@@ -18,6 +18,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static Gson gson = new Gson();
     private static final ChessController chessController = new ChessController();
+    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
 
     public static void main(String[] args) {
         port(8081);
@@ -30,16 +31,17 @@ public class WebUIChessApplication {
 
         get("/init", (req, res) -> {
             res.status(200);
-            return gson.toJson(chessController.start(new RequestDto(Command.START)));
+            ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
+            chessBoardDao.createGame(responseDto);
+            return gson.toJson(responseDto);
         });
 
         get("/move", (req, res) -> {
             try {
                 RequestDto requestDto = new RequestDto(Command.MOVE, req);
                 ResponseDto responseDto = chessController.move(requestDto);
-                ChessBoardDao chessBoardDao = new ChessBoardDao();
-                chessBoardDao.createGame(responseDto);
                 res.status(200);
+                chessBoardDao.pieceMove(responseDto);
                 return gson.toJson(responseDto);
             } catch (IllegalDirectionException e) {
                 res.status(400);

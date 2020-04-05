@@ -2,14 +2,11 @@ package chess.controller.dao;
 
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.Tile;
-import chess.domain.chesspiece.Piece;
-import chess.domain.position.Position;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Map;
 
 public class ChessBoardDao {
     public Connection getConnection() {
@@ -53,7 +50,7 @@ public class ChessBoardDao {
     // 초기 게임 만드는 메서드
     public void createGame(ResponseDto responseDto) throws SQLException {
         String query = "INSERT INTO game(turn, white_score, black_score) VALUES (?,?,?)";
-
+        Connection connection = getConnection();
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, responseDto.getTurn().name());
         pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
@@ -61,13 +58,11 @@ public class ChessBoardDao {
         pstmt.executeUpdate();
         pstmt.close();
 
-        createChessBoard(responseDto);
+        createChessBoard(connection, responseDto);
     }
 
-    // 초기 체스보드 저장 메서드
-    public void createChessBoard(ResponseDto responseDto) throws SQLException {
-        String query = "INSERT INTO chessboard VALUES ((SELECT MAX(game_id) FROM game ),?,?)";
-        Connection connection = getConnection();
+    public void createChessBoard(Connection connection, ResponseDto responseDto) throws SQLException {
+        String query = "INSERT INTO chessboard VALUES ((SELECT MAX(game_id) FROM game),?,?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         for (Tile tile : responseDto.getChessBoardDto().getTiles()) {
@@ -77,14 +72,25 @@ public class ChessBoardDao {
         }
     }
 
-    public void moveChessBoard(Map<Position, Piece> chessBoard) throws SQLException {
-        String query = "INSERT INTO chessboard VALUES (?,?)";
+    public void pieceMove(ResponseDto responseDto) throws SQLException {
+        Connection connection = getConnection();
+        updateGameWithMove(responseDto, connection);
+        deleteChessBoardWithMove(connection);
+        createChessBoard(connection, responseDto);
+    }
 
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        for (Map.Entry<Position, Piece> chessBoardEntry : chessBoard.entrySet()) {
-            pstmt.setString(1, "" + chessBoardEntry.getKey().getRow() + chessBoardEntry.getKey().getColumn());
-            pstmt.setString(2, chessBoardEntry.getValue().getDisplay());
-            pstmt.executeUpdate();
-        }
+    private void deleteChessBoardWithMove(Connection connection) throws SQLException {
+        String query = "DELETE FROM chessboard WHERE room = (SELECT MAX(game_id) FROM game )";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.executeUpdate();
+    }
+
+    private void updateGameWithMove(ResponseDto responseDto, Connection connection) throws SQLException {
+        String query = "UPDATE game SET turn = ?, white_score = ?, black_score = ? WHERE game_id = ( select MAX(game_id) from (select game_id from game) as t)";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setString(1, responseDto.getTurn().name());
+        pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
+        pstmt.setDouble(3, responseDto.getResult().getStatuses().get(1).getScore());
+        pstmt.executeUpdate();
     }
 }
