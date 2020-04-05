@@ -21,9 +21,8 @@ public class Board {
     private static final char MAX_X_POINT = 'h';
     public static final int ONLY_ONE_PAWN_IN_XPOINT = 1;
 
-    public PieceColor team = PieceColor.WHITE;
-
-    private final Map<Position, Piece> board = BoardFactory.getBoard();
+    private final Map<Position, Piece> board = BoardFactory.createBoard();
+    private PieceColor team = PieceColor.WHITE;
 
     public Piece findPiece(Position sourcePosition, PieceColor team) {
         validateNull(sourcePosition);

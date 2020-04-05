@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    private static Map<Position, Piece> board = createBoard();
 
-    private static Map<Position, Piece> createBoard() {
+    static Map<Position, Piece> createBoard() {
         Map<Position, Piece> cells = createEmptyBoard();
         setBlackPieces(cells);
         setWhitePieces(cells);
@@ -54,9 +53,5 @@ public class BoardFactory {
         cells.put(PositionFactory.of("f1"), new Bishop(PieceColor.WHITE, PositionFactory.of("f1")));
         cells.put(PositionFactory.of("g1"), new Knight(PieceColor.WHITE, PositionFactory.of("g1")));
         cells.put(PositionFactory.of("h1"), new Rook(PieceColor.WHITE, PositionFactory.of("h1")));
-    }
-
-    public static Map<Position, Piece> getBoard() {
-        return board;
     }
 }
