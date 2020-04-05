@@ -22,17 +22,17 @@ public class TeamScoreTest {
     @Test
     @DisplayName("게임 점수 계산")
     void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        TeamScore teamScore = chessBoard.getTeamScore();
+        Game game = new Game();
+        TeamScore teamScore = game.getTeamScore();
         Map<Color, Double> teamScores = teamScore.getTeamScore();
         assertThat(teamScores.get(Color.BLACK)).isEqualTo(38);
         assertThat(teamScores.get(Color.WHITE)).isEqualTo(38);
 
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c2", "c4"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("d7", "d5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c4", "d5"));
+        game.movePieceWhenCanMove(new MoveSquare("c2", "c4"));
+        game.movePieceWhenCanMove(new MoveSquare("d7", "d5"));
+        game.movePieceWhenCanMove(new MoveSquare("c4", "d5"));
 
-        teamScore = chessBoard.getTeamScore();
+        teamScore = game.getTeamScore();
         teamScores = teamScore.getTeamScore();
         assertThat(teamScores.get(Color.BLACK)).isEqualTo(37);
         assertThat(teamScores.get(Color.WHITE)).isEqualTo(37);
@@ -41,15 +41,15 @@ public class TeamScoreTest {
     @Test
     @DisplayName("승자 구하기")
     void getWinnerByScore() {
-        ChessBoard chessBoard = new ChessBoard();
-        TeamScore teamScore = chessBoard.getTeamScore();
+        Game game = new Game();
+        TeamScore teamScore = game.getTeamScore();
         assertThat(teamScore.getWinners().size()).isEqualTo(2);
 
-        chessBoard.movePieceWhenCanMove(new MoveSquare("b1", "c3"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("d7", "d5"));
-        chessBoard.movePieceWhenCanMove(new MoveSquare("c3", "d5"));
+        game.movePieceWhenCanMove(new MoveSquare("b1", "c3"));
+        game.movePieceWhenCanMove(new MoveSquare("d7", "d5"));
+        game.movePieceWhenCanMove(new MoveSquare("c3", "d5"));
 
-        teamScore = chessBoard.getTeamScore();
+        teamScore = game.getTeamScore();
         assertThat(teamScore.getWinners().size()).isEqualTo(1);
         assertThat(teamScore.getWinners().get(0)).isEqualTo(Color.WHITE);
     }

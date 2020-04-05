@@ -1,7 +1,7 @@
 package chess.dto;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.Game;
 import chess.domain.piece.Piece;
 import chess.domain.state.MoveState;
 import java.util.ArrayList;
@@ -15,19 +15,19 @@ public class ChessBoardDto {
     private final String turn;
     private final String state;
 
-    public ChessBoardDto(ChessBoard chessBoard) {
-        this(chessBoard, MoveState.EMPTY);
+    public ChessBoardDto(Game game) {
+        this(game, MoveState.EMPTY);
     }
 
-    public ChessBoardDto(ChessBoard chessBoard, MoveState moveState) {
-        NullChecker.validateNotNull(chessBoard, moveState);
-        Map<BoardSquare, Piece> board = chessBoard.getChessBoard();
+    public ChessBoardDto(Game game, MoveState moveState) {
+        NullChecker.validateNotNull(game, moveState);
+        Map<BoardSquare, Piece> board = game.getChessBoard();
         List<String> pieces = new ArrayList<>();
         for (int rank = 8; rank >= 1; rank--) {
             printRankRaw(pieces, board, rank);
         }
         this.pieces = pieces;
-        this.turn = chessBoard.getGameTurn().getName();
+        this.turn = game.getGameTurn().getName();
         this.state = moveState.getMessage();
     }
 

@@ -1,6 +1,6 @@
 package chess.domain.move;
 
-import chess.domain.board.ChessBoard;
+import chess.domain.board.Game;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
 import util.NullChecker;
@@ -8,12 +8,12 @@ import util.NullChecker;
 public class MoveStateAfter implements MoveStateStrategy {
 
     @Override
-    public MoveState getMoveState(ChessBoard chessBoard, MoveSquare moveSquare) {
-        NullChecker.validateNotNull(chessBoard);
-        if (chessBoard.isKingCaptured()) {
+    public MoveState getMoveState(Game game, MoveSquare moveSquare) {
+        NullChecker.validateNotNull(game);
+        if (game.isKingCaptured()) {
             return MoveState.KING_CAPTURED;
         }
-        if (chessBoard.isNeedPromotion()) {
+        if (game.isNeedPromotion()) {
             return MoveState.SUCCESS_BUT_PAWN_PROMOTION;
         }
         return MoveState.SUCCESS;

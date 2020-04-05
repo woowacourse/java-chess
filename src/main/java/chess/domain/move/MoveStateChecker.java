@@ -1,7 +1,7 @@
 package chess.domain.move;
 
 import chess.domain.board.BoardSquare;
-import chess.domain.board.ChessBoard;
+import chess.domain.board.Game;
 import chess.domain.state.MoveSquare;
 import chess.domain.state.MoveState;
 
@@ -14,11 +14,11 @@ public class MoveStateChecker {
         this.moveStateStrategy = moveStateStrategy;
     }
 
-    public MoveState check(ChessBoard chessBoard) {
-        return check(chessBoard, new MoveSquare(DEFAULT_SQUARE, DEFAULT_SQUARE));
+    public MoveState check(Game game) {
+        return check(game, new MoveSquare(DEFAULT_SQUARE, DEFAULT_SQUARE));
     }
 
-    public MoveState check(ChessBoard chessBoard, MoveSquare moveSquare) {
-        return moveStateStrategy.getMoveState(chessBoard, moveSquare);
+    public MoveState check(Game game, MoveSquare moveSquare) {
+        return moveStateStrategy.getMoveState(game, moveSquare);
     }
 }
