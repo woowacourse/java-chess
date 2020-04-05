@@ -18,7 +18,6 @@ function movePiece(value) {
         document.getElementById(value).innerHTML =
             document.getElementsByClassName('sourcePosition')[0].innerHTML;
         document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
-        console.log(document.getElementsByClassName('sourcePosition')[0].id);
     }
 
     setPiece();
@@ -34,10 +33,10 @@ function selectDestinationPiece(value) {
             target: document.getElementById(value).id
         },
         dataType: "text",
-        success: function (data, status, XHR) {
+        success: function (data, status, jqXHR) {
             console.log(status);
-            console.log(XHR.responseText);
             if (data) {
+                console.log(jqXHR.responseText);
                 alert(data);
             }
             movePiece(value);

@@ -2,6 +2,7 @@ package chess;
 
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardFactory;
+import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -9,13 +10,16 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.post;
+import static spark.Spark.*;
 
 public class WebChessController {
 
     private static final String MOVE_SUCCESS = "";
     private ChessBoard chessBoard;
+
+    public WebChessController() {
+        staticFileLocation("templates");
+    }
 
     public void run() {
         get("/", (req, res) -> {
@@ -41,6 +45,12 @@ public class WebChessController {
                 res.status(403);
                 return e.getMessage();
             }
+        });
+
+        post("/status", (req, res) -> {
+            PieceColor playerTurn = chessBoard.getPlayerColor();
+            res.body(String.format("%s점수: %.1f", playerTurn.getColor(), chessBoard.calculateScore()));
+            return res.body();
         });
     }
 
