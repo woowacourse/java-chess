@@ -26,6 +26,10 @@ public enum Team {
                 .orElseThrow(() -> new IllegalArgumentException());
     }
 
+    public boolean isSameTeamName(String compareTeam) {
+        return teamName.equals(compareTeam);
+    }
+
     public String getTeamName() {
         return teamName;
     }
