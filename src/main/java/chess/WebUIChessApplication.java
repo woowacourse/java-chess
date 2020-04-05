@@ -15,7 +15,6 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-
         staticFiles.location("/templates");
         WebChessController webChessController = new WebChessController();
 
@@ -25,11 +24,12 @@ public class WebUIChessApplication {
         });
 
         post("/game", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
             webChessController.start();
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
 
-            Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
 
@@ -58,11 +58,12 @@ public class WebUIChessApplication {
         });
 
         post("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
             String message = webChessController.getScores();
 
-            Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("message", message);
@@ -72,7 +73,6 @@ public class WebUIChessApplication {
 
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
             return render(model, "index.html");
         });
     }

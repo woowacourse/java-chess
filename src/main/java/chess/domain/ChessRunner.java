@@ -137,15 +137,21 @@ public class ChessRunner {
                 .map(TileDto::new)
                 .collect(Collectors.toList());
 
+        setTileDtoTeam(tileDtos);
+        setTileDtoImage(tileDtos);
+
+        return Collections.unmodifiableList(tileDtos);
+    }
+
+    private void setTileDtoTeam(List<TileDto> tileDtos) {
         List<Integer> indexes = Position.getPositionsIndex();
         for (int i = 0; i < indexes.size(); i++) {
-            if (indexes.get(i) % 2 == 0) {
-                tileDtos.get(i).setTeam("white");
-            } else {
-                tileDtos.get(i).setTeam("black");
-            }
+            TileDto tileDto = tileDtos.get(i);
+            tileDto.setStyle(indexes.get(i));
         }
+    }
 
+    private void setTileDtoImage(List<TileDto> tileDtos) {
         List<Tile> tiles = this.board.tiles();
         for (Tile tile : tiles) {
             TileDto tileDto = tileDtos.stream()
@@ -154,7 +160,5 @@ public class ChessRunner {
                     .orElseThrow(IllegalArgumentException::new);
             tileDto.setPieceImageUrl(tile.pieceImageUrl());
         }
-
-        return Collections.unmodifiableList(tileDtos);
     }
 }

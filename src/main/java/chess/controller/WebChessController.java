@@ -9,6 +9,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class WebChessController {
+    private static final String MESSAGE_STYLE_BLACK = "color:black;";
+    private static final String MESSAGE_STYLE_RED = "color:red;";
+    private static final String DELIMITER = ": ";
+    private static final String NEW_LINE = "\n";
+    private static final String ARROW = " -> ";
+    private static final String WINNER = " 가 이겼습니다.";
+
     private ChessRunner chessRunner;
 
     public void start() {
@@ -19,17 +26,21 @@ public class WebChessController {
         try {
             this.chessRunner.update(source, target);
             String moveResult = moveResult(this.chessRunner, source, target);
-            return new MoveResultDto(moveResult, "color:black;");
+            return new MoveResultDto(moveResult, MESSAGE_STYLE_BLACK);
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
-            return new MoveResultDto(e.getMessage(), "color:red;");
+            return new MoveResultDto(e.getMessage(), MESSAGE_STYLE_RED);
         }
     }
 
     private String moveResult(final ChessRunner chessRunner, final String source, final String target) {
         if (!this.isEndGame()) {
-            return source + " -> " + target;
+            return source + ARROW + target;
         }
-        return chessRunner.getWinner() + " 가 이겼습니다.";
+        return chessRunner.getWinner() + WINNER;
+    }
+
+    public boolean isEndGame() {
+        return this.chessRunner.isEndChess();
     }
 
     public TeamDto getCurrentTeam() {
@@ -42,11 +53,7 @@ public class WebChessController {
 
     public String getScores() {
         return this.chessRunner.calculateScores().stream()
-                .map(dto -> dto.getTeam() + ": " + dto.getBoardScore())
-                .collect(Collectors.joining("\n"));
-    }
-
-    public boolean isEndGame() {
-        return this.chessRunner.isEndChess();
+                .map(dto -> dto.getTeam() + DELIMITER + dto.getBoardScore())
+                .collect(Collectors.joining(NEW_LINE));
     }
 }

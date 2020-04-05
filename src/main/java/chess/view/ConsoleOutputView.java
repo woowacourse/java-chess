@@ -39,8 +39,8 @@ public class ConsoleOutputView implements OutputView {
     }
 
     @Override
-    public void printStatus(double calculateScore, String teamName) {
-        System.out.println(String.format("%s 팀의 점수는 %.1f 점입니다.", teamName, calculateScore));
+    public void printStatus(String scores) {
+        System.out.println(scores);
     }
 
     @Override

@@ -1,29 +1,36 @@
 package chess.controller.dto;
 
 public class TileDto {
+    private static final String WHITE = "white";
+    private static final String BLACK = "black";
+
     private final String position;
     private String pieceImageUrl;
-    private String team;
+    private String style;
 
     public TileDto(final String position) {
         this.position = position;
         this.pieceImageUrl = "";
     }
 
-    public void setPieceImageUrl(String pieceImageUrl) {
-        this.pieceImageUrl = pieceImageUrl;
+    public void setStyle(int index) {
+        if (index % 2 == 0) {
+            this.style = WHITE;
+            return;
+        }
+        this.style = BLACK;
     }
 
-    public void setTeam(String team) {
-        this.team = team;
+    public void setPieceImageUrl(String pieceImageUrl) {
+        this.pieceImageUrl = pieceImageUrl;
     }
 
     public String getPosition() {
         return position;
     }
 
-    public String getTeam() {
-        return this.team;
+    public String getStyle() {
+        return this.style;
     }
 
     public String getPieceImageUrl() {
