@@ -94,7 +94,7 @@
 - [x] Score 계산
 
 - [x] end 버튼 클릭 시 main 화면으로 돌아가기
- - [ ] end 버튼 클릭 시 Piece DB에 저장하기
+ - [x] end 버튼 클릭 시 Piece DB에 저장하기
  
 - [ ] start 버튼 클릭 시 돌아오기    
 

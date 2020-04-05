@@ -6,6 +6,7 @@ import java.util.Map;
 import chess.command.MoveCommand;
 import chess.location.Location;
 import chess.progress.Progress;
+import dao.BoardDAO;
 import dto.*;
 import chess.game.ChessGame;
 import com.google.gson.Gson;
@@ -14,6 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
     private static final Gson GSON = new Gson();
+    private static final int GAME_ID = 1;
 
     public static void main(String[] args) {
         staticFiles.location("templates");
@@ -63,6 +65,8 @@ public class WebUIChessApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            BoardDAO boardDAO = new BoardDAO();
+            boardDAO.addBoard(chessGame.getChessBoard(), GAME_ID);
             return render(model, "start.html");
         });
     }
