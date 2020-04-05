@@ -3,10 +3,12 @@ package chess;
 import static chess.util.JsonUtil.*;
 import static spark.Spark.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.TestGameContext;
+import chess.dao.PlayerDao;
+import chess.domain.JdbcGameContext;
 import chess.dto.MovableRequestDto;
 import chess.dto.MoveRequestDto;
 import chess.service.ChessService;
@@ -16,9 +18,15 @@ import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
-    private static ChessService chessService = new ChessService(new TestGameContext());
+    private static ChessService chessService = new ChessService(new JdbcGameContext());
 
     public static void main(String[] args) {
+
+        // 플레이어 회원가입 / 로그인 구현 이전 foreign key 오류를 내지 않기 위해 임시로 DB에 플레이어 추가
+        try {
+            new PlayerDao().addInitialPlayers();
+        } catch (SQLException ignored) {
+        }
 
         port(8080);
         staticFiles.location("/public");
@@ -56,7 +64,11 @@ public class WebUIChessApplication {
 
             post("/:id", (request, response) -> chessService.resetBoard(getId(request)), json());
 
+            delete("/:id", (request, response) -> chessService.finishGame(getId(request)), json());
+
             path("/:id", () -> {
+                get("/status", (request, response) -> chessService.isGameOver(getId(request)), json());
+
                 get("/turn", (request, response) -> chessService.isWhiteTurn(getId(request)), json());
 
                 post("/movable", (request, response) -> {
@@ -66,7 +78,7 @@ public class WebUIChessApplication {
 
                 post("/move", (request, response) -> {
                     MoveRequestDto dto = new Gson().fromJson(request.body(), MoveRequestDto.class);
-                    return chessService.move(getId(request), dto.getFrom(), dto.getTo());
+                    return chessService.move(getId(request), dto);
                 }, json());
 
                 get("/score", (request, response) -> chessService.getScore(getId(request)), json());
