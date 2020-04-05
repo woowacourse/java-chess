@@ -1,10 +1,16 @@
 package chess.dao;
 
+import chess.dto.BoardDTO;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class ChessBoardDAO {
+    private static final int MIN_BOARD_LINE = 1;
+    private static final int MAX_BOARD_LINE = 8;
+
     private static ChessBoardDAO instance = new ChessBoardDAO();
     private Connection connection = getConnection();
 
@@ -51,4 +57,27 @@ public class ChessBoardDAO {
             }
         }
     }
+
+    public void saveBoard(BoardDTO boardDTO) {
+        String query = "INSERT INTO chessBoard VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = this.connection.prepareStatement(query)) {
+            for (int i = MIN_BOARD_LINE; i <= MAX_BOARD_LINE; i++) {
+                pstmt.setString(i, boardDTO.getLines().get(i - 1));
+            }
+            pstmt.setString(9, boardDTO.getCurrentTeam());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deletePreviousBoard() {
+        String query = "DELETE FROM chessBoard";
+        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
