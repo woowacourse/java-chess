@@ -47,3 +47,54 @@
 - [x] Command 입력
 - [x] Board 출력
 - [x] Score 출력
+
+
+### 테이블 생성
+```sql
+create table board
+(
+    id    int(50) auto_increment
+        primary key,
+    user1 varchar(64)       null,
+    user2 varchar(64)       null,
+    turn  int(12) default 0 null,
+    constraint unique_user
+        unique (user1, user2),
+    constraint board_ibfk_1
+        foreign key (user1) references user (name),
+    constraint board_ibfk_2
+        foreign key (user2) references user (name)
+);
+
+create table piece
+(
+    id          int auto_increment
+        primary key,
+    piece_name  varchar(50) not null,
+    position_id int         not null,
+    constraint piece_pk
+        unique (piece_name, position_id),
+    constraint piece_board__fk
+        foreign key (position_id) references position (id)
+            on update cascade on delete cascade
+);
+
+create table position
+(
+    id            int auto_increment
+        primary key,
+    board_id      int         not null,
+    position_name varchar(50) not null,
+    constraint position_pk
+        unique (board_id, position_name),
+    constraint board_parent
+        foreign key (board_id) references board (id)
+            on update cascade on delete cascade
+);
+
+create table user
+(
+    name varchar(64) not null
+        primary key
+);
+```
