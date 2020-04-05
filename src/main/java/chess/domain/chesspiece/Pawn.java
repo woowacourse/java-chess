@@ -18,7 +18,7 @@ public class Pawn extends Piece {
 
     private Direction forwardDirection;
 
-    public Pawn(Player player, Position position) {
+    public Pawn(Player player) {
         super(player, PieceInfo.valueOf(PAWN_NAME));
 
         if (player.equals(Player.BLACK)) {

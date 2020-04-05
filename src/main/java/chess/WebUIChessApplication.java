@@ -21,7 +21,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         port(8081);
-        staticFiles.location("templates");
+        staticFiles.location("public");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -56,7 +56,7 @@ public class WebUIChessApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-
+            chessBoardDao.updateEndState();
             return render(model, "end.html");
         });
     }
