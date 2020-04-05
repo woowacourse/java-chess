@@ -1,16 +1,15 @@
 package chess.domain.piece.piece;
 
-import chess.domain.Position;
-import chess.domain.move.MoveType;
-import chess.domain.move.MoveTypeFactory;
+import chess.domain.move.Move;
+import chess.domain.move.MoveFactory;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
     @Test
@@ -19,10 +18,9 @@ class KingTest {
         Position source = Position.of("d2");
         Position target = Position.of("d3");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece king = new King(source, new BlackTeam());
-
-        assertThat(king.isMovable(moveType)).isTrue();
+        king.validateMovePattern(move, null);
     }
 
     @Test
@@ -31,30 +29,12 @@ class KingTest {
         Position source = Position.of("d2");
         Position target = Position.of("d4");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece king = new King(source, new BlackTeam());
 
-        assertThat(king.isMovable(moveType)).isFalse();
+        assertThatThrownBy(() -> king.validateMovePattern(move, null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
 
-    @Test
-    @DisplayName("킹의 이름이 블랙팀이면 킹의 이름이 'b' 가 된다.")
-    void blackTeamBishopNameTest() {
-        Piece king = new King(Position.of("e1"), new BlackTeam());
-        assertThat(king.pieceName()).isEqualTo("k");
-    }
-
-    @Test
-    @DisplayName("킹의 이름이 화이트팀이면 킹의 이름이 'B' 가 된다.")
-    void whiteTeamBishopNameTest() {
-        Piece king = new King(Position.of("e1"), new WhiteTeam());
-        assertThat(king.pieceName()).isEqualTo("K");
-    }
-
-    @Test
-    @DisplayName("킹의 점수가 0점이다")
-    void bishopScoreTest() {
-        Piece king = new King(Position.of("e1"), new BlackTeam());
-        assertThat(king.getScore()).isEqualTo(0);
-    }
 }

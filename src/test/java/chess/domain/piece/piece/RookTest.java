@@ -1,16 +1,15 @@
 package chess.domain.piece.piece;
 
-import chess.domain.Position;
-import chess.domain.move.MoveType;
-import chess.domain.move.MoveTypeFactory;
+import chess.domain.move.Move;
+import chess.domain.move.MoveFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
     @Test
@@ -19,10 +18,10 @@ class RookTest {
         Position source = Position.of("d2");
         Position target = Position.of("d4");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece rook = new Rook(source, new BlackTeam());
 
-        assertThat(rook.isMovable(moveType)).isTrue();
+        rook.validateMovePattern(move, null);
     }
 
     @Test
@@ -31,30 +30,11 @@ class RookTest {
         Position source = Position.of("d2");
         Position target = Position.of("e3");
 
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece rook = new Rook(source, new BlackTeam());
 
-        assertThat(rook.isMovable(moveType)).isFalse();
-    }
-
-    @Test
-    @DisplayName("룩의 이름이 블랙팀이면 룩의 이름이 'r' 가 된다.")
-    void blackTeamBishopNameTest() {
-        Piece rook = new Rook(Position.of("e1"), new BlackTeam());
-        assertThat(rook.pieceName()).isEqualTo("r");
-    }
-
-    @Test
-    @DisplayName("룩의 이름이 화이트팀이면 룩의 이름이 'R' 가 된다.")
-    void whiteTeamBishopNameTest() {
-        Piece rook = new Rook(Position.of("e1"), new WhiteTeam());
-        assertThat(rook.pieceName()).isEqualTo("R");
-    }
-
-    @Test
-    @DisplayName("룩의 점수가 5점이다")
-    void bishopScoreTest() {
-        Piece rook = new Rook(Position.of("e1"), new BlackTeam());
-        assertThat(rook.getScore()).isEqualTo(5);
+        assertThatThrownBy(() -> rook.validateMovePattern(move, null))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
 }

@@ -1,30 +1,32 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.move.CrossType;
-import chess.domain.move.MoveType;
-import chess.domain.move.StraightType;
-import chess.domain.team.TeamStrategy;
+import chess.domain.move.CrossMove;
+import chess.domain.move.Move;
+import chess.domain.move.StraightMove;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.TeamStrategy;
+
+import java.util.Optional;
 
 public class King extends Piece {
-    private static final int KING_SCORE = 0;
+    private static final int KING_MOVABLE_RANGE = 1;
 
     public King(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
 
     @Override
-    public boolean isMovable(MoveType moveType) {
-        return (moveType instanceof StraightType || moveType instanceof CrossType) && moveType.getCount() == 1;
+    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+        return isKingMovable(move);
+    }
+
+    private boolean isKingMovable(Move move) {
+        return (move instanceof StraightMove || move instanceof CrossMove)
+                && move.getCount() == KING_MOVABLE_RANGE;
     }
 
     @Override
-    public String pieceName() {
+    public String getPieceName() {
         return teamStrategy.kingName();
-    }
-
-    @Override
-    public double getScore() {
-        return KING_SCORE;
     }
 }

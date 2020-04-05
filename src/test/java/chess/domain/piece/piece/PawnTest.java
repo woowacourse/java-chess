@@ -1,19 +1,20 @@
 package chess.domain.piece.piece;
 
-import chess.domain.Position;
-import chess.domain.move.MoveType;
-import chess.domain.move.MoveTypeFactory;
+import chess.domain.move.Move;
+import chess.domain.move.MoveFactory;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
+import chess.domain.piece.team.WhiteTeam;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PawnTest {
-
     @Test
     @DisplayName("폰 2칸이동 테스트 성공")
     void isMovable() {
@@ -21,9 +22,9 @@ class PawnTest {
         Position targetPosition = Position.of("b4");
 
         Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+        Move move = MoveFactory.findMovePattern(sourcePosition, targetPosition);
 
-        assertThat(blackPawn.isMovable(moveType, null)).isTrue();
+        blackPawn.validateMovePattern(move, Optional.empty());
     }
 
     @Test
@@ -33,46 +34,34 @@ class PawnTest {
         Position targetPosition = Position.of("b5");
 
         Pawn blackPawn = new Pawn(sourcePosition, new BlackTeam());
-        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
+        Move move = MoveFactory.findMovePattern(sourcePosition, targetPosition);
 
-        assertThat(blackPawn.isMovable(moveType, null)).isFalse();
+        assertThatThrownBy(() -> blackPawn.validateMovePattern(move, Optional.empty()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
 
     @Test
     @DisplayName("폰 공격 테스트")
     void isMovableAttack() {
-        Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-        Piece whitePawn = new Pawn(Position.of("c3"), new WhiteTeam());
-        MoveType moveType = MoveTypeFactory.of(blackPawn.position, whitePawn.position);
-        assertThat(blackPawn.isMovable(moveType, whitePawn)).isTrue();
+        Position blackPosition = Position.of("b2");
+        Position whitePosition = Position.of("c3");
+
+        Pawn blackPawn = new Pawn(blackPosition, new BlackTeam());
+        Optional<Piece> whitePawn = Optional.of(new Pawn(whitePosition, new WhiteTeam()));
+        Move move = MoveFactory.findMovePattern(blackPawn.getPosition(), whitePosition);
+
+        blackPawn.validateMovePattern(move, whitePawn);
     }
 
     @Test
     @DisplayName("폰 뒤로 이동 테스트")
     void isMovableFalse() {
-        Pawn blackPawn = new Pawn(Position.of("b2"), new BlackTeam());
-        MoveType moveType = MoveTypeFactory.of(blackPawn.position, Position.of("b1"));
-        assertThat(blackPawn.isMovable(moveType, null)).isFalse();
-    }
+        Pawn blackPawn = new Pawn(Position.of("b5"), new WhiteTeam());
+        Move move = MoveFactory.findMovePattern(blackPawn.getPosition(), Position.of("b6"));
 
-    @Test
-    @DisplayName("폰의 이름이 블랙팀이면 폰의 이름이 'p' 가 된다.")
-    void blackTeamBishopNameTest() {
-        Piece pawn = new Pawn(Position.of("e1"), new BlackTeam());
-        assertThat(pawn.pieceName()).isEqualTo("p");
-    }
-
-    @Test
-    @DisplayName("폰의 이름이 화이트팀이면 폰의 이름이 'P' 가 된다.")
-    void whiteTeamBishopNameTest() {
-        Piece pawn = new Pawn(Position.of("e1"), new WhiteTeam());
-        assertThat(pawn.pieceName()).isEqualTo("P");
-    }
-
-    @Test
-    @DisplayName("폰의 점수가 0.5점이다")
-    void bishopScoreTest() {
-        Piece pawn = new Pawn(Position.of("e1"), new BlackTeam());
-        assertThat(pawn.getScore()).isEqualTo(0.5);
+        assertThatThrownBy(() -> blackPawn.validateMovePattern(move, Optional.empty()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
 }

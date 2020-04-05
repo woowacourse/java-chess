@@ -1,29 +1,24 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.move.KnightType;
-import chess.domain.move.MoveType;
-import chess.domain.team.TeamStrategy;
+import chess.domain.move.KnightMove;
+import chess.domain.move.Move;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.TeamStrategy;
+
+import java.util.Optional;
 
 public class Knight extends Piece {
-    private static final double KNIGHT_SCORE = 2.5;
-
     public Knight(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
 
     @Override
-    public boolean isMovable(MoveType moveType) {
-        return moveType instanceof KnightType;
+    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+        return move instanceof KnightMove;
     }
 
     @Override
-    public String pieceName() {
+    public String getPieceName() {
         return teamStrategy.knightName();
-    }
-
-    @Override
-    public double getScore() {
-        return KNIGHT_SCORE;
     }
 }

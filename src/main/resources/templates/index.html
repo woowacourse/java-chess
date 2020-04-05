@@ -2,9 +2,312 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <script
+            crossorigin="anonymous"
+            integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+            src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+
+    <style>
+        #chessboard {
+            margin: 0 5% 5% 5%;
+            position: absolute;
+            width: 720px;
+            height: 720px;
+            left: 20%;
+        }
+
+        .cell {
+            margin: .2% 0 .2% 0;
+            table-layout: fixed;
+            width: 85px;
+            height: 85px;
+            text-align: center;
+        }
+
+        .cell:hover {
+            table-layout: fixed;
+            width: 85px;
+            height: 85px;
+            text-align: center;
+            background-color: lightpink;
+        }
+
+
+        .gray {
+            background-color: lightgray;
+        }
+
+        .selected {
+            transform: translateX(10px) translateY(-10px);
+        }
+
+        .K {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKing.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .k {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKing.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .q {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackQueen.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .Q {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteQueen.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .b {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackBishop.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .B {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteBishop.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .n {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackKnight.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .N {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteKnight.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .r {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackRook.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .R {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whiteRook.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .p {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/blackPawn.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+
+        .P {
+            background-image: url("https://github.com/ordinCode/java-chess/blob/webChess/src/main/resources/templates/image/whitePawn.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: 40%;
+            background-position: center;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button class="btn btn-default navbar-btn reStart" type="button">새게임</button>
+        </div>
+    </div>
+</nav>
+<h1 style="text-align: center">체스</h1>
+<div id="chessboard">
+    <div class="table">
+        <div>
+            <button class="gray cell" id="a8"></button>
+            <button class="cell" id="b8"></button>
+            <button class="gray cell" id="c8"></button>
+            <button class="cell" id="d8"></button>
+            <button class="gray cell" id="e8"></button>
+            <button class="cell" id="f8"></button>
+            <button class="gray cell" id="g8"></button>
+            <button class="cell" id="h8"></button>
+        </div>
+        <div>
+            <button class="cell" id="a7"></button>
+            <button class="gray cell" id="b7"></button>
+            <button class="cell" id="c7"></button>
+            <button class="gray cell" id="d7"></button>
+            <button class="cell" id="e7"></button>
+            <button class="gray cell" id="f7"></button>
+            <button class="cell" id="g7"></button>
+            <button class="gray cell" id="h7"></button>
+        </div>
+        <div>
+            <button class="gray cell" id="a6"></button>
+            <button class="cell" id="b6"></button>
+            <button class="gray cell" id="c6"></button>
+            <button class="cell" id="d6"></button>
+            <button class="gray cell" id="e6"></button>
+            <button class="cell" id="f6"></button>
+            <button class="gray cell" id="g6"></button>
+            <button class="cell" id="h6"></button>
+        </div>
+        <div>
+            <button class="cell" id="a5"></button>
+            <button class="gray cell" id="b5"></button>
+            <button class="cell" id="c5"></button>
+            <button class="gray cell" id="d5"></button>
+            <button class="cell" id="e5"></button>
+            <button class="gray cell" id="f5"></button>
+            <button class="cell" id="g5"></button>
+            <button class="gray cell" id="h5"></button>
+        </div>
+        <div>
+            <button class="gray cell" id="a4"></button>
+            <button class="cell" id="b4"></button>
+            <button class="gray cell" id="c4"></button>
+            <button class="cell" id="d4"></button>
+            <button class="gray cell" id="e4"></button>
+            <button class="cell" id="f4"></button>
+            <button class="gray cell" id="g4"></button>
+            <button class="cell" id="h4"></button>
+        </div>
+        <div>
+            <button class="cell" id="a3"></button>
+            <button class="gray cell" id="b3"></button>
+            <button class="cell" id="c3"></button>
+            <button class="gray cell" id="d3"></button>
+            <button class="cell" id="e3"></button>
+            <button class="gray cell" id="f3"></button>
+            <button class="cell" id="g3"></button>
+            <button class="gray cell" id="h3"></button>
+        </div>
+        <div>
+            <button class="gray cell" id="a2"></button>
+            <button class="cell" id="b2"></button>
+            <button class="gray cell" id="c2"></button>
+            <button class="cell" id="d2"></button>
+            <button class="gray cell" id="e2"></button>
+            <button class="cell" id="f2"></button>
+            <button class="gray cell" id="g2"></button>
+            <button class="cell" id="h2"></button>
+        </div>
+        <div>
+            <button class="cell" id="a1"></button>
+            <button class="gray cell" id="b1"></button>
+            <button class="cell" id="c1"></button>
+            <button class="gray cell" id="d1"></button>
+            <button class="cell" id="e1"></button>
+            <button class="gray cell" id="f1"></button>
+            <button class="cell" id="g1"></button>
+            <button class="gray cell" id="h1"></button>
+        </div>
+        <label for="sourcePositionRecord"></label><input hidden id="sourcePositionRecord" value="nonSelectPosition">
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            type: 'get',
+            url: 'continue',
+            dataType: 'json',
+            error: getPieceInfoError,
+            success: getPieceInfoSuccess
+        });
+    });
+
+    $(".cell").click(function () {
+        var sourcePosition = $("#sourcePositionRecord").val();
+
+        if (sourcePosition === "nonSelectPosition") {
+            $("#sourcePositionRecord").val($(this).attr("id"));
+            $(this).addClass("selected");
+            return;
+        }
+
+        validateMovable(sourcePosition, $(this).attr("id"));
+    });
+
+    function validateMovable(sourcePosition, targetPosition) {
+        console.log(sourcePosition, targetPosition);
+        document.getElementById('sourcePositionRecord').value = "nonSelectPosition";
+        document.getElementById(sourcePosition).classList.remove("selected");
+
+        $.ajax({
+            type: 'post',
+            url: 'isMovable',
+            data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
+            dataType: 'json',
+            error: onError,
+            success: onSuccess
+        });
+
+    }
+
+    function onSuccess(response) {
+        var sourcePosition = response.source;
+        var targetPosition = response.target;
+        var sourcePieceType = response.sourcePieceType;
+        var targetPieceType = response.targetPieceType;
+        var isAttack = response.isAttack;
+
+        document.getElementById(sourcePosition).classList.remove(sourcePieceType);
+        if (isAttack) {
+            document.getElementById(targetPosition).classList.remove(targetPieceType);
+            if (targetPieceType === "K" || targetPieceType === "k") {
+                alert("게임 종료되었습니다.");
+            }
+        }
+        document.getElementById(targetPosition).classList.add(sourcePieceType);
+    }
+
+    function onError() {
+        alert("해당말이 갈 수 없는 칸입니다.");
+    }
+
+    $(".reStart").click(function () {
+        $.ajax({
+            type: 'get',
+            url: 'init',
+            dataType: 'json',
+            error: getPieceInfoError,
+            success: getPieceInfoSuccess
+        });
+        alert("새로운게임이 시작되었습니다. 새로고침하여 시작하세요.");
+    });
+
+    function getPieceInfoError() {
+        alert("error");
+    }
+
+    function getPieceInfoSuccess(response) {
+        for (position in response) {
+            var pieceName = response[position];
+            document.getElementById(position).classList.add(pieceName);
+        }
+    }
+
+</script>
+
 </body>
 </html>

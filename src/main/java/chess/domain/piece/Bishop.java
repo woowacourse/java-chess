@@ -1,29 +1,24 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.move.CrossType;
-import chess.domain.move.MoveType;
-import chess.domain.team.TeamStrategy;
+import chess.domain.move.CrossMove;
+import chess.domain.move.Move;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.TeamStrategy;
+
+import java.util.Optional;
 
 public class Bishop extends Piece {
-    private static final int BISHOP_SCORE = 3;
-
     public Bishop(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
 
     @Override
-    public boolean isMovable(MoveType moveType) {
-        return moveType instanceof CrossType;
+    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+        return move instanceof CrossMove;
     }
 
     @Override
-    public String pieceName() {
+    public String getPieceName() {
         return teamStrategy.bishopName();
-    }
-
-    @Override
-    public double getScore() {
-        return BISHOP_SCORE;
     }
 }

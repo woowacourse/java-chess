@@ -1,68 +1,61 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
 import chess.domain.move.Direction;
-import chess.domain.move.MoveType;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.TeamStrategy;
+import chess.domain.move.Move;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.TeamStrategy;
+
+import java.util.Optional;
 
 public class Pawn extends Piece {
     private static final int PAWN_NORMAL_MOVE_RANGE = 1;
-    private static final int PAWN_FIRST_MOVE_RANGE = 2;
-    private static final String ERROR_MESSAGE_UNSUPPORT_METHOD = "지원하지 않는 메소드 입니다";
-
-    private final double PAWN_SCORE = 0.5;
+    private static final int PAWN_START_LINE_MOVE_RANGE = 2;
 
     public Pawn(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
 
-    public boolean isMovable(MoveType moveType, Piece targetPiece) {
-        if (this.teamStrategy instanceof BlackTeam) {
-            return blackPawnMovable(moveType, targetPiece);
-        }
-        return whitePawnMovable(moveType, targetPiece);
+    @Override
+    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+        return targetPiece.map(piece -> isAttackMovePattern(move))
+                .orElseGet(() -> isNotAttackMovePattern(move));
     }
 
-    private boolean whitePawnMovable(MoveType moveType, Piece targetPiece) {
-        if (targetPiece != null) {
-            return moveType.getDirection() == Direction.DOWN_RIGHT
-                    || moveType.getDirection() == Direction.DOWN_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+    private boolean isAttackMovePattern(Move move) {
+        Direction rightAttackDirection = Direction.DOWN_RIGHT;
+        Direction leftAttackDirection = Direction.DOWN_LEFT;
+        if (teamStrategy.isBlackTeam()) {
+            rightAttackDirection = Direction.UP_RIGHT;
+            leftAttackDirection = Direction.UP_LEFT;
         }
+
+        return isAttack(move, rightAttackDirection, leftAttackDirection);
+    }
+
+    private boolean isAttack(Move move, Direction rightAttackDirection, Direction leftAttackDirection) {
+        return (move.getDirection() == rightAttackDirection || move.getDirection() == leftAttackDirection)
+                && move.getCount() == PAWN_NORMAL_MOVE_RANGE;
+    }
+
+    private boolean isNotAttackMovePattern(Move move) {
         if (this.position.isPawnStartLine(this)) {
-            return moveType.getDirection() == Direction.DOWN && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
+            return isValidMove(move, PAWN_START_LINE_MOVE_RANGE);
         }
-        return moveType.getDirection() == Direction.DOWN && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+        return isValidMove(move, PAWN_NORMAL_MOVE_RANGE);
     }
 
-    private boolean blackPawnMovable(MoveType moveType, Piece targetPiece) {
-        if (targetPiece != null) {
-            return moveType.getDirection() == Direction.UP_RIGHT
-                    || moveType.getDirection() == Direction.UP_LEFT && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
+    private boolean isValidMove(Move move, int validRange) {
+        Direction forwardDirection = Direction.DOWN;
+        if (teamStrategy.isBlackTeam()) {
+            forwardDirection = Direction.UP;
         }
-        if (this.position.isPawnStartLine(this)) {
-            return moveType.getDirection() == Direction.UP && moveType.getCount() <= PAWN_FIRST_MOVE_RANGE;
-        }
-        return moveType.getDirection() == Direction.UP && moveType.getCount() == PAWN_NORMAL_MOVE_RANGE;
-    }
 
+        return move.getDirection() == forwardDirection
+                && move.getCount() <= validRange;
+    }
 
     @Override
-    public boolean isMovable(MoveType moveType) {
-        throw new UnsupportedOperationException(ERROR_MESSAGE_UNSUPPORT_METHOD);
-    }
-
-    @Override
-    public String pieceName() {
+    public String getPieceName() {
         return teamStrategy.pawnName();
-    }
-
-    @Override
-    public double getScore() {
-        return PAWN_SCORE;
-    }
-
-    public boolean isBlackTeam() {
-        return teamStrategy instanceof BlackTeam;
     }
 }
