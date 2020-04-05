@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.BoardGame;
 import domain.board.fixture.RookBoard;
-import domain.command.MoveInfo;
+import domain.command.MoveCommand;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -36,10 +36,10 @@ public class RookTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move a1 a1, WHITE", "move a8 a8, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveInfo moveInfo, Team team) {
-		Rook rook = new Rook(moveInfo.getSourcePosition(), team);
+	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> rook.canMove(moveInfo.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> rook.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -47,8 +47,8 @@ public class RookTest {
 	@DisplayName("유효하지 않은 방향이 입력되면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"NE, move a1 b2, WHITE", "NNE, move a3 b5, WHITE", "SW, move a8 b7, BLACK", "SSE, move a8 b6, BLACK"})
-	void validateDirection_InvalidDirection_ExceptionThrown(Direction direction, MoveInfo moveInfo, Team team) {
-		Rook rook = new Rook(moveInfo.getSourcePosition(), team);
+	void validateDirection_InvalidDirection_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
+		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 
 		assertThatThrownBy(() -> rook.validateDirection(direction))
 			.isInstanceOf(InvalidPositionException.class)
@@ -58,10 +58,10 @@ public class RookTest {
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"N, move a1 a4, WHITE", "S, move a8 a2, BLACK"})
-	void validateRoutecanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveInfo moveInfo, Team team) {
-		Rook rook = new Rook(moveInfo.getSourcePosition(), team);
+	void validateRoutecanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
+		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> rook.validateRoute(direction, moveInfo.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> rook.validateRoute(direction, moveCommand.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 	}
@@ -69,22 +69,22 @@ public class RookTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		MoveInfo moveInfo = new MoveInfo("move a1 a2");
-		Rook rook = new Rook(moveInfo.getSourcePosition(), Team.WHITE);
+		MoveCommand moveCommand = new MoveCommand("move a1 a2");
+		Rook rook = new Rook(moveCommand.getSourcePosition(), Team.WHITE);
 
-		rook.move(moveInfo.getTargetPosition(), chessGame.getBoard());
+		rook.move(moveCommand.getTargetPosition(), chessGame.getBoard());
 
-		assertThat(rook.position).isEqualTo(moveInfo.getTargetPosition());
+		assertThat(rook.position).isEqualTo(moveCommand.getTargetPosition());
 	}
 
 	@DisplayName("아군이 있는 목적지가 입력되면 예외 발생 ")
 	@Test
 	void move_OurTeamAtTargetPosition_ExceptionThrown() {
-		MoveInfo moveInfo = new MoveInfo("move a1 a3");
+		MoveCommand moveCommand = new MoveCommand("move a1 a3");
 
-		Rook rook = new Rook(moveInfo.getSourcePosition(), Team.WHITE);
+		Rook rook = new Rook(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> rook.move(moveInfo.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> rook.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -92,12 +92,12 @@ public class RookTest {
 	@DisplayName("적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
 	@Test
 	void move_EnemyAtTargetPosition_Capture() {
-		MoveInfo moveInfo = new MoveInfo("move a3 a8");
-		Queen queen = new Queen(moveInfo.getSourcePosition(), Team.WHITE);
+		MoveCommand moveCommand = new MoveCommand("move a3 a8");
+		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
 
-		queen.move(moveInfo.getTargetPosition(), chessGame.getBoard());
+		queen.move(moveCommand.getTargetPosition(), chessGame.getBoard());
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveInfo.getTargetPosition());
+		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(queen);
 	}
 

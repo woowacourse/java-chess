@@ -3,7 +3,7 @@ package domain.board;
 import java.util.HashMap;
 import java.util.Map;
 
-import domain.command.MoveInfo;
+import domain.command.MoveCommand;
 import domain.piece.Piece;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -20,9 +20,9 @@ public class BoardGame {
 		this(BoardFactory.create());
 	}
 
-	public void move(MoveInfo moveInfo, Team turn) {
-		Position sourcePosition = moveInfo.getSourcePosition();
-		Position targetPosition = moveInfo.getTargetPosition();
+	public void move(MoveCommand moveCommand, Team turn) {
+		Position sourcePosition = moveCommand.getSourcePosition();
+		Position targetPosition = moveCommand.getTargetPosition();
 
 		Piece piece = board.findPiece(sourcePosition)
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));

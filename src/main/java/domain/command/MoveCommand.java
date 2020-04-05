@@ -6,15 +6,19 @@ import java.util.List;
 import domain.piece.position.Position;
 import view.InputView;
 
-public class MoveInfo {
+public class MoveCommand {
+	private static final int SOURCE_POSITION = 0;
+	private static final int TARGET_POSITION = 1;
+	private static final String DELIMITER = " ";
+
 	private List<Position> positions;
 
-	public MoveInfo(String command) {
+	public MoveCommand(String command) {
 		positions = convert(split(command));
 	}
 
 	private String[] split(String inputCommand) {
-		String[] commands = inputCommand.split(InputView.DELIMITER);
+		String[] commands = inputCommand.split(DELIMITER);
 		if (Command.MOVE_ARGUMENT_SIZE != commands.length) {
 			throw new InvalidCommandException(InvalidCommandException.INVALID_MOVE_COMMAND);
 		}
@@ -31,10 +35,10 @@ public class MoveInfo {
 	}
 
 	public Position getSourcePosition() {
-		return positions.get(InputView.SOURCE_POSITION);
+		return positions.get(SOURCE_POSITION);
 	}
 
 	public Position getTargetPosition() {
-		return positions.get(InputView.TARGET_POSITION);
+		return positions.get(TARGET_POSITION);
 	}
 }

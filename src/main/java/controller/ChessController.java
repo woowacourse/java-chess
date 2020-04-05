@@ -2,12 +2,10 @@ package controller;
 
 import static view.InputView.*;
 
-import domain.board.Board;
-import domain.board.BoardFactory;
 import domain.board.BoardGame;
 import domain.command.Command;
 import domain.command.InvalidCommandException;
-import domain.command.MoveInfo;
+import domain.command.MoveCommand;
 import domain.piece.team.Team;
 import view.OutputView;
 
@@ -25,8 +23,8 @@ public class ChessController {
 			String inputCommand = inputCommand();
 			command = Command.of(inputCommand);
 			if (command.isMove()) {
-				MoveInfo moveInfo = new MoveInfo(inputCommand);
-				board.move(moveInfo, turn);
+				MoveCommand moveCommand = new MoveCommand(inputCommand);
+				board.move(moveCommand, turn);
 				OutputView.printChessBoard(board);
 				turn = Team.changeTurn(turn);
 			}

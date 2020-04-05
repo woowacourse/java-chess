@@ -13,7 +13,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import domain.board.BoardGame;
 import domain.board.fixture.KnightBoard;
-import domain.command.MoveInfo;
+import domain.command.MoveCommand;
 import domain.piece.position.Direction;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
@@ -36,10 +36,10 @@ public class KnightTest {
 	@DisplayName("목적지에 현재 위치가 입력되면(제자리) 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move b1 b1, WHITE", "move c3 c3, BLACK"})
-	void canMove_SourceSameAsTarget_ExceptionThrown(MoveInfo moveInfo, Team team) {
-		Knight knight = new Knight(moveInfo.getSourcePosition(), team);
+	void canMove_SourceSameAsTarget_ExceptionThrown(MoveCommand moveCommand, Team team) {
+		Knight knight = new Knight(moveCommand.getSourcePosition(), team);
 
-		assertThatThrownBy(() -> knight.canMove(moveInfo.getTargetPosition(), team, chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.canMove(moveCommand.getTargetPosition(), team, chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.IS_IN_PLACE);
 	}
@@ -48,8 +48,8 @@ public class KnightTest {
 	@ParameterizedTest
 	@CsvSource({"W, move b1 a1, WHITE", "E, move b1 c1, WHITE", "NE, move c3 d4, WHITE",
 		"S, move c3 c2, WHITE", "N, move c3 c4, BLACK", "SW, move c3 b2, BLACK"})
-	void validateDirection_InvalidDirection_ExceptionThrown(Direction direction, MoveInfo moveInfo, Team team) {
-		Knight knight = new Knight(moveInfo.getSourcePosition(), team);
+	void validateDirection_InvalidDirection_ExceptionThrown(Direction direction, MoveCommand moveCommand, Team team) {
+		Knight knight = new Knight(moveCommand.getSourcePosition(), team);
 
 		assertThatThrownBy(() -> knight.validateDirection(direction))
 			.isInstanceOf(InvalidPositionException.class)
@@ -59,22 +59,22 @@ public class KnightTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		MoveInfo moveInfo = new MoveInfo("move b1 c3");
-		Knight knight = new Knight(moveInfo.getSourcePosition(), Team.WHITE);
+		MoveCommand moveCommand = new MoveCommand("move b1 c3");
+		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveInfo.getTargetPosition(), chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), chessGame.getBoard());
 
-		assertThat(knight.position).isEqualTo(moveInfo.getTargetPosition());
+		assertThat(knight.position).isEqualTo(moveCommand.getTargetPosition());
 	}
 
 	@DisplayName("아군이 있는 목적지가 입력되면 예외 발생 ")
 	@Test
 	void move_OurTeamAtTargetPosition_ExceptionThrown() {
-		MoveInfo moveInfo = new MoveInfo("move b1 a3");
+		MoveCommand moveCommand = new MoveCommand("move b1 a3");
 
-		Knight knight = new Knight(moveInfo.getSourcePosition(), Team.WHITE);
+		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		assertThatThrownBy(() -> knight.move(moveInfo.getTargetPosition(), chessGame.getBoard()))
+		assertThatThrownBy(() -> knight.move(moveCommand.getTargetPosition(), chessGame.getBoard()))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 	}
@@ -82,12 +82,12 @@ public class KnightTest {
 	@DisplayName("적군이 있는 목적지가 입력되면 적군을 잡고 말 이동 ")
 	@Test
 	void move_EnemyAtTargetPosition_Capture() {
-		MoveInfo moveInfo = new MoveInfo("move b1 c3");
-		Knight knight = new Knight(moveInfo.getSourcePosition(), Team.WHITE);
+		MoveCommand moveCommand = new MoveCommand("move b1 c3");
+		Knight knight = new Knight(moveCommand.getSourcePosition(), Team.WHITE);
 
-		knight.move(moveInfo.getTargetPosition(), chessGame.getBoard());
+		knight.move(moveCommand.getTargetPosition(), chessGame.getBoard());
 
-		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveInfo.getTargetPosition());
+		Optional<Piece> targetPiece = chessGame.getBoard().findPiece(moveCommand.getTargetPosition());
 		assertThat(targetPiece.get()).isEqualTo(knight);
 	}
 }
