@@ -73,6 +73,7 @@ public class WebUIChessApplication {
 
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            webService.clearBoardDb();
             webService.saveGame();
 
 			List<String> pieces = webService.showAllPieces();

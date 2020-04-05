@@ -52,6 +52,13 @@ public class BoardDao {
 		}
 	}
 
+
+	public void clearBoardDb() throws SQLException {
+		String query = "DELETE FROM board";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.executeUpdate();
+	}
+
 	public void saveBoard(Board board) throws SQLException {
 		Connection connection = getConnection();
 		for (Rank rank : board.getRanks()) {

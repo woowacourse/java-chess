@@ -40,6 +40,10 @@ public class WebService {
 		return winner.getName();
 	}
 
+	public void clearBoardDb() throws SQLException {
+		boardDao.clearBoardDb();
+	}
+
 	public void saveGame() throws SQLException {
 		boardDao.saveBoard(board);
 	}
