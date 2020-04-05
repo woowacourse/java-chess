@@ -22,6 +22,14 @@ public enum Color {
         this.directionChanger = directionChanger;
     }
 
+    public static Color of(String name) {
+        NullChecker.validateNotNull(name);
+        return Arrays.stream(Color.values())
+            .filter(color -> color.name.equals(name))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     public List<Direction> getChangeDirection(List<Direction> directions) {
         NullChecker.validateNotNull(directions);
         return directionChanger.apply(directions);

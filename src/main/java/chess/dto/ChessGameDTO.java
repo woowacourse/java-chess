@@ -9,17 +9,17 @@ import java.util.List;
 import java.util.Map;
 import util.NullChecker;
 
-public class ChessGameDto {
+public class ChessGameDTO {
 
     private final List<String> pieces;
     private final String turn;
     private final String state;
 
-    public ChessGameDto(ChessGame chessGame) {
+    public ChessGameDTO(ChessGame chessGame) {
         this(chessGame, MoveState.EMPTY);
     }
 
-    public ChessGameDto(ChessGame chessGame, MoveState moveState) {
+    public ChessGameDTO(ChessGame chessGame, MoveState moveState) {
         NullChecker.validateNotNull(chessGame, moveState);
         Map<BoardSquare, Piece> board = chessGame.getChessBoard();
         List<String> pieces = new ArrayList<>();

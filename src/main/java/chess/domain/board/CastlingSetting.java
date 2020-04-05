@@ -106,6 +106,13 @@ public enum CastlingSetting {
                 == moveSquare.get(MoveOrder.AFTER));
     }
 
+    public static CastlingSetting of(String castlingSettingName) {
+        return Arrays.stream(CastlingSetting.values())
+            .filter(castlingSetting -> castlingSetting.name().equalsIgnoreCase(castlingSettingName))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     public Piece getPiece() {
         return piece;
     }

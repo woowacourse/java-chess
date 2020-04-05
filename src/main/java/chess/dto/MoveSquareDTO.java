@@ -1,11 +1,11 @@
 package chess.dto;
 
-public class MoveSquareDto {
+public class MoveSquareDTO {
 
     private final String source;
     private final String target;
 
-    public MoveSquareDto(String source, String target) {
+    public MoveSquareDTO(String source, String target) {
         this.source = source;
         this.target = target;
     }

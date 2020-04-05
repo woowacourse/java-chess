@@ -6,13 +6,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ResultDto {
+public class ResultDTO {
 
     private final String winner;
     private final String blackScore;
     private final String whiteScore;
 
-    public ResultDto(TeamScore teamScore) {
+    public ResultDTO(TeamScore teamScore) {
         List<String> winners = new ArrayList<>();
         for (Color winner : teamScore.getWinners()) {
             winners.add(winner.getName());

@@ -1,10 +1,10 @@
 package chess.dto;
 
-public class PromotionTypeDto {
+public class PromotionTypeDTO {
 
     private final String promotionType;
 
-    public PromotionTypeDto(String promotionType) {
+    public PromotionTypeDTO(String promotionType) {
         this.promotionType = promotionType;
     }
 
