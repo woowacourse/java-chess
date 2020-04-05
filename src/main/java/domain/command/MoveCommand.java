@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import domain.piece.position.Position;
-import view.InputView;
 
 public class MoveCommand {
 	private static final int SOURCE_POSITION = 0;
@@ -19,7 +18,8 @@ public class MoveCommand {
 
 	private String[] split(String inputCommand) {
 		String[] commands = inputCommand.split(DELIMITER);
-		if (Command.MOVE_ARGUMENT_SIZE != commands.length) {
+		boolean isWrongArgumentCount = Command.MOVE_ARGUMENT_COUNT != commands.length;
+		if (isWrongArgumentCount) {
 			throw new InvalidCommandException(InvalidCommandException.INVALID_MOVE_COMMAND);
 		}
 		return commands;

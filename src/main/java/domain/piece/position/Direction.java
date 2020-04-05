@@ -1,7 +1,6 @@
 package domain.piece.position;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
@@ -40,10 +39,6 @@ public enum Direction {
 
 	private static boolean isSameAbs(int rowGap, int columnGap) {
 		return Math.abs(rowGap) == Math.abs(columnGap);
-	}
-
-	public boolean isNotContain(List<Direction> directions) {
-		return !directions.contains(this);
 	}
 
 	public static Direction findDirection(Position position, Position targetPosition) {

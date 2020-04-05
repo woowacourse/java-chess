@@ -10,7 +10,11 @@ public enum Team {
 		return WHITE;
 	}
 
-	public static boolean isWhite(Team team){
+	public static boolean isWhite(Team team) {
 		return WHITE.equals(team);
+	}
+
+	public boolean isOurTeam(Team team) {
+		return this.equals(team);
 	}
 }

@@ -27,8 +27,8 @@ public class King extends Piece {
 	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		int columnGap = this.position.calculateColumnGap(targetPosition);
-
-		if ((Math.abs(rowGap) > MAX_STEP_SIZE) || (Math.abs(columnGap) > MAX_STEP_SIZE)) {
+		boolean isWrongStepSize = (Math.abs(rowGap) > MAX_STEP_SIZE) || (Math.abs(columnGap) > MAX_STEP_SIZE);
+		if (isWrongStepSize) {
 			throw new InvalidPositionException(InvalidPositionException.INVALID_STEP_SIZE);
 		}
 	}

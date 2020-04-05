@@ -10,7 +10,7 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public abstract class Piece{
+public abstract class Piece {
 	protected Position position;
 	protected Team team;
 
@@ -24,8 +24,7 @@ public abstract class Piece{
 
 		Optional<Piece> targetPiece = board.findPiece(targetPosition);
 		targetPiece.ifPresent(target -> {
-			boolean isOurTeam = target.team.equals(this.team);
-			if (isOurTeam) {
+			if (team.isOurTeam(target.team)) {
 				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 			}
 			capture(target, board);
@@ -80,9 +79,7 @@ public abstract class Piece{
 	}
 
 	public String showSymbol() {
-		boolean isWhitePiece = Team.WHITE.equals(this.team);
-
-		if (isWhitePiece) {
+		if (Team.isWhite(team)) {
 			return getSymbol();
 		}
 		return getSymbol().toUpperCase();

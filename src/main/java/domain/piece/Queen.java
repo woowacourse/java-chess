@@ -29,7 +29,8 @@ public class Queen extends Piece {
 
 	@Override
 	protected void validateRoute(Direction direction, Position targetPosition, Board board) {
-		if (direction.hasPieceInRoute(this.position, targetPosition, board)) {
+		boolean hasPiece = direction.hasPieceInRoute(this.position, targetPosition, board);
+		if (hasPiece) {
 			throw new InvalidPositionException(InvalidPositionException.HAS_PIECE_IN_ROUTE);
 		}
 	}

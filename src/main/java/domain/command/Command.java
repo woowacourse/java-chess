@@ -9,7 +9,7 @@ public enum Command {
 	MOVE(command -> command.contains("move")),
 	STATUS(command -> command.equals("status"));
 
-	public static final int MOVE_ARGUMENT_SIZE = 3;
+	public static final int MOVE_ARGUMENT_COUNT = 3;
 
 	public Predicate<String> isEquals;
 

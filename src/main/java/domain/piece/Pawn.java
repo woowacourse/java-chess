@@ -29,17 +29,22 @@ public class Pawn extends Piece {
 		int rowGap = this.position.calculateRowGap(targetPosition);
 		Direction direction = Direction.findDirection(this.position, targetPosition);
 		Optional<Piece> piece = board.findPiece(targetPosition);
-		if (Direction.isDiagonalDirection(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL) {
+
+		boolean isCaptureMovement = Direction.isDiagonalDirection(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL;
+		if (isCaptureMovement) {
 			piece.ifPresent(targetPiece -> {
-				if (targetPiece.team.equals(this.team)) {
+				if (team.isOurTeam(targetPiece.team)) {
 					throw new InvalidPositionException(HAS_OUR_TEAM_AT_TARGET_POSITION);
 				}
 				capture(targetPiece, board);
 			});
 		}
-		if (Direction.isLinearDirection(direction) && piece.isPresent()) {
+
+		boolean hasPieceAtTargetPosition = Direction.isLinearDirection(direction) && piece.isPresent();
+		if (hasPieceAtTargetPosition) {
 			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
 		}
+
 		this.changePosition(targetPosition, board);
 		this.state = State.RUN;
 	}
@@ -60,16 +65,16 @@ public class Pawn extends Piece {
 	@Override
 	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
 		int rowGap = this.position.calculateRowGap(targetPosition);
-
-		int absStepSize = Math.abs(rowGap);
-		if (!state.getIsValidStepSize().apply(absStepSize)) {
+		boolean isWrongStepSize = !state.getIsValidStepSize().apply(Math.abs(rowGap));
+		if (isWrongStepSize) {
 			throw new InvalidPositionException(INVALID_STEP_SIZE);
 		}
 	}
 
 	@Override
 	protected void validateRoute(Direction direction, Position targetPosition, Board board) {
-		if (direction.hasPieceInRoute(this.position, targetPosition, board)) {
+		boolean hasPiece = direction.hasPieceInRoute(this.position, targetPosition, board);
+		if (hasPiece) {
 			throw new InvalidPositionException(HAS_PIECE_IN_ROUTE);
 		}
 	}
