@@ -6,7 +6,6 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
-import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

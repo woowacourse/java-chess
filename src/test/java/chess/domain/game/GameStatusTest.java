@@ -1,10 +1,10 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
-import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

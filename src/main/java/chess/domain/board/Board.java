@@ -14,19 +14,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
 import static chess.domain.chesspiece.ChessPieceInfo.KING;
 import static chess.domain.game.Team.BLACK;
 
 public class Board {
     private static final int DIAGONAL_GAP = 1;
     private static final int INDEX_CORRECTION_NUMBER = 1;
+    public static final int BOARD_MAX_INDEX = 7;
+    public static final int BOARD_MIN_INDEX = 0;
 
     private List<Row> board;
     private GameStatus gameStatus;
 
-    public Board(List<Row> board, GameStatus gameStatus) {
+    Board(List<Row> board, GameStatus gameStatus) {
         this.board = new ArrayList<>(board);
         this.gameStatus = gameStatus;
     }

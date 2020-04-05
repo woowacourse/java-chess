@@ -8,8 +8,8 @@ import chess.domain.game.Team;
 
 import java.util.List;
 
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
+import static chess.domain.board.Board.BOARD_MAX_INDEX;
+import static chess.domain.board.Board.BOARD_MIN_INDEX;
 
 public class OutputView {
     public static void printBoard(Board chessBoard) {
