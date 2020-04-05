@@ -21,7 +21,6 @@ public class WebUIChessApplication {
 	public static void main(String[] args) {
 		staticFiles.location("/public");
 		WebService webService = new WebService();
-		Board board = BoardFactory.create();
 		List<ErrorMessage> errorMessage = new ArrayList<>();
 
 		get("/", (req, res) -> {
@@ -29,16 +28,15 @@ public class WebUIChessApplication {
 			model.put("blackTeamScore", 0);
 			model.put("whiteTeamScore", 0);
 			model.put("turn", "새 게임 혹은 불러오기를 누르세요!");
-			String a = req.params("save");
 			return render(model, "index.html");
 		});
 
 		get("/start", (req, res) -> {
-			List<String> pieces = board.showAllPieces();
+			List<String> pieces = webService.showAllPieces();
 			Map<String, Object> model = new HashMap<>();
 			model.put("pieces", pieces);
-			model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
+			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
+			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
 			model.put("turn", webService.getTurn());
 			model.put("errorMessage", errorMessage);
 
@@ -52,21 +50,21 @@ public class WebUIChessApplication {
 			String target = req.queryParams("target");
 
 			try {
-				webService.move(board, source, target);
+				webService.move(source, target);
 			} catch (InvalidTurnException | InvalidPositionException e) {
 				errorMessage.add(new ErrorMessage(e.getMessage()));
 			}
 
-			if (board.isKingDead()) {
-				model.put("winner", webService.findWinner(board));
+			if (webService.isKingDead()) {
+				model.put("winner", webService.findWinner());
 				return render(model, "result.html");
 			}
 
-			List<String> pieces = board.showAllPieces();
+			List<String> pieces = webService.showAllPieces();
 
 			model.put("pieces", pieces);
-			model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
+			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
+			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
 			model.put("turn", webService.getTurn());
 			model.put("errorMessage", errorMessage);
 
@@ -75,13 +73,13 @@ public class WebUIChessApplication {
 
         post("/save", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            webService.saveGame(board);
+            webService.saveGame();
 
-			List<String> pieces = board.showAllPieces();
+			List<String> pieces = webService.showAllPieces();
 
 			model.put("pieces", pieces);
-			model.put("blackTeamScore", board.calculateTeamScore(Team.BLACK));
-			model.put("whiteTeamScore", board.calculateTeamScore(Team.WHITE));
+			model.put("blackTeamScore", webService.calculateTeamScore(Team.BLACK));
+			model.put("whiteTeamScore", webService.calculateTeamScore(Team.WHITE));
 			model.put("turn", webService.getTurn());
 			model.put("errorMessage", errorMessage);
             return render(model, "index.html");
