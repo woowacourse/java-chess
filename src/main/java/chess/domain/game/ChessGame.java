@@ -26,7 +26,7 @@ public class ChessGame {
 
     public ResponseDto move(RequestDto requestDto) {
         if (!chessBoard.validateTurn(requestDto.getFrom(), turn)) {
-            throw  new IllegalArgumentException("차례가 아닙니다.");
+            throw new IllegalArgumentException("차례가 아닙니다.");
         }
 
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
@@ -34,7 +34,7 @@ public class ChessGame {
         return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 
-    public ResponseDto status(RequestDto requestDto){
+    public ResponseDto status(RequestDto requestDto) {
         return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
     }
 

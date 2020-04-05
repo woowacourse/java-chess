@@ -2,66 +2,41 @@ package chess.controller.dao;
 
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.Tile;
+import chess.domain.chesspiece.ChessPieceFactory;
+import chess.domain.chesspiece.Piece;
+import chess.domain.game.ChessBoard;
+import chess.domain.game.Player;
+import chess.domain.position.Position;
+import chess.domain.position.Positions;
+import chess.domain.status.Result;
+import chess.domain.status.Status;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChessBoardDao {
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
-
-        // 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        // 드라이버 연결
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
-    }
-
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
+    private final static Connection CONNECTION = new ConnectionDao().getConnection();
 
     // 초기 게임 만드는 메서드
-    public void createGame(ResponseDto responseDto) throws SQLException {
+    public void createInitGame(ResponseDto responseDto) throws SQLException {
         String query = "INSERT INTO game(turn, white_score, black_score) VALUES (?,?,?)";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = CONNECTION;
+        PreparedStatement pstmt = CONNECTION.prepareStatement(query);
         pstmt.setString(1, responseDto.getTurn().name());
         pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
         pstmt.setDouble(3, responseDto.getResult().getStatuses().get(1).getScore());
         pstmt.executeUpdate();
-        pstmt.close();
 
-        createChessBoard(connection, responseDto);
+        saveChessBoard(connection, responseDto);
     }
 
-    public void createChessBoard(Connection connection, ResponseDto responseDto) throws SQLException {
+    public void saveChessBoard(Connection connection, ResponseDto responseDto) throws SQLException {
         String query = "INSERT INTO chessboard VALUES ((SELECT MAX(game_id) FROM game),?,?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
@@ -73,10 +48,10 @@ public class ChessBoardDao {
     }
 
     public void pieceMove(ResponseDto responseDto) throws SQLException {
-        Connection connection = getConnection();
+        Connection connection = CONNECTION;
         updateGameWithMove(responseDto, connection);
         deleteChessBoardWithMove(connection);
-        createChessBoard(connection, responseDto);
+        saveChessBoard(connection, responseDto);
     }
 
     private void deleteChessBoardWithMove(Connection connection) throws SQLException {
@@ -92,5 +67,42 @@ public class ChessBoardDao {
         pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
         pstmt.setDouble(3, responseDto.getResult().getStatuses().get(1).getScore());
         pstmt.executeUpdate();
+    }
+
+    public ResponseDto loadGamePlaying() throws SQLException {
+
+        String query = "SELECT a.game_id, a.black_score, a.turn, a.white_score, b.position, b.piece FROM game a INNER JOIN chessboard b ON b.room = (SELECT MAX(game_id) FROM game) AND a.game_id = (SELECT MAX(game_id) FROM game)";
+
+        Connection connection = CONNECTION;
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+        Map<Position, Piece> chessBoard = new HashMap<>();
+
+        if (!rs.next()) return null;
+        Result result = null;
+        Player turn = null;
+        while (rs.next()) {
+            if (turn == null & result == null) {
+                turn = Player.valueOf(rs.getString("turn"));
+                result = getResult(rs);
+            }
+            chessBoard.put(Positions.of(rs.getString("position")),
+                    ChessPieceFactory.of(rs.getString("piece")));
+        }
+
+        ChessBoard chessBoard1 = new ChessBoard(chessBoard);
+
+        ResponseDto responseDto = new ResponseDto(chessBoard1, result, turn);
+
+        return responseDto;
+    }
+
+    private Result getResult(ResultSet rs) throws SQLException {
+        Status whiteStatus = new Status(Player.WHITE, rs.getDouble("white_score"));
+        Status blackStatus = new Status(Player.BLACK, rs.getDouble("black_score"));
+        List<Status> statuses = new ArrayList<>();
+        statuses.add(whiteStatus);
+        statuses.add(blackStatus);
+        return new Result(statuses);
     }
 }

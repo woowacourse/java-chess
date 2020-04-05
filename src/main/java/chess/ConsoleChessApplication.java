@@ -1,14 +1,18 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.controller.dao.ChessBoardDao;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
+import chess.domain.game.ChessBoard;
 import chess.domain.game.Command;
 import chess.views.InputView;
 import chess.views.OutputView;
 
+import java.sql.SQLException;
+
 public class ConsoleChessApplication {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         ChessController chessController = new ChessController();
         RequestDto requestDto;
 

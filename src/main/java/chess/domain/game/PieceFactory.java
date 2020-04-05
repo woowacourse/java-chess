@@ -17,7 +17,7 @@ public class PieceFactory {
         createPieces(Player.BLACK, Column.EIGHT, Column.SEVEN);
     }
 
-    public static void createPieces(Player player, Column column, Column pawnColumn) {
+    private static void createPieces(Player player, Column column, Column pawnColumn) {
         pieces.put(new Rook(player), Arrays.asList(Positions.of(Row.A, column), Positions.of(Row.H, column)));
         pieces.put(new Knight(player), Arrays.asList(Positions.of(Row.B, column), Positions.of(Row.G, column)));
         pieces.put(new Bishop(player), Arrays.asList(Positions.of(Row.C, column), Positions.of(Row.F, column)));
@@ -32,7 +32,11 @@ public class PieceFactory {
         }
     }
 
-    public static Map<Piece, List<Position>> create() {
-        return new HashMap<>(pieces);
+    public static Map<Position, Piece> create() {
+        Map<Position, Piece> chessBoard = new HashMap<>();
+        for (Map.Entry<Piece, List<Position>> entry : pieces.entrySet()) {
+            entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
+        }
+        return chessBoard;
     }
 }

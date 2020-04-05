@@ -15,13 +15,11 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    private final Map<Position, Piece> chessBoard = new HashMap<>();
+    private final Map<Position, Piece> chessBoard;
     private boolean isKingTaken;
 
-    public ChessBoard(Map<Piece, List<Position>> initPieces) {
-        for (Map.Entry<Piece, List<Position>> entry : initPieces.entrySet()) {
-            entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
-        }
+    public ChessBoard(Map<Position, Piece> initPieces) {
+        this.chessBoard = initPieces;
         isKingTaken = false;
     }
 
@@ -31,7 +29,6 @@ public class ChessBoard {
         validateSamePosition(from, to);
         validateSource(source);
         validateIsPlayer(source, target);
-
 
         if (movable(from, to)) {
             chessBoard.put(to, source);

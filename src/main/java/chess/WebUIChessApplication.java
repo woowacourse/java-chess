@@ -1,6 +1,5 @@
 package chess;
 
-import chess.Exception.IllegalDirectionException;
 import chess.controller.ChessController;
 import chess.controller.dao.ChessBoardDao;
 import chess.controller.dto.RequestDto;
@@ -31,8 +30,9 @@ public class WebUIChessApplication {
 
         get("/init", (req, res) -> {
             res.status(200);
-            ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
-            chessBoardDao.createGame(responseDto);
+//            ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
+            ResponseDto responseDto = chessBoardDao.loadGamePlaying();
+            chessBoardDao.createInitGame(responseDto);
             return gson.toJson(responseDto);
         });
 
@@ -43,7 +43,7 @@ public class WebUIChessApplication {
                 res.status(200);
                 chessBoardDao.pieceMove(responseDto);
                 return gson.toJson(responseDto);
-            } catch (IllegalDirectionException e) {
+            } catch (IllegalArgumentException e) {
                 res.status(400);
                 return gson.toJson(e.getMessage());
             }

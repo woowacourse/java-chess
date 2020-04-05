@@ -7,7 +7,7 @@ public class Tile {
     private final String position;
     private final String piece;
 
-    Tile(Position position, Piece piece) {
+    public Tile(Position position, Piece piece) {
         this.position = position.getRow().getValue().toString() + position.getColumn().getValue();
         this.piece = (piece.getPieceInfo().name() + "_" + piece.getPlayer()).toLowerCase();
     }
