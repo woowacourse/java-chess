@@ -10,7 +10,7 @@ public class ChessBoardState {
 
     private ChessBoardState() {
         this.caughtKing = false;
-        this.playerTurnState = PieceColor.BLACK;
+        this.playerTurnState = PieceColor.WHITE;
     }
 
     public static ChessBoardState initialState() {

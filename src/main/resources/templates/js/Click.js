@@ -39,7 +39,6 @@ function selectDestinationPiece(value) {
             console.log(XHR.responseText);
             if (data) {
                 alert(data);
-                return;
             }
             movePiece(value);
         },
