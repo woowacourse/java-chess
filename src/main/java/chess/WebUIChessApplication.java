@@ -9,8 +9,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
-import static spark.Spark.staticFileLocation;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
 
@@ -25,8 +24,13 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-
         get("/chess", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "contents/chess.html");
+        });
+
+
+        post("/move", (req, res) -> {
             try {
                 chessBoard.move(Position.of(req.queryParams("source")), Position.of(req.queryParams("target")));
                 if (chessBoard.isCaughtKing()) {

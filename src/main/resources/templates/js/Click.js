@@ -1,35 +1,34 @@
 function onClick(value) {
     if (document.getElementsByClassName('sourcePosition').length) {
         return selectDestinationPiece(value);
-    } else {
-        sourcePosition(value);
     }
+    sourcePosition(value);
 }
 
 function sourcePosition(value) {
     document.getElementById(value).classList.add('sourcePosition');
 }
 
-
 function resetSourcePosition() {
-    if (document.getElementsByClassName('sourcePosition')[0].innerHTML) {
-        document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
-    }
     document.getElementsByClassName('sourcePosition')[0].classList.remove('sourcePosition');
 }
 
 function movePiece(value) {
-    document.getElementById(value).innerHTML =
-        document.getElementsByClassName('sourcePosition')[0].innerHTML;
-    console.log(document.getElementsByClassName('sourcePosition')[0].id);
+    function setPiece() {
+        document.getElementById(value).innerHTML =
+            document.getElementsByClassName('sourcePosition')[0].innerHTML;
+        document.getElementsByClassName('sourcePosition')[0].innerHTML = "";
+        console.log(document.getElementsByClassName('sourcePosition')[0].id);
+    }
 
+    setPiece();
     resetSourcePosition();
 }
 
 function selectDestinationPiece(value) {
     $.ajax({
-        type: "get",
-        url: "/chess",
+        type: "post",
+        url: "/move",
         data: {
             source: document.getElementsByClassName("sourcePosition")[0].id,
             target: document.getElementById(value).id

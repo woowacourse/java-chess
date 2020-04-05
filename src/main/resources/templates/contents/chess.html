@@ -17,206 +17,202 @@
     </div>
 </header>
 <article id="contents-box">
-    <form action="/chess" method="get">
-        <table class="board">
-            <!-- 8/8 -->
-            <tr>
-                <td class="white" id="a8" onclick="onClick('a8')">
-                    <img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook"/>
-                </td>
-                <td class="gray" id="b8" onclick="onClick('b8')">
-                    <img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight">
-                </td>
-                <td class="white" id="c8" onclick="onClick('c8')">
-                    <img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop">
-                </td>
-                <td class="gray" id="d8" onclick="onClick('d8')">
-                    <img src="../piece/king_black.png" style="max-width: 100%" alt="blackKing">
-                </td>
-                <td class="white" id="e8" onclick="onClick('e8')">
-                    <img src="../piece/queen_black.png" style="max-width: 100%" alt="blackQueen">
-                </td>
-                <td class="gray" id="f8" onclick="onClick('f8')">
-                    <img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop">
-                </td>
-                <td class="white" id="g8" onclick="onClick('g8')">
-                    <img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight">
-                </td>
-                <td class="gray" id="h8" onclick="onClick('h8')">
-                    <img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook">
-                </td>
-            </tr>
-            <!-- 7/8 -->
-            <tr>
-                <td class="gray" id="a7" onclick="onClick('a7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="white" id="b7" onclick="onClick('b7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="gray" id="c7" onclick="onClick('c7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="white" id="d7" onclick="onClick('d7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="gray" id="e7" onclick="onClick('e7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="white" id="f7" onclick="onClick('f7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="gray" id="g7" onclick="onClick('g7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-                <td class="white" id="h7" onclick="onClick('h7')">
-                    <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
-                </td>
-            </tr>
-            <!-- 6/8 -->
-            <tr>
-                <td class="white" id="a6" onclick="onClick('a6')">
-                </td>
-                <td class="gray" id="b6" onclick="onClick('b6')">
-                </td>
-                <td class="white" id="c6" onclick="onClick('c6')">
-                </td>
-                <td class="gray" id="d6" onclick="onClick('d6')">
-                </td>
-                <td class="white" id="e6" onclick="onClick('e6')">
-                </td>
-                <td class="gray" id="f6" onclick="onClick('f6')">
-                </td>
-                <td class="white" id="g6" onclick="onClick('g6')">
-                </td>
-                <td class="gray" id="h6" onclick="onClick('h6')">
-                </td>
-            </tr>
-            <!-- 5/8 -->
-            <tr>
-                <td class="gray" id="a5" onclick="onClick('a5')">
-                </td>
-                <td class="white" id="b5" onclick="onClick('b5')">
-                </td>
-                <td class="gray" id="c5" onclick="onClick('c5')">
-                </td>
-                <td class="white" id="d5" onclick="onClick('d5')">
-                </td>
-                <td class="gray" id="e5" onclick="onClick('e5')">
-                </td>
-                <td class="white" id="f5" onclick="onClick('f5')">
-                </td>
-                <td class="gray" id="g5" onclick="onClick('g5')">
-                </td>
-                <td class="white" id="h5" onclick="onClick('h5')">
-                </td>
-            </tr>
-            <!-- 4/8 -->
-            <tr>
-                <td class="white" id="a4" onclick="onClick('a4')">
-                </td>
-                <td class="gray" id="b4" onclick="onClick('b4')">
-                </td>
-                <td class="white" id="c4" onclick="onClick('c4')">
-                </td>
-                <td class="gray" id="d4" onclick="onClick('d4')">
-                </td>
-                <td class="white" id="e4" onclick="onClick('e4')">
-                </td>
-                <td class="gray" id="f4" onclick="onClick('f4')">
-                </td>
-                <td class="white" id="g4" onclick="onClick('g4')">
-                </td>
-                <td class="gray" id="h4" onclick="onClick('h4')">
-                </td>
-            </tr>
-            <!-- 3/8 -->
-            <tr>
-                <td class="gray" id="a3" onclick="onClick('a3')">
-                </td>
-                <td class="white" id="b3" onclick="onClick('b3')">
-                </td>
-                <td class="gray" id="c3" onclick="onClick('c3')">
-                </td>
-                <td class="white" id="d3" onclick="onClick('d3')">
-                </td>
-                <td class="gray" id="e3" onclick="onClick('e3')">
-                </td>
-                <td class="white" id="f3" onclick="onClick('f3')">
-                </td>
-                <td class="gray" id="g3" onclick="onClick('g3')">
-                </td>
-                <td class="white" id="h3" onclick="onClick('h3')">
-                </td>
-            </tr>
-            <!-- 2/8 -->
-            <tr>
-                <td class="white" id="a2" onclick="onClick('a2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="gray" id="b2" onclick="onClick('b2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="white" id="c2" onclick="onClick('c2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="gray" id="d2" onclick="onClick('d2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="white" id="e2" onclick="onClick('e2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="gray" id="f2" onclick="onClick('f2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="white" id="g2" onclick="onClick('g2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-                <td class="gray" id="h2" onclick="onClick('h2')">
-                    <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
-                </td>
-            </tr>
-            <!-- 1/8 -->
-            <tr>
-                <td class="gray" id="a1" onclick="onClick('a1')">
-                    <img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook">
-                </td>
-                <td class="white" id="b1" onclick="onClick('b1')">
-                    <img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight">
-                </td>
-                <td class="gray" id="c1" onclick="onClick('c1')">
-                    <img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop">
-                </td>
-                <td class="white" id="d1" onclick="onClick('d1')">
-                    <img src="../piece/king_white.png" style="max-width: 100%" alt="whiteKing">
-                </td>
-                <td class="gray" id="e1" onclick="onClick('e1')">
-                    <img src="../piece/queen_white.png" style="max-width: 100%" alt="whiteQueen">
-                </td>
-                <td class="white" id="f1" onclick="onClick('f1')">
-                    <img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop">
-                </td>
-                <td class="gray" id="g1" onclick="onClick('g1')">
-                    <img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight">
-                </td>
-                <td class="white" id="h1" onclick="onClick('h1')">
-                    <img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook">
-                </td>
-            </tr>
-        </table>
-    </form>
+    <table class="board">
+        <!-- 8/8 -->
+        <tr>
+            <td class="white" id="a8" onclick="onClick('a8')">
+                <img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook"/>
+            </td>
+            <td class="gray" id="b8" onclick="onClick('b8')">
+                <img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight">
+            </td>
+            <td class="white" id="c8" onclick="onClick('c8')">
+                <img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop">
+            </td>
+            <td class="gray" id="d8" onclick="onClick('d8')">
+                <img src="../piece/king_black.png" style="max-width: 100%" alt="blackKing">
+            </td>
+            <td class="white" id="e8" onclick="onClick('e8')">
+                <img src="../piece/queen_black.png" style="max-width: 100%" alt="blackQueen">
+            </td>
+            <td class="gray" id="f8" onclick="onClick('f8')">
+                <img src="../piece/bishop_black.png" style="max-width: 100%" alt="blackBishop">
+            </td>
+            <td class="white" id="g8" onclick="onClick('g8')">
+                <img src="../piece/knight_black.png" style="max-width: 100%" alt="blackKnight">
+            </td>
+            <td class="gray" id="h8" onclick="onClick('h8')">
+                <img src="../piece/rook_black.png" style="max-width: 100%" alt="blackRook">
+            </td>
+        </tr>
+        <!-- 7/8 -->
+        <tr>
+            <td class="gray" id="a7" onclick="onClick('a7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="white" id="b7" onclick="onClick('b7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="gray" id="c7" onclick="onClick('c7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="white" id="d7" onclick="onClick('d7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="gray" id="e7" onclick="onClick('e7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="white" id="f7" onclick="onClick('f7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="gray" id="g7" onclick="onClick('g7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+            <td class="white" id="h7" onclick="onClick('h7')">
+                <img src="../piece/pawn_black.png" style="max-width: 100%" alt="blackPawn">
+            </td>
+        </tr>
+        <!-- 6/8 -->
+        <tr>
+            <td class="white" id="a6" onclick="onClick('a6')">
+            </td>
+            <td class="gray" id="b6" onclick="onClick('b6')">
+            </td>
+            <td class="white" id="c6" onclick="onClick('c6')">
+            </td>
+            <td class="gray" id="d6" onclick="onClick('d6')">
+            </td>
+            <td class="white" id="e6" onclick="onClick('e6')">
+            </td>
+            <td class="gray" id="f6" onclick="onClick('f6')">
+            </td>
+            <td class="white" id="g6" onclick="onClick('g6')">
+            </td>
+            <td class="gray" id="h6" onclick="onClick('h6')">
+            </td>
+        </tr>
+        <!-- 5/8 -->
+        <tr>
+            <td class="gray" id="a5" onclick="onClick('a5')">
+            </td>
+            <td class="white" id="b5" onclick="onClick('b5')">
+            </td>
+            <td class="gray" id="c5" onclick="onClick('c5')">
+            </td>
+            <td class="white" id="d5" onclick="onClick('d5')">
+            </td>
+            <td class="gray" id="e5" onclick="onClick('e5')">
+            </td>
+            <td class="white" id="f5" onclick="onClick('f5')">
+            </td>
+            <td class="gray" id="g5" onclick="onClick('g5')">
+            </td>
+            <td class="white" id="h5" onclick="onClick('h5')">
+            </td>
+        </tr>
+        <!-- 4/8 -->
+        <tr>
+            <td class="white" id="a4" onclick="onClick('a4')">
+            </td>
+            <td class="gray" id="b4" onclick="onClick('b4')">
+            </td>
+            <td class="white" id="c4" onclick="onClick('c4')">
+            </td>
+            <td class="gray" id="d4" onclick="onClick('d4')">
+            </td>
+            <td class="white" id="e4" onclick="onClick('e4')">
+            </td>
+            <td class="gray" id="f4" onclick="onClick('f4')">
+            </td>
+            <td class="white" id="g4" onclick="onClick('g4')">
+            </td>
+            <td class="gray" id="h4" onclick="onClick('h4')">
+            </td>
+        </tr>
+        <!-- 3/8 -->
+        <tr>
+            <td class="gray" id="a3" onclick="onClick('a3')">
+            </td>
+            <td class="white" id="b3" onclick="onClick('b3')">
+            </td>
+            <td class="gray" id="c3" onclick="onClick('c3')">
+            </td>
+            <td class="white" id="d3" onclick="onClick('d3')">
+            </td>
+            <td class="gray" id="e3" onclick="onClick('e3')">
+            </td>
+            <td class="white" id="f3" onclick="onClick('f3')">
+            </td>
+            <td class="gray" id="g3" onclick="onClick('g3')">
+            </td>
+            <td class="white" id="h3" onclick="onClick('h3')">
+            </td>
+        </tr>
+        <!-- 2/8 -->
+        <tr>
+            <td class="white" id="a2" onclick="onClick('a2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="gray" id="b2" onclick="onClick('b2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="white" id="c2" onclick="onClick('c2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="gray" id="d2" onclick="onClick('d2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="white" id="e2" onclick="onClick('e2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="gray" id="f2" onclick="onClick('f2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="white" id="g2" onclick="onClick('g2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+            <td class="gray" id="h2" onclick="onClick('h2')">
+                <img src="../piece/pawn_white.png" style="max-width: 100%" alt="whitePawn">
+            </td>
+        </tr>
+        <!-- 1/8 -->
+        <tr>
+            <td class="gray" id="a1" onclick="onClick('a1')">
+                <img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook">
+            </td>
+            <td class="white" id="b1" onclick="onClick('b1')">
+                <img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight">
+            </td>
+            <td class="gray" id="c1" onclick="onClick('c1')">
+                <img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop">
+            </td>
+            <td class="white" id="d1" onclick="onClick('d1')">
+                <img src="../piece/king_white.png" style="max-width: 100%" alt="whiteKing">
+            </td>
+            <td class="gray" id="e1" onclick="onClick('e1')">
+                <img src="../piece/queen_white.png" style="max-width: 100%" alt="whiteQueen">
+            </td>
+            <td class="white" id="f1" onclick="onClick('f1')">
+                <img src="../piece/bishop_white.png" style="max-width: 100%" alt="whiteBishop">
+            </td>
+            <td class="gray" id="g1" onclick="onClick('g1')">
+                <img src="../piece/knight_white.png" style="max-width: 100%" alt="whiteKnight">
+            </td>
+            <td class="white" id="h1" onclick="onClick('h1')">
+                <img src="../piece/rook_white.png" style="max-width: 100%" alt="whiteRook">
+            </td>
+        </tr>
+    </table>
 </article>
 <nav class="nav">
     <div class="wrapper">
         <div class="box">
-            <div class="icon">
-                <a href="../index.html">
-                    <i class="fas fa-space-shuttle fa-3x"></i>
-                </a>
-            </div>
+            <form action="/chess" method="get">
+                <input type="submit" value="&#xf197;" class="fa-3x">
+            </form>
         </div>
-        <div class="text">
-            처음
+        <div class="text" style="margin-top: 10px">
+            다시 시작
         </div>
     </div>
 </nav>

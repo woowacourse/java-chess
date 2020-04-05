@@ -38,19 +38,7 @@ body {
     top: 60%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background-color: gray;
 }
-
-#rocket {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 
 #start {
     position: absolute;
