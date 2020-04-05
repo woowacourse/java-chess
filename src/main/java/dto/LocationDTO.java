@@ -1,25 +1,33 @@
 package dto;
 
 import chess.location.Col;
-import chess.location.Location;
 import chess.location.Row;
 
 public class LocationDTO {
-    private final Location location;
+    private static final String UNDER_BAR = "_";
 
-    public LocationDTO(String row, String col) {
-        Row rowValue = Row.of(Integer.parseInt(row));
-        Col colValue = Col.of(col.charAt(0));
+    private final Row row;
+    private final Col col;
 
-        location = new Location(rowValue, colValue);
+    public LocationDTO(String rawLocation) {
+        String[] rowAndCol = parseRowAndCol(rawLocation);
+
+        String row = rowAndCol[1];
+        String col = rowAndCol[0];
+
+        this.row = Row.of(Integer.parseInt(row));
+        this.col = Col.of(col.charAt(0));
     }
 
-    public Location getLocation() {
-        return location;
+    private static String[] parseRowAndCol(String rowAndCol) {
+        return rowAndCol.split(UNDER_BAR);
     }
 
-    @Override
-    public String toString() {
-        return location.toString();
+    public Row getRow() {
+        return row;
+    }
+
+    public Col getCol() {
+        return col;
     }
 }

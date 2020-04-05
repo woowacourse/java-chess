@@ -5,11 +5,6 @@ import chess.progress.Progress;
 import view.InputView;
 import view.OutputView;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.locks.Condition;
-import java.util.function.Predicate;
-
 public class ChessController {
     public static void main(String[] args) {
         OutputView.printInformation();
@@ -41,16 +36,16 @@ public class ChessController {
 
     private static Command inputCommand(ChessGame chessGame) {
         String commandInput = InputView.inputCommand();
-        if (End.isEnd(commandInput)) {
-            return new End(commandInput);
+        if (EndCommand.isEnd(commandInput)) {
+            return new EndCommand(commandInput);
         }
-        if (Move.isMove(commandInput)) {
-            return new Move(commandInput, chessGame);
+        if (MoveCommand.isMove(commandInput)) {
+            return MoveCommand.of(commandInput, chessGame);
         }
-        if (Status.isStatus(commandInput)) {
-            return new Status(commandInput);
+        if (StatusCommand.isStatus(commandInput)) {
+            return new StatusCommand(commandInput);
         }
-        return new Start(commandInput);
+        return new StartCommand(commandInput);
     }
 
     private static void printResult(ChessGame chessGame) {

@@ -3,6 +3,8 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.command.MoveCommand;
+import chess.location.Location;
 import chess.progress.Progress;
 import dto.*;
 import chess.game.ChessGame;
@@ -28,24 +30,29 @@ public class WebUIChessApplication {
         });
 
         get("/start/board", (req, res) -> {
-
             BoardDTO boardDTO = new BoardDTO(chessGame.getChessBoard());
             return GSON.toJson(boardDTO);
         });
 
         post("/start/move", (req, res) -> {
-            String[] nowLocation = parseRowAndCol(req.queryParams("now"));
-            String[] destination = parseRowAndCol(req.queryParams("des"));
-            LocationDTO nowDTO = new LocationDTO(nowLocation[1], nowLocation[0]);
-            LocationDTO afterDTO = new LocationDTO(destination[1], destination[0]);
+            LocationDTO nowDTO = new LocationDTO(req.queryParams("now"));
+            LocationDTO destinationDTO = new LocationDTO(req.queryParams("des"));
 
-            Progress progress = chessGame.webDoMoveCommand(nowDTO.getLocation(), afterDTO.getLocation());
-            if (Progress.CONTINUE == progress) {
-                chessGame.changeTurn();
-            }
+            Location nowLocation = new Location(nowDTO.getRow(), nowDTO.getCol());
+            Location destinationLocation =
+                    new Location(destinationDTO.getRow(), destinationDTO.getCol());
 
-            ChessGameScoresDTO chessGameScoresDTO = new ChessGameScoresDTO(chessGame.calculateScores());
-            ChessMoveDTO chessMoveDTO = new ChessMoveDTO(chessGameScoresDTO, progress, chessGame.getTurn());
+            MoveCommand move = MoveCommand.of(nowLocation, destinationLocation, chessGame);
+
+            Progress progress = chessGame.doOneCommand(move);
+
+            changeTurnIfMoved(chessGame, progress);
+
+            ChessMoveDTO chessMoveDTO = new ChessMoveDTO(
+                    new ChessGameScoresDTO(chessGame.calculateScores())
+                    , progress
+                    , chessGame.getTurn());
+
             return GSON.toJson(chessMoveDTO);
         });
 
@@ -56,11 +63,13 @@ public class WebUIChessApplication {
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void changeTurnIfMoved(ChessGame chessGame, Progress progress) {
+        if (Progress.CONTINUE == progress) {
+            chessGame.changeTurn();
+        }
     }
 
-    private static String[] parseRowAndCol(String rowAndCol) {
-        return rowAndCol.split("_");
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }

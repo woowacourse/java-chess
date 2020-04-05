@@ -15,7 +15,6 @@ import chess.score.Score;
 import chess.score.ScoreCalcultor;
 import chess.team.Team;
 
-import static chess.location.LocationSubStringUtil.substring;
 import static chess.progress.Progress.*;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
@@ -39,41 +38,11 @@ public class ChessGame {
         turn = turn.changeTurn();
     }
 
-    // State 패턴
     public Progress doOneCommand(Command command) {
         return command.conduct();
     }
 
-    public Progress doMoveCommand(String command) {
-        Location now = substring(command, 1);
-        Location destination = substring(command, 2);
-
-        if (chessBoard.isNotExist(now)
-                || chessBoard.canNotMove(now, destination)
-                || chessBoard.isNotCorrectTeam(now, turn)) {
-            return Progress.ERROR;
-        }
-
-        deletePieceIfExistIn(destination, turn);
-        chessBoard.move(now, destination);
-
-        return finishIfKingDie();
-    }
-
-    public Progress webDoMoveCommand(Location now, Location destination) {
-        if (chessBoard.isNotExist(now)
-                || chessBoard.canNotMove(now, destination)
-                || chessBoard.isNotCorrectTeam(now, turn)) {
-            return Progress.ERROR;
-        }
-
-        deletePieceIfExistIn(destination, turn);
-        chessBoard.move(now, destination);
-
-        return finishIfKingDie();
-    }
-
-    private void deletePieceIfExistIn(Location location, Team turn) {
+    public void deletePieceIfExistIn(Location location, Team turn) {
         Player counterplayer = getCounterTurnPlayer(turn);
         if (chessBoard.isExistPieceIn(location)) {
             Piece toBeRemovedPiece = chessBoard.getPieceIn(location);
@@ -89,7 +58,7 @@ public class ChessGame {
         return counterplayer;
     }
 
-    private Progress finishIfKingDie() {
+    public Progress finishIfKingDie() {
         if (isExistKingDiePlayer()) {
             return END;
         }

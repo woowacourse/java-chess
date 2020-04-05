@@ -2,15 +2,18 @@ package chess.command;
 
 import chess.progress.Progress;
 
-public class Status extends Command {
+public class StatusCommand implements Command {
     private static final String COMMAND = "status";
 
-    public Status(String value) {
-        super(value, Status::doStatusCommand);
+    private final String title;
+
+    public StatusCommand(String title) {
+        this.title = title;
     }
 
-    private static Progress doStatusCommand(String command) {
-        if (command.equals(COMMAND)) {
+    @Override
+    public Progress conduct() {
+        if (COMMAND.equals(title)) {
             return Progress.STATUS;
         }
         return Progress.ERROR;

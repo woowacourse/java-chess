@@ -9,14 +9,13 @@ public class Location {
     private final Row row;
     private final Col col;
 
-    public Location(final int row, final char col) {
-        this.row = Row.of(row);
-        this.col = Col.of(col);
-    }
-
     public Location(final Row row, final Col col) {
         this.row = row;
         this.col = col;
+    }
+
+    public Location(final int row, final char col) {
+        this(Row.of(row), Col.of(col));
     }
 
     public Location moveTo(final int row, final char col) {
@@ -32,7 +31,6 @@ public class Location {
         return row.is(destination.row) || isVertical(destination);
     }
 
-    // 폰의 대각선위치인지 확인하는 메서드
     public boolean isForwardDiagonal(Location after, int value) {
         Col leftCol = col.minus(1);
         Col rightCol = col.plus(1);
