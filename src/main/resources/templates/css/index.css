@@ -14,11 +14,15 @@
 }
 
 .cell {
-    border: solid 1px black;
-}
-.cell-size {
     width: 50px;
     height: 50px;
+    border: solid 1px black;
+}
+.piece {
+    width: 40px;
+    height: 40px;
+    display: block;
+    margin: auto;
 }
 
 .black-cell {

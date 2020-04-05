@@ -14,7 +14,7 @@ const black_pawn = img_create("../chess-img/pawn_black.png");
 function img_create(src) {
     const img = document.createElement('IMG');
     img.src = src;
-    img.classList.add("cell-size");
+    img.classList.add("piece");
     return img;
 }
 const chessBoard = document.querySelector("#chess-board tbody");
@@ -38,14 +38,16 @@ function colorCell(i, j) {
 
 const cells = document.querySelectorAll("td.cell");
 cells.forEach(node => node.addEventListener('click', e => {
-    toggleCell(e.target);
+    const clickedCell = e.currentTarget;
+    console.log(clickedCell);
+    toggleCell(clickedCell);
     const count = findCountOfToggled(cells);
     if (count === 0) {
         localStorage.clear();
     } else if (count === 1) {
-        localStorage.setItem('from', e.target.id);
+        localStorage.setItem('from', clickedCell.id);
     } else if (count === 2) {
-        const obj = {'from': localStorage.getItem('from'), 'to': e.target.id}
+        const obj = {'from': localStorage.getItem('from'), 'to': clickedCell.id}
         localStorage.clear();
         removeAllClickedToggle(cells);
         httpPostRequest(JSON.stringify(obj));
