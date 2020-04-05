@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.ChessGame;
+import chess.domain.Side;
 import chess.domain.dto.ChessBoardDto;
+import chess.domain.dto.StatusDto;
 import chess.domain.position.Position;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -24,7 +26,7 @@ public class ChessWebController {
 
 		get("/chess", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("board", ChessBoardDto.of(chessGame.getBoard()));
+			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
 
@@ -38,9 +40,14 @@ public class ChessWebController {
 				model.put("error", e.getMessage());
 			}
 
-			model.put("board", ChessBoardDto.of(chessGame.getBoard()));
+			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
+	}
+
+	private void transfer(ChessGame chessGame, Map<String, Object> model) {
+		model.put("board", ChessBoardDto.of(chessGame.getBoard()));
+		model.put("status", new StatusDto(chessGame.status(Side.WHITE), chessGame.status(Side.BLACK)));
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

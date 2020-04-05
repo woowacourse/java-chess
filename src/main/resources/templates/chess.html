@@ -33,6 +33,12 @@
         <label>{{.}}</label>
         {{/error}}
         <br/>
+        {{#status}}
+        <label>흰색 점수 : {{whiteScore}}</label>
+        <br/>
+        <label>검은색 점수 : {{blackScore}}</label>
+        {{/status}}
+        <br/>
         <button type="button">재시작</button>
         <button type="button">종료</button>
     </div>
