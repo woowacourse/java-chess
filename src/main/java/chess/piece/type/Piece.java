@@ -26,6 +26,7 @@ public abstract class Piece {
         return name;
     }
 
+    // TODO : ROUTE와 같이 경로를 추상화할 수 있을까 ?
     public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
         return pieceMovable.canMove(board, now, after);
     }

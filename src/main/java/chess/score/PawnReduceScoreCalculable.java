@@ -13,13 +13,13 @@ import java.util.Map;
 import static chess.board.ChessBoardCreater.COL_END;
 import static chess.board.ChessBoardCreater.COL_START;
 
-// TODO : ChessBoard 제거 하고 Player에서 받을 수 있음
+// TODO : ChessBoard 제거 하고 Player에서 받을 수 있으니 매개변수를 줄여보자!
 public class PawnReduceScoreCalculable implements Calculatable {
     private static final double PAWN_REDUCE_VALUE = 0.5;
 
     @Override
     public Score calculate(ChessBoard chessBoard, Player player) {
-        double reducePawnScroe = 0;
+        double reducePawnScore = 0;
         for (int col = COL_START; col <= COL_END; col++) {
             Col fixCol = Col.of(col);
 
@@ -27,9 +27,9 @@ public class PawnReduceScoreCalculable implements Calculatable {
             if (sameColPawnSize == 1) {
                 continue;
             }
-            reducePawnScroe += (sameColPawnSize * PAWN_REDUCE_VALUE);
+            reducePawnScore += (sameColPawnSize * PAWN_REDUCE_VALUE);
         }
-        return new Score(reducePawnScroe);
+        return new Score(reducePawnScore);
     }
 
     private int calculatePawnSameColSize(ChessBoard chessBoard, Team team, Col fixCol) {
