@@ -23,13 +23,7 @@ public abstract class Piece {
 		validateMovement(targetPosition, turn, board);
 
 		Optional<Piece> targetPiece = board.findPiece(targetPosition);
-		targetPiece.ifPresent(target -> {
-			if (team.isOurTeam(target.team)) {
-				throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
-			}
-			capture(target, board);
-		});
-
+		targetPiece.ifPresent(target -> capture(target, board));
 		this.changePosition(targetPosition, board);
 	}
 
@@ -58,14 +52,11 @@ public abstract class Piece {
 		}
 	}
 
-	protected abstract void validateDirection(Direction direction);
-
-	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
-
-	protected abstract void validateRoute(Direction direction, Position targetPosition, Board ranks);
-
-	protected void capture(Piece targetPiece, Board board) {
-		board.remove(targetPiece);
+	protected void capture(Piece target, Board board) {
+		if (team.isOurTeam(target.team)) {
+			throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
+		}
+		board.remove(target);
 	}
 
 	protected void changePosition(Position targetPosition, Board board) {
@@ -88,6 +79,12 @@ public abstract class Piece {
 	public Position getPosition() {
 		return position;
 	}
+
+	protected abstract void validateDirection(Direction direction);
+
+	protected abstract void validateStepSize(Position sourcePosition, Position targetPosition);
+
+	protected abstract void validateRoute(Direction direction, Position targetPosition, Board ranks);
 
 	public abstract double getScore();
 
