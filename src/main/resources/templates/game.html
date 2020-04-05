@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jamie's Chess</title>
+    <style type="text/css">
+        .chessboard {
+            width: 640px;
+            height: 640px;
+            margin: 20px;
+            border: 25px solid #333;
+        }
+
+        .black {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #999;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .white {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: #fff;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        .result {
+            width: 690px;
+            height: 100px;
+            margin: 20px;
+            background-color: lightsteelblue;
+            text-align: center;
+            vertical-align: middle;
+            font-size: large;
+            font-weight: bold;
+            align-content: center;
+        }
+
+        .promo {
+            width: 690px;
+            height: 160px;
+            margin: 20px;
+            background-color: lightyellow;
+            text-align: center;
+            vertical-align: middle;
+            font-size: large;
+            font-weight: bold;
+            align-content: center;
+        }
+
+        .promotion {
+            float: left;
+            width: 160px;
+            height: 80px;
+            background-color: lightgrey;
+            font-size: 50px;
+            text-align: center;
+            display: table-cell;
+            vertical-align: middle;
+            border: 6px solid lightyellow;
+        }
+    </style>
+</head>
+<body>
+
+<form mothod="/get" action="/end" target="_blank">
+    <label>현재 점수 및 고득점자 확인 (새 탭) - 게임 이어 진행 가능</label>
+    <button type="submit">status</button>
+</form>
+
+<form method="get" action="/end">
+    <label>현재 점수 및 고득점자 확인 (현재 탭) - 게임 종료</label>
+    <button type="submit">end</button>
+</form>
+
+<div class="result">
+    <br/>
+    현재 턴 : <label id="turn"></label><br/>
+    <label id="clickTiming">말이 이동할 경로(before)를 선택하세요.</label><br/>
+    <label id="state"></label><br/>
+</div>
+
+<div class="promo">
+    <br/>
+    승격할 피스의 종류를 선택해주세요.<br/>
+    승격(Promotion)이 필요한 경우에만 사용해주세요.<br>
+    <div class="promotion" id="knight">♘♞</div>
+    <div class="promotion" id="rook">♖♜</div>
+    <div class="promotion" id="bishop">♗♝</div>
+    <div class="promotion" id="queen">♕♛</div>
+</div>
+
+<div class="chessboard">
+    <!-- 1st -->
+    <div class="cell white" id="a8"></div>
+    <div class="cell black" id="b8"></div>
+    <div class="cell white" id="c8"></div>
+    <div class="cell black" id="d8"></div>
+    <div class="cell white" id="e8"></div>
+    <div class="cell black" id="f8"></div>
+    <div class="cell white" id="g8"></div>
+    <div class="cell black" id="h8"></div>
+    <!-- 2nd -->
+    <div class="cell black" id="a7"></div>
+    <div class="cell white" id="b7"></div>
+    <div class="cell black" id="c7"></div>
+    <div class="cell white" id="d7"></div>
+    <div class="cell black" id="e7"></div>
+    <div class="cell white" id="f7"></div>
+    <div class="cell black" id="g7"></div>
+    <div class="cell white" id="h7"></div>
+    <!-- 3th -->
+    <div class="cell white" id="a6"></div>
+    <div class="cell black" id="b6"></div>
+    <div class="cell white" id="c6"></div>
+    <div class="cell black" id="d6"></div>
+    <div class="cell white" id="e6"></div>
+    <div class="cell black" id="f6"></div>
+    <div class="cell white" id="g6"></div>
+    <div class="cell black" id="h6"></div>
+    <!-- 4st -->
+    <div class="cell black" id="a5"></div>
+    <div class="cell white" id="b5"></div>
+    <div class="cell black" id="c5"></div>
+    <div class="cell white" id="d5"></div>
+    <div class="cell black" id="e5"></div>
+    <div class="cell white" id="f5"></div>
+    <div class="cell black" id="g5"></div>
+    <div class="cell white" id="h5"></div>
+    <!-- 5th -->
+    <div class="cell white" id="a4"></div>
+    <div class="cell black" id="b4"></div>
+    <div class="cell white" id="c4"></div>
+    <div class="cell black" id="d4"></div>
+    <div class="cell white" id="e4"></div>
+    <div class="cell black" id="f4"></div>
+    <div class="cell white" id="g4"></div>
+    <div class="cell black" id="h4"></div>
+    <!-- 6th -->
+    <div class="cell black" id="a3"></div>
+    <div class="cell white" id="b3"></div>
+    <div class="cell black" id="c3"></div>
+    <div class="cell white" id="d3"></div>
+    <div class="cell black" id="e3"></div>
+    <div class="cell white" id="f3"></div>
+    <div class="cell black" id="g3"></div>
+    <div class="cell white" id="h3"></div>
+    <!-- 7th -->
+    <div class="cell white" id="a2"></div>
+    <div class="cell black" id="b2"></div>
+    <div class="cell white" id="c2"></div>
+    <div class="cell black" id="d2"></div>
+    <div class="cell white" id="e2"></div>
+    <div class="cell black" id="f2"></div>
+    <div class="cell white" id="g2"></div>
+    <div class="cell black" id="h2"></div>
+    <!-- 8th -->
+    <div class="cell black" id="a1"></div>
+    <div class="cell white" id="b1"></div>
+    <div class="cell black" id="c1"></div>
+    <div class="cell white" id="d1"></div>
+    <div class="cell black" id="e1"></div>
+    <div class="cell white" id="f1"></div>
+    <div class="cell black" id="g1"></div>
+    <div class="cell white" id="h1"></div>
+</div>
+<script>
+    const cells = document.querySelectorAll('.cell');
+    const turn = document.getElementById('turn');
+    const state = document.getElementById('state');
+    const promotions = document.querySelectorAll('.promotion');
+
+    let firstClick = true;
+    let source = null;
+    let target = null;
+
+    cells.forEach(cell => {
+        cell.onclick = () => {
+            if (firstClick) {
+                source = cell.id;
+                firstClick = false;
+                document.getElementById('clickTiming').innerText
+                    = '말이 이동할 경로(after)를 선택하세요.';
+                cell.style.backgroundColor = 'STEELBLUE';
+                return;
+            }
+            document.getElementById('clickTiming').innerText
+                = '말이 이동할 경로(before)를 선택하세요.';
+            document.getElementById(source).removeAttribute('style');
+            target = cell.id;
+            firstClick = true;
+            fetch('/move', {
+                method: 'POST',
+                body: JSON.stringify({
+                    source, target
+                })
+            }).then(res => res.json()).then(data => {
+                cells.forEach(cell => {
+                    cell.innerHTML = data.pieces.shift();
+                }),
+                    turn.innerText = data.turn,
+                    state.innerText = data.state
+            })
+        }
+    });
+
+    let promotionType = null;
+    promotions.forEach(promotion => {
+        promotion.onclick = () => {
+            promotionType = promotion.id;
+            fetch('/promotion', {
+                method: 'POST',
+                body: JSON.stringify({
+                    promotionType
+                })
+            }).then(res => res.json()).then(data => {
+                cells.forEach(cell => {
+                    cell.innerHTML = data.pieces.shift();
+                }),
+                    turn.innerText = data.turn,
+                    state.innerText = data.state
+            })
+        }
+    });
+
+    fetch('/board').then(res => res.json()).then(data => {
+        cells.forEach(cell => {
+                cell.innerHTML = data.pieces.shift();
+            },
+            turn.innerText = data.turn,
+            state.innerText = data.state
+        )
+    });
+
+</script>
+</body>
+</html>

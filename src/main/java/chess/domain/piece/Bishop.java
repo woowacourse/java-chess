@@ -9,13 +9,12 @@ public class Bishop extends RepeatMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        for (Color color : Color.values()) {
-            CACHE.put(color, new Bishop(color, Type.BISHOP));
-        }
+        CACHE.put(Color.BLACK, new Bishop(Color.BLACK, Type.BISHOP, "♝"));
+        CACHE.put(Color.WHITE, new Bishop(Color.WHITE, Type.BISHOP, "♗"));
     }
 
-    public Bishop(Color color, Type type) {
-        super(color, type);
+    public Bishop(Color color, Type type, String letter) {
+        super(color, type, letter);
     }
 
     public static Piece getPieceInstance(Color color) {

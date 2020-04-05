@@ -36,20 +36,11 @@ public class OutputView {
 
     private static void printFileColumn(Map<BoardSquare, Piece> gameBoard, int rank, char file) {
         if (gameBoard.containsKey(BoardSquare.of(String.valueOf(file) + rank))) {
-            PrintLetter(gameBoard, rank, file);
+            System.out
+                .print(gameBoard.get(BoardSquare.of(String.valueOf(file) + rank)).getLetter());
             return;
         }
         System.out.print(".");
-    }
-
-    private static void PrintLetter(Map<BoardSquare, Piece> gameBoard, int rank, char file) {
-        Piece piece = gameBoard.get(BoardSquare.of(String.valueOf(file) + rank));
-        if (piece.isSameColor(Color.BLACK)) {
-            System.out.print(piece.getLetter().toUpperCase());
-        }
-        if (piece.isSameColor(Color.WHITE)) {
-            System.out.print(piece.getLetter().toLowerCase());
-        }
     }
 
     public static void printCanNotMove() {

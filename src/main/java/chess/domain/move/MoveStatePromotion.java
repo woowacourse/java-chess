@@ -11,8 +11,8 @@ public class MoveStatePromotion implements MoveStateStrategy {
     public MoveState getMoveState(ChessBoard chessBoard, MoveSquare moveSquare) {
         NullChecker.validateNotNull(chessBoard);
         if (chessBoard.isNeedPromotion()) {
-            return MoveState.SUCCESS;
+            return MoveState.NEEDS_PROMOTION;
         }
-        return MoveState.SUCCESS_BUT_PAWN_CHANGE;
+        return MoveState.NO_PAWN_PROMOTION;
     }
 }

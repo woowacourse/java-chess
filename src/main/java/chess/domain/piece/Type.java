@@ -22,18 +22,18 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Type {
-    ROOK("R", 5, true,
+    ROOK("rook", 5, true,
         Arrays.asList(UP, DOWN, LEFT, RIGHT)),
-    KNIGHT("N", 2.5, true,
+    KNIGHT("knight", 2.5, true,
         Arrays.asList(UP_LEFT_L, UP_RIGHT_L, DOWN_LEFT_L, DOWN_RIGHT_L, RIGHT_DOWN_L, RIGHT_UP_L,
             LEFT_DOWN_L, LEFT_UP_L)),
-    BISHOP("B", 3, true,
+    BISHOP("bishop", 3, true,
         Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
-    QUEEN("Q", 9, true,
+    QUEEN("queen", 9, true,
         Arrays.asList(UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
-    KING("K", 0, false,
+    KING("king", 0, false,
         Arrays.asList(UP, DOWN, LEFT, RIGHT, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN)),
-    PAWN("P", 1, false, Collections.singletonList(UP));
+    PAWN("pawn", 1, false, Collections.singletonList(UP));
 
     private final String letter;
     private final double score;
@@ -52,10 +52,6 @@ public enum Type {
             .filter(type -> type.letter.equals(letter))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public String getLetter() {
-        return letter;
     }
 
     public List<Direction> getDirections() {

@@ -108,7 +108,7 @@ public class ChessBoardTest {
         chessBoard.movePieceWhenCanMove(new MoveSquare("c6", "b7"));
         chessBoard.movePieceWhenCanMove(new MoveSquare("h7", "h6"));
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("b7", "a8")))
-            .isEqualTo(MoveState.SUCCESS_BUT_PAWN_CHANGE);
+            .isEqualTo(MoveState.SUCCESS_BUT_PAWN_PROMOTION);
     }
 
     @DisplayName("폰이 시작지점(즉 상대방의 시작지점)으로 이동했을 때, 변경 여부에 따른 진행 여부")
@@ -129,8 +129,8 @@ public class ChessBoardTest {
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g7", "g6")))
             .isEqualTo(MoveState.FAIL_NOT_ORDER);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g2", "g3")))
-            .isEqualTo(MoveState.FAIL_MUST_PAWN_CHANGE);
-        assertThat(chessBoard.promotion(Type.BISHOP)).isEqualTo(MoveState.SUCCESS);
+            .isEqualTo(MoveState.FAIL_MUST_PAWN_PROMOTION);
+        assertThat(chessBoard.promotion(Type.BISHOP)).isEqualTo(MoveState.SUCCESS_PROMOTION);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g2", "g3")))
             .isEqualTo(MoveState.FAIL_NOT_ORDER);
         assertThat(chessBoard.movePieceWhenCanMove(new MoveSquare("g7", "g6")))

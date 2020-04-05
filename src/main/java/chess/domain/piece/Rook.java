@@ -9,13 +9,12 @@ public class Rook extends RepeatMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        for (Color color : Color.values()) {
-            CACHE.put(color, new Rook(color, Type.ROOK));
-        }
+        CACHE.put(Color.BLACK, new Rook(Color.BLACK, Type.ROOK, "♜"));
+        CACHE.put(Color.WHITE, new Rook(Color.WHITE, Type.ROOK, "♖"));
     }
 
-    public Rook(Color color, Type type) {
-        super(color, type);
+    public Rook(Color color, Type type, String letter) {
+        super(color, type, letter);
     }
 
     public static Piece getPieceInstance(Color color) {

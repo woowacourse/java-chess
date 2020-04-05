@@ -9,7 +9,7 @@ import chess.domain.state.MoveState;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGame {
+public class ChessController {
 
     public static void run() {
         ChessBoard chessBoard = new ChessBoard();
@@ -65,8 +65,8 @@ public class ChessGame {
             OutputView.printChessBoard(chessBoard);
             return;
         }
-        if (moveState == MoveState.SUCCESS_BUT_PAWN_CHANGE
-            || moveState == MoveState.FAIL_MUST_PAWN_CHANGE) {
+        if (moveState == MoveState.SUCCESS_BUT_PAWN_PROMOTION
+            || moveState == MoveState.FAIL_MUST_PAWN_PROMOTION) {
             changePawn(chessBoard);
             return;
         }

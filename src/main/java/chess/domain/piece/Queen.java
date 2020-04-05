@@ -9,13 +9,12 @@ public class Queen extends RepeatMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        for (Color color : Color.values()) {
-            CACHE.put(color, new Queen(color, Type.QUEEN));
-        }
+        CACHE.put(Color.BLACK, new Queen(Color.BLACK, Type.QUEEN, "♛"));
+        CACHE.put(Color.WHITE, new Queen(Color.WHITE, Type.QUEEN, "♕"));
     }
 
-    public Queen(Color color, Type type) {
-        super(color, type);
+    public Queen(Color color, Type type, String letter) {
+        super(color, type, letter);
     }
 
     public static Piece getPieceInstance(Color color) {

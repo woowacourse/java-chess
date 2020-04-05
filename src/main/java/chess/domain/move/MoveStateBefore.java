@@ -17,7 +17,7 @@ public class MoveStateBefore implements MoveStateStrategy {
             return getWhyCanMove(chessBoard, moveSquare);
         }
         if (chessBoard.isNeedPromotion()) {
-            return MoveState.FAIL_MUST_PAWN_CHANGE;
+            return MoveState.FAIL_MUST_PAWN_PROMOTION;
         }
         return MoveState.READY;
     }

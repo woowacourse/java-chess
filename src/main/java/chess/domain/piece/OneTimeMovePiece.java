@@ -4,8 +4,8 @@ import chess.domain.board.BoardSquare;
 
 public abstract class OneTimeMovePiece extends Piece {
 
-    protected OneTimeMovePiece(Color color, Type type) {
-        super(color, type);
+    protected OneTimeMovePiece(Color color, Type type, String letter) {
+        super(color, type, letter);
     }
 
     @Override

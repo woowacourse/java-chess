@@ -15,13 +15,12 @@ public class King extends OneTimeMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        for (Color color : Color.values()) {
-            CACHE.put(color, new King(color, Type.KING));
-        }
+        CACHE.put(Color.BLACK, new King(Color.BLACK, Type.KING, "♚"));
+        CACHE.put(Color.WHITE, new King(Color.WHITE, Type.KING, "♔"));
     }
 
-    public King(Color color, Type type) {
-        super(color, type);
+    public King(Color color, Type type, String letter) {
+        super(color, type, letter);
     }
 
     public static Piece getPieceInstance(Color color) {

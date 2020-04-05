@@ -29,8 +29,8 @@ public class ChessBoard {
     private static final MoveStateChecker PROMOTION_MOVE_CHECKER
         = new MoveStateChecker(new MoveStatePromotion());
 
-    private final Map<BoardSquare, Piece> chessBoard;
-    private final Set<CastlingSetting> castlingElements;
+    private Map<BoardSquare, Piece> chessBoard;
+    private Set<CastlingSetting> castlingElements;
     private Color gameTurn;
 
     public ChessBoard() {
@@ -43,6 +43,12 @@ public class ChessBoard {
         this.chessBoard = chessBoard.getInitialize();
         this.gameTurn = gameTurn;
         this.castlingElements = castlingElements;
+    }
+
+    public void initialize() {
+        this.chessBoard = new BoardInitialDefault().getInitialize();
+        this.gameTurn = Color.WHITE;
+        this.castlingElements = CastlingSetting.getCastlingElements();
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
@@ -85,10 +91,11 @@ public class ChessBoard {
 
     public MoveState promotion(Type hopeType) {
         MoveState moveState = PROMOTION_MOVE_CHECKER.check(this);
-        if (moveState.isSuccess()) {
+        if (moveState == MoveState.NEEDS_PROMOTION) {
             chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
+            moveState = MoveState.SUCCESS_PROMOTION;
+            gameTurn = moveState.turnTeam(gameTurn);
         }
-        gameTurn = moveState.turnTeam(gameTurn);
         return moveState;
     }
 

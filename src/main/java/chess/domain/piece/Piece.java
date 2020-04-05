@@ -11,11 +11,13 @@ public abstract class Piece {
 
     private final Color color;
     private final Type type;
+    private final String letter;
 
-    protected Piece(Color color, Type type) {
+    protected Piece(Color color, Type type, String letter) {
         NullChecker.validateNotNull(color, type);
         this.color = color;
         this.type = type;
+        this.letter = letter;
     }
 
     protected Set<BoardSquare> getAllCheatSheet(BoardSquare boardSquare) {
@@ -76,7 +78,7 @@ public abstract class Piece {
     }
 
     public String getLetter() {
-        return type.getLetter();
+        return letter;
     }
 
     public boolean isSameType(Type type) {
