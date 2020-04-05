@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.GameResult;
 import chess.domain.board.Board;
 import chess.domain.command.MoveCommand;
 import spark.ModelAndView;
@@ -53,6 +54,16 @@ public class WebChessController {
                 String target = req.queryParams("target");
 
                 this.board.move(new MoveCommand(String.format("move %s %s", source, target)));
+
+                if (this.board.isGameOver()) {
+                    GameResult gameResult = this.board.createGameResult();
+
+                    model.put("winner", gameResult.getWinner());
+                    model.put("loser", gameResult.getLoser());
+                    model.put("blackScore", gameResult.getAliveBlackPieceScoreSum());
+                    model.put("whiteScore", gameResult.getAliveWhitePieceScoreSum());
+                    return render(model, "winner.html");
+                }
             } catch (Exception e) {
                 model.put("error", e.getMessage());
             }
