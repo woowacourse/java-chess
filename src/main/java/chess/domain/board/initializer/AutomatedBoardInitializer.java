@@ -2,22 +2,13 @@ package chess.domain.board.initializer;
 
 import chess.domain.board.BoardInitializer;
 import chess.domain.piece.PieceState;
-import chess.domain.piece.implementation.piece.Bishop;
-import chess.domain.piece.implementation.piece.King;
-import chess.domain.piece.implementation.piece.Knight;
-import chess.domain.piece.implementation.piece.Pawn;
-import chess.domain.piece.implementation.piece.Queen;
-import chess.domain.piece.implementation.piece.Rook;
+import chess.domain.piece.implementation.piece.*;
 import chess.domain.player.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.EnumMap;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.BiFunction;
 
 public class AutomatedBoardInitializer implements BoardInitializer {

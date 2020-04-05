@@ -56,7 +56,7 @@ public class ChessController {
             message = e.getMessage();
         } finally {
             if (chessService.isReady()) {
-                return null;
+                return run();
             }
             Map<Position, PieceDto> boardDto = chessService.createBoardDto();
             Map<Team, Double> scoreDto = chessService.createScoreDto();

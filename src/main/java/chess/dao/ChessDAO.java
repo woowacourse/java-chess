@@ -76,6 +76,7 @@ public class ChessDAO {
         deleteGame(chessGameId, connection);
         insertGame(chessGameId, chessGame, connection);
         insertBoard(chessGameId, chessGame, connection);
+        closeConnection(connection);
     }
 
     private void deleteBoard(final long chessGameId, final Connection connection) throws SQLException {
@@ -83,6 +84,22 @@ public class ChessDAO {
         PreparedStatement deleteBoardPstmt = connection.prepareStatement(deleteBoardQuery);
         deleteBoardPstmt.setLong(1, chessGameId);
         deleteBoardPstmt.executeUpdate();
+    }
+
+    public void deleteGame(final long chessGameId) throws SQLException {
+        Connection connection = getConnection();
+        String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?);";
+        PreparedStatement deleteGamePstmt = connection.prepareStatement(deleteGameQuery);
+        deleteGamePstmt.setLong(1, chessGameId);
+        deleteGamePstmt.executeUpdate();
+        deleteGamePstmt.close();
+
+        String alterGameQuery = "ALTER TABLE chessGameTable AUTO_INCREMENT = ?;";
+        PreparedStatement alterGamePstmt = connection.prepareStatement(alterGameQuery);
+        alterGamePstmt.setInt(1, (int) chessGameId);
+        alterGamePstmt.executeUpdate();
+        alterGamePstmt.close();
+        closeConnection(connection);
     }
 
     private void deleteGame(final long chessGameId, final Connection connection) throws SQLException {
@@ -125,6 +142,7 @@ public class ChessDAO {
         Map<Position, PieceState> board = getCurrentBoard(id, connection);
         Turn turn = getCurrentTurn(id, connection);
         if (turn == null) return null;
+        closeConnection(connection);
         return new ChessGame(Board.of(board), turn);
     }
 
@@ -180,6 +198,7 @@ public class ChessDAO {
         if (pstmt != null) {
             pstmt.close();
         }
+        pstmt.close();
         closeConnection(connection);
         return Collections.unmodifiableList(roomId);
     }

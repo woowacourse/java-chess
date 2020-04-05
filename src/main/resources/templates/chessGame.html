@@ -129,11 +129,18 @@
                     <input type="submit" value="새 게임"/>
                 </form>
             </div>
-            <div class="end-button">
+            <div class="save-button">
                 <form action="/" method="post">
                     <input hidden="hidden" name="command" type="text" value="end">
                     <input hidden="hidden" name="parameter" type="text" value="save">
                     <input type="submit" value="게임 저장"/>
+                </form>
+            </div>
+            <div class="end-button">
+                <form action="/" method="post">
+                    <input hidden="hidden" name="command" type="text" value="end">
+                    <input hidden="hidden" name="parameter" type="text" value="">
+                    <input type="submit" value="게임 종료"/>
                 </form>
             </div>
         </div>
@@ -172,13 +179,6 @@
         document.getElementById("{{key}}-SCORE").innerText = {{value}}
     {{/score}}
     document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
-
-
-
-
-
-
-
 
 
 

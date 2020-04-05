@@ -48,11 +48,7 @@ public class RunningState implements State {
 
     @Override
     public State end(List<String> parameters) {
-        if ("save".equals(parameters.get(0))) {
-            return new ReadyState();
-            //게임 저장
-        }
-        throw new UnsupportedOperationException("임시 - 게임 실행 중 ");
+        return new ReadyState();
     }
 
     @Override

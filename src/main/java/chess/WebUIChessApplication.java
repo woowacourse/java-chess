@@ -29,8 +29,8 @@ public class WebUIChessApplication {
         post("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             RequestDto requestDto = getRequestDtoFrom(req);
-            ResponseDto responseDto = chessController.run();
-            chessController.run(requestDto);
+            ResponseDto responseDto = chessController.run(requestDto);
+
             List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
             model.put("roomId", roomDto);
             return render(model, "index.html");

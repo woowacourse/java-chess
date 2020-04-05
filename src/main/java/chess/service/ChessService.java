@@ -32,7 +32,6 @@ public class ChessService {
         if ("new".equals(parameters.get(0))) {
             ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
             this.id = chessDAO.createChessGame(chessGame);
-            System.out.println(id + "번 방입니다.");
             state = new RunningState(chessGame);
         }
         if ("load".equals(parameters.get(0))) {
@@ -43,7 +42,12 @@ public class ChessService {
     }
 
     public void end(List<String> parameters) throws SQLException {
-        chessDAO.addBoard(id, state.getChessGame());
+        if ("save".equals(parameters.get(0))) {
+            chessDAO.addBoard(id, state.getChessGame());
+        }
+        if ("".equals(parameters.get(0))) {
+            chessDAO.deleteGame(id);
+        }
         state = state.end(parameters);
     }
 
