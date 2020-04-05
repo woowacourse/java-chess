@@ -93,6 +93,10 @@ public class Position implements Comparable<Position> {
         return Direction.findDirection(xGap, yGap);
     }
 
+    public String name() {
+        return x.getColumn() + String.valueOf(y.getRow());
+    }
+
     @Override
     public int compareTo(Position o) {
         if (y.isBiggerThan(o.y)) {
