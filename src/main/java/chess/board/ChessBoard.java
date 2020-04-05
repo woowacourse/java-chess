@@ -97,12 +97,12 @@ public class ChessBoard {
         return Objects.isNull(board.get(now));
     }
 
-    public Map<Location, Piece> getBoard() {
-        return board;
-    }
-
     public boolean isExistPieceIn(Location location) {
         return board.containsKey(location);
+    }
+
+    public Map<Location, Piece> getBoard() {
+        return board;
     }
 
     public Piece getPieceIn(Location location) {

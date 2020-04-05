@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.progress.Progress;
-import data.*;
+import dto.*;
 import chess.game.ChessGame;
 import com.google.gson.Gson;
 import spark.ModelAndView;

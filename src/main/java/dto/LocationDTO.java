@@ -1,4 +1,4 @@
-package data;
+package dto;
 
 import chess.location.Col;
 import chess.location.Location;

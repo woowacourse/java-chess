@@ -1,4 +1,4 @@
-package data;
+package dto;
 
 import chess.progress.Progress;
 import chess.team.Team;

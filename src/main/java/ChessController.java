@@ -5,6 +5,11 @@ import chess.progress.Progress;
 import view.InputView;
 import view.OutputView;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.locks.Condition;
+import java.util.function.Predicate;
+
 public class ChessController {
     public static void main(String[] args) {
         OutputView.printInformation();
@@ -36,7 +41,6 @@ public class ChessController {
 
     private static Command inputCommand(ChessGame chessGame) {
         String commandInput = InputView.inputCommand();
-        // 다중 if문 없애려면 enum 뿐일까 ?
         if (End.isEnd(commandInput)) {
             return new End(commandInput);
         }

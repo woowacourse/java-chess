@@ -1,4 +1,4 @@
-package data;
+package dto;
 
 import chess.result.ChessScores;
 import chess.score.Score;
