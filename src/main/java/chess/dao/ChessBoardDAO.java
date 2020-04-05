@@ -1,11 +1,16 @@
 package chess.dao;
 
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.PositionFactory;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.dto.BoardDTO;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessBoardDAO {
     private static final int MIN_BOARD_LINE = 1;
@@ -80,4 +85,35 @@ public class ChessBoardDAO {
         }
     }
 
+    public Board getBoard() {
+        String query = "SELECT * FROM chessBoard";
+        try (PreparedStatement pstmt = this.connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (!rs.next()) {
+                return null;
+            }
+            return createBoard(rs);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Board createBoard(ResultSet rs) throws SQLException {
+        Map<Position, Piece> board = new HashMap<>();
+
+        for (int i = MIN_BOARD_LINE; i <= MAX_BOARD_LINE; i++) {
+            String line = rs.getString(i - 1);
+            for (int j = MIN_BOARD_LINE; j <= MAX_BOARD_LINE; j++) {
+                Position position = PositionFactory.of(j, i);
+                String pieceName = String.valueOf(line.charAt(j - 1));
+                Piece piece = PieceType.of(pieceName).createPiece(position);
+                board.put(position, piece);
+            }
+        }
+
+        PieceColor pieceColor = PieceColor.of(rs.getString("currentTeam"));
+
+        return new Board(board, pieceColor);
+    }
 }
