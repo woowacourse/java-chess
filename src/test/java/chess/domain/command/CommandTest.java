@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -26,10 +25,10 @@ class CommandTest {
 
     static Stream<Arguments> createCommand() {
         return Stream.of(
-                Arguments.of(Collections.singletonList("start"), Collections.emptyList()),
-                Arguments.of(Collections.singletonList("END"), Collections.emptyList()),
-                Arguments.of(Arrays.asList("move", "b1", "b2"), Arrays.asList("b1", "b2")),
-                Arguments.of(Collections.singletonList("status"), Collections.emptyList())
+                Arguments.of(Arrays.asList("start", "user1", "user2"), Arrays.asList("user1", "user2")),
+                Arguments.of(Arrays.asList("END", "user1", "user2"), Arrays.asList("user1", "user2")),
+                Arguments.of(Arrays.asList("move", "user1", "user2", "b1", "b2"), Arrays.asList("user1", "user2", "b1", "b2")),
+                Arguments.of(Arrays.asList("status", "user1", "user2"), Arrays.asList("user1", "user2"))
         );
     }
 
@@ -40,14 +39,14 @@ class CommandTest {
         assertThatThrownBy(() -> {
             Command.from(input);
         }).isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("move 커맨드의 인자는 2개여야 합니다.");
+                .hasMessage("move의 파라미터 갯수는 5개입니다.");
     }
 
     static List<List<String>> createInvalidMoveSize() {
         return Arrays.asList(
-                Arrays.asList("move", "b1"),
-                Arrays.asList("move"),
-                Arrays.asList("move", "b1", "b2", "b3")
+                Arrays.asList("move", "user1", "user2", "b1"),
+                Arrays.asList("move", "user1", "user2"),
+                Arrays.asList("move", "user1", "user2", "b1", "b2", "b3")
         );
     }
 
@@ -60,10 +59,10 @@ class CommandTest {
 
     static Stream<Arguments> createBoolean() {
         return Stream.of(
-                Arguments.of(Collections.singletonList("start"), true),
-                Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), false),
-                Arguments.of(Collections.singletonList("status"), false)
+                Arguments.of(Arrays.asList("start", "user1", "user2"), true),
+                Arguments.of(Arrays.asList("end", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("move", "user1", "user2", "b1", "b3"), false),
+                Arguments.of(Arrays.asList("status", "user1", "user2"), false)
         );
     }
 
@@ -76,10 +75,10 @@ class CommandTest {
 
     static Stream<Arguments> createEnd() {
         return Stream.of(
-                Arguments.of(Collections.singletonList("start"), true),
-                Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), true),
-                Arguments.of(Collections.singletonList("status"), true)
+                Arguments.of(Arrays.asList("start", "user1", "user2"), true),
+                Arguments.of(Arrays.asList("end", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("move", "user1", "user2", "b1", "b3"), true),
+                Arguments.of(Arrays.asList("status", "user1", "user2"), true)
         );
     }
 
@@ -92,10 +91,10 @@ class CommandTest {
 
     static Stream<Arguments> createMove() {
         return Stream.of(
-                Arguments.of(Collections.singletonList("start"), false),
-                Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), true),
-                Arguments.of(Collections.singletonList("status"), false)
+                Arguments.of(Arrays.asList("start", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("end", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("move", "user1", "user2", "b1", "b3"), true),
+                Arguments.of(Arrays.asList("status", "user1", "user2"), false)
         );
     }
 
@@ -109,17 +108,17 @@ class CommandTest {
 
     static Stream<Arguments> createStatus() {
         return Stream.of(
-                Arguments.of(Collections.singletonList("start"), false),
-                Arguments.of(Collections.singletonList("end"), false),
-                Arguments.of(Arrays.asList("move", "b1", "b3"), false),
-                Arguments.of(Collections.singletonList("status"), true)
+                Arguments.of(Arrays.asList("start", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("end", "user1", "user2"), false),
+                Arguments.of(Arrays.asList("move", "user1", "user2", "b1", "b3"), false),
+                Arguments.of(Arrays.asList("status", "user1", "user2"), true)
         );
     }
 
     @Test
     @DisplayName("source position 확인")
     void getSource() {
-        List<String> input = Arrays.asList("move", "b1", "b2");
+        List<String> input = Arrays.asList("move", "user1", "user2", "b1", "b2");
         Command command = Command.from(input);
 
         assertThat(command.getSource()).isEqualTo(Position.from("b1"));
@@ -128,7 +127,7 @@ class CommandTest {
     @Test
     @DisplayName("target position 확인")
     void getTarget() {
-        List<String> input = Arrays.asList("move", "b1", "b2");
+        List<String> input = Arrays.asList("move", "user1", "user2", "b1", "b2");
         Command command = Command.from(input);
 
         assertThat(command.getTarget()).isEqualTo(Position.from("b2"));
@@ -136,7 +135,7 @@ class CommandTest {
 
     @Test
     void moveWithAnotherCommand() {
-        List<String> input = Collections.singletonList("start");
+        List<String> input = Arrays.asList("start", "user1", "user2");
         Command command = Command.from(input);
 
         assertThatThrownBy(() -> command.getSource())

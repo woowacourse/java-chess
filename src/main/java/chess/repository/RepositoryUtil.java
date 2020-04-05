@@ -1,10 +1,15 @@
 package chess.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class RepositoryUtil {
+
+    private final Connection connection;
+
+    public RepositoryUtil() {
+        this.connection = getConnection();
+    }
+
     public static Connection getConnection() {
         Connection con = null;
         String server = "127.0.0.1:13306"; // MySQL 서버 주소
@@ -24,7 +29,6 @@ public class RepositoryUtil {
         // 드라이버 연결
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-//            System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
@@ -41,5 +45,24 @@ public class RepositoryUtil {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public ResultSet executeQuery(String query, String... inserted) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        for (int i = 1; i <= inserted.length; i++) {
+            statement.setString(i, inserted[i - 1]);
+        }
+
+        return statement.executeQuery();
+    }
+
+    public ResultSet executeUpdate(String query, String... inserted) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        for (int i = 1; i <= inserted.length; i++) {
+            statement.setString(i, inserted[i - 1]);
+        }
+        statement.executeUpdate();
+
+        return statement.getGeneratedKeys();
     }
 }
