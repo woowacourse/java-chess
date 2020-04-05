@@ -19,6 +19,10 @@ public class Board {
         this.board = board;
     }
 
+    public static Board webBoard(Map<String, String> pieceOnBoards) {
+        return new Board(BoardInitializer.webInitialize(pieceOnBoards));
+    }
+
     public void updateBoard(final Position sourcePosition, final Position targetPosition) {
         Piece selectedPiece = this.board.get(sourcePosition);
         this.board.put(targetPosition, selectedPiece);

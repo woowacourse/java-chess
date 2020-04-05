@@ -74,7 +74,7 @@ class ChessRunnerTest {
 
     @Test
     void tileDtosTest() {
-        List<TileDto> tileDtos = chessRunner.tileDtos();
+        List<TileDto> tileDtos = chessRunner.entireTileDtos();
     }
 
     @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 빈 문자열 출력")

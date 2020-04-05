@@ -39,4 +39,9 @@ public final class KnightInitializer implements InitializeStrategy {
     public Map<Position, Piece> initialize() {
         return InitialKnight.initializeKnights();
     }
+
+    @Override
+    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        return null;
+    }
 }

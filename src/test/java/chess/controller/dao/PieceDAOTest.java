@@ -1,6 +1,7 @@
 package chess.controller.dao;
 
 import chess.controller.dto.TileDto;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -30,7 +31,7 @@ public class PieceDAOTest {
                 a2WhitePawn, a6BlackPawn
         ));
 
-        pieceDAO.addPiece(1, tileDtos);
+        pieceDAO.addPiece(12, tileDtos);
     }
 
     @Disabled
@@ -53,5 +54,17 @@ public class PieceDAOTest {
         PieceOnBoard a2WhitePawn = new PieceOnBoard(4, "ATHREE", "p_white", 1);
 
         pieceDAO.deletePiece(a2WhitePawn);
+    }
+
+    @Disabled
+    @DisplayName("저장되어 있는 피스 정보 불러오기")
+    @Test
+    void findPieceTest() throws Exception {
+        List<PieceOnBoard> pieceOnBoards = pieceDAO.findPiece(12);
+
+        Assertions.assertThat(pieceOnBoards).containsExactly(
+                new PieceOnBoard(6, "ATWO", "p_white", 12),
+                new PieceOnBoard(7, "ASIX", "P_black", 12)
+        );
     }
 }

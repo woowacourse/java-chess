@@ -39,4 +39,9 @@ public final class RookInitializer implements InitializeStrategy {
     public Map<Position, Piece> initialize() {
         return InitialRook.initializeRooks();
     }
+
+    @Override
+    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        return null;
+    }
 }

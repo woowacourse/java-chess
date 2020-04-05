@@ -39,4 +39,9 @@ public final class BishopInitializer implements InitializeStrategy {
     public Map<Position, Piece> initialize() {
         return InitialBishop.initializeBishops();
     }
+
+    @Override
+    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        return null;
+    }
 }

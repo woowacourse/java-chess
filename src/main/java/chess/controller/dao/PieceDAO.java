@@ -4,7 +4,10 @@ import chess.controller.dto.TileDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class PieceDAO {
@@ -45,5 +48,27 @@ public class PieceDAO {
         pstmt.setInt(1, a2WhitePawn.getPieceId());
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
+    }
+
+    public List<PieceOnBoard> findPiece(int chessBoardId) throws SQLException {
+        List<PieceOnBoard> pieceOnBoards = new ArrayList<>();
+
+        Connection con = ConnectionManager.getConnection();
+        String query = "SELECT * FROM piece WHERE chessBoardId = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, chessBoardId);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (rs.next()) {
+            PieceOnBoard pieceOnBoard = new PieceOnBoard(
+                    rs.getInt("pieceId"),
+                    rs.getString("position"),
+                    rs.getString("pieceImageUrl"),
+                    rs.getInt("chessBoardId")
+            );
+            pieceOnBoards.add(pieceOnBoard);
+        }
+
+        return Collections.unmodifiableList(pieceOnBoards);
     }
 }

@@ -1,11 +1,17 @@
 package chess.controller;
 
+import chess.controller.dao.ChessBoard;
+import chess.controller.dao.ChessBoardDAO;
+import chess.controller.dao.PieceDAO;
+import chess.controller.dao.PieceOnBoard;
 import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
 import chess.domain.ChessRunner;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WebChessController {
@@ -17,9 +23,25 @@ public class WebChessController {
     private static final String WINNER = " 가 이겼습니다.";
 
     private ChessRunner chessRunner;
+    private ChessBoard chessBoard;
 
-    public void start() {
-        this.chessRunner = new ChessRunner();
+    public void start() throws Exception {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+        PieceDAO pieceDAO = new PieceDAO();
+        this.chessBoard = chessBoardDAO.findRecentChessBoard();
+        if (this.chessBoard == null) { // 게임을 새로 시작했다면
+            this.chessRunner = new ChessRunner();
+            chessBoardDAO.addChessBoard();
+            this.chessBoard = chessBoardDAO.findRecentChessBoard();
+            List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
+            pieceDAO.addPiece(chessBoard.getChessBoardId(), tileDtos);
+        } else {
+            List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
+            Map<String, String> pieceOnBoards = pieces.stream()
+                    .collect(Collectors.toMap(entry -> entry.getPosition(),
+                            entry -> entry.getPieceImageUrl(), (e1, e2) -> e1, HashMap::new));
+            this.chessRunner = new ChessRunner(pieceOnBoards);
+        }
     }
 
     public MoveResultDto move(final String source, final String target) {
@@ -48,7 +70,7 @@ public class WebChessController {
     }
 
     public List<TileDto> getTiles() {
-        return this.chessRunner.tileDtos();
+        return this.chessRunner.entireTileDtos();
     }
 
     public String getScores() {

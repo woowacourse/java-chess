@@ -52,4 +52,9 @@ public final class PawnInitializer implements InitializeStrategy {
     public Map<Position, Piece> initialize() {
         return InitialPawn.initialPawns();
     }
+
+    @Override
+    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        return null;
+    }
 }

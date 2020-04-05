@@ -23,6 +23,11 @@ public class ChessRunner {
         this.currentTeam = Team.WHITE;
     }
 
+    public ChessRunner(Map<String, String> pieceOnBoards) {
+        this.board = Board.webBoard(pieceOnBoards);
+        this.currentTeam = Team.WHITE;
+    }
+
     public void update(String source, String target) {
         Position sourcePosition = Position.of(source);
         Position targetPosition = Position.of(target);
@@ -132,7 +137,7 @@ public class ChessRunner {
         return winner.map(Enum::name).orElse(StringUtils.EMPTY);
     }
 
-    public List<TileDto> tileDtos() {
+    public List<TileDto> entireTileDtos() {
         List<TileDto> tileDtos = Position.getPositions().stream()
                 .map(TileDto::new)
                 .collect(Collectors.toList());
@@ -160,5 +165,16 @@ public class ChessRunner {
                     .orElseThrow(IllegalArgumentException::new);
             tileDto.setPieceImageUrl(tile.pieceImageUrl());
         }
+    }
+
+    public List<TileDto> pieceTileDtos() {
+        List<TileDto> tileDtos = this.board.tiles().stream()
+                .map((tile) -> {
+                    TileDto tileDto = new TileDto(tile.position());
+                    tileDto.setPieceImageUrl(tile.pieceImageUrl());
+                    return tileDto;
+                }).collect(Collectors.toList());
+
+        return Collections.unmodifiableList(tileDtos);
     }
 }

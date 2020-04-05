@@ -7,4 +7,6 @@ import java.util.Map;
 
 public interface InitializeStrategy {
     Map<Position, Piece> initialize();
+
+    Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards);
 }

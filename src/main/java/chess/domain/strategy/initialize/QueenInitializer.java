@@ -37,4 +37,9 @@ public final class QueenInitializer implements InitializeStrategy {
     public Map<Position, Piece> initialize() {
         return InitialQueen.initializeQueens();
     }
+
+    @Override
+    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        return null;
+    }
 }
