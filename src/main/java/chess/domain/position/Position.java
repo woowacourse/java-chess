@@ -41,10 +41,6 @@ public class Position {
         return file.toString() + rank.toString();
     }
 
-    public static List<Position> values() {
-        return Collections.unmodifiableList(new ArrayList<>(CACHE.values()));
-    }
-
     public static Position of(File file, Rank rank) {
         return of(file.toString() + rank.toString());
     }
@@ -73,29 +69,12 @@ public class Position {
         return Position.of(this.file.increase(x), this.rank.increase(y));
     }
 
-    public boolean canDecrease(Position position) {
-        return canDecrease(position.file, position.rank);
-    }
-
     public boolean canDecrease(File file, Rank rank) {
         return this.file.canDecrease(file) && this.rank.canDecrease(rank);
     }
 
     public boolean canDecrease(int x, int y) {
         return this.file.canDecrease(x) && this.rank.canDecrease(y);
-    }
-
-    public Position decrease(File file, Rank rank) {
-        if (this.canDecrease(file, rank)) {
-            throw new IllegalArgumentException(
-                "현재 위치에서 x 를" + file + "만큼, y를" + rank + "만큼 증가할 수 없습니다."
-            );
-        }
-        return Position.of(this.file.decrease(file), this.rank.decrease(rank));
-    }
-
-    public Position decrease(Position position) {
-        return decrease(position.file, position.rank);
     }
 
     public Position decrease(int x, int y) {
