@@ -34,4 +34,10 @@ class BoardDAOTest {
         Piece piece = new Rook(PieceColor.BLACK);
         boardDao.addPiece(position, piece);
     }
+
+    @DisplayName("레코드 추가 테스트")
+    @Test
+    public void deleteBoard() throws Exception {
+        boardDao.deleteBoard();
+    }
 }

@@ -133,4 +133,8 @@ public class Board {
     public PieceColor getTeamColor() {
         return teamColor;
     }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
 }

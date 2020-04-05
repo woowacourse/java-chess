@@ -3,10 +3,9 @@ package chess.dao;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardDAO {
     public Connection getConnection() {
@@ -55,4 +54,30 @@ public class BoardDAO {
         pstmt.executeUpdate();
     }
 
+    public void addBoard(Map<Position, Piece> board) throws SQLException {
+        for (Position position : board.keySet()) {
+            this.addPiece(position, board.get(position));
+        }
+    }
+
+    public Map<String, String> showPieces() throws SQLException {
+        String query = "SELECT * FROM board";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        Map<String, String> board = new HashMap<>();
+        while (rs.next()) {
+            board.put(rs.getString("position"), rs.getString("piece"));
+        }
+
+        return board;
+    }
+
+    public void deleteBoard() throws SQLException {
+        String query = "TRUNCATE board";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+        pstmt.executeUpdate();
+    }
 }
