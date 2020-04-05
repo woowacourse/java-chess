@@ -81,10 +81,10 @@ class ChessContextTest {
             add(new MoveRequestDto("b5", "b6"));
             add(new MoveRequestDto("b6", "c7"));
         }};
-        context.recoverMovesById(gameId, moves);
 
         // then
         Game game = context.findGameById(gameId);
+        moves.forEach(move -> context.addMoveByGameId(gameId, move));
         assertThat(game.move("b6", "c7")).isFalse();
     }
 
@@ -115,7 +115,8 @@ class ChessContextTest {
         }};
 
         // when
-        context.recoverMovesById(gameId, moves);
+        context.findGameById(gameId);
+        moves.forEach(move -> context.addMoveByGameId(gameId, move));
 
         // then
         assertThat(context.getScoreById(gameId, Side.WHITE)).isEqualTo(37);
@@ -136,7 +137,8 @@ class ChessContextTest {
         }};
 
         // when
-        context.recoverMovesById(gameId, moves);
+        context.findGameById(gameId);
+        moves.forEach(move -> context.addMoveByGameId(gameId, move));
         context.finishGameById(gameId);
 
         // then

@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.*;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -46,11 +45,6 @@ public class TestGameContext implements GameContext {
     }
 
     @Override
-    public void recoverMovesById(final int id, final List<MoveRequestDto> moves) {
-        moves.forEach(move -> findGameById(id).move(move.getFrom(), move.getTo()));
-    }
-
-    @Override
     public void finishGameById(final int id) {
         findGameById(id).finish();
         context.remove(id);
@@ -70,13 +64,18 @@ public class TestGameContext implements GameContext {
     @Override
     public Map<Integer, Map<Side, Double>> getScoreContexts() {
         return context.keySet().stream()
-            .collect(toMap(Function.identity(), this::getScore));
+            .collect(toMap(Function.identity(), this::getScoresById));
     }
 
     @Override
-    public Map<Side, Double> getScore(final int id) {
+    public Map<Side, Double> getScoresById(final int id) {
         return Arrays.stream(Side.values())
             .filter(side -> side != Side.NONE)
             .collect(toMap(Function.identity(), side -> getScoreById(id, side)));
+    }
+
+    @Override
+    public void addMoveByGameId(final int id, final MoveRequestDto move) {
+        findGameById(id).move(move.getFrom(), move.getTo());
     }
 }

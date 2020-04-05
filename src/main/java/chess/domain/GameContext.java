@@ -1,6 +1,6 @@
 package chess.domain;
 
-import java.util.List;
+import java.sql.SQLException;
 import java.util.Map;
 
 import chess.domain.board.Position;
@@ -10,25 +10,25 @@ import chess.domain.player.Player;
 import chess.dto.MoveRequestDto;
 
 public interface GameContext {
-    int addGame(Player white, Player black);
+    int addGame(Player white, Player black) throws SQLException;
 
-    boolean isEmpty();
+    boolean isEmpty() throws SQLException;
 
-    Game findGameById(int id);
+    Game findGameById(int id) throws SQLException;
 
-    Map<Position, Piece> findBoardById(int id);
+    Map<Position, Piece> findBoardById(int id) throws SQLException;
 
-    void resetGameById(int id);
+    void resetGameById(int id) throws SQLException;
 
-    void recoverMovesById(int id, List<MoveRequestDto> moves);
+    void finishGameById(int id) throws SQLException;
 
-    void finishGameById(int id);
+    double getScoreById(int id, Side side) throws SQLException;
 
-    double getScoreById(int id, Side side);
+    Map<Integer, Map<Side, Player>> getPlayerContexts() throws SQLException;
 
-    Map<Integer, Map<Side, Player>> getPlayerContexts();
+    Map<Integer, Map<Side, Double>> getScoreContexts() throws SQLException;
 
-    Map<Integer, Map<Side, Double>> getScoreContexts();
+    Map<Side, Double> getScoresById(int id) throws SQLException;
 
-    Map<Side, Double> getScore(int id);
+    void addMoveByGameId(int id, MoveRequestDto dto) throws SQLException;
 }
