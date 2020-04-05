@@ -15,7 +15,7 @@
             {{#rows}}
             <div class="row">
                 {{#gamePieces}}
-                <div id="{{position.name}}" class="cell">
+                <div id="{{position.name}}" class="cell {{path}}">
                     <img src="./img/{{playerColor.name}}_{{name}}.png">
                 </div>
                 {{/gamePieces}}
@@ -33,6 +33,11 @@
                 </form>
             </div>
             <div class="button">
+                <form action="/save" method="post">
+                    <input type="submit" value="SAVE">
+                </form>
+            </div>
+            <div class="button">
                 <form action="/end" method="post">
                     <input type="submit" value="END">
                 </form>
@@ -40,9 +45,6 @@
             <div class="user">
                 <img src="./img/WHITE_p.png">
                 <p>{{secondUser}}</p>
-            </div>
-            <div id="message">
-                {{msg}}
             </div>
         </div>
     </div>
@@ -66,8 +68,10 @@
     let before;
 
     $(".cell").click(function () {
-        if (cell !== null) {
-            before = cell;
+        if (document.querySelector(".selected-cell") !== null) {
+            before = $(".selected-cell");
+            source = before.attr("id");
+            isFirstClick = false;
         }
         cell = $(this);
         let cellPosition = $(this).attr("id");
@@ -76,8 +80,37 @@
         // 첫 클릭이라면 source에 포지션 저장
         if (isFirstClick) {
             source = cellPosition;
-            isFirstClick = false;
-            cell.addClass("selected-cell");
+
+            $.ajax({
+                url: "/path",
+                data: { source: source },
+                method: "POST",
+                // async: false,
+                // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
+            }).done(function (list) {
+                document.getElementById(cellPosition).classList.add("selected-cell");
+                const path = list.split(",");
+                path.forEach(position => {
+                    document.getElementById(position).classList.add("y");
+                })
+
+                // var refine = $(".board").html(board);
+                // cell.addClass("selected-cell");
+                // const currentBoard = document.querySelector(".board");
+                // document.getElementById("app").removeChild(currentBoard);
+                // document.getElementById("app").insertAdjacentHTML("afterbegin", board);
+                // // $(".board").html(refine);
+                // for (let i = 0; i < 64; i++) {
+                //     let cell = "white-cell"
+                //     if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
+                //         // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
+                //         cell = "black-cell"
+                //     }
+                //     $(".cell:eq(" + i + ")").addClass(cell);
+                // }
+                // document.getElementById(cellPosition).classList.add("selected-cell");    
+            });
+            // cell.addClass("selected-cell");
             return;
         }
 
@@ -85,31 +118,38 @@
         if (!isFirstClick && (source === cellPosition)) {
             source = null;
             isFirstClick = true;
-            cell.removeClass("selected-cell");
+            before.removeClass("selected-cell");
+            $(".y").removeClass("y");
             return;
         }
-        
+
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
             data: { source: source, target: cellPosition },
             method: "POST",
+            // async: false,
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
         }).done(function (posible) {
             if (posible !== "true") {
                 alert(posible);
-                isFirstClick = true;
                 before.removeClass("selected-cell");
                 return;
             }
             move(source, cellPosition);
-            isFirstClick = true;
             before.removeClass("selected-cell");
+            $(".y").removeClass("y");
+            isFirstClick = true;
+            source = null;
         });
     });
 
     function move(from, to) {
-        document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild, 
-        document.getElementById(to).firstElementChild);
+        console.log(`move from ${from} to ${to}`);
+        var img = document.createElement("IMG");
+        img.src = "./img/NONE_..png";
+        document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild,
+            document.getElementById(to).firstElementChild);
+        document.getElementById(from).appendChild(img);
     }
 </script>

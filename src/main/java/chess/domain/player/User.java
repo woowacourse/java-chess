@@ -4,10 +4,20 @@ import java.util.Objects;
 
 public class User {
 
+    public static final User EMPTY_BOARD_USER = new User("..........");
+
+    private static final int MAXIMUM_LENGTH = 10;
     private final String name;
 
     public User(String name) {
+        valadateName(name);
         this.name = name;
+    }
+
+    private void valadateName(String name) {
+        if (name.length() > MAXIMUM_LENGTH) {
+            throw new IllegalArgumentException("이름은 최대 10자입니다.");
+        }
     }
 
     public String getName() {

@@ -44,6 +44,8 @@ body {
 
 .selected-cell {
     background-color: #FFFACD;
+    opacity: 0.9;
+    border: 0.5px solid gray;
 }
 
 .cell > img {
@@ -53,6 +55,8 @@ body {
 
 .y {
     background-color: #FFFACD;
+    opacity: 0.9;
+    border: 0.5px solid gray;
 }
 
 .side {
@@ -85,7 +89,7 @@ body {
 }
 
 .user > p {
-    font-size: 20px;
+    font-size: 50px;
     font-family: fantasy;
     flex: 2;
 }

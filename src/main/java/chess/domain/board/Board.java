@@ -11,6 +11,7 @@ import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
+import chess.domain.player.User;
 import chess.domain.result.ChessResult;
 import chess.dto.LineDto;
 
@@ -18,14 +19,26 @@ public class Board {
 
     private final Map<Position, GamePiece> board;
     private final Status status;
+    private final User first;
+    private final User second;
 
-    private Board(Map<Position, GamePiece> board, Status status) {
+    private Board(Map<Position, GamePiece> board, Status status, User first, User second) {
         this.board = Collections.unmodifiableMap(new TreeMap<>(board));
         this.status = status;
+        this.first = first;
+        this.second = second;
     }
 
-    static Board of(Map<Position, GamePiece> board, Status status) {
-        return new Board(board, status);
+    static Board of(Map<Position, GamePiece> board, Status status, User first, User second) {
+        return new Board(board, status, first, second);
+    }
+
+    public String searchPath(String sourceInput) {
+        Position source = Position.from(sourceInput);
+        GamePiece sourcePiece = board.get(source);
+        validateSourcePiece(sourcePiece);
+
+        return String.join(",", sourcePiece.searchPaths(this, source));
     }
 
     public Board move(String sourceInput, String targetInput) {
@@ -42,17 +55,20 @@ public class Board {
         Status nextStatus = status.nextTurn();
 
         if (targetPiece.isKing()) {
-            return new Board(board, nextStatus.finish());
+            return new Board(board, nextStatus.finish(), first, second);
         }
-        return new Board(board, nextStatus);
+        return new Board(board, nextStatus, first, second);
     }
 
     private void validateAll(String sourceInput, String targetInput) {
-        validateStatus();
-        GamePiece sourcePiece = board.get(Position.from(sourceInput));
-        validateSourcePiece(sourcePiece);
+        Position source = Position.from(sourceInput);
+        Position target = Position.from(targetInput);
 
-        sourcePiece.validateMoveTo(board, Position.from(sourceInput), Position.from(targetInput));
+        validateStatus();
+        GamePiece sourcePiece = board.get(source);
+        validateSourcePiece(sourcePiece);
+        validateColor(source, target);
+        sourcePiece.validateMoveTo(this, source, target);
     }
 
     private void validateStatus() {
@@ -73,6 +89,20 @@ public class Board {
         }
     }
 
+    private void validateColor(Position source, Position target) {
+        if (board.get(source).isSameColor(board.get(target))) {
+            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
+        }
+    }
+
+    public boolean isSameColor(GamePiece gamePiece, Position position) {
+        return board.get(position).isSameColor(gamePiece);
+    }
+
+    public boolean isNotEmpty(Position position) {
+        return !EmptyPiece.getInstance().equals(board.get(position));
+    }
+
     public boolean isNotFinished() {
         return status.isNotFinished();
     }
@@ -91,6 +121,14 @@ public class Board {
 
     public int getTurn() {
         return status.getTurn();
+    }
+
+    public User getFirstUser() {
+        return first;
+    }
+
+    public User getSecondUser() {
+        return second;
     }
 
     @Override

@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
@@ -26,17 +26,33 @@ public abstract class GamePiece {
         this.playerColor = playerColor;
     }
 
-    public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
-        GamePiece targetPiece = board.get(target);
+    public List<String> searchPaths(Board board, Position source) {
+        List<String> paths = new ArrayList<>();
 
-        if (playerColor == targetPiece.playerColor) {
-            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
+        for (Direction direction : directions) {
+            List<Position> positions = source.pathTo(direction, moveCount);
+            finaMovablePositions(board, paths, positions);
         }
 
-        validatePath(board, source, target);
+        return paths;
     }
 
-    private void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
+    private void finaMovablePositions(Board board, List<String> paths, List<Position> positions) {
+        for (Position position : positions) {
+            if (!board.isNotEmpty(position)) {
+                paths.add(position.getName());
+            }
+            if (board.isSameColor(this, position)) {
+                break;
+            }
+            if (!board.isSameColor(this, position)) {
+                paths.add(position.getName());
+                break;
+            }
+        }
+    }
+
+    public void validateMoveTo(Board board, Position source, Position target) {
         List<Position> path = findPath(source, target);
 
         validateObstacle(board, target, path);
@@ -50,9 +66,9 @@ public abstract class GamePiece {
                 .orElseThrow(() -> new InvalidMovementException("이동할 수 없는 경로입니다."));
     }
 
-    private void validateObstacle(Map<Position, GamePiece> board, Position target, List<Position> path) {
+    private void validateObstacle(Board board, Position target, List<Position> path) {
         pathFromSourceToTarget(target, path).stream()
-                .filter(position -> board.get(position) != EmptyPiece.getInstance())
+                .filter(board::isNotEmpty)
                 .findFirst()
                 .ifPresent(position -> {
                     throw new InvalidMovementException("경로에 기물이 존재합니다.");
@@ -77,6 +93,10 @@ public abstract class GamePiece {
 
     public boolean isPawn() {
         return this instanceof Pawn;
+    }
+
+    public boolean isSameColor(GamePiece gamePiece) {
+        return playerColor.equals(gamePiece.playerColor);
     }
 
     public abstract List<Position> getOriginalPositions();

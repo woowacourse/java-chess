@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
@@ -33,18 +34,46 @@ public class Pawn extends GamePiece {
     }
 
     @Override
-    public void validateMoveTo(Map<Position, GamePiece> board, Position source, Position target) {
-        GamePiece targetPiece = board.get(target);
+    public List<String> searchPaths(Board board, Position source) {
+        List<String> paths = new ArrayList<>();
+        List<Position> path = decideMovePath(source);
 
-        if (playerColor == targetPiece.playerColor) {
-            throw new InvalidMovementException("자신의 말은 잡을 수 없습니다.");
-        }
+        findMovablePositions(board, paths, path);
+        findKillPath(board, source, paths);
 
-        validatePath(board, source, target);
+        return paths;
     }
 
-    private void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
-        if (board.get(target) != EmptyPiece.getInstance()) {
+    private List<Position> decideMovePath(Position source) {
+        List<Position> path = source.pathTo(moveDirection, moveCount);
+        if (playerColor.reviseInitialPositions(originalPositions).contains(source)) {
+            path = source.pathTo(moveDirection, FIRST_MOVE_COUNT);
+        }
+        return path;
+    }
+
+    private void findMovablePositions(Board board, List<String> paths, List<Position> path) {
+        for (Position position : path) {
+            if (board.isNotEmpty(position)) {
+                break;
+            }
+            paths.add(position.getName());
+        }
+    }
+
+    private void findKillPath(Board board, Position source, List<String> paths) {
+        for (Direction killDirection : killDirections) {
+            Position position = source.nextPositionOf(killDirection).orElse(null);
+            if (position == null || !board.isNotEmpty(position) || board.isSameColor(this, position)) {
+                continue;
+            }
+            paths.add(position.getName());
+        }
+    }
+
+    @Override
+    public void validateMoveTo(Board board, Position source, Position target) {
+        if (board.isNotEmpty(target)) {
             validateKillPath(source, target);
             return;
         }
@@ -60,19 +89,15 @@ public class Pawn extends GamePiece {
                 .orElseThrow(() -> new InvalidMovementException("이동할 수 없는 경로입니다."));
     }
 
-    private void validateMovePath(Map<Position, GamePiece> board, Position source, Position target) {
-        List<Position> path = source.pathTo(moveDirection, moveCount);
-        if (playerColor.reviseInitialPositions(originalPositions).contains(source)) {
-            path = source.pathTo(moveDirection, FIRST_MOVE_COUNT);
-
-        }
+    private void validateMovePath(Board board, Position source, Position target) {
+        List<Position> path = decideMovePath(source);
 
         if (!path.contains(target)) {
             throw new InvalidMovementException("이동할 수 없는 경로입니다.");
         }
 
         pathFromSourceToTarget(target, path).stream()
-                .filter(position -> board.get(position) != EmptyPiece.getInstance())
+                .filter(board::isNotEmpty)
                 .findFirst()
                 .ifPresent(position -> {
                     throw new InvalidMovementException("경로에 기물이 존재합니다.");

@@ -4,18 +4,14 @@ import static chess.util.RepositoryUtil.*;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.piece.GamePieces;
-import chess.view.OutputView;
 
 public class CellDAO {
 

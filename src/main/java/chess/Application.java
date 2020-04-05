@@ -1,7 +1,9 @@
 package chess;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
+import chess.domain.player.User;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -17,7 +19,7 @@ public class Application {
         do {
             command = receiveCommand();
             if (command.isStart()) {
-                OutputView.printBoard(service.placeInitialPieces());
+                OutputView.printBoard(BoardFactory.createInitialBoard(new User("123456789"), new User("123456789")));
             }
             if (command.isMove()) {
                 executeMovement(service, command);

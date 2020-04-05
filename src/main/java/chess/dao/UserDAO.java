@@ -5,6 +5,7 @@ import static chess.util.RepositoryUtil.*;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Optional;
 
 import chess.domain.player.User;
 
@@ -17,16 +18,16 @@ public class UserDAO {
         pstmt.executeUpdate();
     }
 
-    public User findByUserName(String userName) throws SQLException {
+    public Optional<User> findByUserName(String userName) throws SQLException {
         String query = "SELECT * FROM user WHERE name = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, userName);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next())
-            return null;
+            return Optional.empty();
 
-        return new User(rs.getString("name"));
+        return Optional.ofNullable(new User(rs.getString("name")));
     }
 
     public User updateUserNameByUserName(String originalName, String changedName) throws SQLException {
@@ -36,7 +37,7 @@ public class UserDAO {
         pstmt.setString(2, originalName);
         int changedColumnCount = pstmt.executeUpdate();
 
-        return findByUserName(changedName);
+        return findByUserName(changedName).orElse(new User(changedName));
     }
 
     public boolean deleteUserByUserName(String name) throws SQLException {

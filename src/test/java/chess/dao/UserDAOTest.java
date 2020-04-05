@@ -33,7 +33,7 @@ class UserDAOTest {
 
     @Test
     public void findByUserName() throws Exception {
-        User user = userDao.findByUserName("testUser");
+        User user = userDao.findByUserName("testUser").orElse(null);
         assertEquals(new User("testUser"), user);
     }
 

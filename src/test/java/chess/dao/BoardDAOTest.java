@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.player.User;
-import chess.view.OutputView;
 
 class BoardDAOTest {
 
@@ -25,15 +24,15 @@ class BoardDAOTest {
 
     @Test
     public void addBoard() throws Exception {
-        Board board = BoardFactory.createInitialBoard();
+        Board board = BoardFactory.createInitialBoard(firstUser, secondUser);
 
         boardDao.addBoard(board, firstUser, secondUser);
     }
 
     @Test
     public void findByUserName() throws Exception {
-        Board board = boardDao.findByUserName(firstUser, secondUser);
-        assertEquals(BoardFactory.createInitialBoard(), board);
+        Board board = boardDao.findByUserName(firstUser, secondUser).orElse(BoardFactory.createInitialBoard(firstUser, secondUser));
+        assertEquals(BoardFactory.createInitialBoard(firstUser, secondUser), board);
     }
 
 }

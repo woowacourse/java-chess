@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
