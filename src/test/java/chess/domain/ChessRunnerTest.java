@@ -72,14 +72,6 @@ class ChessRunnerTest {
     }
 
 
-    @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 예외 출력")
-    @Test
-    void getWinnerTest() {
-        assertThatThrownBy(() -> {
-            chessRunner.getWinner();
-        }).isInstanceOf(AssertionError.class);
-    }
-
     @Test
     void tileDtosTest() {
         List<TileDto> tileDtos = chessRunner.tileDtos();

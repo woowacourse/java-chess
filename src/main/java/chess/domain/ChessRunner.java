@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.controller.dto.BoardScoreDto;
 import chess.controller.dto.TileDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
@@ -8,13 +9,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessRunner {
     private Board board;
@@ -99,8 +97,22 @@ public class ChessRunner {
     }
 
     public double calculateScore() {
-        BoardScore boardScore = this.board.calculateScore(this.currentTeam);
-        return boardScore.getBoardScore();
+        BoardScore currentTeamScore = this.board.calculateScore(this.currentTeam);
+        return currentTeamScore.getBoardScore();
+    }
+
+    public List<BoardScoreDto> calculateScores() {
+        List<BoardScoreDto> scores = new ArrayList<>();
+        BoardScoreDto currentTeam = new BoardScoreDto(calculateScore());
+        currentTeam.setTeam(this.currentTeam.name());
+        scores.add(currentTeam);
+
+        BoardScore oppositeTeamScore = this.board.calculateScore(this.currentTeam.changeTeam());
+        BoardScoreDto oppositeTeam = new BoardScoreDto(oppositeTeamScore.getBoardScore());
+        oppositeTeam.setTeam(this.currentTeam.changeTeam().name());
+        scores.add(oppositeTeam);
+
+        return Collections.unmodifiableList(scores);
     }
 
     public boolean isEndChess() {

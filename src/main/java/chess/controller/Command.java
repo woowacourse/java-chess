@@ -18,7 +18,7 @@ public enum Command {
         this.command = command;
         this.gameController = gameController;
     }
-       
+
     public static Optional<Command> of(final String command) {
         return Arrays.stream(values())
                 .filter(c -> command.contains(c.command))

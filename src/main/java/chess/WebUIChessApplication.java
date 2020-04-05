@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.controller.dto.BoardScoreDto;
 import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
@@ -38,6 +37,8 @@ public class WebUIChessApplication {
         });
 
         post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
@@ -45,20 +46,21 @@ public class WebUIChessApplication {
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
 
-            Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("message", moveResultDto.getMessage());
             model.put("style", moveResultDto.getStyle());
 
+            if (webChessController.isEndGame()) {
+                return render(model, "end.html");
+            }
             return render(model, "game.html");
         });
 
         post("/status", (req, res) -> {
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
-            BoardScoreDto boardScoreDto = webChessController.getBoardScore();
-            String message = teamDto.getTeamName() + "의 점수는 " + boardScoreDto.getBoardScore() + "입니다.";
+            String message = webChessController.getScores();
 
             Map<String, Object> model = new HashMap<>();
             model.put("tiles", tileDtos);
