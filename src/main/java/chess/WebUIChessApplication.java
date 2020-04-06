@@ -4,6 +4,7 @@ import chess.controller.ChessManager;
 import chess.controller.command.Command;
 import chess.controller.dto.ScoreDto;
 import chess.controller.dto.Tile;
+import chess.database.ChessCommand;
 import chess.database.ChessCommandDao;
 import chess.domain.piece.Team;
 import spark.ModelAndView;
@@ -28,7 +29,7 @@ public class WebUIChessApplication {
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
             Map<String, Object> model = new HashMap<>();
-            if (chessCommandDao.selectCommands() != null) {
+            if (!chessCommandDao.selectCommands().isEmpty()) {
                 model.put("haveLastGameRecord", "true");
             }
             return render(model, "chessGameStart.html");
@@ -113,7 +114,7 @@ public class WebUIChessApplication {
     }
 
     public static void saveToDatabase(String command) throws SQLException {
-        chessCommandDao.addCommand(command);
+        chessCommandDao.addCommand(new ChessCommand(command));
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

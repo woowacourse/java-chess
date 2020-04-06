@@ -41,10 +41,10 @@ public class ChessCommandDao {
         }
     }
 
-    public void addCommand(String cmd) throws SQLException {
+    public void addCommand(ChessCommand command) throws SQLException {
         String query = "INSERT INTO commands VALUES (?)";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, cmd);
+        preparedStatement.setString(1, command.getCommand());
         preparedStatement.executeUpdate();
     }
 
@@ -59,13 +59,7 @@ public class ChessCommandDao {
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
         ResultSet rs = preparedStatement.executeQuery();
 
-        if (!rs.next()) {
-            return null;
-        }
-
         List<String> commands = new ArrayList<>();
-        commands.add(rs.getString("command"));
-
         while (rs.next()) {
             commands.add(rs.getString("command"));
         }

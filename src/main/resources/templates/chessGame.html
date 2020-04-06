@@ -9,7 +9,7 @@
 <body>
 <div id="gameUI">
     <h1 id="title">크리스마스 체스</h1>
-        <div id="chessBoard">
+    <div id="chessBoard">
         {{#chessPieces}}
         <div id="{{position}}" class="tile">
             {{#if piece}}
@@ -33,12 +33,9 @@
 
         {{#if error}}
         <div id="move_error" class="error">{{error}}</div>
-        {{/if }}
+        {{/if}}
         <form action="/status" method="post">
             <button id="status_button" name="status" type="submit">STATUS</button>
-        </form>
-        <form action="/end" method="post">
-            <button id="end_button" name="end" type="submit">END</button>
         </form>
         <br/>
         <form action="/move" method="post">
