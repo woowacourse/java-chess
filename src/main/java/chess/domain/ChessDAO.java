@@ -35,18 +35,10 @@ public class ChessDAO {
         return con;
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
     public void savePiece(List<Piece> pieces) throws SQLException {
         PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Pieces");
         cleanup.executeUpdate();
+
         for (Piece piece : pieces) {
             String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
             PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -60,6 +52,7 @@ public class ChessDAO {
     public void saveTurn(Turn turn) throws SQLException {
         PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Turn");
         cleanup.executeUpdate();
+
         String query = "INSERT INTO Turn (turn) VALUES (?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, turn.getTeam().toString());
@@ -88,9 +81,9 @@ public class ChessDAO {
         String query = "SELECT * FROM Turn";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) return null;
-
+        if (!rs.next()) {
+            return null;
+        }
         return new Turn(Team.valueOf(rs.getString("turn")));
     }
 }
