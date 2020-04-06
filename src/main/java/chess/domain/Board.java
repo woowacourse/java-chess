@@ -39,7 +39,6 @@ public class Board {
 		board.remove(from);
 		checkKingDead(to);
 		board.put(to, source);
-
 	}
 
 	private void checkTurn(Turn turn, Piece source) {

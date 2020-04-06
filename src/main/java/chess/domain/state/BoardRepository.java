@@ -48,4 +48,11 @@ public class BoardRepository {
 	public static Board create() {
 		return new Board(initialBoard);
 	}
+
+	public static Piece findByName(String name) {
+		return initialBoard.values().stream()
+			.filter(piece -> piece.getSymbol().equals(name))
+			.findFirst()
+			.orElseThrow(()->new IllegalArgumentException("존재하지 않는 유닛입니다."));
+	}
 }
