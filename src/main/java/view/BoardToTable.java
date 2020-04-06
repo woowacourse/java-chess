@@ -35,7 +35,7 @@ public class BoardToTable {
 					.append("class=")
 					.append(brightness.getBrightness())
 					.append(">")
-					.append(Images.getImageHtml(string))
+					.append(Images.getImageHtmlByInitial(string))
 					.append("</td>");
 			brightness = brightness.makeSwitch();
 		}
