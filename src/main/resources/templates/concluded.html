@@ -3,11 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <link rel="stylesheet" href="./css/chess.css"/>
-  <title>Chess</title>
+  <title>Chess 결과</title>
 </head>
 <body>
 <header>
-  <div id="title">Chess</div>
+  <div id="title">Chess 결과 : {{conclude-message}}</div>
 </header>
 <section id="main">
   <div id="board">
@@ -219,14 +219,6 @@
           <img class="piece" src="image/peace/{{h1.acronym}}.png" onerror="this.src='{{empty-image}}'">
       </div>
     </div>
-  </div>
-  <div id="move">
-    <form action="/" method="post">
-      move
-      <input type="text" placeholder="from" name="from-position">
-      <input type="text" placeholder="to" name="to-position">
-      <button type="submit">GO!</button>
-    </form>
   </div>
 </section>
 </body>

@@ -8,10 +8,12 @@ import static spark.Spark.staticFiles;
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
 import chess.dao.JDBCCommandLogDao;
+import chess.domain.gamestatus.Finished;
 import chess.domain.gamestatus.GameStatus;
 import chess.domain.gamestatus.NothingHappened;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.domain.score.Score;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -51,7 +53,7 @@ public class WebUIController {
 
         executePastRequests();
 
-        return renderRefreshedChessBoard();
+        return refreshAndRender();
     }
 
     private static void executePastRequests() throws SQLException {
@@ -64,19 +66,40 @@ public class WebUIController {
     }
 
     private static String moveAndRender(Request request, Response response) throws SQLException {
-        String requestCommand = "move "
-            + request.queryParams("from-position") + " "
-            + request.queryParams("to-position");
-
+        String requestCommand = "move " + request.queryParams("from-position")
+            + " " + request.queryParams("to-position");
         Command command = CommandReader.of(requestCommand);
         gameStatus = command.execute(gameStatus);
-
         commandLogDao.add(requestCommand);
-        return renderRefreshedChessBoard();
+
+        return refreshAndRender();
     }
 
-    private static String renderRefreshedChessBoard() {
+    private static String refreshAndRender() {
+        if (gameStatus instanceof Finished) {
+            return renderFinishedStatus();
+        }
+        return renderRunningStatus();
+    }
 
+    private static String renderRunningStatus() {
+        Map<String, Object> model = getBoardModel();
+        return render(model, "chess.html");
+    }
+
+    private static String renderFinishedStatus() {
+        Map<String, Object> model = getBoardModel();
+        Score score = gameStatus.scoring();
+        if (score.isDraw()) {
+            model.put("conclude-message", "무승부입니다.");
+        }
+        else {
+            model.put("conclude-message", gameStatus.scoring().getWinner() + " 승!");
+        }
+        return render(model, "concluded.html");
+    }
+
+    private static Map<String, Object> getBoardModel() {
         Map<Position, Piece> board = gameStatus.getBoard();
         Map<String, Object> model = new HashMap<>();
 
@@ -85,7 +108,7 @@ public class WebUIController {
         }
         model.put("empty-image", "image/peace/empty.png");
 
-        return render(model, "chess.html");
+        return model;
     }
 
     private static String renderErrorPage() {

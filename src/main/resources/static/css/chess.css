@@ -6,9 +6,9 @@
 }
 
 body {
-  background-color: white;
+  color: #AAFFED;
   align-content: center;
-  background-image: url("../image/leaves-pattern-clipart-silhouette.jpg");
+  background-image: url("../image/leaves-pattern-clipart-silhouette.png");
   background-size: 300px;
 }
 
@@ -18,8 +18,7 @@ body {
   margin: 70px 0 70px 0;
 }
 
-#main {
-}
+#main {}
 
 #board {
   width: 720px;
@@ -34,6 +33,7 @@ body {
   margin: 0;
   text-align: center;
   overflow: hidden;
+  box-shadow: 0 0 8px 3px rgba(0, 0, 0, 0.3) inset;
 }
 
 .row:nth-of-type(2n - 1) .square:nth-of-type(2n - 1),
@@ -54,4 +54,5 @@ img.piece {
 #move {
   margin: 30px 0 30px 0;
   text-align: center;
+  font-size: 25px;
 }
