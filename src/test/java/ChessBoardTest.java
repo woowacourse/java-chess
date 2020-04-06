@@ -1,4 +1,3 @@
-mport chess.Exception.NotMoveException;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Piece;
@@ -20,7 +19,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,8 +28,7 @@ public class ChessBoardTest {
     @DisplayName("초기 체스판 개수 확인")
     @Test
     void initChessBoard() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
         int actual = chessBoard.getChessBoard().size();
         int expected = 32;
         assertThat(actual).isEqualTo(expected);
@@ -40,21 +37,17 @@ public class ChessBoardTest {
     @DisplayName("(예외) 같은 위치로 이동")
     @Test
     void moveSamePosition() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
-    void 같은_위치로_이동했을때() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
-                .isInstanceOf(NotMoveException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("점수 계산")
     @ParameterizedTest
     @EnumSource(value = Player.class)
     void createStatusTest(Player player) {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
         Status result = chessBoard.createStatus(player);
         double actual = result.getScore();
         double expected = 38;
@@ -65,20 +58,20 @@ public class ChessBoardTest {
     @ParameterizedTest
     @MethodSource("generatePositions3")
     void existPawnNumberTest(List<Piece> columnLine, Player player, int exptectd) {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
         assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
     }
 
     static Stream<Arguments> generatePositions3() {
-        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE),
                 new King(Player.WHITE));
-        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.WHITE, Positions.of("a2")),
-                new Pawn(Player.WHITE, Positions.of("a3"))
+        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE)
         );
-        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.BLACK, Positions.of("a2")),
-                new Pawn(Player.BLACK, Positions.of("a3")));
+        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.BLACK),
+                new Pawn(Player.BLACK));
         List<Piece> whiteKingBlackQueen = Arrays.asList(new King(Player.WHITE), new Queen(Player.BLACK));
 
         return Stream.of(Arguments.of(whitePawnWhiteKing, Player.WHITE, 1),

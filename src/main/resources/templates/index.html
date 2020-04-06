@@ -5,93 +5,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-
-    <style>
-        * {margin: 0; padding: 0; font-family: "Krabby Patty", serif;}
-        body {
-            min-width: 1200px;
-        }
-
-        #background {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        #background > img {
-            width: 100%;
-            height: 100%;
-        }
-
-        #wrap {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-        }
-
-        #wrap #end-container #end-btn {width: 90px; height: 110px; background: transparent url('image/end_button.png') no-repeat; background-size: contain; border: transparent;}
-        #wrap .btn-container {
-            position: absolute;
-        }
-        #end-container {
-            right: 10px;
-            top: 10px;
-        }
-        #board-container {
-            width: 640px;
-            height: 560px;
-            left: 50%;
-            top: 50%;
-            margin-left: -320px;
-            margin-top: -280px;
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;}
-        #board-container .row {flex: 1; display: inline-flex; width: 100%}
-        #board-container .row div {width: 80px; height: 80px;}
-        #board-container .row span {flex-direction: column;}
-        #board-container .row:nth-child(odd) .square:nth-child(even) {background-color: #3ab6c2}
-        #board-container .row:nth-child(odd) .square:nth-child(odd) {background-color: #ffffff}
-        #board-container .row:nth-child(even) .square:nth-child(odd) {background-color: #3ab6c2}
-        #board-container .row:nth-child(even) .square:nth-child(even) {background-color: #ffffff}
-        #turn-container {
-            bottom: 10px;
-            left: 50px;
-        }
-        #wrap #turn-container #turn-btn {width: 300px; height: 200px; background: transparent url('image/turn_button.png') no-repeat; background-size: contain; border: transparent;}
-        #wrap #white-score {}
-        #wrap #black-score {}
-        #wrap .score-container {
-            width: 300px;
-            height: 140px;
-            background: url('image/score.png') no-repeat center center;
-            -webkit-background-size: 100%;
-            background-size: 100%;
-            text-align: center;
-            position: absolute;
-            bottom: 200px;
-            padding-top: 50px;
-            display: inline-grid;
-        }
-        .white-score-container {
-            left: 5%;
-        }
-        .black-score-container {
-            right: 5%;
-        }
-
-        .piece {
-            width: 90%;
-            height: 90%;
-        }
-
-        #wrap .score {color: #ffffff; font-size: 40px; font-weight: bold}
-        #wrap #white-score {height: 100px; color: rgb(237, 125, 49); font-size: 50px;}
-        #wrap #black-score {height: 100px; color: rgb(237, 125, 49); font-size: 50px;}
-    </style>
+    <link rel="stylesheet" href="./css/index.css">
     <title>체스게임!</title>
 </head>
 <body>
@@ -103,10 +17,10 @@
 
         let board = document.createElement("div");
         board.id = "board-container";
-        for (let i in columns) {
+        for (let i in columns.reverse()) {
             let column = columns[i];
             let div = document.createElement("div");
-            div.className = "rows";
+            div.className = "row";
             for (let j in rows) {
                 let row = rows[j];
                 let square = document.createElement("div");
@@ -122,24 +36,53 @@
         // piece 이미지 초기화
         $.ajax({
             type: 'get',
-            url: '/test',
+            url: '/loadGame',
             dataType: 'json',
             error: initError,
-            success: initSuccess
+            success: printChessBoardAndStatus
         });
 
         // drag and drop event 추가
-        $(".piece").on("dragstart", function (event) {
-            // from의 square: event.originalEvent.toElement.parentElement
-            event.originalEvent.dataTransfer.setData("id", "piece");
+        $('.square').on("dragstart", function (event) {
+            console.log("drag start");
+            event.originalEvent.dataTransfer.setData("from", event.currentTarget.id);
         });
 
         $('.square').on("dragover", function (event) {
             event.preventDefault();
         }).on("drop", function (event) {
+            console.log("drop");
+            console.dir(event);
             event.preventDefault();
-            let data = event.originalEvent.dataTransfer.getData("id");
-            event.target.appendChild(document.getElementsByClassName(data).item(0));
+            let from = event.originalEvent.dataTransfer.getData("from");
+            let to = event.currentTarget.id;
+            // let target = event.target.
+
+            // console.log("event: "+event);
+            // console.log("event.currentTarget: "+event.currentTarget);
+            // console.log("event currentTarget.children: "+event.currentTarget.children[0]);
+            // console.log(event.currentTarget.children);
+            // var children = event.currentTarget.children;
+            // console.log(children );
+            // console.log(children[0]);
+            // console.log(event.currentTarget.childElementCount );
+            // console.log(event.currentTarget.children.length);
+            // console.log(event.target.childNodes);
+            // console.log(event.target.childNodes.length);
+            // console.log(event.target.childNodes[0]);
+            // console.log(event.target.firstElementChild);
+
+            $.ajax({
+                type: 'get',
+                url: '/move',
+                dataType: 'json',
+                data: "from=" + from + "&to=" + to,
+                error: function (res) {
+                    alert(res.responseText);
+                },
+                success: printChessBoardAndStatus
+            });
+
         });
     });
 
@@ -148,34 +91,53 @@
     }
 
     // 체스 기물 초기화
-    function initSuccess(response) {
-        response['tiles'].forEach(function (item, index, array) {
+    function printChessBoardAndStatus(response) {
+        let chessBoardDto = response["chessBoardDto"];
+        $(".piece").remove();
+
+        chessBoardDto['tiles'].forEach(function (item, index, array) {
             var piece = document.createElement("img");
-            piece.src = "./image/piece/"+item.piece+".png";
+            piece.src = "./img/piece/" + item.piece + ".png";
             piece.id = item.piece;
             piece.className = "piece";
+            $("#" + item.position).append(piece);
+        });
 
-            $("#"+item.position).append(piece);
-    })
+        let scores = response["result"]["statuses"];
+        scores.forEach(function (item, index, array) {
+            if (item.player == "WHITE") {
+                $("#white-score").text(item.score);
+            }
+            if (item.player == "BLACK") {
+                $("#black-score").text(item.score);
+            }
+        });
+
+        let turn = response["turn"];
+        if (turn == "BALCK") {
+            $("#turn").text("turn: " + turn).css("color", "black");
+        } else if (turn == "WHITE") {
+            $("#turn").text("turn: " + turn).css("color", "white");
+        }
     }
 </script>
 <div id="background">
-    <img src="./image/full_background.png">
+    <img src="./img/full_background.png">
 </div>
 <div id="wrap">
     <div id="end-container" class="btn-container">
-        <button id="end-btn"></button>
+        <button onclick="location.href='/end'" id="end-btn"></button>
     </div>
-    <div id="turn-container" class="btn-container">
-        <button id="turn-btn"></button>
-    </div>
+    <button id="turn-btn" class="btn-container">
+        <span id="turn"> </span>
+    </button>
     <div class="white-score-container score-container">
-        <span class="score">Score</span>
-        <span id="white-score">26</span>
+        <span class="score" style="color: white">White Score</span>
+        <span id="white-score"></span>
     </div>
     <div class="black-score-container score-container">
-        <span class="score">Score</span>
-        <span id="black-score">26</span>
+        <span class="score" style="color: black"> Black Score</span>
+        <span id="black-score"></span>
     </div>
 </div>
 ​

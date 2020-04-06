@@ -38,6 +38,6 @@ public class ChessController {
     }
 
     public ResponseDto getResponseDto(RequestDto requestDto) {
-        return commands.get(requestDto.getCommend()).apply(requestDto);
+        return commands.get(requestDto.getCommand()).apply(requestDto);
     }
 }

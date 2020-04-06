@@ -1,22 +1,38 @@
 package chess.controller.dto;
 
-import chess.domain.game.ChessBoard;
+import chess.domain.game.Player;
 import chess.domain.status.Result;
 
 public class ResponseDto {
-    private ChessBoard chessBoard;
-    private Result result;
+    private final ChessBoardDto chessBoardDto;
+    private final Result result;
+    private final Player turn;
+    private final int roomNumber;
 
-    public ResponseDto(ChessBoard chessBoard, Result result) {
-        this.chessBoard = chessBoard;
+    public ResponseDto(ChessBoardDto chessBoardDto, Result result, Player turn, int roomNumber) {
+        this.chessBoardDto = chessBoardDto;
         this.result = result;
+        this.turn = turn;
+        this.roomNumber = roomNumber;
     }
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
+    public ResponseDto(ChessBoardDto chessBoardDto, Result result, Player turn) {
+        this(chessBoardDto, result, turn, 0);
+    }
+
+    public ChessBoardDto getChessBoardDto() {
+        return chessBoardDto;
     }
 
     public Result getResult() {
         return result;
+    }
+
+    public Player getTurn() {
+        return turn;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
     }
 }
