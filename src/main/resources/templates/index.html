@@ -113,6 +113,9 @@
                 <td class="coordinate">H</td>
                 <td class="coordinate">
                     <button id="startBtn">게임시작</button>
+                    {{#canResume}}
+                    <button id="resumeBtn">이어하기</button>
+                    {{/canResume}}
                 </td>
             </tr>
         </table>
@@ -121,6 +124,7 @@
     <div class="game_info">
         <h3>게임 명령 입력할 거야 {{turn}}</h3>
         <form action="/move" class="game_interface" method="post">
+            <input class="user_id" name="user_id" type="hidden"/>
             <input class="command" name="source" type="text"/>
             <input class="command" name="target" type="text"/>
             <input type="submit" value="입력"/>

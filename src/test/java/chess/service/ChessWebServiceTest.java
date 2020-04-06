@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.dao.MoveHistoryDao;
 import chess.dao.TestPieceDao;
 import chess.domains.board.BoardFactory;
 import chess.domains.piece.Piece;
@@ -19,9 +20,9 @@ class ChessWebServiceTest {
     void test() throws SQLException {
         Map<Position, Piece> saved = BoardFactory.getBoard();
         TestPieceDao dao = new TestPieceDao("guest", saved);
-        ChessWebService webService = new ChessWebService(dao);
+        ChessWebService webService = new ChessWebService(dao, new MoveHistoryDao());
 
-        boolean actual = webService.canContinue("guest");
+        boolean actual = webService.canResume("guest");
 
         assertThat(actual).isEqualTo(true);
     }
@@ -33,10 +34,11 @@ class ChessWebServiceTest {
         Map<Position, Piece> saved = BoardFactory.getBoard();
         saved.remove(Position.ofPositionName("a1"));
         TestPieceDao dao = new TestPieceDao("guest", saved);
-        ChessWebService webService = new ChessWebService(dao);
+        ChessWebService webService = new ChessWebService(dao, new MoveHistoryDao());
 
-        boolean actual = webService.canContinue("guest");
+        boolean actual = webService.canResume("guest");
 
         assertThat(actual).isEqualTo(false);
     }
+
 }

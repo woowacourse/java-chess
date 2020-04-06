@@ -7,10 +7,7 @@ import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -29,8 +26,14 @@ public class Board {
         this.teamColor = PieceColor.WHITE;
     }
 
+    public void resume(Map<Position, Piece> savedBoard, Optional<String> lastTurn) {
+        this.board.putAll(savedBoard);
+        String lastTeamColor = lastTurn.orElseGet(() -> "BLACK");
+        this.teamColor = PieceColor.of(lastTeamColor).changeTeam();
+    }
+
     public List<Piece> showBoard() {
-        ArrayList<Position> positions = new ArrayList<>(board.keySet());
+        List<Position> positions = new ArrayList<>(board.keySet());
         Collections.sort(positions);
 
         return positions.stream()
