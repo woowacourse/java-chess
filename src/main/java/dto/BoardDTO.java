@@ -19,4 +19,15 @@ public class BoardDTO {
             boardValue.add(pieceDTO);
         }
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (PieceDTO pieceDTO : boardValue) {
+            sb.append(pieceDTO.toString()).append("\n");
+        }
+        return "BoardDTO{" +
+                "boardValue=" + boardValue +
+                '}';
+    }
 }

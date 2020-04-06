@@ -34,18 +34,16 @@ public class DBConnection {
     }
 
     // 드라이버 연결해제
-    public static void closeConnection(Connection con) {
+    public static void closeConnection() {
         try {
-            if (con != null)
-                con.close();
+            if (connection != null)
+                connection.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            System.err.println("connection 오류:" + e.getMessage());
         }
     }
 
     public static Connection getInstance() {
-        System.out.println("커넥션은 뭐냐!" + connection);
-
         if (Objects.isNull(connection)) {
             throw new DataBaseConnectionException();
         }

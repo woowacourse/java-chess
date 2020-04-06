@@ -28,11 +28,15 @@ public class ChessGame {
     private Team turn;
 
     public ChessGame() {
-        chessBoard = ChessBoardCreater.create();
+        this(ChessBoardCreater.create(), Team.WHITE);
+    }
+
+    public ChessGame(ChessBoard chessBoard, Team turn) {
+        this.chessBoard = chessBoard;
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
         calculatable = new ScoreCalculator();
-        turn = Team.WHITE;
+        this.turn = turn;
     }
 
     public void changeTurn() {

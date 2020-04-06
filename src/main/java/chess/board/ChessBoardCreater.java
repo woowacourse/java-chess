@@ -3,7 +3,9 @@ package chess.board;
 import chess.location.Location;
 import chess.piece.type.*;
 import chess.team.Team;
+import vo.PieceVO;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 

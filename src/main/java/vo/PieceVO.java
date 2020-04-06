@@ -1,11 +1,5 @@
 package vo;
 
-import chess.board.ChessBoard;
-import chess.location.Location;
-import chess.piece.type.Piece;
-
-import java.util.Map;
-
 public class PieceVO {
     private final int gameId;
     private final String name;

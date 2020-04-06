@@ -1,17 +1,22 @@
 import static spark.Spark.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import chess.command.MoveCommand;
 import chess.location.Location;
 import chess.progress.Progress;
+import converter.ChessGameConverter;
 import dao.BoardDAO;
+import dao.ChessGameDAO;
+import dao.PieceDAO;
 import dto.*;
 import chess.game.ChessGame;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import vo.PieceVO;
 
 public class WebUIChessApplication {
     private static final Gson GSON = new Gson();
@@ -19,6 +24,7 @@ public class WebUIChessApplication {
 
     public static void main(String[] args) {
         staticFiles.location("templates");
+
         ChessGame chessGame = new ChessGame();
 
         get("/main", (req, res) -> {
@@ -32,10 +38,22 @@ public class WebUIChessApplication {
         });
 
         get("/start/board", (req, res) -> {
-            BoardDTO boardDTO = new BoardDTO(chessGame.getChessBoard());
+            PieceDAO pieceDAO = new PieceDAO();
+            ArrayList<PieceVO> pieceVOs = pieceDAO.findByUserId(GAME_ID);
+
+            ChessGameDAO chessGameDAO = new ChessGameDAO();
+            ChessGameDTO chessGameDTO = chessGameDAO.findChessGameBy(GAME_ID);
+
+            if (pieceVOs == null) {
+                BoardDTO boardDTO = new BoardDTO(new ChessGame().getChessBoard());
+                return GSON.toJson(boardDTO);
+            }
+
+            BoardDTO boardDTO = new BoardDTO(ChessGameConverter.convert(pieceVOs, chessGameDTO).getChessBoard());
             return GSON.toJson(boardDTO);
         });
 
+        // 무브할 때마다 DB에 값 있는지 체크하고 없을 경우 확인하기...!
         post("/start/move", (req, res) -> {
             LocationDTO nowDTO = new LocationDTO(req.queryParams("now"));
             LocationDTO destinationDTO = new LocationDTO(req.queryParams("des"));

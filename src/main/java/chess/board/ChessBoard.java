@@ -79,4 +79,16 @@ public class ChessBoard {
     public Piece getPieceIn(Location location) {
         return board.get(location);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Location, Piece> entry : board.entrySet()) {
+            sb.append("location : " + entry.getKey().toString() + "\n");
+            sb.append("piece : " + entry.getValue().toString() + "\n");
+        }
+        return "ChessBoard{" +
+                "board=" + board +
+                '}';
+    }
 }

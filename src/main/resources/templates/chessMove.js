@@ -54,7 +54,7 @@ function getChessBoard() {
             }
         },
         error: function (errorThrown) {
-            alert(errorThrown);
+            alert(JSON.stringify(errorThrown));
         },
     });
 }

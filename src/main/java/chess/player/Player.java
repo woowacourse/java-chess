@@ -1,6 +1,5 @@
 package chess.player;
 
-import chess.location.Location;
 import chess.game.ChessSet;
 import chess.piece.type.Piece;
 import chess.score.Score;
