@@ -8,13 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import domain.piece.Bishop;
-import domain.piece.King;
-import domain.piece.Knight;
-import domain.piece.Pawn;
 import domain.piece.Piece;
-import domain.piece.Queen;
-import domain.piece.Rook;
+import domain.piece.PieceCreator;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
@@ -135,22 +130,6 @@ public class BoardDao {
 
 	private Piece createPiece(ResultSet rs) throws SQLException {
 		Position position = Position.of(rs.getString("piece_position"));
-
-		switch (rs.getString("symbol")) {
-			case "p" : return new Pawn(position, Team.WHITE);
-			case "P" : return new Pawn(position, Team.BLACK);
-			case "r" : return new Rook(position, Team.WHITE);
-			case "R" : return new Rook(position, Team.BLACK);
-			case "n" : return new Knight(position, Team.WHITE);
-			case "N" : return new Knight(position, Team.BLACK);
-			case "b" : return new Bishop(position, Team.WHITE);
-			case "B" : return new Bishop(position, Team.BLACK);
-			case "k" : return new King(position, Team.WHITE);
-			case "K" : return new King(position, Team.BLACK);
-			case "q" : return new Queen(position, Team.WHITE);
-			case "Q" : return new Queen(position, Team.BLACK);
-			default:
-				throw new IllegalStateException("Unexpected value: " + rs.getString("symbol"));
-		}
+		return PieceCreator.of(rs.getString("symbol")).getPieceCreator().apply(position);
 	}
 }
