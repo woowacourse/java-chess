@@ -1,9 +1,10 @@
 package chess.domain.board;
 
+import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 import util.NullChecker;
 
 public class BoardSquare {
@@ -14,18 +15,11 @@ public class BoardSquare {
     private static final String SQUARE_NOT_CACHED_EXCEPTION_MESSAGE = "잘못된 입력 - Square 인자";
 
     static {
-        Map<String, BoardSquare> cache = new HashMap<>();
-        int fileCount = 0;
-        int rankCount = 0;
-        for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                cache.put(file.getName() + rank.getName(), new BoardSquare(file, rank));
-                rankCount++;
-            }
-            fileCount++;
-        }
-        CACHE = Collections.unmodifiableMap(cache);
-        MAX_FILE_AND_RANK_COUNT = Integer.max(fileCount, rankCount / fileCount);
+        CACHE = Collections.unmodifiableMap(Arrays.stream(File.values())
+            .flatMap(file -> Arrays.stream(Rank.values())
+                .map(rank -> new BoardSquare(file, rank)))
+            .collect(Collectors.toMap(BoardSquare::getName, boardSquare -> boardSquare)));
+        MAX_FILE_AND_RANK_COUNT = Integer.max(File.values().length, Rank.values().length);
     }
 
     private final File file;
@@ -48,6 +42,10 @@ public class BoardSquare {
     public static BoardSquare of(File file, Rank rank) {
         NullChecker.validateNotNull(file, rank);
         return BoardSquare.of(file.getName() + rank.getName());
+    }
+
+    private String getName() {
+        return file.getName() + rank.getName();
     }
 
     public boolean hasIncreased(int fileIncrement, int rankIncrement) {
