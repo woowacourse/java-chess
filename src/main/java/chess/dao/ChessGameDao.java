@@ -8,41 +8,47 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ChessGameDao extends DaoTemplate {
-	public int add(Side side) throws SQLException {
+	public int add(Side side) throws Exception {
 		String query = "INSERT INTO game(turn) VALUES (?)";
-		PreparedStatement pstmt = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-		pstmt.setString(1, side.name());
-		pstmt.executeUpdate();
-		ResultSet rs = pstmt.getGeneratedKeys();
-		if (rs.next()) {
-			return rs.getInt(1);
+		try (PreparedStatement pstmt = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+			pstmt.setString(1, side.name());
+			pstmt.executeUpdate();
+			try (ResultSet rs = pstmt.getGeneratedKeys()) {
+				if (!rs.next()) {
+					throw new RuntimeException("기본 id가 올바르게 생성되지 않았습니다.");
+				}
+				return rs.getInt(1);
+			}
 		}
-		throw new AssertionError();
 	}
 
 	public void updateTurn(int gameId, Side side) throws SQLException {
 		String query = "UPDATE game SET turn = (?) WHERE id = (?)";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setString(1, side.name());
-		pstmt.setInt(2, gameId);
-		pstmt.executeUpdate();
+		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+			pstmt.setString(1, side.name());
+			pstmt.setInt(2, gameId);
+			pstmt.executeUpdate();
+		}
 	}
 
 	public void deleteByGameId(int gameId) throws SQLException {
 		String query = "DELETE FROM game WHERE id = (?)";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setInt(1, gameId);
-		pstmt.executeUpdate();
+		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+			pstmt.setInt(1, gameId);
+			pstmt.executeUpdate();
+		}
 	}
 
-	public Side findTrunByGameId(int gameId) throws SQLException {
+	public Side findTrunByGameId(int gameId) throws Exception {
 		String query = "SELECT * FROM game WHERE id = (?)";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setInt(1, gameId);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return Side.valueOf(rs.getString("turn"));
+		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+			pstmt.setInt(1, gameId);
+			try (ResultSet rs = pstmt.executeQuery()) {
+				if (!rs.next()) {
+					throw new IllegalArgumentException("id에 해당하는 정보가 없습니다.");
+				}
+				return Side.valueOf(rs.getString("turn"));
+			}
 		}
-		throw new IllegalArgumentException("id에 해당하는 정보가 없습니다.");
 	}
 }
