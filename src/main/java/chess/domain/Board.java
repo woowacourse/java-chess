@@ -35,7 +35,6 @@ public class Board {
                 .map(pieces::findByPosition)
                 .collect(Collectors.toList());
         sourcePiece.validateDestination(destination, destinationPiece, piecesInBetween);
-        System.out.println(destinationPiece);
         pieces.validateMove(source, destination);
         if (destinationPiece != null) {
             killPiece(sourcePiece, destinationPiece);
