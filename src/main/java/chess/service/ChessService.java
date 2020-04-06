@@ -3,12 +3,12 @@ package chess.service;
 import chess.board.BoardGenerator;
 import chess.board.ChessBoard;
 import chess.board.ChessBoardAdapter;
+import chess.entity.ChessEntity;
+import chess.entity.Movement;
 import chess.manager.ChessManager;
 import chess.piece.Piece;
 import chess.repository.ChessRepository;
 import chess.repository.MovementRepository;
-import chess.repository.entity.ChessEntity;
-import chess.repository.entity.Movement;
 import chess.web.dto.ChessBoardResponse;
 import chess.web.dto.MoveRequest;
 import chess.web.dto.MoveResponse;
@@ -72,6 +72,9 @@ public class ChessService {
     }
 
     public ChessBoardResponse loadSavedGame(Long targetId) {
+        chessRepository.findById(targetId)
+                .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", targetId)));
+
         List<Movement> movements = movementRepository.findAllByChessId(targetId);
         ChessManager chessManager = new ChessManager(BoardGenerator.create());
         chessManager.moveAll(movements);

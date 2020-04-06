@@ -5,10 +5,12 @@ import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;
 
-public class CanNotMoveExceptionHandler extends AbstractExceptionHandler<IllegalArgumentException> {
+import java.util.NoSuchElementException;
+
+public class NoSuchElementExceptionHandler extends AbstractExceptionHandler<NoSuchElementException> {
 
     @Override
-    public void handle(IllegalArgumentException exception, Request request, Response response) {
+    public void handle(NoSuchElementException exception, Request request, Response response) {
         response.status(HttpStatus.BAD_REQUEST_400);
         response.body(gson.toJson(DefaultResponse.BADREQUEST(exception, exception.getMessage())));
     }

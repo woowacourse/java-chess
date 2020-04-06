@@ -1,4 +1,4 @@
-package chess.repository.entity;
+package chess.entity;
 
 import chess.piece.Team;
 

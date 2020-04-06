@@ -1,6 +1,6 @@
 package chess.repository;
 
-import chess.repository.entity.Movement;
+import chess.entity.Movement;
 
 import java.util.Hashtable;
 import java.util.List;

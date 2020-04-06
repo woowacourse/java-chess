@@ -1,6 +1,6 @@
 package chess.web.dto;
 
-import chess.repository.entity.ChessEntity;
+import chess.entity.ChessEntity;
 
 import java.time.format.DateTimeFormatter;
 

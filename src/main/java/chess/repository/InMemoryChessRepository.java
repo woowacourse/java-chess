@@ -1,6 +1,6 @@
 package chess.repository;
 
-import chess.repository.entity.ChessEntity;
+import chess.entity.ChessEntity;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;

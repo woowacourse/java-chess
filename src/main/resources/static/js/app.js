@@ -19,7 +19,7 @@ const App = function app() {
     startBtn.addEventListener('click', (evnet) => {
         clearDeadPieces();
         fetch("http://localhost:8080/chessboard", {method: "POST"})
-            .then(res => res.json())
+            .then(resolver)
             .then(loadChessBoard)
             .catch(alert)
         ;
@@ -29,7 +29,7 @@ const App = function app() {
         fetch("http://localhost:8080/chessboard", {method: "GET"})
             .then(resolver)
             .then(loadSavedGame)
-            .catch(alert);
+            .catch(errorHandler);
     });
 
     function loadSavedGame(resolve) {
@@ -50,8 +50,8 @@ const App = function app() {
         }
         fetch("http://localhost:8080/chessboard/" + select, {method: "GET"})
             .then(resolver)
-            .then(res => loadChessBoard(res.body))
-            .catch(alert);
+            .then(loadChessBoard)
+            .catch(errorHandler);
     }
 
     function addTileClickEvent() {
@@ -89,12 +89,29 @@ const App = function app() {
         }
         if (isEmpty(sourceKey.value)) {
             sourceKey.value = tiles[i].id;
-        } else {
-            targetKey.value = tiles[i].id;
+            saveSelectedTile();
+            return;
         }
+        targetKey.value = tiles[i].id;
 
+        removeSelectedTile();
         if (sourceKey.value === targetKey.value) {
             clearMoveSource();
+        }
+    }
+
+    function saveSelectedTile() {
+        const sourceTile = document.getElementById(sourceKey.value);
+        originalColor = sourceTile.style.backgroundColor;
+        sourceTile.style.backgroundColor = "gray";
+    }
+
+    var originalColor;
+
+    function removeSelectedTile() {
+        const sourceTile = document.getElementById(sourceKey.value);
+        if (sourceTile) {
+            sourceTile.style.backgroundColor = originalColor;
         }
     }
 
@@ -167,15 +184,18 @@ const App = function app() {
     }
 
     function loadChessBoard(res) {
-        let data = res.data;
+        let data = res.body.data;
 
         gameId.innerHTML = data.id;
         turn.innerHTML = data.turn;
         const teamScoreDto = data.teamScoreDto;
+        const tiles = data.tilesDto.tiles;
 
         updateScore(teamScoreDto);
-        replaceChessBoard(data.tilesDto.tiles);
+        replaceChessBoard(tiles);
         clearDeadPieces();
+        removeSelectedTile();
+        clearMoveSource();
     }
 
     function replaceChessBoard(responseTiles) {

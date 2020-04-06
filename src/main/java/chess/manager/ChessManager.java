@@ -3,11 +3,11 @@ package chess.manager;
 import chess.board.ChessBoardAdapter;
 import chess.board.Tile;
 import chess.coordinate.Coordinate;
+import chess.entity.Movement;
 import chess.handler.exception.AlreadyEndGameException;
 import chess.observer.Observable;
 import chess.piece.Piece;
 import chess.piece.Team;
-import chess.repository.entity.Movement;
 
 import java.util.Collections;
 import java.util.List;

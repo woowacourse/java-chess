@@ -2,6 +2,8 @@ package chess.web;
 
 import chess.handler.CanNotMoveExceptionHandler;
 import chess.handler.EndGameExceptionHandler;
+import chess.handler.NoSuchElementExceptionHandler;
+import chess.handler.NumberFormatExceptionHandler;
 import chess.handler.exception.AlreadyEndGameException;
 import chess.service.ChessService;
 import chess.web.dto.ChessBoardResponse;
@@ -17,6 +19,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import static spark.Spark.delete;
 import static spark.Spark.exception;
@@ -65,7 +68,6 @@ public class ChessController {
         //load chessboard
         get("/chessboard/:id", (request, response) -> {
             Long targetId = Long.parseLong(request.params("id"));
-
             return toJson(DefaultResponse.OK(chessService.loadSavedGame(targetId)));
         });
 
@@ -91,6 +93,8 @@ public class ChessController {
 
         exception(IllegalArgumentException.class, new CanNotMoveExceptionHandler());
         exception(AlreadyEndGameException.class, new EndGameExceptionHandler());
+        exception(NumberFormatException.class, new NumberFormatExceptionHandler());
+        exception(NoSuchElementException.class, new NoSuchElementExceptionHandler());
     }
 
 }

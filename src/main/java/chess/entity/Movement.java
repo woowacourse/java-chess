@@ -1,4 +1,4 @@
-package chess.repository.entity;
+package chess.entity;
 
 public class Movement extends BaseEntity implements Comparable<Movement> {
 

@@ -1,6 +1,6 @@
 package chess.web.dto;
 
-import chess.repository.entity.Movement;
+import chess.entity.Movement;
 
 public class MoveRequest {
     private Long id;

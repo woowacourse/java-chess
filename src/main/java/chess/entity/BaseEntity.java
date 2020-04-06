@@ -1,4 +1,4 @@
-package chess.repository.entity;
+package chess.entity;
 
 import java.time.LocalDateTime;
 
