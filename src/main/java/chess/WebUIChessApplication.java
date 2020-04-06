@@ -27,10 +27,9 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
     private static final Gson GSON = new GsonBuilder().create();
     private static final ChessGameDao chessGameDao = new ChessGameDao();
-    private static int nextId = 1;
 
     public static void main(String[] args) {
-        Spark.staticFileLocation("assets");
+        Spark.staticFileLocation("/assets");
 
         get("/games", (req, res) -> GSON.toJson(new ResponseDto(ResponseDto.SUCCESS, chessGameDao.selectAll())));
 

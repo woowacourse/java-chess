@@ -1,0 +1,280 @@
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  background: #333;
+}
+
+.wrapper {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-board {
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
+  background: #5a3c29;
+  box-shadow: 0 0 15px #222;
+}
+
+.chess-map {
+  display: flex;
+  flex-direction: column;
+}
+
+.chess-row {
+  display: flex;
+}
+
+.chess-col {
+  display: flex;
+  width: 64px;
+  height: 64px;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-row:nth-child(2n) .chess-col {
+  background-color: #5a3c29;
+}
+
+.chess-row:nth-child(2n) .chess-col:nth-child(2n) {
+  background-color: #edcaa4;
+}
+
+.chess-row:nth-child(2n + 1) .chess-col {
+  background-color: #edcaa4;
+}
+
+.chess-row:nth-child(2n + 1) .chess-col:nth-child(2n) {
+  background-color: #5a3c29;
+}
+
+.chess-container {
+  display: flex;
+}
+
+.chess-file {
+  display: flex;
+  justify-content: center;
+  background: #edcaa4;
+}
+
+.chess-rank {
+  display: flex;
+  flex-direction: column-reverse;
+  background: #edcaa4;
+}
+
+.chess-symbol {
+  color: #5a3c29;
+  text-align: center;
+  font-weight: bold;
+}
+
+.chess-file .chess-symbol {
+  width: 64px;
+  height: 24px;
+  padding: 0 12px;
+}
+
+.chess-rank .chess-symbol {
+  width: 24px;
+  height: 64px;
+  padding: 12 0px;
+  line-height: 64px;
+}
+
+.chess-map {
+  display: flex;
+  border: 4px solid #5a3c29;
+}
+
+.chess-piece {
+  width: 55px;
+  height: 55px;
+  background-image: url('../chess-pieces.png');
+}
+
+.chess-piece.blank {
+  background-image: none;
+}
+
+.chess-piece.queen.white {
+  background-position: -55px 0;
+}
+
+.chess-piece.king.white {
+  background-position: 0 0;
+}
+
+.chess-piece.bishop.white {
+  background-position: -110px 0;
+}
+
+.chess-piece.knight.white {
+  background-position: -165px 0;
+}
+
+.chess-piece.rook.white {
+  background-position: -220px 0;
+}
+
+.chess-piece.pawn.white {
+  background-position: -275px 0;
+}
+
+.chess-piece.queen.black {
+  background-position: -55px 55px;
+}
+
+.chess-piece.king.black {
+  background-position: 0 55px;
+}
+
+.chess-piece.bishop.black {
+  background-position: -110px 55px;
+}
+
+.chess-piece.knight.black {
+  background-position: -165px 55px;
+}
+
+.chess-piece.rook.black {
+  background-position: -220px 55px;
+}
+
+.chess-piece.pawn.black {
+  background-position: -275px 55px;
+}
+
+.chess-status {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  height: 300px;
+  align-items: center;
+  justify-content: space-around;
+  background: #5a3c29;
+}
+
+.chess-score-board {
+  display: flex;
+  flex-direction: row-reverse;
+  width: 260px;
+  height: 120px;
+  justify-content: center;
+  align-items: center;
+  background: #edcaa4;
+}
+
+.chess-score {
+  font-weight: bold;
+  color: #5a3c29;
+}
+
+.chess-menu {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 400px;
+  background: #5a3c29;
+}
+
+.chess-games {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 300px;
+  height: 300px;
+  background: #edcaa4;
+  overflow-y: auto;
+}
+
+.chess-create {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  flex: 1;
+}
+
+.chess-create-submit {
+  background: #edcaa4;
+  padding: 10px 20px;
+  color: #333;
+  font-weight: bold;
+}
+
+.chess-game {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+  text-align: center;
+  padding: 10px;
+  border-bottom: 1px solid #5a3c29;
+  color: #5a3c29;
+}
+
+.chess-alert {
+  display: flex;
+  position: absolute;
+  width: 300px;
+  height: 150px;
+  background: #5a3c29;
+  border: 20px solid #edcaa4;
+  justify-content: center;
+  align-items: center;
+}
+
+.chess-alert-message {
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.chess-result {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 300px;
+  height: 150px;
+  background: #5a3c29;
+  border: 20px solid #edcaa4;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.chess-result-message {
+  font-weight: bold;
+  color: #f1f1f1;
+}
+
+.chess-result-restart {
+  background: #edcaa4;
+  color: #5a3c29;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: flex;
+}
