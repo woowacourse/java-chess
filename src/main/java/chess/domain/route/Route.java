@@ -34,18 +34,6 @@ public class Route {
         return new Route(movablePositions);
     }
 
-    private static List<Position> subListByPieceType(List<Position> movablePositions, Position fromPosition, PieceType pieceType) {
-        if (pieceType == PieceType.PAWN && fromPosition.isAt(Row.TWO)) {
-            return movablePositions.subList(0, 2);
-        }
-
-        if (pieceType == PieceType.PAWN || pieceType == PieceType.KING || pieceType == PieceType.KNIGHT) {
-            return movablePositions.subList(0, 1);
-        }
-
-        return movablePositions;
-    }
-
     private static List<Position> findAllMovablePositions(Position fromPosition, Direction direction) {
         List<Position> movablePositions = new ArrayList<>();
         Position movedPosition = fromPosition;
@@ -56,6 +44,20 @@ public class Route {
                 movablePositions.add(movedPosition);
             } catch (IllegalArgumentException e) {
                 break;
+            }
+        }
+
+        return movablePositions;
+    }
+
+    private static List<Position> subListByPieceType(List<Position> movablePositions, Position fromPosition, PieceType pieceType) {
+        if (pieceType == PieceType.PAWN && (fromPosition.isAt(Row.TWO) || fromPosition.isAt(Row.SEVEN))) {
+            return movablePositions.subList(0, 2);
+        }
+
+        if (pieceType == PieceType.PAWN || pieceType == PieceType.KING || pieceType == PieceType.KNIGHT) {
+            if (movablePositions.size() > 0) {
+                return movablePositions.subList(0, 1);
             }
         }
 
