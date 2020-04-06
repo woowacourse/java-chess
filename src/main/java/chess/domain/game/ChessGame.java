@@ -52,6 +52,6 @@ public class ChessGame {
 
     public ResponseDto end(RequestDto requestDto) {
         gameStatus = GameStatus.FINISH;
-        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
     }
 }

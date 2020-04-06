@@ -18,7 +18,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static Gson gson = new Gson();
     private static final ChessController chessController = new ChessController();
-<   private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
+    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
     private static final GameDao gameDao = new GameDao();
 
     public static void main(String[] args) {
@@ -30,16 +30,16 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-          get("/loadGame", (req, res) -> {
+        get("/loadGame", (req, res) -> {
             try {
                 //            String state = gameDao.findState(roomNumber);
 //            if (state.equals("playing")) {
 //                Map<Position, Piece> positionPieceMap = chessBoardDao.loadGamePlaying(700);
 //            } else if (state.equals("end")) {
-            responseDto = chessController.start(new RequestDto(Command.START));
-            gameDao.saveInitGame(responseDto);
-            int roomNumber = gameDao.findMaxRoomNumber();
-            chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
+                ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
+                gameDao.saveInitGame(responseDto);
+                int roomNumber = gameDao.findMaxRoomNumber();
+                chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
                 res.status(200);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {

@@ -93,7 +93,7 @@ body {
     left: 50px;
     width: 300px;
     height: 200px;
-    background: transparent url('../img/turn_button.png') no-repeat;
+    background: transparent url('../img/turn-button.png') no-repeat;
     background-size: contain;
     border: transparent;
 }
@@ -101,7 +101,7 @@ body {
 #turn {
     position: relative;
     font-size: xx-large;
-    top: 20px;
+    top: 22px;
     left: 30px;
 }
 
@@ -149,14 +149,6 @@ body {
     color: #ffffff;
     font-size: 40px;
     font-weight: bold
-}
-
-#wrap .white-score-container .score {
-    color: white;
-}
-
-#wrap .black-score-container .score {
-    color: black;
 }
 
 #wrap #white-score {
