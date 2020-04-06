@@ -55,6 +55,18 @@
 - [x] 흑과 백의 차례에 따라 상대편 말을 이동하는 것을 제한하는 기능
 
 ###### 5단계
+**테이블 생성 SQL문**
+```
+CREATE TABLE `Pieces` (
+`position` VARCHAR(20) NOT NULL,
+`representation` CHAR(1) NOT NULL,
+`team` VARCHAR(10) NOT NULL,
+PRIMARY KEY (`position`));
+
+CREATE TABLE `turn` (
+`turn` VARCHAR(10) NOT NULL,
+PRIMARY KEY (`turn`));
+```
 - [x] MySQL DB에 게임 진행 상태를 저장하는 기능
 - [x] MySQL DB로부터 이전 진행 상태를 불러오는 기능
 
