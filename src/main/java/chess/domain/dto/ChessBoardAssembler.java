@@ -21,7 +21,7 @@ public class ChessBoardAssembler {
 		List<List<String>> board = createEmptyBoard();
 
 		for (Piece piece : chessBoard.getPieces()) {
-			PieceDto pieceDto = PieceAssembler.create(piece);
+			PieceDto pieceDto = PieceAssembler.createDto(piece);
 
 			List<String> boardRow = board.get(ROW_COUNT - pieceDto.getRow());
 			boardRow.set(pieceDto.getCol() - INDEX_ADJUST, pieceDto.getName());
