@@ -27,6 +27,8 @@ public enum Direction {
 	SEE(-1, 2, (rowGap, columnGap) -> rowGap == -1 && columnGap == 2),
 	SWW(-1, -2, (rowGap, columnGap) -> rowGap == -1 && columnGap == -2);
 
+	public static final int NO_CELL_TO_CHECK = 0;
+
 	private int rowGap;
 	private int columnGap;
 	private BiFunction<Integer, Integer, Boolean> find;
@@ -53,18 +55,30 @@ public enum Direction {
 	}
 
 	public boolean hasPieceInRoute(Position position, Position targetPosition, Board board) {
-		int loopCount = calculateLoopCount(position, targetPosition) - 1;
+		int countOfCellToCheck = calculateLoopCount(position, targetPosition) - 1;
+
+		if (countOfCellToCheck == NO_CELL_TO_CHECK) {
+			return false;
+		}
+
+		return checkPieceInRoute(board, countOfCellToCheck, position);
+	}
+
+	private boolean checkPieceInRoute(Board board, int countOfCellToCheck, Position position) {
 		int routeRow = position.getRowNumber();
 		int routeColumn = position.getColumnNumber();
-		for (int i = 0; i < loopCount; i++) {
+		int loopCount = 0;
+		Optional<Piece> piece;
+
+		do {
 			routeRow += this.rowGap;
 			routeColumn += this.columnGap;
-			Optional<Piece> piece = board.findPiece(Position.of(routeColumn, routeRow));
-			if (piece.isPresent()) {
-				return true;
-			}
+			piece = board.findPiece(Position.of(routeColumn, routeRow));
+			loopCount++;
 		}
-		return false;
+		while (loopCount < countOfCellToCheck && !piece.isPresent());
+
+		return piece.isPresent();
 	}
 
 	private int calculateLoopCount(Position position, Position targetPosition) {
