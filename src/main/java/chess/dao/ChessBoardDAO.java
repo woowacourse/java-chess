@@ -101,9 +101,8 @@ public class ChessBoardDAO {
 
     private Board createBoard(ResultSet rs) throws SQLException {
         Map<Position, Piece> board = new HashMap<>();
-
         for (int i = MIN_BOARD_LINE; i <= MAX_BOARD_LINE; i++) {
-            String line = rs.getString(i - 1);
+            String line = rs.getString(i);
             for (int j = MIN_BOARD_LINE; j <= MAX_BOARD_LINE; j++) {
                 Position position = PositionFactory.of(j, i);
                 String pieceName = String.valueOf(line.charAt(j - 1));
