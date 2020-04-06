@@ -31,8 +31,6 @@ const chessGamesElement = document.querySelector('.chess-games');
 const chessCreateSubmitElement = document.querySelector('.chess-create-submit');
 
 const chessCellElements = document.querySelectorAll('.chess-col');
-const findChessCell = (x, y) =>
-  document.querySelector(`[data-x="${x}"][data-y="${y}"]`);
 
 chessCreateSubmitElement.onclick = () => {
   fetch('/create', {
