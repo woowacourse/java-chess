@@ -39,7 +39,8 @@ public class WebChessController {
             List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
             Map<String, String> pieceOnBoards = pieces.stream()
                     .collect(Collectors.toMap(entry -> entry.getPosition(),
-                            entry -> entry.getPieceImageUrl(), (e1, e2) -> e1, HashMap::new));
+                            entry -> entry.getPieceImageUrl(),
+                            (e1, e2) -> e1, HashMap::new));
             this.chessRunner = new ChessRunner(pieceOnBoards);
         }
     }

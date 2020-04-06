@@ -20,7 +20,7 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "start.html");
+            return render(model, "index.html");
         });
 
         post("/game", (req, res) -> {
