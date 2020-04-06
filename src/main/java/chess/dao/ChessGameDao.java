@@ -27,7 +27,7 @@ public class ChessGameDao {
             String database = "chess_game"; // MySQL DATABASE 이름
             String option = "?useSSL=false&serverTimezone=UTC";
             String userName = "root"; //  MySQL 서버 아이디
-            String password = "thsl1020"; // MySQL 서버 비밀번호
+            String password = "root"; // MySQL 서버 비밀번호
 
             // 드라이버 로딩
             try {
