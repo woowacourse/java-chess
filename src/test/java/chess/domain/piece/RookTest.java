@@ -43,11 +43,10 @@ public class RookTest {
         board.put(Square.of("f3"), Pawn.of(Color.BLACK));
         board.put(Square.of("g6"), King.of(Color.BLACK));
         board.put(Square.of("g2"), Pawn.of(Color.WHITE));
+        board.put(Square.of("c6"), Rook.of(Color.BLACK));
 
         Rook rook = Rook.of(Color.BLACK);
-        Set<Square> availableSquares = rook.getMovableSquares(Square.of("c6"), board);
-        for (Square square : availableSquares) {
-        }
+        Set<Square> availableSquares = rook.findMovable(Square.of("c6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(5);

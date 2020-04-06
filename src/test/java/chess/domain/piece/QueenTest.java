@@ -43,11 +43,10 @@ public class QueenTest {
         board.put(Square.of("f3"), Queen.of(Color.BLACK));
         board.put(Square.of("g6"), Queen.of(Color.BLACK));
         board.put(Square.of("g2"), Queen.of(Color.WHITE));
+        board.put(Square.of("c6"), Queen.of(Color.BLACK));
 
         Queen queen = Queen.of(Color.BLACK);
-        Set<Square> availableSquares = queen.getMovableSquares(Square.of("c6"), board);
-        for (Square square : availableSquares) {
-        }
+        Set<Square> availableSquares = queen.findMovable(Square.of("c6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(12);
