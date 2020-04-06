@@ -16,105 +16,90 @@ import chess.domain.game.state.Playing;
 import chess.domain.game.state.Ready;
 import chess.domain.game.state.State;
 import chess.dto.BoardDto;
+import chess.dto.ChessGameDto;
 import chess.dto.TurnDto;
 
 public class ChessGameDao {
-    private static Connection con = null;
+	private static final String server = "localhost:3306"; // MySQL 서버 주소
+	private static final String database = "chess_game"; // MySQL DATABASE 이름
+	private static final String option = "?useSSL=false&serverTimezone=UTC";
+	private static final String userName = "root"; //  MySQL 서버 아이디
+	private static final String password = "root"; // MySQL 서버 비밀번호
 
-    public static Connection getConnection() {
-        if (con == null) {
-            String server = "localhost:3306"; // MySQL 서버 주소
-            String database = "chess_game"; // MySQL DATABASE 이름
-            String option = "?useSSL=false&serverTimezone=UTC";
-            String userName = "root"; //  MySQL 서버 아이디
-            String password = "root"; // MySQL 서버 비밀번호
+	private static Connection connection;
 
-            // 드라이버 로딩
-            try {
-                Class.forName("com.mysql.cj.jdbc.Driver");
-            } catch (ClassNotFoundException e) {
-                System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-                e.printStackTrace();
-            }
+	public static Connection getConnection() {
+		if (connection != null) {
+			return connection;
+		}
+		try {
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
+			e.printStackTrace();
+		}
+		try {
+			connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
+					password);
+			System.out.println("정상적으로 연결되었습니다.");
+		} catch (SQLException e) {
+			System.err.println("연결 오류:" + e.getMessage());
+			e.printStackTrace();
+		}
+		return connection;
+	}
 
-            // 드라이버 연결
-            try {
-                con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName,
-                    password);
-                System.out.println("정상적으로 연결되었습니다.");
-            } catch (SQLException e) {
-                System.err.println("연결 오류:" + e.getMessage());
-                e.printStackTrace();
-            }
-            return con;
-        }
-        return con;
-    }
+	public int create() throws SQLException {
+		String query = "INSERT INTO chess_game(state) VALUES (?)";
+		PreparedStatement pstmt = getConnection().prepareStatement(query, new String[] {"id"});
+		pstmt.setString(1, "READY");
+		pstmt.executeUpdate();
+		ResultSet rs = pstmt.getGeneratedKeys();
+		if (!rs.next()) {
+			return -1;
+		}
+		return rs.getInt(1);
+	}
 
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
+	public List<Integer> findAll() throws SQLException {
+		String query = "SELECT id FROM chess_game";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		List<Integer> ids = new ArrayList<>();
+		while (rs.next()) {
+			ids.add(rs.getInt("id"));
+		}
+		return ids;
+	}
 
-    public ChessGame create() throws SQLException {
-        String query = "INSERT INTO chess_game(state) VALUES (?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query, new String[] {"id"});
-        pstmt.setString(1, "READY");
-        pstmt.executeUpdate();
-        ResultSet resultSet = pstmt.getGeneratedKeys();
-        if (!resultSet.next()) {
-            return null;
-        }
-        int id = resultSet.getInt(1);
-        return new ChessGame(id, new Ready());
-    }
+	public ChessGame findById(int id) throws SQLException {
+		String query = "SELECT * FROM chess_game WHERE id = ?";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setInt(1, id);
+		ResultSet rs = pstmt.executeQuery();
+		if (!rs.next()) {
+			return null;
+		}
+		State state = new Ready();
+		if (rs.getString("state").equals("PLAYING")) {
+			state = new Playing(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
+		}
+		if (rs.getString("state").equals("FINISHED")) {
+			state = new Finished(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
+		}
+		return new ChessGame(state);
+	}
 
-    public List<Integer> selectAll() throws SQLException {
-        String query = "SELECT id FROM chess_game";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        List<Integer> ids = new ArrayList<>();
-        while (rs.next()) {
-            ids.add(rs.getInt("id"));
-        }
-        return ids;
-    }
-
-    public ChessGame findById(int id) throws SQLException {
-        String query = "SELECT * FROM chess_game WHERE id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, id);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return null;
-        }
-
-        State state = new Ready();
-        if (rs.getString("state").equals("PLAYING")) {
-            state = new Playing(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
-        }
-        if (rs.getString("state").equals("FINISHED")) {
-            state = new Finished(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
-        }
-        return new ChessGame(id, state);
-    }
-
-    public void update(ChessGame chessGame) throws SQLException {
-        String query = "UPDATE chess_game SET state=?,board=?,turn=? WHERE id=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        BoardDto boardDto = new BoardDto(chessGame.board());
-        TurnDto turnDto = new TurnDto(chessGame.turn());
-        String state = chessGame.getState().toString();
-        pstmt.setString(1, state);
-        pstmt.setString(2, String.join("", boardDto.getBoard()));
-        pstmt.setString(3, turnDto.getTurn().getColor().toString());
-        pstmt.setInt(4, chessGame.getId());
-        pstmt.executeUpdate();
-    }
+	public void update(int id, ChessGame chessGame) throws SQLException {
+		String query = "UPDATE chess_game SET state = ?, board = ?, turn = ? WHERE id=?";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		String board = String.join("", new BoardDto(chessGame.board()).getBoard());
+		String turn = chessGame.turn().getColor().toString();
+		String state = chessGame.getState().toString();
+		pstmt.setString(1, state);
+		pstmt.setString(2, board);
+		pstmt.setString(3, turn);
+		pstmt.setInt(4, id);
+		pstmt.executeUpdate();
+	}
 }
