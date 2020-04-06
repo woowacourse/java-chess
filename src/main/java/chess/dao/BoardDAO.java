@@ -52,12 +52,14 @@ public class BoardDAO {
     private void initializeBoard() throws SQLException {
         String query = "truncate table board";
         PreparedStatement pstmt = connection.prepareStatement(query);
+
         pstmt.executeUpdate();
     }
 
     private void initializeGameStatus() throws SQLException {
         String query = "truncate table game_status";
         PreparedStatement pstmt = connection.prepareStatement(query);
+
         pstmt.executeUpdate();
     }
 
@@ -85,23 +87,26 @@ public class BoardDAO {
     }
 
     private ChessPiece getNewChessPiece(String piece_name, String teamName, Position position) {
-        if (piece_name.toLowerCase().equals("k")) {
+        String lowerPieceName = piece_name.toLowerCase();
+
+        if (lowerPieceName.equals("k")) {
             return new King(Team.of(teamName));
         }
-        if (piece_name.toLowerCase().equals("q")) {
+        if (lowerPieceName.equals("q")) {
             return new Queen(Team.of(teamName));
         }
-        if (piece_name.toLowerCase().equals("r")) {
+        if (lowerPieceName.equals("r")) {
             return new Rook(Team.of(teamName));
         }
-        if (piece_name.toLowerCase().equals("b")) {
+        if (lowerPieceName.equals("b")) {
             return new Bishop(Team.of(teamName));
         }
-        if (piece_name.toLowerCase().equals("n")) {
+        if (lowerPieceName.equals("n")) {
             return new Knight(Team.of(teamName));
         }
-        if (piece_name.toLowerCase().equals("p")) {
+        if (lowerPieceName.equals("p")) {
             Pawn pawn = new Pawn(Team.of(teamName));
+
             pawn.updateFirstMove(teamName, position);
             return pawn;
         }
@@ -128,6 +133,7 @@ public class BoardDAO {
 
         for (int i = 0; i < rows.size(); i++) {
             List<ChessPiece> chessPieces = rows.get(i).getChessPieces();
+
             updateRow(chessPieces, i);
         }
     }
@@ -135,6 +141,7 @@ public class BoardDAO {
     private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
+
             updateColumn(chessPiece, i, j);
         }
     }
@@ -143,6 +150,7 @@ public class BoardDAO {
         if (!(chessPiece instanceof Blank)) {
             String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
+
             pstmt.setString(1, chessPiece.getName());
             pstmt.setString(2, chessPiece.getTeam().getTeamName());
             pstmt.setString(3, String.valueOf(i + 1));
