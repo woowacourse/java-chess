@@ -27,14 +27,4 @@ public abstract class DaoTemplate {
 
 		return connection;
 	}
-
-	public void closeConnection(Connection con) {
-		try {
-			if (con != null) {
-				con.close();
-			}
-		} catch (SQLException e) {
-			System.err.println(e.getMessage());
-		}
-	}
 }
