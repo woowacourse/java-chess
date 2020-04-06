@@ -6,21 +6,21 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CurrentTeamDAO {
-    public void addCurrentTeam(int chessBoardId, String currentTeam) throws SQLException {
+    public void addCurrentTeam(int chessBoardId, CurrentTeam currentTeam) throws SQLException {
         Connection con = ConnectionManager.getConnection();
         String query = "INSERT INTO currentTeam (team, chessBoardId) VALUES(?, ?)";
         PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, currentTeam);
+        pstmt.setString(1, currentTeam.getCurrentTeam());
         pstmt.setInt(2, chessBoardId);
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
     }
 
-    public void updateCurrentTeam(int chessBoardId, String currentTeam) throws SQLException {
+    public void updateCurrentTeam(int chessBoardId, CurrentTeam currentTeam) throws SQLException {
         Connection con = ConnectionManager.getConnection();
         String query = "UPDATE currentTeam SET team = ? WHERE chessBoardId = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, currentTeam);
+        pstmt.setString(1, currentTeam.getCurrentTeam());
         pstmt.setInt(2, chessBoardId);
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);

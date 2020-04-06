@@ -23,7 +23,7 @@ public class WebChessController {
     private ChessRunner chessRunner;
     private ChessBoard chessBoard;
     private CurrentTeam currentTeam;
-    private PieceOnBoards pieceOnBoards;
+    private PieceOnBoards originalPieces;
 
     public void start() throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
@@ -35,16 +35,16 @@ public class WebChessController {
             this.chessRunner = new ChessRunner();
             chessBoardDAO.addChessBoard();
             this.chessBoard = chessBoardDAO.findRecentChessBoard();
-            currentTeamDAO.addCurrentTeam(this.chessBoard.getChessBoardId(), this.chessRunner.getCurrentTeam());
             this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+            currentTeamDAO.addCurrentTeam(this.chessBoard.getChessBoardId(), this.currentTeam);
             List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
             pieceDAO.addPiece(this.chessBoard.getChessBoardId(), tileDtos);
-            updatePieceOnBoards(pieceDAO);
+            updateOriginalPieces(pieceDAO);
             return;
         }
 
-        updatePieceOnBoards(pieceDAO);
-        Map<String, String> pieceOnBoards = this.pieceOnBoards.getPieceOnBoards().stream()
+        updateOriginalPieces(pieceDAO);
+        Map<String, String> pieceOnBoards = this.originalPieces.getPieceOnBoards().stream()
                 .collect(Collectors.toMap(entry -> entry.getPosition(),
                         entry -> entry.getPieceImageUrl(),
                         (e1, e2) -> e1, HashMap::new));
@@ -52,9 +52,9 @@ public class WebChessController {
         this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
     }
 
-    private void updatePieceOnBoards(PieceDAO pieceDAO) throws Exception {
+    private void updateOriginalPieces(PieceDAO pieceDAO) throws Exception {
         List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
-        this.pieceOnBoards = PieceOnBoards.of(pieces);
+        this.originalPieces = PieceOnBoards.of(pieces);
     }
 
     public MoveResultDto move(final String source, final String target) throws Exception {
@@ -71,13 +71,17 @@ public class WebChessController {
     private void updateChessBoard(final String source, final String target) throws Exception {
         PieceOnBoard deletedPiece = null;
         PieceDAO pieceDAO = new PieceDAO();
-        Optional<PieceOnBoard> targetPiece = this.pieceOnBoards.find(target);
+        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+
+        Optional<PieceOnBoard> targetPiece = this.originalPieces.find(target);
         if (targetPiece.isPresent()) {
             deletedPiece = targetPiece.get();
             pieceDAO.deletePiece(deletedPiece);
         }
-        Optional<PieceOnBoard> sourcePiece = this.pieceOnBoards.find(source);
+        Optional<PieceOnBoard> sourcePiece = this.originalPieces.find(source);
         pieceDAO.updatePiece(sourcePiece.get(), target);
+        this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+        currentTeamDAO.updateCurrentTeam(this.chessBoard.getChessBoardId(), this.currentTeam);
     }
 
     private String moveResult(final ChessRunner chessRunner, final String source, final String target) {

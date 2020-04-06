@@ -56,7 +56,7 @@ public class Position {
         String fileName = value.substring(0, 1);
         String rankName = value.substring(1);
         File file = File.of(fileName);
-        Rank rank = Rank.valueOf(rankName);
+        Rank rank = Rank.of(rankName);
 
         return new Position(file, rank);
     }
@@ -99,7 +99,8 @@ public class Position {
 
     @Override
     public String toString() {
-        return file.name() + rank.name();
+        return this.file.getSymbol()
+                + this.rank.getSymbol();
     }
 
     @Override
@@ -107,8 +108,8 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return file == position.file &&
-                rank == position.rank;
+        return file == position.file
+                && rank == position.rank;
     }
 
     @Override

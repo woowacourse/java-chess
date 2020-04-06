@@ -86,7 +86,7 @@ public class Board {
     }
 
     public Map<String, String> parse() {
-        Map<String, String> parseResult = board.entrySet()
+        Map<String, String> parseResult = this.board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(),
                         entry -> entry.getValue().toSymbol(),
