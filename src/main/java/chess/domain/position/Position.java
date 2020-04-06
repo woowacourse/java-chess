@@ -54,10 +54,6 @@ public class Position implements Comparable<Position> {
 		return row;
 	}
 
-	public String getName() {
-		return column.getName() + row.getName();
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

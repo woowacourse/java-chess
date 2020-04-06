@@ -35,7 +35,7 @@ public class WebUIChessApplication {
 			return render(new HashMap<>(), "userNames.html");
 		});
 
-		get("/games", (req, res) ->{
+		get("/games", (req, res) -> {
 			GamesDao gamesDao = new GamesDao();
 			return render(gamesDao.everyGames(), "gameList.html");
 		});
@@ -44,15 +44,6 @@ public class WebUIChessApplication {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("id", req.params(":id"));
 			return render(model, "playingGame.html");
-		});
-
-		post("/users", (req, res) -> {
-			Map map = gson.fromJson(req.body(), Map.class);
-			GamesDao gamesDao = new GamesDao();
-			int gameId = gamesDao.createGame(String.valueOf(map.get("user1")), String.valueOf(map.get("user2")));
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("id", gameId);
-			return gson.toJson(model);
 		});
 
 		get("/board/:id", (req, res) -> {
@@ -88,6 +79,17 @@ public class WebUIChessApplication {
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("turn", turnDto);
 			return gson.toJson(model);
+		});
+
+
+		post("/users", (req, res) -> {
+			Map map = gson.fromJson(req.body(), Map.class);
+			GamesDao gamesDao = new GamesDao();
+			int gameId = gamesDao.createGame(String.valueOf(map.get("user1")), String.valueOf(map.get("user2")));
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("id", gameId);
+			return gson.toJson(model);
+
 		});
 
 		post("/move/:id", (req, res) -> {
