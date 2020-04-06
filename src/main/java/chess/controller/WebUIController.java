@@ -90,12 +90,9 @@ public class WebUIController {
     private static String renderFinishedStatus() {
         Map<String, Object> model = getBoardModel();
         Score score = gameStatus.scoring();
-        if (score.isDraw()) {
-            model.put("conclude-message", "무승부입니다.");
-        }
-        else {
-            model.put("conclude-message", gameStatus.scoring().getWinner() + " 승!");
-        }
+
+        model.put("winner", gameStatus.scoring().getWinner());
+
         return render(model, "concluded.html");
     }
 
