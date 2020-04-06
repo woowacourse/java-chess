@@ -12,6 +12,7 @@ import java.util.List;
 import chess.domain.piece.Name;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class BoardDAO {
@@ -98,6 +99,29 @@ public class BoardDAO {
 			pstmt.executeUpdate();
 			pstmt.close();
 			closeConnection(con);
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
+
+	public List<Piece> findGroupBy(Column column) {
+		List<Piece> result = new ArrayList<>();
+		String query = "SELECT * FROM board WHERE game_id = ? AND position LIKE ?";
+		try {
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, gameId);
+			pstmt.setString(2, column.getName() + "%");
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String symbol = rs.getString("symbol");
+				Position position = Position.of(rs.getString("position"));
+				result.add(PieceFactory.of(symbol).create(position));
+			}
+			pstmt.close();
+			closeConnection(con);
+
+			return result;
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
