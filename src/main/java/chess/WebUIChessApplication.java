@@ -1,7 +1,6 @@
 package chess;
 
 import chess.controller.ChessController;
-import chess.controller.dao.ChessBoardDao;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.domain.game.Command;
@@ -17,7 +16,6 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static Gson gson = new Gson();
     private static final ChessController chessController = new ChessController();
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
 
     public static void main(String[] args) {
         port(8081);
@@ -28,17 +26,15 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/init", (req, res) -> {
-            res.status(200);
-            ResponseDto responseDto = null;
-            String state = chessBoardDao.loadState();
-            if (state.equals("playing")) {
-                responseDto = chessBoardDao.loadGamePlaying();
-            } else if (state.equals("end")) {
-                responseDto = chessController.start(new RequestDto(Command.START));
-                chessBoardDao.saveInitGame(responseDto);
+        get("/loadGame", (req, res) -> {
+            try {
+                ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
+                res.status(200);
+                return gson.toJson(responseDto);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                res.status(400);
+                return gson.toJson(e.getMessage());
             }
-            return gson.toJson(responseDto);
         });
 
         get("/move", (req, res) -> {
@@ -46,18 +42,12 @@ public class WebUIChessApplication {
                 RequestDto requestDto = new RequestDto(Command.MOVE, req);
                 ResponseDto responseDto = chessController.move(requestDto);
                 res.status(200);
-                chessBoardDao.saveGameAfterPieceMove(responseDto);
+//                chessBoardDao.pieceMove(responseDto);
                 return gson.toJson(responseDto);
-            } catch (IllegalArgumentException e) {
+            } catch (IllegalArgumentException | IllegalStateException e) {
                 res.status(400);
                 return gson.toJson(e.getMessage());
             }
-        });
-
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            chessBoardDao.updateEndState();
-            return render(model, "end.html");
         });
     }
 
