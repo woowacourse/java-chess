@@ -6,17 +6,8 @@
     <link rel="stylesheet" type="text/css" href="css/index.css"/>
     <script type="text/javascript">
         function initialBoard() {
-            var files = ["A", "B", "C", "D", "E", "F", "G", "H"];
-            var ranks = [
-                "EIGHT",
-                "SEVEN",
-                "SIX",
-                "FIVE",
-                "FOUR",
-                "THREE",
-                "TWO",
-                "ONE"
-            ];
+            var files = ["a", "b", "c", "d", "e", "f", "g", "h"];
+            var ranks = ["8", "7", "6", "5", "4", "3", "2", "1"];
 
             for (var i = 0; i < 8; i++) {
                 for (var j = 0; j < 8; j++) {
@@ -29,7 +20,7 @@
                     } else {
                         div.className = "black";
                     }
-
+                    div.innerHTML = divId;
                     document.getElementById("chess-board").appendChild(div);
                 }
             }

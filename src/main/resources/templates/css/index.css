@@ -6,16 +6,17 @@
 }
 
 #chess-board {
-    width: 600px;
+    width: 800px;
 }
 
 #chess-board div {
     margin: 0;
     padding: 0;
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     float: left;
     border: 1px solid;
+    font-family: BMHANNAPro;
 }
 
 .black {

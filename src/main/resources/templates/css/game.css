@@ -6,17 +6,31 @@
 }
 
 #chess-board {
-    width: 600px;
+    width: 800px;
 }
 
 #chess-board div {
     margin: 0;
     padding: 0;
-    width: 70px;
-    height: 70px;
+    width: 90px;
+    height: 90px;
     float: left;
     border: 1px solid;
-    text-align: center;
+    font-family: BMHANNAPro;
+}
+
+#chess-board p {
+    float: left;
+    margin: 0;
+}
+
+#chess-board img {
+    width: 50px;
+    height: 50px;
+    position: relative;
+    top: 60%;
+    left: 40%;
+    transform: translate(-60%, -40%);
 }
 
 .black {
@@ -52,10 +66,6 @@
     color: white;
 }
 
-img {
-    width: 50px;
-}
-
 #source-label,
 #target-label {
     font-family: BMHANNAPro;
@@ -65,7 +75,7 @@ img {
 #source,
 #target {
     font-family: BMHANNAPro;
-    size: 50;
+    size: 50px;
 }
 
 #currentTeam {
