@@ -52,6 +52,7 @@ public class WebUIChessApplication {
             model.put("style", moveResultDto.getStyle());
 
             if (webChessController.isEndGame()) {
+                webChessController.deleteChessGame();
                 return render(model, "end.html");
             }
             return render(model, "game.html");
@@ -73,7 +74,13 @@ public class WebUIChessApplication {
 
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+
+            webChessController.deleteChessGame();
+            String message = webChessController.getScores();
+
+            model.put("message", message);
+
+            return render(model, "end.html");
         });
     }
 

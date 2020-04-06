@@ -82,6 +82,7 @@ public class WebChessController {
         pieceDAO.updatePiece(sourcePiece.get(), target);
         this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
         currentTeamDAO.updateCurrentTeam(this.chessBoard.getChessBoardId(), this.currentTeam);
+        updateOriginalPieces(pieceDAO);
     }
 
     private String moveResult(final ChessRunner chessRunner, final String source, final String target) {
@@ -93,6 +94,18 @@ public class WebChessController {
 
     public boolean isEndGame() {
         return this.chessRunner.isEndChess();
+    }
+
+    public void deleteChessGame() throws Exception {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+        PieceDAO pieceDAO = new PieceDAO();
+        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+
+        currentTeamDAO.deleteCurrentTeam(this.chessBoard.getChessBoardId());
+        for (PieceOnBoard pieceOnBoard : this.originalPieces.getPieceOnBoards()) {
+            pieceDAO.deletePiece(pieceOnBoard);
+        }
+        chessBoardDAO.deleteChessBoard(this.chessBoard);
     }
 
     public TeamDto getCurrentTeam() {

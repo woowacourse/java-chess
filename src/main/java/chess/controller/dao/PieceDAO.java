@@ -47,15 +47,15 @@ public class PieceDAO {
         ConnectionManager.closeConnection(con);
     }
 
-    public void deletePiece(PieceOnBoard a2WhitePawn) throws SQLException {
-        if (a2WhitePawn == null) {
+    public void deletePiece(PieceOnBoard piece) throws SQLException {
+        if (piece == null) {
             return;
         }
 
         Connection con = ConnectionManager.getConnection();
         String query = "DELETE FROM piece WHERE pieceId = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setInt(1, a2WhitePawn.getPieceId());
+        pstmt.setInt(1, piece.getPieceId());
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
     }
