@@ -1,16 +1,16 @@
 package chess.repository;
 
-import chess.entity.ChessEntity;
+import chess.entity.ChessGame;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface ChessRepository {
-    ChessEntity save(ChessEntity entity);
+    ChessGame save(ChessGame entity);
 
-    Optional<ChessEntity> findById(Long id);
+    Optional<ChessGame> findById(Long id);
 
-    Long update(ChessEntity entity);
+    Long update(ChessGame entity);
 
-    List<ChessEntity> findAll();
+    List<ChessGame> findAll();
 }

@@ -4,6 +4,9 @@ const App = function app() {
 
     const startBtn = document.querySelector("#new-game");
     const loadBtn = document.querySelector("#load-game");
+    const surrenderBtn = document.querySelector("#surrender-game");
+    const endBtn = document.querySelector("#end-game");
+
     const tiles = document.getElementsByClassName("tile");
 
     const gameId = document.getElementById("game-id");
@@ -32,8 +35,32 @@ const App = function app() {
             .catch(errorHandler);
     });
 
-    function loadSavedGame(resolve) {
-        const data = resolve.body.data;
+    surrenderBtn.addEventListener('click', (event) => {
+        const id = gameId.innerText;
+        const loseTeam = turn.innerText;
+        if (!id) {
+            return;
+        }
+        var surrenderRequest = {};
+        surrenderRequest.gameId = id;
+        surrenderRequest.loseTeam = loseTeam;
+
+        fetch("http://localhost:8080/surrender", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify(surrenderRequest)
+        })
+            .then(res => alert(loseTeam + "의 항복으로 게임 종료"))
+            .catch(errorHandler)
+            .finally(() => window.location.href = "http://localhost:8080/home")
+    });
+
+    endBtn.addEventListener('click', (event => {
+        window.location.href = "http://localhost:8080/home";
+    }));
+
+    function loadSavedGame(response) {
+        const data = response.body.data;
         const savedGameResponses = data.savedGameResponses;
         if (savedGameResponses.length === 0) {
             alert("저장된 게임이 존재하지 않습니다.");

@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.service.dto;
 
 import org.eclipse.jetty.http.HttpStatus;
 
@@ -23,6 +23,10 @@ public class DefaultResponse<T> {
 
     public static <T> DefaultResponse<T> OK(T data) {
         return new DefaultResponse<>(HttpStatus.Code.OK, data, null);
+    }
+
+    public static <Void> DefaultResponse<Void> ACCEPT() {
+        return new DefaultResponse<>(HttpStatus.Code.ACCEPTED, null, null);
     }
 
     public static <T> DefaultResponse<T> CREATED(T data, String message) {

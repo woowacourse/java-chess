@@ -6,12 +6,13 @@ import chess.handler.NoSuchElementExceptionHandler;
 import chess.handler.NumberFormatExceptionHandler;
 import chess.handler.exception.AlreadyEndGameException;
 import chess.service.ChessService;
-import chess.web.dto.ChessBoardResponse;
-import chess.web.dto.DefaultResponse;
-import chess.web.dto.MoveRequest;
-import chess.web.dto.MoveResponse;
-import chess.web.dto.SavedGameBundleResponse;
-import chess.web.dto.TilesDto;
+import chess.service.dto.ChessBoardResponse;
+import chess.service.dto.DefaultResponse;
+import chess.service.dto.MoveRequest;
+import chess.service.dto.MoveResponse;
+import chess.service.dto.SavedGameBundleResponse;
+import chess.service.dto.SurrenderRequest;
+import chess.service.dto.TilesDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
@@ -81,8 +82,9 @@ public class ChessController {
 
         //surrender
         post("/surrender", (request, response) -> {
-
-            return null;
+            SurrenderRequest surrenderRequest = gson.fromJson(request.body(), SurrenderRequest.class);
+            chessService.surrender(surrenderRequest);
+            return DefaultResponse.ACCEPT();
         });
 
         //end

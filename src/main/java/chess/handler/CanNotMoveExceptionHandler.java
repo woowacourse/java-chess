@@ -1,6 +1,6 @@
 package chess.handler;
 
-import chess.web.dto.DefaultResponse;
+import chess.service.dto.DefaultResponse;
 import org.eclipse.jetty.http.HttpStatus;
 import spark.Request;
 import spark.Response;

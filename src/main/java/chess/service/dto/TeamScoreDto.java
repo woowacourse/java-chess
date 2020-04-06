@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.service.dto;
 
 import chess.manager.ChessManager;
 import chess.piece.Team;

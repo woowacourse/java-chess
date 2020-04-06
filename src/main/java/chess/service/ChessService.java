@@ -3,17 +3,19 @@ package chess.service;
 import chess.board.BoardGenerator;
 import chess.board.ChessBoard;
 import chess.board.ChessBoardAdapter;
-import chess.entity.ChessEntity;
+import chess.entity.ChessGame;
 import chess.entity.Movement;
 import chess.manager.ChessManager;
 import chess.piece.Piece;
+import chess.piece.Team;
 import chess.repository.ChessRepository;
 import chess.repository.MovementRepository;
-import chess.web.dto.ChessBoardResponse;
-import chess.web.dto.MoveRequest;
-import chess.web.dto.MoveResponse;
-import chess.web.dto.SavedGameBundleResponse;
-import chess.web.dto.TilesDto;
+import chess.service.dto.ChessBoardResponse;
+import chess.service.dto.MoveRequest;
+import chess.service.dto.MoveResponse;
+import chess.service.dto.SavedGameBundleResponse;
+import chess.service.dto.SurrenderRequest;
+import chess.service.dto.TilesDto;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -30,14 +32,17 @@ public class ChessService {
     private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
 
     public MoveResponse move(MoveRequest moveRequest) {
-        ChessManager chessManager = new ChessManager(BoardGenerator.create());
+        ChessGame chessGame = chessRepository.findById(moveRequest.getId())
+                .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", moveRequest.getId())));
 
+        ChessManager chessManager = new ChessManager(BoardGenerator.create());
         restore(moveRequest, chessManager);
         Piece deadPiece = chessManager.move(moveRequest.getSourceKey(), moveRequest.getTargetKey());
 
         movementRepository.save(moveRequest.toEntity());
         if (deadPiece.isKing()) {
-            endGame(moveRequest, chessManager);
+            chessGame.endGame(chessManager.getCurrentTeam());
+            chessRepository.update(chessGame);
         }
 
         return new MoveResponse(chessManager, moveRequest, deadPiece);
@@ -48,19 +53,12 @@ public class ChessService {
         chessManager.moveAll(movements);
     }
 
-    private void endGame(MoveRequest moveRequest, ChessManager chessManager) {
-        ChessEntity chessEntity = chessRepository.findById(moveRequest.getId())
-                .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", moveRequest.getId())));
-        chessEntity.endGame(chessManager.getCurrentTeam());
-        chessRepository.update(chessEntity);
-    }
-
     public ChessBoardResponse save() {
-        ChessEntity chessEntity = new ChessEntity(true);
-        chessEntity = chessRepository.save(chessEntity);
+        ChessGame chessGame = new ChessGame(true);
+        chessGame = chessRepository.save(chessGame);
 
         ChessManager chessManager = new ChessManager(BoardGenerator.create());
-        return new ChessBoardResponse(chessEntity.getId(), chessManager);
+        return new ChessBoardResponse(chessGame.getId(), chessManager);
     }
 
     public SavedGameBundleResponse loadAllSavedGames() {
@@ -78,6 +76,17 @@ public class ChessService {
         List<Movement> movements = movementRepository.findAllByChessId(targetId);
         ChessManager chessManager = new ChessManager(BoardGenerator.create());
         chessManager.moveAll(movements);
+
         return new ChessBoardResponse(targetId, chessManager);
+    }
+
+    public void surrender(SurrenderRequest surrenderRequest) {
+        ChessGame chessGame = chessRepository.findById(surrenderRequest.getGameId())
+                .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", surrenderRequest.getGameId())));
+
+        Team winTeam = Team.valueOf(surrenderRequest.getLoseTeam()).getOppositeTeam();
+        chessGame.endGame(winTeam);
+
+        chessRepository.update(chessGame);
     }
 }

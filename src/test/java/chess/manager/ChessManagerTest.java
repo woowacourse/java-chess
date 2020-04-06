@@ -6,6 +6,7 @@ import chess.board.Tile;
 import chess.coordinate.Coordinate;
 import chess.coordinate.File;
 import chess.coordinate.Rank;
+import chess.handler.exception.AlreadyEndGameException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -28,7 +29,7 @@ class ChessManagerTest {
 
         //then
         assertThatThrownBy(() -> chessManager.move("a1", "b1"))
-                .isInstanceOf(IllegalStateException.class)
+                .isInstanceOf(AlreadyEndGameException.class)
                 .hasMessage("%s의 승리로 끝난 게임입니다.", chessManager.getCurrentTeam());
     }
 }

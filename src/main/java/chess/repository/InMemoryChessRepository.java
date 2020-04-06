@@ -1,6 +1,6 @@
 package chess.repository;
 
-import chess.entity.ChessEntity;
+import chess.entity.ChessGame;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -12,24 +12,24 @@ import java.util.Map;
 import java.util.Optional;
 
 public class InMemoryChessRepository implements ChessRepository {
-    private final Map<Long, ChessEntity> memory = new Hashtable<>();
+    private final Map<Long, ChessGame> memory = new Hashtable<>();
     private Long autoIncrement = 0L;
 
     @Override
-    public ChessEntity save(ChessEntity entity) {
+    public ChessGame save(ChessGame entity) {
         autoIncrement++;
-        entity = new ChessEntity(autoIncrement, LocalDateTime.now(ZoneId.of("Asia/Seoul")), entity);
+        entity = new ChessGame(autoIncrement, LocalDateTime.now(ZoneId.of("Asia/Seoul")), entity);
         memory.put(autoIncrement, entity);
         return entity;
     }
 
     @Override
-    public Optional<ChessEntity> findById(Long id) {
+    public Optional<ChessGame> findById(Long id) {
         return Optional.ofNullable(memory.get(id));
     }
 
     @Override
-    public Long update(ChessEntity entity) {
+    public Long update(ChessGame entity) {
         try {
             memory.replace(entity.getId(), entity);
             return entity.getId();
@@ -39,7 +39,7 @@ public class InMemoryChessRepository implements ChessRepository {
     }
 
     @Override
-    public List<ChessEntity> findAll() {
+    public List<ChessGame> findAll() {
         return new ArrayList<>(memory.values());
     }
 }

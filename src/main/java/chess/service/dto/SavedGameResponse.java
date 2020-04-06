@@ -1,6 +1,6 @@
-package chess.web.dto;
+package chess.service.dto;
 
-import chess.entity.ChessEntity;
+import chess.entity.ChessGame;
 
 import java.time.format.DateTimeFormatter;
 
@@ -10,9 +10,9 @@ public class SavedGameResponse {
     private Long id;
     private String createdTime;
 
-    public SavedGameResponse(ChessEntity chessEntity) {
-        this.id = chessEntity.getId();
-        this.createdTime = chessEntity.getCreatedTime().format(DATE_TIME_FORMATTER);
+    public SavedGameResponse(ChessGame chessGame) {
+        this.id = chessGame.getId();
+        this.createdTime = chessGame.getCreatedTime().format(DATE_TIME_FORMATTER);
     }
 
     public Long getId() {

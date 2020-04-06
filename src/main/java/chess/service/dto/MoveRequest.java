@@ -1,4 +1,4 @@
-package chess.web.dto;
+package chess.service.dto;
 
 import chess.entity.Movement;
 
