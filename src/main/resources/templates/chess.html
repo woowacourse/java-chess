@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/chess.css">
+    <link rel="stylesheet" href="/css/header.css">
     <title>우아체스</title>
 </head>
 <body>
 <div class="header_box">
     <div class="title_box">
-        <strong>우아체스</strong>
+        <strong class="title_text">우아체스</strong>
         <img src="/images/logo.png" alt="우아한형제들 로고" id="logo">
     </div>
 </div>
 <div class="content_box">
     {{{ table }}}
-    <form method="post" action="/chess" id="commend_form">
+    <form method="post" id="commend_form">
         <label for="commend">명령: </label>
         <input type="text" name="commend" id="commend">
         <button type="submit" form="commend_form">입력</button>

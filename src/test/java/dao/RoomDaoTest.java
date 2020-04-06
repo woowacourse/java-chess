@@ -1,7 +1,6 @@
 package dao;
 
-import dao.exceptions.DaoSelectException;
-import org.junit.jupiter.api.BeforeAll;
+import dao.exceptions.DaoNoneSelectedException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -58,6 +57,6 @@ class RoomDaoTest {
 		final int resultNum = roomDao.deleteRoomByRoomName(roomName);
 		assertThat(resultNum).isEqualTo(1);
 		assertThatThrownBy(() -> roomDao.findRoomByRoomName(roomName))
-				.isInstanceOf(DaoSelectException.class);
+				.isInstanceOf(DaoNoneSelectedException.class);
 	}
 }

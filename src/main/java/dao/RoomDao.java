@@ -1,6 +1,6 @@
 package dao;
 
-import dao.exceptions.DaoSelectException;
+import dao.exceptions.DaoNoneSelectedException;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -61,7 +61,7 @@ public class RoomDao {
 		final ResultSet resultSet = preparedStatement.executeQuery();
 
 		if (!resultSet.next()) {
-			throw new DaoSelectException();
+			throw new DaoNoneSelectedException();
 		}
 
 		return new Room(resultSet.getInt("id"),

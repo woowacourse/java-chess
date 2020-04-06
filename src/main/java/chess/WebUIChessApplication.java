@@ -2,6 +2,7 @@ package chess;
 
 import dao.Room;
 import dao.RoomDao;
+import dao.exceptions.DaoNoneSelectedException;
 import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
 import domain.pieces.Piece;
@@ -9,6 +10,7 @@ import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.state.exceptions.StateException;
+import spark.Response;
 import view.Announcement;
 import view.board.Board;
 import domain.state.Ended;
@@ -20,20 +22,20 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import view.BoardToTable;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class WebUIChessApplication {
 	private static State state;
+	private static Map<String, State> states;
 	private static Announcement announcement;
 
 	public static void main(String[] args) {
 		Spark.port(8080);
 		Spark.staticFiles.location("/statics");
-
 		state = initState();
 		announcement = Announcement.ofFirst();
 
@@ -45,19 +47,31 @@ public class WebUIChessApplication {
 			return render(map, "/rooms.html");
 		});
 
-		Spark.get("/chess", (request, response) -> {
+		Spark.post("/rooms", (request, response) -> {
+			final String requestType = request.queryParams("selection");
+			final String roomName = request.queryParams("room_name");
+
+			if (requestType.equals("enter_or_create")) {
+				return responseToEnterOrCreateRoom(response, roomName);
+			}
+			if (requestType.equals("delete")) {
+				return responseToDeleteRoom(response, roomName);
+			}
+			return "";
+		});
+
+		Spark.get("/chess/:room_name", (request, response) -> {
 			final Map<String, Object> map = new HashMap<>();
 			map.put("table", createTableHtmlFromState());
 			map.put("announcement", announcement.getString());
 			return render(map, "/chess.html");
 		});
 
-		Spark.post("/chess", (request, response) -> {
+		Spark.post("/chess/:room_name", (request, response) -> {
 			try {
 				state = state.pushCommend(request.queryParams("commend"));
 				announcement = createAnnouncement();
-				response.redirect("/chess");
-
+				response.redirect("/chess/" + request.params(":room_name"));
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
@@ -65,10 +79,29 @@ public class WebUIChessApplication {
 					| CanNotReachException
 					| StateException e) {
 				announcement = Announcement.of(e.getMessage());
-				response.redirect("/chess");
+				response.redirect("/chess/" + request.params(":room_name"));
 			}
 			return "";
 		});
+	}
+
+	private static String responseToEnterOrCreateRoom(final Response response, final String roomName) throws SQLException {
+		final RoomDao roomDao = new RoomDao();
+		try {
+			final Room room = roomDao.findRoomByRoomName(roomName);
+			response.redirect("/chess/" + room.getRoomName());
+		} catch (DaoNoneSelectedException e) {
+			final int resultNum = roomDao.addRoomByRoomName(roomName);
+			response.redirect("/rooms");
+		}
+		return "";
+	}
+
+	private static String responseToDeleteRoom(final Response response, final String roomName) throws SQLException {
+		final RoomDao roomDao = new RoomDao();
+		final int resultNum = roomDao.deleteRoomByRoomName(roomName);
+		response.redirect("/rooms");
+		return "";
 	}
 
 	private static String createTableHtmlFromState() {
@@ -78,10 +111,10 @@ public class WebUIChessApplication {
 	}
 
 	private static Ended initState() {
-        return new Ended(new Pieces(new StartPieces().getInstance()));
-    }
+		return new Ended(new Pieces(new StartPieces().getInstance()));
+	}
 
-    private static Announcement createAnnouncement() {
+	private static Announcement createAnnouncement() {
 		if (state.isReported()) {
 			return Announcement.ofStatus(state.getPieces());
 		}

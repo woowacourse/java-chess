@@ -31,27 +31,11 @@ p, form {
     margin-top: 10px;
 }
 
-strong {
-    margin-top: 5px;
-    color: white;
-    width: max-content;
-    display: block;
-    float: left;
-}
-
 .content_box {
     width: max-content;
     height: max-content;
     margin: auto;
     padding-top: 20px;
-}
-
-.header_box {
-    margin-top: 0;
-    background: #4bc1bd;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    height: 30px;
 }
 
 .bright {
@@ -60,16 +44,4 @@ strong {
 
 .dark {
     background: #CC723D;
-}
-
-.title_box {
-    width: max-content;
-    height: 100%;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-#logo {
-    height: 100%;
-    width: auto;
 }

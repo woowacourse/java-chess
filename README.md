@@ -157,8 +157,8 @@ abcdefgh
  [x] 데이터베이스 테이블 생성
  [x] room DAO
     [x] Create, Read, Delete
-    - 컨트롤러에 적용
-    - 뷰 추가
+    [x] 컨트롤러에 적용
+    [x] 뷰 추가
  - state DAO
     - Create, Read, Update
     - 컨트롤러에 적용

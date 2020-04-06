@@ -3,9 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/rooms.css">
+    <link rel="stylesheet" href="/css/header.css">
     <title>우아체스 - 방 목록</title>
 </head>
 <body>
+<div class="header_box">
+    <div class="title_box">
+        <strong class="title_text">우아체스</strong>
+        <img src="/images/logo.png" alt="우아한형제들 로고" id="logo">
+    </div>
+</div>
 <div class="content_box_wrapper">
     <div class="content_box">
         <ul>
@@ -13,11 +20,15 @@
             <li>{{roomName}}</li>
             {{/rooms}}
         </ul>
-        <form id="room_form" action="">
+        <form method="post" id="room_form">
             <label for="room_name">방</label>
-            <input type="text" name="room_name" id="room_name">
-            <button form="room_form">선택</button>
+            <input type="text" name="room_name" id="room_name"><br />
+            <input type="radio" value="enter_or_create" name="selection" id="enter_or_create" checked="checked"/>
+            <label for="enter_or_create">입장/생성</label><br />
+            <input type="radio" value="delete" name="selection" id="delete" />
+            <label for="delete">삭제</label>
         </form>
+        <button form="room_form">입력</button>
     </div>
 </div>
 </body>
