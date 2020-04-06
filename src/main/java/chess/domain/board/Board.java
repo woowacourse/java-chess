@@ -10,12 +10,13 @@ import java.util.stream.IntStream;
 public class Board {
     private static final int BOARD_SIZE = 64;
     private static final int FIRST_INDEX = 0;
-    public static final int WHITE_PAWN_ROW = 2;
-    public static final int BLACK_PAWN_ROW = 7;
+    private static final int WHITE_PAWN_ROW = 2;
+    private static final int BLACK_PAWN_ROW = 7;
     private static final int ASCII_GAP = 96;
 
     private List<Piece> board;
     private boolean isFinished = false;
+    private Turn turn = Turn.WHITE;
 
     public Board(final List<Piece> board) {
         if (isNotProperBoardSize(board)) {
@@ -74,11 +75,11 @@ public class Board {
         board.set(63, Rook.createBlack(new Position(8, 8)));
     }
 
-    public void move(final String from, final String to, final Team currentTurn) {
+    public void move(final String from, final String to) {
         Piece fromPiece = findPieceBy(Position.of(from));
         Piece toPiece = findPieceBy(Position.of(to));
 
-        if (!fromPiece.isSameTeam(currentTurn)) {
+        if (!fromPiece.isSameTeam(turn)) {
             throw new TakeTurnException("체스 게임 순서를 지켜주세요.");
         }
 
@@ -86,7 +87,16 @@ public class Board {
             board.set(boardIndexOf(toPiece.getPosition()), fromPiece.moveTo(toPiece.getPosition()));
             board.set(boardIndexOf(fromPiece.getPosition()), Blank.create(fromPiece.getPosition()));
         }
+        changeTurn();
         changeFlagWhenKingCaptured(toPiece);
+    }
+
+    private void changeTurn() {
+        if (turn == Turn.WHITE) {
+            turn = Turn.BLACK;
+            return;
+        }
+        turn = Turn.WHITE;
     }
 
     public Piece findPieceBy(int index) {

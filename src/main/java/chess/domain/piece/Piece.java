@@ -11,13 +11,13 @@ import java.util.Objects;
 public abstract class Piece {
     protected PieceType pieceType;
     protected char representation;
-    protected Team team;
+    protected Turn turn;
     protected Position position;
 
-    public Piece(final PieceType pieceType, final char representation, final Team team, final Position position) {
+    public Piece(final PieceType pieceType, final char representation, final Turn turn, final Position position) {
         this.pieceType = pieceType;
         this.representation = representation;
-        this.team = team;
+        this.turn = turn;
         this.position = position;
     }
 
@@ -29,15 +29,15 @@ public abstract class Piece {
     }
 
     public boolean isOtherTeam(final Piece piece) {
-        return team.isNotSame(piece.team);
+        return turn.isNotSame(piece.turn);
     }
 
     public boolean isSameTeam(final Piece piece) {
-        return team == piece.team;
+        return turn == piece.turn;
     }
 
-    public boolean isSameTeam(final Team team) {
-        return this.team == team;
+    public boolean isSameTeam(final Turn turn) {
+        return this.turn == turn;
     }
 
     public boolean isKing() {
@@ -66,7 +66,7 @@ public abstract class Piece {
     }
 
     public String getName() {
-        return representation + "_" + team.toString().toLowerCase();
+        return representation + "_" + turn.toString().toLowerCase();
     }
 
     public char getRepresentation() {

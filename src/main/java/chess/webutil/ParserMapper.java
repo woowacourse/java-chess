@@ -1,8 +1,12 @@
 package chess.webutil;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Team;
+import chess.domain.piece.Turn;
 import chess.domain.result.GameResult;
+import chess.exception.InvalidPositionException;
+import chess.exception.MoveCommandWhenBoardNullException;
+import chess.exception.PieceImpossibleMoveException;
+import chess.exception.TakeTurnException;
 import spark.Request;
 
 import java.util.Arrays;
@@ -17,11 +21,20 @@ public enum ParserMapper {
         board.clear();
         return ModelParser.parseBoard(board);
     }),
+    MOVE("이동", (request, board) -> {
+        try {
+            board.move(request.queryParams("fromPiece"), request.queryParams("toPiece"));
+            return ModelParser.parseBoard(board);
+        } catch (InvalidPositionException | MoveCommandWhenBoardNullException | PieceImpossibleMoveException | TakeTurnException e) {
+            // js 알림
+            return ModelParser.parseBoard(board);
+        }
+    }),
     STATUS("점수 현황", (request, board) -> {
         GameResult gameResult = new GameResult();
         Map<String, Object> model = ModelParser.parseBoard(board);
-        model.put("white", gameResult.calculateScore(board, Team.WHITE));
-        model.put("black", gameResult.calculateScore(board, Team.BLACK));
+        model.put("white", "white 점수 : " + gameResult.calculateScore(board, Turn.WHITE));
+        model.put("black", "black 점수 : " + gameResult.calculateScore(board, Turn.BLACK));
         return model;
     });
 

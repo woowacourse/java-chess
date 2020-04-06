@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Team;
+import chess.domain.piece.Turn;
 import chess.domain.result.GameResult;
 import chess.domain.util.Command;
 import chess.exception.InvalidPositionException;
@@ -28,7 +28,6 @@ public class ChessGame {
 
     public void run() {
         OutputView.printInputStartGuideMessage();
-        Team currentTurn = Team.WHITE;
         Command command;
 
         while ((command = inputCommandWithValidation()).isNotEnd()) {
@@ -38,8 +37,7 @@ public class ChessGame {
             }
             try {
                 if (command.isMove()) {
-                    board.move(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX], currentTurn);
-                    currentTurn = reverseTurn(currentTurn);
+                    board.move(inputCommand[FROM_POSITION_INDEX], inputCommand[TO_POSITION_INDEX]);
                     OutputView.printBoard(board.getBoard());
                 }
             } catch (InvalidPositionException | MoveCommandWhenBoardNullException | PieceImpossibleMoveException | TakeTurnException e) {
@@ -47,8 +45,8 @@ public class ChessGame {
             }
 
             if (command.isStatus()) {
-                OutputView.printTeamScore(gameResult.calculateScore(board, Team.WHITE),
-                        gameResult.calculateScore(board, Team.BLACK));
+                OutputView.printTeamScore(gameResult.calculateScore(board, Turn.WHITE),
+                        gameResult.calculateScore(board, Turn.BLACK));
             }
 
             if (board.isFinished()) {
@@ -56,13 +54,6 @@ public class ChessGame {
                 break;
             }
         }
-    }
-
-    private Team reverseTurn(Team currentTurn) {
-        if (currentTurn == Team.WHITE) {
-            return Team.BLACK;
-        }
-        return Team.WHITE;
     }
 
     private Command inputCommandWithValidation() {

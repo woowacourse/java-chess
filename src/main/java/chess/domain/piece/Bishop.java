@@ -3,20 +3,20 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
-    public Bishop(final PieceType pieceType, final char representation, final Team team, final Position position) {
-        super(pieceType, representation, team, position);
+    public Bishop(final PieceType pieceType, final char representation, final Turn turn, final Position position) {
+        super(pieceType, representation, turn, position);
     }
 
     public static Piece createWhite(final Position position) {
-        return new Bishop(PieceType.BISHOP, 'b', Team.WHITE, position);
+        return new Bishop(PieceType.BISHOP, 'b', Turn.WHITE, position);
     }
 
     public static Piece createBlack(final Position position) {
-        return new Bishop(PieceType.BISHOP, 'B', Team.BLACK, position);
+        return new Bishop(PieceType.BISHOP, 'B', Turn.BLACK, position);
     }
 
     @Override
     public Piece moveTo(final Position toPosition) {
-        return new Bishop(pieceType, representation, team, toPosition);
+        return new Bishop(pieceType, representation, turn, toPosition);
     }
 }

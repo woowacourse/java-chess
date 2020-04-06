@@ -50,6 +50,27 @@ header .inner h1 {
     margin: 20px 0;
 }
 
+/* status */
+#score-status {
+    position: absolute;
+    top: 40%;
+    left: 100px;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 25px;
+    font-weight: bold;
+    color: whitesmoke;
+}
+
+#score-status .score {
+    margin: 20px;
+    padding: 5px;
+}
+
+
 /* BOARD */
 .inner {
     max-width: 680px;
