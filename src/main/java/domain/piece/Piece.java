@@ -56,7 +56,7 @@ public abstract class Piece {
 		if (team.isOurTeam(target.team)) {
 			throw new InvalidPositionException(InvalidPositionException.HAS_OUR_TEAM_AT_TARGET_POSITION);
 		}
-		board.remove(getRankIndex(), target);
+		board.remove(target.getRankIndex(), target);
 	}
 
 	protected void changePosition(Position targetPosition, Board board) {

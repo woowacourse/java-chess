@@ -2,6 +2,9 @@ package controller;
 
 import static view.InputView.*;
 
+import java.util.Map;
+
+import domain.Score;
 import domain.board.BoardGame;
 import domain.command.Command;
 import domain.command.InvalidCommandException;
@@ -30,7 +33,8 @@ public class ChessController {
 			}
 
 			if (command.isStatus()) {
-				OutputView.printScore(board.calculateScore());
+				Map<Team, Double> score = Score.calculateScore(board.getRanks(), Team.values());
+				OutputView.printScore(score);
 			}
 
 			if (command.isStart()) {

@@ -39,20 +39,4 @@ public class BoardGameTest {
 			.isInstanceOf(InvalidTurnException.class)
 			.hasMessage(InvalidTurnException.INVALID_TURN);
 	}
-
-	@DisplayName("처음 상태의 보드판 점수 확인")
-	@Test
-	void getScore_InitialBoard_IsBlack38AndWhit38() {
-		assertThat(boardGame.calculateScore().get(Team.WHITE)).isEqualTo(38.0);
-		assertThat(boardGame.calculateScore().get(Team.BLACK)).isEqualTo(38.0);
-	}
-
-	@DisplayName("White팀 Rook 2개, Black팀 Rook 1개가 생존했을 때 점수 확인")
-	@Test
-	void getScore_Black1RookAndWhite2Rook_Black5White10() {
-		BoardGame boardGame = new BoardGame(new RookBoard().create());
-		assertThat(boardGame.calculateScore().get(Team.WHITE)).isEqualTo(10);
-		assertThat(boardGame.calculateScore().get(Team.BLACK)).isEqualTo(5);
-	}
-
 }

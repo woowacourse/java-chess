@@ -98,7 +98,7 @@ class KingTest {
 
 		king.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
-		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
-		assertThat(targetPiece.get()).isEqualTo(king);
+		Optional<Piece> piece = board.findPiece(moveCommand.getTargetPosition());
+		assertThat(piece.get()).isEqualTo(king);
 	}
 }

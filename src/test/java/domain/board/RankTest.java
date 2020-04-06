@@ -19,12 +19,4 @@ public class RankTest {
 	void constructor_GivenPieces_CreateRank() {
 		assertThat(new Rank(new ArrayList<>())).isInstanceOf(Rank.class);
 	}
-
-	@DisplayName("처음 보드판에서 Pawn을 찾아 반환")
-	@ParameterizedTest
-	@CsvSource({"0,0,WHITE","1,8,WHITE","6,8,BLACK","7,0,BLACK"})
-	void findPawn_InitialBoard_ReturnPawns(int index, int count, Team team) {
-		List<Piece> pawn =  new BoardGame().getRanks().get(index).findPawn(team);
-		assertThat(pawn.size()).isEqualTo(count);
-	}
 }

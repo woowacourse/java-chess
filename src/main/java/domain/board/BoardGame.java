@@ -30,13 +30,6 @@ public class BoardGame {
 		piece.move(targetPosition, turn, board);
 	}
 
-	public Map<Team, Double> calculateScore() {
-		Map<Team, Double> score = new HashMap<>();
-		score.put(Team.WHITE, board.calculateScoreByTeam(Team.WHITE));
-		score.put(Team.BLACK, board.calculateScoreByTeam(Team.BLACK));
-		return score;
-	}
-
 	public boolean isKingAlive() {
 		return board.isKingAlive();
 	}

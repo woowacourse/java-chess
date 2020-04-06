@@ -40,7 +40,7 @@ public class BishopBoard {
 		ranks.add(new Rank(rank1));
 		ranks.add(new Rank(rank2));
 		ranks.add(new Rank(rank3));
-		createEmptyRank(4);
+		createEmptyRank(5);
 
 		return new Board(ranks);
 	}

@@ -94,12 +94,11 @@ class RookTest {
 	@Test
 	void move_EnemyAtTargetPosition_Capture() {
 		MoveCommand moveCommand = new MoveCommand("move a3 a8");
-		Queen queen = new Queen(moveCommand.getSourcePosition(), Team.WHITE);
+		Rook rook = new Rook(moveCommand.getSourcePosition(), Team.WHITE);
 
-		queen.move(moveCommand.getTargetPosition(), Team.WHITE, board);
+		rook.move(moveCommand.getTargetPosition(), Team.WHITE, board);
 
 		Optional<Piece> targetPiece = board.findPiece(moveCommand.getTargetPosition());
-		assertThat(targetPiece.get()).isEqualTo(queen);
+		assertThat(targetPiece.get()).isEqualTo(rook);
 	}
-
 }

@@ -22,6 +22,7 @@ public class BoardTest {
 	void setUp() {
 		board = BoardFactory.create();
 	}
+
 	@DisplayName("King이 살았을 때 isKingAlive를 호출하면 true반환")
 	@Test
 	void isKingAlive_KingIsAlive_ReturnTrue() {
