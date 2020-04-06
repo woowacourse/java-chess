@@ -22,23 +22,23 @@ public class ChessBoard {
         isKingTaken = false;
     }
 
-    public boolean move(Position from, Position to) {
+    public void move(Position from, Position to) {
         Piece source = chessBoard.get(from);
         Piece target = chessBoard.get(to);
         validateSamePosition(from, to);
         validateSource(source);
         validateIsPlayer(source, target);
 
-        if (movable(from, to)) {
-            chessBoard.put(to, source);
-            chessBoard.remove(from);
-
-            if (target instanceof King) {
-                this.isKingTaken = true;
-            }
-            return true;
+        if (!movable(from, to)) {
+            throw new IllegalStateException("이동할 수 없습니다.");
         }
-        return false;
+
+        chessBoard.put(to, source);
+        chessBoard.remove(from);
+
+        if (target instanceof King) {
+            this.isKingTaken = true;
+        }
     }
 
     private void validateSamePosition(Position from, Position to) {
