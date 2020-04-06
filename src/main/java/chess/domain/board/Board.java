@@ -1,19 +1,20 @@
 package chess.domain.board;
 
-import chess.domain.piece.Blank;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import chess.exception.TakeTurnException;
 
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Board {
     private static final int BOARD_SIZE = 64;
     private static final int FIRST_INDEX = 0;
+    public static final int WHITE_PAWN_ROW = 2;
+    public static final int BLACK_PAWN_ROW = 7;
     private static final int ASCII_GAP = 96;
 
-    private final List<Piece> board;
+    private List<Piece> board;
     private boolean isFinished = false;
 
     public Board(final List<Piece> board) {
@@ -35,6 +36,42 @@ public class Board {
 
     public static int getBoardIndex(final int col, final int row) {
         return (row - 1) * Position.ROW_SIZE + col - 1;
+    }
+
+    public void clear() {
+        for (int row = Position.START_INDEX; row <= Position.END_INDEX; row++) {
+            for (int col = Position.START_INDEX; col <= Position.END_INDEX; col++) {
+                board.set(getBoardIndex(col, row), Blank.create(new Position(col, row)));
+            }
+        }
+    }
+
+    public void initialize() {
+        board.set(0, Rook.createWhite(new Position(1, 1)));
+        board.set(1, Knight.createWhite(new Position(2, 1)));
+        board.set(2, Bishop.createWhite(new Position(3, 1)));
+        board.set(3, Queen.createWhite(new Position(4, 1)));
+        board.set(4, King.createWhite(new Position(5, 1)));
+        board.set(5, Bishop.createWhite(new Position(6, 1)));
+        board.set(6, Knight.createWhite(new Position(7, 1)));
+        board.set(7, Rook.createWhite(new Position(8, 1)));
+
+        IntStream.rangeClosed(Position.START_INDEX, Position.END_INDEX)
+                .forEach(col -> board.set(Position.ROW_SIZE * (WHITE_PAWN_ROW - 1) + col - 1,
+                        Pawn.createWhite(new Position(col, WHITE_PAWN_ROW))));
+
+        IntStream.rangeClosed(Position.START_INDEX, Position.END_INDEX)
+                .forEach(col -> board.set(Position.ROW_SIZE * (BLACK_PAWN_ROW - 1) + col - 1,
+                        Pawn.createBlack(new Position(col, BLACK_PAWN_ROW))));
+
+        board.set(56, Rook.createBlack(new Position(1, 8)));
+        board.set(57, Knight.createBlack(new Position(2, 8)));
+        board.set(58, Bishop.createBlack(new Position(3, 8)));
+        board.set(59, Queen.createBlack(new Position(4, 8)));
+        board.set(60, King.createBlack(new Position(5, 8)));
+        board.set(61, Bishop.createBlack(new Position(6, 8)));
+        board.set(62, Knight.createBlack(new Position(7, 8)));
+        board.set(63, Rook.createBlack(new Position(8, 8)));
     }
 
     public void move(final String from, final String to, final Team currentTurn) {

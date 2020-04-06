@@ -23,6 +23,7 @@ public class ChessGame {
 
     public ChessGame() {
         this.gameResult = new GameResult();
+        board = BoardFactory.createEmptyBoard();
     }
 
     public void run() {
@@ -32,7 +33,7 @@ public class ChessGame {
 
         while ((command = inputCommandWithValidation()).isNotEnd()) {
             if (command.isStart()) {
-                board = BoardFactory.createBoard();
+                board.initialize();
                 OutputView.printBoard(board.getBoard());
             }
             try {

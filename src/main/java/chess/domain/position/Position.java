@@ -69,4 +69,9 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf((char)(x + 96)) + String.valueOf(y);
+    }
 }

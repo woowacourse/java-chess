@@ -65,6 +65,14 @@ public abstract class Piece {
         return pieceType;
     }
 
+    public String getName() {
+        return representation + "_" + team.toString().toLowerCase();
+    }
+
+    public char getRepresentation() {
+        return representation;
+    }
+
     public List<Direction> directions() {
         return pieceType.directions();
     }
@@ -95,6 +103,6 @@ public abstract class Piece {
 
     @Override
     public String toString() {
-        return String.valueOf(representation);
+        return position.toString();
     }
 }

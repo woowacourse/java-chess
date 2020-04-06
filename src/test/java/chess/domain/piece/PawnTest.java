@@ -20,7 +20,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("getCasesForPawnMoveByDirection")
     void pawnMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        Board board = BoardFactory.createBoard();
+        Board board = BoardFactory.createInitializedBoard();
         assertThat(moveStrategy.possiblePositions(board, piece)).isEqualTo(expectedToPositions);
     }
 

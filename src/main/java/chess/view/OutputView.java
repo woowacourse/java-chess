@@ -20,7 +20,7 @@ public class OutputView {
     public static void printBoard(List<Piece> board) {
         for (int row = END_INDEX; row >= START_INDEX; row--) {
             for (int col = START_INDEX; col <= END_INDEX; col++) {
-                System.out.print(board.get((row - 1) * Position.ROW_SIZE + col - 1));
+                System.out.print(board.get((row - 1) * Position.ROW_SIZE + col - 1).getRepresentation());
             }
             System.out.print(NEW_LINE);
         }

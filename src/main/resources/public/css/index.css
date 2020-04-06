@@ -1,0 +1,83 @@
+body {
+    margin: 0;
+    position: relative;
+    background: url("../images/bg.jpg")
+}
+
+.center {
+    margin: 0 auto;
+}
+
+/* HEADER */
+header {
+    width: 750px;
+    margin: 0;
+}
+
+header .inner {
+    height: 70px;
+    background-color: lightcoral;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .inner h1 {
+    color : whitesmoke;
+    font-weight: bold;
+}
+
+/* CONTROLLER */
+.controller {
+    position: absolute;
+    top: 30%;
+    right: 30px;
+    margin-right: 20px;
+    width: 150px;
+    height: 280px;
+    background-color: lightcoral;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.controller input {
+    width: 100px;
+    height: 45px;
+    margin: 20px 0;
+}
+
+/* BOARD */
+.inner {
+    max-width: 680px;
+    padding: 10px;
+    text-align: center;
+}
+
+.inner .chess-row {
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner .chess-row .square {
+    width: 64px;
+    height: 64px;
+}
+
+.inner .chess-row .square-white {
+    background-color: #F5DEB3;
+}
+
+.inner .chess-row .square-black {
+    background-color: #4A2511;
+}
+
+.inner .chess-row .square img {
+    width: 64px;
+    height: 64px;
+}

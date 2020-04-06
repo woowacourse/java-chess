@@ -35,7 +35,7 @@ public class BoardTest {
     @ParameterizedTest
     @MethodSource("getCasesForFindingPieceByStringPosition")
     void findPiece(String position, Piece expectedPiece) {
-        Board board = BoardFactory.createBoard();
+        Board board = BoardFactory.createInitializedBoard();
         int index = Board.getBoardIndexByStringPosition(position);
         assertThat(board.findPieceBy(index)).isEqualTo(expectedPiece);
     }
@@ -120,7 +120,7 @@ public class BoardTest {
     @ParameterizedTest
     @MethodSource("getCasesForPieceMove")
     void movePiece(String from, String to, PieceType fromPieceType, PieceType toPieceType) {
-        Board board = BoardFactory.createBoard();
+        Board board = BoardFactory.createInitializedBoard();
 
         board.move(from, to, Team.WHITE);
         assertThat(board.findPieceBy(Position.of(from)).getPieceType()).isEqualTo(toPieceType);
