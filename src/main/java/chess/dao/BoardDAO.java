@@ -6,6 +6,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -48,6 +50,28 @@ public class BoardDAO {
 			closeConnection(con);
 
 			return piece;
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
+
+	public List<Piece> findAll() {
+		List<Piece> result = new ArrayList<>();
+		String query = "SELECT * FROM board WHERE game_id = ?";
+		try {
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, gameId);
+			ResultSet rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String symbol = rs.getString("symbol");
+				Position position = Position.of(rs.getString("position"));
+				result.add(PieceFactory.of(symbol).create(position));
+			}
+			pstmt.close();
+			closeConnection(con);
+
+			return result;
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
