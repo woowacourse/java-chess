@@ -29,16 +29,13 @@ public class ChessRunner {
     }
 
     private void validateMovement(Position sourcePosition, Position targetPosition, Piece selectedPiece) {
-//        if (selectedPiece == null) {
-//            System.out.println("HERE IS NULL여기가 ");
-//        }
-//        if (selectedPiece.isEnemy(currentTeam)) {
-//            throw new IllegalArgumentException("현재 차례가 아닙니다.");
-//        }
-//
-//        if (!(selectedPiece.movable(sourcePosition, targetPosition, board))) {
-//            throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
-//        }
+        if (selectedPiece.isEnemy(currentTeam)) {
+            throw new IllegalArgumentException("현재 차례가 아닙니다.");
+        }
+
+        if (!(selectedPiece.movable(sourcePosition, targetPosition, board))) {
+            throw new IllegalArgumentException("이동할 수 없는 곳입니다.");
+        }
     }
 
     private void updateBoard(Position sourcePosition, Position targetPosition) {

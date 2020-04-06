@@ -68,7 +68,6 @@ public class ChessCommandDao {
 
         while (rs.next()) {
             commands.add(rs.getString("command"));
-            System.out.println("커맨드는 " + rs.getString("command"));
         }
         return commands;
     }
