@@ -1,5 +1,6 @@
 package chess.domain.gamestate;
 
+import chess.dao.JdbcTemplatePieceDAO;
 import chess.dao.PieceDAO;
 import chess.domain.Team;
 import chess.domain.board.Board;
@@ -26,7 +27,7 @@ public class Running extends Started {
 
 
         try {
-            PieceDAO pieceDAO = PieceDAO.getInstance();
+            PieceDAO pieceDAO = JdbcTemplatePieceDAO.getInstance();
 
             Map<Position, Placeable> positionToPiece = board.getPositionToPiece();
             for (Position position : positionToPiece.keySet()) {

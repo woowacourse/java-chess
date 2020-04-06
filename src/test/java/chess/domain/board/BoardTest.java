@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.dao.InMemoryPieceDAO;
+import chess.dao.PieceDAO;
 import chess.domain.Pieces;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
@@ -31,7 +33,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("createFromPositionAndToPosition")
     void move(Position fromPosition, Position toPosition) {
-        Board board = BoardFactory.createInitially();
+        Board board = BoardFactory.createInitially(InMemoryPieceDAO.getInstance());
         Placeable pieceToMove = board.findPieceBy(fromPosition);
         board.move(fromPosition, toPosition, teamInTurn);
 
@@ -370,7 +372,7 @@ class BoardTest {
     @ParameterizedTest
     @MethodSource("createTeamAndPieces")
     void findPiecesOf(Team team, Pieces expected) {
-        Board board = BoardFactory.createInitially();
+        Board board = BoardFactory.createInitially(InMemoryPieceDAO.getInstance());
         Pieces pieces = board.findPiecesOf(team);
 
         assertThat(pieces).isEqualTo(expected);

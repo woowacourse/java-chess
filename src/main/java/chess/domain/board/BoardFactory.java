@@ -28,12 +28,11 @@ public class BoardFactory {
         return board;
     }
 
-    public static Board createInitially() {
+    public static Board createInitially(PieceDAO pieceDAO) {
         Map<Position, Placeable> positionAndPiece;
 
         try {
             positionAndPiece = createBoardSource();
-            PieceDAO pieceDAO = PieceDAO.getInstance();
 
             for (Position position : positionAndPiece.keySet()) {
                 Placeable piece = positionAndPiece.get(position);
