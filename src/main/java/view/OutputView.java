@@ -5,7 +5,6 @@ import static domain.board.Board.*;
 import java.util.List;
 import java.util.Map;
 
-import domain.board.BoardGame;
 import domain.board.Rank;
 import domain.piece.Piece;
 import domain.piece.team.Team;
@@ -27,17 +26,15 @@ public class OutputView {
 		System.out.println(INPUT_COMMAND_MESSAGE);
 	}
 
-	public static void printChessBoard(BoardGame board) {
-		List<Rank> ranks = board.getRanks();
-		for (int rankIndex = ranks.size() - 1; rankIndex >= 0; rankIndex--) {
-			List<Piece> pieces = ranks.get(rankIndex).getPieces();
-			printRank(pieces);
+	public static void printChessBoard(List<Rank> ranks) {
+		for (Rank rank : ranks) {
+			printRank(rank.getPieces());
 		}
 	}
 
 	private static void printRank(List<Piece> rank) {
-		for (int columnIndex = MIN_COLUMN_COUNT; columnIndex <= MAX_COLUMN_COUNT; columnIndex++) {
-			final int columnNumber = columnIndex;
+		for (int i = MIN_COLUMN_COUNT; i <= MAX_COLUMN_COUNT; i++) {
+			final int columnNumber = i;
 			String pieceSymbol = rank.stream()
 				.filter(p -> p.equalsColumn(columnNumber))
 				.map(Piece::showSymbol)

@@ -20,7 +20,7 @@ public class ChessController {
 	}
 
 	private void run(BoardGame board, Team turn) {
-		OutputView.printChessBoard(board);
+		OutputView.printChessBoard(board.getReverse());
 		Command command;
 		do {
 			String inputCommand = inputCommand();
@@ -28,7 +28,7 @@ public class ChessController {
 			if (command.isMove()) {
 				MoveCommand moveCommand = new MoveCommand(inputCommand);
 				board.move(moveCommand, turn);
-				OutputView.printChessBoard(board);
+				OutputView.printChessBoard(board.getReverse());
 				turn = Team.changeTurn(turn);
 			}
 

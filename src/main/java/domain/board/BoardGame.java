@@ -1,8 +1,8 @@
 package domain.board;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import domain.command.MoveCommand;
 import domain.piece.Piece;
@@ -32,6 +32,13 @@ public class BoardGame {
 
 	public boolean isKingAlive() {
 		return board.isKingAlive();
+	}
+
+	public List<Rank> getReverse() {
+		List<Rank> originalBoard = board.getRanks();
+		List<Rank> reverseBoard = new ArrayList<>(originalBoard);
+		Collections.reverse(reverseBoard);
+		return reverseBoard;
 	}
 
 	public List<Rank> getRanks() {
