@@ -31,6 +31,7 @@ public class Knight extends Piece {
 		return false;
 	}
 
+
 	private static class KnightCache {
 		private static Map<Team, Knight> knightCache = new HashMap<>();
 

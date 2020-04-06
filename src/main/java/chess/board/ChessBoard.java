@@ -16,6 +16,7 @@ public class ChessBoard {
 	public static final int COLUMN_LENGTH = 8;
 	private static final int TEAM_LENGTH = 2;
 
+
 	private final Map<Location, Piece> board;
 
 	public ChessBoard(Map<Location, Piece> pieces) {

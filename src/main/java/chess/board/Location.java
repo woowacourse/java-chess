@@ -32,6 +32,7 @@ public class Location {
 		Location.of(Column.H, Row.SEVEN)
 	);
 
+
 	private final Column column;
 	private final Row row;
 

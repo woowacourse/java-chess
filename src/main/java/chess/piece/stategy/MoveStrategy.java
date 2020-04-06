@@ -1,7 +1,6 @@
 package chess.piece.stategy;
 
 import java.util.Objects;
-
 import chess.board.Location;
 import chess.team.Team;
 

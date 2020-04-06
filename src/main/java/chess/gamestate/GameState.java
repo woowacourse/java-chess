@@ -22,6 +22,7 @@ public enum GameState {
 		this.team = Team.BLACK;
 	}
 
+
 	public static GameState of(String message) {
 		return Arrays.stream(values())
 			.filter(gameState -> gameState.name().equals(message))
@@ -44,6 +45,7 @@ public enum GameState {
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("반대팀을 찾을 수 없습니다."));
 	}
+
 
 	public boolean isGameRunning() {
 		return gameRunning;

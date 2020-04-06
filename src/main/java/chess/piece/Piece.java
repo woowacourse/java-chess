@@ -24,6 +24,7 @@ public abstract class Piece {
 		return c;
 	}
 
+
 	public abstract double getScore();
 
 	public abstract boolean isNotJumper();
@@ -51,10 +52,6 @@ public abstract class Piece {
 
 	public boolean isKing() {
 		return this instanceof King;
-	}
-
-	public char getName() {
-		return name;
 	}
 
 	public Team getTeam() {
