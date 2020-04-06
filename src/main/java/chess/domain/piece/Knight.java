@@ -42,17 +42,6 @@ public class Knight extends Piece {
         return availableSquares;
     }
 
-//    @Override
-//    public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
-//        Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-//        Square squareToAdd = Square.moveTo(
-//                direction.getFileDegree(), direction.getRankDegree(), centerSquare);
-//        availableSquares.add(squareToAdd);
-//        if (!squareToAdd.equals(centerSquare)) {
-//            removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
-//        }
-//    }
-
     @Override
     public String getLetter() {
         if (color == Color.BLACK) {

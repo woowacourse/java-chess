@@ -42,16 +42,6 @@ public class King extends Piece {
         return availableSquares;
     }
 
-//    @Override
-//    public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
-//        Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-//        Square squareToAdd = Square.moveTo(
-//                direction.getFileDegree(), direction.getRankDegree(), centerSquare);
-//        availableSquares.add(squareToAdd);
-//        if (chessBoard.containsKey(squareToAdd) && !squareToAdd.equals(centerSquare)) {
-//            removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
-//        }
-//    }
 
     @Override
     public String getLetter() {

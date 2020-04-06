@@ -42,21 +42,6 @@ public class Rook extends Piece {
         return availableSquares;
     }
 
-//    @Override
-//    public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
-//        Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-//        for (int moveTime = FIRST_SHIFT; moveTime < LAST_SHIFT; moveTime++) {
-//            Square squareToAdd = Square.moveTo(
-//                    direction.getFileDegree() * moveTime, direction.getRankDegree() * moveTime, centerSquare
-//            );
-//            availableSquares.add(squareToAdd);
-//            if (chessBoard.containsKey(squareToAdd) && !squareToAdd.equals(centerSquare)) {
-//                removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
-//                break;
-//            }
-//        }
-//    }
-
     @Override
     public String getLetter() {
         if (color == Color.BLACK) {
