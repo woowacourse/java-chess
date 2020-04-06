@@ -37,7 +37,7 @@ public class WebUIChessApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            gameDao.updateEndState(700);
+            gameDao.updateEndState(gameDao.findMaxRoomNumber());
             return render(model, "end.html");
         });
 
@@ -46,7 +46,7 @@ public class WebUIChessApplication {
                 ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
                 gameDao.saveInitGame(responseDto);
                 int roomNumber = gameDao.findMaxRoomNumber();
-                chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
+                chessBoardDao.saveChessBoard(responseDto.getChessBoardDto(), roomNumber);
                 res.status(200);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {
@@ -60,10 +60,13 @@ public class WebUIChessApplication {
                 int roomNumber = gameDao.findMaxRoomNumber();
                 RequestDto requestDto = new RequestDto(Command.MOVE, req);
                 ResponseDto responseDto = chessController.move(requestDto);
-                res.status(200);
+                responseDto.setRoomNumber(roomNumber);
+
                 gameDao.updateGame(responseDto);
-                chessBoardDao.deleteChessBoard(700);
-                chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
+                chessBoardDao.deleteChessBoard(roomNumber);
+                chessBoardDao.saveChessBoard(responseDto.getChessBoardDto(), roomNumber);
+
+                res.status(200);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 res.status(400);

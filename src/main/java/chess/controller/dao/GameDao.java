@@ -39,12 +39,12 @@ public class GameDao {
         pstmt.close();
     }
 
-    public void updateEndState(int game_id) throws SQLException {
+    public void updateEndState(int roomNumber) throws SQLException {
         String query = "UPDATE game SET state = ?" +
                 "WHERE game_id = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, "end");
-        pstmt.setInt(2, game_id);
+        pstmt.setInt(2, roomNumber);
         pstmt.executeUpdate();
         pstmt.close();
     }

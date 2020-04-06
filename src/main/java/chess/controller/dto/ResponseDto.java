@@ -7,7 +7,7 @@ public class ResponseDto {
     private final ChessBoardDto chessBoardDto;
     private final Result result;
     private final Player turn;
-    private final int roomNumber;
+    private int roomNumber;
 
     public ResponseDto(ChessBoardDto chessBoardDto, Result result, Player turn, int roomNumber) {
         this.chessBoardDto = chessBoardDto;
@@ -34,5 +34,9 @@ public class ResponseDto {
 
     public int getRoomNumber() {
         return roomNumber;
+    }
+
+    public void setRoomNumber(int roomNumber) {
+        this.roomNumber = roomNumber;
     }
 }

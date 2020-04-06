@@ -13,11 +13,10 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-// Data Access Object
 public class ChessBoardDao {
     private Connection connection = new ConnectionDao().getConnection();
 
-    public void saveInitChessBoard(ChessBoardDto chessBoardDto, int roomNumber) throws SQLException {
+    public void saveChessBoard(ChessBoardDto chessBoardDto, int roomNumber) throws SQLException {
         String query = "INSERT INTO chessboard VALUES (?,?,(SELECT piece_id FROM piece WHERE name=? AND player=?))";
         PreparedStatement pstmt = connection.prepareStatement(query);
         for (TileDto tile : chessBoardDto.getTiles()) {
@@ -38,19 +37,19 @@ public class ChessBoardDao {
         pstmt.close();
     }
 
-    public Map<Position, Piece> loadGamePlaying(int roomNumber) throws SQLException {
-        String query = "SELECT b.position, b.piece FROM chessboard b ON b.room = ?";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setInt(1, roomNumber);
-
-        ResultSet rs = pstmt.executeQuery();
-        Map<Position, Piece> chessBoard = new HashMap<>();
-        while (rs.next()) {
-            chessBoard.put(Positions.of(rs.getString("position")),
-                    ChessPieceFactory.of(rs.getString("piece")));
-        }
-        pstmt.close();
-
-        return chessBoard;
-    }
+//    public Map<Position, Piece> loadGamePlaying(int roomNumber) throws SQLException {
+//        String query = "SELECT b.position, b.piece FROM chessboard b ON b.room = ?";
+//        PreparedStatement pstmt = connection.prepareStatement(query);
+//        pstmt.setInt(1, roomNumber);
+//
+//        ResultSet rs = pstmt.executeQuery();
+//        Map<Position, Piece> chessBoard = new HashMap<>();
+//        while (rs.next()) {
+//            chessBoard.put(Positions.of(rs.getString("position")),
+//                    ChessPieceFactory.of(rs.getString("piece")));
+//        }
+//        pstmt.close();
+//
+//        return chessBoard;
+//    }
 }
