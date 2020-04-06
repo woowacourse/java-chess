@@ -17,13 +17,38 @@
     font-size: 20px;
     color: white;
     font-weight: bolder;
-    width: 80px;
+    width: 100px;
     margin: 10px 5px;
     padding: 10px 0;
     border-radius: 10px;
-    border: 0;
     background-color: rgba(75, 0, 130, 0.5);
+    border: 1px solid rgba(75, 0, 130, 0.5);
     cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgba(75, 0, 130, 0.8);
+    border: 1px solid rgba(75, 0, 130, 0.8);
+}
+
+.endBtn {
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
+    color: rgba(75, 0, 130, 0.5);
+    font-weight: bolder;
+    width: 100px;
+    margin: 10px 5px;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(75, 0, 130, 0.5);
+    background-color: white;
+    cursor: pointer;
+}
+
+.endBtn:hover {
+    background-color: rgba(205, 92, 92, 0.8);
+    border: 1px solid rgba(205, 92, 92, 0.8);
+    color: white;
 }
 
 #background {
@@ -108,30 +133,32 @@
 
 #teamNotice {
     font-family: BMHANNAPro, sans-serif;
-    font-size: 25px;
+    margin-top: -6px;
 }
 
 .subTitle {
-    font-size: 40px;
+    font-size: 30px;
     color: indigo;
     text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
+    margin-bottom: 16px;
 }
 
 #whiteTeam {
     color: white;
     text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
-    font-size: 50px;
+    font-size: 26px;
 }
 
 #blackTeam {
     color: black;
     text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
-    font-size: 50px;
+    font-size: 26px;
 }
 
 #moveForms {
     font-family: BMHANNAPro, sans-serif;
-    margin-top: 30px;
+    margin-top: 10px;
+    margin-bottom: -16px;
 }
 
 .moveForm {
@@ -145,8 +172,8 @@
     text-align: center;
 }
 
-.btn:hover {
-    background-color: rgba(75, 0, 130, 0.8);
+#status {
+    font-family: "BMHANNAPro", sans-serif;
 }
 
 #helpBox {

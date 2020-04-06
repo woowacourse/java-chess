@@ -32,8 +32,9 @@
     :: 체 스 게 임 ::
 </div>
 <div id="btnBox">
-    <a href="/chessGame"><input class="btn" type="button" value="시작하기"></a>
+    <a href="/chessGame"><input class="btn" type="button" value="이어서 하기"></a>
     <a href="/newChessGame"><input class="btn" type="button" value="새 게임"></a>
+    <a href="/"><input class="endBtn" type="button" value="끝내기"></a>
 </div>
 
 <div>
@@ -81,13 +82,20 @@
                 <form action="/move" method="POST">
                     <input class="moveForm" name="source" placeholder="체스말 선택" readonly type="text"/><br>
                     <input class="moveForm" name="target" placeholder="옮길 위치 선택" readonly type="text"/><br>
-                    <input class="btn" id="moveBtn" style="color: greenyellow" type="submit" value="이 동">
-                    <a href="/chessGame"><input class="btn" type="button" value="초기화"></a>
+                    <input class="btn" id="moveBtn" style="color: greenyellow; width: 70px" type="submit" value="이 동">
+                    <a href="/chessGame"><input class="btn" style="width: 70px" type="button" value="초기화"></a>
                 </form>
             </div>
 
+            <div id="status">
+                <p class="subTitle"> - 점수 현황 - </p>
+                <div id="blackTeam"> BLACK {{blackScore}} 점</div>
+                <br>
+                <div id="whiteTeam"> WHITE {{whiteScore}} 점</div>
+            </div>
+
             <div id="helpBox">
-                <p class="subTitle"> - 도움말 - </p>
+                <p class="subTitle" style="margin-bottom: 20px"> - 도움말 - </p>
                 <div id="errorMessage">
                     {{error}}
                 </div>

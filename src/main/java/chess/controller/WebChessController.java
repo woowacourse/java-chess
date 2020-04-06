@@ -15,6 +15,7 @@ import static spark.Spark.*;
 public class WebChessController {
     private ChessBoardDAO chessBoardDAO;
     private Board board;
+    private GameResult gameResult;
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
@@ -30,6 +31,7 @@ public class WebChessController {
         } else {
             this.board = chessBoardDAO.getBoard();
         }
+        this.gameResult = this.board.createGameResult();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -40,15 +42,20 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             model.put("cells", this.board.getCells());
             model.put("currentTeam", this.board.getTeam().getName());
+            model.put("blackScore", gameResult.getAliveBlackPieceScoreSum());
+            model.put("whiteScore", gameResult.getAliveWhitePieceScoreSum());
             return render(model, "index.html");
         });
 
         get("/newChessGame", (req, res) -> {
             this.board = new Board();
+            this.gameResult = this.board.createGameResult();
 
             Map<String, Object> model = new HashMap<>();
             model.put("cells", this.board.getCells());
             model.put("currentTeam", this.board.getTeam().getName());
+            model.put("blackScore", gameResult.getAliveBlackPieceScoreSum());
+            model.put("whiteScore", gameResult.getAliveWhitePieceScoreSum());
             return render(model, "index.html");
         });
 
@@ -77,8 +84,12 @@ public class WebChessController {
             } catch (Exception e) {
                 model.put("error", e.getMessage());
             }
+            this.gameResult = this.board.createGameResult();
+
             model.put("cells", this.board.getCells());
             model.put("currentTeam", this.board.getTeam().getName());
+            model.put("blackScore", gameResult.getAliveBlackPieceScoreSum());
+            model.put("whiteScore", gameResult.getAliveWhitePieceScoreSum());
 
             chessBoardDAO.deletePreviousBoard();
             chessBoardDAO.saveBoard(board.createBoardDTO());
