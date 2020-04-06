@@ -1,11 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Type;
 import chess.domain.piece.Piece;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
@@ -33,7 +31,7 @@ public class ChessBoard {
         if (!beforePiece.getColor().equals(turn.getTurn())) {
             throw new UnsupportedOperationException("차례가 아닙니다.");
         }
-        if (!beforePiece.getMovableSquares(beforeSquare, chessBoard).contains(afterSquare)) {
+        if (!beforePiece.findMovable(beforeSquare, chessBoard).contains(afterSquare)) {
             throw new UnsupportedOperationException("이동할 수 없는 칸입니다.");
         }
         turn.changeTurn();

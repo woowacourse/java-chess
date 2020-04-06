@@ -44,9 +44,10 @@ public class BishopTest {
         board.put(Square.of("f3"), Pawn.of(Color.BLACK));
         board.put(Square.of("g6"), King.of(Color.BLACK));
         board.put(Square.of("g2"), Pawn.of(Color.WHITE));
+        board.put(Square.of("c6"), Bishop.of(Color.BLACK));
 
         Bishop bishop = Bishop.of(Color.BLACK);
-        Set<Square> availableSquares = bishop.getMovableSquares(Square.of("c6"), board);
+        Set<Square> availableSquares = bishop.findMovable(Square.of("c6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(7);

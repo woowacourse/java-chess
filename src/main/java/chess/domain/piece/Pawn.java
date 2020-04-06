@@ -23,6 +23,7 @@ public class Pawn extends Piece {
 
     public Pawn(Color color) {
         super(color);
+        addMovable = this;
     }
 
     public static Pawn of(Color color) {
@@ -31,11 +32,11 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Set<Square> getMovableSquares(Square centerSquare, Map<Square, Piece> chessBoard) {
+    public Set<Square> findMovable(Square centerSquare, Map<Square, Piece> chessBoard) {
         Set<Square> availableSquares = new LinkedHashSet<>();
         availableSquares.add(centerSquare);
         Direction direction = getRankLevelByColor();
-        addMovableSquares(chessBoard, availableSquares, direction);
+        addMovable(chessBoard, availableSquares, direction);
         addCaptureableSquares(chessBoard, availableSquares);
         availableSquares.remove(centerSquare);
         return availableSquares;
@@ -67,7 +68,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
+    public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
         Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
         Square squareToAdd = Square.moveTo(
                 direction.getFileDegree(), direction.getRankDegree(), centerSquare

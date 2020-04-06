@@ -41,20 +41,20 @@ public class PawnTest {
 
         Pawn pawn = Pawn.of(Color.BLACK);
         board.put(Square.of("c6"), pawn);
-        Set<Square> availableSquares = pawn.getMovableSquares(Square.of("c6"), board);
+        Set<Square> availableSquares = pawn.findMovable(Square.of("c6"), board);
         assertThat(availableSquares.contains(Square.of("c5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(1);
 
         board.remove(Square.of("c6"));
         board.put(Square.of("g6"), pawn);
-        availableSquares = pawn.getMovableSquares(Square.of("g6"), board);
+        availableSquares = pawn.findMovable(Square.of("g6"), board);
         assertThat(availableSquares.contains(Square.of("g5"))).isTrue();
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(2);
         board.remove(Square.of("g6"));
 
         board.put(Square.of("e6"), pawn);
-        availableSquares = pawn.getMovableSquares(Square.of("e6"), board);
+        availableSquares = pawn.findMovable(Square.of("e6"), board);
         assertThat(availableSquares.contains(Square.of("f5"))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(1);
     }

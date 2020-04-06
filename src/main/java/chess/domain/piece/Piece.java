@@ -2,30 +2,31 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.board.Square;
+import chess.domain.piece.strategy.AddMovable;
 
 import java.util.Map;
 import java.util.Set;
 
-public abstract class Piece {
+public abstract class Piece implements AddMovable {
 
-    static final int FIRST_SHIFT = 1;
-    static final int LAST_SHIFT = 8;
+    public static final int FIRST_SHIFT = 1;
+    public static final int LAST_SHIFT = 8;
     private static final String INPUT_ERROR_MESSAGE = "잘못된 입력입니다.";
     private static final String NULL_INPUT_ERROR_MESSAGE = "입력이 존재하지 않습니다.";
 
     protected final Color color;
+    protected AddMovable addMovable;
 
     public Piece(Color color) {
         this.color = color;
     }
 
-    public abstract Set<Square> getMovableSquares(Square pieceSquare, Map<Square, Piece> chessBoard);
+    public abstract Set<Square> findMovable(Square pieceSquare, Map<Square, Piece> chessBoard);
 
-    public abstract String getLetter();
 
-    public abstract double getScore();
-
-    abstract void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction);
+    public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction){
+        addMovable.addMovable(chessBoard,availableSquares,direction);
+    }
 
     static void checkColorNull(Color color) {
         if (color == null) {
@@ -54,4 +55,8 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
+
+    public abstract String getLetter();
+
+    public abstract double getScore();
 }
