@@ -3,13 +3,12 @@ package chess;
 import chess.controller.WebController;
 import chess.dao.BoardDAO;
 import chess.dao.RecordDAO;
-import chess.domains.Record;
 import chess.domains.board.Board;
+import chess.domains.piece.PieceColor;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -29,27 +28,27 @@ public class WebUIChessApplication {
         });
 
         get("/start", (req, res) -> {
-            boardDAO.clearBoard();
-            boardDAO.addBoard(board.getBoard());
+            WebController.startGame(board, boardDAO, recordDAO);
 
-            Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
+            Map<String, Object> model = new HashMap<>();
+            model.put("records", recordDAO.readRecords());
+            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("turn", WebController.printTurn(WebController.turn(board)));
+            model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
 
-            recordDAO.clearRecord();
-            recordDAO.addRecord(new Record("start", ""));
-
-            List<Record> records = recordDAO.readRecords();
-
-            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
             return render(model, "index.html");
         });
 
         get("/resume", (req, res) -> {
-            board.initialize();
-            List<Record> records = recordDAO.readRecords();
-            board.recoverRecords(records);
+            WebController.resumeGame(board, recordDAO);
 
-            Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
-            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
+            Map<String, Object> model = new HashMap<>();
+            model.put("records", recordDAO.readRecords());
+            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("turn", WebController.printTurn(WebController.turn(board)));
+            model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
 
             return render(model, "index.html");
         });
@@ -58,24 +57,21 @@ public class WebUIChessApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            Record move = new Record("move " + source + " " + target, "");
+            WebController.movePiece(board, source, target);
 
-            try {
-                WebController.move(boardDAO, board, source, target);
-            } catch (Exception e) {
-                move.setErrorMsg(e.getMessage());
-            }
+            WebController.endGame(board);
 
-            recordDAO.addRecord(move);
-
-            List<Record> records = recordDAO.readRecords();
-            Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
-            Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
+            Map<String, Object> model = new HashMap<>();
+            model.put("records", recordDAO.readRecords());
+            model.put("end", board.isGameOver());
+            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("turn", WebController.printTurn(WebController.turn(board)));
+            model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+            model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
 
             return render(model, "index.html");
         });
     }
-
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

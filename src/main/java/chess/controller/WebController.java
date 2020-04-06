@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.dao.BoardDAO;
+import chess.dao.RecordDAO;
 import chess.domains.Record;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
@@ -12,16 +13,48 @@ import java.util.List;
 import java.util.Map;
 
 public class WebController {
-    public static Map<String, Object> makeModel(Board board, List<Record> records, Map<String, String> pieceCodes) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("records", records);
-        model.put("pieces", pieceCodes);
-        model.put("turn", printTurn(turn(board)));
-        model.put("white_score", calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", calculateScore(board, PieceColor.BLACK));
+    public static void startGame(Board board, BoardDAO boardDAO, RecordDAO recordDAO) throws SQLException {
+        board.initialize();
 
-        return model;
+        boardDAO.clearBoard();
+        boardDAO.addBoard(board.getBoard());
+
+        recordDAO.clearRecord();
+        recordDAO.addRecord(new Record("start", ""));
     }
+
+    public static void movePiece(Board board, String source, String target) throws SQLException {
+        BoardDAO boardDAO = new BoardDAO();
+        RecordDAO recordDAO = new RecordDAO();
+        Record move = new Record("move " + source + " " + target, "");
+
+        try {
+            Position sourcePosition = Position.ofPositionName(source);
+            Position targetPosition = Position.ofPositionName(target);
+            board.move(sourcePosition, targetPosition);
+            boardDAO.updateBoard(source, board.findPieceByPosition(source));
+            boardDAO.updateBoard(target, board.findPieceByPosition(target));
+        } catch (Exception e) {
+            move.setErrorMsg(e.getMessage());
+        }
+
+        recordDAO.addRecord(move);
+    }
+
+    public static void resumeGame(Board board, RecordDAO recordDAO) throws SQLException {
+        board.initialize();
+        List<Record> records = recordDAO.readRecords();
+        board.recoverRecords(records);
+    }
+
+    public static void endGame(Board board) throws SQLException {
+        RecordDAO recordDAO = new RecordDAO();
+        if (board.isGameOver()) {
+            String winner = board.getTeamColor().changeTeam().name();
+            recordDAO.addRecord(new Record("게임이 종료되었습니다.", winner + "의 승리"));
+        }
+    }
+
 
     public static Map<String, String> convertView(Map<String, String> board) {
         Map<String, String> pieces = new HashMap<>();
@@ -71,20 +104,12 @@ public class WebController {
         return pieces;
     }
 
-    private static String printTurn(String turn) {
+    public static String printTurn(String turn) {
         return turn + "의 순서입니다.";
     }
 
     public static String turn(Board board) {
         return board.getTeamColor().name();
-    }
-
-    public static void move(BoardDAO boardDAO, Board board, String source, String target) throws SQLException {
-        Position sourcePosition = Position.ofPositionName(source);
-        Position targetPosition = Position.ofPositionName(target);
-        board.move(sourcePosition, targetPosition);
-        boardDAO.updateBoard(source, board.findPieceByPosition(source));
-        boardDAO.updateBoard(target, board.findPieceByPosition(target));
     }
 
     public static double calculateScore(Board board, PieceColor pieceColor) {

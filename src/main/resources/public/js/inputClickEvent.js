@@ -5,3 +5,10 @@ $(document).ready(function () {
         }
     });
 });
+
+if (document.getElementById("end").innerHTML === "true") {
+    [...document.getElementsByClassName("command")].forEach(command => {
+        command.setAttribute("disabled", true);
+    });
+    document.getElementById("input").setAttribute("disabled", true);
+}

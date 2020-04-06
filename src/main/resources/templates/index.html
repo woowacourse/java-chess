@@ -9,8 +9,6 @@
             integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
             src="https://code.jquery.com/jquery-3.4.1.min.js">
     </script>
-    <script src="./js/buttonClickEvent.js" type="text/javascript"></script>
-    <script src="./js/inputClickEvent.js" type="text/javascript"></script>
 </head>
 <body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <div class="container">
@@ -130,7 +128,7 @@
                    value="이동할 말의 위치를 입력하세요."/>
             <input class="command" name="target" onfocus="this.value='';return true;" type="text"
                    value="이동할 위치를 입력하세요."/>
-            <input type="submit" value="입력"/>
+            <input id="input" type="submit" value="입력"/>
         </form>
         <div class="command_history">
             {{#records}}
@@ -150,6 +148,9 @@
             </div>
         </div>
     </div>
+    <div id="end">{{end}}</div>
 </div>
+<script src="./js/buttonClickEvent.js" type="text/javascript"></script>
+<script src="./js/inputClickEvent.js" type="text/javascript"></script>
 </body>
 </html>
