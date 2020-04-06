@@ -7,7 +7,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import chess.domain.dao.BoardDAO;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -16,14 +15,14 @@ public class BoardDAOTest {
 
 	private BoardDAO boardDAO;
 
-	@AfterEach
-	void tearDown() {
-		boardDAO.truncate();
-	}
-
 	@BeforeEach
 	void setUp() {
 		boardDAO = new BoardDAO("1");
+	}
+
+	@AfterEach
+	void tearDown() {
+		boardDAO.truncate();
 	}
 
 	@Test
