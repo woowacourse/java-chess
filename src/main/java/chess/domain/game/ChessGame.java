@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.controller.dto.ChessBoardDto;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 
@@ -27,7 +28,7 @@ public class ChessGame {
         turn = Player.WHITE;
         gameStatus = GameStatus.RUNNING;
 
-        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
     }
 
     public ResponseDto move(RequestDto requestDto) {
@@ -40,12 +41,13 @@ public class ChessGame {
         }
 
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
+
         this.turn = Player.reversePlayer(turn);
-        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
     }
 
     public ResponseDto status(RequestDto requestDto) {
-        return new ResponseDto(chessBoard, chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
     }
 
     public ResponseDto end(RequestDto requestDto) {

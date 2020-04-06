@@ -1,6 +1,5 @@
 package chess.controller.dto;
 
-import chess.domain.game.ChessBoard;
 import chess.domain.game.Player;
 import chess.domain.status.Result;
 
@@ -8,11 +7,17 @@ public class ResponseDto {
     private final ChessBoardDto chessBoardDto;
     private final Result result;
     private final Player turn;
+    private final int roomNumber;
 
-    public ResponseDto(ChessBoard chessBoard, Result result, Player turn) {
-        this.chessBoardDto = new ChessBoardDto(chessBoard.getChessBoard());
+    public ResponseDto(ChessBoardDto chessBoardDto, Result result, Player turn, int roomNumber) {
+        this.chessBoardDto = chessBoardDto;
         this.result = result;
         this.turn = turn;
+        this.roomNumber = roomNumber;
+    }
+
+    public ResponseDto(ChessBoardDto chessBoardDto, Result result, Player turn) {
+        this(chessBoardDto, result, turn, 0);
     }
 
     public ChessBoardDto getChessBoardDto() {
@@ -25,5 +30,9 @@ public class ResponseDto {
 
     public Player getTurn() {
         return turn;
+    }
+
+    public int getRoomNumber() {
+        return roomNumber;
     }
 }
