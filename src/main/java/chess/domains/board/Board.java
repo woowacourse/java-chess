@@ -148,4 +148,8 @@ public class Board {
     public Map<Position, Piece> getBoard() {
         return board;
     }
+
+    public String findPieceByPosition(String source) {
+        return board.get(Position.ofPositionName(source)).name();
+    }
 }

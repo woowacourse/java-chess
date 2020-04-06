@@ -61,15 +61,12 @@ public class WebUIChessApplication {
             Record move = new Record("move " + source + " " + target, "");
 
             try {
-                WebController.move(board, source, target);
+                WebController.move(boardDAO, board, source, target);
             } catch (Exception e) {
                 move.setErrorMsg(e.getMessage());
             }
 
             recordDAO.addRecord(move);
-
-            boardDAO.clearBoard();
-            boardDAO.addBoard(board.getBoard());
 
             List<Record> records = recordDAO.readRecords();
             Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());

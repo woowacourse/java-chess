@@ -60,6 +60,15 @@ public class BoardDAO {
         }
     }
 
+    public void updateBoard(String position, String piece) throws SQLException {
+        String query = "UPDATE board SET piece = ? where position = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, piece);
+        pstmt.setString(2, position);
+        pstmt.executeUpdate();
+    }
+
+
     public Map<String, String> showPieces() throws SQLException {
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -70,7 +79,6 @@ public class BoardDAO {
         while (rs.next()) {
             board.put(rs.getString("position"), rs.getString("piece"));
         }
-
         return board;
     }
 

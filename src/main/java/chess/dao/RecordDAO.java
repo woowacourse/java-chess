@@ -54,7 +54,7 @@ public class RecordDAO {
         if (rs.next()) {
             recordCount = rs.getInt(1);
         }
-
+        closeConnection(getConnection());
         return recordCount;
     }
 
@@ -67,6 +67,8 @@ public class RecordDAO {
         pstmt.setString(2, record.getRecord());
         pstmt.setString(3, record.getErrorMsg());
         pstmt.executeUpdate();
+
+        closeConnection(getConnection());
     }
 
     public void clearRecord() throws SQLException {
@@ -74,6 +76,7 @@ public class RecordDAO {
         PreparedStatement pstmt = getConnection().prepareStatement(query);
 
         pstmt.executeUpdate();
+        closeConnection(getConnection());
     }
 
     public List<Record> readRecords() throws SQLException {
@@ -87,7 +90,7 @@ public class RecordDAO {
         while (rs.next()) {
             records.add(new Record(rs.getString("record"), rs.getString("errorMsg")));
         }
-
+        closeConnection(getConnection());
         return records;
     }
 }
