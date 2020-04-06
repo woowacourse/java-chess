@@ -7,7 +7,6 @@
         .outer_box {
             width: 600px;
             height: 600px;
-            border: solid black 1px;
             margin: 0 auto;
         }
 
@@ -20,18 +19,17 @@
         }
 
         .inner_box > div {
+            font-size: 55px;
             vertical-align: middle;
             display: table-cell;
         }
 
         .black {
-            background-color: saddlebrown;
-            color: white;
+            background-color: sandybrown;
         }
 
         .white {
             background-color: beige;
-            color: black;
         }
 
         .errorMessage {
@@ -48,19 +46,29 @@
         .flex_container > .flex_item {
             flex: auto;
         }
+
+        .buttons {
+            display: flex;
+            margin: 0 auto;
+            width: 600px;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
 <div>
-    <form action="/start" style="text-align: center">
-        <button style="font-size: 35px">게임 시작</button>
-    </form><br/>
-    <form action="/save" method="post">
-        <button style="font-size: 20px">게임 저장</button>
-    </form>
-    <form action="/load" method="post">
-        <button style="font-size: 20px">불러오기</button>
-    </form>
+    <div class="buttons">
+        <form action="/start">
+            <button style="font-size: 30px">게임 시작</button>
+        </form>
+        <br/>
+        <form action="/save" method="post">
+            <button style="font-size: 30px">게임 저장</button>
+        </form>
+        <form action="/load" method="post">
+            <button style="font-size: 30px">불러오기</button>
+        </form>
+    </div>
     <div class="flex_container">
         <div class="flex_item">
             <h2 style="text-align: center">{{turn}}</h2>

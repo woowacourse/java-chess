@@ -1,7 +1,10 @@
 package service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import domain.board.Board;
 import domain.board.BoardDao;
@@ -17,6 +20,25 @@ public class WebService {
 	private Board board;
 	private Team turn;
 	private BoardDao boardDao;
+	private static Map<String, String> unicodeConverter = new HashMap<>();
+
+	static {
+		unicodeConverter.put("k", "♔");
+		unicodeConverter.put("q", "♕");
+		unicodeConverter.put("r", "♖");
+		unicodeConverter.put("b", "♗");
+		unicodeConverter.put("n", "♘");
+		unicodeConverter.put("p", "♙");
+
+		unicodeConverter.put("K", "♚");
+		unicodeConverter.put("Q", "♛");
+		unicodeConverter.put("R", "♜");
+		unicodeConverter.put("B", "♝");
+		unicodeConverter.put("N", "♞");
+		unicodeConverter.put("P", "♟");
+
+		unicodeConverter.put("", "");
+	}
 
 	public WebService() {
 		board = BoardFactory.create();
@@ -26,12 +48,14 @@ public class WebService {
 
 	public void initialize() {
 		board = BoardFactory.create();
-		turn = Team.BLACK;
+		turn = Team.WHITE;
 		boardDao = new BoardDao();
 	}
 
 	public List<String> showAllPieces() {
-		return board.showAllPieces();
+		return board.showAllPieces().stream()
+			.map(s -> s = unicodeConverter.get(s))
+			.collect(Collectors.toList());
 	}
 
 	public double calculateTeamScore(Team team) {

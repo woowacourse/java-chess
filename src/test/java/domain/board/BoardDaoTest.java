@@ -41,7 +41,7 @@ public class BoardDaoTest {
 		boardDao.saveBoard(board);
 
 		Board newBoard = boardDao.loadBoard();
-		assertThat(board.calculateTeamScore(Team.WHITE)).isEqualTo(10);
+		assertThat(newBoard.calculateTeamScore(Team.WHITE)).isEqualTo(10);
 
 		boardDao.clearBoardDb();
 	}
