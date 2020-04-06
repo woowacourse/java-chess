@@ -37,9 +37,9 @@ public enum Team {
 
 	public static String getPieceName(Piece piece) {
 		if (piece.isSameTeam(WHITE)) {
-			return piece.getName().toLowerCase();
+			return piece.getName().getName().toLowerCase();
 		}
-		return piece.getName();
+		return piece.getName().getName();
 	}
 
 	public String getName() {

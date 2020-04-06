@@ -41,8 +41,12 @@ public abstract class Piece {
 		return position;
 	}
 
-	public String getName() {
-		return name.getName();
+	public Name getName() {
+		return name;
+	}
+
+	public Team getTeam() {
+		return team;
 	}
 
 	public String getSymbol() {

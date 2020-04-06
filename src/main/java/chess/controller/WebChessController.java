@@ -38,11 +38,6 @@ public class WebChessController implements ChessController {
 		get("/chess", this::renderBoard);
 	}
 
-	private void handleException(IllegalArgumentException exception, Request request, Response response) {
-		response.status(400);
-		response.body(exception.getMessage());
-	}
-
 	private String renderStart(Request request, Response response) {
 		return render(new HashMap<>(), "index.html");
 	}
@@ -51,19 +46,11 @@ public class WebChessController implements ChessController {
 		return render(BoardDTO.of(board).getBoard(), "chess.html");
 	}
 
-	private String render(Map<String, String> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-	}
-
 	@Override
 	public void playTurn() {
 		post("/api/move", this::updateBoard);
 		exception(IllegalArgumentException.class, this::handleException);
 		get("/status", this::toStatus);
-	}
-
-	private String toStatus(Request request, Response response) {
-		return render(StatusDTO.of(Status.of(board)).getStatus(), "status.html");
 	}
 
 	private String updateBoard(Request request, Response response) {
@@ -81,5 +68,18 @@ public class WebChessController implements ChessController {
 
 		team = team.next();
 		return GSON.toJson(from + " " + to);
+	}
+
+	private String toStatus(Request request, Response response) {
+		return render(StatusDTO.of(Status.of(board)).getStatus(), "status.html");
+	}
+
+	private void handleException(IllegalArgumentException exception, Request request, Response response) {
+		response.status(400);
+		response.body(exception.getMessage());
+	}
+
+	private String render(Map<String, String> model, String templatePath) {
+		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }
