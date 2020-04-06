@@ -2,10 +2,13 @@ package chess.dao;
 
 import chess.dto.PieceDTO;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Properties;
 
 public class JdbcTemplatePieceDAO implements PieceDAO {
     static {
@@ -19,7 +22,8 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
 
     private static PieceDAO jdbcTemplateDAO;
 
-    private JdbcTemplatePieceDAO() {}
+    private JdbcTemplatePieceDAO() {
+    }
 
     static public PieceDAO getInstance() {
         if (jdbcTemplateDAO == null) {
@@ -30,15 +34,24 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
 
     private Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306";
-        String database = "java_chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "moonui";
-        String password = "8123";
 
         try {
+            String file = "src\\jdbc.properties";
+            FileInputStream fileInputStream = new FileInputStream(file);
+            Properties properties = new Properties();
+            properties.load(fileInputStream);
+
+            String server = properties.getProperty("server");
+            String database = properties.getProperty("database");
+            String option = properties.getProperty("option");
+            String userName = properties.getProperty("userName");
+            String password = properties.getProperty("password");
+
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
+        } catch (IOException e) {
+            System.err.println("jdbc 속성 파일 오류 : " + e.getMessage());
+            e.printStackTrace();
         } catch (SQLException e) {
             System.err.println("연결 오류 : " + e.getMessage());
             e.printStackTrace();
@@ -66,6 +79,7 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
         pstmt.setString(2, pieceDTO.getTeam());
         pstmt.setString(3, pieceDTO.getPieceType());
         pstmt.executeUpdate();
+        pstmt.close();
         closeConnection(connection);
     }
 
@@ -78,6 +92,7 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
         pstmt.setString(2, pieceDTO.getPieceType());
         pstmt.setString(3, pieceDTO.getPosition());
         pstmt.executeUpdate();
+        pstmt.close();
         closeConnection(connection);
     }
 }
