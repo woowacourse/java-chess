@@ -9,6 +9,7 @@ import chess.domain.ChessRunner;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class WebChessController {
@@ -22,6 +23,7 @@ public class WebChessController {
     private ChessRunner chessRunner;
     private ChessBoard chessBoard;
     private CurrentTeam currentTeam;
+    private PieceOnBoards pieceOnBoards;
 
     public void start() throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
@@ -34,29 +36,48 @@ public class WebChessController {
             chessBoardDAO.addChessBoard();
             this.chessBoard = chessBoardDAO.findRecentChessBoard();
             currentTeamDAO.addCurrentTeam(this.chessBoard.getChessBoardId(), this.chessRunner.getCurrentTeam());
-            currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+            this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
             List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
-            pieceDAO.addPiece(chessBoard.getChessBoardId(), tileDtos);
+            pieceDAO.addPiece(this.chessBoard.getChessBoardId(), tileDtos);
+            updatePieceOnBoards(pieceDAO);
             return;
         }
 
-        List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
-        Map<String, String> pieceOnBoards = pieces.stream()
+        updatePieceOnBoards(pieceDAO);
+        Map<String, String> pieceOnBoards = this.pieceOnBoards.getPieceOnBoards().stream()
                 .collect(Collectors.toMap(entry -> entry.getPosition(),
                         entry -> entry.getPieceImageUrl(),
                         (e1, e2) -> e1, HashMap::new));
-        currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard.getChessBoardId());
-        this.chessRunner = new ChessRunner(pieceOnBoards, currentTeam.getCurrentTeam());
+        this.currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard.getChessBoardId());
+        this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
     }
 
-    public MoveResultDto move(final String source, final String target) {
+    private void updatePieceOnBoards(PieceDAO pieceDAO) throws Exception {
+        List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
+        this.pieceOnBoards = PieceOnBoards.of(pieces);
+    }
+
+    public MoveResultDto move(final String source, final String target) throws Exception {
         try {
             this.chessRunner.update(source, target);
+            updateChessBoard(source, target);
             String moveResult = moveResult(this.chessRunner, source, target);
             return new MoveResultDto(moveResult, MESSAGE_STYLE_BLACK);
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
             return new MoveResultDto(e.getMessage(), MESSAGE_STYLE_RED);
         }
+    }
+
+    private void updateChessBoard(final String source, final String target) throws Exception {
+        PieceOnBoard deletedPiece = null;
+        PieceDAO pieceDAO = new PieceDAO();
+        Optional<PieceOnBoard> targetPiece = this.pieceOnBoards.find(target);
+        if (targetPiece.isPresent()) {
+            deletedPiece = targetPiece.get();
+            pieceDAO.deletePiece(deletedPiece);
+        }
+        Optional<PieceOnBoard> sourcePiece = this.pieceOnBoards.find(source);
+        pieceDAO.updatePiece(sourcePiece.get(), target);
     }
 
     private String moveResult(final ChessRunner chessRunner, final String source, final String target) {

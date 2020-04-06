@@ -67,4 +67,13 @@ public class PieceDAOTest {
                 new PieceOnBoard(7, "ASIX", "P_black", 12)
         );
     }
+
+    @Disabled
+    @DisplayName("피스를 받아서 업데이트")
+    @Test
+    void updatePiecePositionTest() throws Exception {
+        PieceOnBoard pieceOnBoard = new PieceOnBoard(34, "ATHREE", "p_white", 4);
+
+        pieceDAO.updatePiece(pieceOnBoard);
+    }
 }

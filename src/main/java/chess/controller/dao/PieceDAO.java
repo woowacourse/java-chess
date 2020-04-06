@@ -37,6 +37,16 @@ public class PieceDAO {
         ConnectionManager.closeConnection(con);
     }
 
+    public void updatePiece(PieceOnBoard piece) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String query = "UPDATE piece SET position = ? WHERE pieceId = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, piece.getPosition());
+        pstmt.setInt(2, piece.getPieceId());
+        pstmt.executeUpdate();
+        ConnectionManager.closeConnection(con);
+    }
+
     public void deletePiece(PieceOnBoard a2WhitePawn) throws SQLException {
         if (a2WhitePawn == null) {
             return;
@@ -70,5 +80,15 @@ public class PieceDAO {
         }
 
         return Collections.unmodifiableList(pieceOnBoards);
+    }
+
+    public void updatePiece(PieceOnBoard pieceOnBoard, String targetPosition) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String query = "UPDATE piece SET position = ? WHERE pieceId = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setString(1, targetPosition);
+        pstmt.setInt(2, pieceOnBoard.getPieceId());
+        pstmt.executeUpdate();
+        ConnectionManager.closeConnection(con);
     }
 }
