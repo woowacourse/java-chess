@@ -11,7 +11,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.Empty;
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
@@ -51,5 +53,16 @@ public class BoardDAOTest {
 		}
 
 		assertThat(boardDAO.findAll().size()).isEqualTo(64);
+	}
+
+	@Test
+	void update() {
+		boardDAO.addPiece(new Pawn(A2, Team.WHITE));
+		boardDAO.addPiece(new Empty(A4, Team.NONE));
+
+		boardDAO.update(A2, A4);
+
+		assertThat(boardDAO.findPieceBy(A2)).isInstanceOf(Empty.class);
+		assertThat(boardDAO.findPieceBy(A4)).isInstanceOf(Pawn.class);
 	}
 }

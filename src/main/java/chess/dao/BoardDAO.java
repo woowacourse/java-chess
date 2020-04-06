@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.piece.Name;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
@@ -72,6 +73,31 @@ public class BoardDAO {
 			closeConnection(con);
 
 			return result;
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
+	}
+
+	public void update(Position from, Position to) {
+		String query = "UPDATE board SET symbol = ? WHERE game_id = ? AND position = ?";
+		Piece source = findPieceBy(from);
+		Piece target = findPieceBy(to);
+		try {
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement(query);
+			pstmt.setString(1, source.getSymbol());
+			pstmt.setString(2, gameId);
+			pstmt.setString(3, target.getPosition().getName());
+			pstmt.executeUpdate();
+			pstmt.close();
+
+			pstmt = con.prepareStatement(query);
+			pstmt.setString(1, Name.EMPTY.getBlackSymbol());
+			pstmt.setString(2, gameId);
+			pstmt.setString(3, source.getPosition().getName());
+			pstmt.executeUpdate();
+			pstmt.close();
+			closeConnection(con);
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
