@@ -1,4 +1,4 @@
-package chess.consolecontroller;
+package chess.console;
 
 import chess.board.BoardGenerator;
 import chess.manager.ChessManager;

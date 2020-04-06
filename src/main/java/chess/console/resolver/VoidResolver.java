@@ -1,6 +1,6 @@
-package chess.consolecontroller.resolver;
+package chess.console.resolver;
 
-import chess.consolecontroller.dto.DefaultRequest;
+import chess.console.dto.DefaultRequest;
 
 public class VoidResolver implements RequestResolver {
     @Override

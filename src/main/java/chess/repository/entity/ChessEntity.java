@@ -25,6 +25,12 @@ public class ChessEntity extends BaseEntity {
         this.active = chessEntity.active;
     }
 
+    public ChessEntity(Long id, LocalDateTime now, ChessEntity entity) {
+        super(id, now);
+        this.winner = entity.winner;
+        this.active = entity.active;
+    }
+
     public Team getWinner() {
         return winner;
     }

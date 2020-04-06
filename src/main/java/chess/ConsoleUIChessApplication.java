@@ -1,6 +1,6 @@
 package chess;
 
-import chess.consolecontroller.ChessController;
+import chess.console.ChessController;
 import chess.view.InputView;
 import chess.view.OutputView;
 

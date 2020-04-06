@@ -1,9 +1,9 @@
-package chess.consolecontroller.handler;
+package chess.console.handler;
 
-import chess.consolecontroller.ChessContext;
-import chess.consolecontroller.command.ChessCommand;
-import chess.consolecontroller.dto.DefaultRequest;
-import chess.consolecontroller.resolver.RequestResolverGroup;
+import chess.console.ChessContext;
+import chess.console.command.ChessCommand;
+import chess.console.dto.DefaultRequest;
+import chess.console.resolver.RequestResolverGroup;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;

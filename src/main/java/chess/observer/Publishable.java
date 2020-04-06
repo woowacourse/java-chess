@@ -1,9 +1,7 @@
 package chess.observer;
 
-import chess.piece.Piece;
-
-public interface Publishable {
+public interface Publishable<T> {
     void subscribe(Observable observable);
 
-    void push(Piece piece);
+    void push(T t);
 }

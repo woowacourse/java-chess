@@ -1,15 +1,19 @@
 package chess.service;
 
 import chess.board.BoardGenerator;
+import chess.board.ChessBoard;
+import chess.board.ChessBoardAdapter;
 import chess.manager.ChessManager;
 import chess.piece.Piece;
 import chess.repository.ChessRepository;
 import chess.repository.MovementRepository;
 import chess.repository.entity.ChessEntity;
 import chess.repository.entity.Movement;
+import chess.web.dto.ChessBoardResponse;
 import chess.web.dto.MoveRequest;
 import chess.web.dto.MoveResponse;
-import chess.web.dto.SaveResponse;
+import chess.web.dto.SavedGameBundleResponse;
+import chess.web.dto.TilesDto;
 
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,13 +27,7 @@ public class ChessService {
         this.movementRepository = movementRepository;
     }
 
-    public SaveResponse save() {
-        ChessEntity chessEntity = new ChessEntity(true);
-        chessEntity = chessRepository.save(chessEntity);
-
-        ChessManager chessManager = new ChessManager(BoardGenerator.create());
-        return new SaveResponse(chessEntity.getId(), chessManager);
-    }
+    private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
 
     public MoveResponse move(MoveRequest moveRequest) {
         ChessManager chessManager = new ChessManager(BoardGenerator.create());
@@ -55,5 +53,28 @@ public class ChessService {
                 .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", moveRequest.getId())));
         chessEntity.endGame(chessManager.getCurrentTeam());
         chessRepository.update(chessEntity);
+    }
+
+    public ChessBoardResponse save() {
+        ChessEntity chessEntity = new ChessEntity(true);
+        chessEntity = chessRepository.save(chessEntity);
+
+        ChessManager chessManager = new ChessManager(BoardGenerator.create());
+        return new ChessBoardResponse(chessEntity.getId(), chessManager);
+    }
+
+    public SavedGameBundleResponse loadAllSavedGames() {
+        return new SavedGameBundleResponse(chessRepository.findAll());
+    }
+
+    public TilesDto getEmptyBoard() {
+        return EMPTY_BOARD;
+    }
+
+    public ChessBoardResponse loadSavedGame(Long targetId) {
+        List<Movement> movements = movementRepository.findAllByChessId(targetId);
+        ChessManager chessManager = new ChessManager(BoardGenerator.create());
+        chessManager.moveAll(movements);
+        return new ChessBoardResponse(targetId, chessManager);
     }
 }

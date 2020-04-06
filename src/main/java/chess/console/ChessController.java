@@ -1,6 +1,6 @@
-package chess.consolecontroller;
+package chess.console;
 
-import chess.consolecontroller.handler.CommandHandler;
+import chess.console.handler.CommandHandler;
 import chess.generic.VoidFunction;
 
 import java.util.function.Supplier;

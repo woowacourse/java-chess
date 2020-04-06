@@ -3,6 +3,7 @@ const App = function app() {
     const targetKey = document.getElementById("targetKey");
 
     const startBtn = document.querySelector("#new-game");
+    const loadBtn = document.querySelector("#load-game");
     const tiles = document.getElementsByClassName("tile");
 
     const gameId = document.getElementById("game-id");
@@ -13,6 +14,8 @@ const App = function app() {
     const blackDeadPieces = document.getElementById("black-dead");
     const whiteDeadPieces = document.getElementById("white-dead");
 
+    addTileClickEvent();
+
     startBtn.addEventListener('click', (evnet) => {
         clearDeadPieces();
         fetch("http://localhost:8080/chessboard", {method: "POST"})
@@ -22,8 +25,39 @@ const App = function app() {
         ;
     });
 
-    for (let i = 0; i < tiles.length; i++) {
-        tiles[i].addEventListener("click", (event) => clickMoveEvent(i));
+    loadBtn.addEventListener('click', (event) => {
+        fetch("http://localhost:8080/chessboard", {method: "GET"})
+            .then(resolver)
+            .then(loadSavedGame)
+            .catch(alert);
+    });
+
+    function loadSavedGame(resolve) {
+        const data = resolve.body.data;
+        const savedGameResponses = data.savedGameResponses;
+        if (savedGameResponses.length === 0) {
+            alert("저장된 게임이 존재하지 않습니다.");
+            return;
+        }
+        var message = "저장된 게임 목록\n";
+        for (let i = 0; i < savedGameResponses.length; i++) {
+            const saved = "게임 ID : " + savedGameResponses[i].id + " - 생성 일자 : " + savedGameResponses[i].createdTime + "\n";
+            message += saved;
+        }
+        const select = prompt(message, '');
+        if (!select || select.trim() === '') {
+            return;
+        }
+        fetch("http://localhost:8080/chessboard/" + select, {method: "GET"})
+            .then(resolver)
+            .then(res => loadChessBoard(res.body))
+            .catch(alert);
+    }
+
+    function addTileClickEvent() {
+        for (let i = 0; i < tiles.length; i++) {
+            tiles[i].addEventListener("click", (event) => clickMoveEvent(i));
+        }
     }
 
     function clickMoveEvent(i) {
@@ -138,9 +172,10 @@ const App = function app() {
         gameId.innerHTML = data.id;
         turn.innerHTML = data.turn;
         const teamScoreDto = data.teamScoreDto;
-        updateScore(teamScoreDto);
 
+        updateScore(teamScoreDto);
         replaceChessBoard(data.tilesDto.tiles);
+        clearDeadPieces();
     }
 
     function replaceChessBoard(responseTiles) {

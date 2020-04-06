@@ -2,13 +2,13 @@ package chess.web.dto;
 
 import chess.manager.ChessManager;
 
-public class SaveResponse {
+public class ChessBoardResponse {
     private Long id;
     private TeamScoreDto teamScoreDto;
     private TilesDto tilesDto;
     private String turn;
 
-    public SaveResponse(Long id, ChessManager chessManager) {
+    public ChessBoardResponse(Long id, ChessManager chessManager) {
         this.id = id;
         this.teamScoreDto = new TeamScoreDto(chessManager);
         this.tilesDto = new TilesDto(chessManager);

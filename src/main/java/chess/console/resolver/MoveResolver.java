@@ -1,7 +1,7 @@
-package chess.consolecontroller.resolver;
+package chess.console.resolver;
 
-import chess.consolecontroller.dto.DefaultRequest;
-import chess.consolecontroller.dto.MoveRequest;
+import chess.console.dto.DefaultRequest;
+import chess.console.dto.MoveRequest;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

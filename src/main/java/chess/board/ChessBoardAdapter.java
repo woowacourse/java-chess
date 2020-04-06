@@ -8,7 +8,7 @@ import chess.piece.Team;
 
 import java.util.Map;
 
-public class ChessBoardAdapter implements Publishable {
+public class ChessBoardAdapter implements Publishable<Piece> {
     private final ChessBoard chessBoard;
     private Observable observable;
 

@@ -1,4 +1,4 @@
-package chess.consolecontroller.dto;
+package chess.console.dto;
 
 public class MoveRequest {
     private final String file;

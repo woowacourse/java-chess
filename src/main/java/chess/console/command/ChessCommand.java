@@ -1,8 +1,8 @@
-package chess.consolecontroller.command;
+package chess.console.command;
 
-import chess.consolecontroller.ChessContext;
-import chess.consolecontroller.dto.DefaultRequest;
-import chess.consolecontroller.dto.MoveRequest;
+import chess.console.ChessContext;
+import chess.console.dto.DefaultRequest;
+import chess.console.dto.MoveRequest;
 import chess.manager.ChessManager;
 import chess.view.OutputView;
 

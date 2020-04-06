@@ -13,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-public class ChessManager implements Observable {
+public class ChessManager implements Observable<Piece> {
     private final ChessBoardAdapter chessBoard;
     private Team currentTeam = Team.WHITE;
     private boolean isKingAlive = true;

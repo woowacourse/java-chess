@@ -1,16 +1,14 @@
 package chess.web;
 
-import chess.board.ChessBoard;
-import chess.board.ChessBoardAdapter;
 import chess.handler.CanNotMoveExceptionHandler;
 import chess.handler.EndGameExceptionHandler;
 import chess.handler.exception.AlreadyEndGameException;
-import chess.manager.ChessManager;
 import chess.service.ChessService;
+import chess.web.dto.ChessBoardResponse;
 import chess.web.dto.DefaultResponse;
 import chess.web.dto.MoveRequest;
 import chess.web.dto.MoveResponse;
-import chess.web.dto.SaveResponse;
+import chess.web.dto.SavedGameBundleResponse;
 import chess.web.dto.TilesDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -27,7 +25,6 @@ import static spark.Spark.post;
 
 public class ChessController {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
-    private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
 
     private final ChessService chessService;
 
@@ -47,27 +44,29 @@ public class ChessController {
         //home
         get("/home", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("tilesDto", EMPTY_BOARD);
+            TilesDto tilesDto = chessService.getEmptyBoard();
+            model.put("tilesDto", tilesDto);
             return render(model, "index.html");
         });
 
         //start 새게임 시작 및 저장
         post("/chessboard", (request, response) -> {
-            SaveResponse saveResponse = chessService.save();
+            ChessBoardResponse chessBoardResponse = chessService.save();
 
-            return toJson(DefaultResponse.CREATED(saveResponse));
+            return toJson(DefaultResponse.CREATED(chessBoardResponse));
         });
 
-        //get id list
+        //get saved list
         get("/chessboard", (request, response) -> {
-
-            return null;
+            SavedGameBundleResponse savedGameBundleResponse = chessService.loadAllSavedGames();
+            return toJson(DefaultResponse.OK(savedGameBundleResponse));
         });
 
         //load chessboard
         get("/chessboard/:id", (request, response) -> {
+            Long targetId = Long.parseLong(request.params("id"));
 
-            return null;
+            return toJson(DefaultResponse.OK(chessService.loadSavedGame(targetId)));
         });
 
         // move
