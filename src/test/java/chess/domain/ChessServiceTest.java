@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -14,14 +15,14 @@ import chess.domain.player.Player;
 import chess.domain.player.Result;
 import chess.dto.MoveRequestDto;
 
-class ChessContextTest {
-    private TestGameContext context;
+class ChessServiceTest {
+    private FakeChessService service;
     private Player white;
     private Player black;
 
     @BeforeEach
     void setUp() {
-        context = new TestGameContext();
+        service = new FakeChessService();
         white = new Player("hodol", "password");
         black = new Player("pobi", "password");
     }
@@ -30,21 +31,22 @@ class ChessContextTest {
     @Test
     void addNewGame() {
         // when
-        int gameId = context.addGame(white, black);
+        Map<Integer, Map<Side, Player>> playerContexts = service.addGame(white, black);
 
         // then
-        assertThat(context.isEmpty()).isEqualTo(false);
-        assertThat(gameId).isEqualTo(1);
+        assertThat(playerContexts.get(1)).isNotNull();
+        assertThat(playerContexts.size()).isEqualTo(1);
     }
 
     @DisplayName("체스게임 읽어오기 테스트")
     @Test
     void findGameById() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
 
         // when
-        Game gameFoundById = context.findGameById(gameId);
+        Game gameFoundById = service.findGameById(gameId);
 
         // then
         assertThat(gameFoundById.getPlayers().get(Side.WHITE)).isEqualTo(white);
@@ -55,24 +57,26 @@ class ChessContextTest {
     @Test
     void resetGameById() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
 
         // when
-        Game game = context.findGameById(gameId);
+        Game game = service.findGameById(gameId);
         assertThat(game.isWhiteTurn()).isTrue();
         game.move("b2", "b4");
         assertThat(game.isWhiteTurn()).isFalse();
-        context.resetGameById(gameId);
+        service.resetGameById(gameId);
 
         // then
-        assertThat(context.findGameById(gameId).isWhiteTurn()).isTrue();
+        assertThat(service.findGameById(gameId).isWhiteTurn()).isTrue();
     }
 
     @DisplayName("체스게임 moves를 통해 원상복귀 테스트")
     @Test
     void recoverMovesById() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
 
         // when
         List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
@@ -83,8 +87,8 @@ class ChessContextTest {
         }};
 
         // then
-        Game game = context.findGameById(gameId);
-        moves.forEach(move -> context.addMoveByGameId(gameId, move));
+        Game game = service.findGameById(gameId);
+        moves.forEach(move -> service.addMoveByGameId(gameId, move));
         assertThat(game.move("b6", "c7")).isFalse();
     }
 
@@ -92,20 +96,22 @@ class ChessContextTest {
     @Test
     void deleteGameById() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
 
         // when
-        context.finishGameById(gameId);
+        service.finishGameById(gameId);
 
         // then
-        assertThat(context.isEmpty()).isEqualTo(true);
+        assertThat(service.getPlayerContexts()).isEmpty();
     }
 
     @DisplayName("체스게임 점수 업데이트 테스트")
     @Test
     void getScoreById() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
         List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
             add(new MoveRequestDto("b2", "b4"));
             add(new MoveRequestDto("b4", "b5"));
@@ -115,19 +121,20 @@ class ChessContextTest {
         }};
 
         // when
-        context.findGameById(gameId);
-        moves.forEach(move -> context.addMoveByGameId(gameId, move));
+        service.findGameById(gameId);
+        moves.forEach(move -> service.addMoveByGameId(gameId, move));
 
         // then
-        assertThat(context.getScoreById(gameId, Side.WHITE)).isEqualTo(37);
-        assertThat(context.getScoreById(gameId, Side.BLACK)).isEqualTo(28);
+        assertThat(service.getScoreById(gameId, Side.WHITE)).isEqualTo(37);
+        assertThat(service.getScoreById(gameId, Side.BLACK)).isEqualTo(28);
     }
 
     @DisplayName("플레이어 승패 기록 테스트")
     @Test
     void playerStatisticsTest() {
         // given
-        int gameId = context.addGame(white, black);
+        service.addGame(white, black);
+        int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
         List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
             add(new MoveRequestDto("b2", "b4"));
             add(new MoveRequestDto("b4", "b5"));
@@ -137,9 +144,9 @@ class ChessContextTest {
         }};
 
         // when
-        context.findGameById(gameId);
-        moves.forEach(move -> context.addMoveByGameId(gameId, move));
-        context.finishGameById(gameId);
+        service.findGameById(gameId);
+        moves.forEach(move -> service.addMoveByGameId(gameId, move));
+        service.finishGameById(gameId);
 
         // then
         assertThat(white.recordOf(Result.WIN)).isEqualTo(1);

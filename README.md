@@ -17,17 +17,17 @@
             id int not null auto_increment,
             username varchar(15) not null,
             password varchar(60) not null,
-            win int default 0,
-            lose int default 0,
-            draw int default 0,
+            win int,
+            lose int,
+            draw int,
             primary key (id)
         );
         create table if not exists game (
             id int not null auto_increment,
             white int not null,
             black int not null,
-            white_score double default 38,
-            black_score double default 38,
+            white_score double,
+            black_score double,
             primary key (id),
             foreign key (white) references player(id),
             foreign key (black) references player(id)

@@ -2,8 +2,10 @@ package chess.domain;
 
 import static java.util.stream.Collectors.*;
 
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -12,20 +14,17 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
 import chess.dto.MoveRequestDto;
+import chess.service.ChessService;
 
-public class TestGameContext implements GameContext {
+public class FakeChessService implements ChessService {
     private Map<Integer, Game> context = new HashMap<>();
 
     @Override
-    public int addGame(final Player white, final Player black) {
-        int gameId = context.size() + 1;
-        context.put(gameId, new Game(white, black));
-        return gameId;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return context.size() == 0;
+    public Map<Integer, Map<Side, Player>> addGame(final Player white, final Player black) {
+        context.put(context.size() + 1, new Game(white, black));
+        return context.keySet()
+            .stream()
+            .collect(toMap(Function.identity(), gameId -> context.get(gameId).getPlayers()));
     }
 
     @Override
@@ -39,15 +38,17 @@ public class TestGameContext implements GameContext {
     }
 
     @Override
-    public void resetGameById(final int id) {
+    public Map<Position, Piece> resetGameById(final int id) {
         Map<Side, Player> players = context.get(id).getPlayers();
         context.put(id, new Game(players.get(Side.WHITE), players.get(Side.BLACK)));
+        return context.get(id).getBoard().getBoard();
     }
 
     @Override
-    public void finishGameById(final int id) {
+    public boolean finishGameById(final int id) {
         findGameById(id).finish();
         context.remove(id);
+        return true;
     }
 
     @Override
@@ -75,7 +76,22 @@ public class TestGameContext implements GameContext {
     }
 
     @Override
-    public void addMoveByGameId(final int id, final MoveRequestDto move) {
-        findGameById(id).move(move.getFrom(), move.getTo());
+    public boolean addMoveByGameId(final int id, final MoveRequestDto move) {
+        return findGameById(id).move(move.getFrom(), move.getTo());
+    }
+
+    @Override
+    public List<String> findAllAvailablePath(final int id, final String from) throws SQLException {
+        return findGameById(id).findAllAvailablePath(from);
+    }
+
+    @Override
+    public boolean isWhiteTurn(final int id) throws SQLException {
+        return findGameById(id).isWhiteTurn();
+    }
+
+    @Override
+    public boolean isGameOver(final int id) throws SQLException {
+        return findGameById(id).isGameOver();
     }
 }

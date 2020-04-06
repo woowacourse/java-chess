@@ -6,7 +6,7 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public class ConsoleChessController {
     private static Game context = new Game();
 
     public static void run() {

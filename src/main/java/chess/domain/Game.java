@@ -17,22 +17,21 @@ import chess.exceptions.InvalidInputException;
 
 public class Game {
     private int id;
-    private final Board board;
-    private final Judge judge;
-    private final Map<Side, Player> players;
-    private Side turn;
+    private final Board board = Board.init();
+    private final Judge judge = new BasicJudge(board);
+    private final Map<Side, Player> players = new HashMap<>();
+    private Side turn = Side.WHITE;
 
     public Game() {
-        this.board = Board.init();
-        this.judge = new BasicJudge(board);
-        this.turn = Side.WHITE;
-        this.players = new HashMap<>();
     }
 
     public Game(Player white, Player black) {
-        this();
         players.put(Side.WHITE, white);
         players.put(Side.BLACK, black);
+    }
+
+    public Game(final int id) {
+        this.id = id;
     }
 
     public List<String> findAllAvailablePath(String from) {
@@ -99,6 +98,10 @@ public class Game {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    public void setPlayer(Side side, Player player) {
+        players.put(side, player);
     }
 
     @Override

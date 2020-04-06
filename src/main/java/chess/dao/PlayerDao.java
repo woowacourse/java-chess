@@ -5,9 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.HashMap;
+import java.util.Map;
 
+import chess.domain.piece.Side;
 import chess.domain.player.Player;
 import chess.domain.player.Record;
+import chess.domain.player.Result;
 
 public class PlayerDao implements JdbcTemplateDao {
 
@@ -22,11 +26,14 @@ public class PlayerDao implements JdbcTemplateDao {
     }
 
     public void addPlayer(Player player) throws SQLException {
-        String query = "insert into player (username, password) values (?, ?);";
+        String query = "insert into player (username, password, win, lose, draw) values (?, ?, ?, ?, ?);";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         statement.setString(1, player.getUsername());
         statement.setString(2, player.getPassword());
+        statement.setInt(3, new Record().get(Result.WIN));
+        statement.setInt(4, new Record().get(Result.LOSE));
+        statement.setInt(5, new Record().get(Result.DRAW));
         statement.executeUpdate();
         closeConnection(connection);
     }
@@ -48,7 +55,40 @@ public class PlayerDao implements JdbcTemplateDao {
             return player;
         }
         closeConnection(connection);
-        return null;
+        throw new SQLException();
+    }
+
+    public Map<Integer, Map<Side, Player>> getPlayerContexts() throws SQLException {
+        String query = "select id, white, black from game";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        ResultSet resultSet = statement.executeQuery();
+        Map<Integer, Map<Side, Player>> playerContexts = new HashMap<>();
+        while (resultSet.next()) {
+            Map<Side, Player> playerContext = new HashMap<>();
+            playerContext.put(Side.WHITE, getPlayerById(resultSet.getInt("white")));
+            playerContext.put(Side.BLACK, getPlayerById(resultSet.getInt("black")));
+            playerContexts.put(resultSet.getInt("id"), playerContext);
+        }
+        closeConnection(connection);
+        return playerContexts;
+    }
+
+    public Map<Side, Player> getPlayersByGameId(int gameId) throws SQLException {
+        String query = "select white, black from game where id = ?";
+        Connection connection = getConnection();
+        PreparedStatement statement = connection.prepareStatement(query);
+        statement.setInt(1, gameId);
+        ResultSet resultSet = statement.executeQuery();
+        if (resultSet.next()) {
+            Map<Side, Player> result = new HashMap<>();
+            result.put(Side.WHITE, getPlayerById(resultSet.getInt("white")));
+            result.put(Side.BLACK, getPlayerById(resultSet.getInt("black")));
+            closeConnection(connection);
+            return result;
+        }
+        closeConnection(connection);
+        throw new SQLException();
     }
 
     public void increaseWin(int id) throws SQLException {

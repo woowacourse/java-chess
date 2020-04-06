@@ -9,16 +9,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.Game;
+import chess.domain.judge.BasicJudge;
 import chess.domain.piece.Side;
-import chess.domain.player.Player;
 
 public class GameDao implements JdbcTemplateDao {
+
     public int add(final Game game) throws SQLException {
-        String query = "insert into game (white, black) values (?, ?);";
+        String query = "insert into game (white, black, white_score, black_score) values (?, ?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         statement.setInt(1, game.getPlayerId(Side.WHITE));
         statement.setInt(2, game.getPlayerId(Side.BLACK));
+        statement.setDouble(3, BasicJudge.INITIAL_SCORE);
+        statement.setDouble(4, BasicJudge.INITIAL_SCORE);
         statement.executeUpdate();
         ResultSet resultSet = statement.getGeneratedKeys();
         if (resultSet.next()) {
@@ -32,47 +35,23 @@ public class GameDao implements JdbcTemplateDao {
     }
 
     public boolean isEmpty() throws SQLException {
-        String query = "select count(*) from game";
+        String query = "select count(*) > 0 from game";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
             closeConnection(connection);
-            return resultSet.getInt(1) == 0;
+            return resultSet.getBoolean(1);
         }
         closeConnection(connection);
         throw new SQLException();
     }
 
-    public Game find(final int id) throws SQLException {
-        MoveDao moveDao = new MoveDao();
-        String query = "select * from game where id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, id);
-        ResultSet resultSet = statement.executeQuery();
-        if (resultSet.next()) {
-            PlayerDao playerDao = new PlayerDao();
-            Player white = playerDao.getPlayerById(resultSet.getInt("white"));
-            Player black = playerDao.getPlayerById(resultSet.getInt("black"));
-            Game game = new Game(white, black);
-            game.setId(id);
-            moveDao.getMoves(game).forEach(move -> game.move(move.getFrom(), move.getTo()));
-            updateScores(game);
-            closeConnection(connection);
-            return game;
-        }
-        closeConnection(connection);
-        return null;
-    }
-
     public void remove(final Game game) throws SQLException {
-        MoveDao moveDao = new MoveDao();
         String query = "delete from game where id = ?";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, game.getId());
-        moveDao.reset(game);
         statement.executeUpdate();
         closeConnection(connection);
     }
@@ -90,23 +69,6 @@ public class GameDao implements JdbcTemplateDao {
             return resultSet.getDouble("black_score");
         }
         throw new SQLException();
-    }
-
-    public Map<Integer, Map<Side, Player>> getPlayerContexts() throws SQLException {
-        PlayerDao playerDao = new PlayerDao();
-        String query = "select id, white, black from game";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        ResultSet resultSet = statement.executeQuery();
-        Map<Integer, Map<Side, Player>> playerContexts = new HashMap<>();
-        while (resultSet.next()) {
-            Map<Side, Player> playerContext = new HashMap<>();
-            playerContext.put(Side.WHITE, playerDao.getPlayerById(resultSet.getInt("white")));
-            playerContext.put(Side.BLACK, playerDao.getPlayerById(resultSet.getInt("black")));
-            playerContexts.put(resultSet.getInt("id"), playerContext);
-        }
-        closeConnection(connection);
-        return playerContexts;
     }
 
     public Map<Integer, Map<Side, Double>> getScoreContexts() throws SQLException {
