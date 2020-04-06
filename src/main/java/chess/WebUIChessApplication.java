@@ -19,16 +19,14 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 
     private static ChessCommandDao chessCommandDao = new ChessCommandDao();
+    private static ChessManager chessManager;
 
     public static void main(String[] args) {
         staticFiles.location("/public");
 
-        ChessManager chessManager = new ChessManager();
-        List<Tile> tiles = chessManager.getTileDto().getTiles();
-        Team currentTeam = chessManager.getCurrentTeam();
-
         //start
         get("/start", (req, res) -> {
+            chessManager = new ChessManager();
             Map<String, Object> model = new HashMap<>();
             return render(model, "chessGameStart.html");
         });
@@ -37,6 +35,8 @@ public class WebUIChessApplication {
         get("/playing:false", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             initializeDatabase();
+            List<Tile> tiles = chessManager.getTileDto().getTiles();
+            Team currentTeam = chessManager.getCurrentTeam();
             model.put("chessPieces", tiles);
             model.put("currentTeam", currentTeam);
             return render(model, "chessGame.html");
@@ -46,13 +46,16 @@ public class WebUIChessApplication {
         get("/playing:true", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<String> commands = chessCommandDao.selectCommands();
+            System.out.println("ggggggg b");
+
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }
             List<Tile> tiles2 = chessManager.getTileDto().getTiles();
+            Team currentTeam2 = chessManager.getCurrentTeam();
             model.put("chessPieces", tiles2);
             model.put("playLastGame", "이전게임");
-            model.put("currentTeam", currentTeam);
+            model.put("currentTeam", currentTeam2);
             return render(model, "chessGame.html");
         });
 
