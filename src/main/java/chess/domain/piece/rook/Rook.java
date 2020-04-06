@@ -11,10 +11,6 @@ public class Rook extends Piece {
 	private static final String BLACK_ROOK = "\u265c";
 	public static final int ROOK_SCORE = 5;
 
-	public String getSymbol() {
-		return symbol;
-	}
-
 	private final String symbol = "r";
 
 	public Rook(Team team, Position position) {
@@ -26,6 +22,13 @@ public class Rook extends Piece {
 	}
 
 	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		strategy.validateMove(from, to, dto);
+		this.position = to;
+		return this;
+	}
+
+	@Override
 	public String toString() {
 		if (team.equals(Team.WHITE)) {
 			return WHITE_ROOK;
@@ -34,15 +37,12 @@ public class Rook extends Piece {
 	}
 
 	@Override
-	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		strategy.validateMove(from, to, dto);
-		this.position = to;
-		return this;
-	}
-
-	@Override
 	public double getScore() {
 		return ROOK_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }
 

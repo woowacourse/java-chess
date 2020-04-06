@@ -11,10 +11,6 @@ public class Pawn extends Piece {
 	public static final String BLACK_PAWN = "\u265f";
 	public static final int PAWN_SCORE = 1;
 
-	public String getSymbol() {
-		return symbol;
-	}
-
 	private final String symbol = "p";
 
 	public Pawn(Team team, Position position) {
@@ -31,6 +27,13 @@ public class Pawn extends Piece {
 	}
 
 	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> teamBoard) {
+		strategy.validateMove(from, to, teamBoard);
+		this.position = to;
+		return this;
+	}
+
+	@Override
 	public String toString() {
 		if (team.equals(Team.WHITE)) {
 			return WHITE_PAWN;
@@ -39,14 +42,11 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		strategy.validateMove(from, to, dto);
-		this.position = to;
-		return this;
-	}
-
-	@Override
 	public double getScore() {
 		return PAWN_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }

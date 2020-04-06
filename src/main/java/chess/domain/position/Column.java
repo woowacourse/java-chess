@@ -35,7 +35,7 @@ public enum Column {
 		return name;
 	}
 
-	public int getColumn() {
+	public int intValue() {
 		return column;
 	}
 }

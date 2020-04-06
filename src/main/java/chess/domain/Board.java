@@ -25,14 +25,6 @@ public class Board {
 		this.board = board;
 	}
 
-	public Map<Position, Team> getTeamBoard() {
-		return board.entrySet().stream()
-			.collect(Collectors.toMap(
-				Map.Entry::getKey,
-				entry -> entry.getValue().getTeam()
-			));
-	}
-
 	public boolean isKingDead() {
 		return kingDead.entrySet()
 			.stream()
@@ -70,13 +62,21 @@ public class Board {
 		return piece;
 	}
 
-	public Map<Position, Piece> getBoard() {
-		return Collections.unmodifiableMap(board);
-	}
-
 	public List<Piece> findPiecesByTeam(Team team) {
 		return board.values().stream()
 			.filter(value -> value.getTeam() == team)
 			.collect(Collectors.toList());
+	}
+
+	public Map<Position, Piece> getBoard() {
+		return Collections.unmodifiableMap(board);
+	}
+
+	public Map<Position, Team> getTeamBoard() {
+		return board.entrySet().stream()
+			.collect(Collectors.toMap(
+				Map.Entry::getKey,
+				entry -> entry.getValue().getTeam()
+			));
 	}
 }

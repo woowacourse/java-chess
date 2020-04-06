@@ -51,7 +51,7 @@ public class Position {
 	}
 
 	public boolean equalsX(int x) {
-		return this.column.getColumn() == x;
+		return this.column.intValue() == x;
 	}
 
 	@Override

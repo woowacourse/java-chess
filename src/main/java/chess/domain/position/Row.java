@@ -35,7 +35,7 @@ public enum Row {
 		return name;
 	}
 
-	public int getRow() {
+	public int intValue() {
 		return row;
 	}
 }

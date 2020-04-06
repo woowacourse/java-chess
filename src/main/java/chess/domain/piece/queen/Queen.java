@@ -11,10 +11,6 @@ public class Queen extends Piece {
 	public static final String BLACK_QUEEN = "\u265b";
 	public static final int QUEEN_SCORE = 9;
 
-	public String getSymbol() {
-		return symbol;
-	}
-
 	private final String symbol = "q";
 
 	public Queen(Team team, Position position) {
@@ -26,6 +22,13 @@ public class Queen extends Piece {
 	}
 
 	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		strategy.validateMove(from, to, dto);
+		this.position = to;
+		return this;
+	}
+
+	@Override
 	public String toString() {
 		if (team.equals(Team.WHITE)) {
 			return WHITE_QUEEN;
@@ -34,14 +37,11 @@ public class Queen extends Piece {
 	}
 
 	@Override
-	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		strategy.validateMove(from, to, dto);
-		this.position = to;
-		return this;
-	}
-
-	@Override
 	public double getScore() {
 		return QUEEN_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }

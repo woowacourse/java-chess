@@ -13,16 +13,19 @@ public class Bishop extends Piece {
 
 	private final String symbol = "b";
 
-	public String getSymbol() {
-		return symbol;
-	}
-
 	public Bishop(Team team, Position position) {
 		super(new BishopStrategy(), team, position);
 	}
 
 	public static Piece of(Team team, Position position) {
 		return new Bishop(team, position);
+	}
+
+	@Override
+	public Piece move(Position from, Position to, Map<Position, Team> dto) {
+		strategy.validateMove(from, to, dto);
+		this.position = to;
+		return this;
 	}
 
 	@Override
@@ -34,14 +37,11 @@ public class Bishop extends Piece {
 	}
 
 	@Override
-	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		strategy.validateMove(from, to, dto);
-		this.position = to;
-		return this;
-	}
-
-	@Override
 	public double getScore() {
 		return BISHOP_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }

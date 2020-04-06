@@ -39,8 +39,8 @@ public class WebUIChessApplication {
 
 		get("/board", (req, res) -> {
 			List<UnitDto> unitList = game.board().getBoard().values().stream()
-				.map(piece -> new UnitDto(piece.getPosition().getColumn().getColumn(),
-					piece.getPosition().getRow().getRow(), piece.getTeam().name(), piece.getSymbol()))
+				.map(piece -> new UnitDto(piece.getPosition().getColumn().intValue(),
+					piece.getPosition().getRow().intValue(), piece.getTeam().name(), piece.getSymbol()))
 				.collect(Collectors.toList());
 			return gson.toJson(unitList);
 		});
@@ -61,8 +61,8 @@ public class WebUIChessApplication {
 			game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
 				Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
 			List<UnitDto> unitList = game.board().getBoard().values().stream()
-				.map(piece -> new UnitDto(piece.getPosition().getColumn().getColumn(),
-					piece.getPosition().getRow().getRow(), piece.getTeam().name(), piece.getSymbol()))
+				.map(piece -> new UnitDto(piece.getPosition().getColumn().intValue(),
+					piece.getPosition().getRow().intValue(), piece.getTeam().name(), piece.getSymbol()))
 				.collect(Collectors.toList());
 			return gson.toJson(unitList);
 		});
