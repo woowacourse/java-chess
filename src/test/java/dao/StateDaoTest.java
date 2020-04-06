@@ -19,14 +19,39 @@ class StateDaoTest {
 
 	@Test
 	void getConnection() {
-		Connection connection = stateDao.getConnection();
+		final Connection connection = stateDao.getConnection();
 		assertThat(connection).isNotNull();
 	}
 
 	@Test
 	void closeConnection() throws SQLException {
-		Connection connection = stateDao.getConnection();
+		final Connection connection = stateDao.getConnection();
 		stateDao.closeConnection(connection);
 		assertThat(connection.isClosed()).isTrue();
+	}
+
+	@Test
+	void addState() throws SQLException {
+		final String roomName = "그니";
+		final String state = "ended";
+		final int resultNum = stateDao.addState(state, roomName);
+		assertThat(resultNum).isEqualTo(1);
+		assertThat(stateDao.findStateByRoomName(roomName).getState()).isEqualTo(state);
+	}
+
+	@Test
+	void findStateByRoomName() throws SQLException {
+		final String roomName = "그니";
+		final String state = "ended";
+		final State stateBean = stateDao.findStateByRoomName(roomName);
+		assertThat(stateBean.getState()).isEqualTo(state);
+	}
+
+	@Test
+	void setState() throws SQLException {
+		final int id = 1;
+		final String state = "started";
+		int resultNum = stateDao.setState(id, state);
+		assertThat(resultNum).isEqualTo(1);
 	}
 }

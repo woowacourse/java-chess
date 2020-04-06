@@ -1,8 +1,8 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import dao.exceptions.DaoNoneSelectedException;
+
+import java.sql.*;
 
 public class StateDao {
 	public Connection getConnection() {
@@ -44,4 +44,32 @@ public class StateDao {
 		}
 	}
 
+	public int addState(final String state, final String roomName) throws SQLException {
+		final String query = "INSERT INTO state (state, room_id) "
+				+ "VALUES (?, (SELECT id FROM room WHERE room_name=?))";
+		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		preparedStatement.setString(1, state);
+		preparedStatement.setString(2, roomName);
+		return preparedStatement.executeUpdate();
+	}
+
+	public State findStateByRoomName(final String roomName) throws SQLException {
+		final String query = "SELECT * FROM state WHERE room_id="
+				+ "(SELECT id FROM room WHERE room_name=?)";
+		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		preparedStatement.setString(1, roomName);
+		final ResultSet resultSet = preparedStatement.executeQuery();
+		if (!resultSet.next()) {
+			throw new DaoNoneSelectedException();
+		}
+		return new State(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getInt("room_id"));
+	}
+
+	public int setState(final int id, final String state) throws SQLException {
+		final String query = "UPDATE state SET state=? WHERE id=?";
+		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		preparedStatement.setString(1, state);
+		preparedStatement.setInt(2, id);
+		return preparedStatement.executeUpdate();
+	}
 }

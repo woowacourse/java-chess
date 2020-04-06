@@ -39,7 +39,7 @@ public class WebUIChessApplication {
 		state = initState();
 		announcement = Announcement.ofFirst();
 
-		Spark.get("/rooms", (request, response) -> {
+		Spark.get("/chess/rooms", (request, response) -> {
 			final RoomDao roomDao = new RoomDao();
 			final List<Room> rooms = roomDao.findAllRooms();
 			final Map<String, Object> map = new HashMap<>();
@@ -47,7 +47,7 @@ public class WebUIChessApplication {
 			return render(map, "/rooms.html");
 		});
 
-		Spark.post("/rooms", (request, response) -> {
+		Spark.post("/chess/rooms", (request, response) -> {
 			final String requestType = request.queryParams("selection");
 			final String roomName = request.queryParams("room_name");
 
@@ -60,18 +60,18 @@ public class WebUIChessApplication {
 			return "";
 		});
 
-		Spark.get("/chess/:room_name", (request, response) -> {
+		Spark.get("/chess/rooms/:id", (request, response) -> {
 			final Map<String, Object> map = new HashMap<>();
 			map.put("table", createTableHtmlFromState());
 			map.put("announcement", announcement.getString());
 			return render(map, "/chess.html");
 		});
 
-		Spark.post("/chess/:room_name", (request, response) -> {
+		Spark.post("/chess/rooms/:id", (request, response) -> {
 			try {
 				state = state.pushCommend(request.queryParams("commend"));
 				announcement = createAnnouncement();
-				response.redirect("/chess/" + request.params(":room_name"));
+				response.redirect("/chess/rooms/" + request.params(":id"));
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
@@ -79,7 +79,7 @@ public class WebUIChessApplication {
 					| CanNotReachException
 					| StateException e) {
 				announcement = Announcement.of(e.getMessage());
-				response.redirect("/chess/" + request.params(":room_name"));
+				response.redirect("/chess/rooms/" + request.params(":id"));
 			}
 			return "";
 		});
@@ -89,10 +89,10 @@ public class WebUIChessApplication {
 		final RoomDao roomDao = new RoomDao();
 		try {
 			final Room room = roomDao.findRoomByRoomName(roomName);
-			response.redirect("/chess/" + room.getRoomName());
+			response.redirect("/chess/rooms/" + room.getId());
 		} catch (DaoNoneSelectedException e) {
 			final int resultNum = roomDao.addRoomByRoomName(roomName);
-			response.redirect("/rooms");
+			response.redirect("/chess/rooms");
 		}
 		return "";
 	}
@@ -100,7 +100,7 @@ public class WebUIChessApplication {
 	private static String responseToDeleteRoom(final Response response, final String roomName) throws SQLException {
 		final RoomDao roomDao = new RoomDao();
 		final int resultNum = roomDao.deleteRoomByRoomName(roomName);
-		response.redirect("/rooms");
+		response.redirect("/chess/rooms");
 		return "";
 	}
 
