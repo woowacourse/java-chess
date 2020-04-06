@@ -14,7 +14,6 @@ public class WebUIChessApplication {
 	private static WebController webController = new WebController();
 
 	public static void main(String[] args) {
-
 		port(8080);
 		staticFileLocation("/public");
 
@@ -23,7 +22,9 @@ public class WebUIChessApplication {
 			return render(model, "index.html");
 		});
 
-		post("/move", (request, response) -> webController.move(request, gameManager), gson::toJson);
+		post("/move", (request, response) ->
+				webController.move(request, gameManager)
+			, gson::toJson);
 
 		get("/start", (request, response) -> {
 			gameManager = webController.start();

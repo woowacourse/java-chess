@@ -116,14 +116,12 @@ class ChessBoardTest {
 		assertThat(actual).isEqualTo(expect);
 	}
 
-	@DisplayName("체스보드에서 이동할 피스가 같은팀인지 확인")
+	@DisplayName("체스보드에서 이동할 피스가 다른팀인지 확인")
 	@Test
 	void isTurn() {
 		Map<Location, Piece> board = new HashMap<>();
 		Location movingLocation = Location.of('a', 1);
-		Location topLocation = Location.of('a', 2);
-		board.put(movingLocation, Queen.of(Team.BLACK));
-		board.put(topLocation, Queen.of(Team.BLACK));
+		board.put(movingLocation, Queen.of(Team.WHITE));
 
 		ChessBoard chessBoard = new ChessBoard(board);
 		boolean actual = chessBoard.isNotSameTeam(GameState.RUNNING_BLACK_TURN, movingLocation);

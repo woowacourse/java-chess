@@ -57,7 +57,6 @@ public class WebController {
 		GameStateDAO gameStateDAO = new GameStateDAO();
 		String now = request.queryParams("now");
 		String destination = request.queryParams("destination");
-
 		try {
 			gameManager.movePiece(Location.of(now), Location.of(destination));
 		} catch (IllegalArgumentException | NullPointerException e) {

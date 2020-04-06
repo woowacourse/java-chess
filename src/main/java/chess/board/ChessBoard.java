@@ -33,7 +33,9 @@ public class ChessBoard {
 		Piece piece = board.get(now);
 
 		checkLocationSameTeam(piece, destination);
-		checkObstacleJumper(piece, now, destination);
+		if (piece.isNotJumper()) {
+			checkObstacleJumper(piece, now, destination);
+		}
 		piece.checkStrategy(now, destination, existEnemyInLocation(destination, piece));
 	}
 
@@ -55,7 +57,7 @@ public class ChessBoard {
 			}
 			nextLocation = now.calculateNextLocation(destination, weight);
 		}
-		if (obstacle && piece.isNotJumper()) {
+		if (obstacle) {
 			throw new IllegalArgumentException("경로 사이에 피스가 있습니다.");
 		}
 	}

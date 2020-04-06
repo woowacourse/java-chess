@@ -128,6 +128,9 @@ function addPieces(response) {
 
 function moveRequest(now, destination) {
     return new Promise((resolve, reject) => {
+        console.log("테스트")
+        console.log(now);
+        console.log(destination);
         var queryString = `now=${now}&destination=${destination}`;
         $.ajax({
             type: "post",

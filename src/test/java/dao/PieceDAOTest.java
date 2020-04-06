@@ -66,4 +66,5 @@ class PieceDAOTest {
 
 		pieceDAO.deletePiece(Location.of(Column.A, Row.TWO));
 	}
+
 }
