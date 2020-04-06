@@ -53,6 +53,7 @@ function move() {
         data: {"move": input},
         success : function(data){
             caching(data)
+            $("#input-commend").val("");
         },
     })
 
@@ -64,7 +65,7 @@ function status() {
         type: "get",
         success : function(data){
             data = JSON.parse(data)
-            $(`#${data["team"]}`).text(data["status"])
+            $(`#${data["team"]}`).html(`<h2>${data["status"]}</h2>`)
         },
     })
 }

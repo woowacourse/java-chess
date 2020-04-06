@@ -1,3 +1,7 @@
+body {
+    background-image: url("./img/white-2127384_1280.png")
+}
+
 div {
     display: table;
     margin: 0 auto;
@@ -7,7 +11,7 @@ div table {
     display: table-cell;
     text-align: center;
     vertical-align: middle;
-    background-color: burlywood;
+    background-color: #F5F5F5;
 }
 
 #score-white, #score-black {
@@ -26,13 +30,13 @@ th, td {
 }
 
 td {
-    background:#FFE7AA;
+    background:#D3D3D3;
     border: 1px solid black;
 }
 
 tr:nth-child(odd) td:nth-child(even),
 tr:nth-child(even) td:nth-child(odd) {
-    background:#D4B66A;
+    background:#A9A9A9;
 }
 
 .input-group {
