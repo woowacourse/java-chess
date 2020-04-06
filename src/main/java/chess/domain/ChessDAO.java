@@ -70,12 +70,16 @@ public class ChessDAO {
         String query = "SELECT * FROM Pieces";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
-
         Map<Position, Piece> pieces = new HashMap<>();
 
-
         while (rs.next()) {
-            pieces.put(new Position(rs.getString("position")), PieceGenerator.generate(rs.getString("representation"), rs.getString("team"), rs.getString("position")));
+            Position position = new Position(rs.getString("position"));
+            Piece piece = PieceGenerator.generate(
+                    rs.getString("representation"),
+                    rs.getString("team"),
+                    rs.getString("position")
+            );
+            pieces.put(position, piece);
         }
         return new Pieces(pieces);
     }
