@@ -1,53 +1,68 @@
 package chess.service;
 
 import chess.controller.dto.PieceDto;
-import chess.controller.dto.ResponseDto;
+import chess.dao.ChessDAO;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
+import chess.domain.board.initializer.AutomatedBoardInitializer;
+import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Turn;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
+import chess.domain.state.RunningState;
+import chess.domain.state.State;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
 
-    private ChessGame chessGame = new ChessGame();
+    private ChessDAO chessDAO = new ChessDAO();
+    private State state = new RunningState(new ChessGame(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE)));
 
     public boolean isEnd() {
-        return chessGame.isEnd();
+        return state.isEnd();
     }
 
-    public ResponseDto start(List<String> parameters) {
-        chessGame.start();
-        return new ResponseDto(createBoardDto());
+    public void start(List<String> parameters) throws SQLException {
+        if ("new".equals(parameters.get(0))) {
+            ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+            Long id = chessDAO.createChessGame(chessGame);
+            state = new RunningState(chessGame);
+        }
+        if ("load".equals(parameters.get(0))) {
+            ChessGame chessGame = chessDAO.findGameById(1L);
+            state = new RunningState(chessGame);
+        }
     }
 
-    public ResponseDto end(List<String> parameters) {
-        chessGame.end();
-        return new ResponseDto(createBoardDto());
+    public void end(List<String> parameters) throws SQLException {
+        chessDAO.addBoard(1L, state.getBoard());
+        state = state.end(parameters);
     }
 
-    public ResponseDto move(List<String> parameters) {
-        chessGame.move(MoveParameter.of(parameters));
-        return new ResponseDto(createBoardDto());
+    public void move(List<String> parameters) {
+        state = state.move(MoveParameter.of(parameters));
     }
 
-    public ResponseDto status(List<String> parameters) {
-        Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
-    }
-
-    private Map<Position, PieceDto> createBoardDto() {
-        Board board = chessGame.getBoard();
-        return board.getBoard()
+    public Map<Position, PieceDto> createBoardDto() {
+        return state.getBoard()
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
+                        Map.Entry::getKey,
                         entry -> PieceDto.of(entry.getValue())
                 ));
+    }
+
+    public Map<Team, Double> createScoreDto() {
+        return state.getStatus();
+    }
+
+    public Team getWinner() {
+        return state.getWinner();
     }
 }

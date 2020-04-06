@@ -26,13 +26,16 @@ public class Board {
         return new Board(boardInitializer.create());
     }
 
+    public static Board of(Map<Position, PieceState> board) {
+        return new Board(board);
+    }
+
     public void move(Position source, Position target, Turn turn) {
         PieceState sourcePiece = board.get(source);
         validateSource(sourcePiece, turn);
         PieceState piece = sourcePiece.move(target, getBoardState(sourcePiece));
         board.remove(source);
         board.put(target, piece);
-        turn.switchTurn();
     }
 
     public boolean isEnd() {

@@ -13,14 +13,10 @@ public class ConsoleChessApplication {
         ChessController chessController = new ChessController();
 
         consoleOutputView.printInitialMessage();
-        while (!chessController.isEnd()) {
-            try {
-                RequestDto requestDto = consoleInputView.inputRequest();
-                ResponseDto responseDto = chessController.run(requestDto);
-                consoleOutputView.printResponse(responseDto);
-            } catch (IllegalArgumentException ie) {
-                System.out.println(ie.getMessage());
-            }
+        while (true) {
+            RequestDto requestDto = consoleInputView.inputRequest();
+            ResponseDto responseDto = chessController.run(requestDto);
+            consoleOutputView.printResponse(responseDto);
         }
     }
 }

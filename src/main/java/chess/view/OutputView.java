@@ -51,6 +51,10 @@ public class OutputView {
         if (responseDto.getScores() != null) {
             printStatus(responseDto.getScores());
         }
+
+        if (responseDto.getMessage() != null) {
+            System.out.println(responseDto.getMessage());
+        }
     }
 
     private void appendByRank(StringBuilder stringBuilder, Map<Position, PieceDto> board, Rank rank) {

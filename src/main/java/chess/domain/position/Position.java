@@ -82,4 +82,8 @@ public class Position {
     public Rank getRank() {
         return rank;
     }
+
+    public String getName() {
+        return key(file, rank);
+    }
 }
