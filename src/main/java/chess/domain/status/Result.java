@@ -44,4 +44,12 @@ public class Result {
     public boolean isDraw() {
         return isDraw;
     }
+
+    public double getWhiteScore() {
+        return statuses.get(0).getScore();
+    }
+
+    public double getBlackScore() {
+        return statuses.get(1).getScore();
+    }
 }
