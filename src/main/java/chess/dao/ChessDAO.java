@@ -13,13 +13,14 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessDAO {
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
+    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+    private static final String DATABASE_NAME = "chess";
+    private static final String SERVER_URL = "localhost:13306";
+
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306";
-        String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -29,7 +30,7 @@ public class ChessDAO {
         }
 
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            con = DriverManager.getConnection("jdbc:mysql://" + SERVER_URL + "/" + DATABASE_NAME + OPTION, USERNAME, PASSWORD);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
