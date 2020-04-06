@@ -1,23 +1,20 @@
 package chess.controller;
 
 import chess.controller.dto.Command;
-import chess.controller.dto.PieceDto;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
-import chess.domain.player.Team;
-import chess.domain.position.Position;
 import chess.service.ChessService;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.function.BiConsumer;
 
 public class ChessController {
 
     private ChessService chessService = new ChessService();
-    private Map<Command, Consumer<List<String>>> runner;
+    private Map<Command, BiConsumer<Long, List<String>>> runner;
 
     public ChessController() {
         this.runner = new HashMap<>();
@@ -27,8 +24,12 @@ public class ChessController {
         runner.put(Command.UNKNOWN, this::unknown);
     }
 
-    public boolean isEnd() {
-        return chessService.isEnd();
+    public boolean isEnd(Long id) {
+        return chessService.isEnd(id);
+    }
+
+    public Long createChessGame() throws SQLException {
+        return chessService.createGame();
     }
 
     public ResponseDto run() {
@@ -41,59 +42,45 @@ public class ChessController {
         return responseDto;
     }
 
-    public ResponseDto run(RequestDto requestDto) {
+    public ResponseDto run(Long id, RequestDto requestDto) {
         String message = null;
-        ResponseDto responseDto = new ResponseDto();
+
         try {
             Command command = requestDto.getCommand();
-            runner.get(command).accept(requestDto.getParameter());
-            if (chessService.isEnd()) {
-                Team winner = chessService.getWinner();
-                responseDto.setWinner(winner);
-                responseDto.setMessage(winner.toString() + "가 승리했습니다.");
-                responseDto.setRoomId(chessService.getRoomId());
-                chessService.deleteGame();
-            }
-        } catch (IllegalArgumentException | UnsupportedOperationException | SQLException e) {
-            responseDto.setMessage(e.getMessage());
-        } finally {
-            if (chessService.isReady()) {
-                return run();
-            }
-            responseDto.setBoard(chessService.createBoardDto());
-            responseDto.setScores(chessService.createScoreDto());
-            responseDto.setTurn(chessService.createTurnDto());
-            return responseDto;
+            runner.get(command).accept(id, requestDto.getParameter());
+        } catch (IllegalArgumentException | UnsupportedOperationException e) {
+            message = e.getMessage();
         }
+        ResponseDto responseDto = chessService.getResponseDto(id);
+        responseDto.setMessage(message);
+        return responseDto;
     }
 
-    private void start(List<String> parameter) {
+    public ResponseDto getResponseDto(Long id) {
+        return chessService.getResponseDto(id);
+    }
+
+    private void start(Long id, List<String> parameter) {
         try {
-            chessService.start(parameter);
+            chessService.start(id, parameter);
         } catch (SQLException se) {
             System.out.println(se.getMessage());
         }
     }
 
-    private void end(List<String> parameter) {
+    private void end(Long id, List<String> parameter) {
         try {
-            chessService.end(parameter);
+            chessService.end(id, parameter);
         } catch (SQLException se) {
             System.out.println(se.getMessage());
         }
     }
 
-    private void move(List<String> parameter) {
-        chessService.move(parameter);
+    private void move(Long id, List<String> parameter) {
+        chessService.move(id, parameter);
     }
 
-    public ResponseDto getResponseDto() {
-        Map<Position, PieceDto> boardDto = chessService.createBoardDto();
-        Map<Team, Double> scoreDto = chessService.createScoreDto();
-        return new ResponseDto(boardDto, scoreDto);
-    }
-
-    private ResponseDto unknown(List<String> parameter) {
+    private ResponseDto unknown(Long id, List<String> parameter) {
         throw new IllegalArgumentException("잘못된 명령어입니다.");
     }
 }

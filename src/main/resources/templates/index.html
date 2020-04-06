@@ -248,20 +248,12 @@
         </div>
         <div class="buttons">
             <div class="start-button">
-                <form action="/chessGame" method="post">
+                <form action="/createChessGame" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
                     <input hidden="hidden" name="parameter" type="text" value="new">
                     <input type="submit" value="New Game"/>
                 </form>
             </div>
-            <!--            <div class="load-button">-->
-            <!--                <form action="/chessGame" method="post">-->
-            <!--                    <input hidden="hidden" name="command" type="text" value="start">-->
-            <!--                    <input hidden="hidden" name="parameter" type="text" value="load">-->
-            <!--                    <input name="saveId" type="text">-->
-            <!--                    <input type="submit" value="불러오기"/>-->
-            <!--                </form>-->
-            <!--            </div>-->
         </div>
     </div>
     <div class="room-container" id="room-container">
@@ -282,44 +274,43 @@
         </div>
     </div>
 </div>
-<form action="/chessGame" id="load-form" method="post" style="display: none;">
-    <input class="load-form-command" name="command" type="text">
-    <input class="load-form-parameter" name="parameter" type="text">
-</form>
 </body>
 </html>
 <script>
-    const loadForm = document.getElementById("load-form");
-    const commandInput = document.querySelector(".load-form-command");
-    const parameterInput = document.querySelector(".load-form-parameter");
-    document.querySelectorAll(".room-button").forEach(element => {
-        element.addEventListener("click", event => {
-            event.preventDefault();
-            commandInput.value = "start";
-            parameterInput.value = "load_" + element.id;
-            loadForm.submit();
-        })
-    });
+    window.onload = () => {
+        document.querySelectorAll(".room-button").forEach(element => {
+            element.addEventListener("click", event => {
+                event.preventDefault();
+                loadGame(element.id);
+            })
+        });
 
-    function loadGame(id) {
+        function loadGame(id) {
+            let form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "/loadChessGame");
 
-        let form = document.createElement("form");
-        form.setAttribute("method", "post");
-        form.setAttribute("action", "/chessGame");
+            let command = document.createElement("input");
+            command.setAttribute("type", "hidden");
+            command.setAttribute("name", "command");
+            command.setAttribute("value", "start");
+            form.appendChild(command);
 
-        let command = document.createElement("input");
-        command.setAttribute("type", "hidden");
-        command.setAttribute("name", "command");
-        command.setAttribute("value", "start");
-        form.appendChild(command);
+            let parameter = document.createElement("input");
+            parameter.setAttribute("type", "hidden");
+            parameter.setAttribute("name", "parameter");
+            parameter.setAttribute("value", "load");
+            form.appendChild(parameter);
 
-        let parameter = document.createElement("input");
-        parameter.setAttribute("type", "hidden");
-        parameter.setAttribute("name", "parameter");
-        parameter.setAttribute("value", load + "_" + id);
-        form.appendChild(parameter);
-        document.body.appendChild(form);
-        form.submit();
+            let idInput = document.createElement("input");
+            idInput.setAttribute("type", "hidden");
+            idInput.setAttribute("name", "id");
+            idInput.setAttribute("value", id);
+            form.appendChild(idInput);
+
+
+            document.body.appendChild(form);
+            form.submit();
+        }
     }
-
 </script>

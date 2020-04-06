@@ -1,7 +1,10 @@
 package chess;
 
-import chess.controller.ChessController;
-import chess.controller.dto.*;
+import chess.controller.ChessWebController;
+import chess.controller.dto.Command;
+import chess.controller.dto.PieceDto;
+import chess.controller.dto.RequestDto;
+import chess.controller.dto.WebDto;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 import spark.ModelAndView;
@@ -11,33 +14,37 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static spark.Spark.*;
+import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/static");
-        ChessController chessController = new ChessController();
-
-        get("/", (req, res) -> {
-            ResponseDto responseDto = chessController.run();
-            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
-            Map<String, Object> model = new HashMap<>();
-            model.put("roomId", roomDto);
-            return render(model, "index.html");
-        });
-
-        post("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            RequestDto requestDto = getRequestDtoFrom(req);
-            ResponseDto responseDto = chessController.run(requestDto);
-
-            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
-            model.put("roomId", roomDto);
-            return render(model, "index.html");
-        });
-
+//        ChessController chessController = new ChessController();
+//
+//        get("/", (req, res) -> {
+//            ResponseDto responseDto = chessController.run();
+//            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("roomId", roomDto);
+//            return render(model, "index.html");
+//        });
+//
+//        post("/", (req, res) -> {
+//            String number = req.queryParams("id");
+//            Long id = Long.valueOf(number);
+//            Map<String, Object> model = new HashMap<>();
+//            RequestDto requestDto = getRequestDtoFrom(req);
+//            ResponseDto responseDto = chessController.run(id, requestDto);
+//
+//            List<WebDto> roomDto = getRoomDto(responseDto.getRoomId());
+//            model.put("roomId", roomDto);
+//            return render(model, "index.html");
+//        });
+//
 //        get("/chessGame", (req, res) -> {
-//            ResponseDto responseDto = chessController.getResponseDto();
+//            String number = req.queryParams("id");
+//            Long id = Long.valueOf(number);
+//            ResponseDto responseDto = chessController.getResponseDto(id);
 //            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
 //            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
 //            Map<String, Object> model = new HashMap<>();
@@ -45,22 +52,34 @@ public class WebUIChessApplication {
 //            model.put("score", scoreDto);
 //            return render(model, "chessGame.html");
 //        });
-
-        post("/chessGame", (req, res) -> {
-            RequestDto requestDto = getRequestDtoFrom(req);
-            ResponseDto responseDto = chessController.run(requestDto);
-            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-            WebDto winnerDto = getTurnDto(responseDto.getWinner());
-            WebDto turnDto = getTurnDto(responseDto.getTurn());
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", boardDto);
-            model.put("score", scoreDto);
-            model.put("turn", turnDto);
-            model.put("message", responseDto.getMessage());
-            model.put("winner", winnerDto);
-            return render(model, "chessGame.html");
-        });
+//
+//        post("/chessGame", (req, res) -> {
+//            String number = req.queryParams("id");
+//            Long id = Long.valueOf(number.trim());
+//            RequestDto requestDto = getRequestDtoFrom(req);
+//            ResponseDto responseDto = chessController.run(id, requestDto);
+//            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
+//            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+//            WebDto winnerDto = getTurnDto(responseDto.getWinner());
+//            WebDto turnDto = getTurnDto(responseDto.getTurn());
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("board", boardDto);
+//            model.put("score", scoreDto);
+//            model.put("turn", turnDto);
+//            model.put("message", responseDto.getMessage());
+//            model.put("winner", winnerDto);
+//            model.put("id", id);
+//            return render(model, "chessGame.html");
+//        });
+//
+//        post("/createChessGame", (req, res) -> {
+//            Long id = chessController.createChessGame();
+//            Map<String, Object> model = new HashMap<>();
+//            model.put("id", id);
+//            return render(model, "create.html");
+//        });
+        ChessWebController chessWebController = new ChessWebController();
+        chessWebController.run();
 
     }
 
@@ -87,10 +106,6 @@ public class WebUIChessApplication {
     private static RequestDto getRequestDtoFrom(final Request req) {
         Command command = Command.of(req.queryParams("command"));
         List<String> parameters = new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_")));
-        if (parameters.contains("load")) {
-            String saveId = req.queryParams("saveId");
-            parameters.add(saveId);
-        }
         return new RequestDto(command, parameters);
     }
 

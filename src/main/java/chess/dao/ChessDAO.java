@@ -57,7 +57,9 @@ public class ChessDAO {
         String turn = chessGame.getTurn().toString();
         pstmt.setString(1, turn);
         pstmt.executeUpdate();
-        return getCurrentGameId(connection);
+        Long id = getCurrentGameId(connection);
+        addBoard(id, chessGame);
+        return id;
     }
 
     public long getCurrentGameId(Connection connection) throws SQLException {
@@ -73,10 +75,18 @@ public class ChessDAO {
         Connection connection = getConnection();
 
         deleteBoard(chessGameId, connection);
-        deleteGame(chessGameId, connection);
-        insertGame(chessGameId, chessGame, connection);
+        updateTurn(chessGameId, chessGame, connection);
         insertBoard(chessGameId, chessGame, connection);
         closeConnection(connection);
+    }
+
+    private void updateTurn(long chessGameId, ChessGame chessGame, Connection connection) throws SQLException {
+        System.out.println(chessGame);
+        String updateTurnQuery = "UPDATE chessGameTable SET turn = ? where id = ?";
+        PreparedStatement updatePstmt = connection.prepareStatement(updateTurnQuery);
+        updatePstmt.setString(1, chessGame.getTurn().toString());
+        updatePstmt.setLong(2, chessGameId);
+        updatePstmt.executeUpdate();
     }
 
     private void deleteBoard(final long chessGameId, final Connection connection) throws SQLException {
@@ -103,13 +113,6 @@ public class ChessDAO {
         closeConnection(connection);
     }
 
-    private void deleteGame(final long chessGameId, final Connection connection) throws SQLException {
-        String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?)";
-        PreparedStatement deleteGamePstmt = connection.prepareStatement(deleteGameQuery);
-        deleteGamePstmt.setLong(1, chessGameId);
-        deleteGamePstmt.executeUpdate();
-    }
-
     private void insertBoard(final long chessGameId, final ChessGame chessGame, final Connection connection) throws SQLException {
         Map<Position, PieceState> board = chessGame.getBoard();
 
@@ -129,13 +132,6 @@ public class ChessDAO {
         }
     }
 
-    private void insertGame(final long chessGameId, final ChessGame chessGame, final Connection connection) throws SQLException {
-        String insertGameQuery = "INSERT INTO chessGameTable VALUES (?, ?)";
-        PreparedStatement insertGamePstmt = connection.prepareStatement(insertGameQuery);
-        insertGamePstmt.setLong(1, chessGameId);
-        insertGamePstmt.setString(2, chessGame.getTurn().toString());
-        insertGamePstmt.executeUpdate();
-    }
 
     public ChessGame findGameById(long id) throws SQLException {
         Connection connection = getConnection();

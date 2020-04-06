@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>체스게임</title>
+    <title>체스게임 {{id}}게임</title>
     <link href="style-game.css" rel="stylesheet">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
 <body>
 <div class="container">
@@ -123,23 +122,26 @@
         </div>
         <div class="buttons">
             <div class="restart-button">
-                <form action="/chessGame" method="post">
+                <form action="/restartChessGame" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
                     <input hidden="hidden" name="parameter" type="text" value="new">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
                     <input type="submit" value="새 게임"/>
                 </form>
             </div>
             <div class="save-button">
-                <form action="/" method="post">
+                <form action="/end" method="post">
                     <input hidden="hidden" name="command" type="text" value="end">
                     <input hidden="hidden" name="parameter" type="text" value="save">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
                     <input type="submit" value="게임 저장"/>
                 </form>
             </div>
             <div class="end-button">
-                <form action="/" method="post">
+                <form action="/end" method="post">
                     <input hidden="hidden" name="command" type="text" value="end">
                     <input hidden="hidden" name="parameter" type="text" value="">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
                     <input type="submit" value="게임 종료"/>
                 </form>
             </div>
@@ -168,12 +170,18 @@
             </div>
         </div>
     </div>
+    <div id="chessGameId" style="display: none">
+        {{id}}
+    </div>
 </div>
 </body>
 <script id="board-data" type="text/x-mustache">
     {{#board}}
         document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
     {{/board}}
+    {{#if error-message}}
+        alert("{{error-message}}");
+    {{/if}}
     {{#if message}}
         alert("{{message}}");
     {{/if }}
@@ -184,6 +192,15 @@
         document.getElementById("{{winner.key}}-winner").innerText = '우승'
     {{/if}}
     document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
+
+
+
+
+
+
+
+
+
 
 
 
@@ -217,7 +234,7 @@
             } else {
                 params += pieceCell.item(i).getAttribute("id");
                 let method = "post";
-                let path = "/chessGame";
+                let path = "/move";
                 let form = document.createElement("form");
                 form.setAttribute("method", method);
                 form.setAttribute("action", path);
@@ -232,6 +249,15 @@
                 parameter.setAttribute("type", "hidden");
                 parameter.setAttribute("name", "parameter");
                 parameter.setAttribute("value", params);
+                form.appendChild(parameter);
+
+                let gameId = document.createElement("input");
+                let id = document.getElementById("chessGameId");
+                gameId.setAttribute("type", "hidden");
+                gameId.setAttribute("name", "id");
+                gameId.setAttribute("value", id.innerText);
+                form.appendChild(gameId);
+
                 params = "";
                 form.appendChild(parameter);
                 document.body.appendChild(form);

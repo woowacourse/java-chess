@@ -15,6 +15,20 @@ public class ResponseDto {
     private Team winner;
     private String message;
 
+    public ResponseDto(final Map<Position, PieceDto> board, final Map<Team, Double> scores, final Team turn) {
+        this.board = board;
+        this.scores = scores;
+        this.turn = turn;
+    }
+
+    public ResponseDto(final Map<Position, PieceDto> board, final Map<Team, Double> scores, final Team turn, final Team winner, final String message) {
+        this.board = board;
+        this.scores = scores;
+        this.turn = turn;
+        this.winner = winner;
+        this.message = message;
+    }
+
 
     public ResponseDto() {
     }
