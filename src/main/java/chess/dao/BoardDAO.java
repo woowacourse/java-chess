@@ -16,13 +16,7 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class BoardDAO {
-	private final String gameId;
-
-	public BoardDAO(String gameId) {
-		this.gameId = gameId;
-	}
-
-	public void addPiece(Piece piece) {
+	public void addPiece(String gameId, Piece piece) {
 		String query = "INSERT INTO board VALUES (?, ?, ?)";
 		try {
 			Connection con = getConnection();
@@ -38,7 +32,7 @@ public class BoardDAO {
 		}
 	}
 
-	public Piece findPieceBy(Position position) {
+	public Piece findPieceBy(String gameId, Position position) {
 		String query = "SELECT * FROM board WHERE game_id = ? AND position = ?";
 		try {
 			Connection con = getConnection();
@@ -57,7 +51,7 @@ public class BoardDAO {
 		}
 	}
 
-	public List<Piece> findAll() {
+	public List<Piece> findAll(String gameId) {
 		List<Piece> result = new ArrayList<>();
 		String query = "SELECT * FROM board WHERE game_id = ?";
 		try {
@@ -79,10 +73,10 @@ public class BoardDAO {
 		}
 	}
 
-	public void update(Position from, Position to) {
+	public void update(String gameId, Position from, Position to) {
 		String query = "UPDATE board SET symbol = ? WHERE game_id = ? AND position = ?";
-		Piece source = findPieceBy(from);
-		Piece target = findPieceBy(to);
+		Piece source = findPieceBy(gameId, from);
+		Piece target = findPieceBy(gameId, to);
 		try {
 			Connection con = getConnection();
 			PreparedStatement pstmt = con.prepareStatement(query);
@@ -104,7 +98,7 @@ public class BoardDAO {
 		}
 	}
 
-	public List<Piece> findGroupBy(Column column) {
+	public List<Piece> findGroupBy(String gameId, Column column) {
 		List<Piece> result = new ArrayList<>();
 		String query = "SELECT * FROM board WHERE game_id = ? AND position LIKE ?";
 		try {

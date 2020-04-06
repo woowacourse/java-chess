@@ -10,13 +10,7 @@ import java.sql.SQLException;
 import chess.domain.piece.Team;
 
 public class TurnInfoDAO {
-	private final String gameId;
-
-	public TurnInfoDAO(String gameId) {
-		this.gameId = gameId;
-	}
-
-	public void initialize(Team team) {
+	public void initialize(String gameId, Team team) {
 		String query = "INSERT INTO turn_info VALUES (?, ?)";
 		try {
 			Connection con = getConnection();
@@ -31,7 +25,7 @@ public class TurnInfoDAO {
 		}
 	}
 
-	public Team findCurrent() {
+	public Team findCurrent(String gameId) {
 		String query = "SELECT current_team FROM turn_info WHERE game_id = ?";
 		try {
 			Connection con = getConnection();
@@ -49,12 +43,12 @@ public class TurnInfoDAO {
 		}
 	}
 
-	public void updateNext() {
+	public void updateNext(String gameId) {
 		String query = "UPDATE turn_info SET current_team = ? WHERE game_id = ?";
 		try {
 			Connection con = getConnection();
 			PreparedStatement pstmt = con.prepareStatement(query);
-			pstmt.setString(1, findCurrent().next().getName());
+			pstmt.setString(1, findCurrent(gameId).next().getName());
 			pstmt.setString(2, gameId);
 			pstmt.executeUpdate();
 			pstmt.close();

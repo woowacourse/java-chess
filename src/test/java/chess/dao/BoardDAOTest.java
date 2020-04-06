@@ -24,7 +24,7 @@ public class BoardDAOTest {
 
 	@BeforeEach
 	void setUp() {
-		boardDAO = new BoardDAO("1");
+		boardDAO = new BoardDAO();
 	}
 
 	@AfterEach
@@ -34,15 +34,15 @@ public class BoardDAOTest {
 
 	@Test
 	void create() {
-		assertThat(new BoardDAO("1")).isInstanceOf(BoardDAO.class);
+		assertThat(new BoardDAO()).isInstanceOf(BoardDAO.class);
 	}
 
 	@Test
 	void addPiece() {
 		Piece piece = new King(A3, Team.WHITE);
-		boardDAO.addPiece(piece);
+		boardDAO.addPiece("1", piece);
 
-		assertThat(boardDAO.findPieceBy(A3).getSymbol()).isEqualTo(piece.getSymbol());
+		assertThat(boardDAO.findPieceBy("1", A3).getSymbol()).isEqualTo(piece.getSymbol());
 
 	}
 
@@ -50,30 +50,30 @@ public class BoardDAOTest {
 	void findAll() {
 		List<Piece> initial = new ArrayList<>(BoardFactory.create().getBoard().values());
 		for (Piece piece : initial) {
-			boardDAO.addPiece(piece);
+			boardDAO.addPiece("1" ,piece);
 		}
 
-		assertThat(boardDAO.findAll().size()).isEqualTo(64);
+		assertThat(boardDAO.findAll("1").size()).isEqualTo(64);
 	}
 
 	@Test
 	void update() {
-		boardDAO.addPiece(new Pawn(A2, Team.WHITE));
-		boardDAO.addPiece(new Empty(A4, Team.NONE));
+		boardDAO.addPiece("1", new Pawn(A2, Team.WHITE));
+		boardDAO.addPiece("1", new Empty(A4, Team.NONE));
 
-		boardDAO.update(A2, A4);
+		boardDAO.update("1", A2, A4);
 
-		assertThat(boardDAO.findPieceBy(A2)).isInstanceOf(Empty.class);
-		assertThat(boardDAO.findPieceBy(A4)).isInstanceOf(Pawn.class);
+		assertThat(boardDAO.findPieceBy("1", A2)).isInstanceOf(Empty.class);
+		assertThat(boardDAO.findPieceBy("1", A4)).isInstanceOf(Pawn.class);
 	}
 
 	@Test
 	void findByColumn() {
 		List<Piece> initial = new ArrayList<>(BoardFactory.create().getBoard().values());
 		for (Piece piece : initial) {
-			boardDAO.addPiece(piece);
+			boardDAO.addPiece("1", piece);
 		}
 
-		assertThat(boardDAO.findGroupBy(Column.A).size()).isEqualTo(8);
+		assertThat(boardDAO.findGroupBy("1", Column.A).size()).isEqualTo(8);
 	}
 }

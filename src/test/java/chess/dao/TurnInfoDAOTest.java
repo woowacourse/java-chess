@@ -13,7 +13,7 @@ public class TurnInfoDAOTest {
 
 	@BeforeEach
 	void setUp() {
-		turnInfoDAO = new TurnInfoDAO("1");
+		turnInfoDAO = new TurnInfoDAO();
 	}
 
 	@AfterEach
@@ -23,21 +23,21 @@ public class TurnInfoDAOTest {
 
 	@Test
 	void create() {
-		assertThat(new TurnInfoDAO("1")).isInstanceOf(TurnInfoDAO.class);
+		assertThat(new TurnInfoDAO()).isInstanceOf(TurnInfoDAO.class);
 	}
 
 	@Test
 	void initialize() {
-		turnInfoDAO.initialize(Team.WHITE);
+		turnInfoDAO.initialize("1", Team.WHITE);
 
-		assertThat(turnInfoDAO.findCurrent()).isEqualTo(Team.WHITE);
+		assertThat(turnInfoDAO.findCurrent("1")).isEqualTo(Team.WHITE);
 	}
 
 	@Test
 	void updateNext() {
-		turnInfoDAO.initialize(Team.WHITE);
-		turnInfoDAO.updateNext();
+		turnInfoDAO.initialize("1", Team.WHITE);
+		turnInfoDAO.updateNext("1");
 
-		assertThat(turnInfoDAO.findCurrent()).isEqualTo(Team.BLACK);
+		assertThat(turnInfoDAO.findCurrent("1")).isEqualTo(Team.BLACK);
 	}
 }
