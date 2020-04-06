@@ -4,6 +4,7 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     protected static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
@@ -69,5 +70,22 @@ public abstract class Piece {
     @Override
     public String toString() {
         return String.valueOf(team.getTeamRepresentation().apply(representation));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return representation == piece.representation &&
+                isAlive == piece.isAlive &&
+                Double.compare(piece.score, score) == 0 &&
+                team == piece.team &&
+                position.equals(piece.position);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(representation, team, isAlive, position, score);
     }
 }

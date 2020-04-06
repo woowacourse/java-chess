@@ -1,8 +1,10 @@
 package chess.domain;
 
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BoardTest {
@@ -33,5 +35,13 @@ public class BoardTest {
         assertThatThrownBy(() ->
                 board.movePiece(new Position("h1"), new Position("h3"))
         ).isInstanceOf(IllegalArgumentException.class).hasMessageContaining("경로");
+    }
+
+    @Test
+    @DisplayName("점수를 잘 계산하는지 확인")
+    void calculateTotalScore() {
+        Board board = new Board();
+        assertThat(board.calculateScoreByTeam(Team.WHITE)).isEqualTo(38);
+        assertThat(board.calculateScoreByTeam(Team.BLACK)).isEqualTo(38);
     }
 }
