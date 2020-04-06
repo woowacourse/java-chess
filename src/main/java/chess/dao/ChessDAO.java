@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.dao;
 
+import chess.domain.Pieces;
+import chess.domain.Position;
+import chess.domain.Turn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceGenerator;
 import chess.domain.piece.Team;

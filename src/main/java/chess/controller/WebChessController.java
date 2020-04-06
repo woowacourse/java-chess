@@ -1,7 +1,7 @@
 package chess.controller;
 
+import chess.dao.ChessDAO;
 import chess.domain.Board;
-import chess.domain.ChessDAO;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;

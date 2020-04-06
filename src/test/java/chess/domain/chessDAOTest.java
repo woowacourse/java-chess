@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.dao.ChessDAO;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
