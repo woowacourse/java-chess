@@ -9,118 +9,6 @@
     <title>체스게임!</title>
 </head>
 <body>
-<script>
-    $(document).ready(function () {
-        // 보드판 초기화
-        const rows = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-        const columns = [1, 2, 3, 4, 5, 6, 7, 8];
-
-        let board = document.createElement("div");
-        board.id = "board-container";
-        for (let i in columns.reverse()) {
-            let column = columns[i];
-            let div = document.createElement("div");
-            div.className = "row";
-            for (let j in rows) {
-                let row = rows[j];
-                let square = document.createElement("div");
-                square.className = "square";
-                square.id = row + column;
-                div.appendChild(square);
-            }
-            board.appendChild(div);
-        }
-
-        $("#wrap").append(board);
-
-        // piece 이미지 초기화
-        $.ajax({
-            type: 'get',
-            url: '/loadGame',
-            dataType: 'json',
-            error: initError,
-            success: printChessBoardAndStatus
-        });
-
-        // drag and drop event 추가
-        $('.square').on("dragstart", function (event) {
-            console.log("drag start");
-            event.originalEvent.dataTransfer.setData("from", event.currentTarget.id);
-        });
-
-        $('.square').on("dragover", function (event) {
-            event.preventDefault();
-        }).on("drop", function (event) {
-            console.log("drop");
-            console.dir(event);
-            event.preventDefault();
-            let from = event.originalEvent.dataTransfer.getData("from");
-            let to = event.currentTarget.id;
-            // let target = event.target.
-
-            // console.log("event: "+event);
-            // console.log("event.currentTarget: "+event.currentTarget);
-            // console.log("event currentTarget.children: "+event.currentTarget.children[0]);
-            // console.log(event.currentTarget.children);
-            // var children = event.currentTarget.children;
-            // console.log(children );
-            // console.log(children[0]);
-            // console.log(event.currentTarget.childElementCount );
-            // console.log(event.currentTarget.children.length);
-            // console.log(event.target.childNodes);
-            // console.log(event.target.childNodes.length);
-            // console.log(event.target.childNodes[0]);
-            // console.log(event.target.firstElementChild);
-
-            $.ajax({
-                type: 'get',
-                url: '/move',
-                dataType: 'json',
-                data: "from=" + from + "&to=" + to,
-                error: function (res) {
-                    alert(res.responseText);
-                },
-                success: printChessBoardAndStatus
-            });
-
-        });
-    });
-
-    function initError() {
-        alert("initError");
-    }
-
-    // 체스 기물 초기화
-    function printChessBoardAndStatus(response) {
-        let chessBoardDto = response["chessBoardDto"];
-        $(".piece").remove();
-
-        chessBoardDto['tiles'].forEach(function (item, index, array) {
-            var piece = document.createElement("img");
-            piece.src = "./img/piece/" + item.piece + ".png";
-            piece.id = item.piece;
-            piece.className = "piece";
-            $("#" + item.position).append(piece);
-        });
-
-        let scores = response["result"]["statuses"];
-        scores.forEach(function (item, index, array) {
-            if (item.player == "WHITE") {
-                $("#white-score").text(item.score);
-            }
-            if (item.player == "BLACK") {
-                $("#black-score").text(item.score);
-            }
-        });
-
-        let turn = response["turn"];
-        if (turn == "BALCK") {
-            $("#turn").text("turn: " + turn).css("color", "black");
-        } else if (turn == "WHITE") {
-            $("#turn").text("turn: " + turn).css("color", "white");
-        }
-    }
-</script>
 <div id="background">
     <img src="./img/full_background.png">
 </div>
@@ -140,7 +28,6 @@
         <span id="black-score"></span>
     </div>
 </div>
-​
-<!--<script src="JS/chess.js"></script>-->
 </body>
+<script src="./js/index.js"></script>
 </html>

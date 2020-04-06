@@ -1,8 +1,7 @@
 package chess.controller.dao;
 
 import chess.controller.dto.ChessBoardDto;
-import chess.controller.dto.Tile;
-import chess.domain.chesspiece.ChessPieceFactory;
+import chess.controller.dto.TileDto;
 import chess.domain.chesspiece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
@@ -19,12 +18,13 @@ public class ChessBoardDao {
     private Connection connection = new ConnectionDao().getConnection();
 
     public void saveInitChessBoard(ChessBoardDto chessBoardDto, int roomNumber) throws SQLException {
-        String query = "INSERT INTO chessboard VALUES (?,?,?)";
+        String query = "INSERT INTO chessboard VALUES (?,?,(SELECT piece_id FROM piece WHERE name=? AND player=?))";
         PreparedStatement pstmt = connection.prepareStatement(query);
-        for (Tile tile : chessBoardDto.getTiles()) {
+        for (TileDto tile : chessBoardDto.getTiles()) {
             pstmt.setInt(1, roomNumber);
             pstmt.setString(2, tile.getPosition());
-            pstmt.setString(3, tile.getPiece());
+            pstmt.setString(3, tile.getPieceName());
+            pstmt.setString(4, tile.getPiecePlayer());
             pstmt.executeUpdate();
         }
         pstmt.close();

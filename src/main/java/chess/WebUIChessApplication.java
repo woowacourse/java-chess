@@ -27,15 +27,22 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            return render(model, "main.html");
+        });
+
+        get("/game", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
+        });
+
+        get("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            gameDao.updateEndState(700);
+            return render(model, "end.html");
         });
 
         get("/loadGame", (req, res) -> {
             try {
-                //            String state = gameDao.findState(roomNumber);
-//            if (state.equals("playing")) {
-//                Map<Position, Piece> positionPieceMap = chessBoardDao.loadGamePlaying(700);
-//            } else if (state.equals("end")) {
                 ResponseDto responseDto = chessController.start(new RequestDto(Command.START));
                 gameDao.saveInitGame(responseDto);
                 int roomNumber = gameDao.findMaxRoomNumber();
@@ -57,18 +64,11 @@ public class WebUIChessApplication {
                 gameDao.updateGame(responseDto);
                 chessBoardDao.deleteChessBoard(700);
                 chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
-//                chessBoardDao.pieceMove(responseDto);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {
                 res.status(400);
                 return gson.toJson(e.getMessage());
             }
-        });
-
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            gameDao.updateEndState(700);
-            return render(model, "end.html");
         });
     }
 
