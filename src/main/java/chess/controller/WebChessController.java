@@ -17,9 +17,9 @@ import static spark.Spark.post;
 public class WebChessController {
     public static ChessBoard chessBoard = new ChessBoard();
     public static boolean blackTurn = false;
+    public static String notification;
 
     public static void run() {
-        //staticFileLocation("/templates");
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -34,20 +34,20 @@ public class WebChessController {
                 boardView.put(square.toString(), board.get(square));
             }
             model.put("chessBoard", boardView);
+            model.put("notification", notification);
             return render(model, "onGame.html");
         });
 
         post("/move", (req, res) -> {
-            try {
-                List<Square> sourceDestination = Arrays.asList(Square.of(req.queryParams("source")), Square.of(req.queryParams("destination")));
-                if (chessBoard.canMove(sourceDestination, blackTurn)) {
-                    chessBoard.movePiece(sourceDestination);
-                    blackTurn = !blackTurn;
-                }
-                res.redirect("/onGame");
-            } catch (Exception e) {
-                res.redirect("/onGame");
+            List<Square> sourceDestination = Arrays.asList(Square.of(req.queryParams("source")), Square.of(req.queryParams("destination")));
+            if (chessBoard.canMove(sourceDestination, blackTurn)) {
+                chessBoard.movePiece(sourceDestination);
+                blackTurn = !blackTurn;
+                notification = "";
+            } else {
+                notification = "움직일 수 없는 위치입니다";
             }
+            res.redirect("/onGame");
             return null;
         });
     }
