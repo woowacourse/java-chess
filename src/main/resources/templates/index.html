@@ -122,13 +122,14 @@
     </div>
     <!-- game_ui end -->
     <div class="game_info">
-        <h3>게임 명령 입력할 거야 {{turn}}</h3>
+        <h3>{{turn}}</h3>
         <form action="/move" class="game_interface" method="post">
             <input class="user_id" name="user_id" type="hidden"/>
-            <input class="command" name="source" type="text"/>
-            <input class="command" name="target" type="text"/>
-            <input id="moveBtn" type="submit" value="입력"/>
+            <input class="command" name="source" placeholder="출발지를 입력하세요. ex) a2" type="text"/>
+            <input class="command" name="target" placeholder="도착지를 입력하세요. ex) 32" type="text"/>
+            <input id="moveBtn" type="submit" value="이동"/>
         </form>
+        <br/><br/>
         <div class="score_board">
             <div class="score_box">
                 WHITE
