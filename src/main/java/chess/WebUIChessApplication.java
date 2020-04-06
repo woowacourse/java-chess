@@ -7,6 +7,7 @@ import chess.repository.MariaMovementRepository;
 import chess.service.ChessService;
 import chess.web.ChessController;
 
+import static chess.repository.ChessConnection.getConnection;
 import static spark.Spark.port;
 import static spark.Spark.staticFileLocation;
 
@@ -16,15 +17,10 @@ public class WebUIChessApplication {
         port(8080);
         staticFileLocation("/static");
 
-        ChessService chessService;
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
+        ChessService chessService = new ChessService(new InMemoryChessRepository(), new InMemoryMovementRepository());
+        if (getConnection() != null) {
             chessService = new ChessService(new MariaChessRepository(), new MariaMovementRepository());
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-            chessService = new ChessService(new InMemoryChessRepository(), new InMemoryMovementRepository());
         }
-
         final ChessController chessController = new ChessController(chessService);
         chessController.run();
     }

@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.List;
 
+import static chess.repository.ChessConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class MovementRepositoryTest {
@@ -20,13 +21,11 @@ class MovementRepositoryTest {
     @DisplayName("실제 디비 없는 경우 메모리로 테스트")
     @BeforeEach
     void setUp() {
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
+        chessRepository = new InMemoryChessRepository();
+        movementRepository = new InMemoryMovementRepository();
+        if (getConnection() != null) {
             chessRepository = new MariaChessRepository();
             movementRepository = new MariaMovementRepository();
-        } catch (ClassNotFoundException e) {
-            chessRepository = new InMemoryChessRepository();
-            movementRepository = new InMemoryMovementRepository();
         }
     }
 
