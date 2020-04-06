@@ -22,6 +22,7 @@ public class Board {
     private static final int WHITE_PIECES_Y = 0;
     private static final int WHITE_PAWNS_Y = 1;
     private static final int INITIAL_KING_COUNT = 2;
+    private static final String DELIMITER = "";
 
     private Map<Position, Piece> board;
 
@@ -56,7 +57,7 @@ public class Board {
     }
 
     public static Board from(String rawBoard) {
-        String[] pieces = rawBoard.split("");
+        String[] pieces = rawBoard.split(DELIMITER);
         Board board = new Board();
         for (int i = 0; i < pieces.length; i++) {
             int x = i % Position.END_X;
