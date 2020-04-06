@@ -1,0 +1,63 @@
+body {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin: 0;
+    padding: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+.board {
+    width: 500px;
+    height: 500px;
+    box-sizing: content-box;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    border: 1px solid;
+}
+
+.row {
+    display: flex;
+    flex: 1;
+    flex-direction: row;
+}
+
+.coordinates {
+    align-items: center;
+    flex: 1;
+}
+
+.white-box {
+    background: antiquewhite;
+}
+
+.black-box {
+    background: dimgray;
+}
+
+.coordinates > img {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+}
+
+.buttons {
+    display: flex;
+    max-width: 300px;
+    margin: 10px;
+    justify-content: space-around;
+}
+
+.button {
+    margin: 20px;
+    padding: 8px;
+    font-size: 1rem;
+    width: 80px;
+    text-align: center;
+}

@@ -1,10 +1,12 @@
 package chess.domain;
 
+import java.util.Map;
 import java.util.Objects;
 
 import chess.domain.board.Board;
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 public class GameManager {
 	private final Board board;
@@ -50,5 +52,13 @@ public class GameManager {
 
 	public Color getEnemyColor() {
 		return turn.reverse();
+	}
+
+	public java.lang.String getTurn() {
+		return turn.name();
+	}
+
+	public Map<Coordinates, Piece> getPieces() {
+		return board.getPieces();
 	}
 }
