@@ -9,19 +9,24 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class CommandLogDao {
+public class JDBCCommandLogDao {
+
     public void add(String command) throws SQLException {
+        Connection connection = getConnection();
         String query = "insert into commandlog (command) values (?)";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, command);
 
         preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 
     public List<String> getAllByOldOneFirst() throws SQLException {
+        Connection connection = getConnection();
+
         String query = "select command from commandlog order by execute_order asc";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<String> commands = new ArrayList<>();
@@ -29,10 +34,11 @@ public class CommandLogDao {
         while (resultSet.next()) {
             commands.add(resultSet.getString("command"));
         }
+        closeConnection(connection);
         return Collections.unmodifiableList(commands);
     }
 
-    public Connection getConnection() {
+    private Connection getConnection() {
         Connection connection = null;
         String serverAddress = "localhost:3306";
         String databaseName = "chess";
@@ -59,7 +65,7 @@ public class CommandLogDao {
         return connection;
     }
 
-    public void closeConnection(Connection connection) {
+    private void closeConnection(Connection connection) {
         if (connection == null) {
             throw new IllegalArgumentException("null connection 을 닫을 수 없습니다.");
         }

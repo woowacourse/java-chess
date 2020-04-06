@@ -7,7 +7,7 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
-import chess.dao.CommandLogDao;
+import chess.dao.JDBCCommandLogDao;
 import chess.domain.gamestatus.GameStatus;
 import chess.domain.gamestatus.NothingHappened;
 import chess.domain.piece.Piece;
@@ -25,7 +25,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIController {
 
     private static GameStatus gameStatus;
-    private static CommandLogDao commandLogDao = new CommandLogDao();
+    private static JDBCCommandLogDao commandLogDao = new JDBCCommandLogDao();
 
     public static void run() {
         try {

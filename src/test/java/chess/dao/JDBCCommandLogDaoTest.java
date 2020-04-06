@@ -6,12 +6,12 @@ import java.sql.Connection;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class CommandLogDaoTest {
-    private CommandLogDao commandLogDao;
+class JDBCCommandLogDaoTest {
+    private JDBCCommandLogDao commandLogDao;
 
     @BeforeEach
     public void setUp() {
-        commandLogDao = new CommandLogDao();
+        commandLogDao = new JDBCCommandLogDao();
     }
 
     @Test
