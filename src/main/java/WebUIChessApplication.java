@@ -10,6 +10,7 @@ import chess.progress.Progress;
 import converter.ChessGameConverter;
 import dao.BoardDAO;
 import dao.ChessGameDAO;
+import dao.ChessGamesDAO;
 import dao.PieceDAO;
 import dto.*;
 import chess.game.ChessGame;
@@ -32,6 +33,13 @@ public class WebUIChessApplication {
             return render(model, "start.html");
         });
 
+        get("/main/boards", (req, res) -> {
+            ChessGamesDAO chessGamesDAO = new ChessGamesDAO();
+            ArrayList<ChessGameDTO> all = chessGamesDAO.findAll();
+            ChessGamesDTO chessGamesDTO = new ChessGamesDTO(all);
+            return GSON.toJson(chessGamesDTO);
+        });
+
         get("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -39,7 +47,7 @@ public class WebUIChessApplication {
 
         get("/start/board", (req, res) -> {
             PieceDAO pieceDAO = new PieceDAO();
-            ArrayList<PieceVO> pieceVOs = pieceDAO.findByUserId(GAME_ID);
+            ArrayList<PieceVO> pieceVOs = pieceDAO.findBy(GAME_ID);
 
             ChessGameDAO chessGameDAO = new ChessGameDAO();
             ChessGameDTO chessGameDTO = chessGameDAO.findChessGameBy(GAME_ID);

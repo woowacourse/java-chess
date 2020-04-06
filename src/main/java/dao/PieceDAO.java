@@ -24,7 +24,7 @@ public class PieceDAO {
         return pstmt;
     }
 
-    public ArrayList<PieceVO> findByUserId(int gameId) throws SQLException {
+    public ArrayList<PieceVO> findBy(int gameId) throws SQLException {
         String query = "SELECT * FROM piece WHERE game_id = ?";
         PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
         pstmt.setInt(1, gameId);

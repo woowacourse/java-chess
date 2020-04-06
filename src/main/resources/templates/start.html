@@ -6,15 +6,44 @@
     <title>Java chess game start</title>
 </head>
 
-<body>
+<body onload="getChessGames();">
+<script>
+    function getChessGames() {
+        $.ajax({
+            url: "/main/boards",
+            type: "get",
+            success: function (data) {
+                var res = JSON.parse(data);
+                console.log(JSON.stringify(data));
+                console.log(res.chessGameDTOs.size());
+                // 아직 뭐 받는지 모른다.
+                // var jsonData = JSON.parse(data);
+                // for (var i = 0; i < jsonData.boardValue.length; i++) {
+                //     var piece = jsonData.boardValue[i];
+                //     $('#' + piece.location).html(main.variables.pieces[piece.pieceName].img);
+                //     $('#' + piece.location).attr('chess', piece.pieceName);
+                // }
+            },
+            error: function (errorThrown) {
+                alert(JSON.stringify(errorThrown));
+            },
+        });
+    }
+</script>
+<form action="/start" method="get">
+    <input class="start-button" type="submit" value="스타트"/>
+</form>
 
 <form action="/start" method="get">
 <input class="start-button" type="submit" value="스타트"/>
 </form>
 
+
+
 <!--<form action="/reset" method="get">-->
     <!--<input class="reset-button" type="submit" value="다시하기"/>-->
 <!--</form>-->
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </body>
 </html>
