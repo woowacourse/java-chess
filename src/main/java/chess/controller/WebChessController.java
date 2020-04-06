@@ -22,7 +22,7 @@ public class WebChessController {
 
     public void run() {
         port(8080);
-        staticFiles.location("/templates");
+        staticFiles.location("/static");
 
         this.chessBoardDAO = ChessBoardDAO.getInstance();
         if (chessBoardDAO.getBoard() == null) {
@@ -31,7 +31,7 @@ public class WebChessController {
             this.board = chessBoardDAO.getBoard();
         }
 
-        get("/start", (req, res) -> {
+        get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
