@@ -29,7 +29,7 @@ public class WebUIChessApplication {
     private static final ChessGameDao chessGameDao = new ChessGameDao();
 
     public static void main(String[] args) {
-        Spark.staticFileLocation("/assets");
+        Spark.staticFileLocation("assets");
 
         get("/games", (req, res) -> GSON.toJson(new ResponseDto(ResponseDto.SUCCESS, chessGameDao.selectAll())));
 
