@@ -71,7 +71,7 @@ class PlayingTest {
 	@Test
 	void turn() {
 		assertThat(playing.turn().getTeam()).isEqualTo(Team.WHITE);
-		playing.move(Position.of("a1"), Position.of("a3"));
+		playing.move(Position.of("a2"), Position.of("a4"));
 		assertThat(playing.turn().getTeam()).isEqualTo(Team.BLACK);
 	}
 }

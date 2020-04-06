@@ -5,15 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
-public class RepositoryConnector {
-
-	private final Connection connection;
-
-	public RepositoryConnector() {
-		this.connection = getConnection();
-	}
-
+public class MoveDao {
 	private static Connection getConnection() {
 		Connection con = null;
 		String server = "127.0.0.1:13306"; // MySQL 서버 주소
@@ -38,22 +33,24 @@ public class RepositoryConnector {
 		return con;
 	}
 
-	public ResultSet executeQuery(String query, String... inputs) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(query);
-		for (int i = 1; i <= inputs.length; i++) {
-			statement.setString(i, inputs[i - 1]);
-		}
-		return statement.executeQuery();
+	public void save(String source, String target, int gameId) throws SQLException {
+		String query = "insert into move(game_id, source, target) values (?, ?, ?)";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setInt(1, gameId);
+		pstmt.setString(2, source);
+		pstmt.setString(3, target);
+		pstmt.executeUpdate();
 	}
 
-	public int executeUpdate(String query, String... inputs) throws SQLException {
-		PreparedStatement statement = connection.prepareStatement(query, new String[] {"id"});
-		for (int i = 1; i <= inputs.length; i++) {
-			statement.setString(i, inputs[i - 1]);
+	public Map<String, String> findMovesByGameId(int gameId) throws SQLException {
+		String query = "select * from move where game_id = ?";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setInt(1, gameId);
+		ResultSet rs = pstmt.executeQuery();
+		Map<String, String> moves = new LinkedHashMap<>();
+		while (rs.next()) {
+			moves.put(rs.getString("source"), rs.getString("target"));
 		}
-		statement.executeUpdate();
-		ResultSet result = statement.getGeneratedKeys();
-		result.next();
-		return result.getInt(1);
+		return moves;
 	}
 }

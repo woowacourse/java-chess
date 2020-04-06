@@ -6,7 +6,7 @@
     <title>체스 게임</title>
     <style>
         .entire_div {
-            background-image: url("background.jpg");
+            background-image: url("../background.jpg");
             height: 100%;
         }
 
@@ -448,7 +448,7 @@
     }
     const findChessCell = (x, y) => document.querySelector(`[data-x="${x - 1}"][data-y="${y - 1}"]`)
 
-    fetch("http://localhost:4567/board/" +{{id}}).then((response) => response.json()).then((board) => {
+    fetch("http://localhost:4567/board/" + {{id}}).then((response) => response.json()).then((board) => {
         for (let i = 1; i < 9; i++) {
             for (let j = 1; j < 9; j++) {
                 findChessCell(i, j).innerHTML = templateBlank();
@@ -482,14 +482,19 @@
         console.log(e.target.parentElement.dataset.x + 1)
         console.log(e.target.parentElement.dataset.y + 1)
         console.log('drop')
-        fetch("http://localhost:4567/move/" +{{id}}, {
-            method: 'POST', body: JSON.stringify({
+        fetch("http://localhost:4567/move/" + {{id}},
+        {
+            method: 'POST', body
+        :
+            JSON.stringify({
                 sourceX: e.dataTransfer.getData('x'),
                 sourceY: e.dataTransfer.getData('y'),
                 targetX: (parseInt(e.target.parentElement.dataset.x) + 1) + "",
                 targetY: (parseInt(e.target.parentElement.dataset.y) + 1) + "",
             })
-        }).then((response) => response.json()).then((board) => {
+        }
+    ).
+        then((response) => response.json()).then((board) => {
             for (let i = 1; i < 9; i++) {
                 for (let j = 1; j < 9; j++) {
                     findChessCell(i, j).innerHTML = templateBlank();
@@ -499,13 +504,15 @@
                 let position = findChessCell(board[i].x, board[i].y);
                 position.innerHTML = createTemplate(board[i].team, board[i].unit);
             }
-            fetch("http://localhost:4567/turn/"+{{id}}).then((response) => response.json().then((turn) => {
+            fetch("http://localhost:4567/turn/" + {{id}}).
+            then((response) => response.json().then((turn) => {
                 console.log(turn.name);
-                document.querySelector(".turn-info").innerText = turn.name + '의 차례입니다.'
+                document.querySelector(".turn-info").innerText = turn.turn.name + '의 차례입니다.'
             }))
-            fetch("http://localhost:4567/score/"+{{id}}).then((response) => response.json().then((scores) => {
-                let blackScore = scores.blackScore;
-                let whiteScore = scores.whiteScore;
+            fetch("http://localhost:4567/score/" + {{id}}).
+            then((response) => response.json().then((scores) => {
+                let blackScore = scores.score.blackScore;
+                let whiteScore = scores.score.whiteScore;
                 console.log("동작하고 있음.")
                 document.querySelector(".chess-info").innerText = '화이트 : ' + whiteScore + ' 블랙 : ' + blackScore;
             }))

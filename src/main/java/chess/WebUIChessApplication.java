@@ -8,9 +8,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import chess.dao.ChessGameDao;
-import chess.dao.GamesDto;
-import chess.dao.MoveDto;
-import chess.dao.RepositoryConnector;
+import chess.dao.GamesDao;
+import chess.dao.MoveDao;
 import chess.domain.Status;
 import chess.domain.position.Position;
 import chess.dto.ScoreDto;
@@ -33,7 +32,12 @@ public class WebUIChessApplication {
 		});
 
 		get("/init", (req, res) -> {
-			return render(new HashMap<>(), "initialBoard.html");
+			return render(new HashMap<>(), "userNames.html");
+		});
+
+		get("/games", (req, res) ->{
+			GamesDao gamesDao = new GamesDao();
+			return render(gamesDao.everyGames(), "gameList.html");
 		});
 
 		get("/new_game/:id", (req, res) -> {
@@ -44,8 +48,8 @@ public class WebUIChessApplication {
 
 		post("/users", (req, res) -> {
 			Map map = gson.fromJson(req.body(), Map.class);
-			GamesDto gamesDto = new GamesDto(new RepositoryConnector());
-			int gameId = gamesDto.createGame(String.valueOf(map.get("user1")), String.valueOf(map.get("user2")));
+			GamesDao gamesDao = new GamesDao();
+			int gameId = gamesDao.createGame(String.valueOf(map.get("user1")), String.valueOf(map.get("user2")));
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("id", gameId);
 			return gson.toJson(model);
@@ -53,7 +57,7 @@ public class WebUIChessApplication {
 
 		get("/board/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao(new RepositoryConnector());
+			ChessGameDao gameDao = new ChessGameDao();
 			ChessGame game = gameDao.findById(id);
 			List<UnitDto> unitList = game.board().getBoard().values().stream()
 				.map(piece -> new UnitDto(
@@ -67,24 +71,28 @@ public class WebUIChessApplication {
 
 		get("/score/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao(new RepositoryConnector());
+			ChessGameDao gameDao = new ChessGameDao();
 			ChessGame game = gameDao.findById(id);
 			Status status = game.status();
 			ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
-			return gson.toJson(score);
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("score", score);
+			return gson.toJson(model);
 		});
 
 		get("/turn/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao(new RepositoryConnector());
+			ChessGameDao gameDao = new ChessGameDao();
 			ChessGame game = gameDao.findById(id);
 			TurnDto turnDto = new TurnDto(game.turn());
-			return gson.toJson(turnDto);
+			HashMap<String, Object> model = new HashMap<>();
+			model.put("turn", turnDto);
+			return gson.toJson(model);
 		});
 
 		post("/move/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao(new RepositoryConnector());
+			ChessGameDao gameDao = new ChessGameDao();
 			ChessGame game = gameDao.findById(id);
 
 			Map<String, String> map = gson.fromJson(req.body(), Map.class);
@@ -95,14 +103,11 @@ public class WebUIChessApplication {
 				.map(piece -> new UnitDto(piece.getPosition().getColumn().intValue(),
 					piece.getPosition().getRow().intValue(), piece.getTeam().name(), piece.getSymbol()))
 				.collect(Collectors.toList());
-			MoveDto moveDto = new MoveDto(new RepositoryConnector());
+			MoveDao moveDao = new MoveDao();
+
 			int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
 			int targetX = Integer.parseInt(map.get("targetX")) + 96;
-			String sourceY = (char)(sourceX) + map.get("sourceY");
-			String targetY = (char)(targetX) + map.get("targetY");
-			System.out.println(sourceY);
-			System.out.println(targetY);
-			moveDto.save(sourceY, targetY, id);
+			moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
 			return gson.toJson(unitList);
 		});
 	}

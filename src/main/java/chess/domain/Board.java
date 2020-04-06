@@ -13,17 +13,14 @@ import chess.domain.position.Position;
 import chess.exception.InvalidTurnException;
 
 public class Board {
-	private static Map<Team, Boolean> kingDead = new HashMap<>();
+	private Map<Team, Boolean> kingDead = new HashMap<>();
 
 	private final Map<Position, Piece> board;
 
-	static {
-		kingDead.put(Team.BLACK, false);
-		kingDead.put(Team.WHITE, false);
-	}
-
 	public Board(Map<Position, Piece> board) {
 		this.board = new TreeMap<>(board);
+		kingDead.put(Team.BLACK, false);
+		kingDead.put(Team.WHITE, false);
 	}
 
 	public boolean isKingDead() {
