@@ -46,6 +46,15 @@
             <button id="move_button" type="submit">MOVE</button>
         </form>
         {{/if}}
+
+        <div>여기가 {{playLastGame}}</div>
+        <form action="/playing" method="post">
+            <button>저장하기</button>
+        </form>
+
+        <form action="/playing" method="post">
+            <button>불러오기</button>
+        </form>
     </div>
 </div>
 </body>
