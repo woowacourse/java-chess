@@ -95,11 +95,12 @@
     </table>
 </article>
 <article class="king__caught">
-    {{#is_king_caught}} {{color}}가 왕을 잡았습니다!!! {{/is_king_caught}}
+    {{#is_king_caught}} {{piece_color.color}}가 왕을 잡았습니다!!! {{/is_king_caught}}
 </article>
 <article class="chess__status">
     <div id="chess__status__area">
-        {{#statuses}} {{color}}의 점수 : {{score}}
+        {{#statuses}}
+        {{turn}}의 점수 : {{score}}
         <br/>
         {{/statuses}}
     </div>

@@ -12,7 +12,7 @@
 </header>
 <article class="chessgame__turn">
     <div id="chessgame__turn__area">
-        {{#turn}} {{color}}턴입니다. {{/turn}}
+        {{#turns}} {{color}}턴입니다. {{/turns}}
     </div>
 </article>
 <article class="chessboard">
@@ -101,7 +101,7 @@
 </article>
 <article class="chess__status">
     <div id="chess__status__area">
-        {{#statuses}} {{color}}의 점수 : {{score}}
+        {{#statuses}} {{turn}}의 점수 : {{score}}
         <br/>
         {{/statuses}}
     </div>

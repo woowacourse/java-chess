@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.chessBoard.dto.ChessBoardDto;
 import chess.domain.chessGame.ChessCommand;
 import chess.domain.chessGame.ChessGame;
+import chess.web.dto.ChessBoardDto;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -40,7 +40,7 @@ public class WebChessController {
 		ChessBoardDto chessBoardDto = chessGame.getChessBoardDto();
 
 		Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoardDto());
-		model.put("turn", chessGame.getCurrentTurnColor());
+		model.put("turns", chessGame.getCurrentTurnPieceColorDto());
 		model.put("statuses", chessGame.getChessStatusDtos());
 		return render(model, "chess.html");
 	}
@@ -69,7 +69,7 @@ public class WebChessController {
 
 		Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoardDto());
 		model.put("is_king_caught", chessGame.isKingCaught());
-		model.put("color", chessGame.getCurrentTurnColor().getColor());
+		model.put("piece_color", chessGame.getCurrentTurnPieceColorDto());
 		model.put("statuses", chessGame.getChessStatusDtos());
 
 		return render(model, "result.html");

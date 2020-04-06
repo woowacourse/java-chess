@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 
-import chess.domain.chessBoard.dto.ChessBoardDto;
 import chess.domain.chessGame.ChessStatus;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.King;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.MoveDirection;
 import chess.domain.position.Position;
+import chess.web.dto.ChessBoardDto;
 
 public class ChessBoard {
 

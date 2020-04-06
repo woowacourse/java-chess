@@ -1,4 +1,4 @@
-package chess.domain.chessBoard.dto;
+package chess.web.dto;
 
 import static java.util.stream.Collectors.*;
 

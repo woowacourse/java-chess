@@ -1,4 +1,4 @@
-package chess.domain.chessGame.dto;
+package chess.web.dto;
 
 import static org.assertj.core.api.Assertions.*;
 

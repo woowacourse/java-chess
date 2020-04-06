@@ -6,8 +6,6 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.dto.ChessBoardDto;
-import chess.domain.chessGame.dto.ChessStatusDto;
 import chess.domain.chessGame.gameState.ChessEndState;
 import chess.domain.chessGame.gameState.GameState;
 import chess.domain.chessGame.gameState.KingCaughtState;
@@ -15,6 +13,9 @@ import chess.domain.chessGame.gameState.WhiteTurnState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 import chess.util.ChessBoardRenderer;
+import chess.web.dto.ChessBoardDto;
+import chess.web.dto.ChessStatusDto;
+import chess.web.dto.PieceColorDto;
 
 public class ChessGame {
 
@@ -123,6 +124,10 @@ public class ChessGame {
 		return Arrays.stream(PieceColor.values())
 			.map(pieceColor -> ChessStatusDto.of(pieceColor, chessStatus.getStatusOf(pieceColor)))
 			.collect(Collectors.toList());
+	}
+
+	public PieceColorDto getCurrentTurnPieceColorDto() {
+		return PieceColorDto.of(this.gameState.getPieceColor());
 	}
 
 }
