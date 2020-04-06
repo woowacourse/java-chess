@@ -30,7 +30,7 @@ class BoardDAOTest {
     @DisplayName("보드 전체 삭제 테스트")
     @Test
     public void deleteBoard() throws Exception {
-        boardDao.deleteBoard();
+        boardDao.clearBoard();
     }
 
     @DisplayName("Piece 추가 테스트")

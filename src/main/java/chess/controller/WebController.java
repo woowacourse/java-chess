@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domains.Record;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
-import chess.service.WebService;
+import chess.domains.position.Position;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,9 +14,9 @@ public class WebController {
         Map<String, Object> model = new HashMap<>();
         model.put("records", records);
         model.put("pieces", pieceCodes);
-        model.put("turn", printTurn(WebService.turn(board)));
-        model.put("white_score", WebService.calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", WebService.calculateScore(board, PieceColor.BLACK));
+        model.put("turn", printTurn(turn(board)));
+        model.put("white_score", calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", calculateScore(board, PieceColor.BLACK));
 
         return model;
     }
@@ -73,4 +73,17 @@ public class WebController {
         return turn + "의 순서입니다.";
     }
 
+    public static String turn(Board board) {
+        return board.getTeamColor().name();
+    }
+
+    public static void move(Board board, String source, String target) {
+        Position sourcePosition = Position.ofPositionName(source);
+        Position targetPosition = Position.ofPositionName(target);
+        board.move(sourcePosition, targetPosition);
+    }
+
+    public static double calculateScore(Board board, PieceColor pieceColor) {
+        return board.calculateScore(pieceColor);
+    }
 }

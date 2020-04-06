@@ -2,13 +2,12 @@ package chess;
 
 import chess.controller.WebController;
 import chess.dao.BoardDAO;
+import chess.dao.RecordDAO;
 import chess.domains.Record;
 import chess.domains.board.Board;
-import chess.service.WebService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,28 +19,35 @@ public class WebUIChessApplication {
         staticFileLocation("/public");
 
         Board board = new Board();
-        List<Record> records = new ArrayList<>();
         BoardDAO boardDAO = new BoardDAO();
+        RecordDAO recordDAO = new RecordDAO();
 
         get("/", (req, res) -> {
+            board.initialize();
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
         get("/start", (req, res) -> {
-            board.initialize();
-            boardDAO.deleteBoard();
+            boardDAO.clearBoard();
             boardDAO.addBoard(board.getBoard());
 
             Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
-            records.clear();
-            records.add(new Record("start", ""));
+
+            recordDAO.clearRecord();
+            recordDAO.addRecord(new Record("start", ""));
+
+            List<Record> records = recordDAO.readRecords();
 
             Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
             return render(model, "index.html");
         });
 
         get("/resume", (req, res) -> {
+            board.initialize();
+            List<Record> records = recordDAO.readRecords();
+            board.recoverRecords(records);
+
             Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
             Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
 
@@ -52,17 +58,20 @@ public class WebUIChessApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            Record move = new Record("move " + source + ", " + target, "");
+            Record move = new Record("move " + source + " " + target, "");
+
             try {
-                WebService.move(board, source, target);
+                WebController.move(board, source, target);
             } catch (Exception e) {
                 move.setErrorMsg(e.getMessage());
             }
-            records.add(move);
 
-            boardDAO.deleteBoard();
+            recordDAO.addRecord(move);
+
+            boardDAO.clearBoard();
             boardDAO.addBoard(board.getBoard());
 
+            List<Record> records = recordDAO.readRecords();
             Map<String, String> pieceCodes = WebController.convertView(boardDAO.showPieces());
             Map<String, Object> model = WebController.makeModel(board, records, pieceCodes);
 

@@ -1,5 +1,6 @@
 package chess.domains.board;
 
+import chess.domains.Record;
 import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
@@ -50,7 +51,7 @@ public class Board {
         }
 
         exchange(source, target);
-        teamColor = teamColor.changeTeam();
+        this.teamColor = this.teamColor.changeTeam();
     }
 
     private void validRoute(List<Position> route) {
@@ -128,6 +129,16 @@ public class Board {
             return sameColumnPiecesCount;
         }
         return 0;
+    }
+
+    public void recoverRecords(List<Record> records) {
+        for (Record record : records) {
+            String recordMessage = record.getRecord();
+            String[] recordMessages = recordMessage.split(" ");
+            if (recordMessage.startsWith("move") && record.getErrorMsg().equals("")) {
+                this.move(Position.ofPositionName(recordMessages[1]), Position.ofPositionName(recordMessages[2]));
+            }
+        }
     }
 
     public PieceColor getTeamColor() {

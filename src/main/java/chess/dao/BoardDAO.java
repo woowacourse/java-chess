@@ -74,10 +74,12 @@ public class BoardDAO {
         return board;
     }
 
-    public void deleteBoard() throws SQLException {
+    public void clearBoard() throws SQLException {
         String query = "TRUNCATE board";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
 
         pstmt.executeUpdate();
     }
+
+
 }

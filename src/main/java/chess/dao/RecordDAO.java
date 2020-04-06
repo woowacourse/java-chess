@@ -3,6 +3,8 @@ package chess.dao;
 import chess.domains.Record;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RecordDAO {
     public Connection getConnection() {
@@ -67,4 +69,25 @@ public class RecordDAO {
         pstmt.executeUpdate();
     }
 
+    public void clearRecord() throws SQLException {
+        String query = "TRUNCATE record";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+        pstmt.executeUpdate();
+    }
+
+    public List<Record> readRecords() throws SQLException {
+        String query = "SELECT * FROM record";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        List<Record> records = new ArrayList<>();
+
+        while (rs.next()) {
+            records.add(new Record(rs.getString("record"), rs.getString("errorMsg")));
+        }
+
+        return records;
+    }
 }
