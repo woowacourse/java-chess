@@ -9,7 +9,11 @@ public class WebUIChessApplication {
 		staticFiles.location("/static");
 		WebChessController webChessController = new WebChessController();
 
-		get("/game", webChessController::startGame);
+		get("/start_game", webChessController::startGame);
+
+		get("/continue_game", webChessController::continueGame);
+
+		get("/show", webChessController::showGame);
 
 		post("/game", webChessController::runGame);
 
