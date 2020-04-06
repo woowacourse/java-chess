@@ -4,7 +4,7 @@ import chess.controller.ChessManager;
 import chess.controller.command.Command;
 import chess.controller.dto.ScoreDto;
 import chess.controller.dto.Tile;
-import chess.database.ChessBoardDao;
+import chess.database.ChessCommandDao;
 import chess.domain.piece.Team;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,7 +18,7 @@ import static spark.Spark.*;
 
 public class WebUIChessApplication {
 
-    private static ChessBoardDao chessBoardDao;
+    private static ChessCommandDao chessCommandDao = new ChessCommandDao();
 
     public static void main(String[] args) {
         staticFiles.location("/public");
@@ -33,14 +33,10 @@ public class WebUIChessApplication {
             return render(model, "chessGameStart.html");
         });
 
-//        post("/playing", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "chessGame.html");
-//        });
-
         //play new game
         get("/playing:false", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            initializeDatabase();
             model.put("chessPieces", tiles);
             model.put("currentTeam", currentTeam);
             return render(model, "chessGame.html");
@@ -49,7 +45,13 @@ public class WebUIChessApplication {
         //play last game
         get("/playing:true", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", tiles);
+            List<String> commands = chessCommandDao.selectCommands();
+            for (String command : commands) {
+                Command.MOVE.apply(chessManager, command);
+            }
+            System.out.println("playing true aaa");
+            List<Tile> tiles2 = chessManager.getTileDto().getTiles();
+            model.put("chessPieces", tiles2);
             model.put("playLastGame", "이전게임");
             model.put("currentTeam", currentTeam);
             return render(model, "chessGame.html");
@@ -61,6 +63,7 @@ public class WebUIChessApplication {
             String errorMessage = null;
             try {
                 Command.MOVE.apply(chessManager, cmd);
+                saveToDatabase(cmd);
             } catch (Exception e) {
                 errorMessage = "이동할 수 없는 곳입니다. 다시 입력해주세요.";
             }
@@ -95,21 +98,19 @@ public class WebUIChessApplication {
         });
 
         //end
-        post("/end", (req, res) -> {
+        get("/end", (req, res) -> {
             chessManager.end();
-            List<Tile> tiles4 = chessManager.getTileDto().getTiles();
-            saveToDatabase(tiles4);
             Map<String, Object> model = new HashMap<>();
             return render(model, "chessGameEnd.html");
         });
     }
 
-    public static void saveToDatabase(List<Tile> tiles) throws SQLException {
-        chessBoardDao.getConnection();
-        chessBoardDao = new ChessBoardDao();
-        for (Tile tile : tiles) {
-            chessBoardDao.addBoard(tile.getPosition().toString(), tile.getPiece().toString());
-        }
+    private static void initializeDatabase() throws SQLException {
+        chessCommandDao.deleteCommands();
+    }
+
+    public static void saveToDatabase(String command) throws SQLException {
+        chessCommandDao.addCommand(command);
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

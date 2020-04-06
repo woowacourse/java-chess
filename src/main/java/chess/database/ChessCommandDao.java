@@ -1,8 +1,10 @@
 package chess.database;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class ChessBoardDao {
+public class ChessCommandDao {
     public Connection getConnection() {
         Connection connection = null;
         String server = "localhost:13306";
@@ -13,7 +15,7 @@ public class ChessBoardDao {
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); //어떤 드라이버에 연결할지
-       } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException e) {
             System.err.println(" !! JDBC Driver load 오류 : " + e.getMessage());
             e.printStackTrace();
         }
@@ -39,34 +41,31 @@ public class ChessBoardDao {
         }
     }
 
-    public void addBoard(String position, String piece) throws SQLException {
-        String query = "INSERT INTO board VALUES (?, ?)";
+    public void addCommand(String cmd) throws SQLException {
+        String query = "INSERT INTO commands VALUES (?)";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, position);
-        preparedStatement.setString(2, piece);
+        preparedStatement.setString(1, cmd);
         preparedStatement.executeUpdate();
     }
 
-    public ChessBoard findByPosition(String position) throws SQLException {
-        String query = "SELECT * FROM board WHERE position = ?";
+    public void deleteCommands() throws SQLException {
+        String query = "TRUNCATE commands";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, position);
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        if (!resultSet.next()) {
-            return null;
-        }
-
-        return new ChessBoard(
-                resultSet.getString("position"),
-                resultSet.getString("piece"));
+        preparedStatement.execute();
     }
 
-    public void updatePiece(String position, String piece) throws SQLException {
-        String query = "UPDATE board SET piece = ? where position = ?";
+    public List<String> selectCommands() throws SQLException {
+        String query = "SELECT * FROM commands";
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, piece);
-        preparedStatement.setString(2, position);
-        preparedStatement.executeUpdate();
+        ResultSet rs = preparedStatement.executeQuery();
+
+//        if (!rs.next()) {
+//            return null;
+//        }
+
+        List<String> commands = new ArrayList<>();
+        commands.add("move a2 a4");
+        commands.add("move a7 a5");
+        return commands;
     }
 }
