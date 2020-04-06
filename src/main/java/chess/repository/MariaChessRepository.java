@@ -1,79 +1,124 @@
 package chess.repository;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import chess.entity.ChessGame;
+import chess.piece.Team;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
-public class MariaChessRepository {
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:3306"; // MySQL 서버 주소
-        String database = "woowa-chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+import static chess.repository.ChessConnection.getConnection;
 
-        try {
-            Class.forName("org.mariadb.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+public class MariaChessRepository implements ChessRepository {
+
+    @Override
+    public ChessGame save(ChessGame entity) throws SQLException {
+        String query =
+                "INSERT INTO CHESSGAME " +
+                        "(active, winner, createdTime) " +
+                        "VALUES (?, ?, ?)";
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        preparedStatement.setBoolean(1, entity.isActive());
+        preparedStatement.setString(2, entity.getWinner().name());
+        LocalDateTime createdTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+        preparedStatement.setTimestamp(3, Timestamp.valueOf(createdTime));
+
+        preparedStatement.executeQuery();
+        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
+
+        if (!generatedKeys.next()) {
+            return entity;
         }
 
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
+        return new ChessGame(generatedKeys.getLong("id"), createdTime, entity);
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+    @Override
+    public Optional<ChessGame> findById(Long id) throws SQLException {
+        String query =
+                "SELECT * " +
+                        "FROM CHESSGAME " +
+                        "WHERE id = ?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setLong(1, id);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        if (!resultSet.next()) {
+            return Optional.empty();
         }
+        ChessGame chessGame = collectEntity(resultSet);
+
+        return Optional.of(chessGame);
     }
 
-//
-//    public void addUser(User user) throws SQLException {
-//        String query = "INSERT INTO user VALUES (?, ?)";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, user.getUserId());
-//        pstmt.setString(2, user.getName());
-//        pstmt.executeUpdate();
-//    }
-//
-//    public User findByUserId(String userId) throws SQLException {
-//        String query = "SELECT * FROM user WHERE user_id = ?";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, userId);
-//        ResultSet rs = pstmt.executeQuery();
-//
-//        if (!rs.next()) return null;
-//
-//        return new User(
-//                rs.getString("user_id"),
-//                rs.getString("name"));
-//    }
-//
-//    public void deleteAll() throws SQLException {
-//        String query = "DELETE FROM user";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.executeUpdate();
-//    }
-//
-//    public int updateUser(String id, String name) throws SQLException {
-//        String query = "UPDATE user SET name = ? WHERE user_id = ?";
-//        PreparedStatement pstmt = getConnection().prepareStatement(query);
-//        pstmt.setString(1, name);
-//        pstmt.setString(2, id);
-//        return pstmt.executeUpdate();
-//    }
+    private ChessGame collectEntity(ResultSet resultSet) throws SQLException {
+        Long rowId = resultSet.getLong("id");
+        boolean active = resultSet.getBoolean("active");
+        Team winningTeam = Team.valueOf(resultSet.getString("winner"));
+        LocalDateTime createdTime = resultSet.getTimestamp("createdTime").toLocalDateTime();
+        return new ChessGame(rowId, winningTeam, active, createdTime);
+    }
 
+    @Override
+    public void update(ChessGame entity) throws SQLException {
+        String query =
+                "UPDATE CHESSGAME " +
+                        "SET active = ? , winner = ?" +
+                        "WHERE id = ?";
+
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setBoolean(1, entity.isActive());
+        preparedStatement.setString(2, entity.getWinner().name());
+        preparedStatement.setLong(3, entity.getId());
+
+        preparedStatement.executeUpdate();
+    }
+
+    @Override
+    public List<ChessGame> findAll() throws SQLException {
+        String query =
+                "SELECT * " +
+                        "FROM CHESSGAME";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<ChessGame> chessGames = new ArrayList<>();
+        while (resultSet.next()) {
+            chessGames.add(collectEntity(resultSet));
+        }
+        return chessGames;
+    }
+
+    @Override
+    public List<ChessGame> findAllByActive() throws SQLException {
+        String query =
+                "SELECT * " +
+                        "FROM CHESSGAME " +
+                        "WHERE active = ?";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.setBoolean(1, true);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        List<ChessGame> chessGames = new ArrayList<>();
+        while (resultSet.next()) {
+            ChessGame chessGame = collectEntity(resultSet);
+            chessGames.add(chessGame);
+        }
+        return chessGames;
+    }
+
+    @Override
+    public void deleteAll() throws SQLException {
+        String query = "DELETE FROM CHESSGAME";
+        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        preparedStatement.executeUpdate();
+    }
 }

@@ -1,5 +1,7 @@
 package chess.entity;
 
+import java.time.LocalDateTime;
+
 public class Movement extends BaseEntity implements Comparable<Movement> {
 
     private Long chessId;
@@ -13,7 +15,21 @@ public class Movement extends BaseEntity implements Comparable<Movement> {
         this.targetKey = entity.targetKey;
     }
 
+    public Movement(Long autoIncrement, Movement entity, LocalDateTime createdTime) {
+        super(autoIncrement, createdTime);
+        this.chessId = entity.getChessId();
+        this.sourceKey = entity.sourceKey;
+        this.targetKey = entity.targetKey;
+    }
+
     public Movement(Long chessId, String sourceKey, String targetKey) {
+        this.chessId = chessId;
+        this.sourceKey = sourceKey;
+        this.targetKey = targetKey;
+    }
+
+    public Movement(Long id, Long chessId, String sourceKey, String targetKey, LocalDateTime createdTime) {
+        super(id, createdTime);
         this.chessId = chessId;
         this.sourceKey = sourceKey;
         this.targetKey = targetKey;

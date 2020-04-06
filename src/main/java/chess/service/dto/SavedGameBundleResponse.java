@@ -10,7 +10,6 @@ public class SavedGameBundleResponse {
 
     public SavedGameBundleResponse(List<ChessGame> chessEntities) {
         this.savedGameResponses = chessEntities.stream()
-                .filter(ChessGame::isActive)
                 .map(SavedGameResponse::new)
                 .collect(Collectors.toList());
     }

@@ -17,6 +17,7 @@ import chess.service.dto.SavedGameBundleResponse;
 import chess.service.dto.SurrenderRequest;
 import chess.service.dto.TilesDto;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -31,7 +32,7 @@ public class ChessService {
 
     private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
 
-    public MoveResponse move(MoveRequest moveRequest) {
+    public MoveResponse move(MoveRequest moveRequest) throws SQLException {
         ChessGame chessGame = chessRepository.findById(moveRequest.getId())
                 .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", moveRequest.getId())));
 
@@ -48,12 +49,12 @@ public class ChessService {
         return new MoveResponse(chessManager, moveRequest, deadPiece);
     }
 
-    private void restore(MoveRequest moveRequest, ChessManager chessManager) {
+    private void restore(MoveRequest moveRequest, ChessManager chessManager) throws SQLException {
         List<Movement> movements = movementRepository.findAllByChessId(moveRequest.getId());
         chessManager.moveAll(movements);
     }
 
-    public ChessBoardResponse save() {
+    public ChessBoardResponse save() throws SQLException {
         ChessGame chessGame = new ChessGame(true);
         chessGame = chessRepository.save(chessGame);
 
@@ -61,15 +62,15 @@ public class ChessService {
         return new ChessBoardResponse(chessGame.getId(), chessManager);
     }
 
-    public SavedGameBundleResponse loadAllSavedGames() {
-        return new SavedGameBundleResponse(chessRepository.findAll());
+    public SavedGameBundleResponse loadAllSavedGames() throws SQLException {
+        return new SavedGameBundleResponse(chessRepository.findAllByActive());
     }
 
     public TilesDto getEmptyBoard() {
         return EMPTY_BOARD;
     }
 
-    public ChessBoardResponse loadSavedGame(Long targetId) {
+    public ChessBoardResponse loadSavedGame(Long targetId) throws SQLException {
         chessRepository.findById(targetId)
                 .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", targetId)));
 
@@ -80,7 +81,7 @@ public class ChessService {
         return new ChessBoardResponse(targetId, chessManager);
     }
 
-    public void surrender(SurrenderRequest surrenderRequest) {
+    public void surrender(SurrenderRequest surrenderRequest) throws SQLException {
         ChessGame chessGame = chessRepository.findById(surrenderRequest.getGameId())
                 .orElseThrow(() -> new NoSuchElementException(String.format("존재하지 않는 게임(%d)입니다.", surrenderRequest.getGameId())));
 

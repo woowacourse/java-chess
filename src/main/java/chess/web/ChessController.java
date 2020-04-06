@@ -22,7 +22,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
-import static spark.Spark.delete;
 import static spark.Spark.exception;
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -85,12 +84,6 @@ public class ChessController {
             SurrenderRequest surrenderRequest = gson.fromJson(request.body(), SurrenderRequest.class);
             chessService.surrender(surrenderRequest);
             return DefaultResponse.ACCEPT();
-        });
-
-        //end
-        delete("/end", (request, response) -> {
-
-            return null;
         });
 
         exception(IllegalArgumentException.class, new CanNotMoveExceptionHandler());

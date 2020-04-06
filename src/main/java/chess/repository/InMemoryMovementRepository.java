@@ -2,6 +2,7 @@ package chess.repository;
 
 import chess.entity.Movement;
 
+import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -26,5 +27,10 @@ public class InMemoryMovementRepository implements MovementRepository {
                 .stream()
                 .filter(entity -> entity.equalGameId(chessId))
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public void deleteAll() throws SQLException {
+        memory.clear();
     }
 }

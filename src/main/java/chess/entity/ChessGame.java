@@ -5,12 +5,11 @@ import chess.piece.Team;
 import java.time.LocalDateTime;
 
 public class ChessGame extends BaseEntity {
-    private Team winner;
+    private Team winner = Team.NOTHING;
     private boolean active;
 
     public ChessGame(LocalDateTime createdTime, boolean active) {
         super(createdTime);
-        this.winner = Team.NOTHING;
         this.active = active;
     }
 
@@ -29,6 +28,12 @@ public class ChessGame extends BaseEntity {
         super(id, now);
         this.winner = entity.winner;
         this.active = entity.active;
+    }
+
+    public ChessGame(Long id, Team winner, boolean active, LocalDateTime createdTime) {
+        super(id, createdTime);
+        this.winner = winner;
+        this.active = active;
     }
 
     public Team getWinner() {
