@@ -2,6 +2,8 @@ package chess;
 
 import chess.repository.InMemoryChessRepository;
 import chess.repository.InMemoryMovementRepository;
+import chess.repository.MariaChessRepository;
+import chess.repository.MariaMovementRepository;
 import chess.service.ChessService;
 import chess.web.ChessController;
 
@@ -14,7 +16,15 @@ public class WebUIChessApplication {
         port(8080);
         staticFileLocation("/static");
 
-        final ChessService chessService = new ChessService(new InMemoryChessRepository(), new InMemoryMovementRepository());
+        ChessService chessService;
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            chessService = new ChessService(new MariaChessRepository(), new MariaMovementRepository());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+            chessService = new ChessService(new InMemoryChessRepository(), new InMemoryMovementRepository());
+        }
+
         final ChessController chessController = new ChessController(chessService);
         chessController.run();
     }

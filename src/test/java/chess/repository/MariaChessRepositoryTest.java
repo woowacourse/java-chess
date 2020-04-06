@@ -3,6 +3,7 @@ package chess.repository;
 import chess.entity.ChessGame;
 import chess.piece.Team;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +15,18 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MariaChessRepositoryTest {
 
-    private ChessRepository chessRepository = new MariaChessRepository();
+    private ChessRepository chessRepository;
+
+    @DisplayName("실제 디비 없는 경우 메모리로 테스트")
+    @BeforeEach
+    void setUp() {
+        try {
+            Class.forName("org.mariadb.jdbc.Driver");
+            chessRepository = new MariaChessRepository();
+        } catch (ClassNotFoundException e) {
+            chessRepository = new InMemoryChessRepository();
+        }
+    }
 
     @AfterEach
     void tearDown() throws SQLException {
