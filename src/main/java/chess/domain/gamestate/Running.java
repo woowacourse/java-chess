@@ -25,21 +25,8 @@ public class Running extends Started {
     public GameState move(String keyFromPosition, String keyToPosition) {
         board.move(keyFromPosition, keyToPosition, teamInTurn);
 
-
         try {
-            PieceDAO pieceDAO = JdbcTemplatePieceDAO.getInstance();
-
-            Map<Position, Placeable> positionToPiece = board.getPositionToPiece();
-            for (Position position : positionToPiece.keySet()) {
-                Placeable piece = positionToPiece.get(position);
-
-                PieceDTO pieceDTO = new PieceDTO();
-                pieceDTO.setPosition(position);
-                pieceDTO.setPieceType(piece.getPieceType());
-                pieceDTO.setTeam(piece.getTeam());
-
-                pieceDAO.updatePiece(pieceDTO);
-            }
+            updateBoardToDB();
         } catch (SQLException e) {
             System.err.println("SQL 오류 : " + e.getErrorCode());
         }
@@ -51,6 +38,22 @@ public class Running extends Started {
         teamInTurn = teamInTurn.opposite();
 
         return this;
+    }
+
+    private void updateBoardToDB() throws SQLException {
+        PieceDAO pieceDAO = JdbcTemplatePieceDAO.getInstance();
+
+        Map<Position, Placeable> positionToPiece = board.getPositionToPiece();
+        for (Position position : positionToPiece.keySet()) {
+            Placeable piece = positionToPiece.get(position);
+
+            PieceDTO pieceDTO = new PieceDTO();
+            pieceDTO.setPosition(position);
+            pieceDTO.setPieceType(piece.getPieceType());
+            pieceDTO.setTeam(piece.getTeam());
+
+            pieceDAO.updatePiece(pieceDTO);
+        }
     }
 
     @Override

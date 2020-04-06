@@ -33,26 +33,26 @@ public class BoardFactory {
 
         try {
             positionAndPiece = createBoardSource();
-
-            for (Position position : positionAndPiece.keySet()) {
-                Placeable piece = positionAndPiece.get(position);
-
-                PieceDTO pieceDTO = new PieceDTO();
-                pieceDTO.setPosition(position);
-                pieceDTO.setPieceType(piece.getPieceType());
-                pieceDTO.setTeam(piece.getTeam());
-
-                pieceDAO.addPiece(pieceDTO);
-            }
-
+            createBoardToDB(pieceDAO, positionAndPiece);
         } catch (SQLException e) {
             System.err.println("SQL 오류 : " + e.getErrorCode());
             throw new RuntimeException("SQL 오류가 발생하였습니다.");
         }
 
         return new Board(createBoardSource());
+    }
 
+    private static void createBoardToDB(PieceDAO pieceDAO, Map<Position, Placeable> positionAndPiece) throws SQLException {
+        for (Position position : positionAndPiece.keySet()) {
+            Placeable piece = positionAndPiece.get(position);
 
+            PieceDTO pieceDTO = new PieceDTO();
+            pieceDTO.setPosition(position);
+            pieceDTO.setPieceType(piece.getPieceType());
+            pieceDTO.setTeam(piece.getTeam());
+
+            pieceDAO.addPiece(pieceDTO);
+        }
     }
 
     private static Map<Position, Placeable> createBoardSource() {
