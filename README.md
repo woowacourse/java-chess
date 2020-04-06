@@ -26,6 +26,7 @@
 
 ## 데이터베이스 정보
 - DB 이름 : chess
+- DB 서버주소 : localhost
 - DB 권한 user 이름 : chess
 - DB 권한 user 패스워드 : chess
 - 테이블
