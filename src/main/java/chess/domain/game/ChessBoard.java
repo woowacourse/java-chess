@@ -30,7 +30,7 @@ public class ChessBoard {
         validateIsPlayer(source, target);
 
         if (!movable(from, to)) {
-            throw new IllegalStateException("이동할 수 없습니다.");
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
 
         chessBoard.put(to, source);

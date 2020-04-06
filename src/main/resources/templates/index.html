@@ -5,6 +5,7 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <style>
         * {
@@ -244,7 +245,7 @@
                 dataType: 'json',
                 data: "from=" + from + "&to=" + to,
                 error: function (res) {
-                    alert(res.responseText);
+                    swal(res.responseText);
                 },
                 success: printChessBoardAndStatus
             });
@@ -253,7 +254,7 @@
     });
 
     function initError() {
-        alert("initError");
+        swal("initError");
     }
 
     // 체스 기물 초기화
@@ -270,6 +271,8 @@
         });
 
         let scores = response["result"]["statuses"];
+        console.log("Score");
+        console.dir(response["result"]);
         scores.forEach(function (item, index, array) {
             if (item.player == "WHITE") {
                 $("#white-score").text(item.score);
