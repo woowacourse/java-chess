@@ -1,10 +1,14 @@
 package chess;
 
+import chess.piece.Piece;
+import chess.position.Position;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardDAO {
 
@@ -34,14 +38,26 @@ public class BoardDAO {
         if (!rs.next()) {
             return null;
         }
-        return makeBoard(rs);
+        return new Board(toPieces(rs));
     }
 
-    private Board makeBoard(ResultSet rs) {
+    private Map<Position, Piece> toPieces(ResultSet rs) throws SQLException {
+        Map<Position, Piece> pieces = new HashMap<>();
+        Position position;
+        Piece piece;
+        do {
+            position = Position.of(rs.getString("position"));
+            char symbol = rs.getString("piece").charAt(0);
+            boolean hasMoved = rs.getBoolean("hasMoved");
+            System.out.println(String.format("받아온 값 위치:%s, 심볼:%c, 움직였는지:%b", position.getKey(), symbol, hasMoved));
+            piece = Piece.of(symbol, hasMoved);
+            System.out.println(String.format("받아온 값으로 만든 Piece값 심볼:%c, 움직였는지:%b", piece.getSymbol(), piece.getHasMoved()));
+            pieces.put(position, piece);
+        } while (rs.next());
 
-        //TODO
-        return new Board(Collections.emptyMap());
+        return pieces;
     }
+
 
 //    public void addUser(User user) throws SQLException {
 //        String query = "INSERT INTO user VALUES (?, ?)";

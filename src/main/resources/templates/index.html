@@ -5,113 +5,29 @@
     <title>체스게임 made by 그래</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
-
 </head>
 
 <body>
-    <h1>CHESS</h1>
+    <h1>핵꿀잼 체스</h1>
     <div class="container">
         <div class="chess-board">
-            <table>
-                <tr>
-                    <th class="bright-tile"></th>
-                    <th class="dark-tile"></th>
-                    <th class="bright-tile"></th>
-                    <th class="dark-tile"></th>
-                    <th class="bright-tile"></th>
-                    <th class="dark-tile"></th>
-                    <th class="bright-tile"></th>
-                    <th class="dark-tile"></th>
-                </tr>
-                <tr>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                </tr>
-                <tr>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                </tr>
-                <tr>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                </tr>
-                <tr>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                </tr>
-                <tr>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                </tr>
-                <tr>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                </tr>
-                <tr>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                    <td class="dark-tile"></td>
-                    <td class="bright-tile"></td>
-                </tr>
-            </table>
+            {{{board}}}
         </div>
-        <div class="message">
-            <textarea readonly></textarea>
+        <div class="source-and-target">
+            <div class="source-and-target-message">
+            출발지와 목적지를 입력해주세요.
+            </div>
+            <form class="source-and-target-inputs" method="POST" action="/">
+                <input type="text" name="source" placeholder="a1">
+                ->
+                <input type="text" name="destination" placeholder="a2">
+                <input type="submit" value="이동">
+            </form>
         </div>
         <div class="buttons">
             <input type="button" name="new-game" value="새 게임">
             <input type="button" name="score" value="점수 보기">
         </div>
     </div>
-
-
-
-
-
-
-
-
-    <script type="text/javascript" src="practice.js"></script>
 </body>
-
 </html>
