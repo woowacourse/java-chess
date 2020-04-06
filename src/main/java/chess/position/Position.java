@@ -41,7 +41,7 @@ public class Position {
         return CACHE.get(lowerCaseKey);
     }
 
-    private static String getKey(File file, Rank rank) {
+    public static String getKey(File file, Rank rank) {
         return file.getName() + rank.getName();
     }
 

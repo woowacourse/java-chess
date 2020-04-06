@@ -21,7 +21,7 @@ public class RookTest {
 	@ParameterizedTest
 	@CsvSource(value = {"BLACK,R", "WHITE,r"})
 	void getSymbolTest(Team team, String expected) {
-		Piece piece = new Rook(team);
+		Piece piece = new Piece(team, PieceType.ROOK);
 		assertThat(piece.getSymbol()).isEqualTo(expected);
 	}
 }

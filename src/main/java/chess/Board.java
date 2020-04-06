@@ -2,9 +2,8 @@ package chess;
 
 import chess.exception.EmptySourceException;
 import chess.exception.InvalidMovementException;
-import chess.piece.EmptyPiece;
-import chess.piece.King;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import chess.piece.Team;
 import chess.position.Direction;
 import chess.position.Position;
@@ -13,6 +12,7 @@ import chess.strategy.PiecesInitStrategy;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static chess.piece.Team.NONE;
 import static chess.piece.Team.WHITE;
 
 public class Board {
@@ -51,7 +51,7 @@ public class Board {
     }
 
     private boolean isEnemyKing(Position position) {
-        return getTeamOf(position).isNotSame(this.turn) && pieces.get(position) instanceof King;
+        return getTeamOf(position).isNotSame(this.turn) && pieces.get(position).isKing();
     }
 
     public boolean isKilledIfMoves(Position source, Position target) {
@@ -62,7 +62,7 @@ public class Board {
 
     public void move(Position source, Position target) {
         Piece piece = pieces.get(source);
-        pieces.put(source, new EmptyPiece());
+        pieces.put(source, new Piece(NONE, PieceType.NONE));
         pieces.put(target, piece);
     }
 
@@ -118,7 +118,7 @@ public class Board {
 
     private Position findPositionOfKing(Team turn) {
         return pieces.keySet().stream()
-                .filter(position -> pieces.get(position) instanceof King)
+                .filter(position -> pieces.get(position).isKing())
                 .filter(position -> pieces.get(position).isSameTeam(turn))
                 .findFirst()
                 .orElseThrow(NoSuchElementException::new);

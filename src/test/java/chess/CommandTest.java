@@ -8,7 +8,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class CommandTest {
-
 	@DisplayName("유효하지 않는 명령어 입력시 예외 발생")
 	@ParameterizedTest
 	@ValueSource(strings = {"hello", "star!"})

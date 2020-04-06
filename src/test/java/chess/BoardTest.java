@@ -2,8 +2,7 @@ package chess;
 
 import chess.exception.InvalidPositionException;
 import chess.piece.Piece;
-import chess.piece.Rook;
-import chess.piece.Team;
+import chess.piece.PieceType;
 import chess.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -17,6 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Stream;
 
+import static chess.piece.Team.BLACK;
 import static chess.position.File.A;
 import static chess.position.File.H;
 import static chess.position.Rank.*;
@@ -25,12 +25,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BoardTest {
     private Board board;
-    private Rook rook;
+    private Piece rook;
 
     @BeforeEach
     void setup() {
         Map<Position, Piece> pieces = new HashMap<>();
-        rook = new Rook(Team.BLACK);
+        rook = new Piece(BLACK, PieceType.ROOK);
         pieces.put(Position.of(A, ONE), rook);
         board = new Board(pieces);
     }

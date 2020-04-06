@@ -34,13 +34,13 @@ public class ConsoleOutputView {
 
     public static void printBoard(Map<Position, Piece> pieces) {
         StringBuilder builder = new StringBuilder();
-        for (Rank rank : ReverseOrderOfRankValuesExceptNone()) {
+        for (Rank rank : reverseOrderOfRankValuesExceptNone()) {
             builder.append(informationOf(pieces, rank));
         }
         System.out.println(builder);
     }
 
-    public static List<Rank> ReverseOrderOfRankValuesExceptNone() {
+    public static List<Rank> reverseOrderOfRankValuesExceptNone() {
         return Arrays.stream(Rank.valuesExceptNone())
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());

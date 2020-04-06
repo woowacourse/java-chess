@@ -21,7 +21,7 @@ public class QueenTest {
 	@ParameterizedTest
 	@CsvSource(value = {"BLACK,Q", "WHITE,q"})
 	void getSymbolTest(Team team, String expected) {
-		Piece piece = new Queen(team);
+		Piece piece = new Piece(team, PieceType.QUEEN);
 		assertThat(piece.getSymbol()).isEqualTo(expected);
 	}
 }

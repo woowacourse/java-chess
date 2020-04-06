@@ -21,7 +21,7 @@ public class KingTest {
 	@ParameterizedTest
 	@CsvSource(value = {"BLACK,K", "WHITE,k"})
 	void getSymbolTest(Team team, String expected) {
-		Piece piece = new King(team);
+		Piece piece = new Piece(team, PieceType.KING);
 		assertThat(piece.getSymbol()).isEqualTo(expected);
 	}
 }

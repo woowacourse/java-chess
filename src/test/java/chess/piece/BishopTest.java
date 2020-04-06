@@ -23,7 +23,7 @@ public class BishopTest {
 	@ParameterizedTest
 	@CsvSource(value = {"BLACK,B", "WHITE,b"})
 	void getSymbolTest(Team team, String expected) {
-		Piece piece = new Bishop(team);
+		Piece piece = new Piece(team, PieceType.BISHOP);
 		assertThat(piece.getSymbol()).isEqualTo(expected);
 	}
 }

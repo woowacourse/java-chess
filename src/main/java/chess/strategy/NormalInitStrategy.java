@@ -8,6 +8,7 @@ import chess.position.Rank;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.piece.PieceType.*;
 import static chess.piece.Team.BLACK;
 import static chess.piece.Team.WHITE;
 import static chess.position.File.*;
@@ -18,29 +19,29 @@ public class NormalInitStrategy implements PiecesInitStrategy {
     public Map<Position, Piece> init() {
         Map<Position, Piece> pieces = new HashMap<>();
 
-        pieces.put(Position.of(A, EIGHT), new Rook(BLACK));
-        pieces.put(Position.of(B, EIGHT), new Knight(BLACK));
-        pieces.put(Position.of(C, EIGHT), new Bishop(BLACK));
-        pieces.put(Position.of(D, EIGHT), new Queen(BLACK));
-        pieces.put(Position.of(E, EIGHT), new King(BLACK));
-        pieces.put(Position.of(F, EIGHT), new Bishop(BLACK));
-        pieces.put(Position.of(G, EIGHT), new Knight(BLACK));
-        pieces.put(Position.of(H, EIGHT), new Rook(BLACK));
+        pieces.put(Position.of(A, EIGHT), new Piece(BLACK, ROOK));
+        pieces.put(Position.of(B, EIGHT), new Piece(BLACK, KNIGHT));
+        pieces.put(Position.of(C, EIGHT), new Piece(BLACK, BISHOP));
+        pieces.put(Position.of(D, EIGHT), new Piece(BLACK, QUEEN));
+        pieces.put(Position.of(E, EIGHT), new Piece(BLACK, KING));
+        pieces.put(Position.of(F, EIGHT), new Piece(BLACK, BISHOP));
+        pieces.put(Position.of(G, EIGHT), new Piece(BLACK, KNIGHT));
+        pieces.put(Position.of(H, EIGHT), new Piece(BLACK, ROOK));
 
-        pieces.put(Position.of(A, ONE), new Rook(WHITE));
-        pieces.put(Position.of(B, ONE), new Knight(WHITE));
-        pieces.put(Position.of(C, ONE), new Bishop(WHITE));
-        pieces.put(Position.of(D, ONE), new Queen(WHITE));
-        pieces.put(Position.of(E, ONE), new King(WHITE));
-        pieces.put(Position.of(F, ONE), new Bishop(WHITE));
-        pieces.put(Position.of(G, ONE), new Knight(WHITE));
-        pieces.put(Position.of(H, ONE), new Rook(WHITE));
+        pieces.put(Position.of(A, ONE), new Piece(WHITE, ROOK));
+        pieces.put(Position.of(B, ONE), new Piece(WHITE, KNIGHT));
+        pieces.put(Position.of(C, ONE), new Piece(WHITE, BISHOP));
+        pieces.put(Position.of(D, ONE), new Piece(WHITE, QUEEN));
+        pieces.put(Position.of(E, ONE), new Piece(WHITE, KING));
+        pieces.put(Position.of(F, ONE), new Piece(WHITE, BISHOP));
+        pieces.put(Position.of(G, ONE), new Piece(WHITE, KNIGHT));
+        pieces.put(Position.of(H, ONE), new Piece(WHITE, ROOK));
 
         for (File file : File.valuesExceptNone()) {
-            pieces.put(Position.of(file, SEVEN), new Pawn(BLACK));
-            pieces.put(Position.of(file, TWO), new Pawn(WHITE));
+            pieces.put(Position.of(file, SEVEN), new Piece(BLACK, PAWN));
+            pieces.put(Position.of(file, TWO), new Piece(WHITE, PAWN));
             Rank.valuesRangeClosed(THREE, SIX)
-                    .forEach(rank -> pieces.put(Position.of(file, rank), new EmptyPiece()));
+                    .forEach(rank -> pieces.put(Position.of(file, rank), new Piece(Team.NONE, PieceType.NONE)));
         }
         return pieces;
     }

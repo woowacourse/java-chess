@@ -1,7 +1,7 @@
 package chess;
 
-import chess.piece.Pawn;
 import chess.piece.Piece;
+import chess.piece.PieceType;
 import chess.piece.Team;
 import chess.position.File;
 import chess.position.Position;
@@ -50,7 +50,7 @@ public class Scores {
 
         double scoreOfFile = rawScoreOfFile;
         if (countOfPawn >= MINIMUM_COUNT_OF_LOWER_SCORE_PAWN) {
-            scoreOfFile = rawScoreOfFile - Pawn.getLowerScore() * countOfPawn;
+            scoreOfFile = rawScoreOfFile - PieceType.getPawnLowerScore() * countOfPawn;
         }
         return scoreOfFile;
     }
