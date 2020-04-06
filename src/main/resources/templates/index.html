@@ -122,7 +122,8 @@
     </div>
     <!-- game_ui end -->
     <div class="game_info">
-        <h3>{{turn}}</h3>
+        <h3 id="turn">{{turn}}</h3>
+        <h3 id="end">{{end}}</h3>
         <form action="/move" class="game_interface" method="post">
             <input class="user_id" name="user_id" type="hidden"/>
             <input class="command" name="source" placeholder="출발지를 입력하세요. ex) a2" type="text"/>

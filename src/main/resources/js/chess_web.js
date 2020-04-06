@@ -1,9 +1,18 @@
 $(document).ready(function () {
+    var end = document.getElementById("end").innerText;
+    var moveBtn = document.getElementById("moveBtn");
+    var startBtn = document.getElementById("startBtn");
+
+    if (end) {
+        moveBtn.setAttribute("disabled", "disabled");
+        alert(end);
+    }
+
     if (window.location.pathname !== "/") {
-        document.getElementById("startBtn").innerHTML = ("재시작");
+        startBtn.innerHTML = ("재시작");
     }
     if (window.location.pathname === "/") {
-        document.getElementById("moveBtn").setAttribute("disabled", "disabled");
+        moveBtn.setAttribute("disabled", "disabled");
     }
     document.getElementById("startBtn").onclick = function () {
         window.location.href = '/start';
