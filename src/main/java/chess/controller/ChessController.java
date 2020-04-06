@@ -6,7 +6,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-	private State state = State.BEFORESTART;
+	private State state = State.BEFORE_START;
 
 	public void run() {
 		OutputView.printGameStartInstruction();

@@ -14,8 +14,8 @@ public class Knight extends Piece {
 
 	public Knight(Position position, Team team) {
 		super(position, team);
-		this.representation = 'N';
-		this.score = 2.5;
+		this.representation = Arrays.asList('♘', '♞');
+		this.score = Rule.KNIGHT_SCORE;
 	}
 
 	@Override

@@ -138,29 +138,9 @@
         </table>
     </div>
     <div class="controller">
-        <div class="move-chess-piece">
-            <form action="/move" method="post">
-                <div class="title"> 말 이동</div>
-                <br/>
-                <div class="user-input-form">
-                    <div> 출발</div>
-                    <div class="text-input">
-                        <input id="source" name="source" type="text"/>
-                    </div>
-                </div>
-                <div class="user-input-form">
-                    <div> 도착</div>
-                    <div class="text-input">
-                        <input id="destination" name="destination" type="text"/>
-                    </div>
-                </div>
-                <input type="submit">
-            </form>
-        </div>
         <div class="show-score">
-            <div class="title"> 점수 보기</div>
-            <div class="user-input-form">흰색 : {{teamWhiteScore}} 점</div>
-            <div class="user-input-form">검은색: {{teamBlackScore}} 점</div>
+            <div class="title"> 게임 종료</div>
+            <div class="user-input-form"> {{winner}}팀 승리!</div>
         </div>
         <div class="initialize">
             <div class="title"> 초기화</div>

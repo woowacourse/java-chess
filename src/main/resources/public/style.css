@@ -1,21 +1,30 @@
+@import url(//fonts.googleapis.com/earlyaccess/hanna.css);
+
+.hanna * {
+    font-family: 'Hanna', fantasy;
+}
+
+body {
+    font-family: Hanna, fantasy;
+}
+
 .game-board {
-    width: 50%;
-    margin: 0 auto;
+    margin: 70px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
 }
 
 .chessboard {
-    padding-top: 70px;
     text-align: center;
-}
-
-.chess-row {
-
 }
 
 .chess-cell {
     height: 80px;
     width: 80px;
     border: 0;
+    font-weight: 900;
+    font-size: 44px;
 }
 
 .light {
@@ -30,12 +39,14 @@
     height: 80px;
     width: 10px;
     color: gray;
+    font-size: 14px;
 }
 
 .edge {
     height: 10px;
     width: 80px;
     color: gray;
+    font-size: 14px;
 }
 
 .corner {
@@ -43,8 +54,70 @@
     width: 10px;
 }
 
+/***************************/
+
+.controller {
+    width: 260px;
+    position: relative;
+}
+
 .command-shell {
-    margin: 0 auto;
-    /*align-items: center;*/
-    padding-top: 60px;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.game-start {
+    height: 70px;
+    background: none;
+}
+
+.game-start-a {
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+    font-family: Hanna, fantasy;
+}
+
+/*********/
+
+.title {
+    text-align: left;
+    font-size: 28px;
+    height: 35px;
+}
+
+.move-chess-piece {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+}
+
+.user-input-form {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.show-score {
+    position: absolute;
+    top: 400px;
+    left: 50px;
+}
+
+.initialize {
+    position: absolute;
+    top: 600px;
+    left: 50px;
+    text-decoration: none;
+    color: black;
+    font-family: Hanna, fantasy;
+}
+
+.initialize-button {
+    font-size: 40px;
+    text-decoration: none;
+    color: black;
+    font-family: Hanna, fantasy;
 }

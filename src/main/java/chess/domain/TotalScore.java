@@ -7,7 +7,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public class TotalScore {
-	public static final double PAWN_DISADVANTAGE = 0.5;
+	private static final double PAWN_DISADVANTAGE = 0.5;
 	private final List<Piece> pieces;
 	private final double totalScore;
 

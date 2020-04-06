@@ -1,21 +1,22 @@
 package chess.domain.piece;
 
+import java.util.List;
 import java.util.function.Function;
 
 public enum Team {
-	WHITE(Character::toLowerCase, "흰색"),
-	BLACK(Character::toUpperCase, "검은색");
+	WHITE(a -> a.get(0), "흰색"),
+	BLACK(a -> a.get(1), "검은색");
 
-	private final Function<Character, Character> teamRepresentation;
+	private final Function<List<Character>, Character> teamRepresentation;
 	private final String name;
 
-	Team(Function<Character, Character> teamRepresentation, String name) {
+	Team(Function<List<Character>, Character> teamRepresentation, String name) {
 		this.teamRepresentation = teamRepresentation;
 		this.name = name;
 	}
 
-	public Function<Character, Character> getTeamRepresentation() {
-		return teamRepresentation;
+	public static char getRepresentation(Piece piece) {
+		return piece.getTeam().teamRepresentation.apply(piece.getRepresentations());
 	}
 
 	public String getName() {

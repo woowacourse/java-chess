@@ -48,11 +48,17 @@ public class Pieces {
 
 	public void move(Position source, Position destination) {
 		Piece sourcePiece = this.pieces.get(source);
+		sourcePiece.move(destination);
 		this.pieces.put(destination, sourcePiece);
 		this.pieces.remove(source);
 	}
 
 	public void kill(Piece destinationPiece) {
+		destinationPiece.kill();
 		this.pieces.values().remove(destinationPiece);
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return pieces;
 	}
 }

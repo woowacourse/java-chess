@@ -49,6 +49,12 @@ public class PositionTest {
 	@MethodSource("inBetweenSource")
 	void inBetweenTest(Position source, Position destination, List<Position> positions) {
 		assertThat(source.getPositionsInBetween(destination)).containsAll(positions);
+	}
 
+	@Test
+	@DisplayName("toString 테스트")
+	void toString1() {
+		Position position = new Position("a1");
+		assertThat(position.toString()).isEqualTo("a1");
 	}
 }

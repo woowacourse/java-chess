@@ -84,6 +84,11 @@ public class Position {
 	}
 
 	@Override
+	public String toString() {
+		return String.valueOf((char)(x + 'a' - 1)) + y;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o)
 			return true;

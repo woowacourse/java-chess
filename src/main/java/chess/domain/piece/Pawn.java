@@ -15,16 +15,18 @@ public class Pawn extends Piece {
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
-		this.representation = 'P';
-		this.score = 1;
+		this.representation = Arrays.asList('♙', '♟');
+		this.score = Rule.PAWN_SCORE;
 	}
 
 	@Override
 	public void validateMove(Position destination) {
-		if (this.team == Team.WHITE)
+		if (this.team == Team.WHITE) {
 			validateMoveByDirection(destination, LOWER_TEAM_POSSIBLE_DIRECTIONS);
-		if (this.team == Team.BLACK)
+		}
+		if (this.team == Team.BLACK) {
 			validateMoveByDirection(destination, UPPER_TEAM_POSSIBLE_DIRECTIONS);
+		}
 	}
 
 	private void validateMoveByDirection(Position destination, List<Direction> possibleDirections) {

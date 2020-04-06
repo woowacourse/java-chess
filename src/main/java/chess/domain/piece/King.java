@@ -13,8 +13,8 @@ public class King extends Piece {
 
 	public King(Position position, Team team) {
 		super(position, team);
-		this.representation = 'K';
-		this.score = 0;
+		this.representation = Arrays.asList('♔', '♚');
+		this.score = Rule.KING_SCORE;
 	}
 
 	public void validateMove(Position destination) {

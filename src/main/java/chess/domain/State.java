@@ -3,7 +3,7 @@ package chess.domain;
 import java.util.Arrays;
 
 public enum State {
-	BEFORESTART(""),
+	BEFORE_START(""),
 	RUNNING("start"),
 	FINISHED("end");
 

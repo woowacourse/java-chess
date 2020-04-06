@@ -16,7 +16,7 @@ public class TeamTest {
 	void teamRepresentationDisplayTest() {
 		Piece blackPawn = new Pawn(new Position("a2"), Team.BLACK);
 		Piece whiteKnight = new Knight(new Position("d6"), Team.WHITE);
-		assertThat(blackPawn.toString()).isEqualTo("P");
-		assertThat(whiteKnight.toString()).isEqualTo("n");
+		assertThat(blackPawn.toString()).isEqualTo("♟");
+		assertThat(whiteKnight.toString()).isEqualTo("♘");
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Rule;
 import chess.domain.piece.Team;
 import chess.exception.IllegalMoveException;
 import chess.exception.NullPieceException;
@@ -27,10 +28,10 @@ public class Board {
 		Piece sourcePiece = pieces.findByPosition(source);
 		validateSource(sourcePiece);
 		Piece destinationPiece = pieces.findByPosition(destination);
-		if (sourcePiece.getRepresentation() == 'P') {
+		if (sourcePiece.getScore() == Rule.PAWN_SCORE) {
 			validatePawnDestination(source, destination);
 		}
-		if (!(sourcePiece.getRepresentation() == 'N')) {
+		if (!(sourcePiece.getScore() == Rule.KNIGHT_SCORE)) {
 			validateNoObstacle(source, destination);
 		}
 		if (destinationPiece != null) {

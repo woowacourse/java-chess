@@ -1,11 +1,13 @@
 package chess.domain.piece;
 
+import java.util.List;
+
 import chess.domain.Position;
 
 public abstract class Piece {
 	protected static final String ILLEGAL_MOVE = "말이 움직일 수 없는 자리입니다.";
 
-	protected char representation;
+	protected List<Character> representation;
 	protected final Team team;
 	protected boolean isAlive;
 	protected Position position;
@@ -28,10 +30,6 @@ public abstract class Piece {
 		this.isAlive = false;
 	}
 
-	public boolean isSamePosition(Position otherPosition) {
-		return this.position.equals(otherPosition);
-	}
-
 	public boolean isSameTeam(Piece destinationPiece) {
 		return this.team == destinationPiece.team;
 	}
@@ -52,12 +50,12 @@ public abstract class Piece {
 		return team;
 	}
 
-	public char getRepresentation() {
+	public List<Character> getRepresentations() {
 		return representation;
 	}
 
 	@Override
 	public String toString() {
-		return String.valueOf(team.getTeamRepresentation().apply(representation));
+		return String.valueOf(Team.getRepresentation(this));
 	}
 }
