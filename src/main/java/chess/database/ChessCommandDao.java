@@ -59,13 +59,17 @@ public class ChessCommandDao {
         PreparedStatement preparedStatement = getConnection().prepareStatement(query);
         ResultSet rs = preparedStatement.executeQuery();
 
-//        if (!rs.next()) {
-//            return null;
-//        }
+        if (!rs.next()) {
+            return null;
+        }
 
         List<String> commands = new ArrayList<>();
-        commands.add("move a2 a4");
-        commands.add("move a7 a5");
+        commands.add(rs.getString("command"));
+
+        while (rs.next()) {
+            commands.add(rs.getString("command"));
+            System.out.println("커맨드는 " + rs.getString("command"));
+        }
         return commands;
     }
 }

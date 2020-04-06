@@ -49,7 +49,6 @@ public class WebUIChessApplication {
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }
-            System.out.println("playing true aaa");
             List<Tile> tiles2 = chessManager.getTileDto().getTiles();
             model.put("chessPieces", tiles2);
             model.put("playLastGame", "이전게임");
