@@ -60,16 +60,7 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public void deletePiece(String user_id, Position position) throws SQLException {
-        String query = "DELETE FROM SAVED WHERE USER_ID = ? AND POSITION = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, user_id);
-        pstmt.setString(2, position.name());
-        pstmt.executeUpdate();
-    }
-
-    @Override
-    public void deleteSaved(String user_id) throws SQLException {
+    public void deleteSavedInfo(String user_id) throws SQLException {
         String query = "DELETE FROM SAVED WHERE USER_ID = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, user_id);

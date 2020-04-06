@@ -63,10 +63,10 @@ public class WebUIChessApplication {
             String target = req.queryParams("target");
 
             webService.move(board, "guest", source, target);
-            boolean gameOver = webService.isGameOver(board);
 
+            boolean gameOver = webService.isGameOver(board);
             if (gameOver) {
-                webService.deleteSaved();
+                webService.deleteSaved("guest");
                 String winningMsg = webService.winningMsg(board);
                 model.put("end", winningMsg);
                 model.put("pieces", webService.convertPieces(board));

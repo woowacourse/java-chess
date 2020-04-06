@@ -29,12 +29,19 @@ public class MoveHistoryDao {
     }
 
     public Optional<String> figureLastTurn(String user_id) throws SQLException {
-        String query = "SELECT TEAM FROM MOVE_HISTORY WHERE USER_ID = ?";
+        String query = "SELECT TEAM FROM MOVE_HISTORY WHERE USER_ID = ? ORDER BY MOVES DESC LIMIT 1";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setString(1, user_id);
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) return Optional.empty();
         return Optional.ofNullable(rs.getString("TEAM"));
+    }
+
+    public void deleteMoveHistory(String user_id) throws SQLException {
+        String query = "DELETE FROM MOVE_HISTORY WHERE USER_ID = ?";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, user_id);
+        pstmt.executeUpdate();
     }
 
 }

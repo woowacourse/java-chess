@@ -65,19 +65,6 @@ class PieceDaoTest {
         assertThat(pieceName).isEqualTo("r");
     }
 
-    @DisplayName("saved 테이블에서 row 삭제")
-    @Test
-    void name4() throws SQLException {
-        Map<Position, Piece> saved = new HashMap<>();
-        saved.put(Position.ofPositionName("a2"), new Pawn(PieceColor.WHITE));
-        PieceDao dao = new TestPieceDao("guest", saved);
-
-        dao.deletePiece("guest", Position.ofPositionName("a2"));
-
-        String pieceName = dao.findPieceNameByPosition("guest", Position.ofPositionName("a2"));
-        assertThat(pieceName).isNull();
-    }
-
     @DisplayName("saved 테이블에서 saved 기록 전체 삭제")
     @Test
     void name5() throws SQLException {
@@ -85,7 +72,7 @@ class PieceDaoTest {
         saved.put(Position.ofPositionName("a2"), new Pawn(PieceColor.WHITE));
         PieceDao dao = new TestPieceDao("guest", saved);
 
-        dao.deleteSaved("guest");
+        dao.deleteSavedInfo("guest");
 
         int savedInfo = dao.countSavedInfo("guest");
         assertThat(savedInfo).isEqualTo(0);

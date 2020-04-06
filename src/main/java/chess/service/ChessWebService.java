@@ -34,7 +34,9 @@ public class ChessWebService {
         return savedCount == BOARD_CELLS_COUNT;
     }
 
-    public void startNewGame(Board board, String user_id) {
+    public void startNewGame(Board board, String user_id) throws SQLException {
+        deleteSaved(user_id);
+
         board.initialize();
 
         Position.stream()
@@ -59,7 +61,7 @@ public class ChessWebService {
                     }
                 }));
 
-        Optional<String> lastTurn = moveHistoryDao.figureLastTurn("guest");
+        Optional<String> lastTurn = moveHistoryDao.figureLastTurn(user_id);
 
         board.resume(savedBoard, lastTurn);
     }
@@ -89,8 +91,9 @@ public class ChessWebService {
         return board.calculateScore(pieceColor);
     }
 
-    public void deleteSaved() throws SQLException {
-        pieceDao.deleteSaved("guest");
+    public void deleteSaved(String user_id) throws SQLException {
+        pieceDao.deleteSavedInfo(user_id);
+        moveHistoryDao.deleteMoveHistory(user_id);
     }
 
     public List<String> convertPieces(Board board) {
