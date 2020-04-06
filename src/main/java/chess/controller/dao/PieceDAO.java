@@ -25,28 +25,6 @@ public class PieceDAO {
         ConnectionManager.closeConnection(con);
     }
 
-    public void updatePiece(List<PieceOnBoard> pieces) throws SQLException {
-        Connection con = ConnectionManager.getConnection();
-        for (PieceOnBoard pieceOnBoard : pieces) {
-            String query = "UPDATE piece SET position = ? WHERE pieceId = ?";
-            PreparedStatement pstmt = con.prepareStatement(query);
-            pstmt.setString(1, pieceOnBoard.getPosition());
-            pstmt.setInt(2, pieceOnBoard.getPieceId());
-            pstmt.executeUpdate();
-        }
-        ConnectionManager.closeConnection(con);
-    }
-
-    public void updatePiece(PieceOnBoard piece) throws SQLException {
-        Connection con = ConnectionManager.getConnection();
-        String query = "UPDATE piece SET position = ? WHERE pieceId = ?";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setString(1, piece.getPosition());
-        pstmt.setInt(2, piece.getPieceId());
-        pstmt.executeUpdate();
-        ConnectionManager.closeConnection(con);
-    }
-
     public void deletePiece(PieceOnBoard piece) throws SQLException {
         if (piece == null) {
             return;

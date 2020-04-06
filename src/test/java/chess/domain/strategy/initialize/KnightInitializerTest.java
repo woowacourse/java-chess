@@ -15,11 +15,11 @@ public class KnightInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("ATWO", "n_white");
-        pieceOnBoard.put("BTWO", "p_white");
-        pieceOnBoard.put("FSIX", "P_black");
-        pieceOnBoard.put("CEIGHT", "N_black");
-        pieceOnBoard.put("DFOUR", "n_white");
+        pieceOnBoard.put("a2", "n_white");
+        pieceOnBoard.put("b2", "p_white");
+        pieceOnBoard.put("f6", "P_black");
+        pieceOnBoard.put("c8", "N_black");
+        pieceOnBoard.put("d4", "n_white");
         InitializeStrategy knightInitializer = new KnightInitializer();
         Map<Position, Piece> board = knightInitializer.webInitialize(pieceOnBoard);
 

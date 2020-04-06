@@ -15,11 +15,11 @@ public class KingInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("ATWO", "k_white");
-        pieceOnBoard.put("BTWO", "p_white");
-        pieceOnBoard.put("FSIX", "P_black");
-        pieceOnBoard.put("CEIGHT", "K_black");
-        pieceOnBoard.put("DFOUR", "k_white");
+        pieceOnBoard.put("a2", "k_white");
+        pieceOnBoard.put("b2", "p_white");
+        pieceOnBoard.put("f6", "P_black");
+        pieceOnBoard.put("c8", "K_black");
+        pieceOnBoard.put("d4", "k_white");
         InitializeStrategy kingInitializer = new KingInitializer();
         Map<Position, Piece> board = kingInitializer.webInitialize(pieceOnBoard);
 

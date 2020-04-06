@@ -15,11 +15,11 @@ public class BishopInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("ATWO", "b_white");
-        pieceOnBoard.put("BTWO", "p_white");
-        pieceOnBoard.put("FSIX", "P_black");
-        pieceOnBoard.put("CEIGHT", "B_black");
-        pieceOnBoard.put("DFOUR", "b_white");
+        pieceOnBoard.put("a2", "b_white");
+        pieceOnBoard.put("b2", "p_white");
+        pieceOnBoard.put("f6", "P_black");
+        pieceOnBoard.put("c8", "B_black");
+        pieceOnBoard.put("d4", "b_white");
         InitializeStrategy bishopInitialize = new BishopInitializer();
         Map<Position, Piece> board = bishopInitialize.webInitialize(pieceOnBoard);
 

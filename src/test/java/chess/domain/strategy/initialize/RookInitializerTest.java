@@ -15,11 +15,11 @@ public class RookInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("ATWO", "r_white");
-        pieceOnBoard.put("BTWO", "p_white");
-        pieceOnBoard.put("FSIX", "P_black");
-        pieceOnBoard.put("CEIGHT", "R_black");
-        pieceOnBoard.put("DFOUR", "r_white");
+        pieceOnBoard.put("a2", "r_white");
+        pieceOnBoard.put("b2", "p_white");
+        pieceOnBoard.put("f6", "P_black");
+        pieceOnBoard.put("c8", "R_black");
+        pieceOnBoard.put("d4", "r_white");
         InitializeStrategy rookInitializer = new RookInitializer();
         Map<Position, Piece> board = rookInitializer.webInitialize(pieceOnBoard);
 

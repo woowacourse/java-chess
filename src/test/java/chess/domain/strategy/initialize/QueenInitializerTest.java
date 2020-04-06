@@ -15,11 +15,11 @@ public class QueenInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("ATWO", "q_white");
-        pieceOnBoard.put("BTWO", "p_white");
-        pieceOnBoard.put("FSIX", "P_black");
-        pieceOnBoard.put("CEIGHT", "Q_black");
-        pieceOnBoard.put("DFOUR", "q_white");
+        pieceOnBoard.put("a2", "q_white");
+        pieceOnBoard.put("b2", "p_white");
+        pieceOnBoard.put("f6", "P_black");
+        pieceOnBoard.put("c8", "Q_black");
+        pieceOnBoard.put("d4", "q_white");
         InitializeStrategy queenInitializer = new QueenInitializer();
         Map<Position, Piece> board = queenInitializer.webInitialize(pieceOnBoard);
 

@@ -23,9 +23,9 @@ public class PieceDAOTest {
     @DisplayName("피스 정보 추가")
     @Test
     void addPieceTest() throws Exception {
-        TileDto a2WhitePawn = new TileDto("ATWO");
+        TileDto a2WhitePawn = new TileDto("a2");
         a2WhitePawn.setPieceImageUrl("p_white");
-        TileDto a6BlackPawn = new TileDto("ASIX");
+        TileDto a6BlackPawn = new TileDto("a6");
         a6BlackPawn.setPieceImageUrl("P_black");
         List<TileDto> tileDtos = new ArrayList<>(Arrays.asList(
                 a2WhitePawn, a6BlackPawn
@@ -35,23 +35,10 @@ public class PieceDAOTest {
     }
 
     @Disabled
-    @DisplayName("피스 정보 업데이트")
-    @Test
-    void updatePieceTest() throws Exception {
-        PieceOnBoard a2WhitePawn = new PieceOnBoard(4, "ATHREE", "p_white", 1);
-        PieceOnBoard a6BlackPawn = new PieceOnBoard(5, "ASIX", "P_black", 1);
-        List<PieceOnBoard> pieces = new ArrayList<>(Arrays.asList(
-                a2WhitePawn, a6BlackPawn
-        ));
-
-        pieceDAO.updatePiece(pieces);
-    }
-
-    @Disabled
     @DisplayName("피스 삭제")
     @Test
     void deletePieceTest() throws Exception {
-        PieceOnBoard a2WhitePawn = new PieceOnBoard(4, "ATHREE", "p_white", 1);
+        PieceOnBoard a2WhitePawn = new PieceOnBoard(4, "a3", "p_white", 1);
 
         pieceDAO.deletePiece(a2WhitePawn);
     }
@@ -63,17 +50,18 @@ public class PieceDAOTest {
         List<PieceOnBoard> pieceOnBoards = pieceDAO.findPiece(12);
 
         Assertions.assertThat(pieceOnBoards).containsExactly(
-                new PieceOnBoard(6, "ATWO", "p_white", 12),
-                new PieceOnBoard(7, "ASIX", "P_black", 12)
+                new PieceOnBoard(6, "a2", "p_white", 12),
+                new PieceOnBoard(7, "a6", "P_black", 12)
         );
     }
 
     @Disabled
-    @DisplayName("피스를 받아서 업데이트")
+    @DisplayName("피스 정보 업데이트")
     @Test
-    void updatePiecePositionTest() throws Exception {
-        PieceOnBoard pieceOnBoard = new PieceOnBoard(34, "ATHREE", "p_white", 4);
+    void updatePieceTest() throws Exception {
+        PieceOnBoard pieceOnBoard = new PieceOnBoard(141, "a1",
+                "r_white", 17);
 
-        pieceDAO.updatePiece(pieceOnBoard);
+        pieceDAO.updatePiece(pieceOnBoard, "a2");
     }
 }

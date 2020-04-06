@@ -18,14 +18,18 @@ public class CurrentTeamDAOTest {
     @DisplayName("현재 팀 정보 추가")
     @Test
     void addCurrentTeamTest() throws Exception {
-        this.currentTeamDAO.addCurrentTeam(2, "white");
+        CurrentTeam currentTeam = new CurrentTeam("white");
+
+        this.currentTeamDAO.addCurrentTeam(2, currentTeam);
     }
 
     @Disabled
     @DisplayName("현재 팀 정보 업데이트")
     @Test
     void updateCurrentTeamTest() throws Exception {
-        this.currentTeamDAO.updateCurrentTeam(2, "black");
+        CurrentTeam currentTeam = new CurrentTeam("black");
+
+        this.currentTeamDAO.updateCurrentTeam(2, currentTeam);
     }
 
     @Disabled
