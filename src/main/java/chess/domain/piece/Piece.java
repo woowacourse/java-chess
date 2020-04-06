@@ -18,13 +18,15 @@ public abstract class Piece {
 		this.position = position;
 	}
 
-	public abstract String toString();
-
-	public boolean isTurn(Turn turn) {
-		return turn.isSameTeam(team);
+	public boolean isBlack() {
+		return team.isSameTeam(Team.BLACK);
 	}
 
 	public abstract Piece move(Position from, Position to, Map<Position, Team> teamBoard);
+
+	public abstract double getScore();
+
+	public abstract String getSymbol();
 
 	public boolean isKing() {
 		return this instanceof King;
@@ -34,6 +36,10 @@ public abstract class Piece {
 		return false;
 	}
 
+	public boolean isTurn(Turn turn) {
+		return turn.isSameTeam(team);
+	}
+
 	public Position getPosition() {
 		return position;
 	}
@@ -41,8 +47,4 @@ public abstract class Piece {
 	public Team getTeam() {
 		return team;
 	}
-
-	public abstract double getScore();
-
-	public abstract String getSymbol();
 }

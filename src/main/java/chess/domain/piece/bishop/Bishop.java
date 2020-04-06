@@ -7,9 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Bishop extends Piece {
-	public static final String WHITE_BISHOP = "\u2657";
-	public static final String BLACK_BISHOP = "\u265d";
-	public static final double BISHOP_SCORE = 3;
+	private static final double BISHOP_SCORE = 3;
 
 	private final String symbol = "b";
 
@@ -26,14 +24,6 @@ public class Bishop extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		if (team.equals(Team.WHITE)) {
-			return WHITE_BISHOP;
-		}
-		return BLACK_BISHOP;
 	}
 
 	@Override

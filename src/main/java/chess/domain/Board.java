@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Piece;
@@ -22,7 +23,7 @@ public class Board {
 	}
 
 	public Board(Map<Position, Piece> board) {
-		this.board = board;
+		this.board = new TreeMap<>(board);
 	}
 
 	public boolean isKingDead() {

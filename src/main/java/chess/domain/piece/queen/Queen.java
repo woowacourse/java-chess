@@ -7,9 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Queen extends Piece {
-	public static final String WHITE_QUEEN = "\u2655";
-	public static final String BLACK_QUEEN = "\u265b";
-	public static final int QUEEN_SCORE = 9;
+	private static final int QUEEN_SCORE = 9;
 
 	private final String symbol = "q";
 
@@ -26,14 +24,6 @@ public class Queen extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		if (team.equals(Team.WHITE)) {
-			return WHITE_QUEEN;
-		}
-		return BLACK_QUEEN;
 	}
 
 	@Override

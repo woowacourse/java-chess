@@ -1,7 +1,7 @@
 package chess.domain.state;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import chess.domain.Board;
 import chess.domain.Team;
@@ -17,7 +17,7 @@ import chess.domain.position.Position;
 public class BoardRepository {
 	private static final String BLACK_PAWN = "2";
 	private static final String WHITE_PAWN = "7";
-	private static final Map<Position, Piece> initialBoard = new HashMap<>();
+	private static final Map<Position, Piece> initialBoard = new TreeMap<>();
 
 	static {
 		for (int i = 'a'; i <= 'h'; i++) {

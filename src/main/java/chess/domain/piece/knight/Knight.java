@@ -7,9 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Knight extends Piece {
-	private static final String WHITE_KNIGHT = "\u2658";
-	private static final String BLACK_KNIGHT = "\u265e";
-	public static final double KNIGHT_SCORE = 2.5;
+	private static final double KNIGHT_SCORE = 2.5;
 
 	private final String symbol = "n";
 
@@ -26,14 +24,6 @@ public class Knight extends Piece {
 		strategy.validateMove(from, to, dto);
 		this.position = to;
 		return this;
-	}
-
-	@Override
-	public String toString() {
-		if (team.equals(Team.WHITE)) {
-			return WHITE_KNIGHT;
-		}
-		return BLACK_KNIGHT;
 	}
 
 	@Override

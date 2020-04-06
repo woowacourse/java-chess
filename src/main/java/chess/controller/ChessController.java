@@ -20,13 +20,13 @@ public class ChessController {
 			put("start", tokenizer -> {
 				game.start();
 				OutputView.printGameStart();
-				OutputView.printResponse(game.board());
+				OutputView.printBoard(game.board());
 			});
 			put("end", tokenizer -> game.end());
 			put("move", tokenizer -> {
 				game.move(Position.of(tokenizer.nextToken()),
 					Position.of(tokenizer.nextToken()));
-				OutputView.printResponse(game.board());
+				OutputView.printBoard(game.board());
 			});
 			put("status", tokenizer -> OutputView.printStatus(game.status()));
 		}};
