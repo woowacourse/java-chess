@@ -53,7 +53,6 @@ public class WebUIChessApplication {
             return GSON.toJson(boardDTO);
         });
 
-        // 무브할 때마다 DB에 값 있는지 체크하고 없을 경우 확인하기...!
         post("/start/move", (req, res) -> {
             LocationDTO nowDTO = new LocationDTO(req.queryParams("now"));
             LocationDTO destinationDTO = new LocationDTO(req.queryParams("des"));

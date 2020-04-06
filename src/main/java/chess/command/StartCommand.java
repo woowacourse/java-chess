@@ -11,6 +11,10 @@ public class StartCommand implements Command {
         this.value = value;
     }
 
+    public static boolean isStart(String input) {
+        return COMMAND.equals(input);
+    }
+
     @Override
     public Progress conduct() {
         if (COMMAND.equals(value)) {

@@ -10,19 +10,20 @@ public class ChessController {
         OutputView.printInformation();
         Progress progress = Progress.CONTINUE;
         ChessGame chessGame = new ChessGame();
+        CommandMapper commandMapper = new CommandMapper();
         while (progress.isNotEnd()) {
-            progress = getProgress(chessGame);
+            progress = getProgress(chessGame, commandMapper);
             OutputView.printPresentPlayer(chessGame.getTurn());
         }
         printResult(chessGame);
     }
 
-    private static Progress getProgress(ChessGame chessGame) {
-        Command command = inputCommand(chessGame);
+    private static Progress getProgress(ChessGame chessGame, CommandMapper commandMapper) {
+        Command command = inputCommand(chessGame, commandMapper);
         Progress progress = chessGame.doOneCommand(command);
         while (progress.isError()) {
             OutputView.printMoveErrorMessage();
-            command = inputCommand(chessGame);
+            command = inputCommand(chessGame, commandMapper);
             progress = chessGame.doOneCommand(command);
         }
         if (progress.isNotEnd()) {
@@ -34,18 +35,9 @@ public class ChessController {
         return progress;
     }
 
-    private static Command inputCommand(ChessGame chessGame) {
+    private static Command inputCommand(ChessGame chessGame, CommandMapper commandMapper) {
         String commandInput = InputView.inputCommand();
-        if (EndCommand.isEnd(commandInput)) {
-            return new EndCommand(commandInput);
-        }
-        if (MoveCommand.isMove(commandInput)) {
-            return MoveCommand.of(commandInput, chessGame);
-        }
-        if (StatusCommand.isStatus(commandInput)) {
-            return new StatusCommand(commandInput);
-        }
-        return new StartCommand(commandInput);
+        return commandMapper.getCommand(commandInput, chessGame);
     }
 
     private static void printResult(ChessGame chessGame) {
