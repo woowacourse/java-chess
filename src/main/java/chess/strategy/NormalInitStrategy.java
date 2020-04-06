@@ -1,6 +1,8 @@
 package chess.strategy;
 
-import chess.piece.*;
+import chess.piece.Piece;
+import chess.piece.PieceType;
+import chess.piece.Team;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;

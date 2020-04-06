@@ -36,7 +36,7 @@ public class Position {
     }
 
     public static Position of(String key) {
-        String lowerCaseKey = key.toLowerCase();
+        String lowerCaseKey = key.toLowerCase().trim();
         validate(lowerCaseKey);
         return CACHE.get(lowerCaseKey);
     }

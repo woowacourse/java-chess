@@ -17,15 +17,20 @@ import static chess.piece.Team.WHITE;
 
 public class Board {
     private final Map<Position, Piece> pieces;
-    private Team turn = WHITE;
+    private Team turn;
     private boolean isFinished = false;
 
-    public Board(Map<Position, Piece> pieces) {
+    public Board(Map<Position, Piece> pieces, Team turn) {
         this.pieces = pieces;
+        this.turn = turn;
+    }
+
+    public Board(Map<Position, Piece> pieces) {
+        this(pieces, WHITE);
     }
 
     public Board(PiecesInitStrategy piecesInitStrategy) {
-        this.pieces = piecesInitStrategy.init();
+        this(piecesInitStrategy.init(), WHITE);
     }
 
     public void moveIfPossible(Position source, Position target) {

@@ -1,7 +1,6 @@
 package chess.validator;
 
 import chess.Board;
-import chess.exception.InvalidMovementException;
 import chess.position.File;
 import chess.position.Position;
 import chess.position.Rank;

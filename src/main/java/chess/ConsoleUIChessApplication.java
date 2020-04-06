@@ -1,10 +1,10 @@
 package chess;
 
-import chess.controller.ChessGame;
+import chess.controller.ConsoleChessGame;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
-        ChessGame chessGame = new ChessGame();
-        chessGame.run();
+        ConsoleChessGame consoleChessGame = new ConsoleChessGame();
+        consoleChessGame.run();
     }
 }

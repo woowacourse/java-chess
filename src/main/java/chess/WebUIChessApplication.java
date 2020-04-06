@@ -1,10 +1,12 @@
 package chess;
 
+import chess.controller.WebChessGame;
+import chess.exception.InvalidMovementException;
 import chess.view.WebOutputView;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,35 +14,48 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static Connection conn = DBConnector.getConnection();
-    private static BoardDAO boardDAO = new BoardDAO(conn);
-    private static Board board;
-
-    static {
-        try {
-            board = boardDAO.loadBoard();
-            System.out.println("로딩중..");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         staticFiles.location("/public");
+
+        WebChessGame game = new WebChessGame();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", WebOutputView.printBoard(board));
+            model.put("board", WebOutputView.printBoard(game.getBoard()));
             return render(model, "index.html");
         });
 
         post("/", (req, res) -> {
             String source = req.queryParams("source");
-            String destination = req.queryParams("destination");
-            System.out.println(String.format("받은 경로 : %s -> %s", source, destination));
-            //TODO: 말 이동 로직
+            String target = req.queryParams("target");
+            System.out.println(String.format("받은 source:%s, target:%s", source,target));
+            try {
+                game.play(source, target);
+            } catch (InvalidMovementException e) {
+                System.out.println(e.getMessage());
+                //TODO: 브라우저 위에 alert로 뜨게하고 싶음.
+                res.redirect("/error");
+            }
             Map<String, Object> model = new HashMap<>();
-            model.put("board", WebOutputView.printBoard(board));
+            model.put("board", WebOutputView.printBoard(game.getBoard()));
             return render(model, "index.html");
+        });
+
+        post("/newgame", (req, res) -> {
+            game.init();
+            res.redirect("/");
+            return null;
+        });
+
+        post("/scores", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("scores", Scores.calculateScores(game.getBoard()));
+            return render(model, "scores.html");
+        });
+
+        get("/error", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "error.html");
         });
     }
 
