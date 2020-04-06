@@ -10,15 +10,13 @@ import chess.domain.position.Positions;
 import chess.domain.utils.NameUtils;
 
 public abstract class ChessPiece {
-	protected final String name;
 	protected final Team team;
 	protected Position position;
 	protected final MoveManager moveManager;
 
-	public ChessPiece(Position position, Team team, String name) {
+	public ChessPiece(Position position, Team team) {
 		this.position = position;
 		this.team = team;
-		this.name = NameUtils.parseName(name, team);
 		this.moveManager = new MoveManager(this.position);
 	}
 
@@ -66,9 +64,7 @@ public abstract class ChessPiece {
 
 	public abstract Positions makePathAndValidate(ChessPiece targetPiece);
 
-	public String getName() {
-		return this.name;
-	}
+	public abstract String getName();
 
 	@Override
 	public boolean equals(Object o) {

@@ -9,6 +9,7 @@ import chess.domain.Direction;
 import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.domain.utils.NameUtils;
 
 public class Rook extends ValuablePiece {
 	private static final List<Direction> DIRECTIONS;
@@ -19,7 +20,12 @@ public class Rook extends ValuablePiece {
 	}
 
 	public Rook(Position position, Team team) {
-		super(position, team, NAME);
+		super(position, team);
+	}
+
+	@Override
+	public String getName() {
+		return NameUtils.parseName(NAME, team);
 	}
 
 	@Override

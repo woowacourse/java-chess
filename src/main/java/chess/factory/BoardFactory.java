@@ -17,6 +17,8 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
+import chess.dto.ChessDTO;
+import chess.view.OutputView;
 
 public class BoardFactory {
 	private static final int BLACK_TEAM_EXECUTIVE_INDEX = 8;
@@ -35,13 +37,15 @@ public class BoardFactory {
 	private static final int BISHOP_SECOND_INDEX = 6;
 	private static final int KNIGHT_SECOND_INDEX = 7;
 	private static final int ROOK_SECOND_INDEX = 8;
+	private static final int DEFAULT_INDEX = 0;
+	private static final String POSITION_FORMAT = "%c%d";
 
 	public static ChessBoard createBoard() {
 		List<Row> board = new ArrayList<>();
 		board.addAll(createWhiteTeam());
 		board.addAll(createBlankTeam());
 		board.addAll(createBlackTeam());
-		return new ChessBoard(board, new Turn());
+		return new ChessBoard(1, board, new Turn(true));
 	}
 
 	private static List<Row> createWhiteTeam() {
@@ -89,6 +93,29 @@ public class BoardFactory {
 		List<ChessPiece> chessPieces = new ArrayList<>();
 		for (int y = BOARD_FROM_INDEX; y <= BOARD_TO_INDEX; y++) {
 			chessPieces.add(new Blank(Position.of(index, y)));
+		}
+		return new Row(chessPieces);
+	}
+
+	public static ChessBoard createBoard(ChessDTO chessDTO) {
+		List<Row> rows = new ArrayList<>();
+		int column = BOARD_TO_INDEX;
+		for (String row : chessDTO.getSplitRows()) {
+			rows.add(createRow(row, column--));
+		}
+		ChessBoard chessBoard = new ChessBoard(chessDTO.getId(), rows, new Turn(chessDTO.isWhiteTurn()));
+		//OutputView.printBoard(chessBoard);
+		return chessBoard;
+	}
+
+	private static Row createRow(String row, int column) {
+		List<ChessPiece> chessPieces = new ArrayList<>();
+		int index = DEFAULT_INDEX;
+		for (int y = 'a'; y <= 'h'; y++) {
+			char name = row.charAt(index++);
+			String position = String.format(POSITION_FORMAT, (char)y, column);
+			ChessPiece chessPiece = PieceConverter.convert(name, position);
+			chessPieces.add(chessPiece);
 		}
 		return new Row(chessPieces);
 	}

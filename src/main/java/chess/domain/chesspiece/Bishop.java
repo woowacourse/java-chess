@@ -20,12 +20,17 @@ public class Bishop extends ValuablePiece {
 	}
 
 	public Bishop(Position position, Team team) {
-		super(position, team, NAME);
+		super(position, team);
 	}
 
 	@Override
 	public Positions makePathAndValidate(ChessPiece targetPiece) {
 		return moveManager.makePath(targetPiece.position, DIRECTIONS);
+	}
+
+	@Override
+	public String getName() {
+		return NameUtils.parseName(NAME, team);
 	}
 
 	@Override

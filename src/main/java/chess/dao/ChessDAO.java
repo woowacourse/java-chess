@@ -5,9 +5,10 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
+import chess.domain.chessboard.ChessBoard;
 import chess.dto.ChessDTO;
+import chess.factory.BoardFactory;
 
 public class ChessDAO {
 	public Connection getConnection() {
@@ -49,27 +50,42 @@ public class ChessDAO {
 	}
 
 	public void addBoard(ChessDTO chessDto) throws SQLException {
-		String query = "INSERT INTO board (rows) VALUES (?)";
+		String query = "INSERT INTO board (whiteTurn, rows) VALUES (?, ?)";
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setString(1, chessDto.getRows());
+		pstmt.setBoolean(1, chessDto.isWhiteTurn());
+		pstmt.setString(2, chessDto.getRawBoard());
 		pstmt.executeUpdate();
 	}
 
-	public int count() throws SQLException {
-		String query = "SELECT COUNT(*) count FROM board";
+	public void removeAll() throws SQLException {
+		String query = "TRUNCATE board";
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		ResultSet resultSet = pstmt.executeQuery();
-		return Integer.parseInt(resultSet.getString("count"));
+		pstmt.executeUpdate();
 	}
 
-	public ChessDTO find() throws SQLException {
+	public ChessBoard find() throws SQLException {
 		String query = "SELECT * FROM board";
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
 		ResultSet resultSet = pstmt.executeQuery();
 		if (!resultSet.next()) {
-			return null;
+			ChessBoard chessBoard = BoardFactory.createBoard();
+			addBoard(new ChessDTO(chessBoard));
+			return chessBoard;
 		}
+		int id = resultSet.getInt("id");
 		String rows = resultSet.getString("rows");
-		return new ChessDTO(rows);
+		boolean isWhiteTurn = resultSet.getBoolean("whiteTurn");
+		ChessDTO chessDTO = new ChessDTO(id, rows, isWhiteTurn);
+		return BoardFactory.createBoard(chessDTO);
+	}
+
+	public void update(ChessDTO chessDTO) throws SQLException {
+		String query = "UPDATE board SET rows = (?), whiteTurn = (?)"
+			+ " WHERE id = (?)";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setString(1, chessDTO.getRawBoard());
+		pstmt.setBoolean(2, chessDTO.isWhiteTurn());
+		pstmt.setInt(3, chessDTO.getId());
+		pstmt.executeUpdate();
 	}
 }

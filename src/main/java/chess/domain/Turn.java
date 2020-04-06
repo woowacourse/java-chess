@@ -7,8 +7,8 @@ public class Turn {
 
 	private boolean isWhiteTurn;
 
-	public Turn() {
-		this.isWhiteTurn = true;
+	public Turn(boolean isWhiteTurn) {
+		this.isWhiteTurn = isWhiteTurn;
 	}
 
 	public void validateTurn(ChessPiece chessPiece) {
@@ -27,5 +27,9 @@ public class Turn {
 
 	public void changeTurn() {
 		this.isWhiteTurn = !this.isWhiteTurn;
+	}
+
+	public boolean isWhiteTurn() {
+		return isWhiteTurn;
 	}
 }

@@ -2,7 +2,7 @@ package chess;
 
 import chess.domain.chessgame.ChessGame;
 
-public class Application {
+public class ConsoleChessApplication {
 
 	public static void main(String[] args) {
 		new ChessGame().play();

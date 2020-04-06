@@ -1,20 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper {
+    -webkit-flex-direction: column;
+    　flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: 'Do Hyeon', sans-serif;
+    background-color: black;
+}
+
+.title {
+    margin-bottom: 20px;
+    color: white;
+    font-size: 50px;
+    letter-spacing: 10px;
+}
+
 .chessboard {
-    margin-top: 30px;
 }
 
 .row {
-    width: 670px;
-    height: 83px;
+    width: 590px;
+    height: 73px;
 }
 
 .row > button {
     border: 1px solid black;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     margin-right: -3px;
     margin-left: 1px;
     margin-bottom: 2px;
 }
+
+.row > button:active {
+    background-color: #2025ed;
+    transform: translateY(4px);
+}
+
+
+.row > button:hover{
+    border: 4px solid black;
+}
+
 
 .cell {
     background-color: #E6E6E6;
@@ -73,4 +112,33 @@
 
 .R {
     background-image: url("images/rook_black.png");
+}
+
+.alert {
+    margin-top: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    background-color: white;
+}
+
+.alert > .message {
+    font-size: 45px;
+    margin-top: 10px;
+    padding-bottom: 50px;
+}
+
+.alert > .submit {
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #f6f8ef;
+    border: 1px solid black;
 }

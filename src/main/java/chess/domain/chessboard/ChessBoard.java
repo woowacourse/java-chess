@@ -19,10 +19,12 @@ public class ChessBoard {
 	private static final String SAME_TEAM_MESSAGE = "같은 팀입니다.";
 	private static final String NOT_CHESS_PIECE_MESSAGE = "체스 말이 아닙니다.";
 
+	private final int id;
 	private final List<Row> rows;
 	private final Turn turn;
 
-	public ChessBoard(List<Row> rows, Turn turn) {
+	public ChessBoard(int id, List<Row> rows, Turn turn) {
+		this.id = id;
 		this.rows = new ArrayList<>(rows);
 		this.turn = turn;
 	}
@@ -108,15 +110,11 @@ public class ChessBoard {
 		return Collections.unmodifiableList(rows);
 	}
 
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		for (Row row : rows) {
-			IntStream.range(0, rows.size())
-				.mapToObj(index -> row.get(index).getName())
-				.forEach(name -> builder.append(name));
-			builder.append(System.lineSeparator());
-		}
-		return builder.toString();
+	public boolean isWhiteTurn() {
+		return turn.isWhiteTurn();
+	}
+
+	public int getId() {
+		return id;
 	}
 }
