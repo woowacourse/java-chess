@@ -50,6 +50,7 @@
 - [x] 각 말들에 점수를 매기는 기능
 
 ###### 4단계
+![web_chess](https://raw.githubusercontent.com/hotheadfactory/java-chess/chess-step2/web_chess.png)
 - [x] 웹을 통해 게임을 진행할 수 있는 기능
 - [x] 흑과 백의 차례에 따라 상대편 말을 이동하는 것을 제한하는 기능
 
