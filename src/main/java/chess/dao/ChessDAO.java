@@ -39,33 +39,47 @@ public class ChessDAO {
         return con;
     }
 
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
     public void savePiece(List<Piece> pieces) throws SQLException {
-        PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Pieces");
+        Connection connection = getConnection();
+        PreparedStatement cleanup = connection.prepareStatement("DELETE FROM Pieces");
         cleanup.executeUpdate();
 
         for (Piece piece : pieces) {
             String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = getConnection().prepareStatement(query);
+            PreparedStatement pstmt = connection.prepareStatement(query);
             pstmt.setString(1, piece.getPosition().toString());
             pstmt.setString(2, piece.toString());
             pstmt.setString(3, piece.getTeam().toString());
             pstmt.executeUpdate();
         }
+        closeConnection(connection);
     }
 
     public void saveTurn(Turn turn) throws SQLException {
-        PreparedStatement cleanup = getConnection().prepareStatement("DELETE FROM Turn");
+        Connection connection = getConnection();
+        PreparedStatement cleanup = connection.prepareStatement("DELETE FROM Turn");
         cleanup.executeUpdate();
 
         String query = "INSERT INTO Turn (turn) VALUES (?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, turn.getTeam().toString());
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
     public Pieces loadPieces() throws SQLException {
+        Connection connection = getConnection();
         String query = "SELECT * FROM Pieces";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         Map<Position, Piece> pieces = new HashMap<>();
 
@@ -78,16 +92,20 @@ public class ChessDAO {
             );
             pieces.put(position, piece);
         }
+        closeConnection(connection);
         return new Pieces(pieces);
     }
 
     public Turn loadTurn() throws SQLException {
+        Connection connection = getConnection();
         String query = "SELECT * FROM Turn";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) {
             return null;
         }
-        return new Turn(Team.valueOf(rs.getString("turn")));
+        Turn turn = new Turn(Team.valueOf(rs.getString("turn")));
+        closeConnection(connection);
+        return turn;
     }
 }

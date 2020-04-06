@@ -15,6 +15,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController implements ChessController {
+    private static final String BLANK = "";
+    private static final String WINNER_ALERT = "이 승리했습니다!";
+
     private Board board = new Board();
 
     @Override
@@ -36,9 +39,9 @@ public class WebChessController implements ChessController {
             try {
                 board.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
                 if (!board.isBothKingAlive()) {
-                    return board.getWinner().getName() + "이 승리했습니다!";
+                    return board.getWinner().getName() + WINNER_ALERT;
                 }
-                return "";
+                return BLANK;
             } catch (Exception e) {
                 res.status(403);
                 return e.getMessage();
