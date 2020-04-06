@@ -1,6 +1,9 @@
 package chess.domain.strategy.initialize;
 
-import chess.domain.piece.*;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Arrays;

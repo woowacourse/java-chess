@@ -1,9 +1,6 @@
 package chess.controller;
 
-import chess.controller.dao.ChessBoard;
-import chess.controller.dao.ChessBoardDAO;
-import chess.controller.dao.PieceDAO;
-import chess.controller.dao.PieceOnBoard;
+import chess.controller.dao.*;
 import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
@@ -24,25 +21,32 @@ public class WebChessController {
 
     private ChessRunner chessRunner;
     private ChessBoard chessBoard;
+    private CurrentTeam currentTeam;
 
     public void start() throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
         PieceDAO pieceDAO = new PieceDAO();
         this.chessBoard = chessBoardDAO.findRecentChessBoard();
-        if (this.chessBoard == null) { // 게임을 새로 시작했다면
+
+        if (this.chessBoard == null) {
             this.chessRunner = new ChessRunner();
             chessBoardDAO.addChessBoard();
             this.chessBoard = chessBoardDAO.findRecentChessBoard();
+            currentTeamDAO.addCurrentTeam(this.chessBoard.getChessBoardId(), this.chessRunner.getCurrentTeam());
+            currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
             List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
             pieceDAO.addPiece(chessBoard.getChessBoardId(), tileDtos);
-        } else {
-            List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
-            Map<String, String> pieceOnBoards = pieces.stream()
-                    .collect(Collectors.toMap(entry -> entry.getPosition(),
-                            entry -> entry.getPieceImageUrl(),
-                            (e1, e2) -> e1, HashMap::new));
-            this.chessRunner = new ChessRunner(pieceOnBoards);
+            return;
         }
+
+        List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard.getChessBoardId());
+        Map<String, String> pieceOnBoards = pieces.stream()
+                .collect(Collectors.toMap(entry -> entry.getPosition(),
+                        entry -> entry.getPieceImageUrl(),
+                        (e1, e2) -> e1, HashMap::new));
+        currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard.getChessBoardId());
+        this.chessRunner = new ChessRunner(pieceOnBoards, currentTeam.getCurrentTeam());
     }
 
     public MoveResultDto move(final String source, final String target) {

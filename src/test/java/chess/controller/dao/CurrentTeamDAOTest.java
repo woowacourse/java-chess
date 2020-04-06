@@ -1,5 +1,6 @@
 package chess.controller.dao;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -32,5 +33,15 @@ public class CurrentTeamDAOTest {
     @Test
     void deleteCurrentTeamTest() throws Exception {
         this.currentTeamDAO.deleteCurrentTeam(2);
+    }
+
+    @Disabled
+    @DisplayName("현재 팀 검색")
+    @Test
+    void findCurrentTeamTest() throws Exception {
+        CurrentTeam currentTeam = currentTeamDAO.findCurrentTeam(3);
+
+        Assertions.assertThat(currentTeam).isNotNull();
+        Assertions.assertThat(currentTeam.getCurrentTeam()).isEqualTo("white");
     }
 }

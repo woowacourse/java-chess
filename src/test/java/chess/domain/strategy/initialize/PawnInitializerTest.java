@@ -1,6 +1,5 @@
 package chess.domain.strategy.initialize;
 
-import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;

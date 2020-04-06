@@ -2,6 +2,7 @@ package chess.controller.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class CurrentTeamDAO {
@@ -32,5 +33,21 @@ public class CurrentTeamDAO {
         pstmt.setInt(1, chessBoardId);
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
+    }
+
+    public CurrentTeam findCurrentTeam(int chessBoardId) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String query = "SELECT * FROM currentTeam WHERE chessBoardId = ?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, chessBoardId);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (!rs.next()) {
+            return null;
+        }
+
+        return new CurrentTeam(
+                rs.getString("team")
+        );
     }
 }
