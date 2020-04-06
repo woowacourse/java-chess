@@ -52,6 +52,15 @@ public class Position {
         return findPosition(File.of(fileSymbol), Rank.of(rankSymbol));
     }
 
+    public static Position convert(String value) {
+        String fileName = value.substring(0, 1);
+        String rankName = value.substring(1);
+        File file = File.of(fileName);
+        Rank rank = Rank.valueOf(rankName);
+
+        return new Position(file, rank);
+    }
+
     public int calculateFileGap(final Position target) {
         return this.file.compareTo(target.file);
     }

@@ -1,9 +1,6 @@
 package chess.domain.strategy.initialize;
 
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
@@ -40,6 +37,23 @@ public final class KingInitializer implements InitializeStrategy {
 
     @Override
     public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
-        return null;
+        Map<String, String> kings = pieceOnBoards.entrySet().stream()
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals("k"))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+        Map<Position, Piece> board = kings.entrySet().stream()
+                .collect(Collectors.toMap(entry -> Position.convert(entry.getKey()),
+                        entry -> initializeKing(entry.getValue()),
+                        (e1, e2) -> e1, HashMap::new));
+
+        return Collections.unmodifiableMap(board);
+    }
+
+    private Piece initializeKing(String key) {
+        String pieceTypeSymbol = key.substring(0, 1);
+        String teamName = key.substring(2).toUpperCase();
+        PieceType pieceType = PieceType.of(pieceTypeSymbol);
+        Team team = Team.valueOf(teamName);
+        return new King(pieceType, team);
     }
 }

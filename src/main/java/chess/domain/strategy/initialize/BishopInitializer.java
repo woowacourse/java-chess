@@ -42,6 +42,23 @@ public final class BishopInitializer implements InitializeStrategy {
 
     @Override
     public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
-        return null;
+        Map<String, String> bishops = pieceOnBoards.entrySet().stream()
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals("b"))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+        Map<Position, Piece> board = bishops.entrySet().stream()
+                .collect(Collectors.toMap(entry -> Position.convert(entry.getKey()),
+                        entry -> initializeBishop(entry.getValue()),
+                        (e1, e2) -> e1, HashMap::new));
+
+        return Collections.unmodifiableMap(board);
+    }
+
+    private Piece initializeBishop(String key) {
+        String pieceTypeSymbol = key.substring(0, 1);
+        String teamName = key.substring(2).toUpperCase();
+        PieceType pieceType = PieceType.of(pieceTypeSymbol);
+        Team team = Team.valueOf(teamName);
+        return new Bishop(pieceType, team);
     }
 }

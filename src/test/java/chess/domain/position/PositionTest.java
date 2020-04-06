@@ -12,10 +12,4 @@ public class PositionTest {
 
         Assertions.assertThat(position).isEqualTo(Position.of("b2"));
     }
-
-//    @Test
-//    void getPositionsTest() {
-//        List<String> positions = Position.getPositions();
-//
-//    }
 }

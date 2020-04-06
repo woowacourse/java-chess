@@ -1,9 +1,6 @@
 package chess.domain.strategy.initialize;
 
-import chess.domain.piece.Knight;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
@@ -42,6 +39,23 @@ public final class KnightInitializer implements InitializeStrategy {
 
     @Override
     public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
-        return null;
+        Map<String, String> knights = pieceOnBoards.entrySet().stream()
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals("n"))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+        Map<Position, Piece> board = knights.entrySet().stream()
+                .collect(Collectors.toMap(entry -> Position.convert(entry.getKey()),
+                        entry -> initializeKnight(entry.getValue()),
+                        (e1, e2) -> e1, HashMap::new));
+
+        return Collections.unmodifiableMap(board);
+    }
+
+    private Piece initializeKnight(String key) {
+        String pieceTypeSymbol = key.substring(0, 1);
+        String teamName = key.substring(2).toUpperCase();
+        PieceType pieceType = PieceType.of(pieceTypeSymbol);
+        Team team = Team.valueOf(teamName);
+        return new Knight(pieceType, team);
     }
 }
