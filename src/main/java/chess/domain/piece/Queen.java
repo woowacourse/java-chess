@@ -14,9 +14,9 @@ public class Queen extends Piece {
     @Override
     public boolean canMove(MoveInformation moveInformation) {
         return !moveInformation.isSameTeamPlacedOnEnd()
-            && !moveInformation.doAnyPieceExistInBetween()
             && (moveInformation.isEndOnDiagonalOfStart()
-            || moveInformation.isEndOnStraightLineOfStart());
+            || moveInformation.isEndOnStraightLineOfStart())
+            && !moveInformation.doAnyPieceExistInBetween();
     }
 
     @Override

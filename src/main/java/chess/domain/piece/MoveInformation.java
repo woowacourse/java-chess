@@ -49,11 +49,11 @@ public class MoveInformation {
         return isEndIncrementOfStartBy(1, 2)
             || isEndIncrementOfStartBy(2, 1)
             || isEndIncrementOfStartBy(2, -1)
-            || isEndIncrementOfStartBy(1, -1)
-            || isEndIncrementOfStartBy(-1, -1)
+            || isEndIncrementOfStartBy(1, -2)
+            || isEndIncrementOfStartBy(-1, -2)
             || isEndIncrementOfStartBy(-2, -1)
             || isEndIncrementOfStartBy(-2, 1)
-            || isEndIncrementOfStartBy(-1, 1);
+            || isEndIncrementOfStartBy(-1, 2);
     }
 
     private boolean isEndIncrementOfStartBy(int x, int y) {
