@@ -50,5 +50,4 @@ public class OutputView {
 			System.out.println(team + COLON + score.get(team) + SCORE_MESSAGE);
 		}
 	}
-
 }
