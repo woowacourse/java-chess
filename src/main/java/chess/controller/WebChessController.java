@@ -5,7 +5,6 @@ import chess.domain.Winner;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Square;
 import chess.domain.piece.Color;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -15,8 +14,6 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebChessController implements Controller {
-
-    private static final Gson GSON = new Gson();
 
     ChessBoard chessBoard = new ChessBoard();
 
