@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.Color;
 import chess.domain.GameManager;
 import chess.domain.command.Command;
 import chess.domain.command.FirstCommand;
@@ -38,7 +39,7 @@ public class ConsoleController {
 
 	public void running() {
 		pieces = new Pieces(Pieces.initPieces());
-		gameManager = new GameManager(pieces);
+		gameManager = new GameManager(pieces, Color.WHITE);
 
 		Command command;
 

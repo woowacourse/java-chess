@@ -17,6 +17,7 @@
 </form>
 
 <form action="/game/status" method="get">
+    <input name="roomId" type="hidden" value="{{roomId}}">
     <input type="submit" value="status">
 </form>
 
@@ -149,6 +150,7 @@
             function applyBackgroundImg(piecePosition, pieceImgUrl) {
                 let element = document.getElementById(piecePosition);
                 element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
+                element.style.backgroundSize = "cover";
             }
 </script>
 </body>

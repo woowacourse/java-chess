@@ -14,17 +14,19 @@ import chess.service.RoomService;
 
 public class RoomServiceTest {
 	RoomService roomService = RoomService.getInstance();
+	private int roomId;
 
 	@BeforeEach
 	void setUp() throws SQLException {
-		roomService.removeRoom("hello world");
+		roomId = 1;
+		roomService.removeRoom(roomId);
 	}
 
 	@DisplayName("방을 추가하는 메서드 테스트")
 	@Test
 	void addRoomTest() throws SQLException {
 		roomService.addRoom("hello world");
-		Room room = roomService.findRoom("hello world");
+		Room room = roomService.findRoom(roomId);
 		assertThat(room.getRoomName()).isEqualTo("hello world");
 	}
 
@@ -39,8 +41,8 @@ public class RoomServiceTest {
 	@DisplayName("방을 삭제하는 메서드 테스트")
 	@Test
 	void deleteRoomTest() throws SQLException {
-		roomService.removeRoom("hello world");
-		Room room = roomService.findRoom("hello world");
+		roomService.removeRoom(roomId);
+		Room room = roomService.findRoom(roomId);
 		assertThat(room).isNull();
 	}
 }

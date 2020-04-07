@@ -42,7 +42,7 @@ public class RoomController {
 	// TODO : add랑 똑같은 로직인데 왜 새로고침해야 보일까?
 	public static Route removeRoom = (request, response) -> {
 		RoomService roomService = RoomService.getInstance();
-		roomService.removeRoom(request.queryParams("roomId"));
+		roomService.removeRoom(Integer.parseInt(request.queryParams("roomId")));
 
 		response.redirect("/rooms");
 		return null;

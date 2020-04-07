@@ -9,9 +9,9 @@ public class GameManager {
 	private Pieces pieces;
 	private Color currentColor;
 
-	public GameManager(Pieces pieces) {
+	public GameManager(Pieces pieces, Color currentColor) {
 		this.pieces = pieces;
-		this.currentColor = Color.WHITE;
+		this.currentColor = currentColor;
 	}
 
 	public void moveFromTo(Position sourcePosition, Position targetPosition) {
@@ -69,5 +69,9 @@ public class GameManager {
 
 	public Piece getPiece(Position position) {
 		return pieces.getPieceByPosition(position);
+	}
+
+	public Color getCurrentColor() {
+		return currentColor;
 	}
 }

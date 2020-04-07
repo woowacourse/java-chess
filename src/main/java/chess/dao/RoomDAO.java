@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.Color;
 import chess.domain.room.Room;
 import chess.util.JDBCConnector;
 
@@ -79,5 +80,28 @@ public class RoomDAO {
 		}
 
 		return rooms;
+	}
+
+	public void updateTurnById(int roomId, Color color) throws SQLException {
+		String query = "UPDATE room SET turn = ? WHERE room_id = ?";
+
+		PreparedStatement pstmt = con.prepareStatement(query);
+		// TODO : Color를 모두 UpperCase로 바꾸자
+		pstmt.setString(1, color.name().toLowerCase());
+		pstmt.setInt(2, roomId);
+		pstmt.executeUpdate();
+	}
+
+	public String findTurnById(int roomId) throws SQLException {
+		String query = "SELECT turn FROM room WHERE room_id = ?";
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setInt(1, roomId);
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next()) {
+			return null;
+		}
+
+		return rs.getString("turn");
 	}
 }

@@ -24,9 +24,6 @@ public class GameController {
 		gameService.movePiece(roomId, sourcePosition, targetPosition);
 
 		model.put("pieces", gameService.getPiecesResponseDTO(roomId).getPieces());
-
-		System.out.println(gameService.getPiecesResponseDTO(roomId).getPieces().toString());
-
 		model.put("roomId", roomId);
 
 		return render(model, "game.html");

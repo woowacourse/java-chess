@@ -21,7 +21,7 @@ public class PieceScoreTest {
 		pieces.addPiece(Position.of("f6"), new Pawn(Color.BLACK, "P"));
 		pieces.addPiece(Position.of("f5"), new Pawn(Color.BLACK, "P"));
 
-		GameManager gameManager = new GameManager(pieces);
+		GameManager gameManager = new GameManager(pieces, Color.WHITE);
 
 		double whiteScore = PieceScore.calculateByColor(gameManager, Color.WHITE);
 		double blackScore = PieceScore.calculateByColor(gameManager, Color.BLACK);

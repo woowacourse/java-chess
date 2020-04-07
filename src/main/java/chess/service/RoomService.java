@@ -18,14 +18,13 @@ public class RoomService {
 		roomDAO.addRoom(roomName, "white");
 	}
 
-	public void removeRoom(String roomId) throws SQLException {
+	public void removeRoom(int roomId) throws SQLException {
 		RoomDAO roomDAO = RoomDAO.getInstance();
-		roomDAO.removeRoomById(Integer.parseInt(roomId));
+		roomDAO.removeRoomById(roomId);
 	}
 
-	public Room findRoom(String roomName) throws SQLException {
+	public Room findRoom(int roomId) throws SQLException {
 		RoomDAO roomDAO = RoomDAO.getInstance();
-		int roomId = roomDAO.findRoomIdByRoomName(roomName);
 		return roomDAO.findRoomById(roomId);
 	}
 

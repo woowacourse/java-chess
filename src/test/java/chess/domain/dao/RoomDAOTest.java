@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import chess.dao.RoomDAO;
+import chess.domain.Color;
 import chess.domain.room.Room;
 
 public class RoomDAOTest {
@@ -70,5 +71,26 @@ public class RoomDAOTest {
 		Room room = roomDAO.findRoomById(roomId);
 
 		assertThat(room).isNull();
+	}
+
+	@DisplayName("move를 하고나서 상대방 턴이 됐을 때 turn의 값이 바뀌었는지 테스트")
+	@Test
+	void updateTurnByIdTest() throws SQLException {
+		roomDAO.addRoom("hello world", "white");
+		int roomId = roomDAO.findRoomIdByRoomName("hello world");
+		Color color = Color.BLACK;
+		roomDAO.updateTurnById(roomId, color);
+
+		Room room = roomDAO.findRoomById(roomId);
+		assertThat(room.getTurn()).isEqualTo("black");
+	}
+
+	@DisplayName("현재 내 턴을 가져오는 테스트")
+	@Test
+	void findTurnByIdTest() throws SQLException {
+		roomDAO.addRoom("hello world", "white");
+		int roomId = roomDAO.findRoomIdByRoomName("hello world");
+		String color = roomDAO.findTurnById(roomId);
+		assertThat(Color.valueOf(color.toUpperCase())).isEqualTo(Color.WHITE);
 	}
 }
