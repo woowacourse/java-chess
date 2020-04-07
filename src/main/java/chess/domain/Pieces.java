@@ -5,11 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 import chess.domain.piece.Team;
 
 public class Pieces {
+	public static final int BOTH_TEAM_KING_NUMBER = 2;
 	private final Map<Position, Piece> pieces;
 
 	public Pieces(Map<Position, Piece> pieces) {
@@ -34,13 +35,13 @@ public class Pieces {
 
 	public boolean isBothKingAlive() {
 		return this.getAlivePieces().stream()
-			.filter(p -> p instanceof King)
-			.count() == 2;
+			.filter(p -> p.getScore() == PieceRule.KING.getScore())
+			.count() == BOTH_TEAM_KING_NUMBER;
 	}
 
 	public Team teamWithAliveKing() {
 		return this.getAlivePieces().stream()
-			.filter(p -> p instanceof King)
+			.filter(p -> p.getScore() == PieceRule.KING.getScore())
 			.findFirst()
 			.orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
 			.getTeam();

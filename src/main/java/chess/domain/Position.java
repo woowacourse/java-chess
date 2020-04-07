@@ -12,6 +12,8 @@ public class Position {
 	private static final int LOWER_BOUND = 1;
 	private static final int UPPER_BOUND = 8;
 	private static final String INVALID_POSITION = "올바른 위치값을 입력해 주십시오.";
+	public static final int LOWER_TEAM_PAWN_POSITION = 2;
+	public static final int UPPER_TEAM_PAWN_POSITION = 7;
 	private final int x;
 	private final int y;
 
@@ -76,7 +78,7 @@ public class Position {
 	}
 
 	public boolean isPawnInOriginalPosition() {
-		return this.y == 2 || this.y == 7;
+		return this.y == LOWER_TEAM_PAWN_POSITION || this.y == UPPER_TEAM_PAWN_POSITION;
 	}
 
 	public boolean isInSameColumn(Position position) {

@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceRule;
 
 public class TotalScore {
 	private static final double PAWN_DISADVANTAGE = 0.5;
@@ -23,7 +24,7 @@ public class TotalScore {
 
 	private double sameColumnPawnHandler(double plainSum) {
 		List<Pawn> pawns = pieces.stream()
-			.filter(p -> p instanceof Pawn)
+			.filter(p -> p.getScore() == PieceRule.PAWN.getScore())
 			.map(p -> (Pawn)p)
 			.collect(Collectors.toList());
 		for (Pawn pawn : pawns) {
