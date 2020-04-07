@@ -30,8 +30,9 @@ public class PieceDAOTest {
         List<TileDto> tileDtos = new ArrayList<>(Arrays.asList(
                 a2WhitePawn, a6BlackPawn
         ));
+        ChessBoard chessBoard = new ChessBoard(12);
 
-        pieceDAO.addPiece(12, tileDtos);
+        pieceDAO.addPiece(chessBoard, tileDtos);
     }
 
     @Disabled
@@ -47,7 +48,8 @@ public class PieceDAOTest {
     @DisplayName("저장되어 있는 피스 정보 불러오기")
     @Test
     void findPieceTest() throws Exception {
-        List<PieceOnBoard> pieceOnBoards = pieceDAO.findPiece(12);
+        ChessBoard chessBoard = new ChessBoard(12);
+        List<PieceOnBoard> pieceOnBoards = pieceDAO.findPiece(chessBoard);
 
         Assertions.assertThat(pieceOnBoards).containsExactly(
                 new PieceOnBoard(6, "a2", "p_white", 12),

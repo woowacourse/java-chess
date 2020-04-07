@@ -17,8 +17,8 @@
     </tr>
     </thead>
     <tbody>
+    {{#gameData}}
     <tr>
-        {{#gameData}}
         <form action="/continueGame" method="post">
             <td>{{chessBoardId}}</td>
             <td>{{whitePlayer}}</td>
@@ -27,8 +27,8 @@
                 <button id="game-start">Start</button>
             </td>
         </form>
-        {{/gameData}}
     </tr>
+    {{/gameData}}
     </tbody>
 </table>
 </body>

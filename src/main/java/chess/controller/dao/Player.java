@@ -5,10 +5,15 @@ import java.util.Objects;
 public class Player {
     private String whitePlayer;
     private String blackPlayer;
+    private int chessBoardId;
 
     public Player(String whitePlayer, String blackPlayer) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
+    }
+
+    public void setChessBoardId(int chessBoardId) {
+        this.chessBoardId = chessBoardId;
     }
 
     public String getWhitePlayer() {
@@ -17,6 +22,10 @@ public class Player {
 
     public String getBlackPlayer() {
         return this.blackPlayer;
+    }
+
+    public int getChessBoardId() {
+        return this.chessBoardId;
     }
 
     @Override

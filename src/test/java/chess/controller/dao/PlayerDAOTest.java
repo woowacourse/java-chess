@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 public class PlayerDAOTest {
     private PlayerDAO playerDAO;
 
@@ -42,5 +44,16 @@ public class PlayerDAOTest {
         ChessBoard chessBoard = new ChessBoard(5);
 
         this.playerDAO.deletePlayer(chessBoard);
+    }
+
+    @Disabled
+    @DisplayName("전체 플레이어 정보 찾기")
+    @Test
+    void findAllPlayerTest() throws Exception {
+        List<Player> players = this.playerDAO.findAllPlayer();
+        Player expected = new Player("pobi", "json");
+        expected.setChessBoardId(8);
+
+        Assertions.assertThat(players).contains(expected);
     }
 }

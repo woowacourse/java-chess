@@ -1,6 +1,7 @@
 package chess;
 
 import chess.controller.WebChessController;
+import chess.controller.dao.Player;
 import chess.controller.dto.MoveResultDto;
 import chess.controller.dto.TeamDto;
 import chess.controller.dto.TileDto;
@@ -21,34 +22,67 @@ public class WebUIChessApplication {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            return render(model, "gameType.html");
+            return render(model, "index.html");
         });
 
-        get("/name", (req, res) -> {
+        post("/name", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
             return render(model, "name.html");
         });
 
-        get("/newGame", (req, res) -> {
-           Map<String, Object> model = new HashMap<>();
+        post("/load", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
 
-           String whitePlayer = req.queryParams("white-player");
-           String blackPlayer = req.queryParams("black-player");
+            List<Player> players = webChessController.players();
 
-           webChessController.newGame(whitePlayer, blackPlayer);
-           List<TileDto> tileDtos = webChessController.getTiles();
-           TeamDto teamDto = webChessController.getCurrentTeam();
+            model.put("gameData", players);
 
-           model.put("tiles", tileDtos);
-           model.put("currentTeam", teamDto);
+            return render(model, "table.html");
+        });
 
-           return render(model, "game.html");
+        post("/newGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            String whitePlayer = req.queryParams("white-player");
+            String blackPlayer = req.queryParams("black-player");
+
+            Player player = new Player(whitePlayer, blackPlayer);
+            webChessController.newGame(player);
+            List<TileDto> tileDtos = webChessController.getTiles();
+            TeamDto teamDto = webChessController.getCurrentTeam();
+
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+
+            return render(model, "game.html");
+        });
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
+
+            MoveResultDto moveResultDto = webChessController.move(source, target);
+            List<TileDto> tileDtos = webChessController.getTiles();
+            TeamDto teamDto = webChessController.getCurrentTeam();
+
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("message", moveResultDto.getMessage());
+            model.put("style", moveResultDto.getStyle());
+
+            if (webChessController.isEndGame()) {
+                webChessController.deleteChessGame();
+                return render(model, "end.html");
+            }
+            return render(model, "game.html");
         });
 
 //        get("/", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();
-//            return render(model, "index.html");
+//            return render(model, "index2.html");
 //        });
 //
 //        post("/game", (req, res) -> {
@@ -64,27 +98,6 @@ public class WebUIChessApplication {
 //            return render(model, "game.html");
 //        });
 //
-//        post("/move", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            String source = req.queryParams("source");
-//            String target = req.queryParams("target");
-//
-//            MoveResultDto moveResultDto = webChessController.move(source, target);
-//            List<TileDto> tileDtos = webChessController.getTiles();
-//            TeamDto teamDto = webChessController.getCurrentTeam();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//            model.put("message", moveResultDto.getMessage());
-//            model.put("style", moveResultDto.getStyle());
-//
-//            if (webChessController.isEndGame()) {
-//                webChessController.deleteChessGame();
-//                return render(model, "end.html");
-//            }
-//            return render(model, "game.html");
-//        });
 //
 //        post("/status", (req, res) -> {
 //            Map<String, Object> model = new HashMap<>();

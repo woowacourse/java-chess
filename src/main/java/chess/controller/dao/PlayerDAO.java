@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PlayerDAO {
     public void addPlayer(ChessBoard chessBoard, Player player) throws SQLException {
@@ -43,5 +45,24 @@ public class PlayerDAO {
         pstmt.setInt(1, chessBoard.getChessBoardId());
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
+    }
+
+    public List<Player> findAllPlayer() throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String query = "SELECT whitePlayer, blackPlayer, chessBoardId FROM player";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+        List<Player> players = new ArrayList<>();
+
+        while (rs.next()) {
+            Player player = new Player(
+                    rs.getString("whitePlayer"),
+                    rs.getString("blackPlayer")
+            );
+            player.setChessBoardId(rs.getInt("chessBoardId"));
+            players.add(player);
+        }
+
+        return players;
     }
 }

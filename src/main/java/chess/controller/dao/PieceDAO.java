@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class PieceDAO {
-    public void addPiece(int chessBoardId, List<TileDto> tileDtos) throws SQLException {
+    public void addPiece(ChessBoard chessBoard, List<TileDto> tileDtos) throws SQLException {
         Connection con = ConnectionManager.getConnection();
         for (TileDto tileDto : tileDtos) {
             String query = "INSERT INTO piece (position, pieceImageUrl, chessBoardId) "
@@ -19,7 +19,7 @@ public class PieceDAO {
             PreparedStatement pstmt = con.prepareStatement(query);
             pstmt.setString(1, tileDto.getPosition());
             pstmt.setString(2, tileDto.getPieceImageUrl());
-            pstmt.setInt(3, chessBoardId);
+            pstmt.setInt(3, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         }
         ConnectionManager.closeConnection(con);
@@ -38,13 +38,13 @@ public class PieceDAO {
         ConnectionManager.closeConnection(con);
     }
 
-    public List<PieceOnBoard> findPiece(int chessBoardId) throws SQLException {
+    public List<PieceOnBoard> findPiece(ChessBoard chessBoard) throws SQLException {
         List<PieceOnBoard> pieceOnBoards = new ArrayList<>();
 
         Connection con = ConnectionManager.getConnection();
         String query = "SELECT * FROM piece WHERE chessBoardId = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setInt(1, chessBoardId);
+        pstmt.setInt(1, chessBoard.getChessBoardId());
         ResultSet rs = pstmt.executeQuery();
 
         while (rs.next()) {
