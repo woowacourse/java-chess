@@ -26,6 +26,7 @@ function move(now, dest) {
             alert(response["error"]);
             return;
         }
+        console.log(response);
         await deletePieces();
         await addPieces(response);
     };
@@ -87,6 +88,7 @@ function start() {
 function resume() {
     return new Promise((resolve, reject) => {
         let roomID = $("#roomID").val();
+        console.log(roomID);
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
@@ -113,9 +115,10 @@ function addPieces(response) {
             $("#turn").addClass("black-color");
         } else {
             $("#turn").remove();
+            let roomID = $("#roomID").val();
             $.ajax({
                 type: "get",
-                url: "/winner",
+                url: "/winner/" + roomID,
                 dataType: "json",
                 error: function (xhr, status, error) {
                     return reject();
@@ -131,8 +134,8 @@ function addPieces(response) {
 
 function moveRequest(now, destination) {
     return new Promise((resolve, reject) => {
-        let roomID =
-            console.log("테스트")
+        let roomID = $("#roomID").val();
+        console.log("테스트")
         console.log(now);
         console.log(destination);
         var queryString = `now=${now}&destination=${destination}`;

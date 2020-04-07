@@ -16,9 +16,11 @@ import spark.Request;
 public class WebController {
 	private final PieceDAO pieceDAO = new PieceDAO();
 	private final GameStateDAO gameStateDAO = new GameStateDAO();
+	private final Map<Long, GameManager> session = new HashMap<>();
 
-	public Object winner(GameManager gameManager) {
+	public Object winner(Long roomID) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
+		GameManager gameManager = createGameManager(roomID);
 		try {
 			model.put("winner", gameManager.findWinner());
 		} catch (IllegalArgumentException | NullPointerException e) {
@@ -27,23 +29,15 @@ public class WebController {
 		return model;
 	}
 
-	public List<GameStatistic> status(GameManager gameManager) {
-		return gameManager.createStatistics();
+	public List<GameStatistic> status(Long roomID) throws SQLException {
+		return createGameManager(roomID).createStatistics();
 	}
 
 	public GameManager resume(Long roomID) throws SQLException {
-		Map<Location, Piece> allPieces = pieceDAO.findAll(roomID);
-		GameState gameState = gameStateDAO.findGameState(roomID);
-
-		return new GameManager(allPieces, gameState);
+		return createGameManager(roomID);
 	}
 
-	// todo : 여기서 ID가 생겨야하지않을까?
 	public GameManager start(Long roomID) throws SQLException {
-
-		gameStateDAO.deleteAll(roomID);
-		pieceDAO.deleteAll(roomID);
-
 		GameManager gameManager = new GameManager(new PieceFactory().createPieces(), GameState.RUNNING_WHITE_TURN);
 
 		Map<Location, Piece> board = gameManager.getBoard();
@@ -51,13 +45,16 @@ public class WebController {
 			pieceDAO.addPiece(roomID, location, board.get(location));
 		}
 		gameStateDAO.addGameState(roomID, GameState.RUNNING_WHITE_TURN);
+
+		session.put(roomID, gameManager);
 		return gameManager;
 	}
 
 	public Object move(Long roomID, Request request) throws SQLException {
 		String now = request.queryParams("now");
 		String destination = request.queryParams("destination");
-		GameManager gameManager = new GameManager(pieceDAO.findAll(roomID), gameStateDAO.findGameState(roomID));
+		GameManager gameManager = createGameManager(roomID);
+
 		try {
 			gameManager.movePiece(Location.of(now), Location.of(destination));
 		} catch (IllegalArgumentException | NullPointerException e) {
@@ -73,5 +70,10 @@ public class WebController {
 		gameStateDAO.updateMessage(roomID, gameState, gameState.findOpposingTeam());
 
 		return gameManager;
+	}
+
+	private GameManager createGameManager(Long roomID) throws SQLException {
+		return session.getOrDefault(roomID,
+			new GameManager(pieceDAO.findAll(roomID), gameStateDAO.findGameState(roomID)));
 	}
 }

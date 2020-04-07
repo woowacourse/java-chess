@@ -22,6 +22,10 @@ public class GameManager {
 		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.chessBoard = new ChessBoard(pieces);
 		this.gameState = gameState;
+		// todo : 추가된 방어로직
+		if (!chessBoard.hasTwoKings()) {
+			this.gameState = GameState.END;
+		}
 	}
 
 	public boolean isRunning() {

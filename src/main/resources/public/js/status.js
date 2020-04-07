@@ -1,8 +1,9 @@
 function getStatistics() {
     return new Promise(((resolve, reject) => {
+        let roomID = $("#roomID").val();
         $.ajax({
             type: 'get',
-            url: '/status',
+            url: '/status/' + roomID,
             dataType: 'json',
             error: function (xhr, status, error) {
                 reject();

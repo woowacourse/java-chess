@@ -28,7 +28,7 @@ public class RoomDAO {
 	}
 
 	public String createRoom() throws SQLException {
-		String query = "INSERT INTO ROOM value ()";
+		String query = "INSERT INTO room value ()";
 		PreparedStatement pstmt = ConnectionManager.getConnection()
 			.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 		pstmt.executeUpdate();

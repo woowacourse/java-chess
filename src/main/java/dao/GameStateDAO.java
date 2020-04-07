@@ -8,14 +8,16 @@ import chess.gamestate.GameState;
 
 public class GameStateDAO {
 	public void addGameState(Long roomID, GameState gameState) throws SQLException {
-		String query = "INSERT INTO gamestate(room_id,message) VALUES (?, ?)";
+		String query = "INSERT INTO gamestate(room_id, message) VALUES (?, ?)";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setLong(1, roomID);
 		pstmt.setString(2, gameState.toString());
+		System.out.println("test");
+		System.out.println(pstmt.toString());
 		pstmt.executeUpdate();
 	}
 
-	public void deleteAll(Long roomID) throws SQLException {
+	public void delete(Long roomID) throws SQLException {
 		String query = "DELETE FROM gamestate WHERE room_id = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
 		pstmt.setString(1, String.valueOf(roomID));
@@ -26,7 +28,6 @@ public class GameStateDAO {
 		String query = "DELETE FROM gamestate WHERE message = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
 		pstmt.setString(1, String.valueOf(roomID));
-		pstmt.setString(2, gameState.toString());
 		pstmt.executeUpdate();
 	}
 
@@ -45,8 +46,8 @@ public class GameStateDAO {
 	public void updateMessage(Long roomID, GameState gameState, GameState opposingTeam) throws SQLException {
 		String query = "UPDATE gamestate SET message = ? WHERE room_id = ? AND message = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, String.valueOf(roomID));
-		pstmt.setString(2, opposingTeam.toString());
+		pstmt.setString(1, opposingTeam.toString());
+		pstmt.setLong(2, roomID);
 		pstmt.setString(3, gameState.toString());
 
 		pstmt.executeUpdate();

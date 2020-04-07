@@ -15,7 +15,7 @@ class GameStateDAOTest {
 	@Test
 	void name() throws SQLException {
 		GameStateDAO gameStateDAO = new GameStateDAO();
-		gameStateDAO.deleteAll();
+		gameStateDAO.delete();
 
 		gameStateDAO.addGameState(GameState.RUNNING_WHITE_TURN);
 
@@ -35,14 +35,14 @@ class GameStateDAOTest {
 
 		assertThat(actual).isEqualTo(GameState.RUNNING_WHITE_TURN);
 
-		gameStateDAO.deleteAll();
+		gameStateDAO.delete();
 	}
 
 	@DisplayName("GameState 변경 테스트")
 	@Test
 	void updateMessage() throws SQLException {
 		GameStateDAO gameStateDAO = new GameStateDAO();
-		gameStateDAO.deleteAll();
+		gameStateDAO.delete();
 
 		gameStateDAO.addGameState(GameState.RUNNING_WHITE_TURN);
 

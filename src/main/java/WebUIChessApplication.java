@@ -32,8 +32,7 @@ public class WebUIChessApplication {
 		delete("/:roomID", ((request, response) -> { // 삭제
 			String roomID = request.params("roomID");
 			new RoomDAO().delete(roomID);
-			response.redirect("/");
-			return null;
+			return true;
 		}));
 
 		get("/:roomID", (req, res) -> { // 방 조회
@@ -56,8 +55,13 @@ public class WebUIChessApplication {
 				webController.resume(Long.valueOf(request.params("roomID")))
 			, gson::toJson);
 
-		// get("/status", (request, response) -> webController.status(), gson::toJson);
-		// get("/winner", (request, response) -> webController.winner(), gson::toJson);
+		get("/status/:roomID", (request, response) ->
+				webController.status(Long.valueOf(request.params("roomID")))
+			, gson::toJson);
+
+		get("/winner/:roomID", (request, response) ->
+				webController.winner(Long.valueOf(request.params("roomID"))),
+			gson::toJson);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

@@ -29,8 +29,9 @@
     function delete_button(room_id) {
         $.ajax({
             url: `/${room_id.id}`,
-            method: "DELETE"
-        })
+            method: "DELETE",
+            success: () => location.reload("/")
+        });
     }
 </script>
 </body>
