@@ -9,7 +9,7 @@ import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 public class KingStrategy extends MovingStrategy {
-	private static final List<Direction> directions = Direction.everyDirection();
+	private static final List<Direction> directions = Direction.EVERY_DIRECTION;
 
 	@Override
 	protected void checkDirection(Position source, Position target) {
