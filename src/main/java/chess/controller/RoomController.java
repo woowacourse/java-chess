@@ -1,6 +1,6 @@
 package chess.controller;
 
-import static chess.util.HandlebarUtil.*;
+import static chess.util.HandlebarsUtil.*;
 
 import java.util.HashMap;
 import java.util.List;
