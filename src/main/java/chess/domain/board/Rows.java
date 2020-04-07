@@ -6,7 +6,9 @@ import chess.domain.position.Column;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.Row;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rows {

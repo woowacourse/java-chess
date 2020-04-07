@@ -58,7 +58,7 @@ public class WebChessController {
 
     public Map<String, Object> board(){
         Map<String, Object> model = new HashMap<>();
-        model.put("board", chessGame.createWebBoard().getPiecesForTransfer());
+        model.put("board", chessGame.createBoard().getPiecesForTransfer());
         model.put("turn", chessGame.getTurn());
         model.put("score", chessGame.calculateScore());
         model.put("status", true);

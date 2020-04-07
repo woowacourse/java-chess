@@ -6,7 +6,6 @@ import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
-import chess.domain.board.WebBoard;
 
 public class ChessGame {
     private Pieces pieces;
@@ -41,10 +40,6 @@ public class ChessGame {
 
     public Board createBoard() {
         return new Board(pieces);
-    }
-
-    public WebBoard createWebBoard() {
-        return new WebBoard(pieces);
     }
 
     public Color getAliveKingColor() {
