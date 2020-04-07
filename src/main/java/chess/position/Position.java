@@ -1,5 +1,7 @@
 package chess.position;
 
+import chess.exception.InvalidPositionException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,7 +10,6 @@ import java.util.Map;
 public class Position {
 
     private static final Map<String, Position> CACHE = new HashMap<>();
-    private static final int KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE = 2;
 
     static {
         for (File file : File.values()) {
@@ -21,6 +22,7 @@ public class Position {
     private final File file;
 
     private final Rank rank;
+
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
@@ -34,18 +36,22 @@ public class Position {
     }
 
     public static Position of(String key) {
-        String lowerCaseKey = key.toLowerCase();
+        String lowerCaseKey = key.toLowerCase().trim();
         validate(lowerCaseKey);
         return CACHE.get(lowerCaseKey);
     }
 
-    private static String getKey(File file, Rank rank) {
+    public static String getKey(File file, Rank rank) {
         return file.getName() + rank.getName();
+    }
+
+    public String getKey() {
+        return this.file.getName() + this.rank.getName();
     }
 
     private static void validate(String key) {
         if (CACHE.get(key) == null) {
-            throw new IllegalArgumentException("위치 입력값이 올바르지 않습니다.");
+            throw new InvalidPositionException(key);
         }
     }
 
@@ -70,6 +76,10 @@ public class Position {
         return this.file == other.file || this.rank == other.rank;
     }
 
+    public boolean isNotStraight(Position other) {
+        return !isStraight(other);
+    }
+
     public boolean isDiagonal(Position other) {
         return isSameSum(other) || isSameDifference(other);
     }
@@ -88,10 +98,6 @@ public class Position {
 
     public boolean isNotDiagonal(Position other) {
         return !isDiagonal(other);
-    }
-
-    public boolean isNotStraight(Position other) {
-        return !isStraight(other);
     }
 
     public boolean isSameRank(Position other) {
@@ -114,13 +120,8 @@ public class Position {
         return this.rank.isNear(other.rank) && this.file.isNear(other.file);
     }
 
-    public boolean isNotMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
-        return !isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(other);
-    }
-
-    private boolean isMultiplicationOfDifferenceBetweenFileAndRankIsTwo(Position other) {
-        return this.file.findDifference(other.file) * this.rank.findDifference(other.rank)
-                == KNIGHT_MULTIPLICATION_OF_BETWEEN_FILE_DISTANCE_AND_RANK_DISTANCE;
+    public int multiplicationOfDifferenceBetweenFileAndRank(Position other) {
+        return this.file.findDifference(other.file) * this.rank.findDifference(other.rank);
     }
 
     public int increaseAmountOfRank(Position other) {
@@ -132,8 +133,8 @@ public class Position {
     }
 
     public Position at(Direction direction) {
-        File file = this.file.getFileUsingIncreaseAmount(direction.getIncreaseAmountOfFile());
-        Rank rank = this.rank.getRankUsingIncreaseAmount(direction.getIncreaseAmountOfRank());
+        File file = this.file.addFile(direction.getIncreaseAmountOfFile());
+        Rank rank = this.rank.addRank(direction.getIncreaseAmountOfRank());
         return Position.of(file, rank);
     }
 

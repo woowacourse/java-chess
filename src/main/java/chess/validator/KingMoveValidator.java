@@ -16,9 +16,4 @@ public class KingMoveValidator extends MoveValidator {
     protected List<Position> movePathExceptSourceAndTarget(Position source, Position target) {
         return Collections.emptyList();
     }
-
-    @Override
-    protected boolean isKingKilledIfMoves(Board board, Position source, Position target) {
-        return board.isKilledIfMoves(source, target);
-    }
 }

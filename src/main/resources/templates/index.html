@@ -1,10 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
+    <title>체스게임 made by 그래</title>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-Hello World!!
+<h1>핵꿀잼 체스</h1>
+<div class="container">
+    <div class="chess-board">
+        {{{board}}}
+    </div>
+    <div class="source-and-target">
+        <div class="source-and-target-message">
+            출발지와 목적지를 입력해주세요.
+        </div>
+        <form class="source-and-target-inputs" method="POST" action="/">
+            <input type="text" name="source" placeholder="a1">
+            ->
+            <input type="text" name="target" placeholder="a2">
+            <input type="submit" value="이동">
+        </form>
+    </div>
+    <div class="buttons">
+        <form method="POST" action="/newgame">
+            <input type="submit" value="새 게임">
+        </form>
+        <form method="POST" action="/scores">
+            <input type="submit" value="점수 보기">
+        </form>
+    </div>
+</div>
 </body>
 </html>

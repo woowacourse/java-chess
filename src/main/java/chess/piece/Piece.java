@@ -2,29 +2,34 @@ package chess.piece;
 
 import chess.Board;
 import chess.position.Position;
-import chess.validator.MoveValidator;
 
-public abstract class Piece {
-    protected final Team team;
-    protected final String symbol;
-    protected boolean hasMoved;
-    protected final MoveValidator moveValidator;
-    protected final double score;
+public class Piece {
+    private final Team team;
+    private final PieceType pieceType;
+    private boolean hasMoved;
 
-    public Piece(Team team, String symbol, MoveValidator moveValidator, double score) {
+    public Piece(Team team, PieceType pieceType, boolean hasMoved) {
         this.team = team;
-        this.symbol = team.isBlack() ? symbol.toUpperCase() : symbol.toLowerCase();
-        this.hasMoved = false;
-        this.moveValidator = moveValidator;
-        this.score = score;
+        this.pieceType = pieceType;
+        this.hasMoved = hasMoved;
+    }
+
+    public Piece(Team team, PieceType pieceType) {
+        this(team, pieceType, false);
+    }
+
+    public static Piece of(char symbol, boolean hasMoved) {
+        if (symbol == '.') {
+            return new Piece(Team.NONE, PieceType.NONE);
+        }
+        if (Character.isUpperCase(symbol)) {
+            return new Piece(Team.BLACK, PieceType.of(symbol), hasMoved);
+        }
+        return new Piece(Team.WHITE, PieceType.of(Character.toUpperCase(symbol)), hasMoved);
     }
 
     public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
-        this.moveValidator.throwExceptionIfNotMovable(board, source, target);
-    }
-
-    public void throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(Board board, Position source, Position target) {
-        this.moveValidator.throwExceptionIfNotMovableWithoutConsideringKingCouldBeKilledNextTurn(board, source, target);
+        this.pieceType.validate(board, source, target);
     }
 
     public void updateHasMoved() {
@@ -47,20 +52,28 @@ public abstract class Piece {
         return this.team == Team.BLACK;
     }
 
+    public boolean isKing() {
+        return this.pieceType.isKing();
+    }
+
     public boolean isPawn() {
-        return this instanceof Pawn;
+        return this.pieceType.isPawn();
     }
 
     public boolean isEmpty() {
-        return this instanceof EmptyPiece;
+        return this.pieceType.isNone();
+    }
+
+    public boolean isNotEmpty() {
+        return !isEmpty();
     }
 
     public Team getTeam() {
         return this.team;
     }
 
-    public String getSymbol() {
-        return this.symbol;
+    public char getSymbol() {
+        return team.isBlack() ? pieceType.getUpperCaseInitialCharacter() : pieceType.getLowerCaseInitialCharacter();
     }
 
     public boolean getHasMoved() {
@@ -68,6 +81,6 @@ public abstract class Piece {
     }
 
     public double getScore() {
-        return this.score;
+        return this.pieceType.getScore();
     }
 }
