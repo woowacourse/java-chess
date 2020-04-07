@@ -26,12 +26,4 @@ public class Rows {
                 .collect(Collectors.toList());
         return Collections.unmodifiableList(resources);
     }
-
-    public Map<Position, Piece> getPiecesForTransfer(){
-        Map<Position, Piece> result = new HashMap<>();
-        for(Piece piece : pieces) {
-            result.put(piece.getPosition(), piece);
-        }
-        return Collections.unmodifiableMap(result);
-    }
 }

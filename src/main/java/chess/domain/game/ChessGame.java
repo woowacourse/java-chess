@@ -6,9 +6,10 @@ import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
+import chess.domain.web.WebBoard;
 
 public class ChessGame {
-    private final Pieces pieces;
+    private Pieces pieces;
     private Turn turn;
 
     public ChessGame() {
@@ -19,6 +20,11 @@ public class ChessGame {
     public void move(Position start, Position end) {
         pieces.move(start, end, turn.getColor());
         turn = turn.change();
+    }
+
+    public void reset() {
+        pieces = PiecesFactory.create();
+        turn = new Turn(Color.WHITE);
     }
 
     public Positions findMovablePositions(Position position) {
@@ -33,11 +39,19 @@ public class ChessGame {
         return pieces.isKingDead();
     }
 
+    public Board createBoard() {
+        return new Board(pieces);
+    }
+
+    public WebBoard createWebBoard() {
+        return new WebBoard(pieces);
+    }
+
     public Color getAliveKingColor() {
         return pieces.getAliveKingColor();
     }
 
-    public Board createBoard() {
-        return new Board(pieces);
+    public Turn getTurn() {
+        return turn;
     }
 }

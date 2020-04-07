@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.domain.game.ChessGame;
 import chess.domain.game.ScoreResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
@@ -8,7 +9,6 @@ import chess.domain.util.WrongOperationException;
 import chess.domain.util.WrongPositionException;
 import chess.domain.web.Log;
 import chess.domain.web.LogDao;
-import chess.domain.web.WebChessGame;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -17,11 +17,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class WebChessController {
-    private final WebChessGame chessGame;
+    private final ChessGame chessGame;
     private final LogDao logDao;
 
     public WebChessController(){
-        chessGame = new WebChessGame();
+        chessGame = new ChessGame();
         logDao = new LogDao();
     }
 
@@ -57,7 +57,7 @@ public class WebChessController {
 
     public Map<String, Object> board(){
         Map<String, Object> model = new HashMap<>();
-        model.put("board", chessGame.createBoard().getPiecesForTransfer());
+        model.put("board", chessGame.createWebBoard().getPiecesForTransfer());
         model.put("turn", chessGame.getTurn());
         model.put("score", chessGame.calculateScore());
         model.put("status", true);
@@ -83,7 +83,6 @@ public class WebChessController {
                 for (Color color : scoreResult.keySet()) {
                     model.put(color + "score", scoreResult.getScoreBy(color));
                 }
-
                 logDao.clear();
 
                 chessGame.reset();

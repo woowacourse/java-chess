@@ -41,6 +41,7 @@ public class WebUIChessApplication {
         }, json());
 
         post("/board", (req, res) -> {
+            // TODO: 2020/04/07 isKingDead 체크될 경우 render를 result에 해줘야됨!!
             return render(chessController.move(req.queryParams("start"),req.queryParams("end")),"chess.html");
         });
 
