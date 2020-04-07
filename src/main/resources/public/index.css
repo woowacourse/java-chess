@@ -1,5 +1,4 @@
 .main {
-    background-image: url("image/dream.jpg");
     margin:0 auto;
 }
 
@@ -7,7 +6,6 @@
     border: 49px solid #462921;
     width: 560px;
     margin: 0 auto;
-    margin-top: 193px;
     display: grid;
     grid-gap: 0;
     grid-template-columns: repeat(8, 70px);
