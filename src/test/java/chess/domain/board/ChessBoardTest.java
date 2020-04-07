@@ -1,9 +1,9 @@
 package chess.domain.board;
 
+import chess.domain.Chess;
 import chess.domain.coordinate.Coordinate;
 import chess.domain.coordinate.File;
 import chess.domain.coordinate.Rank;
-import chess.domain.manager.ChessManager;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -20,10 +20,10 @@ class ChessBoardTest {
     @CsvSource(value = {"b1,c4", "b1,c9", "a1,a3", "a7,a2"})
     void moveTest(String sourceKey, String targetKey) {
         //given
-        ForwardChessBoard chessBoard = BoardGenerator.create();
-        ChessManager chessManager = new ChessManager(chessBoard);
+        ChessBoard chessBoard = BoardGenerator.create();
+        Chess chess = new Chess(chessBoard);
 
-        assertThatThrownBy(() -> chessBoard.move(sourceKey, targetKey))
+        assertThatThrownBy(() -> chessBoard.move(Coordinate.of(sourceKey), Coordinate.of(targetKey)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

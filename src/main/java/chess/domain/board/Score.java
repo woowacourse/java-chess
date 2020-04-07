@@ -10,6 +10,8 @@ import java.util.function.Function;
 public class Score {
     private static final int PAWN_REDUCIBLE_COUNT = 2;
     private static final double PAWN_REDUCE_SCORE = 0.5;
+    public static final Score ZERO = new Score(0, 0);
+
     private final double score;
     private final int pawnCount;
 
@@ -18,12 +20,8 @@ public class Score {
         this.pawnCount = pawnCount;
     }
 
-    public static Score zero() {
-        return new Score(0, 0);
-    }
-
     public static double calculateScore(Team team, Function<Coordinate, Tile> tileFinder) {
-        Score sum = zero();
+        Score sum = ZERO;
         for (File file : File.values()) {
             sum = sum.add(getSumFileScore(team, tileFinder, file));
             sum = sum.subtractPawnScore();
@@ -43,7 +41,7 @@ public class Score {
     }
 
     private static Score getSumFileScore(Team team, Function<Coordinate, Tile> tileFinder, File file) {
-        Score sum = zero();
+        Score sum = ZERO;
         for (Rank rank : Rank.values()) {
             Coordinate coordinate = Coordinate.of(file, rank);
             sum = sum.add(tileFinder.apply(coordinate), team);

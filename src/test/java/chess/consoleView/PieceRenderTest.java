@@ -1,5 +1,6 @@
-package chess.consolView;
+package chess.consoleView;
 
+import chess.consolView.PieceRender;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;

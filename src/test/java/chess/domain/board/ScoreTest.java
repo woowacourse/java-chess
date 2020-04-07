@@ -20,7 +20,7 @@ class ScoreTest {
     @DisplayName("zero는 0을 가지고 있다.")
     @Test
     void zero() {
-        double sum = Score.zero().getSum();
+        double sum = Score.ZERO.getScore();
 
         assertThat(sum).isEqualTo(0);
     }
