@@ -14,16 +14,21 @@ cache["K"] = "king_black"
 cache["k"] = "king_white"
 const rows = ["1", "2", "3", "4", "5", "6", "7", "8"]
 const columns = ["a", "b", "c", "d", "e", "f", "g", "h"]
-initialSet()
+create()
 
-function initialSet() {
-    $.ajax({
-        url: "/info",
-        type: "get",
-        success : function(data) {
-           caching(data)
+function create() {
+    for (column in columns) {
+        for (row in rows) {
+            value = $(`#${columns[column]}${rows[row]}`).text()
+            if (value != "." && value != "") {
+                $(`#${columns[column]}${rows[row]}`).html(createImage(value))
+            }
+            if (value == ".") {
+                $(`#${columns[column]}${rows[row]}`).text("")
+            }
+
         }
-    })
+    }
 }
 
 function createImage(piece) {
@@ -33,6 +38,15 @@ function createImage(piece) {
         return ""
     }
 }
+
+function caching(data) {
+    data = JSON.parse(data)
+    for (key in data) {
+        value = $(`#${key}`).text()
+        $(`#${key}`).html(createImage(data[key]))
+    }
+}
+
 
 function commend() {
     let input = document.getElementById("commends").value;
@@ -46,14 +60,14 @@ function commend() {
 }
 
 function move() {
-    let input = document.getElementById("input-commend").value;
-    $.ajax( {
+    let from = document.getElementById("from").value;
+    let to = document.getElementById("to").value;
+    $.ajax({
         url: "/move",
-        type: "get",
-        data: {"move": input},
+        type: "post",
+        data: {"from": from, "to": to},
         success : function(data){
-            caching(data)
-            $("#input-commend").val("");
+            window.location.href = "/chess"
         },
     })
 
@@ -62,7 +76,7 @@ function move() {
 function status() {
     $.ajax( {
         url: "/status",
-        type: "get",
+        type: "post",
         success : function(data){
             data = JSON.parse(data)
             $(`#${data["team"]}`).html(`<h2>${data["status"]}</h2>`)
@@ -70,29 +84,13 @@ function status() {
     })
 }
 
-function caching(data) {
-    data = JSON.parse(data)
-    for (key in data) {
-        value = $(`#${key}`).text()
-        $(`#${key}`).html(createImage(data[key]))
-    }
-}
-
-function isFinished() {
-    $.ajax( {
-        url: "/isFinished",
-        type: "get",
-        success : function(data){
-            console.log(data)
-        }
-    })
-}
-
 $("#commends").change(function() {
     let input = document.getElementById("commends").value;
     if (input == "status") {
-        $("#input-commend").attr("readonly", true)
+        $("#from").attr("disabled", true)
+        $("#to").attr("disabled", true)
     } else {
-        $("#input-commend").attr("readonly", false)
+        $("#from").attr("disabled", false)
+        $("#to").attr("disabled", false)
     }
 })
