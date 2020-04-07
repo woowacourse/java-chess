@@ -19,6 +19,18 @@ public class ChessDAO {
     private static final String DATABASE_NAME = "chess";
     private static final String SERVER_URL = "localhost:13306";
 
+    private static ChessDAO instance;
+
+    private ChessDAO() {
+    }
+
+    public static ChessDAO getInstance() {
+        if (instance == null) {
+            instance = new ChessDAO();
+        }
+        return instance;
+    }
+
     public Connection getConnection() {
         Connection con = null;
 
