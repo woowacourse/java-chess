@@ -1,7 +1,7 @@
 package chess;
 
-import chess.cotroller.ChessController;
-import chess.cotroller.RoomController;
+import chess.controller.ChessController;
+import chess.controller.RoomController;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
