@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/table.css"/>
+</head>
+
+<body>
+<table id="load-information">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>White</th>
+        <th>Black</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        {{#gameData}}
+        <form action="/continueGame" method="post">
+            <td>{{chessBoardId}}</td>
+            <td>{{whitePlayer}}</td>
+            <td>{{blackPlayer}}</td>
+            <td>
+                <button id="game-start">Start</button>
+            </td>
+        </form>
+        {{/gameData}}
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

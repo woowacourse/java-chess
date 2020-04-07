@@ -1,0 +1,33 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
+}
+
+div {
+    font-family: BMHANNAPro;
+}
+
+#white-label,
+#black-label {;
+    font-size: 30px;
+}
+
+#white-team,
+#black-team {
+    font-size: 30px;
+}
+
+#submit-button {
+    width: 80px;
+    height: 50px;
+    border: solid 1px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#submit-button:hover {
+    background-color: black;
+    color: white;
+}
