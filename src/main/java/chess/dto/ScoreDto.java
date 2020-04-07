@@ -1,12 +1,14 @@
 package chess.dto;
 
+import chess.domain.Status;
+
 public class ScoreDto {
 	private final double blackScore;
 	private final double whiteScore;
 
-	public ScoreDto(double blackScore, double whiteScore) {
-		this.blackScore = blackScore;
-		this.whiteScore = whiteScore;
+	public ScoreDto(Status status) {
+		this.blackScore = status.getBlackScore();
+		this.whiteScore = status.getWhiteScore();
 	}
 
 	public double getBlackScore() {

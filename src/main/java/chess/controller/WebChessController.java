@@ -9,7 +9,6 @@ import java.util.Map;
 import chess.ChessGame;
 import chess.dao.GamesDao;
 import chess.dao.MoveDao;
-import chess.domain.Status;
 import chess.domain.position.Position;
 import chess.dto.ScoreDto;
 import chess.dto.TurnDto;
@@ -85,8 +84,7 @@ public class WebChessController {
 	private String score(Request request, Response response) throws SQLException {
 		int id = Integer.parseInt(request.params(":id"));
 		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-		Status status = game.status();
-		ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
+		ScoreDto score = new ScoreDto(game.status());
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("score", score);
 		return gson.toJson(model);
