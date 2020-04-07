@@ -61,6 +61,10 @@ public class Position {
 		return column.getNumber();
 	}
 
+	public String getPosition() {
+		return PositionCache.createKey(column, row);
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
