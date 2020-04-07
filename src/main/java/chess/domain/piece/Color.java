@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 public enum Color {
-    BLACK("BLACK"),
-    WHITE("WHITE");
+    BLACK("Black"),
+    WHITE("White");
 
     private final String name;
 
