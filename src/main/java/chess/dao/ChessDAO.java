@@ -48,7 +48,7 @@ public class ChessDAO {
         }
     }
 
-    public void savePiece(List<Piece> pieces) throws SQLException {
+    public void savePieces(List<Piece> pieces) throws SQLException {
         Connection connection = getConnection();
         PreparedStatement cleanup = connection.prepareStatement("DELETE FROM Pieces");
         cleanup.executeUpdate();

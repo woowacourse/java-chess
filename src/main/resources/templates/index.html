@@ -7,7 +7,7 @@
     <script src="js/chess.js" type="text/javascript"></script>
     <link href="/css/chess.css" rel="stylesheet" type="text/css">
 </head>
-<body onload="setPieces();">
+<body onload="init();">
 <div class="chessBoardWrapper">
     <div class="chessBoard">
         <table class="playArea">
@@ -45,21 +45,21 @@
                 <td class="rankindicator">
                     8
                 </td>
-                <td class="tile light" id="a8" onclick="choose('a8')">
+                <td class="tile light" id="a8">
                 </td>
-                <td class="tile dark" id="b8" onclick="choose('b8')">
+                <td class="tile dark" id="b8">
                 </td>
-                <td class="tile light" id="c8" onclick="choose('c8')">
+                <td class="tile light" id="c8">
                 </td>
-                <td class="tile dark" id="d8" onclick="choose('d8')">
+                <td class="tile dark" id="d8">
                 </td>
-                <td class="tile light" id="e8" onclick="choose('e8')">
+                <td class="tile light" id="e8">
                 </td>
-                <td class="tile dark" id="f8" onclick="choose('f8')">
+                <td class="tile dark" id="f8">
                 </td>
-                <td class="tile light" id="g8" onclick="choose('g8')">
+                <td class="tile light" id="g8">
                 </td>
-                <td class="tile dark" id="h8" onclick="choose('h8')">
+                <td class="tile dark" id="h8">
                 </td>
                 <td class="rankindicator">
                     8
@@ -69,21 +69,21 @@
                 <td class="rankindicator">
                     7
                 </td>
-                <td class="tile dark" id="a7" onclick="choose('a7')">
+                <td class="tile dark" id="a7">
                 </td>
-                <td class="tile light" id="b7" onclick="choose('b7')">
+                <td class="tile light" id="b7">
                 </td>
-                <td class="tile dark" id="c7" onclick="choose('c7')">
+                <td class="tile dark" id="c7">
                 </td>
-                <td class="tile light" id="d7" onclick="choose('d7')">
+                <td class="tile light" id="d7">
                 </td>
-                <td class="tile dark" id="e7" onclick="choose('e7')">
+                <td class="tile dark" id="e7">
                 </td>
-                <td class="tile light" id="f7" onclick="choose('f7')">
+                <td class="tile light" id="f7">
                 </td>
-                <td class="tile dark" id="g7" onclick="choose('g7')">
+                <td class="tile dark" id="g7">
                 </td>
-                <td class="tile light" id="h7" onclick="choose('h7')">
+                <td class="tile light" id="h7">
                 </td>
                 <td class="rankindicator">
                     7
@@ -93,21 +93,21 @@
                 <td class="rankindicator">
                     6
                 </td>
-                <td class="tile light" id="a6" onclick="choose('a6')">
+                <td class="tile light" id="a6">
                 </td>
-                <td class="tile dark" id="b6" onclick="choose('b6')">
+                <td class="tile dark" id="b6">
                 </td>
-                <td class="tile light" id="c6" onclick="choose('c6')">
+                <td class="tile light" id="c6">
                 </td>
-                <td class="tile dark" id="d6" onclick="choose('d6')">
+                <td class="tile dark" id="d6">
                 </td>
-                <td class="tile light" id="e6" onclick="choose('e6')">
+                <td class="tile light" id="e6">
                 </td>
-                <td class="tile dark" id="f6" onclick="choose('f6')">
+                <td class="tile dark" id="f6">
                 </td>
-                <td class="tile light" id="g6" onclick="choose('g6')">
+                <td class="tile light" id="g6">
                 </td>
-                <td class="tile dark" id="h6" onclick="choose('h6')">
+                <td class="tile dark" id="h6">
                 </td>
                 <td class="rankindicator">
                     6
@@ -117,21 +117,21 @@
                 <td class="rankindicator">
                     5
                 </td>
-                <td class="tile dark" id="a5" onclick="choose('a5')">
+                <td class="tile dark" id="a5">
                 </td>
-                <td class="tile light" id="b5" onclick="choose('b5')">
+                <td class="tile light" id="b5">
                 </td>
-                <td class="tile dark" id="c5" onclick="choose('c5')">
+                <td class="tile dark" id="c5">
                 </td>
-                <td class="tile light" id="d5" onclick="choose('d5')">
+                <td class="tile light" id="d5">
                 </td>
-                <td class="tile dark" id="e5" onclick="choose('e5')">
+                <td class="tile dark" id="e5">
                 </td>
-                <td class="tile light" id="f5" onclick="choose('f5')">
+                <td class="tile light" id="f5">
                 </td>
-                <td class="tile dark" id="g5" onclick="choose('g5')">
+                <td class="tile dark" id="g5">
                 </td>
-                <td class="tile light" id="h5" onclick="choose('h5')">
+                <td class="tile light" id="h5">
                 </td>
                 <td class="rankindicator">
                     5
@@ -141,21 +141,21 @@
                 <td class="rankindicator">
                     4
                 </td>
-                <td class="tile light" id="a4" onclick="choose('a4')">
+                <td class="tile light" id="a4">
                 </td>
-                <td class="tile dark" id="b4" onclick="choose('b4')">
+                <td class="tile dark" id="b4">
                 </td>
-                <td class="tile light" id="c4" onclick="choose('c4')">
+                <td class="tile light" id="c4">
                 </td>
-                <td class="tile dark" id="d4" onclick="choose('d4')">
+                <td class="tile dark" id="d4">
                 </td>
-                <td class="tile light" id="e4" onclick="choose('e4')">
+                <td class="tile light" id="e4">
                 </td>
-                <td class="tile dark" id="f4" onclick="choose('f4')">
+                <td class="tile dark" id="f4">
                 </td>
-                <td class="tile light" id="g4" onclick="choose('g4')">
+                <td class="tile light" id="g4">
                 </td>
-                <td class="tile dark" id="h4" onclick="choose('h4')">
+                <td class="tile dark" id="h4">
                 </td>
                 <td class="rankindicator">
                     4
@@ -165,21 +165,21 @@
                 <td class="rankindicator">
                     3
                 </td>
-                <td class="tile dark" id="a3" onclick="choose('a3')">
+                <td class="tile dark" id="a3">
                 </td>
-                <td class="tile light" id="b3" onclick="choose('b3')">
+                <td class="tile light" id="b3">
                 </td>
-                <td class="tile dark" id="c3" onclick="choose('c3')">
+                <td class="tile dark" id="c3">
                 </td>
-                <td class="tile light" id="d3" onclick="choose('d3')">
+                <td class="tile light" id="d3">
                 </td>
-                <td class="tile dark" id="e3" onclick="choose('e3')">
+                <td class="tile dark" id="e3">
                 </td>
-                <td class="tile light" id="f3" onclick="choose('f3')">
+                <td class="tile light" id="f3">
                 </td>
-                <td class="tile dark" id="g3" onclick="choose('g3')">
+                <td class="tile dark" id="g3">
                 </td>
-                <td class="tile light" id="h3" onclick="choose('h3')">
+                <td class="tile light" id="h3">
                 </td>
                 <td class="rankindicator">
                     3
@@ -189,21 +189,21 @@
                 <td class="rankindicator">
                     2
                 </td>
-                <td class="tile light" id="a2" onclick="choose('a2')">
+                <td class="tile light" id="a2">
                 </td>
-                <td class="tile dark" id="b2" onclick="choose('b2')">
+                <td class="tile dark" id="b2">
                 </td>
-                <td class="tile light" id="c2" onclick="choose('c2')">
+                <td class="tile light" id="c2">
                 </td>
-                <td class="tile dark" id="d2" onclick="choose('d2')">
+                <td class="tile dark" id="d2">
                 </td>
-                <td class="tile light" id="e2" onclick="choose('e2')">
+                <td class="tile light" id="e2">
                 </td>
-                <td class="tile dark" id="f2" onclick="choose('f2')">
+                <td class="tile dark" id="f2">
                 </td>
-                <td class="tile light" id="g2" onclick="choose('g2')">
+                <td class="tile light" id="g2">
                 </td>
-                <td class="tile dark" id="h2" onclick="choose('h2')">
+                <td class="tile dark" id="h2">
                 </td>
                 <td class="rankindicator">
                     2
@@ -213,21 +213,21 @@
                 <td class="rankindicator">
                     1
                 </td>
-                <td class="tile dark" id="a1" onclick="choose('a1')">
+                <td class="tile dark" id="a1">
                 </td>
-                <td class="tile light" id="b1" onclick="choose('b1')">
+                <td class="tile light" id="b1">
                 </td>
-                <td class="tile dark" id="c1" onclick="choose('c1')">
+                <td class="tile dark" id="c1">
                 </td>
-                <td class="tile light" id="d1" onclick="choose('d1')">
+                <td class="tile light" id="d1">
                 </td>
-                <td class="tile dark" id="e1" onclick="choose('e1')">
+                <td class="tile dark" id="e1">
                 </td>
-                <td class="tile light" id="f1" onclick="choose('f1')">
+                <td class="tile light" id="f1">
                 </td>
-                <td class="tile dark" id="g1" onclick="choose('g1')">
+                <td class="tile dark" id="g1">
                 </td>
-                <td class="tile light" id="h1" onclick="choose('h1')">
+                <td class="tile light" id="h1">
                 </td>
                 <td class="rankindicator">
                     1

@@ -1,6 +1,13 @@
-function choose(value) {
+async function init() {
+    document.querySelectorAll(".tile").forEach(e => {
+        e.addEventListener("click", () => choose(e));
+    });
+    await setPieces();
+}
+
+async function choose(value) {
     if (document.querySelector('.source')) {
-        chooseDestination(value);
+        await chooseDestination(value);
     } else {
         chooseSource(value);
     }
@@ -23,7 +30,7 @@ async function setPieces() {
 
     let status = await (fetch("/status").then((data) => data.json()));
 
-    Object.values(document.querySelectorAll(".tile")).forEach(e => {
+    document.querySelectorAll(".tile").forEach(e => {
         e.innerHTML = "";
     });
 
@@ -36,12 +43,12 @@ async function setPieces() {
     document.querySelector("#turnInfo").innerText = teamName.get(status.turn.team) + "의 차례입니다.";
 }
 
-function chooseSource(sourceValue) {
-    document.getElementById(sourceValue).classList.add('source');
+function chooseSource(source) {
+    source.classList.add('source');
 }
 
-async function chooseDestination(destinationValue) {
-    await document.getElementById(destinationValue).classList.add('destination');
+async function chooseDestination(destination) {
+    await destination.classList.add('destination');
     await move();
 }
 
