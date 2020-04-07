@@ -9,8 +9,10 @@ public class ChessGame {
     private ChessBoard chessBoard;
     private GameStatus gameStatus;
 
-    public ChessGame() {
-        gameStatus = GameStatus.NOT_STARTED;
+    public ChessGame(ChessBoard chessBoard, Player turn, GameStatus gameStatus) {
+        this.chessBoard = chessBoard;
+        this.turn = turn;
+        this.gameStatus = gameStatus;
     }
 
     public ResponseDto start(RequestDto requestDto) {
@@ -25,10 +27,14 @@ public class ChessGame {
         }
 
         chessBoard = new ChessBoard(PieceFactory.create());
-        turn = Player.WHITE;
-        gameStatus = GameStatus.RUNNING;
+        this.turn = Player.WHITE;
+        this.gameStatus = GameStatus.RUNNING;
 
-        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
+    }
+
+    public ResponseDto load(ChessBoard chessBoard) {
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
     }
 
     public ResponseDto move(RequestDto requestDto) {
@@ -43,15 +49,20 @@ public class ChessGame {
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
 
         this.turn = Player.reversePlayer(turn);
-        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
+
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
     }
 
     public ResponseDto status(RequestDto requestDto) {
-        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
     }
 
     public ResponseDto end(RequestDto requestDto) {
         gameStatus = GameStatus.FINISH;
-        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn);
+        return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
+    }
+
+    public GameStatus getStatus() {
+        return gameStatus;
     }
 }

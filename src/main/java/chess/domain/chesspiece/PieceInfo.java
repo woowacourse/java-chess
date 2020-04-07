@@ -55,7 +55,10 @@ public enum PieceInfo {
         return movableColumnDiff;
     }
 
-    public Piece of(Player player) {
-        return findPiece.apply(player);
+    public static Piece of(String name, String player) {
+        return PieceInfo.valueOf(name)
+                .findPiece
+                .apply(Player
+                        .valueOf(player));
     }
 }

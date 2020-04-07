@@ -3,6 +3,7 @@ package chess.controller.dao;
 import chess.controller.dto.ChessBoardDto;
 import chess.controller.dto.TileDto;
 import chess.domain.chesspiece.Piece;
+import chess.domain.chesspiece.PieceInfo;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 
@@ -37,19 +38,22 @@ public class ChessBoardDao {
         pstmt.close();
     }
 
-//    public Map<Position, Piece> loadGamePlaying(int roomNumber) throws SQLException {
-//        String query = "SELECT b.position, b.piece FROM chessboard b ON b.room = ?";
-//        PreparedStatement pstmt = connection.prepareStatement(query);
-//        pstmt.setInt(1, roomNumber);
-//
-//        ResultSet rs = pstmt.executeQuery();
-//        Map<Position, Piece> chessBoard = new HashMap<>();
-//        while (rs.next()) {
-//            chessBoard.put(Positions.of(rs.getString("position")),
-//                    ChessPieceFactory.of(rs.getString("piece")));
-//        }
-//        pstmt.close();
-//
-//        return chessBoard;
-//    }
+    public Map<Position, Piece> findPlayingChessBoard(int roomNumber) throws SQLException {
+        String query = "SELECT a.position, b.name, b.player FROM chessboard a " +
+                "INNER JOIN piece b ON a.piece_id = b.piece_id WHERE a.room = ?";
+
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, roomNumber);
+
+        ResultSet rs = pstmt.executeQuery();
+
+        Map<Position, Piece> chessBoard = new HashMap<>();
+        while (rs.next()) {
+            chessBoard.put(Positions.of(rs.getString("position")),
+                    PieceInfo.of(rs.getString("name"), rs.getString("player")));
+        }
+        pstmt.close();
+
+        return chessBoard;
+    }
 }

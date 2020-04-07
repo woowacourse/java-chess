@@ -53,18 +53,40 @@ public class GameDao {
         String query = "SELECT state FROM game WHERE game_id=?";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setInt(1, roomNumber);
+
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) return null;
+
         return rs.getString("state");
     }
 
-    public Result getResult(ResultSet rs) throws SQLException {
+    public Result findResult() throws SQLException {
+        String query = "SELECT white_score, black_score FROM game WHERE game_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+
         Status whiteStatus = new Status(Player.WHITE, rs.getDouble("white_score"));
         Status blackStatus = new Status(Player.BLACK, rs.getDouble("black_score"));
+
         List<Status> statuses = new ArrayList<>();
+
         statuses.add(whiteStatus);
         statuses.add(blackStatus);
+
         return new Result(statuses);
+    }
+
+    public Player findTurn(int roomNumber) throws SQLException {
+        String query = "SELECT turn FROM game WHERE game_id = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.setInt(1, roomNumber);
+        ResultSet rs = pstmt.executeQuery();
+
+        if(!rs.next()) return null;
+
+        return Player.valueOf(rs.getString("turn"));
     }
 
     public int findMaxRoomNumber() throws SQLException {
@@ -72,7 +94,7 @@ public class GameDao {
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
-        if(!rs.next()) return 0;
+        if (!rs.next()) return 0;
 
         return rs.getInt("MAX(game_id)");
     }

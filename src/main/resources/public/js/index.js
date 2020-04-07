@@ -25,7 +25,9 @@ $(document).ready(function () {
         type: 'get',
         url: '/loadGame',
         dataType: 'json',
-        error: initError,
+        error: function (res) {
+            alert(res.responseText);
+        },
         success: printChessBoardAndStatus
     });
 
@@ -50,17 +52,13 @@ $(document).ready(function () {
             dataType: 'json',
             data: "from=" + from + "&to=" + to,
             error: function (res) {
-                alert(res.responseText);
+                console.log(res.responseText);
             },
             success: printChessBoardAndStatus
         });
 
     });
 });
-
-function initError() {
-    alert("initError");
-}
 
 function printChessBoardAndStatus(response) {
     let chessBoardDto = response["chessBoardDto"];
