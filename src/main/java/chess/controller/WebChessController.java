@@ -20,7 +20,15 @@ import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
-	private final Gson gson = new GsonBuilder().create();
+	private final Gson gson;
+	private final MoveDao moveDao;
+	private final GamesDao gamesDao;
+
+	public WebChessController(MoveDao moveDao, GamesDao gamesDao) {
+		this.gson = new GsonBuilder().create();
+		this.moveDao = moveDao;
+		this.gamesDao = gamesDao;
+	}
 
 	public void run() {
 		Spark.staticFileLocation("/templates");
@@ -46,7 +54,6 @@ public class WebChessController {
 	private void move(Gson gson) {
 		post("/move/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			MoveDao moveDao = new MoveDao();
 			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 
 			Map<String, String> map = gson.fromJson(req.body(), Map.class);
@@ -65,7 +72,6 @@ public class WebChessController {
 	private void users(Gson gson) {
 		post("/users", (req, res) -> {
 			Map request = gson.fromJson(req.body(), Map.class);
-			GamesDao gamesDao = new GamesDao();
 			int gameId = gamesDao.createGame(String.valueOf(request.get("user1")),
 				String.valueOf(request.get("user2")));
 			HashMap<String, Object> model = new HashMap<>();
@@ -77,7 +83,6 @@ public class WebChessController {
 	private void turn(Gson gson) {
 		get("/turn/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			MoveDao moveDao = new MoveDao();
 			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 			TurnDto turnDto = new TurnDto(game.turn());
 
@@ -90,7 +95,6 @@ public class WebChessController {
 	private void score(Gson gson) {
 		get("/score/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			MoveDao moveDao = new MoveDao();
 			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 			Status status = game.status();
 			ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
@@ -103,7 +107,6 @@ public class WebChessController {
 	private void board(Gson gson) {
 		get("/board/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			MoveDao moveDao = new MoveDao();
 			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 			UnitsDto units = new UnitsDto(game.board().getBoard());
 			return gson.toJson(units);
@@ -119,16 +122,11 @@ public class WebChessController {
 	}
 
 	private void games(Gson gson) {
-		get("/games", (req, res) -> {
-			GamesDao gamesDao = new GamesDao();
-			return gson.toJson(gamesDao.everyGames());
-		});
+		get("/games", (req, res) -> gson.toJson(gamesDao.everyGames()));
 	}
 
 	private void init() {
-		get("/init", (req, res) -> {
-			return render(new HashMap<>(), "userNames.html");
-		});
+		get("/init", (req, res) -> render(new HashMap<>(), "userNames.html"));
 	}
 
 	private void index() {
