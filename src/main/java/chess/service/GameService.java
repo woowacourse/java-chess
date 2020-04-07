@@ -14,9 +14,6 @@ import chess.dto.PiecesResponseDTO;
 public class GameService {
 	private static final GameService GAME_SERVICE = new GameService();
 
-	GameDAO gameDAO = GameDAO.getInstance();
-	RoomDAO roomDAO = RoomDAO.getInstance();
-
 	private GameService() {
 	}
 
@@ -25,12 +22,16 @@ public class GameService {
 	}
 
 	public void initialize(int roomId) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
 		Pieces pieces = new Pieces(Pieces.initPieces());
 
 		gameDAO.addAllPiecesById(roomId, pieces);
 	}
 
 	public void movePiece(int roomId, String sourcePosition, String targetPosition) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
+		RoomDAO roomDAO = RoomDAO.getInstance();
+
 		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
 		GameManager gameManager = new GameManager(pieces, Color.valueOf(roomDAO.findTurnById(roomId).toUpperCase()));
 		gameManager.moveFromTo(Position.of(sourcePosition), Position.of(targetPosition));
@@ -40,8 +41,8 @@ public class GameService {
 		gameDAO.addAllPiecesById(roomId, pieces);
 	}
 
-	// TODO : roomId 마다 계산해줘야 하고, DB도 따로 만들어줘야 함.
 	public double getScore(int roomId, Color color) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
 		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
 		GameManager gameManager = new GameManager(pieces, color);
 
@@ -49,6 +50,7 @@ public class GameService {
 	}
 
 	public PiecesResponseDTO getPiecesResponseDTO(int roomId) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
 		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
 		return new PiecesResponseDTO(pieces);
 	}

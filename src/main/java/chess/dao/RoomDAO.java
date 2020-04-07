@@ -13,13 +13,14 @@ import chess.util.JDBCConnector;
 
 public class RoomDAO {
 	private static final RoomDAO ROOM_DAO = new RoomDAO();
-	Connection con = JDBCConnector.getConnection(); // TODO : 이렇게 해줘도 상관없나?
 
 	public static RoomDAO getInstance() {
 		return ROOM_DAO;
 	}
 
 	public Room findRoomById(int roomId) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		String query = "SELECT room_id, room_name, turn FROM room WHERE room_id = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, roomId);
@@ -29,29 +30,44 @@ public class RoomDAO {
 			return null;
 		}
 
-		return new Room(
+		Room room = new Room(
 			rs.getInt("room_id"),
 			rs.getString("room_name"),
 			rs.getString("turn")
 		);
+
+		JDBCConnector.closeConnection(con);
+
+		return room;
 	}
 
 	public void addRoom(String room_name, String turn) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		String query = "INSERT INTO room(room_name, turn) VALUES (?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setString(1, room_name);
 		pstmt.setString(2, turn);
 		pstmt.executeUpdate();
+
+		JDBCConnector.closeConnection(con);
 	}
 
 	public void removeRoomById(int roomId) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
+
 		String query = "DELETE FROM room WHERE room_id = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, roomId);
 		pstmt.executeUpdate();
+
+		JDBCConnector.closeConnection(con);
 	}
 
 	public int findRoomIdByRoomName(String roomName) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		String query = "SELECT room_id FROM room WHERE room_name = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setString(1, roomName);
@@ -60,11 +76,14 @@ public class RoomDAO {
 		if (!rs.next()) {
 			return 0;
 		}
+		JDBCConnector.closeConnection(con);
 
 		return rs.getInt("room_id");
 	}
 
 	public List<Room> findAllRoom() throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		List<Room> rooms = new ArrayList<>();
 
 		String query = "SELECT room_id, room_name, turn FROM room";
@@ -79,10 +98,14 @@ public class RoomDAO {
 			rooms.add(new Room(roomId, roomName, turn));
 		}
 
+		JDBCConnector.closeConnection(con);
+
 		return rooms;
 	}
 
 	public void updateTurnById(int roomId, Color color) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		String query = "UPDATE room SET turn = ? WHERE room_id = ?";
 
 		PreparedStatement pstmt = con.prepareStatement(query);
@@ -90,9 +113,13 @@ public class RoomDAO {
 		pstmt.setString(1, color.name().toLowerCase());
 		pstmt.setInt(2, roomId);
 		pstmt.executeUpdate();
+
+		JDBCConnector.closeConnection(con);
 	}
 
 	public String findTurnById(int roomId) throws SQLException {
+		Connection con = JDBCConnector.getConnection();
+
 		String query = "SELECT turn FROM room WHERE room_id = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, roomId);
@@ -101,6 +128,8 @@ public class RoomDAO {
 		if (!rs.next()) {
 			return null;
 		}
+
+		JDBCConnector.closeConnection(con);
 
 		return rs.getString("turn");
 	}
