@@ -7,11 +7,11 @@ public class StartCommand implements Command {
 
     private final String value;
 
-    public StartCommand(String value) {
+    StartCommand(String value) {
         this.value = value;
     }
 
-    public static boolean isStart(String input) {
+    static boolean isStart(String input) {
         return COMMAND.equals(input);
     }
 

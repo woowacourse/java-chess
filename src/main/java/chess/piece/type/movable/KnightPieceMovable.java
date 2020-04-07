@@ -14,11 +14,6 @@ public class KnightPieceMovable implements PieceMovable {
         return isKnightRange(route.getNow(), route.getDestination());
     }
 
-//    @Override
-//    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-//        return isKnightRange(now, after);
-//    }
-
     private boolean isKnightRange(Location now, Location destination) {
         int[] dRow = {2, 2, 1, 1, -1, -1, -2, -2};
         int[] dCol = {1, -1, -2, 2, -2, 2, -1, 1};

@@ -11,9 +11,4 @@ public class BishopMovable implements PieceMovable {
     public boolean canMove(Route route) {
         return route.isDiagonal() && hasNotObstacle(route);
     }
-
-//    @Override
-//    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-//        return now.isDiagonal(after) && hasNotObstacle(board, now, after);
-//    }
 }

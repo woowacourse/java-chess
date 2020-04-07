@@ -60,8 +60,4 @@ public class ChessSet {
         }
         throw new NoSuchElementException(NO_ELEMENT_IN_CHESS_SET_MESSAGE);
     }
-
-    public Map<Location, Piece> getChessSet() {
-        return chessSet;
-    }
 }

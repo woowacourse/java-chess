@@ -2,13 +2,10 @@ package chess.player;
 
 import chess.game.ChessSet;
 import chess.location.Location;
-import chess.piece.type.Piece;
 import chess.score.Calculatable;
 import chess.score.Score;
 import chess.score.ScoreCalculator;
 import chess.team.Team;
-
-import java.util.Map;
 
 public class Player {
     private final ChessSet chessSet;
@@ -25,7 +22,7 @@ public class Player {
         return calculatable.calculate(chessSet);
     }
 
-    public Score calculateScoreExceptPawnReduce() {
+    Score calculateScoreExceptPawnReduce() {
         return chessSet.calculateScoreExceptPawnReduce();
     }
 

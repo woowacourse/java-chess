@@ -1,10 +1,8 @@
 package chess.piece.type;
 
-import java.util.Map;
 import java.util.Objects;
 
 import chess.board.Route;
-import chess.location.Location;
 import chess.piece.type.movable.PieceMovable;
 import chess.score.Score;
 import chess.team.Team;
@@ -27,7 +25,6 @@ public abstract class Piece {
         return name;
     }
 
-    // TODO : ROUTE와 같이 경로를 추상화할 수 있을까 ?
     public boolean canMove(Route route) {
         return pieceMovable.canMove(route);
     }
@@ -47,10 +44,6 @@ public abstract class Piece {
     public boolean isKing() {
         return this.getClass() == King.class;
     }
-
-//    public boolean isReverseTeam(Team team) {
-//        return team.isReverseTeam(getTeam());
-//    }
 
     public boolean isReverseTeam(Piece piece) {
         Team anotherTeam = piece.getTeam();

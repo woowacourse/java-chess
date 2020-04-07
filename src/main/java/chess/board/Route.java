@@ -19,10 +19,6 @@ public class Route {
         this.destination = destination;
     }
 
-    public boolean containsKey(Location location) {
-        return route.containsKey(location);
-    }
-
     public boolean isDiagonal() {
         return abs(now.getRowValue() - destination.getRowValue())
                 == abs(now.getColValue() - destination.getColValue());

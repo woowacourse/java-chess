@@ -1,7 +1,5 @@
 package chess.location;
 
-import static java.lang.Math.*;
-
 import java.util.Objects;
 
 // 팀별 초기위치를 갖고있는다.

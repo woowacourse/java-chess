@@ -16,7 +16,7 @@ public class MoveCommand implements Command {
     private final Location destination;
     private final ChessGame chessGame;
 
-    public MoveCommand(Location now
+    private MoveCommand(Location now
             , Location destination
             , ChessGame chessGame) {
         this.now = now;
