@@ -88,7 +88,6 @@ public class HistoryDao {
 
         List<MoveCommand> result = new ArrayList<>();
         while (rs.next()) {
-            System.out.println("move " + rs.getString("start") + "에서 " + rs.getString("end"));
             MoveCommand moveCommand = new MoveCommand(rs.getString("start"), rs.getString("end"));
             result.add(moveCommand);
         }

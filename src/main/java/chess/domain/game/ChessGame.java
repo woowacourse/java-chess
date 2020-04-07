@@ -37,6 +37,11 @@ public class ChessGame {
         }
     }
 
+    public void load(Pieces pieces, Turn turn){
+        this.pieces = pieces;
+        this.turn = turn;
+    }
+
     public void reset() {
         pieces = PiecesFactory.create();
         turn = new Turn(Color.WHITE);
