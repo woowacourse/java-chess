@@ -29,6 +29,13 @@ public enum Row {
                 .orElseThrow(WrongPositionException::new);
     }
 
+    public static Row of(int value) {
+        return Arrays.stream(Row.values())
+                .filter(row->row.value == value)
+                .findFirst()
+                .orElseThrow(WrongPositionException::new);
+    }
+
     public Row calculate(int value) {
         return Arrays.stream(Row.values())
                 .filter(row -> row.value == this.value + value)

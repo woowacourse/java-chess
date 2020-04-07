@@ -67,6 +67,10 @@ public class Piece {
         return pieceType.isPawn();
     }
 
+    public boolean isBlank() {
+        return pieceType.equals(PieceType.BLANK);
+    }
+
     public Position getPosition() {
         return position;
     }
