@@ -44,7 +44,7 @@ public class ChessWebController {
 		List<MovingPosition> histories = chessWebService.selectAllHistory();
 
 		for (MovingPosition movingPosition : histories) {
-			chessGame.move(PositionFactory.of(movingPosition.getStart()), PositionFactory.of(movingPosition.getEnd()));
+			chessWebService.move(movingPosition.getStart(), movingPosition.getEnd(), chessGame);
 		}
 		return model;
 	}
@@ -61,26 +61,14 @@ public class ChessWebController {
 	}
 
 	public Map<String, Object> move(String start, String end) {
-		Map<String, Object> model = new HashMap<>();
-
-		if (start.equals(end)) {
-			model.put("status", true);
-			return model;
-		}
-
 		try {
-			chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-			chessWebService.insertHistory(start, end);
-			model.put("status", true);
-			if (chessGame.isKingDead()) {
-				model.put("winner", chessGame.getAliveKingColor());
-				chessWebService.resetGameAndHistory(chessGame);
-				return model;
-			}
-			return model;
+			return chessWebService.move(start, end, chessGame);
 		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
+			Map<String, Object> model = new HashMap<>();
+
 			model.put("status", false);
 			model.put("exception", e.getMessage());
+			model.put("destination", "chess.html");
 			return model;
 		}
 	}

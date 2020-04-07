@@ -32,7 +32,8 @@ public class ChessWebUIApplication {
 		}, json());
 
 		post("/board", (req, res) -> {
-			return render(chessWebController.move(req.queryParams("start"), req.queryParams("end")), "chess.html");
+			Map<String, Object> model = chessWebController.move(req.queryParams("start"), req.queryParams("end"));
+			return render(model, (String) model.get("destination"));
 		});
 
 		post("/start", (req, res) -> {
