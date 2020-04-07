@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.domain.game.ChessGame;
 import chess.domain.web.HistoryDao;
 import chess.domain.web.MovingPosition;
 
@@ -20,5 +21,9 @@ public class ChessWebService {
 	public void insertHistory(String start, String end) throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		historyDao.insert(start, end);
+	}
+
+	public List<String> findMovablePositionNames(String position, ChessGame chessGame) {
+		return chessGame.findMovablePositionNames(position);
 	}
 }

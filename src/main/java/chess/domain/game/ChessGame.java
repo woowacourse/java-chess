@@ -5,8 +5,12 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesInitializer;
 import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import chess.domain.position.positions.Positions;
 import chess.domain.web.BoardDto;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class ChessGame {
 	private Pieces pieces;
@@ -51,6 +55,14 @@ public class ChessGame {
 	public Positions findMovablePositions(Position position) {
 		Piece piece = pieces.findBy(position, turn.getColor());
 		return piece.createMovablePositions(pieces.getPieces());
+	}
+
+	public List<String> findMovablePositionNames(String position) {
+		return this.findMovablePositions(PositionFactory.of(position))
+				.getPositions()
+				.stream()
+				.map(Position::toString)
+				.collect(Collectors.toList());
 	}
 
 	public Turn getTurn() {

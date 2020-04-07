@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
-import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.web.MovingPosition;
 import chess.service.ChessWebService;
@@ -10,7 +9,6 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessWebController {
 	private ChessWebService chessWebService;
@@ -92,15 +90,11 @@ public class ChessWebController {
 	public Map<String, Object> chooseFirstPosition(String position) {
 		Map<String, Object> model = new HashMap<>();
 		try {
-			model.put("status", true);
-			List<String> movablePositionNames = chessGame
-					.findMovablePositions(PositionFactory.of(position))
-					.getPositions()
-					.stream()
-					.map(Position::toString)
-					.collect(Collectors.toList());
-			model.put("position", position);
+			List<String> movablePositionNames = chessWebService.findMovablePositionNames(position, chessGame);
+
 			model.put("movable", movablePositionNames);
+			model.put("position", position);
+			model.put("status", true);
 
 			return model;
 		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
