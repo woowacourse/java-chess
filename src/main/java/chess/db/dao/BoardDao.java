@@ -7,7 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 
-import chess.db.PieceMapper;
+import chess.db.BlackPieceMapper;
+import chess.db.WhitePieceMapper;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -98,7 +99,50 @@ public class BoardDao {
 			return null;
 		}
 
-		Piece piece = PieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		Piece piece = WhitePieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		if (Objects.isNull(piece)) {
+			piece = BlackPieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		}
+		pstmt.close();
+		closeConnection(con);
+		return piece;
+	}
+
+	public Piece findWhitePieceBy(String position) throws SQLException {
+		String query = "SELECT * FROM board WHERE position = ?";
+		Connection con = getConnection();
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, position);
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next())
+			return null;
+
+		if (Objects.isNull(rs.getString("pieceSymbol"))) {
+			return null;
+		}
+
+		Piece piece = WhitePieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		pstmt.close();
+		closeConnection(con);
+		return piece;
+	}
+
+	public Piece findBlackPieceBy(String position) throws SQLException {
+		String query = "SELECT * FROM board WHERE position = ?";
+		Connection con = getConnection();
+		PreparedStatement pstmt = con.prepareStatement(query);
+		pstmt.setString(1, position);
+		ResultSet rs = pstmt.executeQuery();
+
+		if (!rs.next())
+			return null;
+
+		if (Objects.isNull(rs.getString("pieceSymbol"))) {
+			return null;
+		}
+
+		Piece piece = BlackPieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
 		pstmt.close();
 		closeConnection(con);
 		return piece;
