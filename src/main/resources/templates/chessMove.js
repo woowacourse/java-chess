@@ -41,11 +41,18 @@ var main = {
     }
 }
 
-function getChessBoard() {
+function getChessBoard(id) {
     $.ajax({
         url: "/start/board",
         type: "get",
+        data: { id: id },
         success: function (data) {
+            $('.gamecell').html('');
+            $('.gamecell').attr('chess', 'null');
+
+            $('.gamecell grey').html('');
+            $('.gamecell grey').attr('chess', 'null');
+
             var jsonData = JSON.parse(data);
             for (var i = 0; i < jsonData.boardValue.length; i++) {
                 var piece = jsonData.boardValue[i];
@@ -131,6 +138,36 @@ function getChessBoardResult() {
             alert(errorThrown);
         },
     });
+}
+
+function getChessGames() {
+    $.ajax({
+        url: "/start/boards",
+        type: "get",
+        success: function (data) {
+            var res = JSON.parse(data);
+            console.log(JSON.stringify(data));
+            var chessGameDTOs = res.chessGameDTOs;
+            for (var i = 0; i < chessGameDTOs.length; i++) {
+                add(chessGameDTOs[i].id);
+            }
+        },
+        error: function (errorThrown) {
+
+        },
+    });
+}
+
+function add(id) {
+    var element = document.createElement("input");
+    element.type = "button";
+    element.value = id + "번 체스 게임";
+    element.onclick = function () {
+        getChessBoard(id);
+    };
+
+    var chessBar = document.getElementById("chessBar");
+    chessBar.appendChild(element);
 }
 
 $(document).ready(function () {

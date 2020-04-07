@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="chess.css" type="text/css">
 </head>
 
-<body onload="getChessBoard();">
+<body onload="getChessGames();">
 
 <div id="game">
     <div class='cellprefix'>8</div>
@@ -99,13 +99,22 @@
     <div class='cellprefix'>f</div>
     <div class='cellprefix'>g</div>
     <div class='cellprefix'>h</div>
-    <div id='whiteScore'>White score : 38</div>
-    <div id='blackScore'>Black score : 38</div>
+    <div id='whiteScore' style="margin-left: 60px; margin-top: 8px;">White score : 38</div>
+    <div id='blackScore' style="margin-left: 60px; margin-top: 4px;">Black score : 38</div>
+    <p id="chessBar" style="margin-left: 60px; margin-top: 8px;">체스 방 :</p>
+
     <div id='turn'>It's whites Turn!</div>
 
-    <form action="/end" method="get">
-        <input class="end-button" type="submit" value="End"/>
-    </form>
+
+    <p style="margin-left: 60px; margin-top: 8px;">
+        <form action="/start/new/game" method="get">
+            <input class="start-button" type="submit" value="Start" style="margin-left: 60px; margin-top: 8px;"/>
+        </form>
+
+        <form action="/end" method="get">
+            <input class="end-button" type="submit" value="End" style="margin-left: 60px; margin-top: 8px;"/>
+        </form>
+    </p>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>

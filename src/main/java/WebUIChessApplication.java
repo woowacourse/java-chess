@@ -33,24 +33,26 @@ public class WebUIChessApplication {
             return render(model, "start.html");
         });
 
-        get("/main/boards", (req, res) -> {
+        get("/start", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+
+        get("/start/boards", (req, res) -> {
             ChessGamesDAO chessGamesDAO = new ChessGamesDAO();
             ArrayList<ChessGameDTO> all = chessGamesDAO.findAll();
             ChessGamesDTO chessGamesDTO = new ChessGamesDTO(all);
             return GSON.toJson(chessGamesDTO);
         });
 
-        get("/start", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-
         get("/start/board", (req, res) -> {
+            int boardID = Integer.parseInt(req.queryParams("id"));
+
             PieceDAO pieceDAO = new PieceDAO();
-            ArrayList<PieceVO> pieceVOs = pieceDAO.findBy(GAME_ID);
+            ArrayList<PieceVO> pieceVOs = pieceDAO.findAll(boardID);
 
             ChessGameDAO chessGameDAO = new ChessGameDAO();
-            ChessGameDTO chessGameDTO = chessGameDAO.findChessGameBy(GAME_ID);
+            ChessGameDTO chessGameDTO = chessGameDAO.findChessGameBy(boardID);
 
             if (pieceVOs == null) {
                 BoardDTO boardDTO = new BoardDTO(new ChessGame().getChessBoard());
