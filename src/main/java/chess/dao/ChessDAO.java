@@ -8,7 +8,7 @@ import java.sql.SQLException;
 
 import chess.domain.chessboard.ChessBoard;
 import chess.dto.ChessDTO;
-import chess.factory.BoardFactory;
+import chess.domain.factory.BoardFactory;
 
 public class ChessDAO {
 	public Connection getConnection() {

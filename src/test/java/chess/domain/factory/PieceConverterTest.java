@@ -10,7 +10,6 @@ import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.King;
 import chess.domain.position.Position;
-import chess.factory.PieceConverter;
 
 public class PieceConverterTest {
 

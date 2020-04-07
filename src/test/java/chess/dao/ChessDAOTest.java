@@ -11,7 +11,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
 import chess.dto.ChessDTO;
-import chess.factory.BoardFactory;
+import chess.domain.factory.BoardFactory;
 import chess.view.OutputView;
 
 public class ChessDAOTest {

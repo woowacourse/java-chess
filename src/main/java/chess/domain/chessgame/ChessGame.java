@@ -1,7 +1,7 @@
 package chess.domain.chessgame;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.factory.BoardFactory;
+import chess.domain.factory.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 

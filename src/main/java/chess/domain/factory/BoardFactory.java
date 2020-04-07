@@ -1,4 +1,4 @@
-package chess.factory;
+package chess.domain.factory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,7 +18,6 @@ import chess.domain.chesspiece.Queen;
 import chess.domain.chesspiece.Rook;
 import chess.domain.position.Position;
 import chess.dto.ChessDTO;
-import chess.view.OutputView;
 
 public class BoardFactory {
 	private static final int BLACK_TEAM_EXECUTIVE_INDEX = 8;

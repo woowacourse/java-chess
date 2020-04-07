@@ -1,4 +1,4 @@
-package chess.factory;
+package chess.domain.factory;
 
 import java.util.Arrays;
 import java.util.function.Function;
