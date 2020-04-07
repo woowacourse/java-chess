@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class GamePieceDAOTest {
 
-    private final RepositoryUtil repositoryUtil = new RepositoryUtil();
+    private final DBConnector DBConnector = new DBConnector();
     private UserDAO userDAO;
     private BoardDAO boardDAO;
     private PositionDAO positionDAO;
@@ -23,21 +23,21 @@ class GamePieceDAOTest {
 
     @BeforeEach
     void setUp() throws SQLException {
-        userDAO = new UserDAO(repositoryUtil);
+        userDAO = new UserDAO(DBConnector);
         userDAO.addUser(UserDAOTest.TEST_USER1);
         userDAO.addUser(UserDAOTest.TEST_USER2);
 
-        boardDAO = new BoardDAO(repositoryUtil);
+        boardDAO = new BoardDAO(DBConnector);
         Board board = Board.createEmpty().placeInitialPieces();
         boardDAO.addBoard(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2, board);
         int boardId = boardDAO.findIdByUsers(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2);
 
-        positionDAO = new PositionDAO(repositoryUtil);
+        positionDAO = new PositionDAO(DBConnector);
         Position position = Position.from("e5");
         positionDAO.addPosition(boardId, position);
         positionId = positionDAO.findIdByBoardIdAndName(boardId, "e5");
 
-        gamePieceDAO = new GamePieceDAO(repositoryUtil);
+        gamePieceDAO = new GamePieceDAO(DBConnector);
     }
 
     @Test

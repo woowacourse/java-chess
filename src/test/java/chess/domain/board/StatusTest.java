@@ -59,14 +59,14 @@ class StatusTest {
     @DisplayName("finish가 아닌지 확인")
     @MethodSource("createNotFinishedStatus")
     void isNotFinished(Status status, boolean expected) {
-        assertThat(status.isNotFinished()).isEqualTo(expected);
+        assertThat(status.isFinished()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createNotFinishedStatus() {
         return Stream.of(
-                Arguments.of(new Status(0, StatusType.READY), true),
-                Arguments.of(new Status(0, StatusType.PROCESSING), true),
-                Arguments.of(new Status(0, StatusType.FINISHED), false)
+                Arguments.of(new Status(0, StatusType.READY), false),
+                Arguments.of(new Status(0, StatusType.PROCESSING), false),
+                Arguments.of(new Status(0, StatusType.FINISHED), true)
         );
     }
 

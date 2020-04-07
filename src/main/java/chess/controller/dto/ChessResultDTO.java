@@ -1,4 +1,6 @@
-package chess.domain.result;
+package chess.controller.dto;
+
+import chess.domain.result.ChessResult;
 
 import java.util.Map;
 

@@ -96,11 +96,7 @@ public class Board {
     }
 
     public boolean isNotFinished() {
-        return status.isNotFinished();
-    }
-
-    public boolean isFinished() {
-        return !status.isNotFinished();
+        return !status.isFinished();
     }
 
     public boolean isNotEmpty(Position position) {
@@ -136,6 +132,13 @@ public class Board {
                 .filter(gamePiece -> gamePiece != EmptyPiece.getInstance())
                 .filter(gamePiece -> gamePiece.is(playerColor))
                 .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
+    }
+
+    public Board toSave() {
+        if (status.isFinished()) {
+            return Board.createEmpty().placeInitialPieces();
+        }
+        return this;
     }
 
     public Map<Position, GamePiece> getBoard() {

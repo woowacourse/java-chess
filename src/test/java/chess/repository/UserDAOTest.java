@@ -9,20 +9,20 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UserDAOTest {
+public class UserDAOTest {
 
     private static final String testName1 = "testName1";
     private static final String testName2 = "testName2";
-    static final User TEST_USER1 = new User(testName1);
-    static final User TEST_USER2 = new User(testName2);
+    public static final User TEST_USER1 = new User(testName1);
+    public static final User TEST_USER2 = new User(testName2);
 
-    private final RepositoryUtil repositoryUtil = new RepositoryUtil();
+    private final DBConnector DBConnector = new DBConnector();
 
     private UserDAO userDAO;
 
     @BeforeEach
     void setup() {
-        userDAO = new UserDAO(repositoryUtil);
+        userDAO = new UserDAO(DBConnector);
     }
 
     @Test

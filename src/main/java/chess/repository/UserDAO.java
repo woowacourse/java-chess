@@ -7,15 +7,15 @@ import java.sql.SQLException;
 
 public class UserDAO {
 
-    private final RepositoryUtil repositoryUtil;
+    private final DBConnector DBConnector;
 
-    public UserDAO(RepositoryUtil repositoryUtil) {
-        this.repositoryUtil = repositoryUtil;
+    public UserDAO(DBConnector DBConnector) {
+        this.DBConnector = DBConnector;
     }
 
     public void addUser(User user) throws SQLException {
         String query = "INSERT INTO user VALUES (?)";
-        repositoryUtil.executeUpdate(query, user.getName());
+        DBConnector.executeUpdate(query, user.getName());
     }
 
     public User findUserByName(String name) throws SQLException {
@@ -28,10 +28,10 @@ public class UserDAO {
 
     private ResultSet findByName(String name) throws SQLException {
         String query = "SELECT * FROM user WHERE name = ?";
-        return repositoryUtil.executeQuery(query, name);
+        return DBConnector.executeQuery(query, name);
     }
 
-    public void insertIfNotExist(User user) throws SQLException {
+    public void upsert(User user) throws SQLException {
         ResultSet resultSet = findByName(user.getName());
         if (!resultSet.next()) {
             addUser(user);
@@ -40,11 +40,11 @@ public class UserDAO {
 
     public void updateByName(String originalName, User modifiedUser) throws SQLException {
         String query = "UPDATE user SET name = ? WHERE name = ?";
-        repositoryUtil.executeUpdate(query, modifiedUser.getName(), originalName);
+        DBConnector.executeUpdate(query, modifiedUser.getName(), originalName);
     }
 
     public void deleteByName(String name) throws SQLException {
         String query = "DELETE FROM user WHERE name = ?";
-        repositoryUtil.executeUpdate(query, name);
+        DBConnector.executeUpdate(query, name);
     }
 }

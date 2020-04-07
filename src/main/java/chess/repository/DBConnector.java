@@ -2,11 +2,11 @@ package chess.repository;
 
 import java.sql.*;
 
-public class RepositoryUtil {
+public class DBConnector {
 
     private final Connection connection;
 
-    public RepositoryUtil() {
+    public DBConnector() {
         this.connection = getConnection();
     }
 

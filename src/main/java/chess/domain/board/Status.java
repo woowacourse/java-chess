@@ -36,8 +36,8 @@ public class Status {
         return !statusType.equals(StatusType.PROCESSING);
     }
 
-    public boolean isNotFinished() {
-        return !statusType.equals(StatusType.FINISHED);
+    public boolean isFinished() {
+        return statusType.equals(StatusType.FINISHED);
     }
 
     public Status nextTurn() {

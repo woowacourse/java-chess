@@ -10,16 +10,16 @@ import java.sql.SQLException;
 
 public class BoardDAO {
 
-    private final RepositoryUtil repositoryUtil;
+    private final DBConnector DBConnector;
 
-    public BoardDAO(RepositoryUtil repositoryUtil) {
-        this.repositoryUtil = repositoryUtil;
+    public BoardDAO(DBConnector DBConnector) {
+        this.DBConnector = DBConnector;
     }
 
     public void addBoard(User firstUser, User secondUser, Board board) throws SQLException {
-        String query = "INSERT INTO board (user1, user2, turn) VALUES (?, ?, ?)";
+        String query = "INSERT INTO board (white, black, turn) VALUES (?, ?, ?)";
         String turn = Integer.toString(board.getStatus().getTurn());
-        repositoryUtil.executeUpdate(query, firstUser.getName(), secondUser.getName(), turn);
+        DBConnector.executeUpdate(query, firstUser.getName(), secondUser.getName(), turn);
     }
 
     public int findIdByUsers(User firstUser, User secondUser) throws SQLException {
@@ -44,28 +44,28 @@ public class BoardDAO {
     }
 
     private ResultSet findByUsers(User firstUser, User secondUser) throws SQLException {
-        String query = "SELECT * FROM board WHERE user1 = ? AND user2 = ?";
-        return repositoryUtil.executeQuery(query, firstUser.getName(), secondUser.getName());
+        String query = "SELECT * FROM board WHERE white = ? AND black = ?";
+        return DBConnector.executeQuery(query, firstUser.getName(), secondUser.getName());
     }
 
-    public int insertOrUpdateIfExist(User firstUser, User secondUser, Board board) throws SQLException {
-        ResultSet resultSet1 = findByUsers(firstUser, secondUser);
-        if (!resultSet1.next()) {
+    public int upsert(User firstUser, User secondUser, Board board) throws SQLException {
+        ResultSet resultSet = findByUsers(firstUser, secondUser);
+        if (!resultSet.next()) {
             addBoard(firstUser, secondUser, board);
             return findIdByUsers(firstUser, secondUser);
         }
         updateByUsers(firstUser, secondUser, board);
-        return resultSet1.getInt("id");
+        return resultSet.getInt("id");
     }
 
     public void updateByUsers(User firstUser, User secondUser, Board modifiedBoard) throws SQLException {
-        String query = "UPDATE board SET turn = ? WHERE user1 = ? AND user2 = ?";
+        String query = "UPDATE board SET turn = ? WHERE white = ? AND black = ?";
         String turn = Integer.toString(modifiedBoard.getStatus().getTurn());
-        repositoryUtil.executeUpdate(query, turn, firstUser.getName(), secondUser.getName());
+        DBConnector.executeUpdate(query, turn, firstUser.getName(), secondUser.getName());
     }
 
     public void deleteByUsers(User firstUser, User secondUser) throws SQLException {
-        String query = "DELETE FROM board WHERE user1 = ? AND user2 = ?";
-        repositoryUtil.executeUpdate(query, firstUser.getName(), secondUser.getName());
+        String query = "DELETE FROM board WHERE white = ? AND black = ?";
+        DBConnector.executeUpdate(query, firstUser.getName(), secondUser.getName());
     }
 }

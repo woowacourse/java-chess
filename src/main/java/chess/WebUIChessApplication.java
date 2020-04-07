@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.Controller.WebController;
+import chess.controller.WebController;
 
 import static spark.Spark.staticFiles;
 

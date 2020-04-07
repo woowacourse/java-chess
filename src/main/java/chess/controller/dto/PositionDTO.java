@@ -1,4 +1,6 @@
-package chess.domain.board;
+package chess.controller.dto;
+
+import chess.domain.board.Position;
 
 public class PositionDTO {
 

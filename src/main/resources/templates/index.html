@@ -21,20 +21,13 @@
     </div>
     <div class="commands">
         <div class="command">
-            <input id="user1" value="{{user1}}"/>
-            <input id="user2" value="{{user2}}"/>
+            <input id="white" value="{{white}}"/>
+            <input id="black" value="{{black}}"/>
             <button id="start-button">START</button>
         </div>
         <div class="command">
-            <button id="result">RESULT</button>
-            {{#result}}
-            {{#scores}}
-            <div id="result-view">
-                BLACK: {{BLACK}} <br/>
-                WHITE: {{WHITE}}
-            </div>
-            {{/scores}}
-            {{/result}}
+            <button id="result-button">RESULT</button>
+            <div id="result-view"></div>
         </div>
         <div>
             {{board.status.message}}
@@ -125,7 +118,7 @@
     $("#start-button").click(function () {
         $.ajax({
             url: "/start",
-            data: {user1: $("#user1").val(), user2: $("#user2").val()},
+            data: {white: $("#white").val(), black: $("#black").val()},
             method: "POST",
             dataType: "html"
         })
@@ -135,15 +128,15 @@
     });
 
     // 결과 버튼
-    $("#result").click(function () {
+    $("#result-button").click(function () {
         $.ajax({
             url: "/status",
-            data: {user1: $("#user1").val(), user2: $("#user2").val()},
+            data: {white: $("#white").val(), black: $("#black").val()},
             method: "GET",
             dataType: "html"
         })
             .done(function (html) {
-                $("html").html(html);
+                $("#result-view").html(html);
             });
     });
 
@@ -175,7 +168,7 @@
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
-            data: {source: source, target: cellPosition, user1: $("#user1").val(), user2: $("#user2").val()},
+            data: {source: source, target: cellPosition, white: $("#white").val(), black: $("#black").val()},
             method: "POST",
             dataType: "html"
         })

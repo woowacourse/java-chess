@@ -1,7 +1,7 @@
-package chess.domain.piece;
+package chess.controller.dto;
 
 import chess.domain.board.Position;
-import chess.domain.board.PositionDTO;
+import chess.domain.piece.GamePiece;
 
 public class GamePieceDTO {
 
@@ -18,7 +18,7 @@ public class GamePieceDTO {
     }
 
     public static GamePieceDTO create(GamePiece gamePiece, Position position) {
-        String name = String.join(COLOR_NAME_DELIMITER, gamePiece.playerColor.getName(), gamePiece.getName());
+        String name = String.join(COLOR_NAME_DELIMITER, gamePiece.getPlayerColor().getName(), gamePiece.getName());
         if (name.equals(ORIGINAL_EMPTY_PIECE_NAME)) {
             name = MODIFIED_EMPTY_PIECE_NAME;
         }

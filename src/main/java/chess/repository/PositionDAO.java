@@ -11,15 +11,15 @@ import java.util.Map;
 
 public class PositionDAO {
 
-    private final RepositoryUtil repositoryUtil;
+    private final DBConnector DBConnector;
 
-    public PositionDAO(RepositoryUtil repositoryUtil) {
-        this.repositoryUtil = repositoryUtil;
+    public PositionDAO(DBConnector DBConnector) {
+        this.DBConnector = DBConnector;
     }
 
     public void addPosition(int boardId, Position position) throws SQLException {
         String query = "INSERT INTO position (board_id, position_name) VALUES (?, ?)";
-        repositoryUtil.executeUpdate(query, Integer.toString(boardId), position.getName());
+        DBConnector.executeUpdate(query, Integer.toString(boardId), position.getName());
     }
 
     public Position findPositionByBoardIdAndName(int boardId, String name) throws SQLException {
@@ -39,7 +39,7 @@ public class PositionDAO {
         return resultSet.getInt("id");
     }
 
-    public int insertIfNotExist(int boardId, Position position) throws SQLException {
+    public int upsert(int boardId, Position position) throws SQLException {
         ResultSet resultSet = findByBoardIdAndName(boardId, position.getName());
         if (!resultSet.next()) {
             addPosition(boardId, position);
@@ -49,17 +49,17 @@ public class PositionDAO {
 
     private ResultSet findByBoardIdAndName(int boardId, String name) throws SQLException {
         String query = "SELECT * FROM position WHERE board_id = ? AND position_name = ?";
-        return repositoryUtil.executeQuery(query, Integer.toString(boardId), name);
+        return DBConnector.executeQuery(query, Integer.toString(boardId), name);
     }
 
     public void updateByBoardIdAndName(int boardId, Position originalPosition, Position modifiedPosition) throws SQLException {
         String query = "UPDATE position SET position_name = ? WHERE board_id = ? AND position_name = ?";
-        repositoryUtil.executeUpdate(query, modifiedPosition.getName(), Integer.toString(boardId), originalPosition.getName());
+        DBConnector.executeUpdate(query, modifiedPosition.getName(), Integer.toString(boardId), originalPosition.getName());
     }
 
     public void deleteByBoardIdAndName(int boardId, Position position) throws SQLException {
         String query = "DELETE FROM position WHERE board_id = ? AND position_name = ?";
-        repositoryUtil.executeUpdate(query, Integer.toString(boardId), position.getName());
+        DBConnector.executeUpdate(query, Integer.toString(boardId), position.getName());
     }
 
     public Map<Position, GamePiece> findBoardContentByBoardId(int boardId) throws SQLException {
@@ -67,7 +67,7 @@ public class PositionDAO {
 
         String query = "SELECT position.position_name, piece.piece_name FROM position, piece " +
                 "WHERE position.board_id = ? AND position.id = piece.position_id";
-        ResultSet resultSet = repositoryUtil.executeQuery(query, Integer.toString(boardId));
+        ResultSet resultSet = DBConnector.executeQuery(query, Integer.toString(boardId));
 
         while (resultSet.next()) {
             String position = resultSet.getString("position_name");

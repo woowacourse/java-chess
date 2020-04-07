@@ -3,6 +3,7 @@ package chess.domain.player;
 import java.util.Objects;
 
 public class User {
+
     private final String name;
 
     public User(String name) {

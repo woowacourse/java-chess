@@ -12,15 +12,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardDAOTest {
 
-    private final RepositoryUtil repositoryUtil = new RepositoryUtil();
+    private final DBConnector DBConnector = new DBConnector();
     private UserDAO userDAO;
     private BoardDAO boardDAO;
 
     @BeforeEach
     void setUp() throws SQLException {
-        boardDAO = new BoardDAO(repositoryUtil);
+        boardDAO = new BoardDAO(DBConnector);
 
-        userDAO = new UserDAO(repositoryUtil);
+        userDAO = new UserDAO(DBConnector);
         userDAO.addUser(UserDAOTest.TEST_USER1);
         userDAO.addUser(UserDAOTest.TEST_USER2);
     }

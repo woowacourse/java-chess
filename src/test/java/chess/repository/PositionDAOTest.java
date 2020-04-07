@@ -12,22 +12,22 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionDAOTest {
 
-    private final RepositoryUtil repositoryUtil = new RepositoryUtil();
+    private final DBConnector DBConnector = new DBConnector();
     private UserDAO userDAO;
     private BoardDAO boardDAO;
     private PositionDAO positionDAO;
 
     @BeforeEach
     void setUp() throws SQLException {
-        userDAO = new UserDAO(repositoryUtil);
+        userDAO = new UserDAO(DBConnector);
         userDAO.addUser(UserDAOTest.TEST_USER1);
         userDAO.addUser(UserDAOTest.TEST_USER2);
 
-        boardDAO = new BoardDAO(repositoryUtil);
+        boardDAO = new BoardDAO(DBConnector);
         Board board = Board.createEmpty().placeInitialPieces();
         boardDAO.addBoard(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2, board);
 
-        positionDAO = new PositionDAO(repositoryUtil);
+        positionDAO = new PositionDAO(DBConnector);
     }
 
     @Test
