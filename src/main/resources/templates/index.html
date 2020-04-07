@@ -26,13 +26,13 @@
             <input id="end" type="submit" name="command" value="게임 종료">
         </form>
     </div>
-    <div class="turn">
-        {{ turn }}
+    <div class="turn" id="turn-presenter">
+        <span>{{ turn }}</span> 의 차례입니다.
     </div>
     <div class="controller-move">
         <form action="/move" method="post" id="moveForm">
-            <label for="fromPiece"></label><input id="fromPiece" type="text" name="fromPiece">
-            <label for="toPiece"></label><input id="toPiece" type="text" name="toPiece">
+            <label for="fromPiece"></label><input id="fromPiece" type="text" name="fromPiece" value="from">
+            <label for="toPiece"></label><input id="toPiece" type="text" name="toPiece" value="to">
             <input id="moveCommand" type="submit" name="command" value="이동">
         </form>
     </div>
@@ -109,25 +109,25 @@
                 <img src="./images/{{a6}}.png" alt=""/>
             </div>
             <div class="square square-black" id="b6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{b6}}.png" alt=""/>
             </div>
             <div class="square square-white" id="c6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{c6}}.png" alt=""/>
             </div>
             <div class="square square-black" id="d6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{d6}}.png" alt=""/>
             </div>
             <div class="square square-white" id="e6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{e6}}.png" alt=""/>
             </div>
             <div class="square square-black" id="f6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{f6}}.png" alt=""/>
             </div>
             <div class="square square-white" id="g6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{g6}}.png" alt=""/>
             </div>
             <div class="square square-black" id="h6">
-                <img src="./images/{{a6}}.png" alt=""/>
+                <img src="./images/{{h6}}.png" alt=""/>
             </div>
             <div class="row">6</div>
         </div>
@@ -285,6 +285,24 @@
             <div class="row">1</div>
         </div>
     </div>
+
+    <!-- FINISH -->
+    <div id="layer" class="layer-wrap">
+        <div class="pop-layer">
+            <div class="pop-container">
+                <div class="pop-conts">
+                    {{ turn }} 이 승리했습니다!!
+                    <div class="btn-r">
+                        <form action="/end" method="post">
+                            <input id="btn-layerClose" type="submit" name="command" value="게임 종료">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input id="finish-checker" value={{isFinished}} />
+
 
     <script type="application/javascript" src="./js/index.js"></script>
 </body>

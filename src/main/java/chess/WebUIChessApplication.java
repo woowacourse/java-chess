@@ -30,7 +30,7 @@ public class WebUIChessApplication {
         post("/start", (req, res) -> {
             board.initialize();
             Map<String, Object> model = ModelParser.parseBoard(board);
-            model.put("turn", board.getTurn() + " 차례입니다.");
+            model.put("turn", board.getTurn());
             return render(model, "index.html");
         });
 
@@ -44,7 +44,7 @@ public class WebUIChessApplication {
                 Map<String, Object> model = ModelParser.parseBoard(board);
                 model.put("black", blackScore);
                 model.put("white", whiteScore);
-                model.put("turn", board.getTurn() + " 차례입니다.");
+                model.put("turn", board.getTurn());
                 return render(model, "index.html");
             }
         });
@@ -56,11 +56,12 @@ public class WebUIChessApplication {
 
         post("/move", (req, res) -> {
             Map<String, Object> model = ModelParser.parseBoard(board);
-            model.put("turn", board.getTurn() + " 차례입니다.");
+            model.put("turn", board.getTurn());
             try {
                 board.move(req.queryParams("fromPiece"), req.queryParams("toPiece"));
                 model = ModelParser.parseBoard(board);
-                model.put("turn", board.getTurn() + " 차례입니다.");
+                model.put("turn", board.getTurn());
+                model.put("isFinished", String.valueOf(board.isFinished()));
                 return render(model, "index.html");
             } catch (InvalidPositionException | MoveCommandWhenBoardNullException | PieceImpossibleMoveException | TakeTurnException e) {
                 return render(model, "index.html");
