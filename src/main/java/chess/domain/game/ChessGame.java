@@ -1,11 +1,15 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.exception.WrongPositionException;
 import chess.domain.piece.Color;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.position.Position;
+import chess.domain.position.PositionFactory;
 import chess.domain.position.positions.Positions;
+
+import java.util.List;
 
 public class ChessGame {
     private Pieces pieces;
@@ -17,8 +21,20 @@ public class ChessGame {
     }
 
     public void move(Position start, Position end) {
+        if (start == end) {
+            throw new WrongPositionException(start.toString());
+        }
         pieces.move(start, end, turn.getColor());
         turn = turn.change();
+    }
+
+    public void moveAll(List<MoveCommand> commands) {
+        for (MoveCommand command : commands) {
+            Position start = PositionFactory.of(command.getFirstCommand());
+            Position end = PositionFactory.of(command.getSecondCommand());
+
+            move(start, end);
+        }
     }
 
     public void reset() {

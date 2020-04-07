@@ -93,10 +93,6 @@ window.onload = function () {
                 const end = data.position;
                 startPosition = null;
 
-                if(start === end) {
-                    alert("이동을 취소합니다.");
-                }
-
                 post_to_url("/board", {"start": start, "end": end});
             });
     }

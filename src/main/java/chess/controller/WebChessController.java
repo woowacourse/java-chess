@@ -1,133 +1,86 @@
 package chess.controller;
 
-import chess.domain.game.ChessGame;
-import chess.domain.game.ScoreResult;
-import chess.domain.piece.Color;
-import chess.domain.position.Position;
-import chess.domain.position.PositionFactory;
+import chess.dao.HistoryDao;
 import chess.domain.exception.WrongOperationException;
 import chess.domain.exception.WrongPositionException;
-import chess.domain.game.MoveCommand;
-import chess.dao.HistoryDao;
+import chess.domain.game.ChessGame;
+import chess.domain.position.PositionFactory;
+import chess.service.ChessService;
+import chess.service.ServiceState;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+
+import static chess.JsonTransformer.json;
+import static spark.Spark.*;
 
 public class WebChessController {
+    private final ChessService chessService;
     private final ChessGame chessGame;
     private final HistoryDao historyDao;
 
-    public WebChessController(){
+    public WebChessController() {
+        chessService = new ChessService();
         chessGame = new ChessGame();
         historyDao = new HistoryDao();
     }
 
-    public Map<String, Object> init(){
-        Map<String, Object> model = new HashMap<>();
+    public void run() {
+        staticFiles.location("/public");
 
-        chessGame.reset();
-        model.put("status",true);
+        get("/", (req, res) -> {
+            chessGame.reset();
+            return render(chessService.makeNormalModel(), ServiceState.INIT);
+        });
 
-        return model;
-    }
+        get("/new", (req, res) -> {
+            historyDao.clear();
+            return render(chessService.makeNormalModel(), ServiceState.EXECUTE);
+        });
 
-    public Map<String, Object> newGame() throws SQLException {
-        Map<String, Object> model = new HashMap<>();
+        get("/loading", (req, res) -> {
+            chessGame.moveAll(historyDao.selectAll());
+            return render(chessService.makeNormalModel(), ServiceState.EXECUTE);
+        });
 
-        historyDao.clear();
-        model.put("status",true);
+        get("/board", (req, res) -> {
+            return chessService.draw(chessGame);
+        }, json());
 
-        return model;
-    }
+        post("/board", (req, res) -> {
+            String start = req.queryParams("start");
+            String end = req.queryParams("end");
 
-    public Map<String, Object> load() throws SQLException {
-        Map<String, Object> model = new HashMap<>();
-
-        for (MoveCommand moveCommand : historyDao.selectAll()) {
-            Position startPosition = PositionFactory.of(moveCommand.getFirstCommand());
-            Position endPosition = PositionFactory.of(moveCommand.getSecondCommand());
-            chessGame.move(startPosition, endPosition);
-        }
-        model.put("status", true);
-
-        return model;
-    }
-
-    public Map<String, Object> board(){
-        Map<String, Object> model = new HashMap<>();
-        model.put("board", chessGame.createBoard().getPiecesForTransfer());
-        model.put("turn", chessGame.getTurn());
-        model.put("score", chessGame.calculateScore());
-        model.put("status", true);
-        return model;
-    }
-
-    public Map<String, Object> move(String start, String end) throws SQLException{
-        Map<String, Object> model = new HashMap<>();
-
-        if (start.equals(end)) {
-            model.put("status", true);
-            return model;
-        }
-
-        try {
-            chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-            model.put("status", true);
-            historyDao.insert(start, end);
+            try {
+                chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
+                historyDao.insert(start, end);
+            } catch (WrongPositionException | WrongOperationException e) {
+                return render(chessService.makeInvalidModel(e.getMessage()), ServiceState.EXECUTE);
+            }
 
             if (chessGame.isKingDead()) {
-                model.put("winner", chessGame.getAliveKingColor());
-                ScoreResult scoreResult = chessGame.calculateScore();
-                for (Color color : scoreResult.keySet()) {
-                    model.put(color + "score", scoreResult.getScoreBy(color));
-                }
-                historyDao.clear();
-
+                Map<String, Object> model = chessService.terminate(chessGame);
                 chessGame.reset();
-                return model;
+                historyDao.clear();
+                return render(model, ServiceState.TERMINATE);
             }
-            return model;
-        } catch (WrongPositionException | WrongOperationException e) {
-            model.put("status", false);
-            model.put("exception", e.getMessage());
-            return model;
-        }
+
+            return render(chessService.makeNormalModel(), ServiceState.EXECUTE);
+        });
+
+        post("/start", (req, res) -> {
+            String start = req.queryParams("start");
+            return chessService.chooseFirstPosition(chessGame, start);
+        }, json());
+
+        post("/end", (req, res) -> {
+            String end = req.queryParams("end");
+            return chessService.chooseSecondPosition(end);
+        }, json());
     }
 
-    public Map<String, Object> chooseFirstPosition(String position){
-        Map<String, Object> model = new HashMap<>();
-        try {
-            model.put("status", true);
-            List<String> movablePositionNames = chessGame
-                    .findMovablePositions(PositionFactory.of(position))
-                    .getPositions()
-                    .stream()
-                    .map(Position::toString)
-                    .collect(Collectors.toList());
-            model.put("position", position);
-            model.put("movable", movablePositionNames);
-
-            return model;
-        } catch (WrongPositionException | WrongOperationException e) {
-            model.put("status", false);
-            model.put("exception", e.getMessage());
-            return model;
-        }
-    }
-
-    public Map<String, Object> chooseSecondPosition(String position){
-        Map<String, Object> model = new HashMap<>();
-        try {
-            model.put("status", true);
-            model.put("position", position);
-            return model;
-        } catch (WrongPositionException | WrongOperationException e) {
-            model.put("status", false);
-            model.put("exception", e.getMessage());
-            return model;
-        }
+    private String render(Map<String, Object> model, ServiceState serviceState) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, serviceState.getUrl()));
     }
 }
