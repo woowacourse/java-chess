@@ -3,7 +3,9 @@ package chess.dao;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class MoveDao {
@@ -16,14 +18,14 @@ public class MoveDao {
 		pstmt.executeUpdate();
 	}
 
-	public Map<String, String> findMovesByGameId(int gameId) throws SQLException {
+	public Map<Integer, List<String>> findMovesByGameId(int gameId) throws SQLException {
 		String query = "select * from move where game_id = ?";
 		PreparedStatement pstmt = ConnectionLoader.load().prepareStatement(query);
 		pstmt.setInt(1, gameId);
 		ResultSet rs = pstmt.executeQuery();
-		Map<String, String> moves = new LinkedHashMap<>();
+		Map<Integer, List<String>> moves = new LinkedHashMap<>();
 		while (rs.next()) {
-			moves.put(rs.getString("source"), rs.getString("target"));
+			moves.put(rs.getInt("id"), Arrays.asList(rs.getString("source"), rs.getString("target")));
 		}
 		return moves;
 	}

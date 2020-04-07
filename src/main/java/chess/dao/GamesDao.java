@@ -7,18 +7,23 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class GamesDao {
+	private static final int ID_INDEX = 1;
+
 	public int createGame(String firstUser, String secondUser) throws SQLException {
 		String query = "insert into games(user1, user2) values (?, ?)";
 		PreparedStatement pstmt = ConnectionLoader.load().prepareStatement(query, new String[] {"id"});
 		pstmt.setString(1, firstUser);
 		pstmt.setString(2, secondUser);
 		pstmt.executeUpdate();
+		return getId(pstmt);
+	}
+
+	private int getId(PreparedStatement pstmt) throws SQLException {
 		ResultSet rs = pstmt.getGeneratedKeys();
 		if (!rs.next()) {
 			throw new IllegalArgumentException();
 		}
-		int id = rs.getInt(1);
-		return id;
+		return rs.getInt(ID_INDEX);
 	}
 
 	public Map<String, String> everyGames() throws SQLException {

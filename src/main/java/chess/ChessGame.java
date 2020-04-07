@@ -1,5 +1,6 @@
 package chess;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.Board;
@@ -49,10 +50,10 @@ public class ChessGame {
 		return new Status(white, black);
 	}
 
-	public static ChessGame createGameByMoves(Map<String, String> moves) {
+	public static ChessGame createGameByMoves(Map<Integer, List<String>> moves) {
 		ChessGame game = new ChessGame(new Playing(BoardRepository.create(), new Turn(Team.WHITE)));
-		for (Map.Entry<String, String> move : moves.entrySet()) {
-			game.move(Position.of(move.getKey()), Position.of(move.getValue()));
+		for (List<String> value : moves.values()) {
+			game.move(Position.of(value.get(0)), Position.of(value.get(1)));
 		}
 		return game;
 	}

@@ -15,8 +15,8 @@ class ChessGameDaoTest {
 	void crud() throws SQLException {
 		GamesDao gamesDao = new GamesDao();
 		int gameId = gamesDao.createGame("kyle", "pobi");
-		ChessGameDao chessGameDao = new ChessGameDao();
-		ChessGame game = chessGameDao.findById(gameId);
+		MoveDao moveDao = new MoveDao();
+		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(gameId));
 		game.move(Position.of("a2"),Position.of("a4"));
 
 		assertThat(game.board().getBoard().get(Position.of("a4"))).isInstanceOf(Pawn.class);
