@@ -49,9 +49,11 @@ class StateDaoTest {
 
 	@Test
 	void setState() throws SQLException {
-		final int id = 1;
+		final int stateId = 1;
 		final String state = "started";
-		int resultNum = stateDao.setState(id, state);
+		int resultNum = stateDao.setState(stateId, state);
+		final State stateBean = stateDao.findStateByRoomName("그니");
 		assertThat(resultNum).isEqualTo(1);
+		assertThat(stateBean.getState()).isEqualTo("started");
 	}
 }
