@@ -20,7 +20,7 @@ public enum Turn {
     }
 
     public static Turn from(String color) {
-        return from(Color.valueOf(color));
+        return from(Color.from(color));
     }
 
     public Turn next() {

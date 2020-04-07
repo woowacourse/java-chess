@@ -2,8 +2,10 @@ package chess.domain.game;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -16,133 +18,132 @@ import chess.domain.piece.Symbol;
 import chess.domain.piece.exception.NotMovableException;
 
 public class Board {
-    public static final Board EMPTY = new Board();
-    private static final int BLACK_PIECES_Y = 7;
-    private static final int BLACK_PAWNS_Y = 6;
-    private static final int WHITE_PIECES_Y = 0;
-    private static final int WHITE_PAWNS_Y = 1;
-    private static final int INITIAL_KING_COUNT = 2;
+	public static final Board EMPTY = new Board();
+	private static final int BLACK_PIECES_Y = 7;
+	private static final int BLACK_PAWNS_Y = 6;
+	private static final int WHITE_PIECES_Y = 0;
+	private static final int WHITE_PAWNS_Y = 1;
+	private static final int INITIAL_KING_COUNT = 2;
 
-    private Map<Position, Piece> board;
+	private Map<Position, Piece> board;
 
-    private Board() {
-        this.board = new TreeMap<>();
-    }
+	private Board() {
+		this.board = new TreeMap<>();
+	}
 
-    public static Board create() {
-        Board board = new Board();
+	public static Board create() {
+		Board board = new Board();
 
-        List<Symbol> pieceSequence = Arrays.asList(
-            Symbol.ROOK, Symbol.KNIGHT, Symbol.BISHOP, Symbol.QUEEN,
-            Symbol.KING, Symbol.BISHOP, Symbol.KNIGHT, Symbol.ROOK
-        );
+		List<Symbol> pieceSequence = Arrays.asList(
+				Symbol.ROOK, Symbol.KNIGHT, Symbol.BISHOP, Symbol.QUEEN,
+				Symbol.KING, Symbol.BISHOP, Symbol.KNIGHT, Symbol.ROOK
+		);
 
-        for (Position position : Position.values()) {
-            board.setBlank(position);
-        }
+		for (Position position : Position.values()) {
+			board.setBlank(position);
+		}
 
-        for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
-            board.setPiece(Position.of(x, BLACK_PIECES_Y),
-                PieceFactory.create(pieceSequence.get(x), Position.of(x, BLACK_PIECES_Y), Color.BLACK));
-            board.setPiece(Position.of(x, BLACK_PAWNS_Y),
-                PieceFactory.create(Symbol.PAWN, Position.of(x, BLACK_PAWNS_Y), Color.BLACK));
-            board.setPiece(Position.of(x, WHITE_PAWNS_Y),
-                PieceFactory.create(Symbol.PAWN, Position.of(x, WHITE_PAWNS_Y), Color.WHITE));
-            board.setPiece(Position.of(x, WHITE_PIECES_Y),
-                PieceFactory.create(pieceSequence.get(x), Position.of(x, WHITE_PIECES_Y), Color.WHITE));
-        }
+		for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
+			board.setPiece(Position.of(x, BLACK_PIECES_Y),
+					PieceFactory.create(pieceSequence.get(x), Position.of(x, BLACK_PIECES_Y), Color.BLACK));
+			board.setPiece(Position.of(x, BLACK_PAWNS_Y),
+					PieceFactory.create(Symbol.PAWN, Position.of(x, BLACK_PAWNS_Y), Color.BLACK));
+			board.setPiece(Position.of(x, WHITE_PAWNS_Y),
+					PieceFactory.create(Symbol.PAWN, Position.of(x, WHITE_PAWNS_Y), Color.WHITE));
+			board.setPiece(Position.of(x, WHITE_PIECES_Y),
+					PieceFactory.create(pieceSequence.get(x), Position.of(x, WHITE_PIECES_Y), Color.WHITE));
+		}
 
-        return board;
-    }
+		return board;
+	}
 
-    public static Board from(String rawBoard) {
-        String[] pieces = rawBoard.split("");
-        Board board = new Board();
-        for (int i = 0; i < pieces.length; i++) {
-            int x = i % Position.END_X;
-            int y = 7 - (i / Position.END_X);
-            Color color = Color.NONE;
-            if (Character.isUpperCase(pieces[i].charAt(0))) {
-                color = Color.BLACK;
-            }
-            if (Character.isLowerCase(pieces[i].charAt(0))) {
-                color = Color.WHITE;
-            }
-            if (color.isNone()) {
-                board.setBlank(Position.of(x, y));
-                continue;
-            }
-            board.setPiece(Position.of(x, y),
-                PieceFactory.create(Symbol.from(pieces[i]), Position.of(x, y), color));
-        }
-        return board;
-    }
+	public static Board from(String rawBoard) {
+		Board board = new Board();
 
-    private void setBlank(Position position) {
-        board.put(position, PieceFactory.createBlank(position));
-    }
+		Queue<String> symbols = new LinkedList<>(Arrays.asList(rawBoard.split("")));
 
-    private void setPiece(Position position, Piece piece) {
-        board.put(position, piece);
-        piece.onMoveEvent(event -> {
-            validateMove(event.getSource(), event.getTarget(), event.getPath());
-            updatePosition(event.getSourcePosition(), event.getTargetPosition());
-        });
-    }
+		for (Position position : Position.values()) {
+			board.setBlank(position);
+		}
 
-    public Piece findPiece(Position position) {
-        return board.get(position);
-    }
+		for (Position position : board.getBoard().keySet()) {
+			String symbol = symbols.poll();
+			Color color = Color.from(symbol.charAt(0));
+			if (color.isNone()) {
+				board.setBlank(position);
+				continue;
+			}
+			board.setPiece(position, PieceFactory.create(Symbol.from(symbol), position, color));
+		}
 
-    public List<Piece> findPiecesByColor(Color color) {
-        return board.values()
-            .stream()
-            .filter(piece -> piece.isSameColor(color))
-            .collect(Collectors.toList());
-    }
+		return board;
+	}
 
-    public boolean isKingDead() {
-        return board.values()
-            .stream()
-            .filter(Piece::isKing)
-            .count() < INITIAL_KING_COUNT;
-    }
+	private void setBlank(Position position) {
+		board.put(position, PieceFactory.createBlank(position));
+	}
 
-    public boolean hasKing(Color color) {
-        return board.values()
-            .stream()
-            .anyMatch(piece -> piece.isKing() && piece.isSameColor(color));
-    }
+	private void setPiece(Position position, Piece piece) {
+		board.put(position, piece);
+		piece.onMoveEvent(event -> {
+			validateMove(event.getSource(), event.getTarget(), event.getPath());
+			updatePosition(event.getSourcePosition(), event.getTargetPosition());
+		});
+	}
 
-    private void validateMove(Piece source, Piece target, Path path) {
-        validateColor(source, target);
-        validatePath(path);
-    }
+	public Piece findPiece(Position position) {
+		return board.get(position);
+	}
 
-    private void validateColor(Piece source, Piece target) {
-        if (source.isSameColor(target)) {
-            throw new NotMovableException("목표 위치에 같은 색상의 말이 존재하여 이동할 수 없습니다.");
-        }
-    }
+	public List<Piece> findPiecesByColor(Color color) {
+		return board.values()
+				.stream()
+				.filter(piece -> piece.isSameColor(color))
+				.collect(Collectors.toList());
+	}
 
-    private void validatePath(Path path) {
-        path.forEachRemaining(this::validateBlank);
-    }
+	public boolean isKingDead() {
+		return board.values()
+				.stream()
+				.filter(Piece::isKing)
+				.count() < INITIAL_KING_COUNT;
+	}
 
-    private void validateBlank(Position position) {
-        Piece piece = board.get(position);
-        if (!piece.isBlank()) {
-            throw new NotMovableException("해당 경로에 장애물이 존재하여 이동할 수 없습니다.");
-        }
-    }
+	public boolean hasKing(Color color) {
+		return board.values()
+				.stream()
+				.anyMatch(piece -> piece.isKing() && piece.isSameColor(color));
+	}
 
-    private void updatePosition(Position source, Position target) {
-        Piece piece = board.get(source);
-        board.put(target, piece);
-        setBlank(source);
-    }
+	private void validateMove(Piece source, Piece target, Path path) {
+		validateColor(source, target);
+		validatePath(path);
+	}
 
-    public Map<Position, Piece> getBoard() {
-        return Collections.unmodifiableMap(board);
-    }
+	private void validateColor(Piece source, Piece target) {
+		if (source.isSameColor(target)) {
+			throw new NotMovableException("목표 위치에 같은 색상의 말이 존재하여 이동할 수 없습니다.");
+		}
+	}
+
+	private void validatePath(Path path) {
+		path.forEachRemaining(this::validateBlank);
+	}
+
+	private void validateBlank(Position position) {
+		Piece piece = board.get(position);
+		if (!piece.isBlank()) {
+			throw new NotMovableException("해당 경로에 장애물이 존재하여 이동할 수 없습니다.");
+		}
+	}
+
+	private void updatePosition(Position source, Position target) {
+		Piece piece = board.get(source);
+		board.put(target, piece);
+		setBlank(source);
+	}
+
+	public Map<Position, Piece> getBoard() {
+		return Collections.unmodifiableMap(board);
+	}
 }
