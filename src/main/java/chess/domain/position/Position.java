@@ -1,8 +1,8 @@
 package chess.domain.position;
 
+import chess.domain.exception.WrongPositionException;
 import chess.domain.piece.Color;
 import chess.domain.piece.movable.Direction;
-import chess.domain.exception.WrongPositionException;
 
 import java.util.Objects;
 
@@ -71,6 +71,6 @@ public class Position {
 
     @Override
     public String toString() {
-        return row.getName()+column.getValue();
+        return row.getName() + column.getValue();
     }
 }

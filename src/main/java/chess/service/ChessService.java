@@ -92,7 +92,7 @@ public class ChessService {
      * 예외 발생 시에는 status를 false로 설정한 뒤, 예외처리 메세지를 model에 저장하여 반환한다.
      *
      * @param chessGame 체스를 관리하는 ChessGame 클래스를 받아 현재 게임의 정보를 얻는다.
-     * @param position 유저가 클릭한 위치의 정보를 전달한다.
+     * @param position  유저가 클릭한 위치의 정보를 전달한다.
      * @return 유저의 말 위치와, 그 말이 움직일 수 있는 칸들의 위치를 model에 담아 반환한다.
      */
     public Map<String, Object> chooseFirstPosition(ChessGame chessGame, String position) {

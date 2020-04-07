@@ -1,9 +1,11 @@
 package chess.controller;
 
-import chess.dao.HistoryDao;
+import chess.dao.BoardDao;
+import chess.dao.TurnDao;
 import chess.domain.exception.WrongOperationException;
 import chess.domain.exception.WrongPositionException;
 import chess.domain.game.ChessGame;
+import chess.domain.piece.pieces.PiecesFactory;
 import chess.domain.position.PositionFactory;
 import chess.service.ChessService;
 import chess.service.ServiceState;
@@ -16,14 +18,18 @@ import static chess.JsonTransformer.json;
 import static spark.Spark.*;
 
 public class WebChessController {
+    private static final String DEFAULT_GAME_ID = "game";
+
     private final ChessService chessService;
     private final ChessGame chessGame;
-    private final HistoryDao historyDao;
+    private final TurnDao turnDao;
+    private final BoardDao boardDao;
 
     public WebChessController() {
         chessService = new ChessService();
         chessGame = new ChessGame();
-        historyDao = new HistoryDao();
+        turnDao = new TurnDao();
+        boardDao = new BoardDao();
     }
 
     public void run() {
@@ -35,18 +41,17 @@ public class WebChessController {
         });
 
         get("/new", (req, res) -> {
-            historyDao.clear();
+            turnDao.update(DEFAULT_GAME_ID, chessGame.getTurn());
+            boardDao.update(DEFAULT_GAME_ID, chessGame.createBoard());
             return render(chessService.makeNormalModel(), ServiceState.EXECUTE);
         });
 
         get("/loading", (req, res) -> {
-            chessGame.moveAll(historyDao.selectAll());
+            chessGame.load(PiecesFactory.create(boardDao.select(DEFAULT_GAME_ID)), turnDao.select(DEFAULT_GAME_ID));
             return render(chessService.makeNormalModel(), ServiceState.EXECUTE);
         });
 
-        get("/board", (req, res) -> {
-            return chessService.draw(chessGame);
-        }, json());
+        get("/board", (req, res) -> chessService.draw(chessGame), json());
 
         post("/board", (req, res) -> {
             String start = req.queryParams("start");
@@ -54,7 +59,8 @@ public class WebChessController {
 
             try {
                 chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-                historyDao.insert(start, end);
+                turnDao.update(DEFAULT_GAME_ID, chessGame.getTurn());
+                boardDao.update(DEFAULT_GAME_ID, chessGame.createBoard());
             } catch (WrongPositionException | WrongOperationException e) {
                 return render(chessService.makeInvalidModel(e.getMessage()), ServiceState.EXECUTE);
             }
@@ -62,7 +68,8 @@ public class WebChessController {
             if (chessGame.isKingDead()) {
                 Map<String, Object> model = chessService.terminate(chessGame);
                 chessGame.reset();
-                historyDao.clear();
+                turnDao.update(DEFAULT_GAME_ID, chessGame.getTurn());
+                boardDao.update(DEFAULT_GAME_ID, chessGame.createBoard());
                 return render(model, ServiceState.TERMINATE);
             }
 
