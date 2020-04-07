@@ -10,7 +10,10 @@ public enum Command {
     MOVE(Command::isMove),
     STATUS(Command::isStatus);
 
-    private final static String MOVE_PATTERN = "move ([a-h][1-8]) ([a-h][1-8])";
+    private static final String MOVE_PATTERN = "move ([a-h][1-8]) ([a-h][1-8])";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
+    private static final String STATUS_COMMAND = "status";
 
     private final Predicate<String> compare;
 
@@ -19,11 +22,11 @@ public enum Command {
     }
 
     public static boolean isStart(String command) {
-        return "start".equalsIgnoreCase(command);
+        return START_COMMAND.equalsIgnoreCase(command);
     }
 
     public static boolean isEnd(String command) {
-        return "end".equalsIgnoreCase(command);
+        return END_COMMAND.equalsIgnoreCase(command);
     }
 
     public static boolean isMove(String command) {
@@ -31,7 +34,7 @@ public enum Command {
     }
 
     public static boolean isStatus(String command) {
-        return "status".equalsIgnoreCase(command);
+        return STATUS_COMMAND.equalsIgnoreCase(command);
     }
 
     public static Command findBy(String value) {
