@@ -12,12 +12,12 @@
 <div class="outer-board">
     <div id="turn_box">
     </div>
-    {{#status}}
+    {{#normalStatus}}
     <!-- -->
-    {{/status}}
-    {{^status}}
+    {{/normalStatus}}
+    {{^normalStatus}}
     <script>alert("움직일 수 없는 위치를 선택하셨습니다. 다시 선택해주세요.");</script>
-    {{/status}}
+    {{/normalStatus}}
     <div class="inner-board">
         <div class="column" id="8">
             <div class="position" id="a8">

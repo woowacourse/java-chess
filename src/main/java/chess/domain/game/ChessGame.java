@@ -21,7 +21,6 @@ public class ChessGame {
 		turn = new Turn(Color.WHITE);
 	}
 
-
 	public void reset() {
 		pieces = PiecesInitializer.reset();
 		turn = new Turn(Color.WHITE);

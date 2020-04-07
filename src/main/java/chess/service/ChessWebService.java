@@ -4,6 +4,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.position.PositionFactory;
 import chess.domain.web.HistoryDao;
 import chess.domain.web.MovingPosition;
+import chess.domain.web.NormalStatus;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class ChessWebService {
 	public Map<String, Object> index(ChessGame chessGame) {
 		Map<String, Object> model = new HashMap<>();
 
-		model.put("status", true);
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 		chessGame.reset();
 
 		return model;
@@ -23,7 +24,7 @@ public class ChessWebService {
 	public Map<String, Object> startGame(ChessGame chessGame) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 
-		model.put("status", true);
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 		chessGame.reset();
 		clearHistory();
 
@@ -32,7 +33,7 @@ public class ChessWebService {
 
 	public Map<String, Object> loadGame(ChessGame chessGame) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
-		model.put("status", true);
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 		List<MovingPosition> histories = selectAllHistory();
 
@@ -48,7 +49,7 @@ public class ChessWebService {
 		model.put("board", chessGame.createBoardDto().getBoardDto());
 		model.put("turn", chessGame.getTurn());
 		model.put("score", chessGame.calculateScore());
-		model.put("status", true);
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 		return model;
 	}
@@ -59,7 +60,7 @@ public class ChessWebService {
 		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
 			Map<String, Object> model = new HashMap<>();
 
-			model.put("status", false);
+			model.put("errorStatus", NormalStatus.NO);
 			model.put("exception", e.getMessage());
 			model.put("destination", "chess.html");
 			return model;
@@ -73,11 +74,11 @@ public class ChessWebService {
 
 			model.put("movable", movablePositionNames);
 			model.put("position", position);
-			model.put("status", true);
+			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 			return model;
 		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("status", false);
+			model.put("normalStatus", NormalStatus.NO.isNormalStatus());
 			model.put("exception", e.getMessage());
 			return model;
 		}
@@ -86,11 +87,11 @@ public class ChessWebService {
 	public Map<String, Object> chooseSecondPosition(String position) {
 		Map<String, Object> model = new HashMap<>();
 		try {
-			model.put("status", true);
+			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 			model.put("position", position);
 			return model;
 		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("status", false);
+			model.put("normalStatus", NormalStatus.NO.isNormalStatus());
 			model.put("exception", e.getMessage());
 			return model;
 		}
@@ -115,14 +116,14 @@ public class ChessWebService {
 		Map<String, Object> model = new HashMap<>();
 
 		if (start.equals(end)) {
-			model.put("status", true);
+			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 			model.put("destination", "chess.html");
 			return model;
 		}
 
 		chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
 		insertHistory(start, end);
-		model.put("status", true);
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 		if (chessGame.isKingDead()) {
 			model.put("winner", chessGame.getAliveKingColor());

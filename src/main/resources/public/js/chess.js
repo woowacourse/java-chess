@@ -55,8 +55,8 @@ window.onload = function () {
         const turn = chessGame["turn"];
         const score = chessGame["score"]["scores"];
 
-        if (chessGame["status"] === false) {
-            alert("!!!!!!!잘못된 명령입니다.");
+        if (chessGame["normalStatus"] === false) {
+            alert("잘못된 명령입니다.");
             return;
         }
         setBoard(board);
@@ -69,8 +69,8 @@ window.onload = function () {
             .then(res => res.json())
             .then(data => {
                 startPosition = data.position;
-                console.log(data.status);
-                if (data.status === false) {
+                console.log(data.normalStatus);
+                if (data.normalStatus === false) {
                     alert(data.exception);
                     return;
                 }
@@ -91,7 +91,7 @@ window.onload = function () {
         fetch(`http://localhost:4567/end?end=${position}`, {method: "POST"})
             .then(res => res.json())
             .then(data => {
-                if (data.status === false) {
+                if (data.normalStatus === false) {
                     alert(data.exception);
                     return;
                 }
