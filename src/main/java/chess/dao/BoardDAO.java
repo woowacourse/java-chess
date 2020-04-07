@@ -13,6 +13,7 @@ import java.sql.*;
 import java.util.List;
 
 import static chess.dao.ServerInfo.*;
+import static chess.domain.chesspiece.ChessPieceInfo.*;
 
 public class BoardDAO {
     Connection connection = getConnection();
@@ -86,22 +87,22 @@ public class BoardDAO {
     private ChessPiece getNewChessPiece(String piece_name, String teamName, Position position) {
         String lowerPieceName = piece_name.toLowerCase();
 
-        if (lowerPieceName.equals("k")) {
+        if (lowerPieceName.equals(KING.getName())) {
             return new King(Team.of(teamName));
         }
-        if (lowerPieceName.equals("q")) {
+        if (lowerPieceName.equals(QUEEN.getName())) {
             return new Queen(Team.of(teamName));
         }
-        if (lowerPieceName.equals("r")) {
+        if (lowerPieceName.equals(ROOK.getName())) {
             return new Rook(Team.of(teamName));
         }
-        if (lowerPieceName.equals("b")) {
+        if (lowerPieceName.equals(BISHOP.getName())) {
             return new Bishop(Team.of(teamName));
         }
-        if (lowerPieceName.equals("n")) {
+        if (lowerPieceName.equals(KNIGHT.getName())) {
             return new Knight(Team.of(teamName));
         }
-        if (lowerPieceName.equals("p")) {
+        if (lowerPieceName.equals(PAWN.getName())) {
             Pawn pawn = new Pawn(Team.of(teamName));
 
             pawn.updateFirstMove(teamName, position);
