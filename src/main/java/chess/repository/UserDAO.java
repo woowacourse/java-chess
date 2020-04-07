@@ -38,12 +38,11 @@ public class UserDAO {
     }
 
     public void upsert(User user) throws SQLException {
-        ResultSet resultSet = findByName(user.getName());
-        if (!resultSet.next()) {
-            addUser(user);
-            return;
-        }
-        updateByName(user.getName(), user);
+        String query = "INSERT INTO user (name, win_count, lose_count) VALUES (?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE win_count = ?, lose_count = ?;";
+        String winCount = Integer.toString(user.getWinCount());
+        String loseCount = Integer.toString(user.getLoseCount());
+        DBConnector.executeUpdate(query, user.getName(), winCount, loseCount, winCount, loseCount);
     }
 
     public void updateByName(String originalName, User modifiedUser) throws SQLException {

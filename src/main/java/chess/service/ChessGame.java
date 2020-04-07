@@ -68,12 +68,12 @@ public class ChessGame {
 
     private void updateRecord(User whitePlayer, User blackPlayer, Board board) throws SQLException {
         if (board.isWhiteTurn()) {
-            userDAO.updateByName(whitePlayer.getName(), whitePlayer.win());
-            userDAO.updateByName(blackPlayer.getName(), blackPlayer.lose());
+            userDAO.upsert(whitePlayer.win());
+            userDAO.upsert(blackPlayer.lose());
             return;
         }
-        userDAO.updateByName(blackPlayer.getName(), blackPlayer.win());
-        userDAO.updateByName(whitePlayer.getName(), whitePlayer.lose());
+        userDAO.upsert(blackPlayer.win());
+        userDAO.upsert(whitePlayer.lose());
     }
 
     public ChessResult status(String whiteName, String blackName) throws SQLException {
