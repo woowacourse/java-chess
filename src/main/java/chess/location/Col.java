@@ -10,8 +10,7 @@ public enum Col {
     E('e'),
     F('f'),
     G('g'),
-    H('h'),
-    OUT_OF_BOUND('-');
+    H('h');
 
     private final char value;
 
@@ -21,7 +20,7 @@ public enum Col {
 
     public static Col of(int value) {
         if (isInValidRange(value)) {
-            return OUT_OF_BOUND;
+            throw new NoExistChessLocationException();
         }
         return Arrays.stream(Col.values())
                 .filter(col -> col.value == value)

@@ -32,11 +32,8 @@ public class Location {
     }
 
     public boolean isForwardDiagonal(Location after, int value) {
-        Col leftCol = col.minus(1);
-        Col rightCol = col.plus(1);
-
-        return row.plus(value).is(after.row)
-                && (leftCol.is(after.col) || rightCol.is(after.col));
+        int colGap = Math.abs(after.getColValue() - col.getValue());
+        return row.plus(value).is(after.row) && colGap == 1;
     }
 
     public Location calculateNextLocation(Location destination, int weight) {
