@@ -13,18 +13,25 @@ import java.util.stream.Collectors;
 
 public class Rows {
     private final List<Piece> pieces;
+    private final Column column;
 
     public Rows(Column column, Pieces pieces) {
+        this.column = column;
         this.pieces = Arrays.stream(Row.values())
                 .map(row -> PositionFactory.of(row, column))
                 .map(pieces::findByPosition)
                 .collect(Collectors.toList());
     }
 
-    public List<String> getResources() {
-        List<String> resources = pieces.stream()
-                .map(Piece::getResource)
-                .collect(Collectors.toList());
-        return Collections.unmodifiableList(resources);
+    public String getResources() {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(Piece piece : pieces) {
+            stringBuilder.append(piece.getResource());
+        }
+        return stringBuilder.toString();
+    }
+
+    public Column getColumn() {
+        return column;
     }
 }

@@ -21,16 +21,9 @@ public class OutputView {
         printEmptyLine();
 
         for(Rows rows : board.getRows()) {
-            printRows(rows);
+            System.out.println(rows.getResources());
         }
 
-        printEmptyLine();
-    }
-
-    private static void printRows(Rows rows) {
-        for(String path : rows.getResources()) {
-            System.out.print(path);
-        }
         printEmptyLine();
     }
 
