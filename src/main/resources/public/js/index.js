@@ -1,5 +1,7 @@
-// document.getElementById("status")
-//     .addEventListener("click", async function (event) {
-//         event.preventDefault();
-//         document.getElementById("score-status").style.visibility = 'visible';
-//     });
+let scoreStatus = document.getElementById("score-status");
+let score = document.querySelector("#score-status span");
+if (score.innerText === "") {
+    scoreStatus.style.visibility = "hidden"
+} else {
+    scoreStatus.style.visibility = "visible";
+}

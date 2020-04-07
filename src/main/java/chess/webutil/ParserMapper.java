@@ -21,6 +21,9 @@ public enum ParserMapper {
         board.clear();
         return ModelParser.parseBoard(board);
     }),
+//    Movable("이동 가능 위치", (request, board) -> {
+////        board, request.queryParams("fromPiece"));
+//    }),
     MOVE("이동", (request, board) -> {
         try {
             board.move(request.queryParams("fromPiece"), request.queryParams("toPiece"));
@@ -33,8 +36,8 @@ public enum ParserMapper {
     STATUS("점수 현황", (request, board) -> {
         GameResult gameResult = new GameResult();
         Map<String, Object> model = ModelParser.parseBoard(board);
-        model.put("white", "white 점수 : " + gameResult.calculateScore(board, Turn.WHITE));
-        model.put("black", "black 점수 : " + gameResult.calculateScore(board, Turn.BLACK));
+        model.put("white", gameResult.calculateScore(board, Turn.WHITE));
+        model.put("black", gameResult.calculateScore(board, Turn.BLACK));
         return model;
     });
 

@@ -21,6 +21,10 @@ public abstract class Piece {
         this.position = position;
     }
 
+    public List<Piece> possiblePositions(final Board board, final Piece piece) {
+        return null;
+    }
+
     public boolean isMovable(final Board board,  final Piece toPiece) {
         if (pieceType.possiblePositions(board, this).contains(toPiece.getPosition())) {
             return true;
