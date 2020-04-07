@@ -1,16 +1,25 @@
 package chess.domain.game;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesInitializer;
 import chess.domain.position.Position;
+import chess.domain.position.positions.Positions;
+import chess.domain.web.BoardDto;
 
 public class ChessGame {
-	private final Pieces pieces;
+	private Pieces pieces;
 	private Turn turn;
 
 	public ChessGame() {
 		pieces = PiecesInitializer.operate();
+		turn = new Turn(Color.WHITE);
+	}
+
+
+	public void reset() {
+		pieces = PiecesInitializer.reset();
 		turn = new Turn(Color.WHITE);
 	}
 
@@ -33,5 +42,22 @@ public class ChessGame {
 
 	public Board createBoard() {
 		return new Board(pieces);
+	}
+
+	public BoardDto createBoardDto() {
+		return new BoardDto(pieces);
+	}
+
+	public Positions findMovablePositions(Position position) {
+		Piece piece = pieces.findBy(position, turn.getColor());
+		return piece.createMovablePositions(pieces.getPieces());
+	}
+
+	public Turn getTurn() {
+		return turn;
+	}
+
+	public Pieces getPieces() {
+		return pieces;
 	}
 }

@@ -1,9 +1,9 @@
 package chess.controller;
 
+import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.web.Log;
-import chess.domain.web.WebChessGame;
 import chess.service.ChessWebService;
 
 import java.sql.SQLException;
@@ -14,10 +14,10 @@ import java.util.stream.Collectors;
 
 public class ChessWebController {
 	private ChessWebService chessWebService;
-	private WebChessGame chessGame;
+	private ChessGame chessGame;
 
 	public ChessWebController() {
-		this.chessGame = new WebChessGame();
+		this.chessGame = new ChessGame();
 		this.chessWebService = new ChessWebService();
 	}
 
