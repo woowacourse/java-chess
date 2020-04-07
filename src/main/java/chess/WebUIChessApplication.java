@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.service.ChessService;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
+	private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+
 	private static ChessService chessService;
 
 	public static void main(String[] args) {
@@ -41,7 +41,7 @@ public class WebUIChessApplication {
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+		return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
 	}
 
 }

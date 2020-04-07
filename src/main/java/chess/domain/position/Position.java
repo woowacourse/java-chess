@@ -7,12 +7,15 @@ import java.util.Objects;
 import chess.domain.Direction;
 
 public class Position {
-	private static final int MIN_VER_INT = 1;
-	private static final int MAX_VER_INT = 8;
-	private static final char MIN_VER_CHAR = 'a';
-	private static final char MAX_VER_CHAR = 'h';
+	private static final int MIN_INT = 1;
+	private static final int MAX_INT = 8;
+	private static final char MIN_CHAR = 'a';
+	private static final char MAX_CHAR = 'h';
 	private static final int ALPHABET_DEFORMATION_VALUE = 96;
 	private static final String NOT_ABLE_VALUE_MESSAGE = "허용되는 좌표 값이 아닙니다.";
+	private static final int ALPHABET_INDEX = 0;
+	private static final int INT_FROM_INDEX = 1;
+	private static final int INT_TO_INDEX = 2;
 
 	private final int x;
 	private final int y;
@@ -30,19 +33,19 @@ public class Position {
 	}
 
 	public static Position of(String position) {
-		char alphabet = position.charAt(0);
-		int number = Integer.parseInt(position.substring(1, 2));
+		char alphabet = position.charAt(ALPHABET_INDEX);
+		int number = Integer.parseInt(position.substring(INT_FROM_INDEX, INT_TO_INDEX));
 		return Position.of(number, alphabet);
 	}
 
 	private static void validateIntRange(int num) {
-		if (num < MIN_VER_INT || num > MAX_VER_INT) {
+		if (num < MIN_INT || num > MAX_INT) {
 			throw new IllegalArgumentException(NOT_ABLE_VALUE_MESSAGE);
 		}
 	}
 
 	private static void validateCharRange(char num) {
-		if (num < MIN_VER_CHAR || num > MAX_VER_CHAR) {
+		if (num < MIN_CHAR || num > MAX_CHAR) {
 			throw new IllegalArgumentException(NOT_ABLE_VALUE_MESSAGE);
 		}
 	}

@@ -8,7 +8,7 @@
 </head>
 <body>
 <div class="wrapper">
-<h1 class="title">체스 게임</h1>
+    <h1 class="title">체스 게임</h1>
     <div class="chessboard">
         <div class="row">
             <button id="a8" class="black cell"></button>
@@ -91,102 +91,12 @@
             <button id="h1" class="black cell"></button>
         </div>
     </div>
-    <div class="alert">
+    <div class="result">
         <div class="message"></div>
         <div class="submit">새로 시작</div>
     </div>
 </div>
 <script src="https://code.jquery.com/jquery-3.0.0.min.js"></script>
-<script>
-    $('.alert').hide();
-    $.ajax({
-        type: 'get',
-        url: '/init',
-        dataType: 'json',
-        error: function () {
-            alert("initError");
-        },
-        success: initSuccess
-    });
-
-    function initSuccess(response) {
-        for (position in response) {
-            const pieceName = response[position];
-            document.getElementById(position).classList.add(pieceName);
-        }
-    }
-
-    let startPosition = '';
-    $('.cell').click(function () {
-        const targetPosition = $(this).attr('id');
-        if (startPosition == '') {
-            startPosition = targetPosition;
-        } else {
-            requestMove(startPosition, targetPosition);
-            startPosition = '';
-        }
-    });
-
-    function requestMove(startPosition, targetPosition) {
-        $.ajax({
-            type: 'post',
-            url: '/move',
-            data: {startPosition: startPosition, targetPosition: targetPosition},
-            dataType: 'json',
-            error: function (response) {
-                alert(response.responseText);
-            },
-            success: function () {
-                move({startPosition, targetPosition});
-            }
-        })
-    }
-
-    function move(position) {
-        let startPositionClassName = getChessPieceClassName(position.startPosition);
-        let targetPositionClassName = getChessPieceClassName(position.targetPosition);
-
-        if (targetPositionClassName != '') {
-            getClassList(position.targetPosition).remove(targetPositionClassName);
-        }
-        getClassList(position.startPosition).remove(startPositionClassName);
-        getClassList(position.targetPosition).add(startPositionClassName);
-        setTimeout(() => checkKingDie(), 0);
-    }
-
-    function getChessPieceClassName(position) {
-        let className = document.getElementById(position).className;
-        return className.substring(className.lastIndexOf("cell") + 5, className.length);
-    }
-
-    function getClassList(position) {
-        return document.getElementById(position).classList
-    }
-
-    function checkKingDie() {
-        $.ajax({
-            type: 'get',
-            url: '/isEnd',
-            dataType: 'json',
-            error: function () {
-                alert("isEnd Error")
-            },
-            success: function (response) {
-                if (response.isEnd == false) {
-                    return;
-                }
-                $('.alert').show();
-                $('.alert > .message').html(response.message);
-                $('.alert > .submit').click(() => {
-                    $.ajax({
-                        type: 'get',
-                        url: '/restart',
-                    });
-                    location.reload()
-                })
-            }
-        })
-    }
-</script>
+<script src="script.js"></script>
 </body>
 </html>

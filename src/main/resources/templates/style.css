@@ -114,7 +114,7 @@ html, body {
     background-image: url("images/rook_black.png");
 }
 
-.alert {
+.result {
     margin-top: 50px;
     position: absolute;
     display: flex;
@@ -127,13 +127,13 @@ html, body {
     background-color: white;
 }
 
-.alert > .message {
+.result > .message {
     font-size: 45px;
     margin-top: 10px;
     padding-bottom: 50px;
 }
 
-.alert > .submit {
+.result > .submit {
     width: 120px;
     height: 50px;
     line-height: 50px;

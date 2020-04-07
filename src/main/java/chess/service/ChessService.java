@@ -30,7 +30,6 @@ public class ChessService {
 			Position startPosition = Position.of(req.queryParams("startPosition"));
 			Position targetPosition = Position.of(req.queryParams("targetPosition"));
 			chessBoard.move(startPosition, targetPosition);
-
 			chessDAO.update(new ChessDTO(chessBoard));
 			return getBoardJson();
 		} catch (RuntimeException e) {
@@ -63,7 +62,7 @@ public class ChessService {
 	}
 
 	public String restart() throws SQLException {
-		chessDAO.removeAll();
+		chessDAO.remove(new ChessDTO(chessBoard));
 		chessBoard = chessDAO.find();
 		return getBoardJson();
 	}

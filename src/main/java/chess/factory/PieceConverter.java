@@ -45,6 +45,5 @@ public enum PieceConverter {
 			.findFirst()
 			.map(converter -> converter.creator.apply(position))
 			.orElseThrow(() -> new IllegalArgumentException(NOT_EXIST_NAME_MESSAGE));
-
 	}
 }

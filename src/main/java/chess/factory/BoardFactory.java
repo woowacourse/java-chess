@@ -48,12 +48,6 @@ public class BoardFactory {
 		return new ChessBoard(1, board, new Turn(true));
 	}
 
-	private static List<Row> createWhiteTeam() {
-		return Arrays.asList(
-			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE),
-			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE));
-	}
-
 	private static List<Row> createBlackTeam() {
 		return Arrays.asList(
 			createExecutive(BLACK_TEAM_EXECUTIVE_INDEX, Team.BLACK),
@@ -62,10 +56,16 @@ public class BoardFactory {
 
 	private static List<Row> createBlankTeam() {
 		List<Row> rows = new ArrayList<>();
-		for (int index = BLACK_FROM_INDEX; index <= BLACK_TO_INDEX; index++) {
+		for (int index = BLACK_TO_INDEX; index >= BLACK_FROM_INDEX; index--) {
 			rows.add(createBlanks(index));
 		}
 		return rows;
+	}
+
+	private static List<Row> createWhiteTeam() {
+		return Arrays.asList(
+			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE),
+			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE));
 	}
 
 	private static Row createExecutive(int index, Team team) {

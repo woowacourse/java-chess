@@ -12,6 +12,7 @@ import chess.domain.chessboard.ChessBoard;
 import chess.domain.position.Position;
 import chess.dto.ChessDTO;
 import chess.factory.BoardFactory;
+import chess.view.OutputView;
 
 public class ChessDAOTest {
 
@@ -20,6 +21,19 @@ public class ChessDAOTest {
 	@BeforeEach
 	void setup() {
 		chessDAO = new ChessDAO();
+	}
+
+	@Test
+	void totalTest() throws SQLException {
+		ChessBoard chessBoard = BoardFactory.createBoard();
+		ChessDTO chessDTO = new ChessDTO(chessBoard);
+		chessDAO.addBoard(chessDTO);
+
+		assertThat(chessDAO.find()).isEqualTo(chessBoard);
+		chessBoard.move(Position.of("b2"), Position.of("b4"));
+		chessDAO.update(new ChessDTO(chessBoard));
+		assertThat(chessDAO.find()).isEqualTo(chessBoard);
+		chessDAO.remove(new ChessDTO(chessBoard));
 	}
 
 
@@ -31,26 +45,27 @@ public class ChessDAOTest {
 
 	@Test
 	void addBoardTest() throws SQLException {
-		ChessDTO chessDto = new ChessDTO(1, BoardFactory.createBoard().toString(), true);
+		ChessDTO chessDto = new ChessDTO(BoardFactory.createBoard());
 		chessDAO.addBoard(chessDto);
 	}
 
 	@Test
 	void findTest() throws SQLException {
 		ChessBoard chessBoard = chessDAO.find();
-		System.out.println(chessBoard);
+		OutputView.printBoard(chessBoard);
 	}
 
 	@Test
-	void removeAllTest() throws SQLException {
-		chessDAO.removeAll();
+	void removeTest() throws SQLException {
+		ChessDTO chessDTO = new ChessDTO(BoardFactory.createBoard());
+		chessDAO.addBoard(chessDTO);
+		chessDAO.remove(chessDTO);
 	}
 
 	@Test
 	void updateTest() throws SQLException {
-		ChessBoard chessBoard = chessDAO.find();
+		ChessBoard chessBoard = BoardFactory.createBoard();
 		chessBoard.move(Position.of("b2"), Position.of("b4"));
 		chessDAO.update(new ChessDTO(chessBoard));
-
 	}
 }

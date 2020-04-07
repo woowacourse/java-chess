@@ -3,8 +3,8 @@ package chess.domain.chessboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import chess.domain.Status;
 import chess.domain.Team;
@@ -116,5 +116,23 @@ public class ChessBoard {
 
 	public int getId() {
 		return id;
+	}
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ChessBoard that = (ChessBoard)o;
+		return id == that.id &&
+			rows.equals(that.rows) &&
+			turn.equals(that.turn);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, rows, turn);
 	}
 }

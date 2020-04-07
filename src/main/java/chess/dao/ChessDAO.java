@@ -57,9 +57,10 @@ public class ChessDAO {
 		pstmt.executeUpdate();
 	}
 
-	public void removeAll() throws SQLException {
-		String query = "TRUNCATE board";
+	public void remove(ChessDTO chessDTO) throws SQLException {
+		String query = "DELETE FROM board WHERE id = (?)";
 		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setInt(1, chessDTO.getId());
 		pstmt.executeUpdate();
 	}
 

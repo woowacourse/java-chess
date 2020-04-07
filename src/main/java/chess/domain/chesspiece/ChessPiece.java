@@ -58,6 +58,10 @@ public abstract class ChessPiece {
 		positions.validateCanMovePath(findByPosition);
 	}
 
+	public Position getPosition() {
+		return position;
+	}
+
 	public abstract boolean isNotNeedCheckPath();
 
 	public abstract void validateCanGo(ChessPiece targetPiece);
@@ -74,15 +78,11 @@ public abstract class ChessPiece {
 			return false;
 		ChessPiece that = (ChessPiece)o;
 		return team == that.team &&
-			Objects.equals(position, that.position);
+			position.equals(that.position);
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(team, position);
-	}
-
-	public Position getPosition() {
-		return position;
 	}
 }
