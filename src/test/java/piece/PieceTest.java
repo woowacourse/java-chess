@@ -1,3 +1,5 @@
+package piece;
+
 import chess.domain.game.Player;
 import chess.domain.chesspiece.King;
 import chess.domain.chesspiece.Queen;

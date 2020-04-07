@@ -1,3 +1,5 @@
+package piece;
+
 import chess.domain.chesspiece.Knight;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.chesspiece.Rook;

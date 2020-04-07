@@ -71,7 +71,7 @@ function printChessBoardAndStatus(response) {
         $("#" + item.position).append(piece);
 
         if (response.isKing === true) {
-            swal(response.turn + "이겼습니다.");
+            swal(response.turn + "가 이겼습니다.");
         }
     });
 

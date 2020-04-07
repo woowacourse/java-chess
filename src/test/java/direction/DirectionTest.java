@@ -1,3 +1,5 @@
+package direction;
+
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

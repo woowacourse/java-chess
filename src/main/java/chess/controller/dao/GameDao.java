@@ -3,15 +3,11 @@ package chess.controller.dao;
 import chess.controller.dto.ResponseDto;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Player;
-import chess.domain.status.Result;
-import chess.domain.status.Status;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class GameDao {
     private Connection connection = new ConnectionDao().getConnection();
@@ -61,31 +57,13 @@ public class GameDao {
         return GameStatus.valueOf(rs.getString("state"));
     }
 
-    public Result findResult() throws SQLException {
-        String query = "SELECT white_score, black_score FROM game WHERE game_id = ?";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) return null;
-
-        Status whiteStatus = new Status(Player.WHITE, rs.getDouble("white_score"));
-        Status blackStatus = new Status(Player.BLACK, rs.getDouble("black_score"));
-
-        List<Status> statuses = new ArrayList<>();
-
-        statuses.add(whiteStatus);
-        statuses.add(blackStatus);
-
-        return new Result(statuses);
-    }
-
     public Player findTurn(int roomNumber) throws SQLException {
         String query = "SELECT turn FROM game WHERE game_id = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setInt(1, roomNumber);
         ResultSet rs = pstmt.executeQuery();
 
-        if(!rs.next()) return null;
+        if (!rs.next()) return null;
 
         return Player.valueOf(rs.getString("turn"));
     }

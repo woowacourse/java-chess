@@ -1,3 +1,5 @@
+package position;
+
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import chess.domain.position.component.Column;
