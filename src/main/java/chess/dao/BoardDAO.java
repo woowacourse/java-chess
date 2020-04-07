@@ -12,6 +12,8 @@ import chess.domain.move.Position;
 import java.sql.*;
 import java.util.List;
 
+import static chess.dao.ServerInfo.*;
+
 public class BoardDAO {
     Connection connection = getConnection();
 
@@ -30,14 +32,9 @@ public class BoardDAO {
 
     private Connection connectDriver() {
         Connection connection = null;
-        String server = "localhost:13306";
-        String database = "chess";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER.getData() + "/" + DATABASE.getData() + OPTION.getData(), USER_NAME.getData(), PASSWORD.getData());
         } catch (SQLException e) {
             e.printStackTrace();
         }

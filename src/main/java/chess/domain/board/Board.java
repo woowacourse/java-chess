@@ -48,7 +48,7 @@ public class Board {
     }
 
     private void checkGameEnd() {
-        if (gameStatus.isGameEnd() == true) {
+        if (gameStatus.isGameEnd()) {
             throw new IllegalArgumentException("King이 죽어서 게임이 종료되었습니다.");
         }
     }
