@@ -1,5 +1,7 @@
 package chess.ui;
 
+import java.util.Arrays;
+
 public enum Command {
     START("start"),
     END("end"),
@@ -13,13 +15,14 @@ public enum Command {
     }
 
     static Command of(String value) {
-        for (Command command : values()) {
-            if (command.value.equals(value)) {
-                return command;
-            }
-        }
+        return Arrays.stream(values())
+                .filter(command -> command.matchValue(value, command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%s에 해당하는 명령어를 찾을 수 없습니다.", value)));
+    }
 
-        throw new IllegalArgumentException(String.format("%s에 해당하는 명령어를 찾을 수 없습니다.", value));
+    private boolean matchValue(String value, Command command) {
+        return command.value.equals(value);
     }
 
     public boolean isNotMove() {
