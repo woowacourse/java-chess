@@ -25,6 +25,13 @@ public class WebChessController {
     private CurrentTeam currentTeam;
     private PieceOnBoards originalPieces;
 
+    public void newGame(String whitePlayer, String blackPlayer) {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+        PieceDAO pieceDAO = new PieceDAO();
+        PlayerDAO playerDAO = new PlayerDAO();
+    }
+
     public void start() throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
         CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
