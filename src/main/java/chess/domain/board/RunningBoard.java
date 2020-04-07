@@ -62,23 +62,24 @@ public class RunningBoard extends StartedBoard {
     }
 
     private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
-        for (int y = row; y <= row; y++) {
-            for (int x = 1; x <= 8; x++) {
-                Position position = Position.of(x, y);
-                Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, position, team);
-                pieces.put(position, initializedPawn);
-
-            }
+        for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
+            Position position = Position.of(x, row);
+            Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, position, team);
+            pieces.put(position, initializedPawn);
         }
     }
 
     private static void initializeBlanks(Map<Position, Piece> pieces) {
         for (int y = BLANK_START_INDEX; y <= BLANK_END_INDEX; y++) {
-            for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
-                Position position = Position.of(x, y);
-                Blank blank = Blank.of();
-                pieces.put(position, blank);
-            }
+            initializeBlanks(pieces, y);
+        }
+    }
+
+    private static void initializeBlanks(Map<Position, Piece> pieces, int y) {
+        for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
+            Position position = Position.of(x, y);
+            Blank blank = Blank.of();
+            pieces.put(position, blank);
         }
     }
 }
