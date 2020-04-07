@@ -13,7 +13,7 @@ class PieceRenderTest {
 
     @DisplayName("피스에 따라 뷰에 보여지는 토큰을 반환한다.")
     @ParameterizedTest
-    @CsvSource(value = {"BLACK_KING,K", "WHITE_KING,k", "BLACK_MOVED_PAWN,P", "BLACK_NOT_MOVED_PAWN,P", "WHITE_MOVED_PAWN,p", "WHITE_NOT_MOVED_PAWN,p"})
+    @CsvSource(value = {"BLACK_KING,♚", "WHITE_KING,♔", "BLACK_MOVED_PAWN,♟", "BLACK_NOT_MOVED_PAWN,♟", "WHITE_MOVED_PAWN,♙", "WHITE_NOT_MOVED_PAWN,♙"})
     void findTokenByPiece(Pieces pieces, String expect) {
         //given
         Piece piece = pieces.getPiece();
