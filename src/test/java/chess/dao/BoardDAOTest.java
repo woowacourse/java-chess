@@ -31,7 +31,7 @@ class BoardDAOTest {
 
     @Test
     public void findByUserName() throws Exception {
-        Board board = boardDao.findByUserName(firstUser, secondUser).orElse(BoardFactory.createInitialBoard(firstUser, secondUser));
+        Board board = boardDao.findBoardByUser(firstUser, secondUser).orElse(BoardFactory.createInitialBoard(firstUser, secondUser));
         assertEquals(BoardFactory.createInitialBoard(firstUser, secondUser), board);
     }
 

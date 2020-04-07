@@ -25,9 +25,9 @@ public class Application {
                 executeMovement(service, command);
             }
             if (command.isStatus()) {
-                OutputView.printScore(service.calculateResult());
+                OutputView.printScore(service.calculateResult(new User("123456789")));
             }
-        } while (command.isNotEnd() && service.checkGameNotFinished());
+        } while (command.isNotEnd() && service.checkGameNotFinished(new User("123456789")));
     }
 
     private static Command receiveCommand() {
@@ -41,7 +41,7 @@ public class Application {
 
     private static void executeMovement(ChessService service, Command command) {
         try {
-            Board board = service.move(command.getSource(), command.getTarget());
+            Board board = service.move(new User("123456789"), command.getSource(), command.getTarget());
             OutputView.printBoard(board);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());

@@ -47,23 +47,36 @@ public class WebUIChessApplication {
 
         post("/path", (req, res) -> {
             String source = req.queryParams("source");
-            Board board = chessService.getBoard();
-            return board.searchPath(source);
+            String firstUserName = req.queryParams("user1");
+            Board board;
+            try {
+                board = chessService.getBoard(new User(firstUserName));
+                return board.searchPath(source);
+            } catch (RuntimeException e) {
+                return e.getMessage();
+            }
         });
 
         post("/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
+            String firstUserName = req.queryParams("user1");
+            Board board;
             try {
-                chessService.move(source, target);
+                board = chessService.move(new User(firstUserName), source, target);
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
-            return true;
+            if (board.isNotFinished()) {
+                return true;
+            }
+            return "finished";
         });
 
         post("/save", (req, res) -> {
-            chessService.save();
+            String firstUserName = req.queryParams("user1");
+            String secondUserName = req.queryParams("user2");
+            chessService.save(new User(firstUserName), new User(secondUserName));
             Map<String, Object> model = new HashMap<>();
             Board board = chessService.createEmpty();
             List<LineDto> rows = board.getRows();
@@ -73,11 +86,15 @@ public class WebUIChessApplication {
 
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            String firstUserName = req.queryParams("user1");
             return render(model, "status.html");
         });
 
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            String firstUserName = req.queryParams("user1");
+            String secondUserName = req.queryParams("user2");
+            chessService.delete(new User(firstUserName), new User(secondUserName));
             Board board = chessService.createEmpty();
             List<LineDto> rows = board.getRows();
             model.put("rows", rows);

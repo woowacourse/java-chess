@@ -13,6 +13,12 @@ import chess.domain.player.User;
 
 public class BoardDAO {
 
+    private CellDAO cellDAO;
+
+    public BoardDAO() {
+        this.cellDAO = new CellDAO();
+    }
+
     public void addBoard(Board board, User first, User second) throws SQLException {
         String query = "INSERT INTO board (user1, user2, turn) VALUES (?, ?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -23,7 +29,7 @@ public class BoardDAO {
         pstmt.executeUpdate();
     }
 
-    public Optional<Board> findByUserName(User first, User second) throws SQLException {
+    public Optional<Board> findBoardByUser(User first, User second) throws SQLException {
         String query = "SELECT * FROM board WHERE user1 = ? AND user2 = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
         pstmt.setString(1, first.getName());
@@ -35,9 +41,7 @@ public class BoardDAO {
 
         int boardId = rs.getInt(1);
 
-        CellDAO cellDAO = new CellDAO();
-
-        return Optional.ofNullable(BoardFactory.of(cellDAO.findByBoardId(boardId), rs.getInt(4), first, second));
+        return Optional.ofNullable(BoardFactory.of(cellDAO.findCellsByBoardId(boardId), rs.getInt(4), first, second));
     }
 
     public void saveBoardByUserName(Board board, User first, User second) throws SQLException {
@@ -60,7 +64,29 @@ public class BoardDAO {
 
         int boardId = rs.getInt(1);
 
-        CellDAO cellDAO = new CellDAO();
         cellDAO.addCells(board, boardId);
+    }
+
+    public boolean deleteBoardByUser(User first, User second) throws SQLException {
+        String query = "SELECT id FROM board WHERE user1 = ? AND user2 = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, first.getName());
+        pstmt.setString(2, second.getName());
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next())
+            return false;
+
+        int boardId = rs.getInt(1);
+
+        cellDAO.deleteCellsByUser(boardId);
+
+        query = "DELETE FROM board WHERE user1 = ? AND user2 = ?";
+        pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, first.getName());
+        pstmt.setString(2, second.getName());
+        pstmt.executeUpdate();
+
+        return findBoardByUser(first, second) == null;
     }
 }

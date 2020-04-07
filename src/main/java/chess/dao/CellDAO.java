@@ -12,6 +12,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.GamePiece;
 import chess.domain.piece.GamePieces;
+import chess.domain.player.User;
 
 public class CellDAO {
 
@@ -36,7 +37,7 @@ public class CellDAO {
         pstmt.executeUpdate();
     }
 
-    public Map<Position, GamePiece> findByBoardId(int board_id) throws SQLException {
+    public Map<Position, GamePiece> findCellsByBoardId(int board_id) throws SQLException {
         String query = "SELECT * FROM cell WHERE board_id = ?";
 
         PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -52,5 +53,14 @@ public class CellDAO {
         }
 
         return board;
+    }
+
+    public boolean deleteCellsByUser(int board_id) throws SQLException {
+        String query = "DELETE FROM cell WHERE board_id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setInt(1, board_id);
+        pstmt.executeUpdate();
+
+        return findCellsByBoardId(board_id) == null;
     }
 }

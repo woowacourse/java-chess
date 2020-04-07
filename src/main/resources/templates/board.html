@@ -29,16 +29,21 @@
             </div>
             <div class="button">
                 <form action="/status" method="post">
+                    <input type="hidden" name="user1" value="{{firstUser}}">
                     <input type="submit" value="STATUS">
                 </form>
             </div>
             <div class="button">
                 <form action="/save" method="post">
+                    <input type="hidden" name="user1" value="{{firstUser}}">
+                    <input type="hidden" name="user2" value="{{secondUser}}">
                     <input type="submit" value="SAVE">
                 </form>
             </div>
             <div class="button">
                 <form action="/end" method="post">
+                    <input type="hidden" name="user1" value="{{firstUser}}">
+                    <input type="hidden" name="user2" value="{{secondUser}}">
                     <input type="submit" value="END">
                 </form>
             </div>
@@ -66,6 +71,7 @@
     let isFirstClick = true;
     let cell;
     let before;
+    var user1 = document.getElementsByClassName("user-name")[0].innerHTML;
 
     $(".cell").click(function () {
         if (document.querySelector(".selected-cell") !== null) {
@@ -83,11 +89,14 @@
 
             $.ajax({
                 url: "/path",
-                data: { source: source },
+                data: { source: source, user1: user1 },
                 method: "POST",
                 // async: false,
                 // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
             }).done(function (list) {
+                if (list === '이동할 수 없습니다.\n해당 플레이어의 턴이 아닙니다.') {
+                    alert(list);
+                }
                 document.getElementById(cellPosition).classList.add("selected-cell");
                 const path = list.split(",");
                 path.forEach(position => {
@@ -98,7 +107,7 @@
                 // cell.addClass("selected-cell");
                 // const currentBoard = document.querySelector(".board");
                 // document.getElementById("app").removeChild(currentBoard);
-                // document.getElementById("app").insertAdjacentHTML("afterbegin", board);
+                // document.getElementById("app").in할ertAdjacentHTML("afterbegin", board);
                 // // $(".board").html(refine);
                 // for (let i = 0; i < 64; i++) {
                 //     let cell = "white-cell"
@@ -126,13 +135,15 @@
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
-            data: { source: source, target: cellPosition },
+            data: { source: source, target: cellPosition, user1: user1 },
             method: "POST",
             // async: false,
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
-        }).done(function (posible) {
-            if (posible !== "true") {
-                alert(posible);
+        }).done(function (possible) {
+            if (possible == "finished") {
+                window.location.href = "main.html";
+            } else if (possible !== "true") {
+                alert(possible);
                 before.removeClass("selected-cell");
                 return;
             }
@@ -145,7 +156,6 @@
     });
 
     function move(from, to) {
-        console.log(`move from ${from} to ${to}`);
         var img = document.createElement("IMG");
         img.src = "./img/NONE_..png";
         document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild,
