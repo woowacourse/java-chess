@@ -16,9 +16,6 @@ public class Application {
 		if (command.isStart()) {
 			startGame();
 		}
-		if(command.isResume()) {
-			resumeGame(new GameManager());
-		}
 	}
 
 	public static Command inputCommand() {

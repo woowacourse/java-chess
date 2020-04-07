@@ -4,7 +4,6 @@ import java.util.stream.Stream;
 
 public enum CommandType {
 	START,
-	RESUME,
 	END,
 	MOVE,
 	STATUS;

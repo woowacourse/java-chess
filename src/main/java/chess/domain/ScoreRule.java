@@ -2,7 +2,6 @@ package chess.domain;
 
 import static chess.domain.piece.Pawn.*;
 
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -15,7 +14,7 @@ public class ScoreRule {
 	private static final int MIN_COLUMN_PAWN_COUNT = 2;
 	private static final double PAWN_SCORE_DISCOUNT_FACTOR = 0.5;
 
-	public Map<Color, Double> calculateScore(Board board) throws SQLException {
+	public Map<Color, Double> calculateScore(Board board) {
 		Map<Color, Double> eachScore = board.getPieces()
 			.values()
 			.stream()
@@ -28,7 +27,7 @@ public class ScoreRule {
 		return eachScore;
 	}
 
-	private double discountPawnScore(Color color, Board board) throws SQLException {
+	private double discountPawnScore(Color color, Board board) {
 		return findEachColumnPawnCountBy(color, board)
 			.values()
 			.stream()
@@ -37,7 +36,7 @@ public class ScoreRule {
 			.count();
 	}
 
-	private Map<Column, Long> findEachColumnPawnCountBy(Color color, Board board) throws SQLException {
+	private Map<Column, Long> findEachColumnPawnCountBy(Color color, Board board) {
 		return board.getPieces()
 			.entrySet()
 			.stream()

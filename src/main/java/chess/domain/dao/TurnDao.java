@@ -5,19 +5,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import chess.domain.dto.TurnDto;
 import chess.domain.piece.Color;
 
 public class TurnDao {
-	public void addTurn(TurnDto turnDto) throws SQLException {
-		Connection connection = new SQLConnector().getConnection();
-		String query = "INSERT INTO state VALUES (1, ?)";
-		PreparedStatement statement =connection.prepareStatement(query);
-		statement.setString(1, turnDto.getColorName());
-		statement.executeUpdate();
-		connection.close();
-	}
-
 	public Color findTurn() throws SQLException {
 		Connection connection = new SQLConnector().getConnection();
 		String query = "SELECT * FROM state WHERE id = 1";
