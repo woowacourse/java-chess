@@ -136,22 +136,15 @@
     </tr>
 </table>
 <script type="text/javascript">
-    {
-        {
-            #each
-            pieces
-        }
-    }
+    {{#each pieces}}
     applyBackgroundImg("{{this.position}}", "{{this.imgUrl}}");
-    {
-        {
-            /each}}
+    {{/each}}
 
-            function applyBackgroundImg(piecePosition, pieceImgUrl) {
-                let element = document.getElementById(piecePosition);
-                element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
-                element.style.backgroundSize = "cover";
-            }
+    function applyBackgroundImg(piecePosition, pieceImgUrl) {
+        let element = document.getElementById(piecePosition);
+        element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
+        element.style.backgroundSize = "cover";
+    }
 </script>
 </body>
 </html>
