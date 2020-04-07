@@ -1,55 +1,81 @@
 package chess.service;
 
 import chess.controller.dto.PieceDto;
+import chess.controller.dto.ResponseDto;
 import chess.dao.ChessDAO;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.board.initializer.AutomatedBoardInitializer;
-import chess.domain.board.initializer.EnumRepositoryBoardInitializer;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Turn;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
-import chess.domain.state.RunningState;
-import chess.domain.state.State;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessService {
-
     private ChessDAO chessDAO = new ChessDAO();
-    private State state = new RunningState(new ChessGame(Board.of(new EnumRepositoryBoardInitializer()), Turn.from(Team.WHITE)));
+    private Map<Long, ChessGame> chessGames = new HashMap<>();
 
-    public boolean isEnd() {
-        return state.isEnd();
+    public Long createGame() throws SQLException {
+        ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        Long id = chessDAO.createChessGame(chessGame);
+        chessGames.put(id, chessGame);
+        return id;
     }
 
-    public void start(List<String> parameters) throws SQLException {
+    public void start(Long id, List<String> parameters) throws SQLException {
         if ("new".equals(parameters.get(0))) {
             ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
-            Long id = chessDAO.createChessGame(chessGame);
-            state = new RunningState(chessGame);
+            chessDAO.addBoard(id, chessGame);
+            chessGames.put(id, chessGame);
         }
         if ("load".equals(parameters.get(0))) {
-            ChessGame chessGame = chessDAO.findGameById(1L);
-            state = new RunningState(chessGame);
+            ChessGame chessGame = chessDAO.findGameById(id);
+            chessGames.put(id, chessGame);
+            System.out.println("load" + chessGames.size());
         }
     }
 
-    public void end(List<String> parameters) throws SQLException {
-        chessDAO.addBoard(1L, state.getBoard());
-        state = state.end(parameters);
+    public void end(Long id, List<String> parameters) throws SQLException {
+        if ("save".equals(parameters.get(0))) {
+            System.out.println("save" + chessGames.size());
+            chessDAO.addBoard(id, chessGames.get(id));
+        }
+        if ("".equals(parameters.get(0))) {
+            deleteGame(id);
+        }
+        chessGames.remove(id);
     }
 
-    public void move(List<String> parameters) {
-        state = state.move(MoveParameter.of(parameters));
+    public void move(Long id, List<String> parameters) {
+        chessGames.get(id).move(MoveParameter.of(parameters));
     }
 
-    public Map<Position, PieceDto> createBoardDto() {
-        return state.getBoard()
+    public void deleteGame(long id) throws SQLException {
+        chessDAO.deleteGame(id);
+    }
+
+    public ResponseDto getResponseDto(Long id) {
+        Map<Position, PieceDto> board = createBoardDto(id);
+        Map<Team, Double> scoreDto = createScoreDto(id);
+        Team turnDto = createTurnDto(id);
+        if (isEnd(id)) {
+            Team winner = getWinner(id);
+            String message = winner.toString() + "가 승리했습니다.";
+            return new ResponseDto(board, scoreDto, turnDto, winner, message);
+        }
+        return new ResponseDto(board, scoreDto, turnDto);
+    }
+
+
+    public Map<Position, PieceDto> createBoardDto(Long id) {
+        return chessGames.get(id)
+                .getBoard()
                 .entrySet()
                 .stream()
                 .collect(Collectors.toMap(
@@ -58,11 +84,34 @@ public class ChessService {
                 ));
     }
 
-    public Map<Team, Double> createScoreDto() {
-        return state.getStatus();
+    public Map<Team, Double> createScoreDto(Long id) {
+        return chessGames.get(id).getStatus();
     }
 
-    public Team getWinner() {
-        return state.getWinner();
+    public boolean isEnd(Long id) {
+        return chessGames.get(id).isEnd();
+    }
+
+    public Team createTurnDto(Long id) {
+        return chessGames.get(id).getTurn();
+    }
+
+    public Team getWinner(Long id) {
+        return chessGames.get(id).getWinner();
+    }
+
+    public List<Long> getRoomId() throws SQLException {
+        return chessDAO.getRoomId();
+
+    }
+
+    public void load(final Long id) throws SQLException {
+        ChessGame chessGame = chessDAO.findGameById(id);
+        chessGames.put(id, chessGame);
+    }
+
+    public void restart(final Long id) {
+        ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        chessGames.put(id, chessGame);
     }
 }

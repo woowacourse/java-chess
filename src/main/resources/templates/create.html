@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>create</title>
+</head>
+
+<body>
+<form action="/loadChessGame" method="post" id="load-form">
+    <input id="idInput" type="hidden" name="id" value="{{id}}">
+</form>
+</body>
+
+
+<script>
+    const id = document.getElementById("idInput").getAttribute("value");
+    alert(id + "번 게임에 입장하셨습니다.");
+
+    document.getElementById("load-form").submit();
+</script>
+</html>

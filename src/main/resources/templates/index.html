@@ -9,7 +9,7 @@
 <div class="container">
     <div class="game-container">
         <div class="title-container">
-            <div class="title"><h1>체스체스체스체스</h1></div>
+            <div class="title"><h1><a href="/" id="main-title">체스체스체스체스</a></h1></div>
         </div>
         <div class="chess-board-container">
             <div class="board" id="board">
@@ -248,21 +248,69 @@
         </div>
         <div class="buttons">
             <div class="start-button">
-                <form action="/chessGame" method="post">
+                <form action="/createChessGame" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
                     <input hidden="hidden" name="parameter" type="text" value="new">
-                    <input type="submit" value="게임 시작"/>
+                    <input type="submit" value="New Game"/>
                 </form>
             </div>
-            <div class="load-button">
-                <form action="/chessGame" method="post">
-                    <input hidden="hidden" name="command" type="text" value="start">
-                    <input hidden="hidden" name="parameter" type="text" value="load">
-                    <input type="submit" value="불러오기"/>
-                </form>
-            </div>
+        </div>
+    </div>
+    <div class="room-container" id="room-container">
+        <div class="room-title"><h3>게임 목록</h3></div>
+        <div class="room-table-head">
+            <div class="room-id table-head">id</div>
+            <div class="room-name table-head">name</div>
+        </div>
+        <div class="room-table-body">
+            {{#roomId}}
+            <a class="room-button" id="{{key}}">
+                <div class="room">
+                    <div class="room-id">{{key}}</div>
+                    <div class="room-name">player1 vs player2</div>
+                </div>
+            </a>
+            {{/roomId}}
         </div>
     </div>
 </div>
 </body>
 </html>
+<script>
+    window.onload = () => {
+        document.querySelectorAll(".room-button").forEach(element => {
+            element.addEventListener("click", event => {
+                event.preventDefault();
+                loadGame(element.id);
+            })
+        });
+
+        function loadGame(id) {
+            let form = document.createElement("form");
+            form.setAttribute("method", "post");
+            form.setAttribute("action", "/loadChessGame");
+
+            let command = document.createElement("input");
+            command.setAttribute("type", "hidden");
+            command.setAttribute("name", "command");
+            command.setAttribute("value", "start");
+            form.appendChild(command);
+
+            let parameter = document.createElement("input");
+            parameter.setAttribute("type", "hidden");
+            parameter.setAttribute("name", "parameter");
+            parameter.setAttribute("value", "load");
+            form.appendChild(parameter);
+
+            let idInput = document.createElement("input");
+            idInput.setAttribute("type", "hidden");
+            idInput.setAttribute("name", "id");
+            idInput.setAttribute("value", id);
+            form.appendChild(idInput);
+
+
+            document.body.appendChild(form);
+            form.submit();
+        }
+    }
+</script>

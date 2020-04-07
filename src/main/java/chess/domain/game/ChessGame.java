@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
 import chess.domain.piece.PieceState;
+import chess.domain.piece.implementation.piece.King;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
@@ -25,8 +26,12 @@ public class ChessGame {
     }
 
     public void move(MoveParameter moveParameter) {
-        board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
-        turn.switchTurn();
+        if (!isEnd()) {
+            board.move(moveParameter.getSource(), moveParameter.getTarget(), turn);
+            turn.switchTurn();
+            return;
+        }
+        throw new UnsupportedOperationException("게임이 종료 되었습니다.");
     }
 
     public Map<Position, PieceState> getBoard() {
@@ -41,11 +46,17 @@ public class ChessGame {
                 ));
     }
 
-    public double getScores(Team team) {
-        return board.getScores(team);
-    }
-
     public Team getTurn() {
         return turn.getTurn();
+    }
+
+    public Team getWinner() {
+        if (isEnd()) {
+            return getBoard().values().stream()
+                    .filter(piece -> piece instanceof King)
+                    .map(PieceState::getTeam)
+                    .findFirst().get();
+        }
+        throw new UnsupportedOperationException("게임이 아직 종료되지 않았습니다.");
     }
 }
