@@ -1,12 +1,20 @@
 package chess.domain.piece;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.Color;
+import chess.dto.PieceResponseDTO;
 
 public class PieceMapper {
-	private static PieceMapper PIECE_MAPPER = new PieceMapper();
+	public static final int COLUMN_BEGIN_INDEX = 0;
+	public static final int COLUMN_END_INDEX = 1;
+	public static final int ROW_BEGIN_INDEX = 1;
+	public static final int ROW_END_INDEX = 2;
+	private static final PieceMapper PIECE_MAPPER = new PieceMapper();
+
 	private Map<String, Piece> pieceDBMapper;
 	private Map<String, String> pieceViewMapper;
 
@@ -57,4 +65,12 @@ public class PieceMapper {
 		return pieceViewMapper.get(pieceSymbol);
 	}
 
+	public List<PieceResponseDTO> createPiecesResponseDTO(Pieces pieces) {
+		return pieces.getPieces().keySet().stream()
+			.map(position -> new PieceResponseDTO(
+				position.getPosition(),
+				findViewPiece(pieces.getPieceByPosition(position).getSymbol()))
+			)
+			.collect(Collectors.toList());
+	}
 }
