@@ -2,21 +2,23 @@ package chess;
 
 import static spark.Spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.GameController;
+import chess.controller.RoomController;
 
 public class WebUIChessApplication {
 	public static void main(String[] args) {
-		get("/", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.html");
-		});
-	}
+		port(4567);
+		staticFiles.location("/static");
+		externalStaticFileLocation("src/main/resources/templates");
 
-	private static String render(Map<String, Object> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+		get(RoomController.BASIC_URL, RoomController.getAllRoom);
+		get(RoomController.CREATE_ROOM_URL, RoomController.createRoom);
+		get(RoomController.REMOVE_ROOM_URL, RoomController.removeRoom);
+		get(RoomController.ENTER_ROOM_URL, RoomController.enterRoom);
+
+		get(GameController.INIT_URL, GameController.initGame);
+		post(GameController.MOVE_URL, GameController.movePiece);
+		get(GameController.STATUS_URL, GameController.showStatus);
+		get(GameController.END_URL, GameController.endGame);
 	}
 }

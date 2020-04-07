@@ -1,7 +1,5 @@
 package chess;
 
-import chess.controller.Controller;
-
 /**
  *    class description
  *
@@ -9,6 +7,6 @@ import chess.controller.Controller;
  */
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
-		Controller.run();
+		// GameController.run();
 	}
 }
