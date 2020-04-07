@@ -3,6 +3,7 @@ package chess.piece.type;
 import java.util.Map;
 import java.util.Objects;
 
+import chess.board.Route;
 import chess.location.Location;
 import chess.piece.type.movable.PieceMovable;
 import chess.score.Score;
@@ -27,8 +28,8 @@ public abstract class Piece {
     }
 
     // TODO : ROUTE와 같이 경로를 추상화할 수 있을까 ?
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return pieceMovable.canMove(board, now, after);
+    public boolean canMove(Route route) {
+        return pieceMovable.canMove(route);
     }
 
     public boolean isSameTeam(Team team) {
@@ -47,8 +48,14 @@ public abstract class Piece {
         return this.getClass() == King.class;
     }
 
-    public boolean isReverseTeam(Team team) {
-        return team.isReverseTeam(getTeam());
+//    public boolean isReverseTeam(Team team) {
+//        return team.isReverseTeam(getTeam());
+//    }
+
+    public boolean isReverseTeam(Piece piece) {
+        Team anotherTeam = piece.getTeam();
+        Team myTeam = this.getTeam();
+        return myTeam.isReverseTeam(anotherTeam);
     }
 
     public Team getTeam() {

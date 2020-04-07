@@ -10,6 +10,7 @@ import chess.result.ChessResult;
 import chess.result.ChessScores;
 import chess.team.Team;
 
+import static chess.progress.Progress.END;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
 
@@ -52,6 +53,18 @@ public class ChessGame {
             counterplayer.deletePieceIfExistIn(location);
         }
     }
+
+    public Progress finishIfKingDie() {
+        if (isExistKingDiePlayer()) {
+            return END;
+        }
+        return Progress.CONTINUE;
+    }
+
+    private boolean isExistKingDiePlayer() {
+        return white.hasNotKing() || black.hasNotKing();
+    }
+
 
     public ChessResult findWinner() {
         return ChessResult.of(white, black);

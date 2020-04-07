@@ -2,10 +2,13 @@ package chess.piece.type;
 
 import chess.board.ChessBoard;
 import chess.board.ChessBoardCreater;
+import chess.board.Route;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,7 +31,9 @@ class KingTest {
                     continue;
                 }
                 Location after = new Location(now.getRowValue() + dx[i], (char) (now.getColValue() + dy[j]));
-                boolean afterActual = king.canMove(chessBoard.getBoard(), now, after);
+                Route route = new Route(Collections.EMPTY_MAP, now, after);
+
+                boolean afterActual = king.canMove(route);
 
                 assertThat(afterActual).isTrue();
             }
@@ -44,7 +49,8 @@ class KingTest {
         Location now = new Location(8, 'e');
         Location cantAfter = new Location(6, 'c');
 
-        boolean cantActual = king.canMove(chessBoard.getBoard(), now, cantAfter);
+        Route route = new Route(Collections.EMPTY_MAP, now, cantAfter);
+        boolean cantActual = king.canMove(route);
         assertThat(cantActual).isFalse();
     }
 

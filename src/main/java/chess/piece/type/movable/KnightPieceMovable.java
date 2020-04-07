@@ -1,5 +1,6 @@
 package chess.piece.type.movable;
 
+import chess.board.Route;
 import chess.location.Location;
 import chess.location.NoExistChessLocationException;
 import chess.piece.type.Piece;
@@ -7,10 +8,16 @@ import chess.piece.type.Piece;
 import java.util.Map;
 
 public class KnightPieceMovable implements PieceMovable {
+
     @Override
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return isKnightRange(now, after);
+    public boolean canMove(Route route) {
+        return isKnightRange(route.getNow(), route.getDestination());
     }
+
+//    @Override
+//    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
+//        return isKnightRange(now, after);
+//    }
 
     private boolean isKnightRange(Location now, Location destination) {
         int[] dRow = {2, 2, 1, 1, -1, -1, -2, -2};

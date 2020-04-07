@@ -22,20 +22,6 @@ public class Location {
         return new Location(row, col);
     }
 
-    public boolean isDiagonal(Location destination) {
-        return abs(row.getValue() - destination.row.getValue())
-                == abs(col.getValue() - destination.col.getValue());
-    }
-
-    public boolean isStraight(Location destination) {
-        return row.is(destination.row) || isVertical(destination);
-    }
-
-    public boolean isForwardDiagonal(Location after, int value) {
-        int colGap = Math.abs(after.getColValue() - col.getValue());
-        return row.plus(value).is(after.row) && colGap == 1;
-    }
-
     public Location calculateNextLocation(Location destination, int weight) {
         int rowWeight = weight;
         int colWeight = weight;
@@ -54,10 +40,6 @@ public class Location {
         }
 
         return new Location(row.plus(rowWeight), col.plus(colWeight));
-    }
-
-    private boolean isVertical(Location destination) {
-        return col.is(destination.col);
     }
 
     public boolean isSameRow(Row row) {

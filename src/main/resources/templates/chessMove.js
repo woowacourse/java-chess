@@ -104,6 +104,8 @@ function postChessBoard(json) {
         },
         success: function (data) {
             var jsonData = JSON.parse(data);
+            console.log(JSON.stringify(jsonData));
+
             if (jsonData.progress == "CONTINUE") {
                 var nowImg = $('#' + json.now).html();
                 $('#' + json.des).html(nowImg);
