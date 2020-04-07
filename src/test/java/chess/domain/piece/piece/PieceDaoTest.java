@@ -1,9 +1,9 @@
 package chess.domain.piece.piece;
 
+import chess.dao.PieceDao;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceDao;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.BlackTeam;
 import org.junit.jupiter.api.BeforeEach;

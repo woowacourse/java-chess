@@ -1,8 +1,8 @@
 package chess.controller;
 
+import chess.dao.PieceDao;
 import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceDao;
 import chess.domain.piece.position.Position;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
