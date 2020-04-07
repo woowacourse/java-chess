@@ -25,7 +25,7 @@ class KingTest {
     @DisplayName("#move() : should return King as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        King king = (King) PieceFactory.createInitializedPiece(King.class, from, team);
+        Piece king = PieceFactory.createInitializedPiece(King.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = king.move(to, board);
@@ -36,11 +36,11 @@ class KingTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        King kin = (King) PieceFactory.createInitializedPiece(King.class, from, team);
+        Piece king = PieceFactory.createInitializedPiece(King.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
-        assertThatThrownBy(() -> kin.move(to, board))
+        assertThatThrownBy(() -> king.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

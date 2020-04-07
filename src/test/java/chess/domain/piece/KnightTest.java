@@ -25,7 +25,7 @@ class KnightTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Knight knight = (Knight) PieceFactory.createInitializedPiece(Knight.class, from, team);
+        Piece knight = PieceFactory.createInitializedPiece(Knight.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = knight.move(to, board);
@@ -36,7 +36,7 @@ class KnightTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Knight knight = (Knight) PieceFactory.createInitializedPiece(Knight.class, from, team);
+        Piece knight = PieceFactory.createInitializedPiece(Knight.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 

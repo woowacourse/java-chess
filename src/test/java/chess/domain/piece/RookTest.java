@@ -26,7 +26,7 @@ class RookTest {
     @DisplayName("#move() : should return Piece as to Position 'from' and 'to'")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Rook rook = (Rook) PieceFactory.createInitializedPiece(Rook.class, from, team);
+        Piece rook = PieceFactory.createInitializedPiece(Rook.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = rook.move(to, board);
@@ -37,7 +37,7 @@ class RookTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from' and 'to'")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Rook rook = (Rook) PieceFactory.createInitializedPiece(Rook.class, from, team);
+        Piece rook = PieceFactory.createInitializedPiece(Rook.class, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
