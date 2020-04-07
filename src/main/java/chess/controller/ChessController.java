@@ -1,4 +1,4 @@
-package chess.cotroller;
+package chess.controller;
 
 import chess.domain.Chess;
 import chess.domain.coordinate.Coordinate;

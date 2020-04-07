@@ -1,4 +1,4 @@
-package chess.cotroller;
+package chess.controller;
 
 import chess.dto.RoomDto;
 import chess.result.Result;
