@@ -1,5 +1,5 @@
 .main {
-    margin:0 auto;
+    margin: 0 auto;
 }
 
 .wrapper {
@@ -12,7 +12,8 @@
     grid-template-rows: 40px repeat(8, 70px) 40px;
     grid-auto-flow: row;
 }
-.wrapper-inner{
+
+.wrapper-inner {
     display: grid;
     grid-gap: 0;
     grid-template-columns: repeat(8, auto);
@@ -26,7 +27,7 @@
     text-align: center;
 }
 
-.box-inner{
+.box-inner {
     text-align: center;
     align-self: center;
 }
@@ -40,17 +41,19 @@
 }
 
 .top,
-.bottom{
+.bottom {
     display: grid;
     align-items: stretch;
     background-color: #85745c;
 }
+
 .top {
     grid-column-start: 1;
     grid-column-end: 9;
     grid-row-start: 1;
     grid-row-end: 1;
 }
+
 .bottom {
     grid-column-start: 1;
     grid-column-end: 9;
@@ -65,7 +68,7 @@
 .box:nth-child(33) ~ div:nth-child(-2n+41),
 .box:nth-child(41) ~ div:nth-child(-2n+48),
 .box:nth-child(49) ~ div:nth-child(-2n+57),
-.box:nth-child(57) ~ div:nth-child(-2n+64){
+.box:nth-child(57) ~ div:nth-child(-2n+64) {
     background-color: #773c1d;
 }
 

@@ -50,7 +50,7 @@ public class BoardDAOTest {
 	void findAll() {
 		List<Piece> initial = new ArrayList<>(BoardFactory.toList());
 		for (Piece piece : initial) {
-			boardDAO.addPiece("1" ,piece);
+			boardDAO.addPiece("1", piece);
 		}
 
 		assertThat(boardDAO.findAll("1").size()).isEqualTo(64);

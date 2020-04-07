@@ -23,6 +23,7 @@ function renderPiece(response) {
     targetNode.innerText = sourceNode.innerText;
     sourceNode.innerText = " ";
 }
+
 function boxClickHandler() {
     let isFrom = true;
     const moveInfo = {};
