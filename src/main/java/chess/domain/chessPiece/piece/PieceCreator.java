@@ -9,19 +9,21 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum PieceCreator {
-	PAWN("p", (String position, TeamStrategy team) -> {
+	PAWN("p", (position, team) -> {
 		return new Pawn(Position.of(position), team);
-	}), ROOK("r", (String position, TeamStrategy team) -> {
+	}), ROOK("r", (position, team) -> {
 		return new Rook(Position.of(position), team);
-	}), KNIGHT("n", (String position, TeamStrategy team) -> {
+	}), KNIGHT("n", (position, team) -> {
 		return new Knight(Position.of(position), team);
-	}), BISHOP("b", (String position, TeamStrategy team) -> {
+	}), BISHOP("b", (position, team) -> {
 		return new Bishop(Position.of(position), team);
-	}), QUEEN("q", (String position, TeamStrategy team) -> {
+	}), QUEEN("q", (position, team) -> {
 		return new Queen(Position.of(position), team);
-	}), KING("k", (String position, TeamStrategy team) -> {
+	}), KING("k", (position, team) -> {
 		return new King(Position.of(position), team);
 	});
+
+	private static final int FIRST_INDEX = 0;
 
 	private final String name;
 	private final BiFunction<String, TeamStrategy, Piece> creator;
@@ -41,7 +43,7 @@ public enum PieceCreator {
 	}
 
 	private static TeamStrategy findTeam(final String pieceType) {
-		if (Character.isUpperCase(pieceType.charAt(0))) {
+		if (Character.isUpperCase(pieceType.charAt(FIRST_INDEX))) {
 			return new WhiteTeam();
 		}
 		return new BlackTeam();
