@@ -23,7 +23,7 @@ public enum Team {
         return Arrays.stream(values())
                 .filter(o -> o.teamName.equals(teamName))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException());
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀입니다."));
     }
 
     public boolean isSameTeamName(String compareTeam) {

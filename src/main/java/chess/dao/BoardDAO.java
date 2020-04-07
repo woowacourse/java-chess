@@ -84,8 +84,8 @@ public class BoardDAO {
         }
     }
 
-    private ChessPiece getNewChessPiece(String piece_name, String teamName, Position position) {
-        String lowerPieceName = piece_name.toLowerCase();
+    private ChessPiece getNewChessPiece(String pieceName, String teamName, Position position) {
+        String lowerPieceName = pieceName.toLowerCase();
 
         if (lowerPieceName.equals(KING.getName())) {
             return new King(Team.of(teamName));
