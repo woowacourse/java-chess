@@ -19,4 +19,9 @@ class CoordinateTest {
 
 		assertThat(coordinate.add(1, -1)).isEqualTo(expect);
 	}
+
+	@Test
+	void getRepresentation() {
+		assertThat(new Coordinate(Row.FOUR, Column.E).getRepresentation()).isEqualTo("e4");
+	}
 }

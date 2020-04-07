@@ -5,8 +5,8 @@ import domain.pieces.Pieces;
 import domain.pieces.StartPieces;
 
 public abstract class NotPlaying extends GameState {
-	protected NotPlaying(Pieces pieces) {
-		super(pieces);
+	protected NotPlaying(final StateType stateType, final Pieces pieces) {
+		super(stateType, pieces);
 	}
 
 	@Override

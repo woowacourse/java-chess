@@ -10,10 +10,11 @@ import java.util.Objects;
 import java.util.Set;
 
 public abstract class GameState implements State {
+    protected final StateType stateType;
+    protected final Pieces pieces;
 
-    protected Pieces pieces;
-
-    protected GameState(Pieces pieces) {
+    protected GameState(final StateType stateType, final Pieces pieces) {
+        this.stateType = stateType;
         this.pieces = pieces;
     }
 
@@ -64,6 +65,11 @@ public abstract class GameState implements State {
     @Override
     public Pieces getPieces() {
         return new Pieces(pieces.getSet());
+    }
+
+    @Override
+    public String getStateName() {
+        return stateType.name();
     }
 
     @Override

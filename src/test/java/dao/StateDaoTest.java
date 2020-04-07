@@ -34,7 +34,7 @@ class StateDaoTest {
 	void addState() throws SQLException {
 		final String roomName = "그니";
 		final String state = "ended";
-		final int resultNum = stateDao.addState(state, roomName);
+		final int resultNum = stateDao.addState(state, 1);
 		assertThat(resultNum).isEqualTo(1);
 		assertThat(stateDao.findStateByRoomName(roomName).getState()).isEqualTo(state);
 	}

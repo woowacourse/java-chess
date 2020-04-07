@@ -84,6 +84,22 @@ public abstract class Piece {
         return pieceType.getScore();
     }
 
+    public String getPieceTypeName() {
+        return pieceType.getName();
+    }
+
+    public String getTeamName() {
+        return team.getName();
+    }
+
+    public String getCoordinateRepresentation() {
+        return coordinate.getRepresentation();
+    }
+
+    public boolean isCanMoveTwoDistance() {
+        return false;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -162,6 +162,6 @@ abcdefgh
  [ ] state DAO
     [x] Create, Read, Update
     [ ] 컨트롤러에 적용
- - piece DAO
-    - Create, Read, Delete
-    - 컨트롤러에 적용
+ [ ] piece DAO
+    [ ] Create, Read, Delete
+    [ ] 컨트롤러에 적용

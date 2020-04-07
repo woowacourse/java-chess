@@ -1,0 +1,51 @@
+package dao;
+
+import domain.pieces.Queen;
+import domain.point.Coordinate;
+import domain.team.Team;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class PieceDaoTest {
+	private PieceDao pieceDao;
+
+	@BeforeEach
+	void setUp() {
+		pieceDao = new PieceDao();
+	}
+
+	@Test
+	void getConnection() {
+		Connection connection = pieceDao.getConnection();
+		assertThat(connection).isNotNull();
+	}
+
+	@Test
+	void closeConnection() {
+		Connection connection = pieceDao.getConnection();
+		pieceDao.closeConnection(connection);
+	}
+
+	@Test
+	void addPiece() throws SQLException {
+		final domain.pieces.Piece piece = new Queen(Team.BLACK, Coordinate.of("a2"));
+		final int resultNum = pieceDao.addPiece(piece.getPieceTypeName(),
+				piece.getTeamName(), piece.getCoordinateRepresentation(), piece.isCanMoveTwoDistance(), 1);
+		assertThat(resultNum).isEqualTo(1);
+	}
+
+	@Test
+	void findPiecesByRoomId() throws SQLException {
+		final int roomId = 1;
+		final List<dao.Piece> pieces = pieceDao.findPiecesByRoomId(roomId);
+		assertThat(pieces).isEqualTo(Arrays.asList(
+				new dao.Piece(2, "queen", "black", "a2", "false", 1)));
+	}
+}

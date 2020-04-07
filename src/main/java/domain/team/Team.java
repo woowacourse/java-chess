@@ -26,4 +26,8 @@ public enum Team {
     public String caseInitial(String initial) {
         return operator.apply(initial);
     }
+
+    public String getName() {
+        return name;
+    }
 }

@@ -5,8 +5,8 @@ import domain.point.Coordinate;
 import domain.state.exceptions.StateException;
 
 public abstract class Playing extends GameState {
-	protected Playing(Pieces pieces) {
-		super(pieces);
+	protected Playing(final StateType stateType, final Pieces pieces) {
+		super(stateType, pieces);
 	}
 
 	@Override

@@ -12,11 +12,11 @@ public enum Column {
 	G("g", 6),
 	H("h", 7);
 
-	private final String column;
+	private final String representation;
 	private final int index;
 
-	Column(String column, int index) {
-		this.column = column;
+	Column(String representation, int index) {
+		this.representation = representation;
 		this.index = index;
 	}
 
@@ -26,7 +26,7 @@ public enum Column {
 
 	public static Column find(String input) {
 		return Arrays.stream(values())
-				.filter(column -> column.column.equals(input))
+				.filter(column -> column.representation.equals(input))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}
@@ -42,4 +42,7 @@ public enum Column {
 		return index;
 	}
 
+	public String getRepresentation() {
+		return representation;
+	}
 }

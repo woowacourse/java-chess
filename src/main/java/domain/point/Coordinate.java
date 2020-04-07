@@ -38,6 +38,10 @@ public class Coordinate {
 		return column.getIndex();
 	}
 
+	public String getRepresentation() {
+		return column.getRepresentation() + row.getRepresentation();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;

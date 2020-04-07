@@ -91,6 +91,11 @@ public class Pawn extends Piece {
 	}
 
 	@Override
+	public boolean isCanMoveTwoDistance() {
+		return canMoveTwoDistance;
+	}
+
+	@Override
 	public boolean equals(Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;

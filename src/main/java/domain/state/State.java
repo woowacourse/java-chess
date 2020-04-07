@@ -17,4 +17,6 @@ public interface State {
 	Set<Piece> getSet();
 
 	Pieces getPieces();
+
+	String getStateName();
 }

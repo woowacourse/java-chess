@@ -12,11 +12,11 @@ public enum Row {
 	TWO("2", 6),
 	ONE("1", 7);
 
-	private final String row;
+	private final String representation;
 	private final int index;
 
-	Row(String row, int index) {
-		this.row = row;
+	Row(String representation, int index) {
+		this.representation = representation;
 		this.index = index;
 	}
 
@@ -26,7 +26,7 @@ public enum Row {
 
 	public static Row find(String input) {
 		return Arrays.stream(values())
-				.filter(row -> row.row.equals(input))
+				.filter(row -> row.representation.equals(input))
 				.findFirst()
 				.orElseThrow(IllegalArgumentException::new);
 	}
@@ -42,4 +42,7 @@ public enum Row {
 		return this.index;
 	}
 
+	public String getRepresentation() {
+		return representation;
+	}
 }
