@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDAO {
 
@@ -21,14 +22,14 @@ public class UserDAO {
                 user.getName(), Integer.toString(user.getWinCount()), Integer.toString(user.getLoseCount()));
     }
 
-    public User findUserByName(String name) throws SQLException {
+    public Optional<User> findUserByName(String name) throws SQLException {
         ResultSet resultSet = findByName(name);
         if (!resultSet.next()) {
-            throw new IllegalArgumentException(String.format("%s 이름을 가진 유저가 존재하지 않습니다.", name));
+            return Optional.empty();
         }
         int winCount = resultSet.getInt("win_count");
         int loseCount = resultSet.getInt("lose_count");
-        return new User(name, winCount, loseCount);
+        return Optional.of(new User(name, winCount, loseCount));
     }
 
     private ResultSet findByName(String name) throws SQLException {

@@ -9,7 +9,6 @@ import chess.domain.result.ChessResult;
 import chess.repository.*;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +35,11 @@ public class ChessGame {
     }
 
     private User loadOrCreateUser(String name) throws SQLException {
-        try {
-            return userDAO.findUserByName(name);
-        } catch (IllegalArgumentException e) {
-            User user = new User(name);
+        User user = userDAO.findUserByName(name).orElseGet(() -> new User(name));
+        if (user.isNeverPlayingGame()) {
             userDAO.addUser(user);
-            return user;
         }
+        return user;
     }
 
     private Board loadOrCreateBoard(User whitePlayer, User blackPlayer) throws SQLException {

@@ -29,6 +29,10 @@ public class User {
         return new User(name, winCount, loseCount + 1);
     }
 
+    public boolean isNeverPlayingGame() {
+        return (winCount == DEFAULT_WIN_COUNT) && (loseCount == DEFAULT_LOSE_COUNT);
+    }
+
     public String getName() {
         return name;
     }
