@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.player.User;
+import chess.util.DBConnector;
 
 class BoardDAOTest {
 
@@ -17,7 +18,7 @@ class BoardDAOTest {
 
     @BeforeEach
     public void setup() {
-        boardDao = new BoardDAO();
+        boardDao = new BoardDAO(new DBConnector());
         firstUser = new User("first");
         secondUser = new User("second");
     }

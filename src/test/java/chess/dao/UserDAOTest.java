@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.player.User;
-import chess.util.RepositoryUtil;
+import chess.util.DBConnector;
 
 class UserDAOTest {
 
@@ -16,13 +16,7 @@ class UserDAOTest {
 
     @BeforeEach
     public void setup() {
-        userDao = new UserDAO();
-    }
-
-    @Test
-    public void connection() {
-        Connection con = RepositoryUtil.getConnection();
-        assertNotNull(con);
+        userDao = new UserDAO(new DBConnector());
     }
 
     @Test
@@ -51,7 +45,6 @@ class UserDAOTest {
 
     @Test
     public void repeatableCrud() throws Exception {
-        connection();
         addUser();
         findByUserName();
         updateNameByUserName();

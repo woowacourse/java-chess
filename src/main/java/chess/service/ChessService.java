@@ -10,14 +10,17 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.player.User;
 import chess.domain.result.ChessResult;
+import chess.util.DBConnector;
 
 public class ChessService {
 
     private BoardDAO boardDAO;
     private Map<User, Board> boards;
+    private DBConnector dbConnector;
 
     public ChessService() {
-        boardDAO = new BoardDAO();
+        dbConnector = new DBConnector();
+        boardDAO = new BoardDAO(dbConnector);
         boards = new HashMap<>();
     }
 
@@ -28,13 +31,10 @@ public class ChessService {
     public Board findByUserName(User first, User second) throws SQLException {
         Board board;
         if (!boardDAO.findBoardByUser(first, second).isPresent()) {
-            UserDAO userDAO = new UserDAO();
+            UserDAO userDAO = new UserDAO(dbConnector);
             userDAO.addUser(first);
             userDAO.addUser(second);
             boardDAO.addBoard(BoardFactory.createInitialBoard(first, second), first, second);
-            board = BoardFactory.createInitialBoard(first, second);
-            boards.put(first, board);
-            return board;
         }
         board = boardDAO.findBoardByUser(first, second).orElse(BoardFactory.createInitialBoard(first, second));
         boards.put(first, board);
@@ -53,7 +53,7 @@ public class ChessService {
 
     public void delete(User first, User second) throws SQLException {
         boardDAO.deleteBoardByUser(first, second);
-        UserDAO userDAO = new UserDAO();
+        UserDAO userDAO = new UserDAO(dbConnector);
         userDAO.deleteUserByUserName(first.getName());
         userDAO.deleteUserByUserName(second.getName());
         boards.remove(first);

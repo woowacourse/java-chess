@@ -96,6 +96,7 @@
             }).done(function (list) {
                 if (list === '이동할 수 없습니다.\n해당 플레이어의 턴이 아닙니다.') {
                     alert(list);
+                    return;
                 }
                 document.getElementById(cellPosition).classList.add("selected-cell");
                 const path = list.split(",");
@@ -141,7 +142,9 @@
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
         }).done(function (possible) {
             if (possible == "finished") {
+                alert("게임이 끝났습니다.");
                 window.location.href = "main.html";
+                return;
             } else if (possible !== "true") {
                 alert(possible);
                 before.removeClass("selected-cell");

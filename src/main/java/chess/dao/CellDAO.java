@@ -1,7 +1,5 @@
 package chess.dao;
 
-import static chess.util.RepositoryUtil.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,40 +11,28 @@ import chess.domain.board.Position;
 import chess.domain.piece.GamePiece;
 import chess.domain.piece.GamePieces;
 import chess.domain.player.User;
+import chess.util.DBConnector;
 
 public class CellDAO {
 
+    private DBConnector dbConnector;
+
+    public CellDAO(DBConnector dbConnector) {
+        this.dbConnector = dbConnector;
+    }
+
     public void addCells(Board board, int board_id) throws SQLException {
-        String query = "INSERT INTO cell (board_id, position, piece) VALUES ";
-        StringBuilder str = new StringBuilder();
         for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
-            str.append("(");
-            str.append(board_id);
-            str.append(", '");
-            str.append(entry.getKey().getName());
-            str.append("', '");
-            str.append(entry.getValue().getName());
-            str.append("'),\n");
+            dbConnector.executeUpdate("INSERT INTO cell (board_id, position, piece) VALUES (?, ?, ?)",
+                    String.valueOf(board_id), entry.getKey().getName(), entry.getValue().getName());
         }
-
-        int index = str.lastIndexOf(",\n");
-        str.replace(index, index + 1, ";");
-        query = query + str.toString();
-
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
     }
 
     public Map<Position, GamePiece> findCellsByBoardId(int board_id) throws SQLException {
-        String query = "SELECT * FROM cell WHERE board_id = ?";
-
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, board_id);
-        ResultSet rs = pstmt.executeQuery();
-
+        ResultSet rs = dbConnector.executeQuery("SELECT * FROM cell WHERE board_id = ?", String.valueOf(board_id));
         Map<Position, GamePiece> board = new HashMap<>();
 
-        while(rs.next()) {
+        while (rs.next()) {
             Position position = Position.from(rs.getString("position"));
             GamePiece gamePiece = GamePieces.from(rs.getString("piece"));
             board.put(position, gamePiece);
@@ -55,11 +41,17 @@ public class CellDAO {
         return board;
     }
 
+    public Map<Position, GamePiece> updateCellsByBoard_id(Board board, int board_id) throws SQLException {
+        for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
+            dbConnector.executeUpdate("UPDATE cell SET piece = ? WHERE position = ? AND board_id = ?",
+                    entry.getValue().getName(), entry.getKey().getName(), String.valueOf(board_id));
+        }
+
+        return findCellsByBoardId(board_id);
+    }
+
     public boolean deleteCellsByUser(int board_id) throws SQLException {
-        String query = "DELETE FROM cell WHERE board_id = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, board_id);
-        pstmt.executeUpdate();
+        dbConnector.executeUpdate("DELETE FROM cell WHERE board_id = ?", String.valueOf(board_id));
 
         return findCellsByBoardId(board_id) == null;
     }

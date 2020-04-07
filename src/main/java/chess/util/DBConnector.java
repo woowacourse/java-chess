@@ -2,11 +2,19 @@ package chess.util;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class RepositoryUtil {
+public class DBConnector {
 
-    public static Connection getConnection() {
+    private Connection connection;
+
+    public DBConnector() {
+        this.connection = connect();
+    }
+
+    private Connection connect() {
         Connection con = null;
         String server = "127.0.0.1:13306"; // MySQL 서버 주소
         String database = "chess"; // MySQL DATABASE 이름
@@ -40,5 +48,25 @@ public class RepositoryUtil {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public ResultSet executeQuery(String query, String... args) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        for (int i = 1; i <= args.length; i++) {
+            pstmt.setString(i, args[i - 1]);
+        }
+        return pstmt.executeQuery();
+    }
+
+    public int executeUpdate(String query, String... args) throws SQLException {
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        for (int i = 1; i <= args.length; i++) {
+            pstmt.setString(i, args[i - 1]);
+        }
+        return pstmt.executeUpdate();
+    }
+
+    public Connection getConnection() {
+        return connection;
     }
 }

@@ -1,29 +1,27 @@
 package chess.dao;
 
-import static chess.util.RepositoryUtil.*;
-
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
 import chess.domain.player.User;
+import chess.util.DBConnector;
 
 public class UserDAO {
 
+    private DBConnector dbConnector;
+
+    public UserDAO(final DBConnector dbConnector) {
+        this.dbConnector = dbConnector;
+    }
+
     public void addUser(User user) throws SQLException {
-        String query = "INSERT INTO user VALUES (?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, user.getName());
-        pstmt.executeUpdate();
+        dbConnector.executeUpdate("INSERT INTO user VALUES (?)", user.getName());
     }
 
     public Optional<User> findByUserName(String userName) throws SQLException {
-        String query = "SELECT * FROM user WHERE name = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, userName);
-        ResultSet rs = pstmt.executeQuery();
-
+        ResultSet rs = dbConnector.executeQuery("SELECT * FROM user WHERE name = ?", userName);
         if (!rs.next())
             return Optional.empty();
 
@@ -31,20 +29,13 @@ public class UserDAO {
     }
 
     public User updateUserNameByUserName(String originalName, String changedName) throws SQLException {
-        String query = "UPDATE user SET name = ? WHERE name = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, changedName);
-        pstmt.setString(2, originalName);
-        int changedColumnCount = pstmt.executeUpdate();
+        dbConnector.executeUpdate("UPDATE user SET name = ? WHERE name = ?", changedName, originalName);
 
         return findByUserName(changedName).orElse(new User(changedName));
     }
 
     public boolean deleteUserByUserName(String name) throws SQLException {
-        String query = "DELETE FROM user WHERE name = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, name);
-        int affectedRowCount = pstmt.executeUpdate();
+        dbConnector.executeUpdate("DELETE FROM user WHERE name = ?", name);
 
         return findByUserName(name) == null;
     }
