@@ -140,19 +140,19 @@
 		//좌표를 post 전송
 		$.ajax({
 			type: 'post',
-			url: 'isMovable',
+			url: 'movePiece',
 			data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
 			dataType: 'json',
-			error: notMovable,
-			success: movable
+			error: moveError,
+			success: moveSuccess
 		});
 	}
 
-	function notMovable() {
+	function moveError() {
 		alert("해당말이 갈 수 없는 칸입니다.")
 	}
 
-	function movable(response) {
+	function moveSuccess(response) {
 		var sourcePosition = response.sourcePosition;
 		var targetPosition = response.targetPosition;
 		var sourcePieceType = response.sourcePieceType;

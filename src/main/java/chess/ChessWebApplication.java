@@ -20,6 +20,8 @@ import java.util.Optional;
 import static spark.Spark.*;
 
 public class ChessWebApplication {
+	private static final String EMPTY_NAME = "";
+
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private static final PieceDao pieceDao = new PieceDao();
 	private static ChessBoard chessBoard;
@@ -48,7 +50,7 @@ public class ChessWebApplication {
 			return gson.toJson(model);
 		});
 
-		post("/isMovable", (req, res) -> {
+		post("/movePiece", (req, res) -> {
 			Position sourcePosition = Position.of(req.queryParams("sourcePosition"));
 			Position targetPosition = Position.of(req.queryParams("targetPosition"));
 
@@ -98,7 +100,7 @@ public class ChessWebApplication {
 
 	private static String findPieceType(final Position position) {
 		Optional<Piece> piece = chessBoard.findPieceByPosition(position);
-		return piece.map(Piece::getPieceName).orElse("");
+		return piece.map(Piece::getPieceName).orElse(EMPTY_NAME);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
