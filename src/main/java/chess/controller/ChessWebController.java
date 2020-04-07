@@ -1,14 +1,15 @@
 package chess.controller;
 
 import chess.domain.game.ChessGame;
-import chess.domain.position.PositionFactory;
-import chess.domain.web.MovingPosition;
 import chess.service.ChessWebService;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import static chess.JsonTransformer.json;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessWebController {
 	private ChessWebService chessWebService;
@@ -19,87 +20,38 @@ public class ChessWebController {
 		this.chessWebService = new ChessWebService();
 	}
 
-	public Map<String, Object> index() {
-		Map<String, Object> model = new HashMap<>();
+	public void run() {
+		get("/", (req, res) -> {
+			return render(chessWebService.index(chessGame), "index.html");
+		});
 
-		chessWebService.resetGame(chessGame);
-		model.put("status", true);
+		get("/new", (req, res) -> {
+			return render(chessWebService.startGame(chessGame), "chess.html");
+		});
 
-		return model;
+		get("/loading", (req, res) -> {
+			return render(chessWebService.loadGame(chessGame), "chess.html");
+		});
+
+		get("/board", (req, res) -> {
+			return chessWebService.setBoard(chessGame);
+		}, json());
+
+		post("/board", (req, res) -> {
+			Map<String, Object> model = chessWebService.move(req.queryParams("start"), req.queryParams("end"), chessGame);
+			return render(model, (String) model.get("destination"));
+		});
+
+		post("/start", (req, res) -> {
+			return chessWebService.chooseFirstPosition(req.queryParams("start"), chessGame);
+		}, json());
+
+		post("/end", (req, res) -> {
+			return chessWebService.chooseSecondPosition(req.queryParams("end"));
+		}, json());
 	}
 
-	public Map<String, Object> startGame() throws SQLException {
-		Map<String, Object> model = new HashMap<>();
-
-		chessWebService.resetGameAndHistory(chessGame);
-		model.put("status", true);
-
-		return model;
-	}
-
-	public Map<String, Object> loadGame() throws SQLException {
-		Map<String, Object> model = new HashMap<>();
-		model.put("status", true);
-
-		List<MovingPosition> histories = chessWebService.selectAllHistory();
-
-		for (MovingPosition movingPosition : histories) {
-			chessWebService.move(movingPosition.getStart(), movingPosition.getEnd(), chessGame);
-		}
-		return model;
-	}
-
-	public Map<String, Object> setBoard() {
-		Map<String, Object> model = new HashMap<>();
-
-		model.put("board", chessGame.createBoardDto().getBoardDto());
-		model.put("turn", chessGame.getTurn());
-		model.put("score", chessGame.calculateScore());
-		model.put("status", true);
-
-		return model;
-	}
-
-	public Map<String, Object> move(String start, String end) {
-		try {
-			return chessWebService.move(start, end, chessGame);
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
-			Map<String, Object> model = new HashMap<>();
-
-			model.put("status", false);
-			model.put("exception", e.getMessage());
-			model.put("destination", "chess.html");
-			return model;
-		}
-	}
-
-	public Map<String, Object> chooseFirstPosition(String position) {
-		Map<String, Object> model = new HashMap<>();
-		try {
-			List<String> movablePositionNames = chessWebService.findMovablePositionNames(position, chessGame);
-
-			model.put("movable", movablePositionNames);
-			model.put("position", position);
-			model.put("status", true);
-
-			return model;
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("status", false);
-			model.put("exception", e.getMessage());
-			return model;
-		}
-	}
-
-	public Map<String, Object> chooseSecondPosition(String position) {
-		Map<String, Object> model = new HashMap<>();
-		try {
-			model.put("status", true);
-			model.put("position", position);
-			return model;
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("status", false);
-			model.put("exception", e.getMessage());
-			return model;
-		}
+	private static String render(Map<String, Object> model, String templatePath) {
+		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }

@@ -11,13 +11,89 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessWebService {
-	public void resetGame(ChessGame chessGame) {
+	public Map<String, Object> index(ChessGame chessGame) {
+		Map<String, Object> model = new HashMap<>();
+
+		model.put("status", true);
 		chessGame.reset();
+
+		return model;
 	}
 
-	public void resetGameAndHistory(ChessGame chessGame) throws SQLException {
+	public Map<String, Object> startGame(ChessGame chessGame) throws SQLException {
+		Map<String, Object> model = new HashMap<>();
+
+		model.put("status", true);
 		chessGame.reset();
 		clearHistory();
+
+		return model;
+	}
+
+	public Map<String, Object> loadGame(ChessGame chessGame) throws SQLException {
+		Map<String, Object> model = new HashMap<>();
+		model.put("status", true);
+
+		List<MovingPosition> histories = selectAllHistory();
+
+		for (MovingPosition movingPosition : histories) {
+			move(movingPosition.getStart(), movingPosition.getEnd(), chessGame);
+		}
+		return model;
+	}
+
+	public Map<String, Object> setBoard(ChessGame chessGame) {
+		Map<String, Object> model = new HashMap<>();
+
+		model.put("board", chessGame.createBoardDto().getBoardDto());
+		model.put("turn", chessGame.getTurn());
+		model.put("score", chessGame.calculateScore());
+		model.put("status", true);
+
+		return model;
+	}
+
+	public Map<String, Object> move(String start, String end, ChessGame chessGame) {
+		try {
+			return updateMoving(start, end, chessGame);
+		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
+			Map<String, Object> model = new HashMap<>();
+
+			model.put("status", false);
+			model.put("exception", e.getMessage());
+			model.put("destination", "chess.html");
+			return model;
+		}
+	}
+
+	public Map<String, Object> chooseFirstPosition(String position, ChessGame chessGame) {
+		Map<String, Object> model = new HashMap<>();
+		try {
+			List<String> movablePositionNames = chessGame.findMovablePositionNames(position);
+
+			model.put("movable", movablePositionNames);
+			model.put("position", position);
+			model.put("status", true);
+
+			return model;
+		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
+			model.put("status", false);
+			model.put("exception", e.getMessage());
+			return model;
+		}
+	}
+
+	public Map<String, Object> chooseSecondPosition(String position) {
+		Map<String, Object> model = new HashMap<>();
+		try {
+			model.put("status", true);
+			model.put("position", position);
+			return model;
+		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
+			model.put("status", false);
+			model.put("exception", e.getMessage());
+			return model;
+		}
 	}
 
 	private void clearHistory() throws SQLException {
@@ -25,21 +101,17 @@ public class ChessWebService {
 		historyDao.clear();
 	}
 
-	public List<MovingPosition> selectAllHistory() throws SQLException {
+	private List<MovingPosition> selectAllHistory() throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		return historyDao.selectAll();
 	}
 
-	public void insertHistory(String start, String end) throws SQLException {
+	private void insertHistory(String start, String end) throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		historyDao.insert(start, end);
 	}
 
-	public List<String> findMovablePositionNames(String position, ChessGame chessGame) {
-		return chessGame.findMovablePositionNames(position);
-	}
-
-	public Map<String, Object> move(String start, String end, ChessGame chessGame) throws SQLException {
+	private Map<String, Object> updateMoving(String start, String end, ChessGame chessGame) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 
 		if (start.equals(end)) {
@@ -54,7 +126,8 @@ public class ChessWebService {
 
 		if (chessGame.isKingDead()) {
 			model.put("winner", chessGame.getAliveKingColor());
-			resetGameAndHistory(chessGame);
+			chessGame.reset();
+			clearHistory();
 			model.put("destination", "result.html");
 			return model;
 		}
