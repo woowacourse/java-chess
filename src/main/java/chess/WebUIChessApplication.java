@@ -6,10 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.service.ChessService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebUIChessApplication {
+public class WebUIChessApplication {	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+
 	private static ChessService chessService;
 
 	public static void main(String[] args) {
@@ -29,7 +32,12 @@ public class WebUIChessApplication {
 		});
 
 		get("/isEnd", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
 			return chessService.isEnd();
+		});
+
+		get("/restart", (req, res) -> {
+			return chessService.restart();
 		});
 
 	}

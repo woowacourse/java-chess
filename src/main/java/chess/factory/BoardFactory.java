@@ -104,7 +104,6 @@ public class BoardFactory {
 			rows.add(createRow(row, column--));
 		}
 		ChessBoard chessBoard = new ChessBoard(chessDTO.getId(), rows, new Turn(chessDTO.isWhiteTurn()));
-		//OutputView.printBoard(chessBoard);
 		return chessBoard;
 	}
 

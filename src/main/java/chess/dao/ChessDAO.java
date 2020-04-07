@@ -75,8 +75,7 @@ public class ChessDAO {
 		int id = resultSet.getInt("id");
 		String rows = resultSet.getString("rows");
 		boolean isWhiteTurn = resultSet.getBoolean("whiteTurn");
-		ChessDTO chessDTO = new ChessDTO(id, rows, isWhiteTurn);
-		return BoardFactory.createBoard(chessDTO);
+		return BoardFactory.createBoard(new ChessDTO(id, rows, isWhiteTurn));
 	}
 
 	public void update(ChessDTO chessDTO) throws SQLException {

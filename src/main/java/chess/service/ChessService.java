@@ -15,10 +15,10 @@ import com.google.gson.GsonBuilder;
 import spark.Request;
 
 public class ChessService {
-	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
 	private final ChessDAO chessDAO;
-	private final ChessBoard chessBoard;
+	private ChessBoard chessBoard;
 
 	public ChessService() throws SQLException {
 		this.chessDAO = new ChessDAO();
@@ -44,16 +44,27 @@ public class ChessService {
 			Position position = chessPiece.getPosition();
 			model.put(position.toString(), chessPiece.getName());
 		}
-		return gson.toJson(model);
+		return GSON.toJson(model);
 	}
 
 	public String isEnd() {
+		Map<String, Object> model = new HashMap<>();
 		if (chessBoard.isLiveBothKing()) {
-			return "notEnd";
+			model.put("isEnd", false);
+			return GSON.toJson(model);
 		}
+			model.put("isEnd", true);
 		if (chessBoard.isLiveKing(Team.BLACK)) {
-			return "BLACK팀 승리!";
+			model.put("message", "BLACK팀 승리!");
+			return GSON.toJson(model);
 		}
-		return "WHITE팀 승리!";
+		model.put("message", "WHITE팀 승리!");
+		return GSON.toJson(model);
+	}
+
+	public String restart() throws SQLException {
+		chessDAO.removeAll();
+		chessBoard = chessDAO.find();
+		return getBoardJson();
 	}
 }

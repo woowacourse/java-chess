@@ -167,18 +167,23 @@
         $.ajax({
             type: 'get',
             url: '/isEnd',
-            dateType: 'text',
+            dataType: 'json',
             error: function () {
                 alert("isEnd Error")
             },
             success: function (response) {
-                if (response == 'notEnd') {
+                console.log(response);
+                if (response.isEnd == false) {
                     return;
                 }
                 $('.alert').show();
-                $('.alert > .message').html(response);
+                $('.alert > .message').html(response.message);
                 $('.alert > .submit').click(() => {
-                    alert('클릭');
+                    $.ajax({
+                        type: 'get',
+                        url: '/restart',
+                    });
+                    location.reload()
                 })
             }
         })
