@@ -6,7 +6,6 @@ import chess.view.WebOutputView;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,7 +15,6 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     public static void main(String[] args) throws SQLException {
         staticFiles.location("/public");
-
         WebChessGame game = new WebChessGame();
 
         get("/", (req, res) -> {
@@ -26,17 +24,19 @@ public class WebUIChessApplication {
         });
 
         post("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            System.out.println(String.format("받은 source:%s, target:%s", source,target));
             try {
                 game.play(source, target);
             } catch (InvalidMovementException e) {
-                System.out.println(e.getMessage());
-                //TODO: 브라우저 위에 alert로 뜨게하고 싶음.
-                res.redirect("/error");
+                model.put("message", e.getMessage());
+                return render(model, "error.html");
             }
-            Map<String, Object> model = new HashMap<>();
+            if (game.isFinished()) {
+                model.put("winner", game.isTurnWhite() ? "흑팀" : "백팀");
+                return render(model, "result.html");
+            }
             model.put("board", WebOutputView.printBoard(game.getBoard()));
             return render(model, "index.html");
         });
@@ -51,11 +51,6 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("scores", Scores.calculateScores(game.getBoard()));
             return render(model, "scores.html");
-        });
-
-        get("/error", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "error.html");
         });
     }
 

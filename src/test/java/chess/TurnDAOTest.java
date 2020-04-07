@@ -2,12 +2,9 @@ package chess;
 
 import chess.DAO.TurnDAO;
 import chess.piece.Team;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.platform.commons.util.BlacklistedExceptions;
 
 import java.sql.SQLException;
 

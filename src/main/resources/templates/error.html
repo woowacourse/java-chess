@@ -6,8 +6,9 @@
 </head>
 <body>
 잘못된 움직임입니다.
-<form method="POST" action="/">
-    <input type="submit" value="되돌아가기">
-</form>
+<br/>
+에러 메시지 : {{message}}
+<br/>
+<input type="button" value="뒤로가기" onclick="history.back(-1);">
 </body>
 </html>

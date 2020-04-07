@@ -57,13 +57,6 @@ img {
     width: 60px;
 }
 
-/* textarea{
-    display: block;
-    margin: auto;
-    width: 690px;
-    resize: none;
-} */
-
 .source-and-target{
     display: flex;
     flex-direction: column;
@@ -77,6 +70,7 @@ img {
 .buttons{
     display: flex;
     flex-direction: row;
+    margin: auto;
 }
 
 input{

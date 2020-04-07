@@ -33,14 +33,4 @@ public class DBConnector {
 
         return conn;
     }
-
-    // 드라이버 연결해제
-    public void closeConnection(Connection conn) {
-        try {
-            if (conn != null)
-                conn.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
 }

@@ -13,5 +13,4 @@ public class DBConnectorTest {
         Connection con = DBConnector.getConnection();
         assertNotNull(con);
     }
-
 }
