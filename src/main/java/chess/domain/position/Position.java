@@ -87,6 +87,10 @@ public class Position {
 		return column;
 	}
 
+	public String getName() {
+		return key(column, row);
+	}
+
 	public static List<Position> getPositions() {
 		return List.copyOf(POSITIONS.values());
 	}

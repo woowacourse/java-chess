@@ -5,14 +5,38 @@ import java.util.function.BiPredicate;
 import java.util.function.Function;
 
 public enum Direction {
-	E((start, end) -> start.getColumnGap(end) < 0 && start.getRowGap(end) == 0, Position::right),
-	W((start, end) -> start.getColumnGap(end) > 0 && start.getRowGap(end) == 0, Position::left),
-	S((start, end) -> start.getColumnGap(end) == 0 && start.getRowGap(end) > 0, Position::down),
-	N((start, end) -> start.getColumnGap(end) == 0 && start.getRowGap(end) < 0, Position::up),
-	NE((start, end) -> start.getColumnGap(end) < 0 && start.getRowGap(end) < 0, position -> position.up().right()),
-	SW((start, end) -> start.getColumnGap(end) > 0 && start.getRowGap(end) > 0, position -> position.down().left()),
-	NW((start, end) -> start.getColumnGap(end) > 0 && start.getRowGap(end) < 0, position -> position.up().left()),
-	ES((start, end) -> start.getColumnGap(end) < 0 && start.getRowGap(end) > 0, position -> position.right().down());
+	E((start, end) -> isRight(start, end) && isHorizontal(start, end), Position::right),
+	W((start, end) -> isLeft(start, end) && isHorizontal(start, end), Position::left),
+	S((start, end) -> isVertical(start, end) && isDown(start, end), Position::down),
+	N((start, end) -> isVertical(start, end) && isUp(start, end), Position::up),
+	NE((start, end) -> isRight(start, end) && isUp(start, end), position -> position.up().right()),
+	SW((start, end) -> isLeft(start, end) && isDown(start, end), position -> position.down().left()),
+	NW((start, end) -> isLeft(start, end) && isUp(start, end), position -> position.up().left()),
+	ES((start, end) -> isRight(start, end) && isDown(start, end), position -> position.right().down());
+
+	private static boolean isUp(Position start, Position end) {
+		return start.getRowGap(end) < 0;
+	}
+
+	private static boolean isDown(Position start, Position end) {
+		return start.getRowGap(end) > 0;
+	}
+
+	private static boolean isHorizontal(Position start, Position end) {
+		return start.getRowGap(end) == 0;
+	}
+
+	private static boolean isVertical(Position start, Position end) {
+		return start.getColumnGap(end) == 0;
+	}
+
+	private static boolean isLeft(Position start, Position end) {
+		return start.getColumnGap(end) > 0;
+	}
+
+	private static boolean isRight(Position start, Position end) {
+		return start.getColumnGap(end) < 0;
+	}
 
 	private final BiPredicate<Position, Position> directJudge;
 	private final Function<Position, Position> moving;

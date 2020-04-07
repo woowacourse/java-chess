@@ -1,43 +1,69 @@
 package chess.service;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import chess.dao.BoardDAO;
+import chess.dao.TurnInfoDAO;
+import chess.domain.Status;
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.MoveInfo;
-import chess.domain.position.Path;
 import chess.domain.position.Position;
 
 public class ChessService {
-	private final Board board;
+	private final BoardDAO boardDAO;
+	private final TurnInfoDAO turnInfoDAO;
 
-	private ChessService(Board board) {
-		this.board = board;
+	public ChessService(BoardDAO boardDAO, TurnInfoDAO turnInfoDAO) {
+		this.boardDAO = boardDAO;
+		this.turnInfoDAO = turnInfoDAO;
 	}
 
-	public static ChessService of(Board board) {
-		return new ChessService(board);
+	public void initialize(String gameId) {
+		if (boardDAO.findAll(gameId).isEmpty()) {
+			for (Piece piece : BoardFactory.toList()) {
+				boardDAO.addPiece(gameId, piece);
+			}
+			turnInfoDAO.initialize(gameId, Team.WHITE);
+		}
 	}
 
-	public void move(MoveInfo moveInfo, Team team) {
+	public void move(String gameId, MoveInfo moveInfo) {
+		Board board = Board.of(boardDAO.findAll(gameId));
 		Position from = moveInfo.getFrom();
 		Position to = moveInfo.getTo();
 
-		Piece piece = board.get(from);
-		validateMove(from, to, team);
+		board.verifyMove(from, to, turnInfoDAO.findCurrent(gameId));
 
-		piece.moveTo(to);
-		board.update(from, to);
+		boardDAO.update(gameId, from, to);
+		turnInfoDAO.updateNext(gameId);
 	}
 
-	private void validateMove(Position from, Position to, Team team) {
-		Piece piece = board.get(from);
-		Piece target = board.get(to);
+	public Map<String, String> getBoard(String gameId) {
+		return boardDAO.findAll(gameId)
+			.stream()
+			.collect(Collectors.toMap(
+				piece -> piece.getPosition().getName(),
+				Piece::getSymbol
+			));
+	}
 
-		if (piece.isNotSameTeam(team)) {
-			throw new IllegalArgumentException("아군 기물의 위치가 아닙니다.");
-		}
-		if (board.hasPieceIn(Path.of(from, to).toList()) || piece.canNotMoveTo(target)) {
-			throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
-		}
+	public Map<String, String> getResult(String gameId) {
+		Map<String, String> result = new HashMap<>();
+		Status status = Status.of(boardDAO.findAll(gameId));
+
+		String whiteScore = String.valueOf(status.toMap().get(Team.WHITE));
+		String blackScore = String.valueOf(status.toMap().get(Team.BLACK));
+		String winner = String.valueOf(status.getWinner().getName());
+
+		result.put("whiteScore", whiteScore);
+		result.put("blackScore", blackScore);
+		result.put("result", winner);
+
+		return result;
 	}
 }

@@ -15,7 +15,7 @@ class PawnTest {
 	}
 
 	@Test
-	void moveTo() {
+	void moveTo_FromC2() {
 		pawn.moveTo(C3);
 		assertThat(pawn.getPosition()).isEqualTo(C3);
 	}

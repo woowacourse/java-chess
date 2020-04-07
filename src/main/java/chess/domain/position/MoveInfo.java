@@ -25,6 +25,10 @@ public class MoveInfo {
 		return new MoveInfo(infos.get(FROM), infos.get(TO));
 	}
 
+	public static MoveInfo of(String from, String to) {
+		return new MoveInfo(Position.of(from), Position.of(to));
+	}
+
 	public Position getFrom() {
 		return from;
 	}

@@ -31,7 +31,7 @@ public enum PieceScore {
 
 	private static double getScoreOf(Piece piece) {
 		return Arrays.stream(values())
-			.filter(value -> value.name.equals(piece.getName()))
+			.filter(value -> value.name.equals(piece.getName().getName()))
 			.findFirst()
 			.orElseThrow(NullPointerException::new)
 			.score;

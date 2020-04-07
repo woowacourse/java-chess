@@ -2,7 +2,7 @@ package chess.view;
 
 import java.util.Map;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
@@ -16,22 +16,20 @@ public class OutputView {
 		System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
 	}
 
-	public static void printBoard(Map<Position, Piece> board) {
+	public static void printBoard(Map<String, String> board) {
 		for (int i = 8; i >= 1; i--) {
 			for (char c = 'a'; c <= 'h'; c++) {
-				Position key = Position.of(String.valueOf(c) + i);
-				System.out.print(Team.getPieceName(board.get(key)));
+				String key = String.valueOf(c) + i;
+				System.out.print(Team.getPieceName(PieceFactory.of(board.get(key)).create(Position.of(key))));
 			}
 			System.out.print(NEW_LINE);
 		}
 		System.out.print(NEW_LINE);
 	}
 
-	public static void printScore(Map<Team, Double> result) {
-		result.forEach((key, value) -> System.out.println(key.getName() + "팀 점수: " + value));
-	}
-
-	public static void printWinner(Team team) {
-		System.out.println("승자 : " + team.getName());
+	public static void printScore(Map<String, String> result) {
+		System.out.println("백 팀 점수: " + result.get("whiteScore"));
+		System.out.println("흑 팀 점수: " + result.get("blackScore"));
+		System.out.println("승자: " + result.get("winner"));
 	}
 }
