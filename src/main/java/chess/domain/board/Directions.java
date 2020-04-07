@@ -20,8 +20,8 @@ public class Directions {
         return !this.directions.isEmpty();
     }
 
-    public boolean hasObstacle(String sourceKey, Function<Coordinate, Tile> tileFinder) {
-        Coordinate next = Coordinate.of(sourceKey);
+    public boolean hasObstacle(Coordinate source, Function<Coordinate, Tile> tileFinder) {
+        Coordinate next = source;
         boolean exist = false;
         while (isNotEmpty() && !exist) {
             Direction direction = directions.poll();

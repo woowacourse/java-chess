@@ -12,7 +12,7 @@ public class NotMovedPawn extends AbstractPawn {
 
     @Override
     protected boolean canMoveTwoStep(final Vector vector, final Piece targetPiece) {
-        return vector.isRangeUnderAbsolute(FIRST_MOVE_RANGE) && team.isSameDirection(vector.getRankVariation()) && vector.isStraight();
+        return vector.isRangeUnderAbsolute(FIRST_MOVE_RANGE) && team.isSameDirection(vector.getRankVariation()) && vector.isStraight() && targetPiece.isBlank();
     }
 
     @Override

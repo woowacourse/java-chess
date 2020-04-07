@@ -60,4 +60,9 @@ public final class Coordinate {
     public Rank getRank() {
         return rank;
     }
+
+    @Override
+    public String toString() {
+        return file.getSymbol() + rank.getValue();
+    }
 }
