@@ -9,9 +9,6 @@ import java.util.Set;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.dao.SQLConnector;
-import chess.domain.dao.TurnDao;
-import chess.domain.dto.TurnDto;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -21,18 +18,21 @@ public class GameManager {
 	private static final String NOT_MOVABLE_MESSAGE = "이동할 수 없는 위치입니다.";
 
 	private Board board;
-	private TurnDao currentTurn;
+	private Color currentTurn;
 
-	public GameManager(Board board) throws SQLException {
+	public GameManager(Board board) {
 		this.board = board;
-		this.currentTurn = new TurnDao(new SQLConnector().getConnection());
-		this.currentTurn.editTurn(TurnDto.of(WHITE));
+		this.currentTurn = WHITE;
 	}
 
-	public GameManager() throws SQLException {
+	public GameManager(Board board, Color turn) {
+		this.board = board;
+		this.currentTurn = turn;
+	}
+
+	public GameManager() {
 		this.board = new Board(new HashMap<>());
-		this.currentTurn = new TurnDao(new SQLConnector().getConnection());
-		this.currentTurn.findTurn();
+		this.currentTurn = WHITE;
 	}
 
 	public void move(Position targetPosition, Position destination) throws SQLException {
@@ -48,14 +48,13 @@ public class GameManager {
 		validateMovablePosition(target, targetPosition, destination);
 	}
 
-	private void validateTurn(Piece target) throws SQLException {
-		if (target.isNotSameColor(currentTurn.findTurn().getColor())) {
+	private void validateTurn(Piece target) {
+		if (target.isNotSameColor(currentTurn)) {
 			throw new IllegalArgumentException(TURN_MISS_MATCH_MESSAGE);
 		}
 	}
 
-	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) throws
-		SQLException {
+	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) {
 		Set<Position> movablePositions = target.findMovablePositions(targetPosition,
 			board.getPieces());
 		if (!movablePositions.contains(destination)) {
@@ -63,10 +62,8 @@ public class GameManager {
 		}
 	}
 
-	private void nextTurn() throws SQLException {
-		TurnDto turn = currentTurn.findTurn();
-		Color reverse = turn.getColor().reverse();
-		currentTurn.editTurn(TurnDto.of(reverse));
+	private void nextTurn() {
+		currentTurn = currentTurn.reverse();
 	}
 
 	public Map<Color, Double> calculateEachScore() throws SQLException {
@@ -74,21 +71,21 @@ public class GameManager {
 		return scoreRule.calculateScore(board);
 	}
 
-	public Color getCurrentTurn() throws SQLException {
-		return currentTurn.findTurn().getColor();
+	public Color getCurrentTurn() {
+		return currentTurn;
 	}
 
-	public boolean isKingAlive() throws SQLException {
-		return board.isKingAliveOf(currentTurn.findTurn().getColor());
+	public boolean isKingAlive() {
+		return board.isKingAliveOf(currentTurn);
 	}
 
 	public Board getBoard() {
 		return board;
 	}
 
-	public void resetGame() throws SQLException {
+	public void resetGame() {
 		board.deleteAll();
 		board = BoardFactory.create();
-		this.currentTurn.editTurn(TurnDto.of(WHITE));
+		currentTurn = WHITE;
 	}
 }

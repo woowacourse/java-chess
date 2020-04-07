@@ -7,30 +7,40 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.board.PieceFactory;
 import chess.domain.dto.PieceDto;
-import chess.domain.dto.PieceEditDto;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class BoardDao {
-	private Connection connection;
-
-	public BoardDao(Connection connection) {
-		this.connection = connection;
-	}
-
-	public Connection getConnection() {
-		return connection;
-	}
-
 	public void addPiece(PieceDto pieceDto) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		String query = "INSERT INTO piece VALUES (?, ?)";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, pieceDto.getPositionValue());
 		statement.setString(2, pieceDto.getPieceName());
 		statement.executeUpdate();
+		connection.close();
 	}
 
-	public PieceDto findPiece(Position position) throws SQLException {
+	public void addAllPieces(List<PieceDto> pieces) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
+		String query = "INSERT INTO piece VALUES (?, ?)";
+		for (PieceDto piece : pieces) {
+			PreparedStatement statement = connection.prepareStatement(query);
+			statement.setString(1, piece.getPositionValue());
+			statement.setString(2, piece.getPieceName());
+			statement.executeUpdate();
+		}
+
+		connection.close();
+	}
+
+	public Piece findPiece(Position position) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		String query = "SELECT * FROM piece WHERE position = ?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, position.getValue());
@@ -40,13 +50,15 @@ public class BoardDao {
 			return null;
 		}
 
-		String findPiecePosition = result.getString("position");
 		String name = result.getString("name");
 
-		return PieceDto.of(findPiecePosition, name);
+		connection.close();
+		return PieceFactory.of(name);
 	}
 
 	public List<PieceDto> findAllPieces() throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		List<PieceDto> results = new ArrayList<>();
 		String query = "SELECT * FROM piece";
 		PreparedStatement statement = connection.prepareStatement(query);
@@ -57,28 +69,39 @@ public class BoardDao {
 				result.getString("name")));
 		}
 
+		connection.close();
 		return results;
 	}
 
-	public void editPieceByPosition(PieceEditDto pieceEditDto) throws SQLException {
+	public void editPieceByPosition(Position position, Piece piece) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		String query = "INSERT INTO piece VALUE (?, ?) ON DUPLICATE KEY UPDATE name = ?";
 		PreparedStatement statement = connection.prepareStatement(query);
-		statement.setString(1, pieceEditDto.getTargetPositionValue());
-		statement.setString(2, pieceEditDto.getWantPieceName());
-		statement.setString(3, pieceEditDto.getWantPieceName());
+		statement.setString(1, position.getValue());
+		statement.setString(2, piece.getName());
+		statement.setString(3, piece.getName());
 		statement.executeUpdate();
+
+		connection.close();
 	}
 
 	public void deletePieceByPosition(Position position) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		String query = "DELETE FROM piece WHERE position = ?";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.setString(1, position.getValue());
 		statement.executeUpdate();
+		connection.close();
 	}
 
 	public void deleteAll() throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
+
 		String query = "DELETE FROM piece";
 		PreparedStatement statement = connection.prepareStatement(query);
 		statement.executeUpdate();
+		connection.close();
 	}
 }

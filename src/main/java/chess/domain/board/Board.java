@@ -1,55 +1,47 @@
 package chess.domain.board;
 
-import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import chess.domain.dao.BoardDao;
-import chess.domain.dao.SQLConnector;
 import chess.domain.dto.PieceDto;
-import chess.domain.dto.PieceEditDto;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Board {
-	private final BoardDao boardDao;
+	private final Map<Position, Piece> pieces;
 
 	public Board(Map<Position, Piece> pieces) {
-		boardDao = new BoardDao(new SQLConnector().getConnection());
-		pieces.entrySet()
-			.stream()
-			.map(x -> PieceDto.of(x.getKey(), x.getValue()))
-			.forEach(x -> {
-				try {
-					boardDao.addPiece(x);
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			});
+		this.pieces = pieces;
 	}
 
-	public boolean isNotEmptyPosition(Position position) throws SQLException {
-		return boardDao.findPiece(position) != null;
+	public static Board of(List<PieceDto> pieces) {
+		return new Board(pieces.stream()
+			.collect(Collectors.toMap(PieceDto::getPosition, PieceDto::getPiece)));
 	}
 
-	public Piece findPieceBy(Position position) throws SQLException {
-		PieceDto pieceDto = boardDao.findPiece(position);
-		return pieceDto.getPiece();
+	public boolean isNotEmptyPosition(Position position) {
+		return pieces.get(position) != null;
 	}
 
-	public void movePiece(Position from, Position to) throws SQLException {
-		PieceDto pieceDto = boardDao.findPiece(from);
-		PieceEditDto pieceEditDto = new PieceEditDto(to, pieceDto.getPiece());
-		boardDao.editPieceByPosition(pieceEditDto);
-		boardDao.deletePieceByPosition(from);
+	public Piece findPieceBy(Position position) {
+		return pieces.get(position);
 	}
 
-	public boolean isKingAliveOf(Color color) throws SQLException {
-		return boardDao.findAllPieces()
-			.stream()
-			.map(PieceDto::getPiece)
+	public void movePiece(Position from, Position to) {
+		Piece target = pieces.remove(from);
+
+		pieces.put(to, target);
+	}
+
+	public Map<Position, Piece> getPieces() {
+		return pieces;
+	}
+
+	public boolean isKingAliveOf(Color color) {
+		return pieces.values().stream()
 			.anyMatch(piece -> isKingOf(color, piece));
 	}
 
@@ -57,13 +49,7 @@ public class Board {
 		return piece.isSameColor(color) && piece instanceof King;
 	}
 
-	public Map<Position, Piece> getPieces() throws SQLException {
-		return boardDao.findAllPieces()
-			.stream()
-			.collect(Collectors.toMap(PieceDto::getPosition, PieceDto::getPiece));
-	}
+	public void deleteAll() {
 
-	public void deleteAll() throws SQLException {
-		boardDao.deleteAll();
 	}
 }

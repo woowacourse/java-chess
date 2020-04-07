@@ -6,22 +6,20 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import chess.domain.dto.TurnDto;
+import chess.domain.piece.Color;
 
 public class TurnDao {
-	private Connection connection;
-
-	public TurnDao(Connection connection) {
-		this.connection = connection;
-	}
-
 	public void addTurn(TurnDto turnDto) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
 		String query = "INSERT INTO state VALUES (1, ?)";
 		PreparedStatement statement =connection.prepareStatement(query);
 		statement.setString(1, turnDto.getColorName());
 		statement.executeUpdate();
+		connection.close();
 	}
 
-	public TurnDto findTurn() throws SQLException {
+	public Color findTurn() throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
 		String query = "SELECT * FROM state WHERE id = 1";
 		PreparedStatement statement = connection.prepareStatement(query);
 		ResultSet result = statement.executeQuery();
@@ -32,14 +30,17 @@ public class TurnDao {
 
 		String nowTurn = result.getString("turn");
 
-		return TurnDto.of(nowTurn);
+		connection.close();
+		return Color.of(nowTurn);
 	}
 
-	public void editTurn(TurnDto turnDto) throws SQLException {
+	public void editTurn(Color turn) throws SQLException {
+		Connection connection = new SQLConnector().getConnection();
 		String query = "INSERT INTO state VALUE (1, ?) ON DUPLICATE KEY UPDATE turn = ?";
 		PreparedStatement statement = connection.prepareStatement(query);
-		statement.setString(1, turnDto.getColorName());
-		statement.setString(2, turnDto.getColorName());
+		statement.setString(1, turn.name());
+		statement.setString(2, turn.name());
 		statement.executeUpdate();
+		connection.close();
 	}
 }
