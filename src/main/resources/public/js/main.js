@@ -1,5 +1,3 @@
-let startPosition;
-
 document.querySelectorAll(".position").forEach(element => {
     element.addEventListener("click", async function () {
         if (document.getElementById("moveStart").value) {
