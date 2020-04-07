@@ -19,7 +19,10 @@ public enum Rank {
     }
 
     public static Rank of(String rank) {
-        return of(Integer.parseInt(rank));
+        if (rank.matches("^[0-9]$")) {
+            return of(Integer.parseInt(rank));
+        }
+        return valueOf(rank);
     }
 
     public static Rank of(int rank) {

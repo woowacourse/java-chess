@@ -24,7 +24,7 @@ public class Positions {
 
     public static Position of(final String position) {
         File file = File.of(position.substring(0, 1));
-        Rank rank = Rank.of(position.substring(1, 2));
+        Rank rank = Rank.of(position.substring(1));
 
         return findPosition(file, rank);
     }

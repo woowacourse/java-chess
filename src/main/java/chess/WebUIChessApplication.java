@@ -18,9 +18,10 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-
     private static ChessCommandDao chessCommandDao = new ChessCommandDao();
     private static ChessManager chessManager;
+
+    private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
 
     public static void main(String[] args) {
         staticFiles.location("/public");
@@ -52,8 +53,8 @@ public class WebUIChessApplication {
 
         //play new game
         get("/playing:newGame", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             initializeDatabase();
+            Map<String, Object> model = new HashMap<>();
             List<Tile> tiles = chessManager.getTileDto().getTiles();
             Team currentTeam = chessManager.getCurrentTeam();
             model.put("chessPieces", tiles);
@@ -61,13 +62,32 @@ public class WebUIChessApplication {
             return render(model, "chessGame.html");
         });
 
+        get("/move", (req, res) -> {
+            List<Tile> tiles = chessManager.getTileDto().getTiles();
+            Team currentTeam = chessManager.getCurrentTeam();
+            Map<String, Object> model = new HashMap<>();
+            model.put("chessPieces", tiles);
+            model.put("currentTeam", currentTeam);
+
+            if (!chessManager.isPlaying()) {
+                Team winner = chessManager.getWinner();
+                chessManager.end();
+                model.put("winner", winner);
+                initializeDatabase();
+            }
+            return render(model, "chessGame.html");
+        });
+
         //move source target
         post("/move", (req, res) -> {
-            String cmd = req.queryParams("move_cmd");
+            String source = req.headers("source");
+            String target = req.headers("target");
+            String cmd = String.join(" ", new String[]{"move", source, target});
             String errorMessage = null;
             try {
                 Command.MOVE.apply(chessManager, cmd);
                 saveToDatabase(cmd);
+                System.out.println("DB저장완료");
             } catch (Exception e) {
                 errorMessage = "이동할 수 없는 곳입니다. 다시 입력해주세요.";
             }
@@ -84,11 +104,9 @@ public class WebUIChessApplication {
                 chessManager.end();
                 model.put("winner", winner);
             }
-
             return render(model, "chessGame.html");
         });
 
-        //status
         post("/status", (req, res) -> {
             List<Tile> tiles = chessManager.getTileDto().getTiles();
             Team currentTeam = chessManager.getCurrentTeam();
