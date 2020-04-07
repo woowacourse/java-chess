@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
 
 import java.util.*;
 
@@ -118,6 +118,11 @@ public class Pawn extends Piece {
     @Override
     public double getScore() {
         return type.getScore();
+    }
+
+    @Override
+    public String toString() {
+        return color.getName()+type.getFullName();
     }
 
 }

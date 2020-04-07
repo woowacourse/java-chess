@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
 import chess.domain.piece.strategy.AddMovableWhenKing;
 
 import java.util.HashMap;
@@ -54,5 +54,10 @@ public class King extends Piece {
     @Override
     public double getScore() {
         return type.getScore();
+    }
+
+    @Override
+    public String toString() {
+        return color.getName()+type.getFullName();
     }
 }

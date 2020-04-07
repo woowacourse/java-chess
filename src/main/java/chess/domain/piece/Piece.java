@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
 import chess.domain.piece.strategy.AddMovable;
 
 import java.util.Map;
@@ -59,4 +59,7 @@ public abstract class Piece implements AddMovable {
     public abstract String getLetter();
 
     public abstract double getScore();
+
+    public abstract String toString();
+
 }
