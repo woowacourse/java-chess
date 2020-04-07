@@ -50,7 +50,7 @@ public class PawnTest {
 
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
-	@CsvSource({"f1, WHITE, f3", "e1, WHITE, e3"})
+	@CsvSource({"a2, WHITE, a4", "g2, WHITE, g4"})
 	void canMove_InvalidTargetPosition_ExceptionThrown(String sourcePosition, Team team, String targetPosition) {
 		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
@@ -59,24 +59,22 @@ public class PawnTest {
 
 	@DisplayName("처음 상태의 Pawn은 2칸 이동 가능")
 	@Test
-	void move_StateIsStart_Success() {
-		String sourcePosition = "b1";
-		String targetPosition = "b3";
+	void move_PawnIsInitialPosition_Success() {
+		String sourcePosition = "f2";
+		String targetPosition = "f4";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
-		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(2));
+		System.out.println("it works");
+		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(3));
 		assertThat(pieceAfterMove.getPosition()).isEqualTo(Position.of(targetPosition));
 	}
 
 	@DisplayName("진행 상태의 Pawn은 2칸 이동 불가능")
-	@Test
-	void move_StateIsRun_ExceptionThrown() {
-		String sourcePosition = "b1";
-		String firstTargetPosition = "b3";
-		String secondTargetPosition = "b5";
+	@ParameterizedTest
+	@CsvSource({"a3,a5,WHITE", "b5,b3,BLACK"})
+	void move_PawnIsMoved_ExceptionThrown(String sourcePosition, String targetPosition, Team team) {
 
-		board.move(sourcePosition, firstTargetPosition, Team.WHITE);
-		assertThatThrownBy(() -> board.move(firstTargetPosition, secondTargetPosition, Team.WHITE))
+		assertThatThrownBy(() -> board.move(sourcePosition, targetPosition, team))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}
@@ -84,8 +82,8 @@ public class PawnTest {
 	@DisplayName("기물이 없는 목적지가 입력되면 말 이동")
 	@Test
 	void move_EmptyTargetPosition_Success() {
-		String sourcePosition = "a1";
-		String targetPosition = "a2";
+		String sourcePosition = "b1";
+		String targetPosition = "b2";
 
 		board.move(sourcePosition, targetPosition, Team.WHITE);
 		Piece pieceAfterMove = board.findPiece(targetPosition, board.getRanks().get(1));

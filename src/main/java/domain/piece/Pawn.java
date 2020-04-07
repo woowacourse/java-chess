@@ -13,20 +13,20 @@ import domain.piece.team.Team;
 
 public class Pawn extends Piece {
 	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
+	private static final int PAWN_NORMAL_STEP = 1;
+	private static final int POSSIBLE_START_STEP = 2;
 
 	private final double score;
-	private State state;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
-		state = State.START;
 		this.symbol = "p";
 		this.score = 1d;
 	}
 
 	@Override
 	protected boolean validDirection(Direction direction) {
-		if (team.getPawnDirectionValidation().apply(direction)) {
+		if (PawnMoveValidator.isValidPawnDirection(direction, team)) {
 			return true;
 		}
 		throw new InvalidPositionException(INVALID_DIRECTION);
@@ -34,8 +34,9 @@ public class Pawn extends Piece {
 
 	@Override
 	protected boolean validStepSize(int rowGap, int columnGap) {
-		int absStepSize = Math.abs(rowGap);
-		if (state.getIsValidStepSize().apply(absStepSize)) {
+		int absRowGap = Math.abs(rowGap);
+		Boolean isInitialRank = PawnMoveValidator.isInitialRank(this.position.getRow(), team);
+		if ((absRowGap == PAWN_NORMAL_STEP) || ((absRowGap == POSSIBLE_START_STEP) && (isInitialRank))) {
 			return true;
 		}
 		throw new InvalidPositionException(INVALID_STEP_SIZE);
@@ -65,7 +66,6 @@ public class Pawn extends Piece {
 			throw new InvalidPositionException(HAS_PIECE_AT_TARGET_POSITION);
 		}
 		this.changePosition(this, targetPosition, ranks);
-		this.state = State.RUN;
 	}
 
 	private Optional<Piece> hasPieceInBoard(List<Rank> ranks, Position targetPosition) {
