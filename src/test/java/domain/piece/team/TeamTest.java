@@ -20,4 +20,11 @@ public class TeamTest {
 	void changeTurn_GivenNowTurn_ReturnExpectedTurn(Team nowTurn, Team expectedTurn) {
 		assertThat(Team.changeTurn(nowTurn)).isEqualTo(expectedTurn);
 	}
+
+	@DisplayName("입력된 team name에 따라 Team을 제대로 반환하는지 확인")
+	@ParameterizedTest
+	@CsvSource({"White, WHITE", "Black, BLACK"})
+	void ofTest(String turn, Team team) {
+		assertThat(Team.of(turn)).isEqualTo(team);
+	}
 }

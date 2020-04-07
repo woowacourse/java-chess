@@ -34,7 +34,7 @@ public class BoardDaoTest {
 
 	@DisplayName("Board 저장, 불러오기, 삭제 테스트")
 	@Test
-	public void loadBoardTest() throws SQLException {
+	public void boardTest() throws SQLException {
 		boardDao.clearBoardDb();
 
 		Board board = new RookBoard().create();
@@ -46,15 +46,15 @@ public class BoardDaoTest {
 		boardDao.clearBoardDb();
 	}
 
-	@DisplayName("현재의 공격 순서 저장")
+	@DisplayName("Turn 저장, 불러오기, 삭제 테스트")
 	@Test
-	public void saveTurnTest() throws SQLException {
-		boardDao.saveTurn(Team.BLACK);
-	}
+	public void turnTest() throws SQLException {
+		boardDao.clearTurn();
 
-	@DisplayName("게임 저장 버튼을 누르면 Turn의 데이터 삭제")
-	@Test
-	void clearTurnTest() throws SQLException {
+		boardDao.saveTurn(Team.BLACK);
+		Team turn = boardDao.loadTurn();
+
+		assertThat(turn).isEqualTo(Team.BLACK);
 		boardDao.clearTurn();
 	}
 }

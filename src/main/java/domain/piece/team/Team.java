@@ -1,5 +1,6 @@
 package domain.piece.team;
 
+import java.util.Arrays;
 import java.util.function.Function;
 
 import domain.piece.position.Direction;
@@ -21,6 +22,13 @@ public enum Team {
 			return BLACK;
 		}
 		return WHITE;
+	}
+
+	public static Team of(String turn) {
+		return Arrays.stream(Team.values())
+			.filter(t -> t.getName().equals(turn))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 Turn 입니다."));
 	}
 
 	public String getName() {

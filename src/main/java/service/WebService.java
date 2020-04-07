@@ -92,5 +92,6 @@ public class WebService {
 
 	public void loadGame() throws SQLException {
 		board = boardDao.loadBoard();
+		turn = boardDao.loadTurn();
 	}
 }

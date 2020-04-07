@@ -132,4 +132,14 @@ public class BoardDao {
 		Position position = Position.of(rs.getString("piece_position"));
 		return PieceCreator.of(rs.getString("symbol")).getPieceCreator().apply(position);
 	}
+
+	public Team loadTurn() throws SQLException {
+		String query = "SELECT * FROM turn";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+		if (rs.next()) {
+			return Team.of(rs.getString("game_turn"));
+		}
+		return null;
+	}
 }
