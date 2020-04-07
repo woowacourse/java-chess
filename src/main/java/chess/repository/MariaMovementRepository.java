@@ -15,11 +15,17 @@ import java.util.List;
 import static chess.repository.ChessConnection.getConnection;
 
 public class MariaMovementRepository implements MovementRepository {
+    private final ConnectionProperties connectionProperties;
+
+    public MariaMovementRepository(ConnectionProperties connectionProperties) {
+        this.connectionProperties = connectionProperties;
+    }
+
     @Override
     public Movement save(Movement entity) throws SQLException {
         String query = "INSERT INTO MOVEMENT (chessId, sourceKey, targetKey, createdTime) VALUES (?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setLong(1, entity.getChessId());
         preparedStatement.setString(2, entity.getSourceKey());
         preparedStatement.setString(3, entity.getTargetKey());
@@ -42,7 +48,7 @@ public class MariaMovementRepository implements MovementRepository {
                 "FROM MOVEMENT " +
                 "WHERE chessId = ?";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.setLong(1, chessId);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -66,7 +72,7 @@ public class MariaMovementRepository implements MovementRepository {
     @Override
     public void deleteAll() throws SQLException {
         String query = "DELETE FROM MOVEMENT";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.executeUpdate();
     }
 }

@@ -1,5 +1,6 @@
 package chess;
 
+import chess.repository.ConnectionProperties;
 import chess.repository.InMemoryChessRepository;
 import chess.repository.InMemoryMovementRepository;
 import chess.repository.MariaChessRepository;
@@ -18,9 +19,12 @@ public class WebUIChessApplication {
         staticFileLocation("/static");
 
         ChessService chessService = new ChessService(new InMemoryChessRepository(), new InMemoryMovementRepository());
-        if (getConnection() != null) {
-            chessService = new ChessService(new MariaChessRepository(), new MariaMovementRepository());
+
+        ConnectionProperties connectionProperties = new ConnectionProperties();
+        if (getConnection(connectionProperties) != null) {
+            chessService = new ChessService(new MariaChessRepository(connectionProperties), new MariaMovementRepository(connectionProperties));
         }
+
         final ChessController chessController = new ChessController(chessService);
         chessController.run();
     }

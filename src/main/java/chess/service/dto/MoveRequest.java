@@ -13,6 +13,10 @@ public class MoveRequest {
         this.targetKey = targetKey;
     }
 
+    public Movement toEntity() {
+        return new Movement(id, sourceKey, targetKey);
+    }
+
     public Long getId() {
         return id;
     }
@@ -25,7 +29,4 @@ public class MoveRequest {
         return targetKey;
     }
 
-    public Movement toEntity() {
-        return new Movement(id, sourceKey, targetKey);
-    }
 }

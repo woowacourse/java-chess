@@ -45,4 +45,5 @@ public class MoveResponse {
     public TeamScoreDto getTeamScoreDto() {
         return teamScoreDto;
     }
+
 }

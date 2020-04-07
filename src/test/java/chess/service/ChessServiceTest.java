@@ -5,8 +5,6 @@ import chess.piece.Team;
 import chess.repository.ChessRepository;
 import chess.repository.InMemoryChessRepository;
 import chess.repository.InMemoryMovementRepository;
-import chess.repository.MariaChessRepository;
-import chess.repository.MariaMovementRepository;
 import chess.repository.MovementRepository;
 import chess.service.dto.ChessBoardResponse;
 import chess.service.dto.MoveRequest;
@@ -21,7 +19,6 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
-import static chess.repository.ChessConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessServiceTest {
@@ -31,15 +28,11 @@ class ChessServiceTest {
     private MovementRepository movementRepository;
     private ChessRepository chessRepository;
 
-    @DisplayName("실제 디비 없는 경우 메모리로 테스트")
+    @DisplayName("메모리로 테스트")
     @BeforeEach
     void setUp() {
         chessRepository = new InMemoryChessRepository();
         movementRepository = new InMemoryMovementRepository();
-        if (getConnection() != null) {
-            chessRepository = new MariaChessRepository();
-            movementRepository = new MariaMovementRepository();
-        }
         chessService = new ChessService(chessRepository, movementRepository);
     }
 

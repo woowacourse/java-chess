@@ -17,6 +17,11 @@ import java.util.Optional;
 import static chess.repository.ChessConnection.getConnection;
 
 public class MariaChessRepository implements ChessRepository {
+    private final ConnectionProperties connectionProperties;
+
+    public MariaChessRepository(ConnectionProperties connectionProperties) {
+        this.connectionProperties = connectionProperties;
+    }
 
     @Override
     public ChessGame save(ChessGame entity) throws SQLException {
@@ -25,7 +30,7 @@ public class MariaChessRepository implements ChessRepository {
                         "(active, winner, createdTime) " +
                         "VALUES (?, ?, ?)";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setBoolean(1, entity.isActive());
         preparedStatement.setString(2, entity.getWinner().name());
         LocalDateTime createdTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
@@ -47,7 +52,7 @@ public class MariaChessRepository implements ChessRepository {
                 "SELECT * " +
                         "FROM CHESSGAME " +
                         "WHERE id = ?";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -74,7 +79,7 @@ public class MariaChessRepository implements ChessRepository {
                         "SET active = ? , winner = ?" +
                         "WHERE id = ?";
 
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.setBoolean(1, entity.isActive());
         preparedStatement.setString(2, entity.getWinner().name());
         preparedStatement.setLong(3, entity.getId());
@@ -87,7 +92,7 @@ public class MariaChessRepository implements ChessRepository {
         String query =
                 "SELECT * " +
                         "FROM CHESSGAME";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
 
         List<ChessGame> chessGames = new ArrayList<>();
@@ -103,7 +108,7 @@ public class MariaChessRepository implements ChessRepository {
                 "SELECT * " +
                         "FROM CHESSGAME " +
                         "WHERE active = ?";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.setBoolean(1, true);
         ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -118,7 +123,7 @@ public class MariaChessRepository implements ChessRepository {
     @Override
     public void deleteAll() throws SQLException {
         String query = "DELETE FROM CHESSGAME";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
         preparedStatement.executeUpdate();
     }
 }

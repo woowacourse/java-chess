@@ -11,19 +11,20 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import static chess.repository.ChessConnection.getConnection;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MariaChessRepositoryTest {
+class ChessRepositoryTest {
 
     private ChessRepository chessRepository;
 
     @DisplayName("실제 디비 없는 경우 메모리로 테스트")
     @BeforeEach
     void setUp() {
-        chessRepository = new InMemoryChessRepository();
-        if (getConnection() != null) {
-            chessRepository = new MariaChessRepository();
+        try {
+            ConnectionProperties connectionProperties = new ConnectionProperties();
+            chessRepository = new MariaChessRepository(connectionProperties);
+        } catch (Exception e) {
+            chessRepository = new InMemoryChessRepository();
         }
     }
 

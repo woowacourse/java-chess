@@ -28,6 +28,7 @@ import static spark.Spark.post;
 
 public class ChessController {
     private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
 
     private final ChessService chessService;
 
@@ -36,7 +37,7 @@ public class ChessController {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
     }
 
     private static String toJson(DefaultResponse<?> defaultResponse) {
@@ -74,7 +75,6 @@ public class ChessController {
         // move
         post("/chessboard/move", (request, response) -> {
             MoveRequest moveRequest = gson.fromJson(request.body(), MoveRequest.class);
-
             MoveResponse moveResponse = chessService.move(moveRequest);
             return toJson(DefaultResponse.OK(moveResponse));
         });
