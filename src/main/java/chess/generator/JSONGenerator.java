@@ -23,13 +23,13 @@ public class JSONGenerator {
             addRowData(chessPieceArray, chessPieces, i);
         }
         jsonObject.put("chessPieces", chessPieceArray);
-
         return jsonObject.toJSONString();
     }
 
     private static void addRowData(JSONArray chessPieceArray, List<ChessPiece> chessPieces, int i) {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
+
             addColumnData(chessPieceArray, chessPiece, i, j);
         }
     }
@@ -37,6 +37,7 @@ public class JSONGenerator {
     private static void addColumnData(JSONArray chessPieceArray, ChessPiece chessPiece, int i, int j) {
         if (!(chessPiece instanceof Blank)) {
             JSONObject chessPieceInfo = new JSONObject();
+
             chessPieceInfo.put("name", chessPiece.getName());
             chessPieceInfo.put("team", chessPiece.getTeam().getTeamName());
             chessPieceInfo.put("x", i + 1);

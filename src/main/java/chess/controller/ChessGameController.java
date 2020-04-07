@@ -3,9 +3,12 @@ package chess.controller;
 import chess.dao.BoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
+import chess.domain.move.Position;
 import chess.generator.JSONGenerator;
 import spark.ModelAndView;
+import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -32,7 +35,14 @@ public class ChessGameController {
     }
 
     public static String move(Request request, Response response) throws SQLException {
-        MovingInfo movingInfo = MovingInfo.of(request);
+        QueryParamsMap map = request.queryMap();
+        String startX = map.get("startX").value();
+        String startY = map.get("startY").value();
+        String targetX = map.get("targetX").value();
+        String targetY = map.get("targetY").value();
+        Position startPosition = Position.of(Coordinate.of(startX), Coordinate.of(startY));
+        Position targetPosition = Position.of(Coordinate.of(targetX), Coordinate.of(targetY));
+        MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
 
         try {
             board.move(movingInfo);

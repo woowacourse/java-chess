@@ -17,18 +17,6 @@ public class MovingInfo {
         return new MovingInfo(startPosition, targetPosition);
     }
 
-    public static MovingInfo of(Request request) {
-        QueryParamsMap map = request.queryMap();
-        String startX = map.get("startX").value();
-        String startY = map.get("startY").value();
-        String targetX = map.get("targetX").value();
-        String targetY = map.get("targetY").value();
-        Position startPosition = Position.of(Coordinate.of(startX), Coordinate.of(startY));
-        Position targetPosition = Position.of(Coordinate.of(targetX), Coordinate.of(targetY));
-
-        return of(startPosition, targetPosition);
-    }
-
     public static MovingInfo reverseMovingInfo(MovingInfo movingInfo) {
         Position startPosition = movingInfo.getStartPosition();
         Position targetPosition = movingInfo.getTargetPosition();
