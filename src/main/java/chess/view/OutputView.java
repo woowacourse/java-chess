@@ -30,6 +30,6 @@ public class OutputView {
 	public static void printScore(Map<String, String> result) {
 		System.out.println("백 팀 점수: " + result.get("whiteScore"));
 		System.out.println("흑 팀 점수: " + result.get("blackScore"));
-		System.out.println("승자: " + result.get("winner"));
+		System.out.println("승자: " + result.get("result"));
 	}
 }
