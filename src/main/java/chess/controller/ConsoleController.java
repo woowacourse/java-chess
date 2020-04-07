@@ -12,14 +12,22 @@ import chess.view.OutputView;
  *
  *    @author AnHyungJu, LeeHoBin
  */
-public class Controller {
-	public static void run() {
+public class ConsoleController {
+	private static final ConsoleController GAME_CONTROLLER = new ConsoleController();
+	private Pieces pieces;
+	private GameManager gameManager;
+
+	public static ConsoleController getInstance() {
+		return GAME_CONTROLLER;
+	}
+
+	public void run() {
 		start();
 		running();
 		end();
 	}
 
-	private static void start() {
+	public void start() {
 		OutputView.printGameInstruction();
 		FirstCommand command = new FirstCommand(InputView.inputCommand());
 
@@ -28,10 +36,11 @@ public class Controller {
 		}
 	}
 
-	private static void running() {
+	public void running() {
+		pieces = new Pieces(Pieces.initPieces());
+		gameManager = new GameManager(pieces);
+
 		Command command;
-		Pieces pieces = new Pieces(Pieces.initPieces());
-		GameManager gameManager = new GameManager(pieces);
 
 		OutputView.printChessBoard(gameManager);
 
@@ -48,7 +57,7 @@ public class Controller {
 		end();
 	}
 
-	private static void move(Command command, GameManager gameManager) {
+	private void move(Command command, GameManager gameManager) {
 		try {
 			gameManager.moveFromTo(command.getSourceCommand(), command.getTargetCommand());
 		} catch (IllegalArgumentException e) {
@@ -56,17 +65,21 @@ public class Controller {
 		}
 	}
 
-	private static void end() {
+	private void end() {
 		OutputView.printGameEnd();
 		System.exit(0);
 	}
 
-	private static Command readCommand() {
+	private Command readCommand() {
 		try {
 			return new Command(InputView.inputCommand());
 		} catch (IllegalArgumentException e) {
 			OutputView.printException(e);
 			return readCommand();
 		}
+	}
+
+	public Pieces getPieces() {
+		return this.pieces;
 	}
 }
