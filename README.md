@@ -55,15 +55,15 @@ create table board
 (
     id    int(50) auto_increment
         primary key,
-    user1 varchar(64)       null,
-    user2 varchar(64)       null,
+    white varchar(64)       null,
+    black varchar(64)       null,
     turn  int(12) default 0 null,
     constraint unique_user
-        unique (user1, user2),
+        unique (white, black),
     constraint board_ibfk_1
-        foreign key (user1) references user (name),
+        foreign key (white) references user (name),
     constraint board_ibfk_2
-        foreign key (user2) references user (name)
+        foreign key (black) references user (name)
 );
 
 create table piece

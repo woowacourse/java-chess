@@ -15,10 +15,17 @@ import java.util.Map;
 
 public class ChessGame {
 
-    private final DBConnector DBConnector;
+    private final UserDAO userDAO;
+    private final BoardDAO boardDAO;
+    private final PositionDAO positionDAO;
+    private final GamePieceDAO gamePieceDAO;
 
     public ChessGame() {
-        DBConnector = new DBConnector();
+        DBConnector dbConnector = new DBConnector();
+        userDAO = new UserDAO(dbConnector);
+        boardDAO = new BoardDAO(dbConnector);
+        positionDAO = new PositionDAO(dbConnector);
+        gamePieceDAO = new GamePieceDAO(dbConnector);
     }
 
     public Board start(String whiteName, String blackName) throws SQLException {
@@ -53,7 +60,18 @@ public class ChessGame {
         Board board = loadBoard(whitePlayer, blackPlayer).move(source, target);
         saveBoard(board.toSave(), whitePlayer, blackPlayer);
 
+        if (board.isFinished()) {
+            updateRecord(whitePlayer, blackPlayer, board);
+        }
         return board;
+    }
+
+    private void updateRecord(User whitePlayer, User blackPlayer, Board board) throws SQLException {
+        if (board.getStatus().isWhiteTurn()) {
+            userDAO.updateRecord(whitePlayer, blackPlayer);
+            return;
+        }
+        userDAO.updateRecord(blackPlayer, whitePlayer);
     }
 
     public ChessResult status(String whiteName, String blackName) throws SQLException {
@@ -67,16 +85,12 @@ public class ChessGame {
     }
 
     void saveUsers(String... names) throws SQLException {
-        UserDAO userDAO = new UserDAO(DBConnector);
-
         for (String name : names) {
             userDAO.upsert(new User(name));
         }
     }
 
     List<User> findUsers(String... names) throws SQLException {
-        UserDAO userDAO = new UserDAO(DBConnector);
-
         List<User> users = new ArrayList<>();
         for (String name : names) {
             User user = userDAO.findUserByName(name);
@@ -87,10 +101,6 @@ public class ChessGame {
     }
 
     void saveBoard(Board board, User firstUser, User secondUser) throws SQLException {
-        BoardDAO boardDAO = new BoardDAO(DBConnector);
-        PositionDAO positionDAO = new PositionDAO(DBConnector);
-        GamePieceDAO gamePieceDAO = new GamePieceDAO(DBConnector);
-
         int boardId = boardDAO.upsert(firstUser, secondUser, board);
 
         for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
@@ -100,14 +110,15 @@ public class ChessGame {
     }
 
     Board loadBoard(User firstUser, User secondUser) throws SQLException {
-        BoardDAO boardDAO = new BoardDAO(DBConnector);
-        PositionDAO positionDAO = new PositionDAO(DBConnector);
-
         int boardId = boardDAO.findIdByUsers(firstUser, secondUser);
         Status status = boardDAO.findStatusByUsers(firstUser, secondUser);
 
         Map<Position, GamePiece> board = positionDAO.findBoardContentByBoardId(boardId);
 
         return Board.from(board, status);
+    }
+
+    public List<User> findRankers() throws SQLException {
+        return userDAO.findRankers();
     }
 }

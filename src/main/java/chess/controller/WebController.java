@@ -1,9 +1,10 @@
 package chess.controller;
 
-import chess.domain.board.Board;
 import chess.controller.dto.BoardDTO;
-import chess.domain.result.ChessResult;
 import chess.controller.dto.ChessResultDTO;
+import chess.controller.dto.UserDTO;
+import chess.domain.board.Board;
+import chess.domain.result.ChessResult;
 import chess.service.ChessGame;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -26,6 +27,7 @@ public class WebController {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("board", BoardDTO.create(Board.createEmpty()));
+            model.put("rankers", UserDTO.createList(chessGame.findRankers()));
 
             return render(model, "index.html");
         });

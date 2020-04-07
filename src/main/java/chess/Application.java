@@ -24,7 +24,7 @@ public class Application {
             if (command.isStatus()) {
                 OutputView.printScore(board.calculateResult());
             }
-        } while (command.isNotEnd() && board.isNotFinished());
+        } while (command.isNotEnd() && !board.isFinished());
     }
 
     private static Command receiveCommand() {

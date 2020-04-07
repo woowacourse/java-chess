@@ -71,12 +71,10 @@ public class Board {
         board.put(target, sourcePiece);
         board.put(source, EmptyPiece.getInstance());
 
-        Status nextStatus = status.nextTurn();
-
         if (ChessPiece.isKing(targetPiece)) {
-            return new Board(board, nextStatus.finish());
+            return new Board(board, status.finish());
         }
-        return new Board(board, nextStatus);
+        return new Board(board, status.nextTurn());
     }
 
     private boolean isPieceCanMove(GamePiece sourcePiece, GamePiece targetPiece) {
@@ -95,8 +93,8 @@ public class Board {
         return true;
     }
 
-    public boolean isNotFinished() {
-        return !status.isFinished();
+    public boolean isFinished() {
+        return status.isFinished();
     }
 
     public boolean isNotEmpty(Position position) {

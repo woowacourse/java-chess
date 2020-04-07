@@ -4,6 +4,8 @@ import chess.domain.player.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserDAO {
 
@@ -14,7 +16,7 @@ public class UserDAO {
     }
 
     public void addUser(User user) throws SQLException {
-        String query = "INSERT INTO user VALUES (?)";
+        String query = "INSERT INTO user (name) VALUES (?)";
         DBConnector.executeUpdate(query, user.getName());
     }
 
@@ -46,5 +48,27 @@ public class UserDAO {
     public void deleteByName(String name) throws SQLException {
         String query = "DELETE FROM user WHERE name = ?";
         DBConnector.executeUpdate(query, name);
+    }
+
+    public void updateRecord(User winner, User loser) throws SQLException {
+        String winnerQuery = "UPDATE user SET win_count = win_count + 1 WHERE name = ?";
+        String loserQuery = "UPDATE user SET lose_count = lose_count + 1 WHERE name = ?;";
+        DBConnector.executeUpdate(winnerQuery, winner.getName());
+        DBConnector.executeUpdate(loserQuery, loser.getName());
+    }
+
+    public List<User> findRankers() throws SQLException {
+        String query = "SELECT * FROM user ORDER BY win_count - lose_count DESC, win_count DESC LIMIT 10;";
+        ResultSet resultSet = DBConnector.executeQuery(query);
+
+        List<User> rankers = new ArrayList<>();
+        while (resultSet.next()) {
+            String name = resultSet.getString("name");
+            int winCount = resultSet.getInt("win_count");
+            int loseCount = resultSet.getInt("lose_count");
+            rankers.add(new User(name, winCount, loseCount));
+        }
+
+        return rankers;
     }
 }

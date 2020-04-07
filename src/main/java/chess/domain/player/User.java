@@ -4,14 +4,33 @@ import java.util.Objects;
 
 public class User {
 
+    private static final int DEFAULT_LOSE_COUNT = 0;
+    private static final int DEFAULT_WIN_COUNT = 0;
+
     private final String name;
+    private final int winCount;
+    private final int loseCount;
+
+    public User(String name, int winCount, int loseCount) {
+        this.name = name;
+        this.winCount = winCount;
+        this.loseCount = loseCount;
+    }
 
     public User(String name) {
-        this.name = name;
+        this(name, DEFAULT_WIN_COUNT, DEFAULT_LOSE_COUNT);
     }
 
     public String getName() {
         return name;
+    }
+
+    public int getWinCount() {
+        return winCount;
+    }
+
+    public int getLoseCount() {
+        return loseCount;
     }
 
     @Override
@@ -19,11 +38,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(name, user.name);
+        return winCount == user.winCount &&
+                loseCount == user.loseCount &&
+                Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(name, winCount, loseCount);
     }
 }

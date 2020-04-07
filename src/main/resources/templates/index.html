@@ -29,8 +29,26 @@
             <button id="result-button">RESULT</button>
             <div id="result-view"></div>
         </div>
-        <div>
+        <div class="command">
             {{board.status.message}}
+        </div>
+        <div>
+            <table>
+                <thead>
+                <th>이름</th>
+                <th>승리</th>
+                <th>패배</th>
+                </thead>
+                <tbody>
+                {{#rankers}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{winCount}}</td>
+                    <td>{{loseCount}}</td>
+                </tr>
+                {{/rankers}}
+                </tbody>
+            </table>
         </div>
     </div>
 </main>
@@ -100,6 +118,18 @@
     .command {
         height: 100px;
         width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid #bcbcbc;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
     }
 </style>
 
