@@ -51,26 +51,19 @@ public class BoardDao {
 		return con;
 	}
 
-	// 드라이버 연결해제
-	public void closeConnection(Connection con) {
-		try {
-			if (con != null)
-				con.close();
-		} catch (SQLException e) {
-			System.err.println("con 오류:" + e.getMessage());
+	public void clearBoardDb() throws SQLException {
+		try (Connection connection = getConnection()) {
+			String query = "DELETE FROM board";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.executeUpdate();
 		}
 	}
 
-	public void clearBoardDb() throws SQLException {
-		String query = "DELETE FROM board";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.executeUpdate();
-	}
-
 	public void saveBoard(Board board) throws SQLException {
-		Connection connection = getConnection();
-		for (Rank rank : board.getRanks()) {
-			savePiece(rank, connection);
+		try (Connection connection = getConnection()) {
+			for (Rank rank : board.getRanks()) {
+				savePiece(rank, connection);
+			}
 		}
 	}
 
@@ -88,26 +81,31 @@ public class BoardDao {
 	}
 
 	public void clearTurn() throws SQLException {
-		String query = "DELETE FROM TURN";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.executeUpdate();
+		try (Connection connection = getConnection()) {
+			String query = "DELETE FROM TURN";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.executeUpdate();
+		}
 	}
 
 	public void saveTurn(Team turn) throws SQLException {
-		String query = "INSERT INTO turn VALUES (?)";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		pstmt.setString(1, turn.getName());
-		pstmt.executeUpdate();
+		try (Connection connection = getConnection()) {
+			String query = "INSERT INTO turn VALUES (?)";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, turn.getName());
+			pstmt.executeUpdate();
+		}
 	}
 
 	public Board loadBoard() throws SQLException {
 		List<Rank> ranks = new ArrayList<>();
-		Connection connection = getConnection();
 
-		for (int i = FIRST_RANK_INDEX; i <= LAST_RANK_INDEX; i++) {
-			ranks.add(loadRank(i, connection));
+		try (Connection connection = getConnection()) {
+			for (int i = FIRST_RANK_INDEX; i <= LAST_RANK_INDEX; i++) {
+				ranks.add(loadRank(i, connection));
+			}
+			return new Board(ranks);
 		}
-		return new Board(ranks);
 	}
 
 	private Rank loadRank(int rankIndex, Connection connection) throws SQLException {
@@ -134,11 +132,13 @@ public class BoardDao {
 	}
 
 	public Team loadTurn() throws SQLException {
-		String query = "SELECT * FROM turn";
-		PreparedStatement pstmt = getConnection().prepareStatement(query);
-		ResultSet rs = pstmt.executeQuery();
-		if (rs.next()) {
-			return Team.of(rs.getString("game_turn"));
+		try (Connection connection = getConnection()) {
+			String query = "SELECT * FROM turn";
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			ResultSet rs = pstmt.executeQuery();
+			if (rs.next()) {
+				return Team.of(rs.getString("game_turn"));
+			}
 		}
 		return null;
 	}
