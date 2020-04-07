@@ -9,16 +9,11 @@ import chess.domain.Color;
 import chess.dto.PieceResponseDTO;
 
 public class PieceMapper {
-	public static final int COLUMN_BEGIN_INDEX = 0;
-	public static final int COLUMN_END_INDEX = 1;
-	public static final int ROW_BEGIN_INDEX = 1;
-	public static final int ROW_END_INDEX = 2;
 	private static final PieceMapper PIECE_MAPPER = new PieceMapper();
 
 	private Map<String, Piece> pieceDBMapper;
 	private Map<String, String> pieceViewMapper;
 
-	// TODO : 매우 비효율적인 방법인듯? 특히나 두 번이나 Mapper를 만드는 건...
 	public PieceMapper() {
 		this.pieceDBMapper = new HashMap<>();
 
