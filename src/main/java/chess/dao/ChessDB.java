@@ -1,16 +1,12 @@
-package chess.dao.game;
+package chess.dao;
 
-import chess.domain.piece.Color;
-import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class ChessGameDAO {
+public class ChessDB {
 
-    public Connection getConnection() {
-        Connection con = null;
+    public static java.sql.Connection getConnection() {
+        java.sql.Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
         String database = "Chess"; // MySQL DATABASE 이름
         String option = "?useSSL=false&serverTimezone=UTC";
@@ -33,7 +29,7 @@ public class ChessGameDAO {
         return con;
     }
 
-    public void closeConnection(Connection con) {
+    public void closeConnection(java.sql.Connection con) {
         try {
             if (con != null) {
                 con.close();
@@ -43,17 +39,4 @@ public class ChessGameDAO {
         }
     }
 
-    public Color getGameTurn(String gameID) throws SQLException {
-        String query = "select * from game_chessGame_TB Where Game_ID = ?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setString(1, gameID);
-        ResultSet rs = pstmt.executeQuery();
-
-        rs.next();
-        Color gameTurn = Color.of(rs.getString("GAME_TURN_NM"));
-        if (rs.next()) {
-            throw new IllegalAccessError("인자가 너무 많습니다.");
-        }
-        return gameTurn;
-    }
 }

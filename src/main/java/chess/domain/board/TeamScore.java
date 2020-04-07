@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import java.util.Collection;
 import java.util.Collections;
@@ -13,6 +14,7 @@ import util.NullChecker;
 public class TeamScore {
 
     private static final double PAWN_SAME_FILE_SCORE = -0.5;
+    private static final double ZERO = 0.0;
 
     private final Map<Color, Double> teamScore;
 
@@ -34,6 +36,12 @@ public class TeamScore {
     }
 
     private double getSumScore(Collection<Piece> pieces, Color color) {
+        boolean noKing = pieces.stream()
+            .filter(piece -> piece.isSameColor(color))
+            .noneMatch(piece -> piece instanceof King);
+        if (noKing) {
+            return ZERO;
+        }
         return pieces.stream()
             .filter(piece -> piece.isSameColor(color))
             .mapToDouble(Piece::getScore)

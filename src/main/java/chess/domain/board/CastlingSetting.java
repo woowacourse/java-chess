@@ -78,12 +78,12 @@ public enum CastlingSetting {
 
     private final BoardSquare boardSquare;
     private final Piece piece;
-    private final boolean CastlingPiece;
+    private final boolean castlingPiece;
 
     CastlingSetting(BoardSquare boardSquare, Piece piece, boolean castlingPiece) {
         this.boardSquare = boardSquare;
         this.piece = piece;
-        CastlingPiece = castlingPiece;
+        this.castlingPiece = castlingPiece;
     }
 
     public static MoveSquare getMoveCastlingRook(MoveSquare moveSquare) {
@@ -113,13 +113,21 @@ public enum CastlingSetting {
             .orElseThrow(IllegalArgumentException::new);
     }
 
+    public static CastlingSetting of(BoardSquare boardsquare, Piece piece) {
+        return Arrays.stream(CastlingSetting.values())
+            .filter(castlingSetting -> castlingSetting.boardSquare == boardsquare)
+            .filter(castlingSetting -> castlingSetting.piece == piece)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     public Piece getPiece() {
         return piece;
     }
 
     public static Set<CastlingSetting> getCastlingElements() {
         return Arrays.stream(CastlingSetting.values())
-            .filter(castlingElement -> castlingElement.CastlingPiece)
+            .filter(castlingElement -> castlingElement.castlingPiece)
             .collect(Collectors.toSet());
     }
 
@@ -147,5 +155,14 @@ public enum CastlingSetting {
     @Override
     public String toString() {
         return boardSquare + "-" + piece.getLetter();
+    }
+
+    public boolean isCastlingBefore(BoardSquare boardSquare, Piece piece) {
+        return Arrays.stream(CastlingSetting.values())
+            .filter(castlingSetting -> castlingSetting.boardSquare == boardSquare)
+            .filter(castlingSetting -> castlingSetting.piece == piece)
+            .findFirst()
+            .map(castlingSetting -> castlingSetting.castlingPiece)
+            .orElse(false);
     }
 }

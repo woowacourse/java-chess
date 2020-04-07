@@ -84,4 +84,9 @@ public abstract class Piece {
     public boolean isSameType(Type type) {
         return this.type == type;
     }
+
+    @Override
+    public String toString() {
+        return letter;
+    }
 }

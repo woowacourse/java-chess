@@ -4,7 +4,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
 import chess.domain.state.MoveSquare;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -52,5 +56,26 @@ public class TeamScoreTest {
         teamScore = chessGame.getTeamScore();
         assertThat(teamScore.getWinners().size()).isEqualTo(1);
         assertThat(teamScore.getWinners().get(0)).isEqualTo(Color.WHITE);
+    }
+
+    @Test
+    @DisplayName("킹 잡혔을 때 0점 처리")
+    void noKingZero() {
+        Map<BoardSquare, Piece> boardInitial = new HashMap<>();
+        boardInitial.put(BoardSquare.of("e1"), King.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("a8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("h8"), Rook.getPieceInstance(Color.BLACK));
+        boardInitial.put(BoardSquare.of("a1"), Rook.getPieceInstance(Color.WHITE));
+        boardInitial.put(BoardSquare.of("h1"), Rook.getPieceInstance(Color.WHITE));
+        ChessGame chessGame = new ChessGame(new BoardInitialTestUse(boardInitial), Color.WHITE,
+            CastlingSetting.getCastlingElements());
+
+        TeamScore teamScore = chessGame.getTeamScore();
+
+        assertThat(teamScore.getWinners().contains(Color.WHITE)).isTrue();
+        assertThat(teamScore.getWinners().size()).isEqualTo(1);
+
+        assertThat(teamScore.getTeamScore().get(Color.BLACK)).isEqualTo(0.0);
+        assertThat(teamScore.getTeamScore().get(Color.WHITE)).isEqualTo(10.0);
     }
 }

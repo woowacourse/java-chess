@@ -4,26 +4,28 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import util.NullChecker;
 
 public class BoardSquare {
 
-    private final static Map<String, BoardSquare> CACHE;
-    public final static int MIN_FILE_AND_RANK_COUNT = 1;
-    public final static int MAX_FILE_AND_RANK_COUNT;
+    public static final int MIN_FILE_AND_RANK_COUNT = 1;
+    public static final int MAX_FILE_AND_RANK_COUNT;
+    private static final Map<String, BoardSquare> CACHE;
     private static final String SQUARE_NOT_CACHED_EXCEPTION_MESSAGE = "잘못된 입력 - Square 인자";
+
+    private final File file;
+    private final Rank rank;
 
     static {
         CACHE = Collections.unmodifiableMap(Arrays.stream(File.values())
             .flatMap(file -> Arrays.stream(Rank.values())
                 .map(rank -> new BoardSquare(file, rank)))
-            .collect(Collectors.toMap(BoardSquare::getName, boardSquare -> boardSquare)));
+            .collect(Collectors.toMap(BoardSquare::getName, Function.identity())));
+
         MAX_FILE_AND_RANK_COUNT = Integer.max(File.values().length, Rank.values().length);
     }
-
-    private final File file;
-    private final Rank rank;
 
     private BoardSquare(File file, Rank rank) {
         this.file = file;
@@ -44,7 +46,7 @@ public class BoardSquare {
         return BoardSquare.of(file.getName() + rank.getName());
     }
 
-    private String getName() {
+    public String getName() {
         return file.getName() + rank.getName();
     }
 

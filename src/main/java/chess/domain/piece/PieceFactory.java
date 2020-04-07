@@ -33,4 +33,11 @@ public class PieceFactory {
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
+
+    public static String getName(Piece piece) {
+        return CACHE.keySet().stream()
+            .filter(key -> CACHE.get(key) == piece)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
 }
