@@ -2,6 +2,7 @@ package chess.controller;
 
 import static spark.Spark.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ import chess.dto.UnitsDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -30,110 +33,88 @@ public class WebChessController {
 		this.gamesDao = gamesDao;
 	}
 
-	public void run() {
+	public void route() {
 		Spark.staticFileLocation("/templates");
-		getMapping(gson);
-		postMapping(gson);
+		get("/", this::index);
+		get("/init", this::init);
+		get("/new_game/:id", this::createNewGame);
+		get("/games", this::games);
+		get("/turn/:id", this::turn);
+		get("/board/:id", this::board);
+		get("/score/:id", this::score);
+		post("/move/:id", this::move);
+		post("/users", this::users);
 	}
 
-	private void getMapping(Gson gson) {
-		index();
-		init();
-		games(gson);
-		createNewGame();
-		board(gson);
-		score(gson);
-		turn(gson);
+	private String index(Request request, Response response) {
+		Map<String, Object> model = new HashMap<>();
+		return render(model, "index.html");
 	}
 
-	private void postMapping(Gson gson) {
-		users(gson);
-		move(gson);
+	private String init(Request request, Response response) {
+		return render(new HashMap<>(), "userNames.html");
 	}
 
-	private void move(Gson gson) {
-		post("/move/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-
-			Map<String, String> map = gson.fromJson(req.body(), Map.class);
-			game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
-				Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
-
-			UnitsDto units = new UnitsDto(game.board().getBoard());
-
-			int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
-			int targetX = Integer.parseInt(map.get("targetX")) + 96;
-			moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
-			return gson.toJson(units);
-		});
+	private String createNewGame(Request request, Response response) {
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("id", request.params(":id"));
+		return render(model, "playingGame.html");
 	}
 
-	private void users(Gson gson) {
-		post("/users", (req, res) -> {
-			Map request = gson.fromJson(req.body(), Map.class);
-			int gameId = gamesDao.createGame(String.valueOf(request.get("user1")),
-				String.valueOf(request.get("user2")));
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("id", gameId);
-			return gson.toJson(model);
-		});
+	private String games(Request request, Response response) throws SQLException {
+		return gson.toJson(gamesDao.everyGames());
 	}
 
-	private void turn(Gson gson) {
-		get("/turn/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-			TurnDto turnDto = new TurnDto(game.turn());
+	private String turn(Request request, Response response) throws SQLException {
+		int id = Integer.parseInt(request.params(":id"));
+		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
+		TurnDto turnDto = new TurnDto(game.turn());
 
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("turn", turnDto);
-			return gson.toJson(model);
-		});
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("turn", turnDto);
+		return gson.toJson(model);
 	}
 
-	private void score(Gson gson) {
-		get("/score/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-			Status status = game.status();
-			ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("score", score);
-			return gson.toJson(model);
-		});
+	private String board(Request request, Response response) throws SQLException {
+		int id = Integer.parseInt(request.params(":id"));
+		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
+		UnitsDto units = new UnitsDto(game.board().getBoard());
+		return gson.toJson(units);
 	}
 
-	private void board(Gson gson) {
-		get("/board/:id", (req, res) -> {
-			int id = Integer.parseInt(req.params(":id"));
-			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-			UnitsDto units = new UnitsDto(game.board().getBoard());
-			return gson.toJson(units);
-		});
+	private String score(Request request, Response response) throws SQLException {
+		int id = Integer.parseInt(request.params(":id"));
+		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
+		Status status = game.status();
+		ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("score", score);
+		return gson.toJson(model);
 	}
 
-	private void createNewGame() {
-		get("/new_game/:id", (req, res) -> {
-			HashMap<String, Object> model = new HashMap<>();
-			model.put("id", req.params(":id"));
-			return render(model, "playingGame.html");
-		});
+	private String move(Request request, Response response) throws SQLException {
+		int id = Integer.parseInt(request.params(":id"));
+		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
+
+		Map<String, String> map = gson.fromJson(request.body(), Map.class);
+		game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
+			Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
+
+		UnitsDto units = new UnitsDto(game.board().getBoard());
+
+		int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
+		int targetX = Integer.parseInt(map.get("targetX")) + 96;
+		moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
+		return gson.toJson(units);
 	}
 
-	private void games(Gson gson) {
-		get("/games", (req, res) -> gson.toJson(gamesDao.everyGames()));
-	}
-
-	private void init() {
-		get("/init", (req, res) -> render(new HashMap<>(), "userNames.html"));
-	}
-
-	private void index() {
-		get("/", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.html");
-		});
+	private String users(Request request, Response response) throws SQLException {
+		Map req = gson.fromJson(request.body(), Map.class);
+		int gameId = gamesDao.createGame(String.valueOf(req.get("user1")),
+			String.valueOf(req.get("user2")));
+		HashMap<String, Object> model = new HashMap<>();
+		model.put("id", gameId);
+		return gson.toJson(model);
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
