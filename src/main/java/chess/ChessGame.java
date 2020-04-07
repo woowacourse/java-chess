@@ -1,11 +1,15 @@
 package chess;
 
+import java.util.Map;
+
 import chess.domain.Board;
 import chess.domain.Status;
 import chess.domain.Team;
 import chess.domain.Turn;
 import chess.domain.position.Position;
+import chess.domain.state.BoardRepository;
 import chess.domain.state.ChessGameState;
+import chess.domain.state.Playing;
 import chess.domain.state.Score;
 
 public class ChessGame {
@@ -43,5 +47,13 @@ public class ChessGame {
 		Score white = state.score(Team.WHITE);
 		Score black = state.score(Team.BLACK);
 		return new Status(white, black);
+	}
+
+	public static ChessGame createGameByMoves(Map<String, String> moves) {
+		ChessGame game = new ChessGame(new Playing(BoardRepository.create(), new Turn(Team.WHITE)));
+		for (Map.Entry<String, String> move : moves.entrySet()) {
+			game.move(Position.of(move.getKey()), Position.of(move.getValue()));
+		}
+		return game;
 	}
 }

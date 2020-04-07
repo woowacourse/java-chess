@@ -44,9 +44,17 @@
     <!--기존 게임보기-->
     <div class="on_games">
         <form action="/games" method="get">
-            <input type="button" value="기존게임보기!">
+            <input type="button" value="기존게임보기!" onclick="on_games()">
+            <div class = games></div>
         </form>
     </div>
 </div>
+<script>
+    function on_games() {
+        fetch("http://localhost:4567/games").then(response => response.json()).then(players => {
+            console.log(players);
+        })
+    }
+</script>
 </body>
 </html>

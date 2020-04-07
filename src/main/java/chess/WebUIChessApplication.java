@@ -3,18 +3,15 @@ package chess;
 import static spark.Spark.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import chess.dao.ChessGameDao;
 import chess.dao.GamesDao;
 import chess.dao.MoveDao;
 import chess.domain.Status;
 import chess.domain.position.Position;
 import chess.dto.ScoreDto;
 import chess.dto.TurnDto;
-import chess.dto.UnitDto;
+import chess.dto.UnitsDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
@@ -37,7 +34,7 @@ public class WebUIChessApplication {
 
 		get("/games", (req, res) -> {
 			GamesDao gamesDao = new GamesDao();
-			return render(gamesDao.everyGames(), "gameList.html");
+			return gson.toJson(gamesDao.everyGames());
 		});
 
 		get("/new_game/:id", (req, res) -> {
@@ -48,22 +45,16 @@ public class WebUIChessApplication {
 
 		get("/board/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao();
-			ChessGame game = gameDao.findById(id);
-			List<UnitDto> unitList = game.board().getBoard().values().stream()
-				.map(piece -> new UnitDto(
-					piece.getPosition().getColumn().intValue(),
-					piece.getPosition().getRow().intValue(),
-					piece.getTeam().name(),
-					piece.getSymbol()))
-				.collect(Collectors.toList());
-			return gson.toJson(unitList);
+			MoveDao moveDao = new MoveDao();
+			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
+			UnitsDto units = new UnitsDto(game.board().getBoard());
+			return gson.toJson(units);
 		});
 
 		get("/score/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao();
-			ChessGame game = gameDao.findById(id);
+			MoveDao moveDao = new MoveDao();
+			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 			Status status = game.status();
 			ScoreDto score = new ScoreDto(status.getBlackScore(), status.getWhiteScore());
 			HashMap<String, Object> model = new HashMap<>();
@@ -73,9 +64,10 @@ public class WebUIChessApplication {
 
 		get("/turn/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao();
-			ChessGame game = gameDao.findById(id);
+			MoveDao moveDao = new MoveDao();
+			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 			TurnDto turnDto = new TurnDto(game.turn());
+
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("turn", turnDto);
 			return gson.toJson(model);
@@ -83,9 +75,9 @@ public class WebUIChessApplication {
 
 
 		post("/users", (req, res) -> {
-			Map map = gson.fromJson(req.body(), Map.class);
+			Map request = gson.fromJson(req.body(), Map.class);
 			GamesDao gamesDao = new GamesDao();
-			int gameId = gamesDao.createGame(String.valueOf(map.get("user1")), String.valueOf(map.get("user2")));
+			int gameId = gamesDao.createGame(String.valueOf(request.get("user1")), String.valueOf(request.get("user2")));
 			HashMap<String, Object> model = new HashMap<>();
 			model.put("id", gameId);
 			return gson.toJson(model);
@@ -94,23 +86,19 @@ public class WebUIChessApplication {
 
 		post("/move/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ChessGameDao gameDao = new ChessGameDao();
-			ChessGame game = gameDao.findById(id);
+			MoveDao moveDao = new MoveDao();
+			ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
 
 			Map<String, String> map = gson.fromJson(req.body(), Map.class);
 			game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
 				Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
 
-			List<UnitDto> unitList = game.board().getBoard().values().stream()
-				.map(piece -> new UnitDto(piece.getPosition().getColumn().intValue(),
-					piece.getPosition().getRow().intValue(), piece.getTeam().name(), piece.getSymbol()))
-				.collect(Collectors.toList());
-			MoveDao moveDao = new MoveDao();
+			UnitsDto units = new UnitsDto(game.board().getBoard());
 
 			int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
 			int targetX = Integer.parseInt(map.get("targetX")) + 96;
 			moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
-			return gson.toJson(unitList);
+			return gson.toJson(units);
 		});
 	}
 
