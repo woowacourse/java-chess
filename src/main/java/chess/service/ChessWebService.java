@@ -8,7 +8,6 @@ import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +18,6 @@ import java.util.stream.Collectors;
 public class ChessWebService {
     private static final int BOARD_CELLS = 64;
     private static final int BOARD_CELLS_COUNT = BOARD_CELLS;
-    private static final String SQL_EXCEPTION_ERR_MSG = "DB에서 정보를 가져오는 중 에러가 발생했습니다.";
 
     private final PieceDao pieceDao;
     private final MoveHistoryDao moveHistoryDao;
@@ -29,36 +27,25 @@ public class ChessWebService {
         this.moveHistoryDao = moveHistoryDao;
     }
 
-    public boolean canResume(String user_id) throws SQLException {
+    public boolean canResume(String user_id) {
         int savedCount = pieceDao.countSavedInfo(user_id);
         return savedCount == BOARD_CELLS_COUNT;
     }
 
-    public void startNewGame(Board board, String user_id) throws SQLException {
+    public void startNewGame(Board board, String user_id) {
         deleteSaved(user_id);
 
         board.initialize();
 
         Position.stream()
-                .forEach(position -> {
-                    try {
-                        pieceDao.addPiece(user_id, position, board.getPieceByPosition(position));
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                    }
-                });
+                .forEach(position -> pieceDao.addPiece(user_id, position, board.getPieceByPosition(position)));
     }
 
-    public void resumeGame(Board board, String user_id) throws SQLException {
+    public void resumeGame(Board board, String user_id) {
         Map<Position, Piece> savedBoard = Position.stream()
                 .collect(Collectors.toMap(Function.identity(), position -> {
-                    try {
-                        String pieceName = pieceDao.findPieceNameByPosition(user_id, position);
-                        return BoardFactory.findPieceByPieceName(pieceName);
-                    } catch (SQLException e) {
-                        e.printStackTrace();
-                        throw new RuntimeException(SQL_EXCEPTION_ERR_MSG);
-                    }
+                    String pieceName = pieceDao.findPieceNameByPosition(user_id, position);
+                    return BoardFactory.findPieceByPieceName(pieceName);
                 }));
 
         Optional<String> lastTurn = moveHistoryDao.figureLastTurn(user_id);
@@ -71,7 +58,7 @@ public class ChessWebService {
         return turn + "의 순서입니다.";
     }
 
-    public void move(Board board, String user_id, String sourceName, String targetName) throws SQLException {
+    public void move(Board board, String user_id, String sourceName, String targetName) {
         Position source = Position.ofPositionName(sourceName);
         Position target = Position.ofPositionName(targetName);
         PieceColor currentTeam = board.getTeamColor();
@@ -91,7 +78,7 @@ public class ChessWebService {
         return board.calculateScore(pieceColor);
     }
 
-    public void deleteSaved(String user_id) throws SQLException {
+    public void deleteSaved(String user_id) {
         pieceDao.deleteSavedInfo(user_id);
         moveHistoryDao.deleteMoveHistory(user_id);
     }

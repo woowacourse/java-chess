@@ -10,60 +10,109 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessPieceDao implements PieceDao {
-    private final Connection conn;
-
-    public ChessPieceDao() {
-        this.conn = JdbcUtil.getConnection();
-    }
-
     @Override
-    public int countSavedInfo(String user_id) throws SQLException {
+    public int countSavedInfo(String user_id) {
         String query = "SELECT COUNT(*) FROM SAVED WHERE USER_ID = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, user_id);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) return 0;
-        return rs.getInt("count(*)");
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+
+        try {
+            conn = JdbcUtil.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_id);
+            rs = pstmt.executeQuery();
+            return rs.getInt("count(*)");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
+        }
     }
 
     @Override
-    public void addPiece(String user_id, Position position, Piece piece) throws SQLException {
+    public void addPiece(String user_id, Position position, Piece piece) {
         String query = "INSERT INTO SAVED VALUES (?, ?, ?)";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, user_id);
-        pstmt.setString(2, position.name());
-        pstmt.setString(3, piece.name());
-        pstmt.executeUpdate();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JdbcUtil.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_id);
+            pstmt.setString(2, position.name());
+            pstmt.setString(3, piece.name());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtil.close(conn, pstmt);
+        }
     }
 
     @Override
-    public String findPieceNameByPosition(String user_id, Position position) throws SQLException {
+    public String findPieceNameByPosition(String user_id, Position position) {
         String query = "SELECT * FROM SAVED WHERE USER_ID = ? and POSITION = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, user_id);
-        pstmt.setString(2, position.name());
-        ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) return null;
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-        return rs.getString("piece");
+        try {
+            conn = JdbcUtil.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_id);
+            pstmt.setString(2, position.name());
+            rs = pstmt.executeQuery();
+            return rs.getString("piece");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return null;
+        } finally {
+            JdbcUtil.close(conn, pstmt, rs);
+        }
     }
 
     @Override
-    public void updatePiece(String user_id, Position position, Piece piece) throws SQLException {
+    public void updatePiece(String user_id, Position position, Piece piece) {
         String query = "UPDATE SAVED SET PIECE = ? WHERE USER_ID = ? AND POSITION = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, piece.name());
-        pstmt.setString(2, user_id);
-        pstmt.setString(3, position.name());
-        pstmt.executeUpdate();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JdbcUtil.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, piece.name());
+            pstmt.setString(2, user_id);
+            pstmt.setString(3, position.name());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtil.close(conn, pstmt);
+        }
     }
 
     @Override
-    public void deleteSavedInfo(String user_id) throws SQLException {
+    public void deleteSavedInfo(String user_id) {
         String query = "DELETE FROM SAVED WHERE USER_ID = ?";
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, user_id);
-        pstmt.executeUpdate();
+
+        Connection conn = null;
+        PreparedStatement pstmt = null;
+
+        try {
+            conn = JdbcUtil.getConnection();
+            pstmt = conn.prepareStatement(query);
+            pstmt.setString(1, user_id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            JdbcUtil.close(conn, pstmt);
+        }
     }
 }

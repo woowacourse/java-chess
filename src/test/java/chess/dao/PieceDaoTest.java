@@ -9,7 +9,6 @@ import chess.domains.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ class PieceDaoTest {
 
     @DisplayName("saved 테이블에서 id에 해당하는 게임 히스토리 읽어오기 테스트")
     @Test
-    void test() throws SQLException {
+    void test() {
         Map<Position, Piece> saved = BoardFactory.getBoard();
         PieceDao dao = new TestPieceDao("guest", saved);        // 초기화된 체스 피스 DB를 가지는 Dao 생성
         int savedCount = dao.countSavedInfo("guest");
@@ -28,7 +27,7 @@ class PieceDaoTest {
 
     @DisplayName("saved 테이블에서 id에 해당하는 게임 히스토리 읽어오기 테스트")
     @Test
-    void test2() throws SQLException {
+    void test2() {
         PieceDao dao = new TestPieceDao();          // 비어있는 DB를 가진 Dao 생성
         int savedCount = dao.countSavedInfo("guest");
         assertThat(savedCount).isEqualTo(0);
@@ -36,14 +35,14 @@ class PieceDaoTest {
 
     @DisplayName("saved 테이블에 row 추가 테스트")
     @Test
-    void name() throws SQLException {
+    void name() {
         PieceDao dao = new TestPieceDao();
         dao.addPiece("guest", Position.ofPositionName("c2"), new Pawn(PieceColor.WHITE));
     }
 
     @DisplayName("saved 테이블에서 원하는 위치의 piece 값 읽기 테스트")
     @Test
-    void name2() throws SQLException {
+    void name2() {
         Map<Position, Piece> saved = new HashMap<>();
         saved.put(Position.ofPositionName("c2"), new Pawn(PieceColor.WHITE));
         PieceDao dao = new TestPieceDao("guest", saved);
@@ -54,7 +53,7 @@ class PieceDaoTest {
 
     @DisplayName("saved 테이블에서 원하는 위치의 piece 정보 업데이트 테스트")
     @Test
-    void name3() throws SQLException {
+    void name3() {
         Map<Position, Piece> saved = new HashMap<>();
         saved.put(Position.ofPositionName("c2"), new Pawn(PieceColor.WHITE));
         PieceDao dao = new TestPieceDao("guest", saved);
@@ -67,7 +66,7 @@ class PieceDaoTest {
 
     @DisplayName("saved 테이블에서 saved 기록 전체 삭제")
     @Test
-    void name5() throws SQLException {
+    void name5() {
         Map<Position, Piece> saved = new HashMap<>();
         saved.put(Position.ofPositionName("a2"), new Pawn(PieceColor.WHITE));
         PieceDao dao = new TestPieceDao("guest", saved);

@@ -9,7 +9,7 @@ import java.util.Map;
 public class TestPieceDao implements PieceDao {
     private final Map<String, Map<Position, Piece>> testDB;
 
-    public TestPieceDao() {
+    TestPieceDao() {
         this.testDB = new HashMap<>();
     }
 
@@ -62,17 +62,7 @@ public class TestPieceDao implements PieceDao {
     }
 
     @Override
-    public void deletePiece(String user_id, Position position) {
-        if (!testDB.containsKey(user_id)) {
-            return;
-        }
-
-        Map<Position, Piece> saved = testDB.get(user_id);
-        saved.remove(position);
-    }
-
-    @Override
-    public void deleteSaved(String user_id) {
+    public void deleteSavedInfo(String user_id) {
         testDB.remove(user_id);
     }
 }

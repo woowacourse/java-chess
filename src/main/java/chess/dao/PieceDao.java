@@ -3,16 +3,14 @@ package chess.dao;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
-import java.sql.SQLException;
-
 public interface PieceDao {
-    int countSavedInfo(String user_id) throws SQLException;
+    int countSavedInfo(String user_id);
 
-    void addPiece(String user_id, Position position, Piece piece) throws SQLException;
+    void addPiece(String user_id, Position position, Piece piece);
 
-    String findPieceNameByPosition(String user_id, Position position) throws SQLException;
+    String findPieceNameByPosition(String user_id, Position position);
 
-    void updatePiece(String user_id, Position position, Piece piece) throws SQLException;
+    void updatePiece(String user_id, Position position, Piece piece);
 
-    void deleteSavedInfo(String user_id) throws SQLException;
+    void deleteSavedInfo(String user_id);
 }
