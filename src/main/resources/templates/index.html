@@ -1,10 +1,58 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link href="/css/index.css" rel="stylesheet">
 </head>
 <body>
-Hello World!!
+
+<h1>전체 방 목록입니다 :)</h1>
+
+{{#if rooms}}
+<div class="roomList">
+    <table>
+        {{#each rooms}}
+        <tr>
+            <td>{{this.roomId}}</td>
+            <td>{{this.roomName}}</td>
+            <td>{{this.turn}}</td>
+            <td>
+                <button class="deleteButton">DELETE</button>
+            </td>
+        </tr>
+        {{/each}}
+    </table>
+</div>
+{{else}}
+<h1>방이 하나도 개설되지 않았습니다!</h1>
+{{/if}}
+
+<form action="/rooms/create" method="get">
+    방을 만드려면 방 이름을 입력하세요 : <input name="roomName" type="text">
+    <input type="submit" value="방 만들기">
+</form>
+
+<form action="/rooms/enter" method="get">
+    방의 번호를 입력하세요 : <input name="roomId" type="text">
+    <input type="submit" value="방에 입장하기">
+</form>
+
+<script type="text/javascript">
+    let allDeleteButton = document.querySelectorAll(".deleteButton");
+
+    for (let i = 0; i < allDeleteButton.length; i++) {
+        allDeleteButton[i].addEventListener('click', function () {
+            let roomId = allDeleteButton[i].parentElement.parentElement.firstElementChild.innerHTML;
+            deleteRoom(roomId);
+        });
+    }
+
+    function deleteRoom(roomId) {
+        console.log("deleteRoom : " + roomId);
+        let oReq = new XMLHttpRequest();
+        oReq.open('GET', '/rooms/remove?roomId=' + roomId);
+        oReq.send();
+    }
+</script>
 </body>
 </html>
