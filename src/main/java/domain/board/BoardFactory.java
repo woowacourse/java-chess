@@ -50,8 +50,8 @@ public class BoardFactory {
 		rank.add(new Rook(Position.of(Column.A, row), team));
 		rank.add(new Knight(Position.of(Column.B, row), team));
 		rank.add(new Bishop(Position.of(Column.C, row), team));
-		rank.add(new King(Position.of(Column.D, row), team));
-		rank.add(new Queen(Position.of(Column.E, row), team));
+		rank.add(new Queen(Position.of(Column.D, row), team));
+		rank.add(new King(Position.of(Column.E, row), team));
 		rank.add(new Bishop(Position.of(Column.F, row), team));
 		rank.add(new Knight(Position.of(Column.G, row), team));
 		rank.add(new Rook(Position.of(Column.H, row), team));
