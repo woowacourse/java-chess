@@ -2,15 +2,13 @@ package chess;
 
 import static chess.view.OutputView.*;
 
-import java.sql.SQLException;
-
 import chess.domain.GameManager;
 import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
-	public static void main(String[] args) throws SQLException {
+	public static void main(String[] args) {
 		printStartMessage();
 		Command command = inputCommand();
 		if (command.isStart()) {
@@ -23,14 +21,14 @@ public class Application {
 		return Command.of(command);
 	}
 
-	public static void startGame() throws SQLException {
+	public static void startGame() {
 		GameManager gameManager = new GameManager();
 		gameManager.resetGame();
 
 		resumeGame(gameManager);
 	}
 
-	private static Command resumeGame(GameManager gameManager) throws SQLException {
+	private static Command resumeGame(GameManager gameManager) {
 		Command command;
 		do {
 			printBoard(gameManager.getBoard());
@@ -44,7 +42,7 @@ public class Application {
 		return command;
 	}
 
-	private static void printResult(GameManager gameManager, Command command) throws SQLException {
+	private static void printResult(GameManager gameManager, Command command) {
 		if (command.isStatus()) {
 			OutputView.printResultScore(gameManager.calculateEachScore());
 		} else {

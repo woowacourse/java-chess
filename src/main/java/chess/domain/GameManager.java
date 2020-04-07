@@ -2,7 +2,6 @@ package chess.domain;
 
 import static chess.domain.piece.Color.*;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -35,14 +34,14 @@ public class GameManager {
 		this.currentTurn = WHITE;
 	}
 
-	public void move(Position targetPosition, Position destination) throws SQLException {
+	public void move(Position targetPosition, Position destination){
 		validateMove(targetPosition, destination);
 
 		board.movePiece(targetPosition, destination);
 		nextTurn();
 	}
 
-	private void validateMove(Position targetPosition, Position destination) throws SQLException {
+	private void validateMove(Position targetPosition, Position destination) {
 		Piece target = board.findPieceBy(targetPosition);
 		validateTurn(target);
 		validateMovablePosition(target, targetPosition, destination);
@@ -66,7 +65,7 @@ public class GameManager {
 		currentTurn = currentTurn.reverse();
 	}
 
-	public Map<Color, Double> calculateEachScore() throws SQLException {
+	public Map<Color, Double> calculateEachScore() {
 		ScoreRule scoreRule = new ScoreRule();
 		return scoreRule.calculateScore(board);
 	}
