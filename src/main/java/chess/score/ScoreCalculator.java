@@ -1,13 +1,15 @@
 package chess.score;
 
-import chess.board.ChessBoard;
-import chess.player.Player;
+import chess.game.ChessSet;
 
 public class ScoreCalculator implements Calculatable {
+    private static final PawnReduceScoreCalculable pawnReduceScoreCalculable
+            = new PawnReduceScoreCalculable();
+
     @Override
-    public Score calculate(ChessBoard chessBoard, Player player) {
-        Score scoreExceptPawnReduce = player.calculateScoreExceptPawnReduce();
-        Score pawnReduceScore = chessBoard.calculateReducePawnScore(player);
+    public Score calculate(ChessSet chessSet) {
+        Score scoreExceptPawnReduce = chessSet.calculateScoreExceptPawnReduce();
+        Score pawnReduceScore = pawnReduceScoreCalculable.calculate(chessSet);
         return scoreExceptPawnReduce.minus(pawnReduceScore);
     }
 }

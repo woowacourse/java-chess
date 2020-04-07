@@ -32,30 +32,30 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Team team) {
-        return isBlack() == team;
+        return getTeam() == team;
     }
 
     public boolean isNotSame(Team team) {
-        return isBlack() != team;
+        return getTeam() != team;
     }
 
     public boolean isNotSameTeam(Piece piece) {
-        return isBlack() != piece.isBlack();
+        return getTeam() != piece.getTeam();
     }
 
     public boolean isKing() {
         return this.getClass() == King.class;
     }
 
-    private Team isBlack() {
+    public boolean isReverseTeam(Team team) {
+        return team.isReverseTeam(getTeam());
+    }
+
+    public Team getTeam() {
         if (Character.isUpperCase(name)) {
             return Team.BLACK;
         }
         return Team.WHITE;
-    }
-
-    public boolean isReverseTeam(Team team) {
-        return team.isReverseTeam(isBlack());
     }
 
     public char getName() {

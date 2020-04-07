@@ -55,49 +55,4 @@ class ChessBoardTest {
             board.put(new Location(row, (char) (i + 'a')), new Pawn(Team.BLACK));
         }
     }
-
-    @DisplayName("팀 별로 감점해야하는 폰의 점수를 계산한다.")
-    @Test
-    void calculateReducePawnScore1() {
-        ChessBoard chessBoard = ChessBoardCreater.create();
-        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
-        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
-                .isEqualTo(new Score(0).getValue());
-    }
-
-    @DisplayName("두 개의 폰이 한 Col에 있을 경우")
-    @Test
-    void calculateReducePawnScore2() {
-        ChessBoard chessBoard = ChessBoardCreater.create();
-        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
-
-        Location now = new Location(Row.of(2), Col.of('a'));
-        Location after = new Location(Row.of(3), Col.of('b'));
-        chessBoard.move(now, after);
-        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
-                .isEqualTo(new Score(1).getValue());
-    }
-
-    @DisplayName("세 개의 폰이 한 Col에 있을 경우")
-    @Test
-    void calculateReducePawnScore3() {
-        ChessBoard chessBoard = ChessBoardCreater.create();
-        Location now = new Location(Row.of(2), Col.of('a'));
-        Location after = new Location(Row.of(3), Col.of('b'));
-
-        Location now1 = new Location(Row.of(2), Col.of('c'));
-        Location after1 = new Location(Row.of(4), Col.of('c'));
-
-        Location now2 = new Location(Row.of(4), Col.of('c'));
-        Location after2 = new Location(Row.of(5), Col.of('b'));
-
-        chessBoard.move(now, after);
-        chessBoard.move(now1, after1);
-        chessBoard.move(now2, after2);
-
-        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(Team.WHITE)), Team.WHITE);
-
-        assertThat(chessBoard.calculateReducePawnScore(player).getValue())
-                .isEqualTo(new Score(1.5).getValue());
-    }
 }

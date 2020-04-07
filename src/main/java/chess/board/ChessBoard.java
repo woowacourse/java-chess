@@ -5,15 +5,9 @@ import java.util.stream.Collectors;
 
 import chess.location.Location;
 import chess.piece.type.Piece;
-import chess.player.Player;
-import chess.score.Calculatable;
-import chess.score.PawnReduceScoreCalculable;
-import chess.score.Score;
 import chess.team.Team;
 
 public class ChessBoard {
-    private static final Calculatable pawnScoreCalculatable = new PawnReduceScoreCalculable();
-
     private final Map<Location, Piece> board;
 
     public ChessBoard(Map<Location, Piece> board) {
@@ -52,10 +46,6 @@ public class ChessBoard {
         board.remove(destination);
         Piece piece = board.remove(now);
         board.put(destination, piece);
-    }
-
-    public Score calculateReducePawnScore(Player player) {
-        return pawnScoreCalculatable.calculate(this, player);
     }
 
     public boolean isNotCorrectTeam(Location location, Team team) {

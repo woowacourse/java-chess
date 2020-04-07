@@ -23,7 +23,6 @@ public class ChessGame {
     private final ChessBoard chessBoard;
     private final Player white;
     private final Player black;
-    private final Calculatable calculatable;
     private Team turn;
 
     public ChessGame() {
@@ -34,7 +33,6 @@ public class ChessGame {
         this.chessBoard = chessBoard;
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
-        calculatable = new ScoreCalculator();
         this.turn = turn;
     }
 
@@ -92,14 +90,14 @@ public class ChessGame {
 
     public ChessScores calculateScores() {
         return new ChessScores(
-                calculatable.calculate(chessBoard, white),
-                calculatable.calculate(chessBoard, black)
+                white.calculate(),
+                black.calculate()
         );
     }
 
     private ChessResult compareScore() {
-        Score whiteScore = calculatable.calculate(chessBoard, white);
-        Score blackScore = calculatable.calculate(chessBoard, black);
+        Score whiteScore = white.calculate();
+        Score blackScore = black.calculate();
 
         if (whiteScore.isHigherThan(blackScore)) {
             return new ChessResult(Result.WIN, white.getTeamName());

@@ -14,8 +14,8 @@ class ScoreCalcultorTest {
     void calculate() {
         ChessBoard chessBoard = ChessBoardCreater.create();
         Calculatable scoreCalculator = new ScoreCalculator();
-        Player player = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
-        Score result = scoreCalculator.calculate(chessBoard, player);
-        assertThat(result.getValue()).isEqualTo(new Score(38).getValue());
+        ChessSet chessSet = new ChessSet(chessBoard.giveMyPiece(WHITE));
+        Score result = scoreCalculator.calculate(chessSet);
+        assertThat(result).isEqualTo(new Score(38));
     }
 }
