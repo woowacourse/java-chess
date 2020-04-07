@@ -30,20 +30,21 @@ public class WebUIChessApplication {
 
         get("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(model, "game.html");
         });
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            chessBoardDao.deleteChessBoard(gameDao.findMaxRoomNumber());
             gameDao.updateEndState(gameDao.findMaxRoomNumber());
-            return render(model, "end.html");
+            return render(model, "main.html");
         });
 
         get("/loadGame", (req, res) -> {
             try {
                 int roomNumber = gameDao.findMaxRoomNumber();
                 ResponseDto responseDto = null;
-                if (gameDao.findState(roomNumber).equals("end")) {
+                if (gameDao.findState(roomNumber) == GameStatus.FINISH) {
                     ChessBoard chessBoard = new ChessBoard(PieceFactory.create());
                     ChessGame chessGame = new ChessGame(chessBoard, Player.WHITE, GameStatus.NOT_STARTED);
                     responseDto = chessGame.start(new RequestDto(Command.START));
@@ -51,9 +52,10 @@ public class WebUIChessApplication {
                     roomNumber = gameDao.findMaxRoomNumber();
                     chessBoardDao.saveChessBoard(responseDto.getChessBoardDto(), roomNumber);
                     res.status(200);
-                } else if (gameDao.findState(roomNumber).equals("playing")) {
+                } else if (gameDao.findState(roomNumber) == GameStatus.RUNNING) {
                     ChessBoard chessBoard = new ChessBoard(chessBoardDao.findPlayingChessBoard(roomNumber));
                     ChessGame chessGame = new ChessGame(chessBoard, gameDao.findTurn(roomNumber), GameStatus.RUNNING);
+
                     responseDto = chessGame.load(chessBoard);
                 }
 
@@ -78,6 +80,12 @@ public class WebUIChessApplication {
                 gameDao.updateGame(responseDto);
                 chessBoardDao.deleteChessBoard(roomNumber);
                 chessBoardDao.saveChessBoard(responseDto.getChessBoardDto(), roomNumber);
+
+                if (chessBoard.isGameOver()) {
+                    responseDto.dieKing();
+                    chessBoardDao.deleteChessBoard(roomNumber);
+                    gameDao.updateEndState(roomNumber);
+                }
 
                 res.status(200);
                 return gson.toJson(responseDto);

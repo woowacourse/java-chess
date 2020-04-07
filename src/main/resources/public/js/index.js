@@ -26,7 +26,7 @@ $(document).ready(function () {
         url: '/loadGame',
         dataType: 'json',
         error: function (res) {
-            alert(res.responseText);
+            swal(res.responseText);
         },
         success: printChessBoardAndStatus
     });
@@ -40,8 +40,6 @@ $(document).ready(function () {
     $('.square').on("dragover", function (event) {
         event.preventDefault();
     }).on("drop", function (event) {
-        console.log("drop");
-        console.dir(event);
         event.preventDefault();
         let from = event.originalEvent.dataTransfer.getData("from");
         let to = event.currentTarget.id;
@@ -52,7 +50,7 @@ $(document).ready(function () {
             dataType: 'json',
             data: "from=" + from + "&to=" + to,
             error: function (res) {
-                console.log(res.responseText);
+                swal(res.responseText);
             },
             success: printChessBoardAndStatus
         });
@@ -61,6 +59,7 @@ $(document).ready(function () {
 });
 
 function printChessBoardAndStatus(response) {
+    console.log(response);
     let chessBoardDto = response["chessBoardDto"];
     $(".piece").remove();
 
@@ -70,6 +69,10 @@ function printChessBoardAndStatus(response) {
         piece.id = item.piece;
         piece.className = "piece";
         $("#" + item.position).append(piece);
+
+        if (response.isKing === true) {
+            swal(response.turn + "이겼습니다.");
+        }
     });
 
     let scores = response["result"]["statuses"];
@@ -83,7 +86,8 @@ function printChessBoardAndStatus(response) {
     });
 
     let turn = response["turn"];
-    if (turn == "BALCK") {
+
+    if (turn == "BLACK") {
         $("#turn").text("turn: " + turn).css("color", "black");
     } else if (turn == "WHITE") {
         $("#turn").text("turn: " + turn).css("color", "white");

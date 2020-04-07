@@ -26,8 +26,6 @@ public class ChessGame {
             throw new IllegalStateException("게임을 진행하기 위해서는 start(시작) 명령어를 먼저 입력해야 합니다.");
         }
 
-        chessBoard = new ChessBoard(PieceFactory.create());
-        this.turn = Player.WHITE;
         this.gameStatus = GameStatus.RUNNING;
 
         return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
@@ -49,7 +47,6 @@ public class ChessGame {
         chessBoard.move(requestDto.getFrom(), requestDto.getTo());
 
         this.turn = Player.reversePlayer(turn);
-
         return new ResponseDto(new ChessBoardDto(chessBoard.getChessBoard()), chessBoard.createResult(), turn, gameStatus);
     }
 

@@ -1,6 +1,7 @@
 package chess.controller.dao;
 
 import chess.controller.dto.ResponseDto;
+import chess.domain.game.GameStatus;
 import chess.domain.game.Player;
 import chess.domain.status.Result;
 import chess.domain.status.Status;
@@ -21,7 +22,7 @@ public class GameDao {
         pstmt.setString(1, responseDto.getTurn().name());
         pstmt.setDouble(2, responseDto.getResult().getStatuses().get(0).getScore());
         pstmt.setDouble(3, responseDto.getResult().getStatuses().get(1).getScore());
-        pstmt.setString(4, "playing");
+        pstmt.setString(4, responseDto.getGameStatus().toString());
         pstmt.executeUpdate();
         pstmt.close();
     }
@@ -43,13 +44,13 @@ public class GameDao {
         String query = "UPDATE game SET state = ?" +
                 "WHERE game_id = ?";
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, "end");
+        pstmt.setString(1, GameStatus.FINISH.toString());
         pstmt.setInt(2, roomNumber);
         pstmt.executeUpdate();
         pstmt.close();
     }
 
-    public String findState(int roomNumber) throws SQLException {
+    public GameStatus findState(int roomNumber) throws SQLException {
         String query = "SELECT state FROM game WHERE game_id=?";
         PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setInt(1, roomNumber);
@@ -57,7 +58,7 @@ public class GameDao {
         ResultSet rs = pstmt.executeQuery();
         if (!rs.next()) return null;
 
-        return rs.getString("state");
+        return GameStatus.valueOf(rs.getString("state"));
     }
 
     public Result findResult() throws SQLException {

@@ -12,7 +12,7 @@ public enum PieceInfo {
     QUEEN("Q", 9, Row.values().length, Column.values().length, Queen::new),
     BISHOP("B", 3, Row.values().length, Column.values().length, Bishop::new),
     ROOK("R", 5, Row.values().length, Column.values().length, Rook::new),
-    KNIGHT("N", 2.5, 2, 2, King::new),
+    KNIGHT("N", 2.5, 2, 2, Knight::new),
     PAWN("P", 1, 1, 1, Pawn::new);
 
     public static final double PAWN_SCORE_DIFF = 0.5;

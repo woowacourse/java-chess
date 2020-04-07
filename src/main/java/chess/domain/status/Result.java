@@ -46,10 +46,12 @@ public class Result {
     }
 
     public double getWhiteScore() {
+        System.out.println("whiteScore = " + statuses.get(0).getScore());
         return statuses.get(0).getScore();
     }
 
     public double getBlackScore() {
+        System.out.println("blackScore = " + statuses.get(1).getScore());
         return statuses.get(1).getScore();
     }
 }
