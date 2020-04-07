@@ -1,7 +1,7 @@
 body {
     margin: 0;
     position: relative;
-    background: url("../images/bg.jpg")
+    background: url("../images/bg.jpg");
 }
 
 .center {
@@ -32,7 +32,7 @@ header .inner h1 {
 .controller {
     position: absolute;
     top: 30%;
-    right: 30px;
+    right: 4%;
     margin-right: 20px;
     width: 150px;
     height: 280px;
@@ -45,16 +45,44 @@ header .inner h1 {
 }
 
 .controller input {
-    width: 100px;
+    width: 90px;
     height: 45px;
     margin: 20px 0;
+}
+
+.turn {
+    position: absolute;
+    top: 27%;
+    left: 4%;
+    font-size: 25px;
+    color: #fff;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controller-move {
+    position: absolute;
+    top: 35%;
+    left: 4%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controller-move input {
+    width: 50px;
+    height: 25px;
+    margin: 0 10px;
 }
 
 /* status */
 #score-status {
     position: absolute;
-    top: 40%;
-    left: 100px;
+    top: 45%;
+    left: 5%;
     float: left;
     display: flex;
     align-items: center;
@@ -100,4 +128,18 @@ header .inner h1 {
 .inner .chess-row .square img {
     width: 64px;
     height: 64px;
+}
+
+.inner .chess-row .row {
+    margin-left: 9px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.inner .chess-row .square .col {
+    margin-top: 3px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
 }

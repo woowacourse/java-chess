@@ -16,4 +16,9 @@ public class Blank extends Piece {
     public Piece moveTo(final Position toPosition) {
         throw new PieceImpossibleMoveException("빈 칸은 움직일 수 없습니다.");
     }
+
+    @Override
+    public String getName() {
+        return "blank";
+    }
 }

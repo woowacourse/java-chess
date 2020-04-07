@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>체스게임 by BossDog</title>
     <link rel="stylesheet" type="text/css" href="./css/index.css">
-</head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script></head>
 <body>
 
     <!-- HEADER -->
@@ -16,254 +16,273 @@
 
     <!-- CONTROLLER -->
     <div class="controller">
-        <form action="/" method="post">
+        <form action="/start" method="post">
             <input id="start" type="submit" name="command" value="새 게임">
         </form>
-        <form action="/" method="post">
+        <form action="/status" method="post">
             <input id="status" type="submit" name="command" value="점수 현황">
         </form>
-        <form action="/" method="post">
+        <form action="/end" method="post">
             <input id="end" type="submit" name="command" value="게임 종료">
         </form>
     </div>
+    <div class="turn">
+        {{ turn }}
+    </div>
     <div class="controller-move">
-        <form action="/" method="post">
+        <form action="/move" method="post" id="moveForm">
             <label for="fromPiece"></label><input id="fromPiece" type="text" name="fromPiece">
             <label for="toPiece"></label><input id="toPiece" type="text" name="toPiece">
-            <input id="move" type="submit" name="command" value="이동">
+            <input id="moveCommand" type="submit" name="command" value="이동">
         </form>
     </div>
 
     <!-- SCORE STATUS -->
     <div id="score-status">
-        <div class="score" id="black-score">흑 : <span>{{ black }}</span></div>
-        <div class="score" id="white-score">백 : <span>{{ white }}</span></div>
+        <div class="score" id="black-score">Black : <span>{{ black }}</span></div>
+        <div class="score" id="white-score">White : <span>{{ white }}</span></div>
     </div>
 
     <!-- BOARD -->
     <div class="inner board center">
-        <!-- h1 ~ h8 -->
+        <!-- a8 ~ h8 -->
         <div class="chess-row center">
-            <div class="square square-white">
-                <img src="./images/{{a8}}.png" alt="">
+            <div class="square square-white" id="a8">
+                <img src="./images/{{ a8 }}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{b8}}.png" alt="">
+            <div class="square square-black" id="b8">
+                <img src="./images/{{ b8 }}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{c8}}.png" alt="">
+            <div class="square square-white" id="c8">
+                <img src="./images/{{ c8 }}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{d8}}.png" alt="">
+            <div class="square square-black" id="d8">
+                <img src="./images/{{ d8 }}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{e8}}.png" alt="">
+            <div class="square square-white" id="e8">
+                <img src="./images/{{ e8 }}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{f8}}.png" alt="">
+            <div class="square square-black" id="f8">
+                <img src="./images/{{ f8 }}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{g8}}.png" alt="">
+            <div class="square square-white" id="g8">
+                <img src="./images/{{ g8 }}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{h8}}.png" alt="">
+            <div class="square square-black" id="h8">
+                <img src="./images/{{ h8 }}.png" alt=""/>
             </div>
+            <div class="row">8</div>
         </div>
 
-        <!-- g1 ~ g8 -->
+        <!-- a7 ~ h7 -->
         <div class="chess-row center">
-            <div class="square square-black">
-                <img src="./images/{{a7}}.png" alt="">
+            <div class="square square-black" id="a7">
+                <img src="./images/{{a7}}.png" alt="" />
             </div>
-            <div class="square square-white">
-                <img src="./images/{{b7}}.png" alt="">
+            <div class="square square-white" id="b7">
+                <img src="./images/{{b7}}.png" alt="" />
             </div>
-            <div class="square square-black">
-                <img src="./images/{{c7}}.png" alt="">
+            <div class="square square-black" id="c7">
+                <img src="./images/{{c7}}.png" alt="" />
             </div>
-            <div class="square square-white">
-                <img src="./images/{{d7}}.png" alt="">
+            <div class="square square-white" id="d7">
+                <img src="./images/{{d7}}.png" alt="" />
             </div>
-            <div class="square square-black">
-                <img src="./images/{{e7}}.png" alt="">
+            <div class="square square-black" id="e7">
+                <img src="./images/{{e7}}.png" alt="" />
             </div>
-            <div class="square square-white">
-                <img src="./images/{{f7}}.png" alt="">
+            <div class="square square-white" id="f7">
+                <img src="./images/{{f7}}.png" alt="" />
             </div>
-            <div class="square square-black">
-                <img src="./images/{{g7}}.png" alt="">
+            <div class="square square-black" id="g7">
+                <img src="./images/{{g7}}.png" alt="" />
             </div>
-            <div class="square square-white">
-                <img src="./images/{{h7}}.png" alt="">
+            <div class="square square-white" id="h7">
+                <img src="./images/{{h7}}.png" alt="" />
             </div>
+            <div class="row">7</div>
         </div>
 
-        <!-- f1 ~ f8 -->
+        <!-- a6 ~ h6 -->
         <div class="chess-row center">
-            <div class="square square-white">
-                <img src="./images/{{a6}}.png" alt="">
+            <div class="square square-white" id="a6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{b6}}.png" alt="">
+            <div class="square square-black" id="b6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{c6}}.png" alt="">
+            <div class="square square-white" id="c6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{d6}}.png" alt="">
+            <div class="square square-black" id="d6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{e6}}.png" alt="">
+            <div class="square square-white" id="e6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{f6}}.png" alt="">
+            <div class="square square-black" id="f6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{g6}}.png" alt="">
+            <div class="square square-white" id="g6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{h6}}.png" alt="">
+            <div class="square square-black" id="h6">
+                <img src="./images/{{a6}}.png" alt=""/>
             </div>
+            <div class="row">6</div>
         </div>
 
-        <!-- e1 ~ e8 -->
+        <!-- a5 ~ h5 -->
         <div class="chess-row center">
-            <div class="square square-black">
-                <img src="./images/{{a5}}.png" alt="">
+            <div class="square square-black" id="a5">
+                <img src="./images/{{a5}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{b5}}.png" alt="">
+            <div class="square square-white" id="b5">
+                <img src="./images/{{b5}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{c5}}.png" alt="">
+            <div class="square square-black" id="c5">
+                <img src="./images/{{c5}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{d5}}.png" alt="">
+            <div class="square square-white" id="d5">
+                <img src="./images/{{d5}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{e5}}.png" alt="">
+            <div class="square square-black" id="e5">
+                <img src="./images/{{e5}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{f5}}.png" alt="">
+            <div class="square square-white" id="f5">
+                <img src="./images/{{f5}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{g5}}.png" alt="">
+            <div class="square square-black" id="g5">
+                <img src="./images/{{g5}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{h5}}.png" alt="">
+            <div class="square square-white" id="h5">
+                <img src="./images/{{h5}}.png" alt=""/>
             </div>
+            <div class="row">5</div>
         </div>
 
-        <!-- d1 ~ d8 -->
+        <!-- a4 ~ h4 -->
         <div class="chess-row center">
-            <div class="square square-white">
-                <img src="./images/{{a4}}.png" alt="">
+            <div class="square square-white" id="a4">
+                <img src="./images/{{a4}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{b4}}.png" alt="">
+            <div class="square square-black" id="b4">
+                <img src="./images/{{b4}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{c4}}.png" alt="">
+            <div class="square square-white" id="c4">
+                <img src="./images/{{c4}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{d4}}.png" alt="">
+            <div class="square square-black" id="d4">
+                <img src="./images/{{d4}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{e4}}.png" alt="">
+            <div class="square square-white" id="e4">
+                <img src="./images/{{e4}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{f4}}.png" alt="">
+            <div class="square square-black" id="f4">
+                <img src="./images/{{f4}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{g4}}.png" alt="">
+            <div class="square square-white" id="g4">
+                <img src="./images/{{g4}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{h4}}.png" alt="">
+            <div class="square square-black" id="h4">
+                <img src="./images/{{h4}}.png" alt=""/>
             </div>
+            <div class="row">4</div>
         </div>
 
-        <!-- c1 ~ c8 -->
+        <!-- a3 ~ h3 -->
         <div class="chess-row center">
-            <div class="square square-black">
-                <img src="./images/{{a3}}.png" alt="">
+            <div class="square square-black" id="a3">
+                <img src="./images/{{a3}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{b3}}.png" alt="">
+            <div class="square square-white" id="b3">
+                <img src="./images/{{b3}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{c3}}.png" alt="">
+            <div class="square square-black" id="c3">
+                <img src="./images/{{c3}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{d3}}.png" alt="">
+            <div class="square square-white" id="d3">
+                <img src="./images/{{d3}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{e3}}.png" alt="">
+            <div class="square square-black" id="e3">
+                <img src="./images/{{e3}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{f3}}.png" alt="">
+            <div class="square square-white" id="f3">
+                <img src="./images/{{f3}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{g3}}.png" alt="">
+            <div class="square square-black" id="g3">
+                <img src="./images/{{g3}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{h3}}.png" alt="">
+            <div class="square square-white" id="h3">
+                <img src="./images/{{h3}}.png" alt=""/>
             </div>
+            <div class="row">3</div>
         </div>
 
-        <!-- b1 ~ b8 -->
+        <!-- a2 ~ h2 -->
         <div class="chess-row center">
-            <div class="square square-white">
-                <img src="./images/{{a2}}.png" alt="">
+            <div class="square square-white" id="a2">
+                <img src="./images/{{a2}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{b2}}.png" alt="">
+            <div class="square square-black" id="b2">
+                <img src="./images/{{b2}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{c2}}.png" alt="">
+            <div class="square square-white" id="c2">
+                <img src="./images/{{c2}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{d2}}.png" alt="">
+            <div class="square square-black" id="d2">
+                <img src="./images/{{d2}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{e2}}.png" alt="">
+            <div class="square square-white" id="e2">
+                <img src="./images/{{e2}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{f2}}.png" alt="">
+            <div class="square square-black" id="f2">
+                <img src="./images/{{f2}}.png" alt=""/>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{g2}}.png" alt="">
+            <div class="square square-white" id="g2">
+                <img src="./images/{{g2}}.png" alt=""/>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{h2}}.png" alt="">
+            <div class="square square-black" id="h2">
+                <img src="./images/{{h2}}.png" alt=""/>
             </div>
+            <div class="row">2</div>
         </div>
 
-        <!-- a1 ~ a8 -->
+        <!-- a1 ~ h1 -->
         <div class="chess-row center">
-            <div class="square square-black">
-                <img src="./images/{{a1}}.png" alt="">
+            <div class="square square-black" id="a1">
+                <img src="./images/{{a1}}.png" alt=""/>
+                <div class="col">a</div>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{b1}}.png" alt="">
+            <div class="square square-white" id="b1">
+                <img src="./images/{{b1}}.png" alt=""/>
+                <div class="col">b</div>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{c1}}.png" alt="">
+            <div class="square square-black" id="c1">
+                <img src="./images/{{c1}}.png" alt=""/>
+                <div class="col">c</div>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{d1}}.png" alt="">
+            <div class="square square-white" id="d1">
+                <img src="./images/{{d1}}.png" alt=""/>
+                <div class="col">d</div>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{e1}}.png" alt="">
+            <div class="square square-black" id="e1">
+                <img src="./images/{{e1}}.png" alt=""/>
+                <div class="col">e</div>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{f1}}.png" alt="">
+            <div class="square square-white" id="f1">
+                <img src="./images/{{f1}}.png" alt=""/>
+                <div class="col">f</div>
             </div>
-            <div class="square square-black">
-                <img src="./images/{{g1}}.png" alt="">
+            <div class="square square-black" id="g1">
+                <img src="./images/{{g1}}.png" alt=""/>
+                <div class="col">g</div>
             </div>
-            <div class="square square-white">
-                <img src="./images/{{h1}}.png" alt="">
+            <div class="square square-white" id="h1">
+                <img src="./images/{{h1}}.png" alt=""/>
+                <div class="col">h</div>
             </div>
+            <div class="row">1</div>
         </div>
     </div>
 

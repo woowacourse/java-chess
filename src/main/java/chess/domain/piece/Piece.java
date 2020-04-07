@@ -21,8 +21,8 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public List<Piece> possiblePositions(final Board board, final Piece piece) {
-        return null;
+    public List<Position> possiblePositions(final Board board) {
+        return pieceType.possiblePositions(board, this);
     }
 
     public boolean isMovable(final Board board,  final Piece toPiece) {

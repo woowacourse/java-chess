@@ -4,6 +4,8 @@ import chess.domain.util.Direction;
 import chess.exception.InvalidPositionException;
 import chess.exception.OutOfBoardRangeException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -33,6 +35,16 @@ public class Position {
 
     public static Position of(final String x, final String y) {
         return new Position(Integer.parseInt(x), Integer.parseInt(y));
+    }
+
+    public static List<Position> getAllPositions() {
+        List<Position> positions = new ArrayList<>();
+        for (int row = START_INDEX; row <= END_INDEX; row++) {
+            for (int col = START_INDEX; col <= END_INDEX; col++) {
+                positions.add(new Position(col, row));
+            }
+        }
+        return positions;
     }
 
     public Position moveBy(final Direction direction) {

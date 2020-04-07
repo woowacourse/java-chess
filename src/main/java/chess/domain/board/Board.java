@@ -10,9 +10,11 @@ import java.util.stream.IntStream;
 public class Board {
     private static final int BOARD_SIZE = 64;
     private static final int FIRST_INDEX = 0;
+    private static final int ASCII_GAP = 96;
     private static final int WHITE_PAWN_ROW = 2;
     private static final int BLACK_PAWN_ROW = 7;
-    private static final int ASCII_GAP = 96;
+    private static final int BLANK_START_INDEX = 3;
+    private static final int BLANK_END_INDEX = 6;
 
     private List<Piece> board;
     private boolean isFinished = false;
@@ -48,6 +50,8 @@ public class Board {
     }
 
     public void initialize() {
+        turn = Turn.WHITE;
+
         board.set(0, Rook.createWhite(new Position(1, 1)));
         board.set(1, Knight.createWhite(new Position(2, 1)));
         board.set(2, Bishop.createWhite(new Position(3, 1)));
@@ -60,6 +64,12 @@ public class Board {
         IntStream.rangeClosed(Position.START_INDEX, Position.END_INDEX)
                 .forEach(col -> board.set(Position.ROW_SIZE * (WHITE_PAWN_ROW - 1) + col - 1,
                         Pawn.createWhite(new Position(col, WHITE_PAWN_ROW))));
+
+        for (int row = BLANK_START_INDEX; row <= BLANK_END_INDEX; row++) {
+            for (int col = Position.START_INDEX; col <= Position.END_INDEX; col++) {
+                board.set(getBoardIndex(col, row), Blank.create(new Position(col, row)));
+            }
+        }
 
         IntStream.rangeClosed(Position.START_INDEX, Position.END_INDEX)
                 .forEach(col -> board.set(Position.ROW_SIZE * (BLACK_PAWN_ROW - 1) + col - 1,
@@ -127,5 +137,9 @@ public class Board {
 
     public List<Piece> getBoard() {
         return board;
+    }
+
+    public String getTurn() {
+        return turn.name();
     }
 }

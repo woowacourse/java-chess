@@ -122,7 +122,7 @@ public class BoardTest {
     void movePiece(String from, String to, PieceType fromPieceType, PieceType toPieceType) {
         Board board = BoardFactory.createInitializedBoard();
 
-        board.move(from, to, Turn.WHITE);
+        board.move(from, to);
         assertThat(board.findPieceBy(Position.of(from)).getPieceType()).isEqualTo(toPieceType);
         assertThat(board.findPieceBy(Position.of(to)).getPieceType()).isEqualTo(fromPieceType);
     }

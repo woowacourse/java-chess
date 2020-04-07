@@ -12,7 +12,7 @@ import chess.exception.TakeTurnException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGame {
+public class ConsoleChessController {
     private static final int COMMAND_INDEX = 0;
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;
@@ -21,7 +21,7 @@ public class ChessGame {
     private GameResult gameResult;
     private String[] inputCommand;
 
-    public ChessGame() {
+    public ConsoleChessController() {
         this.gameResult = new GameResult();
         board = BoardFactory.createEmptyBoard();
     }
