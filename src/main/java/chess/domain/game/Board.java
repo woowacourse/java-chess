@@ -70,7 +70,6 @@ public class Board {
 			String symbol = symbols.poll();
 			Color color = Color.from(symbol.charAt(0));
 			if (color.isNone()) {
-				board.setBlank(position);
 				continue;
 			}
 			board.setPiece(position, PieceFactory.create(Symbol.from(symbol), position, color));
