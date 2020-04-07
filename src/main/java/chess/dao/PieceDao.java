@@ -7,14 +7,24 @@ import java.sql.*;
 import java.util.*;
 
 public class PieceDao {
-    public Connection getConnection() {
-        Optional<Connection> con = null;
+    private static final int SERVER_INDEX = 0;
+    private static final int DATABASE_INDEX = 1;
+    private static final int OPTION_INDEX = 2;
+    private static final int USERNAME_INDEX = 3;
+    private static final int PASSWORD_INDEX = 4;
+
+    public List<String> Properties() {
         String server = "localhost:13306";
         String database = "db_name";
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root";
         String password = "root";
+        return Arrays.asList(server, database, option, userName, password);
+    }
 
+    public Connection getConnection() {
+        Optional<Connection> con = null;
+        List<String> properties = Properties();
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -25,7 +35,11 @@ public class PieceDao {
         try {
             con = Optional
                     .of(DriverManager
-                            .getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password));
+                            .getConnection("jdbc:mysql://"
+                                            + properties.get(SERVER_INDEX)
+                                            + "/" + properties.get(DATABASE_INDEX)
+                                            + properties.get(OPTION_INDEX)
+                                    , properties.get(USERNAME_INDEX), properties.get(PASSWORD_INDEX)));
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
