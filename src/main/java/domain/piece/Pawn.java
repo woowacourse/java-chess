@@ -30,8 +30,9 @@ public class Pawn extends Piece {
 		Direction direction = Direction.findDirection(this.position, targetPosition);
 		Optional<Piece> target = board.findPiece(targetPosition);
 
-		boolean isCaptureMovement = Direction.isDiagonalDirection(direction) && rowGap == MIN_STEP_SIZE_OF_DIAGONAL
-			&& target.isPresent();
+		boolean isCaptureMovement =
+			Direction.isDiagonalDirection(direction) && Math.abs(rowGap) == MIN_STEP_SIZE_OF_DIAGONAL
+				&& target.isPresent();
 
 		if (isCaptureMovement) {
 			capture(target.get(), board);
