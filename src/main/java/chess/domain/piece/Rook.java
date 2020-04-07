@@ -9,7 +9,7 @@ public class Rook extends Piece {
 	public Rook(Position position, Team team) {
 		super(position, team);
 		this.representation = Arrays.asList('♖', '♜');
-		this.score = Rule.ROOK_SCORE;
+		this.score = PieceRule.ROOK.getScore();
 	}
 
 	@Override

@@ -9,7 +9,7 @@ public class Bishop extends Piece {
 	public Bishop(Position position, Team team) {
 		super(position, team);
 		this.representation = Arrays.asList('♗', '♝');
-		this.score = Rule.BISHOP_SCORE;
+		this.score = PieceRule.BISHOP.getScore();
 	}
 
 	@Override

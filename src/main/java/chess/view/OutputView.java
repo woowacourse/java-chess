@@ -50,15 +50,15 @@ public class OutputView {
 	}
 
 	public static void printTeamWithHigherScore(Board board) {
-		double team1Score = board.calculateScoreByTeam(Team.BLACK);
-		double team2Score = board.calculateScoreByTeam(Team.WHITE);
-		if (team1Score == team2Score) {
+		double teamBlackScore = board.calculateScoreByTeam(Team.BLACK);
+		double teamWhiteScore = board.calculateScoreByTeam(Team.WHITE);
+		if (teamBlackScore == teamWhiteScore) {
 			System.out.println("무승부입니다.");
 		}
-		if (team1Score > team2Score) {
+		if (teamBlackScore > teamWhiteScore) {
 			System.out.println(Team.BLACK.getName() + "이 승리했습니다.");
 		}
-		if (team1Score < team2Score) {
+		if (teamBlackScore < teamWhiteScore) {
 			System.out.println(Team.WHITE.getName() + "이 승리했습니다.");
 		}
 		System.out.println();

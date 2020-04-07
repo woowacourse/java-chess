@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import java.util.List;
+import java.util.Objects;
 
 import chess.domain.Position;
 
@@ -50,6 +51,10 @@ public abstract class Piece {
 		return team;
 	}
 
+	public String getPosition() {
+		return position.toString();
+	}
+
 	public List<Character> getRepresentations() {
 		return representation;
 	}
@@ -57,5 +62,24 @@ public abstract class Piece {
 	@Override
 	public String toString() {
 		return String.valueOf(Team.getRepresentation(this));
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Piece piece = (Piece)o;
+		return isAlive == piece.isAlive &&
+			Double.compare(piece.score, score) == 0 &&
+			Objects.equals(representation, piece.representation) &&
+			team == piece.team &&
+			Objects.equals(position, piece.position);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(representation, team, isAlive, position, score);
 	}
 }

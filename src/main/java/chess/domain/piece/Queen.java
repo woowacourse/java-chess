@@ -9,7 +9,7 @@ public class Queen extends Piece {
 	public Queen(Position position, Team team) {
 		super(position, team);
 		this.representation = Arrays.asList('♕', '♛');
-		this.score = Rule.QUEEN_SCORE;
+		this.score = PieceRule.QUEEN.getScore();
 	}
 
 	@Override

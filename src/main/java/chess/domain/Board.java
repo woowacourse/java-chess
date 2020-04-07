@@ -4,7 +4,7 @@ import java.util.List;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Rule;
+import chess.domain.piece.PieceRule;
 import chess.domain.piece.Team;
 import chess.exception.IllegalMoveException;
 import chess.exception.NullPieceException;
@@ -23,15 +23,19 @@ public class Board {
 		this.pieces = new Pieces(pieceFactory.getPieces());
 	}
 
+	public Board(Pieces pieces) {
+		this.pieces = pieces;
+	}
+
 	public void movePiece(Position source, Position destination) {
 		validateDestination(source, destination);
 		Piece sourcePiece = pieces.findByPosition(source);
 		validateSource(sourcePiece);
 		Piece destinationPiece = pieces.findByPosition(destination);
-		if (sourcePiece.getScore() == Rule.PAWN_SCORE) {
+		if (sourcePiece.getScore() == PieceRule.PAWN.getScore()) {
 			validatePawnDestination(source, destination);
 		}
-		if (!(sourcePiece.getScore() == Rule.KNIGHT_SCORE)) {
+		if (!(sourcePiece.getScore() == PieceRule.KNIGHT.getScore())) {
 			validateNoObstacle(source, destination);
 		}
 		if (destinationPiece != null) {

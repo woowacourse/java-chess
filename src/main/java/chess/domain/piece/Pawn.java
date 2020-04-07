@@ -16,7 +16,7 @@ public class Pawn extends Piece {
 	public Pawn(Position position, Team team) {
 		super(position, team);
 		this.representation = Arrays.asList('♙', '♟');
-		this.score = Rule.PAWN_SCORE;
+		this.score = PieceRule.PAWN.getScore();
 	}
 
 	@Override

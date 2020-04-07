@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Function;
 
@@ -13,6 +14,13 @@ public enum Team {
 	Team(Function<List<Character>, Character> teamRepresentation, String name) {
 		this.teamRepresentation = teamRepresentation;
 		this.name = name;
+	}
+
+	public static Team of(String name) {
+		return Arrays.stream(Team.values())
+			.filter(a -> a.name.equals(name))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("일치하는 팀이 없습니다."));
 	}
 
 	public static char getRepresentation(Piece piece) {

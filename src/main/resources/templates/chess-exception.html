@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <link href="./style.css" rel="stylesheet">
+</head>
+<body>
+
+{{#map}}
+<div class="game-board">
+    <div>
+        <table class="chessboard">
+            <tr class="chess-row">
+                <td class="chess-cell corner"></td>
+                <td class="chess-cell edge">a</td>
+                <td class="chess-cell edge">b</td>
+                <td class="chess-cell edge">c</td>
+                <td class="chess-cell edge">d</td>
+                <td class="chess-cell edge">e</td>
+                <td class="chess-cell edge">f</td>
+                <td class="chess-cell edge">g</td>
+                <td class="chess-cell edge">h</td>
+                <td class="chess-cell corner"></td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">8</td>
+                <td class="chess-cell light" id="a8">{{map.a8}}</td>
+                <td class="chess-cell dark" id="b8">{{map.b8}}</td>
+                <td class="chess-cell light" id="c8">{{map.c8}}</td>
+                <td class="chess-cell dark" id="d8">{{map.d8}}</td>
+                <td class="chess-cell light" id="e8">{{map.e8}}</td>
+                <td class="chess-cell dark" id="f8">{{map.f8}}</td>
+                <td class="chess-cell light" id="g8">{{map.g8}}</td>
+                <td class="chess-cell dark" id="h8">{{map.h8}}</td>
+                <td class="chess-cell side">8</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">7</td>
+                <td class="chess-cell dark" id="a7">{{map.a7}}</td>
+                <td class="chess-cell light" id="b7">{{map.b7}}</td>
+                <td class="chess-cell dark" id="c7">{{map.c7}}</td>
+                <td class="chess-cell light" id="d7">{{map.d7}}</td>
+                <td class="chess-cell dark" id="e7">{{map.e7}}</td>
+                <td class="chess-cell light" id="f7">{{map.f7}}</td>
+                <td class="chess-cell dark" id="g7">{{map.g7}}</td>
+                <td class="chess-cell light" id="h7">{{map.h7}}</td>
+                <td class="chess-cell side">7</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">6</td>
+                <td class="chess-cell light" id="a6">{{map.a6}}</td>
+                <td class="chess-cell dark" id="b6">{{map.b6}}</td>
+                <td class="chess-cell light" id="c6">{{map.c6}}</td>
+                <td class="chess-cell dark" id="d6">{{map.d6}}</td>
+                <td class="chess-cell light" id="e6">{{map.e6}}</td>
+                <td class="chess-cell dark" id="f6">{{map.f6}}</td>
+                <td class="chess-cell light" id="g6">{{map.g6}}</td>
+                <td class="chess-cell dark" id="h6">{{map.h6}}</td>
+                <td class="chess-cell side">6</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">5</td>
+                <td class="chess-cell dark" id="a5">{{map.a5}}</td>
+                <td class="chess-cell light" id="b5">{{map.b5}}</td>
+                <td class="chess-cell dark" id="c5">{{map.c5}}</td>
+                <td class="chess-cell light" id="d5">{{map.d5}}</td>
+                <td class="chess-cell dark" id="e5">{{map.e5}}</td>
+                <td class="chess-cell light" id="f5">{{map.f5}}</td>
+                <td class="chess-cell dark" id="g5">{{map.g5}}</td>
+                <td class="chess-cell light" id="h5">{{map.h5}}</td>
+                <td class="chess-cell side">5</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">4</td>
+                <td class="chess-cell light" id="a4">{{map.a4}}</td>
+                <td class="chess-cell dark" id="b4">{{map.b4}}</td>
+                <td class="chess-cell light" id="c4">{{map.c4}}</td>
+                <td class="chess-cell dark" id="d4">{{map.d4}}</td>
+                <td class="chess-cell light" id="e4">{{map.e4}}</td>
+                <td class="chess-cell dark" id="f4">{{map.f4}}</td>
+                <td class="chess-cell light" id="g4">{{map.g4}}</td>
+                <td class="chess-cell dark" id="h4">{{map.h4}}</td>
+                <td class="chess-cell side">4</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">3</td>
+                <td class="chess-cell dark" id="a3">{{map.a3}}</td>
+                <td class="chess-cell light" id="b3">{{map.b3}}</td>
+                <td class="chess-cell dark" id="c3">{{map.c3}}</td>
+                <td class="chess-cell light" id="d3">{{map.d3}}</td>
+                <td class="chess-cell dark" id="e3">{{map.e3}}</td>
+                <td class="chess-cell light" id="f3">{{map.f3}}</td>
+                <td class="chess-cell dark" id="g3">{{map.g3}}</td>
+                <td class="chess-cell light" id="h3">{{map.h3}}</td>
+                <td class="chess-cell side">3</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">2</td>
+                <td class="chess-cell light" id="a2">{{map.a2}}</td>
+                <td class="chess-cell dark" id="b2">{{map.b2}}</td>
+                <td class="chess-cell light" id="c2">{{map.c2}}</td>
+                <td class="chess-cell dark" id="d2">{{map.d2}}</td>
+                <td class="chess-cell light" id="e2">{{map.e2}}</td>
+                <td class="chess-cell dark" id="f2">{{map.f2}}</td>
+                <td class="chess-cell light" id="g2">{{map.g2}}</td>
+                <td class="chess-cell dark" id="h2">{{map.h2}}</td>
+                <td class="chess-cell side">2</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell side">1</td>
+                <td class="chess-cell dark" id="a1">{{map.a1}}</td>
+                <td class="chess-cell light" id="b1">{{map.b1}}</td>
+                <td class="chess-cell dark" id="c1">{{map.c1}}</td>
+                <td class="chess-cell light" id="d1">{{map.d1}}</td>
+                <td class="chess-cell dark" id="e1">{{map.e1}}</td>
+                <td class="chess-cell light" id="f1">{{map.f1}}</td>
+                <td class="chess-cell dark" id="g1">{{map.g1}}</td>
+                <td class="chess-cell light" id="h1">{{map.h1}}</td>
+                <td class="chess-cell side">1</td>
+            </tr>
+            <tr class="chess-row">
+                <td class="chess-cell corner"></td>
+                <td class="chess-cell edge">a</td>
+                <td class="chess-cell edge">b</td>
+                <td class="chess-cell edge">c</td>
+                <td class="chess-cell edge">d</td>
+                <td class="chess-cell edge">e</td>
+                <td class="chess-cell edge">f</td>
+                <td class="chess-cell edge">g</td>
+                <td class="chess-cell edge">h</td>
+                <td class="chess-cell corner"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="controller">
+        <div class="move-chess-piece">
+            <form action="/move" method="post">
+                <div class="title"> 말 이동</div>
+                <br/>
+                <div class="user-input-form">
+                    <div> 출발</div>
+                    <div class="text-input">
+                        <input id="source" name="source" type="text"/>
+                    </div>
+                </div>
+                <div class="user-input-form">
+                    <div> 도착</div>
+                    <div class="text-input">
+                        <input id="destination" name="destination" type="text"/>
+                    </div>
+                </div>
+                <input type="submit">
+                <div>말이 움직일 수 없는 위치입니다.</div>
+            </form>
+        </div>
+        <div class="show-score">
+            <div class="title"> 점수 보기</div>
+            <div class="user-input-form">흰색 : {{teamWhiteScore}} 점</div>
+            <div class="user-input-form">검은색: {{teamBlackScore}} 점</div>
+        </div>
+        <div class="initialize">
+            <div class="title"> 초기화</div>
+            <form action="/initialize" class="initialize-button" method="post">
+                <input class="initialize-button" type="submit" value="새 게임">
+            </form>
+        </div>
+    </div>
+</div>
+{{/map}}
+
+</body>
+</html>

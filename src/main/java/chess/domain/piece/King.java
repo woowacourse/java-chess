@@ -14,7 +14,7 @@ public class King extends Piece {
 	public King(Position position, Team team) {
 		super(position, team);
 		this.representation = Arrays.asList('♔', '♚');
-		this.score = Rule.KING_SCORE;
+		this.score = PieceRule.KING.getScore();
 	}
 
 	public void validateMove(Position destination) {
