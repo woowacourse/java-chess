@@ -1,18 +1,14 @@
 package chess;
 
 import chess.controller.ConsoleChessController;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.domain.piece.Team;
+import chess.dao.BoardDAO;
+import chess.dao.TurnInfoDAO;
 import chess.service.ChessService;
 
 public class ConsoleUIChessApplication {
 	public static void main(String[] args) {
-		Board initial = BoardFactory.create();
-		Team first = Team.WHITE;
-		ChessService chessService = ChessService.of(initial);
-
-		ConsoleChessController controller = new ConsoleChessController(chessService, initial, first);
+		ChessService chessService = new ChessService(new BoardDAO(), new TurnInfoDAO());
+		ConsoleChessController controller = new ConsoleChessController(chessService);
 
 		controller.start();
 		while (true) {

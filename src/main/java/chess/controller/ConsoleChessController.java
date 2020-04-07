@@ -1,22 +1,17 @@
 package chess.controller;
 
-import chess.domain.Status;
-import chess.domain.board.Board;
-import chess.domain.piece.Team;
 import chess.domain.position.MoveInfo;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ConsoleChessController implements ChessController {
-	private final ChessService service;
-	private final Board board;
-	private Team team;
+	private static final String CONSOLE_ID = "console";
 
-	public ConsoleChessController(ChessService chessService, Board board, Team team) {
+	private final ChessService service;
+
+	public ConsoleChessController(ChessService chessService) {
 		this.service = chessService;
-		this.board = board;
-		this.team = team;
 	}
 
 	@Override
@@ -31,7 +26,8 @@ public class ConsoleChessController implements ChessController {
 			exit();
 		}
 
-		OutputView.printBoard(board.getBoard());
+		service.initialize(CONSOLE_ID);
+		OutputView.printBoard(service.getBoard(CONSOLE_ID));
 	}
 
 	private void exit() {
@@ -54,20 +50,12 @@ public class ConsoleChessController implements ChessController {
 	}
 
 	private void move(String input) {
-		service.move(MoveInfo.of(input), team);
-		team = team.next();
-
-		OutputView.printBoard(board.getBoard());
-
-		if (board.isEnd()) {
-			exit();
-		}
+		service.move(CONSOLE_ID, MoveInfo.of(input));
+		OutputView.printBoard(service.getBoard(CONSOLE_ID));
 	}
 
 	private void status() {
-		Status status = Status.of(board);
-		OutputView.printScore(status.toMap());
-		OutputView.printWinner(status.getWinner());
+		OutputView.printScore(service.getResult(CONSOLE_ID));
 		exit();
 	}
 }

@@ -44,7 +44,7 @@ public class WebChessController implements ChessController {
 	@Override
 	public void playTurn() {
 		post("/api/move", this::updateBoard);
-		get("/status", this::toStatus);
+		get("/status", this::renderResult);
 		exception(IllegalArgumentException.class, this::handleException);
 	}
 
@@ -56,17 +56,13 @@ public class WebChessController implements ChessController {
 		String to = element.getAsJsonObject().get("to").getAsString();
 		String gameId = request.session().attribute("game_id");
 
-		if (service.isEnd(gameId)) {
-			throw new IllegalArgumentException("게임 끝");
-		}
-
 		service.move(gameId, MoveInfo.of(from, to));
 		return GSON.toJson(from + " " + to);
 	}
 
-	private String toStatus(Request request, Response response) {
+	private String renderResult(Request request, Response response) {
 		String gameId = request.session().attribute("game_id");
-		return render(StatusDTO.of(service.getStatus(gameId)).getStatus(), "status.html");
+		return render(service.getResult(gameId), "status.html");
 	}
 
 	private void handleException(IllegalArgumentException exception, Request request, Response response) {

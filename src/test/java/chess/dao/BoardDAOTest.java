@@ -48,7 +48,7 @@ public class BoardDAOTest {
 
 	@Test
 	void findAll() {
-		List<Piece> initial = new ArrayList<>(BoardFactory.create().getBoard().values());
+		List<Piece> initial = new ArrayList<>(BoardFactory.toList());
 		for (Piece piece : initial) {
 			boardDAO.addPiece("1" ,piece);
 		}
@@ -69,7 +69,7 @@ public class BoardDAOTest {
 
 	@Test
 	void findByColumn() {
-		List<Piece> initial = new ArrayList<>(BoardFactory.create().getBoard().values());
+		List<Piece> initial = new ArrayList<>(BoardFactory.toList());
 		for (Piece piece : initial) {
 			boardDAO.addPiece("1", piece);
 		}
