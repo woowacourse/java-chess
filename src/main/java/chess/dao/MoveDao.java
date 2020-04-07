@@ -8,29 +8,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 import chess.domain.Game;
-import chess.dto.MoveRequestDto;
+import chess.domain.board.Path;
+import chess.domain.board.Position;
 
 public class MoveDao implements JdbcTemplateDao {
-    public void addMove(final Game game, final MoveRequestDto moveRequestDto) throws SQLException {
+
+    public void addMove(final Game game, final Path path) throws SQLException {
         String query = "insert into move (game, start_position, end_position) values (?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, game.getId());
-        statement.setString(2, moveRequestDto.getFrom());
-        statement.setString(3, moveRequestDto.getTo());
+        statement.setString(2, path.getStart());
+        statement.setString(3, path.getEnd());
         statement.executeUpdate();
         closeConnection(connection);
     }
 
-    public List<MoveRequestDto> getMoves(final Game game) throws SQLException {
+    public List<Path> getMoves(final Game game) throws SQLException {
         String query = "select * from move where game = ?";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, game.getId());
-        List<MoveRequestDto> moves = new ArrayList<>();
+        List<Path> moves = new ArrayList<>();
         ResultSet resultSet = statement.executeQuery();
         while (resultSet.next()) {
-            moves.add(new MoveRequestDto(resultSet.getString("start_position"), resultSet.getString("end_position")));
+            String end = resultSet.getString("end_position");
+            String start = resultSet.getString("start_position");
+            moves.add(new Path(Position.of(start), Position.of(end)));
         }
         closeConnection(connection);
         return moves;

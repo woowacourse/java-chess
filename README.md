@@ -26,8 +26,6 @@
             id int not null auto_increment,
             white int not null,
             black int not null,
-            white_score double,
-            black_score double,
             primary key (id),
             foreign key (white) references player(id),
             foreign key (black) references player(id)

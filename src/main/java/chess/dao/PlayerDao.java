@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.Game;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
 import chess.domain.player.Record;
@@ -48,11 +49,9 @@ public class PlayerDao implements JdbcTemplateDao {
             Record record = Record.of(resultSet.getInt("win"), resultSet.getInt("lose"), resultSet.getInt("draw"));
             String username = resultSet.getString("username");
             String password = resultSet.getString("password");
-            Player player = new Player(username, password, record);
-            player.setRecord(record);
-            player.setId(resultSet.getInt("id"));
+            int playerId = resultSet.getInt("id");
             closeConnection(connection);
-            return player;
+            return new Player(playerId, username, password, record);
         }
         closeConnection(connection);
         throw new SQLException();
@@ -74,47 +73,30 @@ public class PlayerDao implements JdbcTemplateDao {
         return playerContexts;
     }
 
-    public Map<Side, Player> getPlayersByGameId(int gameId) throws SQLException {
+    public Game findGameById(int gameId) throws SQLException {
         String query = "select white, black from game where id = ?";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
         statement.setInt(1, gameId);
         ResultSet resultSet = statement.executeQuery();
         if (resultSet.next()) {
-            Map<Side, Player> result = new HashMap<>();
-            result.put(Side.WHITE, getPlayerById(resultSet.getInt("white")));
-            result.put(Side.BLACK, getPlayerById(resultSet.getInt("black")));
+            Player white = getPlayerById(resultSet.getInt("white"));
+            Player black = getPlayerById(resultSet.getInt("black"));
             closeConnection(connection);
-            return result;
+            return new Game(gameId, white, black);
         }
         closeConnection(connection);
         throw new SQLException();
     }
 
-    public void increaseWin(int id) throws SQLException {
-        String query = "update player set win = win + 1 where id = ?";
+    public void updatePlayer(Player player) throws SQLException {
+        String query = "update player set win = ?, lose = ?, draw = ? where id = ?";
         Connection connection = getConnection();
         PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, id);
+        statement.setInt(1, player.recordOf(Result.WIN));
+        statement.setInt(2, player.recordOf(Result.LOSE));
+        statement.setInt(3, player.recordOf(Result.DRAW));
+        statement.setInt(4, player.getId());
         statement.executeUpdate();
-        closeConnection(connection);
-    }
-
-    public void increaseLose(int id) throws SQLException {
-        String query = "update player set lose = lose + 1 where id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, id);
-        statement.executeUpdate();
-        closeConnection(connection);
-    }
-
-    public void increaseDraw(int id) throws SQLException {
-        String query = "update player set draw = draw + 1 where id = ?";
-        Connection connection = getConnection();
-        PreparedStatement statement = connection.prepareStatement(query);
-        statement.setInt(1, id);
-        statement.executeUpdate();
-        closeConnection(connection);
     }
 }

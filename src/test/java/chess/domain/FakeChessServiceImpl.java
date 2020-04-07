@@ -9,14 +9,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import chess.domain.board.Board;
+import chess.domain.board.Path;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
-import chess.dto.MoveRequestDto;
 import chess.service.ChessService;
 
-public class FakeChessService implements ChessService {
+public class FakeChessServiceImpl implements ChessService {
     private Map<Integer, Game> context = new HashMap<>();
 
     @Override
@@ -33,15 +33,15 @@ public class FakeChessService implements ChessService {
     }
 
     @Override
-    public Map<Position, Piece> findBoardById(final int id) {
-        return findGameById(id).getBoard().getBoard();
+    public Board findBoardById(final int id) {
+        return findGameById(id).getBoard();
     }
 
     @Override
-    public Map<Position, Piece> resetGameById(final int id) {
+    public Board resetGameById(final int id) {
         Map<Side, Player> players = context.get(id).getPlayers();
         context.put(id, new Game(players.get(Side.WHITE), players.get(Side.BLACK)));
-        return context.get(id).getBoard().getBoard();
+        return context.get(id).getBoard();
     }
 
     @Override
@@ -76,8 +76,9 @@ public class FakeChessService implements ChessService {
     }
 
     @Override
-    public boolean addMoveByGameId(final int id, final MoveRequestDto move) {
-        return findGameById(id).move(move.getFrom(), move.getTo());
+    public boolean addMoveByGameId(final int id, String start, String end) {
+        Path path = findBoardById(id).generatePath(Position.of(start), Position.of(end));
+        return findGameById(id).move(path.getStart(), path.getEnd());
     }
 
     @Override

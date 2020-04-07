@@ -11,7 +11,6 @@ import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 
 public class BasicJudge implements Judge {
-    public static final double INITIAL_SCORE = 38;
     private static final double PAWN_SCORE_DEDUCTION_IF_ON_SAME_COLUMN = 0.5;
 
     private final Board board;

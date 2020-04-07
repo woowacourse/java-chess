@@ -9,26 +9,22 @@ import chess.dao.GameDao;
 import chess.dao.MoveDao;
 import chess.dao.PlayerDao;
 import chess.domain.Game;
+import chess.domain.board.Board;
+import chess.domain.board.Path;
 import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
-import chess.dto.MoveRequestDto;
 
-public class JdbcChessService implements ChessService {
+public class ChessServiceImpl implements ChessService {
     private final GameDao gameDao = new GameDao();
     private final MoveDao moveDao = new MoveDao();
     private final PlayerDao playerDao = new PlayerDao();
 
     @Override
     public Game findGameById(final int id) throws SQLException {
-        Game game = new Game(id);
-        List<MoveRequestDto> moves = moveDao.getMoves(game);
-        Map<Side, Player> players = playerDao.getPlayersByGameId(id);
-        game.setPlayer(Side.WHITE, players.get(Side.WHITE));
-        game.setPlayer(Side.BLACK, players.get(Side.BLACK));
-        moves.forEach(move -> game.move(move.getFrom(), move.getTo()));
-        gameDao.updateScores(game);
+        Game game = playerDao.findGameById(id);
+        List<Path> paths = moveDao.getMoves(game);
+        paths.forEach(path -> game.move(path.getStart(), path.getEnd()));
         return game;
     }
 
@@ -38,12 +34,12 @@ public class JdbcChessService implements ChessService {
     }
 
     @Override
-    public Map<Position, Piece> findBoardById(int id) throws SQLException {
-        return findGameById(id).getBoard().getBoard();
+    public Board findBoardById(int id) throws SQLException {
+        return findGameById(id).getBoard();
     }
 
     @Override
-    public Map<Position, Piece> resetGameById(int id) throws SQLException {
+    public Board resetGameById(int id) throws SQLException {
         moveDao.reset(findGameById(id));
         return findBoardById(id);
     }
@@ -64,7 +60,11 @@ public class JdbcChessService implements ChessService {
 
     @Override
     public Map<Integer, Map<Side, Double>> getScoreContexts() throws SQLException {
-        return gameDao.getScoreContexts();
+        Map<Integer, Map<Side, Double>> result = new HashMap<>();
+        for (int gameId : gameDao.getAllGameId()) {
+            result.put(gameId, getScoresById(gameId));
+        }
+        return result;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class JdbcChessService implements ChessService {
 
     @Override
     public double getScoreById(final int id, final Side side) throws SQLException {
-        return gameDao.getScore(findGameById(id), side);
+        return findGameById(id).getScoreOf(side);
     }
 
     @Override
@@ -86,11 +86,11 @@ public class JdbcChessService implements ChessService {
     }
 
     @Override
-    public boolean addMoveByGameId(final int id, MoveRequestDto dto) throws SQLException {
-        boolean movable = findGameById(id).move(dto.getFrom(), dto.getTo());
+    public boolean addMoveByGameId(final int id, String start, String end) throws SQLException {
+        Path path = findBoardById(id).generatePath(Position.of(start), Position.of(end));
+        boolean movable = findGameById(id).move(start, end);
         if (movable) {
-            moveDao.addMove(findGameById(id), dto);
-            gameDao.updateScores(findGameById(id));
+            moveDao.addMove(findGameById(id), path);
         }
         return movable;
     }
@@ -99,20 +99,11 @@ public class JdbcChessService implements ChessService {
     public boolean finishGameById(final int id) throws SQLException {
         Game game = findGameById(id);
         game.finish();
-        recordResult(game);
+        playerDao.updatePlayer(game.getPlayer(Side.WHITE));
+        playerDao.updatePlayer(game.getPlayer(Side.BLACK));
         moveDao.reset(game);
         gameDao.remove(game);
         return true;
-    }
-
-    private void recordResult(final Game game) throws SQLException {
-        if (game.winnerSide() == Side.NONE) {
-            playerDao.increaseDraw(game.getPlayerId(Side.WHITE));
-            playerDao.increaseDraw(game.getPlayerId(Side.BLACK));
-        } else {
-            playerDao.increaseWin(game.getPlayerId(game.winnerSide()));
-            playerDao.increaseLose(game.getPlayerId(game.winnerSide().opposite()));
-        }
     }
 
     @Override

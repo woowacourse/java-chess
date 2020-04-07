@@ -17,20 +17,26 @@ import chess.exceptions.InvalidInputException;
 
 public class Game {
     private int id;
-    private final Board board = Board.init();
-    private final Judge judge = new BasicJudge(board);
-    private final Map<Side, Player> players = new HashMap<>();
-    private Side turn = Side.WHITE;
+    private final Board board;
+    private final Judge judge;
+    private final Map<Side, Player> players;
+    private Side turn;
 
     public Game() {
+        board = Board.init();
+        judge = new BasicJudge(board);
+        players = new HashMap<>();
+        turn = Side.WHITE;
     }
 
     public Game(Player white, Player black) {
+        this();
         players.put(Side.WHITE, white);
         players.put(Side.BLACK, black);
     }
 
-    public Game(final int id) {
+    public Game(int id, Player white, Player black) {
+        this(white, black);
         this.id = id;
     }
 
@@ -55,11 +61,15 @@ public class Game {
 
     public void finish() {
         Side winnerSide = judge.winner();
-        if (winnerSide != Side.NONE) {
-            players.get(winnerSide).finishAgainst(players.get(winnerSide.opposite()), Result.WIN);
+        if (judge.isDraw()) {
+            Player white = getPlayer(Side.WHITE);
+            Player black = getPlayer(Side.BLACK);
+            white.finishAgainst(black, Result.DRAW);
             return;
         }
-        players.get(Side.WHITE).finishAgainst(players.get(Side.BLACK), Result.DRAW);
+        Player winner = getPlayer(winnerSide);
+        Player loser = getPlayer(winnerSide.opposite());
+        winner.finishAgainst(loser, Result.WIN);
     }
 
     public boolean move(String from, String to) {
@@ -84,6 +94,10 @@ public class Game {
         return players;
     }
 
+    public Player getPlayer(Side side) {
+        return players.get(side);
+    }
+
     public int getPlayerId(Side side) {
         return players.get(side).getId();
     }
@@ -94,14 +108,6 @@ public class Game {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(final int id) {
-        this.id = id;
-    }
-
-    public void setPlayer(Side side, Player player) {
-        players.put(side, player);
     }
 
     @Override

@@ -10,21 +10,22 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.Path;
+import chess.domain.board.Position;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
 import chess.domain.player.Result;
-import chess.dto.MoveRequestDto;
 
 class ChessServiceTest {
-    private FakeChessService service;
+    private FakeChessServiceImpl service;
     private Player white;
     private Player black;
 
     @BeforeEach
     void setUp() {
-        service = new FakeChessService();
-        white = new Player("hodol", "password");
-        black = new Player("pobi", "password");
+        service = new FakeChessServiceImpl();
+        white = new Player(1, "hodol", "password");
+        black = new Player(2, "pobi", "password");
     }
 
     @DisplayName("새 체스 게임 추가 테스트")
@@ -79,16 +80,16 @@ class ChessServiceTest {
         int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
 
         // when
-        List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
-            add(new MoveRequestDto("b2", "b4"));
-            add(new MoveRequestDto("b4", "b5"));
-            add(new MoveRequestDto("b5", "b6"));
-            add(new MoveRequestDto("b6", "c7"));
+        List<Path> paths = new ArrayList<Path>() {{
+            add(new Path(Position.of("b2"), Position.of("b4")));
+            add(new Path(Position.of("b4"), Position.of("b5")));
+            add(new Path(Position.of("b5"), Position.of("b6")));
+            add(new Path(Position.of("b6"), Position.of("c7")));
         }};
 
         // then
         Game game = service.findGameById(gameId);
-        moves.forEach(move -> service.addMoveByGameId(gameId, move));
+        paths.forEach(path -> service.addMoveByGameId(gameId, path.getStart(), path.getEnd()));
         assertThat(game.move("b6", "c7")).isFalse();
     }
 
@@ -112,17 +113,17 @@ class ChessServiceTest {
         // given
         service.addGame(white, black);
         int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
-        List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
-            add(new MoveRequestDto("b2", "b4"));
-            add(new MoveRequestDto("b4", "b5"));
-            add(new MoveRequestDto("b5", "b6"));
-            add(new MoveRequestDto("b6", "c7"));
-            add(new MoveRequestDto("c7", "d8"));
+        List<Path> paths = new ArrayList<Path>() {{
+            add(new Path(Position.of("b2"), Position.of("b4")));
+            add(new Path(Position.of("b4"), Position.of("b5")));
+            add(new Path(Position.of("b5"), Position.of("b6")));
+            add(new Path(Position.of("b6"), Position.of("c7")));
+            add(new Path(Position.of("c7"), Position.of("d8")));
         }};
 
         // when
         service.findGameById(gameId);
-        moves.forEach(move -> service.addMoveByGameId(gameId, move));
+        paths.forEach(path -> service.addMoveByGameId(gameId, path.getStart(), path.getEnd()));
 
         // then
         assertThat(service.getScoreById(gameId, Side.WHITE)).isEqualTo(37);
@@ -135,17 +136,17 @@ class ChessServiceTest {
         // given
         service.addGame(white, black);
         int gameId = (int)service.getPlayerContexts().keySet().toArray()[0];
-        List<MoveRequestDto> moves = new ArrayList<MoveRequestDto>() {{
-            add(new MoveRequestDto("b2", "b4"));
-            add(new MoveRequestDto("b4", "b5"));
-            add(new MoveRequestDto("b5", "b6"));
-            add(new MoveRequestDto("b6", "c7"));
-            add(new MoveRequestDto("c7", "d8"));
+        List<Path> paths = new ArrayList<Path>() {{
+            add(new Path(Position.of("b2"), Position.of("b4")));
+            add(new Path(Position.of("b4"), Position.of("b5")));
+            add(new Path(Position.of("b5"), Position.of("b6")));
+            add(new Path(Position.of("b6"), Position.of("c7")));
+            add(new Path(Position.of("c7"), Position.of("d8")));
         }};
 
         // when
         service.findGameById(gameId);
-        moves.forEach(move -> service.addMoveByGameId(gameId, move));
+        paths.forEach(path -> service.addMoveByGameId(gameId, path.getStart(), path.getEnd()));
         service.finishGameById(gameId);
 
         // then

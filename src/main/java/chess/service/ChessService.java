@@ -5,20 +5,18 @@ import java.util.List;
 import java.util.Map;
 
 import chess.domain.Game;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
+import chess.domain.board.Board;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
-import chess.dto.MoveRequestDto;
 
 public interface ChessService {
     Map<Integer, Map<Side, Player>> addGame(Player white, Player black) throws SQLException;
 
     Game findGameById(int id) throws SQLException;
 
-    Map<Position, Piece> findBoardById(int id) throws SQLException;
+    Board findBoardById(int id) throws SQLException;
 
-    Map<Position, Piece> resetGameById(int id) throws SQLException;
+    Board resetGameById(int id) throws SQLException;
 
     boolean finishGameById(int id) throws SQLException;
 
@@ -30,7 +28,7 @@ public interface ChessService {
 
     Map<Side, Double> getScoresById(int id) throws SQLException;
 
-    boolean addMoveByGameId(int id, MoveRequestDto dto) throws SQLException;
+    boolean addMoveByGameId(int id, String from, String to) throws SQLException;
 
     List<String> findAllAvailablePath(int id, String from) throws SQLException;
 
