@@ -20,7 +20,7 @@ public class PiecesFactory {
 
 	private static void createBlankPiecesByFile(Row row, Map<Position, Piece> pieces) {
 		for (Column column : Column.values()) {
-			pieces.put(Position.of(column, row), Blank.of());
+			pieces.put(Position.of(column, row), Blank.getInstance());
 		}
 	}
 

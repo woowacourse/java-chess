@@ -9,13 +9,13 @@ import chess.domain.board.Position;
 import chess.domain.piece.strategy.BasicOneMoveStrategy;
 
 public class Blank extends Piece {
-	private static final Blank blank = new Blank(Color.NONE, "");
+	private static final Blank blank = new Blank(Color.NONE, "blank");
 
 	public Blank(Color color, String symbol) {
 		super(color, symbol, new BasicOneMoveStrategy(Collections.EMPTY_LIST));
 	}
 
-	public static Blank of() {
+	public static Blank getInstance() {
 		return blank;
 	}
 
