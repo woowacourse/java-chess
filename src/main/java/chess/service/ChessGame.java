@@ -36,9 +36,7 @@ public class ChessGame {
 
     private User loadOrCreateUser(String name) throws SQLException {
         User user = userDAO.findUserByName(name).orElseGet(() -> new User(name));
-        if (user.isNeverPlayingGame()) {
-            userDAO.addUser(user);
-        }
+        userDAO.upsert(user);
         return user;
     }
 

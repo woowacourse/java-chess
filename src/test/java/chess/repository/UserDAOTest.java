@@ -31,7 +31,7 @@ public class UserDAOTest {
 
         userDAO.updateByName(TEST_USER1.getName(), TEST_USER2);
 
-        assertThat(userDAO.findUserByName(testName2)).isEqualTo(TEST_USER2);
+        assertThat(userDAO.findUserByName(testName2).get()).isEqualTo(TEST_USER2);
     }
 
     @AfterEach
