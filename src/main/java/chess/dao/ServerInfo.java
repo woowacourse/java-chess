@@ -13,7 +13,7 @@ public enum ServerInfo {
         this.data = data;
     }
 
-    public String getData(){
+    public String getData() {
         return data;
     }
 }

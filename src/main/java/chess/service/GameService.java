@@ -3,22 +3,19 @@ package chess.service;
 import chess.dao.BoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
-import chess.domain.move.Position;
 import chess.generator.JSONGenerator;
-import spark.QueryParamsMap;
 
 import java.sql.SQLException;
 
 public class GameService {
     private static BoardDAO boardDAO;
 
-    public GameService(){
+    public GameService() {
         boardDAO = new BoardDAO();
     }
 
-    public static String newGame() throws SQLException {
+    public String newGame() throws SQLException {
         Board board = BoardFactory.createBoard();
 
         boardDAO.initialize();
@@ -26,7 +23,7 @@ public class GameService {
         return JSONGenerator.generateJSON(board);
     }
 
-    public static String move(MovingInfo movingInfo) throws SQLException {
+    public String move(MovingInfo movingInfo) throws SQLException {
         Board board = boardDAO.loadBoard();
 
         try {
@@ -38,7 +35,7 @@ public class GameService {
         return JSONGenerator.generateJSON(board);
     }
 
-    public static String continueGame() throws SQLException {
+    public String continueGame() throws SQLException {
         Board board = boardDAO.loadBoard();
 
         return JSONGenerator.generateJSON(board);

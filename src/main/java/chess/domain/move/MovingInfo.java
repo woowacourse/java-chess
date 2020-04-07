@@ -1,8 +1,5 @@
 package chess.domain.move;
 
-import spark.QueryParamsMap;
-import spark.Request;
-
 public class MovingInfo {
     private static final int REVERSE_BASE = 9;
     private final Position startPosition;

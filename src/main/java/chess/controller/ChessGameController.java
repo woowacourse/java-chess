@@ -1,12 +1,9 @@
 package chess.controller;
 
-import chess.dao.BoardDAO;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
-import chess.generator.JSONGenerator;
+import chess.service.GameService;
 import spark.ModelAndView;
 import spark.QueryParamsMap;
 import spark.Request;
@@ -18,9 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameController {
-    private static Board board;
-    private static BoardDAO boardDAO = new BoardDAO();
-
     public static String index(Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
 
@@ -28,10 +22,9 @@ public class ChessGameController {
     }
 
     public static String newGame(Request request, Response response) throws SQLException {
-        boardDAO.initialize();
-        board = BoardFactory.createBoard();
-        boardDAO.updateDB(board);
-        return JSONGenerator.generateJSON(board);
+        GameService gameService = new GameService();
+
+        return gameService.newGame();
     }
 
     public static String move(Request request, Response response) throws SQLException {
@@ -43,19 +36,15 @@ public class ChessGameController {
         Position startPosition = Position.of(Coordinate.of(startX), Coordinate.of(startY));
         Position targetPosition = Position.of(Coordinate.of(targetX), Coordinate.of(targetY));
         MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
+        GameService gameService = new GameService();
 
-        try {
-            board.move(movingInfo);
-        } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException error) {
-            return error.getMessage();
-        }
-        boardDAO.updateDB(board);
-        return JSONGenerator.generateJSON(board);
+        return gameService.move(movingInfo);
     }
 
     public static String continueGame(Request request, Response response) throws SQLException {
-        board = boardDAO.loadBoard();
-        return JSONGenerator.generateJSON(board);
+        GameService gameService = new GameService();
+
+        return gameService.continueGame();
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

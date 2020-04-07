@@ -173,7 +173,7 @@ public class BoardDAO {
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         if (!(chessPiece instanceof Blank)) {
-                pstmt.setString(1, chessPiece.getName());
+            pstmt.setString(1, chessPiece.getName());
             pstmt.setString(2, chessPiece.getTeam().getTeamName());
             pstmt.setString(3, String.valueOf(i + 1));
             pstmt.setString(4, String.valueOf(j + 1));
