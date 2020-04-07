@@ -22,11 +22,6 @@ public class PositionTest {
     }
 
     @Test
-    void fileDifferenceFromTargetPosition() {
-        Position A1 = Position.of("A1");
-    }
-
-    @Test
     void getFileDifference() {
         assertThat(Position.of("A1").getFileDifference(Position.of("D1"))).isEqualTo(3);
     }
