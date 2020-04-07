@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public interface JdbcTemplateDao {
     default Connection getConnection() {
         Connection connection = null;
-        String server = "localhost:3306"; // MySQL 서버 주소
+        String server = "localhost:13306"; // MySQL 서버 주소
         String database = "chess_game"; // MySQL DATABASE 이름
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root"; //  MySQL 서버 아이디

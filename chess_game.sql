@@ -1,6 +1,6 @@
 CREATE DATABASE chess_game DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
-USE chess_game
+USE chess_game;
 
 CREATE TABLE chess_game (
     id INT NOT NULL AUTO_INCREMENT,
