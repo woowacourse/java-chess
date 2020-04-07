@@ -43,7 +43,7 @@ public class WebChessController implements ChessController {
                 }
                 return BLANK;
             } catch (Exception e) {
-                res.status(403);
+                res.status(400);
                 return e.getMessage();
             }
         });
