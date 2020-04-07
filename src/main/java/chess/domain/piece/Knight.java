@@ -43,7 +43,6 @@ public class Knight extends UnchangeablePiece {
         if (!MOVING_DIRECTIONS.contains(movingDirection)) {
             throw new MovingDirectionException();
         }
-
         int fileDifference = position.getFileDifference(target);
         int rankDifference = position.getRankDifference(target);
         if (!(movingDirection.getFileDirection() == fileDifference &&

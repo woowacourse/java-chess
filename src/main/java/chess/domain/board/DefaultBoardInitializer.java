@@ -11,7 +11,7 @@ public class DefaultBoardInitializer implements BoardInitializer {
     @Override
     public Map<Position, PieceState> create() {
         Map<Position, PieceState> initialBoard = new HashMap<>();
-        for (InitialPiecePosition pieceRepository : InitialPiecePosition.values()) {
+        for (DefaultBoard pieceRepository : DefaultBoard.values()) {
             initialBoard.put(pieceRepository.getPosition(), pieceRepository.getInitialPiece());
         }
         return initialBoard;

@@ -2,17 +2,22 @@ package chess.domain.board;
 
 import chess.domain.Turn;
 import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
 import chess.domain.player.Player;
+import chess.domain.position.File;
 import chess.domain.position.Position;
 
-import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Board {
+    public static final double DEFAULT_PAWN_POINT = 1d;
+    public static final double DUPLICATED_PAWN_POINT = 0.5d;
+    private static final int PAWN_DUPLICATION_COUNT = 1;
+
     private Map<Position, PieceState> board;
 
     private Board(Map<Position, PieceState> board) {
@@ -32,8 +37,13 @@ public class Board {
         turn.switchTurn();
     }
 
-    public Map<Position, PieceState> getBoard() {
-        return Collections.unmodifiableMap(board);
+    public Map<Position, String> getBoard() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().getFigure()
+                ));
     }
 
     private void validateSource(PieceState sourcePiece, Turn turn) {
@@ -54,6 +64,12 @@ public class Board {
                 ));
     }
 
+    public boolean isLost(Player player) {
+        return board.values()
+                .stream()
+                .noneMatch(piece -> player.equals(piece.getPlayer()) && piece instanceof King);
+    }
+
     public Map<Position, PieceState> getRemainPieces(Player player) {
         return board.entrySet()
                 .stream()
@@ -64,9 +80,29 @@ public class Board {
                 ));
     }
 
-    public boolean isLost(Player player) {
-        return board.values()
+    public double getPlayerSumWithoutPawn(final Player player) {
+        return getRemainPieces(player).values()
                 .stream()
-                .noneMatch(piece -> player.equals(piece.getPlayer()) && piece instanceof King);
+                .filter(piece -> !(piece instanceof Pawn))
+                .mapToDouble(PieceState::getPoint)
+                .sum();
+    }
+
+    public double getPawnPointsByFile(File file, Player player) {
+        double duplicatedPawnCount = getDuplicatedPawnCount(file, player);
+        if (duplicatedPawnCount > PAWN_DUPLICATION_COUNT) {
+            return duplicatedPawnCount * DUPLICATED_PAWN_POINT;
+        }
+        return duplicatedPawnCount * DEFAULT_PAWN_POINT;
+    }
+
+    private double getDuplicatedPawnCount(File file, Player player) {
+        return getRemainPieces(player)
+                .entrySet()
+                .stream()
+                .filter(entry -> entry.getValue() instanceof Pawn)
+                .filter(entry -> entry.getKey().isSameFile(file))
+                .mapToDouble(entry -> entry.getValue().getPoint())
+                .sum();
     }
 }

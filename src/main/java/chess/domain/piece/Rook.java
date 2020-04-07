@@ -44,10 +44,14 @@ public class Rook extends UnchangeablePiece {
 
         Position startPathPosition = position.moveByDirection(movingDirection);
         while (!startPathPosition.equals(target)) {
-            if (!Objects.isNull(boardDto.get(startPathPosition))) {
-                throw new ObstacleOnPathException();
-            }
+            checkObstacleOnPath(boardDto, startPathPosition);
             startPathPosition = startPathPosition.moveByDirection(movingDirection);
+        }
+    }
+
+    private void checkObstacleOnPath(final Map<Position, PieceDto> boardDto, final Position startPathPosition) {
+        if (!Objects.isNull(boardDto.get(startPathPosition))) {
+            throw new ObstacleOnPathException();
         }
     }
 
