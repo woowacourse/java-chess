@@ -8,7 +8,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ChessWebService {
-	public void clearHistory() throws SQLException {
+	public void resetGame(ChessGame chessGame) {
+		chessGame.reset();
+	}
+
+	public void resetGameAndHistory(ChessGame chessGame) throws SQLException {
+		chessGame.reset();
+		clearHistory();
+	}
+
+	private void clearHistory() throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		historyDao.clear();
 	}

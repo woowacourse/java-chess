@@ -22,7 +22,7 @@ public class ChessWebController {
 	public Map<String, Object> index() {
 		Map<String, Object> model = new HashMap<>();
 
-		chessGame.reset();
+		chessWebService.resetGame(chessGame);
 		model.put("status", true);
 
 		return model;
@@ -31,8 +31,7 @@ public class ChessWebController {
 	public Map<String, Object> startGame() throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 
-		chessGame.reset();
-		chessWebService.clearHistory();
+		chessWebService.resetGameAndHistory(chessGame);
 		model.put("status", true);
 
 		return model;
@@ -75,8 +74,7 @@ public class ChessWebController {
 			model.put("status", true);
 			if (chessGame.isKingDead()) {
 				model.put("winner", chessGame.getAliveKingColor());
-				chessWebService.clearHistory();
-				chessGame.reset();
+				chessWebService.resetGameAndHistory(chessGame);
 				return model;
 			}
 			return model;
