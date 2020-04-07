@@ -1,19 +1,10 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.domain.game.ScoreResult;
-import chess.domain.piece.Color;
-import chess.domain.position.Position;
-import chess.domain.position.PositionFactory;
-import chess.domain.util.WrongOperationException;
-import chess.domain.util.WrongPositionException;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import static chess.JsonTransformer.json;
 import static spark.Spark.*;

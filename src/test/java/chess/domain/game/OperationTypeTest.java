@@ -1,6 +1,6 @@
 package chess.domain.game;
 
-import chess.domain.util.WrongOperationException;
+import chess.domain.exception.WrongOperationException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

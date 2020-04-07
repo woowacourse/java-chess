@@ -1,6 +1,7 @@
-package chess.domain.web;
+package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceDto;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.position.Position;
 

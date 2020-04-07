@@ -1,4 +1,4 @@
-package chess.domain.util;
+package chess.domain.exception;
 
 public class WrongOperationException extends RuntimeException {
     public static final String ERROR_OPERATION_MESSAGE = "수행할 수 없는 명령입니다.";

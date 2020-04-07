@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 
 import java.util.Arrays;
 

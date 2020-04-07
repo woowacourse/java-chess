@@ -1,4 +1,4 @@
-package chess.domain.util;
+package chess.domain.exception;
 
 public class WrongPositionException extends RuntimeException {
     public static final String ERROR_POSITION_MESSAGE = "옳지 않은 좌표 입력입니다.";

@@ -5,10 +5,10 @@ import chess.domain.game.ScoreResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
-import chess.domain.util.WrongOperationException;
-import chess.domain.util.WrongPositionException;
-import chess.domain.web.Log;
-import chess.domain.web.LogDao;
+import chess.domain.exception.WrongOperationException;
+import chess.domain.exception.WrongPositionException;
+import chess.domain.game.MoveCommand;
+import chess.dao.HistoryDao;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -18,11 +18,11 @@ import java.util.stream.Collectors;
 
 public class WebChessController {
     private final ChessGame chessGame;
-    private final LogDao logDao;
+    private final HistoryDao historyDao;
 
     public WebChessController(){
         chessGame = new ChessGame();
-        logDao = new LogDao();
+        historyDao = new HistoryDao();
     }
 
     public Map<String, Object> init(){
@@ -37,7 +37,7 @@ public class WebChessController {
     public Map<String, Object> newGame() throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
-        logDao.clear();
+        historyDao.clear();
         model.put("status",true);
 
         return model;
@@ -46,9 +46,10 @@ public class WebChessController {
     public Map<String, Object> load() throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
-        Map<Integer, Log> gameLog = logDao.selectAll();
-        for (Log log : gameLog.values()) {
-            chessGame.move(PositionFactory.of(log.getStart()), PositionFactory.of(log.getEnd()));
+        for (MoveCommand moveCommand : historyDao.selectAll()) {
+            Position startPosition = PositionFactory.of(moveCommand.getFirstCommand());
+            Position endPosition = PositionFactory.of(moveCommand.getSecondCommand());
+            chessGame.move(startPosition, endPosition);
         }
         model.put("status", true);
 
@@ -75,7 +76,7 @@ public class WebChessController {
         try {
             chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
             model.put("status", true);
-            logDao.insert(start, end);
+            historyDao.insert(start, end);
 
             if (chessGame.isKingDead()) {
                 model.put("winner", chessGame.getAliveKingColor());
@@ -83,7 +84,7 @@ public class WebChessController {
                 for (Color color : scoreResult.keySet()) {
                     model.put(color + "score", scoreResult.getScoreBy(color));
                 }
-                logDao.clear();
+                historyDao.clear();
 
                 chessGame.reset();
                 return model;

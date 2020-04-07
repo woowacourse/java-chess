@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.movable.Direction;
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 
 import java.util.Objects;
 

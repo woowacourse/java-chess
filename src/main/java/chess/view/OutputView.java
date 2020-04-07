@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.game.board.Board;
+import chess.domain.board.Board;
 import chess.domain.game.ScoreResult;
-import chess.domain.game.board.Rows;
+import chess.domain.board.Rows;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String OPERATIONS_MESSAGE = String.join("\n",

@@ -1,9 +1,8 @@
-package chess.domain.game.board;
+package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.position.Column;
-import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.Row;
 

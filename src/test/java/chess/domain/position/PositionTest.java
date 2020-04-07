@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

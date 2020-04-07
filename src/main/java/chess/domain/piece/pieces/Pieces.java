@@ -3,10 +3,9 @@ package chess.domain.piece.pieces;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 
 import java.util.List;
 
