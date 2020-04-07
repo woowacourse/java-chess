@@ -36,7 +36,6 @@ public class ChessDAOTest {
 		chessDAO.remove(new ChessDTO(chessBoard));
 	}
 
-
 	@Test
 	void connection() {
 		Connection con = chessDAO.getConnection();

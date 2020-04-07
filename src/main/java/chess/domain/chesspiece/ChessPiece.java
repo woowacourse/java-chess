@@ -7,7 +7,6 @@ import chess.domain.MoveManager;
 import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.utils.NameUtils;
 
 public abstract class ChessPiece {
 	protected final Team team;
