@@ -2,6 +2,7 @@ package chess.position;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,9 +50,17 @@ public enum Rank {
     public static List<Rank> valuesBetween(Rank start, Rank end) {
         int bigger = Math.max(start.getNumber(), end.getNumber());
         int smaller = Math.min(start.getNumber(), end.getNumber());
-        return Arrays.stream(values())
-                .filter(rank -> rank.getNumber() > smaller)
-                .filter(rank -> rank.getNumber() < bigger)
+        if (start.getNumber() < end.getNumber()) {
+            return Arrays.stream(values())
+                    .filter(file -> file.getNumber() > smaller)
+                    .filter(file -> file.getNumber() < bigger)
+                    .collect(Collectors.toList());
+        }
+        List<Rank> reversedValues = Arrays.asList(values());
+        Collections.reverse(reversedValues);
+        return reversedValues.stream()
+                .filter(file -> file.getNumber() > smaller)
+                .filter(file -> file.getNumber() < bigger)
                 .collect(Collectors.toList());
     }
 

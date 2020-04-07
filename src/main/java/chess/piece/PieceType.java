@@ -38,10 +38,6 @@ public enum PieceType {
         moveValidator.validate(board, source, target);
     }
 
-    public void validateThisTurn(Board board, Position source, Position target) {
-        moveValidator.validateThisTurn(board, source, target);
-    }
-
     public boolean isKing() {
         return this == KING;
     }
@@ -68,10 +64,6 @@ public enum PieceType {
 
     public char getLowerCaseInitialCharacter() {
         return Character.toLowerCase(initialCharacter);
-    }
-
-    public MoveValidator getMoveValidator() {
-        return moveValidator;
     }
 
     public double getScore() {

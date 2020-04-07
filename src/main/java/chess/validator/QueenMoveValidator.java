@@ -31,9 +31,4 @@ public class QueenMoveValidator extends MoveValidator {
                 .map(rank -> Position.of(source.getFile(), rank))
                 .collect(Collectors.toList());
     }
-
-    @Override
-    protected boolean isKingKilledIfMoves(Board board, Position source, Position target) {
-        return board.isKingKilledIfMoves(source, target);
-    }
 }

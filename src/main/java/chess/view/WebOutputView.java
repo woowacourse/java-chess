@@ -17,19 +17,23 @@ public class WebOutputView {
         stringBuilder.append("<table>");
         for (Rank rank : reverseOrderOfRankValuesExceptNone()) {
             stringBuilder.append("<tr>");
-            for (File file : File.valuesExceptNone()) {
-                Piece piece = board.getPiece(Position.of(file, rank));
-                stringBuilder.append(String.format("<td class=\"%s\">", file.getName() + rank.getName()));
-                if (piece != null && piece.isNotEmpty()) {
-                    String imageName = piece.isBlack() ? "B" + piece.getSymbol() : "W" + piece.getSymbol();
-                    stringBuilder.append(String.format("<img src=\"%s.png\">", imageName));
-                }
-                stringBuilder.append("</td>");
-            }
+            printRank(board, stringBuilder, rank);
             stringBuilder.append("</tr>");
         }
         stringBuilder.append("</table>");
         return stringBuilder.toString();
+    }
+
+    private static void printRank(Board board, StringBuilder stringBuilder, Rank rank) {
+        for (File file : File.valuesExceptNone()) {
+            Piece piece = board.getPiece(Position.of(file, rank));
+            stringBuilder.append(String.format("<td class=\"%s\">", file.getName() + rank.getName()));
+            if (piece != null && piece.isNotEmpty()) {
+                String imageName = piece.isBlack() ? "B" + piece.getSymbol() : "W" + piece.getSymbol();
+                stringBuilder.append(String.format("<img src=\"%s.png\">", imageName));
+            }
+            stringBuilder.append("</td>");
+        }
     }
 
     public static List<Rank> reverseOrderOfRankValuesExceptNone() {

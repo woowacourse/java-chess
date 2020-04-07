@@ -6,5 +6,5 @@ import chess.position.Position;
 import java.util.Map;
 
 public interface PiecesInitStrategy {
-    public Map<Position, Piece> init();
+    Map<Position, Piece> init();
 }

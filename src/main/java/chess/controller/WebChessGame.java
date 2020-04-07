@@ -4,7 +4,6 @@ import chess.Board;
 import chess.DAO.PiecesDAO;
 import chess.DAO.TurnDAO;
 import chess.DBConnector;
-import chess.Scores;
 import chess.piece.Team;
 import chess.position.Position;
 import chess.strategy.NormalInitStrategy;
@@ -33,6 +32,14 @@ public class WebChessGame {
         board.moveIfPossible(Position.of(source), Position.of(target));
         piecesDAO.savePieces(board.getPieces());
         turnDAO.saveTurn(board.getTurn());
+    }
+
+    public boolean isFinished() {
+        return board.isFinished();
+    }
+
+    public boolean isTurnWhite() {
+        return board.getTurn() == Team.WHITE;
     }
 
     public Board getBoard() {

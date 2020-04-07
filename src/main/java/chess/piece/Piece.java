@@ -18,12 +18,18 @@ public class Piece {
         this(team, pieceType, false);
     }
 
-    public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
-        this.pieceType.validate(board, source, target);
+    public static Piece of(char symbol, boolean hasMoved) {
+        if (symbol == '.') {
+            return new Piece(Team.NONE, PieceType.NONE);
+        }
+        if (Character.isUpperCase(symbol)) {
+            return new Piece(Team.BLACK, PieceType.of(symbol), hasMoved);
+        }
+        return new Piece(Team.WHITE, PieceType.of(Character.toUpperCase(symbol)), hasMoved);
     }
 
-    public void throwExceptionIfNotMovableWithoutConsideringNextTurn(Board board, Position source, Position target) {
-        this.pieceType.validateThisTurn(board, source, target);
+    public void throwExceptionIfNotMovable(Board board, Position source, Position target) {
+        this.pieceType.validate(board, source, target);
     }
 
     public void updateHasMoved() {
@@ -60,16 +66,6 @@ public class Piece {
 
     public boolean isNotEmpty() {
         return !isEmpty();
-    }
-
-    public static Piece of(char symbol, boolean hasMoved) {
-        if (symbol == '.') {
-            return new Piece(Team.NONE, PieceType.NONE);
-        }
-        if (Character.isUpperCase(symbol)) {
-            return new Piece(Team.BLACK, PieceType.of(symbol), hasMoved);
-        }
-        return new Piece(Team.WHITE, PieceType.of(Character.toUpperCase(symbol)), hasMoved);
     }
 
     public Team getTeam() {

@@ -4,7 +4,6 @@ import chess.exception.InvalidPositionException;
 import chess.piece.Piece;
 import chess.piece.PieceType;
 import chess.position.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,21 +23,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BoardTest {
-    private Board board;
-    private Piece rook;
-
-    @BeforeEach
-    void setup() {
-        Map<Position, Piece> pieces = new HashMap<>();
-        rook = new Piece(BLACK, PieceType.ROOK);
-        pieces.put(Position.of(A, ONE), rook);
-        board = new Board(pieces);
-    }
 
     @DisplayName("Board객체 생성 테스트")
     @Test
     void constructTest() {
-        assertThat(board).isInstanceOf(Board.class);
+        Map<Position, Piece> pieces = new HashMap<>();
+        Piece rook = new Piece(BLACK, PieceType.ROOK);
+        pieces.put(Position.of(A, ONE), rook);
+        assertThat(new Board(pieces)).isInstanceOf(Board.class);
     }
 
     @DisplayName("잘못된 위치를 입력했을때 예외가 발생하는지 테스트")
@@ -47,7 +39,7 @@ public class BoardTest {
     void invalidPositionInputTest(String input) {
         assertThatThrownBy(() -> Position.of(input))
                 .isInstanceOf(InvalidPositionException.class)
-                .hasMessage("위치 입력값이 올바르지 않습니다.");
+                .hasMessageStartingWith("위치 입력값이 올바르지 않습니다.");
     }
 
     private static Stream<Arguments> inputAndPositionProvider() {
@@ -67,6 +59,11 @@ public class BoardTest {
     @DisplayName("move메서드를 실행하면 Map이 수정되는지 테스트")
     @Test
     void moveTest() {
+        Map<Position, Piece> pieces = new HashMap<>();
+        Piece rook = new Piece(BLACK, PieceType.ROOK);
+        pieces.put(Position.of(A, ONE), rook);
+        Board board = new Board(pieces);
+
         Position from = Position.of(A, ONE);
         Position to = Position.of(A, TWO);
         board.move(from, to);
