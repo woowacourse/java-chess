@@ -67,4 +67,14 @@ public class TurnDAO {
         pstmt.executeUpdate();
         pstmt.close();
     }
+
+    public Team getTurn() throws SQLException {
+        String query = "SELECT * from turn";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        ResultSet rs = pstmt.executeQuery();
+        rs.next();
+
+        Team team = Team.findTeam(rs.getObject(1).toString());
+        return team;
+    }
 }

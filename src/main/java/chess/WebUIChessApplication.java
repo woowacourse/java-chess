@@ -7,7 +7,6 @@ import static spark.Spark.staticFiles;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import controller.WebController;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -16,7 +15,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIChessApplication {
     private static Gson gson = new Gson();
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         staticFiles.location("/templates");
         WebController webController = new WebController();
 
@@ -40,10 +39,7 @@ public class WebUIChessApplication {
                 res.redirect("/finished");
                 return "";
             }
-            if (webController.isSave()) {
-                return render(webController.read(), "chess.html");
-            }
-            return render(webController.start(), "chess.html");
+            return render(webController.read(), "chess.html");
         });
     }
 

@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import dao.PiecesDAO;
 import dao.TurnDAO;
 import domain.commend.State;
+import domain.pieces.DBPiecesFactory;
 import domain.pieces.Pieces;
 import domain.pieces.PiecesFactory;
 import domain.team.Team;
@@ -16,12 +17,13 @@ public class WebController {
     private State state;
 
     public WebController() {
-        Pieces pieces = Pieces.of(PiecesFactory.create());
-        state = State.of(pieces);
-        state.start();
     }
 
     public Map<String, Object> start() throws SQLException {
+        Pieces pieces = Pieces.of(PiecesFactory.create());
+        state = State.of(pieces);
+        state.start();
+
         PiecesDAO piecesDAO = new PiecesDAO();
         TurnDAO turnDAO = new TurnDAO();
 
@@ -34,7 +36,20 @@ public class WebController {
 
     public Map<String, Object> read() throws SQLException {
         PiecesDAO piecesDAO = new PiecesDAO();
+        if (state == null) {
+            return getWhenStateIsNull(piecesDAO);
+        }
         return piecesDAO.readPieces();
+    }
+
+    private Map<String, Object> getWhenStateIsNull(PiecesDAO piecesDAO) throws SQLException {
+        if (piecesDAO.isSave()) {
+            Pieces pieces = Pieces.of(DBPiecesFactory.create(piecesDAO.readPieces()));
+            state = State.of(pieces);
+            state.start();
+            return piecesDAO.readPieces();
+        }
+        return start();
     }
 
     public boolean isSave() throws SQLException {
@@ -45,7 +60,7 @@ public class WebController {
     public void move(String from, String to) throws SQLException {
         TurnDAO turnDAO = new TurnDAO();
         PiecesDAO piecesDAO = new PiecesDAO();
-        state.move("move" + " " + from + " " + to);
+        state.move(turnDAO.getTurn(),"move" + " " + from + " " + to);
         turnDAO.changeTurn();
         piecesDAO.updatePieces(state.getPieces());
     }
@@ -65,7 +80,7 @@ public class WebController {
     }
 
     public boolean isFinished() {
-        return state.isFinished();
+        return state != null && state.isFinished();
     }
 
     public String getWhoWinner() {

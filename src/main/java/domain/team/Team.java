@@ -21,4 +21,14 @@ public enum Team {
             .findFirst()
             .orElseThrow(() -> new CannotFindTeamExcrption("찾을 수 없는 팀입니다."));
     }
+
+    public static Team getInitialTeam(String initial) {
+        if (".".equals(initial)) {
+            return NONE;
+        }
+        if (initial.equals(initial.toLowerCase())) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }
