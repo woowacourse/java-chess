@@ -41,6 +41,7 @@ public class ChessWebApplication {
 			List<Piece> pieces = chessBoard.getPieces();
 
 			databaseInit(model, pieces);
+
 			return gson.toJson(model);
 		});
 
@@ -81,7 +82,7 @@ public class ChessWebApplication {
 	private static void updateChessBoardFromDatabase(final Map<String, Object> model) throws SQLException {
 		List<Map<String, Object>> pieceInfos = pieceDao.readPieces();
 		List<Piece> pieces = new ArrayList<>();
-		for (Map pieceInfo : pieceInfos) {
+		for (Map<String, Object> pieceInfo : pieceInfos) {
 			String position = String.valueOf(pieceInfo.get("file")) + pieceInfo.get("rank");
 			String pieceName = String.valueOf(pieceInfo.get("name"));
 			Piece piece = PieceCreator.create(pieceName, position);
