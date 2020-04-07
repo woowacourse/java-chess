@@ -94,7 +94,9 @@ create table position
 
 create table user
 (
-    name varchar(64) not null
-        primary key
+    name       varchar(64)   not null
+        primary key,
+    win_count  int default 0 not null,
+    lose_count int default 0 not null
 );
 ```
