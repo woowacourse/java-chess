@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 public class ChessConnection {
     public static Connection getConnection(ConnectionProperties connectionProperties) {
@@ -28,16 +27,12 @@ public class ChessConnection {
         }
     }
 
-    public void closeConnection(Connection con) {
-        Optional.ofNullable(con)
-                .ifPresent(this::close);
-    }
-
-    private void close(Connection connection) {
+    public static void closeConnection(Connection con) {
         try {
-            connection.close();
+            con.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            System.err.println("con close 실패 :" + e.getMessage());
         }
     }
+
 }

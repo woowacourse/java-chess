@@ -3,6 +3,7 @@ package chess.repository;
 import chess.entity.ChessGame;
 import chess.piece.Team;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import static chess.repository.ChessConnection.closeConnection;
 import static chess.repository.ChessConnection.getConnection;
 
 public class MariaChessRepository implements ChessRepository {
@@ -30,19 +32,21 @@ public class MariaChessRepository implements ChessRepository {
                         "(active, winner, createdTime) " +
                         "VALUES (?, ?, ?)";
 
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setBoolean(1, entity.isActive());
         preparedStatement.setString(2, entity.getWinner().name());
         LocalDateTime createdTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
         preparedStatement.setTimestamp(3, Timestamp.valueOf(createdTime));
 
         preparedStatement.executeQuery();
+        closeConnection(connection);
+
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
         if (!generatedKeys.next()) {
             return entity;
         }
-
         return new ChessGame(generatedKeys.getLong("id"), createdTime, entity);
     }
 
@@ -52,9 +56,12 @@ public class MariaChessRepository implements ChessRepository {
                 "SELECT * " +
                         "FROM CHESSGAME " +
                         "WHERE id = ?";
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, id);
         ResultSet resultSet = preparedStatement.executeQuery();
+        closeConnection(connection);
 
         if (!resultSet.next()) {
             return Optional.empty();
@@ -78,13 +85,14 @@ public class MariaChessRepository implements ChessRepository {
                 "UPDATE CHESSGAME " +
                         "SET active = ? , winner = ?" +
                         "WHERE id = ?";
-
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setBoolean(1, entity.isActive());
         preparedStatement.setString(2, entity.getWinner().name());
         preparedStatement.setLong(3, entity.getId());
 
         preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 
     @Override
@@ -92,8 +100,10 @@ public class MariaChessRepository implements ChessRepository {
         String query =
                 "SELECT * " +
                         "FROM CHESSGAME";
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
+        closeConnection(connection);
 
         List<ChessGame> chessGames = new ArrayList<>();
         while (resultSet.next()) {
@@ -123,7 +133,9 @@ public class MariaChessRepository implements ChessRepository {
     @Override
     public void deleteAll() throws SQLException {
         String query = "DELETE FROM CHESSGAME";
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 }

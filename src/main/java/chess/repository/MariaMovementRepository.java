@@ -2,6 +2,7 @@ package chess.repository;
 
 import chess.entity.Movement;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,6 +13,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.repository.ChessConnection.closeConnection;
 import static chess.repository.ChessConnection.getConnection;
 
 public class MariaMovementRepository implements MovementRepository {
@@ -25,7 +27,8 @@ public class MariaMovementRepository implements MovementRepository {
     public Movement save(Movement entity) throws SQLException {
         String query = "INSERT INTO MOVEMENT (chessId, sourceKey, targetKey, createdTime) VALUES (?, ?, ?, ?)";
 
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setLong(1, entity.getChessId());
         preparedStatement.setString(2, entity.getSourceKey());
         preparedStatement.setString(3, entity.getTargetKey());
@@ -33,6 +36,8 @@ public class MariaMovementRepository implements MovementRepository {
         preparedStatement.setTimestamp(4, Timestamp.valueOf(createdTime));
 
         preparedStatement.execute();
+        closeConnection(connection);
+
         ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
         if (!generatedKeys.next()) {
@@ -47,10 +52,11 @@ public class MariaMovementRepository implements MovementRepository {
         String query = "SELECT * " +
                 "FROM MOVEMENT " +
                 "WHERE chessId = ?";
-
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setLong(1, chessId);
         ResultSet resultSet = preparedStatement.executeQuery();
+        closeConnection(connection);
 
         List<Movement> movements = new ArrayList<>();
         while (resultSet.next()) {
@@ -72,7 +78,9 @@ public class MariaMovementRepository implements MovementRepository {
     @Override
     public void deleteAll() throws SQLException {
         String query = "DELETE FROM MOVEMENT";
-        PreparedStatement preparedStatement = getConnection(connectionProperties).prepareStatement(query);
+        Connection connection = getConnection(connectionProperties);
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.executeUpdate();
+        closeConnection(connection);
     }
 }
