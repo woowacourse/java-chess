@@ -14,7 +14,6 @@ import chess.dao.RoomDAO;
 import chess.domain.Color;
 import chess.domain.board.Position;
 import chess.domain.dao.AutoIncrementTest;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.service.GameService;
 
@@ -43,14 +42,12 @@ public class GameServiceTest {
 		assertThat(pieces.size()).isEqualTo(64);
 	}
 
-	@DisplayName("체스 말을 움직이고나서 움직인 Position의 체스 말을 꺼냈을 때 움직이기 전 체스 말과 같은지 테스트")
+	@DisplayName("체스 말을 움직이고나서 움직이기 전 체스 말과 같은지 테스트")
 	@Test
 	void movePieceTest() throws SQLException {
 		String source = "a2";
 		String target = "a4";
-		Piece pawn = new Pawn(Color.WHITE, "p");
-		gameDAO.addPieceByPosition(roomId, Position.of(source), pawn);
-
+		gameService.initialize(roomId);
 		gameService.movePiece(roomId, source, target);
 
 		assertThat(gameDAO.findPieceByPosition(Position.of(target).getPosition()).isPawn()).isTrue();

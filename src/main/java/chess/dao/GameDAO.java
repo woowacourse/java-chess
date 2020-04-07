@@ -85,9 +85,11 @@ public class GameDAO {
 			return Blank.getInstance();
 		}
 
+		Piece piece = PieceMapper.getInstance().findDBPiece(rs.getString("piece_name"));
+
 		JDBCConnector.closeConnection(con);
 
-		return PieceMapper.getInstance().findDBPiece(rs.getString("piece_name"));
+		return piece;
 	}
 
 	public void updatePieceByPosition(String currentPosition, String nextPosition) throws SQLException {

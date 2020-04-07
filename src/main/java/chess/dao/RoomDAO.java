@@ -76,9 +76,12 @@ public class RoomDAO {
 		if (!rs.next()) {
 			return 0;
 		}
+
+		int roomId = rs.getInt("room_id");
+
 		JDBCConnector.closeConnection(con);
 
-		return rs.getInt("room_id");
+		return roomId;
 	}
 
 	public List<Room> findAllRoom() throws SQLException {
@@ -128,8 +131,10 @@ public class RoomDAO {
 			return null;
 		}
 
+		Color color = Color.valueOf(rs.getString("room_color"));
+
 		JDBCConnector.closeConnection(con);
 
-		return Color.valueOf(rs.getString("room_color"));
+		return color;
 	}
 }
