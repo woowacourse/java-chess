@@ -29,13 +29,20 @@ public class ChessGame {
     }
 
     public Board start(String whiteName, String blackName) throws SQLException {
-        saveUsers(whiteName, blackName);
-        List<User> users = findUsers(whiteName, blackName);
-
-        User whitePlayer = users.get(0);
-        User blackPlayer = users.get(1);
+        User whitePlayer = loadOrCreateUser(whiteName);
+        User blackPlayer = loadOrCreateUser(blackName);
 
         return loadOrCreateBoard(whitePlayer, blackPlayer);
+    }
+
+    private User loadOrCreateUser(String name) throws SQLException {
+        try {
+            return userDAO.findUserByName(name);
+        } catch (IllegalArgumentException e) {
+            User user = new User(name);
+            userDAO.addUser(user);
+            return user;
+        }
     }
 
     private Board loadOrCreateBoard(User whitePlayer, User blackPlayer) throws SQLException {
@@ -49,10 +56,8 @@ public class ChessGame {
     }
 
     public Board move(String whiteName, String blackName, String sourceName, String targetName) throws SQLException {
-        List<User> users = findUsers(whiteName, blackName);
-
-        User whitePlayer = users.get(0);
-        User blackPlayer = users.get(1);
+        User whitePlayer = loadOrCreateUser(whiteName);
+        User blackPlayer = loadOrCreateUser(blackName);
 
         Position source = Position.from(sourceName);
         Position target = Position.from(targetName);
@@ -67,37 +72,21 @@ public class ChessGame {
     }
 
     private void updateRecord(User whitePlayer, User blackPlayer, Board board) throws SQLException {
-        if (board.getStatus().isWhiteTurn()) {
-            userDAO.updateRecord(whitePlayer, blackPlayer);
+        if (board.isWhiteTurn()) {
+            userDAO.updateByName(whitePlayer.getName(), whitePlayer.win());
+            userDAO.updateByName(blackPlayer.getName(), blackPlayer.lose());
             return;
         }
-        userDAO.updateRecord(blackPlayer, whitePlayer);
+        userDAO.updateByName(blackPlayer.getName(), blackPlayer.win());
+        userDAO.updateByName(whitePlayer.getName(), whitePlayer.lose());
     }
 
     public ChessResult status(String whiteName, String blackName) throws SQLException {
-        List<User> users = findUsers(whiteName, blackName);
-
-        User whitePlayer = users.get(0);
-        User blackPlayer = users.get(1);
+        User whitePlayer = loadOrCreateUser(whiteName);
+        User blackPlayer = loadOrCreateUser(blackName);
 
         return loadBoard(whitePlayer, blackPlayer)
                 .calculateResult();
-    }
-
-    void saveUsers(String... names) throws SQLException {
-        for (String name : names) {
-            userDAO.upsert(new User(name));
-        }
-    }
-
-    List<User> findUsers(String... names) throws SQLException {
-        List<User> users = new ArrayList<>();
-        for (String name : names) {
-            User user = userDAO.findUserByName(name);
-            users.add(user);
-        }
-
-        return users;
     }
 
     void saveBoard(Board board, User firstUser, User secondUser) throws SQLException {

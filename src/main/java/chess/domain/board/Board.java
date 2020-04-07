@@ -147,6 +147,10 @@ public class Board {
         return status;
     }
 
+    public boolean isWhiteTurn() {
+        return status.isWhiteTurn();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

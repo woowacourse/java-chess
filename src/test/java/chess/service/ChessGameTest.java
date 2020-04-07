@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.repository.BoardDAO;
 import chess.repository.DBConnector;
 import chess.repository.UserDAO;
@@ -24,11 +25,15 @@ class ChessGameTest {
 
     @Test
     void saveAndLoad() throws SQLException {
-        chessGame.saveUsers(UserDAOTest.TEST_USER1.getName(), UserDAOTest.TEST_USER2.getName());
+        chessGame.start(UserDAOTest.TEST_USER1.getName(), UserDAOTest.TEST_USER2.getName());
 
-        Board board = Board.createEmpty().placeInitialPieces();
-        chessGame.saveBoard(board, UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2);
-        assertThat(chessGame.loadBoard(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2)).isEqualTo(board);
+        Board board = chessGame.move(UserDAOTest.TEST_USER1.getName(), UserDAOTest.TEST_USER2.getName(),
+                "e2", "e3");
+
+        Board expected = Board.createEmpty().placeInitialPieces();
+        expected = expected.move(Position.from("e2"), Position.from("e3"));
+
+        assertThat(board).isEqualTo(expected);
     }
 
     @AfterEach

@@ -38,11 +38,6 @@ public class BoardDAO {
         return new Status(resultSet.getInt("turn"), StatusType.PROCESSING);
     }
 
-    public boolean isBoardExist(User firstUser, User secondUser) throws SQLException {
-        ResultSet resultSet = findByUsers(firstUser, secondUser);
-        return resultSet.next();
-    }
-
     private ResultSet findByUsers(User firstUser, User secondUser) throws SQLException {
         String query = "SELECT * FROM board WHERE white = ? AND black = ?";
         return DBConnector.executeQuery(query, firstUser.getName(), secondUser.getName());

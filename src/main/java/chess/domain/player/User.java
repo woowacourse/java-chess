@@ -21,6 +21,14 @@ public class User {
         this(name, DEFAULT_WIN_COUNT, DEFAULT_LOSE_COUNT);
     }
 
+    public User win() {
+        return new User(name, winCount + 1, loseCount);
+    }
+
+    public User lose() {
+        return new User(name, winCount, loseCount + 1);
+    }
+
     public String getName() {
         return name;
     }

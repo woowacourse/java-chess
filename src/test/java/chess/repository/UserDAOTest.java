@@ -27,11 +27,11 @@ public class UserDAOTest {
 
     @Test
     void crud() throws SQLException {
-        userDAO.addUser(new User(testName1));
+        userDAO.addUser(TEST_USER1);
 
-        userDAO.updateByName(testName1, new User(testName2));
+        userDAO.updateByName(TEST_USER1.getName(), TEST_USER2);
 
-        assertThat(userDAO.findUserByName(testName2)).isEqualTo(new User(testName2));
+        assertThat(userDAO.findUserByName(testName2)).isEqualTo(TEST_USER2);
     }
 
     @AfterEach
