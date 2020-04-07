@@ -1,7 +1,7 @@
 package chess.player;
 
 import chess.game.ChessSet;
-import chess.piece.type.Piece;
+import chess.location.Location;
 import chess.score.Score;
 import chess.team.Team;
 
@@ -14,16 +14,16 @@ public class Player {
         this.team = team;
     }
 
-    public boolean isSame(Team team) {
+    public boolean is(Team team) {
         return this.team.equals(team);
     }
 
     public boolean isNotSame(Team team) {
-        return !isSame(team);
+        return !is(team);
     }
 
-    public void deletePieceIfExistIn(Piece piece) {
-        chessSet.remove(piece);
+    public void deletePieceIfExistIn(Location location) {
+        chessSet.remove(location);
     }
 
     public boolean hasNotKing() {
@@ -32,6 +32,10 @@ public class Player {
 
     public Score calculateScoreExceptPawnReduce() {
         return chessSet.calculateScoreExceptPawnReduce();
+    }
+
+    public void movePiece(Location now, Location after) {
+        chessSet.movePiece(now, after);
     }
 
     public Team getTeam() {

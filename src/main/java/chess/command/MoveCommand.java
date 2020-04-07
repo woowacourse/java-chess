@@ -8,7 +8,6 @@ import chess.progress.Progress;
 import chess.team.Team;
 
 public class MoveCommand implements Command {
-    private static final String COMMAND = "move";
     private static final String SPACE = " ";
     private static final int NOW_INDEX_IN_MOVE_COMMAND = 1;
     private static final int DESTINATION_INDEX_IN_MOVE_COMMAND = 2;
@@ -35,16 +34,12 @@ public class MoveCommand implements Command {
                 || chessBoard.isNotCorrectTeam(now, turn)) {
             return Progress.ERROR;
         }
-
         chessGame.deletePieceIfExistIn(destination, turn);
+
         chessBoard.move(now, destination);
+        chessGame.movePieceInPlayerChessSet(now, destination);
 
         return chessGame.finishIfKingDie();
-    }
-
-    public static boolean isMove(String command) {
-        String lowerCaseCommand = command.toLowerCase();
-        return lowerCaseCommand.substring(0, 4).equals(COMMAND);
     }
 
     public static MoveCommand of(String rawCommand, ChessGame chessGame) {

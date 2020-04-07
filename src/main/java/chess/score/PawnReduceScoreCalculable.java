@@ -23,6 +23,7 @@ public class PawnReduceScoreCalculable implements Calculatable {
         for (int col = COL_START; col <= COL_END; col++) {
             Col fixCol = Col.of(col);
 
+            // TODO : ChessBoard 없애기
             int sameColPawnSize = calculatePawnSameColSize(chessBoard, player.getTeam(), fixCol);
             if (sameColPawnSize == 1) {
                 continue;

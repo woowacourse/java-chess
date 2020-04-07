@@ -30,32 +30,29 @@ class ChessBoardTest {
     @Test
     void giveMyPiece() {
         ChessBoard chessBoard = ChessBoardCreater.create();
-        List<Piece> givenPieces = chessBoard.giveMyPiece(Team.BLACK);
+        Map<Location, Piece> givenPieces = chessBoard.giveMyPiece(Team.BLACK);
 
-        List<Piece> actual = new ArrayList<>();
-        putNoble(actual);
-        putPawns(actual);
+        Map<Location, Piece> actual = new HashMap<>();
+        putNoble(actual, 8);
+        putPawns(actual, 7);
 
-        for (Piece piece : actual) {
-            assertThat(givenPieces).contains(piece);
-        }
-        assertThat(givenPieces).hasSameSizeAs(actual);
+        assertThat(givenPieces).isEqualTo(actual);
     }
 
-    private void putNoble(List<Piece> board) {
-        board.add(new Rook(Team.BLACK));
-        board.add(new Knight(Team.BLACK));
-        board.add(new Bishop(Team.BLACK));
-        board.add(new Queen(Team.BLACK));
-        board.add(new King(Team.BLACK));
-        board.add(new Bishop(Team.BLACK));
-        board.add(new Knight(Team.BLACK));
-        board.add(new Rook(Team.BLACK));
+    private void putNoble(Map<Location, Piece> board, int row) {
+        board.put(new Location(row, 'a'), new Rook(Team.BLACK));
+        board.put(new Location(row, 'b'), new Knight(Team.BLACK));
+        board.put(new Location(row, 'c'), new Bishop(Team.BLACK));
+        board.put(new Location(row, 'd'), new Queen(Team.BLACK));
+        board.put(new Location(row, 'e'), new King(Team.BLACK));
+        board.put(new Location(row, 'f'), new Bishop(Team.BLACK));
+        board.put(new Location(row, 'g'), new Knight(Team.BLACK));
+        board.put(new Location(row, 'h'), new Rook(Team.BLACK));
     }
 
-    private void putPawns(List<Piece> board) {
+    private void putPawns(Map<Location, Piece> board, int row) {
         for (int i = 0; i < 8; i++) {
-            board.add(new Pawn(Team.BLACK));
+            board.put(new Location(row, (char) (i + 'a')), new Pawn(Team.BLACK));
         }
     }
 

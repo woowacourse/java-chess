@@ -42,10 +42,10 @@ public class ChessBoard {
     }
 
     // 팀별 위치, 체스 정보를 가져온다.
-    public List<Piece> giveMyPiece(Team team) {
-        return board.values().stream()
-                .filter(piece -> piece.isSameTeam(team))
-                .collect(Collectors.toList());
+    public Map<Location, Piece> giveMyPiece(Team team) {
+        return board.entrySet().stream()
+                .filter(entry -> entry.getValue().isSameTeam(team))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     public void move(Location now, Location destination) {
@@ -72,10 +72,6 @@ public class ChessBoard {
 
     public Map<Location, Piece> getBoard() {
         return board;
-    }
-
-    public Piece getPieceIn(Location location) {
-        return board.get(location);
     }
 
     @Override

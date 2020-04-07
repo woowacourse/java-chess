@@ -4,7 +4,6 @@ import chess.board.ChessBoardCreater;
 import chess.command.Command;
 import chess.board.ChessBoard;
 import chess.location.Location;
-import chess.piece.type.Piece;
 import chess.progress.Progress;
 import chess.player.Player;
 import chess.result.ChessResult;
@@ -47,11 +46,18 @@ public class ChessGame {
         return command.conduct();
     }
 
+    public void movePieceInPlayerChessSet(Location now, Location destination) {
+        if (white.is(turn)) {
+            white.movePiece(now, destination);
+            return;
+        }
+        black.movePiece(now, destination);
+    }
+
     public void deletePieceIfExistIn(Location location, Team turn) {
         Player counterplayer = getCounterTurnPlayer(turn);
         if (chessBoard.isExistPieceIn(location)) {
-            Piece toBeRemovedPiece = chessBoard.getPieceIn(location);
-            counterplayer.deletePieceIfExistIn(toBeRemovedPiece);
+            counterplayer.deletePieceIfExistIn(location);
         }
     }
 
