@@ -39,15 +39,6 @@ function createImage(piece) {
     }
 }
 
-function caching(data) {
-    data = JSON.parse(data)
-    for (key in data) {
-        value = $(`#${key}`).text()
-        $(`#${key}`).html(createImage(data[key]))
-    }
-}
-
-
 function commend() {
     let input = document.getElementById("commends").value;
     if (input == "move") {
