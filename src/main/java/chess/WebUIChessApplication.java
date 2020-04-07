@@ -22,62 +22,71 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // String user_id = req.params("user_id");
+            return render(model, "index.html");
+        });
 
-            boolean canResume = webService.canResume("guest");
+        post("/enter", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String user_id = req.queryParams("user_id");
+            boolean canResume = webService.canResume(user_id);
 
+            model.put("user_id", user_id);
             model.put("canResume", canResume);
-            return render(model, "index.html");
+            return render(model, "game_room.html");
         });
 
-        get("/start", (req, res) -> {
+        post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // String user_id = req.params("user_id");
+            String user_id = req.queryParams("user_id");
 
-            webService.startNewGame(board, "guest");
+            webService.startNewGame(board, user_id);
 
+            model.put("user_id", user_id);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", webService.calculateScore(board, PieceColor.BLACK));
-            return render(model, "index.html");
+            return render(model, "game_room.html");
         });
 
-        get("/resume", (req, res) -> {
+        post("/resume", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // String user_id = req.params("user_id");
+            String user_id = req.queryParams("user_id");
 
-            webService.resumeGame(board, "guest");
+            webService.resumeGame(board, user_id);
 
+            model.put("user_id", user_id);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", webService.calculateScore(board, PieceColor.BLACK));
-            return render(model, "index.html");
+            return render(model, "game_room.html");
         });
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            // String user_id = req.params("user_id");
+            String user_id = req.queryParams("user_id");
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            webService.move(board, "guest", source, target);
+            webService.move(board, user_id, source, target);
 
             boolean gameOver = webService.isGameOver(board);
             if (gameOver) {
-                webService.deleteSaved("guest");
+                webService.deleteSaved(user_id);
                 String winningMsg = webService.winningMsg(board);
+                model.put("user_id", user_id);
                 model.put("end", winningMsg);
                 model.put("pieces", webService.convertPieces(board));
-                return render(model, "index.html");
+                return render(model, "game_room.html");
             }
 
+            model.put("user_id", user_id);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", webService.calculateScore(board, PieceColor.BLACK));
-            return render(model, "index.html");
+            return render(model, "game_room.html");
         });
     }
 

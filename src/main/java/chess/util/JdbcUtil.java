@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class JdbcUtil {
+    private static Connection connection;
+
     public static Connection getConnection() {
-        Connection con = null;
+        if (connection != null) return connection;
+
+        Connection conn = null;
         String server = "localhost:3306"; // MySQL 서버 주소
         String database = "chess_game"; // MySQL DATABASE 이름
         String option = "?useSSL=false&serverTimezone=UTC";
@@ -23,14 +27,15 @@ public class JdbcUtil {
 
         // 드라이버 연결
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            conn = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
 
-        return con;
+        connection = conn;
+        return connection;
     }
 
     // 드라이버 연결해제

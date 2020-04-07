@@ -1,4 +1,4 @@
-$(document).ready(function () {
+window.onload = function () {
     var end = document.getElementById("end").innerText;
     var moveBtn = document.getElementById("moveBtn");
     var startBtn = document.getElementById("startBtn");
@@ -8,16 +8,10 @@ $(document).ready(function () {
         alert(end);
     }
 
-    if (window.location.pathname !== "/") {
-        startBtn.innerHTML = ("재시작");
+    if (window.location.pathname !== "/enter") {
+        startBtn.value = "재시작";
     }
-    if (window.location.pathname === "/") {
+    if (window.location.pathname === "/enter") {
         moveBtn.setAttribute("disabled", "disabled");
     }
-    document.getElementById("startBtn").onclick = function () {
-        window.location.href = '/start';
-    };
-    document.getElementById("resumeBtn").onclick = function () {
-        window.location.href = '/resume';
-    };
-});
+};
