@@ -34,34 +34,49 @@ public class PieceDao {
         return con;
     }
 
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
     public void addPiece(Piece piece) throws SQLException {
-        String query = "INSERT INTO chess(name,file,rank,team) VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        String query = "INSERT INTO chess(name,xposition,yposition,team) VALUES (?, ?, ?, ?)";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.setString(1, piece.getPieceName());
-        pstmt.setString(2, piece.getFile());
-        pstmt.setString(3, piece.getRank());
+        pstmt.setString(2, piece.getXPosition());
+        pstmt.setString(3, piece.getYPosition());
         pstmt.setString(4, piece.getTeamStrategy().toString());
-
         pstmt.executeUpdate();
+
         pstmt.close();
+        connection.close();
     }
 
     public void deletePiece(Position targetPosition) throws SQLException {
-        String query = "delete from chess where file=? and rank=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        String query = "delete from chess where xposition=? and yposition=?";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.setString(1, targetPosition.getXPosition());
         pstmt.setString(2, targetPosition.getYPosition());
 
         pstmt.executeUpdate();
+
         pstmt.close();
+        connection.close();
 
     }
 
     public void updatePiece(Position sourcePosition, Position targetPosition) throws SQLException {
-        String query = "UPDATE chess SET file = ?, rank = ? WHERE file=? AND rank=?";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        String query = "UPDATE chess SET xposition = ?, yposition = ? WHERE xposition=? AND yposition=?";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.setString(1, targetPosition.getXPosition());
         pstmt.setString(2, targetPosition.getYPosition());
@@ -69,19 +84,27 @@ public class PieceDao {
         pstmt.setString(4, sourcePosition.getYPosition());
 
         pstmt.executeUpdate();
+
         pstmt.close();
+        connection.close();
     }
 
     public void deleteAll() throws SQLException {
         String query = "delete from chess";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
 
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.executeUpdate();
+
+        pstmt.close();
+        connection.close();
+
     }
 
     public List<Map<String, Object>> readPieces() throws SQLException {
         String query = "SELECT * from chess";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         ResultSetMetaData metaData = rs.getMetaData();
 
@@ -94,7 +117,10 @@ public class PieceDao {
             pieces.add(map);
         }
 
+        rs.close();
         pstmt.close();
+        connection.close();
+
         return pieces;
     }
 }

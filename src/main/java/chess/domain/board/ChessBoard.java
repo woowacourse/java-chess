@@ -88,7 +88,9 @@ public class ChessBoard {
     }
 
     public boolean isSurviveKings() {
-        return pieces.stream().filter(x -> x instanceof King).count() == INIT_KING_COUNT;
+        return pieces.stream()
+                .filter(x -> x instanceof King)
+                .count() == INIT_KING_COUNT;
     }
 
     public List<Piece> getPieces() {

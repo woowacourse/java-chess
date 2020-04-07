@@ -67,6 +67,14 @@ public class Position {
         return xPosition.calculateDistance(target.xPosition);
     }
 
+    public String getXPosition() {
+        return xPosition.getName();
+    }
+
+    public String getYPosition() {
+        return String.valueOf(yPosition.getNumber());
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -84,13 +92,5 @@ public class Position {
     @Override
     public String toString() {
         return xPosition.getName() + yPosition.getNumber();
-    }
-
-    public String getXPosition() {
-        return xPosition.getName();
-    }
-
-    public String getYPosition() {
-        return String.valueOf(yPosition.getNumber());
     }
 }

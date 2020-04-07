@@ -61,11 +61,11 @@ public abstract class Piece implements PieceAbility {
         return teamStrategy;
     }
 
-    public String getFile() {
+    public String getXPosition() {
         return position.getXPosition();
     }
 
-    public String getRank() {
+    public String getYPosition() {
         return position.getYPosition();
     }
 }
