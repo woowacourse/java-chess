@@ -1,8 +1,6 @@
 package chess.board;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import chess.location.Location;
