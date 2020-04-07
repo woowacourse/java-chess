@@ -14,12 +14,8 @@ public class Knight extends NotPawn {
 
     public static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
 
-    public Knight(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    public Knight(String name, Position to, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, to, team, canNotMoveStrategies, score, moveType);
+    private Knight(KnightBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -28,12 +24,23 @@ public class Knight extends NotPawn {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return new Knight(name, to, team, canNotMoveStrategies, score, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return null;
     }
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
         return false;
+    }
+
+    public static class KnightBuilder extends InitializedBuilder {
+        public KnightBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
+
+        @Override
+        public Piece build() {
+            return new Knight(this);
+        }
     }
 }

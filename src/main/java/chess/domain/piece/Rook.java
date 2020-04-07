@@ -11,12 +11,8 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class Rook extends NotPawn {
-    public Rook(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    public Rook(String name, Position to, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, to, team, canNotMoveStrategies, score, moveType);
+    private Rook(RookBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -25,12 +21,25 @@ public class Rook extends NotPawn {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return new Rook(name, to, team, canNotMoveStrategies, score, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return new RookBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
         return hasHindrancePerpendicularlyInBetween(to, board);
+    }
+
+    public static class RookBuilder extends InitializedBuilder {
+        public RookBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
+
+        @Override
+        public Piece build() {
+            return new Rook(this);
+        }
     }
 }

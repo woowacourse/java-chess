@@ -1,6 +1,7 @@
 package chess.domain.piece.state.piece;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Bishop;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -16,6 +17,10 @@ public abstract class NotPawn extends Initialized {
 
     public NotPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
         super(name, position, team, canNotMoveStrategies, score, moveType);
+    }
+
+    public NotPawn(InitializedBuilder builder) {
+        super(builder);
     }
 
 

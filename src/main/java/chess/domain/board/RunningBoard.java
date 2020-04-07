@@ -4,6 +4,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.InitializedPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
 import chess.domain.ui.UserInterface;
@@ -64,7 +65,7 @@ public class RunningBoard extends StartedBoard {
     private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
         for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
             Position position = Position.of(x, row);
-            Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, position, team);
+            Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, team);
             pieces.put(position, initializedPawn);
         }
     }

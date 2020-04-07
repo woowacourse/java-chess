@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -14,12 +13,8 @@ import java.util.List;
 public class InitializedPawn extends Pawn {
     public static final int MAX_DISTANCE = 2;
 
-    public InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    private InitializedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, position, team, canNotMoveStrategies, score, moveType);
+    private InitializedPawn(InitializedPawnBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -29,8 +24,11 @@ public class InitializedPawn extends Pawn {
         }
 
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return PieceFactory.createMovedPiece(MovedPawn.class, to, team, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+
+        return new MovedPawn.MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
@@ -52,7 +50,16 @@ public class InitializedPawn extends Pawn {
             }
         }
         return false;
+    }
 
+    public static class InitializedPawnBuilder extends InitializedBuilder {
+        public InitializedPawnBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
 
+        @Override
+        public Piece build() {
+            return new InitializedPawn(this);
+        }
     }
 }

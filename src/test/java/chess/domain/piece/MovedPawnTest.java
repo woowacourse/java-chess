@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
@@ -25,7 +26,7 @@ class MovedPawnTest {
     @DisplayName("#move() : should return MovedPawn as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Piece movedPawn = PieceFactory.createInitializedPiece(MovedPawn.class, from, team);
+        Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = movedPawn.move(to, board);
@@ -38,17 +39,17 @@ class MovedPawnTest {
                 Arguments.of(Position.of(1, 3),
                         Position.of(1, 4),
                         team,
-                        PieceFactory.createMovedPiece(MovedPawn.class, Position.of(1, 4), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(1, 4), team, MoveType.MOVED)),
 
                 Arguments.of(Position.of(1, 6),
                         Position.of(2, 7),
                         team,
-                        PieceFactory.createMovedPiece(MovedPawn.class, Position.of(2, 7), team, MoveType.ATTACKED_SUBORDINATE)),
+                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(2, 7), team, MoveType.ATTACKED_SUBORDINATE)),
 
                 Arguments.of(Position.of(1, 4),
                         Position.of(1, 5),
                         team,
-                        PieceFactory.createMovedPiece(MovedPawn.class, Position.of(1, 5), team, MoveType.MOVED))
+                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(1, 5), team, MoveType.MOVED))
         );
     }
 
@@ -56,7 +57,7 @@ class MovedPawnTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Piece movedPawn = PieceFactory.createInitializedPiece(MovedPawn.class, from, team);
+        Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -79,7 +80,7 @@ class MovedPawnTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        MovedPawn runningPawn = (MovedPawn) PieceFactory.createInitializedPiece(MovedPawn.class, from, team);
+        MovedPawn runningPawn = (MovedPawn) PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = runningPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);

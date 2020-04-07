@@ -18,17 +18,22 @@ public abstract class Initialized extends Started {
     protected final List<CanNotMoveStrategy> canNotMoveStrategies;
     protected final Position position;
     protected final Score score;
-    protected MoveType moveType = MoveType.INITIALIZED;
+    protected final MoveType moveType;
+
+    protected Initialized(InitializedBuilder builder) {
+        super(builder.name, builder.team);
+        this.canNotMoveStrategies = builder.canNotMoveStrategies;
+        this.position = builder.position;
+        this.score = builder.score;
+        this.moveType = builder.moveType;
+    }
 
     protected Initialized(String name,
                           Position position,
                           Team team,
                           List<CanNotMoveStrategy> canNotMoveStrategies,
                           Score score) {
-        super(name, team);
-        this.position = position;
-        this.canNotMoveStrategies = canNotMoveStrategies;
-        this.score = score;
+        this(name, position, team, canNotMoveStrategies, score, MoveType.INITIALIZED);
     }
 
     protected Initialized(String name,
@@ -37,7 +42,10 @@ public abstract class Initialized extends Started {
                           List<CanNotMoveStrategy> canNotMoveStrategies,
                           Score score,
                           MoveType moveType) {
-        this(name, position, team, canNotMoveStrategies, score);
+        super(name, team);
+        this.position = position;
+        this.canNotMoveStrategies = canNotMoveStrategies;
+        this.score = score;
         this.moveType = moveType;
     }
 
@@ -144,6 +152,37 @@ public abstract class Initialized extends Started {
             }
         }
         return false;
+    }
+
+
+    public abstract static class InitializedBuilder {
+        private final String name;
+        private final Team team;
+        private final List<CanNotMoveStrategy> canNotMoveStrategies;
+        private final Position position;
+        private final Score score;
+        private MoveType moveType;
+
+        public InitializedBuilder(String name,
+                                  Position position,
+                                  Team team,
+                                  List<CanNotMoveStrategy> canNotMoveStrategies,
+                                  Score score) {
+            this.name = name;
+            this.position = position;
+            this.team = team;
+            this.canNotMoveStrategies = canNotMoveStrategies;
+            this.score = score;
+            this.moveType = MoveType.INITIALIZED;
+        }
+
+        public InitializedBuilder moveType(MoveType moveType) {
+            this.moveType = moveType;
+            return this;
+        }
+
+        public abstract Piece build();
+
     }
 
     @Override

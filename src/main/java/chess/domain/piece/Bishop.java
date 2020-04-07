@@ -11,13 +11,8 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class Bishop extends NotPawn {
-    public Bishop(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    Bishop(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, position, team, canNotMoveStrategies, score, moveType);
-
+    private Bishop(BishopBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -27,8 +22,10 @@ public class Bishop extends NotPawn {
         }
 
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return new Bishop(name, to, team, canNotMoveStrategies, score, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return new BishopBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
@@ -38,5 +35,16 @@ public class Bishop extends NotPawn {
         }
 
         return hasHindranceDiagonallyInBetween(to, board);
+    }
+
+    public static class BishopBuilder extends InitializedBuilder {
+        public BishopBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
+
+        @Override
+        public Piece build() {
+            return new Bishop(this);
+        }
     }
 }

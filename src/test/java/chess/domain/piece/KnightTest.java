@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
@@ -25,7 +26,7 @@ class KnightTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Piece knight = PieceFactory.createInitializedPiece(Knight.class, from, team);
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = knight.move(to, board);
@@ -36,7 +37,7 @@ class KnightTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Piece knight = PieceFactory.createInitializedPiece(Knight.class, from, team);
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -49,35 +50,35 @@ class KnightTest {
                 Arguments.of(Position.of(4, 4),
                         Position.of(5, 6),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(5, 6), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(5, 6), Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(6, 5),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(6, 5), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(6, 5), Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(6, 3),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(6, 3), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(6, 3), Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(5, 2),
                         Team.BLACK,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(5, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(5, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(3, 2),
                         Team.BLACK,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(3, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(2, 3),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(2, 3), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(2, 3), Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(2, 5),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(2, 5), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(2, 5), Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(3, 6),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(Knight.class, Position.of(3, 6), Team.WHITE, MoveType.MOVED))
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3, 6), Team.WHITE, MoveType.MOVED))
         );
     }
 

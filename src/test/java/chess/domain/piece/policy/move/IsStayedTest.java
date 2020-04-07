@@ -1,5 +1,6 @@
 package chess.domain.piece.policy.move;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
@@ -28,7 +29,7 @@ class IsStayedTest {
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
         //given
-        Initialized initialized = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, Team.BLACK);
+        Initialized initialized = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, Team.BLACK);
         Board board = RunningBoard.initiaize(userInterface);
 
         boolean canNotMove = isStayed.canNotMove(initialized, to, board);

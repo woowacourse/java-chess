@@ -17,6 +17,10 @@ public abstract class Pawn extends Initialized {
     private static final int LINE_START_INDEX = 1;
     private static final int LINE_END_INDEX = 8;
 
+    protected Pawn(InitializedBuilder builder) {
+        super(builder);
+    }
+
     protected Pawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
         super(name, position, team, canNotMoveStrategies, score);
     }

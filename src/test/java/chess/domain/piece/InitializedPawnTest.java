@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
 import chess.domain.ui.UserInterface;
@@ -25,7 +26,7 @@ class InitializedPawnTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = initializedPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -35,7 +36,7 @@ class InitializedPawnTest {
     @DisplayName("#move() : should return Piece as to team and Position 'to'")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Team team, Position to) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, Position.of(1,2), team);
+        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, Position.of(1,2), team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -47,7 +48,7 @@ class InitializedPawnTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to team and Position 'to'")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Team team, Position from, Position to) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
+        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 

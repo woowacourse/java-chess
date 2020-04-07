@@ -1,5 +1,6 @@
 package chess.domain.piece.state;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
@@ -26,7 +27,7 @@ class PawnTest {
     @MethodSource({"getCasesForCalculateScore"})
     void calculateScore(Position position, Score expected) {
         //given
-        Initialized pawn = (Initialized) PieceFactory.createInitializedPiece(InitializedPawn.class, position, Team.WHITE);
+        Initialized pawn = (Initialized) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, Team.WHITE);
         UserInterface userInterface = new Console();
         Board board = RunningBoard.initiaize(userInterface);
         //when

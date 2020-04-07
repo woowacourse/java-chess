@@ -27,7 +27,7 @@ class BishopTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Piece bishop = PieceFactory.createInitializedPiece(Bishop.class, from, team);
+        Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = bishop.move(to, board);
@@ -38,7 +38,7 @@ class BishopTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Piece bishop = PieceFactory.createInitializedPiece(Bishop.class, from, team);
+        Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -50,7 +50,7 @@ class BishopTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(Bishop.class, from, team);
+        Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
         Board board = RunningBoard.initiaize(userInterface);
         boolean hasHindrance = bishop.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
@@ -62,15 +62,21 @@ class BishopTest {
                 Arguments.of(Position.of(2, 2),
                         Position.of(6, 6),
                         team,
-                        new Bishop("b", Position.of(6, 6), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.MOVED)),
+                        new Bishop.BishopBuilder("b", Position.of(6, 6), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
+                                .moveType(MoveType.MOVED)
+                                .build()),
                 Arguments.of(Position.of(2, 2),
                         Position.of(7, 7),
                         team,
-                        new Bishop("b", Position.of(7, 7), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.ATTACKED_SUBORDINATE)),
+                        new Bishop.BishopBuilder("b", Position.of(7, 7), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
+                                .moveType(MoveType.ATTACKED_SUBORDINATE)
+                                .build()),
                 Arguments.of(Position.of(2, 2),
                         Position.of(1, 3),
                         team,
-                        new Bishop("b", Position.of(1, 3), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3), MoveType.MOVED))
+                        new Bishop.BishopBuilder("b", Position.of(1, 3), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
+                                .moveType(MoveType.MOVED)
+                                .build())
         );
     }
 

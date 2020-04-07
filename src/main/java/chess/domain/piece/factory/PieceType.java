@@ -16,7 +16,7 @@ public enum PieceType {
             initializedPawnCanNotMoveStrategies(),
             new NullList(),
             new Score(1)),
-    RUNNING_PAWN("p",
+    MOVED_PAWN("p",
             MovedPawn.class,
             movedPawnCanNotMoveStrategies(),
             new NullList(),
@@ -74,14 +74,11 @@ public enum PieceType {
         throw new IllegalArgumentException("해당하는 PieceType을 찾을 수 없습니다.");
     }
 
-    static Class<? extends Piece> findTypeByInitialColumn(int initialColumn) {
-        for (PieceType piece : values()) {
-            if (piece.initialColumns.contains(new InitialColumn(initialColumn))) {
-                return piece.type;
-            }
-        }
-
-        throw new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn));
+    static PieceType findByInitialColumn(int initialColumn) {
+        return Arrays.stream(values())
+                .filter(pieceType -> pieceType.initialColumns.contains(new InitialColumn(initialColumn)))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn)));
     }
 
     public String getName(Team team) {

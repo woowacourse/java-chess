@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
@@ -25,7 +26,7 @@ class KingTest {
     @DisplayName("#move() : should return King as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
-        Piece king = PieceFactory.createInitializedPiece(King.class, from, team);
+        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
         Piece moved = king.move(to, board);
@@ -36,7 +37,7 @@ class KingTest {
     @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveFail"})
     void moveFail(Position from, Position to, Team team) {
-        Piece king = PieceFactory.createInitializedPiece(King.class, from, team);
+        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
         Board board = RunningBoard.initiaize(userInterface);
 
@@ -50,36 +51,36 @@ class KingTest {
                 Arguments.of(Position.of(5, 4),
                         Position.of(5, 5),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(5, 5), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(5, 5), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 5),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(6, 5), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(6, 5), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 4),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(6, 4), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(6, 4), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 3),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(6, 3), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(6, 3), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(5, 3),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(5, 3), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(5, 3), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 3),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(4, 3), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(4, 3), team, MoveType.MOVED)),
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 4),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(4, 4), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(4, 4), team, MoveType.MOVED)),
 
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 5),
                         team,
-                        PieceFactory.createMovedPiece(King.class, Position.of(4, 5), team, MoveType.MOVED))
+                        PieceFactory.createMovedPiece(PieceType.KING, Position.of(4, 5), team, MoveType.MOVED))
         );
     }
 

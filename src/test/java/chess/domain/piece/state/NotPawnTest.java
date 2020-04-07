@@ -1,5 +1,6 @@
 package chess.domain.piece.state;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
@@ -29,7 +30,7 @@ class NotPawnTest {
     @ParameterizedTest
     @DisplayName("#calculateScore() : should return score as PieceType")
     @MethodSource({"getCasesForCalculateScore"})
-    void calculateScore(Class<? extends Piece> pieceType, Score expected) {
+    void calculateScore(PieceType pieceType, Score expected) {
         //given
         Initialized piece = (Initialized) PieceFactory.createInitializedPiece(pieceType, Position.of(5, 5), Team.WHITE);
         UserInterface userInterface = new Console();
@@ -42,11 +43,11 @@ class NotPawnTest {
 
     private static Stream<Arguments> getCasesForCalculateScore() {
         return Stream.of(
-                Arguments.of(Rook.class, new Score(5)),
-                Arguments.of(Knight.class, new Score(2.5)),
-                Arguments.of(Bishop.class, new Score(3)),
-                Arguments.of(Queen.class, new Score(9)),
-                Arguments.of(King.class, new Score(0))
+                Arguments.of(PieceType.ROOK, new Score(5)),
+                Arguments.of(PieceType.KNIGHT, new Score(2.5)),
+                Arguments.of(PieceType.BISHOP, new Score(3)),
+                Arguments.of(PieceType.QUEEN, new Score(9)),
+                Arguments.of(PieceType.KING, new Score(0))
         );
     }
 }

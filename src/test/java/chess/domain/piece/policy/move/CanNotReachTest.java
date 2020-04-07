@@ -1,5 +1,6 @@
 package chess.domain.piece.policy.move;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
@@ -25,7 +26,7 @@ class CanNotReachTest {
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, Team.WHITE);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, Team.WHITE);
         Board board = RunningBoard.initiaize(userInterface);
         boolean canNotMove = canNotReach.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);

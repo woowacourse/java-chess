@@ -11,12 +11,8 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class Queen extends NotPawn {
-    public Queen(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    public Queen(String name, Position to, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, to, team, canNotMoveStrategies, score, moveType);
+    private Queen(QueenBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -25,12 +21,25 @@ public class Queen extends NotPawn {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return new Queen(name, to, team, canNotMoveStrategies, score, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return new QueenBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
         return hasHindranceStraightInBetween(to, board);
+    }
+
+    public static class QueenBuilder extends InitializedBuilder {
+        public QueenBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
+
+        @Override
+        public Piece build() {
+            return new Queen(this);
+        }
     }
 }

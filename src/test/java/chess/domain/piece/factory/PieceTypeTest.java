@@ -1,11 +1,6 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
 import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -26,31 +21,31 @@ class PieceTypeTest {
     }
 
     @ParameterizedTest
-    @DisplayName("#findTypeByInitialColumn() : should return Class as to initialCollumn")
+    @DisplayName("#findByInitialColumn() : should return Class as to initialCollumn")
     @MethodSource({"getCasesForfindTypeByInitialColumn"})
-    void findTypeByInitialColumnSucceed(int initialColumn, Class expected) {
-        Class type = PieceType.findTypeByInitialColumn(initialColumn);
-        assertThat(type).isEqualTo(expected);
+    void findByInitialColumn(int initialColumn, PieceType expected) {
+        PieceType pieceType = PieceType.findByInitialColumn(initialColumn);
+        assertThat(pieceType).isEqualTo(expected);
     }
 
     private static Stream<Arguments> getCasesForfindTypeByInitialColumn() {
         return Stream.of(
-                Arguments.of(1, Rook.class),
-                Arguments.of(2, Knight.class),
-                Arguments.of(3, Bishop.class),
-                Arguments.of(4, Queen.class),
-                Arguments.of(5, King.class),
-                Arguments.of(6, Bishop.class),
-                Arguments.of(7, Knight.class),
-                Arguments.of(8, Rook.class)
+                Arguments.of(1, PieceType.ROOK),
+                Arguments.of(2, PieceType.KNIGHT),
+                Arguments.of(3, PieceType.BISHOP),
+                Arguments.of(4, PieceType.QUEEN),
+                Arguments.of(5, PieceType.KING),
+                Arguments.of(6, PieceType.BISHOP),
+                Arguments.of(7, PieceType.KNIGHT),
+                Arguments.of(8, PieceType.ROOK)
         );
     }
 
     @Test
-    @DisplayName("#findTypeByInitialColumn() : should throw IllegalArgumentException with invalid initialCollumn")
+    @DisplayName("#findByInitialColumn() : should throw IllegalArgumentException with invalid initialCollumn")
     void findTypeByInitialColumnFail() {
         int invalidInitialColumn = 10;
-        assertThatThrownBy(() -> PieceType.findTypeByInitialColumn(invalidInitialColumn))
+        assertThatThrownBy(() -> PieceType.findByInitialColumn(invalidInitialColumn))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

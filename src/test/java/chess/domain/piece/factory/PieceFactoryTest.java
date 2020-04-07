@@ -26,26 +26,26 @@ class PieceFactoryTest {
     @ParameterizedTest
     @DisplayName("#createInitializedPiece() : should return Class which implements Piece")
     @MethodSource("getCasesForCreatePiece")
-    void createInitializedPiece(Class<? extends Piece> type) {
-        Piece piece = PieceFactory.createInitializedPiece(type, Position.of(1, 1), Team.WHITE);
-        assertThat(piece).isInstanceOf(type);
+    void createInitializedPiece(PieceType pieceType, Class<? extends Piece> expected) {
+        Piece piece = PieceFactory.createInitializedPiece(pieceType, Position.of(1, 1), Team.WHITE);
+        assertThat(piece).isInstanceOf(expected);
     }
 
     private static Stream<Arguments> getCasesForCreatePiece() {
         return Stream.of(
-                Arguments.of(InitializedPawn.class),
-                Arguments.of(MovedPawn.class),
-                Arguments.of(Rook.class),
-                Arguments.of(Bishop.class),
-                Arguments.of(Queen.class),
-                Arguments.of(King.class)
+                Arguments.of(PieceType.INITIALIZED_PAWN, InitializedPawn.class),
+                Arguments.of(PieceType.MOVED_PAWN, MovedPawn.class),
+                Arguments.of(PieceType.ROOK, Rook.class),
+                Arguments.of(PieceType.BISHOP, Bishop.class),
+                Arguments.of(PieceType.QUEEN, Queen.class),
+                Arguments.of(PieceType.KING, King.class)
         );
     }
 
     @Test
     @DisplayName("#createMovedPiece() : should return Class which implements Piece")
     void createMovedPice() {
-        Piece piece = PieceFactory.createMovedPiece(MovedPawn.class, Position.of(1, 1), Team.WHITE, MoveType.MOVED);
+        Piece piece = PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(1, 1), Team.WHITE, MoveType.MOVED);
         assertThat(piece).isInstanceOf(MovedPawn.class);
     }
 

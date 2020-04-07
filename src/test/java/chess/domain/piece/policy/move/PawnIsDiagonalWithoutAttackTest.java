@@ -1,5 +1,6 @@
 package chess.domain.piece.policy.move;
 
+import chess.domain.piece.factory.PieceType;
 import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
@@ -26,7 +27,7 @@ class PawnIsDiagonalWithoutAttackTest {
     @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Team team, Position from, Position to, boolean expected) {
-        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(InitializedPawn.class, from, team);
+        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
 
 
         Board board = RunningBoard.initiaize(userInterface);

@@ -16,12 +16,8 @@ public class MovedPawn extends Pawn {
 
     public static final double MAX_DISTANCE = Math.sqrt(2);
 
-    public MovedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-        super(name, position, team, canNotMoveStrategies, score);
-    }
-
-    public MovedPawn(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score, MoveType moveType) {
-        super(name, position, team, canNotMoveStrategies, score, moveType);
+    private MovedPawn(MovedPawnBuilder builder) {
+        super(builder);
     }
 
     @Override
@@ -30,12 +26,25 @@ public class MovedPawn extends Pawn {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
         }
         Piece exPiece = board.getPiece(to);
-        moveType = moveType.update(this, exPiece);
-        return PieceFactory.createMovedPiece(MovedPawn.class, to, team, moveType);
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return new MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
     public boolean hasHindrance(Position to, Board board) {
         return hasHindranceStraightInBetween(to, board);
+    }
+
+    public static class MovedPawnBuilder extends InitializedBuilder {
+        public MovedPawnBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, position, team, canNotMoveStrategies, score);
+        }
+
+        @Override
+        public Piece build() {
+            return new MovedPawn(this);
+        }
     }
 }
