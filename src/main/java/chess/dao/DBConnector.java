@@ -7,8 +7,8 @@ import java.sql.SQLException;
 public class DBConnector {
 	public static Connection getConnection() {
 		Connection con = null;
-		String server = "localhost:13306"; // MySQL 서버 주소
-		String database = "db_name"; // MySQL DATABASE 이름
+		String server = "localhost:3306"; // MySQL 서버 주소
+		String database = "chess"; // MySQL DATABASE 이름
 		String option = "?useSSL=false&serverTimezone=UTC";
 		String userName = "root"; //  MySQL 서버 아이디
 		String password = "root"; // MySQL 서버 비밀번호
