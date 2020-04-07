@@ -40,8 +40,8 @@ public class WebChessGame {
 		return pieces.getAliveKingColor();
 	}
 
-	public WebBoard createBoard() {
-		return new WebBoard(pieces);
+	public BoardDto createBoardDto() {
+		return new BoardDto(pieces);
 	}
 
 	public Positions findMovablePositions(Position position) {
