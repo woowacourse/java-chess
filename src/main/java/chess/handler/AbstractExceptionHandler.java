@@ -5,5 +5,5 @@ import com.google.gson.GsonBuilder;
 import spark.ExceptionHandler;
 
 public abstract class AbstractExceptionHandler<T extends Exception> implements ExceptionHandler<T> {
-    protected static Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    protected static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 }

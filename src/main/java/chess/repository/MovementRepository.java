@@ -2,14 +2,13 @@ package chess.repository;
 
 import chess.entity.Movement;
 
-import java.sql.SQLException;
 import java.util.List;
 
 public interface MovementRepository {
 
-    Movement save(Movement entity) throws SQLException;
+    Movement save(Movement entity);
 
-    List<Movement> findAllByChessId(Long chessId) throws SQLException;
+    List<Movement> findAllByChessId(Long chessId);
 
-    void deleteAll() throws SQLException;
+    void deleteAll();
 }

@@ -13,7 +13,6 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.repository.ChessConnection.closeConnection;
 import static chess.repository.ChessConnection.getConnection;
 
 public class MariaMovementRepository implements MovementRepository {
@@ -24,40 +23,58 @@ public class MariaMovementRepository implements MovementRepository {
     }
 
     @Override
-    public Movement save(Movement entity) throws SQLException {
+    public Movement save(Movement entity) {
         String query = "INSERT INTO MOVEMENT (chessId, sourceKey, targetKey, createdTime) VALUES (?, ?, ?, ?)";
 
-        Connection connection = getConnection(connectionProperties);
-        PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-        preparedStatement.setLong(1, entity.getChessId());
-        preparedStatement.setString(2, entity.getSourceKey());
-        preparedStatement.setString(3, entity.getTargetKey());
-        LocalDateTime createdTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
-        preparedStatement.setTimestamp(4, Timestamp.valueOf(createdTime));
+        try (Connection connection = getConnection(connectionProperties);
+             PreparedStatement preparedStatement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            preparedStatement.setLong(1, entity.getChessId());
+            preparedStatement.setString(2, entity.getSourceKey());
+            preparedStatement.setString(3, entity.getTargetKey());
+            LocalDateTime createdTime = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+            preparedStatement.setTimestamp(4, Timestamp.valueOf(createdTime));
 
-        preparedStatement.execute();
-        closeConnection(connection);
+            preparedStatement.execute();
+            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
-        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-
-        if (!generatedKeys.next()) {
+            return getMovement(entity, createdTime, generatedKeys);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
             return entity;
         }
 
-        return new Movement(generatedKeys.getLong("id"), entity, createdTime);
+
+    }
+
+    private Movement getMovement(Movement entity, LocalDateTime createdTime, ResultSet generatedKeys) throws SQLException {
+        if (!generatedKeys.next()) {
+            return entity;
+        }
+        long id = generatedKeys.getLong("id");
+        generatedKeys.close();
+
+        return new Movement(id, entity, createdTime);
     }
 
     @Override
-    public List<Movement> findAllByChessId(Long chessId) throws SQLException {
+    public List<Movement> findAllByChessId(Long chessId) {
         String query = "SELECT * " +
                 "FROM MOVEMENT " +
                 "WHERE chessId = ?";
-        Connection connection = getConnection(connectionProperties);
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setLong(1, chessId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        closeConnection(connection);
 
+        try (Connection connection = getConnection(connectionProperties);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.setLong(1, chessId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            return collectEntities(resultSet);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            return new ArrayList<>();
+        }
+    }
+
+    private List<Movement> collectEntities(ResultSet resultSet) throws SQLException {
         List<Movement> movements = new ArrayList<>();
         while (resultSet.next()) {
             movements.add(collectEntity(resultSet));
@@ -76,11 +93,13 @@ public class MariaMovementRepository implements MovementRepository {
     }
 
     @Override
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         String query = "DELETE FROM MOVEMENT";
-        Connection connection = getConnection(connectionProperties);
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.executeUpdate();
-        closeConnection(connection);
+        try (Connection connection = getConnection(connectionProperties);
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }

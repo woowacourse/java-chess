@@ -2,20 +2,19 @@ package chess.repository;
 
 import chess.entity.ChessGame;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 
 public interface ChessRepository {
-    ChessGame save(ChessGame entity) throws SQLException;
+    ChessGame save(ChessGame entity);
 
-    Optional<ChessGame> findById(Long id) throws SQLException;
+    Optional<ChessGame> findById(Long id);
 
-    void update(ChessGame entity) throws SQLException;
+    void update(ChessGame entity);
 
-    List<ChessGame> findAll() throws SQLException;
+    List<ChessGame> findAll();
 
-    List<ChessGame> findAllByActive() throws SQLException;
+    List<ChessGame> findAllByActive();
 
-    void deleteAll() throws SQLException;
+    void deleteAll();
 }
