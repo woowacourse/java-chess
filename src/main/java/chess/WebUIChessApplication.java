@@ -11,8 +11,7 @@ import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-public class WebUIChessApplication {	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
+public class WebUIChessApplication {
 	private static ChessService chessService;
 
 	public static void main(String[] args) {
@@ -32,7 +31,6 @@ public class WebUIChessApplication {	private static final Gson GSON = new GsonBu
 		});
 
 		get("/isEnd", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
 			return chessService.isEnd();
 		});
 

@@ -42,22 +42,22 @@ public class BoardFactory {
 
 	public static ChessBoard createBoard() {
 		List<Row> board = new ArrayList<>();
-		board.addAll(createWhiteTeam());
-		board.addAll(createBlankTeam());
 		board.addAll(createBlackTeam());
+		board.addAll(createBlankTeam());
+		board.addAll(createWhiteTeam());
 		return new ChessBoard(1, board, new Turn(true));
 	}
 
 	private static List<Row> createWhiteTeam() {
 		return Arrays.asList(
-			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE),
-			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE));
+			createPawns(WHITE_TEAM_PAWN_INDEX, Team.WHITE),
+			createExecutive(WHITE_TEAM_EXECUTIVE_INDEX, Team.WHITE));
 	}
 
 	private static List<Row> createBlackTeam() {
 		return Arrays.asList(
-			createPawns(BLACK_TEAM_PAWN_INDEX, Team.BLACK),
-			createExecutive(BLACK_TEAM_EXECUTIVE_INDEX, Team.BLACK));
+			createExecutive(BLACK_TEAM_EXECUTIVE_INDEX, Team.BLACK),
+			createPawns(BLACK_TEAM_PAWN_INDEX, Team.BLACK));
 	}
 
 	private static List<Row> createBlankTeam() {

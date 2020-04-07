@@ -53,7 +53,7 @@ public class ChessService {
 			model.put("isEnd", false);
 			return GSON.toJson(model);
 		}
-			model.put("isEnd", true);
+		model.put("isEnd", true);
 		if (chessBoard.isLiveKing(Team.BLACK)) {
 			model.put("message", "BLACK팀 승리!");
 			return GSON.toJson(model);

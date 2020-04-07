@@ -8,7 +8,7 @@ import chess.domain.chessboard.Row;
 
 public class ChessDTO {
 	private static final int FROM_INDEX = 0;
-	private static final int TO_INDEX = 8;
+	private static final int TO_INDEX = 7;
 
 	private final int id;
 	private final String rawBoard;
@@ -21,19 +21,18 @@ public class ChessDTO {
 	}
 
 	public ChessDTO(ChessBoard chessBoard) {
-		this.rawBoard = reverseToString(chessBoard);
+		this.rawBoard = parsing(chessBoard);
 		this.id = chessBoard.getId();
 		this.isWhiteTurn = chessBoard.isWhiteTurn();
 	}
 
-	private String reverseToString(ChessBoard chessBoard) {
+	private String parsing(ChessBoard chessBoard) {
 		StringBuilder builder = new StringBuilder();
-		List<Row> rows = chessBoard.getRows();
-		int size = rows.size();
-		for (int index = size - 1; index >= 0; index--) {
-			Row row = rows.get(index);
-			IntStream.range(FROM_INDEX, TO_INDEX)
-				.mapToObj(num -> row.get(num).getName())
+		List<Row> board = chessBoard.getRows();
+		for (Row row : board) {
+			IntStream.rangeClosed(FROM_INDEX, TO_INDEX)
+				.mapToObj(index -> row.get(index))
+				.map(chessPiece -> chessPiece.getName())
 				.forEach(name -> builder.append(name));
 			builder.append(System.lineSeparator());
 		}
