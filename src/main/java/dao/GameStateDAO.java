@@ -7,30 +7,33 @@ import java.sql.SQLException;
 import chess.gamestate.GameState;
 
 public class GameStateDAO {
-	public void addGameState(GameState gameState) throws SQLException {
-		String query = "INSERT INTO gamestate VALUES (?)";
+	public void addGameState(Long roomID, GameState gameState) throws SQLException {
+		String query = "INSERT INTO gamestate(room_id,message) VALUES (?, ?)";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, gameState.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, gameState.toString());
 		pstmt.executeUpdate();
 	}
 
-	public void deleteAll() throws SQLException {
-		String query = "DELETE FROM gamestate";
+	public void deleteAll(Long roomID) throws SQLException {
+		String query = "DELETE FROM gamestate WHERE room_id = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
+		pstmt.setString(1, String.valueOf(roomID));
 		pstmt.executeUpdate();
 	}
 
-	public void deleteGameState(GameState gameState) throws SQLException {
+	public void deleteGameState(Long roomID, GameState gameState) throws SQLException {
 		String query = "DELETE FROM gamestate WHERE message = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, gameState.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, gameState.toString());
 		pstmt.executeUpdate();
 	}
 
-	public GameState findGameState() throws SQLException {
-		String query = "SELECT * FROM gamestate";
+	public GameState findGameState(Long roomID) throws SQLException {
+		String query = "SELECT * FROM gamestate WHERE room_id = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-
+		pstmt.setString(1, String.valueOf(roomID));
 		ResultSet resultSet = pstmt.executeQuery();
 
 		if (!resultSet.next())
@@ -39,12 +42,12 @@ public class GameStateDAO {
 		return GameState.of(resultSet.getString("message"));
 	}
 
-	public void updateMessage(GameState gameState, GameState opposingTeam) throws SQLException {
-		String query = "UPDATE gamestate SET message = ? WHERE message = ?";
+	public void updateMessage(Long roomID, GameState gameState, GameState opposingTeam) throws SQLException {
+		String query = "UPDATE gamestate SET message = ? WHERE room_id = ? AND message = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-
-		pstmt.setString(1, opposingTeam.toString());
-		pstmt.setString(2, gameState.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, opposingTeam.toString());
+		pstmt.setString(3, gameState.toString());
 
 		pstmt.executeUpdate();
 	}

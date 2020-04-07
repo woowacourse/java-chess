@@ -69,13 +69,16 @@ function boardCreate() {
 
 function start() {
     return new Promise((resolve, reject) => {
+        let roomID = $("#roomID").val();
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
+                console.log("start 함수")
+                console.log(JSON.parse(this.responseText))
                 return resolve(JSON.parse(this.responseText));
             }
         };
-        xhttp.open("GET", "http://localhost:8080/start", false);
+        xhttp.open("GET", "http://localhost:8080/start/" + roomID, false);
         xhttp.setRequestHeader("X-Custom-Header", "testvalue");
         xhttp.send();
     });
@@ -83,13 +86,14 @@ function start() {
 
 function resume() {
     return new Promise((resolve, reject) => {
+        let roomID = $("#roomID").val();
         var xhttp = new XMLHttpRequest();
         xhttp.onreadystatechange = function () {
             if (this.readyState == 4 && this.status == 200) {
                 return resolve(JSON.parse(this.responseText));
             }
         };
-        xhttp.open("GET", "http://localhost:8080/resume", false);
+        xhttp.open("GET", "http://localhost:8080/resume/" + roomID, false);
         xhttp.setRequestHeader("X-Custom-Header", "testvalue");
         xhttp.send();
     });
@@ -97,9 +101,8 @@ function resume() {
 
 function addPieces(response) {
     return new Promise((resolve, reject) => {
-        let gameManager = response;
-        for (let location in gameManager["chessBoard"]["board"]) {
-            let fileName = gameManager["chessBoard"]["board"][location]["name"];
+        for (let location in response["chessBoard"]["board"]) {
+            let fileName = response["chessBoard"]["board"][location]["name"];
             $("#" + location).addClass(fileName);
         }
         if (response["gameState"] === "RUNNING_WHITE_TURN") {
@@ -128,13 +131,14 @@ function addPieces(response) {
 
 function moveRequest(now, destination) {
     return new Promise((resolve, reject) => {
-        console.log("테스트")
+        let roomID =
+            console.log("테스트")
         console.log(now);
         console.log(destination);
         var queryString = `now=${now}&destination=${destination}`;
         $.ajax({
             type: "post",
-            url: "/move",
+            url: "/move/" + roomID,
             data: queryString,
             dataType: "json",
             error: function (xhr, status, error) {

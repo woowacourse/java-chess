@@ -1,68 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
-    <!-- 서버용 -->
-    <link href="../css/style.css" rel="stylesheet">
-    <link crossorigin="anonymous" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" rel="stylesheet">
+    <title>홍토체스</title>
 </head>
-
 <body>
-<div class="container">
-    <h2 style="text-align: center; font-family: cursive;font-size: 3rem;color: red;padding: 0px;">홍토체스</h2>
-    <div id="main">
-        <div class="row"
-             style="margin: 0; padding: 0 15px 20px; justify-content: space-between;align-items: flex-end;">
-            <div class="col" style="padding-left: 0;">
-                <h1 id="guide" style="font-size: 1rem;">현재 턴</h1>
-                <div class="black-color" id="turn" style="width: 50px;height: 50px;"></div>
-            </div>
-            <div class="col" style="display: flex; padding: 0; justify-content: flex-end;">
-                <button class="btn btn-danger" onclick="start_button()">Start</button>
-                <button class="btn btn-danger" id="status" onclick="status()">Status</button>
-                <button class="btn btn-danger" id="exit">Exit</button>
-            </div>
-        </div>
-        <div class="container" id="table"
-             style="width: 100%;display: flex;flex-direction: column;justify-content: center;align-items: center;">
+대기열
+{{#rooms}}
+
+<a href="/{{.}}" style="display: inline-block">{{.}}번방</a>
+<a href="#" id="{{.}}" onclick="delete_button(this)">삭제</a>
+<br>
+{{/rooms}}
+<form action="/" method="post">
+    <button>방 만들기</button>
+</form>
 
 
-            <div class="modal" id="statusModal" role="dialog" tabindex="-1">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title">체스 점수 통계</h5>
-                            <button aria-label="Close" class="close" data-dismiss="modal" type="button">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body" id="modal-body">
-                            <p>Modal body text goes here.</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button aria-label="Close" class="btn btn-primary" data-dismiss="modal"
-                                    type="button">확인
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-            <script crossorigin="anonymous" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
-                    src="https://code.jquery.com/jquery-3.4.1.js"></script>
-            <script crossorigin="anonymous"
-                    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-                    src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-            <script crossorigin="anonymous"
-                    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
-                    src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-
-            <script src="../js/init.js"></script>
-            <script src="../js/status.js"></script>
-        </div>
+<script crossOrigin="anonymous" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script crossOrigin="anonymous"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script crossOrigin="anonymous"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+    function delete_button(room_id) {
+        $.ajax({
+            url: `/${room_id.id}`,
+            method: "DELETE"
+        })
+    }
+</script>
 </body>
+</html>

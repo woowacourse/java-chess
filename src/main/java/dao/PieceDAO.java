@@ -7,47 +7,33 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.board.Location;
-import chess.piece.Bishop;
-import chess.piece.King;
-import chess.piece.Knight;
-import chess.piece.Pawn;
 import chess.piece.Piece;
-import chess.piece.Queen;
-import chess.piece.Rook;
 import chess.team.Team;
 
 public class PieceDAO {
-	private static Piece createOnePiece(String name, Team team) {
-		Map<String, Piece> map = new HashMap<>();
-		map.put("p", Pawn.of(team));
-		map.put("k", King.of(team));
-		map.put("r", Rook.of(team));
-		map.put("q", Queen.of(team));
-		map.put("n", Knight.of(team));
-		map.put("b", Bishop.of(team));
-		return map.get(name.toLowerCase());
-	}
-
-	public void addPiece(Location location, Piece piece) throws SQLException {
-		String query = "INSERT INTO piece VALUES (?, ?, ?)";
+	public void addPiece(Long roomID, Location location, Piece piece) throws SQLException {
+		String query = "INSERT INTO piece(room_id, location, name, team) VALUES (?, ?, ?, ?)";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, location.toString());
-		pstmt.setString(2, String.valueOf(piece.getName()));
-		pstmt.setString(3, piece.getTeam().getName());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, location.toString());
+		pstmt.setString(3, String.valueOf(piece.getName()));
+		pstmt.setString(4, piece.getTeam().getName());
 		pstmt.executeUpdate();
 	}
 
-	public void deletePiece(Location location) throws SQLException {
-		String query = "DELETE FROM piece WHERE location = ?";
+	public void deletePiece(Long roomID, Location location) throws SQLException {
+		String query = "DELETE FROM piece WHERE room_id = ? AND location = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, location.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, location.toString());
 		pstmt.executeUpdate();
 	}
 
-	public Piece findPiece(Location location) throws SQLException {
-		String query = "SELECT * FROM piece WHERE location = ?";
+	public Piece findPiece(Long roomID, Location location) throws SQLException {
+		String query = "SELECT * FROM piece WHERE room_id = ? AND location = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, location.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, location.toString());
 		ResultSet rs = pstmt.executeQuery();
 
 		if (!rs.next()) {
@@ -57,12 +43,13 @@ public class PieceDAO {
 		String name = rs.getString("name");
 		Team team = Team.of(rs.getString("team"));
 
-		return createOnePiece(name, team);
+		return Piece.createOnePiece(name, team);
 	}
 
-	public Map<Location, Piece> findAll() throws SQLException {
-		String query = "SELECT * FROM piece";
+	public Map<Location, Piece> findAll(Long roomID) throws SQLException {
+		String query = "SELECT * FROM piece WHERE room_id = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
+		pstmt.setString(1, String.valueOf(roomID));
 		ResultSet rs = pstmt.executeQuery();
 
 		Map<Location, Piece> result = new HashMap<>();
@@ -72,23 +59,25 @@ public class PieceDAO {
 			Team team = Team.of(rs.getString("team"));
 			Location location = Location.of(rs.getString("location"));
 
-			result.put(location, createOnePiece(name, team));
+			result.put(location, Piece.createOnePiece(name, team));
 		}
 
 		return result;
 	}
 
-	public void updateLocation(Location now, Location destination) throws SQLException {
-		String query = "UPDATE piece SET location = ? WHERE location = ?";
+	public void updateLocation(Long roomID, Location now, Location destination) throws SQLException {
+		String query = "UPDATE piece SET location = ? WHERE room_id = ? AND location = ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
-		pstmt.setString(1, destination.toString());
-		pstmt.setString(2, now.toString());
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.setString(2, destination.toString());
+		pstmt.setString(3, now.toString());
 		pstmt.executeUpdate();
 	}
 
-	public void deleteAll() throws SQLException {
-		String query = "DELETE FROM	piece;";
+	public void deleteAll(Long roomID) throws SQLException {
+		String query = "DELETE FROM	piece WHERE room_id	= ?";
 		PreparedStatement pstmt = ConnectionManager.getConnection().prepareStatement(query);
+		pstmt.setString(1, String.valueOf(roomID));
 		pstmt.executeUpdate();
 	}
 }
