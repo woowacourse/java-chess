@@ -88,7 +88,7 @@ public class HistoryDao {
 
         List<MoveCommand> result = new ArrayList<>();
         while (rs.next()) {
-            System.out.println("move " + rs.getString("start") + "에서 "+rs.getString("end"));
+            System.out.println("move " + rs.getString("start") + "에서 " + rs.getString("end"));
             MoveCommand moveCommand = new MoveCommand(rs.getString("start"), rs.getString("end"));
             result.add(moveCommand);
         }
@@ -111,6 +111,10 @@ public class HistoryDao {
         String query = "DELETE FROM history";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
+        pstmt.executeUpdate();
+
+        query = "ALTER TABLE history AUTO_INCREMENT=1";
+        pstmt = connection.prepareStatement(query);
         pstmt.executeUpdate();
         closeConnection(connection);
     }
