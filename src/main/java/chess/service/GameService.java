@@ -36,7 +36,8 @@ public class GameService {
 		Map<Position, Piece> pieces = board.getPieces();
 
 		return pieces.entrySet().stream()
-			.map(entry -> new BoardDTO(entry.getKey().toString(), entry.getValue().getSymbol().toLowerCase(), entry.getValue().getTeam().name().toLowerCase()))
+			.map(entry -> new BoardDTO(entry.getKey().toString(), entry.getValue().getSymbol().toLowerCase(),
+				entry.getValue().getTeam().name().toLowerCase()))
 			.collect(Collectors.toList());
 	}
 
@@ -47,8 +48,10 @@ public class GameService {
 	public List<BoardDTO> findChangedPiecesOnBoard(Position from, Position to) {
 		Board board = game.getBoard();
 		List<BoardDTO> result = new ArrayList<>();
-		result.add(new BoardDTO(from.toString(), board.findPiece(from).getSymbol().toLowerCase(), board.findPiece(from).getTeam().name().toLowerCase()));
-		result.add(new BoardDTO(to.toString(), board.findPiece(to).getSymbol().toLowerCase(), board.findPiece(to).getTeam().name().toLowerCase()));
+		result.add(new BoardDTO(from.toString(), board.findPiece(from).getSymbol().toLowerCase(),
+			board.findPiece(from).getTeam().name().toLowerCase()));
+		result.add(new BoardDTO(to.toString(), board.findPiece(to).getSymbol().toLowerCase(),
+			board.findPiece(to).getTeam().name().toLowerCase()));
 		return result;
 	}
 }

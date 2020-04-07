@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
+import chess.domain.state.StateType;
 
 public class Game {
 	private GameState state;
@@ -33,6 +34,10 @@ public class Game {
 	public Board getBoard() {
 		return state.getBoard();
 	}
+
+	public Team getTurn() {return state.getTurn();}
+
+	public StateType getStateType() {return state.getStateType();}
 
 	public Team findWinner() {
 		return state.getWinner();

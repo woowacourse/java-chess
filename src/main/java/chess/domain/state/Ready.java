@@ -1,23 +1,21 @@
 package chess.domain.state;
 
+import static chess.domain.piece.Team.*;
+import static chess.domain.state.StateType.*;
+
 import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public class Ready implements GameState {
-	private final Board board;
-	private Team turn;
-
+public class Ready extends GameState {
 	public Ready(Board board) {
-		this.board = board;
-		this.turn = Team.WHITE;
+		this(board, WHITE);
 	}
 
 	public Ready(Board board, Team turn) {
-		this.board = board;
-		this.turn = turn;
+		super(board, READY, turn);
 	}
 
 	@Override
@@ -39,11 +37,6 @@ public class Ready implements GameState {
 	@Override
 	public boolean isNotFinished() {
 		return true;
-	}
-
-	@Override
-	public Board getBoard() {
-		return board;
 	}
 
 	@Override

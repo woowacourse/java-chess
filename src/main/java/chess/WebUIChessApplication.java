@@ -2,10 +2,7 @@ package chess;
 
 import static spark.Spark.*;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import chess.domain.board.Board;
@@ -13,9 +10,9 @@ import chess.domain.game.Game;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.service.GameService;
+import chess.view.dto.GameDTO;
 import chess.view.dto.PositionRequestDTO;
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -33,6 +30,18 @@ public class WebUIChessApplication {
 		get("/chess/start", (req, res) -> {
 			GameService service = new GameService(game);
 			service.startNewGame();
+			return new Gson().toJson(GameDTO.of(game.getTurn(), game.getStateType()));
+		});
+
+		get("/chess/end", (req, res) -> {
+			game.end();
+			return new Gson().toJson(GameDTO.of(game.getTurn(), game.getStateType()));
+		});
+
+		get("/chess/state", (req, res) -> new Gson().toJson(GameDTO.of(game.getTurn(), game.getStateType())));
+
+		get("/chess/pieces", (req, res) -> {
+			GameService service = new GameService(game);
 			return new Gson().toJson(service.findAllPiecesOnBoard());
 		});
 
@@ -44,8 +53,14 @@ public class WebUIChessApplication {
 			GameService service = new GameService(game);
 			PositionRequestDTO request = new Gson().fromJson(req.body(), PositionRequestDTO.class);
 			service.move(Position.of(request.getFrom()), Position.of(request.getTo()));
-			return new Gson().toJson(service.findChangedPiecesOnBoard(Position.of(request.getFrom()), Position.of(request.getTo())));
+
+			return new Gson().toJson(
+				service.findChangedPiecesOnBoard(Position.of(request.getFrom()), Position.of(request.getTo())));
 		});
+
+		get("/chess/game/isnotfinish", (req, res) -> game.isNotEnd());
+
+		get("/chess/result/winner", (req, res) -> game.findWinner().name().toLowerCase());
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

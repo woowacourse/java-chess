@@ -1,18 +1,16 @@
 package chess.domain.state;
 
+import static chess.domain.state.StateType.*;
+
 import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-public abstract class Finished implements GameState {
-	protected final Board board;
-	protected Team turn;
-
+public abstract class Finished extends GameState {
 	public Finished(Board board, Team turn) {
-		this.board = board;
-		this.turn = turn;
+		super(board, FINISHED, turn);
 	}
 
 	@Override
@@ -39,10 +37,5 @@ public abstract class Finished implements GameState {
 	@Override
 	public boolean isNotFinished() {
 		return false;
-	}
-
-	@Override
-	public Board getBoard() {
-		return board;
 	}
 }

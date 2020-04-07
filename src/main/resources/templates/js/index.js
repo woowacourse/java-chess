@@ -50,7 +50,7 @@ cells.forEach(node => node.addEventListener('click', e => {
         const obj = {'from': localStorage.getItem('from'), 'to': clickedCell.id}
         localStorage.clear();
         removeAllClickedToggle(cells);
-        httpPostRequest(JSON.stringify(obj));
+        requestMovePieces(JSON.stringify(obj));
     }
 }));
 
@@ -71,23 +71,77 @@ function removeAllClickedToggle(nodes) {
     nodes.forEach(node => node.classList.remove("clicked"));
 }
 
-function httpPostRequest(data) {
+function renderCurrentGameState(currentState) {
+    const turn = currentState["turn"];
+    const state = currentState["gameState"];
+    document.getElementById("current-turn").innerText = turn;
+    document.getElementById("exception-message").innerText = state;
+}
+
+function updateGameState() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            renderCurrentGameState(JSON.parse(xhttp.responseText));
+        }
+    };
+    xhttp.open("GET", "/chess/state", true);
+    xhttp.send();
+}
+
+function requestMovePieces(data) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
             updatePieceOnBoard(xhttp);
             requestRecord();
+            checkWhetherGameIsFinished();
+            updateGameState();
+        } else if(this.status === 500) {
+            console.log(this.responseText);
         }
     };
     xhttp.open("POST", "/chess/move", true);
     xhttp.send(data);
 }
 
-const newGameButton = document.getElementById("new-game");
-newGameButton.addEventListener('click', requestNewGame);
+function checkWhetherGameIsFinished() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            if (!JSON.parse(xhttp.responseText)) {
+                requestWinner();
+            }
+        }
+    };
+    xhttp.open("GET", "/chess/game/isnotfinish", true);
+    xhttp.send();
+}
 
-function cleanBoard() {
-    cells.forEach(cell => cell.innerHTML = '');
+document.getElementById("end-game").addEventListener('click', requestEndGame);
+document.getElementById("new-game").addEventListener('click', requestNewGame);
+
+function requestEndGame() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            updateGameState();
+            requestWinner();
+        }
+    };
+    xhttp.open("GET", "/chess/end", true);
+    xhttp.send();
+}
+
+function requestWinner() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            alert(xhttp.responseText)
+        }
+    };
+    xhttp.open("GET", "/chess/result/winner", true);
+    xhttp.send();
 }
 
 function requestNewGame() {
@@ -95,17 +149,19 @@ function requestNewGame() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            updatePieceOnBoard(xhttp);
-            requestRecord();
+            requestAllPieces();
+            updateGameState();
         }
     };
     xhttp.open("GET", "/chess/start", true);
     xhttp.send();
 }
 
+function cleanBoard() {
+    cells.forEach(cell => cell.innerHTML = '');
+}
+
 function updatePieceOnBoard(xhttp) {
-    //모든 포지션, 블럭 정보 가져온다음에, 각 포지션마다 말 위치 시켜준다.
-    //position : {row: 3, col:3}, piece: {symbol:p, team: black}
     const piecesToUpdate = JSON.parse(xhttp.responseText);
     console.log(piecesToUpdate);
     moveAllPieces(piecesToUpdate);
@@ -118,7 +174,6 @@ function moveAllPieces(piecesToUpdate) {
 }
 
 function movePiece(piecesToUpdate) {
-    //position : {row: 3, col:3}, piece: {symbol:p, team: black}
     const position = piecesToUpdate["position"];
     const symbol = piecesToUpdate["symbol"];
     const team = piecesToUpdate["team"];
@@ -152,13 +207,13 @@ function renderPiece(element, symbol, team) {
         }
     }
     element.appendChild(img);
-    //element.innerText =  symbol + team;
 }
 
 function requestRecord() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            console.log(this);
             let data = xhttp.responseText;
             const parse = JSON.parse(data);
             updateRecord(parse);
@@ -178,4 +233,22 @@ function updateRecord(parse) {
         }
         select.innerHTML = parse[i]["score"];
     }
+}
+
+function requestAllPieces() {
+    let xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState === 4 && this.status === 200) {
+            updatePieceOnBoard(xhttp);
+            requestRecord();
+        }
+    };
+    xhttp.open("GET", "/chess/pieces", true);
+    xhttp.send();
+}
+
+window.addEventListener('load', initialLoad);
+function initialLoad() {
+    updateGameState();
+    requestAllPieces();
 }
