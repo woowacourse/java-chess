@@ -46,4 +46,8 @@ public class Game {
 	public boolean isNotEnd() {
 		return state.isNotFinished();
 	}
+
+	public int getId() {
+		return state.getId();
+	}
 }

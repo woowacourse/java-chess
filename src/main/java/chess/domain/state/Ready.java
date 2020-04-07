@@ -11,7 +11,7 @@ import chess.domain.position.Position;
 
 public class Ready extends GameState {
 	public Ready(Board board) {
-		this(board, WHITE);
+		this(board, NONE);
 	}
 
 	public Ready(Board board, Team turn) {

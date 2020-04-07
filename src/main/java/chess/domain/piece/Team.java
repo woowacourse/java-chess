@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Team {
 	BLACK, WHITE, NONE;
 
@@ -23,5 +25,12 @@ public enum Team {
 			return WHITE;
 		}
 		return BLACK;
+	}
+
+	public static Team of(String team) {
+		return Arrays.stream(values())
+			.filter(val -> val.name().equals(team))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("유효하지 않는 입력 값입니다."));
 	}
 }

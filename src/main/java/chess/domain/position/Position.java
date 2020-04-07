@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.domain.piece.Team;
+
 public class Position {
 	public static final int MINIMUM_POSITION_NUMBER = 1;
 	public static final int MAXIMUM_POSITION_NUMBER = 8;
@@ -72,6 +74,10 @@ public class Position {
 				.collect(Collectors.toList());
 		}
 		throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+	}
+
+	public boolean isInitialPawnPosition(Team team) {
+		return row.isInitialPawnRow(team);
 	}
 
 	public boolean isNotDiagonal(Position other) {

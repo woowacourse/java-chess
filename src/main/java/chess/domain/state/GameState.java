@@ -9,15 +9,21 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public abstract class GameState {
+	protected final int id;
 	protected final Board board;
 	protected final StateType stateType;
 	protected Team turn;
 
 	public GameState(Board board, StateType stateType) {
-		this(board, stateType, WHITE);
+		this(1, board, stateType, WHITE);
 	}
 
 	public GameState(Board board, StateType stateType, Team turn) {
+		this(1, board, stateType, turn);
+	}
+
+	public GameState(int id, Board board, StateType stateType, Team turn) {
+		this.id = id;
 		this.board = board;
 		this.stateType = stateType;
 		this.turn = turn;
@@ -47,5 +53,9 @@ public abstract class GameState {
 
 	public StateType getStateType() {
 		return stateType;
+	}
+
+	public int getId() {
+		return id;
 	}
 }

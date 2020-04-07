@@ -18,6 +18,7 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
@@ -34,6 +35,22 @@ public class Board {
 
 	public Board(Map<Position, Piece> pieces) {
 		this.pieces = pieces;
+	}
+
+	public Board(String boards) {
+		pieces = new HashMap<>();
+		if ("".equals(boards)) return;
+		String[] split = boards.split("\n");
+		for (int i = 0; i < split.length; i++) {
+			String s = split[i];
+			String[] split1 = s.split("");
+			for (int j = 0; j < split1.length; j++) {
+				String s1 = split1[j];
+				if (s1.equals("."))
+					continue;
+				pieces.put(Position.of(j + 1, 8 - i), PieceFactory.of(s1));
+			}
+		}
 	}
 
 	public void start() {
@@ -89,7 +106,6 @@ public class Board {
 		Piece target = findPiece(to);
 		validateSourceMovingRoute(from, to, source, target);
 		updatePiecePosition(from, to, source);
-		source.updateHasMoved();
 	}
 
 	private Piece requireNonEmpty(Piece piece) {
@@ -146,5 +162,17 @@ public class Board {
 
 	public Map<Position, Piece> getPieces() {
 		return Collections.unmodifiableMap(this.pieces);
+	}
+
+	public String getAsString() {
+		StringBuilder builder = new StringBuilder();
+		for (int rank = 8; rank >= 1; rank--) {
+			for (int file = 1; file <= 8; file++) {
+				Piece piece = findPiece(Position.of(file, rank));
+				builder.append(piece.getSymbol());
+			}
+			builder.append("\n");
+		}
+		return builder.toString();
 	}
 }

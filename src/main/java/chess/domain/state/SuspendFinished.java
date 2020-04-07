@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import static chess.domain.piece.Team.*;
+import static chess.domain.state.StateType.*;
 
 import java.util.Map;
 
@@ -9,7 +10,7 @@ import chess.domain.piece.Team;
 
 public class SuspendFinished extends Finished {
 	public SuspendFinished(Board board, Team turn) {
-		super(board, turn);
+		super(board, SUSPEND_FINISHED, turn);
 	}
 
 	@Override

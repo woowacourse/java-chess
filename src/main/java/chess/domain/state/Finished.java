@@ -1,7 +1,5 @@
 package chess.domain.state;
 
-import static chess.domain.state.StateType.*;
-
 import java.util.Map;
 
 import chess.domain.board.Board;
@@ -9,8 +7,8 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public abstract class Finished extends GameState {
-	public Finished(Board board, Team turn) {
-		super(board, FINISHED, turn);
+	public Finished(Board board, StateType stateType, Team turn) {
+		super(board, stateType, turn);
 	}
 
 	@Override

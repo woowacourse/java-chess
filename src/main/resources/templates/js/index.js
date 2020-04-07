@@ -137,7 +137,7 @@ function requestWinner() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            alert(xhttp.responseText)
+            alert("승리 : " + xhttp.responseText)
         }
     };
     xhttp.open("GET", "/chess/result/winner", true);
@@ -176,35 +176,30 @@ function moveAllPieces(piecesToUpdate) {
 function movePiece(piecesToUpdate) {
     const position = piecesToUpdate["position"];
     const symbol = piecesToUpdate["symbol"];
-    const team = piecesToUpdate["team"];
     const element = document.querySelector("#" + position);
-    renderPiece(element, symbol, team);
+    renderPiece(element, symbol);
 }
 
-function renderPiece(element, symbol, team) {
+function renderPiece(element, symbol) {
     let img;
     element.innerHTML = '';
-    if (team === 'none') {
+    if (symbol === '.') {
         return;
     }
-    if (team === 'black') {
-        switch (symbol) {
-            case 'p': img = black_pawn.cloneNode(true); break;
-            case 'b': img = black_bishop.cloneNode(true); break;
-            case 'r': img = black_rook.cloneNode(true); break;
-            case 'n': img = black_knight.cloneNode(true); break;
-            case 'q': img = black_queen.cloneNode(true); break;
-            case 'k': img = black_king.cloneNode(true);
-        }
-    } else {
-        switch (symbol) {
-            case 'p': img = white_pawn.cloneNode(true); break;
-            case 'b': img = white_bishop.cloneNode(true); break;
-            case 'r': img = white_rook.cloneNode(true); break;
-            case 'n': img = white_knight.cloneNode(true); break;
-            case 'q': img = white_queen.cloneNode(true); break;
-            case 'k': img = white_king.cloneNode(true);
-        }
+
+    switch (symbol) {
+        case 'P': img = black_pawn.cloneNode(true); break;
+        case 'B': img = black_bishop.cloneNode(true); break;
+        case 'R': img = black_rook.cloneNode(true); break;
+        case 'N': img = black_knight.cloneNode(true); break;
+        case 'Q': img = black_queen.cloneNode(true); break;
+        case 'K': img = black_king.cloneNode(true); break;
+        case 'p': img = white_pawn.cloneNode(true); break;
+        case 'b': img = white_bishop.cloneNode(true); break;
+        case 'r': img = white_rook.cloneNode(true); break;
+        case 'n': img = white_knight.cloneNode(true); break;
+        case 'q': img = white_queen.cloneNode(true); break;
+        case 'k': img = white_king.cloneNode(true);
     }
     element.appendChild(img);
 }
