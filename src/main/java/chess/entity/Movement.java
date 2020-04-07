@@ -8,13 +8,6 @@ public class Movement extends BaseEntity implements Comparable<Movement> {
     private String sourceKey;
     private String targetKey;
 
-    public Movement(Long autoIncrement, Movement entity) {
-        super(autoIncrement);
-        this.chessId = entity.getChessId();
-        this.sourceKey = entity.sourceKey;
-        this.targetKey = entity.targetKey;
-    }
-
     public Movement(Long id, Movement entity, LocalDateTime createdTime) {
         super(id, createdTime);
         this.chessId = entity.getChessId();

@@ -2,7 +2,8 @@ package chess.repository;
 
 import chess.entity.Movement;
 
-import java.sql.SQLException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,7 @@ public class InMemoryMovementRepository implements MovementRepository {
     @Override
     public Movement save(Movement entity) {
         autoIncrement++;
-        entity = new Movement(autoIncrement, entity);
+        entity = new Movement(autoIncrement, entity, LocalDateTime.now(ZoneId.of("Asia/Seoul")));
         memory.put(autoIncrement, entity);
         return entity;
     }
@@ -30,7 +31,7 @@ public class InMemoryMovementRepository implements MovementRepository {
     }
 
     @Override
-    public void deleteAll() throws SQLException {
+    public void deleteAll() {
         memory.clear();
     }
 }

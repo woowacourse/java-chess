@@ -22,15 +22,16 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 public class ChessService {
+    private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
+
     private final ChessRepository chessRepository;
     private final MovementRepository movementRepository;
+
 
     public ChessService(ChessRepository chessRepository, MovementRepository movementRepository) {
         this.chessRepository = chessRepository;
         this.movementRepository = movementRepository;
     }
-
-    private static final TilesDto EMPTY_BOARD = new TilesDto(new ChessManager(new ChessBoardAdapter(ChessBoard.empty())));
 
     public MoveResponse move(MoveRequest moveRequest) throws SQLException {
         ChessGame chessGame = chessRepository.findById(moveRequest.getId())

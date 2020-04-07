@@ -8,13 +8,7 @@ public class ChessGame extends BaseEntity {
     private Team winner = Team.NOTHING;
     private boolean active;
 
-    public ChessGame(LocalDateTime createdTime, boolean active) {
-        super(createdTime);
-        this.active = active;
-    }
-
     public ChessGame(boolean active) {
-        super();
         this.active = active;
     }
 

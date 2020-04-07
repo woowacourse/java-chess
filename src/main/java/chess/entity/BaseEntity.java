@@ -9,18 +9,9 @@ public abstract class BaseEntity {
     public BaseEntity() {
     }
 
-    public BaseEntity(LocalDateTime createdTime) {
-        this.createdTime = createdTime;
-    }
-
     public BaseEntity(Long id, LocalDateTime createdTime) {
         this.id = id;
         this.createdTime = createdTime;
-    }
-
-    public BaseEntity(Long id) {
-        this.id = id;
-        this.createdTime = LocalDateTime.now();
     }
 
     public Long getId() {
