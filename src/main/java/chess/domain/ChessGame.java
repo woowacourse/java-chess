@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
-import chess.domain.result.Status;
+import chess.domain.status.Status;
 
 import java.util.Map;
 
@@ -51,7 +51,7 @@ public class ChessGame {
     }
 
     public Status getStatus() {
-        return getStatus();
+        return status;
     }
 
     public boolean isEnd() {

@@ -1,4 +1,4 @@
-package chess.domain.result;
+package chess.domain.status;
 
 import chess.domain.board.Board;
 import chess.domain.player.Player;

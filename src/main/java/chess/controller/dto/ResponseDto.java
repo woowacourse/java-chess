@@ -2,7 +2,7 @@ package chess.controller.dto;
 
 import chess.domain.player.Player;
 import chess.domain.position.Position;
-import chess.domain.result.Status;
+import chess.domain.status.Status;
 
 import java.util.Map;
 import java.util.Objects;
