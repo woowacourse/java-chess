@@ -5,13 +5,13 @@ import chess.domain.piece.*;
 import java.util.Arrays;
 
 public enum PieceRender {
-    KING(King.class, (piece) -> piece.isBlack() ? "K" : "k"),
-    QUEEN(Queen.class, (piece) -> piece.isBlack() ? "Q" : "q"),
-    BISHOP(Bishop.class, (piece) -> piece.isBlack() ? "B" : "b"),
-    KNIGHT(Knight.class, (piece) -> piece.isBlack() ? "N" : "n"),
-    ROOK(Rook.class, (piece) -> piece.isBlack() ? "R" : "r"),
-    PAWN(AbstractPawn.class, (piece) -> piece.isBlack() ? "P" : "p"),
-    BLANK(Blank.class, (piece -> "."));
+    KING(King.class, (piece) -> piece.isBlack() ? "♚" : "♔"),
+    QUEEN(Queen.class, (piece) -> piece.isBlack() ? "♛" : "♕"),
+    BISHOP(Bishop.class, (piece) -> piece.isBlack() ? "♝" : "♗"),
+    KNIGHT(Knight.class, (piece) -> piece.isBlack() ? "♞" : "♘"),
+    ROOK(Rook.class, (piece) -> piece.isBlack() ? "♜" : "♖"),
+    PAWN(AbstractPawn.class, (piece) -> piece.isBlack() ? "♟" : "♙"),
+    BLANK(Blank.class, (piece -> ""));
 
     private final Class<? extends Piece> pieceClass;
     private final RenderStrategy renderStrategy;
