@@ -15,6 +15,7 @@ public class GameController {
 	public static final String STATUS_URL = BASIC_URL + "/status";
 	public static final String END_URL = BASIC_URL + "/end";
 	public static final String INIT_URL = BASIC_URL + "/init";
+	public static final String LOAD_URL = BASIC_URL + "/load";
 	public static Route movePiece = ((request, response) -> {
 		Map<String, Object> model = new HashMap<>();
 		GameService gameService = GameService.getInstance();
@@ -43,7 +44,6 @@ public class GameController {
 	});
 	public static Route endGame = (request, response) -> {
 		Map<String, Object> model = new HashMap<>();
-		GameService gameService = GameService.getInstance();
 
 		return render(model, "result.html");
 	};
@@ -54,13 +54,19 @@ public class GameController {
 		gameService.initialize(roomId);
 
 		model.put("pieces", gameService.getPiecesResponseDTO(roomId).getPieces());
-		System.out.println(gameService.getPiecesResponseDTO(roomId).getPieces().toString());
 
 		model.put("roomId", roomId);
 		// TODO : 얘가 왜 되는지 정확히 모르겠다. form 형태로 줬을 때만 가능함. 전체를 리로드하기 때문에 그런듯?
 		return render(model, "game.html");
 	};
+	public static Route loadGame = (request, response) -> {
+		Map<String, Object> model = new HashMap<>();
+		GameService gameService = GameService.getInstance();
+		int roomId = Integer.parseInt(request.queryParams("roomId"));
 
-	private GameController() {
-	}
+		model.put("pieces", gameService.getPiecesResponseDTO(roomId).getPieces());
+
+		model.put("roomId", roomId);
+		return render(model, "game.html");
+	};
 }

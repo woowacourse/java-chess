@@ -29,6 +29,11 @@
     <input type="submit" value="save">
 </form>
 
+<form action="/game/load" method="get">
+    <input name="roomId" type="hidden" value="{{roomId}}">
+    <input type="submit" value="load">
+</form>
+
 <form action="/game/init" method="get">
     <input name="roomId" type="hidden" value="{{roomId}}">
     <input type="submit" value="init">
