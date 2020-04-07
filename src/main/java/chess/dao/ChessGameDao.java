@@ -12,4 +12,6 @@ public interface ChessGameDao {
 	ChessGame findById(int id) throws Exception;
 
 	void update(int id, ChessGame chessGame) throws Exception;
+
+	boolean deleteById(int id) throws Exception;
 }

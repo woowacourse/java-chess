@@ -95,4 +95,12 @@ public class JDBCChessGameDao implements ChessGameDao {
 		pstmt.setInt(4, id);
 		pstmt.executeUpdate();
 	}
+
+	@Override
+	public boolean deleteById(int id) throws SQLException {
+		String query = "DELETE FROM chess_game WHERE id = ?";
+		PreparedStatement pstmt = getConnection().prepareStatement(query);
+		pstmt.setInt(1, id);
+		return pstmt.executeUpdate() != 0;
+	}
 }

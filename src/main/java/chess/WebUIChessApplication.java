@@ -11,7 +11,6 @@ import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
@@ -19,7 +18,7 @@ public class WebUIChessApplication {
 	private static final ChessGameService CHESS_GAME_SERVICE = new ChessGameService();
 
 	public static void main(String[] args) {
-		Spark.staticFileLocation("assets");
+		staticFileLocation("assets");
 
 		get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
@@ -27,7 +26,7 @@ public class WebUIChessApplication {
 
 		get("/game/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ResponseDto responseDto = CHESS_GAME_SERVICE.findById(id);
+			ResponseDto responseDto = CHESS_GAME_SERVICE.find(id);
 			if (responseDto.getStatusCode() == ResponseDto.SUCCESS) {
 				Map<String, Object> model = new HashMap<>();
 				model.put("id", id);
@@ -40,7 +39,7 @@ public class WebUIChessApplication {
 
 		get("/board/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			return GSON.toJson(CHESS_GAME_SERVICE.findById(id));
+			return GSON.toJson(CHESS_GAME_SERVICE.find(id));
 		});
 
 		post("/move", (req, res) -> {
@@ -53,6 +52,11 @@ public class WebUIChessApplication {
 		post("/restart", (req, res) -> {
 			int id = Integer.parseInt(req.queryParams("id"));
 			return GSON.toJson(CHESS_GAME_SERVICE.restart(id));
+		});
+
+		post("/delete", (req, res) -> {
+			int id = Integer.parseInt(req.queryParams("id"));
+			return GSON.toJson(CHESS_GAME_SERVICE.delete(id));
 		});
 
 		post("/create", (req, res) -> GSON.toJson(CHESS_GAME_SERVICE.create()));

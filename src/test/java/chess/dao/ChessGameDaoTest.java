@@ -43,4 +43,11 @@ class ChessGameDaoTest {
 		chessGameDao.update(chessGameId, chessGame);
 		assertThat(chessGameDao.findById(chessGameId)).isEqualTo(chessGame);
 	}
+
+	@Test
+	void deleteById() throws Exception {
+		int chessGameId = chessGameDao.create();
+		chessGameDao.deleteById(chessGameId);
+		assertThat(chessGameDao.findById(chessGameId)).isNull();
+	}
 }

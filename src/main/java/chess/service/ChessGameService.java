@@ -1,6 +1,7 @@
 package chess.service;
 
 import chess.dao.ChessGameDao;
+import chess.dao.InMemoryChessGameDao;
 import chess.dao.JDBCChessGameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.exception.InvalidTurnException;
@@ -24,7 +25,7 @@ public class ChessGameService {
 		return new ResponseDto(ResponseDto.SUCCESS, chessGameDao.findAll());
 	}
 
-	public ResponseDto findById(int id) throws Exception {
+	public ResponseDto find(int id) throws Exception {
 		ChessGame chessGame = chessGameDao.findById(id);
 		if (chessGame == null) {
 			return new ResponseDto(ResponseDto.FAIL, null);
@@ -65,6 +66,14 @@ public class ChessGameService {
 		chessGame.start();
 		chessGameDao.update(chessGameId, chessGame);
 		return new ResponseDto(ResponseDto.SUCCESS, chessGameId);
+	}
+
+	public ResponseDto delete(int id) throws Exception {
+		boolean isDeleted = chessGameDao.deleteById(id);
+		if (!isDeleted) {
+			return new ResponseDto(ResponseDto.FAIL, null);
+		}
+		return new ResponseDto(ResponseDto.SUCCESS, null);
 	}
 
 	private ChessGameDto convertToChessGameDto(ChessGame chessGame) {

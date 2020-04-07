@@ -270,11 +270,26 @@
             color: #f1f1f1;
         }
 
+        .chess-result-submit {
+            display: flex;
+            justify-content: center;
+        }
+
         .chess-result-restart {
             background: #EDCAA4;
             color: #5A3C29;
             cursor: pointer;
             padding: 5px;
+            margin: 5px;
+
+        }
+
+        .chess-result-delete {
+            background: #EDCAA4;
+            color: #5A3C29;
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
         }
 
         .hide {
@@ -284,8 +299,6 @@
         .show {
             display: flex;
         }
-
-
     </style>
 </head>
 <body>
@@ -501,7 +514,10 @@
     </div>
     <div class="chess-result hide">
         <div class="chess-result-message"></div>
-        <div class="chess-result-restart">새로 시작</div>
+        <div class="chess-result-submit">
+            <div class="chess-result-restart">새로 시작</div>
+            <div class="chess-result-delete">게임 삭제</div>
+        </div>
     </div>
 </div>
 <script>
@@ -522,6 +538,7 @@
     const chessResultElement = document.querySelector('.chess-result')
     const chessResultMessageElement = document.querySelector('.chess-result-message')
     const chessResultRestartElement = document.querySelector('.chess-result-restart')
+    const chessResultDeleteElement = document.querySelector('.chess-result-delete')
 
     const chessGamesElement = document.querySelector('.chess-games')
     const chessCreateSubmitElement = document.querySelector('.chess-create-submit')
@@ -553,6 +570,22 @@
         .then(data => {
             if (data.statusCode == 1) {
                 location.reload()
+            }
+        })
+    }
+
+    chessResultDeleteElement.onclick = () => {
+        fetch('/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + {{ id }}
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.statusCode == 1) {
+                location.replace('/')
             }
         })
     }

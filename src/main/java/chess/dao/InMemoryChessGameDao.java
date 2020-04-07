@@ -36,4 +36,9 @@ public class InMemoryChessGameDao implements ChessGameDao {
 	public void update(int id, ChessGame chessGame) throws Exception {
 		memory.replace(id, chessGame);
 	}
+
+	@Override
+	public boolean deleteById(int id) throws Exception {
+		return memory.remove(id) != null;
+	}
 }
