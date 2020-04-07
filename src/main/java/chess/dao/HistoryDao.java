@@ -3,15 +3,17 @@ package chess.dao;
 import chess.domain.game.MoveCommand;
 
 import java.sql.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * HistoryDao 클래스는 DB와의 통신을 위한 클래스로, DB에 게임 기록을 저장하거나 불러오는 작업을 수행한다.
  * 필요한 테이블 조작 기능 세 가지만을 메서드로 가지고 있다.
  * 기능의 목록은 다음과 같다.
- *  - insert : 새로운 기록을 테이블에 추가한다. 게임 진행 중에 수시로 호출된다.
- *  - selectAll : 테이블의 모든 기록을 가져온다. 불러오기 기능에서 사용된다.
- *  - clear : 테이블의 모든 기록을 지운다. 게임이 종료되거나, 기존 기록을 지우고 게임을 새로 시작핧 때 사용된다.
+ * - insert : 새로운 기록을 테이블에 추가한다. 게임 진행 중에 수시로 호출된다.
+ * - selectAll : 테이블의 모든 기록을 가져온다. 불러오기 기능에서 사용된다.
+ * - clear : 테이블의 모든 기록을 지운다. 게임이 종료되거나, 기존 기록을 지우고 게임을 새로 시작핧 때 사용된다.
  */
 public class HistoryDao {
     public Connection getConnection() {
@@ -56,15 +58,17 @@ public class HistoryDao {
      * 이동 시작 위치와 끝 위치만 전달하면 이후 이를 바탕으로 경기를 불러올 수 있다.
      *
      * @param start 이동이 시작된 위치값이다.
-     * @param end 이동이 끝난 위치값이다.
+     * @param end   이동이 끝난 위치값이다.
      * @throws SQLException DB와의 통신이나 SQL 실행에 문제 발생 시 RuntimeException이 발생한다.
      */
     public void insert(String start, String end) throws SQLException {
         String query = "INSERT INTO history (start, end) VALUES (?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.setString(1, start);
         pstmt.setString(2, end);
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 
     /**
@@ -78,14 +82,17 @@ public class HistoryDao {
      */
     public List<MoveCommand> selectAll() throws SQLException {
         String query = "SELECT * FROM history";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
+        closeConnection(connection);
 
         List<MoveCommand> result = new ArrayList<>();
         while (rs.next()) {
             MoveCommand moveCommand = new MoveCommand(rs.getString("start"), rs.getString("end"));
             result.add(moveCommand);
         }
+
         return Collections.unmodifiableList(result);
     }
 
@@ -101,7 +108,9 @@ public class HistoryDao {
      */
     public void clear() throws SQLException {
         String query = "DELETE FROM history";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
         pstmt.executeUpdate();
+        closeConnection(connection);
     }
 }
