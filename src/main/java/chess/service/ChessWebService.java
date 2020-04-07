@@ -1,24 +1,24 @@
 package chess.service;
 
-import chess.domain.web.Log;
-import chess.domain.web.LogDao;
+import chess.domain.web.HistoryDao;
+import chess.domain.web.MovingPosition;
 
 import java.sql.SQLException;
-import java.util.Map;
+import java.util.List;
 
 public class ChessWebService {
-	public void clearLog() throws SQLException {
-		LogDao logDao = new LogDao();
-		logDao.clear();
+	public void clearHistory() throws SQLException {
+		HistoryDao historyDao = new HistoryDao();
+		historyDao.clear();
 	}
 
-	public Map<Integer, Log> selectAllLog() throws SQLException {
-		LogDao logDao = new LogDao();
-		return logDao.selectAll();
+	public List<MovingPosition> selectAllHistory() throws SQLException {
+		HistoryDao historyDao = new HistoryDao();
+		return historyDao.selectAll();
 	}
 
-	public void insertLog(String start, String end) throws SQLException {
-		LogDao logDao = new LogDao();
-		logDao.insert(start, end);
+	public void insertHistory(String start, String end) throws SQLException {
+		HistoryDao historyDao = new HistoryDao();
+		historyDao.insert(start, end);
 	}
 }

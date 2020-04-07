@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
-import chess.domain.web.Log;
+import chess.domain.web.MovingPosition;
 import chess.service.ChessWebService;
 
 import java.sql.SQLException;
@@ -34,7 +34,7 @@ public class ChessWebController {
 		Map<String, Object> model = new HashMap<>();
 
 		chessGame.reset();
-		chessWebService.clearLog();
+		chessWebService.clearHistory();
 		model.put("status", true);
 
 		return model;
@@ -44,10 +44,10 @@ public class ChessWebController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("status", true);
 
-		Map<Integer, Log> fakeLog = chessWebService.selectAllLog();
+		List<MovingPosition> histories = chessWebService.selectAllHistory();
 
-		for (Log log : fakeLog.values()) {
-			chessGame.move(PositionFactory.of(log.getStart()), PositionFactory.of(log.getEnd()));
+		for (MovingPosition movingPosition : histories) {
+			chessGame.move(PositionFactory.of(movingPosition.getStart()), PositionFactory.of(movingPosition.getEnd()));
 		}
 		return model;
 	}
@@ -73,11 +73,11 @@ public class ChessWebController {
 
 		try {
 			chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-			chessWebService.insertLog(start, end);
+			chessWebService.insertHistory(start, end);
 			model.put("status", true);
 			if (chessGame.isKingDead()) {
 				model.put("winner", chessGame.getAliveKingColor());
-				chessWebService.clearLog();
+				chessWebService.clearHistory();
 				chessGame.reset();
 				return model;
 			}
