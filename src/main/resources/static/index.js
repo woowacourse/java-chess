@@ -8,7 +8,7 @@ $(document).ready(function() {
     $continue = function() {
         jQuery.ajax({
             type: "POST",
-            url: "/continue_game",
+            url: "/continue-game",
             dataType: "json",
             success: function(data) {
                 $setPieces(data);
@@ -21,7 +21,7 @@ $(document).ready(function() {
     $('.start_new_game').on('click', function() {
         jQuery.ajax({
             type: "POST",
-            url: "/new_game",
+            url: "/new-game",
             dataType: "json",
             success: function(data) {
                 $setPieces(data);

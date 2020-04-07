@@ -16,8 +16,6 @@ import static chess.dao.ServerInfo.*;
 import static chess.domain.chesspiece.ChessPieceInfo.*;
 
 public class BoardDAO {
-    Connection connection = getConnection();
-
     public Connection getConnection() {
         loadDriver();
         return connectDriver();
@@ -42,32 +40,50 @@ public class BoardDAO {
         return connection;
     }
 
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            System.err.println("con 오류:" + e.getMessage());
+        }
+    }
+
     public void initialize() throws SQLException {
         initializeBoard();
         initializeGameStatus();
     }
 
     private void initializeBoard() throws SQLException {
+        Connection connection = getConnection();
         String query = "truncate table board";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.executeUpdate();
+        pstmt.close();
+        closeConnection(connection);
     }
 
     private void initializeGameStatus() throws SQLException {
+        Connection connection = getConnection();
         String query = "truncate table game_status";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.executeUpdate();
+        pstmt.close();
+        closeConnection(connection);
     }
 
     public Board loadBoard() throws SQLException {
+        Connection connection = getConnection();
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         Board board = BoardFactory.createBlankBoard(loadGameStatus());
 
         loadChessPieces(rs, board);
+        pstmt.close();
+        closeConnection(connection);
         return board;
     }
 
@@ -112,12 +128,19 @@ public class BoardDAO {
     }
 
     public GameStatus loadGameStatus() throws SQLException {
+        Connection connection = getConnection();
         String query = "SELECT * FROM game_status";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
+        Team nowPlayingTeam;
+        boolean isGameEnd;
 
         rs.next();
-        return new GameStatus(Team.of(rs.getString("now_playing_team")), Boolean.valueOf(rs.getString("is_game_end")));
+        nowPlayingTeam = Team.of(rs.getString("now_playing_team"));
+        isGameEnd = Boolean.parseBoolean(rs.getString("is_game_end"));
+        pstmt.close();
+        closeConnection(connection);
+        return new GameStatus(nowPlayingTeam, isGameEnd);
     }
 
     public void updateDB(Board board) throws SQLException {
@@ -145,24 +168,30 @@ public class BoardDAO {
     }
 
     private void updateColumn(ChessPiece chessPiece, int i, int j) throws SQLException {
-        if (!(chessPiece instanceof Blank)) {
-            String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(query);
+        Connection connection = getConnection();
+        String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = connection.prepareStatement(query);
 
-            pstmt.setString(1, chessPiece.getName());
+        if (!(chessPiece instanceof Blank)) {
+                pstmt.setString(1, chessPiece.getName());
             pstmt.setString(2, chessPiece.getTeam().getTeamName());
             pstmt.setString(3, String.valueOf(i + 1));
             pstmt.setString(4, String.valueOf(j + 1));
             pstmt.executeUpdate();
         }
+        pstmt.close();
+        closeConnection(connection);
     }
 
     private void updateGameStatus(GameStatus gameStatus) throws SQLException {
+        Connection connection = getConnection();
         String query = "INSERT INTO game_status VALUES (?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         pstmt.setString(1, gameStatus.getNowPlayingTeam().getTeamName());
         pstmt.setString(2, String.valueOf(gameStatus.isGameEnd()));
         pstmt.executeUpdate();
+        pstmt.close();
+        closeConnection(connection);
     }
 }
