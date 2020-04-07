@@ -58,6 +58,16 @@ public class WebUIChessApplication {
             return render(model, "game.html");
         });
 
+        post("/continueGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
+            String whitePlayer = req.queryParams("white-player");
+            String blackPlayer = req.queryParams("black-player");
+
+           return render(model, "game.html");
+        });
+
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
