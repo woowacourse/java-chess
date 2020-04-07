@@ -6,14 +6,13 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class DefaultBoardInitializer implements BoardInitializer {
+public class ManipulatedBoardInitializer implements BoardInitializer {
 
     @Override
     public Map<Position, PieceState> create() {
         Map<Position, PieceState> initialBoard = new HashMap<>();
-        for (DefaultBoardPiece piece : DefaultBoardPiece.values()) {
-            initialBoard.put(piece.getPosition(), piece.getInitialPiece());
-        }
+        DefaultBoardPiece piece = DefaultBoardPiece.BLACK_ROOK_1;
+        initialBoard.put(piece.getPosition(), piece.getInitialPiece());
         return initialBoard;
     }
 }

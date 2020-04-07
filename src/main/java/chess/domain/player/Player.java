@@ -10,5 +10,4 @@ public enum Player {
         }
         return WHITE;
     }
-
 }

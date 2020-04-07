@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 
 import java.util.function.BiFunction;
 
-public enum DefaultBoard {
+public enum DefaultBoardPiece {
     BLACK_PAWN_1(NotMovedPawn::of, Player.BLACK, Position.of("A7")),
     BLACK_PAWN_2(NotMovedPawn::of, Player.BLACK, Position.of("B7")),
     BLACK_PAWN_3(NotMovedPawn::of, Player.BLACK, Position.of("C7")),
@@ -44,7 +44,7 @@ public enum DefaultBoard {
     private Player player;
     private Position position;
 
-    DefaultBoard(BiFunction<Position, Player, Piece> generator, Player player, Position position) {
+    DefaultBoardPiece(BiFunction<Position, Player, Piece> generator, Player player, Position position) {
         this.generator = generator;
         this.player = player;
         this.position = position;
