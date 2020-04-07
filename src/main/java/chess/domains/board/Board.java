@@ -91,7 +91,7 @@ public class Board {
                 .mapToDouble(Piece::score)
                 .sum();
 
-        int pawnCount = countOfPawnsInSameColumn();
+        int pawnCount = countOfPawnsInSameColumn(teamColor);
 
         return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
@@ -103,31 +103,32 @@ public class Board {
                 .mapToDouble(Piece::score)
                 .sum();
 
-        int pawnCount = countOfPawnsInSameColumn();
+        int pawnCount = countOfPawnsInSameColumn(pieceColor);
 
-        return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
+        return score - (pawnCount * SCORE_OF_PAWN_SAME_COLUMN);
     }
 
-    private int countOfPawnsInSameColumn() {
+    private int countOfPawnsInSameColumn(PieceColor pieceColor) {
         int pawnCount = 0;
         for (Column column : Column.values()) {
-            pawnCount += countValidPawns(column);
+            pawnCount += countValidPawns(column, pieceColor);
         }
         return pawnCount;
     }
 
-    private int countValidPawns(Column column) {
+    private int countValidPawns(Column column, PieceColor pieceColor) {
         int sameColumnPiecesCount = (int) board.keySet()
                 .stream()
                 .filter(position -> position.isColumn(column))
                 .map(board::get)
-                .filter(playingPiece -> playingPiece.isMine(teamColor)
+                .filter(playingPiece -> playingPiece.isMine(pieceColor)
                         && playingPiece.is(PieceType.PAWN))
                 .count();
 
         if (sameColumnPiecesCount > 1) {
             return sameColumnPiecesCount;
         }
+
         return 0;
     }
 

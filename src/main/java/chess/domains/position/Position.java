@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
     private static final Map<String, Position> cachedPositions;
+    public static final String INVALID_POSITION_NAME_ERR_MSG = "말의 위치를 찾을 수 없습니다.";
 
     private Column x;
     private Row y;
@@ -41,7 +42,7 @@ public class Position implements Comparable<Position> {
 
     public static Position ofPositionName(String positionName) {
         if (cachedPositions.get(positionName) == null) {
-            throw new IllegalArgumentException("말의 위치를 찾을 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_POSITION_NAME_ERR_MSG);
         }
         return cachedPositions.get(positionName);
     }

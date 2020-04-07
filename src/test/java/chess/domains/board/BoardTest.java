@@ -1,6 +1,14 @@
 package chess.domains.board;
 
+import chess.domains.piece.PieceColor;
+import chess.domains.position.Position;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
     private static Board board;
@@ -10,12 +18,21 @@ class BoardTest {
         board = new Board();
     }
 
-//    @DisplayName("입력한 위치의 말을 찾는 기능 확인")
-//    @Test
-//    void findPiece_1() {
-//        PlayingPiece piece = board.findPiece(Position.ofPositionName("a1"));
-//
-//        PlayingPiece playingPiece = new PlayingPiece(Position.ofPositionName("a1"), new Rook(PieceColor.WHITE));
-//        assertThat(piece).isEqualTo(playingPiece);
-//    }
+    @DisplayName("점수계산 기능 확인")
+    @Test
+    void calculateScore() {
+        board.move(Position.ofPositionName("a2"), Position.ofPositionName("a4"));
+        board.move(Position.ofPositionName("b7"), Position.ofPositionName("b5"));
+        board.move(Position.ofPositionName("a4"), Position.ofPositionName("b5"));
+
+        assertThat(board.calculateScore(PieceColor.WHITE)).isEqualTo(37);
+        assertThat(board.calculateScore(PieceColor.BLACK)).isEqualTo(37);
+    }
+
+    @DisplayName("입력한 위치의 말을 찾는 기능 확인")
+    @ParameterizedTest
+    @CsvSource(value = {"a1, r", "a8, R", "d1, k", "h7, P"})
+    void findPieceByPosition(String position, String piece) {
+        assertThat(board.findPieceByPosition(position)).isEqualTo(piece);
+    }
 }

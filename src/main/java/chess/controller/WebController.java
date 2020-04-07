@@ -13,6 +13,13 @@ import java.util.List;
 import java.util.Map;
 
 public class WebController {
+
+    public static final String START_COMMAND = "start";
+    public static final String MOVE_COMMAND = "move ";
+    public static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
+    public static final String TURN_MESSAGE = "의 순서입니다.";
+    public static final String WINNER_MESSAGE = "의 승리";
+
     public static void startGame(Board board, BoardDAO boardDAO, RecordDAO recordDAO) throws SQLException {
         board.initialize();
 
@@ -20,13 +27,13 @@ public class WebController {
         boardDAO.addBoard(board.getBoard());
 
         recordDAO.clearRecord();
-        recordDAO.addRecord(new Record("start", ""));
+        recordDAO.addRecord(new Record(START_COMMAND, ""));
     }
 
     public static void movePiece(Board board, String source, String target) throws SQLException {
         BoardDAO boardDAO = new BoardDAO();
         RecordDAO recordDAO = new RecordDAO();
-        Record move = new Record("move " + source + " " + target, "");
+        Record move = new Record(MOVE_COMMAND + source + " " + target, "");
 
         try {
             Position sourcePosition = Position.ofPositionName(source);
@@ -51,7 +58,7 @@ public class WebController {
         RecordDAO recordDAO = new RecordDAO();
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
-            recordDAO.addRecord(new Record("게임이 종료되었습니다.", winner + "의 승리"));
+            recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));
         }
     }
 
@@ -105,7 +112,7 @@ public class WebController {
     }
 
     public static String printTurn(String turn) {
-        return turn + "의 순서입니다.";
+        return turn + TURN_MESSAGE;
     }
 
     public static String turn(Board board) {
