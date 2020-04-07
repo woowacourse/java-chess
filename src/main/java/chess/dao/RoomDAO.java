@@ -21,7 +21,7 @@ public class RoomDAO {
 	public Room findRoomById(int roomId) throws SQLException {
 		Connection con = JDBCConnector.getConnection();
 
-		String query = "SELECT room_id, room_name, turn FROM room WHERE room_id = ?";
+		String query = "SELECT room_id, room_name, room_color FROM room WHERE room_id = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, roomId);
 		ResultSet rs = pstmt.executeQuery();
@@ -33,7 +33,7 @@ public class RoomDAO {
 		Room room = new Room(
 			rs.getInt("room_id"),
 			rs.getString("room_name"),
-			rs.getString("turn")
+			rs.getString("room_color")
 		);
 
 		JDBCConnector.closeConnection(con);
@@ -41,13 +41,13 @@ public class RoomDAO {
 		return room;
 	}
 
-	public void addRoom(String room_name, String turn) throws SQLException {
+	public void addRoom(String roomName, String roomColor) throws SQLException {
 		Connection con = JDBCConnector.getConnection();
 
-		String query = "INSERT INTO room(room_name, turn) VALUES (?, ?)";
+		String query = "INSERT INTO room(room_name, room_color) VALUES (?, ?)";
 		PreparedStatement pstmt = con.prepareStatement(query);
-		pstmt.setString(1, room_name);
-		pstmt.setString(2, turn);
+		pstmt.setString(1, roomName);
+		pstmt.setString(2, roomColor);
 		pstmt.executeUpdate();
 
 		JDBCConnector.closeConnection(con);
@@ -86,16 +86,16 @@ public class RoomDAO {
 
 		List<Room> rooms = new ArrayList<>();
 
-		String query = "SELECT room_id, room_name, turn FROM room";
+		String query = "SELECT room_id, room_name, room_color FROM room";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		ResultSet rs = pstmt.executeQuery();
 
 		while (rs.next()) {
 			int roomId = rs.getInt("room_id");
 			String roomName = rs.getString("room_name");
-			String turn = rs.getString("turn");
+			String roomColor = rs.getString("room_color");
 
-			rooms.add(new Room(roomId, roomName, turn));
+			rooms.add(new Room(roomId, roomName, roomColor));
 		}
 
 		JDBCConnector.closeConnection(con);
@@ -103,24 +103,23 @@ public class RoomDAO {
 		return rooms;
 	}
 
-	public void updateTurnById(int roomId, Color color) throws SQLException {
+	public void updateRoomColorById(int roomId, Color roomColor) throws SQLException {
 		Connection con = JDBCConnector.getConnection();
 
-		String query = "UPDATE room SET turn = ? WHERE room_id = ?";
+		String query = "UPDATE room SET room_color = ? WHERE room_id = ?";
 
 		PreparedStatement pstmt = con.prepareStatement(query);
-		// TODO : Color를 모두 UpperCase로 바꾸자
-		pstmt.setString(1, color.name().toLowerCase());
+		pstmt.setString(1, roomColor.name());
 		pstmt.setInt(2, roomId);
 		pstmt.executeUpdate();
 
 		JDBCConnector.closeConnection(con);
 	}
 
-	public String findTurnById(int roomId) throws SQLException {
+	public Color findRoomColorById(int roomId) throws SQLException {
 		Connection con = JDBCConnector.getConnection();
 
-		String query = "SELECT turn FROM room WHERE room_id = ?";
+		String query = "SELECT room_color FROM room WHERE room_id = ?";
 		PreparedStatement pstmt = con.prepareStatement(query);
 		pstmt.setInt(1, roomId);
 		ResultSet rs = pstmt.executeQuery();
@@ -131,6 +130,6 @@ public class RoomDAO {
 
 		JDBCConnector.closeConnection(con);
 
-		return rs.getString("turn");
+		return Color.valueOf(rs.getString("room_color"));
 	}
 }

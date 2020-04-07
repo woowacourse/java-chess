@@ -15,7 +15,7 @@ public class RoomService {
 
 	public void addRoom(String roomName) throws SQLException {
 		RoomDAO roomDAO = RoomDAO.getInstance();
-		roomDAO.addRoom(roomName, "white");
+		roomDAO.addRoom(roomName, "WHITE");
 	}
 
 	public void removeRoom(int roomId) throws SQLException {

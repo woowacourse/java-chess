@@ -25,7 +25,7 @@ public class RoomDAOTest {
 	@DisplayName("auto increment를 1로 초기화하는 테스트")
 	@Test
 	void applyAutoIncrementToZeroTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 
 		assertThat(roomDAO.findRoomById(roomId)).isNotNull();
@@ -34,7 +34,7 @@ public class RoomDAOTest {
 	@DisplayName("방의 이름를 가지고 방의 이름을 찾는 메서드 테스트")
 	@Test
 	void findRoomIdByRoomNameTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 		assertThat(roomDAO.findRoomById(roomId)).isNotNull();
 	}
@@ -42,7 +42,7 @@ public class RoomDAOTest {
 	@DisplayName("방의 번호를 가지고 방을 찾는 테스트")
 	@Test
 	void findRoomByIdTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 
 		Room room = roomDAO.findRoomById(roomId);
@@ -53,7 +53,7 @@ public class RoomDAOTest {
 	@DisplayName("방에 입장했을 때 DB에 room을 insert하는 작업")
 	@Test
 	void addRoomTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 
 		Room room = roomDAO.findRoomById(roomId);
@@ -64,7 +64,7 @@ public class RoomDAOTest {
 	@DisplayName("방을 삭제하고 나서 해당 방을 찾았을 때 Null이 들어가는지 테스트")
 	@Test
 	public void removeRoomByIdTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 
 		roomDAO.removeRoomById(roomId);
@@ -75,22 +75,22 @@ public class RoomDAOTest {
 
 	@DisplayName("move를 하고나서 상대방 턴이 됐을 때 turn의 값이 바뀌었는지 테스트")
 	@Test
-	void updateTurnByIdTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+	void updateRoomColorByIdTest() throws SQLException {
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
 		Color color = Color.BLACK;
-		roomDAO.updateTurnById(roomId, color);
+		roomDAO.updateRoomColorById(roomId, color);
 
 		Room room = roomDAO.findRoomById(roomId);
-		assertThat(room.getTurn()).isEqualTo("black");
+		assertThat(room.getTurn()).isEqualTo("BLACK");
 	}
 
 	@DisplayName("현재 내 턴을 가져오는 테스트")
 	@Test
-	void findTurnByIdTest() throws SQLException {
-		roomDAO.addRoom("hello world", "white");
+	void findRoomColorByIdTest() throws SQLException {
+		roomDAO.addRoom("hello world", "WHITE");
 		int roomId = roomDAO.findRoomIdByRoomName("hello world");
-		String color = roomDAO.findTurnById(roomId);
-		assertThat(Color.valueOf(color.toUpperCase())).isEqualTo(Color.WHITE);
+		Color color = roomDAO.findRoomColorById(roomId);
+		assertThat(color).isEqualTo(Color.WHITE);
 	}
 }

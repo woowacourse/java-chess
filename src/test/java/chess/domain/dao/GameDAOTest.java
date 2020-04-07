@@ -28,7 +28,7 @@ public class GameDAOTest {
 		roomId = roomDAO.findRoomIdByRoomName("hello world");
 		roomDAO.removeRoomById(roomId);
 		AutoIncrementTest.applyAutoIncrementToZero();
-		roomDAO.addRoom("hello world", "white");
+		roomDAO.addRoom("hello world", "WHITE");
 		roomId = roomDAO.findRoomIdByRoomName("hello world");
 		gameDAO.removeAllPiecesById(roomId);
 	}
