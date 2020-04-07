@@ -62,7 +62,7 @@ public class ChessService {
 
 		result.put("whiteScore", whiteScore);
 		result.put("blackScore", blackScore);
-		result.put("result", winner);
+		result.put("winner", winner);
 
 		return result;
 	}
