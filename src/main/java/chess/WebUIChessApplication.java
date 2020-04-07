@@ -4,20 +4,16 @@ import static spark.Spark.*;
 
 import chess.controller.ChessController;
 import chess.controller.WebChessController;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
-import chess.domain.piece.Team;
+import chess.dao.BoardDAO;
+import chess.dao.TurnInfoDAO;
 import chess.service.ChessService;
 
 public class WebUIChessApplication {
 	public static void main(String[] args) {
 		staticFiles.location("/public");
 
-		Board initial = BoardFactory.create();
-		Team first = Team.WHITE;
-		ChessService chessService = ChessService.of(initial);
-
-		ChessController controller = new WebChessController(chessService, initial, first);
+		ChessService service = new ChessService(new BoardDAO(), new TurnInfoDAO());
+		ChessController controller = new WebChessController(service);
 
 		controller.start();
 		controller.playTurn();

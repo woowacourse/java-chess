@@ -5,10 +5,6 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.domain.Status;
-import chess.domain.board.Board;
-import chess.domain.board.dto.BoardDTO;
-import chess.domain.piece.Team;
 import chess.domain.position.MoveInfo;
 import chess.service.ChessService;
 import com.google.gson.Gson;
@@ -23,13 +19,9 @@ public class WebChessController implements ChessController {
 	private static final Gson GSON = new Gson();
 
 	private final ChessService service;
-	private final Board board;
-	private Team team;
 
-	public WebChessController(ChessService service, Board board, Team team) {
+	public WebChessController(ChessService service) {
 		this.service = service;
-		this.board = board;
-		this.team = team;
 	}
 
 	@Override
@@ -43,14 +35,17 @@ public class WebChessController implements ChessController {
 	}
 
 	private String renderBoard(Request request, Response response) {
-		return render(BoardDTO.of(board).getBoard(), "chess.html");
+		String gameId = request.queryParams("game_id");
+		request.session(true).attribute("game_id", gameId);
+		service.initialize(gameId);
+		return render(service.getBoard(gameId), "chess.html");
 	}
 
 	@Override
 	public void playTurn() {
 		post("/api/move", this::updateBoard);
-		exception(IllegalArgumentException.class, this::handleException);
 		get("/status", this::toStatus);
+		exception(IllegalArgumentException.class, this::handleException);
 	}
 
 	private String updateBoard(Request request, Response response) {
@@ -59,19 +54,19 @@ public class WebChessController implements ChessController {
 
 		String from = element.getAsJsonObject().get("from").getAsString();
 		String to = element.getAsJsonObject().get("to").getAsString();
+		String gameId = request.session().attribute("game_id");
 
-		if (board.isEnd()) {
+		if (service.isEnd(gameId)) {
 			throw new IllegalArgumentException("게임 끝");
 		}
 
-		service.move(MoveInfo.of(from, to), team);
-
-		team = team.next();
+		service.move(gameId, MoveInfo.of(from, to));
 		return GSON.toJson(from + " " + to);
 	}
 
 	private String toStatus(Request request, Response response) {
-		return render(StatusDTO.of(Status.of(board)).getStatus(), "status.html");
+		String gameId = request.session().attribute("game_id");
+		return render(StatusDTO.of(service.getStatus(gameId)).getStatus(), "status.html");
 	}
 
 	private void handleException(IllegalArgumentException exception, Request request, Response response) {
