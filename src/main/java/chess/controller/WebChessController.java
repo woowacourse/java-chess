@@ -93,17 +93,18 @@ public class WebChessController {
 	private String move(Request request, Response response) throws SQLException {
 		int id = Integer.parseInt(request.params(":id"));
 		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-
 		Map<String, String> map = gson.fromJson(request.body(), Map.class);
 		game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
 			Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
+		UnitsDto updatedUnits = new UnitsDto(game.board().getBoard());
+		saveMove(id, map);
+		return gson.toJson(updatedUnits);
+	}
 
-		UnitsDto units = new UnitsDto(game.board().getBoard());
-
+	private void saveMove(int id, Map<String, String> map) throws SQLException {
 		int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
 		int targetX = Integer.parseInt(map.get("targetX")) + 96;
 		moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
-		return gson.toJson(units);
 	}
 
 	private String users(Request request, Response response) throws SQLException {
