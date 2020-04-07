@@ -23,6 +23,7 @@ public class ChessPieceDao implements PieceDao {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, user_id);
             rs = pstmt.executeQuery();
+            rs.next();
             return rs.getInt("count(*)");
         } catch (SQLException e) {
             e.printStackTrace();
@@ -67,6 +68,7 @@ public class ChessPieceDao implements PieceDao {
             pstmt.setString(1, user_id);
             pstmt.setString(2, position.name());
             rs = pstmt.executeQuery();
+            rs.next();
             return rs.getString("piece");
         } catch (SQLException e) {
             e.printStackTrace();

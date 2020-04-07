@@ -45,6 +45,7 @@ public class MoveHistoryDao {
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, user_id);
             rs = pstmt.executeQuery();
+            rs.next();
             return Optional.ofNullable(rs.getString("TEAM"));
         } catch (SQLException e) {
             e.printStackTrace();

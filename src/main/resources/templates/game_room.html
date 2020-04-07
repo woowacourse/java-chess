@@ -113,7 +113,7 @@
                         <input id="startBtn" type="submit" value="게임시작"/>
                     </form>
                     {{#canResume}}
-                    <form action="post" action="/resume">
+                    <form action="/resume" method="post">
                         <input class="user_id" name="user_id" type="hidden" value="{{user_id}}">
                         <input id="resumeBtn" type="submit" value="이어하기">
                     </form>
