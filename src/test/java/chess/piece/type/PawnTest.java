@@ -143,7 +143,6 @@ class PawnTest {
         assertThat(actual).isTrue();
     }
 
-    // TODO : 검사.
     @DisplayName("폰의 두 칸의 직선 위치로 가는 중 적이 있는 경우")
     @Test
     void name3() {

@@ -1,23 +1,36 @@
 package db;
 
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Properties;
 
 public class DBConnection {
     private static Connection connection = null;
 
     static {
-        // TODO : 관련 정보 숨겨보자!
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "db_name"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
+        Properties properties = new Properties();
+        try {
+            Reader reader = new FileReader("src/main/resources/db.properties");
+            properties.load(reader);
+            String server = properties.getProperty("server");
+            String database = properties.getProperty("database");
+            String option = properties.getProperty("option");
+            String userName = properties.getProperty("userName");
+            String password = properties.getProperty("password");
 
-        loadDrive();
-        connectDrive(server, database, option, userName, password);
+            loadDrive();
+            connectDrive(server, database, option, userName, password);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void loadDrive() {
