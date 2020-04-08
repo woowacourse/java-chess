@@ -49,6 +49,30 @@ public class WebChessController {
         return Collections.unmodifiableList(playerDAO.findAllPlayer());
     }
 
+    public Player getPlayer() throws Exception {
+        PlayerDAO playerDAO = new PlayerDAO();
+
+        return playerDAO.findPlayer(this.chessBoard);
+    }
+
+    public void continueGame(int chessBoardId, String whitePlayer, String blackPlayer) throws Exception {
+        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
+        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+        PieceDAO pieceDAO = new PieceDAO();
+        PlayerDAO playerDAO = new PlayerDAO();
+
+        this.chessBoard = chessBoardDAO.findById(chessBoardId);
+
+        this.currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard);
+
+        updateOriginalPieces(pieceDAO);
+        Map<String, String> pieceOnBoards = this.originalPieces.getPieceOnBoards().stream()
+                .collect(Collectors.toMap(entry -> entry.getPosition(),
+                        entry -> entry.getPieceImageUrl(),
+                        (e1, e2) -> e1, HashMap::new));
+        this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
+    }
+
     public void start() throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
         CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();

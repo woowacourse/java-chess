@@ -18,8 +18,16 @@ th,
 td {
     border: 1px solid black;
     height: 50px;
-    width: 100px;
+    width: 50px;
     text-align: center;
+}
+
+#index,
+#white-player,
+#black-player {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
 }
 
 #game-start {

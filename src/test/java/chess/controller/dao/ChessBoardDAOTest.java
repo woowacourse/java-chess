@@ -39,4 +39,14 @@ public class ChessBoardDAOTest {
         ChessBoard chessBoard = chessBoardDAO.findRecentChessBoard();
         chessBoardDAO.deleteChessBoard(chessBoard);
     }
+
+    @Disabled
+    @DisplayName("체스 보드 아이디로 체스 보드 찾기")
+    @Test
+    void findByIdTest() throws Exception {
+        int chessBoardId = 9;
+        ChessBoard expected = this.chessBoardDAO.findById(chessBoardId);
+
+        Assertions.assertThat(expected.getChessBoardId()).isEqualTo(9);
+    }
 }

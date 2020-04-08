@@ -42,4 +42,22 @@ public class ChessBoardDAO {
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
     }
+
+    public ChessBoard findById(int chessBoardId) throws SQLException {
+        Connection con = ConnectionManager.getConnection();
+        String query = "SELECT * FROM chessBoard WHERE chessBoardId=?";
+        PreparedStatement pstmt = con.prepareStatement(query);
+        pstmt.setInt(1, chessBoardId);
+        ResultSet rs = pstmt.executeQuery();
+
+        while (!rs.next()) {
+            return null;
+        }
+        ChessBoard chessBoard = new ChessBoard(
+                rs.getInt("chessBoardId")
+        );
+        ConnectionManager.closeConnection(con);
+
+        return chessBoard;
+    }
 }

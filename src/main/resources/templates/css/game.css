@@ -5,6 +5,12 @@
     src: url(../ttf/BMHANNAPro.ttf);
 }
 
+#white-player,
+#black-player {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}
+
 #chess-board {
     width: 800px;
 }

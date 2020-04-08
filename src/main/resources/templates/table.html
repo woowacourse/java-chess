@@ -20,9 +20,15 @@
     {{#gameData}}
     <tr>
         <form action="/continueGame" method="post">
-            <td id="chess-board-id" name="chess-board-id">{{chessBoardId}}</td>
-            <td id="white-player" name="white-player">{{whitePlayer}}</td>
-            <td id="black-player" name="black-player">{{blackPlayer}}</td>
+            <td>
+                <input type="text" id="index" name="chess-board-id" value="{{chessBoardId}}" readonly>
+            </td>
+            <td>
+                <input type="text" id="white-player" name="white-player" value="{{whitePlayer}}" readonly>
+            </td>
+            <td>
+                <input type="text" id="black-player" name="black-player" value="{{blackPlayer}}" readonly>
+            </td>
             <td>
                 <button id="game-start">Start</button>
             </td>

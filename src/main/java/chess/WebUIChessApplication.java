@@ -54,6 +54,7 @@ public class WebUIChessApplication {
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
+            model.put("player", player);
 
             return render(model, "game.html");
         });
@@ -64,6 +65,15 @@ public class WebUIChessApplication {
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
             String whitePlayer = req.queryParams("white-player");
             String blackPlayer = req.queryParams("black-player");
+
+            webChessController.continueGame(chessBoardId, whitePlayer, blackPlayer);
+            List<TileDto> tileDtos = webChessController.getTiles();
+            TeamDto teamDto = webChessController.getCurrentTeam();
+            Player player = webChessController.getPlayer();
+
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("player", player);
 
            return render(model, "game.html");
         });
