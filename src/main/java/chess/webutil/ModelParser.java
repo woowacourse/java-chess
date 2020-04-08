@@ -10,10 +10,14 @@ import java.util.*;
 import static java.util.stream.Collectors.toMap;
 
 public class ModelParser {
+    private static final String BLANK = "blank";
+    private static final String MOVABLE = "movable";
+    private static final String MARK = "_mark";
+
     public static Map<String, Object> parseBlankBoard() {
         return Position.getAllPositions()
                 .stream()
-                .collect(toMap(Position::toString, position -> "blank"));
+                .collect(toMap(Position::toString, position -> BLANK));
     }
 
     public static Map<String, Object> parseBoard(Board board) throws SQLException {
@@ -46,7 +50,7 @@ public class ModelParser {
         if (piece.isPresent()) {
             return piece.get().toString();
         }
-        return "blank";
+        return BLANK;
     }
 
     public static Map<String, Object> parseMovablePlaces(List<Position> markingPlaces) {
@@ -56,13 +60,13 @@ public class ModelParser {
     }
 
     private static String parseMarkPosition(Position position) {
-        return position.toString() + "_mark";
+        return position.toString() + MARK;
     }
 
     private static String parseMovable(Position position, List<Position> positions) {
         if (positions.contains(position)) {
-            return "movable";
+            return MOVABLE;
         }
-        return "blank";
+        return BLANK;
     }
 }
