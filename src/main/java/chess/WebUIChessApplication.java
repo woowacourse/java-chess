@@ -5,6 +5,7 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.ChessGameController;
 import chess.database.DataSource;
+import chess.database.JDBCTemplate;
 import chess.database.MySQLDataSource;
 import chess.database.dao.BoardDao;
 import chess.database.dao.BoardDaoImpl;
@@ -18,8 +19,10 @@ public class WebUIChessApplication {
 		staticFiles.location("/static");
 
 		DataSource dataSource = MySQLDataSource.getInstance();
-		BoardDao boardDao = new BoardDaoImpl(dataSource);
-		TurnDao turnDao = new TurnDaoImpl(dataSource);
+		JDBCTemplate jdbcTemplate = new JDBCTemplate(dataSource);
+
+		BoardDao boardDao = new BoardDaoImpl(jdbcTemplate);
+		TurnDao turnDao = new TurnDaoImpl(jdbcTemplate);
 		ChessService chessService = new ChessService(boardDao, turnDao);
 
 		ChessGameController chessGameController = new ChessGameController(chessService);
