@@ -9,6 +9,7 @@ import chess.team.Team;
 
 import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ChessSet {
@@ -53,11 +54,12 @@ public class ChessSet {
     }
 
     public Team getTeam() {
-        Optional<Piece> first = chessSet.values().stream().findFirst();
-        if(first.isPresent()) {
-            Piece piece = first.get();
-            return piece.getTeam();
+        for (Piece piece: chessSet.values()) {
+            if(Objects.nonNull(piece)) {
+                return piece.getTeam();
+            }
         }
+
         throw new NoSuchElementException(NO_ELEMENT_IN_CHESS_SET_MESSAGE);
     }
 }
