@@ -7,6 +7,7 @@ import chess.controller.dto.Tile;
 import chess.database.ChessCommand;
 import chess.database.ChessCommandDao;
 import chess.domain.piece.Team;
+import chess.web.ChessGameResponse;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,6 +21,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static ChessCommandDao chessCommandDao = new ChessCommandDao();
     private static ChessManager chessManager;
+    private static ChessGameResponse chessGameResponse;
 
     private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
 
@@ -29,45 +31,45 @@ public class WebUIChessApplication {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
+            chessGameResponse = new ChessGameResponse(chessManager);
             Map<String, Object> model = new HashMap<>();
             if (!chessCommandDao.selectCommands().isEmpty()) {
                 model.put("haveLastGameRecord", "true");
             }
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
             return render(model, "chessGameStart.html");
         });
 
         //play last game
-        get("/playing:lastGame", (req, res) -> {
+        get("/playing/lastGame", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             List<String> commands = chessCommandDao.selectCommands();
 
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }
-            List<Tile> tiles = chessManager.getTileDto().getTiles();
-            Team currentTeam = chessManager.getCurrentTeam();
-            model.put("chessPieces", tiles);
-            model.put("currentTeam", currentTeam);
+
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
             return render(model, "chessGame.html");
         });
 
         //play new game
-        get("/playing:newGame", (req, res) -> {
+        get("/playing/newGame", (req, res) -> {
             initializeDatabase();
             Map<String, Object> model = new HashMap<>();
-            List<Tile> tiles = chessManager.getTileDto().getTiles();
-            Team currentTeam = chessManager.getCurrentTeam();
-            model.put("chessPieces", tiles);
-            model.put("currentTeam", currentTeam);
+
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
             return render(model, "chessGame.html");
         });
 
-        get("/move", (req, res) -> {
-            List<Tile> tiles = chessManager.getTileDto().getTiles();
-            Team currentTeam = chessManager.getCurrentTeam();
+        get("/playing/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", tiles);
-            model.put("currentTeam", currentTeam);
+
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
 
             if (!chessManager.isPlaying()) {
                 Team winner = chessManager.getWinner();
@@ -79,25 +81,22 @@ public class WebUIChessApplication {
         });
 
         //move source target
-        post("/move", (req, res) -> {
+        post("/playing/move", (req, res) -> {
             String source = req.headers("source");
             String target = req.headers("target");
             String cmd = String.join(" ", new String[]{"move", source, target});
-            String errorMessage = null;
+
             try {
                 Command.MOVE.apply(chessManager, cmd);
                 saveToDatabase(cmd);
-                System.out.println("DB저장완료");
             } catch (Exception e) {
-                errorMessage = "이동할 수 없는 곳입니다. 다시 입력해주세요.";
+                throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
             }
-            List<Tile> tiles = chessManager.getTileDto().getTiles();
-            Team currentTeam = chessManager.getCurrentTeam();
             Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", tiles);
-            model.put("currentTeam", currentTeam);
-            model.put("cmd", cmd);
-            model.put("error", errorMessage);
+
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
+            model.put("error", MOVE_ERROR_MESSAGE);
 
             if (!chessManager.isPlaying()) {
                 Team winner = chessManager.getWinner();
@@ -107,14 +106,12 @@ public class WebUIChessApplication {
             return render(model, "chessGame.html");
         });
 
-        post("/status", (req, res) -> {
-            List<Tile> tiles = chessManager.getTileDto().getTiles();
-            Team currentTeam = chessManager.getCurrentTeam();
+        post("/playing/status", (req, res) -> {
             ScoreDto scoreDto = new ScoreDto(chessManager.calculateScore());
             String score = scoreDto.getScore();
             Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", tiles);
-            model.put("currentTeam", currentTeam);
+            model.put("chessPieces", chessGameResponse.getTiles());
+            model.put("currentTeam", chessGameResponse.getCurrentTeam());
             model.put("score", score);
             return render(model, "chessGame.html");
         });

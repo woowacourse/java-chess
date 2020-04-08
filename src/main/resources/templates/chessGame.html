@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link href="./chessStyle.css" rel="stylesheet" type="text/css"/>
+    <link href="../chessStyle.css" rel="stylesheet" type="text/css"/>
     <title>엘리의 크리스마스 체스</title>
 </head>
 
@@ -13,9 +13,9 @@
         {{#chessPieces}}
         <div id="{{position}}" class="tile">
             {{#if piece}}
-            <img alt="position" class="tileImage" src="./images/{{piece}}.png"/>
+            <img alt="position" class="tileImage" src="../images/{{piece}}.png"/>
             {{else}}
-            <img alt="empty" src="./images/blank.png"/>
+            <img alt="empty" src="../images/blank.png"/>
             {{/if}}
         </div>
         {{/chessPieces}}
@@ -24,7 +24,7 @@
     <div id="commandUI">
         <div id="current_team"> 현재 차례 : {{currentTeam}}팀</div>
         {{#if score}}
-        <div id="chess_score">{{currentTeam}}팀의 점수는 {{score}}점 입니다.</div>
+        <div id="chess_score">{{currentTeam}}팀의 현재 점수는 {{score}}점 입니다.</div>
         {{/if}}
 
         {{#if winner}}
@@ -34,14 +34,10 @@
         {{#if error}}
         <div id="move_error" class="error">{{error}}</div>
         {{/if}}
-        <form action="/status" method="post">
+        <form action="/playing/status" method="post">
             <button id="status_button" name="status" type="submit">STATUS</button>
         </form>
         <br/>
-        <form action="/move" method="post">
-            <input id="move_input" name="move_cmd"/>
-            <button id="move_button" type="submit">MOVE</button>
-        </form>
         {{/if}}
 
         <form action="/end" method="get">
@@ -86,12 +82,16 @@
                 'target': target
             }
         };
-        fetch("/move", moveInformation)
+        fetch("/playing/move", moveInformation)
+            .then(response => {
+                if (!response.ok) {
+                    alert("이동할 수 없는 곳입니다.");
+                }
+            })
             .then(() => {
-                window.location = "http://localhost:4567/move";
-            }).catch(error => {
-            console.log("이동할 수 없습니다." + error);
-        });
+                console.log();
+                window.location = "http://localhost:4567/playing/move";
+            });
         initialize();
     }
 
