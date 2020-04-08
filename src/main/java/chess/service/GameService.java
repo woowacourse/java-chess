@@ -56,4 +56,18 @@ public class GameService {
 		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
 		return new PiecesResponseDTO(pieces);
 	}
+
+	public boolean isKingDead(final int roomId) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
+		RoomDAO roomDAO = RoomDAO.getInstance();
+
+		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
+		GameManager gameManager = new GameManager(pieces, roomDAO.findRoomColorById(roomId));
+		return gameManager.isKingDead();
+	}
+
+	public String getCurrentColor(final int roomId) throws SQLException {
+		RoomDAO roomDAO = RoomDAO.getInstance();
+		return roomDAO.findRoomColorById(roomId).name();
+	}
 }

@@ -16,9 +16,17 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<div class="container">
 
+<div id="overlay">
+    <div id="text">
+        <p><span id="winner"></span>가 이겼습니다!</p>
+    </div>
+</div>
+
+<div class="container" id="all">
     <h1>이곳은 {{roomId}}번 방입니다!</h1>
+
+    <div>현재 턴은 <span id="turn"></span>입니다.</div>
 
     <div class="form-row">
         <div class="col">
@@ -147,6 +155,25 @@
 <script type="text/javascript">
     let roomId;
 
+    addClass = function (element, classString) {
+        element.className = element.className
+            .split(" ")
+            .filter(function (name) {
+                return name !== classString;
+            })
+            .concat(classString)
+            .join(" ");
+    };
+
+    removeClass = function (element, classString) {
+        element.className = element.className
+            .split(" ")
+            .filter(function (name) {
+                return name !== classString;
+            })
+            .join(" ");
+    };
+
     function applyPieces(pieces) {
         pieces.forEach(function (piece) {
             applyBackgroundImg(piece.position, piece.imgUrl);
@@ -171,6 +198,45 @@
         return document.getElementById("targetInput").value;
     }
 
+    function addBlur() {
+        let containerValue = document.getElementById("all");
+        addClass(containerValue, "blur");
+    }
+
+    function removeBlur() {
+        let containerValue = document.getElementById("all");
+        removeClass(containerValue, "blur");
+    }
+
+    function addOverlay() {
+        document.getElementById("overlay").style.display = "block";
+    }
+
+    function removeOverlay() {
+        document.getElementById("overlay").style.display = "none";
+    }
+
+    // TODO : 임시방편 왕이 죽는 순간 Turn도 바뀌지 않고 끝나야 함.
+    function applyWinnerColor(currentColor) {
+        if (currentColor === "WHITE") {
+            document.getElementById("winner").innerText = "BLACK";
+        } else {
+            document.getElementById("winner").innerText = "WHITE";
+        }
+    }
+
+    function showCurrentColor(currentColor) {
+        document.getElementById("turn").innerText = currentColor;
+    }
+
+    function isKingDead(currentColor, kingDead) {
+        if (kingDead === true) {
+            addOverlay();
+            addBlur();
+            applyWinnerColor(currentColor);
+        }
+    }
+
     window.onload = function () {
         document.getElementById("initButton").addEventListener('click', function () {
             let xhr = new XMLHttpRequest();
@@ -179,6 +245,8 @@
                     let chessJson = JSON.parse(xhr.responseText);
                     roomId = chessJson.roomId;
                     applyPieces(JSON.parse(chessJson.pieces));
+                    showCurrentColor(chessJson.currentColor);
+
                 }
             }
             xhr.open('GET', '/game/init?roomId={{roomId}}', true);
@@ -224,8 +292,12 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let chessJson = JSON.parse(xhr.responseText);
+
                     roomId = chessJson.roomId;
                     applyPieces(JSON.parse(chessJson.pieces));
+                    let currentColor = chessJson.currentColor;
+                    isKingDead(currentColor, chessJson.kingDead);
+                    showCurrentColor(currentColor);
                 }
             }
             xhr.open('POST', '/game/move?roomId={{roomId}}&sourcePosition='
@@ -234,6 +306,11 @@
                 + getTargetInput(),
                 true);
             xhr.send();
+        });
+
+        document.getElementById("overlay").addEventListener('click', function () {
+            removeBlur();
+            removeOverlay();
         });
     }
 

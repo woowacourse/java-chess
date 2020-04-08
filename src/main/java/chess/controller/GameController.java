@@ -1,8 +1,6 @@
 package chess.controller;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 import chess.domain.Color;
 import chess.service.GameService;
@@ -26,19 +24,24 @@ public class GameController {
 		Gson gson = new Gson();
 		JsonObject object = new JsonObject();
 		String pieces = gson.toJson(gameService.getPiecesResponseDTO(roomId).getPieces());
+		String currentColor = gameService.getCurrentColor(roomId);
 
 		object.addProperty("roomId", roomId);
 		object.addProperty("pieces", pieces);
+		object.addProperty("currentColor", currentColor);
 
 		return gson.toJson(object);
 	}
 
 	public static String movePiece(Request request, Response response) throws SQLException {
 		GameService gameService = GameService.getInstance();
+
 		int roomId = Integer.parseInt(request.queryParams("roomId"));
 		String sourcePosition = request.queryParams("sourcePosition");
 		String targetPosition = request.queryParams("targetPosition");
 		gameService.movePiece(roomId, sourcePosition, targetPosition);
+		boolean kingDead = gameService.isKingDead(roomId);
+		String currentColor = gameService.getCurrentColor(roomId);
 
 		Gson gson = new Gson();
 		JsonObject object = new JsonObject();
@@ -46,12 +49,13 @@ public class GameController {
 
 		object.addProperty("roomId", roomId);
 		object.addProperty("pieces", pieces);
+		object.addProperty("kingDead", kingDead);
+		object.addProperty("currentColor", currentColor);
 
 		return gson.toJson(object);
 	}
 
 	public static String showStatus(Request request, Response response) throws SQLException {
-		Map<String, Object> model = new HashMap<>();
 		GameService gameService = GameService.getInstance();
 		int roomId = Integer.parseInt(request.queryParams("roomId"));
 
