@@ -10,10 +10,10 @@ import utils.Assembler;
 
 import java.util.List;
 
-public class ChessService {
+public class ChessGame {
     private GameState gameState;
 
-    public ChessService() {
+    public ChessGame() {
         this.gameState = new NothingHappened();
     }
 

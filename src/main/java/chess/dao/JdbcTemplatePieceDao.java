@@ -2,10 +2,9 @@ package chess.dao;
 
 import chess.dto.PieceDto;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class JdbcTemplatePieceDao implements PieceDao {
     static {
@@ -79,5 +78,27 @@ public class JdbcTemplatePieceDao implements PieceDao {
         pstmt.executeUpdate();
         pstmt.close();
         closeConnection(connection);
+    }
+
+    @Override
+    public List<PieceDto> findPiece() throws SQLException {
+        String query = "SELECT * FROM piece";
+        Connection connection = getConnection();
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet resultSet = pstmt.executeQuery();
+
+        List<PieceDto> pieceDtos = new ArrayList<>();
+
+        if (resultSet.next()) {
+            String position = resultSet.getString("position");
+            String team = resultSet.getString("team");
+            String pieceType = resultSet.getString("pieceType");
+            pieceDtos.add(new PieceDto(position, team, pieceType));
+        }
+        resultSet.close();
+        pstmt.close();
+        closeConnection(connection);
+
+        return pieceDtos;
     }
 }

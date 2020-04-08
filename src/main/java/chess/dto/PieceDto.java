@@ -1,29 +1,25 @@
 package chess.dto;
 
-import chess.domain.Team;
-import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
-
 public class PieceDto {
-    private Position position;
-    private Team team;
-    private PieceType pieceType;
+    private String position;
+    private String team;
+    private String pieceType;
 
-    public PieceDto(Position position, Team team, PieceType pieceType) {
+    public PieceDto(String position, String team, String pieceType) {
         this.position = position;
         this.team = team;
         this.pieceType = pieceType;
     }
 
     public String getPosition() {
-        return position.toString();
+        return position;
     }
 
     public String getTeam() {
-        return team.getName();
+        return team;
     }
 
     public String getPieceType() {
-        return pieceType.getName();
+        return pieceType;
     }
 }
