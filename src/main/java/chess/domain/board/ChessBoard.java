@@ -9,6 +9,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Team;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class ChessBoard implements Publishable {
     private final Map<Coordinate, Tile> chessBoard;
@@ -67,12 +68,11 @@ public class ChessBoard implements Publishable {
     public List<String> getMovableWay(Coordinate sourceCoordinate) {
         List<String> movableCoordinate = new ArrayList<>();
         for (File file : File.values()) {
-            for (Rank rank : Rank.values()) {
-                Coordinate targetCoordinate = Coordinate.of(file, rank);
-                if (canMove(sourceCoordinate, targetCoordinate)) {
-                    movableCoordinate.add(targetCoordinate.toString());
-                }
-            }
+            movableCoordinate.addAll(
+                    Arrays.stream(Rank.values())
+                            .filter(rank -> canMove(sourceCoordinate, Coordinate.of(file, rank)))
+                            .map(rank -> file.getSymbol() + rank.getValue())
+                            .collect(Collectors.toList()));
         }
         return movableCoordinate;
     }
