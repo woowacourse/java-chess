@@ -15,8 +15,7 @@ function setBoard() {
     map.set("", "");
 
     document.querySelectorAll(".tile")
-        .forEach(e = > {
+        .forEach(e => {
         e.innerText = map.get(e.innerText);
-})
-    ;
+    });
 }

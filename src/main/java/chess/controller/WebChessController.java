@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.TeamScore;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import spark.ModelAndView;
@@ -10,6 +12,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
@@ -18,6 +21,7 @@ public class WebChessController {
     public static ChessBoard chessBoard = new ChessBoard();
     public static boolean blackTurn = false;
     public static String notification;
+    public static TeamScore teamScore;
 
     public static void run() {
 
@@ -30,11 +34,18 @@ public class WebChessController {
             Map<String, Object> model = new HashMap<>();
             Map<Square, Piece> board = chessBoard.getChessBoard();
             Map<String, Piece> boardView = new HashMap<>();
+            teamScore = new TeamScore();
+            teamScore.updateTeamScore(chessBoard);
+            Map<String, Double> teamScoreView = new HashMap<>();
             for (Square square : board.keySet()) {
                 boardView.put(square.toString(), board.get(square));
             }
+            for(Color color: teamScore.getTeamScore().keySet()) {
+                teamScoreView.put(color.toString(), teamScore.getTeamScore().get(color));
+            }
             model.put("chessBoard", boardView);
             model.put("notification", notification);
+            model.put("teamScore", teamScoreView);
             return render(model, "onGame.html");
         });
 
@@ -47,8 +58,25 @@ public class WebChessController {
             } else {
                 notification = "움직일 수 없는 위치입니다";
             }
+            if(chessBoard.isKingCaptured()) {
+                res.redirect("/endGame");
+            }
             res.redirect("/onGame");
             return null;
+        });
+
+        get("/endGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Map<Square, Piece> board = chessBoard.getChessBoard();
+            Map<String, Piece> boardView = new HashMap<>();
+            for (Square square : board.keySet()) {
+                boardView.put(square.toString(), board.get(square));
+            }
+            String winners = teamScore.getWinners().stream().map(t -> t.toString()).collect(Collectors.joining(","));
+            model.put("chessBoard", boardView);
+            model.put("notification", notification);
+            model.put("winners", winners);
+            return render(model, "endGame.html");
         });
     }
 
