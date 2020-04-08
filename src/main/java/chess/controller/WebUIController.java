@@ -7,7 +7,8 @@ import static spark.Spark.staticFiles;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
-import chess.dao.JDBCCommandLogDao;
+import chess.dao.CommandLogDao;
+import chess.dbconnect.JDBCConnector;
 import chess.domain.gamestatus.Finished;
 import chess.domain.gamestatus.GameStatus;
 import chess.domain.gamestatus.NothingHappened;
@@ -27,7 +28,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 public class WebUIController {
 
     private static GameStatus gameStatus;
-    private static JDBCCommandLogDao commandLogDao = new JDBCCommandLogDao();
+    private static CommandLogDao commandLogDao = new CommandLogDao(new JDBCConnector());
 
     public static void run() {
         try {
