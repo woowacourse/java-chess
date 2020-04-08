@@ -1,3 +1,5 @@
+package controller;
+
 import chess.GameManager;
 import chess.board.Location;
 import chess.gamestate.GameState;

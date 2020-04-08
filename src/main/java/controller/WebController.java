@@ -1,3 +1,5 @@
+package controller;
+
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -5,11 +7,10 @@ import java.util.Map;
 
 import chess.GameManager;
 import chess.result.GameStatistic;
+import service.ChessService;
 import spark.Request;
-import view.ChessService;
 
 public class WebController {
-
 	private final ChessService chessService = new ChessService();
 
 	public Object winner(Request request) throws SQLException {
