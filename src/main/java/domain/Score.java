@@ -2,7 +2,6 @@ package domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -14,10 +13,8 @@ import domain.piece.team.Team;
 
 public class Score {
 	public static Map<Team, Double> calculateScore(List<Rank> ranks, Team... teams) {
-		Map<Team, Double> score = new HashMap<>();
-		Arrays.stream(teams)
-			.forEach(team -> score.put(team, calculateScoreByTeam(ranks, team)));
-		return score;
+		return Arrays.stream(teams)
+			.collect(Collectors.toMap(team -> team, team -> calculateScoreByTeam(ranks, team)));
 	}
 
 	private static double calculateScoreByTeam(List<Rank> ranks, Team team) {
