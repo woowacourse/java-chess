@@ -9,21 +9,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessBoardTest {
+
+    public static final ChessBoard chessBoard = new ChessBoard("player1", Color.WHITE);
+
     @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
     void chessBoardSizeCheck() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(32);
     }
 
     @Test
     @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
         assertThatThrownBy(()->chessBoard.canMove(Square.of("c5"), Square.of("c6")))
                 .isInstanceOf(UnsupportedOperationException.class);
         //WhiteTurn
-        chessBoard.getTurn().changeTurn();
+        chessBoard.getTurn().changeTurn(chessBoard.getTurn().getTurn().getName());
         //Black
         assertThatThrownBy(()->chessBoard.canMove(Square.of("a2"), Square.of("a3")))
                 .isInstanceOf(UnsupportedOperationException.class);
@@ -37,7 +40,6 @@ public class ChessBoardTest {
     @Test
     @DisplayName("move 수행 테스트")
     void move() {
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.movePiece(Square.of("a2"),Square.of("a4"));
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a2"))).isFalse();
         assertThat(chessBoard.getChessBoard().containsKey(Square.of("a4"))).isTrue();
@@ -47,7 +49,6 @@ public class ChessBoardTest {
     @Test
     @DisplayName("king 잡혔는지 확인")
     void isKingOnChessBoard() {
-        ChessBoard chessBoard = new ChessBoard();
         chessBoard.movePiece(Square.of("e2"), Square.of("e4"));
         chessBoard.movePiece(Square.of("a7"), Square.of("a5"));
         chessBoard.movePiece(Square.of("e1"), Square.of("e2"));

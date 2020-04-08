@@ -63,7 +63,7 @@ public class Square {
     }
 
     public String toString() {
-        return file.name() + rank.name();
+        return file.name() + rank.getName();
     }
 
 }

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +11,7 @@ public class MoveStateTest {
     @Test
     @DisplayName("move 수행시 moveCount 증가 확인")
     void moveCount() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
         chessBoard.movePiece(Square.of("a2"), Square.of("a4"));
         assertThat(chessBoard.getMoveState().getMoveCount().getMoveCount()).isEqualTo(1);
         assertThatThrownBy(() -> chessBoard.movePiece(Square.of("a2"), Square.of("a3")))

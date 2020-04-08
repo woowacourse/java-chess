@@ -2,9 +2,10 @@ package chess.domain;
 
 public class MoveStateDTO {
 
-    private Square source;
-    private Square target;
+    private String source;
+    private String target;
     private int moveCount;
+    private Player player;
 
     public MoveStateDTO(MoveState moveState) {
         this(moveState, moveState.getMoveCount());
@@ -12,15 +13,20 @@ public class MoveStateDTO {
 
     private MoveStateDTO(MoveState moveState, MoveCount moveCount) {
         this.moveCount = moveCount.getMoveCount();
-        this.source = moveState.getSource();
-        this.target = moveState.getTarget();
+        this.source = moveState.getSource().toString();
+        this.target = moveState.getTarget().toString();
+        this.player = moveState.getPlayer();
     }
 
-    public Square getSource() {
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getSource() {
         return source;
     }
 
-    public Square getTarget() {
+    public String getTarget() {
         return target;
     }
 

@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.*;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -9,7 +10,7 @@ public class ConsoleChessController implements Controller{
     ChessBoard chessBoard;
 
     public ConsoleChessController(){
-        chessBoard = new ChessBoard();
+        chessBoard = new ChessBoard("id", Color.WHITE);
     }
 
     @Override

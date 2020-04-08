@@ -1,8 +1,6 @@
 package chess.domain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class MoveStateDAO {
 
@@ -39,5 +37,32 @@ public class MoveStateDAO {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public void addMoveState(MoveStateDTO moveStateDTO) throws SQLException {
+        String query = "INSERT INTO moveState VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, moveStateDTO.getPlayer().getPlayerId());
+        pstmt.setString(2, moveStateDTO.getSource());
+        pstmt.setString(3, moveStateDTO.getTarget());
+        pstmt.setInt(4, moveStateDTO.getMoveCount());
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet findByPlayerId(String playerId) throws SQLException {
+        String query = "SELECT * FROM moveState WHERE id = ? ";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+        return rs;
+    }
+
+    public void deleteMoveStateById(String playerId) throws SQLException {
+        String query = "DELETE from moveState WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        pstmt.executeUpdate();
     }
 }

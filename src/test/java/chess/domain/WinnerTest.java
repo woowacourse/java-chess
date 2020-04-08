@@ -11,7 +11,7 @@ public class WinnerTest {
     @Test
     @DisplayName("승자 구하기")
     void calculateWinnerByScore() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
         assertThat(Winner.getWinners(chessBoard.getChessBoard()).size()).isEqualTo(2);
 
         chessBoard.movePiece(Square.of("b1"), Square.of("c3"));

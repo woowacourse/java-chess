@@ -14,15 +14,13 @@ import static spark.Spark.*;
 public class WebChessController implements Controller {
 
 
-    ChessBoard chessBoard = new ChessBoard();
+    ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
     ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
     private Gson gson = new Gson();
 
     @Override
     public void run() {
         get("/", (req, res) -> {
-            chessBoard = new ChessBoard();
-            chessBoardDTO = new ChessBoardDTO(chessBoard);
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
@@ -47,9 +45,9 @@ public class WebChessController implements Controller {
 
         get("/refresh", (req, res) -> {
             try {
-                chessBoard = new ChessBoard();
-                chessBoardDTO = new ChessBoardDTO(chessBoard);
                 res.redirect("/");
+                chessBoard = new ChessBoard("id2", Color.WHITE);
+                chessBoardDTO = new ChessBoardDTO(chessBoard);
                 externalStaticFileLocation("/templates");
                 return null;
             } catch (Exception e) {

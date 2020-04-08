@@ -1,10 +1,11 @@
 package chess.domain;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import chess.domain.piece.Color;
+
+import java.sql.*;
 
 public class ChessBoardDAO {
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -38,5 +39,41 @@ public class ChessBoardDAO {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public void addChessBoard(ChessBoardDTO chessBoardDTO) throws SQLException {
+        String query = "INSERT INTO chessBoard VALUES (?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, chessBoardDTO.getId());
+        pstmt.setString(2, chessBoardDTO.getTurn());
+        pstmt.executeUpdate();
+    }
+
+    public ChessBoard findByPlayerId(String playerId) throws SQLException {
+        String query = "SELECT * FROM chessBoard WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+        return new ChessBoard(
+                rs.getString("id"),
+                Color.of(rs.getString("turn"))
+        );
+    }
+
+    public void updateChessBoard(String id, String turn) throws SQLException {
+        String query = "UPDATE chessBoard SET turn = ? Where id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, turn);
+        pstmt.setString(2, id);
+        pstmt.executeUpdate();
+    }
+
+    public void deleteChessBoard(String playerId) throws SQLException {
+        String query = "DELETE from chessBoard WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        pstmt.executeUpdate();
     }
 }

@@ -9,7 +9,7 @@ public class MoveCount {
     }
 
     void setMoveCount() {
-        this.moveCount++;
+        this.moveCount = this.moveCount + 1;
     }
 
     public int getMoveCount() {
