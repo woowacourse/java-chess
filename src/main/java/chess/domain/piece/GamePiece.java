@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import java.util.List;
-
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
+
+import java.util.List;
 
 public abstract class GamePiece {
 
@@ -20,11 +20,7 @@ public abstract class GamePiece {
         this.playerColor = playerColor;
     }
 
-    public boolean canMoveTo(Board board, Position source, Position target) {
-        return canMove(board, source, target);
-    }
-
-    protected abstract boolean canMove(Board board, Position source, Position target);
+    public abstract boolean canMoveTo(Board board, Position source, Position target);
 
     public boolean is(PlayerColor playerColor) {
         return playerColor.equals(this.playerColor);
@@ -36,6 +32,10 @@ public abstract class GamePiece {
 
     public List<Position> getOriginalPositions() {
         return originalPositions;
+    }
+
+    public boolean isName(String name) {
+        return this.name.equals(name);
     }
 
     public String getName() {

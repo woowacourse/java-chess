@@ -1,14 +1,7 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Stream;
-
+import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.board.Status;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,9 +9,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
+import java.util.*;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class BishopTest {
 
@@ -31,7 +26,7 @@ class BishopTest {
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
+            gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -59,7 +54,7 @@ class BishopTest {
         GamePiece gamePiece = ChessPiece.WHITE_BISHOP.getGamePiece();
         board.put(source, gamePiece);
 
-        assertThat(gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+        assertThat(gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {
@@ -84,6 +79,6 @@ class BishopTest {
         board.put(source, piece);
         board.put(obstacle, ChessPiece.BLACK_PAWN.getGamePiece());
 
-        assertThat(piece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+        assertThat(piece.canMoveTo(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 }

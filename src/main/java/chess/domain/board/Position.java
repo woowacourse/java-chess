@@ -6,6 +6,7 @@ import java.util.*;
 
 public class Position implements Comparable<Position> {
 
+    private static final String DELIMITER = "";
     private static final Map<String, Position> positions;
 
     static {
@@ -71,17 +72,19 @@ public class Position implements Comparable<Position> {
 
     public List<Position> pathTo(Direction direction, int count) {
         List<Position> path = new ArrayList<>();
-        Position nextPosition = this;
-
-        for (int i = 0; i < count; i++) {
-            try {
-                nextPosition = nextPosition.nextPositionOf(direction);
-                path.add(nextPosition);
-            } catch (ArrayIndexOutOfBoundsException e) {
-                break;
-            }
+        try {
+            findPath(direction, count, path);
+        } catch (ArrayIndexOutOfBoundsException ignored) {
         }
         return path;
+    }
+
+    private void findPath(Direction direction, int count, List<Position> path) {
+        Position nextPosition = this;
+        for (int i = 0; i < count; i++) {
+            nextPosition = nextPosition.nextPositionOf(direction);
+            path.add(nextPosition);
+        }
     }
 
     public Row getRow() {
@@ -90,6 +93,10 @@ public class Position implements Comparable<Position> {
 
     public Column getColumn() {
         return column;
+    }
+
+    public String getName() {
+        return String.join(DELIMITER, column.getName(), row.getName());
     }
 
     @Override

@@ -1,15 +1,12 @@
 package chess.domain.result;
 
 import chess.domain.board.Board;
-import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class ChessResult {
 

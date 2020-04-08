@@ -1,9 +1,9 @@
 package chess.domain.result;
 
+import chess.domain.piece.GamePiece;
+
 import java.util.Map;
 import java.util.Objects;
-
-import chess.domain.piece.GamePiece;
 
 public class Score {
 

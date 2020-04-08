@@ -71,12 +71,10 @@ public class Board {
         board.put(target, sourcePiece);
         board.put(source, EmptyPiece.getInstance());
 
-        Status nextStatus = status.nextTurn();
-
         if (ChessPiece.isKing(targetPiece)) {
-            return new Board(board, nextStatus.finish());
+            return new Board(board, status.finish());
         }
-        return new Board(board, nextStatus);
+        return new Board(board, status.nextTurn());
     }
 
     private boolean isPieceCanMove(GamePiece sourcePiece, GamePiece targetPiece) {
@@ -95,8 +93,8 @@ public class Board {
         return true;
     }
 
-    public boolean isNotFinished() {
-        return status.isNotFinished();
+    public boolean isFinished() {
+        return status.isFinished();
     }
 
     public boolean isNotEmpty(Position position) {
@@ -136,5 +134,27 @@ public class Board {
 
     public Map<Position, GamePiece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public boolean isWhiteTurn() {
+        return status.isWhiteTurn();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Board board1 = (Board) o;
+        return Objects.equals(board, board1.board) &&
+                Objects.equals(status, board1.status);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(board, status);
     }
 }

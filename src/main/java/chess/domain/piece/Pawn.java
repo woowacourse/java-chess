@@ -1,18 +1,19 @@
 package chess.domain.piece;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 import chess.domain.board.Board;
 import chess.domain.board.Column;
 import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.player.PlayerColor;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class Pawn extends GamePiece {
 
     private static final int FIRST_MOVE_COUNT = 2;
+
     private Direction moveDirection;
     private List<Direction> killDirections;
     private int moveCount;
@@ -30,7 +31,7 @@ public class Pawn extends GamePiece {
     }
 
     @Override
-    public boolean canMove(Board board, Position source, Position target) {
+    public boolean canMoveTo(Board board, Position source, Position target) {
         if (board.isNotEmpty(target)) {
             return canKill(source, target);
         }
@@ -54,7 +55,8 @@ public class Pawn extends GamePiece {
             return false;
         }
 
-        return path.stream()
+        return path.subList(0, path.indexOf(target))
+                .stream()
                 .noneMatch(board::isNotEmpty);
     }
 }

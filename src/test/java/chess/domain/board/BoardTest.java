@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.exception.InvalidMovementException;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.GamePiece;
 import org.junit.jupiter.api.DisplayName;
@@ -132,13 +131,13 @@ class BoardTest {
         Board board = Board.from(map, new Status(1, StatusType.PROCESSING));
         board = board.move(source, target);
 
-        assertThat(board.isNotFinished()).isEqualTo(expected);
+        assertThat(board.isFinished()).isEqualTo(expected);
     }
 
     static Stream<Arguments> createFinish() {
         return Stream.of(
-                Arguments.of(Position.from("d6"), Position.from("d5"), true),
-                Arguments.of(Position.from("d6"), Position.from("c5"), false)
+                Arguments.of(Position.from("d6"), Position.from("d5"), false),
+                Arguments.of(Position.from("d6"), Position.from("c5"), true)
         );
     }
 

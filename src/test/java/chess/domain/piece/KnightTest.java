@@ -29,7 +29,7 @@ class KnightTest {
         board.put(source, gamePiece);
 
         assertThatCode(() -> {
-            gamePiece.canMove(Board.from(board, Status.initialStatus()), source, target);
+            gamePiece.canMoveTo(Board.from(board, Status.initialStatus()), source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -57,7 +57,7 @@ class KnightTest {
 
         board.put(source, piece);
 
-        assertThat(piece.canMove(Board.from(board, Status.initialStatus()), source, target)).isFalse();
+        assertThat(piece.canMoveTo(Board.from(board, Status.initialStatus()), source, target)).isFalse();
     }
 
     static Stream<Arguments> createInvalidTarget() {

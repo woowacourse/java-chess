@@ -1,10 +1,209 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
 </head>
 <body>
-Hello World!!
+<div>{{error}}</div>
+<main>
+    <div class="board">
+        {{#board}}
+        {{#pieces}}
+        <div class="cell" id="{{position.position}}">
+            <div class="piece">
+                <img src="/assets/{{name}}.png" alt="{{name}}"/>
+            </div>
+        </div>
+        {{/pieces}}
+        {{/board}}
+    </div>
+    <div class="commands">
+        <div class="command">
+            <input id="white" value="{{white}}"/>
+            <input id="black" value="{{black}}"/>
+            <button id="start-button">START</button>
+        </div>
+        <div class="command">
+            <button id="result-button">RESULT</button>
+            <div id="result-view"></div>
+        </div>
+        <div class="command">
+            {{board.status.message}}
+        </div>
+        <div>
+            <table>
+                <thead>
+                <th>이름</th>
+                <th>승리</th>
+                <th>패배</th>
+                </thead>
+                <tbody>
+                {{#rankers}}
+                <tr>
+                    <td>{{name}}</td>
+                    <td>{{winCount}}</td>
+                    <td>{{loseCount}}</td>
+                </tr>
+                {{/rankers}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</main>
 </body>
 </html>
+
+<style>
+    html, body {
+        height: 100%;
+        width: 100%;
+    }
+
+    main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: inherit;
+        width: inherit;
+        flex-direction: row;
+    }
+
+    .board, .cell, .piece, .commands, .command {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .board {
+        width: 640px;
+        height: 640px;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .black-cell {
+        background-color: black;
+    }
+
+    .white-cell {
+        background-color: white;
+    }
+
+    .selected-cell {
+        background-color: #84965b;
+    }
+
+    .cell {
+        width: 12.5%;
+        height: 12.5%;
+    }
+
+    .piece {
+        width: 80%;
+        height: 80%;
+    }
+
+    .piece > img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .commands {
+        flex-direction: column;
+        margin-left: 20px;
+    }
+
+    .command {
+        height: 100px;
+        width: 100%;
+    }
+
+    table, th, td {
+        border: 1px solid #bcbcbc;
+    }
+
+    th {
+        text-align: center;
+    }
+
+    td {
+        text-align: center;
+    }
+</style>
+
+<script>
+    // cell 별 색깔 부여(흰색, 검은색)
+    for (let i = 0; i < 64; i++) {
+        let cell = "white-cell";
+        if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
+            // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
+            cell = "black-cell";
+        }
+        $(".cell:eq(" + i + ")").addClass(cell);
+    }
+
+    // 시작 버튼
+    $("#start-button").click(function () {
+        $.ajax({
+            url: "/start",
+            data: {white: $("#white").val(), black: $("#black").val()},
+            method: "POST",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("html").html(html);
+            });
+    });
+
+    // 결과 버튼
+    $("#result-button").click(function () {
+        $.ajax({
+            url: "/status",
+            data: {white: $("#white").val(), black: $("#black").val()},
+            method: "GET",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("#result-view").html(html);
+            });
+    });
+
+    // move 클릭으로 구현
+    let source;
+    let target;
+    let isFirstClick = true;
+
+    $(".piece").click(function () {
+        let cell = $(this).parent();
+        let cellPosition = $(this).parent().attr("id");
+
+        // 첫 클릭이라면 source에 포지션 저장
+        if (isFirstClick) {
+            source = cellPosition;
+            isFirstClick = false;
+            cell.addClass("selected-cell");
+            return;
+        }
+
+        // 두번째 클릭이지만 똑같은 기물을 선택했다면 선택 취소
+        if (!isFirstClick && (source === cellPosition)) {
+            source = null;
+            isFirstClick = true;
+            cell.removeClass("selected-cell");
+            return;
+        }
+
+        // 두번째 클릭이라면 이동
+        $.ajax({
+            url: "/move",
+            data: {source: source, target: cellPosition, white: $("#white").val(), black: $("#black").val()},
+            method: "POST",
+            dataType: "html"
+        })
+            .done(function (html) {
+                $("html").html(html);
+            });
+    });
+</script>

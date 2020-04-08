@@ -4,11 +4,7 @@ import chess.domain.piece.ChessPiece;
 import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.*;
 
 public class Line {
 
