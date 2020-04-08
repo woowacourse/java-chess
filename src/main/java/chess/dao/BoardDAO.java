@@ -33,7 +33,8 @@ public class BoardDAO {
         Connection connection = null;
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + SERVER.getData() + "/" + DATABASE.getData() + OPTION.getData(), USER_NAME.getData(), PASSWORD.getData());
+            String url = "jdbc:mysql://" + SERVER.getData() + "/" + DATABASE.getData() + OPTION.getData();
+            connection = DriverManager.getConnection(url, USER_NAME.getData(), PASSWORD.getData());
         } catch (SQLException e) {
             e.printStackTrace();
         }
