@@ -10,56 +10,56 @@ import chess.domain.piece.PieceRule;
 import chess.domain.piece.Team;
 
 public class Pieces {
-	public static final int BOTH_TEAM_KING_NUMBER = 2;
-	private final Map<Position, Piece> pieces;
+    public static final int BOTH_TEAM_KING_NUMBER = 2;
+    private final Map<Position, Piece> pieces;
 
-	public Pieces(Map<Position, Piece> pieces) {
-		this.pieces = new HashMap<>(pieces);
-	}
+    public Pieces(Map<Position, Piece> pieces) {
+        this.pieces = new HashMap<>(pieces);
+    }
 
-	public List<Piece> getAlivePieces() {
-		return pieces.values().stream()
-			.filter(Piece::isAlive)
-			.collect(Collectors.toList());
-	}
+    public List<Piece> getAlivePieces() {
+        return pieces.values().stream()
+            .filter(Piece::isAlive)
+            .collect(Collectors.toList());
+    }
 
-	public List<Piece> getAlivePiecesByTeam(Team team) {
-		return this.getAlivePieces().stream()
-			.filter(p -> p.isInTeam(team))
-			.collect(Collectors.toList());
-	}
+    public List<Piece> getAlivePiecesByTeam(Team team) {
+        return this.getAlivePieces().stream()
+            .filter(p -> p.isInTeam(team))
+            .collect(Collectors.toList());
+    }
 
-	public Piece findByPosition(Position position) {
-		return pieces.get(position);
-	}
+    public Piece findByPosition(Position position) {
+        return pieces.get(position);
+    }
 
-	public boolean isBothKingAlive() {
-		return this.getAlivePieces().stream()
-			.filter(p -> p.getScore() == PieceRule.KING.getScore())
-			.count() == BOTH_TEAM_KING_NUMBER;
-	}
+    public boolean isBothKingAlive() {
+        return this.getAlivePieces().stream()
+            .filter(p -> p.getScore() == PieceRule.KING.getScore())
+            .count() == BOTH_TEAM_KING_NUMBER;
+    }
 
-	public Team teamWithAliveKing() {
-		return this.getAlivePieces().stream()
-			.filter(p -> p.getScore() == PieceRule.KING.getScore())
-			.findFirst()
-			.orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
-			.getTeam();
-	}
+    public Team teamWithAliveKing() {
+        return this.getAlivePieces().stream()
+            .filter(p -> p.getScore() == PieceRule.KING.getScore())
+            .findFirst()
+            .orElseThrow(() -> new NullPointerException("킹이 한 명도 없습니다."))
+            .getTeam();
+    }
 
-	public void move(Position source, Position destination) {
-		Piece sourcePiece = this.pieces.get(source);
-		sourcePiece.move(destination);
-		this.pieces.put(destination, sourcePiece);
-		this.pieces.remove(source);
-	}
+    public void move(Position source, Position destination) {
+        Piece sourcePiece = this.pieces.get(source);
+        sourcePiece.move(destination);
+        this.pieces.put(destination, sourcePiece);
+        this.pieces.remove(source);
+    }
 
-	public void kill(Piece destinationPiece) {
-		destinationPiece.kill();
-		this.pieces.values().remove(destinationPiece);
-	}
+    public void kill(Piece destinationPiece) {
+        destinationPiece.kill();
+        this.pieces.values().remove(destinationPiece);
+    }
 
-	public Map<Position, Piece> getPieces() {
-		return pieces;
-	}
+    public Map<Position, Piece> getPieces() {
+        return pieces;
+    }
 }

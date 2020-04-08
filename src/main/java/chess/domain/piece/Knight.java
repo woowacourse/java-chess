@@ -10,19 +10,19 @@ import chess.domain.Position;
 import chess.exception.IllegalMoveException;
 
 public class Knight extends Piece {
-	private static List<Direction> possibleDirections = Arrays.asList(NNE, NEE, NNW, NWW, SSE, SEE, SSW, SWW);
+    private static List<Direction> possibleDirections = Arrays.asList(NNE, NEE, NNW, NWW, SSE, SEE, SSW, SWW);
 
-	public Knight(Position position, Team team) {
-		super(position, team);
-		this.representation = Arrays.asList('♘', '♞');
-		this.score = PieceRule.KNIGHT.getScore();
-	}
+    public Knight(Position position, Team team) {
+        super(position, team);
+        this.representation = Arrays.asList('♘', '♞');
+        this.score = PieceRule.KNIGHT.getScore();
+    }
 
-	@Override
-	public void validateMove(Position destination) {
-		Direction direction = position.calculateDirection(destination);
-		if (!possibleDirections.contains(direction)) {
-			throw new IllegalMoveException(ILLEGAL_MOVE);
-		}
-	}
+    @Override
+    public void validateMove(Position destination) {
+        Direction direction = position.calculateDirection(destination);
+        if (!possibleDirections.contains(direction)) {
+            throw new IllegalMoveException(ILLEGAL_MOVE);
+        }
+    }
 }

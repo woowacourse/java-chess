@@ -17,44 +17,44 @@ import org.junit.jupiter.params.provider.MethodSource;
 import chess.exception.PositionOutOfBoundsException;
 
 public class PositionTest {
-	@Test
-	@DisplayName("위치 정보를 String으로 받아 좌표값으로 변환")
-	void PositionReceive() {
-		assertThat(new Position("e1")).isEqualTo(new Position(5, 1));
-	}
+    private static Stream<Arguments> inBetweenSource() {
+        return Stream.of(
+            Arguments.of(new Position("a1"), new Position("c3"), Collections.singletonList(new Position("b2"))),
+            Arguments.of(new Position("a2"), new Position("d2"),
+                Arrays.asList(new Position("b2"), new Position("c2"))),
+            Arguments.of(new Position("h7"), new Position("d7"),
+                Arrays.asList(new Position("g7"), new Position("f7"), new Position("e7")))
+        );
+    }
 
-	@ParameterizedTest
-	@DisplayName("잘못된 위치 값을 받은 경우 예외를 잘 처리하는지 확인")
-	@CsvSource(value = {"0,4", "9,2", "1,0", "3,9"})
-	void invalidPositionTest(int x, int y) {
-		assertThatThrownBy(() ->
-			new Position(x, y)
-		).isInstanceOf(PositionOutOfBoundsException.class)
-			.hasMessageContaining("위치값");
+    @Test
+    @DisplayName("위치 정보를 String으로 받아 좌표값으로 변환")
+    void PositionReceive() {
+        assertThat(new Position("e1")).isEqualTo(new Position(5, 1));
+    }
 
-	}
+    @ParameterizedTest
+    @DisplayName("잘못된 위치 값을 받은 경우 예외를 잘 처리하는지 확인")
+    @CsvSource(value = {"0,4", "9,2", "1,0", "3,9"})
+    void invalidPositionTest(int x, int y) {
+        assertThatThrownBy(() ->
+            new Position(x, y)
+        ).isInstanceOf(PositionOutOfBoundsException.class)
+            .hasMessageContaining("위치값");
 
-	private static Stream<Arguments> inBetweenSource() {
-		return Stream.of(
-			Arguments.of(new Position("a1"), new Position("c3"), Collections.singletonList(new Position("b2"))),
-			Arguments.of(new Position("a2"), new Position("d2"),
-				Arrays.asList(new Position("b2"), new Position("c2"))),
-			Arguments.of(new Position("h7"), new Position("d7"),
-				Arrays.asList(new Position("g7"), new Position("f7"), new Position("e7")))
-		);
-	}
+    }
 
-	@ParameterizedTest
-	@DisplayName("Source, Destination 사이의 방향과 거리가 맞는지 확인")
-	@MethodSource("inBetweenSource")
-	void inBetweenTest(Position source, Position destination, List<Position> positions) {
-		assertThat(source.getPositionsInBetween(destination)).containsAll(positions);
-	}
+    @ParameterizedTest
+    @DisplayName("Source, Destination 사이의 방향과 거리가 맞는지 확인")
+    @MethodSource("inBetweenSource")
+    void inBetweenTest(Position source, Position destination, List<Position> positions) {
+        assertThat(source.getPositionsInBetween(destination)).containsAll(positions);
+    }
 
-	@Test
-	@DisplayName("toString 테스트")
-	void toString1() {
-		Position position = new Position("a1");
-		assertThat(position.toString()).isEqualTo("a1");
-	}
+    @Test
+    @DisplayName("toString 테스트")
+    void toString1() {
+        Position position = new Position("a1");
+        assertThat(position.toString()).isEqualTo("a1");
+    }
 }

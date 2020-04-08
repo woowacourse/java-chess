@@ -18,22 +18,22 @@ import chess.domain.piece.Team;
 
 public class TotalScoreTest {
 
-	private static Stream<Arguments> scoreCalculateSource() {
-		return Stream.of(
-			Arguments.of(Arrays.asList(new King(new Position("d1"), Team.WHITE),
-				new Pawn(new Position("e4"), Team.WHITE),
-				new Pawn(new Position("f4"), Team.WHITE)), 2),
-			Arguments.of(Arrays.asList(new King(new Position("d1"), Team.WHITE),
-				new Pawn(new Position("e4"), Team.WHITE),
-				new Pawn(new Position("e6"), Team.WHITE)), 1)
-		);
-	}
+    private static Stream<Arguments> scoreCalculateSource() {
+        return Stream.of(
+            Arguments.of(Arrays.asList(new King(new Position("d1"), Team.WHITE),
+                new Pawn(new Position("e4"), Team.WHITE),
+                new Pawn(new Position("f4"), Team.WHITE)), 2),
+            Arguments.of(Arrays.asList(new King(new Position("d1"), Team.WHITE),
+                new Pawn(new Position("e4"), Team.WHITE),
+                new Pawn(new Position("e6"), Team.WHITE)), 1)
+        );
+    }
 
-	@ParameterizedTest
-	@DisplayName("점수가 제대로 계산되는지 확인")
-	@MethodSource("scoreCalculateSource")
-	void name(List<Piece> pieces, int expected) {
-		TotalScore whiteTotalScore = new TotalScore(pieces);
-		assertThat(whiteTotalScore.getTotalScore()).isEqualTo(expected);
-	}
+    @ParameterizedTest
+    @DisplayName("점수가 제대로 계산되는지 확인")
+    @MethodSource("scoreCalculateSource")
+    void name(List<Piece> pieces, int expected) {
+        TotalScore whiteTotalScore = new TotalScore(pieces);
+        assertThat(whiteTotalScore.getTotalScore()).isEqualTo(expected);
+    }
 }
