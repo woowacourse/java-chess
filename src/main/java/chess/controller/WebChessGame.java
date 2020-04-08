@@ -18,20 +18,20 @@ public class WebChessGame {
     private Board board;
 
     public WebChessGame() throws SQLException {
-        this.board = new Board(piecesDAO.loadPieces(), turnDAO.loadTurn());
+        this.board = new Board(piecesDAO.load(), turnDAO.load());
     }
 
     public void init() throws SQLException {
         NormalInitStrategy normalInitStrategy = new NormalInitStrategy();
-        piecesDAO.savePieces(normalInitStrategy.init());
-        turnDAO.saveTurn(Team.WHITE);
-        this.board = new Board(piecesDAO.loadPieces(), turnDAO.loadTurn());
+        piecesDAO.save(normalInitStrategy.init());
+        turnDAO.save(Team.WHITE);
+        this.board = new Board(piecesDAO.load(), turnDAO.load());
     }
 
     public void play(String source, String target) throws SQLException {
         board.moveIfPossible(Position.of(source), Position.of(target));
-        piecesDAO.savePieces(board.getPieces());
-        turnDAO.saveTurn(board.getTurn());
+        piecesDAO.save(board.getPieces());
+        turnDAO.save(board.getTurn());
     }
 
     public boolean isFinished() {

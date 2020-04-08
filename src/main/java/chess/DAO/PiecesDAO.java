@@ -18,7 +18,7 @@ public class PiecesDAO {
         this.conn = conn;
     }
 
-    public Map<Position, Piece> loadPieces() throws SQLException {
+    public Map<Position, Piece> load() throws SQLException {
         String query = "SELECT * FROM pieces";
         PreparedStatement pstmt = conn.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -41,7 +41,7 @@ public class PiecesDAO {
         return pieces;
     }
 
-    public void savePieces(Map<Position, Piece> pieces) throws SQLException {
+    public void save(Map<Position, Piece> pieces) throws SQLException {
         for (Position position : pieces.keySet()) {
             savePiece(position, pieces.get(position));
         }

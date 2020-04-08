@@ -15,7 +15,7 @@ public class TurnDAO {
         this.conn = conn;
     }
 
-    public Team loadTurn() throws SQLException {
+    public Team load() throws SQLException {
         String query = "SELECT * FROM turn";
         PreparedStatement pstmt = conn.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
@@ -26,7 +26,7 @@ public class TurnDAO {
         return rs.getBoolean("isWhite") ? Team.WHITE : Team.BLACK;
     }
 
-    public void saveTurn(Team turn) throws SQLException {
+    public void save(Team turn) throws SQLException {
         String query = "UPDATE turn SET isWhite = ?";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setBoolean(1, turn.isWhite());

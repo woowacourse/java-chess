@@ -17,19 +17,19 @@ public class TurnDAOTest {
     @BeforeEach
     public void setUp() throws SQLException {
         turnDAO = new TurnDAO(DBConnector.getConnection());
-        savedTurn = turnDAO.loadTurn();
+        savedTurn = turnDAO.load();
     }
 
     @Test
     void saveTurnTest() throws SQLException {
-        turnDAO.saveTurn(Team.WHITE);
-        assertThat(turnDAO.loadTurn()).isEqualTo(Team.WHITE);
-        turnDAO.saveTurn(Team.BLACK);
-        assertThat(turnDAO.loadTurn()).isEqualTo(Team.BLACK);
+        turnDAO.save(Team.WHITE);
+        assertThat(turnDAO.load()).isEqualTo(Team.WHITE);
+        turnDAO.save(Team.BLACK);
+        assertThat(turnDAO.load()).isEqualTo(Team.BLACK);
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        turnDAO.saveTurn(savedTurn);
+        turnDAO.save(savedTurn);
     }
 }
