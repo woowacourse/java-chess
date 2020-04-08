@@ -7,7 +7,7 @@ import chess.domain.piece.Team;
 
 public class KingCatchFinished extends Finished {
 	public KingCatchFinished(Board board, Team turn) {
-		super(board, KING_CATCHED_FINISHED ,turn);
+		super(board, KING_CATCHED_FINISHED, turn);
 		validCountOfKing(board);
 	}
 

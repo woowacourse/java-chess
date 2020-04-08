@@ -6,7 +6,8 @@ public enum StateType {
 	READY("ready"),
 	STARTED("started"),
 	KING_CATCHED_FINISHED("king_catch_finished"),
-	SUSPEND_FINISHED("suspend_finished"),;
+	SUSPEND_FINISHED("suspend_finished"),
+	;
 
 	private final String state;
 

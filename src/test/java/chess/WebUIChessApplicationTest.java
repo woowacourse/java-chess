@@ -1,13 +1,9 @@
 package chess;
 
-import static org.assertj.core.api.Assertions.*;
-
 import org.junit.Rule;
 import org.junit.jupiter.api.Test;
 
-import com.despegar.http.client.GetMethod;
 import com.despegar.http.client.HttpClientException;
-import com.despegar.http.client.HttpResponse;
 import com.despegar.sparkjava.test.SparkServer;
 import spark.servlet.SparkApplication;
 
@@ -27,12 +23,5 @@ class WebUIChessApplicationTest {
 		// GetMethod request = testServer.get("/chess/record", false);
 		// HttpResponse httpResponse = testServer.execute(request);
 		// assertThat(httpResponse.code()).isEqualTo(500);
-	}
-
-	@Test
-	public void when_request_start_then_success_test() throws HttpClientException {
-		GetMethod request = testServer.get("/chess/start", false);
-		HttpResponse httpResponse = testServer.execute(request);
-		assertThat(httpResponse.code()).isEqualTo(200);
 	}
 }

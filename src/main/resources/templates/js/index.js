@@ -17,6 +17,7 @@ function img_create(src) {
     img.classList.add("piece");
     return img;
 }
+
 const chessBoard = document.querySelector("#chess-board tbody");
 
 for (let i = 8; i > 0; i--) {
@@ -82,7 +83,12 @@ function updateGameState() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            renderCurrentGameState(JSON.parse(xhttp.responseText));
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            renderCurrentGameState(data['data']);
         }
     };
     xhttp.open("GET", "/chess/state", true);
@@ -93,11 +99,16 @@ function requestMovePieces(data) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            updatePieceOnBoard(xhttp);
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            updatePieceOnBoard(data['data']);
             requestRecord();
             checkWhetherGameIsFinished();
             updateGameState();
-        } else if(this.status === 500) {
+        } else if (this.status === 500) {
             console.log(this.responseText);
         }
     };
@@ -109,12 +120,17 @@ function checkWhetherGameIsFinished() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            if (!JSON.parse(xhttp.responseText)) {
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            if (!data['data']) {
                 requestWinner();
             }
         }
     };
-    xhttp.open("GET", "/chess/game/isnotfinish", true);
+    xhttp.open("GET", "/chess/isnotfinish", true);
     xhttp.send();
 }
 
@@ -125,22 +141,32 @@ function requestEndGame() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
             updateGameState();
             requestWinner();
         }
     };
-    xhttp.open("GET", "/chess/end", true);
-    xhttp.send();
+    xhttp.open("POST", "/chess/state", true);
+    xhttp.send("end");
 }
 
 function requestWinner() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            alert("승리 : " + xhttp.responseText)
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            alert("승리 : " + data['data']);
         }
     };
-    xhttp.open("GET", "/chess/result/winner", true);
+    xhttp.open("GET", "/chess/result", true);
     xhttp.send();
 }
 
@@ -149,22 +175,26 @@ function requestNewGame() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
             requestAllPieces();
             updateGameState();
         }
     };
-    xhttp.open("GET", "/chess/start", true);
-    xhttp.send();
+    xhttp.open("POST", "/chess/state", true);
+    xhttp.send("start");
 }
 
 function cleanBoard() {
     cells.forEach(cell => cell.innerHTML = '');
 }
 
-function updatePieceOnBoard(xhttp) {
-    const piecesToUpdate = JSON.parse(xhttp.responseText);
-    console.log(piecesToUpdate);
-    moveAllPieces(piecesToUpdate);
+function updatePieceOnBoard(datas) {
+    console.log(datas);
+    moveAllPieces(datas);
 }
 
 function moveAllPieces(piecesToUpdate) {
@@ -188,18 +218,41 @@ function renderPiece(element, symbol) {
     }
 
     switch (symbol) {
-        case 'P': img = black_pawn.cloneNode(true); break;
-        case 'B': img = black_bishop.cloneNode(true); break;
-        case 'R': img = black_rook.cloneNode(true); break;
-        case 'N': img = black_knight.cloneNode(true); break;
-        case 'Q': img = black_queen.cloneNode(true); break;
-        case 'K': img = black_king.cloneNode(true); break;
-        case 'p': img = white_pawn.cloneNode(true); break;
-        case 'b': img = white_bishop.cloneNode(true); break;
-        case 'r': img = white_rook.cloneNode(true); break;
-        case 'n': img = white_knight.cloneNode(true); break;
-        case 'q': img = white_queen.cloneNode(true); break;
-        case 'k': img = white_king.cloneNode(true);
+        case 'P':
+            img = black_pawn.cloneNode(true);
+            break;
+        case 'B':
+            img = black_bishop.cloneNode(true);
+            break;
+        case 'R':
+            img = black_rook.cloneNode(true);
+            break;
+        case 'N':
+            img = black_knight.cloneNode(true);
+            break;
+        case 'Q':
+            img = black_queen.cloneNode(true);
+            break;
+        case 'K':
+            img = black_king.cloneNode(true);
+            break;
+        case 'p':
+            img = white_pawn.cloneNode(true);
+            break;
+        case 'b':
+            img = white_bishop.cloneNode(true);
+            break;
+        case 'r':
+            img = white_rook.cloneNode(true);
+            break;
+        case 'n':
+            img = white_knight.cloneNode(true);
+            break;
+        case 'q':
+            img = white_queen.cloneNode(true);
+            break;
+        case 'k':
+            img = white_king.cloneNode(true);
     }
     element.appendChild(img);
 }
@@ -208,25 +261,27 @@ function requestRecord() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            console.log(this);
-            let data = xhttp.responseText;
-            const parse = JSON.parse(data);
-            updateRecord(parse);
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            updateRecord(data['data']);
         }
     };
     xhttp.open("GET", "/chess/record", true);
     xhttp.send();
 }
 
-function updateRecord(parse) {
-    for (let i = 0; i < parse.length; i++) {
+function updateRecord(datas) {
+    for (let i = 0; i < datas.length; i++) {
         let select = "";
-        if (parse[i]["team"] === "black") {
+        if (datas[i]["team"] === "black") {
             select = document.querySelector(".black-team");
         } else {
             select = document.querySelector(".white-team");
         }
-        select.innerHTML = parse[i]["score"];
+        select.innerHTML = datas[i]["score"];
     }
 }
 
@@ -234,7 +289,12 @@ function requestAllPieces() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
-            updatePieceOnBoard(xhttp);
+            const data = JSON.parse(xhttp.responseText);
+            if (data['status'] === 'ERROR') {
+                alert(data['message']);
+                return;
+            }
+            updatePieceOnBoard(data['data']);
             requestRecord();
         }
     };
@@ -243,6 +303,7 @@ function requestAllPieces() {
 }
 
 window.addEventListener('load', initialLoad);
+
 function initialLoad() {
     updateGameState();
     requestAllPieces();

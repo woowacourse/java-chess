@@ -39,7 +39,8 @@ public class Board {
 
 	public Board(String boards) {
 		pieces = new HashMap<>();
-		if ("".equals(boards)) return;
+		if ("".equals(boards))
+			return;
 		String[] split = boards.split("\n");
 		for (int i = 0; i < split.length; i++) {
 			String s = split[i];

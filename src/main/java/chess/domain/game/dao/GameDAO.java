@@ -7,5 +7,5 @@ import chess.domain.game.Game;
 public interface GameDAO {
 	Game findById(int userId) throws SQLException;
 
-	void update(Game game) throws SQLException ;
+	void update(Game game) throws SQLException;
 }

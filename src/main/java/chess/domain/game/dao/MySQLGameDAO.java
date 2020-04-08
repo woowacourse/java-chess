@@ -9,7 +9,7 @@ import java.sql.SQLException;
 import chess.domain.game.Game;
 import chess.domain.state.GameStateFactory;
 
-public class MySQLGameDAO implements GameDAO{
+public class MySQLGameDAO implements GameDAO {
 	public Connection getConnection() {
 		Connection con = null;
 		String server = "localhost:13306";
@@ -44,14 +44,14 @@ public class MySQLGameDAO implements GameDAO{
 		pstmt.setInt(1, userId);
 		ResultSet rs = pstmt.executeQuery();
 
-		if (!rs.next()) return null;
-
+		if (!rs.next())
+			return null;
 
 		return new Game(GameStateFactory.of(
 			rs.getString("state"),
 			rs.getString("turn"),
 			rs.getString("board")
-			));
+		));
 	}
 
 	public void update(Game game) throws SQLException {

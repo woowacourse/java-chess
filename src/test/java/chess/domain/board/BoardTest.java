@@ -77,13 +77,13 @@ public class BoardTest {
 	void constructWithStringTest() {
 		String boards =
 			"RNBQKBNR\n" +
-			"PPPPPPPP\n" +
-			"........\n" +
-			"........\n" +
-			"........\n" +
-			"........\n" +
-			"pppppppp\n" +
-			"rnbqkbnr\n";
+				"PPPPPPPP\n" +
+				"........\n" +
+				"........\n" +
+				"........\n" +
+				"........\n" +
+				"pppppppp\n" +
+				"rnbqkbnr\n";
 		Board board = new Board(boards);
 		Map<Position, Piece> pieces = board.getPieces();
 		assertThat(pieces).contains(

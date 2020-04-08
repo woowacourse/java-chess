@@ -35,9 +35,13 @@ public class Game {
 		return state.getBoard();
 	}
 
-	public Team getTurn() {return state.getTurn();}
+	public Team getTurn() {
+		return state.getTurn();
+	}
 
-	public StateType getStateType() {return state.getStateType();}
+	public StateType getStateType() {
+		return state.getStateType();
+	}
 
 	public Team findWinner() {
 		return state.getWinner();
