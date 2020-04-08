@@ -31,7 +31,7 @@ public class ChessGameController {
 		post("/move", (request, response) -> {
 			try {
 				MoveRequestDto moveRequestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
-				return new Gson().toJson(chessService.move(moveRequestDto));
+				return toJson(chessService.move(moveRequestDto));
 			} catch (PieceMoveFailedException exception) {
 				return toJson(MoveResponseDto.ofFailedToMove(exception.getMessage()));
 			}
