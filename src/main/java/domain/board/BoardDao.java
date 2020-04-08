@@ -22,14 +22,14 @@ public class BoardDao {
 	private static final int FIRST_RANK_INDEX = 1;
 	private static final int LAST_RANK_INDEX = 8;
 	private static final int RANK_INDEX = 1;
+	private static final String SERVER = "localhost:3306";// MySQL 서버 주소
+	private static final String DATABASE = "board";// MySQL DATABASE 이름
+	private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+	private static final String USER_NAME = "root";//  MySQL 서버 아이디
+	private static final String PASSWORD = "1234";// MySQL 서버 비밀번호
 
 	public Connection getConnection() {
 		Connection con = null;
-		String server = "localhost:3306"; // MySQL 서버 주소
-		String database = "board"; // MySQL DATABASE 이름
-		String option = "?useSSL=false&serverTimezone=UTC";
-		String userName = "root"; //  MySQL 서버 아이디
-		String password = "1234"; // MySQL 서버 비밀번호
 
 		// 드라이버 로딩
 		try {
@@ -41,7 +41,7 @@ public class BoardDao {
 
 		// 드라이버 연결
 		try {
-			con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+			con = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USER_NAME, PASSWORD);
 			System.out.println("정상적으로 연결되었습니다.");
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
