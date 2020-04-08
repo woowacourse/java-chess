@@ -1,5 +1,6 @@
 package chess.domain.piece.piece;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.move.Move;
 import chess.domain.move.MoveFactory;
 import chess.domain.piece.Bishop;
@@ -25,7 +26,9 @@ class BishopTest {
     @DisplayName("movable 의 인자가 null 일때 테스트")
     @Test
     void validateMovePatternNull() {
-        assertThatThrownBy(() -> bishop.validateMovePattern(null, null))
+        Position targetPosition = Position.of("a1");
+        ChessBoard chessBoard = ChessBoard.initPieces();
+        assertThatThrownBy(() -> bishop.validateMovePattern(null, targetPosition, chessBoard.getPieces()))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -33,10 +36,10 @@ class BishopTest {
     @DisplayName("이동 성공 테스트")
     void validateMovePattern() {
         Position target = Position.of("a3");
-
+        ChessBoard chessBoard = ChessBoard.initPieces();
         Move move = MoveFactory.findMovePattern(source, target);
 
-        bishop.validateMovePattern(move, null);
+        bishop.validateMovePattern(move, null, chessBoard.getPieces());
     }
 
     @Test

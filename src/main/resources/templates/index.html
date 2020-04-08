@@ -255,30 +255,13 @@
 
         $.ajax({
             type: 'post',
-            url: 'isMovable',
+            url: 'move',
             data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
             dataType: 'json',
             error: onError,
-            success: onSuccess
+            success: getPieceInfoSuccess
         });
 
-    }
-
-    function onSuccess(response) {
-        var sourcePosition = response.source;
-        var targetPosition = response.target;
-        var sourcePieceType = response.sourcePieceType;
-        var targetPieceType = response.targetPieceType;
-        var isAttack = response.isAttack;
-
-        document.getElementById(sourcePosition).classList.remove(sourcePieceType);
-        if (isAttack) {
-            document.getElementById(targetPosition).classList.remove(targetPieceType);
-            if (targetPieceType === "K" || targetPieceType === "k") {
-                alert("게임 종료되었습니다.");
-            }
-        }
-        document.getElementById(targetPosition).classList.add(sourcePieceType);
     }
 
     function onError() {
@@ -300,12 +283,21 @@
         alert("error");
     }
 
-    function getPieceInfoSuccess(response) {
-        for (position in response) {
-            var pieceName = response[position];
-            document.getElementById(position).classList.add(pieceName);
+    function getPieceInfoSuccess({isGameOver, boardDto: {pieceDtos}}) {
+        console.log(pieceDtos);
+        document.querySelectorAll('.cell').forEach(cell = > {
+            cell.classList = ['cell'];
+    })
+        for (i in pieceDtos) {
+            var pieceName = pieceDtos[i].name;
+            document.getElementById(pieceDtos[i].position).classList.add(pieceName);
+        }
+        if (isGameOver) {
+            alert("게임 종료되었습니다. 새 게임이 시작됩니다....");
+            $(".reStart").click();
         }
     }
+
 
 </script>
 

@@ -1,6 +1,7 @@
 package chess.domain.piece.piece;
 
-import chess.dao.PieceDao;
+import chess.dao.ChessBoardDaoImpl;
+import chess.database.Connector;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -11,21 +12,20 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class PieceDaoTest {
-    private PieceDao pieceDao;
+class ChessBoardDaoImplTest {
+    private ChessBoardDaoImpl chessBoardDaoImpl;
 
     @BeforeEach
     void setUp() {
-        pieceDao = new PieceDao();
+        chessBoardDaoImpl = new ChessBoardDaoImpl();
     }
 
     @Test
     void connection() {
-        Connection con = pieceDao.getConnection();
+        Connection con = Connector.getConnection();
         assertNotNull(con);
     }
 
@@ -34,7 +34,7 @@ class PieceDaoTest {
     void addPieceTest() {
         Piece piece = new Pawn(Position.of("a1"), new BlackTeam());
         try {
-            pieceDao.addPiece(piece);
+            chessBoardDaoImpl.addPiece(piece);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -49,9 +49,9 @@ class PieceDaoTest {
         Position sourcePosition = Position.of("c1");
         Position targetPosition = Position.of("b3");
         try {
-            pieceDao.addPiece(knight);
-            pieceDao.addPiece(pawn);
-            pieceDao.updatePiece(sourcePosition, targetPosition);
+            chessBoardDaoImpl.addPiece(knight);
+            chessBoardDaoImpl.addPiece(pawn);
+            chessBoardDaoImpl.updatePiece(sourcePosition, targetPosition);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -64,7 +64,7 @@ class PieceDaoTest {
 
         Position deletePosition = Position.of("a1");
         try {
-            pieceDao.deletePiece(deletePosition);
+            chessBoardDaoImpl.deletePiece(deletePosition);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -75,7 +75,7 @@ class PieceDaoTest {
     @DisplayName("모든 pieces가 삭제된다.")
     void deleteAll() {
         try {
-            pieceDao.deleteAll();
+            chessBoardDaoImpl.deleteAll();
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -84,15 +84,13 @@ class PieceDaoTest {
 
     @Test
     @DisplayName("database에 남아있는 pieces의 정보를 가져온다.")
-    void readPieces() {
+    void find() {
         try {
-            ResultSet rs = (ResultSet) pieceDao.readPieces();
-            if (rs.next()) {
-                System.out.println(rs.getObject(4));
-            }
+            chessBoardDaoImpl.find();
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
         }
+
     }
 }

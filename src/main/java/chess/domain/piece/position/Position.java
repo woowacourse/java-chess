@@ -19,9 +19,9 @@ public class Position {
     }
 
     public static Position of(String coordinate) {
-        String[] fileAndRank = coordinate.split(FILE_RANK_DELIMITER);
-        XPosition xPosition = XPosition.of(fileAndRank[XPOSITION_INDEX]);
-        YPosition yPosition = YPosition.of(fileAndRank[YPOSITION_INDEX]);
+        String[] xPositionAndYPosition = coordinate.split(FILE_RANK_DELIMITER);
+        XPosition xPosition = XPosition.of(xPositionAndYPosition[XPOSITION_INDEX]);
+        YPosition yPosition = YPosition.of(xPositionAndYPosition[YPOSITION_INDEX]);
         return Position.of(xPosition, yPosition);
     }
 

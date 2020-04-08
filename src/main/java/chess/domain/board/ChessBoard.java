@@ -10,6 +10,7 @@ import chess.domain.piece.position.Position;
 import chess.domain.piece.team.BlackTeam;
 import chess.domain.piece.team.WhiteTeam;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -21,14 +22,18 @@ public class ChessBoard {
 
     private final List<Piece> pieces;
 
-    public ChessBoard() {
-        this.pieces = initPieces();
+    private ChessBoard(List<Piece> pieces) {
+        this.pieces = new ArrayList<>(pieces);
     }
 
-    private List<Piece> initPieces() {
+    public static ChessBoard initPieces() {
         List<Piece> pieces = PieceBundleFactory.createPieceSet(new BlackTeam());
         pieces.addAll(PieceBundleFactory.createPieceSet(new WhiteTeam()));
-        return pieces;
+        return new ChessBoard(pieces);
+    }
+
+    public static ChessBoard create(List<Piece> pieces) {
+        return new ChessBoard(pieces);
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {

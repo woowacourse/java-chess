@@ -22,7 +22,7 @@ public class ChessBoardTest {
 
     @BeforeEach
     void setUp() {
-        chessBoard = new ChessBoard();
+        chessBoard = ChessBoard.initPieces();
         pawnInitPosition = Position.of("a2");
         rookInitPosition = Position.of("a1");
         knightInitPosition = Position.of("b1");

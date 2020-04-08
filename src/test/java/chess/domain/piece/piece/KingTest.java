@@ -1,5 +1,6 @@
 package chess.domain.piece.piece;
 
+import chess.domain.board.ChessBoard;
 import chess.domain.move.Move;
 import chess.domain.move.MoveFactory;
 import chess.domain.piece.King;
@@ -17,10 +18,11 @@ class KingTest {
     void movable() {
         Position source = Position.of("d2");
         Position target = Position.of("d3");
+        ChessBoard chessBoard = ChessBoard.initPieces();
 
         Move move = MoveFactory.findMovePattern(source, target);
         Piece king = new King(source, new BlackTeam());
-        king.validateMovePattern(move, null);
+        king.validateMovePattern(move, null, chessBoard.getPieces());
     }
 
     @Test
@@ -28,11 +30,11 @@ class KingTest {
     void isNotMovable() {
         Position source = Position.of("d2");
         Position target = Position.of("d4");
-
+        ChessBoard chessBoard = ChessBoard.initPieces();
         Move move = MoveFactory.findMovePattern(source, target);
         Piece king = new King(source, new BlackTeam());
 
-        assertThatThrownBy(() -> king.validateMovePattern(move, null))
+        assertThatThrownBy(() -> king.validateMovePattern(move, null, chessBoard.getPieces()))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
