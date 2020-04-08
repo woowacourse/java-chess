@@ -15,7 +15,7 @@ public class TurnDAOTest {
 
     @BeforeEach
     void init() {
-        turnDAO = new TurnDAO();
+        turnDAO = TurnDAO.getInstance();
     }
 
     @Test
@@ -35,7 +35,6 @@ public class TurnDAOTest {
 
     @AfterEach
     void reset() throws SQLException {
-        TurnDAO turnDAO = new TurnDAO();
         turnDAO.delete();
     }
 }

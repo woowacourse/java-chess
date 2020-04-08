@@ -11,6 +11,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PiecesDAO {
+
+    private static PiecesDAO piecesDAO = new PiecesDAO();
+
+    private PiecesDAO() {}
+
+    public static PiecesDAO getInstance() {
+        return piecesDAO;
+    }
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소

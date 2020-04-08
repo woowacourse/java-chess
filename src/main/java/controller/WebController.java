@@ -19,8 +19,8 @@ public class WebController {
     private TurnDAO turnDAO;
 
     public WebController() {
-        piecesDAO = new PiecesDAO();
-        turnDAO = new TurnDAO();
+        piecesDAO = PiecesDAO.getInstance();
+        turnDAO = TurnDAO.getInstance();
     }
 
     public Map<String, Object> start() throws SQLException {

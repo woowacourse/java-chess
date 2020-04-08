@@ -14,11 +14,10 @@ import org.junit.jupiter.api.Test;
 
 public class PiecesDAOTest {
     PiecesDAO piecesDAO;
-    State state;
 
     @BeforeEach
     void init() {
-        piecesDAO = new PiecesDAO();
+        piecesDAO = PiecesDAO.getInstance();
     }
 
     @Test
@@ -49,7 +48,6 @@ public class PiecesDAOTest {
 
     @AfterEach
     void reset() throws SQLException {
-        PiecesDAO piecesDAO = new PiecesDAO();
         piecesDAO.deleteAll();
     }
 }

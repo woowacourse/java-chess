@@ -8,6 +8,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class TurnDAO {
+
+    private static TurnDAO turnDAO = new TurnDAO();
+
+    private TurnDAO() {
+    }
+
+    public static TurnDAO getInstance() {
+        return turnDAO;
+    }
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소
