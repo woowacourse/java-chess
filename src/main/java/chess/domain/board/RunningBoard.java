@@ -37,20 +37,27 @@ public class RunningBoard implements Board {
 
     @Override
     public Board movePiece(MovingFlow movingFlow) {
-        return MoveExceptionHandler.handle(this::movePiece, movingFlow, this);
+        return movePiece(movingFlow, this);
     }
 
-    private Board movePiece(Position from, Position to, Board board) {
+    private Board movePiece(MovingFlow movingFlow, Board board) {
         Map<Position, Piece> pieces = clonePieces(this.pieces);
-        Piece piece = board.getPiece(from);
-        piece = piece.move(to, board);
-        pieces.put(from, Blank.of());
-        pieces.put(to, piece);
+        Piece piece = board.getPiece(movingFlow.getFrom());
+        piece = piece.move(movingFlow.getTo(), board);
+        updatePieces(pieces, movingFlow.getFrom(), movingFlow.getTo(), piece);
+        return updateBoard(pieces, piece);
+    }
+
+    private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
         if (piece.attackedKing()) {
             return new FinishedBoard(pieces);
         }
-
         return new RunningBoard(pieces);
+    }
+
+    private void updatePieces(Map<Position, Piece> pieces, Position from, Position to, Piece piece) {
+        pieces.put(from, Blank.of());
+        pieces.put(to, piece);
     }
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
