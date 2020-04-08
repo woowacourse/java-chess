@@ -19,11 +19,16 @@ import chess.dto.TurnDto;
 
 public class ChessGameDao implements JdbcTemplateDao {
 
+    private static final String STATE = "state";
+    private static final String READY = "READY";
+    private static final String PLAYING = "PLAYING";
+    private static final String FINISHED = "FINISHED";
+
     public ChessGame create() throws SQLException {
         String query = "INSERT INTO chess_game(state) VALUES (?)";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query, new String[] {"id"});
-        pstmt.setString(1, "READY");
+        pstmt.setString(1, READY);
         pstmt.executeUpdate();
         ResultSet resultSet = pstmt.getGeneratedKeys();
         if (!resultSet.next()) {
@@ -61,10 +66,10 @@ public class ChessGameDao implements JdbcTemplateDao {
         }
 
         State state = new Ready();
-        if (rs.getString("state").equals("PLAYING")) {
+        if (rs.getString(STATE).equals(PLAYING)) {
             state = new Playing(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
         }
-        if (rs.getString("state").equals("FINISHED")) {
+        if (rs.getString(STATE).equals(FINISHED)) {
             state = new Finished(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
         }
         closeConnection(connection);
