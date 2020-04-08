@@ -78,6 +78,28 @@ public class RoomDao {
 		return room;
 	}
 
+	// TODO test
+	public Room findRoomByRoomId(final int roomId) throws SQLException {
+		final String query = "SELECT * FROM room "
+				+ "WHERE id = ?";
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
+		preparedStatement.setInt(1, roomId);
+		final ResultSet resultSet = preparedStatement.executeQuery();
+
+		if (!resultSet.next()) {
+			throw new DaoNoneSelectedException();
+		}
+		final Room room = new Room(resultSet.getInt("id"),
+				resultSet.getString("room_name"));
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection(connection);
+		return room;
+	}
+
+
 	public List<Room> findAllRooms() throws SQLException {
 		final String query = "SELECT * FROM room";
 		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);

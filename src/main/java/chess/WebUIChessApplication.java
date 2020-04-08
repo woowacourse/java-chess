@@ -6,24 +6,23 @@ import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
 import domain.pieces.Piece;
 import domain.pieces.PieceType;
+import domain.pieces.Pieces;
+import domain.pieces.StartPieces;
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Coordinate;
+import domain.state.State;
 import domain.state.StateType;
 import domain.state.exceptions.StateException;
 import domain.team.Team;
-import spark.Response;
-import view.Announcement;
-import view.board.Board;
-import domain.state.Ended;
-import domain.state.State;
-import domain.pieces.Pieces;
-import domain.pieces.StartPieces;
 import spark.ModelAndView;
+import spark.Response;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+import view.Announcement;
 import view.BoardToTable;
+import view.board.Board;
 
 import java.sql.SQLException;
 import java.util.*;
@@ -87,6 +86,10 @@ public class WebUIChessApplication {
 							, roomId);
 				}
 				announcementDao.setAnnouncementByRoomId(roomId, createRightAnnouncement(after));
+				if (after.isEnded()) {
+					final StatusRecordDao statusRecordDao = new StatusRecordDao();
+					statusRecordDao.addStatusRecord(Announcement.ofStatus(after.getPieces()).getString(), roomId);
+				}
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
@@ -97,6 +100,16 @@ public class WebUIChessApplication {
 			}
 			response.redirect("/chess/rooms/" + request.params(":id"));
 			return "";
+		});
+
+		Spark.get("/chess/statistics", (request, response) -> {
+			final StatusRecordWithRoomNameDao statusRecordWithRoomNameDao = new StatusRecordWithRoomNameDao();
+			final List<StatusRecordWithRoomName> statusRecordWithRoomNames
+					= statusRecordWithRoomNameDao.findStatusRecordWithRoomName();
+
+			final Map<String, Object> map = new HashMap<>();
+			map.put("status_record_with_room_names", statusRecordWithRoomNames);
+			return render(map, "/statistics.html");
 		});
 	}
 
