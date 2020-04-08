@@ -2,8 +2,6 @@ package chess.web.repository;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcChessConnection {
@@ -34,27 +32,6 @@ public class JdbcChessConnection {
 		}
 
 		return con;
-	}
-
-	public static ResultSet executeQuery(final String query, final String... inserted) throws SQLException {
-		Connection connection = getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		setPreparedStatementBy(preparedStatement, inserted);
-		return preparedStatement.executeQuery();
-	}
-
-	public static void executeUpdate(final String query, final String... inserted) throws SQLException {
-		Connection connection = getConnection();
-		PreparedStatement preparedStatement = connection.prepareStatement(query);
-		setPreparedStatementBy(preparedStatement, inserted);
-		preparedStatement.executeUpdate();
-	}
-
-	private static void setPreparedStatementBy(final PreparedStatement preparedStatement,
-		final String... inserted) throws SQLException {
-		for (int i = 1; i <= inserted.length; i++) {
-			preparedStatement.setString(i, inserted[i - 1]);
-		}
 	}
 
 }

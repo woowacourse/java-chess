@@ -141,6 +141,10 @@ article.move__command {
     cursor: pointer;
 }
 
+.move__command__submit:hover {
+    background-color: #f8585b;
+}
+
 article.chess_command {
     display: flex;
     flex-direction: row;
@@ -161,6 +165,10 @@ article.chess_command {
     cursor: pointer;
 }
 
+.end__command__submit:hover {
+    background-color: #f8585b;
+}
+
 .restart__command__submit {
     padding: 0.8rem;
     margin: 2rem 2rem;
@@ -173,6 +181,10 @@ article.chess_command {
     border-radius: 10px;
     text-decoration: none;
     cursor: pointer;
+}
+
+.restart__command__submit:hover {
+    background-color: #f8585b;
 }
 
 article.king__caught {

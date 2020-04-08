@@ -6,14 +6,14 @@ import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessBoard.ChessBoardInitializer;
 import chess.domain.chessGame.ChessCommand;
 import chess.domain.chessGame.ChessGame;
-import chess.web.repository.dao.ChessHistoryDao;
+import chess.web.dao.ChessHistoryDao;
 
 public class ChessService {
 
 	private final ChessHistoryDao chessHistoryDao;
 
-	public ChessService() {
-		this.chessHistoryDao = new ChessHistoryDao();
+	public ChessService(ChessHistoryDao chessHistoryDao) {
+		this.chessHistoryDao = chessHistoryDao;
 		initChessHistory();
 	}
 
@@ -21,7 +21,7 @@ public class ChessService {
 		try {
 			createChessHistory();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -49,11 +49,11 @@ public class ChessService {
 		}
 	}
 
-	public void move(final String sourcePosition, final String targetPosition) {
+	public void moveChessPiece(final String sourcePosition, final String targetPosition) {
 		try {
 			chessHistoryDao.addHistory(sourcePosition, targetPosition);
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -61,7 +61,8 @@ public class ChessService {
 		try {
 			chessHistoryDao.deleteAll();
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
+
 }

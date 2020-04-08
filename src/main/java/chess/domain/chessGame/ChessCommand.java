@@ -84,4 +84,21 @@ public class ChessCommand {
 		}
 	}
 
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		final ChessCommand that = (ChessCommand)o;
+		return commandType == that.commandType &&
+			Objects.equals(commandArguments, that.commandArguments);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(commandType, commandArguments);
+	}
 }

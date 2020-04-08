@@ -10,6 +10,7 @@ import java.util.Map;
 import chess.domain.chessGame.ChessCommand;
 import chess.domain.chessGame.ChessGame;
 import chess.service.ChessService;
+import chess.web.dao.JdbcChessHistoryDao;
 import chess.web.dto.ChessBoardDto;
 import spark.ModelAndView;
 import spark.Request;
@@ -21,7 +22,7 @@ public class WebChessController {
 	private final ChessService chessService;
 
 	public WebChessController() {
-		this.chessService = new ChessService();
+		this.chessService = new ChessService(new JdbcChessHistoryDao());
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
@@ -71,7 +72,7 @@ public class WebChessController {
 		ChessCommand chessCommand = ChessCommand.of(commandArguments);
 
 		chessGame.move(chessCommand);
-		chessService.move(sourcePosition, targetPosition);
+		chessService.moveChessPiece(sourcePosition, targetPosition);
 	}
 
 	private String renderChessEnd(final ChessGame chessGame) {
