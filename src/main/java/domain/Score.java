@@ -19,25 +19,17 @@ public class Score {
 
 	private static double calculateScoreByTeam(List<Rank> ranks, Team team) {
 		double sum = ranks.stream()
-			.map(rank -> calculateScore(rank, team))
+			.map(rank -> rank.calculateScore(team))
 			.reduce(0.0, Double::sum);
 
 		return applyPawnScore(ranks, team, sum);
-	}
-
-	private static double calculateScore(Rank rank, Team team) {
-		List<Piece> pieces = rank.getPieces();
-		return pieces.stream()
-			.filter(piece -> piece.isTeam(team))
-			.map(Piece::getScore)
-			.reduce(0.0, Double::sum);
 	}
 
 	private static double applyPawnScore(List<Rank> ranks, Team team, double sum) {
 		List<Piece> pawn = new ArrayList<>();
 
 		ranks.stream()
-			.map(rank -> findPawn(rank, team))
+			.map(rank -> rank.findPawn(team))
 			.map(pawn::addAll)
 			.close();
 
@@ -45,15 +37,6 @@ public class Score {
 			sum += pawn.size() * Pawn.PAWN_SCORE_WHEN_HAS_SAME_COLUMN;
 		}
 		return sum;
-	}
-
-	private static List<Piece> findPawn(Rank rank, Team team) {
-		List<Piece> pieces = rank.getPieces();
-
-		return pieces.stream()
-			.filter(value -> value instanceof Pawn)
-			.filter(value -> value.isTeam(team))
-			.collect(Collectors.toList());
 	}
 
 	private static boolean hasSameColumnPawn(List<Piece> pawns) {
