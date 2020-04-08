@@ -47,3 +47,27 @@
 - [x] Command 입력
 - [x] Board 출력
 - [x] Score 출력
+
+### 테이블 생성
+```sql
+create table board
+(
+    id    int(50) auto_increment,
+    black varchar(64) null,
+    white varchar(64) null,
+    turn  int(12)     null
+); 
+
+create table cell
+(
+    id       int(50) auto_increment,
+    board_id int(50)     not null,
+    position varchar(64) not null,
+    piece    varchar(64) not null
+);
+
+create table user
+(
+    name varchar(64) not null
+);
+```

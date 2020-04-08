@@ -47,7 +47,7 @@ public class Score {
             return true;
         if (!(o instanceof Score))
             return false;
-        Score score1 = (Score) o;
+        Score score1 = (Score)o;
         return Double.compare(score1.score, score) == 0;
     }
 

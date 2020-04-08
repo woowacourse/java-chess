@@ -16,32 +16,6 @@ import chess.domain.piece.Direction;
 
 class PositionTest {
 
-    static Stream<Arguments> createDirection() {
-        return Stream.of(
-                Arguments.of(N, Position.from("d6")),
-                Arguments.of(NE, Position.from("e6")),
-                Arguments.of(E, Position.from("e5")),
-                Arguments.of(SE, Position.from("e4")),
-                Arguments.of(S, Position.from("d4")),
-                Arguments.of(SW, Position.from("c4")),
-                Arguments.of(W, Position.from("c5")),
-                Arguments.of(NW, Position.from("c6"))
-        );
-    }
-
-    static Stream<Arguments> createOutOfIndex() {
-        return Stream.of(
-                Arguments.of(N, Position.from("h8")),
-                Arguments.of(NE, Position.from("h8")),
-                Arguments.of(E, Position.from("h8")),
-                Arguments.of(SE, Position.from("h1")),
-                Arguments.of(S, Position.from("h1")),
-                Arguments.of(SW, Position.from("a2")),
-                Arguments.of(W, Position.from("a5")),
-                Arguments.of(NW, Position.from("a8"))
-        );
-    }
-
     @ParameterizedTest
     @ValueSource(strings = {"b1", "B1"})
     @DisplayName("from 생성")
@@ -90,10 +64,36 @@ class PositionTest {
         assertThat(pivot.nextPositionOf(direction).orElse(null)).isEqualTo(expected);
     }
 
+    static Stream<Arguments> createDirection() {
+        return Stream.of(
+                Arguments.of(N, Position.from("d6")),
+                Arguments.of(NE, Position.from("e6")),
+                Arguments.of(E, Position.from("e5")),
+                Arguments.of(SE, Position.from("e4")),
+                Arguments.of(S, Position.from("d4")),
+                Arguments.of(SW, Position.from("c4")),
+                Arguments.of(W, Position.from("c5")),
+                Arguments.of(NW, Position.from("c6"))
+        );
+    }
+
     @ParameterizedTest
     @DisplayName("주어진 방향으로 이동할 수 없을 경우")
     @MethodSource("createOutOfIndex")
     void destinationOutOfIndex(Direction direction, Position position) {
         assertThat(position.nextPositionOf(direction).orElse(null)).isEqualTo(null);
+    }
+
+    static Stream<Arguments> createOutOfIndex() {
+        return Stream.of(
+                Arguments.of(N, Position.from("h8")),
+                Arguments.of(NE, Position.from("h8")),
+                Arguments.of(E, Position.from("h8")),
+                Arguments.of(SE, Position.from("h1")),
+                Arguments.of(S, Position.from("h1")),
+                Arguments.of(SW, Position.from("a2")),
+                Arguments.of(W, Position.from("a5")),
+                Arguments.of(NW, Position.from("a8"))
+        );
     }
 }

@@ -17,10 +17,14 @@ public class Position implements Comparable<Position> {
     static {
         positions = new HashMap<>();
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                String name = nameOf(column, row);
-                positions.put(name, new Position(column, row));
-            }
+            createPositions(column);
+        }
+    }
+
+    private static void createPositions(final Column column) {
+        for (Row row : Row.values()) {
+            String name = nameOf(column, row);
+            positions.put(name, new Position(column, row));
         }
     }
 
@@ -79,11 +83,8 @@ public class Position implements Comparable<Position> {
         List<Position> path = new ArrayList<>();
         Position nextPosition = this;
 
-        for (int i = 0; i < count; i++) {
+        for (int i = 0; i < count && nextPosition.nextPositionOf(direction).orElse(null) != null; i++) {
             nextPosition = nextPosition.nextPositionOf(direction).orElse(null);
-            if (nextPosition == null) {
-                return path;
-            }
             path.add(nextPosition);
         }
         return path;

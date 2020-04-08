@@ -13,10 +13,13 @@ import chess.domain.player.PlayerColor;
 
 public class Queen extends GamePiece {
 
+    private static final String NAME = "q";
+    private static final int SCORE = 9;
+    private static final int MOVE_COUNT = 8;
     private static List<Position> originalPositions = Collections.singletonList(Position.of(Column.D, Row.ONE));
 
     public Queen(PlayerColor playerColor) {
-        super("q", 9, playerColor, Arrays.asList(N, NE, E, SE, S, SW, W, NW), 8);
+        super(NAME, SCORE, playerColor, Arrays.asList(N, NE, E, SE, S, SW, W, NW), MOVE_COUNT);
     }
 
     @Override

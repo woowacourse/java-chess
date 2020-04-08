@@ -10,11 +10,11 @@ public class User {
     private final String name;
 
     public User(String name) {
-        valadateName(name);
+        validateName(name);
         this.name = name;
     }
 
-    private void valadateName(String name) {
+    private void validateName(String name) {
         if (name.length() > MAXIMUM_LENGTH) {
             throw new IllegalArgumentException("이름은 최대 10자입니다.");
         }

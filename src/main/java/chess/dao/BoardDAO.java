@@ -1,9 +1,5 @@
 package chess.dao;
 
-import static chess.util.DBConnector.*;
-
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -24,9 +20,11 @@ public class BoardDAO {
     }
 
     public void addBoard(Board board, User first, User second) throws SQLException {
-        dbConnector.executeUpdate("INSERT INTO board (user1, user2, turn) VALUES (?, ?, ?)", first.getName(), second.getName(), String.valueOf(board.getTurn()));
+        dbConnector.executeUpdate("INSERT INTO board (black, white, turn) VALUES (?, ?, ?)", first.getName(),
+                second.getName(), String.valueOf(board.getTurn()));
 
-        ResultSet rs = dbConnector.executeQuery("SELECT * FROM board WHERE user1 = ? AND user2 = ?", first.getName(), second.getName());
+        ResultSet rs = dbConnector.executeQuery("SELECT * FROM board WHERE black = ? AND white = ?", first.getName(),
+                second.getName());
 
         if (!rs.next())
             return;
@@ -37,7 +35,8 @@ public class BoardDAO {
     }
 
     public Optional<Board> findBoardByUser(User first, User second) throws SQLException {
-        ResultSet rs = dbConnector.executeQuery("SELECT * FROM board WHERE user1 = ? AND user2 = ?", first.getName(), second.getName());
+        ResultSet rs = dbConnector.executeQuery("SELECT * FROM board WHERE black = ? AND white = ?", first.getName(),
+                second.getName());
 
         if (!rs.next())
             return Optional.empty();
@@ -48,20 +47,23 @@ public class BoardDAO {
     }
 
     public void saveBoardByUserName(Board board, User first, User second) throws SQLException {
-        dbConnector.executeUpdate("UPDATE board SET turn = ? WHERE user1 = ? AND user2 = ?", String.valueOf(board.getTurn()), first.getName(), second.getName());
+        dbConnector.executeUpdate("UPDATE board SET turn = ? WHERE black = ? AND white = ?",
+                String.valueOf(board.getTurn()), first.getName(), second.getName());
 
-        ResultSet rs = dbConnector.executeQuery("SELECT id FROM board WHERE user1 = ? AND user2 = ?", first.getName(), second.getName());
+        ResultSet rs = dbConnector.executeQuery("SELECT id FROM board WHERE black = ? AND white = ?", first.getName(),
+                second.getName());
 
         if (!rs.next())
             return;
 
         int boardId = rs.getInt(1);
 
-        cellDAO.addCells(board, boardId);
+        cellDAO.updateCellsByBoardId(board, boardId);
     }
 
     public boolean deleteBoardByUser(User first, User second) throws SQLException {
-        ResultSet rs = dbConnector.executeQuery("SELECT id FROM board WHERE user1 = ? AND user2 = ?", first.getName(), second.getName());
+        ResultSet rs = dbConnector.executeQuery("SELECT id FROM board WHERE black = ? AND white = ?", first.getName(),
+                second.getName());
 
         if (!rs.next())
             return false;
@@ -70,7 +72,7 @@ public class BoardDAO {
 
         cellDAO.deleteCellsByUser(boardId);
 
-        dbConnector.executeUpdate("DELETE FROM board WHERE user1 = ? AND user2 = ?", first.getName(), second.getName());
+        dbConnector.executeUpdate("DELETE FROM board WHERE black = ? AND white = ?", first.getName(), second.getName());
 
         return findBoardByUser(first, second) == null;
     }

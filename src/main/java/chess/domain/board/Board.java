@@ -13,6 +13,7 @@ import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.player.User;
 import chess.domain.result.ChessResult;
+import chess.dto.DtoConverter;
 import chess.dto.LineDto;
 
 public class Board {
@@ -112,7 +113,7 @@ public class Board {
     }
 
     public List<LineDto> getRows() {
-        return Line.listByRow(board);
+        return DtoConverter.convertFrom(board);
     }
 
     public Map<Position, GamePiece> getBoard() {

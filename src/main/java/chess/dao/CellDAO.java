@@ -1,6 +1,5 @@
 package chess.dao;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -10,7 +9,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.GamePiece;
 import chess.domain.piece.GamePieces;
-import chess.domain.player.User;
 import chess.util.DBConnector;
 
 public class CellDAO {
@@ -41,7 +39,7 @@ public class CellDAO {
         return board;
     }
 
-    public Map<Position, GamePiece> updateCellsByBoard_id(Board board, int board_id) throws SQLException {
+    public Map<Position, GamePiece> updateCellsByBoardId(Board board, int board_id) throws SQLException {
         for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
             dbConnector.executeUpdate("UPDATE cell SET piece = ? WHERE position = ? AND board_id = ?",
                     entry.getValue().getName(), entry.getKey().getName(), String.valueOf(board_id));

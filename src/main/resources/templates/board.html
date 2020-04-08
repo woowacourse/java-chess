@@ -29,21 +29,21 @@
             </div>
             <div class="button">
                 <form action="/status" method="post">
-                    <input type="hidden" name="user1" value="{{firstUser}}">
+                    <input type="hidden" name="black" value="{{firstUser}}">
                     <input type="submit" value="STATUS">
                 </form>
             </div>
             <div class="button">
                 <form action="/save" method="post">
-                    <input type="hidden" name="user1" value="{{firstUser}}">
-                    <input type="hidden" name="user2" value="{{secondUser}}">
+                    <input type="hidden" name="black" value="{{firstUser}}">
+                    <input type="hidden" name="white" value="{{secondUser}}">
                     <input type="submit" value="SAVE">
                 </form>
             </div>
             <div class="button">
                 <form action="/end" method="post">
-                    <input type="hidden" name="user1" value="{{firstUser}}">
-                    <input type="hidden" name="user2" value="{{secondUser}}">
+                    <input type="hidden" name="black" value="{{firstUser}}">
+                    <input type="hidden" name="white" value="{{secondUser}}">
                     <input type="submit" value="END">
                 </form>
             </div>
@@ -71,7 +71,7 @@
     let isFirstClick = true;
     let cell;
     let before;
-    var user1 = document.getElementsByClassName("user-name")[0].innerHTML;
+    var black = document.getElementsByClassName("user-name")[0].innerHTML;
 
     $(".cell").click(function () {
         if (document.querySelector(".selected-cell") !== null) {
@@ -89,7 +89,7 @@
 
             $.ajax({
                 url: "/path",
-                data: { source: source, user1: user1 },
+                data: { source: source, black: black },
                 method: "POST",
                 // async: false,
                 // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
@@ -98,6 +98,7 @@
                     alert(list);
                     return;
                 }
+                console.log(list);
                 document.getElementById(cellPosition).classList.add("selected-cell");
                 const path = list.split(",");
                 path.forEach(position => {
@@ -136,7 +137,7 @@
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
-            data: { source: source, target: cellPosition, user1: user1 },
+            data: { source: source, target: cellPosition, black: black },
             method: "POST",
             // async: false,
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })

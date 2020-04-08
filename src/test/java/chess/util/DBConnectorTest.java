@@ -1,6 +1,5 @@
 package chess.util;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.sql.Connection;

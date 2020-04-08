@@ -15,6 +15,9 @@ import chess.domain.player.PlayerColor;
 
 public class Pawn extends GamePiece {
 
+    private static final String NAME = "p";
+    private static final int SCORE = 1;
+    private static final int MOVE_COUNT = 1;
     private static List<Position> originalPositions = Arrays.stream(Column.values()).
             map(file -> Position.of(file, Row.TWO))
             .collect(Collectors.toList());
@@ -24,7 +27,7 @@ public class Pawn extends GamePiece {
     private List<Direction> killDirections;
 
     public Pawn(PlayerColor playerColor) {
-        super("p", 1, playerColor, Collections.EMPTY_LIST, 1);
+        super(NAME, SCORE, playerColor, Collections.EMPTY_LIST, MOVE_COUNT);
         moveDirection = Direction.N;
         killDirections = Arrays.asList(Direction.NW, Direction.NE);
         if (playerColor.equals(PlayerColor.BLACK)) {
@@ -35,13 +38,15 @@ public class Pawn extends GamePiece {
 
     @Override
     public List<String> searchPaths(Board board, Position source) {
-        List<String> paths = new ArrayList<>();
+        List<Position> paths = new ArrayList<>();
         List<Position> path = decideMovePath(source);
 
-        findMovablePositions(board, paths, path);
-        findKillPath(board, source, paths);
+        paths.addAll(findMovablePositions(board, path));
+        paths.addAll(findKillPath(board, source));
 
-        return paths;
+        return paths.stream()
+                .map(Position::getName)
+                .collect(Collectors.toList());
     }
 
     private List<Position> decideMovePath(Position source) {
@@ -52,22 +57,27 @@ public class Pawn extends GamePiece {
         return path;
     }
 
-    private void findMovablePositions(Board board, List<String> paths, List<Position> path) {
-        for (Position position : path) {
-            if (board.isNotEmpty(position)) {
-                break;
-            }
-            paths.add(position.getName());
+    private List<Position> findMovablePositions(Board board, List<Position> path) {
+        List<Position> possiblePath = new ArrayList<>();
+        for (int i = 0; i < path.size() && !board.isNotEmpty(path.get(i)); i++) {
+            Position position = path.get(i);
+            possiblePath.add(position);
         }
+        return possiblePath;
     }
 
-    private void findKillPath(Board board, Position source, List<String> paths) {
+    private List<Position> findKillPath(Board board, Position source) {
+        List<Position> possiblePaths = new ArrayList<>();
         for (Direction killDirection : killDirections) {
             Position position = source.nextPositionOf(killDirection).orElse(null);
-            if (position == null || !board.isNotEmpty(position) || board.isSameColor(this, position)) {
-                continue;
-            }
-            paths.add(position.getName());
+            checkKillPosition(board, position, possiblePaths);
+        }
+        return possiblePaths;
+    }
+
+    private void checkKillPosition(Board board, Position position, List<Position> paths) {
+        if (position != null && board.isNotEmpty(position) && !board.isSameColor(this, position)) {
+            paths.add(position);
         }
     }
 

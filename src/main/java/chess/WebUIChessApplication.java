@@ -32,8 +32,8 @@ public class WebUIChessApplication {
 
         post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("user1");
-            String secondUserName = req.queryParams("user2");
+            String firstUserName = req.queryParams("black");
+            String secondUserName = req.queryParams("white");
             User first = new User(firstUserName);
             User second = new User(secondUserName);
 
@@ -47,7 +47,7 @@ public class WebUIChessApplication {
 
         post("/path", (req, res) -> {
             String source = req.queryParams("source");
-            String firstUserName = req.queryParams("user1");
+            String firstUserName = req.queryParams("black");
             Board board;
             try {
                 board = chessService.getBoard(new User(firstUserName));
@@ -60,7 +60,7 @@ public class WebUIChessApplication {
         post("/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            String firstUserName = req.queryParams("user1");
+            String firstUserName = req.queryParams("black");
             Board board;
             try {
                 board = chessService.move(new User(firstUserName), source, target);
@@ -74,8 +74,8 @@ public class WebUIChessApplication {
         });
 
         post("/save", (req, res) -> {
-            String firstUserName = req.queryParams("user1");
-            String secondUserName = req.queryParams("user2");
+            String firstUserName = req.queryParams("black");
+            String secondUserName = req.queryParams("white");
             chessService.save(new User(firstUserName), new User(secondUserName));
             Map<String, Object> model = new HashMap<>();
             Board board = chessService.createEmpty();
@@ -86,14 +86,14 @@ public class WebUIChessApplication {
 
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("user1");
+            String firstUserName = req.queryParams("black");
             return render(model, "status.html");
         });
 
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("user1");
-            String secondUserName = req.queryParams("user2");
+            String firstUserName = req.queryParams("black");
+            String secondUserName = req.queryParams("white");
             chessService.delete(new User(firstUserName), new User(secondUserName));
             Board board = chessService.createEmpty();
             List<LineDto> rows = board.getRows();

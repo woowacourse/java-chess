@@ -27,7 +27,7 @@ public enum GamePieces {
 
     static {
         gamePieces = Arrays.stream(GamePieces.values())
-        .collect(Collectors.toMap(gamePiece -> gamePiece.name, gamePiece -> gamePiece.creator));
+                .collect(Collectors.toMap(gamePiece -> gamePiece.name, gamePiece -> gamePiece.creator));
     }
 
     private String name;
