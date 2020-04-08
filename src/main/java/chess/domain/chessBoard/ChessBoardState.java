@@ -13,8 +13,17 @@ public class ChessBoardState {
         this.playerTurnState = PieceColor.WHITE;
     }
 
-    public static ChessBoardState initialState() {
+    private ChessBoardState(PieceColor pieceColor) {
+        this.caughtKing = false;
+        this.playerTurnState = pieceColor;
+    }
+
+    public static ChessBoardState of() {
         return new ChessBoardState();
+    }
+
+    public static ChessBoardState of(PieceColor pieceColor) {
+        return new ChessBoardState(pieceColor);
     }
 
 

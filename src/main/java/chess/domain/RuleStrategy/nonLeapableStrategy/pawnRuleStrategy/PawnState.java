@@ -1,26 +1,25 @@
 package chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy;
 
 public class PawnState {
-    private static final boolean PAWN_MOVED_STATE = true;
-    private final boolean PawnMovedState;
+    private final boolean PawnInitialState;
 
-    private PawnState() {
-        this.PawnMovedState = false;
-    }
-
-    public PawnState(boolean pawnMovedState) {
-        PawnMovedState = pawnMovedState;
+    private PawnState(boolean pawnState) {
+        this.PawnInitialState = pawnState;
     }
 
     public static PawnState initialState() {
-        return new PawnState();
+        return new PawnState(true);
     }
 
-    public static PawnState switchedPawnMovedState() {
-        return new PawnState(PAWN_MOVED_STATE);
+    public static PawnState MovedState() {
+        return new PawnState(false);
     }
 
-    public boolean isPawnMovedState() {
-        return PawnMovedState;
+    public PawnState switchedMovedState(){
+        return MovedState();
+    }
+
+    public boolean isInitialState() {
+        return PawnInitialState;
     }
 }

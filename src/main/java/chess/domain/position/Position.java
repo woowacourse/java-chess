@@ -82,8 +82,7 @@ public class Position {
         return this.chessFile.equals(chessFile);
     }
 
-    @Override
-    public String toString() {
+    public String getPositionToString() {
         return key(this.chessFile, this.chessRank);
     }
 }

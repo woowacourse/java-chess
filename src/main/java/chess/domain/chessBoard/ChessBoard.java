@@ -20,7 +20,12 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
-        chessBoardState = ChessBoardState.initialState();
+        chessBoardState = ChessBoardState.of();
+    }
+
+    public ChessBoard(Map<Position, ChessPiece> chessBoard, String pieceColor) {
+        this.chessBoard = chessBoard;
+        chessBoardState = ChessBoardState.of(PieceColor.valueOf(pieceColor));
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
@@ -32,7 +37,6 @@ public class ChessBoard {
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-        playerTurnChange();
     }
 
     private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
@@ -122,7 +126,12 @@ public class ChessBoard {
         return chessBoardState.isCaughtKing();
     }
 
-    private void playerTurnChange() {
+    public boolean containsTargetPosition(Position targetPosition){
+        ChessPiece chessPiece = chessBoard.get(targetPosition);
+        return Objects.nonNull(chessPiece);
+    }
+
+    public void playerTurnChange() {
         if (!chessBoardState.isCaughtKing()) {
             chessBoardState.playerTurnChange();
         }

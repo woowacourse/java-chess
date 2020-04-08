@@ -14,12 +14,18 @@ class WhitePawnRuleTest {
         assertThat(new WhitePawnRule()).isInstanceOf(WhitePawnRule.class);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"c4", "c5"})
-    void canMove_MovableSourcePositionAndTargetPosition_ReturnTrue(Position targetPosition) {
+    @Test
+    void canMove_InitialStateMovableSourcePositionAndTargetPosition_ReturnTrue() {
+        Position sourcePosition = Position.of("c2");
+
+        assertThat(new WhitePawnRule().canInitialMove(sourcePosition, Position.of("c4"))).isTrue();
+    }
+
+    @Test
+    void canMove_MovedStateMovableSourcePositionAndTargetPosition_ReturnTrue() {
         Position sourcePosition = Position.of("c3");
 
-        assertThat(new WhitePawnRule().canMove(sourcePosition, targetPosition)).isTrue();
+        assertThat(new WhitePawnRule().canMove(sourcePosition, Position.of("c4"))).isTrue();
     }
 
     @ParameterizedTest

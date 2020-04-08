@@ -10,11 +10,9 @@ import java.util.Objects;
 
 public abstract class PawnRule extends NonLeapable {
 
-    protected PawnState pawnState;
     protected final List<MoveDirection> catchableDirections;
 
     public PawnRule() {
-        this.pawnState = PawnState.initialState();
         this.catchableDirections = new ArrayList<>();
     }
 
@@ -46,10 +44,22 @@ public abstract class PawnRule extends NonLeapable {
         int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
         int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
 
-        if (!pawnState.isPawnMovedState()) {
-            return isInitialStateRule(chessFileGap, chessRankGap);
-        }
         return isMovedStateRule(chessFileGap, chessRankGap);
+    }
+
+    public boolean canInitialMove(Position sourcePosition, Position targetPosition) {
+        int chessFileGap = Math.abs(sourcePosition.calculateChessFileGapTo(targetPosition));
+        int chessRankGap = Math.abs(sourcePosition.calculateChessRankGapTo(targetPosition));
+
+        return canMoveDirection(sourcePosition, targetPosition) && isInitialStateRule(chessFileGap, chessRankGap);
+    }
+
+    public static BlackPawnRule generateBlackPawnRule() {
+        return new BlackPawnRule();
+    }
+
+    public static WhitePawnRule generateWhitePawnRule() {
+        return new WhitePawnRule();
     }
 
     private boolean isCaughtRule(int chessFileGap, int chessRankGap) {
@@ -61,10 +71,6 @@ public abstract class PawnRule extends NonLeapable {
     }
 
     private boolean isInitialStateRule(int chessFileGap, int chessRankGap) {
-        if ((chessFileGap == 0) && (chessRankGap <= 2)) {
-            pawnState = PawnState.switchedPawnMovedState();
-            return true;
-        }
-        return false;
+        return (chessFileGap == 0) && (chessRankGap <= 2);
     }
 }

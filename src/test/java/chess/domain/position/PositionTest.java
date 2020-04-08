@@ -74,6 +74,6 @@ public class PositionTest {
         Position position = Position.of(ChessFile.A, ChessRank.TWO);
 
         String expected = "a2";
-        assertThat(position.toString()).isEqualTo(expected);
+        assertThat(position.getPositionToString()).isEqualTo(expected);
     }
 }

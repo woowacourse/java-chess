@@ -39,7 +39,7 @@ public class ChessBoardTest {
     void getPlayerColor_InitialPlayerTurn_returnBLACK() {
         ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
 
-        assertThat(chessBoard.getPlayerColor()).isEqualTo(PieceColor.BLACK);
+        assertThat(chessBoard.getPlayerColor()).isEqualTo(PieceColor.WHITE);
     }
 
     @Test
@@ -70,11 +70,11 @@ public class ChessBoardTest {
     @Test
     void move_MoveSourceToTarget_sourcePieceAtTargetPosition() {
         ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.create());
-        Position source = Position.of("b7");
-        Position target = Position.of("b5");
+        Position source = Position.of("b2");
+        Position target = Position.of("b4");
 
         chessBoard.move(source, target);
 
-        assertThat(chessBoard.getChessPiece(ChessFile.B, ChessRank.FIVE)).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.getChessPiece(ChessFile.B, ChessRank.FOUR)).isInstanceOf(Pawn.class);
     }
 }

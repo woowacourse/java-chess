@@ -28,7 +28,7 @@ public abstract class NonLeapable implements Rule {
         Objects.requireNonNull(targetPosition, "타겟 위치가 존재하지 않습니다.");
     }
 
-    private boolean canMoveDirection(Position sourcePosition, Position targetPosition) {
+    protected boolean canMoveDirection(Position sourcePosition, Position targetPosition) {
         return movableDirections.stream()
                 .anyMatch(moveDirection -> moveDirection.isSameDirectionFrom(sourcePosition, targetPosition));
     }
