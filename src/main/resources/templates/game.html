@@ -21,13 +21,8 @@
     <button>게임 저장</button>
 </form>
 
-<form action="/loading" method="get">
-    <input type="text" name="title">
-    <input type="submit" value="불러오기">
-</form>
-
 <div>
-    {{#each score}}
+    {{#each data.score}}
     {{@key}} : {{this}}
     <br>
     {{/each}}
@@ -45,77 +40,77 @@
 {{error}}
 <div class="chessboard">
     <!-- 1st -->
-    <div class="white">{{board.0}}</div>
-    <div class="black">{{board.1}}</div>
-    <div class="white">{{board.2}}</div>
-    <div class="black">{{board.3}}</div>
-    <div class="white">{{board.4}}</div>
-    <div class="black">{{board.5}}</div>
-    <div class="white">{{board.6}}</div>
-    <div class="black">{{board.7}}</div>
+    <div class="white">{{data.reverseBoard.0}}</div>
+    <div class="black">{{data.reverseBoard.1}}</div>
+    <div class="white">{{data.reverseBoard.2}}</div>
+    <div class="black">{{data.reverseBoard.3}}</div>
+    <div class="white">{{data.reverseBoard.4}}</div>
+    <div class="black">{{data.reverseBoard.5}}</div>
+    <div class="white">{{data.reverseBoard.6}}</div>
+    <div class="black">{{data.reverseBoard.7}}</div>
     <!-- 2nd -->
-    <div class="black">{{board.8}}</div>
-    <div class="white">{{board.9}}</div>
-    <div class="black">{{board.10}}</div>
-    <div class="white">{{board.11}}</div>
-    <div class="black">{{board.12}}</div>
-    <div class="white">{{board.13}}</div>
-    <div class="black">{{board.14}}</div>
-    <div class="white">{{board.15}}</div>
+    <div class="black">{{data.reverseBoard.8}}</div>
+    <div class="white">{{data.reverseBoard.9}}</div>
+    <div class="black">{{data.reverseBoard.10}}</div>
+    <div class="white">{{data.reverseBoard.11}}</div>
+    <div class="black">{{data.reverseBoard.12}}</div>
+    <div class="white">{{data.reverseBoard.13}}</div>
+    <div class="black">{{data.reverseBoard.14}}</div>
+    <div class="white">{{data.reverseBoard.15}}</div>
     <!-- 3th -->
-    <div class="white">{{board.16}}</div>
-    <div class="black">{{board.17}}</div>
-    <div class="white">{{board.18}}</div>
-    <div class="black">{{board.19}}</div>
-    <div class="white">{{board.20}}</div>
-    <div class="black">{{board.21}}</div>
-    <div class="white">{{board.22}}</div>
-    <div class="black">{{board.23}}</div>
+    <div class="white">{{data.reverseBoard.16}}</div>
+    <div class="black">{{data.reverseBoard.17}}</div>
+    <div class="white">{{data.reverseBoard.18}}</div>
+    <div class="black">{{data.reverseBoard.19}}</div>
+    <div class="white">{{data.reverseBoard.20}}</div>
+    <div class="black">{{data.reverseBoard.21}}</div>
+    <div class="white">{{data.reverseBoard.22}}</div>
+    <div class="black">{{data.reverseBoard.23}}</div>
     <!-- 4st -->
-    <div class="black">{{board.24}}</div>
-    <div class="white">{{board.25}}</div>
-    <div class="black">{{board.26}}</div>
-    <div class="white">{{board.27}}</div>
-    <div class="black">{{board.28}}</div>
-    <div class="white">{{board.29}}</div>
-    <div class="black">{{board.30}}</div>
-    <div class="white">{{board.31}}</div>
+    <div class="black">{{data.reverseBoard.24}}</div>
+    <div class="white">{{data.reverseBoard.25}}</div>
+    <div class="black">{{data.reverseBoard.26}}</div>
+    <div class="white">{{data.reverseBoard.27}}</div>
+    <div class="black">{{data.reverseBoard.28}}</div>
+    <div class="white">{{data.reverseBoard.29}}</div>
+    <div class="black">{{data.reverseBoard.30}}</div>
+    <div class="white">{{data.reverseBoard.31}}</div>
     <!-- 5th -->
-    <div class="white">{{board.32}}</div>
-    <div class="black">{{board.33}}</div>
-    <div class="white">{{board.34}}</div>
-    <div class="black">{{board.35}}</div>
-    <div class="white">{{board.36}}</div>
-    <div class="black">{{board.37}}</div>
-    <div class="white">{{board.38}}</div>
-    <div class="black">{{board.39}}</div>
+    <div class="white">{{data.reverseBoard.32}}</div>
+    <div class="black">{{data.reverseBoard.33}}</div>
+    <div class="white">{{data.reverseBoard.34}}</div>
+    <div class="black">{{data.reverseBoard.35}}</div>
+    <div class="white">{{data.reverseBoard.36}}</div>
+    <div class="black">{{data.reverseBoard.37}}</div>
+    <div class="white">{{data.reverseBoard.38}}</div>
+    <div class="black">{{data.reverseBoard.39}}</div>
     <!-- 6th -->
-    <div class="black">{{board.40}}</div>
-    <div class="white">{{board.41}}</div>
-    <div class="black">{{board.42}}</div>
-    <div class="white">{{board.43}}</div>
-    <div class="black">{{board.44}}</div>
-    <div class="white">{{board.45}}</div>
-    <div class="black">{{board.46}}</div>
-    <div class="white">{{board.47}}</div>
+    <div class="black">{{data.reverseBoard.40}}</div>
+    <div class="white">{{data.reverseBoard.41}}</div>
+    <div class="black">{{data.reverseBoard.42}}</div>
+    <div class="white">{{data.reverseBoard.43}}</div>
+    <div class="black">{{data.reverseBoard.44}}</div>
+    <div class="white">{{data.reverseBoard.45}}</div>
+    <div class="black">{{data.reverseBoard.46}}</div>
+    <div class="white">{{data.reverseBoard.47}}</div>
     <!-- 7th -->
-    <div class="white">{{board.48}}</div>
-    <div class="black">{{board.49}}</div>
-    <div class="white">{{board.50}}</div>
-    <div class="black">{{board.51}}</div>
-    <div class="white">{{board.52}}</div>
-    <div class="black">{{board.53}}</div>
-    <div class="white">{{board.54}}</div>
-    <div class="black">{{board.55}}</div>
+    <div class="white">{{data.reverseBoard.48}}</div>
+    <div class="black">{{data.reverseBoard.49}}</div>
+    <div class="white">{{data.reverseBoard.50}}</div>
+    <div class="black">{{data.reverseBoard.51}}</div>
+    <div class="white">{{data.reverseBoard.52}}</div>
+    <div class="black">{{data.reverseBoard.53}}</div>
+    <div class="white">{{data.reverseBoard.54}}</div>
+    <div class="black">{{data.reverseBoard.55}}</div>
     <!-- 8th -->
-    <div class="black">{{board.56}}</div>
-    <div class="white">{{board.57}}</div>
-    <div class="black">{{board.58}}</div>
-    <div class="white">{{board.59}}</div>
-    <div class="black">{{board.60}}</div>
-    <div class="white">{{board.61}}</div>
-    <div class="black">{{board.62}}</div>
-    <div class="white">{{board.63}}</div>
+    <div class="black">{{data.reverseBoard.56}}</div>
+    <div class="white">{{data.reverseBoard.57}}</div>
+    <div class="black">{{data.reverseBoard.58}}</div>
+    <div class="white">{{data.reverseBoard.59}}</div>
+    <div class="black">{{data.reverseBoard.60}}</div>
+    <div class="white">{{data.reverseBoard.61}}</div>
+    <div class="black">{{data.reverseBoard.62}}</div>
+    <div class="white">{{data.reverseBoard.63}}</div>
 </div>
 
 </body>
