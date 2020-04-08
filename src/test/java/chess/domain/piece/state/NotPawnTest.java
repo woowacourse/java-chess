@@ -1,21 +1,13 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.factory.PieceType;
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.factory.PieceType;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

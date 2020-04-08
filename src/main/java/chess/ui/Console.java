@@ -1,19 +1,17 @@
 package chess.ui;
 
 import chess.domain.piece.position.MovingFlow;
-import chess.domain.ui.UserInterface;
 import chess.view.InputView;
 
 import java.util.Scanner;
 
-public class Console implements UserInterface {
+public class Console {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String DELIMETER = " ";
     private static final int MOVE_COMMAND_INDEX = 0;
     private static final int FROM_INDEX = 1;
     private static final int TO_INDEX = 2;
 
-    @Override
     public MovingFlow inputMovingFlow() {
         InputView.printMoveRequest();
         String input = scanner.nextLine();
@@ -25,14 +23,12 @@ public class Console implements UserInterface {
         return MovingFlow.of(words[FROM_INDEX], words[TO_INDEX]);
     }
 
-    @Override
     public Command inputStart() {
         InputView.printStart();
         String input = scanner.nextLine();
         return Command.of(input);
     }
 
-    @Override
     public Command inputStatus() {
         InputView.printResultRequest();
         String input = scanner.nextLine();

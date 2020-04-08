@@ -5,20 +5,20 @@ import chess.domain.board.BoardSerializer;
 import chess.domain.board.Result;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.position.MovingFlow;
-import chess.domain.ui.UserInterface;
 import chess.ui.Command;
+import chess.ui.Console;
 import chess.view.OutputView;
 
 public class Game {
-    private final UserInterface userInterface;
+    private final Console console;
 
-    public Game(UserInterface userInterface) {
-        this.userInterface = userInterface;
+    public Game(Console console) {
+        this.console = console;
     }
 
 
     public Board start() {
-        Command command = userInterface.inputStart();
+        Command command = console.inputStart();
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
@@ -29,7 +29,7 @@ public class Game {
 
     public Board play(Board board) {
         while (board.isNotFinished()) {
-            MovingFlow movingFlow = userInterface.inputMovingFlow();
+            MovingFlow movingFlow = console.inputMovingFlow();
             board = board.movePiece(movingFlow);
             OutputView.printBoard(BoardSerializer.serialize(board));
         }
@@ -37,7 +37,7 @@ public class Game {
     }
 
     public void showResult(Board board) {
-        Command command = userInterface.inputStatus();
+        Command command = console.inputStatus();
         if (command.isNotStatus()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }

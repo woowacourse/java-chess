@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceType;
-import chess.domain.piece.state.move.MoveType;
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.team.Team;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
-import chess.ui.Console;
+import chess.domain.piece.state.move.MoveType;
+import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

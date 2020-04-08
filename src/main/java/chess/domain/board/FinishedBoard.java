@@ -5,7 +5,6 @@ import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
 
 import java.util.Map;
 
