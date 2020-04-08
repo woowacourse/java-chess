@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.position.MoveInfo;
+import chess.dto.BoardDTO;
+import chess.dto.StatusDTO;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,7 +29,7 @@ public class ConsoleChessController implements ChessController {
 		}
 
 		service.initialize(CONSOLE_ID);
-		OutputView.printBoard(service.getBoard(CONSOLE_ID));
+		OutputView.printBoard(BoardDTO.of(service.getBoard(CONSOLE_ID)));
 	}
 
 	private void exit() {
@@ -51,11 +53,11 @@ public class ConsoleChessController implements ChessController {
 
 	private void move(String input) {
 		service.move(CONSOLE_ID, MoveInfo.of(input));
-		OutputView.printBoard(service.getBoard(CONSOLE_ID));
+		OutputView.printBoard(BoardDTO.of(service.getBoard(CONSOLE_ID)));
 	}
 
 	private void status() {
-		OutputView.printScore(service.getResult(CONSOLE_ID));
+		OutputView.printScore(StatusDTO.of(service.getResult(CONSOLE_ID)));
 		exit();
 	}
 }

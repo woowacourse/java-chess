@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import static java.util.stream.Collectors.*;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -26,19 +27,19 @@ public class Board {
 		return new Board(board);
 	}
 
-	private static void fillEmpty(Map<Position, Piece> board) {
-		Position.getPositions()
-			.stream()
-			.filter(position -> board.get(position) == null)
-			.forEach(position -> board.put(position, new Empty(position)));
-	}
-
 	public static Board of(List<Piece> pieces) {
 		return of(pieces.stream()
 			.collect(toMap(
 				Piece::getPosition,
 				Function.identity())
 			));
+	}
+
+	private static void fillEmpty(Map<Position, Piece> board) {
+		Position.getPositions()
+			.stream()
+			.filter(position -> board.get(position) == null)
+			.forEach(position -> board.put(position, new Empty(position)));
 	}
 
 	public void verifyMove(Position from, Position to, Team current) {
@@ -57,6 +58,12 @@ public class Board {
 		}
 	}
 
+	public boolean isEmpty() {
+		return Position.getPositions()
+			.stream()
+			.noneMatch(position -> board.get(position).isObstacle());
+	}
+
 	private boolean hasPieceIn(Path path) {
 		return path.toList()
 			.stream()
@@ -68,5 +75,19 @@ public class Board {
 			.stream()
 			.filter(Piece::hasToAlive)
 			.count() != TEAM_COUNT;
+	}
+
+	public Collection<List<Piece>> getColumnGroupOf(Team team) {
+		return board.entrySet()
+			.stream()
+			.filter(entry -> entry.getValue().isSameTeam(team))
+			.collect(groupingBy(
+				entry -> entry.getKey().getColumn(),
+				mapping(Map.Entry::getValue, toList())))
+			.values();
+	}
+
+	public Map<Position, Piece> getBoard() {
+		return board;
 	}
 }

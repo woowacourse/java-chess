@@ -10,6 +10,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Empty;
 import chess.domain.piece.King;
@@ -18,7 +19,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 
 public class BoardDAOTest {
-
 	private BoardDAO boardDAO;
 
 	@BeforeEach
@@ -46,13 +46,14 @@ public class BoardDAOTest {
 	}
 
 	@Test
-	void findAll() {
+	void findBoard() {
 		List<Piece> initial = new ArrayList<>(BoardFactory.toList());
 		for (Piece piece : initial) {
 			boardDAO.addPiece("1", piece);
 		}
 
-		assertThat(boardDAO.findAll("1").size()).isEqualTo(64);
+		assertThat(boardDAO.findBoardBy("1")).isInstanceOf(Board.class);
+		assertThat(boardDAO.findBoardBy("1").isEmpty()).isFalse();
 	}
 
 	@Test

@@ -1,9 +1,5 @@
 package chess.service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.stream.Collectors;
-
 import chess.dao.BoardDAO;
 import chess.dao.TurnInfoDAO;
 import chess.domain.Status;
@@ -24,7 +20,7 @@ public class ChessService {
 	}
 
 	public void initialize(String gameId) {
-		if (boardDAO.findAll(gameId).isEmpty()) {
+		if (boardDAO.findBoardBy(gameId).isEmpty()) {
 			for (Piece piece : BoardFactory.toList()) {
 				boardDAO.addPiece(gameId, piece);
 			}
@@ -33,7 +29,7 @@ public class ChessService {
 	}
 
 	public void move(String gameId, MoveInfo moveInfo) {
-		Board board = Board.of(boardDAO.findAll(gameId));
+		Board board = boardDAO.findBoardBy(gameId);
 		Position from = moveInfo.getFrom();
 		Position to = moveInfo.getTo();
 
@@ -43,27 +39,11 @@ public class ChessService {
 		turnInfoDAO.updateNext(gameId);
 	}
 
-	public Map<String, String> getBoard(String gameId) {
-		return boardDAO.findAll(gameId)
-			.stream()
-			.collect(Collectors.toMap(
-				piece -> piece.getPosition().getName(),
-				Piece::getSymbol
-			));
+	public Board getBoard(String gameId) {
+		return boardDAO.findBoardBy(gameId);
 	}
 
-	public Map<String, String> getResult(String gameId) {
-		Map<String, String> result = new HashMap<>();
-		Status status = Status.of(boardDAO.findAll(gameId));
-
-		String whiteScore = String.valueOf(status.toMap().get(Team.WHITE));
-		String blackScore = String.valueOf(status.toMap().get(Team.BLACK));
-		String winner = String.valueOf(status.getWinner().getName());
-
-		result.put("whiteScore", whiteScore);
-		result.put("blackScore", blackScore);
-		result.put("winner", winner);
-
-		return result;
+	public Status getResult(String gameId) {
+		return Status.of(boardDAO.findBoardBy(gameId));
 	}
 }

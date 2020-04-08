@@ -1,15 +1,9 @@
 package chess.domain;
 
-import static java.util.stream.Collectors.*;
-
-import java.util.Collection;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-import chess.domain.piece.Piece;
+import chess.domain.board.Board;
 import chess.domain.piece.PieceScore;
 import chess.domain.piece.Team;
 
@@ -20,32 +14,18 @@ public class Status {
 		this.status = status;
 	}
 
-	public static Status of(List<Piece> pieces) {
+	public static Status of(Board board) {
 		return new Status(Map.of(
-			Team.BLACK, calculateOf(groupByTeam(pieces, Team.BLACK)),
-			Team.WHITE, calculateOf(groupByTeam(pieces, Team.WHITE))
-		));
+			Team.BLACK, calculateOf(board, Team.BLACK),
+			Team.WHITE, calculateOf(board, Team.WHITE))
+		);
 	}
 
-	private static List<Piece> groupByTeam(List<Piece> pieces, Team team) {
-		return pieces.stream()
-			.filter(piece -> piece.isSameTeam(team))
-			.collect(Collectors.toList());
-	}
-
-	private static double calculateOf(List<Piece> teams) {
-		return groupByColumn(teams)
+	private static double calculateOf(Board board, Team team) {
+		return board.getColumnGroupOf(team)
 			.stream()
 			.mapToDouble(PieceScore::calculateScoreOf)
 			.sum();
-	}
-
-	private static Collection<List<Piece>> groupByColumn(List<Piece> teams) {
-		return teams.stream()
-			.collect(groupingBy(
-				piece -> piece.getPosition().getColumn(),
-				mapping(Function.identity(), toList())))
-			.values();
 	}
 
 	public Team getWinner() {

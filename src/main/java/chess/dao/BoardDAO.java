@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Name;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -50,8 +51,8 @@ public class BoardDAO {
 		}
 	}
 
-	public List<Piece> findAll(String gameId) {
-		List<Piece> result = new ArrayList<>();
+	public Board findBoardBy(String gameId) {
+		List<Piece> board = new ArrayList<>();
 		String query = "SELECT * FROM board WHERE game_id = ?";
 		try {
 			Connection con = getConnection();
@@ -61,12 +62,12 @@ public class BoardDAO {
 			while (rs.next()) {
 				String symbol = rs.getString("symbol");
 				Position position = Position.of(rs.getString("position"));
-				result.add(PieceFactory.of(symbol).create(position));
+				board.add(PieceFactory.of(symbol).create(position));
 			}
 			pstmt.close();
 			closeConnection(con);
 
-			return result;
+			return Board.of(board);
 		} catch (SQLException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}

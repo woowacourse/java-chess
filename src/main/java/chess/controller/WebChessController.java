@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.position.MoveInfo;
+import chess.dto.BoardDTO;
+import chess.dto.StatusDTO;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -38,7 +40,7 @@ public class WebChessController implements ChessController {
 		String gameId = request.queryParams("game_id");
 		request.session(true).attribute("game_id", gameId);
 		service.initialize(gameId);
-		return render(service.getBoard(gameId), "chess.html");
+		return render(BoardDTO.of(service.getBoard(gameId)).getBoard(), "chess.html");
 	}
 
 	@Override
@@ -62,7 +64,7 @@ public class WebChessController implements ChessController {
 
 	private String renderResult(Request request, Response response) {
 		String gameId = request.session().attribute("game_id");
-		return render(service.getResult(gameId), "status.html");
+		return render(StatusDTO.of(service.getResult(gameId)).getStatus(), "status.html");
 	}
 
 	private void handleException(IllegalArgumentException exception, Request request, Response response) {
