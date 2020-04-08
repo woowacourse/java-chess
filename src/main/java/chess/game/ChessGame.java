@@ -71,11 +71,10 @@ public class ChessGame {
     }
 
     private Player getCounterTurnPlayer(Team turn) {
-        Player counterplayer = white;
-        if (black.isNotSame(turn)) {
-            counterplayer = black;
+        if(black.isNotSame(turn)) {
+            return black;
         }
-        return counterplayer;
+        return white;
     }
 
     public ChessScores calculateScores() {

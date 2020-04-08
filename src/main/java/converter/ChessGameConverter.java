@@ -47,10 +47,9 @@ public class ChessGameConverter {
     }
 
     private static Team getTurn(boolean isTurnBlack) {
-        Team turn = Team.WHITE;
         if (isTurnBlack) {
-            turn = Team.BLACK;
+            return Team.BLACK;
         }
-        return turn;
+        return Team.WHITE;
     }
 }

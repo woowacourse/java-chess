@@ -33,12 +33,11 @@ public class OutputView {
     }
 
     private static String findPieceOrDefault(Map<Location, Piece> board, Location target) {
-        String value = EMPTY_SHAPE;
-        if (board.containsKey(target)) {
+        if(board.containsKey(target)) {
             Piece piece = board.get(target);
-            value = piece.toString();
+            return piece.toString();
         }
-        return value;
+        return EMPTY_SHAPE;
     }
 
     public static void printInformation() {
