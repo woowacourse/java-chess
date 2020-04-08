@@ -25,21 +25,17 @@ public class ChessBoard {
     }
 
     public Route createRoute(Location now, Location after) {
-        Map<Location, Optional<Piece>> route = new HashMap<>();
+        Map<Location, Piece> route = new HashMap<>();
 
         Location next = now.calculateNextLocation(after, 1);
 
-        while (!after.equals(next)) {
-            if (board.containsKey(next) == false) {
-                route.put(next, null);
-                next = next.calculateNextLocation(after, 1);
-                continue;
+        while (after.equals(next) == false) {
+            if (board.containsKey(next)) {
+                route.put(next, board.get(next));
             }
-            route.put(next, Optional.of(board.get(next)));
             next = next.calculateNextLocation(after, 1);
         }
 
-        System.out.println(route);
         return new Route(route, now, after);
     }
 
@@ -55,7 +51,6 @@ public class ChessBoard {
         return true;
     }
 
-    // 팀별 위치, 체스 정보를 가져온다.
     public Map<Location, Piece> giveMyPiece(Team team) {
         return board.entrySet().stream()
                 .filter(entry -> entry.getValue().isSameTeam(team))
@@ -88,11 +83,9 @@ public class ChessBoard {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Location, Piece> entry : board.entrySet()) {
-            sb.append("location : " + entry.getKey().toString() + "\n");
-            sb.append("piece : " + entry.getValue().toString() + "\n");
+            String format = String.format("locatoin : %s piece : %s \n", entry.getKey(), entry.getValue());
+            sb.append(format);
         }
-        return "ChessBoard{" +
-                "board=" + board +
-                '}';
+        return sb.toString();
     }
 }

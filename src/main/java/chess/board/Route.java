@@ -7,13 +7,14 @@ import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.Math.abs;
+import static java.lang.Math.log;
 
 public class Route {
-    private final Map<Location, Optional<Piece>> route;
+    private final Map<Location, Piece> route;
     private final Location now;
     private final Location destination;
 
-    public Route(Map<Location, Optional<Piece>> route, Location now, Location destination) {
+    public Route(Map<Location, Piece> route, Location now, Location destination) {
         this.route = route;
         this.now = now;
         this.destination = destination;
@@ -39,30 +40,22 @@ public class Route {
     }
 
     public boolean isEmptyDestinaion() {
-        Optional<Piece> optionalDestinationPiece = route.get(destination);
-        if(optionalDestinationPiece == null) {
-            return true;
-        }
-        return false;
+        return route.containsKey(destination) == false;
     }
-
 
     public boolean isEnemyNowAndDestination() {
-        Optional<Piece> optionalNowPiece = route.get(now);
-        Piece nowPiece = optionalNowPiece.get();
+        Piece nowPiece = route.get(now);
+        Piece destinationPiece = route.get(destination);
 
-        Optional<Piece> optionalDestinationPiece = route.get(destination);
-
-        if(optionalDestinationPiece.isPresent()) {
-            Piece destinationPiece = optionalDestinationPiece.get();
-            return nowPiece.isReverseTeam(destinationPiece);
-        }
-
-        return false;
+        return nowPiece.isReverseTeam(destinationPiece);
     }
 
-    public boolean isNotEmpty(Location nowLocation) {
-        return route.get(nowLocation) != null;
+    public boolean isEmpty(Location location) {
+        return !route.containsKey(location);
+    }
+
+    public boolean isExistPieceIn(Location location) {
+        return route.containsKey(location);
     }
 
     public Location getNow() {
@@ -71,5 +64,14 @@ public class Route {
 
     public Location getDestination() {
         return destination;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (Map.Entry<Location, Piece> entry : route.entrySet()) {
+            sb.append(entry.getKey() + " : " + entry.getValue());
+        }
+        return sb.toString();
     }
 }

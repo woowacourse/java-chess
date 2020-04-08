@@ -11,7 +11,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -144,37 +143,37 @@ class PawnTest {
         assertThat(actual).isTrue();
     }
 
+    // TODO : 검사.
     @DisplayName("폰의 두 칸의 직선 위치로 가는 중 적이 있는 경우")
     @Test
     void name3() {
-        Map<Location, Optional<Piece>> board = new HashMap<>();
+        Map<Location, Piece> route = new HashMap<>();
         Pawn givenPiece = new Pawn(Team.BLACK);
         Pawn counterPiece = new Pawn(Team.WHITE);
-        Pawn destinaionPiece = new Pawn(Team.WHITE);
+        // Pawn destinaionPiece = new Pawn(Team.WHITE);
 
         Location now = new Location(7, 'a');
-        board.put(now, Optional.ofNullable(givenPiece));
-        board.put(new Location(6, 'a'), Optional.ofNullable(counterPiece));
         Location after = new Location(5, 'a');
-        board.put(after, Optional.ofNullable(destinaionPiece));
 
-        Route route = new Route(board, now, after);
+        route.put(new Location(6, 'a'), counterPiece);
 
-        boolean actual = givenPiece.canMove(route);
+        Route route1 = new Route(route, now, after);
+
+        boolean actual = givenPiece.canMove(route1);
         assertThat(actual).isFalse();
     }
 
     @DisplayName("폰의 직선 위치에 적이 있는 경우")
     @Test
     void name4() {
-        Map<Location, Optional<Piece>> board = new HashMap<>();
+        Map<Location, Piece> board = new HashMap<>();
 
         Pawn givenPiece = new Pawn(Team.BLACK);
         Pawn counterPiece = new Pawn(Team.WHITE);
         Location now = new Location(7, 'a');
-        board.put(now, Optional.ofNullable(givenPiece));
+        board.put(now, givenPiece);
         Location after = new Location(6, 'a');
-        board.put(after, Optional.ofNullable(counterPiece));
+        board.put(after, counterPiece);
 
         Route route = new Route(board, now, after);
 
@@ -185,14 +184,14 @@ class PawnTest {
     @DisplayName("폰의 직선 위치에 적이 있는 경우")
     @Test
     void name5() {
-        Map<Location, Optional<Piece>> board = new HashMap<>();
+        Map<Location, Piece> board = new HashMap<>();
 
         Pawn givenPiece = new Pawn(Team.BLACK);
         Pawn destinaionPiece = new Pawn(Team.WHITE);
         Location now = new Location(7, 'a');
         Location after = new Location(6, 'a');
-        board.put(now, Optional.ofNullable(givenPiece));
-        board.put(after, Optional.ofNullable(destinaionPiece));
+        board.put(now, givenPiece);
+        board.put(after, destinaionPiece);
 
         Route route = new Route(board, now, after);
         boolean actual = givenPiece.canMove(route);

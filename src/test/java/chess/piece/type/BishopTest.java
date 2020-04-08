@@ -7,8 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import chess.board.ChessBoard;
-import chess.board.ChessBoardCreater;
 import chess.board.Route;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,14 +44,14 @@ class BishopTest {
     @DisplayName("비숍의 목적지 중간에 장애물이 있는지 확인")
     @Test
     void name() {
-        Map<Location, Optional<Piece>> board = new HashMap<>();
+        Map<Location, Piece> board = new HashMap<>();
 
         Bishop givenPiece = new Bishop(Team.BLACK);
         Location now = new Location(1, 'c');
-        board.put(now, Optional.ofNullable(givenPiece));
-        board.put(new Location(2, 'd'), Optional.of(new Bishop(Team.WHITE)));
+        board.put(now, givenPiece);
+        board.put(new Location(2, 'd'), new Bishop(Team.WHITE));
         Location after = new Location(3, 'e');
-        board.put(after, Optional.of(new Bishop(Team.WHITE)));
+        board.put(after, new Bishop(Team.WHITE));
 
         Route route = new Route(board, now, after);
         boolean actual = givenPiece.canMove(route);

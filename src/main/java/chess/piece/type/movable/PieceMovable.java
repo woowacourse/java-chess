@@ -13,7 +13,7 @@ public interface PieceMovable {
 
         Location nowLocation = now.calculateNextLocation(destination, weight);
         while (!nowLocation.equals(destination)) {
-            if (route.isNotEmpty(nowLocation)) {
+            if (route.isExistPieceIn(nowLocation)) {
                 return false;
             }
             weight++;
