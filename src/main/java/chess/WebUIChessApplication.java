@@ -59,17 +59,11 @@ public class WebUIChessApplication {
 		Spark.get("/chess/rooms/:id", (request, response) -> {
 			final int roomId = Integer.parseInt(request.params(":id"));
 			try {
-				responseWhenHasState(roomId);
+				return responseWhenHasState(roomId);
 			} catch (DaoNoneSelectedException e) {
-				responseWhenHasNoState(roomId);
+				return responseWhenHasNoState(roomId);
 			}
-			final AnnouncementDao announcementDao = new AnnouncementDao();
-			final dao.Announcement announcement = announcementDao.findAnnouncementByRoomId(roomId);
 
-			final Map<String, Object> map = new HashMap<>();
-			map.put("table", createTableHtmlFromState(roomId));
-			map.put("announcement", announcement.getMessage());
-			return render(map, "/chess.html");
 		});
 
 		Spark.post("/chess/rooms/:id", (request, response) -> {
@@ -92,14 +86,14 @@ public class WebUIChessApplication {
 					pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(), piece.getCoordinateRepresentation()
 							, roomId);
 				}
-				announcementDao.addAnnouncement(createRightAnnouncement(after), roomId);
+				announcementDao.setAnnouncementByRoomId(roomId, createRightAnnouncement(after));
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
 					| CanNotAttackException
 					| CanNotReachException
 					| StateException e) {
-				announcementDao.addAnnouncement(Announcement.of(e.getMessage()).getString(), roomId);
+				announcementDao.setAnnouncementByRoomId(roomId, Announcement.of(e.getMessage()).getString());
 			}
 			response.redirect("/chess/rooms/" + request.params(":id"));
 			return "";
@@ -125,7 +119,7 @@ public class WebUIChessApplication {
 		return "";
 	}
 
-	private static void responseWhenHasState(final int roomId) throws SQLException {
+	private static String responseWhenHasState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
 		final dao.PieceDao pieceDao = new dao.PieceDao();
 		final AnnouncementDao announcementDao = new AnnouncementDao();
@@ -136,7 +130,13 @@ public class WebUIChessApplication {
 		final Set<Piece> domainPieces = mapDaoPiecesToDomainPieces(daoPieces);
 		final State domainState = StateType.getFactory(daoState.getState()).apply(
 				new Pieces(domainPieces));
-		announcementDao.addAnnouncement(createRightAnnouncement(domainState), roomId);
+
+		final dao.Announcement daoAnnouncement = announcementDao.findAnnouncementByRoomId(roomId);
+
+		final Map<String, Object> map = new HashMap<>();
+		map.put("table", createTableHtmlWhenHasState(domainPieces));
+		map.put("announcement", daoAnnouncement.getMessage());
+		return render(map, "/chess.html");
 	}
 
 	private static String createRightAnnouncement(domain.state.State domainState) {
@@ -156,13 +156,12 @@ public class WebUIChessApplication {
 				.collect(Collectors.toSet());
 	}
 
-	private static void responseWhenHasNoState(final int roomId) throws SQLException {
+	private static String responseWhenHasNoState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
 		final dao.PieceDao pieceDao = new dao.PieceDao();
 		final AnnouncementDao announcementDao = new AnnouncementDao();
 
 		final Set<domain.pieces.Piece> pieces = new StartPieces().getInstance();
-		final State domainState = new Ended(new Pieces(pieces));
 		pieceDao.deletePiece(roomId);
 		for (Piece piece : pieces) {
 			pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(),
@@ -170,19 +169,32 @@ public class WebUIChessApplication {
 		}
 		stateDao.addState("ended", roomId);
 		announcementDao.addAnnouncement("게임을 시작하려면 start를 입력해주세요.", roomId);
+
+		final Map<String, Object> map = new HashMap<>();
+		map.put("table", createTableHtmlWhenHasNoState(roomId));
+		map.put("announcement", announcementDao.findAnnouncementByRoomId(roomId).getMessage());
+		return render(map, "/chess.html");
 	}
 
-	private static String createTableHtmlFromState(int roomId) throws SQLException {
+	private static String createTableHtmlWhenHasState(final Set<Piece> pieces) {
+		return createTableHtml(pieces);
+	}
+
+	private static String createTableHtmlWhenHasNoState(int roomId) throws SQLException {
 		final dao.PieceDao pieceDao = new PieceDao();
 		final Set<Piece> pieces = pieceDao.findPiecesByRoomId(roomId).stream()
 				.map(piece -> PieceType.getFactoryOfName(piece.getPieceType()).apply(
 						Team.of(piece.getTeam()), Coordinate.of(piece.getCoordinate())))
 				.collect(Collectors.toSet());
+		return createTableHtml(pieces);
+	}
+
+	private static String createTableHtml(final Set<Piece> pieces) {
 		final List<List<String>> board = Board.of(pieces).getLists();
 		return BoardToTable.of(board).getTableHtml();
 	}
 
-	public static String render(Map<String, Object> model, String templatePath) {
+	public static String render(final Map<String, Object> model, final String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }

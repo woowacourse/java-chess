@@ -1,5 +1,7 @@
 package dao;
 
+import dao.exceptions.DaoNoneSelectedException;
+
 import java.sql.*;
 
 public class AnnouncementDao {
@@ -65,6 +67,9 @@ public class AnnouncementDao {
 		preparedStatement.setInt(1, roomId);
 
 		final ResultSet resultSet = preparedStatement.executeQuery();
+		if (!resultSet.next()) {
+			throw new DaoNoneSelectedException();
+		}
 		final dao.Announcement announcement = new dao.Announcement(resultSet.getInt("id"),
 				resultSet.getString("message"), resultSet.getInt("room_id"));
 
