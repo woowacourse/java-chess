@@ -14,6 +14,7 @@ import static spark.Spark.staticFiles;
 
 public class ChessWebController {
     private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+    private static final String STATIC_FILES_LOCATION = "templates";
 
     private final ChessService chessService;
 
@@ -22,7 +23,7 @@ public class ChessWebController {
     }
 
     public void run() {
-        staticFiles.location("templates");
+        staticFiles.location(STATIC_FILES_LOCATION);
 
         ChessGame chessGame = new ChessGame();
 
