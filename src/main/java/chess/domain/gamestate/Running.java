@@ -47,11 +47,7 @@ public class Running extends Started {
         for (Position position : positionToPiece.keySet()) {
             Placeable piece = positionToPiece.get(position);
 
-            PieceDto pieceDTO = new PieceDto();
-            pieceDTO.setPosition(position);
-            pieceDTO.setPieceType(piece.getPieceType());
-            pieceDTO.setTeam(piece.getTeam());
-
+            PieceDto pieceDTO = new PieceDto(position, piece.getTeam(), piece.getPieceType());
             pieceDAO.updatePiece(pieceDTO);
         }
     }

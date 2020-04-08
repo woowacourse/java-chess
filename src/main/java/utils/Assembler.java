@@ -15,11 +15,7 @@ public class Assembler {
         for (Position position : pieces.keySet()) {
             Placeable piece = pieces.get(position);
 
-            PieceDto pieceDTO = new PieceDto();
-            pieceDTO.setPosition(position);
-            pieceDTO.setPieceType(piece.getPieceType());
-            pieceDTO.setTeam(piece.getTeam());
-
+            PieceDto pieceDTO = new PieceDto(position, piece.getTeam(), piece.getPieceType());
             piecesDTO.add(pieceDTO);
         }
 

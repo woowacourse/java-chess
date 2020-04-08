@@ -5,23 +5,13 @@ import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
 public class PieceDto {
+    private Position position;
     private Team team;
     private PieceType pieceType;
-    private Position position;
 
-    public String getTeam() {
-        return team.getName();
-    }
-
-    public void setTeam(Team team) {
+    public PieceDto(Position position, Team team, PieceType pieceType) {
+        this.position = position;
         this.team = team;
-    }
-
-    public String getPieceType() {
-        return pieceType.getName();
-    }
-
-    public void setPieceType(PieceType pieceType) {
         this.pieceType = pieceType;
     }
 
@@ -29,7 +19,11 @@ public class PieceDto {
         return position.toString();
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public String getTeam() {
+        return team.getName();
+    }
+
+    public String getPieceType() {
+        return pieceType.getName();
     }
 }
