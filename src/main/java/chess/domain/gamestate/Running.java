@@ -1,16 +1,9 @@
 package chess.domain.gamestate;
 
-import chess.dao.JdbcTemplatePieceDao;
-import chess.dao.PieceDao;
 import chess.domain.Team;
 import chess.domain.board.Board;
-import chess.domain.piece.Placeable;
-import chess.domain.position.Position;
-import chess.dto.PieceDto;
 
-import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public class Running extends Started {
     private static final String IMPOSSIBLE_TO_CALCULATE_SCORE_MESSAGE = "게임 진행 중에는 점수를 계산할 수 없습니다.";
@@ -25,12 +18,6 @@ public class Running extends Started {
     public GameState move(String keyFromPosition, String keyToPosition) {
         board.move(keyFromPosition, keyToPosition, teamInTurn);
 
-        try {
-            updateBoardToDB();
-        } catch (SQLException e) {
-            System.err.println("SQL 오류 : " + e.getErrorCode());
-        }
-
         if (board.checkIfOppositeKingIsDead(teamInTurn)) {
             return finish();
         }
@@ -38,18 +25,6 @@ public class Running extends Started {
         teamInTurn = teamInTurn.opposite();
 
         return this;
-    }
-
-    private void updateBoardToDB() throws SQLException {
-        PieceDao pieceDAO = JdbcTemplatePieceDao.getInstance();
-
-        Map<Position, Placeable> positionToPiece = board.getPositionToPiece();
-        for (Position position : positionToPiece.keySet()) {
-            Placeable piece = positionToPiece.get(position);
-
-            PieceDto pieceDTO = new PieceDto(position, piece.getTeam(), piece.getPieceType());
-            pieceDAO.updatePiece(pieceDTO);
-        }
     }
 
     @Override

@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessGame;
+import chess.controller.ChessService;
 import chess.dto.PieceDto;
 import spark.ModelAndView;
 import spark.Route;
@@ -18,15 +18,15 @@ public class WebUIApplication {
     public static void main(String[] args) {
         staticFileLocation("/templates");
 
-        ChessGame chessGame = new ChessGame();
+        ChessService chessService = new ChessService();
 
         Route route = (req, res) -> {
             Map<String, Object> model = new LinkedHashMap<>();
             List<PieceDto> pieces;
             try {
-                pieces = chessGame.run(req.queryParams("command"));
+                pieces = chessService.run(req.queryParams("command"));
             } catch (RuntimeException e) {
-                pieces = chessGame.stay();
+                pieces = chessService.stay();
                 model.put("error", e.getMessage());
             }
             model.put("pieces", pieces);

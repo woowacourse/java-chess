@@ -10,10 +10,10 @@ import utils.Assembler;
 
 import java.util.List;
 
-public class ChessGame {
+public class ChessService {
     private GameState gameState;
 
-    public ChessGame() {
+    public ChessService() {
         this.gameState = new NothingHappened();
     }
 
@@ -21,6 +21,7 @@ public class ChessGame {
         Command command = CommandReader.from(input);
         gameState = command.execute(gameState);
         Board board = gameState.getBoard();
+
         return Assembler.convertMapToDTO(board.getPositionToPiece());
     }
 
