@@ -10,19 +10,34 @@ import chess.domain.Side;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.StatusDto;
 import chess.domain.position.Position;
+import chess.domain.service.BoardService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
+	private final BoardService boardService;
+
+	public WebController(BoardService boardService) {
+		this.boardService = boardService;
+	}
 
 	public void run() {
 		staticFiles.location("/public");
 		ChessGame chessGame = ChessGame.start();
 
 		mainRendering();
-		initGameRendering(chessGame);
+		createRoom(chessGame);
 		moveRendering(chessGame);
 		restartRendering(chessGame);
+	}
+
+	private void createRoom(ChessGame chessGame) {
+		post("/create", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			boardService.create(chessGame, req.queryParams("room-name"));
+			transfer(chessGame, model);
+			return render(model, "chess.html");
+		});
 	}
 
 	private void restartRendering(ChessGame chessGame) {
@@ -50,14 +65,6 @@ public class WebController {
 		});
 	}
 
-	private void initGameRendering(ChessGame chessGame) {
-		get("/chess", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
-	}
-
 	private void mainRendering() {
 		get("/", (req, res) -> {
 			return render(new HashMap<>(), "index.html");
@@ -73,4 +80,3 @@ public class WebController {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
 	}
 }
-
