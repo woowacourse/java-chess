@@ -47,42 +47,64 @@ public class StateDao {
 	public int addState(final String state, final int roomId) throws SQLException {
 		final String query = "INSERT INTO state (state, room_id) "
 				+ "VALUES (?, ?)";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, state);
 		preparedStatement.setInt(2, roomId);
-		return preparedStatement.executeUpdate();
+		final int resultNum = preparedStatement.executeUpdate();
+
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
 	}
 
 	public State findStateByRoomName(final String roomName) throws SQLException {
 		final String query = "SELECT * FROM state WHERE room_id="
 				+ "(SELECT id FROM room WHERE room_name=?)";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, roomName);
 		final ResultSet resultSet = preparedStatement.executeQuery();
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection(connection);
 		return new State(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getInt("room_id"));
 	}
 
 	// TODO test
 	public State findStateByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM state WHERE room_id=?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, roomId);
 		final ResultSet resultSet = preparedStatement.executeQuery();
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-		return new State(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getInt("room_id"));
+		final State state = new State(resultSet.getInt("id"), resultSet.getString("state"),
+				resultSet.getInt("room_id"));
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection(connection);
+		return state;
 	}
 
-	public int setState(final int id, final String state) throws SQLException {
-		final String query = "UPDATE state SET state=? WHERE id=?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+	public int setStateByRoomId(final int roomId, final String state) throws SQLException {
+		final String query = "UPDATE state SET state=? WHERE room_id=?";
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
+
 		preparedStatement.setString(1, state);
-		preparedStatement.setInt(2, id);
-		return preparedStatement.executeUpdate();
-	}
+		preparedStatement.setInt(2, roomId);
+		final int resultNum = preparedStatement.executeUpdate();
 
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
+	}
 }

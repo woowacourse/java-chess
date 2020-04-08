@@ -7,11 +7,11 @@ import java.util.List;
 public class PieceDao {
 	public Connection getConnection() {
 		Connection connection = null;
-		String server = "localhost:13306"; // MySQL 서버 주소
-		String database = "woowachess"; // MySQL DATABASE 이름
-		String option = "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-		String userName = "root"; //  MySQL 서버 아이디
-		String password = "root"; // MySQL 서버 비밀번호
+		final String server = "localhost:13306"; // MySQL 서버 주소
+		final String database = "woowachess"; // MySQL DATABASE 이름
+		final String option = "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
+		final String userName = "root"; //  MySQL 서버 아이디
+		final String password = "root"; // MySQL 서버 비밀번호
 
 		// 드라이버 로딩
 		try {
@@ -48,18 +48,24 @@ public class PieceDao {
 						final Boolean canMoveTwoDistance, final int roomId) throws SQLException {
 		final String query = "INSERT INTO piece(piece_type, team, coordinate, can_move_two_distance, room_id) "
 				+ "VALUES(?, ?, ?, ?, ?)";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, pieceTypeName);
 		preparedStatement.setString(2, teamName);
 		preparedStatement.setString(3, coordinateRepresentation);
 		preparedStatement.setString(4, canMoveTwoDistance.toString());
 		preparedStatement.setInt(5, roomId);
-		return preparedStatement.executeUpdate();
+		final int resultNum = preparedStatement.executeUpdate();
+
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
 	}
 
 	public List<dao.Piece> findPiecesByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM piece WHERE room_id = ?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, roomId);
 		ResultSet resultSet = preparedStatement.executeQuery();
 		List<dao.Piece> pieces = new ArrayList<>();
@@ -68,13 +74,22 @@ public class PieceDao {
 					resultSet.getString("team"), resultSet.getString("coordinate"),
 					resultSet.getString("can_move_two_distance"), resultSet.getInt("room_id")));
 		}
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection(connection);
 		return pieces;
 	}
 
 	public int delete(final int roomId) throws SQLException {
 		final String query = "DELETE FROM piece WHERE room_id = ?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, roomId);
-		return preparedStatement.executeUpdate();
+		final int resultNum = preparedStatement.executeUpdate();
+
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
 	}
 }

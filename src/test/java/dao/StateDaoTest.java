@@ -7,7 +7,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class StateDaoTest {
 	private StateDao stateDao;
@@ -49,9 +48,9 @@ class StateDaoTest {
 
 	@Test
 	void setState() throws SQLException {
-		final int stateId = 1;
+		final int roomId = 1;
 		final String state = "started";
-		int resultNum = stateDao.setState(stateId, state);
+		int resultNum = stateDao.setStateByRoomId(roomId, state);
 		final State stateBean = stateDao.findStateByRoomName("그니");
 		assertThat(resultNum).isEqualTo(1);
 		assertThat(stateBean.getState()).isEqualTo("started");

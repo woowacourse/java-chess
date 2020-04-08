@@ -48,24 +48,34 @@ public class RoomDao {
 
 	public int addRoomByRoomName(final String roomName) throws SQLException {
 		final String query = "INSERT INTO room (room_name) VALUES (?)";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, roomName);
-		return preparedStatement.executeUpdate();
+		final int resultNum = preparedStatement.executeUpdate();
+
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
 	}
 
 	public Room findRoomByRoomName(final String roomName) throws SQLException {
 		final String query = "SELECT * FROM room "
 				+ "WHERE room_name = ?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, roomName);
 		final ResultSet resultSet = preparedStatement.executeQuery();
 
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-
-		return new Room(resultSet.getInt("id"),
+		final Room room = new Room(resultSet.getInt("id"),
 				resultSet.getString("room_name"));
+
+		resultSet.close();
+		preparedStatement.close();
+		closeConnection(connection);
+		return room;
 	}
 
 	public List<Room> findAllRooms() throws SQLException {
@@ -83,8 +93,13 @@ public class RoomDao {
 	public int deleteRoomByRoomName(final String roomName) throws SQLException {
 		final String query = "DELETE FROM room "
 				+ "WHERE room_name = ?";
-		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+		final Connection connection = getConnection();
+		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, roomName);
-		return preparedStatement.executeUpdate();
+		final int resultNum = preparedStatement.executeUpdate();
+
+		preparedStatement.close();
+		closeConnection(connection);
+		return resultNum;
 	}
 }

@@ -87,7 +87,7 @@ public class WebUIChessApplication {
 			final State domainState = StateType.getFactory(daoState.getState()).apply(pieces);
 			try {
 				State after = domainState.pushCommend(request.queryParams("commend"));
-				stateDao.setState(roomId, after.getStateName());
+				stateDao.setStateByRoomId(roomId, after.getStateName());
 				pieceDao.delete(roomId);
 				for (Piece piece : after.getSet()) {
 					pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(), piece.getCoordinateRepresentation()
