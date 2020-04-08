@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.dao.ChessDAO;
+import chess.domain.Result;
+import chess.domain.Status;
 import chess.domain.Team;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
@@ -65,5 +67,14 @@ public class ChessService {
 		chessDAO.remove(new ChessDTO(chessBoard));
 		chessBoard = chessDAO.find();
 		return getBoardJson();
+	}
+
+	public String status() {
+		Status status = chessBoard.createStatus();
+		Result result = status.getResult();
+		Map<String, Object> model = new HashMap<>();
+		model.put("blackTeamScore", result.getBlackTeamScore());
+		model.put("whiteTeamScore", result.getWhiteTeamScore());
+		return GSON.toJson(model);
 	}
 }

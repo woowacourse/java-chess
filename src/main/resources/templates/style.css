@@ -8,9 +8,7 @@ html, body {
     height: 100%;
 }
 
-.wrapper {
-    -webkit-flex-direction: column;
-    　flex-direction: column;
+.wrapper{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -21,18 +19,50 @@ html, body {
 }
 
 .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-bottom: 20px;
     color: white;
     font-size: 50px;
     letter-spacing: 10px;
 }
 
-.chessboard {
+.status {
+    width: 300px;
+    height: 300px;
+    border: 1px solid white;
+    display: flex;
+    align-items: center;
+    -webkit-flex-direction: column;
+    flex-direction:column;
+    color: white;
+    letter-spacing: 10px;
+}
+
+.right {
+    margin-left: 35px;
+}
+
+.left {
+    margin-right: 30px;
+}
+
+.teamName {
+    width: 300px;
+    text-align: center;
+    font-size: 50px;
+    border: 1px solid white;
+}
+
+.score {
+    margin-top: 50px;
+    font-size: 100px;
 }
 
 .row {
-    width: 590px;
-    height: 73px;
+    width: 100%;
+    height: 100%;
 }
 
 .row > button {

@@ -28,7 +28,6 @@ public class ChessDAOTest {
 		ChessBoard chessBoard = BoardFactory.createBoard();
 		ChessDTO chessDTO = new ChessDTO(chessBoard);
 		chessDAO.addBoard(chessDTO);
-
 		assertThat(chessDAO.find()).isEqualTo(chessBoard);
 		chessBoard.move(Position.of("b2"), Position.of("b4"));
 		chessDAO.update(new ChessDTO(chessBoard));

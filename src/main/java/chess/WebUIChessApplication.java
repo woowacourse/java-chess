@@ -38,6 +38,10 @@ public class WebUIChessApplication {
 			return chessService.restart();
 		});
 
+		get("/status", (req, res) -> {
+			return chessService.status();
+		});
+
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

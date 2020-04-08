@@ -8,8 +8,12 @@
 </head>
 <body>
 <div class="wrapper">
-    <h1 class="title">체스 게임</h1>
+    <div class="status left">
+        <p class="teamName">WHITE 팀</p>
+        <p class="score"></p>
+    </div>
     <div class="chessboard">
+    <h1 class="title">체스 게임</h1>
         <div class="row">
             <button id="a8" class="black cell"></button>
             <button id="b8" class="cell"></button>
@@ -90,6 +94,10 @@
             <button id="g1" class="cell"></button>
             <button id="h1" class="black cell"></button>
         </div>
+    </div>
+    <div class="status right">
+        <p class="teamName">BLACK 팀</p>
+        <p class="score"></p>
     </div>
     <div class="result">
         <div class="message"></div>

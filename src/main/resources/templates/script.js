@@ -15,6 +15,7 @@ function initSuccess(response) {
         const pieceName = response[position];
         document.getElementById(position).classList.add(pieceName);
     }
+    status();
 }
 
 let startPosition = '';
@@ -53,6 +54,7 @@ function move(position) {
     getClassList(position.startPosition).remove(startPositionClassName);
     getClassList(position.targetPosition).add(startPositionClassName);
     setTimeout(() => checkKingDie(), 0);
+    status();
 }
 
 function getChessPieceClassName(position) {
@@ -85,6 +87,21 @@ function checkKingDie() {
                 });
                 location.reload()
             })
+        }
+    })
+}
+
+function status() {
+    $.ajax({
+        type: 'get',
+        url: '/status',
+        dataType: 'json',
+        error: function () {
+            alert("status Error")
+        },
+        success: function (response) {
+            $('.left > .score').html(response.whiteTeamScore);
+            $('.right > .score').html(response.blackTeamScore);
         }
     })
 }
