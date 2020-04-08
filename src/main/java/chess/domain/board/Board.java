@@ -78,7 +78,6 @@ public class Board {
         }
     }
 
-
     private void reverseBoard() {
         List<Row> reversedBoard = new ArrayList<>();
 

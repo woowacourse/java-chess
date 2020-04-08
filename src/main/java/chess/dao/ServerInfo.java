@@ -7,13 +7,13 @@ public enum ServerInfo {
     USER_NAME("root"),
     PASSWORD("root");
 
-    String data;
+    String info;
 
-    ServerInfo(String data) {
-        this.data = data;
+    ServerInfo(String info) {
+        this.info = info;
     }
 
-    public String getData() {
-        return data;
+    public String getInfo() {
+        return info;
     }
 }
