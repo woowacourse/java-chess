@@ -10,13 +10,13 @@ import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGameController {
+public class ConsoleChessGameController {
     private static final String COMMAND_DELIMITER = " ";
 
     private ChessGame chessGame;
     private Map<String, Consumer<StringTokenizer>> commands;
 
-    public ChessGameController(ChessGame chessGame) {
+    public ConsoleChessGameController(ChessGame chessGame) {
         this.chessGame = chessGame;
         this.commands = new HashMap<String, Consumer<StringTokenizer>>() {{
             put("start", tokenizer -> {
