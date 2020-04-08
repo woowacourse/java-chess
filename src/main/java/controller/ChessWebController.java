@@ -1,4 +1,7 @@
+package controller;
+
 import chess.game.ChessGame;
+import service.ChessService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -14,11 +17,11 @@ public class ChessWebController {
 
     private final ChessService chessService;
 
-    ChessWebController(ChessService chessService) {
+    public ChessWebController(ChessService chessService) {
         this.chessService = chessService;
     }
 
-    void run() {
+    public void run() {
         staticFiles.location("templates");
 
         ChessGame chessGame = new ChessGame();

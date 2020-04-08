@@ -1,3 +1,5 @@
+package service;
+
 import chess.command.MoveCommand;
 import chess.game.ChessGame;
 import chess.location.Location;
@@ -24,13 +26,13 @@ public class ChessService {
     private static final Gson GSON = new Gson();
     private static final int GAME_ID = 1;
 
-    String findAllBoards() throws SQLException {
+    public String findAllBoards() throws SQLException {
         ArrayList<ChessGameDto> all = chessGamesDao.findAll();
         ChessGamesDto chessGamesDto = new ChessGamesDto(all);
         return GSON.toJson(chessGamesDto);
     }
 
-    String findBoard(Request req) throws SQLException {
+    public String findBoard(Request req) throws SQLException {
         int boardId = Integer.parseInt(req.queryParams("id"));
         List<PieceVo> pieceVos = pieceDao.findAll(boardId);
 
@@ -45,7 +47,7 @@ public class ChessService {
         return GSON.toJson(boardDto);
     }
 
-    String move(Request req, ChessGame chessGame) {
+    public String move(Request req, ChessGame chessGame) {
         LocationDto nowDto = new LocationDto(req.queryParams("now"));
         LocationDto destinationDto = new LocationDto(req.queryParams("des"));
 
@@ -73,12 +75,12 @@ public class ChessService {
         }
     }
 
-    String findWinner(ChessGame chessGame) {
+    public String findWinner(ChessGame chessGame) {
         ChessResultDto chessResultDto = new ChessResultDto(chessGame.findWinner());
         return GSON.toJson(chessResultDto);
     }
 
-    void insertChessBoard(ChessGame chessGame) throws SQLException {
+    public void insertChessBoard(ChessGame chessGame) throws SQLException {
         boardDao.addBoard(chessGame.getChessBoard(), GAME_ID);
     }
 }

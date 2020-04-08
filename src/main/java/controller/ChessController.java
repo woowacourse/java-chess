@@ -1,3 +1,5 @@
+package controller;
+
 import chess.command.*;
 import chess.game.ChessGame;
 import chess.result.ChessResult;

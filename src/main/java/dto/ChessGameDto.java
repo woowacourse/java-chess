@@ -17,18 +17,6 @@ public class ChessGameDto {
         return value == 1;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getWhiteName() {
-        return whiteName;
-    }
-
-    public String getBlackName() {
-        return blackName;
-    }
-
     public boolean isTurnBlack() {
         return turnIsBlack;
     }

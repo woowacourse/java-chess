@@ -8,8 +8,4 @@ public class ChessGamesDto {
     public ChessGamesDto(ArrayList<ChessGameDto> chessGameDtos) {
         this.chessGameDtos = chessGameDtos;
     }
-
-    public ArrayList<ChessGameDto> getChessGameDtos() {
-        return chessGameDtos;
-    }
 }
