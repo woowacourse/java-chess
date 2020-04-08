@@ -89,12 +89,13 @@ public class JdbcTemplatePieceDao implements PieceDao {
 
         List<PieceDto> pieceDtos = new ArrayList<>();
 
-        if (resultSet.next()) {
+        while (resultSet.next()) {
             String position = resultSet.getString("position");
             String team = resultSet.getString("team");
             String pieceType = resultSet.getString("pieceType");
             pieceDtos.add(new PieceDto(position, team, pieceType));
         }
+
         resultSet.close();
         pstmt.close();
         closeConnection(connection);
