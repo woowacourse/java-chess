@@ -1,11 +1,12 @@
 package domain.piece.position;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 import java.util.function.BiFunction;
 
 import domain.board.Board;
-import domain.piece.Piece;
 
 public enum Direction {
 	N(1, 0, (rowGap, columnGap) -> rowGap > 0 && columnGap == 0),
@@ -26,8 +27,6 @@ public enum Direction {
 	NWW(1, -2, (rowGap, columnGap) -> rowGap == 1 && columnGap == -2),
 	SEE(-1, 2, (rowGap, columnGap) -> rowGap == -1 && columnGap == 2),
 	SWW(-1, -2, (rowGap, columnGap) -> rowGap == -1 && columnGap == -2);
-
-	public static final int NO_CELL_TO_CHECK = 0;
 
 	private int rowGap;
 	private int columnGap;
@@ -55,30 +54,23 @@ public enum Direction {
 	}
 
 	public boolean hasPieceInRoute(Position position, Position targetPosition, Board board) {
-		int countOfCellToCheck = calculateLoopCount(position, targetPosition) - 1;
-
-		if (countOfCellToCheck == NO_CELL_TO_CHECK) {
-			return false;
-		}
-
-		return checkPieceInRoute(board, countOfCellToCheck, position);
+		List<Position> route = findRoutes(position, targetPosition);
+		return route.stream()
+			.map(board::findPiece)
+			.anyMatch(Optional::isPresent);
 	}
 
-	private boolean checkPieceInRoute(Board board, int countOfCellToCheck, Position position) {
+	private List<Position> findRoutes(Position position, Position targetPosition) {
+		int loopCount = calculateLoopCount(position, targetPosition) - 1;
 		int routeRow = position.getRowNumber();
 		int routeColumn = position.getColumnNumber();
-		int loopCount = 0;
-		Optional<Piece> piece;
-
-		do {
+		List<Position> route = new ArrayList<>();
+		for (int i = 0; i < loopCount; i++) {
 			routeRow += this.rowGap;
 			routeColumn += this.columnGap;
-			piece = board.findPiece(Position.of(routeColumn, routeRow));
-			loopCount++;
+			route.add(Position.of(routeColumn, routeRow));
 		}
-		while (loopCount < countOfCellToCheck && !piece.isPresent());
-
-		return piece.isPresent();
+		return route;
 	}
 
 	private int calculateLoopCount(Position position, Position targetPosition) {
