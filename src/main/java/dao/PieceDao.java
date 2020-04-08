@@ -45,16 +45,15 @@ public class PieceDao {
 	}
 
 	public int addPiece(final String pieceTypeName, final String teamName, final String coordinateRepresentation,
-						final Boolean canMoveTwoDistance, final int roomId) throws SQLException {
-		final String query = "INSERT INTO piece(piece_type, team, coordinate, can_move_two_distance, room_id) "
-				+ "VALUES(?, ?, ?, ?, ?)";
+						 final int roomId) throws SQLException {
+		final String query = "INSERT INTO piece(piece_type, team, coordinate, room_id) "
+				+ "VALUES(?, ?, ?, ?)";
 		final Connection connection = getConnection();
 		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setString(1, pieceTypeName);
 		preparedStatement.setString(2, teamName);
 		preparedStatement.setString(3, coordinateRepresentation);
-		preparedStatement.setString(4, canMoveTwoDistance.toString());
-		preparedStatement.setInt(5, roomId);
+		preparedStatement.setInt(4, roomId);
 		final int resultNum = preparedStatement.executeUpdate();
 
 		preparedStatement.close();
@@ -72,7 +71,7 @@ public class PieceDao {
 		while (resultSet.next()) {
 			pieces.add(new dao.Piece(resultSet.getInt("id"), resultSet.getString("piece_type"),
 					resultSet.getString("team"), resultSet.getString("coordinate"),
-					resultSet.getString("can_move_two_distance"), resultSet.getInt("room_id")));
+					resultSet.getInt("room_id")));
 		}
 
 		resultSet.close();

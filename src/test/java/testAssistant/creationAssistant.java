@@ -49,10 +49,6 @@ public class creationAssistant {
 		return new Pawn(createTeam(team), createPoint(point));
 	}
 
-	public static Pawn createPawnOnceMoved(String team, String point) {
-		return new Pawn(createTeam(team), createPoint(point), false);
-	}
-
 	public static Queen createQueen(String team, String point) {
 		return new Queen(createTeam(team), createPoint(point));
 	}

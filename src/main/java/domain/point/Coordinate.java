@@ -1,5 +1,6 @@
 package domain.point;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Coordinate {
@@ -28,6 +29,10 @@ public class Coordinate {
 
 	public boolean matchColumn(Column column) {
 		return this.column.equals(column);
+	}
+
+	public boolean matchRow(final Row... rows) {
+		return Arrays.asList(rows).contains(row);
 	}
 
 	public int getRowIndex() {

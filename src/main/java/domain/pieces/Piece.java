@@ -96,10 +96,6 @@ public abstract class Piece {
         return coordinate.getRepresentation();
     }
 
-    public boolean isCanMoveTwoDistance() {
-        return false;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

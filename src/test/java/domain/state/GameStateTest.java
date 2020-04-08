@@ -21,7 +21,7 @@ class GameStateTest {
 		Moved moved = createMoved(createPawn("white", "a2"),
 				createKing("white", "c1"),
 				createKing("black", "d1"));
-		Moved expect = createMoved(createPawnOnceMoved("white", "a4"),
+		Moved expect = createMoved(createPawn("white", "a4"),
 				createKing("white", "c1"),
 				createKing("black", "d1"));
 

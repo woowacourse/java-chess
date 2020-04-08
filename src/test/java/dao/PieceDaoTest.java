@@ -37,7 +37,7 @@ class PieceDaoTest {
 	void addPiece() throws SQLException {
 		final domain.pieces.Piece piece = new Queen(Team.BLACK, Coordinate.of("a2"));
 		final int resultNum = pieceDao.addPiece(piece.getPieceTypeName(),
-				piece.getTeamName(), piece.getCoordinateRepresentation(), piece.isCanMoveTwoDistance(), 1);
+				piece.getTeamName(), piece.getCoordinateRepresentation(), 1);
 		assertThat(resultNum).isEqualTo(1);
 	}
 
@@ -46,6 +46,6 @@ class PieceDaoTest {
 		final int roomId = 1;
 		final List<dao.Piece> pieces = pieceDao.findPiecesByRoomId(roomId);
 		assertThat(pieces).isEqualTo(Arrays.asList(
-				new dao.Piece(2, "queen", "black", "a2", "false", 1)));
+				new dao.Piece(1, "queen", "black", "a2", 1)));
 	}
 }

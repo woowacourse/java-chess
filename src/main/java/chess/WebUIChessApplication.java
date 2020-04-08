@@ -91,7 +91,7 @@ public class WebUIChessApplication {
 				pieceDao.delete(roomId);
 				for (Piece piece : after.getSet()) {
 					pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(), piece.getCoordinateRepresentation()
-							, piece.isCanMoveTwoDistance(), roomId);
+							, roomId);
 				}
 				announcements.put(roomId, createAnnouncement(roomId, after).getString());
 			} catch (CommandTypeException
@@ -152,7 +152,7 @@ public class WebUIChessApplication {
 		pieceDao.delete(roomId);
 		for (Piece piece : pieces) {
 			pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(),
-					piece.getCoordinateRepresentation(), piece.isCanMoveTwoDistance(), roomId);
+					piece.getCoordinateRepresentation(), roomId);
 		}
 		stateDao.addState("ended", roomId);
 		announcements.put(roomId, "ended");

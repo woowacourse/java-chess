@@ -7,16 +7,14 @@ public class Piece {
 	final String pieceType;
 	final String team;
 	final String coordinate;
-	final String canMoveTwoDistance;
 	final int roomId;
 
 	public Piece(final int id, final String pieceType, final String team,
-				 final String coordinate, final String canMoveTwoDistance, final int roomId) {
+				 final String coordinate,  final int roomId) {
 		this.id = id;
 		this.pieceType = pieceType;
 		this.team = team;
 		this.coordinate = coordinate;
-		this.canMoveTwoDistance = canMoveTwoDistance;
 		this.roomId = roomId;
 	}
 
@@ -36,10 +34,6 @@ public class Piece {
 		return coordinate;
 	}
 
-	public String getCanMoveTwoDistance() {
-		return canMoveTwoDistance;
-	}
-
 	public int getRoomId() {
 		return roomId;
 	}
@@ -53,13 +47,12 @@ public class Piece {
 				roomId == piece.roomId &&
 				Objects.equals(pieceType, piece.pieceType) &&
 				Objects.equals(team, piece.team) &&
-				Objects.equals(coordinate, piece.coordinate) &&
-				Objects.equals(canMoveTwoDistance, piece.canMoveTwoDistance);
+				Objects.equals(coordinate, piece.coordinate);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, pieceType, team, coordinate, canMoveTwoDistance, roomId);
+		return Objects.hash(id, pieceType, team, coordinate, roomId);
 	}
 
 	@Override
@@ -69,7 +62,6 @@ public class Piece {
 				", pieceType='" + pieceType + '\'' +
 				", team='" + team + '\'' +
 				", coordinate='" + coordinate + '\'' +
-				", canMoveTwoDistance='" + canMoveTwoDistance + '\'' +
 				", roomId=" + roomId +
 				'}';
 	}

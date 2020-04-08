@@ -20,13 +20,13 @@ class PawnTest {
 	@BeforeEach
 	void setUp() {
 		pawn = createPawn("black", "a1");
-		pawnOnceMoved = createPawnOnceMoved("black", "a1");
+		pawnOnceMoved = createPawn("black", "a1");
 	}
 
 	@Test
 	void move() {
 		Coordinate coordinate = createPoint("a2");
-		Pawn expect = createPawnOnceMoved("black", "a2");
+		Pawn expect = createPawn("black", "a2");
 
 		assertThat(pawn.move(coordinate)).isEqualTo(expect);
 	}

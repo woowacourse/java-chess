@@ -6,25 +6,19 @@ import domain.pieces.exceptions.CanNotReachException;
 import domain.point.Direction;
 import domain.point.Distance;
 import domain.point.Coordinate;
+import domain.point.Row;
 import domain.team.Team;
 
 import java.util.Objects;
 
 public class Pawn extends Piece {
-	private final boolean canMoveTwoDistance;
-
 	public Pawn(Team team, Coordinate coordinate) {
-		this(team, coordinate, true);
-	}
-
-	public Pawn(Team team, Coordinate coordinate, boolean canMoveTwoDistance) {
 		super(PieceType.PAWN, team, coordinate);
-		this.canMoveTwoDistance = canMoveTwoDistance;
 	}
 
 	@Override
 	public Piece move(Coordinate afterCoordinate) {
-		return new Pawn(getTeam(), afterCoordinate, false);
+		return new Pawn(getTeam(), afterCoordinate);
 	}
 
 	@Override
@@ -79,7 +73,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public void validateReach(Distance distance) {
-		if (distance == Distance.VERTICAL_TWO && canMoveTwoDistance) {
+		if (distance == Distance.VERTICAL_TWO && getCoordinate().matchRow(Row.TWO, Row.SEVEN)) {
 			return;
 		}
 
@@ -88,25 +82,6 @@ public class Pawn extends Piece {
 					+ System.lineSeparator()
 					+ "단, 처음엔 두 칸 앞으로 갈 수 있습니다.");
 		}
-	}
-
-	@Override
-	public boolean isCanMoveTwoDistance() {
-		return canMoveTwoDistance;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		Pawn pawn = (Pawn) o;
-		return canMoveTwoDistance == pawn.canMoveTwoDistance;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), canMoveTwoDistance);
 	}
 }
 
