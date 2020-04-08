@@ -6,7 +6,7 @@ import chess.domain.move.StraightMove;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.TeamStrategy;
 
-import java.util.Optional;
+import java.util.List;
 
 public class Queen extends Piece {
     public Queen(Position position, TeamStrategy teamStrategy) {
@@ -14,7 +14,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+    protected boolean isMovablePattern(Move move, Position targetPosition, List<Piece> pieces) {
         return move instanceof StraightMove || move instanceof CrossMove;
     }
 

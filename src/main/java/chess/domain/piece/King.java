@@ -6,7 +6,7 @@ import chess.domain.move.StraightMove;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.TeamStrategy;
 
-import java.util.Optional;
+import java.util.List;
 
 public class King extends Piece {
     private static final int KING_MOVABLE_RANGE = 1;
@@ -16,7 +16,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+    protected boolean isMovablePattern(Move move, Position targetPosition, List<Piece> pieces) {
         return isKingMovable(move);
     }
 

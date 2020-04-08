@@ -4,7 +4,7 @@ import chess.domain.move.Move;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.TeamStrategy;
 
-import java.util.Optional;
+import java.util.List;
 
 public abstract class Piece implements PieceAbility {
     public static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다";
@@ -20,14 +20,14 @@ public abstract class Piece implements PieceAbility {
     }
 
     @Override
-    public void validateMovePattern(Move move, Optional<Piece> targetPiece) {
-        if (isMovablePattern(move, targetPiece)) {
+    public void validateMovePattern(Move move, Position targetPosition, List<Piece> pieces) {
+        if (isMovablePattern(move, targetPosition, pieces)) {
             return;
         }
         throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
     }
 
-    protected abstract boolean isMovablePattern(Move move, Optional<Piece> targetPiece);
+    protected abstract boolean isMovablePattern(Move move, Position targetPosition, List<Piece> pieces);
 
     @Override
     public boolean isEqualPosition(Position position) {

@@ -3,10 +3,10 @@ package chess.domain.piece;
 import chess.domain.move.Move;
 import chess.domain.piece.position.Position;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface PieceAbility {
-    void validateMovePattern(Move move, Optional<Piece> targetPiece);
+    void validateMovePattern(Move move, Position targetPosition, List<Piece> pieces);
 
     void move(Position position);
 

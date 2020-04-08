@@ -45,7 +45,7 @@ public class ChessBoard {
         Move move = MoveFactory.findMovePattern(sourcePosition, targetPosition);
         findPieceByPosition(sourcePosition)
                 .ifPresent(piece -> {
-                    piece.validateMovePattern(move, findPieceByPosition(targetPosition));
+                    piece.validateMovePattern(move, targetPosition, pieces);
                 });
 
         findPieceByPosition(sourcePosition).filter(Piece::isNotKnight)

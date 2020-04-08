@@ -5,7 +5,7 @@ import chess.domain.move.Move;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.TeamStrategy;
 
-import java.util.Optional;
+import java.util.List;
 
 public class Bishop extends Piece {
     public Bishop(Position position, TeamStrategy teamStrategy) {
@@ -13,7 +13,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isMovablePattern(Move move, Optional<Piece> targetPiece) {
+    protected boolean isMovablePattern(Move move, Position targetPosition, List<Piece> pieces) {
         return move instanceof CrossMove;
     }
 
