@@ -78,7 +78,10 @@ public class WebUIChessApplication {
         });
 
         post("/create", (req, res) -> {
-            ChessGame chessGame = chessGameDao.create();
+            ChessGame chessGame = chessGameDao.save();
+            if (chessGame == null) {
+                return GSON.toJson(new ResponseDto(ResponseDto.FAIL, "새로운 방을 만드는데 실패했습니다."));
+            }
             chessGame.start();
             chessGameDao.update(chessGame);
             return GSON.toJson(new ResponseDto(ResponseDto.SUCCESS, chessGame.getId()));

@@ -24,7 +24,7 @@ public class ChessGameDao implements JdbcTemplateDao {
     private static final String PLAYING = "PLAYING";
     private static final String FINISHED = "FINISHED";
 
-    public ChessGame create() throws SQLException {
+    public ChessGame save() throws SQLException {
         String query = "INSERT INTO chess_game(state) VALUES (?)";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query, new String[] {"id"});
