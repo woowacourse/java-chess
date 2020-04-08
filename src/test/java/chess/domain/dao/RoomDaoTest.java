@@ -33,9 +33,6 @@ public class RoomDaoTest {
 		String finishFlag = "N";
 
 		int newRoomId = roomDao.addRoom(roomName, actualBoard, turn, finishFlag);
-		String expectedBoard = roomDao.findByRoomId("" + newRoomId).orElseThrow(NoSuchElementException::new);
-
-		assertThat(actualBoard).isEqualTo(expectedBoard);
 	}
 
 	@Test

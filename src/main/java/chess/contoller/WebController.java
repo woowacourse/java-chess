@@ -71,7 +71,9 @@ public class WebController {
 
 	private void mainRendering() {
 		get("/", (req, res) -> {
-			return render(new HashMap<>(), "index.html");
+			Map<String, Object> model = new HashMap<>();
+			model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+			return render(model, "index.html");
 		});
 	}
 

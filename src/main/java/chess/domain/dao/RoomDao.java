@@ -4,22 +4,27 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class RoomDao extends MySqlDao {
-	public Optional<String> findByRoomId(String roomId) throws SQLException {
-		String query = "SELECT * FROM room WHERE room_id = ?";
-		return find(query, roomId);
+	public List<String> findAll() throws SQLException {
+		String query = "SELECT * FROM room";
+		PreparedStatement pstmt = connect().prepareStatement(query);
+		ResultSet rs = pstmt.executeQuery();
+
+		List<String> roomNames = new ArrayList<>();
+		while (rs.next()) {
+			roomNames.add(rs.getString("room_name"));
+		}
+		return new ArrayList<>(roomNames) ;
 	}
 
 	public Optional<String> findByRoomName(String roomName) throws SQLException {
 		String query = "SELECT * FROM room WHERE room_name = ?";
-		return find(query, roomName);
-	}
-
-	private Optional<String> find(String query, String roomInfo) throws SQLException {
 		PreparedStatement pstmt = connect().prepareStatement(query);
-		pstmt.setString(1, roomInfo);
+		pstmt.setString(1, roomName);
 		ResultSet rs = pstmt.executeQuery();
 
 		if (!rs.next()) {

@@ -1,6 +1,7 @@
 package chess.domain.service;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Optional;
 
 import chess.domain.BoardConverter;
@@ -35,5 +36,9 @@ public class ChessGameService {
 	public void save(ChessGame chessGame, String roomName) throws SQLException {
 		String boardInfo = BoardConverter.convert(chessGame.getBoard(), BLANK_MARK);
 		roomDao.updateBoard(roomName, boardInfo);
+	}
+
+	public List<String> findAllRooms() throws SQLException {
+		return roomDao.findAll();
 	}
 }
