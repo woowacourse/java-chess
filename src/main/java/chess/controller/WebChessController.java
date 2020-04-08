@@ -36,8 +36,10 @@ public class WebChessController implements ChessController {
         }, new JsonTransformer());
 
         post("/move", (req, res) -> {
+            ChessDAO chessDAO = ChessDAO.getInstance();
             try {
                 board.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
+                chessDAO.saveGame(board.getAlivePieces(), board.getTurn());
                 if (!board.isBothKingAlive()) {
                     return board.getWinner().getName() + WINNER_ALERT;
                 }
@@ -50,13 +52,6 @@ public class WebChessController implements ChessController {
 
         get("/reset", (req, res) -> {
             board = resetBoard();
-            res.redirect("/");
-            return null;
-        });
-
-        get("/save", (req, res) -> {
-            ChessDAO chessDAO = ChessDAO.getInstance();
-            chessDAO.saveGame(board.getAlivePieces(), board.getTurn());
             res.redirect("/");
             return null;
         });

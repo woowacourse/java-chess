@@ -6,6 +6,10 @@ async function init() {
 }
 
 async function choose(value) {
+    if (value.classList.contains('source')) {
+        value.classList.remove('source');
+        return;
+    }
     if (document.querySelector('.source')) {
         await chooseDestination(value);
     } else {
@@ -48,7 +52,7 @@ function chooseSource(source) {
 }
 
 async function chooseDestination(destination) {
-    await destination.classList.add('destination');
+    destination.classList.add('destination');
     await move();
 }
 
