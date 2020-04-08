@@ -47,6 +47,12 @@ public class Pawn extends Piece {
 		this.changePosition(targetPosition, board);
 	}
 
+	public boolean hasSameColumn(List<Pawn> pawns) {
+		pawns.remove(this);
+		return pawns.stream()
+			.anyMatch(pawn -> pawn.position.isSameColumn(this.position));
+	}
+
 	@Override
 	protected void validateDirection(Direction direction) {
 		boolean isWrongDirection;
@@ -89,11 +95,5 @@ public class Pawn extends Piece {
 	@Override
 	public double getScore() {
 		return SCORE;
-	}
-
-	public boolean hasSameColumn(List<Pawn> pawns) {
-		pawns.remove(this);
-		return pawns.stream()
-			.anyMatch(pawn -> pawn.position.isSameColumn(this.position));
 	}
 }

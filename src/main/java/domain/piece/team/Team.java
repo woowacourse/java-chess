@@ -28,10 +28,6 @@ public enum Team {
 		return this.equals(team);
 	}
 
-	public boolean isStartRow(int rankIndex) {
-		return this.startRankIndex == rankIndex;
-	}
-
 	public String getName() {
 		return name;
 	}
