@@ -101,16 +101,16 @@ article.chess__status {
     color: #fff;
 }
 
-article.input__command {
+article.move__command {
     text-align: center;
     line-height: 1.6;
     font-size: 2rem;
 }
 
-.input__command__area {
+.move__command__area {
     display: inline-block;
-    padding: 0.8rem;
     margin: 0.5rem auto;
+    padding: 0.8rem;
     width: 5rem;
     text-align: center;
     font-size: 2rem;
@@ -122,7 +122,7 @@ article.input__command {
     cursor: pointer;
 }
 
-.input__command__area::placeholder {
+.move__command__area::placeholder {
     color: #999;
 }
 
@@ -141,10 +141,29 @@ article.input__command {
     cursor: pointer;
 }
 
+article.chess_command {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .end__command__submit {
-    display: inline-block;
     padding: 0.8rem;
-    margin: 3rem auto;
+    margin: 2rem 2rem;
+    width: 10rem;
+    text-align: center;
+    font-size: 2rem;
+    border: 3px solid #333;
+    background-color: #777;
+    color: #fff;
+    border-radius: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.restart__command__submit {
+    padding: 0.8rem;
+    margin: 2rem 2rem;
     width: 10rem;
     text-align: center;
     font-size: 2rem;

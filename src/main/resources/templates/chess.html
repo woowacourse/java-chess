@@ -106,15 +106,20 @@
         {{/statuses}}
     </div>
 </article>
-<article class="input__command">
+<article class="move__command">
     <form action="/chessMove" method="POST">
         이동시킬 피스 :&nbsp;
-        <input class="input__command__area" name="sourcePosition" placeholder="b1" type="text"/>
+        <input class="move__command__area" name="sourcePosition" placeholder="b1" type="text"/>
         <br/>
         이동시킬 위치 :&nbsp;
-        <input class="input__command__area" name="targetPosition" placeholder="b2" type="text"/>
+        <input class="move__command__area" name="targetPosition" placeholder="b2" type="text"/>
         <br/>
         <input class="move__command__submit" type="submit" value="이동"/>
+    </form>
+</article>
+<article class="chess_command">
+    <form action="/chessRestart" method="POST">
+        <input class="restart__command__submit" type="submit" value="다시시작"/>
     </form>
     <form action="/chessEnd" method="POST">
         <input class="end__command__submit" type="submit" value="게임종료"/>

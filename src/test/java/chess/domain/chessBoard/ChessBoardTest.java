@@ -8,7 +8,6 @@ import java.util.Map;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullAndEmptySource;
 import org.junit.jupiter.params.provider.NullSource;
 
 import chess.domain.chessPiece.ChessPiece;
@@ -26,11 +25,11 @@ public class ChessBoardTest {
 	}
 
 	@ParameterizedTest
-	@NullAndEmptySource
-	void validate_EmptyMapOfPositionAndChessPiece_ExceptionThrown(Map<Position, ChessPiece> chessBoard) {
+	@NullSource
+	void ChessBoard_NullMapOfPositionAndChessPiece_ExceptionThrown(Map<Position, ChessPiece> chessBoard) {
 		assertThatThrownBy(() -> new ChessBoard(chessBoard))
-			.isInstanceOf(IllegalArgumentException.class)
-			.hasMessage("체스 보드가 존재하지 않습니다.");
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("체스 보드가 null입니다.");
 	}
 
 	@Test

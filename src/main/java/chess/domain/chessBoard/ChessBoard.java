@@ -17,14 +17,8 @@ public class ChessBoard {
 	private final Map<Position, ChessPiece> chessBoard;
 
 	public ChessBoard(Map<Position, ChessPiece> chessBoard) {
-		validate(chessBoard);
+		Objects.requireNonNull(chessBoard, "체스 보드가 null입니다.");
 		this.chessBoard = chessBoard;
-	}
-
-	private void validate(Map<Position, ChessPiece> chessBoard) {
-		if (Objects.isNull(chessBoard) || chessBoard.isEmpty()) {
-			throw new IllegalArgumentException("체스 보드가 존재하지 않습니다.");
-		}
 	}
 
 	public boolean isKingOn(Position targetPosition) {
@@ -115,6 +109,10 @@ public class ChessBoard {
 
 	public ChessBoardDto getChessBoardDto() {
 		return ChessBoardDto.of(chessBoard);
+	}
+
+	public Map<Position, ChessPiece> getChessBoard() {
+		return chessBoard;
 	}
 
 	@Override

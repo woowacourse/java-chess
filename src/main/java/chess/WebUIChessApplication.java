@@ -3,9 +3,6 @@ package chess;
 import static spark.Spark.*;
 
 import chess.controller.WebChessController;
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessBoard.ChessBoardInitializer;
-import chess.domain.chessGame.ChessGame;
 
 public class WebUIChessApplication {
 
@@ -13,9 +10,7 @@ public class WebUIChessApplication {
 		port(8080);
 		staticFileLocation("/public");
 
-		ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.create());
-		ChessGame chessGame = ChessGame.from(chessBoard);
-		WebChessController webChessController = new WebChessController(chessGame);
+		WebChessController webChessController = new WebChessController();
 
 		webChessController.start();
 		webChessController.run();

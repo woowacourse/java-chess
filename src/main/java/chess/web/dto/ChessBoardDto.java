@@ -11,10 +11,10 @@ import chess.web.WebChessPiece;
 
 public class ChessBoardDto {
 
-	private final Map<String, String> chessBoardDto;
+	private final Map<String, String> chessBoard;
 
-	private ChessBoardDto(final Map<String, String> chessBoardDto) {
-		this.chessBoardDto = chessBoardDto;
+	private ChessBoardDto(final Map<String, String> chessBoard) {
+		this.chessBoard = chessBoard;
 	}
 
 	public static ChessBoardDto of(Map<Position, ChessPiece> chessBoard) {
@@ -33,8 +33,8 @@ public class ChessBoardDto {
 		}
 	}
 
-	public Map<String, String> getChessBoardDto() {
-		return chessBoardDto;
+	public Map<String, String> getChessBoard() {
+		return chessBoard;
 	}
 
 }
