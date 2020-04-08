@@ -4,76 +4,59 @@ import java.util.List;
 import java.util.Map;
 
 import chess.GameManager;
-import chess.board.Location;
-import chess.gamestate.GameState;
-import chess.piece.Piece;
-import chess.piece.PieceFactory;
 import chess.result.GameStatistic;
-import dao.GameStateDAO;
-import dao.PieceDAO;
 import spark.Request;
+import view.ChessService;
 
 public class WebController {
-	private final PieceDAO pieceDAO = new PieceDAO();
-	private final GameStateDAO gameStateDAO = new GameStateDAO();
-	private final Map<Long, GameManager> session = new HashMap<>();
 
-	public Object winner(Long roomID) throws SQLException {
+	private final ChessService chessService = new ChessService();
+
+	public Object winner(Request request) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
-		GameManager gameManager = createGameManager(roomID);
-		try {
-			model.put("winner", gameManager.findWinner());
-		} catch (IllegalArgumentException | NullPointerException e) {
-			model.put("error", e.getMessage());
-		}
-		return model;
+		long roomID = Long.parseLong(request.params("roomID"));
+		return chessService.findWinner(model, roomID);
 	}
 
-	public List<GameStatistic> status(Long roomID) throws SQLException {
-		return createGameManager(roomID).createStatistics();
+	public List<GameStatistic> status(Request request) throws SQLException {
+		long roomID = Long.parseLong(request.params("roomID"));
+		return chessService.createStatistics(roomID);
 	}
 
-	public GameManager resume(Long roomID) throws SQLException {
-		return createGameManager(roomID);
+	public GameManager resume(Request request) throws SQLException {
+		long roomID = Long.parseLong(request.params("roomID"));
+		return chessService.resume(roomID);
 	}
 
-	public GameManager start(Long roomID) throws SQLException {
-		GameManager gameManager = new GameManager(new PieceFactory().createPieces(), GameState.RUNNING_WHITE_TURN);
-
-		Map<Location, Piece> board = gameManager.getBoard();
-		for (Location location : board.keySet()) {
-			pieceDAO.addPiece(roomID, location, board.get(location));
-		}
-		gameStateDAO.addGameState(roomID, GameState.RUNNING_WHITE_TURN);
-
-		session.put(roomID, gameManager);
-		return gameManager;
+	public GameManager start(Request request) throws SQLException {
+		Long roomID = Long.valueOf(request.params("roomID"));
+		return chessService.start(roomID);
 	}
 
-	public Object move(Long roomID, Request request) throws SQLException {
+	public Object move(Request request) throws SQLException {
+		Long roomID = Long.valueOf(request.params("roomID"));
 		String now = request.queryParams("now");
 		String destination = request.queryParams("destination");
-		GameManager gameManager = createGameManager(roomID);
-
-		try {
-			gameManager.movePiece(Location.of(now), Location.of(destination));
-		} catch (IllegalArgumentException | NullPointerException e) {
-			Map<String, String> message = new HashMap<>();
-			message.put("error", e.getMessage());
-			return message;
-		}
-
-		pieceDAO.deletePiece(roomID, Location.of(destination));
-		pieceDAO.updateLocation(roomID, Location.of(now), Location.of(destination));
-
-		GameState gameState = gameStateDAO.findGameState(roomID);
-		gameStateDAO.updateMessage(roomID, gameState, gameState.findOpposingTeam());
-
-		return gameManager;
+		return chessService.move(roomID, now, destination);
 	}
 
-	private GameManager createGameManager(Long roomID) throws SQLException {
-		return session.getOrDefault(roomID,
-			new GameManager(pieceDAO.findAll(roomID), gameStateDAO.findGameState(roomID)));
+	public Map<String, Object> findRoom() throws SQLException {
+		return chessService.findRoom();
+	}
+
+	public String createRoom() throws SQLException {
+		return chessService.createRoom();
+	}
+
+	public boolean deleteRoom(Request request) throws SQLException {
+		String roomID = request.params("roomID");
+		return chessService.deleteRoom(roomID);
+	}
+
+	public Map<String, Object> detailRoom(Request req) {
+		Map<String, Object> model = new HashMap<>();
+		Long roomID = Long.valueOf(req.params("roomID"));
+		model.put("roomID", roomID);
+		return model;
 	}
 }
