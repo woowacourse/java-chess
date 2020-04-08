@@ -27,7 +27,7 @@ class ChessBoardDtoTest {
 		expected.put("b1", "<img class=\"chessboard\" src=\"./images/black-rook.png\">");
 		expected.put("b3", "<img class=\"chessboard\" src=\"./images/black-pawn.png\">");
 		assertThat(ChessBoardDto.of(initialChessBoard)).isInstanceOf(ChessBoardDto.class)
-			.extracting("chessBoardDto").isEqualTo(expected);
+			.extracting("chessBoard").isEqualTo(expected);
 	}
 
 	@ParameterizedTest

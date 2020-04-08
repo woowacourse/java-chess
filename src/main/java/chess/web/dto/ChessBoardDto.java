@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.position.Position;
-import chess.web.WebChessPiece;
+import chess.web.PieceNameConverter;
 
 public class ChessBoardDto {
 
@@ -23,7 +23,7 @@ public class ChessBoardDto {
 			.collect(collectingAndThen(
 				toMap(
 					entry -> entry.getKey().key(),
-					entry -> WebChessPiece.of(entry.getValue().getName()).getImageUrl()
+					entry -> PieceNameConverter.of(entry.getValue().getName()).getImageUrl()
 				), ChessBoardDto::new));
 	}
 

@@ -2,7 +2,7 @@ package chess.web;
 
 import java.util.Arrays;
 
-public enum WebChessPiece {
+public enum PieceNameConverter {
 
 	BLACK_PAWN("P", "<img class=\"chessboard\" src=\"./images/black-pawn.png\">"),
 	WHITE_PAWN("p", "<img class=\"chessboard\" src=\"./images/white-pawn.png\">"),
@@ -20,12 +20,12 @@ public enum WebChessPiece {
 	private final String chessPieceName;
 	private final String imageUrl;
 
-	WebChessPiece(final String chessPieceName, final String imageUrl) {
+	PieceNameConverter(final String chessPieceName, final String imageUrl) {
 		this.chessPieceName = chessPieceName;
 		this.imageUrl = imageUrl;
 	}
 
-	public static WebChessPiece of(String chessPieceName) {
+	public static PieceNameConverter of(String chessPieceName) {
 		return Arrays.stream(values())
 			.filter(value -> value.chessPieceName.equals(chessPieceName))
 			.findFirst()
