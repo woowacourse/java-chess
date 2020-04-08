@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.junit.jupiter.api.Test;
 
-import chess.domain.piece.Empty;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
@@ -43,8 +42,6 @@ class BoardTest {
 		setter.put(C7, new King(C7, Team.BLACK));
 
 		setter.put(B1, new Rook(B1, Team.BLACK));
-		setter.put(B2, new Empty(B2, Team.NONE));
-		setter.put(B3, new Empty(B3, Team.NONE));
 
 		Board board = Board.of(setter);
 
@@ -59,7 +56,6 @@ class BoardTest {
 		setter.put(C7, new King(C7, Team.BLACK));
 
 		setter.put(B1, new Rook(B1, Team.BLACK));
-		setter.put(D2, new Empty(D2, Team.NONE));
 
 		Board board = Board.of(setter);
 
@@ -75,8 +71,6 @@ class BoardTest {
 		setter.put(C7, new King(C7, Team.BLACK));
 
 		setter.put(B1, new Rook(B1, Team.BLACK));
-		setter.put(B2, new Empty(B2, Team.NONE));
-		setter.put(B3, new Empty(B3, Team.NONE));
 
 		Board board = Board.of(setter);
 
@@ -92,7 +86,6 @@ class BoardTest {
 
 		setter.put(B1, new Rook(B1, Team.BLACK));
 		setter.put(B2, new Rook(B2, Team.BLACK));
-		setter.put(B3, new Empty(B3, Team.NONE));
 
 		Board board = Board.of(setter);
 
@@ -108,8 +101,6 @@ class BoardTest {
 		setter.put(C7, new King(C7, Team.BLACK));
 
 		setter.put(B1, new Rook(B1, Team.BLACK));
-		setter.put(B2, new Empty(B2));
-		setter.put(B3, new Empty(B3));
 
 		Board board = Board.of(setter);
 
@@ -133,7 +124,6 @@ class BoardTest {
 	void verifyMove_NotThrowException_When_BothKingAlive() {
 		Map<Position, Piece> setter = new LinkedHashMap<>();
 		setter.put(A3, new King(A3, Team.BLACK));
-		setter.put(A4, new Empty(A4, Team.NONE));
 		setter.put(A2, new King(A2, Team.WHITE));
 
 		Board board = Board.of(setter);

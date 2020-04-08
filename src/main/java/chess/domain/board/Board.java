@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Path;
@@ -21,7 +22,15 @@ public class Board {
 	}
 
 	public static Board of(Map<Position, Piece> board) {
+		fillEmpty(board);
 		return new Board(board);
+	}
+
+	private static void fillEmpty(Map<Position, Piece> board) {
+		Position.getPositions()
+			.stream()
+			.filter(position -> board.get(position) == null)
+			.forEach(position -> board.put(position, new Empty(position)));
 	}
 
 	public static Board of(List<Piece> pieces) {
