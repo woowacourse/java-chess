@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class Assembler {
     public static List<PieceDto> convertMapToDTO(Map<Position, Placeable> pieces) {
-        List<PieceDto> piecesDTO = new ArrayList<>();
+        List<PieceDto> piecesDtos = new ArrayList<>();
 
         for (Position position : pieces.keySet()) {
             Placeable piece = pieces.get(position);
@@ -19,9 +19,9 @@ public class Assembler {
             String teamValue = piece.getTeam().toString();
             String pieceTypeValue = piece.getPieceType().toString();
             PieceDto pieceDto = new PieceDto(positionValue, teamValue, pieceTypeValue);
-            piecesDTO.add(pieceDto);
+            piecesDtos.add(pieceDto);
         }
 
-        return piecesDTO;
+        return piecesDtos;
     }
 }

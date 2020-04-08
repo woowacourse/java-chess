@@ -46,8 +46,15 @@
 
 ### Web controller 기능
 - [x] 요청 받은 command를 실행
+- [ ] error를 받을 경우 
 - [x] Map인 Board를 List<Piece>로 변환
 - [x] List<Piece>를 웹클라이언트로 전달
+
+### Web service 기능
+- [ ] dao를 통한 board 상태 find
+- [ ] dao를 통한 board 상태 add
+- [ ] dao를 통한 board 상태 update
+- [ ] dao를 통한 board 상태 delete
 
 ### DB 기능
 - [x] Piece 테이블의 필드 : position, pieceType, team

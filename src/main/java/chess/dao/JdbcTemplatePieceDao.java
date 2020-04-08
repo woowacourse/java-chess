@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.dto.PieceDto;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,51 +53,51 @@ public class JdbcTemplatePieceDao implements PieceDao {
     }
 
     @Override
-    public void addPiece(PieceDto pieceDto) throws SQLException {
+    public void addPiece(PieceEntity pieceEntity) throws SQLException {
         String query = "INSERT INTO piece VALUES (?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDto.getPosition());
-        pstmt.setString(2, pieceDto.getTeam());
-        pstmt.setString(3, pieceDto.getPieceType());
+        pstmt.setString(1, pieceEntity.getPosition());
+        pstmt.setString(2, pieceEntity.getTeam());
+        pstmt.setString(3, pieceEntity.getPieceType());
         pstmt.executeUpdate();
         pstmt.close();
         closeConnection(connection);
     }
 
     @Override
-    public void updatePiece(PieceDto pieceDto) throws SQLException {
+    public void updatePiece(PieceEntity pieceEntity) throws SQLException {
         String query = "UPDATE SET team=? pieceType=? WHERE position=?";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDto.getTeam());
-        pstmt.setString(2, pieceDto.getPieceType());
-        pstmt.setString(3, pieceDto.getPosition());
+        pstmt.setString(1, pieceEntity.getTeam());
+        pstmt.setString(2, pieceEntity.getPieceType());
+        pstmt.setString(3, pieceEntity.getPosition());
         pstmt.executeUpdate();
         pstmt.close();
         closeConnection(connection);
     }
 
     @Override
-    public List<PieceDto> findPiece() throws SQLException {
+    public List<PieceEntity> findPiece() throws SQLException {
         String query = "SELECT * FROM piece";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet resultSet = pstmt.executeQuery();
 
-        List<PieceDto> pieceDtos = new ArrayList<>();
+        List<PieceEntity> pieceEntities = new ArrayList<>();
 
         while (resultSet.next()) {
             String position = resultSet.getString("position");
             String team = resultSet.getString("team");
             String pieceType = resultSet.getString("pieceType");
-            pieceDtos.add(new PieceDto(position, team, pieceType));
+            pieceEntities.add(new PieceEntity(position, team, pieceType));
         }
 
         resultSet.close();
         pstmt.close();
         closeConnection(connection);
 
-        return pieceDtos;
+        return pieceEntities;
     }
 }
