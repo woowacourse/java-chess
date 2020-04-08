@@ -80,7 +80,8 @@ async function clearBoard() {
             element.removeChild(element.lastElementChild);
         }
     });
-    turn.innerText = "white";
+    turn.innerText = "";
+    score.innerText = "";
 }
 
 async function setBoard(board) {
