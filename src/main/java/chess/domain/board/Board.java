@@ -93,7 +93,7 @@ public class Board {
     private Route findRoute(ChessPiece chessPiece, MovingInfo movingInfo) {
         Position startPosition = movingInfo.getStartPosition();
         Position targetPosition = movingInfo.getTargetPosition();
-        List<Route> allRoute = AllRouteGenerator.getAllRoute(chessPiece, startPosition);
+        List<Route> allRoute = AllRouteGenerator.generateAllRoute(chessPiece, startPosition);
 
         return allRoute.stream()
                 .filter(o -> o.hasPosition(targetPosition))

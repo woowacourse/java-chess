@@ -18,6 +18,6 @@ public class AllRouteGeneratorTest {
         Queen queen = new Queen(WHITE);
         Position position = Position.of(Coordinate.of(4), Coordinate.of(4));
 
-        assertThat(AllRouteGenerator.getAllRoute(queen, position)).isInstanceOf(List.class);
+        assertThat(AllRouteGenerator.generateAllRoute(queen, position)).isInstanceOf(List.class);
     }
 }

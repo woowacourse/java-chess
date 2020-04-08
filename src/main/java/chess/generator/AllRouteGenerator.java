@@ -19,7 +19,7 @@ public class AllRouteGenerator {
     private AllRouteGenerator() {
     }
 
-    public static List<Route> getAllRoute(ChessPiece chessPiece, Position position) {
+    public static List<Route> generateAllRoute(ChessPiece chessPiece, Position position) {
         List<Route> routes = new ArrayList<>();
 
         if (chessPiece instanceof Knight) {

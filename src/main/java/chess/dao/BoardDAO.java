@@ -1,19 +1,18 @@
 package chess.dao;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.Row;
-import chess.domain.chesspiece.*;
+import chess.domain.chesspiece.Blank;
+import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.GameStatus;
-import chess.domain.game.Team;
-import chess.domain.move.Coordinate;
-import chess.domain.move.Position;
+import chess.dto.ChessPieceDTO;
+import chess.dto.GameStatusDTO;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.List;
 
 import static chess.dao.ServerInfo.*;
-import static chess.domain.chesspiece.ChessPieceInfo.*;
 
 public class BoardDAO {
     public Connection getConnection() {
@@ -50,12 +49,7 @@ public class BoardDAO {
         }
     }
 
-    public void initialize() throws SQLException {
-        initializeBoard();
-        initializeGameStatus();
-    }
-
-    private void initializeBoard() throws SQLException {
+    public void initializeBoard() throws SQLException {
         Connection connection = getConnection();
         String query = "truncate table board";
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -75,86 +69,49 @@ public class BoardDAO {
         closeConnection(connection);
     }
 
-    public Board loadBoard() throws SQLException {
+    public List<ChessPieceDTO> loadBoard() throws SQLException {
+        List<ChessPieceDTO> chessPieces = new ArrayList<>();
         Connection connection = getConnection();
         String query = "SELECT * FROM board";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
-        Board board = BoardFactory.createBlankBoard(loadGameStatus());
 
-        loadChessPieces(rs, board);
+        while (rs.next()) {
+            ChessPieceDTO chessPieceDTO = new ChessPieceDTO();
+
+            chessPieceDTO.setPieceName(rs.getString("piece_name"));
+            chessPieceDTO.setTeam(rs.getString("team"));
+            chessPieceDTO.setX(rs.getInt("x_position"));
+            chessPieceDTO.setY(rs.getInt("y_position"));
+            chessPieces.add(chessPieceDTO);
+        }
         pstmt.close();
         closeConnection(connection);
-        return board;
+        return chessPieces;
     }
 
-    //should extract
-    private void loadChessPieces(ResultSet rs, Board board) throws SQLException {
-        while (rs.next()) {
-            String pieceName = rs.getString("piece_name");
-            String teamName = rs.getString("team");
-            int x = rs.getInt("x_position");
-            int y = rs.getInt("y_position");
-            Position position = Position.of(Coordinate.of(x), Coordinate.of(y));
-            ChessPiece chessPiece = getNewChessPiece(pieceName, teamName, position);
-
-            board.setPosition(chessPiece, position);
-        }
-    }
-
-    //should extract
-    private ChessPiece getNewChessPiece(String pieceName, String teamName, Position position) {
-        String lowerPieceName = pieceName.toLowerCase();
-
-        if (lowerPieceName.equals(KING.getName())) {
-            return new King(Team.of(teamName));
-        }
-        if (lowerPieceName.equals(QUEEN.getName())) {
-            return new Queen(Team.of(teamName));
-        }
-        if (lowerPieceName.equals(ROOK.getName())) {
-            return new Rook(Team.of(teamName));
-        }
-        if (lowerPieceName.equals(BISHOP.getName())) {
-            return new Bishop(Team.of(teamName));
-        }
-        if (lowerPieceName.equals(KNIGHT.getName())) {
-            return new Knight(Team.of(teamName));
-        }
-        if (lowerPieceName.equals(PAWN.getName())) {
-            Pawn pawn = new Pawn(Team.of(teamName));
-
-            pawn.updateFirstMove(teamName, position);
-            return pawn;
-        }
-        return new Blank();
-    }
-
-    //should extract some part
-    public GameStatus loadGameStatus() throws SQLException {
+    public GameStatusDTO loadGameStatus() throws SQLException {
+        GameStatusDTO gameStatusDTO = new GameStatusDTO();
         Connection connection = getConnection();
         String query = "SELECT * FROM game_status";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
-        Team nowPlayingTeam;
-        boolean isGameEnd;
 
         rs.next();
-        nowPlayingTeam = Team.of(rs.getString("now_playing_team"));
-        isGameEnd = Boolean.parseBoolean(rs.getString("is_game_end"));
+        gameStatusDTO.setNowPlayingTeam(rs.getString("now_playing_team"));
+        gameStatusDTO.setIsGameEnd(rs.getString("is_game_end"));
         pstmt.close();
         closeConnection(connection);
-        return new GameStatus(nowPlayingTeam, isGameEnd);
+        return gameStatusDTO;
     }
 
-    //should extract
     public void updateDB(Board board) throws SQLException {
-        initialize();
+        initializeBoard();
+        initializeGameStatus();
         updateBoard(board);
         updateGameStatus(board.getGameStatus());
     }
 
-    //should extract
     private void updateBoard(Board board) throws SQLException {
         List<Row> rows = board.getBoard();
 
@@ -165,7 +122,6 @@ public class BoardDAO {
         }
     }
 
-    //should extract
     private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
@@ -174,7 +130,6 @@ public class BoardDAO {
         }
     }
 
-    //check
     private void updateColumn(ChessPiece chessPiece, int i, int j) throws SQLException {
         Connection connection = getConnection();
         String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
