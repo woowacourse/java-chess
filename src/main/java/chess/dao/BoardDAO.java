@@ -87,6 +87,7 @@ public class BoardDAO {
         return board;
     }
 
+    //should extract
     private void loadChessPieces(ResultSet rs, Board board) throws SQLException {
         while (rs.next()) {
             String pieceName = rs.getString("piece_name");
@@ -100,6 +101,7 @@ public class BoardDAO {
         }
     }
 
+    //should extract
     private ChessPiece getNewChessPiece(String pieceName, String teamName, Position position) {
         String lowerPieceName = pieceName.toLowerCase();
 
@@ -127,6 +129,7 @@ public class BoardDAO {
         return new Blank();
     }
 
+    //should extract some part
     public GameStatus loadGameStatus() throws SQLException {
         Connection connection = getConnection();
         String query = "SELECT * FROM game_status";
@@ -143,12 +146,14 @@ public class BoardDAO {
         return new GameStatus(nowPlayingTeam, isGameEnd);
     }
 
+    //should extract
     public void updateDB(Board board) throws SQLException {
         initialize();
         updateBoard(board);
         updateGameStatus(board.getGameStatus());
     }
 
+    //should extract
     private void updateBoard(Board board) throws SQLException {
         List<Row> rows = board.getBoard();
 
@@ -159,6 +164,7 @@ public class BoardDAO {
         }
     }
 
+    //should extract
     private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
@@ -167,6 +173,7 @@ public class BoardDAO {
         }
     }
 
+    //check
     private void updateColumn(ChessPiece chessPiece, int i, int j) throws SQLException {
         Connection connection = getConnection();
         String query = "INSERT INTO board VALUES (?, ?, ?, ?)";

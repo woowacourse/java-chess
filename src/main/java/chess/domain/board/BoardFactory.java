@@ -7,8 +7,6 @@ import chess.domain.game.Team;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.board.Board.BOARD_MAX_INDEX;
-import static chess.domain.board.Board.BOARD_MIN_INDEX;
 import static chess.domain.game.Team.BLACK;
 import static chess.domain.game.Team.WHITE;
 
@@ -31,7 +29,7 @@ public class BoardFactory {
 
     public static Board createBlankBoard(GameStatus gameStatus) {
         List<Row> board = new ArrayList<>();
-        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
+        for (int i = Board.MIN_INDEX; i <= Board.MAX_INDEX; i++) {
             addBlankRow(board);
         }
         return new Board(board, gameStatus);
@@ -70,7 +68,7 @@ public class BoardFactory {
     private static void addPawn(List<Row> board, Team team) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
+        for (int i = Board.MIN_INDEX; i <= Board.MAX_INDEX; i++) {
             chessPieces.add(new Pawn(team));
         }
         board.add(Row.of(chessPieces));
@@ -79,7 +77,7 @@ public class BoardFactory {
     private static void addBlankRow(List<Row> board) {
         List<ChessPiece> chessPieces = new ArrayList<>();
 
-        for (int i = BOARD_MIN_INDEX; i <= BOARD_MAX_INDEX; i++) {
+        for (int i = Board.MIN_INDEX; i <= Board.MAX_INDEX; i++) {
             chessPieces.add(new Blank());
         }
         board.add(Row.of(chessPieces));

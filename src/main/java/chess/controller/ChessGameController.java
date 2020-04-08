@@ -4,15 +4,11 @@ import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.service.GameService;
-import spark.ModelAndView;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ChessGameController {
     public static String newGame(Request request, Response response) throws SQLException {

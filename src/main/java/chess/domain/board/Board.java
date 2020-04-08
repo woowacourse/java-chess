@@ -20,8 +20,8 @@ import static chess.domain.game.Team.BLACK;
 public class Board {
     private static final int DIAGONAL_GAP = 1;
     private static final int INDEX_CORRECTION_NUMBER = 1;
-    public static final int BOARD_MAX_INDEX = 7;
-    public static final int BOARD_MIN_INDEX = 0;
+    public static final int MAX_INDEX = 7;
+    public static final int MIN_INDEX = 0;
 
     private List<Row> board;
     private GameStatus gameStatus;
@@ -82,7 +82,7 @@ public class Board {
     private void reverseBoard() {
         List<Row> reversedBoard = new ArrayList<>();
 
-        for (int i = BOARD_MAX_INDEX; i >= BOARD_MIN_INDEX; i--) {
+        for (int i = Board.MAX_INDEX; i >= Board.MIN_INDEX; i--) {
             Row reversedRow = board.get(i);
             Collections.reverse(reversedRow.getChessPieces());
             reversedBoard.add(reversedRow);

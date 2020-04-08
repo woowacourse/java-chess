@@ -7,8 +7,6 @@ import chess.domain.chesspiece.Pawn;
 
 import java.util.List;
 
-import static chess.domain.board.Board.BOARD_MAX_INDEX;
-import static chess.domain.board.Board.BOARD_MIN_INDEX;
 import static chess.domain.game.Team.WHITE;
 
 public class GameStatus {
@@ -31,7 +29,7 @@ public class GameStatus {
     public double getTotalScore(Board board) {
         Score score = Score.DEFAULT;
 
-        for (int j = BOARD_MIN_INDEX; j <= BOARD_MAX_INDEX; j++) {
+        for (int j = Board.MIN_INDEX; j <= Board.MAX_INDEX; j++) {
             score = getColumnScore(board, score, j);
         }
         return score.getScore();
