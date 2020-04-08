@@ -7,6 +7,7 @@ import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.PieceFactory;
 import chess.model.domain.state.MoveOrder;
 import chess.model.domain.state.MoveSquare;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,7 +30,8 @@ public class ChessBoardDao extends ChessDB {
     public void insert(String gameId, Map<BoardSquare, Piece> board,
         Set<CastlingSetting> castlingElements) throws SQLException {
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             for (BoardSquare boardSquare : board.keySet()) {
                 pstmt.setString(1, gameId);
                 pstmt.setString(2, boardSquare.getName());
@@ -51,7 +53,8 @@ public class ChessBoardDao extends ChessDB {
     public void insertBoard(String gameId, BoardSquare boardSquare, Piece piece)
         throws SQLException {
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, boardSquare.getName());
             pstmt.setString(3, PieceFactory.getName(piece));
@@ -63,7 +66,8 @@ public class ChessBoardDao extends ChessDB {
     public void deleteBoardSquare(String gameId, BoardSquare boardSquare)
         throws SQLException {
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, boardSquare.getName());
             pstmt.executeUpdate();
@@ -72,7 +76,8 @@ public class ChessBoardDao extends ChessDB {
 
     public Set<CastlingSetting> getCastlingElements(String gameId) throws SQLException {
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND CASTLING_ELEMENT_YN = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, "Y");
             Set<CastlingSetting> castlingElements = new HashSet<>();
@@ -89,7 +94,8 @@ public class ChessBoardDao extends ChessDB {
 
     public EnPassant getEnpassantBoard(String gameId) throws SQLException {
         String query = "SELECT EN_PASSANT_NM, BOARDSQUARE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM IS NOT NULL";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             Map<BoardSquare, BoardSquare> board = new HashMap<>();
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -104,7 +110,8 @@ public class ChessBoardDao extends ChessDB {
 
     public Map<BoardSquare, Piece> getBoard(String gameId) throws SQLException {
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             Map<BoardSquare, Piece> board = new HashMap<>();
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -119,7 +126,8 @@ public class ChessBoardDao extends ChessDB {
 
     public void delete(String gameId) throws SQLException {
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.executeUpdate();
         }

@@ -30,7 +30,6 @@ public class ChessGameService {
     private static final ChessGameService INSTANCE = new ChessGameService();
 
     private ChessGameService() {
-
     }
 
     public static ChessGameService getInstance() {
@@ -102,6 +101,9 @@ public class ChessGameService {
         }
         ChessGameDto chessGameDTO = new ChessGameDto(getChessGame(gameId), moveState);
         if (moveState == MoveState.KING_CAPTURED) {
+            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.AFTER));
+            CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquare);
+            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.BEFORE));
             CHESS_GAME_DAO.updateProceedN(gameId);
             chessGameDTO.clearPiece();
         }

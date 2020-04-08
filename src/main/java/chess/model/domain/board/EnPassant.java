@@ -62,7 +62,6 @@ public class EnPassant {
         if (boardSquare.isSameRank(Rank.SIXTH)) {
             return Pawn.getPieceInstance(Color.BLACK);
         }
-        System.out.println(boardSquare + ">>>>");
         throw new IllegalArgumentException("인자 오류");
     }
 
@@ -75,7 +74,7 @@ public class EnPassant {
             && !getRankByPawn(boardSquare).isSameColor(gameTurn);
     }
 
-    public BoardSquare getAfterSqaure(BoardSquare enPassantSquare) {
+    public BoardSquare getAfterSquare(BoardSquare enPassantSquare) {
         return enPassantsToAfterSquares.get(enPassantSquare);
     }
 

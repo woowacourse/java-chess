@@ -1,6 +1,7 @@
 package chess.model.repository;
 
 import chess.model.domain.piece.Color;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,8 @@ public class ChessResultDao extends ChessDB {
 
     public void updateTeamScore(String gameId, Map<Color, Double> teamScore) throws SQLException {
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setDouble(1, teamScore.get(Color.BLACK));
             pstmt.setDouble(2, teamScore.get(Color.WHITE));
             pstmt.setString(3, gameId);
@@ -37,7 +39,8 @@ public class ChessResultDao extends ChessDB {
 
     public void insertTeamScore(String gameId, Map<Color, Double> teamScore) throws SQLException {
         String query = "INSERT INTO CHESS_RESULT_TB(GAME_ID, BLACK_SCORE, WHITE_SCORE) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setDouble(2, teamScore.get(Color.BLACK));
             pstmt.setDouble(3, teamScore.get(Color.WHITE));
@@ -47,7 +50,8 @@ public class ChessResultDao extends ChessDB {
 
     public void deleteTeamScore(String gameId) throws SQLException {
         String query = "DELETE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.executeUpdate();
         }
@@ -55,7 +59,8 @@ public class ChessResultDao extends ChessDB {
 
     public Map<Color, Double> selectTeamScore(String gameId) throws SQLException {
         String query = "SELECT BLACK_SCORE, WHITE_SCORE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             Map<Color, Double> selectTeamScore = new HashMap<>();
             try (ResultSet rs = pstmt.executeQuery()) {

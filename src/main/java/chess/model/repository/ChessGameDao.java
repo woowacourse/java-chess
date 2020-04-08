@@ -1,6 +1,7 @@
 package chess.model.repository;
 
 import chess.model.domain.piece.Color;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,7 +26,8 @@ public class ChessGameDao extends ChessDB {
     public void insert(String gameId, Color gameTurn, Map<Color, String> userNames)
         throws SQLException {
         String query = "INSERT INTO CHESS_GAME_TB(GAME_ID, TURN_NM, PROCEEDING_YN, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.setString(2, gameTurn.getName());
             pstmt.setString(3, "Y");
@@ -37,7 +39,8 @@ public class ChessGameDao extends ChessDB {
 
     public void updateProceedN(String gameId) throws SQLException {
         String query = "UPDATE CHESS_GAME_TB SET PROCEEDING_YN = ? WHERE GAME_ID = ? AND PROCEEDING_YN = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, "N");
             pstmt.setString(2, gameId);
             pstmt.setString(3, "Y");
@@ -47,7 +50,8 @@ public class ChessGameDao extends ChessDB {
 
     public void updateTurn(String gameId, Color gameTurn) throws SQLException {
         String query = "UPDATE CHESS_GAME_TB SET TURN_NM = ? WHERE GAME_ID = ? AND PROCEEDING_YN = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameTurn.getName());
             pstmt.setString(2, gameId);
             pstmt.setString(3, "Y");
@@ -57,7 +61,8 @@ public class ChessGameDao extends ChessDB {
 
     public void delete(String gameId) throws SQLException {
         String query = "DELETE FROM CHESS_GAME_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             pstmt.executeUpdate();
         }
@@ -67,7 +72,8 @@ public class ChessGameDao extends ChessDB {
         throws SQLException, IllegalAccessException {
         validationRoomId(roomNumberDate);
         String query = "SELECT GAME_ID FROM CHESS_GAME_TB WHERE GAME_ID LIKE ? ORDER BY GAME_ID DESC";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, roomNumberDate + "%");
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (!rs.next()) {
@@ -87,7 +93,8 @@ public class ChessGameDao extends ChessDB {
 
     public Optional<Color> getGameTurn(String gameId) throws SQLException {
         String query = "SELECT TURN_NM FROM CHESS_GAME_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (!rs.next()) {
@@ -100,7 +107,8 @@ public class ChessGameDao extends ChessDB {
 
     public Map<Color, String> getUserNames(String gameId) throws SQLException {
         String query = "SELECT BLACK_USER_NM, WHITE_USER_NM FROM CHESS_GAME_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             Map<Color, String> userNames = new HashMap<>();
             try (ResultSet rs = pstmt.executeQuery()) {
@@ -116,7 +124,8 @@ public class ChessGameDao extends ChessDB {
 
     public Optional<Boolean> isProceeding(String gameId) throws SQLException {
         String query = "SELECT PROCEEDING_YN FROM CHESS_GAME_TB WHERE GAME_ID = ?";
-        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setString(1, gameId);
             try (ResultSet rs = pstmt.executeQuery()) {
                 if (!rs.next()) {

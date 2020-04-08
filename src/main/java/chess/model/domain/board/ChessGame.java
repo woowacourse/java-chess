@@ -135,7 +135,7 @@ public class ChessGame {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
         if (enPassant.hasOtherEnpassant(moveSquareAfter, gameTurn)) {
-            chessBoard.remove(enPassant.getAfterSqaure(moveSquareAfter));
+            chessBoard.remove(enPassant.getAfterSquare(moveSquareAfter));
         }
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
 
