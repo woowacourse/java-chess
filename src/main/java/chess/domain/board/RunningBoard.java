@@ -7,7 +7,6 @@ import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
 
 import java.util.HashMap;
 import java.util.Map;

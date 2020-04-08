@@ -6,9 +6,13 @@ public enum MoveType {
     INITIALIZED,
     MOVED,
     ATTACKED_SUBORDINATE,
-    ATTACKED_KING;
+    ATTACKED_KING,
+    STAYED;
 
     public MoveType update(Piece from, Piece to) {
+        if (from.equals(to)) {
+            return STAYED;
+        }
         if (to.isBlank()) {
             return MOVED;
         }
