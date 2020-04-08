@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
+import java.util.Optional;
 
 import chess.db.BlackPieceMapper;
 import chess.db.WhitePieceMapper;
@@ -77,84 +78,86 @@ public class BoardDao {
 		}
 	}
 
-	public Piece findPieceBy(String position) throws SQLException {
+	public Optional<Piece> findPieceBy(String position) throws SQLException {
 		Piece piece;
-		String query = "SELECT * FROM board WHERE position = ?";
-		try (Connection con = getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
-			pstmt.setString(1, position);
-			ResultSet rs = pstmt.executeQuery();
+		String[] selected = executeSelectQuery(position);
 
-			if (!rs.next())
-				return null;
-
-			if (Objects.isNull(rs.getString("pieceSymbol"))) {
-				return null;
-			}
-
-			piece = WhitePieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
-			if (Objects.isNull(piece)) {
-				piece = BlackPieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
-			}
+		if (Objects.isNull(selected[0])) {
+			return Optional.empty();
 		}
-		return piece;
+
+		piece = WhitePieceMapper.mappingBy(selected[0], selected[1]);
+		if (Objects.isNull(piece)) {
+			piece = BlackPieceMapper.mappingBy(selected[0], selected[1]);
+		}
+
+		return Optional.ofNullable(piece);
 	}
 
-	public Piece findWhitePieceBy(String position) throws SQLException {
+	public Optional<Piece> findWhitePieceBy(String position) throws SQLException {
 		Piece piece;
-		String query = "SELECT * FROM board WHERE position = ?";
-		try (Connection con = getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
-			pstmt.setString(1, position);
-			ResultSet rs = pstmt.executeQuery();
+		String[] selected = executeSelectQuery(position);
 
-			if (!rs.next())
-				return null;
-
-			if (Objects.isNull(rs.getString("pieceSymbol"))) {
-				return null;
-			}
-
-			piece = WhitePieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		if (Objects.isNull(selected[0])) {
+			return Optional.empty();
 		}
-		return piece;
+
+		piece = WhitePieceMapper.mappingBy(selected[0], selected[1]);
+
+		return Optional.ofNullable(piece);
 	}
 
-	public Piece findBlackPieceBy(String position) throws SQLException {
+	public Optional<Piece> findBlackPieceBy(String position) throws SQLException {
 		Piece piece;
-		String query = "SELECT * FROM board WHERE position = ?";
-		try (Connection con = getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
-			pstmt.setString(1, position);
-			ResultSet rs = pstmt.executeQuery();
+		String[] selected = executeSelectQuery(position);
 
-			if (!rs.next())
-				return null;
-
-			if (Objects.isNull(rs.getString("pieceSymbol"))) {
-				return null;
-			}
-
-			piece = BlackPieceMapper.mappingBy(rs.getString("pieceSymbol"), rs.getString("pieceState"));
+		if (Objects.isNull(selected[0])) {
+			return Optional.empty();
 		}
-		return piece;
+
+		piece = BlackPieceMapper.mappingBy(selected[0], selected[1]);
+
+		return Optional.ofNullable(piece);
 	}
 
 	public void updateBoard(String position, Piece piece) throws SQLException {
 		String query = "UPDATE board SET pieceSymbol = ?, pieceState = ? WHERE position = ?";
-		try (
-			Connection con = getConnection();
-			PreparedStatement pstmt = con.prepareStatement(query)) {
-			pstmt.setString(3, position);
-			if (Objects.isNull(piece)) {
-				pstmt.setString(1, null);
-				pstmt.setString(2, null);
-				pstmt.executeUpdate();
-				return;
+		if (Objects.isNull(piece)) {
+			executeUpdate(query, null, null, position);
+			return;
+		}
+		executeUpdate(query, piece.getSymbol(), piece.getState().toString(), position);
+	}
+
+	public String[] executeSelectQuery(String position) throws SQLException {
+		String[] selectPiece = new String[2];
+		String query = "SELECT * FROM board WHERE position = ?";
+		try (Connection con = getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(query)) {
+			pstmt.setString(1, position);
+			ResultSet rs = pstmt.executeQuery();
+			if (!rs.next()) {
+				selectPiece[0] = null;
+				selectPiece[1] = null;
+				return selectPiece;
 			}
-			pstmt.setString(1, piece.getSymbol());
-			pstmt.setString(2, piece.getState().toString());
+
+			selectPiece[0] = rs.getString("pieceSymbol");
+			selectPiece[1] = rs.getString("pieceState");
+			rs.close();
+
+			return selectPiece;
+		}
+	}
+
+	public void executeUpdate(String query, String... args) throws SQLException {
+		try (Connection con = getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(query)) {
+			for (int i = 1; i <= args.length; i++) {
+				pstmt.setString(i, args[i - 1]);
+			}
 			pstmt.executeUpdate();
 		}
 	}
+
 }
