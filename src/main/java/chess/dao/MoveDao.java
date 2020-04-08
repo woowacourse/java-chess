@@ -15,8 +15,9 @@ public class MoveDao implements JdbcTemplateDao {
 
     public void addMove(final Game game, final Path path) throws SQLException {
         String query = "insert into move (game, start_position, end_position) values (?, ?, ?)";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             statement.setInt(1, game.getId());
             statement.setString(2, path.getStart());
             statement.setString(3, path.getEnd());
@@ -26,8 +27,9 @@ public class MoveDao implements JdbcTemplateDao {
 
     public List<Path> getMoves(final Game game) throws SQLException {
         String query = "select * from move where game = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             statement.setInt(1, game.getId());
             List<Path> moves = new ArrayList<>();
             ResultSet resultSet = statement.executeQuery();
@@ -42,8 +44,9 @@ public class MoveDao implements JdbcTemplateDao {
 
     public void reset(final Game game) throws SQLException {
         String query = "delete from move where game = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             statement.setInt(1, game.getId());
             statement.executeUpdate();
         }

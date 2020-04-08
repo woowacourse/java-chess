@@ -21,8 +21,9 @@ public class GameDao implements JdbcTemplateDao {
 
     public int add(final Game game) throws SQLException {
         String query = "insert into game (white, black) values (?, ?, ?, ?)";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)
+        ) {
             statement.setInt(1, game.getPlayerId(Side.WHITE));
             statement.setInt(2, game.getPlayerId(Side.BLACK));
             statement.executeUpdate();
@@ -36,8 +37,9 @@ public class GameDao implements JdbcTemplateDao {
 
     public List<Integer> getAllGameId() throws SQLException {
         String query = "select id from game";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             ResultSet resultSet = statement.executeQuery();
             List<Integer> gameIds = new ArrayList<>();
             while (resultSet.next()) {
@@ -49,8 +51,9 @@ public class GameDao implements JdbcTemplateDao {
 
     public List<Map<String, Integer>> findGamesData() throws SQLException {
         String query = "select id, white, black from game";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             ResultSet resultSet = statement.executeQuery();
             List<Map<String, Integer>> games = new ArrayList<>();
             while (resultSet.next()) {
@@ -66,8 +69,9 @@ public class GameDao implements JdbcTemplateDao {
 
     public Map<String, Integer> findGameDataById(int gameId) throws SQLException {
         String query = "select id, white, black from game where id = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             statement.setInt(1, gameId);
             ResultSet resultSet = statement.executeQuery();
             Map<String, Integer> game = new HashMap<>();
@@ -82,8 +86,9 @@ public class GameDao implements JdbcTemplateDao {
 
     public void remove(final Game game) throws SQLException {
         String query = "delete from game where id = ?";
-        try (Connection connection = getConnection()) {
-            PreparedStatement statement = connection.prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement statement = connection.prepareStatement(query)
+        ) {
             statement.setInt(1, game.getId());
             statement.executeUpdate();
         }
