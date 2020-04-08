@@ -59,6 +59,9 @@ function getChessBoard(id) {
                 $('#' + piece.location).html(main.variables.pieces[piece.pieceName].img);
                 $('#' + piece.location).attr('chess', piece.pieceName);
             }
+
+
+
         },
         error: function (errorThrown) {
             alert(JSON.stringify(errorThrown));

@@ -4,13 +4,13 @@ public class ChessGameDto {
     private final int id;
     private final String whiteName;
     private final String blackName;
-    private final boolean turn_is_black;
+    private final boolean turnIsBlack;
 
-    public ChessGameDto(int id, String whiteName, String blackName, int turn_is_black) {
+    public ChessGameDto(int id, String whiteName, String blackName, int turnIsBlack) {
         this.id = id;
         this.whiteName = whiteName;
         this.blackName = blackName;
-        this.turn_is_black = convertIntToBoolean(turn_is_black);
+        this.turnIsBlack = convertIntToBoolean(turnIsBlack);
     }
 
     private static boolean convertIntToBoolean(int value) {
@@ -30,6 +30,6 @@ public class ChessGameDto {
     }
 
     public boolean isTurnBlack() {
-        return turn_is_black;
+        return turnIsBlack;
     }
 }
