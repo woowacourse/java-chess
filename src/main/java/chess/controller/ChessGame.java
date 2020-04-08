@@ -6,7 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.NothingHappened;
 import chess.dto.PieceDTO;
-import utils.CollectionUtil;
+import utils.Assembler;
 
 import java.util.List;
 
@@ -21,11 +21,11 @@ public class ChessGame {
         Command command = CommandReader.from(input);
         gameState = command.execute(gameState);
         Board board = gameState.getBoard();
-        return CollectionUtil.convertMapToDTO(board.getPositionToPiece());
+        return Assembler.convertMapToDTO(board.getPositionToPiece());
     }
 
     public List<PieceDTO> stay() {
         Board board = gameState.getBoard();
-        return CollectionUtil.convertMapToDTO(board.getPositionToPiece());
+        return Assembler.convertMapToDTO(board.getPositionToPiece());
     }
 }
