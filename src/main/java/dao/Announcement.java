@@ -15,7 +15,7 @@ public class Announcement {
 		return id;
 	}
 
-	public String getAnnouncement() {
+	public String getMessage() {
 		return announcement;
 	}
 

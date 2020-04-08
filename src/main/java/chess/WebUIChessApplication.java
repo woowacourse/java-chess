@@ -1,9 +1,6 @@
 package chess;
 
-import dao.PieceDao;
-import dao.Room;
-import dao.RoomDao;
-import dao.StateDao;
+import dao.*;
 import dao.exceptions.DaoNoneSelectedException;
 import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
@@ -33,12 +30,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class WebUIChessApplication {
-	private static Map<Integer, String> announcements;
 
 	public static void main(String[] args) {
 		Spark.port(8080);
 		Spark.staticFiles.location("/statics");
-		announcements = new HashMap<>();
 
 		Spark.get("/chess/rooms", (request, response) -> {
 			final RoomDao roomDao = new RoomDao();
@@ -68,9 +63,12 @@ public class WebUIChessApplication {
 			} catch (DaoNoneSelectedException e) {
 				responseWhenHasNoState(roomId);
 			}
+			final AnnouncementDao announcementDao = new AnnouncementDao();
+			final dao.Announcement announcement = announcementDao.findAnnouncementByRoomId(roomId);
+
 			final Map<String, Object> map = new HashMap<>();
 			map.put("table", createTableHtmlFromState(roomId));
-			map.put("announcement", announcements.get(roomId));
+			map.put("announcement", announcement.getMessage());
 			return render(map, "/chess.html");
 		});
 
@@ -78,6 +76,7 @@ public class WebUIChessApplication {
 			final int roomId = Integer.parseInt(request.params(":id"));
 			final dao.PieceDao pieceDao = new PieceDao();
 			final dao.StateDao stateDao = new StateDao();
+			final AnnouncementDao announcementDao = new AnnouncementDao();
 			final Set<Piece> domainPieces = pieceDao.findPiecesByRoomId(roomId).stream()
 					.map(piece -> PieceType.getFactoryOfName(piece.getPieceType()).apply(
 							Team.of(piece.getTeam()), Coordinate.of(piece.getCoordinate())))
@@ -86,21 +85,21 @@ public class WebUIChessApplication {
 			final dao.State daoState = stateDao.findStateByRoomId(roomId);
 			final State domainState = StateType.getFactory(daoState.getState()).apply(pieces);
 			try {
-				State after = domainState.pushCommend(request.queryParams("commend"));
+				final State after = domainState.pushCommend(request.queryParams("commend"));
 				stateDao.setStateByRoomId(roomId, after.getStateName());
 				pieceDao.deletePiece(roomId);
-				for (Piece piece : after.getSet()) {
+				for (final Piece piece : after.getSet()) {
 					pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(), piece.getCoordinateRepresentation()
 							, roomId);
 				}
-				announcements.put(roomId, createAnnouncement(roomId, after).getString());
+				announcementDao.addAnnouncement(createRightAnnouncement(after), roomId);
 			} catch (CommandTypeException
 					| MoveCommandTokensException
 					| CanNotMoveException
 					| CanNotAttackException
 					| CanNotReachException
 					| StateException e) {
-				announcements.put(roomId, Announcement.of(e.getMessage()).getString());
+				announcementDao.addAnnouncement(Announcement.of(e.getMessage()).getString(), roomId);
 			}
 			response.redirect("/chess/rooms/" + request.params(":id"));
 			return "";
@@ -129,13 +128,25 @@ public class WebUIChessApplication {
 	private static void responseWhenHasState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
 		final dao.PieceDao pieceDao = new dao.PieceDao();
+		final AnnouncementDao announcementDao = new AnnouncementDao();
+
 		final dao.State daoState = stateDao.findStateByRoomId(roomId);
 		final List<dao.Piece> daoPieces = pieceDao.findPiecesByRoomId(roomId);
 
 		final Set<Piece> domainPieces = mapDaoPiecesToDomainPieces(daoPieces);
 		final State domainState = StateType.getFactory(daoState.getState()).apply(
 				new Pieces(domainPieces));
-		announcements.put(roomId, Announcement.ofFirst().getString());
+		announcementDao.addAnnouncement(createRightAnnouncement(domainState), roomId);
+	}
+
+	private static String createRightAnnouncement(domain.state.State domainState) {
+		if (domainState.isPlaying()) {
+			return Announcement.ofPlaying().getString();
+		}
+		if (domainState.isReported()) {
+			return Announcement.ofStatus(domainState.getPieces()).getString();
+		}
+		return Announcement.ofEnd().getString();
 	}
 
 	private static Set<Piece> mapDaoPiecesToDomainPieces(final List<dao.Piece> daoPieces) {
@@ -148,6 +159,8 @@ public class WebUIChessApplication {
 	private static void responseWhenHasNoState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
 		final dao.PieceDao pieceDao = new dao.PieceDao();
+		final AnnouncementDao announcementDao = new AnnouncementDao();
+
 		final Set<domain.pieces.Piece> pieces = new StartPieces().getInstance();
 		final State domainState = new Ended(new Pieces(pieces));
 		pieceDao.deletePiece(roomId);
@@ -156,7 +169,7 @@ public class WebUIChessApplication {
 					piece.getCoordinateRepresentation(), roomId);
 		}
 		stateDao.addState("ended", roomId);
-		announcements.put(roomId, "ended");
+		announcementDao.addAnnouncement("게임을 시작하려면 start를 입력해주세요.", roomId);
 	}
 
 	private static String createTableHtmlFromState(int roomId) throws SQLException {
@@ -167,16 +180,6 @@ public class WebUIChessApplication {
 				.collect(Collectors.toSet());
 		final List<List<String>> board = Board.of(pieces).getLists();
 		return BoardToTable.of(board).getTableHtml();
-	}
-
-	private static Announcement createAnnouncement(int roomId, State state) {
-		if (state.isReported()) {
-			return Announcement.ofStatus(state.getPieces());
-		}
-		if (state.isEnded()) {
-			return Announcement.ofEnd();
-		}
-		return Announcement.ofPlaying();
 	}
 
 	public static String render(Map<String, Object> model, String templatePath) {
