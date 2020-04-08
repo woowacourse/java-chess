@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.dao.InMemoryChessGameDao;
+import chess.dao.JDBCChessGameDao;
 import chess.domain.piece.Position;
 import chess.dto.ResponseDto;
 import chess.service.ChessGameService;
@@ -16,7 +17,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebUIChessApplication {
 	private static final Gson GSON = new GsonBuilder().create();
-	private static final ChessGameService CHESS_GAME_SERVICE = new ChessGameService(new InMemoryChessGameDao());
+	private static final ChessGameService CHESS_GAME_SERVICE = new ChessGameService(new JDBCChessGameDao());
 
 	public static void main(String[] args) {
 		staticFileLocation("assets");
