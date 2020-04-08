@@ -11,7 +11,7 @@ public class PieceOnBoards {
         this.pieceOnBoards = pieceOnBoards;
     }
 
-    public static PieceOnBoards of(List<PieceOnBoard> pieceOnBoards) {
+    public static PieceOnBoards create(List<PieceOnBoard> pieceOnBoards) {
         return new PieceOnBoards(pieceOnBoards);
     }
 

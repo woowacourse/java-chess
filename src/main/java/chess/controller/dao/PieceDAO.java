@@ -56,7 +56,6 @@ public class PieceDAO {
             );
             pieceOnBoards.add(pieceOnBoard);
         }
-
         return Collections.unmodifiableList(pieceOnBoards);
     }
 

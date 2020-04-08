@@ -74,7 +74,7 @@ public class WebChessController {
 
     private void updateOriginalPieces(PieceDAO pieceDAO) throws Exception {
         List<PieceOnBoard> pieces = pieceDAO.findPiece(this.chessBoard);
-        this.originalPieces = PieceOnBoards.of(pieces);
+        this.originalPieces = PieceOnBoards.create(pieces);
     }
 
     public MoveResultDto move(final String source, final String target) throws Exception {

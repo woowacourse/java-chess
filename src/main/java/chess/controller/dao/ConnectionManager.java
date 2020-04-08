@@ -11,7 +11,7 @@ public class ConnectionManager {
     public static Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
-        String database = "chess";
+        String database = "webChess";
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root";
         String password = "root";

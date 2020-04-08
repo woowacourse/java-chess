@@ -1,22 +1,19 @@
 package chess.controller.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ChessBoardDAO {
     public void addChessBoard() throws SQLException {
-        String query = "INSERT INTO chessBoard VALUES()";
         Connection con = ConnectionManager.getConnection();
+        String query = "INSERT INTO chessBoard VALUES()";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.executeUpdate();
         ConnectionManager.closeConnection(con);
     }
 
     public ChessBoard findRecentChessBoard() throws SQLException {
-        String query = "SELECT * FROM chessBoard ORDER BY chessBoardId DESC limit 1";
         Connection con = ConnectionManager.getConnection();
+        String query = "SELECT * FROM chessBoard ORDER BY chessBoardId DESC limit 1";
         PreparedStatement pstmt = con.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
 
@@ -25,7 +22,9 @@ public class ChessBoardDAO {
             return null;
         }
 
-        ChessBoard chessBoard = new ChessBoard(rs.getInt("chessBoardId"));
+        ChessBoard chessBoard = new ChessBoard(
+                rs.getInt("chessBoardId")
+        );
         ConnectionManager.closeConnection(con);
         return chessBoard;
     }
@@ -35,8 +34,8 @@ public class ChessBoardDAO {
             return;
         }
 
-        String query = "DELETE FROM chessBoard WHERE chessBoardId = ?";
         Connection con = ConnectionManager.getConnection();
+        String query = "DELETE FROM chessBoard WHERE chessBoardId = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setInt(1, chessBoard.getChessBoardId());
         pstmt.executeUpdate();
@@ -57,7 +56,6 @@ public class ChessBoardDAO {
                 rs.getInt("chessBoardId")
         );
         ConnectionManager.closeConnection(con);
-
         return chessBoard;
     }
 }

@@ -62,7 +62,6 @@ public class PlayerDAO {
             player.setChessBoardId(rs.getInt("chessBoardId"));
             players.add(player);
         }
-
         return players;
     }
 }

@@ -37,7 +37,7 @@ public class CurrentTeamDAO {
 
     public CurrentTeam findCurrentTeam(ChessBoard chessBoard) throws SQLException {
         Connection con = ConnectionManager.getConnection();
-        String query = "SELECT * FROM currentTeam WHERE chessBoardId = ?";
+        String query = "SELECT team FROM currentTeam WHERE chessBoardId = ?";
         PreparedStatement pstmt = con.prepareStatement(query);
         pstmt.setInt(1, chessBoard.getChessBoardId());
         ResultSet rs = pstmt.executeQuery();
@@ -45,9 +45,10 @@ public class CurrentTeamDAO {
         while (!rs.next()) {
             return null;
         }
-
-        return new CurrentTeam(
+        CurrentTeam currentTeam = new CurrentTeam(
                 rs.getString("team")
         );
+        ConnectionManager.closeConnection(con);
+        return currentTeam;
     }
 }
