@@ -2,6 +2,7 @@ package chess.model.repository;
 
 import chess.model.domain.board.BoardSquare;
 import chess.model.domain.board.CastlingSetting;
+import chess.model.domain.board.EnPassant;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.PieceFactory;
 import chess.model.domain.state.MoveOrder;
@@ -86,18 +87,18 @@ public class ChessBoardDao extends ChessDB {
         }
     }
 
-    public Map<BoardSquare, Piece> getEnpassantBoard(String gameId) throws SQLException {
-        String query = "SELECT EN_PASSANT_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM IS NOT NULL";
+    public EnPassant getEnpassantBoard(String gameId) throws SQLException {
+        String query = "SELECT EN_PASSANT_NM, BOARDSQUARE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM IS NOT NULL";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, gameId);
-            Map<BoardSquare, Piece> board = new HashMap<>();
+            Map<BoardSquare, BoardSquare> board = new HashMap<>();
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     board.put(BoardSquare.of(rs.getString("EN_PASSANT_NM")),
-                        PieceFactory.of(rs.getString("PIECE_NM")));
+                        BoardSquare.of(rs.getString("BOARDSQUARE_NM")));
                 }
             }
-            return board;
+            return new EnPassant(board);
         }
     }
 
@@ -152,6 +153,27 @@ public class ChessBoardDao extends ChessDB {
             pstmt.setString(1, PieceFactory.getName(hopePiece));
             pstmt.setString(2, gameId);
             pstmt.setString(3, finishPawnBoard.getName());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void deleteEnpassant(String gameId, BoardSquare enpassantSquare) throws SQLException {
+        String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, gameId);
+            pstmt.setString(2, enpassantSquare.getName());
+            pstmt.executeUpdate();
+        }
+    }
+
+    public void updateEnPassant(String gameId, MoveSquare moveSquare) {
+        String query = "UPDATE CHESS_BOARD_TB SET EN_PASSANT_NM = ? WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
+        try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+            pstmt.setString(1, moveSquare.getBetweenWhenJumpRank().getName());
+            pstmt.setString(2, gameId);
+            pstmt.setString(3, moveSquare.get(MoveOrder.AFTER).getName());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

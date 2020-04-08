@@ -45,4 +45,16 @@ public class MoveSquare {
     public int hashCode() {
         return Objects.hash(squares);
     }
+
+    public boolean isJumpRank() {
+        return squares.get(MoveOrder.AFTER).isJumpOneRank(squares.get(MoveOrder.BEFORE));
+    }
+
+    public BoardSquare getBetweenWhenJumpRank() {
+        if (isJumpRank()) {
+            return squares.get(MoveOrder.AFTER)
+                .getBetweenWhenJumpOneRank(squares.get(MoveOrder.BEFORE));
+        }
+        throw new IllegalArgumentException("JUMP RANK가 아닙니다.");
+    }
 }

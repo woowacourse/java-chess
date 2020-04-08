@@ -77,4 +77,25 @@ public class BoardSquareTest {
         assertThat(boardSquareB2.getRankCompare(boardSquareC1)).isEqualTo(1);
     }
 
+    @DisplayName("한 칸 점프한 칸인지 비교")
+    @Test
+    void isJumpOneRank() {
+        BoardSquare boardSquareA3 = BoardSquare.of("a3");
+        BoardSquare boardSquareA1 = BoardSquare.of("a1");
+        BoardSquare boardSquareB3 = BoardSquare.of("b3");
+        assertThat(boardSquareA3.isJumpOneRank(boardSquareA3)).isFalse();
+        assertThat(boardSquareA3.isJumpOneRank(boardSquareA1)).isTrue();
+        assertThat(boardSquareA3.isJumpOneRank(boardSquareB3)).isFalse();
+    }
+
+    @DisplayName("한 칸 점프한 칸 가져오기")
+    @Test
+    void getBetweenWhenJumpOneRank() {
+        BoardSquare boardSquareA3 = BoardSquare.of("a3");
+        BoardSquare boardSquareA1 = BoardSquare.of("a1");
+        assertThatThrownBy(() -> boardSquareA3.getBetweenWhenJumpOneRank(boardSquareA3))
+            .isInstanceOf(IllegalArgumentException.class);
+        assertThat(boardSquareA3.getBetweenWhenJumpOneRank(boardSquareA1))
+            .isEqualTo(BoardSquare.of("a2"));
+    }
 }

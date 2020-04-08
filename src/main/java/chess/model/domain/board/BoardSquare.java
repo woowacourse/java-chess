@@ -105,5 +105,23 @@ public class BoardSquare {
     public boolean isSameRank(Rank rank) {
         return this.rank == rank;
     }
+
+    public boolean isJumpOneRank(BoardSquare boardSquare) {
+        return (
+            (boardSquare.rank.hasNextIncrement(2) && boardSquare.rank.findIncrement(2) == this.rank)
+                || (boardSquare.rank.hasNextIncrement(-2)
+                && boardSquare.rank.findIncrement(-2) == this.rank));
+    }
+
+    public BoardSquare getBetweenWhenJumpOneRank(BoardSquare boardSquare) {
+        if (!isJumpOneRank(boardSquare)) {
+            throw new IllegalArgumentException("JUMP RANK가 아닙니다.");
+        }
+        if ((boardSquare.rank.hasNextIncrement(2)
+            && boardSquare.rank.findIncrement(2) == this.rank)) {
+            return BoardSquare.of(this.file, boardSquare.rank.findIncrement(1));
+        }
+        return BoardSquare.of(this.file, boardSquare.rank.findIncrement(-1));
+    }
 }
 

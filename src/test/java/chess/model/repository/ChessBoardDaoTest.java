@@ -45,7 +45,7 @@ class ChessBoardDaoTest {
 
         assertThat(chessBoardDao.getBoard(gameId)).isEmpty();
         assertThat(chessBoardDao.getCastlingElements(gameId)).isEmpty();
-        assertThat(chessBoardDao.getEnpassantBoard(gameId)).isEmpty();
+        assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
 
         ChessGame chessGame = new ChessGame();
         Map<BoardSquare, Piece> board = chessGame.getChessBoard();
@@ -55,7 +55,7 @@ class ChessBoardDaoTest {
 
         assertThat(chessBoardDao.getBoard(gameId)).isEqualTo(board);
         assertThat(chessBoardDao.getCastlingElements(gameId)).isEqualTo(castlingElements);
-        assertThat(chessBoardDao.getEnpassantBoard(gameId)).isEmpty();
+        assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
 
         BoardSquare boardSquareBefore = BoardSquare.of("a2");
         Piece pieceBefore = Pawn.getPieceInstance(Color.WHITE);
@@ -70,11 +70,11 @@ class ChessBoardDaoTest {
         board = chessGame.getChessBoard();
         assertThat(chessBoardDao.getBoard(gameId)).isEqualTo(board);
         assertThat(chessBoardDao.getCastlingElements(gameId)).isEqualTo(castlingElements);
-        assertThat(chessBoardDao.getEnpassantBoard(gameId)).isEmpty();
+        assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
 
         chessBoardDao.delete(gameId);
         assertThat(chessBoardDao.getBoard(gameId)).isEmpty();
         assertThat(chessBoardDao.getCastlingElements(gameId)).isEmpty();
-        assertThat(chessBoardDao.getEnpassantBoard(gameId)).isEmpty();
+        assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
     }
 }

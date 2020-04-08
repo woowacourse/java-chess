@@ -5,6 +5,7 @@ import chess.model.domain.board.BoardInitialization;
 import chess.model.domain.board.BoardSquare;
 import chess.model.domain.board.CastlingSetting;
 import chess.model.domain.board.ChessGame;
+import chess.model.domain.board.EnPassant;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.Type;
@@ -67,19 +68,29 @@ public class ChessGameService {
             CHESS_BOARD_DAO.getBoard(gameId));
         Color gameTurn = CHESS_GAME_DAO.getGameTurn(gameId).orElseThrow(IllegalAccessError::new);
         Set<CastlingSetting> castlingElements = CHESS_BOARD_DAO.getCastlingElements(gameId);
-        return new ChessGame(boardInitialByDB, gameTurn, castlingElements);
+        EnPassant enPassant = CHESS_BOARD_DAO.getEnpassantBoard(gameId);
+        return new ChessGame(boardInitialByDB, gameTurn, castlingElements, enPassant);
     }
 
     public ChessGameDto move(MoveDto moveDTO) throws SQLException {
         MoveSquare moveSquare = new MoveSquare(moveDTO.getSource(), moveDTO.getTarget());
         String gameId = moveDTO.getGameId();
+        EnPassant enPassant = CHESS_BOARD_DAO.getEnpassantBoard(gameId);
         ChessGame chessGame = getChessGame(gameId);
         boolean canCastling = chessGame.canCastling(moveSquare);
+        boolean pawnSpecialMove = chessGame.isPawnSpecialMove(moveSquare);
         MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
+        Color gameTurn = CHESS_GAME_DAO.getGameTurn(gameId).orElseThrow(IllegalAccessError::new);
         if (moveState.isSucceed()) {
             CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.AFTER));
             CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquare);
             CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.BEFORE));
+            if (pawnSpecialMove) {
+                CHESS_BOARD_DAO.updateEnPassant(gameId, moveSquare);
+            }
+            if (enPassant.hasOtherEnpassant(moveSquare.get(MoveOrder.AFTER), gameTurn)) {
+                CHESS_BOARD_DAO.deleteEnpassant(gameId, moveSquare.get(MoveOrder.AFTER));
+            }
             if (canCastling) {
                 MoveSquare moveSquareRook = CastlingSetting.getMoveCastlingRook(moveSquare);
                 CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquareRook);

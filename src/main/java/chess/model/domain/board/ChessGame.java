@@ -32,6 +32,7 @@ public class ChessGame {
     private Map<BoardSquare, Piece> chessBoard;
     private Set<CastlingSetting> castlingElements;
     private Color gameTurn;
+    private EnPassant enPassant;
 
     public ChessGame() {
         this(new BoardInitialDefault(), Color.WHITE, CastlingSetting.getCastlingElements());
@@ -39,10 +40,16 @@ public class ChessGame {
 
     public ChessGame(BoardInitialization chessBoard, Color gameTurn,
         Set<CastlingSetting> castlingElements) {
-        NullChecker.validateNotNull(chessBoard, gameTurn, castlingElements);
+        this(chessBoard, gameTurn, castlingElements, new EnPassant());
+    }
+
+    public ChessGame(BoardInitialization chessBoard, Color gameTurn,
+        Set<CastlingSetting> castlingElements, EnPassant enPassant) {
+        NullChecker.validateNotNull(chessBoard, gameTurn, castlingElements, enPassant);
         this.chessBoard = chessBoard.getInitialize();
         this.gameTurn = gameTurn;
         this.castlingElements = castlingElements;
+        this.enPassant = enPassant;
     }
 
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
@@ -109,15 +116,31 @@ public class ChessGame {
         if (!chessBoard.containsKey(moveSquareBefore) || !movePieceBefore.isSameColor(gameTurn)) {
             return false;
         }
-        return movePieceBefore.getCheatSheet(moveSquareBefore, chessBoard, castlingElements)
+        if (isPawnSpecialMove(moveSquare)) {
+            enPassant.addIfPawnSpecialMove(movePieceBefore, moveSquare);
+        }
+        Map<BoardSquare, Piece> board = new HashMap<>();
+        board.putAll(chessBoard);
+        board.putAll(enPassant.getEnPassantBoard(gameTurn));
+        return movePieceBefore.getCheatSheet(moveSquareBefore, board, castlingElements)
             .contains(moveSquareAfter);
+    }
+
+    public boolean isPawnSpecialMove(MoveSquare moveSquare) {
+        Piece movePieceBefore = chessBoard.get(moveSquare.get(MoveOrder.BEFORE));
+        return EnPassant.isPawnSpecialMove(movePieceBefore, moveSquare);
     }
 
     private void movePiece(MoveSquare moveSquare) {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
+        if (enPassant.hasOtherEnpassant(moveSquareAfter, gameTurn)) {
+            chessBoard.remove(enPassant.getAfterSqaure(moveSquareAfter));
+        }
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
+
         chessBoard.put(moveSquareAfter, currentPiece);
+        enPassant.removeEnPassant(moveSquare);
 
         if (canCastling(moveSquare)) {
             castlingRook(moveSquare);
