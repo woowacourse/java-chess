@@ -2,20 +2,20 @@ package utils;
 
 import chess.domain.piece.Placeable;
 import chess.domain.position.Position;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 public class Assembler {
-    public static List<PieceDTO> convertMapToDTO(Map<Position, Placeable> pieces) {
-        List<PieceDTO> piecesDTO = new ArrayList<>();
+    public static List<PieceDto> convertMapToDTO(Map<Position, Placeable> pieces) {
+        List<PieceDto> piecesDTO = new ArrayList<>();
 
         for (Position position : pieces.keySet()) {
             Placeable piece = pieces.get(position);
 
-            PieceDTO pieceDTO = new PieceDTO();
+            PieceDto pieceDTO = new PieceDto();
             pieceDTO.setPosition(position);
             pieceDTO.setPieceType(piece.getPieceType());
             pieceDTO.setTeam(piece.getTeam());

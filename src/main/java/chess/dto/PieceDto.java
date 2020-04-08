@@ -4,7 +4,7 @@ import chess.domain.Team;
 import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 
-public class PieceDTO {
+public class PieceDto {
     private Team team;
     private PieceType pieceType;
     private Position position;

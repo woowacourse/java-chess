@@ -1,34 +1,34 @@
 package chess.dao;
 
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InMemoryPieceDAO implements PieceDAO {
+public class InMemoryPieceDao implements PieceDao {
     private static final Map<PositionEntity, PieceEntity> entities = new HashMap<>();
-    private static PieceDAO inMemoryPieceDAO;
+    private static PieceDao inMemoryPieceDao;
 
-    public static PieceDAO getInstance() {
-        if (inMemoryPieceDAO == null) {
-            inMemoryPieceDAO = new InMemoryPieceDAO();
+    public static PieceDao getInstance() {
+        if (inMemoryPieceDao == null) {
+            inMemoryPieceDao = new InMemoryPieceDao();
         }
-        return inMemoryPieceDAO;
+        return inMemoryPieceDao;
     }
 
     @Override
-    public void addPiece(PieceDTO pieceDTO) throws SQLException {
-        PositionEntity positionEntity = new PositionEntity(pieceDTO.getPosition());
-        PieceEntity pieceEntity = new PieceEntity(pieceDTO.getPieceType(), pieceDTO.getTeam());
+    public void addPiece(PieceDto pieceDto) throws SQLException {
+        PositionEntity positionEntity = new PositionEntity(pieceDto.getPosition());
+        PieceEntity pieceEntity = new PieceEntity(pieceDto.getPieceType(), pieceDto.getTeam());
         entities.put(positionEntity, pieceEntity);
     }
 
     @Override
-    public void updatePiece(PieceDTO pieceDTO) throws SQLException {
-        PieceEntity pieceEntity = entities.get(pieceDTO.getPosition());
-        pieceEntity.setPieceType(pieceDTO.getPieceType());
-        pieceEntity.setTeam(pieceDTO.getTeam());
+    public void updatePiece(PieceDto pieceDto) throws SQLException {
+        PieceEntity pieceEntity = entities.get(pieceDto.getPosition());
+        pieceEntity.setPieceType(pieceDto.getPieceType());
+        pieceEntity.setTeam(pieceDto.getTeam());
     }
 }
 

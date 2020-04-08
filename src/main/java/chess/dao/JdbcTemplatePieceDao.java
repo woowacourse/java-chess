@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
 
-public class JdbcTemplatePieceDAO implements PieceDAO {
+public class JdbcTemplatePieceDao implements PieceDao {
     static {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
@@ -20,16 +20,16 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
         }
     }
 
-    private static PieceDAO jdbcTemplateDAO;
+    private static PieceDao jdbcTemplateDao;
 
-    private JdbcTemplatePieceDAO() {
+    private JdbcTemplatePieceDao() {
     }
 
-    static public PieceDAO getInstance() {
-        if (jdbcTemplateDAO == null) {
-            jdbcTemplateDAO = new JdbcTemplatePieceDAO();
+    static public PieceDao getInstance() {
+        if (jdbcTemplateDao == null) {
+            jdbcTemplateDao = new JdbcTemplatePieceDao();
         }
-        return jdbcTemplateDAO;
+        return jdbcTemplateDao;
     }
 
     private Connection getConnection() {
@@ -71,26 +71,26 @@ public class JdbcTemplatePieceDAO implements PieceDAO {
     }
 
     @Override
-    public void addPiece(PieceDTO pieceDTO) throws SQLException {
+    public void addPiece(PieceDto pieceDto) throws SQLException {
         String query = "INSERT INTO piece VALUES (?, ?, ?)";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDTO.getPosition());
-        pstmt.setString(2, pieceDTO.getTeam());
-        pstmt.setString(3, pieceDTO.getPieceType());
+        pstmt.setString(1, pieceDto.getPosition());
+        pstmt.setString(2, pieceDto.getTeam());
+        pstmt.setString(3, pieceDto.getPieceType());
         pstmt.executeUpdate();
         pstmt.close();
         closeConnection(connection);
     }
 
     @Override
-    public void updatePiece(PieceDTO pieceDTO) throws SQLException {
+    public void updatePiece(PieceDto pieceDto) throws SQLException {
         String query = "UPDATE SET team=? pieceType=? WHERE position=?";
         Connection connection = getConnection();
         PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDTO.getTeam());
-        pstmt.setString(2, pieceDTO.getPieceType());
-        pstmt.setString(3, pieceDTO.getPosition());
+        pstmt.setString(1, pieceDto.getTeam());
+        pstmt.setString(2, pieceDto.getPieceType());
+        pstmt.setString(3, pieceDto.getPosition());
         pstmt.executeUpdate();
         pstmt.close();
         closeConnection(connection);

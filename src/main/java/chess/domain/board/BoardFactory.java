@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.dao.PieceDAO;
+import chess.dao.PieceDao;
 import chess.domain.Team;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -9,7 +9,7 @@ import chess.domain.piece.Placeable;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.sql.SQLException;
 import java.util.LinkedHashMap;
@@ -28,7 +28,7 @@ public class BoardFactory {
         return board;
     }
 
-    public static Board createInitially(PieceDAO pieceDAO) {
+    public static Board createInitially(PieceDao pieceDAO) {
         Map<Position, Placeable> positionAndPiece;
 
         try {
@@ -42,11 +42,11 @@ public class BoardFactory {
         return new Board(createBoardSource());
     }
 
-    private static void createBoardToDB(PieceDAO pieceDAO, Map<Position, Placeable> positionAndPiece) throws SQLException {
+    private static void createBoardToDB(PieceDao pieceDAO, Map<Position, Placeable> positionAndPiece) throws SQLException {
         for (Position position : positionAndPiece.keySet()) {
             Placeable piece = positionAndPiece.get(position);
 
-            PieceDTO pieceDTO = new PieceDTO();
+            PieceDto pieceDTO = new PieceDto();
             pieceDTO.setPosition(position);
             pieceDTO.setPieceType(piece.getPieceType());
             pieceDTO.setTeam(piece.getTeam());

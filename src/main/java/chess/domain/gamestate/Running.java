@@ -1,12 +1,12 @@
 package chess.domain.gamestate;
 
-import chess.dao.JdbcTemplatePieceDAO;
-import chess.dao.PieceDAO;
+import chess.dao.JdbcTemplatePieceDao;
+import chess.dao.PieceDao;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.piece.Placeable;
 import chess.domain.position.Position;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -41,13 +41,13 @@ public class Running extends Started {
     }
 
     private void updateBoardToDB() throws SQLException {
-        PieceDAO pieceDAO = JdbcTemplatePieceDAO.getInstance();
+        PieceDao pieceDAO = JdbcTemplatePieceDao.getInstance();
 
         Map<Position, Placeable> positionToPiece = board.getPositionToPiece();
         for (Position position : positionToPiece.keySet()) {
             Placeable piece = positionToPiece.get(position);
 
-            PieceDTO pieceDTO = new PieceDTO();
+            PieceDto pieceDTO = new PieceDto();
             pieceDTO.setPosition(position);
             pieceDTO.setPieceType(piece.getPieceType());
             pieceDTO.setTeam(piece.getTeam());

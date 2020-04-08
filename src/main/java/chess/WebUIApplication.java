@@ -1,7 +1,7 @@
 package chess;
 
 import chess.controller.ChessGame;
-import chess.dto.PieceDTO;
+import chess.dto.PieceDto;
 import spark.ModelAndView;
 import spark.Route;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -22,7 +22,7 @@ public class WebUIApplication {
 
         Route route = (req, res) -> {
             Map<String, Object> model = new LinkedHashMap<>();
-            List<PieceDTO> pieces;
+            List<PieceDto> pieces;
             try {
                 pieces = chessGame.run(req.queryParams("command"));
             } catch (RuntimeException e) {
