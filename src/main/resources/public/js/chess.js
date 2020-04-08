@@ -15,6 +15,7 @@ function checkSourceOrTarget(clickedPosition) {
         return;
     }
     if (source === clickedPosition) {
+        initializeOpacity(source);
         source = null;
     }
     if (target == null) {
@@ -45,8 +46,14 @@ function move(source, target) {
             });
         })
         .then(response => {
+            console.log(response.body);
             let board = response.body.chessPieces;
             let team = response.body.currentTeam;
+            let winner = response.body.winner;
+            if (winner != null) {
+                alert(winner + "팀이 이겼습니다.");
+                return;
+            }
             update(board, team);
         });
     initialize(source, target);
@@ -74,8 +81,12 @@ function changeOpacity(clickedPosition) {
 }
 
 function initialize(sourceElement, targetElement) {
-    sourceElement.style.opacity = "1.0";
-    targetElement.style.opacity = "1.0";
+    initializeOpacity(sourceElement);
+    initializeOpacity(targetElement);
     source = null;
     target = null;
+}
+
+function initializeOpacity(clickedPosition) {
+    clickedPosition.style.opacity = "1.0";
 }

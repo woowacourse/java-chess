@@ -9,7 +9,7 @@ import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChessController {
+public class ChessConsoleController {
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start(ChessManager chessManager, String input) {

@@ -7,16 +7,16 @@ import java.util.List;
 public class ChessCommandDao {
     public Connection getConnection() {
         Connection connection = null;
-        String server = "localhost:13306";
-        String database = "WOOWA";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "root";
+        final String server = "localhost:13306";
+        final String database = "WOOWA";
+        final String option = "?useSSL=false&serverTimezone=UTC";
+        final String userName = "root";
+        final String password = "root";
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver"); //어떤 드라이버에 연결할지
         } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류 : " + e.getMessage());
+            System.err.println("JDBC Driver load 오류:" + e.getMessage());
             e.printStackTrace();
         }
 
