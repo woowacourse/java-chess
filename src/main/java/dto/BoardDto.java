@@ -8,25 +8,25 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class BoardDTO {
-    private List<PieceDTO> boardValue;
+public class BoardDto {
+    private List<PieceDto> boardValue;
 
-    public BoardDTO(ChessBoard chessBoard) {
+    public BoardDto(ChessBoard chessBoard) {
         boardValue = new ArrayList();
         Map<Location, Piece> board = chessBoard.getBoard();
         for (Map.Entry<Location, Piece> elem : board.entrySet()) {
-            PieceDTO pieceDTO = new PieceDTO(elem.getKey(), elem.getValue());
-            boardValue.add(pieceDTO);
+            PieceDto pieceDto = new PieceDto(elem.getKey(), elem.getValue());
+            boardValue.add(pieceDto);
         }
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (PieceDTO pieceDTO : boardValue) {
-            sb.append(pieceDTO.toString()).append("\n");
+        for (PieceDto pieceDto : boardValue) {
+            sb.append(pieceDto.toString()).append("\n");
         }
-        return "BoardDTO{" +
+        return "BoardDto{" +
                 "boardValue=" + boardValue +
                 '}';
     }

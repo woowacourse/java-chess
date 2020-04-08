@@ -3,11 +3,11 @@ package dto;
 import chess.location.Location;
 import chess.piece.type.Piece;
 
-public class PieceDTO {
+public class PieceDto {
     private String location;
     private String pieceName;
 
-    public PieceDTO(Location location, Piece piece) {
+    public PieceDto(Location location, Piece piece) {
         this.location = location.toString();
         this.pieceName = String.valueOf(piece.getName());
     }
@@ -22,7 +22,7 @@ public class PieceDTO {
 
     @Override
     public String toString() {
-        return "PieceDTO{" +
+        return "PieceDto{" +
                 "location='" + location +
                 ", pieceName='" + pieceName +
                 '}';

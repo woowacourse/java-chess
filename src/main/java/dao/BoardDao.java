@@ -3,30 +3,30 @@ package dao;
 import chess.board.ChessBoard;
 import chess.location.Location;
 import chess.piece.type.Piece;
-import vo.PieceVO;
+import vo.PieceVo;
 
 import java.sql.SQLException;
 import java.util.Map;
 
-public class BoardDAO {
+public class BoardDao {
     public void addBoard(ChessBoard chessBoard, int gameId) throws SQLException {
         Map<Location, Piece> board = chessBoard.getBoard();
-        PieceDAO pieceDAO = new PieceDAO();
+        PieceDao pieceDao = new PieceDao();
 
-        addPieces(gameId, board, pieceDAO);
+        addPieces(gameId, board, pieceDao);
     }
 
-    private void addPieces(int gameId, Map<Location, Piece> board, PieceDAO pieceDAO) throws SQLException {
+    private void addPieces(int gameId, Map<Location, Piece> board, PieceDao pieceDAO) throws SQLException {
         for (Map.Entry<Location, Piece> entry : board.entrySet()) {
             Location location = entry.getKey();
             Piece piece = entry.getValue();
 
-            PieceVO pieceVO = new PieceVO(gameId
+            PieceVo pieceVo = new PieceVo(gameId
                     , Character.toString(piece.getName())
                     , location.getRowValue()
                     , Character.toString(location.getColValue()));
 
-            pieceDAO.addPiece(pieceVO);
+            pieceDAO.addPiece(pieceVo);
         }
     }
 }

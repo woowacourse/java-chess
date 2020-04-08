@@ -3,11 +3,11 @@ package dto;
 import chess.result.ChessScores;
 import chess.score.Score;
 
-public class ChessGameScoresDTO {
+public class ChessGameScoresDto {
     private final Score whiteScore;
     private final Score blackScore;
 
-    public ChessGameScoresDTO(ChessScores chessScores) {
+    public ChessGameScoresDto(ChessScores chessScores) {
         whiteScore = chessScores.getWhiteScore();
         blackScore = chessScores.getBlackScore();
     }

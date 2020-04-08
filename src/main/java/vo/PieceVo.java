@@ -1,12 +1,12 @@
 package vo;
 
-public class PieceVO {
+public class PieceVo {
     private final int gameId;
     private final String name;
     private final int row;
     private final String col;
 
-    public PieceVO(int gameId, String name, int row, String col) {
+    public PieceVo(int gameId, String name, int row, String col) {
         this.gameId = gameId;
         this.name = name;
         this.row = row;

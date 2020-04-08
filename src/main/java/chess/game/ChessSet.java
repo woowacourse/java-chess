@@ -8,12 +8,9 @@ import chess.score.Score;
 import chess.team.Team;
 
 import java.util.Map;
-import java.util.NoSuchElementException;
 import java.util.Objects;
-import java.util.Optional;
 
 public class ChessSet {
-    private static final String NO_ELEMENT_IN_CHESS_SET_MESSAGE = "ChessSet에 아이템이 존재하지 않습니다.";
     private final Map<Location, Piece> chessSet;
 
     public ChessSet(Map<Location, Piece> chessSet) {

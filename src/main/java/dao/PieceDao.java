@@ -1,21 +1,23 @@
 package dao;
 
 import db.DBConnection;
-import vo.PieceVO;
+import vo.PieceVo;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-public class PieceDAO {
-    public void addPiece(PieceVO pieceVO) throws SQLException {
+public class PieceDao {
+    public void addPiece(PieceVo pieceVO) throws SQLException {
         String query = "INSERT INTO piece(game_id, name, row, col) VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = getPreparedStatement(pieceVO, query);
         pstmt.executeUpdate();
     }
 
-    private PreparedStatement getPreparedStatement(PieceVO pieceVO, String query) throws SQLException {
+    private PreparedStatement getPreparedStatement(PieceVo pieceVO, String query) throws SQLException {
         PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
         pstmt.setInt(1, pieceVO.getGameId());
         pstmt.setString(2, pieceVO.getName());
@@ -24,32 +26,32 @@ public class PieceDAO {
         return pstmt;
     }
 
-    public ArrayList<PieceVO> findAll(int gameId) throws SQLException {
+    public List<PieceVo> findAll(int gameId) throws SQLException {
         String query = "SELECT * FROM piece WHERE game_id = ?";
         PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
         pstmt.setInt(1, gameId);
         ResultSet rs = pstmt.executeQuery();
 
         if (!rs.next()) {
-            return null;
+            return Collections.emptyList();
         }
 
-        ArrayList<PieceVO> pieceVOs = getPieceVOS(rs);
+        List<PieceVo> pieceVos = getPieceVOS(rs);
 
-        return pieceVOs;
+        return pieceVos;
     }
 
-    private ArrayList<PieceVO> getPieceVOS(ResultSet resultSet) throws SQLException {
-        ArrayList<PieceVO> pieceVOs = new ArrayList<>();
+    private List<PieceVo> getPieceVOS(ResultSet resultSet) throws SQLException {
+        ArrayList<PieceVo> pieceVos = new ArrayList<>();
         while (resultSet.next()) {
-            PieceVO pieceVO = new PieceVO(
+            PieceVo pieceVO = new PieceVo(
                     resultSet.getInt("game_id"),
                     resultSet.getString("name"),
                     resultSet.getInt("row"),
                     resultSet.getString("col")
             );
-            pieceVOs.add(pieceVO);
+            pieceVos.add(pieceVO);
         }
-        return pieceVOs;
+        return pieceVos;
     }
 }

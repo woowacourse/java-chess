@@ -113,8 +113,8 @@ function postChessBoard(json) {
                 $('#' + json.now).html('');
                 $('#' + json.now).attr('chess', 'null');
 
-                $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresDTO.whiteScore.value);
-                $('#blackScore').html("blackScore : " + jsonData.chessGameScoresDTO.blackScore.value);
+                $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresDto.whiteScore.value);
+                $('#blackScore').html("blackScore : " + jsonData.chessGameScoresDto.blackScore.value);
 
                 $('#turn').html("It's " + jsonData.turn + " Turn!");
             }
@@ -149,9 +149,9 @@ function getChessGames() {
         success: function (data) {
             var res = JSON.parse(data);
             console.log(JSON.stringify(data));
-            var chessGameDTOs = res.chessGameDTOs;
-            for (var i = 0; i < chessGameDTOs.length; i++) {
-                add(chessGameDTOs[i].id);
+            var chessGameDtos = res.chessGameDtos;
+            for (var i = 0; i < chessGameDtos.length; i++) {
+                add(chessGameDtos[i].id);
             }
         },
         error: function (errorThrown) {

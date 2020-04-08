@@ -1,12 +1,12 @@
 package dto;
 
-public class ChessGameDTO {
+public class ChessGameDto {
     private final int id;
     private final String whiteName;
     private final String blackName;
     private final boolean turn_is_black;
 
-    public ChessGameDTO(int id, String whiteName, String blackName, int turn_is_black) {
+    public ChessGameDto(int id, String whiteName, String blackName, int turn_is_black) {
         this.id = id;
         this.whiteName = whiteName;
         this.blackName = blackName;

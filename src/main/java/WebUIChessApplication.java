@@ -2,22 +2,23 @@ import static spark.Spark.*;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chess.command.MoveCommand;
 import chess.location.Location;
 import chess.progress.Progress;
 import converter.ChessGameConverter;
-import dao.BoardDAO;
-import dao.ChessGameDAO;
-import dao.ChessGamesDAO;
-import dao.PieceDAO;
+import dao.BoardDao;
+import dao.ChessGameDao;
+import dao.ChessGamesDao;
+import dao.PieceDao;
 import dto.*;
 import chess.game.ChessGame;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import vo.PieceVO;
+import vo.PieceVo;
 
 public class WebUIChessApplication {
     private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
@@ -40,37 +41,37 @@ public class WebUIChessApplication {
         });
 
         get("/start/boards", (req, res) -> {
-            ChessGamesDAO chessGamesDAO = new ChessGamesDAO();
-            ArrayList<ChessGameDTO> all = chessGamesDAO.findAll();
-            ChessGamesDTO chessGamesDTO = new ChessGamesDTO(all);
-            return GSON.toJson(chessGamesDTO);
+            ChessGamesDao chessGamesDao = new ChessGamesDao();
+            ArrayList<ChessGameDto> all = chessGamesDao.findAll();
+            ChessGamesDto chessGamesDto = new ChessGamesDto(all);
+            return GSON.toJson(chessGamesDto);
         });
 
         get("/start/board", (req, res) -> {
-            int boardID = Integer.parseInt(req.queryParams("id"));
+            int boardId = Integer.parseInt(req.queryParams("id"));
 
-            PieceDAO pieceDAO = new PieceDAO();
-            ArrayList<PieceVO> pieceVOs = pieceDAO.findAll(boardID);
+            PieceDao pieceDao = new PieceDao();
+            List<PieceVo> pieceVos = pieceDao.findAll(boardId);
 
-            ChessGameDAO chessGameDAO = new ChessGameDAO();
-            ChessGameDTO chessGameDTO = chessGameDAO.findChessGameBy(boardID);
+            ChessGameDao chessGameDao = new ChessGameDao();
+            ChessGameDto chessGameDto = chessGameDao.findChessGameBy(boardId);
 
-            if (pieceVOs == null) {
-                BoardDTO boardDTO = new BoardDTO(new ChessGame().getChessBoard());
-                return GSON.toJson(boardDTO);
+            if (pieceVos == null) {
+                BoardDto boardDto = new BoardDto(new ChessGame().getChessBoard());
+                return GSON.toJson(boardDto);
             }
 
-            BoardDTO boardDTO = new BoardDTO(ChessGameConverter.convert(pieceVOs, chessGameDTO).getChessBoard());
-            return GSON.toJson(boardDTO);
+            BoardDto boardDto = new BoardDto(ChessGameConverter.convert(pieceVos, chessGameDto).getChessBoard());
+            return GSON.toJson(boardDto);
         });
 
         post("/start/move", (req, res) -> {
-            LocationDTO nowDTO = new LocationDTO(req.queryParams("now"));
-            LocationDTO destinationDTO = new LocationDTO(req.queryParams("des"));
+            LocationDto nowDto = new LocationDto(req.queryParams("now"));
+            LocationDto destinationDto = new LocationDto(req.queryParams("des"));
 
-            Location nowLocation = new Location(nowDTO.getRow(), nowDTO.getCol());
+            Location nowLocation = new Location(nowDto.getRow(), nowDto.getCol());
             Location destinationLocation =
-                    new Location(destinationDTO.getRow(), destinationDTO.getCol());
+                    new Location(destinationDto.getRow(), destinationDto.getCol());
 
             MoveCommand move = MoveCommand.of(nowLocation, destinationLocation, chessGame);
 
@@ -78,23 +79,23 @@ public class WebUIChessApplication {
 
             changeTurnIfMoved(chessGame, progress);
 
-            ChessMoveDTO chessMoveDTO = new ChessMoveDTO(
-                    new ChessGameScoresDTO(chessGame.calculateScores())
+            ChessMoveDto chessMoveDto = new ChessMoveDto(
+                    new ChessGameScoresDto(chessGame.calculateScores())
                     , progress
                     , chessGame.getTurn());
 
-            return GSON.toJson(chessMoveDTO);
+            return GSON.toJson(chessMoveDto);
         });
 
         get("/start/winner", (req, res) -> {
-            ChessResultDTO chessResultDTO = new ChessResultDTO(chessGame.findWinner());
-            return GSON.toJson(chessResultDTO);
+            ChessResultDto chessResultDto = new ChessResultDto(chessGame.findWinner());
+            return GSON.toJson(chessResultDto);
         });
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            BoardDAO boardDAO = new BoardDAO();
-            boardDAO.addBoard(chessGame.getChessBoard(), GAME_ID);
+            BoardDao boardDao = new BoardDao();
+            boardDao.addBoard(chessGame.getChessBoard(), GAME_ID);
             return render(model, "start.html");
         });
     }

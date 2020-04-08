@@ -3,13 +3,13 @@ package dto;
 import chess.location.Col;
 import chess.location.Row;
 
-public class LocationDTO {
+public class LocationDto {
     private static final String UNDER_BAR = "_";
 
     private final Row row;
     private final Col col;
 
-    public LocationDTO(String rawLocation) {
+    public LocationDto(String rawLocation) {
         String[] rowAndCol = parseRowAndCol(rawLocation);
 
         String row = rowAndCol[1];
