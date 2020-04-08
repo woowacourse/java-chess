@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.ChessGame;
 import chess.piece.Team;
@@ -15,12 +15,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static chess.repository.ChessConnection.getConnection;
+import static chess.dao.ChessConnection.getConnection;
 
-public class MariaChessRepository implements ChessRepository {
+public class MariaChessDAO implements ChessDAO {
     private final ConnectionProperties connectionProperties;
 
-    public MariaChessRepository(ConnectionProperties connectionProperties) {
+    public MariaChessDAO(ConnectionProperties connectionProperties) {
         this.connectionProperties = connectionProperties;
     }
 

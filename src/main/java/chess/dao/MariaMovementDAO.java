@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.Movement;
 
@@ -13,12 +13,12 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.repository.ChessConnection.getConnection;
+import static chess.dao.ChessConnection.getConnection;
 
-public class MariaMovementRepository implements MovementRepository {
+public class MariaMovementDAO implements MovementDAO {
     private final ConnectionProperties connectionProperties;
 
-    public MariaMovementRepository(ConnectionProperties connectionProperties) {
+    public MariaMovementDAO(ConnectionProperties connectionProperties) {
         this.connectionProperties = connectionProperties;
     }
 

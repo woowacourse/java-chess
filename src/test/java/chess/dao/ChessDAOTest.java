@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.ChessGame;
 import chess.piece.Team;
@@ -13,24 +13,24 @@ import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessRepositoryTest {
+class ChessDAOTest {
 
-    private ChessRepository chessRepository;
+    private ChessDAO chessDAO;
 
     @DisplayName("실제 디비 없는 경우 메모리로 테스트")
     @BeforeEach
     void setUp() {
         try {
             ConnectionProperties connectionProperties = new ConnectionProperties();
-            chessRepository = new MariaChessRepository(connectionProperties);
+            chessDAO = new MariaChessDAO(connectionProperties);
         } catch (Exception e) {
-            chessRepository = new InMemoryChessRepository();
+            chessDAO = new InMemoryChessDAO();
         }
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        chessRepository.deleteAll();
+        chessDAO.deleteAll();
     }
 
     @DisplayName("정상 저장 테스트")
@@ -40,7 +40,7 @@ class ChessRepositoryTest {
         ChessGame chessGame = new ChessGame(true);
 
         //when
-        chessGame = chessRepository.save(chessGame);
+        chessGame = chessDAO.save(chessGame);
 
         //then
         assertThat(chessGame.getId()).isNotNull();
@@ -50,10 +50,10 @@ class ChessRepositoryTest {
     @Test
     void findById() throws SQLException {
         //given
-        ChessGame chessGame = chessRepository.save(new ChessGame(true));
+        ChessGame chessGame = chessDAO.save(new ChessGame(true));
 
         //when
-        ChessGame actual = chessRepository.findById(chessGame.getId())
+        ChessGame actual = chessDAO.findById(chessGame.getId())
                 .orElseThrow(NoSuchElementException::new);
 
         //then
@@ -63,25 +63,25 @@ class ChessRepositoryTest {
     @Test
     void update() throws SQLException {
         //given
-        ChessGame chessGame = chessRepository.save(new ChessGame(true));
+        ChessGame chessGame = chessDAO.save(new ChessGame(true));
 
         //when
         chessGame.endGame(Team.WHITE);
-        chessRepository.update(chessGame);
+        chessDAO.update(chessGame);
 
         //then
-        ChessGame updated = chessRepository.findById(chessGame.getId()).orElseThrow(NoSuchElementException::new);
+        ChessGame updated = chessDAO.findById(chessGame.getId()).orElseThrow(NoSuchElementException::new);
         assertThat(updated.getWinner()).isEqualTo(Team.WHITE);
     }
 
     @Test
     void findAll() throws SQLException {
         //given
-        chessRepository.save(new ChessGame(true));
-        chessRepository.save(new ChessGame(true));
+        chessDAO.save(new ChessGame(true));
+        chessDAO.save(new ChessGame(true));
 
         //when
-        List<ChessGame> all = chessRepository.findAll();
+        List<ChessGame> all = chessDAO.findAll();
 
         //then
         assertThat(all).hasSize(2);
@@ -90,11 +90,11 @@ class ChessRepositoryTest {
     @Test
     void findAllByActive() throws SQLException {
         //given
-        chessRepository.save(new ChessGame(true));
-        chessRepository.save(new ChessGame(false));
+        chessDAO.save(new ChessGame(true));
+        chessDAO.save(new ChessGame(false));
 
         //when
-        List<ChessGame> actual = chessRepository.findAllByActive();
+        List<ChessGame> actual = chessDAO.findAllByActive();
 
         //then
         assertThat(actual).hasSize(1);

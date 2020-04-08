@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.ChessGame;
 
@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class InMemoryChessRepository implements ChessRepository {
+public class InMemoryChessDAO implements ChessDAO {
     private final Map<Long, ChessGame> memory = new Hashtable<>();
     private Long autoIncrement = 0L;
 

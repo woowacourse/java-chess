@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.ChessGame;
 import chess.entity.Movement;
@@ -12,28 +12,28 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MovementRepositoryTest {
+class MovementDAOTest {
 
-    private MovementRepository movementRepository;
-    private ChessRepository chessRepository;
+    private MovementDAO movementDAO;
+    private ChessDAO chessDAO;
 
     @DisplayName("디비 연결 실패시 메모리로 테스트")
     @BeforeEach
     void setUp() {
         try {
             ConnectionProperties connectionProperties = new ConnectionProperties();
-            chessRepository = new MariaChessRepository(connectionProperties);
-            movementRepository = new MariaMovementRepository(connectionProperties);
+            chessDAO = new MariaChessDAO(connectionProperties);
+            movementDAO = new MariaMovementDAO(connectionProperties);
         } catch (Exception e) {
-            chessRepository = new InMemoryChessRepository();
-            movementRepository = new InMemoryMovementRepository();
+            chessDAO = new InMemoryChessDAO();
+            movementDAO = new InMemoryMovementDAO();
         }
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        movementRepository.deleteAll();
-        chessRepository.deleteAll();
+        movementDAO.deleteAll();
+        chessDAO.deleteAll();
     }
 
     @DisplayName("정상 저장 테스트")
@@ -41,11 +41,11 @@ class MovementRepositoryTest {
     void save() throws SQLException {
         //given
         ChessGame chessGame = new ChessGame(true);
-        chessGame = chessRepository.save(chessGame);
+        chessGame = chessDAO.save(chessGame);
         Movement movement = new Movement(chessGame.getId(), "a1", "a2");
 
         //when
-        Movement saved = movementRepository.save(movement);
+        Movement saved = movementDAO.save(movement);
 
         //then
         assertThat(saved.getId()).isNotNull();
@@ -56,14 +56,14 @@ class MovementRepositoryTest {
         //given
         //given
         ChessGame chessGame = new ChessGame(true);
-        chessGame = chessRepository.save(chessGame);
+        chessGame = chessDAO.save(chessGame);
         Movement movement1 = new Movement(chessGame.getId(), "a1", "a2");
         Movement movement2 = new Movement(chessGame.getId(), "a2", "a3");
-        movementRepository.save(movement1);
-        movementRepository.save(movement2);
+        movementDAO.save(movement1);
+        movementDAO.save(movement2);
 
         //when
-        List<Movement> movements = movementRepository.findAllByChessId(chessGame.getId());
+        List<Movement> movements = movementDAO.findAllByChessId(chessGame.getId());
 
         //then
         assertThat(movements).hasSize(2);

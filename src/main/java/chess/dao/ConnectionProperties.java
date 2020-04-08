@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 public class ConnectionProperties {
     private String server = "localhost:3306";

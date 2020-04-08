@@ -1,11 +1,11 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.ChessGame;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface ChessRepository {
+public interface ChessDAO {
     ChessGame save(ChessGame entity);
 
     Optional<ChessGame> findById(Long id);

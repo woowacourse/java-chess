@@ -1,4 +1,4 @@
-package chess.repository;
+package chess.dao;
 
 import chess.entity.Movement;
 
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InMemoryMovementRepository implements MovementRepository {
+public class InMemoryMovementDAO implements MovementDAO {
 
     private final Map<Long, Movement> memory = new Hashtable<>();
     private Long autoIncrement = 0L;

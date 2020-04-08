@@ -1,11 +1,11 @@
 package chess.service;
 
+import chess.dao.ChessDAO;
+import chess.dao.InMemoryChessDAO;
+import chess.dao.InMemoryMovementDAO;
+import chess.dao.MovementDAO;
 import chess.entity.ChessGame;
 import chess.piece.Team;
-import chess.repository.ChessRepository;
-import chess.repository.InMemoryChessRepository;
-import chess.repository.InMemoryMovementRepository;
-import chess.repository.MovementRepository;
 import chess.service.dto.ChessBoardResponse;
 import chess.service.dto.MoveRequest;
 import chess.service.dto.MoveResponse;
@@ -25,21 +25,21 @@ class ChessServiceTest {
 
     private ChessService chessService;
 
-    private MovementRepository movementRepository;
-    private ChessRepository chessRepository;
+    private MovementDAO movementDAO;
+    private ChessDAO chessDAO;
 
     @DisplayName("메모리로 테스트")
     @BeforeEach
     void setUp() {
-        chessRepository = new InMemoryChessRepository();
-        movementRepository = new InMemoryMovementRepository();
-        chessService = new ChessService(chessRepository, movementRepository);
+        chessDAO = new InMemoryChessDAO();
+        movementDAO = new InMemoryMovementDAO();
+        chessService = new ChessService(chessDAO, movementDAO);
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        movementRepository.deleteAll();
-        chessRepository.deleteAll();
+        movementDAO.deleteAll();
+        chessDAO.deleteAll();
     }
 
     @DisplayName("정상적으로 움직임 성공시 상대 턴으로 바뀐다.")
@@ -47,7 +47,7 @@ class ChessServiceTest {
     void move() throws SQLException {
         //given
         ChessGame chessGame = new ChessGame(true);
-        chessGame = chessRepository.save(chessGame);
+        chessGame = chessDAO.save(chessGame);
         MoveRequest moveRequest = new MoveRequest(chessGame.getId(), "a2", "a3");
 
         //when
@@ -75,8 +75,8 @@ class ChessServiceTest {
         //given
         ChessGame chessGame1 = new ChessGame(true);
         ChessGame chessGame2 = new ChessGame(false);
-        chessRepository.save(chessGame1);
-        chessRepository.save(chessGame2);
+        chessDAO.save(chessGame1);
+        chessDAO.save(chessGame2);
 
         //when
         SavedGameBundleResponse savedGameBundleResponse = chessService.loadAllSavedGames();
@@ -90,7 +90,7 @@ class ChessServiceTest {
     void loadSavedGame() throws SQLException {
         //given
         ChessGame chessGame1 = new ChessGame(true);
-        chessGame1 = chessRepository.save(chessGame1);
+        chessGame1 = chessDAO.save(chessGame1);
 
         //when
         ChessBoardResponse chessBoardResponse = chessService.loadSavedGame(chessGame1.getId());
@@ -104,12 +104,12 @@ class ChessServiceTest {
     void surrender() throws SQLException {
         //given
         ChessGame chessGame1 = new ChessGame(true);
-        chessGame1 = chessRepository.save(chessGame1);
+        chessGame1 = chessDAO.save(chessGame1);
         SurrenderRequest surrenderRequest = new SurrenderRequest(chessGame1.getId(), "WHITE");
 
         //when
         chessService.surrender(surrenderRequest);
-        ChessGame chessGame = chessRepository.findById(chessGame1.getId())
+        ChessGame chessGame = chessDAO.findById(chessGame1.getId())
                 .orElseThrow(NoSuchElementException::new);
 
         //then
