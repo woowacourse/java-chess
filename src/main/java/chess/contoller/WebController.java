@@ -27,20 +27,22 @@ public class WebController {
 
 		mainRendering();
 		createRoom(chessGame);
-		moveRendering(chessGame);
-		restartRendering(chessGame);
+		movePiece(chessGame);
+		restartGame(chessGame);
 	}
 
 	private void createRoom(ChessGame chessGame) {
 		post("/create", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			boardService.create(chessGame, req.queryParams("room-name"));
+			String roomName = req.queryParams("room-name");
+			boardService.create(chessGame, roomName);
+			res.cookie("room-name", roomName);
 			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
 	}
 
-	private void restartRendering(ChessGame chessGame) {
+	private void restartGame(ChessGame chessGame) {
 		post("/restart", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			chessGame.restart();
@@ -49,17 +51,17 @@ public class WebController {
 		});
 	}
 
-	private void moveRendering(ChessGame chessGame) {
+	private void movePiece(ChessGame chessGame) {
 		post("/chess", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
 				Position source = new Position(req.queryParams("source"));
 				Position target = new Position(req.queryParams("target"));
 				chessGame.move(source, target);
+				boardService.save(chessGame, req.cookie("room-name"));
 			} catch (RuntimeException e) {
 				model.put("error", e.getMessage());
 			}
-
 			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
