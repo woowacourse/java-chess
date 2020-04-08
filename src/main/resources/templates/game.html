@@ -20,39 +20,25 @@
 
     <h1>이곳은 {{roomId}}번 방입니다!</h1>
 
-    <form action="/game/move" method="post">
-        <div class="form-row">
-            <input name="roomId" type="hidden" value="{{roomId}}">
-            <div class="col">
-                <input type="text" name="sourcePosition" class="form-control" placeholder="source position">
-            </div>
-            <div class="col">
-                <input type="text" name="targetPosition" class="form-control" placeholder="target position">
-            </div>
-            <div class="col">
-                <button type="submit" class="btn btn-primary">이동하기</button>
-            </div>
+    <div class="form-row">
+        <div class="col">
+            <input class="form-control" id="sourceInput" placeholder="source position" type="text">
         </div>
-    </form>
+        <div class="col">
+            <input class="form-control" id="targetInput" placeholder="target position" type="text">
+        </div>
+        <div class="col">
+            <button class="btn btn-primary" id="moveButton" type="submit">이동하기</button>
+        </div>
+    </div>
 
-    <form action="/game/status" method="get">
-        <input name="roomId" type="hidden" value="{{roomId}}">
-        <input type="submit" value="status">
-    </form>
+    <button class="btn btn-primary" id="statusButton">점수보기</button>
 
-    <form action="/game/save" method="get">
-        <input type="submit" value="save">
-    </form>
+    <button class="btn btn-primary" id="saveButton">저장하기</button>
 
-    <form action="/game/load" method="get">
-        <input name="roomId" type="hidden" value="{{roomId}}">
-        <input type="submit" value="load">
-    </form>
+    <button class="btn btn-primary" id="loadButton">불러오기</button>
 
-    <form action="/game/init" method="get">
-        <input name="roomId" type="hidden" value="{{roomId}}">
-        <input type="submit" value="초기화">
-    </form>
+    <button class="btn btn-primary" id="initButton">체스판 초기화</button>
 
     <table class="chessPiece">
         <tr>
@@ -156,16 +142,105 @@
         </tr>
     </table>
 </div>
-<script type="text/javascript">
-    {{#each pieces}}
-    applyBackgroundImg("{{this.position}}", "{{this.imgUrl}}");
-    {{/each}}
 
-        function applyBackgroundImg(piecePosition, pieceImgUrl) {
-            let element = document.getElementById(piecePosition);
-            element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
-            element.style.backgroundSize = "cover";
-        }
+
+<script type="text/javascript">
+    let roomId;
+
+    function applyPieces(pieces) {
+        pieces.forEach(function (piece) {
+            applyBackgroundImg(piece.position, piece.imgUrl);
+        });
+    }
+
+    function applyBackgroundImg(piecePosition, pieceImgUrl) {
+        let element = document.getElementById(piecePosition);
+        element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
+        element.style.backgroundSize = "cover";
+    }
+
+    function showStatus(whiteScore, blackScore) {
+        alert("현재 White의 점수 : " + whiteScore + "\n" + "현재 Black의 점수 : " + blackScore);
+    }
+
+    function getSourceInput() {
+        return document.getElementById("sourceInput").value;
+    }
+
+    function getTargetInput() {
+        return document.getElementById("targetInput").value;
+    }
+
+    window.onload = function () {
+        document.getElementById("initButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    roomId = chessJson.roomId;
+                    applyPieces(JSON.parse(chessJson.pieces));
+                }
+            }
+            xhr.open('GET', '/game/init?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("statusButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let statusResponse = JSON.parse(xhr.responseText);
+                    roomId = statusResponse.roomId;
+                    showStatus(statusResponse.whiteScore, statusResponse.blackScore);
+                }
+            }
+            xhr.open('GET', '/game/status?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("loadButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    roomId = chessJson.roomId;
+                    applyPieces(JSON.parse(chessJson.pieces));
+                    alert("정상적으로 불러왔습니다!");
+                } else {
+                    alert("불러오지 못했습니다!");
+                }
+            }
+            xhr.open('GET', '/game/load?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("saveButton").addEventListener('click', function () {
+            alert("정상적으로 저장되었습니다!");
+        });
+
+
+        document.getElementById("moveButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    roomId = chessJson.roomId;
+                    applyPieces(JSON.parse(chessJson.pieces));
+                }
+            }
+            xhr.open('POST', '/game/move?roomId={{roomId}}&sourcePosition='
+                + getSourceInput()
+                + '&targetPosition='
+                + getTargetInput(),
+                true);
+            xhr.send();
+        });
+    }
+
+
+</script>
+<script type="text/javascript">
+
 </script>
 </body>
 </html>

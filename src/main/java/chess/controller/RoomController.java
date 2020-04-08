@@ -35,11 +35,9 @@ public class RoomController {
 		String param = request.queryParams("roomName");
 		roomService.addRoom(param);
 
-		// TODO : 페이지 전체를 불러오기 때문에 비효율적이다. ajax로 하면 더 효율적이다.
 		response.redirect("/rooms");
 		return null;
 	};
-	// TODO : add랑 똑같은 로직인데 왜 새로고침해야 보일까?
 	public static Route removeRoom = (request, response) -> {
 		RoomService roomService = RoomService.getInstance();
 		roomService.removeRoom(Integer.parseInt(request.queryParams("roomId")));

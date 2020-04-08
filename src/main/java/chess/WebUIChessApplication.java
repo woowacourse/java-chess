@@ -16,10 +16,9 @@ public class WebUIChessApplication {
 		get(RoomController.REMOVE_ROOM_URL, RoomController.removeRoom);
 		get(RoomController.ENTER_ROOM_URL, RoomController.enterRoom);
 
-		get(GameController.INIT_URL, GameController.initGame);
-		post(GameController.MOVE_URL, GameController.movePiece);
-		get(GameController.STATUS_URL, GameController.showStatus);
-		get(GameController.END_URL, GameController.endGame);
-		get(GameController.LOAD_URL, GameController.loadGame);
+		get(GameController.INIT_URL, GameController::initGame);
+		post(GameController.MOVE_URL, GameController::movePiece);
+		get(GameController.STATUS_URL, GameController::showStatus);
+		get(GameController.LOAD_URL, GameController::loadGame);
 	}
 }
