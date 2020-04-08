@@ -11,8 +11,6 @@ import java.util.Properties;
 
 public class DBConnection {
     private static final Properties properties = new Properties();
-
-    private static Reader reader = null;
     private static String server;
     private static String database;
     private static String option;
@@ -21,7 +19,7 @@ public class DBConnection {
 
     static {
         try {
-            reader = new FileReader("src/main/resources/db.properties");
+            Reader reader = new FileReader("src/main/resources/db.properties");
             properties.load(reader);
 
             server = properties.getProperty("server");
