@@ -8,18 +8,18 @@ import java.util.stream.Collectors;
 
 import chess.domain.board.Board;
 import chess.domain.game.Game;
-import chess.domain.game.dao.GameDAO;
+import chess.domain.game.dao.MySQLGameDAO;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.view.dto.BoardDTO;
-import chess.view.dto.GameDTO;
-import chess.view.dto.ScoreDTO;
+import chess.view.dto.responsedto.BoardDTO;
+import chess.view.dto.responsedto.GameDTO;
+import chess.view.dto.responsedto.ScoreDTO;
 
 public class GameService {
-	private GameDAO gameDAO;
+	private MySQLGameDAO gameDAO;
 
-	public GameService(GameDAO gameDAO) {
+	public GameService(MySQLGameDAO gameDAO) {
 		this.gameDAO = gameDAO;
 	}
 

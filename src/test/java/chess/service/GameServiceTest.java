@@ -21,8 +21,8 @@
 // import chess.domain.state.Ready;
 // import chess.domain.state.Started;
 // import chess.domain.state.SuspendFinished;
-// import chess.view.dto.BoardDTO;
-// import chess.view.dto.ScoreDTO;
+// import chess.view.dto.responsedto.BoardDTO;
+// import chess.view.dto.responsedto.ScoreDTO;
 //
 // class GameServiceTest {
 // 	private GameService service;
