@@ -3,6 +3,8 @@ package chess.domain.dao;
 import static org.assertj.core.api.Assertions.*;
 
 import java.sql.SQLException;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,25 +18,38 @@ public class RoomDaoTest {
 	}
 
 	@Test
-	void findByRoomId() throws SQLException {
-		String board = "RNBQKBNR........PPPPPPPP................pppppppp........rnbqkbnr";
-		assertThat(roomDao.findByRoomId("2")).isEqualTo(board);
+	void findByRoomName() throws SQLException {
+		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
+		Optional<String> expectedBoard = roomDao.findByRoomName("A");
+
+		assertThat(actualBoard).isEqualTo(expectedBoard.orElseThrow(NoSuchElementException::new));
 	}
 
 	@Test
 	void addRoom() throws SQLException {
-		String board = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
-		roomDao.addRoom("1번방", board, "black", "N");
+		String roomName = "A";
+		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
+		String turn = "black";
+		String finishFlag = "N";
+
+		int newRoomId = roomDao.addRoom(roomName, actualBoard, turn, finishFlag);
+		String expectedBoard = roomDao.findByRoomId("" + newRoomId).orElseThrow(NoSuchElementException::new);
+
+		assertThat(actualBoard).isEqualTo(expectedBoard);
 	}
 
 	@Test
 	void deleteRoom() throws SQLException {
-		roomDao.deleteRoom("1??");
+		String roomName = "A";
+
+		roomDao.deleteRoom(roomName);
 	}
 
 	@Test
 	void updateRoom() throws SQLException {
+		String roomName = "A";
 		String board = "RNBQKBNR........PPPPPPPP................pppppppp........rnbqkbnr";
-		roomDao.updateBoard("1번방", board);
+
+		roomDao.updateBoard(roomName, board);
 	}
 }
