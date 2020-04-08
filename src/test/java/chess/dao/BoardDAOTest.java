@@ -16,7 +16,6 @@ import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
-import chess.domain.position.Column;
 
 public class BoardDAOTest {
 
@@ -65,15 +64,5 @@ public class BoardDAOTest {
 
 		assertThat(boardDAO.findPieceBy("1", A2)).isInstanceOf(Empty.class);
 		assertThat(boardDAO.findPieceBy("1", A4)).isInstanceOf(Pawn.class);
-	}
-
-	@Test
-	void findByColumn() {
-		List<Piece> initial = new ArrayList<>(BoardFactory.toList());
-		for (Piece piece : initial) {
-			boardDAO.addPiece("1", piece);
-		}
-
-		assertThat(boardDAO.findGroupBy("1", Column.A).size()).isEqualTo(8);
 	}
 }
