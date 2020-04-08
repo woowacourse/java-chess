@@ -59,12 +59,6 @@ public enum Direction {
         throw new IllegalArgumentException(String.format("%s에서 %s로의 방향을 알 수 없습니다.", from, to));
     }
 
-    public Direction compose(Direction other) {
-        int newHorizontal = horizontal + other.horizontal;
-        int newVertical = vertical + other.vertical;
-        return valueOf(newHorizontal, newVertical);
-    }
-
     public int getHorizontal() {
         return horizontal;
     }

@@ -9,6 +9,7 @@ import chess.domain.piece.state.piece.Pawn;
 import chess.domain.piece.team.Team;
 
 import java.util.List;
+import java.util.stream.Stream;
 
 public class InitializedPawn extends Pawn {
     public static final int MAX_DISTANCE = 2;
@@ -41,15 +42,11 @@ public class InitializedPawn extends Pawn {
     }
 
     private boolean hasHindrance(Board board) {
-        Position forwardPosition = position;
-        for (int i = 0; i < MAX_DISTANCE; i++) {
-            forwardPosition = forwardPosition.go(team.getForwardDirection());
-            Piece forward = board.getPiece(forwardPosition);
-            if (forward.isNotBlank()) {
-                return true;
-            }
-        }
-        return false;
+        Position forwardPosition = position.go(team.getForwardDirection());
+        return Stream.iterate(forwardPosition, position -> position.go(team.getForwardDirection()))
+                .limit(MAX_DISTANCE)
+                .map(board::getPiece)
+                .anyMatch(Piece::isNotBlank);
     }
 
     public static class InitializedPawnBuilder extends InitializedBuilder {

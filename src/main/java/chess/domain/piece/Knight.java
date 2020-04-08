@@ -25,7 +25,9 @@ public class Knight extends NotPawn {
         }
         Piece exPiece = board.getPiece(to);
         MoveType moveType = this.moveType.update(this, exPiece);
-        return null;
+        return new KnightBuilder(name, to, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override

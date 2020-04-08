@@ -52,7 +52,6 @@ class InitializedPawnTest {
 
         Board board = RunningBoard.initiaize(userInterface);
 
-
         assertThatThrownBy(() -> initializedPawn.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
     }
@@ -84,6 +83,4 @@ class InitializedPawnTest {
                 Arguments.of(Team.WHITE, Position.of(1, 1), Position.of(1, 2))
         );
     }
-
-
 }

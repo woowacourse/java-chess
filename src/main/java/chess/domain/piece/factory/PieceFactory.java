@@ -19,7 +19,7 @@ public class PieceFactory {
         builderGetters.put(PieceType.INITIALIZED_PAWN, InitializedPawn.InitializedPawnBuilder::new);
         builderGetters.put(PieceType.MOVED_PAWN, MovedPawn.MovedPawnBuilder::new);
         builderGetters.put(PieceType.ROOK, Rook.RookBuilder::new);
-        builderGetters.put(PieceType.KNIGHT, King.KingBuilder::new);
+        builderGetters.put(PieceType.KNIGHT, Knight.KnightBuilder::new);
         builderGetters.put(PieceType.BISHOP, Bishop.BishopBuilder::new);
         builderGetters.put(PieceType.QUEEN, Queen.QueenBuilder::new);
         builderGetters.put(PieceType.KING, King.KingBuilder::new);
