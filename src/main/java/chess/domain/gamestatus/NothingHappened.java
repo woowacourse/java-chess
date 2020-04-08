@@ -33,6 +33,11 @@ public class NothingHappened implements GameStatus {
     }
 
     @Override
+    public boolean isFinished() {
+        throw new UnsupportedOperationException("현 상태에서 수행할 수 없는 동작입니다.");
+    }
+
+    @Override
     public Map<Position, Piece> getBoard() {
         throw new UnsupportedOperationException("현 상태에서 수행할 수 없는 동작입니다.");
     }

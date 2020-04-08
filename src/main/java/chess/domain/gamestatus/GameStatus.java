@@ -19,4 +19,5 @@ public interface GameStatus {
 
     String getBoardString();
 
+    boolean isFinished();
 }
