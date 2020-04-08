@@ -7,24 +7,26 @@ import chess.domain.board.Board;
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.exception.PieceMoveFailedException;
 
-public class GameManager {
+public class ChessGame {
 	private final Board board;
 	private Color turn;
 
-	public GameManager(Board board, Color turn) {
+	public ChessGame(Board board, Color turn) {
 		this.board = Objects.requireNonNull(board, "board가 존재하지 않습니다.");
 		this.turn = Objects.requireNonNull(turn, "turn이 존재하지 않습니다.");
 	}
 
-	public GameManager(Board board) {
+	public ChessGame(Board board) {
 		this(board, Color.WHITE);
 	}
 
-	public void move(Coordinates from, Coordinates to) {
+	public Piece move(Coordinates from, Coordinates to) {
 		validateTurn(from);
-		board.movePiece(from, to);
+		Piece movedPiece = board.movePiece(from, to);
 		nextTurn();
+		return movedPiece;
 	}
 
 	private void nextTurn() {
@@ -37,13 +39,13 @@ public class GameManager {
 	}
 
 	public boolean isEndOfGame() {
-		return !board.isKingAliveOf(turn);
+		return !(board.isKingAliveOf(Color.BLACK) && board.isKingAliveOf(Color.WHITE));
 	}
 
 	private void validateTurn(Coordinates from) {
 		board.findPieceBy(from)
 				.filter(piece -> piece.isTeamOf(turn))
-				.orElseThrow(() -> new IllegalArgumentException(turn + "의 차례입니다."));
+				.orElseThrow(() -> new PieceMoveFailedException(turn + "의 차례입니다."));
 	}
 
 	public Board getBoard() {
@@ -54,7 +56,7 @@ public class GameManager {
 		return turn.reverse();
 	}
 
-	public java.lang.String getTurn() {
+	public String getTurn() {
 		return turn.name();
 	}
 

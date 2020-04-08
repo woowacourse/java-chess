@@ -6,7 +6,7 @@ import static chess.view.OutputView.printScore;
 import static chess.view.OutputView.printStartMessage;
 import static chess.view.OutputView.printWinner;
 
-import chess.domain.GameManager;
+import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
@@ -44,21 +44,21 @@ public class Application {
 
 	private static void resumeGame() {
 		Board board = BoardFactory.createNewGame();
-		GameManager gameManager = new GameManager(board);
-		while (!gameManager.isEndOfGame()) {
-			printBoard(gameManager.getBoard());
+		ChessGame chessGame = new ChessGame(board);
+		while (!chessGame.isEndOfGame()) {
+			printBoard(chessGame.getBoard());
 			Command command = inputCommand();
-			executeOperation(gameManager, command);
+			executeOperation(chessGame, command);
 		}
-		printWinner(gameManager.getEnemyColor());
+		printWinner(chessGame.getEnemyColor());
 	}
 
-	private static void executeOperation(GameManager gameManager, Command command) {
+	private static void executeOperation(ChessGame chessGame, Command command) {
 		if (command.isMove()) {
-			gameManager.move(command.getTargetCoordinates(), command.getDestination());
+			chessGame.move(command.getTargetCoordinates(), command.getDestination());
 		}
 		if (command.isStatus()) {
-			printScore(gameManager.calculateScore());
+			printScore(chessGame.calculateScore());
 		}
 		if (command.isEnd()) {
 			System.exit(EXIT_SUCCESSFULLY);

@@ -49,7 +49,6 @@ h1 {
 
 .buttons {
     display: flex;
-    max-width: 300px;
     margin: 10px;
     justify-content: space-around;
 }
@@ -58,6 +57,6 @@ h1 {
     margin: 20px;
     padding: 8px;
     font-size: 1rem;
-    width: 80px;
+    width: 140px;
     text-align: center;
 }

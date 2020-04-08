@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.coordinates.Coordinates;
+import chess.exception.PieceMoveFailedException;
 
 class WhitePawnTest {
 	static Stream<Arguments> generateMovablePositions() {
@@ -38,7 +39,7 @@ class WhitePawnTest {
 	void findMovablePositions_NotMovableDirection_ExceptionThrown() {
 		assertThatThrownBy(
 				() -> new WhitePawn().findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("C2")))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(PieceMoveFailedException.class)
 				.hasMessageContaining("이동할 수 없는");
 	}
 

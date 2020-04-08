@@ -5,6 +5,7 @@ import java.util.List;
 
 import chess.domain.coordinates.Coordinates;
 import chess.domain.coordinates.Direction;
+import chess.exception.PieceMoveFailedException;
 
 public abstract class StretchablePiece extends AbstractPiece {
 	public StretchablePiece(List<Direction> movableDirections, String name, Color color, double score) {
@@ -26,7 +27,7 @@ public abstract class StretchablePiece extends AbstractPiece {
 
 	private void validateDirection(Direction direction) {
 		if (!movableDirections.contains(direction)) {
-			throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+			throw new PieceMoveFailedException("이동할 수 없는 방향입니다.");
 		}
 	}
 }

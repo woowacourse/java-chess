@@ -19,9 +19,6 @@ import chess.domain.piece.WhitePawn;
 public class BoardFactory {
 	private static final Map<Coordinates, Piece> INITIAL_STATE_PIECES = initializePieces();
 
-	private BoardFactory() {
-	}
-
 	public static Board createNewGame() {
 		return new Board(new HashMap<>(INITIAL_STATE_PIECES));
 	}

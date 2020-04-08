@@ -12,6 +12,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.coordinates.Coordinates;
+import chess.exception.PieceMoveFailedException;
 
 class KingTest {
 	static Stream<Arguments> generateMovablePositions() {
@@ -40,7 +41,7 @@ class KingTest {
 	void findMovablePositions_NotMovableDirection_ExceptionThrown() {
 		assertThatThrownBy(
 				() -> new King(Color.WHITE).findMovableCoordinates(Coordinates.of("C3"), Coordinates.of("A4")))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(PieceMoveFailedException.class)
 				.hasMessageContaining("이동할 수 없는");
 	}
 

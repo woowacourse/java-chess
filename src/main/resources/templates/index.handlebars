@@ -5,8 +5,11 @@
     <title>Woowa Chess</title>
     <link rel="stylesheet" type="text/css" href="/css/style.css">
 </head>
-<body>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
 <h1>Woowa Chess</h1>
+
+<label id="turn"></label>
+<label id="score"></label>
 
 <div class="board">
     <div class="row">
@@ -93,7 +96,7 @@
 
 <div class="buttons">
     <button class="button" id="start" onclick="initializeBoard()">게임 시작</button>
-    <button class="button" id="end">게임 종료</button>
+    <button class="button" id="resume" onclick="resumeGame()">게임 불러오기</button>
 </div>
 
 <script type="application/javascript" src="/js/index.js"></script>

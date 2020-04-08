@@ -5,10 +5,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
+import chess.exception.PieceMoveFailedException;
 
 public class Board {
 	private final Map<Coordinates, Piece> pieces;
@@ -24,29 +26,30 @@ public class Board {
 		}
 	}
 
-	public void movePiece(Coordinates from, Coordinates to) {
+	public Piece movePiece(Coordinates from, Coordinates to) {
 		validatePieceExist(from);
 		validateTargetIsNotAlly(from, to);
 		validateRouteHasObstacle(from, to);
 		Piece target = pieces.remove(from);
 		pieces.put(to, target);
+		return target;
 	}
 
 	private void validatePieceExist(Coordinates from) {
 		if (isEmpty(from)) {
-			throw new IllegalArgumentException("이동할 말이 존재하지 않습니다");
+			throw new PieceMoveFailedException("이동할 말이 존재하지 않습니다");
 		}
 	}
 
 	private void validateRouteHasObstacle(Coordinates from, Coordinates to) {
 		if (canNotReachable(from, to)) {
-			throw new IllegalArgumentException("목적지까지 이동할 수 없습니다.");
+			throw new PieceMoveFailedException("목적지까지 이동할 수 없습니다.");
 		}
 	}
 
 	private void validateTargetIsNotAlly(Coordinates from, Coordinates to) {
 		if (findPieceBy(to).isPresent() && isAlly(from, to)) {
-			throw new IllegalArgumentException("도착점에 같은 팀의 piece가 있습니다.");
+			throw new PieceMoveFailedException("도착점에 같은 팀의 piece가 있습니다.");
 		}
 	}
 
@@ -94,5 +97,12 @@ public class Board {
 
 	public Map<Coordinates, Piece> getPieces() {
 		return new HashMap<>(pieces);
+	}
+
+	public List<Cell> getPiecesAsList() {
+		return pieces.entrySet()
+				.stream()
+				.map(cell -> new Cell(cell.getKey(), cell.getValue()))
+				.collect(Collectors.toList());
 	}
 }
