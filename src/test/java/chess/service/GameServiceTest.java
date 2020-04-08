@@ -1,4 +1,4 @@
-package chess.domain.service;
+package chess.service;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -9,13 +9,12 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.AutoIncrementTest;
 import chess.dao.GameDAO;
 import chess.dao.RoomDAO;
 import chess.domain.Color;
 import chess.domain.board.Position;
-import chess.domain.dao.AutoIncrementTest;
 import chess.domain.piece.Piece;
-import chess.service.GameService;
 
 public class GameServiceTest {
 	private GameService gameService = GameService.getInstance();

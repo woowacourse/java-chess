@@ -1,4 +1,4 @@
-package chess.domain.dao;
+package chess.dao;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import chess.dao.RoomDAO;
+import chess.AutoIncrementTest;
 import chess.domain.Color;
 import chess.domain.room.Room;
 
