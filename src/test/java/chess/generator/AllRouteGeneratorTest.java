@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AllRouteGeneratorTest {
     @Test
-    @DisplayName("getAllRoute 테스트")
+    @DisplayName("generateAllRoute 테스트")
     void getAllRoute() {
         Queen queen = new Queen(WHITE);
         Position position = Position.of(Coordinate.of(4), Coordinate.of(4));
