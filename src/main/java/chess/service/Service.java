@@ -74,29 +74,27 @@ public class Service {
             chessBoard.move(Position.of(chessPositionDTO.getSourcePosition()),
                     Position.of(chessPositionDTO.getTargetPosition())
             );
-            if (selectPieceDaoAtCaughtSituation(chessBoard, chessPositionDTO)) {
-                return;
-            }
+            selectPieceDaoAtCaughtSituation(chessBoard, chessPositionDTO);
+            return;
         }
         chessBoard.move(Position.of(chessPositionDTO.getSourcePosition()),
                 Position.of(chessPositionDTO.getTargetPosition()));
         selectPieceDao(chessBoard, chessPositionDTO);
     }
 
-    private boolean selectPieceDaoAtCaughtSituation(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
-        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getSourcePosition()))
+    private void selectPieceDaoAtCaughtSituation(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
+        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getTargetPosition()))
                 .isSamePieceColorWith(PieceColor.BLACK)) {
             whitePieceDAO.deleteCaughtPiece(chessPositionDTO);
             blackPieceDAO.updatePiece(chessPositionDTO);
-            return true;
+            return;
         }
         blackPieceDAO.deleteCaughtPiece(chessPositionDTO);
         whitePieceDAO.updatePiece(chessPositionDTO);
-        return false;
     }
 
     private void selectPieceDao(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
-        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getSourcePosition()))
+        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getTargetPosition()))
                 .isSamePieceColorWith(PieceColor.BLACK)) {
             blackPieceDAO.updatePiece(chessPositionDTO);
             return;

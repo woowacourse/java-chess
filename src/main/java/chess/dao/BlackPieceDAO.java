@@ -30,7 +30,6 @@ public class BlackPieceDAO {
             "('h8','r')";
 
     private Connection con = null;
-    private Statement statement = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
@@ -88,7 +87,7 @@ public class BlackPieceDAO {
 
     public void deleteBlackTable() {
         try {
-            String dropQuery = "DELETE FROM playerTurn";
+            String dropQuery = "DELETE FROM black";
             preparedStatement = getConnection().prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
@@ -157,7 +156,7 @@ public class BlackPieceDAO {
     }
 
     public void deleteCaughtPiece(ChessPositionDTO chessPositionDTO) {
-        String query = "DELETE  FROM blakc WHERE position = ?";
+        String query = "DELETE  FROM black WHERE position = ?";
         try {
             preparedStatement = getConnection().prepareStatement(query);
 

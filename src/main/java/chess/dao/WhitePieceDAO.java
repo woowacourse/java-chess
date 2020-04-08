@@ -87,7 +87,7 @@ public class WhitePieceDAO {
 
     public void deleteWhiteTable() {
         try {
-            String dropQuery = "DELETE FROM playerTurn";
+            String dropQuery = "DELETE FROM white";
             preparedStatement = getConnection().prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
