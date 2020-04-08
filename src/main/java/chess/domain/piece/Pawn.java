@@ -39,6 +39,17 @@ public abstract class Pawn extends Piece {
         super(PieceType.PAWN, position, player);
     }
 
+    public static PieceState of(final Position position, final Player player) {
+        Position whitePawnPosition = Position.of("a2");
+        Position blackPawnPosition = Position.of("a7");
+
+        if (whitePawnPosition.getRankDifference(position) == 0 && player.equals(Player.WHITE) ||
+                blackPawnPosition.getRankDifference(position) == 0 && player.equals(Player.BLACK)) {
+            return new NotMovedPawn(position, player);
+        }
+        return new MovedPawn(position, player);
+    }
+
     @Override
     protected void validateMovingPolicy(Position target, Map<Position, PieceDto> boardDto) {
         MovingDirection movingDirection = MovingDirection.getDirection(position, target);
@@ -69,16 +80,5 @@ public abstract class Pawn extends Piece {
     @Override
     public String toString() {
         return pieceType.toString();
-    }
-
-    public static PieceState of(final Position position, final Player player) {
-        Position whitePawnPosition = Position.of("a2");
-        Position blackPawnPosition = Position.of("a7");
-
-        if (whitePawnPosition.getRankDifference(position) == 0 && player.equals(Player.WHITE) ||
-                blackPawnPosition.getRankDifference(position) == 0 && player.equals(Player.BLACK)) {
-            return new NotMovedPawn(position, player);
-        }
-        return new MovedPawn(position, player);
     }
 }

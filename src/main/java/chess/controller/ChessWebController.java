@@ -1,10 +1,10 @@
 package chess.controller;
 
+import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.WebDto;
 import chess.service.ChessService;
-import chess.service.Command;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -18,6 +18,10 @@ import static spark.Spark.post;
 public class ChessWebController {
 
     private ChessService chessService = new ChessService();
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    }
 
     public void run() {
         get("/", (req, res) -> {
@@ -122,10 +126,6 @@ public class ChessWebController {
         return responseDto.getBoard().entrySet().stream().map(entry ->
                 new WebDto(entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.toList());
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 //
 //

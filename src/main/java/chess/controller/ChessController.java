@@ -11,7 +11,7 @@ public class ChessController {
 
     public void run() {
         OutputView.printInitialMessage();
-        while (!chessService.isEnd()) {
+        while (!chessService.isEnd(0)) {
             RequestDto requestDto = InputView.inputRequest();
             ResponseDto responseDto = chessService.run(requestDto);
             OutputView.printResponse(responseDto);

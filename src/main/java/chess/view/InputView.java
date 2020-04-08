@@ -1,7 +1,7 @@
 package chess.view;
 
+import chess.command.Command;
 import chess.controller.dto.RequestDto;
-import chess.service.Command;
 
 import java.util.Arrays;
 import java.util.List;

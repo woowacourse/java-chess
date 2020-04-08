@@ -1,5 +1,6 @@
 package chess.service;
 
+import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.dao.ChessDAO;
@@ -69,12 +70,8 @@ public class ChessService {
         List<String> parameter = requestDto.getParameter();
         ResponseDto responseDto = new ResponseDto("");
         try {
-            if ("save".equals(parameter.get(0))) {
-                chessDAO.addBoard(id, chessGame);
-            }
-            if ("".equals(parameter.get(0))) {
-                chessDAO.deleteGame(id);
-            }
+            saveGame(id, chessGame, parameter);
+            endGame(id, parameter);
             chessGames.remove(id);
             responseDto.setRoomId(chessDAO.getRoomId());
         } catch (SQLException e) {
@@ -83,19 +80,25 @@ public class ChessService {
         return responseDto;
     }
 
-//    private ResponseDto status(RequestDto requestDto) {
-////        chessGame.status();
-////        return new ResponseDto(chessGame.getStatus());
-//        return null;
-//    }
+    private void endGame(final long id, final List<String> parameter) throws SQLException {
+        if ("".equals(parameter.get(0))) {
+            chessDAO.deleteGame(id);
+        }
+    }
+
+    private void saveGame(final long id, final ChessGame chessGame, final List<String> parameter) throws SQLException {
+        if ("save".equals(parameter.get(0))) {
+            chessDAO.addBoard(id, chessGame);
+        }
+    }
+
 
     private ResponseDto unknown(RequestDto requestDto) {
         return new ResponseDto("알 수 없는 명령어 입니다.");
     }
 
-    public boolean isEnd() {
-//        return chessGame.isEnd();
-        return false;
+    public boolean isEnd(long id) {
+        return chessGames.get(id).isEnd();
     }
 
     public ResponseDto getRoomId() {

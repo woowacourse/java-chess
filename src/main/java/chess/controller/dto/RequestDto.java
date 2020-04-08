@@ -1,6 +1,6 @@
 package chess.controller.dto;
 
-import chess.service.Command;
+import chess.command.Command;
 
 import java.util.List;
 
@@ -9,19 +9,18 @@ public class RequestDto {
     private List<String> parameter;
     private long id;
 
-    public RequestDto(Command command, List<String> parameter) {
+    public RequestDto(Command command) {
         this.command = command;
+    }
+
+    public RequestDto(Command command, List<String> parameter) {
+        this(command);
         this.parameter = parameter;
     }
 
     public RequestDto(final Command command, final List<String> parameter, final long id) {
-        this.command = command;
-        this.parameter = parameter;
+        this(command, parameter);
         this.id = id;
-    }
-
-    public RequestDto(Command command) {
-        this.command = command;
     }
 
     public Command getCommand() {

@@ -30,16 +30,16 @@ public class ResponseDto {
         this.id = id;
     }
 
-    public ResponseDto(Status status) {
-        this.status = status;
-    }
-
     public ResponseDto(final String message) {
         this.message = message;
     }
 
     public Map<Position, String> getBoard() {
         return board;
+    }
+
+    public void setBoard(final Map<Position, String> board) {
+        this.board = board;
     }
 
     public Map<Player, Double> getStatus() {
@@ -49,12 +49,24 @@ public class ResponseDto {
         return null;
     }
 
+    public void setStatus(final Status status) {
+        this.status = status;
+    }
+
     public Player getWinner() {
         return status.getWinner();
     }
 
+    public void setWinner(final Player winner) {
+        this.winner = winner;
+    }
+
     public String getMessage() {
         return message;
+    }
+
+    public void setMessage(final String message) {
+        this.message = message;
     }
 
     public Turn getTurn() {
@@ -64,26 +76,6 @@ public class ResponseDto {
     public long getId() {
 
         return id;
-    }
-
-    public void setBoard(final Map<Position, String> board) {
-        this.board = board;
-    }
-
-    public void setStatus(final Status status) {
-        this.status = status;
-    }
-
-    public void setMessage(final String message) {
-        this.message = message;
-    }
-
-    public void setWinner(final Player winner) {
-        this.winner = winner;
-    }
-
-    public void setId(final long id) {
-        this.id = id;
     }
 
     public List<Long> getRoomId() {

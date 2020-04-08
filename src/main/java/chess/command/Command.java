@@ -1,4 +1,4 @@
-package chess.service;
+package chess.command;
 
 public enum Command {
     START,
