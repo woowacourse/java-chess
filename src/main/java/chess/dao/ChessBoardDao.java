@@ -16,59 +16,66 @@ public class ChessBoardDao {
 
     public void saveChessBoard(ChessBoardDto chessBoardDto) throws SQLException {
         Objects.requireNonNull(chessBoardDto);
-        Connection connection = new ConnectionDao().getConnection();
-
+        Connection connection = new DBConnector().getConnection();
         String query = "INSERT INTO chessboard VALUES (?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
 
         for (Tile tile : chessBoardDto.getTiles()) {
             pstmt.setString(1, tile.getPosition());
             pstmt.setString(2, tile.getPiece());
-            pstmt.executeUpdate();
+            pstmt.addBatch();
         }
 
-        pstmt.close();
-        connection.close();
+        try (connection; pstmt) {
+            pstmt.executeBatch();
+        } catch (SQLException e) {
+            throw  new SQLException("체스 보드를 저장할 수 없습니다.");
+        }
     }
 
     public void deleteChessBoard() throws SQLException {
-        Connection connection = new ConnectionDao().getConnection();
+        Connection connection = new DBConnector().getConnection();
         Statement stmt = connection.createStatement();
 
         String query = "DELETE FROM chessboard";
-        stmt.executeUpdate(query);
-
-        stmt.close();
-        connection.close();
+        try (connection; stmt) {
+            stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw  new SQLException("체스 보드를 삭제할 수 없습니다.");
+        }
     }
 
     public Map<Position, Piece> getChessBoard() throws SQLException {
-        Connection connection = new ConnectionDao().getConnection();
+        Connection connection = new DBConnector().getConnection();
         Statement stmt = connection.createStatement();
 
         String query = "SELECT * FROM chessboard";
         ResultSet rs = stmt.executeQuery(query);
 
         Map<Position, Piece> chessBoard = new HashMap<>();
-        while (rs.next()) {
-            Position position = Positions.of(rs.getString("position"));
-            Piece piece = ChessPieceFactory.of(rs.getString("piece"));
-            chessBoard.put(position, piece);
+        try (connection; stmt; rs) {
+            while (rs.next()) {
+                Position position = Positions.of(rs.getString("position"));
+                Piece piece = ChessPieceFactory.of(rs.getString("piece"));
+                chessBoard.put(position, piece);
+            }
+        } catch (SQLException e) {
+            throw new SQLException("체스 보드를 가져올 수 없습니다.");
         }
-        stmt.close();
-        connection.close();
         return chessBoard;
     }
 
     public boolean isChessBoardExists() throws SQLException {
-        Connection connection = new ConnectionDao().getConnection();
+        Connection connection = new DBConnector().getConnection();
 
         Statement stmt = connection.createStatement();
         String query = "SELECT * FROM chessBoard";
         ResultSet rs = stmt.executeQuery(query);
 
-        boolean result = rs.next();
-        connection.close();
-        return result;
+        try (connection; stmt; rs) {
+            return rs.next();
+        } catch (SQLException e) {
+            throw new SQLException("체스 보드 존재여부를 찾을 수 없습니다.");
+        }
     }
 }

@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionDao {
+public class DBConnector {
     public Connection getConnection() {
         final String server = "localhost:3306"; // MySQL 서버 주소
         final String database = "chess"; // MySQL DATABASE 이름
