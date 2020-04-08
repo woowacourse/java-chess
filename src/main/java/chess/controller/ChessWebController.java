@@ -1,17 +1,19 @@
 package chess.controller;
 
+import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.WebDto;
 import chess.service.ChessService;
+import chess.service.Command;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessWebController {
 
@@ -21,84 +23,111 @@ public class ChessWebController {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             ResponseDto responseDto = chessService.getRoomId();
-            List<Long> roomId = responseDto.getRoomId();
-            List<WebDto> roomIdDto = roomId.stream().map(id -> new WebDto(id.toString(), id)).collect(Collectors.toList());
+            List<WebDto> roomIdDto = makeRoomIdDto(responseDto);
             model.put("roomId", roomIdDto);
             return render(model, "index.html");
         });
+
+        post("/createChessGame", (req, res) -> {
+            ResponseDto responseDto = chessService.start(null);
+            Map<String, Object> model = new HashMap<>();
+            model.put("id", responseDto.getId());
+            return render(model, "create.html");
+        });
+
+        post("/loadChessGame", (req, res) -> {
+            RequestDto requestDto = makeRequestDto(req);
+            ResponseDto responseDto = chessService.load(requestDto);
+            List<WebDto> boardDto = makeBoardDto(responseDto);
+            List<WebDto> scoreDto = makeScoreDto(responseDto);
+            WebDto turnDto = makeTurnDto(responseDto);
+            Map<String, Object> model = new HashMap<>();
+            model.put("board", boardDto);
+            model.put("score", scoreDto);
+            model.put("turn", turnDto);
+            model.put("id", responseDto.getId());
+            return render(model, "chessGame.html");
+        });
+
+        post("/restartChessGame", (req, res) -> {
+            RequestDto requestDto = makeRequestDto(req);
+            ResponseDto responseDto = chessService.restart(requestDto);
+            List<WebDto> boardDto = makeBoardDto(responseDto);
+            List<WebDto> scoreDto = makeScoreDto(responseDto);
+            WebDto turnDto = makeTurnDto(responseDto);
+            Map<String, Object> model = new HashMap<>();
+            model.put("board", boardDto);
+            model.put("score", scoreDto);
+            model.put("turn", turnDto);
+            model.put("id", requestDto.getId());
+            return render(model, "chessGame.html");
+        });
+
+
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            RequestDto requestDto = makeRequestDto(req);
+            ResponseDto responseDto = chessService.move(requestDto);
+            List<WebDto> boardDto = makeBoardDto(responseDto);
+            List<WebDto> scoreDto = makeScoreDto(responseDto);
+            WebDto winnerDto = makeWinnerDto(responseDto);
+            WebDto turnDto = makeTurnDto(responseDto);
+            model.put("board", boardDto);
+            model.put("score", scoreDto);
+            model.put("turn", turnDto);
+            model.put("winner", winnerDto);
+            model.put("id", responseDto.getId());
+            model.put("message", responseDto.getMessage());
+            return render(model, "chessGame.html");
+        });
+
+        post("/end", (req, res) -> {
+            RequestDto requestDto = makeRequestDto(req);
+            ResponseDto responseDto = chessService.end(requestDto);
+            List<WebDto> roomDto = makeRoomIdDto(responseDto);
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", roomDto);
+            return render(model, "index.html");
+        });
+    }
+
+    private WebDto makeWinnerDto(final ResponseDto responseDto) {
+        return new WebDto(responseDto.getWinner().toString(), responseDto.getWinner().toString());
+    }
+
+    private RequestDto makeRequestDto(final Request req) {
+        return new RequestDto(Command.of(req.queryParams("command")),
+                new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_"))),
+                Long.valueOf(req.queryParams("id").trim()));
+    }
+
+    private List<WebDto> makeRoomIdDto(final ResponseDto responseDto) {
+        return responseDto.getRoomId()
+                .stream()
+                .map(id -> new WebDto(id.toString(), id))
+                .collect(Collectors.toList());
+    }
+
+    private WebDto makeTurnDto(final ResponseDto responseDto) {
+        return new WebDto(responseDto.getTurn().toString(), responseDto.getTurn().toString());
+    }
+
+    private List<WebDto> makeScoreDto(final ResponseDto responseDto) {
+        return responseDto.getStatus().entrySet().stream().map(entry ->
+                new WebDto(entry.getKey().toString(), entry.getValue().toString()))
+                .collect(Collectors.toList());
+    }
+
+    private List<WebDto> makeBoardDto(final ResponseDto responseDto) {
+        return responseDto.getBoard().entrySet().stream().map(entry ->
+                new WebDto(entry.getKey().getName(), entry.getValue()))
+                .collect(Collectors.toList());
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 //
-//        post("/restartChessGame", (req, res) -> {
-//            String number = req.queryParams("id").trim();
-//            Long id = Long.valueOf(number);
-//            chessService.restart(id);
-//            ResponseDto responseDto = chessService.getResponseDto(id);
-//            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-//            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-//            WebDto turnDto = getTurnDto(responseDto.getTurn());
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("board", boardDto);
-//            model.put("score", scoreDto);
-//            model.put("turn", turnDto);
-//            model.put("id", id);
-//            return render(model, "chessGame.html");
-//        });
-//
-//        post("/loadChessGame", (req, res) -> {
-//            String number = req.queryParams("id").trim();
-//            Long id = Long.valueOf(number);
-//            chessService.load(id);
-//            ResponseDto responseDto = chessService.getResponseDto(id);
-//            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-//            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-//            WebDto turnDto = getTurnDto(responseDto.getTurn());
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("board", boardDto);
-//            model.put("score", scoreDto);
-//            model.put("turn", turnDto);
-//            model.put("id", id);
-//            return render(model, "chessGame.html");
-//        });
-//
-//        post("/move", (req, res) -> {
-//            String message = null;
-//            Map<String, Object> model = new HashMap<>();
-//            String number = req.queryParams("id").trim();
-//            Long id = Long.valueOf(number);
-//            List<String> parameters = new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_")));
-//            try {
-//                chessService.move(id, parameters);
-//            } catch (IllegalArgumentException | UnsupportedOperationException e) {
-//                model.put("error-message", e.getMessage());
-//            }
-//            ResponseDto responseDto = chessService.getResponseDto(id);
-//            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-//            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-//            WebDto winnerDto = getTurnDto(responseDto.getWinner());
-//            WebDto turnDto = getTurnDto(responseDto.getTurn());
-//            model.put("board", boardDto);
-//            model.put("score", scoreDto);
-//            model.put("turn", turnDto);
-//            model.put("message", responseDto.getMessage());
-//            model.put("winner", winnerDto);
-//            model.put("id", id);
-//            return render(model, "chessGame.html");
-//        });
-//
-//        post("/end", (req, res) -> {
-//            String number = req.queryParams("id").trim();
-//            Long id = Long.valueOf(number);
-//            List<String> parameters = new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_")));
-//            chessService.end(id, parameters);
-//            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("roomId", roomDto);
-//            return render(model, "index.html");
-//        });
 //
 //        get("/", (req, res) -> {
 //            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());

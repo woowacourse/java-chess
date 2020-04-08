@@ -64,7 +64,7 @@ public class Board {
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
-                        entry -> entry.getValue().getFigure()
+                        entry -> entry.getValue().getPlayer().toString() + entry.getValue().toString()
                 ));
     }
 

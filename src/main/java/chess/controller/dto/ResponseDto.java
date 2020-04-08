@@ -1,5 +1,6 @@
 package chess.controller.dto;
 
+import chess.domain.game.Turn;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.domain.status.Status;
@@ -14,14 +15,18 @@ public class ResponseDto {
     private Map<Position, String> board;
     private Status status;
     private String message;
+    private Turn turn;
+    private Player winner;
     private long id;
 
     public ResponseDto(final List<Long> roomId) {
         this.roomId = roomId;
     }
 
-    public ResponseDto(Map<Position, String> board, long id) {
+    public ResponseDto(Map<Position, String> board, Turn turn, Status status, long id) {
         this.board = board;
+        this.turn = turn;
+        this.status = status;
         this.id = id;
     }
 
@@ -52,6 +57,15 @@ public class ResponseDto {
         return message;
     }
 
+    public Turn getTurn() {
+        return turn;
+    }
+
+    public long getId() {
+
+        return id;
+    }
+
     public void setBoard(final Map<Position, String> board) {
         this.board = board;
     }
@@ -64,11 +78,19 @@ public class ResponseDto {
         this.message = message;
     }
 
+    public void setWinner(final Player winner) {
+        this.winner = winner;
+    }
+
     public void setId(final long id) {
         this.id = id;
     }
 
     public List<Long> getRoomId() {
         return roomId;
+    }
+
+    public void setRoomId(final List<Long> roomId) {
+        this.roomId = roomId;
     }
 }

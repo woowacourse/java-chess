@@ -63,6 +63,13 @@ public class ChessGame {
         return status;
     }
 
+    public Player getWinner() {
+        if (board.isLost(Player.BLACK)) {
+            return Player.WHITE;
+        }
+        return Player.BLACK;
+    }
+
     public boolean isEnd() {
         return isEnd;
     }

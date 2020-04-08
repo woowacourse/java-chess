@@ -21,4 +21,9 @@ public class Turn {
     public boolean isSamePlayer(Player player) {
         return turn.equals(player);
     }
+
+    @Override
+    public String toString() {
+        return turn.toString();
+    }
 }

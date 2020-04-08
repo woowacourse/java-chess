@@ -4,9 +4,11 @@ import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.dao.ChessDAO;
 import chess.domain.game.ChessGame;
+import chess.domain.game.MoveParameter;
 
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -19,7 +21,6 @@ public class ChessService {
         commands.put(Command.START, this::start);
         commands.put(Command.MOVE, this::move);
         commands.put(Command.END, this::end);
-        commands.put(Command.STATUS, this::status);
         commands.put(Command.UNKNOWN, this::unknown);
     }
 
@@ -27,34 +28,66 @@ public class ChessService {
         return commands.get(requestDto.getCommand()).apply(requestDto);
     }
 
-    private ResponseDto start(final RequestDto requestDto) {
+    public ResponseDto start(RequestDto requestDto) {
         try {
             ChessGame chessGame = ChessGame.start();
             long id = chessDAO.createChessGame(chessGame);
-            return new ResponseDto(chessGame.getBoardAndString(), id);
+            return new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
+                    chessGame.getStatus(), id);
         } catch (SQLException | IllegalArgumentException | UnsupportedOperationException e) {
             return new ResponseDto(e.getMessage());
         }
     }
 
-    private ResponseDto move(final RequestDto requestDto) {
-//        long id = Long.valueOf(parameters.get(1));
-//        chessGames.get(id).move(MoveParameter.of(parameters));
-//        return new ResponseDto(chessGame.getBoardAndString());
-        return null;
+    public ResponseDto move(final RequestDto requestDto) {
+        long id = Long.valueOf(requestDto.getId());
+        ChessGame chessGame = chessGames.get(id);
+        ResponseDto responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
+                chessGame.getStatus(), id);
+        responseDto.setStatus(chessGame.getStatus());
+        try {
+            chessGame.move(MoveParameter.of(requestDto.getParameter()));
+            responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
+                    chessGame.getStatus(), id);
+            responseDto.setStatus(chessGame.getStatus());
+            setWinner(chessGame, responseDto);
+        } catch (UnsupportedOperationException | IllegalArgumentException e) {
+            responseDto.setMessage(e.getMessage());
+        }
+        return responseDto;
     }
 
-    private ResponseDto end(RequestDto requestDto) {
-//        chessGame.end();
-//        return new ResponseDto(chessGame.getBoardAndString());
-        return null;
+    private void setWinner(final ChessGame chessGame, final ResponseDto responseDto) {
+        if (chessGame.isEnd()) {
+            responseDto.setWinner(chessGame.getWinner());
+        }
     }
 
-    private ResponseDto status(RequestDto requestDto) {
-//        chessGame.status();
-//        return new ResponseDto(chessGame.getStatus());
-        return null;
+    public ResponseDto end(RequestDto requestDto) {
+        long id = requestDto.getId();
+        ChessGame chessGame = chessGames.get(id);
+        List<String> parameter = requestDto.getParameter();
+        ResponseDto responseDto = new ResponseDto("");
+        try {
+            if ("save".equals(parameter.get(0))) {
+                chessDAO.addBoard(id, chessGame);
+            }
+            if ("".equals(parameter.get(0))) {
+                chessDAO.deleteGame(id);
+            }
+            chessGames.remove(id);
+            responseDto.setRoomId(chessDAO.getRoomId());
+        } catch (SQLException e) {
+            responseDto.setMessage(e.getMessage());
+        }
+        return responseDto;
     }
+
+//    private ResponseDto status(RequestDto requestDto) {
+////        chessGame.status();
+////        return new ResponseDto(chessGame.getStatus());
+//        return null;
+//    }
 
     private ResponseDto unknown(RequestDto requestDto) {
         return new ResponseDto("알 수 없는 명령어 입니다.");
@@ -71,5 +104,27 @@ public class ChessService {
         } catch (SQLException e) {
             return new ResponseDto(e.getMessage());
         }
+    }
+
+    public ResponseDto load(final RequestDto requestDto) {
+        ResponseDto responseDto = new ResponseDto("");
+        long id = requestDto.getId();
+        try {
+            responseDto.setRoomId(chessDAO.getRoomId());
+            ChessGame chessGame = chessDAO.findGameById(id);
+            chessGames.put(id, chessGame);
+            responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
+                    chessGame.getStatus(), id);
+        } catch (SQLException e) {
+            responseDto.setMessage(e.getMessage());
+        }
+        return responseDto;
+    }
+
+    public ResponseDto restart(final RequestDto requestDto) {
+        ChessGame chessGame = ChessGame.start();
+        chessGames.put(requestDto.getId(), chessGame);
+        return new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
+                chessGame.getStatus(), requestDto.getId());
     }
 }
