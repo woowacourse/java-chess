@@ -137,6 +137,6 @@ public class BoardDao {
 				return Team.of(rs.getString("game_turn"));
 			}
 		}
-		return null;
+		throw new IllegalArgumentException("데이터 베이스에 저장된 Turn이 없습니다.");
 	}
 }
