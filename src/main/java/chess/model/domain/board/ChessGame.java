@@ -45,18 +45,6 @@ public class ChessGame {
         this.castlingElements = castlingElements;
     }
 
-    public void initialize() {
-        this.chessBoard = new BoardInitialDefault().getInitialize();
-        this.gameTurn = Color.WHITE;
-        this.castlingElements = CastlingSetting.getCastlingElements();
-    }
-
-    public void initialize(ChessGame chessGame) {
-        this.chessBoard = chessGame.chessBoard;
-        this.gameTurn = chessGame.gameTurn;
-        this.castlingElements = chessGame.castlingElements;
-    }
-
     public static boolean isInitialPoint(BoardSquare boardSquare, Piece piece) {
         return (piece instanceof Pawn)
             && (boardSquare.isSameRank(Rank.SEVENTH) || boardSquare.isSameRank(Rank.SECOND));
@@ -131,12 +119,16 @@ public class ChessGame {
         Piece currentPiece = chessBoard.remove(moveSquareBefore);
         chessBoard.put(moveSquareAfter, currentPiece);
 
-        if (CastlingSetting.canCastling(castlingElements, moveSquare)) {
+        if (canCastling(moveSquare)) {
             castlingRook(moveSquare);
         }
         castlingElements.removeAll(castlingElements.stream()
             .filter(element -> element.isContains(moveSquareBefore))
             .collect(Collectors.toSet()));
+    }
+
+    public boolean canCastling(MoveSquare moveSquare) {
+        return CastlingSetting.canCastling(castlingElements, moveSquare);
     }
 
     private void castlingRook(MoveSquare moveSquare) {

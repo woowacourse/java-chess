@@ -8,6 +8,7 @@ import chess.model.domain.board.ChessGame;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.piece.Type;
+import chess.model.domain.state.MoveOrder;
 import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
 import chess.model.dto.ChessGameDto;
@@ -73,11 +74,17 @@ public class ChessGameService {
         MoveSquare moveSquare = new MoveSquare(moveDTO.getSource(), moveDTO.getTarget());
         String gameId = moveDTO.getGameId();
         ChessGame chessGame = getChessGame(gameId);
+        boolean canCastling = chessGame.canCastling(moveSquare);
         MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
         if (moveState.isSucceed()) {
-            CHESS_BOARD_DAO.deleteBoardSquare(gameId, BoardSquare.of(moveDTO.getTarget()));
+            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.AFTER));
             CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquare);
-            CHESS_BOARD_DAO.deleteBoardSquare(gameId, BoardSquare.of(moveDTO.getSource()));
+            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.BEFORE));
+            if (canCastling) {
+                MoveSquare moveSquareRook = CastlingSetting.getMoveCastlingRook(moveSquare);
+                CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquareRook);
+                CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquareRook.get(MoveOrder.BEFORE));
+            }
         }
         if (moveState == MoveState.SUCCESS) {
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
@@ -101,7 +108,6 @@ public class ChessGameService {
             CHESS_BOARD_DAO.updatePromotion(gameId, finishPawnBoard, hopePiece);
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
         }
-        ChessGameDto chessGameDTO = new ChessGameDto(getChessGame(gameId), moveState);
-        return chessGameDTO;
+        return new ChessGameDto(getChessGame(gameId), moveState);
     }
 }
