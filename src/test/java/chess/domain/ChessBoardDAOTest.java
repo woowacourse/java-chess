@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,4 +20,5 @@ public class ChessBoardDAOTest {
         Connection con = chessBoardDAO.getConnection();
         assertNotNull(con);
     }
+
 }

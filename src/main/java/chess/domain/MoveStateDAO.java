@@ -1,8 +1,11 @@
-package chess.domain.board;
+package chess.domain;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-public class ChessBoardDAO {
+public class MoveStateDAO {
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소

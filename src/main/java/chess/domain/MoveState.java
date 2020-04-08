@@ -1,44 +1,58 @@
 package chess.domain;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Square;
 import chess.view.OutputView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class MoveState {
 
-    private static final String Move = "move";
+    private Square source;
+    private Square target;
+    private MoveCount moveCount = new MoveCount();
+
     private static final String BLANK = " ";
 
-    public static boolean isMove(String input) {
+    public boolean isMove(String input) {
         return validateMoveState(input) == GameState.MOVE;
     }
 
-    public static GameState validateMoveState(String input) {
+    public GameState validateMoveState(String input) {
         if (GameState.MOVE.equals(splitToState(input))) {
             return GameState.MOVE;
         }
         return GameState.ERROR;
     }
 
-    private static GameState splitToState(String input) {
+    private GameState splitToState(String input) {
         String state = Arrays.asList(input.split(BLANK)).get(0);
         return GameState.of(state);
     }
 
-    public static void move(String inputState, ChessBoard chessBoard) {
+    public void move(String inputState, ChessBoard chessBoard) {
         try {
-            List<Square> moveSquare = new ArrayList<>();
-            moveSquare.add(Square.of(Arrays.asList(inputState.split(BLANK)).get(1)));
-            moveSquare.add(Square.of(Arrays.asList(inputState.split(BLANK)).get(2)));
-            if (!chessBoard.movePiece(moveSquare.get(0),moveSquare.get(1))) {
+            source = Square.of(Arrays.asList(inputState.split(BLANK)).get(1));
+            target = Square.of(Arrays.asList(inputState.split(BLANK)).get(2));
+            if (!chessBoard.movePiece(source, target)) {
                 OutputView.printCanNotMoveMessage();
+                return;
             }
         } catch (Exception e) {
             OutputView.printInputError();
+            return;
         }
+        moveCount.setMoveCount();
     }
+
+    public Square getSource() {
+        return source;
+    }
+
+    public Square getTarget() {
+        return target;
+    }
+
+    public MoveCount getMoveCount() {
+        return moveCount;
+    }
+
 }

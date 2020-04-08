@@ -1,10 +1,6 @@
 package chess.controller;
 
-import chess.domain.GameState;
-import chess.domain.MoveState;
-import chess.domain.TeamScore;
-import chess.domain.Winner;
-import chess.domain.board.ChessBoard;
+import chess.domain.*;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -40,8 +36,9 @@ public class ConsoleChessController implements Controller{
 
     private boolean proceed() {
         String inputState = InputView.inputState();
-        if (MoveState.isMove(inputState)) {
-            MoveState.move(inputState, chessBoard);
+        MoveState moveState = chessBoard.getMoveState();
+        if (moveState.isMove(inputState)) {
+            moveState.move(inputState, chessBoard);
             return !chessBoard.isKingCaptured();
         }
         if (GameState.START == GameState.of(inputState)) {

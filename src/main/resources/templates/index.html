@@ -15,8 +15,8 @@
         .screen {
             width: 800px;
             height: 640px;
-            font-size : 25px;
-            font-family: "Apple LiGothic";
+            font-size: 25px;
+            font-family: Arial;
         }
 
         .scoreBoard {
@@ -48,7 +48,7 @@
         }
 
         .selector {
-            width: 200px;
+            width: 500px;
             height: 200px;
             margin-left: 700px;
 
@@ -136,15 +136,33 @@
         <br><br>
         BLACK 점수 : <label id="blackScore">38</label><br><br>
         WHITE 점수 : <label id="whiteScore">38</label><br><br>
-        우승자 : <label id="winner">BLACK WHITE</label>
+        우승자 : <label id="winner">BLACK WHITE</label><br>
     </div>
     <div class=selector>
+        <a href="/refresh">
+            <button id="continue">이어서 하기</button>
+        </a>
         <a href="/refresh"><button id="start">다시 시작하기</button></a>
         <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
     </div>
 </div>
 
 <script>
+
+    const PIECE = {
+        BlackPawn: String.fromCodePoint(9823),
+        BlackKnight: String.fromCodePoint(9822),
+        BlackBishop: String.fromCodePoint(9821),
+        BlackRook: String.fromCodePoint(9820),
+        BlackQueen: String.fromCodePoint(9819),
+        BlackKing: String.fromCodePoint(9818),
+        WhitePawn: String.fromCodePoint(9817),
+        WhiteKnight: String.fromCodePoint(9816),
+        WhiteBishop: String.fromCodePoint(9815),
+        WhiteRook: String.fromCodePoint(9814),
+        WhiteQueen: String.fromCodePoint(9813),
+        WhiteKing: String.fromCodePoint(9812),
+    };
 
     function endGame() {
         const winner = document.getElementById("winner");
@@ -154,6 +172,8 @@
     function pick(value) {
         if (document.querySelector('.before')) {
             pickAfter(value);
+            document.querySelector('.before').style.removeProperty('border');
+
         } else {
             pickBefore(value);
         }
@@ -161,6 +181,8 @@
 
     function pickBefore(beforeValue) {
         document.getElementById(beforeValue).classList.add('before');
+        document.getElementById(beforeValue).style.borderColor = 'blue';
+
     }
 
     async function pickAfter(afterValue) {
@@ -206,7 +228,6 @@
         const moveSquares = response.split(" ");
         const before = document.getElementById(moveSquares[0]);
         const after = document.getElementById(moveSquares[1]);
-
         after.innerText = before.innerText;
         before.innerText = " ";
         setStatus();
@@ -232,20 +253,16 @@
         });
     }
 
-    function doNotReload() {
-        if ((event.ctrlKey === true && (event.keyCode === 78 || event.keyCode === 82))
-            || (event.keyCode === 116)) {
-            reset();
-        }
-    }
-    document.onkeydown = doNotReload;
 
     function reset() {
         $.ajax({
             type: 'GET',
-            url: '/refresh'
+            url: '/refresh',
+            success: resetBoard,
+            error: alertMessage
         });
     }
+
     window.onbeforeunload = reset;
 
 </script>

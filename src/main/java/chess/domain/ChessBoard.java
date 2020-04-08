@@ -1,7 +1,7 @@
-package chess.domain.board;
+package chess.domain;
 
-import chess.domain.piece.Type;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Type;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,6 +10,7 @@ public class ChessBoard {
 
     private static final int FIRST_KINGS_NUMBER = 2;
     private Map<Square, Piece> chessBoard = new HashMap<>();
+    private MoveState moveState = new MoveState();
     private Turn turn;
 
     public ChessBoard() {
@@ -39,12 +40,13 @@ public class ChessBoard {
     }
 
 
-    public boolean movePiece(Square beforeSquare, Square afterSquare) {
-        if (!canMove(beforeSquare, afterSquare)) {
+    public boolean movePiece(Square sourceSquare, Square targetSquare) {
+        if (!canMove(sourceSquare, targetSquare)) {
             return false;
         }
-        Piece currentPiece = chessBoard.remove(beforeSquare);
-        chessBoard.put(afterSquare, currentPiece);
+        Piece currentPiece = chessBoard.remove(sourceSquare);
+        chessBoard.put(targetSquare, currentPiece);
+        moveState.getMoveCount().setMoveCount();
         return true;
     }
 
@@ -57,5 +59,9 @@ public class ChessBoard {
 
     public Turn getTurn() {
         return turn;
+    }
+
+    public MoveState getMoveState() {
+        return moveState;
     }
 }

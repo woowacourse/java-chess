@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
 import chess.domain.piece.Piece;
 
 import java.util.Map;

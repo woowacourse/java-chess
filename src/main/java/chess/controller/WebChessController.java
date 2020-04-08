@@ -1,10 +1,8 @@
 package chess.controller;
 
-import chess.domain.TeamScore;
-import chess.domain.Winner;
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Square;
+import chess.domain.*;
 import chess.domain.piece.Color;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -15,11 +13,16 @@ import static spark.Spark.*;
 
 public class WebChessController implements Controller {
 
+
     ChessBoard chessBoard = new ChessBoard();
+    ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
+    private Gson gson = new Gson();
 
     @Override
     public void run() {
         get("/", (req, res) -> {
+            chessBoard = new ChessBoard();
+            chessBoardDTO = new ChessBoardDTO(chessBoard);
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
@@ -37,16 +40,22 @@ public class WebChessController implements Controller {
                 return black + " " + white + " " + win;
 
             } catch (Exception e) {
-                res.status(403);
+                res.status(400);
                 return e.getMessage();
             }
         });
 
         get("/refresh", (req, res) -> {
-            chessBoard = new ChessBoard();
-            res.redirect("/");
-            externalStaticFileLocation("/templates");
-            return null;
+            try {
+                chessBoard = new ChessBoard();
+                chessBoardDTO = new ChessBoardDTO(chessBoard);
+                res.redirect("/");
+                externalStaticFileLocation("/templates");
+                return null;
+            } catch (Exception e) {
+                res.status(400);
+                return e.getMessage();
+            }
         });
 
         post("/move", (req, res) -> {
@@ -59,12 +68,11 @@ public class WebChessController implements Controller {
                 }
                 return req.queryParams("before") + " " + req.queryParams("after");
             } catch (Exception e) {
-                res.status(403);
+                res.status(400);
                 return e.getMessage();
             }
         });
     }
-
 
     private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

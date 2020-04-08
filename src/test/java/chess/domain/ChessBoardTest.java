@@ -1,13 +1,9 @@
-package chess.domain.board;
+package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -66,4 +62,5 @@ public class ChessBoardTest {
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
     }
+
 }

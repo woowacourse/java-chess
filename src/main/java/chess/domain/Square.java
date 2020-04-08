@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -61,4 +61,9 @@ public class Square {
     public char getRank() {
         return rank.getName();
     }
+
+    public String toString() {
+        return file.name() + rank.name();
+    }
+
 }
