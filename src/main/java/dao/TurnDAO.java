@@ -21,6 +21,7 @@ public class TurnDAO {
         PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
         pstmt.setString(1, Team.WHITE.toString());
         pstmt.executeUpdate();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
     }
 
     public void changeTurn() throws SQLException {
@@ -35,12 +36,14 @@ public class TurnDAO {
 
         pstmtUpdate.setString(1, Team.opposite(team).toString());
         pstmtUpdate.executeUpdate();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
     }
 
     public void delete() throws SQLException {
         String query = "delete from turn";
         PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
         pstmt.executeUpdate();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
     }
 
     public Team getTurn() throws SQLException {
@@ -48,7 +51,8 @@ public class TurnDAO {
         PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
         rs.next();
-
-        return Team.findTeam(rs.getObject(1).toString());
+        String team = rs.getObject(1).toString();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
+        return Team.findTeam(team);
     }
 }

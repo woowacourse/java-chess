@@ -30,6 +30,7 @@ public class PiecesDAO {
         pstmt.setString(1, pieces.getPiece(point).getInitial());
         pstmt.setString(2, point.toString());
         pstmt.executeUpdate();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
     }
 
     public Map<String, Object> readPieces() throws SQLException {
@@ -41,6 +42,7 @@ public class PiecesDAO {
         while (rs.next()) {
             pieces.put(rs.getObject(2).toString(), rs.getObject(1));
         }
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
         return pieces;
     }
 
@@ -54,12 +56,14 @@ public class PiecesDAO {
 
         PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
         pstmt.executeUpdate();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
     }
 
     public boolean isSave() throws SQLException {
         String query = "SELECT * from pieces";
         PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();
+        JDBCConnection.closeConnection(JDBCConnection.getConnection());
         return rs.isBeforeFirst();
     }
 }
