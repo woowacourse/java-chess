@@ -24,6 +24,10 @@ public enum Row {
 		return row.number - this.number;
 	}
 
+	public boolean isStartRow(int rankIndex){
+		return this.rankIndex == rankIndex;
+	}
+
 	public int getNumber() {
 		return number;
 	}

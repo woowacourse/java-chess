@@ -2,6 +2,8 @@ package domain.piece.position;
 
 import java.util.Arrays;
 
+import domain.piece.team.Team;
+
 public class Position {
 	private Column column;
 	private Row row;
@@ -43,6 +45,10 @@ public class Position {
 
 	public boolean isSamePosition(Position position) {
 		return this.equals(position);
+	}
+
+	public boolean isStartRow(Team team) {
+		return this.row.isStartRow(team.getStartRankIndex());
 	}
 
 	public Column getColumn() {

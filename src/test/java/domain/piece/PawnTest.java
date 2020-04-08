@@ -82,7 +82,7 @@ class PawnTest {
 	@DisplayName("처음 상태의 Pawn은 2칸 이동 가능")
 	@Test
 	void move_StartAndTwoStep_Success() {
-		MoveCommand moveCommand = new MoveCommand("move b1 b3");
+		MoveCommand moveCommand = new MoveCommand("move f2 f4");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
 		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
@@ -93,13 +93,10 @@ class PawnTest {
 	@DisplayName("진행 상태의 Pawn은 2칸 이동 불가능")
 	@Test
 	void move_RunAndTwoStep_ExceptionThrown() {
-		MoveCommand moveCommand = new MoveCommand("move b1 b3");
-		MoveCommand invalidInfo = new MoveCommand("move b3 b5");
+		MoveCommand moveCommand = new MoveCommand("move a3 a5");
 		Pawn pawn = new Pawn(moveCommand.getSourcePosition(), Team.WHITE);
 
-		pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board);
-
-		assertThatThrownBy(() -> pawn.move(invalidInfo.getTargetPosition(), Team.WHITE, board))
+		assertThatThrownBy(() -> pawn.move(moveCommand.getTargetPosition(), Team.WHITE, board))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_STEP_SIZE);
 	}

@@ -12,15 +12,16 @@ import domain.piece.team.Team;
 
 public class Pawn extends Piece {
 	public static final double PAWN_SCORE_WHEN_HAS_SAME_COLUMN = -0.5;
+	public static final int WHITE_START_RANK_INDEX = 1;
+	public static final int BLACK_START_RANK_INDEX = 6;
 	private static final int MIN_STEP_SIZE_OF_DIAGONAL = 1;
 	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
-
-	private State state;
+	private static final int START_STEP_SIZE = 2;
+	private static final int START_OR_RUN_STEP_SIZE = 1;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
-		state = State.START;
 	}
 
 	@Override
@@ -44,7 +45,6 @@ public class Pawn extends Piece {
 		}
 
 		this.changePosition(targetPosition, board);
-		this.state = State.RUN;
 	}
 
 	@Override
@@ -62,9 +62,13 @@ public class Pawn extends Piece {
 
 	@Override
 	protected void validateStepSize(Position sourcePosition, Position targetPosition) {
-		int rowGap = this.position.calculateRowGap(targetPosition);
-		boolean isWrongStepSize = !state.getIsValidStepSize().apply(Math.abs(rowGap));
-		if (isWrongStepSize) {
+		int rowGap = Math.abs(this.position.calculateRowGap(targetPosition));
+		boolean isRunState = !sourcePosition.isStartRow(team);
+		boolean isStartStepSize = rowGap == START_STEP_SIZE;
+		if (rowGap > START_STEP_SIZE) {
+			throw new InvalidPositionException(INVALID_STEP_SIZE);
+		}
+		if (isRunState && isStartStepSize) {
 			throw new InvalidPositionException(INVALID_STEP_SIZE);
 		}
 	}
