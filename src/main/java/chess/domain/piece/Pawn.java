@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.MovingDirection;
+import chess.controller.dto.PieceDto;
+import chess.domain.game.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.exception.MovingDirectionException;
@@ -63,5 +64,21 @@ public abstract class Pawn extends Piece {
             return BLACK_PAWN_UNICODE;
         }
         return WHITE_PAWN_UNICODE;
+    }
+
+    @Override
+    public String toString() {
+        return pieceType.toString();
+    }
+
+    public static PieceState of(final Position position, final Player player) {
+        Position whitePawnPosition = Position.of("a2");
+        Position blackPawnPosition = Position.of("a7");
+
+        if (whitePawnPosition.getRankDifference(position) == 0 && player.equals(Player.WHITE) ||
+                blackPawnPosition.getRankDifference(position) == 0 && player.equals(Player.BLACK)) {
+            return new NotMovedPawn(position, player);
+        }
+        return new MovedPawn(position, player);
     }
 }

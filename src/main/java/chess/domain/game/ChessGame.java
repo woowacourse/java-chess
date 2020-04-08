@@ -1,7 +1,8 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.board.Board;
 import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.piece.PieceState;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.domain.status.Status;
@@ -10,20 +11,24 @@ import java.util.Map;
 
 public class ChessGame {
     private final Board board;
-    private Turn turn;
-    private Status status;
+    private final Turn turn;
+    private final Status status;
     private boolean isEnd;
 
-    private ChessGame(Board board, Status status, Turn turn, boolean isEnd) {
+    private ChessGame(Board board, Turn turn) {
         this.board = board;
-        this.status = status;
         this.turn = turn;
-        this.isEnd = isEnd;
+        this.status = Status.of(board);
+        this.isEnd = false;
     }
 
     public static ChessGame start() {
         Board board = Board.of(new DefaultBoardInitializer());
-        return new ChessGame(board, Status.of(board), Turn.from(Player.WHITE), false);
+        return new ChessGame(board, Turn.from(Player.WHITE));
+    }
+
+    public static ChessGame load(Board board, Turn turn) {
+        return new ChessGame(board, turn);
     }
 
     public void move(MoveParameter moveParameter) {
@@ -46,8 +51,12 @@ public class ChessGame {
         status.update(board);
     }
 
-    public Map<Position, String> getBoard() {
-        return board.getBoard();
+    public Map<Position, String> getBoardAndString() {
+        return board.getBoardAndString();
+    }
+
+    public Turn getTurn() {
+        return turn;
     }
 
     public Status getStatus() {
@@ -56,5 +65,9 @@ public class ChessGame {
 
     public boolean isEnd() {
         return isEnd;
+    }
+
+    public Map<Position, PieceState> getBoard() {
+        return board.getBoard();
     }
 }

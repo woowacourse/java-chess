@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.MovingDirection;
+import chess.controller.dto.PieceDto;
+import chess.domain.game.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.exception.MovingDirectionException;
@@ -66,5 +67,10 @@ public class Queen extends UnchangeablePiece {
             return BLACK_QUEEN_UNICODE;
         }
         return WHITE_PAWN_UNICODE;
+    }
+
+    @Override
+    public String toString() {
+        return pieceType.toString();
     }
 }

@@ -5,7 +5,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.Turn;
 import chess.domain.piece.PieceState;
 import chess.domain.piece.PieceType;
-import chess.domain.player.Team;
+import chess.domain.player.Player;
 import chess.domain.position.Position;
 
 import java.sql.*;
@@ -61,6 +61,7 @@ public class ChessDAO {
         addBoard(id, chessGame);
         return id;
     }
+
 
     public long getCurrentGameId(Connection connection) throws SQLException {
         PreparedStatement pstmt = connection.prepareStatement("SELECT MAX(id) as recentId FROM chessGameTable;");
@@ -121,8 +122,8 @@ public class ChessDAO {
         PreparedStatement pstmt;
         for (Map.Entry<Position, PieceState> entry : board.entrySet()) {
             String position = entry.getKey().getName();
-            String piece = entry.getValue().getPieceType().toString();
-            String team = entry.getValue().getTeam().toString();
+            String piece = entry.getValue().toString();
+            String team = entry.getValue().getPlayer().toString();
             pstmt = connection.prepareStatement(query);
             pstmt.setString(1, position);
             pstmt.setString(2, piece);
@@ -140,7 +141,7 @@ public class ChessDAO {
         Turn turn = getCurrentTurn(id, connection);
         if (turn == null) return null;
         closeConnection(connection);
-        return new ChessGame(Board.of(board), turn);
+        return ChessGame.load(Board.of(board), turn);
     }
 
     private Map<Position, PieceState> getCurrentBoard(final long id, final Connection connection) throws SQLException {
@@ -155,7 +156,7 @@ public class ChessDAO {
         Map<Position, PieceState> board = new HashMap<>();
         while (rs.next()) {
             Position position = Position.of(rs.getString("position"));
-            Team team = Team.valueOf(rs.getString("team"));
+            Player team = Player.valueOf(rs.getString("team"));
             PieceState pieceState = createPieceState(rs.getString("piece"), position, team);
             board.put(position, pieceState);
         }
@@ -171,13 +172,13 @@ public class ChessDAO {
         if (!rs.next()) {
             return null;
         }
-        Turn turn = Turn.from(Team.valueOf(rs.getString("turn")));
+        Turn turn = Turn.from(Player.valueOf(rs.getString("turn")));
         return turn;
     }
 
-    private PieceState createPieceState(final String piece, final Position position, final Team team) {
+    private PieceState createPieceState(final String piece, final Position position, final Player player) {
         PieceType type = PieceType.valueOf(piece);
-        return type.apply(position, team);
+        return type.apply(position, player);
     }
 
     public List<Long> getRoomId() throws SQLException {

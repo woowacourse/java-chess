@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.MovingDirection;
+import chess.controller.dto.PieceDto;
+import chess.domain.game.MovingDirection;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 import chess.exception.MovingDirectionException;
@@ -61,5 +62,10 @@ public class Rook extends UnchangeablePiece {
             return BLACK_ROOK_UNICODE;
         }
         return WHITE_ROOK_UNICODE;
+    }
+
+    @Override
+    public String toString() {
+        return pieceType.toString();
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.position.Position;
 import chess.exception.MovingDirectionException;

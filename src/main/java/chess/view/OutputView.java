@@ -74,7 +74,7 @@ public class OutputView {
         System.out.println("우승자는 : " + responseDto.getWinner() + " 입니다.");
     }
 
-    public static void printErrorMessage(final RuntimeException e) {
-        System.out.println(e.getMessage());
+    public static void printErrorMessage(final String message) {
+        System.out.println(message);
     }
 }

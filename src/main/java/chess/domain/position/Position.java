@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.MovingDirection;
+import chess.domain.game.MovingDirection;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -59,5 +59,9 @@ public class Position {
 
     public boolean isSameFile(File file) {
         return this.file == file;
+    }
+
+    public String getName() {
+        return key(this.file, this.rank);
     }
 }

@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.Turn;
+import chess.controller.dto.PieceDto;
+import chess.domain.game.Turn;
 import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.PieceDto;
 import chess.domain.piece.PieceState;
 import chess.domain.player.Player;
 import chess.domain.position.File;
@@ -28,22 +28,17 @@ public class Board {
         return new Board(boardInitializer.create());
     }
 
+    public static Board of(Map<Position, PieceState> board) {
+        return new Board(board);
+    }
+
     public void move(Position source, Position target, Turn turn) {
         PieceState sourcePiece = board.get(source);
         validateSource(sourcePiece, turn);
-        PieceState piece = sourcePiece.move(target, getBoardDto());
+        PieceState piece = sourcePiece.move(target, getBoardAndTeam());
         board.remove(source);
         board.put(target, piece);
         turn.switchTurn();
-    }
-
-    public Map<Position, String> getBoard() {
-        return board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        Map.Entry::getKey,
-                        entry -> entry.getValue().getFigure()
-                ));
     }
 
     private void validateSource(PieceState sourcePiece, Turn turn) {
@@ -55,13 +50,26 @@ public class Board {
         }
     }
 
-    private Map<Position, PieceDto> getBoardDto() {
+    private Map<Position, PieceDto> getBoardAndTeam() {
         return board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,
                         entry -> new PieceDto(entry.getValue().getPlayer())
                 ));
+    }
+
+    public Map<Position, String> getBoardAndString() {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        entry -> entry.getValue().getFigure()
+                ));
+    }
+
+    public Map<Position, PieceState> getBoard() {
+        return board;
     }
 
     public boolean isLost(Player player) {

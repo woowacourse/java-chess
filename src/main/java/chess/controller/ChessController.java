@@ -12,13 +12,10 @@ public class ChessController {
     public void run() {
         OutputView.printInitialMessage();
         while (!chessService.isEnd()) {
-            try {
-                RequestDto requestDto = InputView.inputRequest();
-                ResponseDto responseDto = chessService.run(requestDto.getCommand(), requestDto.getParameter());
-                OutputView.printResponse(responseDto);
-            } catch (IllegalArgumentException | UnsupportedOperationException e) {
-                OutputView.printErrorMessage(e);
-            }
+            RequestDto requestDto = InputView.inputRequest();
+            ResponseDto responseDto = chessService.run(requestDto);
+            OutputView.printResponse(responseDto);
+            OutputView.printErrorMessage(responseDto.getMessage());
         }
     }
 }

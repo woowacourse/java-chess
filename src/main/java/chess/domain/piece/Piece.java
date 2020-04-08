@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.controller.dto.PieceDto;
 import chess.domain.player.Player;
 import chess.domain.position.Position;
 
