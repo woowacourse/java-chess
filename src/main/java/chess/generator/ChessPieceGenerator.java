@@ -7,6 +7,9 @@ import chess.domain.move.Position;
 import static chess.domain.chesspiece.ChessPieceInfo.*;
 
 public class ChessPieceGenerator {
+    private ChessPieceGenerator() {
+    }
+
     public static ChessPiece generateChessPiece(String pieceName, String teamName, Position position) {
         String lowerPieceName = pieceName.toLowerCase();
 
