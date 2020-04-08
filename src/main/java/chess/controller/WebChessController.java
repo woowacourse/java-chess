@@ -1,12 +1,13 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
-import chess.domain.Square;
 import chess.domain.TeamScore;
 import chess.domain.Winner;
-import chess.domain.dto.ChessBoardDTO;
 import chess.domain.piece.Color;
-import com.google.gson.Gson;
+import chess.dto.ChessBoardDTO;
+import chess.dto.MoveStateDTO;
+import chess.service.ChessBoardService;
+import chess.service.MoveStateService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -18,9 +19,9 @@ import static spark.Spark.*;
 public class WebChessController implements Controller {
 
 
-    ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
-    ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
-    private Gson gson = new Gson();
+    private ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+    private ChessBoardService chessBoardService = new ChessBoardService();
+    private MoveStateService moveStateService = new MoveStateService();
 
     @Override
     public void run() {
@@ -49,9 +50,12 @@ public class WebChessController implements Controller {
 
         get("/refresh", (req, res) -> {
             try {
+                ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
+                chessBoardService.deleteChessBoard(chessBoardDTO);
+                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+                moveStateService.deleteMoveStates(moveStateDTO);
                 res.redirect("/");
-                chessBoard = new ChessBoard("id2", Color.WHITE);
-                chessBoardDTO = new ChessBoardDTO(chessBoard);
+                chessBoard = new ChessBoard("id", Color.WHITE);
                 externalStaticFileLocation("/templates");
                 return null;
             } catch (Exception e) {
@@ -62,12 +66,18 @@ public class WebChessController implements Controller {
 
         post("/move", (req, res) -> {
             try {
-                chessBoard.movePiece(Square.of(req.queryParams("before")), Square.of(req.queryParams("after")));
+                String moveStatement = "move" + " " + req.queryParams("before") + " " + req.queryParams("after");
+                chessBoard.getMoveState().move(moveStatement, chessBoard);
+                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
                 if (chessBoard.isKingCaptured()) {
                     Color turn = chessBoard.getTurn().getTurn();
                     turn = turn.changeColor(turn);
                     throw new UnsupportedOperationException(turn.getName() + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
                 }
+                moveStateService.addMoveState(moveStateDTO);
+
+                ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
+                chessBoardService.updateChessBoard(chessBoardDTO);
                 return req.queryParams("before") + " " + req.queryParams("after");
             } catch (Exception e) {
                 res.status(400);

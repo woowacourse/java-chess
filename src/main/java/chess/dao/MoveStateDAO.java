@@ -1,6 +1,6 @@
-package chess.domain.dao;
+package chess.dao;
 
-import chess.domain.dto.MoveStateDTO;
+import chess.dto.MoveStateDTO;
 
 import java.sql.*;
 
@@ -52,7 +52,7 @@ public class MoveStateDAO {
     }
 
     public ResultSet findByPlayerId(String playerId) throws SQLException {
-        String query = "SELECT * FROM moveState WHERE id = ? ";
+        String query = "SELECT * FROM moveState WHERE id = ? ORDER BY moveCount ASC";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, playerId);
         ResultSet rs = pstmt.executeQuery();
