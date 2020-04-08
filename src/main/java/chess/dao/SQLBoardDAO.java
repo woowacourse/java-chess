@@ -8,12 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static ch.qos.logback.core.db.DBHelper.closeConnection;
+
 public class SQLBoardDAO implements BoardDAO {
     private static final String SERVER = "localhost:13306";
     private static final String DATABASE = "db_name";
     private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
     private static final String USER_NAME = "root";
     private static final String PASSWORD = "root";
+
+    private static final String DESTINATION = String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION);
 
     public SQLBoardDAO() {
         try {
@@ -27,14 +31,12 @@ public class SQLBoardDAO implements BoardDAO {
     public void placePieceOn(Position position, Piece piece) throws SQLException {
         String query = "INSERT INTO board (position, piece) VALUES (?, ?) ON DUPLICATE KEY UPDATE position=?, piece=?";
 
-        try (Connection con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION), USER_NAME, PASSWORD);
-             PreparedStatement ps = con.prepareStatement(query)) {
+        executeUpdate(query, ps -> {
             ps.setString(1, position.toString());
             ps.setString(2, piece.toString());
             ps.setString(3, position.toString());
             ps.setString(4, piece.toString());
-            ps.executeUpdate();
-        }
+        });
     }
 
     @Override
@@ -54,7 +56,7 @@ public class SQLBoardDAO implements BoardDAO {
     public Optional<Piece> findPieceOn(Position position) throws SQLException {
         String query = "SELECT * FROM board WHERE position = ?";
 
-        try (Connection con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION), USER_NAME, PASSWORD);
+        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
              PreparedStatement ps = con.prepareStatement(query)) {
             ps.setString(1, position.toString());
             ResultSet rs = ps.executeQuery();
@@ -70,7 +72,7 @@ public class SQLBoardDAO implements BoardDAO {
     public Map<Position, Piece> findAllPieces() throws SQLException {
         String query = "SELECT * FROM board ";
 
-        try (Connection con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION), USER_NAME, PASSWORD);
+        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
              PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
 
@@ -90,10 +92,24 @@ public class SQLBoardDAO implements BoardDAO {
     public void removePieceOn(Position position) throws SQLException {
         String query = "DELETE FROM board WHERE position = ?";
 
-        try (Connection con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION), USER_NAME, PASSWORD);
-             PreparedStatement ps = con.prepareStatement(query)) {
+        executeUpdate(query, (ps) -> {
             ps.setString(1, position.toString());
+        });
+    }
+
+    private void executeUpdate(String query, throwingConsumer<PreparedStatement> consumer) throws SQLException {
+        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(query)) {
+            consumer.accept(ps);
             ps.executeUpdate();
+
+            ps.close();
+            closeConnection(con);
         }
     }
+
+    private interface throwingConsumer<T> {
+        void accept(T t) throws SQLException;
+    }
+
 }
