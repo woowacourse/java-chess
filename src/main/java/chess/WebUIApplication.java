@@ -13,6 +13,8 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIApplication {
+    private static HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+
     public static void main(String[] args) {
         staticFileLocation("/templates");
 
@@ -37,6 +39,6 @@ public class WebUIApplication {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 }
