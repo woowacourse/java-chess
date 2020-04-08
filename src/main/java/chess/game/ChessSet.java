@@ -54,12 +54,11 @@ public class ChessSet {
     }
 
     public Team getTeam() {
-        for (Piece piece: chessSet.values()) {
-            if(Objects.nonNull(piece)) {
-                return piece.getTeam();
-            }
-        }
+        Piece piece = chessSet.values().stream()
+                .filter(Objects::nonNull)
+                .findAny()
+                .get();
 
-        throw new NoSuchElementException(NO_ELEMENT_IN_CHESS_SET_MESSAGE);
+        return piece.getTeam();
     }
 }
