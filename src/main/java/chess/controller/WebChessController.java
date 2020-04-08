@@ -56,15 +56,14 @@ public class WebChessController implements ChessController {
 
         get("/save", (req, res) -> {
             ChessDAO chessDAO = ChessDAO.getInstance();
-            chessDAO.savePieces(board.getPieces().getAlivePieces());
-            chessDAO.saveTurn(board.getTurn());
+            chessDAO.saveGame(board.getAlivePieces(), board.getTurn());
             res.redirect("/");
             return null;
         });
 
         get("/load", (req, res) -> {
             ChessDAO chessDAO = ChessDAO.getInstance();
-            board = new Board(chessDAO.loadPieces(), chessDAO.loadTurn());
+            board = chessDAO.loadGame();
             res.redirect("/");
             return null;
         });
@@ -76,7 +75,7 @@ public class WebChessController implements ChessController {
 
     private Map<String, Piece> printChessBoard(Board board) {
         Map<String, Piece> model = new HashMap<>();
-        for (Piece piece : board.getPieces().getAlivePieces()) {
+        for (Piece piece : board.getAlivePieces()) {
             model.put(piece.getPosition().toString(), piece);
         }
         return model;

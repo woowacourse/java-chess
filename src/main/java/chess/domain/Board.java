@@ -77,6 +77,10 @@ public class Board {
         return pieces;
     }
 
+    public List<Piece> getAlivePieces() {
+        return pieces.getAlivePieces();
+    }
+
     public Team getWinner() {
         return pieces.teamWithAliveKing();
     }

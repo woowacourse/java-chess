@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.domain.Board;
 import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.Turn;
@@ -57,64 +58,87 @@ public class ChessDAO {
         }
     }
 
-    public void savePieces(List<Piece> pieces) throws SQLException {
-        Connection connection = getConnection();
-        PreparedStatement cleanup = connection.prepareStatement("DELETE FROM Pieces");
-        cleanup.executeUpdate();
+    public void saveGame(List<Piece> pieces, Turn turn) throws SQLException {
+        savePieces(pieces);
+        saveTurn(turn);
+    }
+
+    private void savePieces(List<Piece> pieces) throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Pieces");
+        ) {
+            pstmt.executeUpdate();
+        }
 
         for (Piece piece : pieces) {
-            String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
-            PreparedStatement pstmt = connection.prepareStatement(query);
+            savePiece(piece);
+        }
+    }
+
+    private void savePiece(Piece piece) throws SQLException {
+        String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
             pstmt.setString(1, piece.getPosition().toString());
             pstmt.setString(2, piece.toString());
             pstmt.setString(3, piece.getTeam().toString());
             pstmt.executeUpdate();
         }
-        closeConnection(connection);
     }
 
-    public void saveTurn(Turn turn) throws SQLException {
-        Connection connection = getConnection();
-        PreparedStatement cleanup = connection.prepareStatement("DELETE FROM Turn");
-        cleanup.executeUpdate();
-
-        String query = "INSERT INTO Turn (turn) VALUES (?)";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, turn.getTeam().toString());
-        pstmt.executeUpdate();
-        closeConnection(connection);
+    private void saveTurn(Turn turn) throws SQLException {
+        String query = "INSERT INTO Turn (turn) VALUES (?) ON DUPLICATE KEY UPDATE turn=?";
+        try (
+                Connection connection = getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
+            String team = turn.getTeam().toString();
+            pstmt.setString(1, team);
+            pstmt.setString(2, team);
+            pstmt.executeUpdate();
+        }
     }
 
-    public Pieces loadPieces() throws SQLException {
-        Connection connection = getConnection();
+    public Board loadGame() throws SQLException {
+        return new Board(loadPieces(), loadTurn());
+    }
+
+    private Pieces loadPieces() throws SQLException {
         String query = "SELECT * FROM Pieces";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        Map<Position, Piece> pieces = new HashMap<>();
-
-        while (rs.next()) {
-            Position position = new Position(rs.getString("position"));
-            Piece piece = PieceGenerator.generate(
-                    rs.getString("representation"),
-                    rs.getString("team"),
-                    rs.getString("position")
-            );
-            pieces.put(position, piece);
+        try (
+                Connection connection = getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery();
+        ) {
+            Map<Position, Piece> pieces = new HashMap<>();
+            while (rs.next()) {
+                Position position = new Position(rs.getString("position"));
+                Piece piece = PieceGenerator.generate(
+                        rs.getString("representation"),
+                        rs.getString("team"),
+                        rs.getString("position")
+                );
+                pieces.put(position, piece);
+            }
+            return new Pieces(pieces);
         }
-        closeConnection(connection);
-        return new Pieces(pieces);
     }
 
-    public Turn loadTurn() throws SQLException {
-        Connection connection = getConnection();
+    private Turn loadTurn() throws SQLException {
         String query = "SELECT * FROM Turn";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            return null;
+        try (
+                Connection connection = getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                ResultSet rs = pstmt.executeQuery();
+        ) {
+            if (!rs.next()) {
+                return null;
+            }
+            Turn turn = new Turn(Team.valueOf(rs.getString("turn")));
+            return turn;
         }
-        Turn turn = new Turn(Team.valueOf(rs.getString("turn")));
-        closeConnection(connection);
-        return turn;
     }
 }
