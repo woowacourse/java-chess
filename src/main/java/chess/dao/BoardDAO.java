@@ -16,6 +16,10 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 
 public class BoardDAO {
+	public void initialize(String gameId, List<Piece> board) {
+		board.forEach(piece -> addPiece(gameId, piece));
+	}
+
 	public void addPiece(String gameId, Piece piece) {
 		String query = "INSERT INTO board VALUES (?, ?, ?)";
 		try {

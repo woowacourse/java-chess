@@ -5,7 +5,6 @@ import chess.dao.TurnInfoDAO;
 import chess.domain.Status;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.MoveInfo;
 import chess.domain.position.Position;
@@ -21,9 +20,7 @@ public class ChessService {
 
 	public void initialize(String gameId) {
 		if (boardDAO.findBoardBy(gameId).isEmpty()) {
-			for (Piece piece : BoardFactory.toList()) {
-				boardDAO.addPiece(gameId, piece);
-			}
+			boardDAO.initialize(gameId, BoardFactory.toList());
 			turnInfoDAO.initialize(gameId, Team.WHITE);
 		}
 	}
