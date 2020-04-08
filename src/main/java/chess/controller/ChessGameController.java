@@ -15,12 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGameController {
-    public static String index(Request request, Response response) {
-        Map<String, Object> model = new HashMap<>();
-
-        return render(model, "index.html");
-    }
-
     public static String newGame(Request request, Response response) throws SQLException {
         GameService gameService = new GameService();
 
@@ -45,9 +39,5 @@ public class ChessGameController {
         GameService gameService = new GameService();
 
         return gameService.continueGame();
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
