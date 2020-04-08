@@ -47,6 +47,10 @@ public class Position {
 		return this.equals(position);
 	}
 
+	public boolean isSameColumn(Position position) {
+		return this.column.equals(position.column);
+	}
+
 	public boolean isStartRow(Team team) {
 		return this.row.isStartRow(team.getStartRankIndex());
 	}

@@ -2,6 +2,7 @@ package domain.piece;
 
 import static domain.piece.position.InvalidPositionException.*;
 
+import java.util.List;
 import java.util.Optional;
 
 import domain.board.Board;
@@ -18,7 +19,6 @@ public class Pawn extends Piece {
 	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
 	private static final int START_STEP_SIZE = 2;
-	private static final int START_OR_RUN_STEP_SIZE = 1;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
@@ -89,5 +89,11 @@ public class Pawn extends Piece {
 	@Override
 	public double getScore() {
 		return SCORE;
+	}
+
+	public boolean hasSameColumn(List<Pawn> pawns) {
+		pawns.remove(this);
+		return pawns.stream()
+			.anyMatch(pawn -> pawn.position.isSameColumn(this.position));
 	}
 }

@@ -31,10 +31,11 @@ public class Rank {
 			.reduce(0.0, Double::sum);
 	}
 
-	public List<Piece> findPawn(Team team) {
+	public List<Pawn> findPawn(Team team) {
 		return pieces.stream()
 			.filter(value -> value instanceof Pawn)
 			.filter(value -> value.isTeam(team))
+			.map(piece -> (Pawn)piece)
 			.collect(Collectors.toList());
 	}
 

@@ -8,7 +8,6 @@ import java.util.stream.Collectors;
 
 import domain.board.Rank;
 import domain.piece.Pawn;
-import domain.piece.Piece;
 import domain.piece.team.Team;
 
 public class Score {
@@ -26,7 +25,7 @@ public class Score {
 	}
 
 	private static double applyPawnScore(List<Rank> ranks, Team team, double sum) {
-		List<Piece> pawn = new ArrayList<>();
+		List<Pawn> pawn = new ArrayList<>();
 
 		ranks.stream()
 			.map(rank -> rank.findPawn(team))
@@ -39,12 +38,8 @@ public class Score {
 		return sum;
 	}
 
-	private static boolean hasSameColumnPawn(List<Piece> pawns) {
-		int distinctCount = (int)pawns.stream()
-			.map(pawn -> pawn.getPosition().getColumn())
-			.distinct()
-			.count();
-
-		return pawns.size() != distinctCount;
+	private static boolean hasSameColumnPawn(List<Pawn> pawns) {
+		return pawns.stream()
+			.anyMatch(pawn -> pawn.hasSameColumn(pawns));
 	}
 }
