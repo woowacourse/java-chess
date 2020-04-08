@@ -33,8 +33,7 @@ class NotPawnTest {
     void calculateScore(PieceType pieceType, Score expected) {
         //given
         Initialized piece = (Initialized) PieceFactory.createInitializedPiece(pieceType, Position.of(5, 5), Team.WHITE);
-        UserInterface userInterface = new Console();
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         //when
         Score score = piece.calculateScore(board);
         //then

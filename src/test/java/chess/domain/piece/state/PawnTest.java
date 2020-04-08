@@ -1,15 +1,14 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.factory.PieceType;
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.InitializedPawn;
+import chess.domain.piece.factory.PieceType;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
+import chess.domain.ui.UserInterface;
 import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -28,8 +27,7 @@ class PawnTest {
     void calculateScore(Position position, Score expected) {
         //given
         Initialized pawn = (Initialized) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, Team.WHITE);
-        UserInterface userInterface = new Console();
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         //when
         Score score = pawn.calculateScore(board);
         //then

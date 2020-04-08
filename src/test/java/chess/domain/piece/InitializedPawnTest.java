@@ -6,8 +6,6 @@ import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -19,15 +17,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitializedPawnTest {
-
-    private UserInterface userInterface = new Console();
-
     @ParameterizedTest
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         boolean hasHindrance = initializedPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }
@@ -36,9 +31,9 @@ class InitializedPawnTest {
     @DisplayName("#move() : should return Piece as to team and Position 'to'")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Team team, Position to) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, Position.of(1,2), team);
+        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, Position.of(1, 2), team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         Piece moved = initializedPawn.move(to, board);
         assertThat(moved).isInstanceOf(MovedPawn.class);
@@ -50,7 +45,7 @@ class InitializedPawnTest {
     void moveFail(Team team, Position from, Position to) {
         Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> initializedPawn.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

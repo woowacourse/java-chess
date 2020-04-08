@@ -21,16 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PawnIsDiagonalWithoutAttackTest {
 
     private PawnIsDiagonalWithoutAttack pawnIsDiagonalWithoutAttack = new PawnIsDiagonalWithoutAttack();
-    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Team team, Position from, Position to, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
-
-
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         boolean canNotMove = pawnIsDiagonalWithoutAttack.canNotMove(initializedPawn, to, board);
         assertThat(canNotMove).isEqualTo(expected);
     }

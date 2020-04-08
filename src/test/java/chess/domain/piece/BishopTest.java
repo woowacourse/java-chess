@@ -8,8 +8,6 @@ import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -21,7 +19,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BishopTest {
-    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
@@ -29,7 +26,7 @@ class BishopTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Piece moved = bishop.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -40,7 +37,7 @@ class BishopTest {
     void moveFail(Position from, Position to, Team team) {
         Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> bishop.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -51,7 +48,7 @@ class BishopTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         Bishop bishop = (Bishop) PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         boolean hasHindrance = bishop.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }

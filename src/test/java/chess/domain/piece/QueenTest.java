@@ -20,16 +20,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
-
-    private UserInterface userInterface = new Console();
-
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Piece moved = queen.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -40,7 +37,7 @@ class QueenTest {
     void moveFail(Position from, Position to, Team team) {
         Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> queen.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

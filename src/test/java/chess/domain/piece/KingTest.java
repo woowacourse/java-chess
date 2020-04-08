@@ -7,8 +7,6 @@ import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,15 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
-    private UserInterface userInterface = new Console();
-
     @ParameterizedTest
     @DisplayName("#move() : should return King as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMoveSucceed"})
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Piece moved = king.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -39,7 +35,7 @@ class KingTest {
     void moveFail(Position from, Position to, Team team) {
         Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> king.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

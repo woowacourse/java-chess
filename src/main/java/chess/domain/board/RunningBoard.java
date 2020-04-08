@@ -22,26 +22,23 @@ public class RunningBoard implements Board {
     private static final int BLANK_END_INDEX = 6;
 
     private final Map<Position, Piece> pieces;
-    private final UserInterface userInterface;
 
-    private RunningBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
+    private RunningBoard(Map<Position, Piece> pieces) {
         this.pieces = pieces;
-        this.userInterface = userInterface;
     }
 
-    public static RunningBoard initiaize(UserInterface userInterface) {
+    public static RunningBoard initiaize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeBlanks(pieces);
         initializeWhiteTeam(pieces);
-        return new RunningBoard(pieces, userInterface);
+        return new RunningBoard(pieces);
     }
 
 
     @Override
-    public Board movePiece() {
-        MovingFlow movingFlow = userInterface.inputMovingFlow();
-        return MoveExceptionHandler.handle(this::movePiece, movingFlow, userInterface, this);
+    public Board movePiece(MovingFlow movingFlow) {
+        return MoveExceptionHandler.handle(this::movePiece, movingFlow, this);
     }
 
     private Board movePiece(Position from, Position to, Board board) {
@@ -51,10 +48,10 @@ public class RunningBoard implements Board {
         pieces.put(from, Blank.of());
         pieces.put(to, piece);
         if (piece.attackedKing()) {
-            return new FinishedBoard(pieces, userInterface);
+            return new FinishedBoard(pieces);
         }
 
-        return new RunningBoard(pieces, userInterface);
+        return new RunningBoard(pieces);
     }
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {

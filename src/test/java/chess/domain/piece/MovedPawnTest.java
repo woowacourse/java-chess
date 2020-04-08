@@ -7,8 +7,6 @@ import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
-import chess.domain.ui.UserInterface;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MovedPawnTest {
-    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#move() : should return MovedPawn as to Position 'from', 'to' and team")
@@ -28,7 +25,7 @@ class MovedPawnTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Piece moved = movedPawn.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -59,7 +56,7 @@ class MovedPawnTest {
     void moveFail(Position from, Position to, Team team) {
         Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> movedPawn.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -81,7 +78,7 @@ class MovedPawnTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         MovedPawn runningPawn = (MovedPawn) PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         boolean hasHindrance = runningPawn.hasHindrance(to, board);
         assertThat(hasHindrance).isEqualTo(expected);
     }

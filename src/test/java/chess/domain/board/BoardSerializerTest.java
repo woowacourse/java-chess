@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.ui.UserInterface;
-import chess.ui.Console;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
@@ -12,8 +10,7 @@ class BoardSerializerTest {
 
     @Test
     void serialize() {
-        UserInterface userInterface = new Console();
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Map<String, String> serialized = BoardSerializer.serialize(board);
         assertThat(serialized.get("11")).isEqualTo("r");
     }

@@ -1,14 +1,12 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
-import chess.ui.Console;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,7 +20,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 class IsAttackingSameTeamTest {
 
     private IsAttackingSameTeam isAttackingSameTeam = new IsAttackingSameTeam();
-    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
@@ -52,7 +49,7 @@ class IsAttackingSameTeamTest {
             }
         };
         
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Position to = Position.of(1,7);
         boolean canNotMove = isAttackingSameTeam.canNotMove(initializedPiece, to, board);
         assertThat(canNotMove).isEqualTo(expected);

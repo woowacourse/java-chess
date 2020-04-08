@@ -1,14 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceType;
-import chess.domain.piece.state.move.MoveType;
-import chess.domain.ui.UserInterface;
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.team.Team;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
-import chess.ui.Console;
+import chess.domain.piece.state.move.MoveType;
+import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -20,7 +18,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
-    private UserInterface userInterface = new Console();
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
@@ -28,7 +25,7 @@ class KnightTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         Piece moved = knight.move(to, board);
         assertThat(moved).isEqualTo(expected);
     }
@@ -39,7 +36,7 @@ class KnightTest {
     void moveFail(Position from, Position to, Team team) {
         Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
 
         assertThatThrownBy(() -> knight.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);

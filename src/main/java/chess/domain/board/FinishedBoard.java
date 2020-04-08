@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -10,11 +11,29 @@ import java.util.Map;
 
 public class FinishedBoard implements Board {
     private final Map<Position, Piece> pieces;
-    private final UserInterface userInterface;
 
-    FinishedBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
+    FinishedBoard(Map<Position, Piece> pieces) {
         this.pieces = pieces;
-        this.userInterface = userInterface;
+    }
+
+    @Override
+    public Board movePiece(MovingFlow movingFlow) {
+        throw new IllegalStateException("게임이 종료되어, 체스말을 움직일 수 없습니다.");
+    }
+
+    @Override
+    public Piece getPiece(Position position) {
+        return pieces.get(position);
+    }
+
+    @Override
+    public Map<Position, Piece> getPieces() {
+        return pieces;
+    }
+
+    @Override
+    public boolean isNotFinished() {
+        return false;
     }
 
     @Override
@@ -45,25 +64,5 @@ public class FinishedBoard implements Board {
                 .mapToDouble(Score::getValue)
                 .sum();
         return new Score(sum);
-    }
-
-    @Override
-    public Board movePiece() {
-        throw new IllegalStateException("게임이 종료되어, 체스말을 움직일 수 없습니다.");
-    }
-
-    @Override
-    public Piece getPiece(Position position) {
-        return pieces.get(position);
-    }
-
-    @Override
-    public Map<Position, Piece> getPieces() {
-        return pieces;
-    }
-
-    @Override
-    public boolean isNotFinished() {
-        return false;
     }
 }

@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardSerializer;
 import chess.domain.board.Result;
 import chess.domain.board.RunningBoard;
+import chess.domain.piece.position.MovingFlow;
 import chess.domain.ui.UserInterface;
 import chess.ui.Command;
 import chess.view.OutputView;
@@ -21,14 +22,15 @@ public class Game {
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
-        Board board = RunningBoard.initiaize(userInterface);
+        Board board = RunningBoard.initiaize();
         OutputView.printBoard(BoardSerializer.serialize(board));
         return board;
     }
 
     public Board play(Board board) {
         while (board.isNotFinished()) {
-            board = board.movePiece();
+            MovingFlow movingFlow = userInterface.inputMovingFlow();
+            board = board.movePiece(movingFlow);
             OutputView.printBoard(BoardSerializer.serialize(board));
         }
         return board;
