@@ -8,12 +8,12 @@ import chess.domain.ChessGame;
 import chess.domain.FinishFlag;
 import chess.domain.dao.RoomDao;
 
-public class BoardService {
+public class ChessGameService {
 	private static final String BLANK_MARK = ".";
 
 	private final RoomDao roomDao;
 
-	public BoardService(RoomDao roomDao) {
+	public ChessGameService(RoomDao roomDao) {
 		this.roomDao = roomDao;
 	}
 

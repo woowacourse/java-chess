@@ -1,13 +1,13 @@
 package chess;
 
-import chess.domain.service.BoardService;
 import chess.contoller.WebController;
 import chess.domain.dao.RoomDao;
+import chess.domain.service.ChessGameService;
 
 public class WebApplication {
 	public static void main(String[] args) {
-		BoardService boardService = new BoardService(new RoomDao());
-		WebController webController = new WebController(boardService);
+		ChessGameService chessGameService = new ChessGameService(new RoomDao());
+		WebController webController = new WebController(chessGameService);
 		webController.run();
 	}
 }

@@ -9,17 +9,18 @@ import chess.domain.ChessGame;
 import chess.domain.RoomName;
 import chess.domain.Side;
 import chess.domain.dto.ChessBoardDto;
+import chess.domain.dto.RoomsDto;
 import chess.domain.dto.StatusDto;
 import chess.domain.position.Position;
-import chess.domain.service.BoardService;
+import chess.domain.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebController {
-	private final BoardService boardService;
+	private final ChessGameService chessGameService;
 
-	public WebController(BoardService boardService) {
-		this.boardService = boardService;
+	public WebController(ChessGameService chessGameService) {
+		this.chessGameService = chessGameService;
 	}
 
 	public void run() {
@@ -36,7 +37,7 @@ public class WebController {
 		post("/create", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			RoomName roomName = new RoomName(req.queryParams("room-name"));
-			boardService.create(chessGame, roomName.getName());
+			chessGameService.create(chessGame, roomName.getName());
 			res.cookie("room-name", roomName.getName());
 			transfer(chessGame, model);
 			return render(model, "chess.html");
@@ -59,7 +60,7 @@ public class WebController {
 				Position source = new Position(req.queryParams("source"));
 				Position target = new Position(req.queryParams("target"));
 				chessGame.move(source, target);
-				boardService.save(chessGame, req.cookie("room-name"));
+				chessGameService.save(chessGame, req.cookie("room-name"));
 			} catch (RuntimeException e) {
 				model.put("error", e.getMessage());
 			}
