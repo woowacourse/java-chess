@@ -6,7 +6,9 @@ import chess.domain.strategy.*;
 import chess.domain.util.Direction;
 import chess.domain.util.Directions;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public enum PieceType {
     FIRST_WHITE_PAWN(new PawnMoveStrategy(), Directions.FIRST_WHITE_PAWN_DIRECTION, 1),
@@ -23,6 +25,14 @@ public enum PieceType {
 
     BLANK(new BlankStrategy(), Directions.BLANK_DIRECTION, 0);
 
+    private static final Map<String, PieceType> ENUM_MAP = new HashMap<>();
+
+    static {
+        for (PieceType pieceType : values()) {
+            ENUM_MAP.put(pieceType.name(), pieceType);
+        }
+    }
+
     private final MoveStrategy moveStrategy;
     private final Directions directions;
     private final double score;
@@ -31,6 +41,10 @@ public enum PieceType {
         this.moveStrategy = moveStrategy;
         this.directions = directions;
         this.score = score;
+    }
+
+    public static PieceType of(final String name) {
+        return ENUM_MAP.get(name);
     }
 
     public List<Position> possiblePositions(final Board board, final Piece piece) {

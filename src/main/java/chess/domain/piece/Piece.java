@@ -70,7 +70,7 @@ public abstract class Piece {
     }
 
     public String getName() {
-        return representation + "_" + turn.toString().toLowerCase();
+        return representation + "-" + turn.toString().toLowerCase() + "-" + pieceType.name();
     }
 
     public char getRepresentation() {

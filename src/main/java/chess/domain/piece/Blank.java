@@ -19,6 +19,6 @@ public class Blank extends Piece {
 
     @Override
     public String getName() {
-        return "blank";
+        return "blank-BLANK";
     }
 }

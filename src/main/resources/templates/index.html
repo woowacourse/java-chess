@@ -19,6 +19,9 @@
         <form action="/start" method="post">
             <input id="start" type="submit" name="command" value="새 게임">
         </form>
+        <form action="/load" method="post">
+            <input id="load" type="submit" name="command" value="불러오기">
+        </form>
         <form action="/status" method="post">
             <input id="status" type="submit" name="command" value="점수 현황">
         </form>
@@ -291,7 +294,7 @@
         <div class="pop-layer">
             <div class="pop-container">
                 <div class="pop-conts">
-                    {{ turn }} 이 승리했습니다!!
+                    {{ turn }} 승리!!
                     <div class="btn-r">
                         <form action="/end" method="post">
                             <input id="btn-layerClose" type="submit" name="command" value="게임 종료">

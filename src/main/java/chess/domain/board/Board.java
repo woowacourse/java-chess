@@ -101,7 +101,7 @@ public class Board {
         changeFlagWhenKingCaptured(toPiece);
     }
 
-    private void changeTurn() {
+    public void changeTurn() {
         if (turn == Turn.WHITE) {
             turn = Turn.BLACK;
             return;
