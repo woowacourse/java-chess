@@ -31,5 +31,10 @@
 - DB 권한 user 패스워드 : chess
 - 테이블
     - 테이블 명 : commandlog
-    - 테이블 생성문 : 
-    - create table commandlog (execute_order int primary key, command varchar(60) not null);
+    - 테이블 생성문 : create table commandlog (execute_order int primary key, command varchar(60) not null);
+    - 테이블 구조  
+|컬럼명|타입|설명|
+|-----|---|--------------------------|
+|execute_order|int|명령이 실행된 순서(앞번호부터 차례대로 수행된 것임)|
+|command|varchar(60)|move 명령|
+    
