@@ -3,14 +3,12 @@ package chess.domain;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.square.Square;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -74,5 +72,17 @@ public class ChessBoardTest {
         chessBoard.movePiece(Arrays.asList(Square.of("d6"), Square.of("d3")));
 
         assertThat(chessBoard.isKingCaptured()).isTrue();
+    }
+
+    @Test
+    @DisplayName("새로운 체스보드 상태를 넣어주는 updateChessBoard 테스트")
+    void updateChessBoard() {
+        ChessBoard chessBoard = new ChessBoard();
+        Map<Square, Piece> updatedBoardInfo = new HashMap<>();
+        updatedBoardInfo.put(Square.of("a4"), PieceFactory.of("k"));
+        updatedBoardInfo.put(Square.of("c7"), PieceFactory.of("N"));
+        updatedBoardInfo.put(Square.of("d5"), PieceFactory.of("n"));
+        chessBoard.updateChessBoard(updatedBoardInfo);
+        assertThat(chessBoard.getChessBoard()).isEqualTo(updatedBoardInfo);
     }
 }

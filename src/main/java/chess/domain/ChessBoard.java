@@ -6,6 +6,7 @@ import chess.domain.square.Square;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class ChessBoard {
 
@@ -36,6 +37,10 @@ public class ChessBoard {
         chessBoard.put(Square.of("h8"), Rook.of(Color.BLACK));
     }
 
+    public void updateChessBoard(Map<Square, Piece> updatedChessBoard) {
+        chessBoard = updatedChessBoard;
+    }
+
     public Map<Square, Piece> getChessBoard() {
         return chessBoard;
     }
@@ -59,5 +64,18 @@ public class ChessBoard {
     public boolean isKingCaptured() {
         return !(chessBoard.containsValue(King.of(Color.WHITE))
                 && chessBoard.containsValue(King.of(Color.BLACK)));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessBoard that = (ChessBoard) o;
+        return Objects.equals(chessBoard, that.chessBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chessBoard);
     }
 }
