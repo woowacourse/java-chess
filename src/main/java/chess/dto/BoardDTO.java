@@ -5,31 +5,30 @@ import static java.util.stream.Collectors.*;
 import java.util.Map;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 
 public class BoardDTO {
-	private final Map<String, String> board;
+	private final Map<Position, Piece> board;
 
-	public BoardDTO(Map<String, String> board) {
+	public BoardDTO(Map<Position, Piece> board) {
 		this.board = board;
 	}
 
 	public static BoardDTO of(Board board) {
-		Map<String, String> map = board.getBoard()
-			.entrySet()
-			.stream()
-			.collect(toMap(
-				entry -> entry.getKey().getName(),
-				entry -> entry.getValue().getName()
-			));
-
-		return new BoardDTO(map);
+		return new BoardDTO(board.getBoard());
 	}
 
 	public String getPieceIn(String key) {
-		return board.get(key);
+		return board.get(Position.of(key)).getName();
 	}
 
 	public Map<String, String> getBoard() {
-		return board;
+		return board.entrySet()
+			.stream()
+			.collect(toMap(
+				entry -> entry.getKey().getName(),
+				entry -> entry.getValue().getSymbol()
+				));
 	}
 }
