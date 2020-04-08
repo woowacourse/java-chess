@@ -37,7 +37,7 @@ class ChessGameDaoTest {
 	}
 
 	@Test
-	void update() throws Exception {
+	void updateById() throws Exception {
 		int chessGameId = chessGameDao.create();
 		ChessGame newChessGame = new ChessGame(new Ready());
 		chessGameDao.updateById(chessGameId, newChessGame);
