@@ -5,7 +5,7 @@ const tiles = document.getElementsByClassName("tile");
 for (i = 0; i < tiles.length; i++) {
     tiles.item(i).addEventListener("click", function () {
         changeOpacity(this);
-        checkSourceOrTarget(this.id);
+        checkSourceOrTarget(this);
     })
 }
 
@@ -14,7 +14,7 @@ function checkSourceOrTarget(clickedPosition) {
         source = clickedPosition;
         return;
     }
-    if (source == clickedPosition) {
+    if (source === clickedPosition) {
         source = null;
     }
     if (target == null) {
@@ -26,24 +26,56 @@ function checkSourceOrTarget(clickedPosition) {
 function move(source, target) {
     const moveInformation = {
         method: 'POST',
-        headers: {'Content-Type': 'application/json',
-            'source' : source,
-            'target' : target}
+        headers: {
+            'Content-Type': 'application/json',
+            'source': source.id,
+            'target': target.id
+        }
     };
-    fetch("/move", moveInformation).then(function (response) {
-        console.log(response.body.getReader());
-        // window.location = "http://localhost:4567/move"
-    }).catch(function (error) {
-        console.log("이동할 수 없습니다."+error);
-    });
-    initialize();
+    fetch("/playing/move", moveInformation)
+        .then(response => {
+            if (!response.ok) {
+                alert("이동할 수 없는 곳입니다.");
+            }
+            const parsedResponse = response.text().then(text => {
+                return text ? JSON.parse(text) : {}
+            });
+            return new Promise((resolve) => {
+                parsedResponse.then(data => resolve({'status': response.status, 'body': data}));
+            });
+        })
+        .then(response => {
+            let board = response.body.chessPieces;
+            let team = response.body.currentTeam;
+            update(board, team);
+        });
+    initialize(source, target);
+}
+
+function update(board, team) {
+    for (i = 0; i < board.length; i++) {
+        let pieceId = board[i].position.file + board[i].position.rank;
+        let piece = document.getElementById(pieceId);
+
+        if (board[i].piece) {
+            let pieceImage = board[i].piece.pieceType + "_" + board[i].piece.team;
+            piece.firstElementChild.src = "../images/" + pieceImage + ".png";
+        } else {
+            piece.firstElementChild.src = "../images/blank.png";
+        }
+    }
+
+    let currentTeam = document.getElementById("current_team");
+    currentTeam.innerText = team + "팀 차례입니다.";
 }
 
 function changeOpacity(clickedPosition) {
     clickedPosition.style.opacity = "0.7";
 }
 
-function initialize() {
+function initialize(sourceElement, targetElement) {
+    sourceElement.style.opacity = "1.0";
+    targetElement.style.opacity = "1.0";
     source = null;
     target = null;
 }

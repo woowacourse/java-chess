@@ -3,11 +3,12 @@ package chess;
 import chess.controller.ChessManager;
 import chess.controller.command.Command;
 import chess.controller.dto.ScoreDto;
-import chess.controller.dto.Tile;
 import chess.database.ChessCommand;
 import chess.database.ChessCommandDao;
 import chess.domain.piece.Team;
 import chess.web.ChessGameResponse;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -22,6 +23,7 @@ public class WebUIChessApplication {
     private static ChessCommandDao chessCommandDao = new ChessCommandDao();
     private static ChessManager chessManager;
     private static ChessGameResponse chessGameResponse;
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
 
@@ -65,7 +67,18 @@ public class WebUIChessApplication {
             return render(model, "chessGame.html");
         });
 
-        get("/playing/move", (req, res) -> {
+        //move source target
+        post("/playing/move", (req, res) -> {
+            String source = req.headers("source");
+            String target = req.headers("target");
+            String command = String.join(" ", new String[]{"move", source, target});
+
+            try {
+                Command.MOVE.apply(chessManager, command);
+                saveToDatabase(command);
+            } catch (Exception e) {
+                throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
+            }
             Map<String, Object> model = new HashMap<>();
 
             model.put("chessPieces", chessGameResponse.getTiles());
@@ -77,33 +90,7 @@ public class WebUIChessApplication {
                 model.put("winner", winner);
                 initializeDatabase();
             }
-            return render(model, "chessGame.html");
-        });
-
-        //move source target
-        post("/playing/move", (req, res) -> {
-            String source = req.headers("source");
-            String target = req.headers("target");
-            String cmd = String.join(" ", new String[]{"move", source, target});
-
-            try {
-                Command.MOVE.apply(chessManager, cmd);
-                saveToDatabase(cmd);
-            } catch (Exception e) {
-                throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
-            }
-            Map<String, Object> model = new HashMap<>();
-
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
-            model.put("error", MOVE_ERROR_MESSAGE);
-
-            if (!chessManager.isPlaying()) {
-                Team winner = chessManager.getWinner();
-                chessManager.end();
-                model.put("winner", winner);
-            }
-            return render(model, "chessGame.html");
+            return gson.toJson(model);
         });
 
         post("/playing/status", (req, res) -> {

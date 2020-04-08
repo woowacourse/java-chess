@@ -22,7 +22,7 @@
     </div>
 
     <div id="commandUI">
-        <div id="current_team"> 현재 차례 : {{currentTeam}}팀</div>
+        <div id="current_team">{{currentTeam}}팀 차례입니다.</div>
         {{#if score}}
         <div id="chess_score">{{currentTeam}}팀의 현재 점수는 {{score}}점 입니다.</div>
         {{/if}}
@@ -45,63 +45,7 @@
         </form>
     </div>
 </div>
+<script type="text/javascript" src="../js/chess.js"></script>
 </body>
 
-<script>
-    let source = null;
-    let target = null;
-
-    const tiles = document.getElementsByClassName("tile");
-    for (i = 0; i < tiles.length; i++) {
-        tiles.item(i).addEventListener("click", function () {
-            changeOpacity(this);
-            checkSourceOrTarget(this.id);
-        })
-    }
-
-    function checkSourceOrTarget(clickedPosition) {
-        if (source == null) {
-            source = clickedPosition;
-            return;
-        }
-        if (source === clickedPosition) {
-            source = null;
-        }
-        if (target == null) {
-            target = clickedPosition;
-            move(source, target);
-        }
-    }
-
-    function move(source, target) {
-        const moveInformation = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'source': source,
-                'target': target
-            }
-        };
-        fetch("/playing/move", moveInformation)
-            .then(response => {
-                if (!response.ok) {
-                    alert("이동할 수 없는 곳입니다.");
-                }
-            })
-            .then(() => {
-                console.log();
-                window.location = "http://localhost:4567/playing/move";
-            });
-        initialize();
-    }
-
-    function changeOpacity(clickedPosition) {
-        clickedPosition.style.opacity = "0.7";
-    }
-
-    function initialize() {
-        source = null;
-        target = null;
-    }
-</script>
 </html>
