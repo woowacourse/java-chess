@@ -35,6 +35,20 @@ public class MoveState {
         return GameState.of(state);
     }
 
+    public void move(Square source, Square target, ChessBoard chessBoard) {
+        try {
+            if (!chessBoard.movePiece(source, target)) {
+                OutputView.printCanNotMoveMessage();
+            }
+        } catch (Exception e) {
+            OutputView.printInputError();
+            throw e;
+        }
+        this.source = source;
+        this.target = target;
+        moveCount.setMoveCount();
+    }
+
     public void move(String inputState, ChessBoard chessBoard) {
         Square source;
         Square target;

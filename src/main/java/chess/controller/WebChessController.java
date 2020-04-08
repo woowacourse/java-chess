@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessBoard;
+import chess.domain.Square;
 import chess.domain.TeamScore;
 import chess.domain.Winner;
 import chess.domain.piece.Color;
@@ -8,6 +9,7 @@ import chess.dto.ChessBoardDTO;
 import chess.dto.MoveStateDTO;
 import chess.service.ChessBoardService;
 import chess.service.MoveStateService;
+import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -18,7 +20,7 @@ import static spark.Spark.*;
 
 public class WebChessController implements Controller {
 
-
+    private final Gson gson = new Gson();
     private ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
     private ChessBoardService chessBoardService = new ChessBoardService();
     private MoveStateService moveStateService = new MoveStateService();
@@ -29,6 +31,27 @@ public class WebChessController implements Controller {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
+
+        get("/con", (req, res) -> {
+            try {
+                ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+
+                Map<String, String> moveStates = moveStateService.searchMoveHistory(moveStateDTO);
+                String moveTrack = null;
+                for (Map.Entry<String, String> moveState : moveStates.entrySet()) {
+                    moveTrack = moveState.getKey() + " " + moveState.getValue() + ",";
+                    chessBoard.getMoveState()
+                            .move(Square.of(moveState.getKey()), Square.of(moveState.getValue()), chessBoard);
+                }
+                return moveTrack;
+
+            } catch (Exception e) {
+                res.status(400);
+                return e.getMessage();
+            }
+        });
+
 
         get("/status", (req, res) -> {
             try {
@@ -66,24 +89,24 @@ public class WebChessController implements Controller {
 
         post("/move", (req, res) -> {
             try {
-                String moveStatement = "move" + " " + req.queryParams("before") + " " + req.queryParams("after");
-                chessBoard.getMoveState().move(moveStatement, chessBoard);
-                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+                chessBoard.getMoveState()
+                        .move(Square.of(req.queryParams("before")), Square.of(req.queryParams("after")), chessBoard);
                 if (chessBoard.isKingCaptured()) {
                     Color turn = chessBoard.getTurn().getTurn();
                     turn = turn.changeColor(turn);
                     throw new UnsupportedOperationException(turn.getName() + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
                 }
-                moveStateService.addMoveState(moveStateDTO);
-
-                ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
-                chessBoardService.updateChessBoard(chessBoardDTO);
-                return req.queryParams("before") + " " + req.queryParams("after");
             } catch (Exception e) {
                 res.status(400);
                 return e.getMessage();
             }
+            MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+            moveStateService.addMoveState(moveStateDTO);
+            ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
+            chessBoardService.updateChessBoard(chessBoardDTO);
+            return req.queryParams("before") + " " + req.queryParams("after");
         });
+
     }
 
     private String render(Map<String, Object> model, String templatePath) {

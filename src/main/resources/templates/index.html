@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ChessGame!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <style type="text/css">
         .chessboard {
             float: left;
@@ -139,30 +139,13 @@
         우승자 : <label id="winner">BLACK WHITE</label><br>
     </div>
     <div class=selector>
-        <a href="/restart">
-            <button id="continue">이어서 하기</button>
-        </a>
+        <button id="continue" onclick="continueGame()">이어서 하기</button>
         <a href="/refresh"><button id="start">다시 시작하기</button></a>
         <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
     </div>
 </div>
 
 <script>
-
-    const PIECE = {
-        BlackPawn: String.fromCodePoint(9823),
-        BlackKnight: String.fromCodePoint(9822),
-        BlackBishop: String.fromCodePoint(9821),
-        BlackRook: String.fromCodePoint(9820),
-        BlackQueen: String.fromCodePoint(9819),
-        BlackKing: String.fromCodePoint(9818),
-        WhitePawn: String.fromCodePoint(9817),
-        WhiteKnight: String.fromCodePoint(9816),
-        WhiteBishop: String.fromCodePoint(9815),
-        WhiteRook: String.fromCodePoint(9814),
-        WhiteQueen: String.fromCodePoint(9813),
-        WhiteKing: String.fromCodePoint(9812),
-    };
 
     function endGame() {
         const winner = document.getElementById("winner");
@@ -253,17 +236,36 @@
         });
     }
 
+    function trackMove(response) {
+        let pieces = response.split(",");
+        for (let i = 0; i < pieces.size - 1; i++) {
+            let piece = pieces[i];
+            setPiece(piece);
+        }
+    }
+
+    function continueGame() {
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: "con",
+            dataType: 'text',
+            success: trackMove,
+            error: function (request, status, error) {
+                alert("code = " + request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+            }
+        });
+    }
+
 
     function reset() {
         $.ajax({
             type: 'GET',
             url: '/refresh',
-            success: resetBoard,
-            error: alertMessage
         });
     }
 
-    window.onbeforeunload = reset;
+    window.onbeforeunload = reset
 
 </script>
 </body>

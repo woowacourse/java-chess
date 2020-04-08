@@ -32,13 +32,13 @@ public class ChessBoard {
     boolean canMove(Square beforeSquare, Square afterSquare) {
         Piece beforePiece = chessBoard.get(beforeSquare);
         if (!chessBoard.containsKey(beforeSquare)) {
-            throw new UnsupportedOperationException("말이 없는 칸을 선택했습니다.");
+            throw new IllegalArgumentException("말이 없는 칸을 선택했습니다.");
         }
         if (!beforePiece.getColor().equals(turn.getTurn())) {
-            throw new UnsupportedOperationException("차례가 아닙니다.");
+            throw new IllegalArgumentException("차례가 아닙니다.");
         }
         if (!beforePiece.findMovable(beforeSquare, chessBoard).contains(afterSquare)) {
-            throw new UnsupportedOperationException("이동할 수 없는 칸입니다.");
+            throw new IllegalArgumentException("이동할 수 없는 칸입니다.");
         }
         turn.changeTurn(turn.getTurn().getName());
         return true;

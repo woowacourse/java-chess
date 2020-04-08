@@ -3,7 +3,6 @@ package chess.service;
 import chess.domain.ChessBoard;
 import chess.domain.MoveState;
 import chess.domain.Player;
-import chess.domain.Square;
 import chess.domain.piece.Color;
 import chess.dto.MoveStateDTO;
 import org.junit.jupiter.api.DisplayName;
@@ -25,10 +24,10 @@ public class MoveStateServiceTest {
         moveState.move("move a2 a3", new ChessBoard("player", Color.WHITE));
         MoveStateDTO moveStateDTO = new MoveStateDTO(moveState);
 
-        Map<Square, Square> moveHistory = new LinkedHashMap<>();
+        Map<String, String> moveHistory = new LinkedHashMap<>();
 
-        moveHistory.put(Square.of("a2"), Square.of("a3"));
-        moveHistory.put(Square.of("a7"), Square.of("a5"));
+        moveHistory.put("a2", "a3");
+        moveHistory.put("a7", "a5");
         assertThat(moveStateService.searchMoveHistory(moveStateDTO)).isEqualTo(moveHistory);
 
     }

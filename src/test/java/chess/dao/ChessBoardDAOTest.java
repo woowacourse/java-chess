@@ -35,14 +35,14 @@ public class ChessBoardDAOTest {
 
     @Test
     public void findByPlayerId() throws Exception {
-        ChessBoard chessBoard2 = chessBoardDAO.findByPlayerId("player1");
-        assertEquals(chessBoard, chessBoard2);
+        String turn = chessBoardDAO.findByPlayerId("player1");
+        assertEquals(chessBoard.getTurn().getTurn().getName(), turn);
     }
 
     @Test
     public void updateChessBoard() throws Exception {
         chessBoardDAO.updateChessBoard("player1", "Black");
-        Color turn = chessBoardDAO.findByPlayerId("player1").getTurn().getTurn();
+        Color turn = Color.of(chessBoardDAO.findByPlayerId("player1"));
         assertEquals(turn.getName(), "Black");
     }
 

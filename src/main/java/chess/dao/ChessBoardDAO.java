@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.domain.ChessBoard;
-import chess.domain.piece.Color;
 import chess.dto.ChessBoardDTO;
 
 import java.sql.*;
@@ -51,17 +49,15 @@ public class ChessBoardDAO {
         pstmt.executeUpdate();
     }
 
-    public ChessBoard findByPlayerId(String playerId) throws SQLException {
+    public String findByPlayerId(String playerId) throws SQLException {
         String query = "SELECT * FROM chessBoard WHERE id = ?";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, playerId);
         ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) return null;
-        return new ChessBoard(
-                rs.getString("id"),
-                Color.of(rs.getString("turn"))
-        );
+        if (rs.next()) {
+            return rs.getString("turn");
+        }
+        return null;
     }
 
     public void updateChessBoard(String id, String turn) throws SQLException {

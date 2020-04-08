@@ -1,7 +1,6 @@
 package chess.service;
 
 import chess.dao.MoveStateDAO;
-import chess.domain.Square;
 import chess.dto.MoveStateDTO;
 
 import java.sql.ResultSet;
@@ -21,15 +20,15 @@ public class MoveStateService {
         moveStateDAO.deleteMoveStateById(moveStateDTO.getPlayer().getPlayerId());
     }
 
-    public Map<Square, Square> searchMoveHistory(MoveStateDTO moveStateDTO) throws SQLException {
-        Map<Square, Square> moveHistory = new LinkedHashMap<>();
-        Square source;
-        Square target;
+    public Map<String, String> searchMoveHistory(MoveStateDTO moveStateDTO) throws SQLException {
+        Map<String, String> moveHistory = new LinkedHashMap<>();
+        String source;
+        String target;
         ResultSet resultSet = moveStateDAO.findByPlayerId(moveStateDTO.getPlayer().getPlayerId());
         resultSet.beforeFirst();
         while (resultSet.next()) {
-            source = Square.of(resultSet.getString("source"));
-            target = Square.of(resultSet.getString("target"));
+            source = resultSet.getString("source");
+            target = resultSet.getString("target");
             moveHistory.put(source, target);
         }
         return moveHistory;
