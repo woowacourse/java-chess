@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.piece.Type;
+import chess.model.domain.piece.Type;
 import java.util.Scanner;
 
 public class InputView {

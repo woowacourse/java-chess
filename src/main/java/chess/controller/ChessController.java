@@ -1,11 +1,11 @@
 package chess.controller;
 
-import chess.domain.board.ChessGame;
-import chess.domain.board.TeamScore;
-import chess.domain.state.GameState;
-import chess.domain.state.GameStateAndMoveSquare;
-import chess.domain.state.MoveSquare;
-import chess.domain.state.MoveState;
+import chess.model.domain.board.ChessGame;
+import chess.model.domain.board.TeamScore;
+import chess.model.domain.state.GameState;
+import chess.model.domain.state.GameStateAndMoveSquare;
+import chess.model.domain.state.MoveSquare;
+import chess.model.domain.state.MoveState;
 import chess.view.InputView;
 import chess.view.OutputView;
 

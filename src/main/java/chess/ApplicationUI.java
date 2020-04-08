@@ -3,24 +3,26 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.domain.board.ChessGame;
-import chess.domain.piece.Type;
-import chess.domain.state.MoveSquare;
-import chess.domain.state.MoveState;
-import chess.dto.ChessGameDTO;
-import chess.dto.MoveSquareDTO;
-import chess.dto.PromotionTypeDTO;
-import chess.dto.ResultDTO;
+import chess.model.domain.board.ChessGame;
+import chess.model.domain.piece.Color;
+import chess.model.dto.MoveDto;
+import chess.model.dto.PromotionTypeDto;
+import chess.model.dto.ResultDto;
+import chess.model.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
 
 public class ApplicationUI {
 
     public static void main(String[] args) {
         ChessGame chessGame = new ChessGame();
+        ChessGameService chessGameService = ChessGameService.getInstance();
+        Gson gson = new Gson();
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -29,45 +31,57 @@ public class ApplicationUI {
 
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessGame.initialize();
+            Map<Color, String> userNames = getUserNames(req);
+            String gameId = chessGameService.getId("r01");
+            model.put("gameId", gameId);
+            chessGameService.createChessGame(gameId, userNames);
+            return render(model, "/game.html");
+        });
+
+        post("/followGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            String gameIdBefore = chessGameService.getIdBefore("r01");
+            model.put("gameId", gameIdBefore);
             return render(model, "/game.html");
         });
 
         post("/move", (req, res) -> {
-            Gson gson = new Gson();
-            MoveSquareDTO moveSquareDTO = gson.fromJson(req.body(), MoveSquareDTO.class);
-            MoveSquare moveSquare = new MoveSquare(moveSquareDTO.getSource(),
-                moveSquareDTO.getTarget());
-            MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
-            ChessGameDTO chessGameDTO = new ChessGameDTO(chessGame, moveState);
-            if (moveState == MoveState.KING_CAPTURED) {
-                chessGameDTO.clearPiece();
-            }
-            return new Gson().toJson(chessGameDTO);
+            MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
+            return new Gson().toJson(chessGameService.move(moveDTO));
         });
 
         post("/promotion", (req, res) -> {
-            Gson gson = new Gson();
-            PromotionTypeDTO promotionTypeDTO = gson.fromJson(req.body(), PromotionTypeDTO.class);
-            Type type = Type.of(promotionTypeDTO.getPromotionType());
-            MoveState moveState = chessGame.promotion(type);
-            ChessGameDTO chessGameDTO = new ChessGameDTO(chessGame, moveState);
-            return new Gson().toJson(chessGameDTO);
+            PromotionTypeDto promotionTypeDTO = gson.fromJson(req.body(), PromotionTypeDto.class);
+            return new Gson().toJson(chessGameService.promotion(promotionTypeDTO));
         });
 
-        get("/board", (req, res) -> {
-            ChessGameDTO chessGameDTO = new ChessGameDTO(chessGame);
-            return new Gson().toJson(chessGameDTO);
+        post("/board", (req, res) -> {
+            MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
+            return new Gson().toJson(chessGameService.loadChessGame(moveDTO.getGameId()));
         });
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            ResultDTO resultDTO = new ResultDTO(chessGame.getTeamScore());
+            ResultDto resultDTO = new ResultDto(chessGame.getTeamScore());
             model.put("winner", resultDTO.getWinner());
             model.put("blackScore", resultDTO.getBlackScore());
             model.put("whiteScore", resultDTO.getWhiteScore());
             return render(model, "/end.html");
         });
+    }
+
+    private static Map<Color, String> getUserNames(Request req) {
+        Map<Color, String> userNames = new HashMap<>();
+        userNames.put(Color.BLACK, getUserName(req.queryParams("BlackName"), "BLACK"));
+        userNames.put(Color.WHITE, getUserName(req.queryParams("WhiteName"), "WHITE"));
+        return userNames;
+    }
+
+    private static String getUserName(String inputName, String defaultName) {
+        if (inputName == null || inputName.trim().isEmpty()) {
+            return defaultName;
+        }
+        return inputName;
     }
 
     public static String render(Map<String, Object> model, String templatePath) {

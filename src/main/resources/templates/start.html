@@ -3,11 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <title>Jamie's Chess</title>
+    <style type="text/css">
+        .result {
+            width: 300px;
+            height: 120px;
+            margin: 20px;
+            background-color: lightsteelblue;
+            text-align: center;
+            vertical-align: middle;
+            font-size: large;
+            font-weight: bold;
+            align-content: center;
+        }
+    </style>
 </head>
 <body>
 체스 게임을 시작하시겠습니까?
-<form method="post" action="/game">
-    <input type="submit" value="게임 시작"/>
+<div class="result">
+    <form method="post" action="/game">
+        화이트팀 이름(기본 WHITE) : <input type="text" name="WhiteName" maxlength="10"/><br>
+        블랙팀 이름(기본 BLACK) : <input type="text" name="BlackName" maxlength="10"/><br>
+        <input type="submit" value="게임 시작"/>
+    </form>
+</div>
+<form method="post" action="/followGame">
+    <input type="submit" value="게임 이어하기"/>
 </form>
 </body>
 </html>

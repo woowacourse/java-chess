@@ -72,6 +72,8 @@
 </head>
 <body>
 
+<label id="gameId">{{gameId}}</label>
+
 <form mothod="get" action="/end" target="_blank">
     <label>현재 점수 및 고득점자 확인 (새 탭) - 게임 이어 진행 가능</label>
     <button type="submit">status</button>
@@ -182,6 +184,7 @@
     let firstClick = true;
     let source = null;
     let target = null;
+    let gameId = document.getElementById('gameId').innerText;
 
     cells.forEach(cell => {
         cell.onclick = () => {
@@ -201,7 +204,7 @@
             fetch('/move', {
                 method: 'POST',
                 body: JSON.stringify({
-                    source, target
+                    source, target, gameId
                 })
             }).then(res => res.json()).then(data => {
                 cells.forEach(cell => {
@@ -220,7 +223,7 @@
             fetch('/promotion', {
                 method: 'POST',
                 body: JSON.stringify({
-                    promotionType
+                    promotionType, gameId
                 })
             }).then(res => res.json()).then(data => {
                 cells.forEach(cell => {
@@ -232,7 +235,12 @@
         }
     });
 
-    fetch('/board').then(res => res.json()).then(data => {
+    fetch('/board', {
+        method: 'POST',
+        body: JSON.stringify({
+            gameId
+        })
+    }).then(res => res.json()).then(data => {
         cells.forEach(cell => {
                 cell.innerHTML = data.pieces.shift();
             },
