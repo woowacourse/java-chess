@@ -25,9 +25,8 @@ public class ChessGameService {
 	}
 
 	public ResponseDto find(int id) throws Exception {
-		return chessGameDao.findById(id)
-				.map(game -> new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(game)))
-				.orElseGet(() -> new ResponseDto(ResponseDto.FAIL, null));
+		ChessGame chessGame = chessGameDao.findById(id).orElseThrow(InvalidGameException::new);
+		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
 	}
 
 	public ResponseDto move(int id, Position source, Position target) throws Exception {
@@ -36,33 +35,24 @@ public class ChessGameService {
 		try {
 			chessGame.move(source, target);
 			chessGameDao.updateById(id, chessGame);
+			return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
 		} catch (NotMovableException | IllegalArgumentException e) {
 			return new ResponseDto(ResponseDto.FAIL, "이동할 수 없는 위치입니다.");
 		} catch (InvalidTurnException e) {
 			return new ResponseDto(ResponseDto.FAIL, chessGame.turn().getColor() + "의 턴입니다.");
 		}
-		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
-	}
-
-	public ResponseDto restart(int id) throws Exception {
-		chessGameDao.findById(id)
-				.orElseThrow(InvalidGameException::new);
-		ChessGame chessGame = new ChessGame(new Ready());
-		chessGame.start();
-		chessGameDao.updateById(id, chessGame);
-		return new ResponseDto(ResponseDto.SUCCESS, null);
 	}
 
 	public ResponseDto create() throws Exception {
 		int chessGameId = chessGameDao.create();
-		if (chessGameId == 0) {
-			return new ResponseDto(ResponseDto.FAIL, null);
-		}
-		ChessGame chessGame = chessGameDao.findById(chessGameId)
-				.orElseThrow(InvalidGameException::new);
+		return restart(chessGameId);
+	}
+
+	public ResponseDto restart(int id) throws Exception {
+		ChessGame chessGame = new ChessGame(new Ready());
 		chessGame.start();
-		chessGameDao.updateById(chessGameId, chessGame);
-		return new ResponseDto(ResponseDto.SUCCESS, chessGameId);
+		chessGameDao.updateById(id, chessGame);
+		return new ResponseDto(ResponseDto.SUCCESS, id);
 	}
 
 	public ResponseDto delete(int id) throws Exception {

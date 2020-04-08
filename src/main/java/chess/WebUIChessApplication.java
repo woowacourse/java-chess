@@ -5,10 +5,8 @@ import static spark.Spark.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.dao.InMemoryChessGameDao;
 import chess.dao.JDBCChessGameDao;
 import chess.domain.piece.Position;
-import chess.dto.ResponseDto;
 import chess.service.ChessGameService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,13 +26,14 @@ public class WebUIChessApplication {
 
 		get("/game/:id", (req, res) -> {
 			int id = Integer.parseInt(req.params(":id"));
-			ResponseDto responseDto = CHESS_GAME_SERVICE.find(id);
-			if (responseDto.getStatusCode() == ResponseDto.SUCCESS) {
+			try {
+				CHESS_GAME_SERVICE.find(id);
 				Map<String, Object> model = new HashMap<>();
 				model.put("id", id);
 				return render(model, "game.html");
+			} catch (Exception e) {
+				return "<script>location.replace('/')</script>";
 			}
-			return "<script>location.replace('/')</script>";
 		});
 
 		notFound("<script>location.replace('/')</script>");
