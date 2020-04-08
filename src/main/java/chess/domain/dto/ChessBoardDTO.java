@@ -1,5 +1,8 @@
-package chess.domain;
+package chess.domain.dto;
 
+import chess.domain.ChessBoard;
+import chess.domain.Square;
+import chess.domain.Turn;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;

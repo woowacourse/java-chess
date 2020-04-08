@@ -1,4 +1,8 @@
-package chess.domain;
+package chess.domain.dto;
+
+import chess.domain.MoveCount;
+import chess.domain.MoveState;
+import chess.domain.Player;
 
 public class MoveStateDTO {
 

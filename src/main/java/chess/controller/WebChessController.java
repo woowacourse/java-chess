@@ -1,6 +1,10 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.ChessBoard;
+import chess.domain.Square;
+import chess.domain.TeamScore;
+import chess.domain.Winner;
+import chess.domain.dto.ChessBoardDTO;
 import chess.domain.piece.Color;
 import com.google.gson.Gson;
 import spark.ModelAndView;

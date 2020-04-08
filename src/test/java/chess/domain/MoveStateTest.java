@@ -5,17 +5,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class MoveStateTest {
     @Test
     @DisplayName("move 수행시 moveCount 증가 확인")
     void moveCount() {
         ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
-        chessBoard.movePiece(Square.of("a2"), Square.of("a4"));
+        chessBoard.getMoveState().move("move a2 a4", chessBoard);
         assertThat(chessBoard.getMoveState().getMoveCount().getMoveCount()).isEqualTo(1);
-        assertThatThrownBy(() -> chessBoard.movePiece(Square.of("a2"), Square.of("a3")))
-                .isInstanceOf(UnsupportedOperationException.class);
+        chessBoard.getMoveState().move("move a2 a4", chessBoard);
         assertThat(chessBoard.getMoveState().getMoveCount().getMoveCount()).isEqualTo(1);
     }
 }

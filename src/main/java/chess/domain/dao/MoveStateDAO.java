@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.dao;
+
+import chess.domain.dto.MoveStateDTO;
 
 import java.sql.*;
 

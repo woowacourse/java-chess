@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.dao;
 
+import chess.domain.ChessBoard;
+import chess.domain.dto.ChessBoardDTO;
 import chess.domain.piece.Color;
 
 import java.sql.*;
