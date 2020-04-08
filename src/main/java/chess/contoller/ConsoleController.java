@@ -1,27 +1,20 @@
 package chess.contoller;
 
+import static chess.view.InputView.*;
+import static chess.view.OutputView.*;
+
 import chess.domain.ChessGame;
 import chess.domain.Side;
 import chess.domain.command.Command;
-import chess.domain.position.Column;
-import chess.domain.position.Row;
-import chess.view.InputView;
-import chess.view.OutputView;
 
 public class ConsoleController {
 	public void run() {
-		OutputView.printInitMessage();
+		printInitMessage();
 		ChessGame chessGame = ChessGame.start();
 		while (!chessGame.isEnd()) {
-			printLog(chessGame);
-			chessGame = Command.execute(InputView.inputCommand(), chessGame);
+			printInitBoard(chessGame.getBoard());
+			printScore(chessGame.status(Side.BLACK), chessGame.status(Side.WHITE));
+			chessGame = Command.execute(inputCommand(), chessGame);
 		}
-	}
-
-	private void printLog(ChessGame chessGame) {
-		System.out.println();
-		OutputView.createEmptyBoard(Column.values().length, Row.values().length);
-		OutputView.printInitBoard(chessGame.getBoard());
-		OutputView.printScore(chessGame.status(Side.BLACK), chessGame.status(Side.WHITE));
 	}
 }

@@ -1,12 +1,13 @@
 package chess.view;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import chess.domain.BoardConverter;
 import chess.domain.ChessBoard;
 
 public class OutputView {
-	private static List<List<String>> emptyBoard;
+	private OutputView() {
+	}
 
 	public static void printInitMessage() {
 		System.out.println("체스 게임을 시작합니다.");
@@ -15,30 +16,13 @@ public class OutputView {
 	}
 
 	public static void printInitBoard(ChessBoard chessBoard) {
-		chessBoard.getPieces()
-				.forEach(piece -> emptyBoard.get(-piece.getPosition().getRow().getSymbol() + 8)
-						.set(piece.getPosition().getCol().getValue() - 1, piece.getName()));
-		for (List<String> strings : emptyBoard) {
+		List<List<String>> stringBoard = BoardConverter.makeStringBoard(chessBoard.getPieces(), ".");
+		for (List<String> strings : stringBoard) {
 			for (String string : strings) {
 				System.out.print(string);
 			}
 			System.out.println();
 		}
-	}
-
-	public static void createEmptyBoard(int col, int row) {
-		emptyBoard = new ArrayList<>();
-		for (int i = 0; i < row; i++) {
-			createColumn(col);
-		}
-	}
-
-	private static void createColumn(int col) {
-		List<String> emptyRow = new ArrayList<>();
-		for (int j = 0; j < col; j++) {
-			emptyRow.add(".");
-		}
-		emptyBoard.add(emptyRow);
 	}
 
 	public static void printScore(double blackScore, double whiteScore) {
