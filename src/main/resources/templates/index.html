@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <title>ChessGame!</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
     <style type="text/css">
         .chessboard {
             float: left;
@@ -15,8 +15,8 @@
         .screen {
             width: 800px;
             height: 640px;
-            font-size : 25px;
-            font-family: "Apple LiGothic";
+            font-size: 25px;
+            font-family: Arial;
         }
 
         .scoreBoard {
@@ -48,7 +48,7 @@
         }
 
         .selector {
-            width: 200px;
+            width: 500px;
             height: 200px;
             margin-left: 700px;
 
@@ -136,9 +136,10 @@
         <br><br>
         BLACK 점수 : <label id="blackScore">38</label><br><br>
         WHITE 점수 : <label id="whiteScore">38</label><br><br>
-        우승자 : <label id="winner">BLACK WHITE</label>
+        우승자 : <label id="winner">BLACK WHITE</label><br>
     </div>
     <div class=selector>
+        <button id="continue" onclick="continueGame()">이어서 하기</button>
         <a href="/refresh"><button id="start">다시 시작하기</button></a>
         <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
     </div>
@@ -154,6 +155,8 @@
     function pick(value) {
         if (document.querySelector('.before')) {
             pickAfter(value);
+            document.querySelector('.before').style.removeProperty('border');
+
         } else {
             pickBefore(value);
         }
@@ -161,6 +164,8 @@
 
     function pickBefore(beforeValue) {
         document.getElementById(beforeValue).classList.add('before');
+        document.getElementById(beforeValue).style.borderColor = 'blue';
+
     }
 
     async function pickAfter(afterValue) {
@@ -206,7 +211,6 @@
         const moveSquares = response.split(" ");
         const before = document.getElementById(moveSquares[0]);
         const after = document.getElementById(moveSquares[1]);
-
         after.innerText = before.innerText;
         before.innerText = " ";
         setStatus();
@@ -232,21 +236,36 @@
         });
     }
 
-    function doNotReload() {
-        if ((event.ctrlKey === true && (event.keyCode === 78 || event.keyCode === 82))
-            || (event.keyCode === 116)) {
-            reset();
+    function trackMove(response) {
+        let pieces = response.split(",");
+        for (let i = 0; i < pieces.size - 1; i++) {
+            let piece = pieces[i];
+            setPiece(piece);
         }
     }
-    document.onkeydown = doNotReload;
+
+    function continueGame() {
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: "con",
+            dataType: 'text',
+            success: trackMove,
+            error: function (request, status, error) {
+                alert("code = " + request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+            }
+        });
+    }
+
 
     function reset() {
         $.ajax({
             type: 'GET',
-            url: '/refresh'
+            url: '/refresh',
         });
     }
-    window.onbeforeunload = reset;
+
+    window.onbeforeunload = reset
 
 </script>
 </body>

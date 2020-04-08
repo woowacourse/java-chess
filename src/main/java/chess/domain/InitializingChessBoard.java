@@ -1,6 +1,5 @@
-package chess.domain.board;
+package chess.domain;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.*;
 
 import java.util.Map;

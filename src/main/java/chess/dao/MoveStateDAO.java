@@ -1,8 +1,11 @@
-package chess.domain.board;
+package chess.dao;
+
+import chess.dto.MoveStateDTO;
 
 import java.sql.*;
 
-public class ChessBoardDAO {
+public class MoveStateDAO {
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -36,5 +39,32 @@ public class ChessBoardDAO {
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }
+    }
+
+    public void addMoveState(MoveStateDTO moveStateDTO) throws SQLException {
+        String query = "INSERT INTO moveState VALUES (?, ?, ?, ?)";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, moveStateDTO.getPlayer().getPlayerId());
+        pstmt.setString(2, moveStateDTO.getSource());
+        pstmt.setString(3, moveStateDTO.getTarget());
+        pstmt.setInt(4, moveStateDTO.getMoveCount());
+        pstmt.executeUpdate();
+    }
+
+    public ResultSet findByPlayerId(String playerId) throws SQLException {
+        String query = "SELECT * FROM moveState WHERE id = ? ORDER BY moveCount ASC";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        ResultSet rs = pstmt.executeQuery();
+
+        if (!rs.next()) return null;
+        return rs;
+    }
+
+    public void deleteMoveStateById(String playerId) throws SQLException {
+        String query = "DELETE from moveState WHERE id = ?";
+        PreparedStatement pstmt = getConnection().prepareStatement(query);
+        pstmt.setString(1, playerId);
+        pstmt.executeUpdate();
     }
 }

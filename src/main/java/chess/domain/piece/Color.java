@@ -17,7 +17,18 @@ public enum Color {
         return BLACK;
     }
 
+    public static Color of(String color) {
+        if (color.equals(BLACK.name)) {
+            return BLACK;
+        }
+        if (color.equals(WHITE.name)) {
+            return WHITE;
+        }
+        throw new UnsupportedOperationException("존재하지 않는 팀 색입니다.");
+    }
+
     public String getName() {
         return name;
     }
+
 }

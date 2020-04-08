@@ -15,6 +15,7 @@ public class SquareTest {
     @DisplayName("칸 캐싱했는지 확인")
     void checkSquareCache() {
         assertThat(Square.of("a1")).isEqualTo(Square.of("a1"));
+        assertThat(Square.of("a1")).isNotEqualTo(Square.of("a2"));
     }
 
     @ParameterizedTest
@@ -25,5 +26,12 @@ public class SquareTest {
         assertThatThrownBy(() -> Square.of(location))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("잘못");
+    }
+
+    @Test
+    @DisplayName("주어진 Square 에서 file, rank 이동한 Square 구하기")
+    void moveTo() {
+        assertThat(Square.moveTo(-1, 1, Square.of("c3"))).isEqualTo(Square.of("b4"));
+        assertThat(Square.moveTo(-3, 1, Square.of("c3"))).isEqualTo(Square.of("c3"));
     }
 }

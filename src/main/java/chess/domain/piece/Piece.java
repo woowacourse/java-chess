@@ -23,7 +23,6 @@ public abstract class Piece implements AddMovable {
 
     public abstract Set<Square> findMovable(Square pieceSquare, Map<Square, Piece> chessBoard);
 
-
     public void addMovable(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction){
         addMovable.addMovable(chessBoard,availableSquares,direction);
     }

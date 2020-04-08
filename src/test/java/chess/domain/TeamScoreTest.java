@@ -1,12 +1,9 @@
 package chess.domain;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Square;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +13,7 @@ public class TeamScoreTest {
     @Test
     @DisplayName("게임 점수 계산")
     void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
         Map<Color, Double> teamScore = TeamScore.calculateTeamScore(chessBoard.getChessBoard());
         assertThat(teamScore.get(Color.BLACK)).isEqualTo(38);
         assertThat(teamScore.get(Color.WHITE)).isEqualTo(38);
