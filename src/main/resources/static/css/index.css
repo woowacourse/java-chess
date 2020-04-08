@@ -1,4 +1,14 @@
-.chessPiece tr td {
-    width: 100px;
-    height: 100px;
+.chessPiece td {
+    background: #FFE7AA;
+    height: 70px;
+    width: 70px;
+    text-align: center;
+}
+
+.chessPiece tr:nth-child(odd) td:nth-child(even) {
+    background: #D4B66A;
+}
+
+.chessPiece tr:nth-child(even) td:nth-child(odd) {
+    background: #D4B66A;
 }
