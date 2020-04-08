@@ -88,7 +88,7 @@ public class WebUIChessApplication {
 			try {
 				State after = domainState.pushCommend(request.queryParams("commend"));
 				stateDao.setStateByRoomId(roomId, after.getStateName());
-				pieceDao.delete(roomId);
+				pieceDao.deletePiece(roomId);
 				for (Piece piece : after.getSet()) {
 					pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(), piece.getCoordinateRepresentation()
 							, roomId);
@@ -131,6 +131,7 @@ public class WebUIChessApplication {
 		final dao.PieceDao pieceDao = new dao.PieceDao();
 		final dao.State daoState = stateDao.findStateByRoomId(roomId);
 		final List<dao.Piece> daoPieces = pieceDao.findPiecesByRoomId(roomId);
+
 		final Set<Piece> domainPieces = mapDaoPiecesToDomainPieces(daoPieces);
 		final State domainState = StateType.getFactory(daoState.getState()).apply(
 				new Pieces(domainPieces));
@@ -147,9 +148,9 @@ public class WebUIChessApplication {
 	private static void responseWhenHasNoState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
 		final dao.PieceDao pieceDao = new dao.PieceDao();
-		final Set<Piece> pieces = new StartPieces().getInstance();
+		final Set<domain.pieces.Piece> pieces = new StartPieces().getInstance();
 		final State domainState = new Ended(new Pieces(pieces));
-		pieceDao.delete(roomId);
+		pieceDao.deletePiece(roomId);
 		for (Piece piece : pieces) {
 			pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(),
 					piece.getCoordinateRepresentation(), roomId);
