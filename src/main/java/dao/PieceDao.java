@@ -13,32 +13,28 @@ import java.util.List;
 public class PieceDao {
     public void addPiece(PieceVo pieceVO) throws SQLException {
         String query = "INSERT INTO piece(game_id, name, row, col) VALUES (?, ?, ?, ?)";
-        PreparedStatement pstmt = getPreparedStatement(pieceVO, query);
-        pstmt.executeUpdate();
+        try(PreparedStatement pstmt = getPreparedStatement(pieceVO, query)) {
+            pstmt.executeUpdate();
+        }
     }
 
     private PreparedStatement getPreparedStatement(PieceVo pieceVO, String query) throws SQLException {
-        PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
-        pstmt.setInt(1, pieceVO.getGameId());
-        pstmt.setString(2, pieceVO.getName());
-        pstmt.setInt(3, pieceVO.getRow());
-        pstmt.setString(4, pieceVO.getCol());
-        return pstmt;
+        try(PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+            pstmt.setInt(1, pieceVO.getGameId());
+            pstmt.setString(2, pieceVO.getName());
+            pstmt.setInt(3, pieceVO.getRow());
+            pstmt.setString(4, pieceVO.getCol());
+            return pstmt;
+        }
     }
 
     public List<PieceVo> findAll(int gameId) throws SQLException {
         String query = "SELECT * FROM piece WHERE game_id = ?";
-        PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
-        pstmt.setInt(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            return Collections.emptyList();
+        try (PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+            pstmt.setInt(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
+            return getPieceVOS(rs);
         }
-
-        List<PieceVo> pieceVos = getPieceVOS(rs);
-
-        return pieceVos;
     }
 
     private List<PieceVo> getPieceVOS(ResultSet resultSet) throws SQLException {

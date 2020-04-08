@@ -11,12 +11,12 @@ import java.util.ArrayList;
 public class ChessGamesDao {
     public ArrayList<ChessGameDto> findAll() throws SQLException {
         String query = "SELECT * FROM game;";
-        PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
 
-        ArrayList<ChessGameDto> chessGameDtos = getChessGameDtos(rs);
-
-        return chessGameDtos;
+        try(PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            ArrayList<ChessGameDto> chessGameDtos = getChessGameDtos(rs);
+            return chessGameDtos;
+        }
     }
 
     private ArrayList<ChessGameDto> getChessGameDtos(ResultSet resultSet) throws SQLException {

@@ -11,19 +11,20 @@ public class ChessGameDao {
     public ChessGameDto findChessGameBy(int gameId) throws SQLException {
         String query = "SELECT * FROM game WHERE id = ?";
 
-        PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query);
-        pstmt.setInt(1, gameId);
-        ResultSet rs = pstmt.executeQuery();
+        try(PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+            pstmt.setInt(1, gameId);
+            ResultSet rs = pstmt.executeQuery();
 
-        if (!rs.next()) {
-            return null;
+            if (!rs.next()) {
+                return null;
+            }
+
+            return new ChessGameDto(
+                    rs.getInt("id"),
+                    rs.getString("white_name"),
+                    rs.getString("black_name"),
+                    rs.getInt("turn_is_black")
+            );
         }
-
-        return new ChessGameDto(
-                rs.getInt("id"),
-                rs.getString("white_name"),
-                rs.getString("black_name"),
-                rs.getInt("turn_is_black")
-        );
     }
 }
