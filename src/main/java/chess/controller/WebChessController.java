@@ -8,16 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.dao.PlayerDao;
-import chess.domain.board.Position;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.player.Player;
 import chess.dto.BoardDto;
 import chess.dto.MovableRequestDto;
 import chess.dto.MoveRequestDto;
 import chess.service.ChessService;
-import chess.util.RoutesConfig;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.Request;
@@ -33,10 +29,6 @@ public class WebChessController {
     }
 
     public void route() {
-        addTemporaryPlayers();
-        RoutesConfig.configure();
-        before(RoutesConfig::setJsonContentType);
-
         get("/", this::renderEntryPoint);
         get("/boards", this::getPlayerContexts, json());
         post("/boards", this::addGameAndGetPlayers, json());
@@ -57,14 +49,6 @@ public class WebChessController {
         get("/scores", this::getScoreContexts, json());
     }
 
-    private static void addTemporaryPlayers() {
-        // 플레이어 회원가입 / 로그인 구현 이전 foreign key 오류를 내지 않기 위해 임시로 DB에 플레이어 추가
-        try {
-            new PlayerDao().addInitialPlayers();
-        } catch (SQLException ignored) {
-        }
-    }
-
     private String renderEntryPoint(Request request, Response response) {
         response.type("text/html");
         return render(new HashMap<>());
@@ -79,14 +63,12 @@ public class WebChessController {
         return service.getPlayerContexts();
     }
 
-    private Map<Position, Piece> getBoard(final Request request, final Response response) throws SQLException {
-        BoardDto dto = new BoardDto(service.findBoardById(parseId(request)));
-        return dto.getBoard();
+    private BoardDto getBoard(final Request request, final Response response) throws SQLException {
+        return new BoardDto(service.findBoardById(parseId(request)));
     }
 
-    private Map<Position, Piece> resetBoard(final Request request, final Response response) throws SQLException {
-        BoardDto dto = new BoardDto(service.resetGameById(parseId(request)));
-        return dto.getBoard();
+    private BoardDto resetBoard(final Request request, final Response response) throws SQLException {
+        return new BoardDto(service.resetGameById(parseId(request)));
     }
 
     private Map<Integer, Map<Side, Player>> addGameAndGetPlayers(final Request request, final Response response) throws

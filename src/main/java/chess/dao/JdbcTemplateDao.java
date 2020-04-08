@@ -30,15 +30,4 @@ public interface JdbcTemplateDao {
 
         return connection;
     }
-
-    default void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("Connection 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-    }
 }

@@ -1,6 +1,9 @@
 package chess.service;
 
+import static java.util.stream.Collectors.*;
+
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,15 +25,29 @@ public class ChessServiceImpl implements ChessService {
 
     @Override
     public Game findGameById(final int id) throws SQLException {
-        Game game = playerDao.findGameById(id);
+        Game game = generateGameFrom(gameDao.findGameDataById(id));
         List<Path> paths = moveDao.getMoves(game);
         paths.forEach(path -> game.move(path.getStart(), path.getEnd()));
         return game;
     }
 
+    private List<Game> generateGames() throws SQLException {
+        List<Game> games = new ArrayList<>();
+        for (Map<String, Integer> gameData : gameDao.findGamesData()) {
+            games.add(generateGameFrom(gameData));
+        }
+        return games;
+    }
+
+    private Game generateGameFrom(final Map<String, Integer> gameData) throws SQLException {
+        Player white = playerDao.getPlayerById(gameData.get(GameDao.WHITE_ID));
+        Player black = playerDao.getPlayerById(gameData.get(GameDao.BLACK_ID));
+        return new Game(gameData.get(GameDao.GAME_ID), white, black);
+    }
+
     @Override
     public Map<Integer, Map<Side, Player>> getPlayerContexts() throws SQLException {
-        return playerDao.getPlayerContexts();
+        return generateGames().stream().collect(toMap(Game::getId, Game::getPlayers));
     }
 
     @Override

@@ -1,4 +1,4 @@
-import { AVAILABLE_PATH, PIECES, ROOM_TEMPLATE } from "./template.mjs"
+import { AVAILABLE_PATH, PIECES, ROOM_TEMPLATE } from "./template.mjs";
 import {
   addBoard,
   checkGameOver,
@@ -11,7 +11,7 @@ import {
   isWhiteTurn,
   move,
   restart
-} from "./fetch.mjs"
+} from "./fetch.mjs";
 
 window.onload = function () {
 
@@ -35,11 +35,12 @@ window.onload = function () {
   }
 
   function fillBoard(board) {
-    Object.keys(board)
-        .filter(position => board[position]["type"] !== "EMPTY")
+
+    Object.keys(board["board"])
+        .filter(position => board["board"][position]["type"] !== "EMPTY")
         .forEach(position => {
           document.getElementById(position).insertAdjacentHTML("beforeend",
-              PIECES[`${board[position]["side"]}_${board[position]["type"]}`]);
+              PIECES[`${board["board"][position]["side"]}_${board["board"][position]["type"]}`]);
         });
   }
 
@@ -62,7 +63,7 @@ window.onload = function () {
       pieceNode.addEventListener("dragover", event => {
         event.preventDefault();
       }, false);
-      pieceNode.addEventListener("drop", event => dropPiece(event, false))
+      pieceNode.addEventListener("drop", event => dropPiece(event, false));
     });
   }
 
@@ -150,7 +151,7 @@ window.onload = function () {
   }
 
   async function roomEventHandler(roomNode) {
-    document.querySelectorAll(".room").forEach(element => element.classList.remove("room-selected"))
+    document.querySelectorAll(".room").forEach(element => element.classList.remove("room-selected"));
     roomNode.classList.add("room-selected");
     roomId = parseInt(roomNode.querySelector(".room-number").innerText);
     setBoard(await getBoard(roomId));
@@ -158,7 +159,7 @@ window.onload = function () {
       endGameIfKingIsDead();
       return;
     }
-    setMessage(`${roomId}번 체스 게임에 입장하셨습니다. ${await checkTurn(roomId)}`)
+    setMessage(`${roomId}번 체스 게임에 입장하셨습니다. ${await checkTurn(roomId)}`);
   }
 
   async function initiate() {
@@ -170,13 +171,13 @@ window.onload = function () {
     }
     Object.entries(boards).forEach(([index, boardData]) => {
       document.querySelector(".rooms")
-          .insertAdjacentHTML("beforeend", ROOM_TEMPLATE(boardData, index, scores[index]["백"], scores[index]["흑"]))
+          .insertAdjacentHTML("beforeend", ROOM_TEMPLATE(boardData, index, scores[index]["백"], scores[index]["흑"]));
     });
     roomId = Object.keys(boards)[0];
     const board = await getBoard(roomId);
     setBoard(board);
     document.querySelectorAll(".room").forEach(roomNode => {
-      roomNode.addEventListener("click", () => roomEventHandler(roomNode))
+      roomNode.addEventListener("click", () => roomEventHandler(roomNode));
     });
     document.querySelector(".room").classList.add("room-selected");
     if (await checkGameOver(roomId)) {
@@ -190,12 +191,12 @@ window.onload = function () {
     document.querySelectorAll(".position").forEach(positionNode => {
       positionNode.addEventListener("dragover", event => {
         event.preventDefault();
-        event.currentTarget.style.opacity = "0.5"
+        event.currentTarget.style.opacity = "0.5";
       }, false);
       positionNode.addEventListener("dragleave", event => {
         event.currentTarget.style.opacity = "1";
       });
-      positionNode.addEventListener("drop", event => dropPiece(event, true))
+      positionNode.addEventListener("drop", event => dropPiece(event, true));
     });
   }
 
@@ -215,7 +216,7 @@ window.onload = function () {
       });
       rooms.lastElementChild.addEventListener("click", async function () {
         await roomEventHandler(this);
-      })
+      });
     });
   }
 
