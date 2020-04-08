@@ -1,18 +1,19 @@
 package chess.domain.board;
 
 import chess.domain.piece.Blank;
-import chess.domain.piece.InitializedPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
+import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
 import chess.domain.ui.UserInterface;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
-public class RunningBoard extends StartedBoard {
+public class RunningBoard implements Board {
     private static final int LINE_START_INDEX = 1;
     private static final int LINE_END_INDEX = 8;
     private static final int BLACK_PAWN_ROW = 7;
@@ -20,8 +21,12 @@ public class RunningBoard extends StartedBoard {
     private static final int BLANK_START_INDEX = 3;
     private static final int BLANK_END_INDEX = 6;
 
-    RunningBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
-        super(pieces, userInterface);
+    private final Map<Position, Piece> pieces;
+    private final UserInterface userInterface;
+
+    private RunningBoard(Map<Position, Piece> pieces, UserInterface userInterface) {
+        this.pieces = pieces;
+        this.userInterface = userInterface;
     }
 
     public static RunningBoard initiaize(UserInterface userInterface) {
@@ -32,6 +37,42 @@ public class RunningBoard extends StartedBoard {
         return new RunningBoard(pieces, userInterface);
     }
 
+
+    @Override
+    public Board movePiece() {
+        MovingFlow movingFlow = userInterface.inputMovingFlow();
+        return MoveExceptionHandler.handle(this::movePiece, movingFlow, userInterface, this);
+    }
+
+    private Board movePiece(Position from, Position to, Board board) {
+        Map<Position, Piece> pieces = clonePieces(this.pieces);
+        Piece piece = board.getPiece(from);
+        piece = piece.move(to, board);
+        pieces.put(from, Blank.of());
+        pieces.put(to, piece);
+        if (piece.attackedKing()) {
+            return new FinishedBoard(pieces, userInterface);
+        }
+
+        return new RunningBoard(pieces, userInterface);
+    }
+
+    private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        Map.Entry::getValue));
+    }
+
+    @Override
+    public Piece getPiece(Position position) {
+        return pieces.get(position);
+    }
+
+    @Override
+    public Map<Position, Piece> getPieces() {
+        return pieces;
+    }
 
     @Override
     public boolean isNotFinished() {

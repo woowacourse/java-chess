@@ -17,6 +17,5 @@ public class Application {
             System.out.println(String.format("다음과 같은 이유로 중단합니다 - %s", e.getMessage()));
             System.exit(-1);
         }
-
     }
 }
