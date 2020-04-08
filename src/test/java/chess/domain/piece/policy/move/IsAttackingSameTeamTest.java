@@ -2,9 +2,10 @@ package chess.domain.piece.policy.move;
 
 import chess.domain.board.Board;
 import chess.domain.board.RunningBoard;
-import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.score.Score;
+import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -12,7 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.ArrayList;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,29 +25,7 @@ class IsAttackingSameTeamTest {
     @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Team team, boolean expected) {
-        Initialized initializedPiece = new Initialized("testInitializedPiece", Position.of(1,1), team, new ArrayList<>(), new Score(-1)) {
-
-            @Override
-            public Score calculateScore(Board board) {
-                return null;
-            }
-
-            @Override
-            public boolean hasHindrance(Position to, Board board) {
-                return false;
-            }
-
-            @Override
-            protected boolean canNotMove(Position to, Board board) {
-                return false;
-
-            }
-
-            @Override
-            public Piece move(Position to, Board board) {
-                return null;
-            }
-        };
+        Initialized initializedPiece = (Initialized) PieceFactory.createMovedPiece(PieceType.ROOK, Position.of(1,1), team, MoveType.MOVED);
         
         Board board = RunningBoard.initiaize();
         Position to = Position.of(1,7);

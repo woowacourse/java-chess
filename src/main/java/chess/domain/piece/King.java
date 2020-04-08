@@ -11,7 +11,6 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class King extends NotPawn {
-
     public static final double MAX_DISTANCE = Math.sqrt(2);
 
     private King(KingBuilder kingBuilder) {

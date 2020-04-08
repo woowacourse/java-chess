@@ -40,33 +40,6 @@ public class RunningBoard implements Board {
         return movePiece(movingFlow, this);
     }
 
-    private Board movePiece(MovingFlow movingFlow, Board board) {
-        Map<Position, Piece> pieces = clonePieces(this.pieces);
-        Piece piece = board.getPiece(movingFlow.getFrom());
-        piece = piece.move(movingFlow.getTo(), board);
-        updatePieces(pieces, movingFlow.getFrom(), movingFlow.getTo(), piece);
-        return updateBoard(pieces, piece);
-    }
-
-    private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
-        if (piece.attackedKing()) {
-            return new FinishedBoard(pieces);
-        }
-        return new RunningBoard(pieces);
-    }
-
-    private void updatePieces(Map<Position, Piece> pieces, Position from, Position to, Piece piece) {
-        pieces.put(from, Blank.of());
-        pieces.put(to, piece);
-    }
-
-    private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
-        return board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        Map.Entry::getValue));
-    }
-
     @Override
     public Piece getPiece(Position position) {
         return pieces.get(position);
@@ -126,5 +99,32 @@ public class RunningBoard implements Board {
             Blank blank = Blank.of();
             pieces.put(position, blank);
         }
+    }
+
+    private Board movePiece(MovingFlow movingFlow, Board board) {
+        Map<Position, Piece> pieces = clonePieces(this.pieces);
+        Piece piece = board.getPiece(movingFlow.getFrom());
+        piece = piece.move(movingFlow.getTo(), board);
+        updatePieces(pieces, movingFlow.getFrom(), movingFlow.getTo(), piece);
+        return updateBoard(pieces, piece);
+    }
+
+    private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
+        if (piece.attackedKing()) {
+            return new FinishedBoard(pieces);
+        }
+        return new RunningBoard(pieces);
+    }
+
+    private void updatePieces(Map<Position, Piece> pieces, Position from, Position to, Piece piece) {
+        pieces.put(from, Blank.of());
+        pieces.put(to, piece);
+    }
+
+    private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
+        return board.entrySet()
+                .stream()
+                .collect(Collectors.toMap(Map.Entry::getKey,
+                        Map.Entry::getValue));
     }
 }

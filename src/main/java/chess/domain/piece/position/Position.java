@@ -2,8 +2,6 @@ package chess.domain.piece.position;
 
 import chess.util.SmallLetterAsciiConverter;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -50,11 +48,6 @@ public class Position {
         return isNotPerpendicularDirection(to) && isNotStraightDiagonalDirection(to);
     }
 
-    public boolean isPerpendicularDirection(Position to) {
-        Direction direction = Direction.calculate(this, to);
-        return direction.isPerpendicular();
-    }
-
     public boolean isVerticalDirection(Position to) {
         Direction direction = Direction.calculate(this, to);
         return direction.isVertical();
@@ -94,6 +87,11 @@ public class Position {
 
     int getY() {
         return y;
+    }
+
+    private boolean isPerpendicularDirection(Position to) {
+        Direction direction = Direction.calculate(this, to);
+        return direction.isPerpendicular();
     }
 
     private boolean isNotPerpendicularDirection(Position to) {

@@ -21,10 +21,6 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException(String.format("%s에 해당하는 명령어를 찾을 수 없습니다.", value)));
     }
 
-    private boolean matchValue(String value, Command command) {
-        return command.value.equals(value);
-    }
-
     public boolean isNotMove() {
         return this != MOVE;
     }
@@ -39,5 +35,9 @@ public enum Command {
 
     public boolean isNotStatus() {
         return this != STATUS;
+    }
+
+    private boolean matchValue(String value, Command command) {
+        return command.value.equals(value);
     }
 }

@@ -8,7 +8,6 @@ public abstract class NotPawn extends Initialized {
         super(builder);
     }
 
-
     @Override
     public Score calculateScore(Board board) {
         return score;

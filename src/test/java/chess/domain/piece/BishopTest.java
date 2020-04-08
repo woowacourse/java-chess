@@ -5,7 +5,6 @@ import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -59,21 +58,15 @@ class BishopTest {
                 Arguments.of(Position.of(2, 2),
                         Position.of(6, 6),
                         team,
-                        new Bishop.BishopBuilder("b", Position.of(6, 6), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
-                                .moveType(MoveType.MOVED)
-                                .build()),
+                        PieceFactory.createMovedPiece(PieceType.BISHOP, Position.of(6,6), team, MoveType.MOVED)),
                 Arguments.of(Position.of(2, 2),
                         Position.of(7, 7),
                         team,
-                        new Bishop.BishopBuilder("b", Position.of(7, 7), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
-                                .moveType(MoveType.ATTACKED_SUBORDINATE)
-                                .build()),
+                        PieceFactory.createMovedPiece(PieceType.BISHOP, Position.of(7,7), team, MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(2, 2),
                         Position.of(1, 3),
                         team,
-                        new Bishop.BishopBuilder("b", Position.of(1, 3), team, PieceType.BISHOP.getCanNotMoveStrategies(), new Score(3))
-                                .moveType(MoveType.MOVED)
-                                .build())
+                        PieceFactory.createMovedPiece(PieceType.BISHOP, Position.of(1,3), team, MoveType.MOVED))
         );
     }
 

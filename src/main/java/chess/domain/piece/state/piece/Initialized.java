@@ -28,27 +28,6 @@ public abstract class Initialized extends Started {
         this.moveType = builder.moveType;
     }
 
-    protected Initialized(String name,
-                          Position position,
-                          Team team,
-                          List<CanNotMoveStrategy> canNotMoveStrategies,
-                          Score score) {
-        this(name, position, team, canNotMoveStrategies, score, MoveType.INITIALIZED);
-    }
-
-    protected Initialized(String name,
-                          Position position,
-                          Team team,
-                          List<CanNotMoveStrategy> canNotMoveStrategies,
-                          Score score,
-                          MoveType moveType) {
-        super(name, team);
-        this.position = position;
-        this.canNotMoveStrategies = canNotMoveStrategies;
-        this.score = score;
-        this.moveType = moveType;
-    }
-
     public abstract boolean hasHindrance(Position to, Board board);
 
     @Override
@@ -117,6 +96,35 @@ public abstract class Initialized extends Started {
         return position.isStraightDirection(to);
     }
 
+    public abstract static class InitializedBuilder {
+        private final String name;
+        private final Team team;
+        private final List<CanNotMoveStrategy> canNotMoveStrategies;
+        private final Position position;
+        private final Score score;
+        private MoveType moveType;
+
+        public InitializedBuilder(String name,
+                                  Position position,
+                                  Team team,
+                                  List<CanNotMoveStrategy> canNotMoveStrategies,
+                                  Score score) {
+            this.name = name;
+            this.position = position;
+            this.team = team;
+            this.canNotMoveStrategies = canNotMoveStrategies;
+            this.score = score;
+            this.moveType = MoveType.INITIALIZED;
+        }
+
+        public InitializedBuilder moveType(MoveType moveType) {
+            this.moveType = moveType;
+            return this;
+        }
+
+        public abstract Piece build();
+    }
+
     protected boolean canNotMove(Position to, Board board) {
         return canNotMoveStrategies.stream()
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(this, to, board));
@@ -152,37 +160,6 @@ public abstract class Initialized extends Started {
             }
         }
         return false;
-    }
-
-
-    public abstract static class InitializedBuilder {
-        private final String name;
-        private final Team team;
-        private final List<CanNotMoveStrategy> canNotMoveStrategies;
-        private final Position position;
-        private final Score score;
-        private MoveType moveType;
-
-        public InitializedBuilder(String name,
-                                  Position position,
-                                  Team team,
-                                  List<CanNotMoveStrategy> canNotMoveStrategies,
-                                  Score score) {
-            this.name = name;
-            this.position = position;
-            this.team = team;
-            this.canNotMoveStrategies = canNotMoveStrategies;
-            this.score = score;
-            this.moveType = MoveType.INITIALIZED;
-        }
-
-        public InitializedBuilder moveType(MoveType moveType) {
-            this.moveType = moveType;
-            return this;
-        }
-
-        public abstract Piece build();
-
     }
 
     @Override

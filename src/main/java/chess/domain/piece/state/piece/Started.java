@@ -7,7 +7,6 @@ public abstract class Started implements Piece {
     protected final String name;
     protected final Team team;
 
-
     protected Started(String name, Team team) {
         this.name = Team.convertName(name, team);
         this.team = team;

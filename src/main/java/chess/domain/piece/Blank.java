@@ -7,7 +7,6 @@ import chess.domain.piece.state.piece.Started;
 import chess.domain.piece.team.Team;
 
 public class Blank extends Started {
-
     private Blank(String name, Team team) {
         super(name, team);
     }

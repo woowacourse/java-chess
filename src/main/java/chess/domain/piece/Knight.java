@@ -11,7 +11,6 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class Knight extends NotPawn {
-
     public static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
 
     private Knight(KnightBuilder builder) {

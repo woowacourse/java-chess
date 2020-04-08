@@ -41,14 +41,6 @@ public class InitializedPawn extends Pawn {
         return hasHindrance(board);
     }
 
-    private boolean hasHindrance(Board board) {
-        Position forwardPosition = position.go(team.getForwardDirection());
-        return Stream.iterate(forwardPosition, position -> position.go(team.getForwardDirection()))
-                .limit(MAX_DISTANCE)
-                .map(board::getPiece)
-                .anyMatch(Piece::isNotBlank);
-    }
-
     public static class InitializedPawnBuilder extends InitializedBuilder {
         public InitializedPawnBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
             super(name, position, team, canNotMoveStrategies, score);
@@ -58,5 +50,13 @@ public class InitializedPawn extends Pawn {
         public Piece build() {
             return new InitializedPawn(this);
         }
+    }
+
+    private boolean hasHindrance(Board board) {
+        Position forwardPosition = position.go(team.getForwardDirection());
+        return Stream.iterate(forwardPosition, position -> position.go(team.getForwardDirection()))
+                .limit(MAX_DISTANCE)
+                .map(board::getPiece)
+                .anyMatch(Piece::isNotBlank);
     }
 }

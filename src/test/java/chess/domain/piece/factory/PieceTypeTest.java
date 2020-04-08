@@ -1,6 +1,5 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.InitializedPawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -13,13 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PieceTypeTest {
-
-    @Test
-    void valueOf() {
-        PieceType pieceType = PieceType.valueOf(InitializedPawn.class);
-        assertThat(pieceType).isEqualTo(PieceType.INITIALIZED_PAWN);
-    }
-
     @ParameterizedTest
     @DisplayName("#findByInitialColumn() : should return Class as to initialCollumn")
     @MethodSource({"getCasesForfindTypeByInitialColumn"})

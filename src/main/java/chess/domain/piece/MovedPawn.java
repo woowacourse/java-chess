@@ -12,8 +12,6 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 
 public class MovedPawn extends Pawn {
-
-
     public static final double MAX_DISTANCE = Math.sqrt(2);
 
     private MovedPawn(MovedPawnBuilder builder) {
