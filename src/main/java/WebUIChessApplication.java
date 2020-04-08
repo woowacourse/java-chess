@@ -20,6 +20,7 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import vo.PieceVO;
 
 public class WebUIChessApplication {
+    private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
     private static final Gson GSON = new Gson();
     private static final int GAME_ID = 1;
 
@@ -105,6 +106,6 @@ public class WebUIChessApplication {
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
     }
 }
