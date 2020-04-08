@@ -39,7 +39,7 @@ public class ChessBoard {
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
     }
 
-    private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
+    public ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
         ChessPiece sourceChessPiece = chessBoard.get(sourcePosition);
 
         if (Objects.isNull(chessBoard.get(sourcePosition))) {
@@ -126,7 +126,7 @@ public class ChessBoard {
         return chessBoardState.isCaughtKing();
     }
 
-    public boolean containsTargetPosition(Position targetPosition){
+    public boolean containsTargetPosition(Position targetPosition) {
         ChessPiece chessPiece = chessBoard.get(targetPosition);
         return Objects.nonNull(chessPiece);
     }

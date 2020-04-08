@@ -54,14 +54,6 @@ public abstract class PawnRule extends NonLeapable {
         return canMoveDirection(sourcePosition, targetPosition) && isInitialStateRule(chessFileGap, chessRankGap);
     }
 
-    public static BlackPawnRule generateBlackPawnRule() {
-        return new BlackPawnRule();
-    }
-
-    public static WhitePawnRule generateWhitePawnRule() {
-        return new WhitePawnRule();
-    }
-
     private boolean isCaughtRule(int chessFileGap, int chessRankGap) {
         return (chessFileGap == 1) && (chessRankGap == 1);
     }

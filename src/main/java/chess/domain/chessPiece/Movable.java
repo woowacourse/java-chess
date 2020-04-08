@@ -4,8 +4,8 @@ import chess.domain.position.Position;
 
 public interface Movable {
 
-	boolean canLeap();
+    boolean canLeap();
 
-	boolean canMove(Position sourcePosition, Position targetPosition);
+    boolean canMove(Position sourcePosition, Position targetPosition);
 
 }

@@ -15,7 +15,7 @@ public class PawnState {
         return new PawnState(false);
     }
 
-    public PawnState switchedMovedState(){
+    public PawnState switchedMovedState() {
         return MovedState();
     }
 

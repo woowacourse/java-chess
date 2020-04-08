@@ -1,7 +1,8 @@
 package chess.domain.chessPiece.pieceType;
 
 import chess.domain.RuleStrategy.Rule;
-import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRule;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.BlackPawnRule;
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.WhitePawnRule;
 import chess.domain.chessPiece.ChessPiece;
 
 import java.util.function.Function;
@@ -9,8 +10,8 @@ import java.util.function.Supplier;
 
 public enum PieceColor {
 
-    WHITE("white", String::toLowerCase, PawnRule::generateWhitePawnRule),
-    BLACK("black", String::toUpperCase, PawnRule::generateBlackPawnRule);
+    WHITE("white", String::toLowerCase, WhitePawnRule::new),
+    BLACK("black", String::toUpperCase, BlackPawnRule::new);
 
     private final String color;
     private final Function<String, String> convertName;
