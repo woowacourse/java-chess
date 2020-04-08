@@ -1,6 +1,6 @@
 package chess.views;
 
-import chess.controller.Command;
+import chess.domain.game.Command;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 

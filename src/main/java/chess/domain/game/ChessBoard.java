@@ -1,25 +1,25 @@
 package chess.domain.game;
 
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.concrete.King;
+import chess.domain.chesspiece.concrete.Pawn;
 import chess.domain.chesspiece.Piece;
 import chess.domain.chesspiece.PieceInfo;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
-import chess.domain.status.Result;
-import chess.domain.status.Status;
+import chess.domain.result.Result;
+import chess.domain.result.Score;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
     private final Map<Position, Piece> chessBoard;
-    private boolean isKingTaken;
+//    private boolean isKingTaken;
 
     public ChessBoard(Map<Position, Piece> initPieces) {
         this.chessBoard = initPieces;
-        isKingTaken = false;
+//        isKingTaken = false;
     }
 
     public void move(Position from, Position to) {
@@ -36,9 +36,9 @@ public class ChessBoard {
         chessBoard.put(to, source);
         chessBoard.remove(from);
 
-        if (target instanceof King) {
-            this.isKingTaken = true;
-        }
+//        if (target instanceof King) {
+//            this.isKingTaken = true;
+//        }
     }
 
     private void validateSamePosition(Position from, Position to) {
@@ -76,9 +76,9 @@ public class ChessBoard {
                 && source.validateDirection(direction, target);
     }
 
-    public boolean isGameOver() {
-        return isKingTaken;
-    }
+//    public boolean isGameFinished() {
+//        return isKingTaken;
+//    }
 
     private boolean validateObstacles(List<Position> routes) {
         for (Position position : routes) {
@@ -106,9 +106,9 @@ public class ChessBoard {
         return direction.getPositionsBetween(from, to);
     }
 
-    public Status createStatus(Player player) {
+    public Score createStatus(Player player) {
         if (checkKingTaken(player)) {
-            return new Status(player, 0);
+            return new Score(player, 0);
         }
 
         double score = getPlayerPieces(player)
@@ -116,7 +116,7 @@ public class ChessBoard {
                 .mapToDouble(Piece::getScore)
                 .sum();
         score -= PieceInfo.PAWN_SCORE_DIFF * getPawnCount(player);
-        return new Status(player, score);
+        return new Score(player, score);
     }
 
     public boolean checkKingTaken(Player player) {
@@ -128,8 +128,8 @@ public class ChessBoard {
     }
 
     public Result createResult() {
-        List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
-        return new Result(statuses);
+        List<Score> scores = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
+        return new Result(scores);
     }
 
     private List<Piece> getPlayerPieces(Player player) {

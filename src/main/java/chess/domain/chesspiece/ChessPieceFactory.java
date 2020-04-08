@@ -1,5 +1,6 @@
 package chess.domain.chesspiece;
 
+import chess.domain.chesspiece.concrete.*;
 import chess.domain.game.Player;
 
 import java.util.LinkedHashMap;

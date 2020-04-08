@@ -1,6 +1,6 @@
-import chess.domain.chesspiece.Knight;
-import chess.domain.chesspiece.Pawn;
-import chess.domain.chesspiece.Rook;
+import chess.domain.chesspiece.concrete.Knight;
+import chess.domain.chesspiece.concrete.Pawn;
+import chess.domain.chesspiece.concrete.Rook;
 import chess.domain.direction.Direction;
 import chess.domain.game.Player;
 import chess.domain.position.Position;

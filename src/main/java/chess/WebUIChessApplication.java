@@ -1,78 +1,90 @@
 package chess;
 
+import chess.dao.ChessBoardDao;
+import chess.dao.ChessGameDao;
+import chess.domain.game.ChessBoard;
 import chess.controller.ChessController;
-import chess.controller.dao.ChessBoardDao;
-import chess.controller.dao.GameDao;
-import chess.controller.dto.RequestDto;
-import chess.controller.dto.ResponseDto;
 import chess.domain.game.Command;
+import chess.domain.game.Player;
+import chess.dto.RequestDto;
+import chess.dto.ResponseDto;
 import com.google.gson.Gson;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
 
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static Gson gson = new Gson();
-    private static final ChessController chessController = new ChessController();
-<   private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
-    private static final GameDao gameDao = new GameDao();
+    private static final Gson GSON = new Gson();
+    private static final ChessController CHESS_CONTROLLER = new ChessController();
+    private static final ChessBoardDao CHESS_BOARD_DAO = new ChessBoardDao();
+    private static final ChessGameDao CHESS_GAME_DAO = new ChessGameDao();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         port(8081);
-        staticFiles.location("public");
+        staticFiles.location("templates");
+        CHESS_BOARD_DAO.deleteChessBoard();
 
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        get("/loadGame", (req, res) -> {
+            ResponseDto responseDto = null;
 
-          get("/loadGame", (req, res) -> {
             try {
-                //            String state = gameDao.findState(roomNumber);
-//            if (state.equals("playing")) {
-//                Map<Position, Piece> positionPieceMap = chessBoardDao.loadGamePlaying(700);
-//            } else if (state.equals("end")) {
-            responseDto = chessController.start(new RequestDto(Command.START));
-            gameDao.saveInitGame(responseDto);
-            int roomNumber = gameDao.findMaxRoomNumber();
-            chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
-                res.status(200);
-                return gson.toJson(responseDto);
-            } catch (IllegalArgumentException | IllegalStateException e) {
-                res.status(400);
-                return gson.toJson(e.getMessage());
+                boolean isGameExists = CHESS_BOARD_DAO.isChessBoardExists();
+                if (isGameExists) {
+                    ChessBoard chessBoard = new ChessBoard(CHESS_BOARD_DAO.getChessBoard());
+                    Player turn = CHESS_GAME_DAO.getTurn();
+                    responseDto = CHESS_CONTROLLER.load(chessBoard, turn);
+                    CHESS_GAME_DAO.updateGame(responseDto);
+                }
+
+                if (!isGameExists) {
+                    responseDto = CHESS_CONTROLLER.start();
+                    CHESS_GAME_DAO.saveGame(responseDto);
+                }
+
+                CHESS_BOARD_DAO.deleteChessBoard();
+                CHESS_BOARD_DAO.saveChessBoard(responseDto.getChessBoardDto());
+            } catch (SQLException| NullPointerException e) {
+                res.status(500);
+                e.getStackTrace();
+                return GSON.toJson(e.getMessage());
             }
+
+            res.status(200);
+            return GSON.toJson(responseDto);
         });
+
 
         get("/move", (req, res) -> {
             try {
-                int roomNumber = gameDao.findMaxRoomNumber();
                 RequestDto requestDto = new RequestDto(Command.MOVE, req);
-                ResponseDto responseDto = chessController.move(requestDto);
-                res.status(200);
-                gameDao.updateGame(responseDto);
-                chessBoardDao.deleteChessBoard(700);
-                chessBoardDao.saveInitChessBoard(responseDto.getChessBoardDto(), roomNumber);
-//                chessBoardDao.pieceMove(responseDto);
-                return gson.toJson(responseDto);
-            } catch (IllegalArgumentException | IllegalStateException e) {
-                res.status(400);
-                return gson.toJson(e.getMessage());
+                ResponseDto responseDto = CHESS_CONTROLLER.move(requestDto);
+
+                CHESS_GAME_DAO.updateGame(responseDto);
+                CHESS_BOARD_DAO.deleteChessBoard();
+                CHESS_BOARD_DAO.saveChessBoard(responseDto.getChessBoardDto());
+                CHESS_GAME_DAO.updateGame(responseDto);
+
+                return GSON.toJson(responseDto);
+            } catch (IllegalArgumentException
+                    | IllegalStateException
+                    | NullPointerException
+                    | SQLException e) {
+                res.status(500);
+                return GSON.toJson(e.getMessage());
             }
         });
 
         get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            gameDao.updateEndState(700);
-            return render(model, "end.html");
+            try {
+                ResponseDto responseDto = CHESS_CONTROLLER.end();
+                CHESS_BOARD_DAO.deleteChessBoard();
+                CHESS_GAME_DAO.deleteChessGame();
+                return GSON.toJson(responseDto);
+            } catch (IllegalArgumentException | IllegalStateException e) {
+                res.status(500);
+                return GSON.toJson(e.getMessage());
+            }
         });
-    }
-
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
