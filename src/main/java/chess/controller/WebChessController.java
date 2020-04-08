@@ -27,7 +27,7 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-        get("/chessGame", (req, res) -> {
+        get("/chess-game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("cells", this.chessGameService.getCells());
             model.put("currentTeam", this.chessGameService.getCurrentTeam());
@@ -36,7 +36,7 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-        get("/newChessGame", (req, res) -> {
+        get("/new-chess-game", (req, res) -> {
             this.chessGameService.setNewChessGame();
 
             Map<String, Object> model = new HashMap<>();
@@ -50,23 +50,23 @@ public class WebChessController {
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
+
             try {
-                String source = req.queryParams("source");
-                String target = req.queryParams("target");
-
                 this.chessGameService.movePiece(source, target);
-
-                if (this.chessGameService.isGameOver()) {
-                    model.put("winner", this.chessGameService.getWinner());
-                    model.put("loser", this.chessGameService.getLoser());
-                    model.put("blackScore", this.chessGameService.getBlackPieceScore());
-                    model.put("whiteScore", this.chessGameService.getWhitePieceScore());
-                    this.chessGameService.endGame();
-
-                    return render(model, "winner.html");
-                }
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 model.put("error", e.getMessage());
+            }
+
+            if (this.chessGameService.isGameOver()) {
+                model.put("winner", this.chessGameService.getWinner());
+                model.put("loser", this.chessGameService.getLoser());
+                model.put("blackScore", this.chessGameService.getBlackPieceScore());
+                model.put("whiteScore", this.chessGameService.getWhitePieceScore());
+                this.chessGameService.endGame();
+
+                return render(model, "winner.html");
             }
 
             model.put("cells", this.chessGameService.getCells());
