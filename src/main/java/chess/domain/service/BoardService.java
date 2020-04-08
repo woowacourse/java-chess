@@ -1,6 +1,7 @@
 package chess.domain.service;
 
 import java.sql.SQLException;
+import java.util.Optional;
 
 import chess.domain.BoardConverter;
 import chess.domain.ChessGame;
@@ -17,10 +18,18 @@ public class BoardService {
 	}
 
 	public void create(ChessGame chessGame, String roomName) throws SQLException {
+		validateDuplicatedRoom(roomName);
 		String boardInfo = BoardConverter.convert(chessGame.getBoard(), BLANK_MARK);
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.addRoom(roomName, boardInfo, turn, finishFlag);
+	}
+
+	private void validateDuplicatedRoom(String roomName) throws SQLException {
+		Optional<String> result = roomDao.findByRoomName(roomName);
+		if (!result.isPresent()) {
+			throw new IllegalArgumentException("같은 이름의 방이 존재합니다.");
+		}
 	}
 
 	public void save(ChessGame chessGame, String roomName) throws SQLException {
