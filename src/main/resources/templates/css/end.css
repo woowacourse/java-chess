@@ -9,7 +9,7 @@ h1 {
     font-family: BMHANNAPro;
 }
 
-#restart-button {
+#menu-button {
     width: 80px;
     height: 50px;
     font-family: BMHANNAPro;
@@ -18,7 +18,7 @@ h1 {
     font-size: 20px;
 }
 
-#restart-button:hover {
+#menu-button:hover {
     background-color: black;
     color: white;
 }

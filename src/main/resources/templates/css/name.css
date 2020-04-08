@@ -5,12 +5,14 @@
     src: url(../ttf/BMHANNAPro.ttf);
 }
 
-div {
+#name-label {
     font-family: BMHANNAPro;
+    font-size: 30px;
 }
 
 #white-label,
-#black-label {;
+#black-label {
+    font-family: BMHANNAPro;
     font-size: 30px;
 }
 
@@ -18,9 +20,11 @@ div {
 #black-team {
     font-family: BMHANNAPro;
     font-size: 30px;
+    width: 200px;
 }
 
 #submit-button {
+    font-family: BMHANNAPro;
     width: 80px;
     height: 50px;
     border: solid 1px;

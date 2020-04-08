@@ -63,10 +63,8 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
 
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
-            String whitePlayer = req.queryParams("white-player");
-            String blackPlayer = req.queryParams("black-player");
 
-            webChessController.continueGame(chessBoardId, whitePlayer, blackPlayer);
+            webChessController.continueGame(chessBoardId);
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
             Player player = webChessController.getPlayer();
@@ -75,7 +73,7 @@ public class WebUIChessApplication {
             model.put("currentTeam", teamDto);
             model.put("player", player);
 
-           return render(model, "game.html");
+            return render(model, "game.html");
         });
 
         post("/move", (req, res) -> {
@@ -87,11 +85,13 @@ public class WebUIChessApplication {
             MoveResultDto moveResultDto = webChessController.move(source, target);
             List<TileDto> tileDtos = webChessController.getTiles();
             TeamDto teamDto = webChessController.getCurrentTeam();
+            Player player = webChessController.getPlayer();
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("message", moveResultDto.getMessage());
             model.put("style", moveResultDto.getStyle());
+            model.put("player", player);
 
             if (webChessController.isEndGame()) {
                 webChessController.deleteChessGame();
@@ -100,49 +100,32 @@ public class WebUIChessApplication {
             return render(model, "game.html");
         });
 
-//        get("/", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "index2.html");
-//        });
-//
-//        post("/game", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            webChessController.start();
-//            List<TileDto> tileDtos = webChessController.getTiles();
-//            TeamDto teamDto = webChessController.getCurrentTeam();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//
-//            return render(model, "game.html");
-//        });
-//
-//
-//        post("/status", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            List<TileDto> tileDtos = webChessController.getTiles();
-//            TeamDto teamDto = webChessController.getCurrentTeam();
-//            String message = webChessController.getScores();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//            model.put("message", message);
-//
-//            return render(model, "game.html");
-//        });
-//
-//        post("/end", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            webChessController.deleteChessGame();
-//            String message = webChessController.getScores();
-//
-//            model.put("message", message);
-//
-//            return render(model, "end.html");
-//        });
+        post("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            List<TileDto> tileDtos = webChessController.getTiles();
+            TeamDto teamDto = webChessController.getCurrentTeam();
+            String message = webChessController.getScores();
+            Player player = webChessController.getPlayer();
+
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("message", message);
+            model.put("player", player);
+
+            return render(model, "game.html");
+        });
+
+        post("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            webChessController.deleteChessGame();
+            String message = webChessController.getScores();
+
+            model.put("message", message);
+
+            return render(model, "end.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -55,11 +55,10 @@ public class WebChessController {
         return playerDAO.findPlayer(this.chessBoard);
     }
 
-    public void continueGame(int chessBoardId, String whitePlayer, String blackPlayer) throws Exception {
+    public void continueGame(int chessBoardId) throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
         CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
         PieceDAO pieceDAO = new PieceDAO();
-        PlayerDAO playerDAO = new PlayerDAO();
 
         this.chessBoard = chessBoardDAO.findById(chessBoardId);
 
@@ -70,33 +69,6 @@ public class WebChessController {
                 .collect(Collectors.toMap(entry -> entry.getPosition(),
                         entry -> entry.getPieceImageUrl(),
                         (e1, e2) -> e1, HashMap::new));
-        this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
-    }
-
-    public void start() throws Exception {
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
-        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
-        PieceDAO pieceDAO = new PieceDAO();
-        this.chessBoard = chessBoardDAO.findRecentChessBoard();
-
-        if (this.chessBoard == null) {
-            this.chessRunner = new ChessRunner();
-            chessBoardDAO.addChessBoard();
-            this.chessBoard = chessBoardDAO.findRecentChessBoard();
-            this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
-            currentTeamDAO.addCurrentTeam(this.chessBoard, this.currentTeam);
-            List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
-            pieceDAO.addPiece(this.chessBoard, tileDtos);
-            updateOriginalPieces(pieceDAO);
-            return;
-        }
-
-        updateOriginalPieces(pieceDAO);
-        Map<String, String> pieceOnBoards = this.originalPieces.getPieceOnBoards().stream()
-                .collect(Collectors.toMap(entry -> entry.getPosition(),
-                        entry -> entry.getPieceImageUrl(),
-                        (e1, e2) -> e1, HashMap::new));
-        this.currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard);
         this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
     }
 
@@ -148,11 +120,13 @@ public class WebChessController {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
         PieceDAO pieceDAO = new PieceDAO();
         CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+        PlayerDAO playerDAO = new PlayerDAO();
 
         currentTeamDAO.deleteCurrentTeam(this.chessBoard);
         for (PieceOnBoard pieceOnBoard : this.originalPieces.getPieceOnBoards()) {
             pieceDAO.deletePiece(pieceOnBoard);
         }
+        playerDAO.deletePlayer(this.chessBoard);
         chessBoardDAO.deleteChessBoard(this.chessBoard);
     }
 

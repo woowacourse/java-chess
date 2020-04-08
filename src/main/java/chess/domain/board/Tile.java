@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 public class Tile {
     private static final String UNDER_BAR = "_";
-    
+
     private final Position position;
     private final Piece piece;
 
