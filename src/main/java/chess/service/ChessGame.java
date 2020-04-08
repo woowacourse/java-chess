@@ -58,22 +58,27 @@ public class ChessGame {
         Position target = Position.from(targetName);
 
         Board board = loadBoard(whitePlayer, blackPlayer).move(source, target);
-        saveBoard(board.toSave(), whitePlayer, blackPlayer);
+        saveBoard(board, whitePlayer, blackPlayer);
 
         if (board.isFinished()) {
             updateRecord(whitePlayer, blackPlayer, board);
+            boardDAO.deleteByUsers(whitePlayer, blackPlayer);
         }
+
         return board;
     }
 
     private void updateRecord(User whitePlayer, User blackPlayer, Board board) throws SQLException {
         if (board.isWhiteTurn()) {
-            userDAO.upsert(whitePlayer.win());
-            userDAO.upsert(blackPlayer.lose());
+            updateRecordBy(whitePlayer, blackPlayer);
             return;
         }
-        userDAO.upsert(blackPlayer.win());
-        userDAO.upsert(whitePlayer.lose());
+        updateRecordBy(blackPlayer, whitePlayer);
+    }
+
+    private void updateRecordBy(User winner, User loser) throws SQLException {
+        userDAO.upsert(winner.win());
+        userDAO.upsert(loser.lose());
     }
 
     public ChessResult status(String whiteName, String blackName) throws SQLException {
@@ -84,7 +89,7 @@ public class ChessGame {
                 .calculateResult();
     }
 
-    void saveBoard(Board board, User firstUser, User secondUser) throws SQLException {
+    private void saveBoard(Board board, User firstUser, User secondUser) throws SQLException {
         int boardId = boardDAO.upsert(firstUser, secondUser, board);
 
         for (Map.Entry<Position, GamePiece> entry : board.getBoard().entrySet()) {
@@ -93,7 +98,7 @@ public class ChessGame {
         }
     }
 
-    Board loadBoard(User firstUser, User secondUser) throws SQLException {
+    private Board loadBoard(User firstUser, User secondUser) throws SQLException {
         int boardId = boardDAO.findIdByUsers(firstUser, secondUser);
         Status status = boardDAO.findStatusByUsers(firstUser, secondUser);
 

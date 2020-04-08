@@ -48,7 +48,7 @@ public class DBConnector {
     }
 
     public ResultSet executeQuery(String query, String... inserted) throws SQLException {
-        PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+        PreparedStatement statement = connection.prepareStatement(query);
         for (int i = 1; i <= inserted.length; i++) {
             statement.setString(i, inserted[i - 1]);
         }

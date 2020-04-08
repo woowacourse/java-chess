@@ -7,8 +7,11 @@ import chess.domain.player.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class BoardDAO {
+
+    private static final String NO_BOARD_MESSAGE = "%s, %s의 대전정보가 존재하지 않습니다.";
 
     private final DBConnector DBConnector;
 
@@ -25,7 +28,7 @@ public class BoardDAO {
     public int findIdByUsers(User firstUser, User secondUser) throws SQLException {
         ResultSet resultSet = findByUsers(firstUser, secondUser);
         if (!resultSet.next()) {
-            throw new IllegalArgumentException(String.format("%s, %s의 대전정보가 존재하지 않습니다.", firstUser.getName(), secondUser.getName()));
+            throw new IllegalArgumentException(String.format(NO_BOARD_MESSAGE, firstUser.getName(), secondUser.getName()));
         }
         return resultSet.getInt("id");
     }
@@ -33,7 +36,7 @@ public class BoardDAO {
     public Status findStatusByUsers(User firstUser, User secondUser) throws SQLException {
         ResultSet resultSet = findByUsers(firstUser, secondUser);
         if (!resultSet.next()) {
-            throw new IllegalArgumentException(String.format("%s, %s의 대전정보가 존재하지 않습니다.", firstUser.getName(), secondUser.getName()));
+            throw new IllegalArgumentException(String.format(NO_BOARD_MESSAGE, firstUser.getName(), secondUser.getName()));
         }
         return new Status(resultSet.getInt("turn"), StatusType.PROCESSING);
     }
@@ -44,13 +47,15 @@ public class BoardDAO {
     }
 
     public int upsert(User firstUser, User secondUser, Board board) throws SQLException {
-        ResultSet resultSet = findByUsers(firstUser, secondUser);
+        String query = "INSERT INTO board (white, black, turn) VALUES (?, ?, ?)" +
+                "ON DUPLICATE KEY UPDATE turn = ?;";
+        String turn = Integer.toString(board.getStatus().getTurn());
+        ResultSet resultSet = DBConnector.executeUpdate(query, firstUser.getName(), secondUser.getName(), turn, turn);
+
         if (!resultSet.next()) {
-            addBoard(firstUser, secondUser, board);
-            return findIdByUsers(firstUser, secondUser);
+            throw new IllegalArgumentException(String.format(NO_BOARD_MESSAGE, firstUser.getName(), secondUser.getName()));
         }
-        updateByUsers(firstUser, secondUser, board);
-        return resultSet.getInt("id");
+        return resultSet.getInt(Statement.RETURN_GENERATED_KEYS);
     }
 
     public void updateByUsers(User firstUser, User secondUser, Board modifiedBoard) throws SQLException {

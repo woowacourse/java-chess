@@ -36,6 +36,12 @@ class BoardDAOTest {
         assertThat(boardDAO.findStatusByUsers(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2).getTurn()).isEqualTo(1);
     }
 
+    @Test
+    void upsert() throws SQLException {
+        int id = boardDAO.upsert(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2, Board.createEmpty().placeInitialPieces());
+        assertThat(id).isGreaterThan(0);
+    }
+
     @AfterEach
     void deleteUser() throws SQLException {
         boardDAO.deleteByUsers(UserDAOTest.TEST_USER1, UserDAOTest.TEST_USER2);

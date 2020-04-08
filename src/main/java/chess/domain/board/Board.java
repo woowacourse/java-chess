@@ -132,13 +132,6 @@ public class Board {
                 .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
     }
 
-    public Board toSave() {
-        if (status.isFinished()) {
-            return Board.createEmpty().placeInitialPieces();
-        }
-        return this;
-    }
-
     public Map<Position, GamePiece> getBoard() {
         return Collections.unmodifiableMap(board);
     }
