@@ -3,6 +3,7 @@ package chess.service;
 import chess.dao.BoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.board.Row;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
@@ -27,7 +28,7 @@ public class GameService {
     public String newGame() throws SQLException {
         Board board = BoardFactory.createBoard();
 
-        boardDAO.updateDB(board);
+        updateToDB(board);
         return JSONGenerator.generateJSON(board);
     }
 
@@ -39,7 +40,7 @@ public class GameService {
         } catch (IllegalArgumentException | ArrayIndexOutOfBoundsException error) {
             return error.getMessage();
         }
-        boardDAO.updateDB(board);
+        updateToDB(board);
         return JSONGenerator.generateJSON(board);
     }
 
@@ -71,6 +72,31 @@ public class GameService {
             ChessPiece chessPiece = ChessPieceGenerator.generateChessPiece(pieceName, teamName, position);
 
             board.setPosition(chessPiece, position);
+        }
+    }
+
+    private void updateToDB(Board board) throws SQLException {
+        boardDAO.initializeBoard();
+        boardDAO.initializeGameStatus();
+        boardDAO.updateGameStatus(board.getGameStatus());
+        updateBoard(board);
+    }
+
+    private void updateBoard(Board board) throws SQLException {
+        List<Row> rows = board.getBoard();
+
+        for (int i = 0; i < rows.size(); i++) {
+            List<ChessPiece> chessPieces = rows.get(i).getChessPieces();
+
+            updateRow(chessPieces, i);
+        }
+    }
+
+    private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
+        for (int j = 0; j < chessPieces.size(); j++) {
+            ChessPiece chessPiece = chessPieces.get(j);
+
+            boardDAO.updateChessPiece(chessPiece, i, j);
         }
     }
 }

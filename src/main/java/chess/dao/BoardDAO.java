@@ -1,7 +1,5 @@
 package chess.dao;
 
-import chess.domain.board.Board;
-import chess.domain.board.Row;
 import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.GameStatus;
@@ -59,7 +57,7 @@ public class BoardDAO {
         closeConnection(connection);
     }
 
-    private void initializeGameStatus() throws SQLException {
+    public void initializeGameStatus() throws SQLException {
         Connection connection = getConnection();
         String query = "truncate table game_status";
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -105,32 +103,7 @@ public class BoardDAO {
         return gameStatusDTO;
     }
 
-    public void updateDB(Board board) throws SQLException {
-        initializeBoard();
-        initializeGameStatus();
-        updateBoard(board);
-        updateGameStatus(board.getGameStatus());
-    }
-
-    private void updateBoard(Board board) throws SQLException {
-        List<Row> rows = board.getBoard();
-
-        for (int i = 0; i < rows.size(); i++) {
-            List<ChessPiece> chessPieces = rows.get(i).getChessPieces();
-
-            updateRow(chessPieces, i);
-        }
-    }
-
-    private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
-        for (int j = 0; j < chessPieces.size(); j++) {
-            ChessPiece chessPiece = chessPieces.get(j);
-
-            updateColumn(chessPiece, i, j);
-        }
-    }
-
-    private void updateColumn(ChessPiece chessPiece, int i, int j) throws SQLException {
+    public void updateChessPiece(ChessPiece chessPiece, int i, int j) throws SQLException {
         Connection connection = getConnection();
         String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
@@ -146,7 +119,7 @@ public class BoardDAO {
         closeConnection(connection);
     }
 
-    private void updateGameStatus(GameStatus gameStatus) throws SQLException {
+    public void updateGameStatus(GameStatus gameStatus) throws SQLException {
         Connection connection = getConnection();
         String query = "INSERT INTO game_status VALUES (?, ?)";
         PreparedStatement pstmt = connection.prepareStatement(query);
