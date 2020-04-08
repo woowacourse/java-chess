@@ -12,7 +12,6 @@ import java.sql.SQLException;
 import java.util.Map;
 
 public class WebController {
-    private final static String BLANK = " ";
 
     private State state;
     private PiecesDAO piecesDAO;
