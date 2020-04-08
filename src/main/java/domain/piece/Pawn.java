@@ -35,7 +35,7 @@ public class Pawn extends Piece {
 	@Override
 	protected boolean validStepSize(int rowGap, int columnGap) {
 		int absRowGap = Math.abs(rowGap);
-		Boolean isInitialRank = PawnMoveValidator.isInitialRank(this.position.getRow(), team);
+		boolean isInitialRank = PawnMoveValidator.isInitialRank(this.position.getRow(), team);
 		if ((absRowGap == PAWN_NORMAL_STEP) || ((absRowGap == POSSIBLE_START_STEP) && (isInitialRank))) {
 			return true;
 		}

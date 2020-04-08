@@ -8,6 +8,8 @@ import domain.piece.Piece;
 import domain.piece.position.Column;
 
 public class Rank {
+	private static final String BLANK = "";
+
 	private List<Piece> pieces;
 
 	public Rank(List<Piece> pieces) {
@@ -43,7 +45,7 @@ public class Rank {
 					.ifPresent(piece -> rankPieces.add(piece.showSymbol()));
 				continue;
 			}
-			rankPieces.add("");
+			rankPieces.add(BLANK);
 		}
 		return rankPieces;
 	}
