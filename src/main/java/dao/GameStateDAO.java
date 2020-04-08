@@ -52,9 +52,8 @@ public class GameStateDAO {
 			return null;
 		}
 
-		String message = resultSet.getString("message");
 		ConnectionManager.closeConnection(connection);
-		return GameState.of(message);
+		return GameState.of(resultSet.getString("message"));
 	}
 
 	public void updateMessage(Long roomID, GameState gameState, GameState opposingTeam) throws SQLException {
