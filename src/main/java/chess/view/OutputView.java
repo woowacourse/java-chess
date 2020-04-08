@@ -1,9 +1,8 @@
 package chess.view;
 
 import chess.model.domain.board.BoardSquare;
-import chess.model.domain.board.ChessGame;
 import chess.model.domain.piece.Color;
-import chess.model.domain.piece.Piece;
+import chess.model.dto.ChessGameDto;
 import java.util.List;
 import java.util.Map;
 
@@ -20,27 +19,22 @@ public class OutputView {
         System.out.println("> 현재 점수 및 고득점자 확인 : status");
     }
 
-    public static void printChessBoard(ChessGame chessGame) {
-        Map<BoardSquare, Piece> gameBoard = chessGame.getChessBoard();
-        for (int rank = 8; rank >= 1; rank--) {
-            printRankRaw(gameBoard, rank);
+    public static void printChessBoard(ChessGameDto chessGameDto) {
+        List<String> pieces = chessGameDto.getPieces();
+        int maxSize = BoardSquare.MAX_FILE_AND_RANK_COUNT;
+        for (int i = 0; i < maxSize; i++) {
+            for (int j = 0; j < maxSize; j++) {
+                System.out.print(getPieceLetter(pieces.get(i * maxSize + j)));
+            }
+            System.out.println();
         }
     }
 
-    private static void printRankRaw(Map<BoardSquare, Piece> gameBoard, int rank) {
-        for (char file = 'a'; file <= 'h'; file++) {
-            printFileColumn(gameBoard, rank, file);
+    private static String getPieceLetter(String name) {
+        if (name.isEmpty()) {
+            return ".";
         }
-        System.out.println();
-    }
-
-    private static void printFileColumn(Map<BoardSquare, Piece> gameBoard, int rank, char file) {
-        if (gameBoard.containsKey(BoardSquare.of(String.valueOf(file) + rank))) {
-            System.out
-                .print(gameBoard.get(BoardSquare.of(String.valueOf(file) + rank)).getLetter());
-            return;
-        }
-        System.out.print(".");
+        return name;
     }
 
     public static void printCanNotMove() {

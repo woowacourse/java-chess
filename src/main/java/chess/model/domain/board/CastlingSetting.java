@@ -152,11 +152,6 @@ public enum CastlingSetting {
         return this.boardSquare == moveSquare;
     }
 
-    @Override
-    public String toString() {
-        return boardSquare + "-" + piece.getLetter();
-    }
-
     public boolean isCastlingBefore(BoardSquare boardSquare, Piece piece) {
         return Arrays.stream(CastlingSetting.values())
             .filter(castlingSetting -> castlingSetting.boardSquare == boardSquare)

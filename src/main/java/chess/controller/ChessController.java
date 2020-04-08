@@ -6,6 +6,7 @@ import chess.model.domain.state.GameState;
 import chess.model.domain.state.GameStateAndMoveSquare;
 import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
+import chess.model.dto.ChessGameDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -23,7 +24,7 @@ public class ChessController {
         if (gameState != GameState.START) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
-        OutputView.printChessBoard(chessGame);
+        OutputView.printChessBoard(new ChessGameDto(chessGame));
     }
 
     private static void proceed(ChessGame chessGame) {
@@ -62,7 +63,7 @@ public class ChessController {
         MoveSquare moveSquare = gameStateAndMoveSquare.getMoveSquare();
         MoveState moveState = chessGame.movePieceWhenCanMove(moveSquare);
         if (moveState == MoveState.SUCCESS) {
-            OutputView.printChessBoard(chessGame);
+            OutputView.printChessBoard(new ChessGameDto(chessGame));
             return;
         }
         if (moveState == MoveState.SUCCESS_BUT_PAWN_PROMOTION
@@ -90,7 +91,7 @@ public class ChessController {
         do {
             OutputView.print("폰 재입력 요망");
             moveState = chessGame.promotion(InputView.inputChangeType());
-            OutputView.printChessBoard(chessGame);
+            OutputView.printChessBoard(new ChessGameDto(chessGame));
         } while (moveState != MoveState.SUCCESS);
     }
 

@@ -15,12 +15,12 @@ public class Pawn extends OneTimeMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        CACHE.put(Color.BLACK, new Pawn(Color.BLACK, Type.PAWN, "♟"));
-        CACHE.put(Color.WHITE, new Pawn(Color.WHITE, Type.PAWN, "♙"));
+        CACHE.put(Color.BLACK, new Pawn(Color.BLACK, Type.PAWN));
+        CACHE.put(Color.WHITE, new Pawn(Color.WHITE, Type.PAWN));
     }
 
-    public Pawn(Color color, Type type, String letter) {
-        super(color, type, letter);
+    public Pawn(Color color, Type type) {
+        super(color, type);
     }
 
     public static Piece getPieceInstance(Color color) {

@@ -9,8 +9,8 @@ import java.util.stream.Collectors;
 
 public abstract class RepeatMovePiece extends Piece {
 
-    protected RepeatMovePiece(Color color, Type type, String letter) {
-        super(color, type, letter);
+    protected RepeatMovePiece(Color color, Type type) {
+        super(color, type);
     }
 
     @Override

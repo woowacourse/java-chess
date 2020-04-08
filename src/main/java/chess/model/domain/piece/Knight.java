@@ -13,12 +13,12 @@ public class Knight extends OneTimeMovePiece {
     private final static Map<Color, Piece> CACHE = new HashMap<>();
 
     static {
-        CACHE.put(Color.BLACK, new Knight(Color.BLACK, Type.KNIGHT, "♞"));
-        CACHE.put(Color.WHITE, new Knight(Color.WHITE, Type.KNIGHT, "♘"));
+        CACHE.put(Color.BLACK, new Knight(Color.BLACK, Type.KNIGHT));
+        CACHE.put(Color.WHITE, new Knight(Color.WHITE, Type.KNIGHT));
     }
 
-    public Knight(Color color, Type type, String letter) {
-        super(color, type, letter);
+    public Knight(Color color, Type type) {
+        super(color, type);
     }
 
     public static Piece getPieceInstance(Color color) {
