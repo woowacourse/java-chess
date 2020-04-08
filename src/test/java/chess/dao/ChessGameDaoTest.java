@@ -33,21 +33,22 @@ class ChessGameDaoTest {
 	@Test
 	void findById() throws Exception {
 		int chessGameId = chessGameDao.create();
-		assertThat(chessGameDao.findById(chessGameId)).isInstanceOf(ChessGame.class);
+		assertThat(chessGameDao.findById(chessGameId).isPresent()).isTrue();
 	}
 
 	@Test
 	void update() throws Exception {
 		int chessGameId = chessGameDao.create();
-		ChessGame chessGame = new ChessGame(new Ready());
-		chessGameDao.update(chessGameId, chessGame);
-		assertThat(chessGameDao.findById(chessGameId)).isEqualTo(chessGame);
+		ChessGame newChessGame = new ChessGame(new Ready());
+		chessGameDao.updateById(chessGameId, newChessGame);
+		assertThat(
+				chessGameDao.findById(chessGameId).filter(chessGame -> chessGame == newChessGame).isPresent()).isTrue();
 	}
 
 	@Test
 	void deleteById() throws Exception {
 		int chessGameId = chessGameDao.create();
 		chessGameDao.deleteById(chessGameId);
-		assertThat(chessGameDao.findById(chessGameId)).isNull();
+		assertThat(chessGameDao.findById(chessGameId).isPresent()).isFalse();
 	}
 }

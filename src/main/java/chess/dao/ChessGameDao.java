@@ -1,6 +1,7 @@
 package chess.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import chess.domain.game.ChessGame;
 
@@ -9,9 +10,9 @@ public interface ChessGameDao {
 
 	List<Integer> findAll() throws Exception;
 
-	ChessGame findById(int id) throws Exception;
+	Optional<ChessGame> findById(int id) throws Exception;
 
-	void update(int id, ChessGame chessGame) throws Exception;
+	void updateById(int id, ChessGame chessGame) throws Exception;
 
-	boolean deleteById(int id) throws Exception;
+	void deleteById(int id) throws Exception;
 }

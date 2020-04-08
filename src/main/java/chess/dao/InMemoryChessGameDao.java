@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.Ready;
@@ -16,29 +17,29 @@ public class InMemoryChessGameDao implements ChessGameDao {
 	}
 
 	@Override
-	public int create() throws Exception {
+	public int create() {
 		int id = memory.size() + 1;
 		memory.put(id, new ChessGame(new Ready()));
 		return id;
 	}
 
 	@Override
-	public List<Integer> findAll() throws Exception {
+	public List<Integer> findAll() {
 		return new ArrayList<>(memory.keySet());
 	}
 
 	@Override
-	public ChessGame findById(int id) throws Exception {
-		return memory.get(id);
+	public Optional<ChessGame> findById(int id) {
+		return Optional.ofNullable(memory.get(id));
 	}
 
 	@Override
-	public void update(int id, ChessGame chessGame) throws Exception {
+	public void updateById(int id, ChessGame chessGame) {
 		memory.replace(id, chessGame);
 	}
 
 	@Override
-	public boolean deleteById(int id) throws Exception {
-		return memory.remove(id) != null;
+	public void deleteById(int id) {
+		memory.remove(id);
 	}
 }

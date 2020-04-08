@@ -1,8 +1,8 @@
 package chess.service;
 
+import java.util.Optional;
+
 import chess.dao.ChessGameDao;
-import chess.dao.InMemoryChessGameDao;
-import chess.dao.JDBCChessGameDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.exception.InvalidTurnException;
 import chess.domain.game.state.Ready;
@@ -17,8 +17,8 @@ import chess.dto.TurnDto;
 public class ChessGameService {
 	private final ChessGameDao chessGameDao;
 
-	public ChessGameService() {
-		this.chessGameDao = new JDBCChessGameDao();
+	public ChessGameService(ChessGameDao chessGameDao) {
+		this.chessGameDao = chessGameDao;
 	}
 
 	public ResponseDto games() throws Exception {
@@ -26,53 +26,57 @@ public class ChessGameService {
 	}
 
 	public ResponseDto find(int id) throws Exception {
-		ChessGame chessGame = chessGameDao.findById(id);
-		if (chessGame == null) {
-			return new ResponseDto(ResponseDto.FAIL, null);
-		}
-		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
+		Optional<ChessGame> chessGame = chessGameDao.findById(id);
+		return chessGame.map(game -> new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(game)))
+				.orElseGet(() -> new ResponseDto(ResponseDto.FAIL, null));
 	}
 
 	public ResponseDto move(int id, Position source, Position target) throws Exception {
-		ChessGame chessGame = chessGameDao.findById(id);
+		Optional<ChessGame> optionalChessGame = chessGameDao.findById(id);
 		try {
-			chessGame.move(source, target);
-			chessGameDao.update(id, chessGame);
+			optionalChessGame.ifPresent(chessGame -> {
+				chessGame.move(source, target);
+				try {
+					chessGameDao.updateById(id, chessGame);
+				} catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			});
 		} catch (NotMovableException | IllegalArgumentException e) {
 			return new ResponseDto(ResponseDto.FAIL, "이동할 수 없는 위치입니다.");
 		} catch (InvalidTurnException e) {
-			return new ResponseDto(ResponseDto.FAIL, chessGame.turn().getColor() + "의 턴입니다.");
+			return new ResponseDto(ResponseDto.FAIL, optionalChessGame.get().turn().getColor() + "의 턴입니다.");
 		}
-		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
+		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(optionalChessGame.get()));
 	}
 
 	public ResponseDto restart(int id) throws Exception {
-		ChessGame chessGame = chessGameDao.findById(id);
-		if (chessGame == null) {
+		Optional<ChessGame> chessGame = chessGameDao.findById(id);
+		if (!chessGame.isPresent()) {
 			return new ResponseDto(ResponseDto.FAIL, null);
 		}
 		ChessGame newChessGame = new ChessGame(new Ready());
 		newChessGame.start();
-		chessGameDao.update(id, newChessGame);
-		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame));
+		chessGameDao.updateById(id, newChessGame);
+		return new ResponseDto(ResponseDto.SUCCESS, convertToChessGameDto(chessGame.get()));
 	}
 
 	public ResponseDto create() throws Exception {
 		int chessGameId = chessGameDao.create();
-		if (chessGameId == -1) {
+		if (chessGameId == 0) {
 			return new ResponseDto(ResponseDto.FAIL, null);
 		}
-		ChessGame chessGame = chessGameDao.findById(chessGameId);
-		chessGame.start();
-		chessGameDao.update(chessGameId, chessGame);
-		return new ResponseDto(ResponseDto.SUCCESS, chessGameId);
+		Optional<ChessGame> chessGame = chessGameDao.findById(chessGameId);
+		if (chessGame.isPresent()) {
+			chessGame.get().start();
+			chessGameDao.updateById(chessGameId, chessGame.get());
+			return new ResponseDto(ResponseDto.SUCCESS, chessGameId);
+		}
+		return new ResponseDto(ResponseDto.FAIL, null);
 	}
 
 	public ResponseDto delete(int id) throws Exception {
-		boolean isDeleted = chessGameDao.deleteById(id);
-		if (!isDeleted) {
-			return new ResponseDto(ResponseDto.FAIL, null);
-		}
+		chessGameDao.deleteById(id);
 		return new ResponseDto(ResponseDto.SUCCESS, null);
 	}
 
