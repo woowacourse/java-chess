@@ -2,13 +2,10 @@ package chess.dao;
 
 import chess.dto.PieceDto;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Properties;
 
 public class JdbcTemplatePieceDao implements PieceDao {
     static {
@@ -20,44 +17,32 @@ public class JdbcTemplatePieceDao implements PieceDao {
         }
     }
 
-    private static PieceDao jdbcTemplateDao;
+    private static PieceDao jdbcTemplatePieceDao = new JdbcTemplatePieceDao();
+
+    private JdbcProperties jdbcProperties;
 
     private JdbcTemplatePieceDao() {
+        jdbcProperties = new JdbcProperties();
     }
 
     static public PieceDao getInstance() {
-        if (jdbcTemplateDao == null) {
-            jdbcTemplateDao = new JdbcTemplatePieceDao();
-        }
-        return jdbcTemplateDao;
+        return jdbcTemplatePieceDao;
     }
 
     private Connection getConnection() {
-        Connection con = null;
-
+        Connection connection = null;
         try {
-            String file = "src\\jdbc.properties";
-            FileInputStream fileInputStream = new FileInputStream(file);
-            Properties properties = new Properties();
-            properties.load(fileInputStream);
+            String url = jdbcProperties.getUrl();
+            String userName = jdbcProperties.getUserName();
+            String password = jdbcProperties.getPassword();
 
-            String server = properties.getProperty("server");
-            String database = properties.getProperty("database");
-            String option = properties.getProperty("option");
-            String userName = properties.getProperty("userName");
-            String password = properties.getProperty("password");
-
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            connection = DriverManager.getConnection(url, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
-        } catch (IOException e) {
-            System.err.println("jdbc 속성 파일 오류 : " + e.getMessage());
-            e.printStackTrace();
         } catch (SQLException e) {
             System.err.println("연결 오류 : " + e.getMessage());
             e.printStackTrace();
         }
-
-        return con;
+        return connection;
     }
 
     private void closeConnection(Connection con) {
