@@ -33,21 +33,25 @@ body {
     background-size: 100% 100%;
 }
 
-#box {
+.wrapper {
     position: absolute;
-    top: 60%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50%;
+    transform: translate(-50%);
+    text-align: center;
 }
 
-#start {
-    position: absolute;
-    top: 68%;
-    left: 50%;
+.box {
+    display: inline-block;
+    position: relative;
+}
+
+.start {
+    position: relative;
     width: max-content;
     height: max-content;
-    transform: translate(-50%, -50%);
 }
+
 
 footer {
     position: absolute;

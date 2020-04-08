@@ -81,7 +81,7 @@ tr td {
     padding: 0 40px;
 }
 
-input[type="button"] {
+input[type="submit"] {
     position: relative;
     font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;

@@ -17,14 +17,20 @@
         </h1>
     </header>
     <nav>
-        <div id="box">
-            <form action="/chess" method="get">
-                <input type="submit" value="&#xf197;" class="fa-3x">
-            </form>
+        <div class="wrapper">
+            <div class="box">
+                <form action="/chessStart" method="get">
+                    <input type="submit" value="&#xf197;" class="fa-3x">
+                </form>
+                <span class="arrowIcon">새로 시작</span>
+            </div>
+            <div class="box">
+                <form action="/chess" method="get">
+                    <input type="submit" value="&#xf197;" class="fa-3x">
+                </form>
+                <span class="arrowIcon">이어하기</span>
+            </div>
         </div>
-        <span id="start">
-          start
-        </span>
     </nav>
     <footer class="footer">
         <p>
