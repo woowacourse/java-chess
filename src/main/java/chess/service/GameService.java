@@ -3,6 +3,7 @@ package chess.service;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import chess.db.dao.BoardDao;
 import chess.domain.Game;
@@ -69,8 +70,10 @@ public class GameService {
 		for (File file : File.values()) {
 			for (Rank rank : Rank.values()) {
 				String position = file.getFile() + rank.getRow();
-				Piece piece = boardDao.findPieceBy(position);
-				game.getBoard().getBoard().put(Position.of(position), piece);
+				Optional<Piece> piece = boardDao.findPieceBy(position);
+				piece.ifPresent(value -> game.getBoard()
+					.getBoard()
+					.put(Position.of(position), value));
 			}
 		}
 		return game;
@@ -82,10 +85,8 @@ public class GameService {
 		for (File file : File.values()) {
 			for (Rank rank : Rank.values()) {
 				String position = file.getFile() + rank.getRow();
-				Piece piece = boardDao.findBlackPieceBy(position);
-				if (piece != null) {
-					blackPieces.put(Position.of(position), piece);
-				}
+				Optional<Piece> piece = boardDao.findBlackPieceBy(position);
+				piece.ifPresent(value -> blackPieces.put(Position.of(position), value));
 			}
 		}
 		return new Pieces(blackPieces);
@@ -97,10 +98,8 @@ public class GameService {
 		for (File file : File.values()) {
 			for (Rank rank : Rank.values()) {
 				String position = file.getFile() + rank.getRow();
-				Piece piece = boardDao.findWhitePieceBy(position);
-				if (piece != null) {
-					whitePieces.put(Position.of(position), piece);
-				}
+				Optional<Piece> piece = boardDao.findWhitePieceBy(position);
+				piece.ifPresent(value -> whitePieces.put(Position.of(position), value));
 			}
 		}
 		return new Pieces(whitePieces);
