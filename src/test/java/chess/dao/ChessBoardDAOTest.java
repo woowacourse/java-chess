@@ -14,7 +14,7 @@ public class ChessBoardDAOTest {
 
     @BeforeEach
     void setUp() {
-        chessBoardDAO = new ChessBoardDAO();
+        chessBoardDAO = ChessBoardDAO.getInstance();
     }
 
     @Test
