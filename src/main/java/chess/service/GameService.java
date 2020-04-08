@@ -23,8 +23,10 @@ public class GameService {
 
 	public void initialize(int roomId) throws SQLException {
 		GameDAO gameDAO = GameDAO.getInstance();
-		Pieces pieces = new Pieces(Pieces.initPieces());
+		RoomDAO roomDAO = RoomDAO.getInstance();
 
+		roomDAO.updateRoomColorById(roomId, Color.WHITE);
+		Pieces pieces = new Pieces(Pieces.initPieces());
 		gameDAO.addAllPiecesById(roomId, pieces);
 	}
 
