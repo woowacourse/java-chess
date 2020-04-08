@@ -32,12 +32,9 @@ public class JDBCTemplate {
 	}
 
 	public <T> T executeUpdate(String query, PreparedStatementSetter setter, RowMapper<T> mapper) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+		try (Connection conn = getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			setter.set(pstmt);
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
@@ -46,34 +43,19 @@ public class JDBCTemplate {
 			if (rs != null) {
 				rs.close();
 			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
 		}
 	}
 
 	public <T> T executeQuery(String query, PreparedStatementSetter setter, RowMapper<T> mapper) throws SQLException {
-		Connection conn = null;
-		PreparedStatement pstmt = null;
 		ResultSet rs = null;
-		try {
-			conn = getConnection();
-			pstmt = conn.prepareStatement(query);
+		try (Connection conn = getConnection();
+			 PreparedStatement pstmt = conn.prepareStatement(query)) {
 			setter.set(pstmt);
 			rs = pstmt.executeQuery();
 			return mapper.map(rs);
 		} finally {
 			if (rs != null) {
 				rs.close();
-			}
-			if (pstmt != null) {
-				pstmt.close();
-			}
-			if (conn != null) {
-				conn.close();
 			}
 		}
 	}
