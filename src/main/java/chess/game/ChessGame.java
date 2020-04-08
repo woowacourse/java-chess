@@ -70,18 +70,18 @@ public class ChessGame {
         return ChessResult.of(white, black);
     }
 
-    private Player getCounterTurnPlayer(Team turn) {
-        if(black.isNotSame(turn)) {
-            return black;
-        }
-        return white;
-    }
-
     public ChessScores calculateScores() {
         return new ChessScores(
                 white.calculate(),
                 black.calculate()
         );
+    }
+
+    private Player getCounterTurnPlayer(Team turn) {
+        if(black.isNotSame(turn)) {
+            return black;
+        }
+        return white;
     }
 
     public Team getTurn() {

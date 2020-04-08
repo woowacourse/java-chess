@@ -61,27 +61,15 @@ public class Route {
         return false;
     }
 
+    public boolean isNotEmpty(Location nowLocation) {
+        return route.get(nowLocation) != null;
+    }
+
     public Location getNow() {
         return now;
     }
 
     public Location getDestination() {
         return destination;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder sb = new StringBuilder();
-        for (Map.Entry<Location, Optional<Piece>> entry : route.entrySet()) {
-            if(entry.getValue() != null) {
-                sb.append(entry.getKey() + " : " + entry.getValue());
-            }
-            sb.append(entry.getKey() + " : " + "null");
-        }
-        return sb.toString();
-    }
-
-    public boolean isNotEmpty(Location nowLocation) {
-        return route.get(nowLocation) != null;
     }
 }

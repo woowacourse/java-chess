@@ -44,10 +44,6 @@ public enum Col {
         return Col.of(this.value + col);
     }
 
-    public Col minus(int col) {
-        return Col.of(this.value - col);
-    }
-
     public char getValue() {
         return value;
     }

@@ -9,7 +9,6 @@ import chess.piece.type.Piece;
 import chess.team.Team;
 
 public class OutputView {
-
     private static final int MAXIMUM_BOARD_SIZE = 8;
     private static final char FIRST_COLUMN_VALUE = 'a';
     private static final String EMPTY_SHAPE = ".";
