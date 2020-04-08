@@ -12,13 +12,10 @@ import java.util.List;
 
 public class ChessGameService {
 
-    private GameStatus gameStatus;
+    private GameStatus gameStatus= new NothingHappened().start();
     private CommandLogDao commandLogDao = new CommandLogDao(new JDBCConnector());
 
     public ChessGameDTO loadRecord() throws SQLException {
-        this.gameStatus = new NothingHappened();
-        this.gameStatus = gameStatus.start();
-
         executePastRequests();
 
         return new ChessGameDTO(
