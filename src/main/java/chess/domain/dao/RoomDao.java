@@ -18,10 +18,10 @@ public class RoomDao extends MySqlDao {
 		while (rs.next()) {
 			roomNames.add(rs.getString("room_name"));
 		}
-		return new ArrayList<>(roomNames) ;
+		return new ArrayList<>(roomNames);
 	}
 
-	public Optional<String> findByRoomName(String roomName) throws SQLException {
+	public Optional<String> findByRoomName(String roomName, String columnLabel) throws SQLException {
 		String query = "SELECT * FROM room WHERE room_name = ?";
 		PreparedStatement pstmt = connect().prepareStatement(query);
 		pstmt.setString(1, roomName);
@@ -30,8 +30,7 @@ public class RoomDao extends MySqlDao {
 		if (!rs.next()) {
 			return Optional.empty();
 		}
-		String board = rs.getString("board");
-		return Optional.of(board);
+		return Optional.of(rs.getString(columnLabel));
 	}
 
 	public int addRoom(String roomName, String board, String turn, String finishFlag) throws SQLException {
@@ -57,11 +56,13 @@ public class RoomDao extends MySqlDao {
 		pstmt.executeUpdate();
 	}
 
-	public void updateBoard(String roomName, String board) throws SQLException {
-		String query = "UPDATE room SET board = ? WHERE room_name = ?";
+	public void updateRoom(String roomName, String board, String turn, String finishFlag) throws SQLException {
+		String query = "UPDATE room SET board = ?, turn = ?, finish_flag = ? WHERE room_name = ?";
 		PreparedStatement pstmt = connect().prepareStatement(query);
 		pstmt.setString(1, board);
-		pstmt.setString(2, roomName);
+		pstmt.setString(2, turn);
+		pstmt.setString(3, finishFlag);
+		pstmt.setString(4, roomName);
 		pstmt.executeUpdate();
 	}
 }

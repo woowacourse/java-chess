@@ -38,7 +38,7 @@ public class WebController {
 			Map<String, Object> model = new HashMap<>();
 			RoomName roomName = new RoomName(req.queryParams("room-name"));
 			chessGameService.create(chessGame, roomName.getName());
-			res.cookie("room-name", roomName.getName());
+
 			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
@@ -48,6 +48,7 @@ public class WebController {
 		post("/restart", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			chessGame.restart();
+
 			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});

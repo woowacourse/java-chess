@@ -20,7 +20,7 @@ public class RoomDaoTest {
 	@Test
 	void findByRoomName() throws SQLException {
 		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
-		Optional<String> expectedBoard = roomDao.findByRoomName("A");
+		Optional<String> expectedBoard = roomDao.findByRoomName("A", "board");
 
 		assertThat(actualBoard).isEqualTo(expectedBoard.orElseThrow(NoSuchElementException::new));
 	}
@@ -29,7 +29,7 @@ public class RoomDaoTest {
 	void addRoom() throws SQLException {
 		String roomName = "A";
 		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
-		String turn = "black";
+		String turn = "BLACK";
 		String finishFlag = "N";
 
 		int newRoomId = roomDao.addRoom(roomName, actualBoard, turn, finishFlag);
@@ -46,7 +46,9 @@ public class RoomDaoTest {
 	void updateRoom() throws SQLException {
 		String roomName = "A";
 		String board = "RNBQKBNR........PPPPPPPP................pppppppp........rnbqkbnr";
+		String turn = "BLACK";
+		String finishFlag = "N";
 
-		roomDao.updateBoard(roomName, board);
+		roomDao.updateRoom(roomName, board, turn, finishFlag);
 	}
 }
