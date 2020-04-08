@@ -10,6 +10,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardDAO {
+    private static ChessBoardDAO instance;
+
+    public static ChessBoardDAO getInstance() {
+        if (instance == null) return new ChessBoardDAO();
+        return instance;
+    }
+
+    private ChessBoardDAO() {
+    }
+
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -78,17 +88,17 @@ public class ChessBoardDAO {
         }
     }
 
+    private void removeAll(Connection connection) throws SQLException {
+        String sql = "DELETE FROM chessboard";
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+    }
+
     private void savePiece(Connection connection, Square square, Piece piece) throws SQLException {
         String sql = "INSERT INTO chessboard(square, piece) VALUES (?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setString(1, square.toString());
         statement.setString(2, piece.toString());
         statement.executeUpdate();
-    }
-
-    private void removeAll(Connection connection) throws SQLException {
-        String sql = "DELETE FROM chessboard";
-        Statement statement = connection.createStatement();
-        statement.execute(sql);
     }
 }

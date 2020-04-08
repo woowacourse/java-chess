@@ -91,7 +91,7 @@
     <form action="/move" method="post">
         <input type="text" name="source" size="10">
         <input type="text" name="destination" size="10">
-    <input type="submit" value="confirm">
+    <input type="submit" value="move">
     </form>
     <div>
         {{notification}}
@@ -100,6 +100,9 @@
         black score: {{teamScore.BLACK}} <br>
         white score: {{teamScore.WHITE}} <br>
     </div>
+    <form action="/save" method="post">
+        <input type="submit" name="save" value="save">
+    </form>
 </div>
 </div>
 </body>

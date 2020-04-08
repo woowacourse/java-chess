@@ -122,9 +122,12 @@
     </div>
 
     <div>
-        <a href="/onGame">
-            <input type="button" name="start" value="start">
-        </a>
+        <form action="/initialize" method="get">
+            <input type="submit" name="start" value="start">
+        </form>
+        <form action="/retrieve" method="get">
+            <input type="submit" name="retrieve" value="retrieve">
+        </form>
     </div>
 </div>
 </body>
