@@ -24,6 +24,7 @@ public class WebChessGameController {
 
     public WebChessGameController(ChessService chessService) {
         this.chessService = chessService;
+        route();
     }
 
     public void route() {

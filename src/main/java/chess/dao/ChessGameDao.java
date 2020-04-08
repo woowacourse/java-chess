@@ -26,68 +26,78 @@ public class ChessGameDao implements JdbcTemplateDao {
 
     public ChessGame save() throws SQLException {
         String query = "INSERT INTO chess_game(state) VALUES (?)";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query, new String[] {"id"});
-        pstmt.setString(1, READY);
-        pstmt.executeUpdate();
-        ResultSet resultSet = pstmt.getGeneratedKeys();
-        if (!resultSet.next()) {
-            closeConnection(connection);
-            return null;
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query, new String[] {"id"});) {
+            pstmt.setString(1, READY);
+            pstmt.executeUpdate();
+            try (ResultSet resultSet = pstmt.getGeneratedKeys();) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt(1);
+                    return new ChessGame(id, new Ready());
+                }
+            }
+            throw new SQLException();
         }
-        int id = resultSet.getInt(1);
-        closeConnection(connection);
-        return new ChessGame(id, new Ready());
     }
 
     public List<Integer> selectAll() throws SQLException {
         String query = "SELECT id FROM chess_game";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        List<Integer> ids = new ArrayList<>();
-        while (rs.next()) {
-            ids.add(rs.getInt("id"));
+
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery();) {
+            List<Integer> ids = new ArrayList<>();
+            while (rs.next()) {
+                ids.add(rs.getInt("id"));
+            }
+            return ids;
         }
-        closeConnection(connection);
-        return ids;
     }
 
     public ChessGame findById(int id) throws SQLException {
         String query = "SELECT * FROM chess_game WHERE id = ?";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setInt(1, id);
-        ResultSet rs = pstmt.executeQuery();
-
-        if (!rs.next()) {
-            closeConnection(connection);
-            return null;
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            pstmt.setInt(1, id);
+            try (ResultSet rs = pstmt.executeQuery();) {
+                if (rs.next()) {
+                    State state = new Ready();
+                    state = checkPlayingState(rs, state);
+                    state = checkFinishState(rs, state);
+                    return new ChessGame(id, state);
+                }
+            }
+            throw new SQLException();
         }
+    }
 
-        State state = new Ready();
+    private State checkPlayingState(ResultSet rs, State state) throws SQLException {
         if (rs.getString(STATE).equals(PLAYING)) {
             state = new Playing(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
         }
+        return state;
+    }
+
+    private State checkFinishState(ResultSet rs, State state) throws SQLException {
         if (rs.getString(STATE).equals(FINISHED)) {
             state = new Finished(Board.from(rs.getString("board")), Turn.from(rs.getString("turn")));
         }
-        closeConnection(connection);
-        return new ChessGame(id, state);
+        return state;
     }
 
     public void update(ChessGame chessGame) throws SQLException {
         String query = "UPDATE chess_game SET state=?,board=?,turn=? WHERE id=?";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        BoardDto boardDto = new BoardDto(chessGame.board());
-        TurnDto turnDto = new TurnDto(chessGame.turn());
-        String state = chessGame.getState().toString();
-        pstmt.setString(1, state);
-        pstmt.setString(2, String.join("", boardDto.getBoard()));
-        pstmt.setString(3, turnDto.getTurn().getColor().toString());
-        pstmt.setInt(4, chessGame.getId());
-        pstmt.executeUpdate();
-        closeConnection(connection);
+        try (Connection connection = getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query);) {
+            BoardDto boardDto = new BoardDto(chessGame.board());
+            TurnDto turnDto = new TurnDto(chessGame.turn());
+            String state = chessGame.getState().toString();
+            pstmt.setString(1, state);
+            pstmt.setString(2, String.join("", boardDto.getBoard()));
+            pstmt.setString(3, turnDto.getTurn().getColor().toString());
+            pstmt.setInt(4, chessGame.getId());
+            pstmt.executeUpdate();
+        }
     }
 }

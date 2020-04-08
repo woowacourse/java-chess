@@ -5,7 +5,6 @@ import chess.service.ChessService;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        WebChessGameController webChessGameController = new WebChessGameController(new ChessService());
-        webChessGameController.route();
+        new WebChessGameController(new ChessService());
     }
 }
