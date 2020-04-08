@@ -2,9 +2,113 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스 게임</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            height: 400px;
+            background: #5A3C29;
+        }
+
+        .chess-games {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            height: 300px;
+            background: #EDCAA4;
+            overflow-y: auto;
+        }
+
+        .chess-create {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+        }
+
+
+        .chess-create-submit {
+            background: #EDCAA4;
+            padding: 10px 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .chess-game {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #5A3C29;
+            color: #5A3C29;
+        }
+
+    </style>
 </head>
 <body>
-Hello World!!
+<div class="wrapper">
+    <div class="chess-menu">
+        <div class="chess-games"></div>
+        <div class="chess-create">
+            <div class="chess-create-submit">방 만들기</div>
+        </div>
+    </div>
+</div>
+<script>
+    const templateGame = id => `<a href="/game/${id}" class="chess-game"><div class="chess-game-title">체스 게임 ${id}</div></a>`;
+
+    const chessGamesElement = document.querySelector('.chess-games');
+    const chessCreateElement = document.querySelector('.chess-create');
+
+    chessCreateElement.onclick = () => {
+        fetch('/create', {
+            method: 'POST'
+        }).then(response => response.json())
+            .then(data => {
+                if (data.statusCode == 1) {
+                    location.replace('/game/' + data.dto)
+                }
+            })
+    };
+
+    fetch('http://localhost:4567/games')
+        .then(response => response.json())
+        .then(data => drawGameList(data.dto));
+
+    function drawGameList(games) {
+        games.forEach(id => chessGamesElement.innerHTML += templateGame(id))
+    }
+
+</script>
 </body>
 </html>

@@ -2,8 +2,10 @@ package chess.domain.game;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.Queue;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
@@ -55,6 +57,27 @@ public class Board {
 		return board;
 	}
 
+	public static Board from(String rawBoard) {
+		Board board = new Board();
+
+		Queue<String> symbols = new LinkedList<>(Arrays.asList(rawBoard.split("")));
+
+		for (Position position : Position.values()) {
+			board.setBlank(position);
+		}
+
+		for (Position position : board.getBoard().keySet()) {
+			String symbol = symbols.poll();
+			Color color = Color.from(symbol.charAt(0));
+			if (color.isNone()) {
+				continue;
+			}
+			board.setPiece(position, PieceFactory.create(Symbol.from(symbol), position, color));
+		}
+
+		return board;
+	}
+
 	private void setBlank(Position position) {
 		board.put(position, PieceFactory.createBlank(position));
 	}
@@ -83,6 +106,12 @@ public class Board {
 				.stream()
 				.filter(Piece::isKing)
 				.count() < INITIAL_KING_COUNT;
+	}
+
+	public boolean hasKing(Color color) {
+		return board.values()
+				.stream()
+				.anyMatch(piece -> piece.isKing() && piece.isSameColor(color));
 	}
 
 	private void validateMove(Piece source, Piece target, Path path) {

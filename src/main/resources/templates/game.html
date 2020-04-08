@@ -1,0 +1,691 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>체스 게임 {{ id }}</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            background: #333;
+        }
+
+        .wrapper {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-board {
+            display: flex;
+            flex-direction: column;
+            padding: 30px;
+            background: #5A3C29;
+            box-shadow: 0 0 15px #222;
+        }
+
+        .chess-map {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chess-row {
+            display: flex;
+        }
+
+        .chess-col {
+            display: flex;
+            width: 64px;
+            height: 64px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-row:nth-child(2n) .chess-col {
+            background-color: #5A3C29;
+        }
+
+        .chess-row:nth-child(2n) .chess-col:nth-child(2n) {
+            background-color: #EDCAA4;
+        }
+
+        .chess-row:nth-child(2n + 1) .chess-col {
+            background-color: #EDCAA4;
+        }
+
+        .chess-row:nth-child(2n + 1) .chess-col:nth-child(2n) {
+            background-color: #5A3C29;
+        }
+
+        .chess-container {
+            display: flex;
+        }
+
+        .chess-file {
+            display: flex;
+            justify-content: center;
+            background: #EDCAA4;
+        }
+
+        .chess-rank {
+            display: flex;
+            flex-direction: column-reverse;
+            background: #EDCAA4;
+        }
+
+        .chess-symbol {
+            color: #5A3C29;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .chess-file .chess-symbol {
+            width: 64px;
+            height: 24px;
+            padding: 0 12px;
+        }
+
+        .chess-rank .chess-symbol {
+            width: 24px;
+            height: 64px;
+            padding: 12 0px;
+            line-height: 64px;
+        }
+
+        .chess-map {
+            display: flex;
+            border: 4px solid #5A3C29;
+        }
+
+        .chess-piece {
+            width: 55px;
+            height: 55px;
+            background-image: url('../chess-pieces.png');
+        }
+
+        .chess-piece.blank {
+            background-image: none;
+        }
+
+        .chess-piece.queen.white {
+            background-position: -55px 0;
+        }
+
+        .chess-piece.king.white {
+            background-position: 0 0;
+        }
+
+        .chess-piece.bishop.white {
+            background-position: -110px 0;
+        }
+
+        .chess-piece.knight.white {
+            background-position: -165px 0;
+        }
+
+        .chess-piece.rook.white {
+            background-position: -220px 0;
+        }
+
+        .chess-piece.pawn.white {
+            background-position: -275px 0;
+        }
+
+        .chess-piece.queen.black {
+            background-position: -55px 55px;
+        }
+
+        .chess-piece.king.black {
+            background-position: 0 55px;
+        }
+
+        .chess-piece.bishop.black {
+            background-position: -110px 55px;
+        }
+
+        .chess-piece.knight.black {
+            background-position: -165px 55px;
+        }
+
+        .chess-piece.rook.black {
+            background-position: -220px 55px;
+        }
+
+        .chess-piece.pawn.black {
+            background-position: -275px 55px;
+        }
+
+        .chess-status {
+            display: flex;
+            flex-direction: column;
+            width: 300px;
+            height: 300px;
+            align-items: center;
+            justify-content: space-around;
+            background: #5A3C29;
+        }
+
+        .chess-score-board {
+            display: flex;
+            flex-direction: row-reverse;
+            width: 260px;
+            height: 120px;
+            justify-content: center;
+            align-items: center;
+            background: #EDCAA4;
+        }
+
+        .chess-score {
+            font-weight: bold;
+            color: #5A3C29;
+        }
+
+        .chess-menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            height: 400px;
+            background: #5A3C29;
+        }
+
+        .chess-games {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 300px;
+            height: 300px;
+            background: #EDCAA4;
+            overflow-y: auto;
+        }
+
+        .chess-create {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            flex: 1;
+        }
+
+        .chess-create-submit {
+            background: #EDCAA4;
+            padding: 10px 20px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .chess-game {
+            display: block;
+            width: 100%;
+            text-decoration: none;
+            text-align: center;
+            padding: 10px;
+            border-bottom: 1px solid #5A3C29;
+            color: #5A3C29;
+        }
+
+        .chess-alert {
+            display: flex;
+            position: absolute;
+            width: 300px;
+            height: 150px;
+            background: #5A3C29;
+            border: 20px solid #EDCAA4;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chess-alert-message {
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+
+        .chess-result {
+            display: flex;
+            flex-direction: column;
+            position: absolute;
+            width: 300px;
+            height: 150px;
+            background: #5A3C29;
+            border: 20px solid #EDCAA4;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .chess-result-message {
+            font-weight: bold;
+            color: #f1f1f1;
+        }
+
+        .chess-result-submit {
+            display: flex;
+            justify-content: center;
+        }
+
+        .chess-result-restart {
+            background: #EDCAA4;
+            color: #5A3C29;
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
+
+        }
+
+        .chess-result-delete {
+            background: #EDCAA4;
+            color: #5A3C29;
+            cursor: pointer;
+            padding: 5px;
+            margin: 5px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+<div class="wrapper">
+    <div class="chess-menu">
+        <div class="chess-games"></div>
+        <div class="chess-create">
+            <div class="chess-create-submit">방 만들기</div>
+        </div>
+    </div>
+    <div class="chess-board">
+        <div class="chess-file">
+            <div class="chess-symbol">A</div>
+            <div class="chess-symbol">B</div>
+            <div class="chess-symbol">C</div>
+            <div class="chess-symbol">D</div>
+            <div class="chess-symbol">E</div>
+            <div class="chess-symbol">F</div>
+            <div class="chess-symbol">G</div>
+            <div class="chess-symbol">H</div>
+        </div>
+        <div class="chess-container">
+            <div class="chess-rank">
+                <div class="chess-symbol">1</div>
+                <div class="chess-symbol">2</div>
+                <div class="chess-symbol">3</div>
+                <div class="chess-symbol">4</div>
+                <div class="chess-symbol">5</div>
+                <div class="chess-symbol">6</div>
+                <div class="chess-symbol">7</div>
+                <div class="chess-symbol">8</div>
+            </div>
+            <div class="chess-map">
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a8">
+                    </div>
+                    <div class="chess-col" data-pos="b8">
+                    </div>
+                    <div class="chess-col" data-pos="c8">
+                    </div>
+                    <div class="chess-col" data-pos="d8">
+                    </div>
+                    <div class="chess-col" data-pos="e8">
+                    </div>
+                    <div class="chess-col" data-pos="f8">
+                    </div>
+                    <div class="chess-col" data-pos="g8">
+                    </div>
+                    <div class="chess-col" data-pos="h8">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a7">
+                    </div>
+                    <div class="chess-col" data-pos="b7">
+                    </div>
+                    <div class="chess-col" data-pos="c7">
+                    </div>
+                    <div class="chess-col" data-pos="d7">
+                    </div>
+                    <div class="chess-col" data-pos="e7">
+                    </div>
+                    <div class="chess-col" data-pos="f7">
+                    </div>
+                    <div class="chess-col" data-pos="g7">
+                    </div>
+                    <div class="chess-col" data-pos="h7">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a6">
+                    </div>
+                    <div class="chess-col" data-pos="b6">
+                    </div>
+                    <div class="chess-col" data-pos="c6">
+                    </div>
+                    <div class="chess-col" data-pos="d6">
+                    </div>
+                    <div class="chess-col" data-pos="e6">
+                    </div>
+                    <div class="chess-col" data-pos="f6">
+                    </div>
+                    <div class="chess-col" data-pos="g6">
+                    </div>
+                    <div class="chess-col" data-pos="h6">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a5">
+                    </div>
+                    <div class="chess-col" data-pos="b5">
+                    </div>
+                    <div class="chess-col" data-pos="c5">
+                    </div>
+                    <div class="chess-col" data-pos="d5">
+                    </div>
+                    <div class="chess-col" data-pos="e5">
+                    </div>
+                    <div class="chess-col" data-pos="f5">
+                    </div>
+                    <div class="chess-col" data-pos="g5">
+                    </div>
+                    <div class="chess-col" data-pos="h5">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a4">
+                    </div>
+                    <div class="chess-col" data-pos="b4">
+                    </div>
+                    <div class="chess-col" data-pos="c4">
+                    </div>
+                    <div class="chess-col" data-pos="d4">
+                    </div>
+                    <div class="chess-col" data-pos="e4">
+                    </div>
+                    <div class="chess-col" data-pos="f4">
+                    </div>
+                    <div class="chess-col" data-pos="g4">
+                    </div>
+                    <div class="chess-col" data-pos="h4">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a3">
+                    </div>
+                    <div class="chess-col" data-pos="b3">
+                    </div>
+                    <div class="chess-col" data-pos="c3">
+                    </div>
+                    <div class="chess-col" data-pos="d3">
+                    </div>
+                    <div class="chess-col" data-pos="e3">
+                    </div>
+                    <div class="chess-col" data-pos="f3">
+                    </div>
+                    <div class="chess-col" data-pos="g3">
+                    </div>
+                    <div class="chess-col" data-pos="h3">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a2">
+                    </div>
+                    <div class="chess-col" data-pos="b2">
+                    </div>
+                    <div class="chess-col" data-pos="c2">
+                    </div>
+                    <div class="chess-col" data-pos="d2">
+                    </div>
+                    <div class="chess-col" data-pos="e2">
+                    </div>
+                    <div class="chess-col" data-pos="f2">
+                    </div>
+                    <div class="chess-col" data-pos="g2">
+                    </div>
+                    <div class="chess-col" data-pos="h2">
+                    </div>
+                </div>
+                <div class="chess-row">
+                    <div class="chess-col" data-pos="a1">
+                    </div>
+                    <div class="chess-col" data-pos="b1">
+                    </div>
+                    <div class="chess-col" data-pos="c1">
+                    </div>
+                    <div class="chess-col" data-pos="d1">
+                    </div>
+                    <div class="chess-col" data-pos="e1">
+                    </div>
+                    <div class="chess-col" data-pos="f1">
+                    </div>
+                    <div class="chess-col" data-pos="g1">
+                    </div>
+                    <div class="chess-col" data-pos="h1">
+                    </div>
+                </div>
+            </div>
+            <div class="chess-rank">
+                <div class="chess-symbol">1</div>
+                <div class="chess-symbol">2</div>
+                <div class="chess-symbol">3</div>
+                <div class="chess-symbol">4</div>
+                <div class="chess-symbol">5</div>
+                <div class="chess-symbol">6</div>
+                <div class="chess-symbol">7</div>
+                <div class="chess-symbol">8</div>
+            </div>
+        </div>
+        <div class="chess-file">
+            <div class="chess-symbol">A</div>
+            <div class="chess-symbol">B</div>
+            <div class="chess-symbol">C</div>
+            <div class="chess-symbol">D</div>
+            <div class="chess-symbol">E</div>
+            <div class="chess-symbol">F</div>
+            <div class="chess-symbol">G</div>
+            <div class="chess-symbol">H</div>
+        </div>
+    </div>
+    <div class="chess-status">
+        <div class="chess-score-board">
+            <div id="black-score" class="chess-score"></div>
+            <div class="chess-piece pawn black"></div>
+        </div>
+        <div class="chess-score-board">
+            <div id="white-score" class="chess-score"></div>
+            <div class="chess-piece pawn white"></div>
+        </div>
+    </div>
+    <div class="chess-alert hide">
+        <div class="chess-alert-message"></div>
+    </div>
+    <div class="chess-result hide">
+        <div class="chess-result-message"></div>
+        <div class="chess-result-submit">
+            <div class="chess-result-restart">새로 시작</div>
+            <div class="chess-result-delete">게임 삭제</div>
+        </div>
+    </div>
+</div>
+<script>
+    const templateQueen = color => `<div class="chess-piece queen ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateKing = color => `<div class="chess-piece king ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateBishop = color => `<div class="chess-piece bishop ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateKnight = color => `<div class="chess-piece knight ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateRook = color => `<div class="chess-piece rook ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templatePawn = color => `<div class="chess-piece pawn ${color}" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateBlank = `<div class="chess-piece blank" draggable="true" ondrop="onDrop(event)" ondragstart="onDragStart(event)" ondragover="onDragOver(event)"></div>`
+    const templateGame = id => `<a href="/game/${id}" class="chess-game"><div class="chess-game-title">체스 게임 ${id}</div></a>`
+
+    const blackScoreElement = document.querySelector('#black-score')
+    const whiteScoreElement = document.querySelector('#white-score')
+    const chessAlertElement = document.querySelector('.chess-alert')
+    const chessAlertMessageElement = document.querySelector('.chess-alert-message')
+
+    const chessResultElement = document.querySelector('.chess-result')
+    const chessResultMessageElement = document.querySelector('.chess-result-message')
+    const chessResultRestartElement = document.querySelector('.chess-result-restart')
+    const chessResultDeleteElement = document.querySelector('.chess-result-delete')
+
+    const chessGamesElement = document.querySelector('.chess-games')
+    const chessCreateSubmitElement = document.querySelector('.chess-create-submit')
+
+    const chessCellElements = document.querySelectorAll('.chess-col')
+    const findChessCell = (x, y) => document.querySelector(`[data-x="${x}"][data-y="${y}"]`)
+
+    chessCreateSubmitElement.onclick = () => {
+        fetch('/create', {
+            method: 'POST'
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.statusCode == 1) {
+                location.replace('/game/' + data.dto)
+            }
+        })
+    }
+
+    chessResultRestartElement.onclick = () => {
+        fetch('/restart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + {{ id }}
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.statusCode == 1) {
+                location.reload()
+            }
+        })
+    }
+
+    chessResultDeleteElement.onclick = () => {
+        fetch('/delete', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'id=' + {{ id }}
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.statusCode == 1) {
+                location.replace('/')
+            }
+        })
+    }
+
+    function showAlert(message, delay) {
+        show(chessAlertElement)
+        chessAlertMessageElement.innerHTML = message
+        setTimeout(() => {
+            hide(chessAlertElement)
+        }, delay)
+    }
+
+    function show(element) {
+        element.classList.remove('hide')
+        element.classList.add('show')
+    }
+
+    function hide(element) {
+        element.classList.remove('show')
+        element.classList.add('hide')
+    }
+
+    const createTemplate = {
+        p: templatePawn('white'),
+        q: templateQueen('white'),
+        k: templateKing('white'),
+        r: templateRook('white'),
+        b: templateBishop('white'),
+        n: templateKnight('white'),
+        P: templatePawn('black'),
+        Q: templateQueen('black'),
+        K: templateKing('black'),
+        R: templateRook('black'),
+        B: templateBishop('black'),
+        N: templateKnight('black'),
+    }
+
+    fetch('http://localhost:4567/board/' + {{ id }})
+    .then(response => response.json())
+    .then(data => drawChessGame(data.dto))
+
+    fetch('http://localhost:4567/games')
+    .then(response => response.json())
+    .then(data => drawGameList(data.dto))
+
+    function drawGameList(games) {
+        games.forEach(id => chessGamesElement.innerHTML += templateGame(id))
+    }
+
+    function drawChessGame({boardDto, turnDto, statusDto, isFinished}) {
+        drawBoard(boardDto.board)
+        drawStatus(statusDto)
+        drawResult(statusDto, isFinished)
+    }
+
+    function drawResult(statusDto, isFinished) {
+        if (!isFinished) {
+            return
+        }
+        show(chessResultElement)
+        chessResultMessageElement.innerHTML = statusDto.winner + ' 승'
+    }
+
+    function drawBoard(board) {
+        chessCellElements.forEach((element, i) => {
+            const symbol = board[i]
+            element.innerHTML = symbol == '.' ? templateBlank : createTemplate[symbol]
+        })
+    }
+
+    function drawStatus(statusDto) {
+        blackScoreElement.innerHTML = statusDto.black.score
+        whiteScoreElement.innerHTML = statusDto.white.score
+    }
+
+    function onDragStart(e) {
+        e.dataTransfer.setData('src_pos', e.target.parentElement.dataset.pos)
+    }
+
+    function onDragOver(e) {
+        e.preventDefault()
+    }
+
+    function onDrop(e) {
+        fetch('/move', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `id={{ id }}&source=${e.dataTransfer.getData('src_pos')}&target=${e.target.parentElement.dataset.pos}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.statusCode === 1) {
+                drawChessGame(data.dto)
+                return
+            }
+            showAlert(data.dto, 1000)
+        })
+    }
+</script>
+</body>
+</html>

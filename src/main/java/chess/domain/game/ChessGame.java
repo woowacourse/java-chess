@@ -1,7 +1,6 @@
 package chess.domain.game;
 
 import chess.domain.game.state.State;
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class ChessGame {
@@ -27,13 +26,19 @@ public class ChessGame {
 		return state.board();
 	}
 
+	public Turn turn() {
+		return state.turn();
+	}
+
 	public boolean isFinished() {
 		return state.isFinished();
 	}
 
 	public Status status() {
-		Score white = state.score(Color.WHITE);
-		Score black = state.score(Color.BLACK);
-		return new Status(white, black);
+		return state.status();
+	}
+
+	public State getState() {
+		return state;
 	}
 }

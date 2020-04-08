@@ -3,29 +3,25 @@ package chess.domain.game;
 import chess.domain.piece.Color;
 
 public class Status {
-	private final Score white;
-	private final Score black;
+    private final Score white;
+    private final Score black;
+    private final Color winner;
 
-	public Status(Score white, Score black) {
-		this.white = white;
-		this.black = black;
-	}
+    public Status(Score white, Score black, Color winner) {
+        this.white = white;
+        this.black = black;
+        this.winner = winner;
+    }
 
-	public Color winner() {
-		if (white.isOverThan(black)) {
-			return Color.WHITE;
-		}
-		if (black.isOverThan(white)) {
-			return Color.BLACK;
-		}
-		return Color.NONE;
-	}
+    public Color getWinner() {
+        return winner;
+    }
 
-	public double getWhiteScore() {
-		return white.getValue();
-	}
+    public Score getWhiteScore() {
+        return white;
+    }
 
-	public double getBlackScore() {
-		return black.getValue();
-	}
+    public Score getBlackScore() {
+        return black;
+    }
 }
