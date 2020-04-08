@@ -1,3 +1,3 @@
-function end() {
-    alert("게임이 종료되었습니다.");
+function exitRoom() {
+    alert("방에서 나왔습니다.");
 }
