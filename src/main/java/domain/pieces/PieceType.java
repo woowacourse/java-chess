@@ -10,7 +10,7 @@ public enum PieceType {
 	BISHOP(3, "B", "bishop", Bishop::new),
 	KING(0, "K", "king", King::new),
 	KNIGHT(2.5, "N", "knight", Knight::new),
-	PAWN(2, "P", "pawn", Pawn::new),
+	PAWN(1, "P", "pawn", Pawn::new),
 	QUEEN(9, "Q", "queen", Queen::new),
 	ROOK(5, "R", "rook", Rook::new);
 
