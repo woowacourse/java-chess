@@ -3,6 +3,7 @@ package dao;
 import db.DBConnection;
 import vo.PieceVo;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,24 +14,21 @@ import java.util.List;
 public class PieceDao {
     public void addPiece(PieceVo pieceVO) throws SQLException {
         String query = "INSERT INTO piece(game_id, name, row, col) VALUES (?, ?, ?, ?)";
-        try(PreparedStatement pstmt = getPreparedStatement(pieceVO, query)) {
-            pstmt.executeUpdate();
-        }
-    }
-
-    private PreparedStatement getPreparedStatement(PieceVo pieceVO, String query) throws SQLException {
-        try(PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, pieceVO.getGameId());
             pstmt.setString(2, pieceVO.getName());
             pstmt.setInt(3, pieceVO.getRow());
             pstmt.setString(4, pieceVO.getCol());
-            return pstmt;
+
+            pstmt.executeUpdate();
         }
     }
 
     public List<PieceVo> findAll(int gameId) throws SQLException {
         String query = "SELECT * FROM piece WHERE game_id = ?";
-        try (PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+        try (Connection connection = DBConnection.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, gameId);
             ResultSet rs = pstmt.executeQuery();
             return getPieceVOS(rs);

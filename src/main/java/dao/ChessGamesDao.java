@@ -3,6 +3,7 @@ package dao;
 import db.DBConnection;
 import dto.ChessGameDto;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,7 +13,8 @@ public class ChessGamesDao {
     public ArrayList<ChessGameDto> findAll() throws SQLException {
         String query = "SELECT * FROM game;";
 
-        try(PreparedStatement pstmt = DBConnection.getInstance().prepareStatement(query)) {
+        try(Connection connection = DBConnection.getConnection();
+            PreparedStatement pstmt = connection.prepareStatement(query)) {
             ResultSet rs = pstmt.executeQuery();
             ArrayList<ChessGameDto> chessGameDtos = getChessGameDtos(rs);
             return chessGameDtos;
