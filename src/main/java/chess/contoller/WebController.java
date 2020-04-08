@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.ChessGame;
+import chess.domain.RoomName;
 import chess.domain.Side;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.StatusDto;
@@ -34,9 +35,9 @@ public class WebController {
 	private void createRoom(ChessGame chessGame) {
 		post("/create", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			String roomName = req.queryParams("room-name");
-			boardService.create(chessGame, roomName);
-			res.cookie("room-name", roomName);
+			RoomName roomName = new RoomName(req.queryParams("room-name"));
+			boardService.create(chessGame, roomName.getName());
+			res.cookie("room-name", roomName.getName());
 			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
