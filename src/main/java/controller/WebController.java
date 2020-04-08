@@ -15,27 +15,26 @@ public class WebController {
     private final static String BLANK = " ";
 
     private State state;
+    private PiecesDAO piecesDAO;
+    private TurnDAO turnDAO;
 
     public WebController() {
+        piecesDAO = new PiecesDAO();
+        turnDAO = new TurnDAO();
     }
 
     public Map<String, Object> start() throws SQLException {
         Pieces pieces = Pieces.of(PiecesFactory.create());
         state = State.of(pieces);
+
         state.start();
-
-        PiecesDAO piecesDAO = new PiecesDAO();
-        TurnDAO turnDAO = new TurnDAO();
-
         turnDAO.start();
-
         piecesDAO.addPieces(state.getPieces());
 
         return piecesDAO.readPieces();
     }
 
     public Map<String, Object> read() throws SQLException {
-        PiecesDAO piecesDAO = new PiecesDAO();
         if (state == null) {
             return getWhenStateIsNull(piecesDAO);
         }
@@ -52,14 +51,7 @@ public class WebController {
         return start();
     }
 
-    public boolean isSave() throws SQLException {
-        PiecesDAO piecesDAO = new PiecesDAO();
-        return piecesDAO.isSave();
-    }
-
     public void move(String from, String to) throws SQLException {
-        TurnDAO turnDAO = new TurnDAO();
-        PiecesDAO piecesDAO = new PiecesDAO();
         state.move(turnDAO.getTurn(),"move" + " " + from + " " + to);
         turnDAO.changeTurn();
         piecesDAO.updatePieces(state.getPieces());
@@ -73,8 +65,6 @@ public class WebController {
     }
 
     public void delete() throws SQLException {
-        PiecesDAO piecesDAO = new PiecesDAO();
-        TurnDAO turnDAO = new TurnDAO();
         piecesDAO.deleteAll();
         turnDAO.delete();
     }
