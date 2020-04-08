@@ -10,6 +10,7 @@ public class ScoreCalculator implements Calculatable {
     public Score calculate(ChessSet chessSet) {
         Score scoreExceptPawnReduce = chessSet.calculateScoreExceptPawnReduce();
         Score pawnReduceScore = pawnReduceScoreCalculable.calculate(chessSet);
+
         return scoreExceptPawnReduce.minus(pawnReduceScore);
     }
 }

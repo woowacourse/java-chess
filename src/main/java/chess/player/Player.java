@@ -2,24 +2,23 @@ package chess.player;
 
 import chess.game.ChessSet;
 import chess.location.Location;
-import chess.score.Calculatable;
 import chess.score.Score;
 import chess.score.ScoreCalculator;
 import chess.team.Team;
 
 public class Player {
+    private static final ScoreCalculator scoreCalculator = new ScoreCalculator();
+
     private final ChessSet chessSet;
-    private final Calculatable calculatable;
     private final Team team;
 
     public Player(ChessSet chessSet, Team team) {
         this.chessSet = chessSet;
         this.team = team;
-        calculatable = new ScoreCalculator();
     }
 
     public Score calculate() {
-        return calculatable.calculate(chessSet);
+        return scoreCalculator.calculate(chessSet);
     }
 
     Score calculateScoreExceptPawnReduce() {
