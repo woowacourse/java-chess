@@ -11,10 +11,9 @@ public class Connector {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final String URL = String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION);
+    private static final String WRONG_CONNECTION_MESSAGE = "잘못된 값이 연결 되었습니다";
 
     public static Connection getConnection() {
-        Connection con = null;
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -23,13 +22,10 @@ public class Connector {
         }
 
         try {
-            con = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-            System.out.println("정상적으로 연결되었습니다.");
+            return DriverManager.getConnection(URL, USERNAME, PASSWORD);
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new IllegalArgumentException(WRONG_CONNECTION_MESSAGE);
         }
-
-        return con;
     }
 }
