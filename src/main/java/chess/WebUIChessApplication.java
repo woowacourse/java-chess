@@ -28,47 +28,25 @@ public class WebUIChessApplication {
 
         get("/", (req, res) -> {
             Board board = boardDao.find();
-            Map<String, Object> model = new HashMap<>();
-            Pieces pieces = board.getPieces();
-            Map<Position, Piece> positionPieceMap = pieces.getPieces();
-            Map<String, Piece> pieceMap = new HashMap<>();
-            for (Position position : positionPieceMap.keySet()) {
-                pieceMap.put(position.toString(), positionPieceMap.get(position));
-            }
-            model.put("map", pieceMap);
-            double teamWhiteScore = board.calculateScoreByTeam(Team.WHITE);
-            double teamBlackScore = board.calculateScoreByTeam(Team.BLACK);
-            model.put("teamWhiteScore", teamWhiteScore);
-            model.put("teamBlackScore", teamBlackScore);
-            if (!board.isBothKingAlive())
+            Map<String, Object> model = allocatePiecesOnMap(board);
+            model.put("teamWhiteScore", board.calculateScoreByTeam(Team.WHITE));
+            model.put("teamBlackScore", board.calculateScoreByTeam(Team.BLACK));
+            if (!board.isBothKingAlive()) {
                 res.redirect("/result");
+            }
             return render(model, "chess-running.html");
         });
 
         get("/result", (req, res) -> {
             Board board = boardDao.find();
-            Map<String, Object> model = new HashMap<>();
-            Pieces pieces = board.getPieces();
-            Map<Position, Piece> positionPieceMap = pieces.getPieces();
-            Map<String, Piece> pieceMap = new HashMap<>();
-            for (Position position : positionPieceMap.keySet()) {
-                pieceMap.put(position.toString(), positionPieceMap.get(position));
-            }
-            model.put("map", pieceMap);
+            Map<String, Object> model = allocatePiecesOnMap(board);
             model.put("winner", board.getWinner().getName());
             return render(model, "chess-result.html");
         });
 
         get("/exception", (req, res) -> {
             Board board = boardDao.find();
-            Map<String, Object> model = new HashMap<>();
-            Pieces pieces = board.getPieces();
-            Map<Position, Piece> positionPieceMap = pieces.getPieces();
-            Map<String, Piece> pieceMap = new HashMap<>();
-            for (Position position : positionPieceMap.keySet()) {
-                pieceMap.put(position.toString(), positionPieceMap.get(position));
-            }
-            model.put("map", pieceMap);
+            Map<String, Object> model = allocatePiecesOnMap(board);
             return render(model, "chess-exception.html");
         });
 
@@ -92,6 +70,18 @@ public class WebUIChessApplication {
             res.redirect("/");
             return null;
         });
+    }
+
+    private static Map<String, Object> allocatePiecesOnMap(Board board) {
+        Map<String, Object> model = new HashMap<>();
+        Pieces pieces = board.getPieces();
+        Map<Position, Piece> positionPieceMap = pieces.getPieces();
+        Map<String, Piece> pieceMap = new HashMap<>();
+        for (Position position : positionPieceMap.keySet()) {
+            pieceMap.put(position.toString(), positionPieceMap.get(position));
+        }
+        model.put("map", pieceMap);
+        return model;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
