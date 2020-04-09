@@ -78,14 +78,6 @@ public class Position {
         return row() > other.row();
     }
 
-    public Row getRow() {
-        return row;
-    }
-
-    public Column getColumn() {
-        return column;
-    }
-
     public int row() {
         return row.getValue();
     }

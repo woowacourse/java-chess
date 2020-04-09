@@ -6,7 +6,7 @@ import java.util.function.BiConsumer;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import chess.domain.ChessContext;
+import chess.domain.Game;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.judge.Judge;
@@ -22,9 +22,9 @@ public enum Command {
     public static final int END_GROUP = 2;
 
     private final String value;
-    private BiConsumer<String, ChessContext> consumer;
+    private BiConsumer<String, Game> consumer;
 
-    Command(final String value, BiConsumer<String, ChessContext> consumer) {
+    Command(final String value, BiConsumer<String, Game> consumer) {
         this.value = value;
         this.consumer = consumer;
     }
@@ -36,22 +36,22 @@ public enum Command {
             .orElseThrow(InvalidInputException::new);
     }
 
-    private static void initialize(final String input, final ChessContext context) {
+    private static void initialize(final String input, final Game context) {
         Board board = context.getBoard();
         OutputView.showBoard(board);
     }
 
-    private static void quit(final String input, final ChessContext context) {
+    private static void quit(final String input, final Game context) {
         OutputView.quit();
         System.exit(0);
     }
 
-    private static void showStatus(final String input, final ChessContext context) {
+    private static void showStatus(final String input, final Game context) {
         Judge judge = context.getJudge();
         OutputView.showStatus(judge);
     }
 
-    private static void move(final String input, final ChessContext context) {
+    private static void move(final String input, final Game context) {
         Board board = context.getBoard();
         if (Objects.isNull(input) || input.trim().isEmpty()) {
             throw new InvalidInputException();
@@ -81,7 +81,7 @@ public enum Command {
         return value.matches(this.value);
     }
 
-    public void execute(String input, ChessContext context) {
+    public void execute(String input, Game context) {
         consumer.accept(input, context);
     }
 }

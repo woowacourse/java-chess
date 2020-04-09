@@ -1,18 +1,13 @@
 package chess.controller;
 
-import chess.domain.ChessContext;
-import chess.domain.board.Board;
-import chess.domain.judge.BasicJudge;
-import chess.domain.judge.Judge;
+import chess.domain.Game;
 import chess.exceptions.InvalidInputException;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
-    private static Board board = Board.init();
-    private static Judge judge = new BasicJudge(board);
-    private static ChessContext context = new ChessContext(board, judge);
+public class ConsoleChessController {
+    private static Game context = new Game();
 
     public static void run() {
         OutputView.instruction();
@@ -32,8 +27,8 @@ public class ChessController {
     }
 
     private static void validateGameOver() {
-        if (judge.isGameOver()) {
-            OutputView.showGameOver(judge);
+        if (context.isGameOver()) {
+            OutputView.showGameOver(context.winnerSide());
             System.exit(0);
         }
     }

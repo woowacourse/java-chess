@@ -1,22 +1,29 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.sql.SQLException;
 
-import static spark.Spark.get;
+import chess.controller.WebChessController;
+import chess.dao.PlayerDao;
+import chess.service.ChessService;
+import chess.service.ChessServiceImpl;
+import chess.util.RoutesConfig;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
+        RoutesConfig.configure();
+        addTemporaryPlayers();
+        before(RoutesConfig::setJsonContentType);
+        ChessService service = new ChessServiceImpl();
+        WebChessController controller = new WebChessController(service);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static void addTemporaryPlayers() {
+        // 플레이어 회원가입 / 로그인 구현 이전 foreign key 오류를 내지 않기 위해 임시로 DB에 플레이어 추가
+        try {
+            new PlayerDao().addInitialPlayers();
+        } catch (SQLException ignored) {
+        }
     }
 }

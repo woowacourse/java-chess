@@ -58,8 +58,8 @@ public class OutputView {
         System.out.println(judge.winner() + "이 우세한 상황입니다!");
     }
 
-    public static void showGameOver(final Judge judge) {
-        System.out.println(judge.winner() + "이 왕을 잡아 승리했습니다!");
+    public static void showGameOver(final Side side) {
+        System.out.println(side + "이 왕을 잡아 승리했습니다!");
         System.out.println("게임을 종료합니다.");
         System.exit(0);
     }

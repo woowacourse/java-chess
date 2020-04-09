@@ -15,4 +15,14 @@ public enum Side {
     public String toString() {
         return value;
     }
+
+    public Side opposite() {
+        if (this == BLACK) {
+            return WHITE;
+        }
+        if (this == WHITE) {
+            return BLACK;
+        }
+        return NONE;
+    }
 }

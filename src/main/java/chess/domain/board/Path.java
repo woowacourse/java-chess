@@ -10,6 +10,11 @@ public class Path {
     private Position start;
     private Position end;
 
+    public Path(final Position start, final Position end) {
+        this.start = start;
+        this.end = end;
+    }
+
     public Path(final Map<Position, Piece> path, final Position start, final Position end) {
         validate(path, start, end);
         this.path = path;
@@ -72,6 +77,14 @@ public class Path {
         if (piece.is(Side.BLACK)) {
             return start.isGreaterThan(end);
         }
-        return !start.isGreaterThan(end);
+        return !start.isGreaterThan(end) && start.row() != end.row();
+    }
+
+    public String getStart() {
+        return start.toString();
+    }
+
+    public String getEnd() {
+        return end.toString();
     }
 }

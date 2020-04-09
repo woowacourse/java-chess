@@ -1,5 +1,59 @@
 # java-chess
 
+![chess_web_ui_screenshot](./screenshot.jpg)
+
+## 4~5단계 Web UI / DB 요구사항
+
+- [x] 콘솔 UI와 더불어 웹으로 체스 게임이 가능해야 한다.
+    - [x] 체스말 드래그 중 이동 가능한 경로를 표현
+    - [x] HTML Drag and Drop API를 활용해 체스말 이동
+    - [x] AJAX 통신을 활용해 새로고침 없이 게임 진행 / 종료 / 방 이동 구현
+    - [x] HTML Audio API를 활용해 체스말 이동 또는 적군 공격 시 효과음 추가
+
+- [x] 웹 서버를 재시작하더라도 이전에 하던 체스 게임을 다시 시작할 수 있어야 한다.
+    - [x] 플레이어, 보드, 명령 테이블을 만들어 활용
+        ```mysql
+        create table if not exists player (
+            id int not null auto_increment,
+            username varchar(15) not null,
+            password varchar(60) not null,
+            win int,
+            lose int,
+            draw int,
+            primary key (id)
+        );
+        create table if not exists game (
+            id int not null auto_increment,
+            white int not null,
+            black int not null,
+            primary key (id),
+            foreign key (white) references player(id),
+            foreign key (black) references player(id)
+        );
+        create table if not exists move (
+            id int not null auto_increment,
+            game int not null,
+            start_position varchar(2) not null,
+            end_position varchar(2) not null,
+            primary key (id),
+            foreign key (game) references game(id)
+        );
+        ```
+
+- [x] (선택) 체스 게임방을 만들고 체스 게임방에 입장할 수 있는 기능을 추가한다.
+    - [x] 방 생성 / 삭제 기능 
+
+- [x] (선택) 사용자별로 체스 게임 기록을 관리할 수 있다.
+    - [x] 사용자별 (id 기준) 승, 무, 패 기록 표시
+
+### TODO
+
+- [ ] 플레이어 회원가입 / 로그인 기능 
+- [ ] 전체 플레이어 목록 및 전적 조회
+- [ ] 체크, 체크메이트, 캐슬링, 프로모션, 앙파상 등 특수 규칙
+
+## 1~3단계 기능 요구사항
+
 - 체스판을 초기화한다.
     - 말의 위치 값은 가로 위치는 왼쪽부터 a ~ h이고, 세로는 아래부터 위로 1 ~ 8로 구현한다.
     - 각 진영은 검은색(대문자)과 흰색(소문자) 편으로 구분한다.
@@ -16,7 +70,6 @@ rnbqkbnr  1 (rank 1)
 
 abcdefgh
 ```
-## 기능 요구사항
 
 - [x] 빈 판을 생성한다.
     - [x] 체스말들을 생성한다.

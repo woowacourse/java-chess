@@ -1,0 +1,269 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+body:after {
+  top: 0;
+  left: 0;
+  position: absolute;
+  background-size: cover;
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.65)), url("../image/wood.jpg"), no-repeat;
+  z-index: -1;
+  content: "";
+  width: 100%;
+  height: 100%;
+}
+
+
+h1 {
+  width: 100%;
+  text-align: center;
+  padding: 10px 0 10px;
+  font-size: 4rem;
+  color: white;
+  font-family: 'Do Hyeon', sans-serif;
+  font-weight: normal;
+}
+
+main {
+  width: 65%;
+}
+
+.message {
+  margin-bottom: 25px;
+  width: 500px;
+  text-align: center;
+  color: #ffffff;
+  display: flex;
+  font-size: 15px;
+  padding: 9px 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.chess-game {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  padding: 0 5%;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.board-box {
+  width: 100%;
+  max-width: 540px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 0 40px;
+  position: relative;
+  background-color: cornsilk;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+.board {
+  width: calc(100% - 60px);
+  max-width: 480px;
+  margin: 0 auto;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.row {
+  display: flex;
+  position: relative;
+}
+
+.row:nth-of-type(2n - 1) .position:nth-of-type(2n - 1),
+.row:nth-of-type(2n) .position:nth-of-type(2n) {
+  color: #ffffff;
+  background-color: #333333;
+  background-image: linear-gradient(30deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(150deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(30deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(150deg, #222222 12%, transparent 12.5%, transparent 87%, #222222 87.5%, #222222), linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111), linear-gradient(60deg, #111111 25%, transparent 25.5%, transparent 75%, #111111 75%, #111111);
+  background-position: 0 0, 0 0, 10px 20px, 10px 20px, 0 0, 10px 20px;
+  background-size: 20px 40px;
+}
+
+.row-location {
+  position: absolute;
+  left: -20px;
+  top: 25px;
+  font-family: serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1d110a;
+}
+
+.position {
+  width: calc(100% / 6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #333333;
+  position: relative;
+  background-color: #ffffff;
+  background-image: linear-gradient(115deg, transparent 75%, #eeeeee 75%), linear-gradient(245deg, transparent 75%, #eeeeee 75%), linear-gradient(115deg, transparent 75%, #eeeeee 75%), linear-gradient(245deg, transparent 75%, #eeeeee 75%);
+  background-position: 0 0, 0 0, 10px -20px, 10px -20px;
+  background-size: 20px 40px;
+}
+
+.position:after {
+  content: "";
+  float: left;
+  padding-top: 100%;
+}
+
+.position > img {
+  position: absolute;
+  bottom: 10px;
+  height: 75px;
+  filter: drop-shadow(0 5px 1.5px #222222);
+}
+
+.position > img.pawn {
+  height: 40px;
+}
+
+.available-path {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  opacity: 0.53;
+  background-color: greenyellow;
+}
+
+.column-locations {
+  justify-content: space-around;
+  width: calc(100% - 60px);
+  position: absolute;
+  bottom: 10px;
+  font-family: serif;
+  font-size: 12px;
+  font-weight: 800;
+  color: #1d110a;
+}
+
+.buttons {
+  display: flex;
+  max-width: 540px;
+  margin: 0 auto;
+  justify-content: space-around;
+}
+
+.button {
+  margin: 30px 0 0;
+  padding: 7px;
+  font-size: 0.9rem;
+  width: 80px;
+  text-align: center;
+  border-bottom: 1.5px solid white;
+  color: white;
+}
+
+.button:hover {
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.hide {
+  transform: translateX(-9999px);
+}
+
+.rooms {
+  width: 35%;
+  background-color: rgba(0, 0, 0, 0.4);
+  color: white;
+  padding: 40px 20px 80px;
+  position: relative;
+  border-radius: 5px;
+}
+
+.room-add {
+  background-color: #ffffff;
+  color: #2b150c;
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  padding: 8px;
+  border: 1px solid #2b150c;
+  border-radius: 3px;
+}
+
+.room-add:hover {
+  background-color: #2b150c;
+  color: #ffffff;
+  cursor: pointer;
+  border-color: #ffffff;
+}
+
+.room {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding-top: 10px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+  color: gray;
+}
+
+.room:hover {
+  color: gold;
+  cursor: pointer;
+}
+
+.room-selected {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.room-selected:hover {
+  color: unset;
+  cursor: unset;
+}
+
+.room-header {
+  color: bisque;
+  font-weight: 700;
+  display: flex;
+  justify-content: space-around;
+  padding-top: 10px;
+  border-bottom: 1px solid white;
+  padding-bottom: 10px;
+}
+
+.room-number {
+  width: 10%;
+  text-align: center;
+}
+
+.players {
+  width: 45%;
+  display: flex;
+}
+
+.player {
+  width: 50%;
+  text-align: center;
+}
+
+.player-record {
+  font-size: 12px;
+}
+
+.room-status {
+  text-align: center;
+  width: 25%;
+}
