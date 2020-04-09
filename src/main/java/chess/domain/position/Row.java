@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 
 import java.util.Arrays;
 
@@ -24,7 +24,14 @@ public enum Row {
 
     public static Row of(String name) {
         return Arrays.stream(Row.values())
-                .filter(row->row.name.equals(name))
+                .filter(row -> row.name.equals(name))
+                .findFirst()
+                .orElseThrow(WrongPositionException::new);
+    }
+
+    public static Row of(int value) {
+        return Arrays.stream(Row.values())
+                .filter(row -> row.value == value)
                 .findFirst()
                 .orElseThrow(WrongPositionException::new);
     }

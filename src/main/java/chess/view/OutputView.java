@@ -1,10 +1,9 @@
 package chess.view;
 
-import chess.domain.game.board.Board;
+import chess.domain.board.Board;
 import chess.domain.game.ScoreResult;
-import chess.domain.game.board.Rows;
+import chess.domain.board.Rows;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 public class OutputView {
     private static final String OPERATIONS_MESSAGE = String.join("\n",
@@ -22,17 +21,9 @@ public class OutputView {
         printEmptyLine();
 
         for(Rows rows : board.getRows()) {
-            printRows(rows);
+            System.out.println(rows.getResources());
         }
 
-        printEmptyLine();
-    }
-
-    private static void printRows(Rows rows) {
-        for(String path : rows.getResources()) {
-            // TODO: 2020/03/31 나중에 웹으로 이식할 시에도, 패스를 넣는 식으로 구현가능...!!
-            System.out.print(path);
-        }
         printEmptyLine();
     }
 

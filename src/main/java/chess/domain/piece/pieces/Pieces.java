@@ -5,7 +5,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.positions.Positions;
-import chess.domain.util.WrongPositionException;
+import chess.domain.exception.WrongPositionException;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class Pieces {
 	public void move(Position start, Position end, Color color) {
 		Piece piece = findByPosition(start, color);
 
-		Positions movablePositions = piece.createMovablePositions(pieces);
+		Positions movablePositions = piece.findMovablePositions(pieces);
 
 		if (!movablePositions.contains(end)) {
 			throw new WrongPositionException();
@@ -43,11 +43,13 @@ public class Pieces {
 		if (piece.isSameColor(color)) {
 			return piece;
 		}
-		throw new WrongPositionException();
+		throw new WrongPositionException(start.toString());
 	}
 
-	public List<Piece> getPieces() {
-		return pieces;
+	public Positions findMovablePositions(Position position, Color color) {
+		Piece piece = findByPosition(position, color);
+
+		return piece.findMovablePositions(pieces);
 	}
 
 	public boolean isKingDead() {
@@ -55,6 +57,10 @@ public class Pieces {
 				.filter(Piece::isKing)
 				.count();
 		return kingCount != 2;
+	}
+
+	public List<Piece> getPieces() {
+		return pieces;
 	}
 
 	public Color getAliveKingColor() {

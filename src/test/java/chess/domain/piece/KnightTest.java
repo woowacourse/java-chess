@@ -23,7 +23,7 @@ public class KnightTest {
 		Position position = PositionFactory.of("c3");
 		Piece knight = TestPieceFactory.createKnight(position, Color.WHITE);
 
-		assertThat(knight.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(knight.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 유효한 코너 position입력시 정상 동작")
@@ -33,7 +33,7 @@ public class KnightTest {
 		Position position = PositionFactory.of("a1");
 		Piece knight = TestPieceFactory.createKnight(position, Color.WHITE);
 
-		assertThat(knight.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(knight.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position의 개수 반환 테스트")
@@ -47,7 +47,7 @@ public class KnightTest {
 				PositionFactory.of("e4")
 		));
 
-		assertThat(knight.createMovablePositions(pieces.getPieces()).getPositions().size()).isEqualTo(6);
+		assertThat(knight.findMovablePositions(pieces.getPieces()).getPositions().size()).isEqualTo(6);
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
@@ -62,6 +62,6 @@ public class KnightTest {
 				PositionFactory.of("e4")
 		));
 
-		assertThat(knight.createMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(knight.findMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
 	}
 }

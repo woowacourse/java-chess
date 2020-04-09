@@ -23,7 +23,7 @@ public class RookTest {
 		Position position = PositionFactory.of("c3");
 		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
-		assertThat(rook.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(rook.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 코너 유효한 position입력시 정상 동작")
@@ -33,7 +33,7 @@ public class RookTest {
 		Position position = PositionFactory.of("a1");
 		Piece rook = TestPieceFactory.createRook(position, Color.WHITE);
 
-		assertThat(rook.createMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(rook.findMovablePositions(Collections.emptyList()).getPositions()).contains(PositionFactory.of(input));
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position의 개수 반환 테스트")
@@ -47,7 +47,7 @@ public class RookTest {
 				PositionFactory.of("b3")
 		));
 
-		assertThat(rook.createMovablePositions(pieces.getPieces()).getPositions()).size().isEqualTo(11);
+		assertThat(rook.findMovablePositions(pieces.getPieces()).getPositions()).size().isEqualTo(11);
 	}
 
 	@DisplayName("createMovablePositions 아군 말이 경로를 막고있는 경우 갈 수 있는 Position 반환 테스트")
@@ -62,6 +62,6 @@ public class RookTest {
 				PositionFactory.of("b3")
 		));
 
-		assertThat(rook.createMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
+		assertThat(rook.findMovablePositions(pieces.getPieces()).getPositions()).contains(PositionFactory.of(input));
 	}
 }

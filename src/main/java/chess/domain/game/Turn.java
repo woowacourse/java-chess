@@ -1,5 +1,6 @@
 package chess.domain.game;
 
+import chess.domain.exception.WrongOperationException;
 import chess.domain.piece.Color;
 
 import java.util.Arrays;
@@ -19,6 +20,18 @@ public class Turn {
     public Turn(Color color) {
         validate(color);
         this.color = color;
+    }
+
+    public Turn(String name) {
+        color = findColorByName(name);
+    }
+
+    private Color findColorByName(String name) {
+        return turns.stream()
+                .map(Turn::getColor)
+                .filter(turnColor -> turnColor.toString().equals(name))
+                .findFirst()
+                .orElseThrow(WrongOperationException::new);
     }
 
     private void validate(Color color) {

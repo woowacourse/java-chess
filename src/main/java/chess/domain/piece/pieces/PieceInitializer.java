@@ -1,10 +1,13 @@
 package chess.domain.piece.pieces;
 
+import chess.domain.exception.WrongOperationException;
 import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.movable.*;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
+
+import java.util.Arrays;
 
 public enum PieceInitializer {
     A1(PieceType.ROOK, PositionFactory.of("a1"), Color.WHITE, new BlockedMovable(Directions.LINEAR)),
@@ -50,6 +53,15 @@ public enum PieceInitializer {
         this.position = position;
         this.color = color;
         this.movable = movable;
+    }
+
+    public static Movable findPieceMovable(PieceType pieceType, Color color) {
+        return Arrays.stream(values())
+                .filter(pieceInitializer -> pieceInitializer.pieceType == pieceType)
+                .filter(pieceInitializer -> pieceInitializer.color == color)
+                .map(pieceInitializer -> pieceInitializer.movable)
+                .findAny()
+                .orElseThrow(WrongOperationException::new);
     }
 
     public PieceType getPieceType() {
