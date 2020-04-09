@@ -52,7 +52,7 @@ public class WebController {
 
     public void move(String from, String to) throws SQLException {
         state.move(turnDAO.getTurn(),"move" + " " + from + " " + to);
-        turnDAO.changeTurn();
+        turnDAO.changeTurn(state.getPresentTurn());
         piecesDAO.updatePieces(state.getPieces());
     }
 

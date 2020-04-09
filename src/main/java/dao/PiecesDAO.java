@@ -26,24 +26,24 @@ public class PiecesDAO {
 
     private void addPiece(Pieces pieces, Point point) throws SQLException {
         String query = "INSERT INTO pieces VALUES (?, ?)";
-        PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
-        pstmt.setString(1, pieces.getPiece(point).getInitial());
-        pstmt.setString(2, point.toString());
-        pstmt.executeUpdate();
-        JDBCConnection.closeConnection(JDBCConnection.getConnection());
+        try (PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query)) {
+            pstmt.setString(1, pieces.getPiece(point).getInitial());
+            pstmt.setString(2, point.toString());
+            pstmt.executeUpdate();
+        }
     }
 
     public Map<String, Object> readPieces() throws SQLException {
         String query = "SELECT * from pieces";
-        PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+         try (PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query)) {
+             ResultSet rs = pstmt.executeQuery();
+             Map<String, Object> pieces = new HashMap<>();
+             while (rs.next()) {
+                 pieces.put(rs.getObject(2).toString(), rs.getObject(1));
+             }
+             return pieces;
+         }
 
-        Map<String, Object> pieces = new HashMap<>();
-        while (rs.next()) {
-            pieces.put(rs.getObject(2).toString(), rs.getObject(1));
-        }
-        JDBCConnection.closeConnection(JDBCConnection.getConnection());
-        return pieces;
     }
 
     public void updatePieces(Pieces pieces) throws SQLException {
@@ -53,17 +53,16 @@ public class PiecesDAO {
 
     public void deleteAll() throws SQLException {
         String query = "delete from pieces";
-
-        PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
-        pstmt.executeUpdate();
-        JDBCConnection.closeConnection(JDBCConnection.getConnection());
+        try (PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query)) {
+             pstmt.executeUpdate();
+        }
     }
 
     public boolean isSave() throws SQLException {
         String query = "SELECT * from pieces";
-        PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        JDBCConnection.closeConnection(JDBCConnection.getConnection());
-        return rs.isBeforeFirst();
+        try (PreparedStatement pstmt = JDBCConnection.getConnection().prepareStatement(query)) {
+            ResultSet rs = pstmt.executeQuery();
+            return rs.isBeforeFirst();
+        }
     }
 }
