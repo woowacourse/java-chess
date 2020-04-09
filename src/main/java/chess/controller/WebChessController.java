@@ -5,7 +5,6 @@ import static chess.view.response.ResponseStatus.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Supplier;
 
 import chess.service.GameService;
@@ -15,18 +14,17 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
+	private static final HandlebarsTemplateEngine TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+	private static final ModelAndView DEFAULT_MODEL_AND_VIEW = new ModelAndView(new HashMap<String, Object>(), "index.html");
+
 	private final GameService gameService;
 
 	public WebChessController(GameService gameService) {
 		this.gameService = gameService;
 	}
 
-	private static String render(Map<String, Object> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-	}
-
 	public void run() {
-		get("/", (req, res) -> render(new HashMap<>(), "index.html"));
+		get("/", (req, res) -> TEMPLATE_ENGINE.render(DEFAULT_MODEL_AND_VIEW));
 
 		get("/chess/state", (req, res) ->
 				makeResponse(() ->
