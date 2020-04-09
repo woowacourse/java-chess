@@ -36,7 +36,7 @@ public class BoardConverter {
 		return Side.WHITE;
 	}
 
-	public static String convert(ChessBoard chessBoard, String marker) {
+	public static String convertToString(ChessBoard chessBoard, String marker) {
 		List<List<String>> boardInfo = makeStringBoard(chessBoard.getPieces(), marker);
 
 		StringBuilder builder = new StringBuilder();

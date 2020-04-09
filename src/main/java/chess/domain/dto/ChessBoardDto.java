@@ -7,6 +7,8 @@ import chess.domain.ChessBoard;
 import chess.domain.piece.Piece;
 
 public class ChessBoardDto {
+	private static final String BLANK = "blank";
+
 	private List<List<String>> boardDto;
 
 	private ChessBoardDto(List<List<String>> boardDto) {
@@ -36,7 +38,7 @@ public class ChessBoardDto {
 		for (int i = 0; i < 8; i++) {
 			List<String> emptyRow = new ArrayList<>();
 			for (int j = 0; j < 8; j++) {
-				emptyRow.add("blank");
+				emptyRow.add(BLANK);
 			}
 			board.add(emptyRow);
 		}

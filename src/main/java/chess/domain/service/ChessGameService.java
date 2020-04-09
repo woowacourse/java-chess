@@ -20,14 +20,14 @@ public class ChessGameService {
 	}
 
 	public void create(ChessGame chessGame, String roomName) throws SQLException {
-		String board = BoardConverter.convert(chessGame.getBoard(), BLANK_MARK);
+		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.addRoom(roomName, board, turn, finishFlag);
 	}
 
 	public void save(ChessGame chessGame, String roomName) throws SQLException {
-		String board = BoardConverter.convert(chessGame.getBoard(), BLANK_MARK);
+		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.updateRoom(roomName, board, turn, finishFlag);
