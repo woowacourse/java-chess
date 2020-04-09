@@ -12,4 +12,12 @@ public class PieceDto {
 		this.pieceType = piece.getPieceType();
 		this.color = piece.getColor();
 	}
+
+	public PieceType getPieceType() {
+		return pieceType;
+	}
+
+	public Color getColor() {
+		return color;
+	}
 }

@@ -2,7 +2,6 @@ package chess.service;
 
 import chess.dao.HistoryDao;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Color;
 import chess.domain.position.PositionFactory;
 import chess.dto.*;
 import chess.web.MovingPosition;
@@ -14,6 +13,7 @@ import java.util.List;
 public class ChessWebService {
 	public void clearHistory() throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
+
 		historyDao.clear();
 	}
 
@@ -38,52 +38,42 @@ public class ChessWebService {
 		return historyDao.selectAll();
 	}
 
-	public MoveStatusDto move(String start, String end) {
-		try { // TODO: 2020/04/09 이거 꼭 필요?
-
-			if (start.equals(end)) {
-				return new MoveStatusDto(NormalStatus.YES);
-			}
-
-			ChessGame chessGame = new ChessGame();
-
-			load(chessGame);
-			chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-
-			if (chessGame.isKingDead()) {
-				MoveStatusDto moveStatusDto = new MoveStatusDto(NormalStatus.YES, chessGame.getAliveKingColor());
-				clearHistory();
-				return moveStatusDto;
-			}
-
-			insertHistory(start, end);
-
-			return new MoveStatusDto(NormalStatus.YES);
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
-			return new MoveStatusDto(NormalStatus.NO, e.getMessage(), Color.NONE);
+	public MoveStatusDto move(String start, String end) throws SQLException {
+		if (start.equals(end)) {
+			return new MoveStatusDto(NormalStatus.YES.isNormalStatus());
 		}
-	}
 
+		ChessGame chessGame = new ChessGame();
+
+		load(chessGame);
+		chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
+
+		if (chessGame.isKingDead()) {
+			MoveStatusDto moveStatusDto = new MoveStatusDto(NormalStatus.YES.isNormalStatus(), chessGame.getAliveKingColor());
+			clearHistory();
+			return moveStatusDto;
+		}
+
+		insertHistory(start, end);
+
+		return new MoveStatusDto(NormalStatus.YES.isNormalStatus());
+	}
 
 	private void insertHistory(String start, String end) throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		historyDao.insert(start, end);
 	}
 
-	public MovablePositionsDto chooseFirstPosition(String position) {
-		try {
-			ChessGame chessGame = new ChessGame();
-			load(chessGame);
+	public MovablePositionsDto findMovablePositions(String position) throws SQLException {
+		ChessGame chessGame = new ChessGame();
+		load(chessGame);
 
-			List<String> movablePositionNames = chessGame.findMovablePositionNames(position);
+		List<String> movablePositionNames = chessGame.findMovablePositionNames(position);
 
-			return new MovablePositionsDto(movablePositionNames, position, NormalStatus.YES);
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
-			return new MovablePositionsDto(e.getMessage());
-		}
+		return new MovablePositionsDto(movablePositionNames, position);
 	}
 
-	public MovableStatusDto chooseSecondPosition(String position) {
-		return new MovableStatusDto(NormalStatus.YES, position);
+	public DestinationPositionDto chooseDestinationPosition(String position) {
+		return new DestinationPositionDto(position, NormalStatus.YES);
 	}
 }

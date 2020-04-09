@@ -71,7 +71,7 @@ window.onload = function () {
                 startPosition = data.position;
                 console.log(data.normalStatus);
                 if (data.normalStatus === false) {
-                    alert(data.exception + "hahaha");
+                    alert(data.exception);
                     startPosition = null;
                     return;
                 }
