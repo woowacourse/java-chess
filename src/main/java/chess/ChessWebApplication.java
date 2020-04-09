@@ -13,8 +13,6 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class ChessWebApplication {
-	private static final String EMPTY_NAME = "";
-
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private static final ChessService chessService = new ChessService();
 	private static ChessBoard chessBoard;
@@ -29,7 +27,7 @@ public class ChessWebApplication {
 
 		get("/init", (req, res) -> {
 			chessBoard = new ChessBoard();
-			chessService.DBInit(chessBoard);
+			chessService.initDatabase(chessBoard);
 			Map<String, Object> model = chessService.getPiecesInfo();
 			return gson.toJson(model);
 		});
@@ -41,8 +39,11 @@ public class ChessWebApplication {
 		});
 
 		post("/movePiece", (req, res) -> {
-			Map<String, Object> model = chessService.getMoveInfo(req, chessBoard);
-			chessService.move(req, chessBoard);
+			String source = req.queryParams("source");
+			String target = req.queryParams("target");
+
+			Map<String, Object> model = chessService.getMoveInfo(source, target, chessBoard);
+			chessService.move(source, target, chessBoard);
 			return gson.toJson(model);
 		});
 	}

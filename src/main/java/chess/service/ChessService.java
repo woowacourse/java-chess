@@ -5,7 +5,6 @@ import chess.domain.chessPiece.piece.PieceDao;
 import chess.domain.chessPiece.piece.PieceMapper;
 import chess.domain.chessPiece.position.Position;
 import chess.domain.chessboard.ChessBoard;
-import spark.Request;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ import static jdk.nashorn.internal.runtime.linker.NameCodec.*;
 public class ChessService {
 	private static final PieceDao pieceDao = new PieceDao();
 
-	public void DBInit(final ChessBoard chessBoard) throws Exception {
+	public void initDatabase(final ChessBoard chessBoard) throws Exception {
 		List<Piece> pieces = chessBoard.getPieces();
 		pieceDao.deleteAll();
 		for (Piece piece : pieces) {
@@ -49,14 +48,14 @@ public class ChessService {
 		return new ChessBoard(pieces);
 	}
 
-	public Map<String, Object> getMoveInfo(final Request req, final ChessBoard chessBoard) {
+	public Map<String, Object> getMoveInfo(final String source, final String target, final ChessBoard chessBoard) {
 		Map<String, Object> model = new HashMap<>();
-		Position sourcePosition = Position.of(req.queryParams("source"));
-		Position targetPosition = Position.of(req.queryParams("target"));
+		Position sourcePosition = Position.of(source);
+		Position targetPosition = Position.of(target);
 		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
 
-		model.put("sourcePosition", req.queryParams("source"));
-		model.put("targetPosition", req.queryParams("target"));
+		model.put("sourcePosition", source);
+		model.put("targetPosition", target);
 		model.put("sourcePieceType", findPieceType(sourcePosition, chessBoard));
 		model.put("targetPieceType", findPieceType(targetPosition, chessBoard));
 		model.put("isAttack", isAttack);
@@ -69,9 +68,9 @@ public class ChessService {
 		return piece.map(Piece::getPieceName).orElse(EMPTY_NAME);
 	}
 
-	public void move(final Request req, final ChessBoard chessBoard) throws Exception {
-		Position sourcePosition = Position.of(req.queryParams("source"));
-		Position targetPosition = Position.of(req.queryParams("target"));
+	public void move(final String source, final String target, final ChessBoard chessBoard) throws Exception {
+		Position sourcePosition = Position.of(source);
+		Position targetPosition = Position.of(target);
 		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
 
 		chessBoard.movePiece(sourcePosition, targetPosition);
