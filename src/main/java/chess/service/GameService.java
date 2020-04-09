@@ -19,11 +19,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GameService {
-    private static BoardDAO boardDAO;
-
-    public GameService() {
-        boardDAO = new BoardDAO();
-    }
+    private static BoardDAO boardDAO = new BoardDAO();
 
     public String newGame() throws SQLException {
         Board board = BoardFactory.createBoard();
