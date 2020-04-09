@@ -12,7 +12,7 @@ import java.sql.SQLException;
 
 public class ChessGameController {
     public static String newGame(Request request, Response response) throws SQLException {
-        GameService gameService = new GameService();
+        GameService gameService = GameService.getInstance();
 
         return gameService.newGame();
     }
@@ -26,13 +26,13 @@ public class ChessGameController {
         Position startPosition = Position.of(Coordinate.of(startX), Coordinate.of(startY));
         Position targetPosition = Position.of(Coordinate.of(targetX), Coordinate.of(targetY));
         MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
-        GameService gameService = new GameService();
+        GameService gameService = GameService.getInstance();
 
         return gameService.move(movingInfo);
     }
 
     public static String continueGame(Request request, Response response) throws SQLException {
-        GameService gameService = new GameService();
+        GameService gameService = GameService.getInstance();
 
         return gameService.continueGame();
     }

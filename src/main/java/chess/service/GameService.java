@@ -19,7 +19,14 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class GameService {
-    private static BoardDAO boardDAO = new BoardDAO();
+    private static GameService instance = new GameService();
+
+    private GameService(){
+    }
+
+    public static GameService getInstance(){
+        return instance;
+    }
 
     public String newGame() throws SQLException {
         Board board = BoardFactory.createBoard();
@@ -47,6 +54,7 @@ public class GameService {
     }
 
     private Board loadFromDB() throws SQLException {
+        BoardDAO boardDAO = BoardDAO.getInstance();
         List<ChessPieceDTO> chessPieces = boardDAO.loadBoard();
         GameStatusDTO gameStatusDTO = boardDAO.loadGameStatus();
         Team nowPlayingTeam = Team.of(gameStatusDTO.getNowPlayingTeam());
@@ -72,6 +80,8 @@ public class GameService {
     }
 
     private void updateToDB(Board board) throws SQLException {
+        BoardDAO boardDAO = BoardDAO.getInstance();
+
         boardDAO.initializeBoard();
         boardDAO.initializeGameStatus();
         boardDAO.updateGameStatus(board.getGameStatus());
@@ -89,6 +99,8 @@ public class GameService {
     }
 
     private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
+        BoardDAO boardDAO = BoardDAO.getInstance();
+
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
 
