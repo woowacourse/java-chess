@@ -64,7 +64,6 @@ public class BoardDaoImpl implements BoardDao {
 
 	@Override
 	public void insertOrUpdatePieceBy(Coordinates coordinates, Piece piece) {
-
 		String query = "INSERT INTO board VALUES(?, ?) ON DUPLICATE KEY UPDATE piece_type=(?)";
 		jdbcTemplate.update(query, preparedStatement -> {
 			preparedStatement.setString(1, coordinates.getName());
