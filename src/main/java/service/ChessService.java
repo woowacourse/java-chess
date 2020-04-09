@@ -1,12 +1,12 @@
 package service;
 
-import com.google.gson.JsonObject;
 import dao.PiecesDAO;
 import dao.TurnDAO;
 import domain.commend.State;
 import domain.pieces.Pieces;
 import domain.pieces.PiecesFactory;
 import domain.team.Team;
+import dto.ScoreDTO;
 import java.sql.SQLException;
 import java.util.Map;
 
@@ -55,11 +55,11 @@ public class ChessService {
         piecesDAO.updatePieces(state.getPieces());
     }
 
-    public JsonObject status() {
-        JsonObject object = new JsonObject();
-        object.addProperty("team", state.getPresentTurn().toString());
-        object.addProperty("status", state.status());
-        return object;
+    public ScoreDTO status() {
+//        JsonObject object = new JsonObject();
+//        object.addProperty("team", state.getPresentTurn().toString());
+//        object.addProperty("status", state.status());
+        return new ScoreDTO(state.getPresentTurn().toString(), state.status());
     }
 
     public void delete() throws SQLException {

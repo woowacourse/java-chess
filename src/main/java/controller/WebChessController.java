@@ -2,9 +2,9 @@ package controller;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static util.JsonUtil.json;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import java.util.HashMap;
 import java.util.Map;
 import service.ChessService;
@@ -57,10 +57,7 @@ public class WebChessController {
     }
 
     private void status(ChessService chessService) {
-        post("/status", (req, res) -> {
-            JsonObject object = chessService.status();
-            return gson.toJson(object);
-        });
+        post("/status", (req, res) -> chessService.status(), json());
     }
 
     private void finished(ChessService chessService) {

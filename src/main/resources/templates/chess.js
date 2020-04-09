@@ -70,7 +70,7 @@ function status() {
         type: "post",
         success : function(data){
             data = JSON.parse(data)
-            $(`#${data["team"]}`).html(`<h2>${data["status"]}</h2>`)
+            $(`#${data.team}`).html(`<h2>${data.score}</h2>`)
         },
     })
 }

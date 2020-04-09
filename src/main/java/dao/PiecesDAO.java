@@ -43,7 +43,6 @@ public class PiecesDAO {
              }
              return pieces;
          }
-
     }
 
     public void updatePieces(Pieces pieces) throws SQLException {
