@@ -69,7 +69,11 @@ public class WebUIChessApplication {
 
 		post("/load", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			webService.loadGame();
+			try {
+				webService.loadGame();
+			} catch (IndexOutOfBoundsException e) {
+				errorMessage.add(new ErrorMessage("DB에 불러올 게임 정보가 없습니다."));
+			}
 
 			insertIntoModel(webService, errorMessage, model);
 			return render(model, "index.html");
