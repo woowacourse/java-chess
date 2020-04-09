@@ -92,4 +92,8 @@ public class Position {
     public int hashCode() {
         return Objects.hash(xPoint, yPoint);
     }
+
+    public int getPointSum() {
+        return this.xPoint.getValue() + this.yPoint.getValue();
+    }
 }
