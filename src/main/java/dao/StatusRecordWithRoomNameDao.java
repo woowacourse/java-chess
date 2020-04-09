@@ -1,5 +1,7 @@
 package dao;
 
+import dto.StatusRecordWithRoomNameDto;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class StatusRecordWithRoomNameDao {
 		}
 	}
 
-	public List<StatusRecordWithRoomName> findStatusRecordWithRoomName() throws SQLException {
+	public List<StatusRecordWithRoomNameDto> findStatusRecordWithRoomName() throws SQLException {
 		final String query = "SELECT status_record.record, status_record.game_date, room.room_name "
 				+ "FROM status_record JOIN room ON status_record.room_id = room.id "
 				+ "ORDER BY room.room_name";
@@ -53,9 +55,9 @@ public class StatusRecordWithRoomNameDao {
 		final Connection connection = getConnection();
 		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		final ResultSet resultSet = preparedStatement.executeQuery();
-		final List<StatusRecordWithRoomName> list = new ArrayList<>();
+		final List<StatusRecordWithRoomNameDto> list = new ArrayList<>();
 		while (resultSet.next()) {
-			list.add(new StatusRecordWithRoomName(resultSet.getString("status_record.record"),
+			list.add(new StatusRecordWithRoomNameDto(resultSet.getString("status_record.record"),
 					resultSet.getDate("status_record.game_date"), resultSet.getString("room.room_name")));
 		}
 		return list;

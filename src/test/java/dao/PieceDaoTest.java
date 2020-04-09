@@ -3,6 +3,7 @@ package dao;
 import domain.pieces.Queen;
 import domain.point.Coordinate;
 import domain.team.Team;
+import dto.PieceDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,8 +45,8 @@ class PieceDaoTest {
 	@Test
 	void findPiecesByRoomId() throws SQLException {
 		final int roomId = 1;
-		final List<dao.Piece> pieces = pieceDao.findPiecesByRoomId(roomId);
-		assertThat(pieces).isEqualTo(Arrays.asList(
-				new dao.Piece(1, "queen", "black", "a2", 1)));
+		final List<PieceDto> pieceDtos = pieceDao.findPiecesByRoomId(roomId);
+		assertThat(pieceDtos).isEqualTo(Arrays.asList(
+				new PieceDto(1, "queen", "black", "a2", 1)));
 	}
 }

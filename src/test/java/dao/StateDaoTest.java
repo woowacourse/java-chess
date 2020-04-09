@@ -1,5 +1,6 @@
 package dao;
 
+import dto.StateDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -42,8 +43,8 @@ class StateDaoTest {
 	void findStateByRoomName() throws SQLException {
 		final String roomName = "그니";
 		final String state = "ended";
-		final State stateBean = stateDao.findStateByRoomName(roomName);
-		assertThat(stateBean.getState()).isEqualTo(state);
+		final StateDto stateDtoBean = stateDao.findStateByRoomName(roomName);
+		assertThat(stateDtoBean.getState()).isEqualTo(state);
 	}
 
 	@Test
@@ -51,8 +52,8 @@ class StateDaoTest {
 		final int roomId = 1;
 		final String state = "started";
 		int resultNum = stateDao.setStateByRoomId(roomId, state);
-		final State stateBean = stateDao.findStateByRoomName("그니");
+		final StateDto stateDtoBean = stateDao.findStateByRoomName("그니");
 		assertThat(resultNum).isEqualTo(1);
-		assertThat(stateBean.getState()).isEqualTo("started");
+		assertThat(stateDtoBean.getState()).isEqualTo("started");
 	}
 }

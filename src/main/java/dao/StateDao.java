@@ -1,6 +1,7 @@
 package dao;
 
 import dao.exceptions.DaoNoneSelectedException;
+import dto.StateDto;
 
 import java.sql.*;
 
@@ -58,7 +59,7 @@ public class StateDao {
 		return resultNum;
 	}
 
-	public State findStateByRoomName(final String roomName) throws SQLException {
+	public StateDto findStateByRoomName(final String roomName) throws SQLException {
 		final String query = "SELECT * FROM state WHERE room_id="
 				+ "(SELECT id FROM room WHERE room_name=?)";
 		final Connection connection = getConnection();
@@ -72,11 +73,11 @@ public class StateDao {
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection(connection);
-		return new State(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getInt("room_id"));
+		return new StateDto(resultSet.getInt("id"), resultSet.getString("state"), resultSet.getInt("room_id"));
 	}
 
 	// TODO test
-	public State findStateByRoomId(final int roomId) throws SQLException {
+	public StateDto findStateByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM state WHERE room_id=?";
 		Connection connection = getConnection();
 		final PreparedStatement preparedStatement = connection.prepareStatement(query);
@@ -85,13 +86,13 @@ public class StateDao {
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-		final State state = new State(resultSet.getInt("id"), resultSet.getString("state"),
+		final StateDto stateDto = new StateDto(resultSet.getInt("id"), resultSet.getString("state"),
 				resultSet.getInt("room_id"));
 
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection(connection);
-		return state;
+		return stateDto;
 	}
 
 	public int setStateByRoomId(final int roomId, final String state) throws SQLException {

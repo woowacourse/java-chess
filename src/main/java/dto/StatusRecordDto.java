@@ -1,14 +1,14 @@
-package dao;
+package dto;
 
 import java.util.Date;
 
-public class StatusRecord {
+public class StatusRecordDto {
 	private final int id;
 	private final String record;
 	private final Date gameDate;
 	private final int roomId;
 
-	public StatusRecord(final int id, final String record, final Date gameDate, final int roomId) {
+	public StatusRecordDto(final int id, final String record, final Date gameDate, final int roomId) {
 		this.id = id;
 		this.record = record;
 		this.gameDate = gameDate;

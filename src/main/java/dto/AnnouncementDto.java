@@ -1,11 +1,11 @@
-package dao;
+package dto;
 
-public class Announcement {
+public class AnnouncementDto {
 	private final int id;
 	private final String announcement;
 	private final int roomId;
 
-	public Announcement(final int id, final String announcement, final int roomId) {
+	public AnnouncementDto(final int id, final String announcement, final int roomId) {
 		this.id = id;
 		this.announcement = announcement;
 		this.roomId = roomId;

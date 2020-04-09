@@ -1,16 +1,16 @@
-package dao;
+package dto;
 
 import java.util.Objects;
 
-public class Piece {
+public class PieceDto {
 	final int id;
 	final String pieceType;
 	final String team;
 	final String coordinate;
 	final int roomId;
 
-	public Piece(final int id, final String pieceType, final String team,
-				 final String coordinate,  final int roomId) {
+	public PieceDto(final int id, final String pieceType, final String team,
+					final String coordinate, final int roomId) {
 		this.id = id;
 		this.pieceType = pieceType;
 		this.team = team;
@@ -42,12 +42,12 @@ public class Piece {
 	public boolean equals(final Object o) {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
-		final Piece piece = (Piece) o;
-		return id == piece.id &&
-				roomId == piece.roomId &&
-				Objects.equals(pieceType, piece.pieceType) &&
-				Objects.equals(team, piece.team) &&
-				Objects.equals(coordinate, piece.coordinate);
+		final PieceDto pieceDto = (PieceDto) o;
+		return id == pieceDto.id &&
+				roomId == pieceDto.roomId &&
+				Objects.equals(pieceType, pieceDto.pieceType) &&
+				Objects.equals(team, pieceDto.team) &&
+				Objects.equals(coordinate, pieceDto.coordinate);
 	}
 
 	@Override

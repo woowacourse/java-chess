@@ -1,6 +1,7 @@
 package dao;
 
 import dao.exceptions.DaoNoneSelectedException;
+import dto.AnnouncementDto;
 
 import java.sql.*;
 
@@ -59,7 +60,7 @@ public class AnnouncementDao {
 		return resultNum;
 	}
 
-	public dao.Announcement findAnnouncementByRoomId(final int roomId) throws SQLException {
+	public AnnouncementDto findAnnouncementByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM announcement WHERE room_id = ?";
 
 		final Connection connection = getConnection();
@@ -70,7 +71,7 @@ public class AnnouncementDao {
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-		final dao.Announcement announcement = new dao.Announcement(resultSet.getInt("id"),
+		final AnnouncementDto announcement = new AnnouncementDto(resultSet.getInt("id"),
 				resultSet.getString("message"), resultSet.getInt("room_id"));
 
 		resultSet.close();

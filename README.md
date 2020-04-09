@@ -155,13 +155,13 @@ abcdefgh
  [x] 데이터베이스 생성
  [x] 데이터베이스 연결
  [x] 데이터베이스 테이블 생성
- [x] room DAO
+ [x] roomDto DAO
     [x] Create, Read, Delete
     [x] 컨트롤러에 적용
     [x] 뷰 추가
- [ ] state DAO
+ [ ] stateDto DAO
     [x] Create, Read, Update
     [ ] 컨트롤러에 적용
- [ ] piece DAO
+ [ ] pieceDto DAO
     [ ] Create, Read, Delete
     [ ] 컨트롤러에 적용

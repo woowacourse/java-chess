@@ -1,5 +1,7 @@
 package dao;
 
+import dto.PieceDto;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,15 +63,15 @@ public class PieceDao {
 		return resultNum;
 	}
 
-	public List<dao.Piece> findPiecesByRoomId(final int roomId) throws SQLException {
+	public List<PieceDto> findPiecesByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM piece WHERE room_id = ?";
 		final Connection connection = getConnection();
 		final PreparedStatement preparedStatement = connection.prepareStatement(query);
 		preparedStatement.setInt(1, roomId);
 		ResultSet resultSet = preparedStatement.executeQuery();
-		List<dao.Piece> pieces = new ArrayList<>();
+		List<PieceDto> pieceDtos = new ArrayList<>();
 		while (resultSet.next()) {
-			pieces.add(new dao.Piece(resultSet.getInt("id"), resultSet.getString("piece_type"),
+			pieceDtos.add(new PieceDto(resultSet.getInt("id"), resultSet.getString("piece_type"),
 					resultSet.getString("team"), resultSet.getString("coordinate"),
 					resultSet.getInt("room_id")));
 		}
@@ -77,7 +79,7 @@ public class PieceDao {
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection(connection);
-		return pieces;
+		return pieceDtos;
 	}
 
 	public int deletePiece(final int roomId) throws SQLException {

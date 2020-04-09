@@ -1,6 +1,7 @@
 package dao;
 
 import dao.exceptions.DaoNoneSelectedException;
+import dto.RoomDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -44,8 +45,8 @@ class RoomDaoTest {
 	void findRoomByRoomName() throws SQLException {
 		roomDao.addRoomByRoomName(roomName);
 
-		final Room room = roomDao.findRoomByRoomName(roomName);
-		assertThat(room.getRoomName()).isEqualTo(roomName);
+		final RoomDto roomDto = roomDao.findRoomByRoomName(roomName);
+		assertThat(roomDto.getRoomName()).isEqualTo(roomName);
 
 		roomDao.deleteRoomByRoomName(roomName);
 	}

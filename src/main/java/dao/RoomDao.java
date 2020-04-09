@@ -1,6 +1,7 @@
 package dao;
 
 import dao.exceptions.DaoNoneSelectedException;
+import dto.RoomDto;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -58,7 +59,7 @@ public class RoomDao {
 		return resultNum;
 	}
 
-	public Room findRoomByRoomName(final String roomName) throws SQLException {
+	public RoomDto findRoomByRoomName(final String roomName) throws SQLException {
 		final String query = "SELECT * FROM room "
 				+ "WHERE room_name = ?";
 		final Connection connection = getConnection();
@@ -69,17 +70,17 @@ public class RoomDao {
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-		final Room room = new Room(resultSet.getInt("id"),
+		final RoomDto roomDto = new RoomDto(resultSet.getInt("id"),
 				resultSet.getString("room_name"));
 
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection(connection);
-		return room;
+		return roomDto;
 	}
 
 	// TODO test
-	public Room findRoomByRoomId(final int roomId) throws SQLException {
+	public RoomDto findRoomByRoomId(final int roomId) throws SQLException {
 		final String query = "SELECT * FROM room "
 				+ "WHERE id = ?";
 		final Connection connection = getConnection();
@@ -90,26 +91,26 @@ public class RoomDao {
 		if (!resultSet.next()) {
 			throw new DaoNoneSelectedException();
 		}
-		final Room room = new Room(resultSet.getInt("id"),
+		final RoomDto roomDto = new RoomDto(resultSet.getInt("id"),
 				resultSet.getString("room_name"));
 
 		resultSet.close();
 		preparedStatement.close();
 		closeConnection(connection);
-		return room;
+		return roomDto;
 	}
 
 
-	public List<Room> findAllRooms() throws SQLException {
+	public List<RoomDto> findAllRooms() throws SQLException {
 		final String query = "SELECT * FROM room";
 		final PreparedStatement preparedStatement = getConnection().prepareStatement(query);
 		final ResultSet resultSet = preparedStatement.executeQuery();
-		final List<Room> rooms = new ArrayList<>();
+		final List<RoomDto> roomDtos = new ArrayList<>();
 		while (resultSet.next()) {
-			rooms.add(new Room(resultSet.getInt("id"),
+			roomDtos.add(new RoomDto(resultSet.getInt("id"),
 					resultSet.getString("room_name")));
 		}
-		return rooms;
+		return roomDtos;
 	}
 
 	public int deleteRoomByRoomName(final String roomName) throws SQLException {

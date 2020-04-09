@@ -1,10 +1,10 @@
-package dao;
+package dto;
 
-public class Room {
+public class RoomDto {
 	private final int id;
 	private final String roomName;
 
-	public Room(final int id, final String roomName) {
+	public RoomDto(final int id, final String roomName) {
 		this.id = id;
 		this.roomName = roomName;
 	}
