@@ -2,10 +2,12 @@ package chess.domain.service;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 import chess.domain.BoardConverter;
 import chess.domain.ChessGame;
 import chess.domain.FinishFlag;
+import chess.domain.Side;
 import chess.domain.dao.RoomDao;
 
 public class ChessGameService {
@@ -33,5 +35,14 @@ public class ChessGameService {
 
 	public List<String> findAllRooms() throws SQLException {
 		return roomDao.findAll();
+	}
+
+	public void load(ChessGame chessGame, String roomName) throws SQLException {
+		String turn = roomDao.findByRoomName(roomName, "turn")
+				.orElseThrow(NoSuchElementException::new);
+		String board = roomDao.findByRoomName(roomName, "board")
+				.orElseThrow(NoSuchElementException::new);
+
+		chessGame.load(BoardConverter.convertToBoard(board), Side.valueOf(turn));
 	}
 }

@@ -55,6 +55,11 @@ public class ChessGame {
 		turn = Side.WHITE;
 	}
 
+	public void load(ChessBoard chessBoard, Side side) {
+		board = chessBoard;
+		turn = side;
+	}
+
 	public ChessBoard getBoard() {
 		return board;
 	}

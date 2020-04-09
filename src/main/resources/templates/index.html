@@ -10,6 +10,11 @@
     <div>{{.}}</div>
     {{/room.rooms}}
 </div>
+<form method="post" action="/join">
+    <input type="text" name="room-name" placeholder="방 이름을 입력해주세요.">
+    <input type="submit" value="입장">
+</form>
+<br/>
 <form method="post" action="/create">
     <input type="text" name="room-name" placeholder="방 이름을 입력해주세요.">
     <input type="submit" value="방 만들기">

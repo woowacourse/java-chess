@@ -29,6 +29,7 @@ public class WebController {
 
 		mainRendering();
 		createRoom(chessGame);
+		joinRoom(chessGame);
 		movePiece(chessGame);
 		restartGame(chessGame);
 	}
@@ -38,6 +39,17 @@ public class WebController {
 			Map<String, Object> model = new HashMap<>();
 			RoomName roomName = new RoomName(req.queryParams("room-name"));
 			chessGameService.create(chessGame, roomName.getName());
+
+			transfer(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void joinRoom(ChessGame chessGame) {
+		post("/join", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			RoomName roomName = new RoomName(req.queryParams("room-name"));
+			chessGameService.load(chessGame, roomName.getName());
 
 			transfer(chessGame, model);
 			return render(model, "chess.html");
