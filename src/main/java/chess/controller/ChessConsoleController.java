@@ -26,8 +26,8 @@ public class ChessConsoleController {
         chessManager.move(moveCommand.get(1), moveCommand.get(2));
         printBoard(chessManager.getBoard());
 
-        if (!chessManager.isPlaying()) {
-            outputView.printWinner(chessManager.getWinner());
+        if (chessManager.getWinner().isPresent()) {
+            outputView.printWinner(chessManager.getWinner().get());
         }
     }
 

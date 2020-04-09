@@ -23,21 +23,8 @@
 
     <div id="commandUI">
         <div id="current_team">{{currentTeam}}팀 차례입니다.</div>
-        {{#if score}}
-        <div id="chess_score">{{currentTeam}}팀의 현재 점수는 {{score}}점 입니다.</div>
-        {{/if}}
-
-        {{#if winner}}
-        <div id="chess_winner">{{winner}}팀이 우승했습니다. 게임 끝~</div>
-        {{else}}
-
-        {{#if error}}
-        <div id="move_error" class="error">{{error}}</div>
-        {{/if}}
-        <form action="/playing/status" method="post">
-            <button id="status_button" name="status" type="submit">STATUS</button>
-        </form>
-        <br/>
+        {{#if currentTeamScore}}
+        <div id="chess_score">{{currentTeam}}팀의 현재 점수는 {{currentTeamScore}}점 입니다.</div>
         {{/if}}
 
         <form action="/end" method="get">

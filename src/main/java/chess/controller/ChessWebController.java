@@ -1,11 +1,9 @@
 package chess.controller;
 
 import chess.controller.command.Command;
-import chess.controller.dto.ScoreDto;
 import chess.database.ChessCommand;
 import chess.database.ChessCommandDao;
-import chess.domain.piece.Team;
-import chess.web.ChessGameResponse;
+import chess.web.MoveDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
@@ -16,7 +14,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessWebController {
     private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
@@ -24,42 +23,35 @@ public class ChessWebController {
 
     private final ChessCommandDao chessCommandDao = new ChessCommandDao();
     private ChessManager chessManager;
-    private ChessGameResponse chessGameResponse;
+    private MoveDto moveDto;
 
     public void play() {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
-            chessGameResponse = new ChessGameResponse(chessManager);
-            Map<String, Object> model = new HashMap<>();
+            moveDto = new MoveDto(chessManager);
+
             if (!chessCommandDao.selectCommands().isEmpty()) {
-                model.put("haveLastGameRecord", "true");
+                //TODO: 이렇게 하면 안됨. dto따로 만들어줘야 한다......아니면 service에서 조립해서 여기엔 모델만 ㄴ넘겨주기 
+                moveDto.getModel().put("hasLastGameRecord", "true");
             }
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
-            return render(model, "chessGameStart.html");
+            return render(moveDto.getModel(), "chessGameStart.html");
         });
 
         //play last game
         get("/playing/lastGame", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             List<String> commands = chessCommandDao.selectCommands();
 
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
-            return render(model, "chessGame.html");
+            return render(moveDto.getModel(), "chessGame.html");
         });
 
         //play new game
         get("/playing/newGame", (req, res) -> {
             initializeDatabase();
-            Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
-            return render(model, "chessGame.html");
+            return render(moveDto.getModel(), "chessGame.html");
         });
 
         //move source target
@@ -74,30 +66,11 @@ public class ChessWebController {
             } catch (Exception e) {
                 throw new IllegalArgumentException(MOVE_ERROR_MESSAGE);
             }
-            Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
 
             if (!chessManager.isPlaying()) {
-                Team winner = chessManager.getWinner();
-                chessManager.end();
-                model.put("winner", winner);
                 initializeDatabase();
-            } else {
-                model.put("winner", null);
             }
-            return GSON.toJson(model);
-        });
-
-        //TODO: tojson으로 변경
-        post("/playing/status", (req, res) -> {
-            ScoreDto scoreDto = new ScoreDto(chessManager.calculateScore());
-            String score = scoreDto.getScore();
-            Map<String, Object> model = new HashMap<>();
-            model.put("chessPieces", chessGameResponse.getTiles());
-            model.put("currentTeam", chessGameResponse.getCurrentTeam());
-            model.put("score", score);
-            return render(model, "chessGame.html");
+            return GSON.toJson(moveDto.getModel());
         });
 
         //end

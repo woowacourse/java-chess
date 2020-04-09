@@ -10,6 +10,7 @@ for (i = 0; i < tiles.length; i++) {
 }
 
 function checkSourceOrTarget(clickedPosition) {
+    console.log(clickedPosition);
     if (source == null) {
         source = clickedPosition;
         return;
@@ -17,6 +18,7 @@ function checkSourceOrTarget(clickedPosition) {
     if (source === clickedPosition) {
         initializeOpacity(source);
         source = null;
+        return;
     }
     if (target == null) {
         target = clickedPosition;
@@ -46,20 +48,22 @@ function move(source, target) {
             });
         })
         .then(response => {
+            console.log("리스폰스 ");
             console.log(response.body);
             let board = response.body.chessPieces;
             let team = response.body.currentTeam;
+            let currentTeamScore = response.body.currentTeamScore;
             let winner = response.body.winner;
             if (winner != null) {
                 alert(winner + "팀이 이겼습니다.");
                 return;
             }
-            update(board, team);
+            update(board, team, currentTeamScore);
         });
     initialize(source, target);
 }
 
-function update(board, team) {
+function update(board, team, currentTeamScore) {
     for (i = 0; i < board.length; i++) {
         let pieceId = board[i].position.file + board[i].position.rank;
         let piece = document.getElementById(pieceId);
@@ -74,6 +78,9 @@ function update(board, team) {
 
     let currentTeam = document.getElementById("current_team");
     currentTeam.innerText = team + "팀 차례입니다.";
+
+    let score = document.getElementById("chess_score");
+    score.innerText = team + "팀의 현재 점수는 " + currentTeamScore + "점 입니다.";
 }
 
 function changeOpacity(clickedPosition) {

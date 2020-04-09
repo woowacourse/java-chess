@@ -5,6 +5,8 @@ import chess.controller.dto.TileDto;
 import chess.domain.ChessRunner;
 import chess.domain.piece.Team;
 
+import java.util.Optional;
+
 public class ChessManager {
 
     private ChessRunner chessRunner;
@@ -52,7 +54,7 @@ public class ChessManager {
         return chessRunner.getCurrentTeam();
     }
 
-    public Team getWinner() {
-        return chessRunner.findWinner().get();
+    public Optional<Team> getWinner() {
+        return chessRunner.findWinner();
     }
 }
