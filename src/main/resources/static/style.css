@@ -1,0 +1,33 @@
+body{
+	background-image : url(images/background.jpg);
+}
+main {
+	margin: auto;
+	float: center;
+	width: 690px;
+	height: 740px;
+}
+.start_new_game{
+    float: right;
+}
+.chessboard {
+    margin-top: 50px;
+	width: 640px;
+	height: 640px;
+	border: 25px solid #333;
+}
+.cell{
+	float: left;
+	width: 80px;
+	height: 80px;
+	font-size:50px;
+	text-align:center;
+	display: table-cell;
+	vertical-align:middle;
+}
+.gray {
+	background-color: #999;
+}
+.white {
+	background-color: #fff;
+}

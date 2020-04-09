@@ -5,7 +5,6 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.chesspiece.Pawn;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
-import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
 import chess.domain.move.Route;
@@ -15,20 +14,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
 import static chess.domain.chesspiece.ChessPieceInfo.KING;
 import static chess.domain.game.Team.BLACK;
 
 public class Board {
     private static final int DIAGONAL_GAP = 1;
-    private static final int REVERSE_BASE = 9;
     private static final int INDEX_CORRECTION_NUMBER = 1;
+    public static final int MAX_INDEX = 7;
+    public static final int MIN_INDEX = 0;
 
     private List<Row> board;
     private GameStatus gameStatus;
 
-    public Board(List<Row> board, GameStatus gameStatus) {
+    Board(List<Row> board, GameStatus gameStatus) {
         this.board = new ArrayList<>(board);
         this.gameStatus = gameStatus;
     }
@@ -40,6 +38,7 @@ public class Board {
     public void move(MovingInfo movingInfo) {
         ChessPiece chessPiece = getChessPiece(movingInfo.getStartPosition());
 
+        checkGameEnd();
         checkNowPlayingTeam(chessPiece);
         if (gameStatus.getNowPlayingTeam() == BLACK) {
             reverseMove(chessPiece, movingInfo);
@@ -48,8 +47,14 @@ public class Board {
         moveOperation(chessPiece, movingInfo);
     }
 
+    private void checkGameEnd() {
+        if (gameStatus.isGameEnd()) {
+            throw new IllegalArgumentException("King이 죽어서 게임이 종료되었습니다.");
+        }
+    }
+
     private void reverseMove(ChessPiece chessPiece, MovingInfo movingInfo) {
-        movingInfo = reverseMovingInfo(movingInfo);
+        movingInfo = MovingInfo.reverseMovingInfo(movingInfo);
 
         reverseBoard();
         try {
@@ -73,27 +78,10 @@ public class Board {
         }
     }
 
-    private MovingInfo reverseMovingInfo(MovingInfo movingInfo) {
-        Position startPosition = movingInfo.getStartPosition();
-        Position targetPosition = movingInfo.getTargetPosition();
-        Coordinate reverseStartX = reverseCoordinate(startPosition.getX());
-        Coordinate reverseStartY = reverseCoordinate(startPosition.getY());
-        Coordinate reverseTargetX = reverseCoordinate(targetPosition.getX());
-        Coordinate reverseTargetY = reverseCoordinate(targetPosition.getY());
-        Position ReverseStartPosition = Position.of(reverseStartX, reverseStartY);
-        Position ReverseTargetPosition = Position.of(reverseTargetX, reverseTargetY);
-
-        return new MovingInfo(ReverseStartPosition, ReverseTargetPosition);
-    }
-
-    private Coordinate reverseCoordinate(int coordinate) {
-        return Coordinate.of(REVERSE_BASE - coordinate);
-    }
-
     private void reverseBoard() {
         List<Row> reversedBoard = new ArrayList<>();
 
-        for (int i = BOARD_MAX_INDEX; i >= BOARD_MIN_INDEX; i--) {
+        for (int i = Board.MAX_INDEX; i >= Board.MIN_INDEX; i--) {
             Row reversedRow = board.get(i);
             Collections.reverse(reversedRow.getChessPieces());
             reversedBoard.add(reversedRow);
@@ -104,7 +92,7 @@ public class Board {
     private Route findRoute(ChessPiece chessPiece, MovingInfo movingInfo) {
         Position startPosition = movingInfo.getStartPosition();
         Position targetPosition = movingInfo.getTargetPosition();
-        List<Route> allRoute = AllRouteGenerator.getAllRoute(chessPiece, startPosition);
+        List<Route> allRoute = AllRouteGenerator.generateAllRoute(chessPiece, startPosition);
 
         return allRoute.stream()
                 .filter(o -> o.hasPosition(targetPosition))
@@ -155,10 +143,10 @@ public class Board {
         int dy = targetPosition.getY() - startPosition.getY();
 
         if (isDiagonalMovement(dy) && isBlank(targetPosition)) {
-            throw new IllegalArgumentException("대각선으로는 공격할 때만 움직 수 있습니다.");
+            throw new IllegalArgumentException("대각선으로는 공격할 때만 움직일 수 있습니다.");
         }
         if (!isDiagonalMovement(dy) && !isBlank(targetPosition)) {
-            throw new IllegalArgumentException("상대의 말이 있어 움직일 수 없습니다.");
+            throw new IllegalArgumentException("상대의 말이 있어서 움직일 수 없습니다.");
         }
     }
 
@@ -173,6 +161,7 @@ public class Board {
     }
 
     private void executeMove(ChessPiece chessPiece, MovingInfo movingInfo) {
+        updateGameEnd(movingInfo.getTargetPosition());
         clearPosition(movingInfo.getStartPosition());
         setPosition(chessPiece, movingInfo.getTargetPosition());
         gameStatus.changePlayingTeam();
@@ -188,18 +177,20 @@ public class Board {
         board.set(indexOfX, row);
     }
 
-    private void setPosition(ChessPiece chessPiece, Position targetPosition) {
+    public void setPosition(ChessPiece chessPiece, Position targetPosition) {
         int indexOfX = targetPosition.getX() - INDEX_CORRECTION_NUMBER;
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
         Row row = board.get(indexOfX);
 
-        checkGameEnd(row, targetPosition);
         row.modifyRow(indexOfY, chessPiece);
         board.set(indexOfX, row);
     }
 
-    private void checkGameEnd(Row row, Position targetPosition) {
+    private void updateGameEnd(Position targetPosition) {
+        int indexOfX = targetPosition.getX() - INDEX_CORRECTION_NUMBER;
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
+        Row row = board.get(indexOfX);
+        System.out.println(targetPosition.getX() + " , " + targetPosition.getY());
         ChessPiece targetChessPiece = row.get(indexOfY);
         String chessPieceName = targetChessPiece.getName();
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();

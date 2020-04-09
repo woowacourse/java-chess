@@ -14,7 +14,6 @@ public abstract class ChessPiece {
         this.team = team;
     }
 
-
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }

@@ -1,14 +1,15 @@
 package chess;
 
+import chess.controller.ChessGameController;
+
+import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
+
 public class WebUIChessApplication {
-//    public static void main(String[] args) {
-//        get("/", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//            return render(model, "index.html");
-//        });
-//    }
-//
-//    private static String render(Map<String, Object> model, String templatePath) {
-//        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-//    }
+    public static void main(String[] args) {
+        staticFileLocation("/static");
+        post("/new-game", ChessGameController::newGame);
+        post("/continue-game", ChessGameController::continueGame);
+        post("/move", ChessGameController::move);
+    }
 }

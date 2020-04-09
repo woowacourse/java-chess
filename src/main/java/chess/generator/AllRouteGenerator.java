@@ -1,5 +1,6 @@
 package chess.generator;
 
+import chess.domain.board.Board;
 import chess.domain.chesspiece.*;
 import chess.domain.move.Coordinate;
 import chess.domain.move.Direction;
@@ -8,9 +9,6 @@ import chess.domain.move.Route;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static chess.domain.board.BoardInfo.BOARD_MAX_INDEX;
-import static chess.domain.board.BoardInfo.BOARD_MIN_INDEX;
 
 public class AllRouteGenerator {
     private static final int[][] KNIGHT_DIRECTION = {{1, 2}, {1, -2}, {-1, 2}, {-1, -2}, {2, 1}, {2, -1}, {-2, 1}, {-2, -1}};
@@ -21,7 +19,7 @@ public class AllRouteGenerator {
     private AllRouteGenerator() {
     }
 
-    public static List<Route> getAllRoute(ChessPiece chessPiece, Position position) {
+    public static List<Route> generateAllRoute(ChessPiece chessPiece, Position position) {
         List<Route> routes = new ArrayList<>();
 
         if (chessPiece instanceof Knight) {
@@ -49,9 +47,9 @@ public class AllRouteGenerator {
 
     private static void makeRoutes(ChessPiece chessPiece, List<Route> routes, Position initialPosition) {
         Direction[] directions = chessPiece.getMoveDirections();
-        List<Position> positions;
+
         for (Direction direction : directions) {
-            positions = new ArrayList<>();
+            List<Position> positions = new ArrayList<>();
 
             makeRouteByDirection(chessPiece, positions, direction, initialPosition);
             routes.add(new Route(positions));
@@ -59,7 +57,7 @@ public class AllRouteGenerator {
     }
 
     private static List<Route> makeKnightRoute(Position initialPosition) {
-        List<Position> positions;
+        List<Position> positions = new ArrayList<>();
         List<Route> routes = new ArrayList<>();
 
         for (int i = KNIGHT_DIRECTION_MIN; i < KNIGHT_DIRECTION_MAX; i++) {
@@ -120,8 +118,8 @@ public class AllRouteGenerator {
     }
 
     private static boolean validateCoordinate(int x, int y) {
-        boolean xInField = (x - INDEX_CORRECTION_NUMBER >= BOARD_MIN_INDEX && x - INDEX_CORRECTION_NUMBER <= BOARD_MAX_INDEX);
-        boolean yInField = (y - INDEX_CORRECTION_NUMBER >= BOARD_MIN_INDEX && y - INDEX_CORRECTION_NUMBER <= BOARD_MAX_INDEX);
+        boolean xInField = (x - INDEX_CORRECTION_NUMBER >= Board.MIN_INDEX && x - INDEX_CORRECTION_NUMBER <= Board.MAX_INDEX);
+        boolean yInField = (y - INDEX_CORRECTION_NUMBER >= Board.MIN_INDEX && y - INDEX_CORRECTION_NUMBER <= Board.MAX_INDEX);
 
         return xInField && yInField;
     }

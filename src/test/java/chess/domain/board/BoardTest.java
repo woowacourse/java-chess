@@ -6,7 +6,6 @@ import chess.domain.chesspiece.Pawn;
 import chess.domain.move.Coordinate;
 import chess.domain.move.MovingInfo;
 import chess.domain.move.Position;
-import chess.factory.BoardFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -37,7 +36,7 @@ public class BoardTest {
         Board board = BoardFactory.createBoard();
         Position startPosition = Position.of(Coordinate.of(2), Coordinate.of(1));
         Position targetPosition = Position.of(Coordinate.of(4), Coordinate.of(1));
-        MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
+        MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
 
         board.move(movingInfo);
         ChessPiece startChessPiece = board.getBoard().get(2 - CORRECTION_VALUE).get(1 - CORRECTION_VALUE);

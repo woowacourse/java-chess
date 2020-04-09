@@ -12,7 +12,7 @@ public class MovingInfoTest {
         Position startPosition = Position.of(Coordinate.of(2), Coordinate.of(1));
         Position targetPosition = Position.of(Coordinate.of(4), Coordinate.of(1));
 
-        assertThat(new MovingInfo(startPosition, targetPosition)).isInstanceOf(MovingInfo.class);
+        assertThat(MovingInfo.of(startPosition, targetPosition)).isInstanceOf(MovingInfo.class);
     }
 
     @Test
@@ -20,7 +20,7 @@ public class MovingInfoTest {
     void getStartPosition() {
         Position startPosition = Position.of(Coordinate.of(2), Coordinate.of(1));
         Position targetPosition = Position.of(Coordinate.of(4), Coordinate.of(1));
-        MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
+        MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
 
         assertThat(movingInfo.getStartPosition()).isEqualTo(startPosition);
     }
@@ -30,7 +30,7 @@ public class MovingInfoTest {
     void getTargetPosition() {
         Position startPosition = Position.of(Coordinate.of(2), Coordinate.of(1));
         Position targetPosition = Position.of(Coordinate.of(4), Coordinate.of(1));
-        MovingInfo movingInfo = new MovingInfo(startPosition, targetPosition);
+        MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
 
         assertThat(movingInfo.getTargetPosition()).isEqualTo(targetPosition);
     }
