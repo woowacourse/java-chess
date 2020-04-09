@@ -5,7 +5,8 @@ import chess.dto.DestinationPositionDto;
 import chess.dto.MovablePositionsDto;
 import chess.dto.MoveStatusDto;
 import chess.service.ChessWebService;
-import chess.web.NormalStatus;
+import chess.domain.position.MovingPosition;
+import chess.domain.game.NormalStatus;
 import spark.ModelAndView;
 import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.JsonTransformer.json;
+import static chess.web.JsonTransformer.json;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
@@ -68,7 +69,7 @@ public class ChessWebController {
 		Map<String, Object> model = new HashMap<>();
 
 		try {
-			MoveStatusDto moveStatusDto = chessWebService.move(req.queryParams("start"), req.queryParams("end"));
+			MoveStatusDto moveStatusDto = chessWebService.move(new MovingPosition(req.queryParams("start"), req.queryParams("end")));
 
 			model.put("normalStatus", moveStatusDto.getNormalStatus());
 			model.put("winner", moveStatusDto.getWinner());

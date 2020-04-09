@@ -1,7 +1,7 @@
 package chess.dao;
 
+import chess.domain.position.MovingPosition;
 import chess.web.ConnectionManager;
-import chess.web.MovingPosition;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,11 +13,11 @@ import java.util.List;
 public class HistoryDao {
 	private final ConnectionManager connectionManager = new ConnectionManager();
 
-	public void insert(String start, String end) throws SQLException {
+	public void insert(MovingPosition movingPosition) throws SQLException {
 		String query = "INSERT INTO history (start, end) VALUES (?, ?)";
 		try (PreparedStatement pstmt = connectionManager.getConnection().prepareStatement(query)) {
-			pstmt.setString(1, start);
-			pstmt.setString(2, end);
+			pstmt.setString(1, movingPosition.getStart());
+			pstmt.setString(2, movingPosition.getEnd());
 			pstmt.executeUpdate();
 		}
 	}

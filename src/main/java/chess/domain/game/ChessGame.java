@@ -4,10 +4,10 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.pieces.Pieces;
 import chess.domain.piece.pieces.PiecesInitializer;
+import chess.domain.position.MovingPosition;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.positions.Positions;
-import chess.dto.BoardDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,8 +21,8 @@ public class ChessGame {
 		turn = new Turn(Color.WHITE);
 	}
 
-	public void move(Position start, Position end) {
-		pieces.move(start, end, turn.getColor());
+	public void move(MovingPosition movingPosition) {
+		pieces.move(movingPosition.getStartPosition(), movingPosition.getEndPosition(), turn.getColor());
 		turn = turn.change();
 	}
 

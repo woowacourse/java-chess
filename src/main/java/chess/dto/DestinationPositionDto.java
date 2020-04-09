@@ -1,6 +1,6 @@
 package chess.dto;
 
-import chess.web.NormalStatus;
+import chess.domain.game.NormalStatus;
 
 public class DestinationPositionDto {
 	private String position;

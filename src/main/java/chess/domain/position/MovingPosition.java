@@ -1,4 +1,4 @@
-package chess.web;
+package chess.domain.position;
 
 public class MovingPosition {
 	private final String start;
@@ -7,6 +7,18 @@ public class MovingPosition {
 	public MovingPosition(String start, String end) {
 		this.start = start;
 		this.end = end;
+	}
+
+	public boolean isStartAndEndSame() {
+		return start.equals(end);
+	}
+
+	public Position getStartPosition() {
+		return PositionFactory.of(start);
+	}
+
+	public Position getEndPosition() {
+		return PositionFactory.of(end);
 	}
 
 	public String getStart() {

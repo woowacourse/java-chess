@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.web.MovingPosition;
+import chess.domain.position.MovingPosition;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

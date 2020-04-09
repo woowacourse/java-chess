@@ -2,10 +2,9 @@ package chess.service;
 
 import chess.dao.HistoryDao;
 import chess.domain.game.ChessGame;
-import chess.domain.position.PositionFactory;
+import chess.domain.game.NormalStatus;
+import chess.domain.position.MovingPosition;
 import chess.dto.*;
-import chess.web.MovingPosition;
-import chess.web.NormalStatus;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ChessWebService {
 		List<MovingPosition> histories = selectAllHistory();
 
 		for (MovingPosition movingPosition : histories) {
-			chessGame.move(PositionFactory.of(movingPosition.getStart()), PositionFactory.of(movingPosition.getEnd()));
+			chessGame.move(movingPosition);
 		}
 	}
 
@@ -38,15 +37,15 @@ public class ChessWebService {
 		return historyDao.selectAll();
 	}
 
-	public MoveStatusDto move(String start, String end) throws SQLException {
-		if (start.equals(end)) {
+	public MoveStatusDto move(MovingPosition movingPosition) throws SQLException {
+		if (movingPosition.isStartAndEndSame()) {
 			return new MoveStatusDto(NormalStatus.YES.isNormalStatus());
 		}
 
 		ChessGame chessGame = new ChessGame();
 
 		load(chessGame);
-		chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
+		chessGame.move(movingPosition);
 
 		if (chessGame.isKingDead()) {
 			MoveStatusDto moveStatusDto = new MoveStatusDto(NormalStatus.YES.isNormalStatus(), chessGame.getAliveKingColor());
@@ -54,14 +53,14 @@ public class ChessWebService {
 			return moveStatusDto;
 		}
 
-		insertHistory(start, end);
+		insertHistory(movingPosition);
 
 		return new MoveStatusDto(NormalStatus.YES.isNormalStatus());
 	}
 
-	private void insertHistory(String start, String end) throws SQLException {
+	private void insertHistory(MovingPosition movingPosition) throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
-		historyDao.insert(start, end);
+		historyDao.insert(movingPosition);
 	}
 
 	public MovablePositionsDto findMovablePositions(String position) throws SQLException {
