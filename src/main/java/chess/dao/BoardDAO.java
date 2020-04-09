@@ -5,7 +5,6 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.GameStatus;
 import chess.dto.ChessPieceDTO;
 import chess.dto.GameStatusDTO;
-import chess.service.GameService;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -16,10 +15,10 @@ import static chess.dao.ServerInfo.*;
 public class BoardDAO {
     private static BoardDAO instance = new BoardDAO();
 
-    private BoardDAO(){
+    private BoardDAO() {
     }
 
-    public static BoardDAO getInstance(){
+    public static BoardDAO getInstance() {
         return instance;
     }
 

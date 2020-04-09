@@ -161,10 +161,10 @@ public class Board {
     }
 
     private void executeMove(ChessPiece chessPiece, MovingInfo movingInfo) {
+        updateGameEnd(movingInfo.getTargetPosition());
         clearPosition(movingInfo.getStartPosition());
         setPosition(chessPiece, movingInfo.getTargetPosition());
         gameStatus.changePlayingTeam();
-        updateGameEnd(movingInfo.getTargetPosition());
         updateIfPawn(chessPiece);
     }
 
@@ -190,6 +190,7 @@ public class Board {
         int indexOfX = targetPosition.getX() - INDEX_CORRECTION_NUMBER;
         int indexOfY = targetPosition.getY() - INDEX_CORRECTION_NUMBER;
         Row row = board.get(indexOfX);
+        System.out.println(targetPosition.getX() + " , " + targetPosition.getY());
         ChessPiece targetChessPiece = row.get(indexOfY);
         String chessPieceName = targetChessPiece.getName();
         String lowerCaseChessPieceName = chessPieceName.toLowerCase();
