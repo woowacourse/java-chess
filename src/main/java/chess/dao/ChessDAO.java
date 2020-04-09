@@ -49,43 +49,38 @@ public class ChessDAO {
         return con;
     }
 
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
     public void saveGame(BoardStatusDto boardStatusDto) throws SQLException {
         savePieces(boardStatusDto.getPieces());
         saveTurn(boardStatusDto.getTurn());
     }
 
     private void savePieces(Map<String, Piece> pieces) throws SQLException {
-        try (
-                Connection connection = getConnection();
-                PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Pieces");
-        ) {
-            pstmt.executeUpdate();
-        }
-
-        for (Piece piece : pieces.values()) {
-            savePiece(piece);
-        }
-    }
-
-    private void savePiece(Piece piece) throws SQLException {
+        clearPieces();
         String query = "INSERT INTO Pieces (position, representation, team) VALUES (?, ?, ?)";
         try (
                 Connection connection = getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(query);
+                PreparedStatement statement = connection.prepareStatement(query)
         ) {
-            pstmt.setString(1, piece.getPosition().toString());
-            pstmt.setString(2, piece.toString());
-            pstmt.setString(3, piece.getTeam().toString());
-            pstmt.executeUpdate();
+            for (Piece piece : pieces.values()) {
+                addEachPiece(statement, piece);
+            }
+            statement.executeBatch();
+        }
+    }
+
+    private void addEachPiece(PreparedStatement pstmt, Piece piece) throws SQLException {
+        pstmt.setString(1, piece.getPosition().toString());
+        pstmt.setString(2, piece.toString());
+        pstmt.setString(3, piece.getTeam().toString());
+        pstmt.addBatch();
+    }
+
+    private void clearPieces() throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Pieces")
+        ) {
+            statement.executeUpdate();
         }
     }
 
@@ -93,12 +88,12 @@ public class ChessDAO {
         String query = "INSERT INTO Turn (turn) VALUES (?) ON DUPLICATE KEY UPDATE turn=?";
         try (
                 Connection connection = getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(query);
+                PreparedStatement statement = connection.prepareStatement(query)
         ) {
             String team = turn.getTeam().toString();
-            pstmt.setString(1, team);
-            pstmt.setString(2, team);
-            pstmt.executeUpdate();
+            statement.setString(1, team);
+            statement.setString(2, team);
+            statement.executeUpdate();
         }
     }
 
@@ -110,8 +105,8 @@ public class ChessDAO {
         String query = "SELECT * FROM Pieces";
         try (
                 Connection connection = getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(query);
-                ResultSet rs = pstmt.executeQuery();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet rs = statement.executeQuery()
         ) {
             Map<Position, Piece> pieces = new HashMap<>();
             while (rs.next()) {
@@ -131,14 +126,13 @@ public class ChessDAO {
         String query = "SELECT * FROM Turn";
         try (
                 Connection connection = getConnection();
-                PreparedStatement pstmt = connection.prepareStatement(query);
-                ResultSet rs = pstmt.executeQuery();
+                PreparedStatement statement = connection.prepareStatement(query);
+                ResultSet rs = statement.executeQuery()
         ) {
             if (!rs.next()) {
                 return null;
             }
-            Turn turn = new Turn(Team.valueOf(rs.getString("turn")));
-            return turn;
+            return new Turn(Team.valueOf(rs.getString("turn")));
         }
     }
 }

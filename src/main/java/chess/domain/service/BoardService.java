@@ -10,9 +10,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardService {
-    private static final String BLANK = "";
-    private static final String WINNER_ALERT = "이 승리했습니다!";
-
     private Board board = new Board();
 
     public BoardStatusDto getStatus() {
