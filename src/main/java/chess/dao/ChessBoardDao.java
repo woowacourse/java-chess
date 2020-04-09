@@ -53,7 +53,7 @@ public class ChessBoardDao extends DaoTemplate {
 					pieces.add(PieceNameConverter.toPiece(rs.getString("name"), rs.getInt("col"), rs.getInt("row")));
 				}
 				if (pieces.isEmpty()) {
-					throw new IllegalArgumentException("id에 해당하는 정보가 없습니다.");
+					throw new RuntimeException("id에 해당하는 정보가 없습니다.");
 				}
 				return new ChessBoard(pieces);
 			}
