@@ -6,7 +6,7 @@ public enum Team {
     BLACK("Black Team"),
     WHITE("White Team");
 
-    private String teamName;
+    private final String teamName;
 
     Team(String teamName) {
         this.teamName = teamName;

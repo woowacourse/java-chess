@@ -45,9 +45,9 @@ public enum ChessPieceInfo {
     ),
     BLANK(".", 0);
 
-    private String name;
-    private double point;
-    Direction[] moveDirections;
+    private final String name;
+    private final double point;
+    private final Direction[]  moveDirections;
 
     ChessPieceInfo(String name, double point, Direction... moveDirections) {
         this.name = name;

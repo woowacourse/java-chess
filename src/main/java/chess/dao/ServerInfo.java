@@ -7,7 +7,7 @@ public enum ServerInfo {
     USER_NAME("root"),
     PASSWORD("root");
 
-    String info;
+    private final String info;
 
     ServerInfo(String info) {
         this.info = info;
