@@ -45,8 +45,9 @@ public class GameDAO {
 				pstmt.setString(2, piece.getSymbol());
 				pstmt.setString(3, position.getPosition());
 				pstmt.setString(4, piece.getColor().name());
-				pstmt.executeUpdate();
+				pstmt.addBatch();
 			}
+			pstmt.executeBatch();
 		}
 	}
 
