@@ -20,15 +20,15 @@ public class MoveStateService {
         moveStateDAO.deleteMoveStateById(moveStateDTO.getPlayer().getPlayerId());
     }
 
-    public Map<String, String> searchMoveHistory(MoveStateDTO moveStateDTO) throws SQLException {
+    public Map<String, String> searchMoveHistory(String playerId) throws SQLException {
         Map<String, String> moveHistory = new LinkedHashMap<>();
         String source;
         String target;
-        ResultSet resultSet = moveStateDAO.findByPlayerId(moveStateDTO.getPlayer().getPlayerId());
+        ResultSet resultSet = moveStateDAO.findByPlayerId(playerId);
         resultSet.beforeFirst();
         while (resultSet.next()) {
-            source = resultSet.getString("source");
-            target = resultSet.getString("target");
+            source = resultSet.getString("source").toLowerCase();
+            target = resultSet.getString("target").toLowerCase();
             moveHistory.put(source, target);
         }
         return moveHistory;

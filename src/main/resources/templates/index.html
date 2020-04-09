@@ -139,7 +139,7 @@
         우승자 : <label id="winner">BLACK WHITE</label><br>
     </div>
     <div class=selector>
-        <button id="continue" onclick="continueGame()">이어서 하기</button>
+       <button id="continue" onclick="continueGame()">이어서 하기</button>
         <a href="/refresh"><button id="start">다시 시작하기</button></a>
         <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
     </div>
@@ -237,22 +237,28 @@
     }
 
     function trackMove(response) {
-        let pieces = response.split(",");
-        for (let i = 0; i < pieces.size - 1; i++) {
-            let piece = pieces[i];
-            setPiece(piece);
+        alertMessage(response);
+        let pieces = `${response}`.toString().split(" ");
+        alertMessage(pieces);
+        for (let i = 0; i < pieces.size - 1; i=i+2) {
+            const movePiece = pieces[i] + " "+ pieces[i+1];
+            alertMessage(movePiece);
+            setPiece(movePiece);
         }
     }
 
-    function continueGame() {
+    async function continueGame() {
         $.ajax({
-            type: 'GET',
+            type: 'POST',
             async: true,
-            url: "con",
+            url: '/con',
             dataType: 'text',
-            success: trackMove,
-            error: function (request, status, error) {
-                alert("code = " + request.status + " message = " + request.responseText + " error = " + error); // 실패 시 처리
+            success: function (response){
+                let pieces = response.replace("\"","").split(" ");
+                console.log(pieces);
+                for (let i = 0; i < pieces.length - 1; i=i+2) {
+                    setPiece(pieces[i] + " "+ pieces[i+1]);
+                }
             }
         });
     }

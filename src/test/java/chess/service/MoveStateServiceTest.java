@@ -22,13 +22,12 @@ public class MoveStateServiceTest {
         MoveStateService moveStateService = new MoveStateService();
         MoveState moveState = new MoveState(new Player("player"));
         moveState.move("move a2 a3", new ChessBoard("player", Color.WHITE));
-        MoveStateDTO moveStateDTO = new MoveStateDTO(moveState);
 
         Map<String, String> moveHistory = new LinkedHashMap<>();
 
         moveHistory.put("a2", "a3");
         moveHistory.put("a7", "a5");
-        assertThat(moveStateService.searchMoveHistory(moveStateDTO)).isEqualTo(moveHistory);
+        assertThat(moveStateService.searchMoveHistory("player")).isEqualTo(moveHistory);
 
     }
 }

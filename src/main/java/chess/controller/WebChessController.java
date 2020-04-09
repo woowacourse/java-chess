@@ -20,10 +20,10 @@ import static spark.Spark.*;
 
 public class WebChessController implements Controller {
 
-    private final Gson gson = new Gson();
     private ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
     private ChessBoardService chessBoardService = new ChessBoardService();
     private MoveStateService moveStateService = new MoveStateService();
+    private Gson gson = new Gson();
 
     @Override
     public void run() {
@@ -32,19 +32,17 @@ public class WebChessController implements Controller {
             return render(model, "index.html");
         });
 
-        get("/con", (req, res) -> {
+        post("/con", (req, res) -> {
             try {
-                ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
-                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
-
-                Map<String, String> moveStates = moveStateService.searchMoveHistory(moveStateDTO);
-                String moveTrack = null;
+                Map<String, String> moveStates = moveStateService.searchMoveHistory("id");
+                String moveTrack = "";
+                chessBoard = new ChessBoard("id", Color.WHITE);
                 for (Map.Entry<String, String> moveState : moveStates.entrySet()) {
-                    moveTrack = moveState.getKey() + " " + moveState.getValue() + ",";
+                    moveTrack = moveTrack + moveState.getKey() + " " + moveState.getValue() +" ";
                     chessBoard.getMoveState()
                             .move(Square.of(moveState.getKey()), Square.of(moveState.getValue()), chessBoard);
                 }
-                return moveTrack;
+                return gson.toJson(moveTrack);
 
             } catch (Exception e) {
                 res.status(400);
