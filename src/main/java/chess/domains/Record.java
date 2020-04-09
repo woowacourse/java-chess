@@ -3,9 +3,13 @@ package chess.domains;
 public class Record {
     private String record;
     private String errorMsg;
+    private String source;
+    private String target;
 
-    public Record(String record, String errorMsg) {
+    public Record(String record, String source, String target, String errorMsg) {
         this.record = record;
+        this.source = source;
+        this.target = target;
         this.errorMsg = errorMsg;
     }
 
@@ -23,5 +27,13 @@ public class Record {
 
     public void setErrorMsg(String errorMsg) {
         this.errorMsg = errorMsg;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public String getTarget() {
+        return target;
     }
 }

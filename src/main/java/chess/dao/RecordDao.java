@@ -30,11 +30,13 @@ public class RecordDao extends Dao {
         try {
             int number = this.countRecords() + 1;
 
-            String query = "INSERT INTO record VALUES (?, ?, ?)";
+            String query = "INSERT INTO record VALUES (?, ?, ?, ?, ?)";
             PreparedStatement pstmt = getConnection().prepareStatement(query);
             pstmt.setInt(1, number);
             pstmt.setString(2, record.getRecord());
             pstmt.setString(3, record.getErrorMsg());
+            pstmt.setString(4, record.getSource());
+            pstmt.setString(5, record.getTarget());
             pstmt.executeUpdate();
 
             closeConnection(getConnection());
@@ -65,7 +67,8 @@ public class RecordDao extends Dao {
             List<Record> records = new ArrayList<>();
 
             while (rs.next()) {
-                records.add(new Record(rs.getString("record"), rs.getString("errorMsg")));
+                records.add(new Record(rs.getString("record"),
+                        rs.getString("source"), rs.getString("target"), rs.getString("errorMsg")));
             }
             closeConnection(getConnection());
             return records;

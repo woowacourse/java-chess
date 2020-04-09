@@ -22,6 +22,7 @@ public class WebController {
 
     private static final BoardDao boardDAO = new BoardDao();
     private static final RecordDao recordDAO = new RecordDao();
+    public static final String EMPTY_STRING = "";
 
     public static String game(Board board) {
         board.initialize();
@@ -36,7 +37,7 @@ public class WebController {
         boardDAO.addBoard(board.getBoard());
 
         recordDAO.clearRecord();
-        recordDAO.addRecord(new Record(START_COMMAND, ""));
+        recordDAO.addRecord(new Record(START_COMMAND, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
 
         Map<String, Object> model = new HashMap<>();
         model.put("records", recordDAO.readRecords());
@@ -64,7 +65,7 @@ public class WebController {
     }
 
     private static void movePiece(Board board, String source, String target) {
-        Record move = new Record(MOVE_COMMAND + source + " " + target, "");
+        Record move = new Record(MOVE_COMMAND, source, target, "");
 
         try {
             Position sourcePosition = Position.ofPositionName(source);
@@ -97,7 +98,7 @@ public class WebController {
     private static void endGame(Board board) {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
-            recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));
+            recordDAO.addRecord(new Record(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
         }
     }
 
