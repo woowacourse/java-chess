@@ -6,12 +6,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.ChessGame;
-import chess.domain.RoomName;
-import chess.domain.Side;
 import chess.domain.dto.ChessBoardDto;
 import chess.domain.dto.RoomsDto;
 import chess.domain.dto.StatusDto;
-import chess.domain.position.Position;
 import chess.domain.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -25,61 +22,11 @@ public class WebController {
 
 	public void run() {
 		staticFiles.location("/public");
-		ChessGame chessGame = ChessGame.start();
-
 		mainRendering();
-		createRoom(chessGame);
-		joinRoom(chessGame);
-		movePiece(chessGame);
-		restartGame(chessGame);
-	}
-
-	private void createRoom(ChessGame chessGame) {
-		post("/create", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			RoomName roomName = new RoomName(req.queryParams("room-name"));
-			chessGameService.create(chessGame, roomName.getName());
-
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
-	}
-
-	private void joinRoom(ChessGame chessGame) {
-		post("/join", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			RoomName roomName = new RoomName(req.queryParams("room-name"));
-			chessGameService.load(chessGame, roomName.getName());
-
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
-	}
-
-	private void restartGame(ChessGame chessGame) {
-		post("/restart", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			chessGame.restart();
-
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
-	}
-
-	private void movePiece(ChessGame chessGame) {
-		post("/chess", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			try {
-				Position source = new Position(req.queryParams("source"));
-				Position target = new Position(req.queryParams("target"));
-				chessGame.move(source, target);
-				chessGameService.save(chessGame, req.cookie("room-name"));
-			} catch (RuntimeException e) {
-				model.put("error", e.getMessage());
-			}
-			transfer(chessGame, model);
-			return render(model, "chess.html");
-		});
+		createRoom();
+		joinRoom();
+		movePiece();
+		restartGame();
 	}
 
 	private void mainRendering() {
@@ -90,9 +37,52 @@ public class WebController {
 		});
 	}
 
-	private void transfer(ChessGame chessGame, Map<String, Object> model) {
-		model.put("board", ChessBoardDto.of(chessGame.getBoard()));
-		model.put("status", new StatusDto(chessGame.status(Side.WHITE), chessGame.status(Side.BLACK)));
+	private void createRoom() {
+		post("/create", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			ChessGame chessGame = chessGameService.create(req.queryParams("room-name"));
+			putGameInfoToModel(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void joinRoom() {
+		post("/join", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			ChessGame chessGame = chessGameService.load(req.queryParams("room-name"));
+			putGameInfoToModel(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void movePiece() {
+		post("/chess", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			try {
+				ChessGame chessGame = chessGameService.move(
+						req.queryParams("room-name"), req.queryParams("source"), req.queryParams("target"));
+				putGameInfoToModel(chessGame, model);
+			} catch (RuntimeException e) {
+				model.put("error", e.getMessage());
+			}
+			transfer(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void restartGame() {
+		post("/restart", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			ChessGame chessGame = chessGameService.restart(req.queryParams("room-name"));
+			return render(model, "index.html");
+			putGameInfoToModel(chessGame, model);
+			return render(model, "chess.html");
+		});
+	}
+
+	private void putGameInfoToModel(ChessGame chessGame, Map<String, Object> model) {
+		model.put("board", ChessBoardDto.of(chessGame));
+		model.put("status", StatusDto.of(chessGame));
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
