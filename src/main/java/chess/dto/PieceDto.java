@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import java.util.Objects;
 
@@ -23,12 +23,12 @@ public class PieceDto {
 		return new PieceDto(position, piece);
 	}
 
-	public Position getPosition() {
-		return position;
+	public String getPosition() {
+		return position.getValue();
 	}
 
-	public Piece getPiece() {
-		return piece;
+	public String getPiece() {
+		return piece.getName();
 	}
 
 	public String getPositionValue() {

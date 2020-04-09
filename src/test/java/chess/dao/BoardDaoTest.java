@@ -1,4 +1,4 @@
-package chess.domain.dao;
+package chess.dao;
 
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
@@ -8,8 +8,8 @@ import java.sql.SQLException;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.board.PieceFactory;
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Queen;
+import chess.dto.PieceDto;
 
 class BoardDaoTest {
 	@Test

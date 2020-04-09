@@ -132,18 +132,18 @@
     allImages.set("WHITE", '/white.cur');
 
     var allPieces = new Map();
-    {{#each pieces}}
-    allPieces.set("{{@key}}","{{this}}");
-    {{/each}}
+    {{#piecesDto}}
+    allPieces.set("{{position}}","{{piece}}");
+    {{/piecesDto}}
 
     if("{{error}}" !== "") {
         alert("{{error}}");
     }
 
     if("{{scores}}" !== "") {
-        {{#each scores}}
-        document.querySelector("#result").innerHTML += "{{@key}} 의 점수 {{this}} <br>";
-        {{/each}}
+        {{#scores}}
+        document.querySelector("#result").innerHTML += "{{color}} 의 점수 {{score}} <br>";
+        {{/scores}}
     }
 
     if("{{winner}}" !== "") {

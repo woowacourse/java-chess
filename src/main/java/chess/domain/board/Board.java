@@ -1,10 +1,7 @@
 package chess.domain.board;
 
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
@@ -17,11 +14,6 @@ public class Board {
 		this.pieces = pieces;
 	}
 
-	public static Board of(List<PieceDto> pieces) {
-		return new Board(pieces.stream()
-			.collect(Collectors.toMap(PieceDto::getPosition, PieceDto::getPiece)));
-	}
-
 	public boolean isNotEmptyPosition(Position position) {
 		return pieces.get(position) != null;
 	}
@@ -32,7 +24,6 @@ public class Board {
 
 	public void movePiece(Position from, Position to) {
 		Piece target = pieces.remove(from);
-
 		pieces.put(to, target);
 	}
 

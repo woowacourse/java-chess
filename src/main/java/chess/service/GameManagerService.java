@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import chess.dao.BoardDao;
+import chess.dao.TurnDao;
 import chess.domain.GameManager;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.dao.BoardDao;
-import chess.domain.dao.TurnDao;
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
+import chess.dto.PieceDto;
 
 public class GameManagerService {
 	private final BoardDao boardDao;
@@ -24,7 +24,7 @@ public class GameManagerService {
 	}
 
 	public void move(Position targetPosition, Position destination) throws SQLException {
-		Board board = Board.of(boardDao.findAllPieces());
+		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
 
@@ -47,7 +47,7 @@ public class GameManagerService {
 	}
 
 	public Board getBoard() throws SQLException {
-		return Board.of(boardDao.findAllPieces());
+		return new Board(boardDao.findAllPieces());
 	}
 
 	public Color getCurrentTurn() throws SQLException {
@@ -55,7 +55,7 @@ public class GameManagerService {
 	}
 
 	public boolean isKingAlive() throws SQLException {
-		Board board = Board.of(boardDao.findAllPieces());
+		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
 
@@ -63,7 +63,7 @@ public class GameManagerService {
 	}
 
 	public Map<Color, Double> calculateEachScore() throws SQLException {
-		Board board = Board.of(boardDao.findAllPieces());
+		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
 

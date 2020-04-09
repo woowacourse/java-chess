@@ -22,7 +22,7 @@ public class WebUIApplication {
 		get("/start", (request, response) -> {
 			gameManagerService.resetGame();
 			Map<String, Object> model = new HashMap<>();
-			model.put("pieces", WebOutputRenderer.toModel(gameManagerService.getBoard()));
+			model.put("piecesDto", WebOutputRenderer.toPiecesDto(gameManagerService.getBoard()));
 			model.put("turn", gameManagerService.getCurrentTurn().name());
 
 			return render(model, "board.html");
@@ -30,7 +30,7 @@ public class WebUIApplication {
 
 		get("/resume", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("pieces", WebOutputRenderer.toModel(gameManagerService.getBoard()));
+			model.put("piecesDto", WebOutputRenderer.toPiecesDto(gameManagerService.getBoard()));
 			model.put("turn", gameManagerService.getCurrentTurn().name());
 
 			return render(model, "board.html");
@@ -44,7 +44,7 @@ public class WebUIApplication {
 			} catch (RuntimeException e) {
 				model.put("error", e.getMessage());
 			}
-			model.put("pieces", WebOutputRenderer.toModel(gameManagerService.getBoard()));
+			model.put("piecesDto", WebOutputRenderer.toPiecesDto(gameManagerService.getBoard()));
 			model.put("turn", gameManagerService.getCurrentTurn().name());
 
 			if (!gameManagerService.isKingAlive()) {
@@ -57,7 +57,7 @@ public class WebUIApplication {
 
 		get("/status", (request, response) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("pieces", WebOutputRenderer.toModel(gameManagerService.getBoard()));
+			model.put("piecesDto", WebOutputRenderer.toPiecesDto(gameManagerService.getBoard()));
 			model.put("turn", gameManagerService.getCurrentTurn().name());
 			model.put("scores", WebOutputRenderer.scoreToModel(gameManagerService.calculateEachScore()));
 
