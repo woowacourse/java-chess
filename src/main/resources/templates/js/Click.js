@@ -24,6 +24,14 @@ function movePiece(value) {
     resetSourcePosition();
 }
 
+function changeUrl(title, url, state) {
+    if (typeof (history.pushState) != "undefined") {
+        history.pushState(state, title, url);
+    } else {
+        location.href = url; //브라우저가 지원하지 않는 경우 페이지 이동 처리
+    }
+}
+
 function selectDestinationPiece(value) {
     $.ajax({
         type: "post",
@@ -34,7 +42,7 @@ function selectDestinationPiece(value) {
         },
         dataType: "text",
         success: function (data, status, jqXHR) {
-            console.log(status);
+            changeUrl("체스 게임","/chess",{'page_id': 1, 'user_id': 5});
             if (data) {
                 console.log(jqXHR.responseText);
                 alert(data);

@@ -51,6 +51,7 @@ public class WebChessController {
 
 
         post("/move", (req, res) -> {
+             Map<String, Object> model = new HashMap<>();
             ChessPositionDTO chessPositionDTO =
                     new ChessPositionDTO(req.queryParams("source"), req.queryParams("target"));
 
@@ -66,6 +67,7 @@ public class WebChessController {
                 res.status(403);
                 return e.getMessage();
             }
+
         });
 
         post("/status", (req, res) -> {
