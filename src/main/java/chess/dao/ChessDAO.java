@@ -8,171 +8,181 @@ import chess.domain.piece.PieceType;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChessDAO {
-    public Connection getConnection() {
-        Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
 
-        // 드라이버 로딩
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
+    private static final String SERVER = "localhost:13306";
+    private static final String DATABASE = "chess";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "root";
 
-        // 드라이버 연결
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
+    private JDBCTemplate jdbcTemplate = new JDBCTemplate(SERVER, DATABASE, USERNAME, PASSWORD);
 
-        return con;
-    }
+    public long createChessGame(ChessGame chessGame) {
+        PreparedStatementSetter setter = (preparedStatement) -> {
+            preparedStatement.setString(1, chessGame.getTurn().toString());
+        };
 
-    // 드라이버 연결해제
-    public void closeConnection(Connection con) {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
+        ResultSetMapper<Long> mapper = (resultSet) -> {
+            if (resultSet.next()) {
+                return resultSet.getLong(1);
+            }
+            return 0L;
+        };
 
-    public long createChessGame(ChessGame chessGame) throws SQLException {
         String query = "INSERT INTO chessGameTable (turn) VALUES (?)";
-        Connection connection = getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        String turn = chessGame.getTurn().toString();
-        pstmt.setString(1, turn);
-        pstmt.executeUpdate();
-        Long id = getCurrentGameId(connection);
+        Long id;
+        try {
+            id = jdbcTemplate.executeUpdate(query, setter, mapper);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
         addBoard(id, chessGame);
         return id;
     }
 
-    public long getCurrentGameId(Connection connection) throws SQLException {
-        PreparedStatement pstmt = connection.prepareStatement("SELECT MAX(id) as recentId FROM chessGameTable;");
-        ResultSet rs = pstmt.executeQuery();
-        if (!rs.next()) {
-            throw new SQLException();
-        }
-        return rs.getLong("recentId");
+    public void addBoard(long chessGameId, ChessGame chessGame) {
+        deleteBoard(chessGameId);
+        updateTurn(chessGameId, chessGame);
+        insertBoard(chessGameId, chessGame);
     }
 
-    public void addBoard(long chessGameId, ChessGame chessGame) throws SQLException {
-        Connection connection = getConnection();
-
-        deleteBoard(chessGameId, connection);
-        updateTurn(chessGameId, chessGame, connection);
-        insertBoard(chessGameId, chessGame, connection);
-        closeConnection(connection);
-    }
-
-    private void updateTurn(long chessGameId, ChessGame chessGame, Connection connection) throws SQLException {
-        System.out.println(chessGame);
-        String updateTurnQuery = "UPDATE chessGameTable SET turn = ? where id = ?";
-        PreparedStatement updatePstmt = connection.prepareStatement(updateTurnQuery);
-        updatePstmt.setString(1, chessGame.getTurn().toString());
-        updatePstmt.setLong(2, chessGameId);
-        updatePstmt.executeUpdate();
-    }
-
-    private void deleteBoard(final long chessGameId, final Connection connection) throws SQLException {
+    private void deleteBoard(final long chessGameId) {
         String deleteBoardQuery = "DELETE FROM boardTable WHERE gameId = (?)";
-        PreparedStatement deleteBoardPstmt = connection.prepareStatement(deleteBoardQuery);
-        deleteBoardPstmt.setLong(1, chessGameId);
-        deleteBoardPstmt.executeUpdate();
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setLong(1, chessGameId);
+        };
+        try {
+            jdbcTemplate.executeUpdate(deleteBoardQuery, preparedStatementSetter);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
-    public void deleteGame(final long chessGameId) throws SQLException {
-        Connection connection = getConnection();
-        deleteBoard(chessGameId, connection);
-        String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?);";
-        PreparedStatement deleteGamePstmt = connection.prepareStatement(deleteGameQuery);
-        deleteGamePstmt.setLong(1, chessGameId);
-        deleteGamePstmt.executeUpdate();
-        deleteGamePstmt.close();
-
-        String alterGameQuery = "ALTER TABLE chessGameTable AUTO_INCREMENT = ?;";
-        PreparedStatement alterGamePstmt = connection.prepareStatement(alterGameQuery);
-        alterGamePstmt.setInt(1, (int) chessGameId);
-        alterGamePstmt.executeUpdate();
-        alterGamePstmt.close();
-        closeConnection(connection);
+    private void updateTurn(long chessGameId, ChessGame chessGame) {
+        String updateTurnQuery = "UPDATE chessGameTable SET turn = ? where id = ?";
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setString(1, chessGame.getTurn().toString());
+            preparedStatement.setLong(2, chessGameId);
+        };
+        try {
+            jdbcTemplate.executeUpdate(updateTurnQuery, preparedStatementSetter);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
     }
 
-    private void insertBoard(final long chessGameId, final ChessGame chessGame, final Connection connection) throws SQLException {
+    private void insertBoard(final long chessGameId, final ChessGame chessGame) {
         Map<Position, PieceState> board = chessGame.getBoard();
 
-        String query = "INSERT INTO boardTable values ((select id from positionTable where position = ?)," +
-                " (select id from pieceTable where piece = ?), (select id from teamTable where team = ?), ?);";
-        PreparedStatement pstmt;
-        for (Map.Entry<Position, PieceState> entry : board.entrySet()) {
-            String position = entry.getKey().getName();
-            String piece = entry.getValue().getPieceType().toString();
-            String team = entry.getValue().getTeam().toString();
-            pstmt = connection.prepareStatement(query);
-            pstmt.setString(1, position);
-            pstmt.setString(2, piece);
-            pstmt.setString(3, team);
-            pstmt.setLong(4, chessGameId);
-            pstmt.executeUpdate();
+        String query = "INSERT INTO boardTable VALUES ((SELECT id FROM positionTable WHERE position = ?)," +
+                " (SELECT id FROM pieceTable WHERE piece = ?), (SELECT id FROM teamTable WHERE team = ?), ?);";
+        try {
+            for (Map.Entry<Position, PieceState> entry : board.entrySet()) {
+                String position = entry.getKey().getName();
+                String piece = entry.getValue().getPieceType().toString();
+                String team = entry.getValue().getTeam().toString();
+                PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+                    preparedStatement.setString(1, position);
+                    preparedStatement.setString(2, piece);
+                    preparedStatement.setString(3, team);
+                    preparedStatement.setLong(4, chessGameId);
+                };
+                jdbcTemplate.executeUpdate(query, preparedStatementSetter);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+    }
+
+    public void deleteGame(final long chessGameId) {
+        deleteBoard(chessGameId);
+        String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?);";
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setLong(1, chessGameId);
+        };
+        try {
+            jdbcTemplate.executeUpdate(deleteGameQuery, preparedStatementSetter);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
+        }
+
+        String alterGameQuery = "ALTER TABLE chessGameTable AUTO_INCREMENT = ?;";
+        PreparedStatementSetter autoIncrementSetter = preparedStatement -> {
+            preparedStatement.setInt(1, (int) chessGameId);
+        };
+        try {
+            jdbcTemplate.executeUpdate(alterGameQuery, autoIncrementSetter);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
     }
 
 
-    public ChessGame findGameById(long id) throws SQLException {
-        Connection connection = getConnection();
-
-        Map<Position, PieceState> board = getCurrentBoard(id, connection);
-        Turn turn = getCurrentTurn(id, connection);
-        if (turn == null) return null;
-        closeConnection(connection);
-        return new ChessGame(Board.of(board), turn);
+    public ChessGame findGameById(long id) {
+        Board board = getCurrentBoard(id);
+        Turn turn = getCurrentTurn(id);
+        return new ChessGame(board, turn);
     }
 
-    private Map<Position, PieceState> getCurrentBoard(final long id, final Connection connection) throws SQLException {
+    private Board getCurrentBoard(final long id) {
         String query = "SELECT position, piece, team FROM boardTable board " +
                 "inner join positionTable po on po.id=board.positionId " +
                 "inner join pieceTable pi on pi.id=board.pieceId  " +
                 "inner join teamTable team on team.id = board.teamId " +
                 "where gameId = (?);";
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setLong(1, id);
-        ResultSet rs = pstmt.executeQuery();
-        Map<Position, PieceState> board = new HashMap<>();
-        while (rs.next()) {
-            Position position = Position.of(rs.getString("position"));
-            Team team = Team.valueOf(rs.getString("team"));
-            PieceState pieceState = createPieceState(rs.getString("piece"), position, team);
-            board.put(position, pieceState);
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setLong(1, id);
+        };
+
+        ResultSetMapper<Board> resultSetMapper = resultSet -> {
+            Map<Position, PieceState> board = new HashMap<>();
+            while (resultSet.next()) {
+                Position position = Position.of(resultSet.getString("position"));
+                Team team = Team.valueOf(resultSet.getString("team"));
+                PieceState pieceState = createPieceState(resultSet.getString("piece"), position, team);
+                board.put(position, pieceState);
+            }
+            return Board.of(board);
+        };
+
+        try {
+            return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
-        return board;
     }
 
-    private Turn getCurrentTurn(final long id, final Connection connection) throws SQLException {
-        final ResultSet rs;
-        String getTurnQuery = "SELECT turn from chessGameTable where id = (?);";
-        PreparedStatement pstmt2 = connection.prepareStatement(getTurnQuery);
-        pstmt2.setLong(1, id);
-        rs = pstmt2.executeQuery();
-        if (!rs.next()) {
-            return null;
+    private Turn getCurrentTurn(final long id) {
+        String query = "SELECT turn FROM chessGameTable WHERE id = ?;";
+        PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
+            preparedStatement.setLong(1, id);
+        };
+        ResultSetMapper<Turn> resultSetMapper = resultSet -> {
+            if (resultSet.next()) {
+                String team = resultSet.getString("turn");
+                return Turn.from(Team.valueOf(team));
+            }
+            throw new IllegalArgumentException("턴 정보가 없습니다.");
+        };
+        try {
+            return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
-        Turn turn = Turn.from(Team.valueOf(rs.getString("turn")));
-        return turn;
     }
 
     private PieceState createPieceState(final String piece, final Position position, final Team team) {
@@ -180,23 +190,20 @@ public class ChessDAO {
         return type.apply(position, team);
     }
 
-    public List<Long> getRoomId() throws SQLException {
-        Connection connection = getConnection();
+    public List<Long> getRoomId() {
         String query = "SELECT id FROM chessGameTable";
-        List<Long> roomId = new ArrayList<>();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
-        while (rs.next()) {
-            roomId.add(rs.getLong("id"));
+        ResultSetMapper<List<Long>> resultSetMapper = resultSet -> {
+            List<Long> roomIds = new ArrayList<>();
+            while (resultSet.next()) {
+                roomIds.add(resultSet.getLong("id"));
+            }
+            return roomIds;
+        };
+        try {
+            return jdbcTemplate.executeQuery(query, resultSetMapper);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+            throw new RuntimeException();
         }
-        if (rs != null) {
-            rs.close();
-        }
-        if (pstmt != null) {
-            pstmt.close();
-        }
-        pstmt.close();
-        closeConnection(connection);
-        return Collections.unmodifiableList(roomId);
     }
 }

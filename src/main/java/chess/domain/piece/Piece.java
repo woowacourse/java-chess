@@ -22,11 +22,6 @@ public abstract class Piece implements PieceState {
     }
 
     @Override
-    public List<Position> getMovablePositions() {
-        return moveStrategy.getMovablePositionsWithoutObstacles(position);
-    }
-
-    @Override
     public PieceState move(Position target, BoardSituation boardSituation) {
         List<Position> positions = getMovablePositions(boardSituation);
         if (!positions.contains(target)) {

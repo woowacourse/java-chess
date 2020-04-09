@@ -1,6 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.piece.implementation.piece.*;
+import chess.domain.piece.implementation.piece.Bishop;
+import chess.domain.piece.implementation.piece.King;
+import chess.domain.piece.implementation.piece.Knight;
+import chess.domain.piece.implementation.piece.Pawn;
+import chess.domain.piece.implementation.piece.Queen;
+import chess.domain.piece.implementation.piece.Rook;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 

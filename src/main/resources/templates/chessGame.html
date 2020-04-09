@@ -122,7 +122,7 @@
         </div>
         <div class="buttons">
             <div class="restart-button">
-                <form action="/restartChessGame" method="post">
+                <form action="/restart" method="post">
                     <input hidden="hidden" name="command" type="text" value="start">
                     <input hidden="hidden" name="parameter" type="text" value="new">
                     <input hidden="hidden" name="id" type="text" value="{{id}}">
@@ -130,7 +130,7 @@
                 </form>
             </div>
             <div class="save-button">
-                <form action="/end" method="post">
+                <form action="/save" method="post">
                     <input hidden="hidden" name="command" type="text" value="end">
                     <input hidden="hidden" name="parameter" type="text" value="save">
                     <input hidden="hidden" name="id" type="text" value="{{id}}">
@@ -193,6 +193,7 @@
     {{/if}}
     document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
 
+
 </script>
 
 <script>
@@ -215,6 +216,20 @@
             if (params == "") {
                 params += pieceCell.item(i).getAttribute("id");
                 params += "_";
+                let id = document.getElementById("chessGameId");
+                fetch("/movable/" + id.innerText.trim() + "/" + pieceCell.item(i).getAttribute("id"))
+                    .then(response => response.text())
+                    .then(positionText => positionText.split(","))
+                    .then(positions => {
+                        positions.forEach(position => {
+                            let cell = document.getElementById(position);
+                            cell.innerText = "여기";
+                        })
+                    })
+                    .catch(error => {
+                        alert(error.toString());
+                        location.reload();
+                    });
             } else {
                 params += pieceCell.item(i).getAttribute("id");
                 let method = "post";

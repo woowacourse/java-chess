@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface MoveStrategy {
 
-    List<Position> getMovablePositionsWithoutObstacles(Position source);
-
     List<Position> getMovablePositions(Position source, BoardSituation boardSituation);
 
 }

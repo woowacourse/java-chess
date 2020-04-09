@@ -9,7 +9,12 @@ import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static spark.Spark.get;
@@ -28,7 +33,7 @@ public class ChessWebController {
             return render(model, "create.html");
         });
 
-        post("/restartChessGame", (req, res) -> {
+        post("/restart", (req, res) -> {
             String number = req.queryParams("id").trim();
             Long id = Long.valueOf(number);
             chessService.restart(id);
@@ -44,7 +49,7 @@ public class ChessWebController {
             return render(model, "chessGame.html");
         });
 
-        post("/loadChessGame", (req, res) -> {
+        post("/load", (req, res) -> {
             String number = req.queryParams("id").trim();
             Long id = Long.valueOf(number);
             chessService.load(id);
@@ -85,11 +90,20 @@ public class ChessWebController {
             return render(model, "chessGame.html");
         });
 
+        post("/save", (req, res) -> {
+            String number = req.queryParams("id").trim();
+            Long id = Long.valueOf(number);
+            chessService.save(id);
+            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", roomDto);
+            return render(model, "index.html");
+        });
+
         post("/end", (req, res) -> {
             String number = req.queryParams("id").trim();
             Long id = Long.valueOf(number);
-            List<String> parameters = new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_")));
-            chessService.end(id, parameters);
+            chessService.remove(id);
             List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
             Map<String, Object> model = new HashMap<>();
             model.put("roomId", roomDto);
@@ -103,6 +117,12 @@ public class ChessWebController {
             return render(model, "index.html");
         });
 
+        get("/movable/:id/:position", (req, res) -> {
+            Long id = Long.valueOf(req.params(":id"));
+            Position position = Position.of(req.params(":position"));
+            List<Position> positions = chessService.getMovablePositions(id, position);
+            return positions.stream().map(Position::getName).collect(Collectors.joining(","));
+        });
 
     }
 

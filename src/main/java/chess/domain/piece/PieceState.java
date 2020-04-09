@@ -12,8 +12,6 @@ public interface PieceState {
 
     List<Position> getMovablePositions(BoardSituation boardSituation);
 
-    List<Position> getMovablePositions();
-
     PieceType getPieceType();
 
     Team getTeam();

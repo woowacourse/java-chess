@@ -8,6 +8,7 @@ import chess.domain.player.Team;
 import chess.domain.position.Position;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
@@ -32,6 +33,10 @@ public class ChessGame {
             return;
         }
         throw new UnsupportedOperationException("게임이 종료 되었습니다.");
+    }
+
+    public List<Position> getMovablePositions(Position source) {
+        return board.getMovablePositions(source, turn);
     }
 
     public Map<Position, PieceState> getBoard() {

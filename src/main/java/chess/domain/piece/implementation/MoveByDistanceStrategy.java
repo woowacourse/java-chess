@@ -20,14 +20,6 @@ public abstract class MoveByDistanceStrategy implements MoveStrategy {
     }
 
     @Override
-    public List<Position> getMovablePositionsWithoutObstacles(Position source) {
-        return directions.stream()
-                .filter(source::canMoveBy)
-                .map(source::moveByDirection)
-                .collect(Collectors.toList());
-    }
-
-    @Override
     public List<Position> getMovablePositions(Position source, BoardSituation boardSituation) {
         return directions.stream()
                 .filter(source::canMoveBy)

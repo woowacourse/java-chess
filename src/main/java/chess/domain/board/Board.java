@@ -33,9 +33,15 @@ public class Board {
     public void move(Position source, Position target, Turn turn) {
         PieceState sourcePiece = board.get(source);
         validateSource(sourcePiece, turn);
-        PieceState piece = sourcePiece.move(target, getBoardState(sourcePiece));
+        PieceState piece = sourcePiece.move(target, getBoardState());
         board.remove(source);
         board.put(target, piece);
+    }
+
+    public List<Position> getMovablePositions(Position source, Turn turn) {
+        PieceState sourcePiece = board.get(source);
+        validateTurn(sourcePiece, turn);
+        return sourcePiece.getMovablePositions(getBoardState());
     }
 
     public boolean isEnd() {
@@ -92,17 +98,6 @@ public class Board {
                         entry -> entry.getKey(),
                         entry -> entry.getValue().getTeam())
                 );
-        return BoardSituation.of(boardState);
-    }
-
-    private BoardSituation getBoardState(PieceState sourcePiece) {
-        List<Position> positions = sourcePiece.getMovablePositions();
-        Map<Position, Team> boardState = positions.stream()
-                .filter(board::containsKey)
-                .collect(Collectors.toMap(
-                        position -> position,
-                        position -> board.get(position).getTeam()
-                ));
         return BoardSituation.of(boardState);
     }
 }
