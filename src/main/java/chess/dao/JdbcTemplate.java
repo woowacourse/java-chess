@@ -32,7 +32,6 @@ public class JdbcTemplate {
         try {
             con = ConnectionManager.getConnection();
             statement = con.prepareStatement(sql);
-            // pss.setParameters(statement);
             rs = statement.executeQuery();
             return rm.mapRow(rs);
         } finally {
