@@ -4,7 +4,6 @@ import com.google.gson.JsonObject;
 import dao.PiecesDAO;
 import dao.TurnDAO;
 import domain.commend.State;
-import domain.pieces.DBPiecesFactory;
 import domain.pieces.Pieces;
 import domain.pieces.PiecesFactory;
 import domain.team.Team;
@@ -42,7 +41,7 @@ public class ChessService {
 
     private Map<String, Object> getWhenStateIsNull(PiecesDAO piecesDAO) throws SQLException {
         if (piecesDAO.isSave()) {
-            Pieces pieces = Pieces.of(DBPiecesFactory.create(piecesDAO.readPieces()));
+            Pieces pieces = Pieces.of(piecesDAO);
             state = State.of(pieces);
             state.start();
             return piecesDAO.readPieces();

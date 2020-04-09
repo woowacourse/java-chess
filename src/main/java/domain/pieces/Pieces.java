@@ -2,10 +2,12 @@ package domain.pieces;
 
 import static domain.team.Team.NONE;
 
+import dao.PiecesDAO;
 import domain.pieces.exceptions.IsNotMovableException;
 import domain.point.Point;
 import domain.point.MovePoint;
 import domain.team.Team;
+import java.sql.SQLException;
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -19,6 +21,16 @@ public class Pieces {
     }
 
     public static Pieces of(Map<Point, Piece> pieces) {
+        return new Pieces(pieces);
+    }
+
+    public static Pieces of(PiecesDAO piecesDAO) throws SQLException {
+        Map<Point, Piece> pieces = new LinkedHashMap<>();
+        Map<String, Object> pieceDBData = piecesDAO.readPieces();
+        for (String point : pieceDBData.keySet()) {
+            PiecesType piecesType = PiecesType.findPiece((String) pieceDBData.get(point));
+            pieces.put(Point.of(point), piecesType.createPiece((String) pieceDBData.get(point)));
+        }
         return new Pieces(pieces);
     }
 
