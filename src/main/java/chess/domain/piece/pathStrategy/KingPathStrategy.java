@@ -13,10 +13,9 @@ public class KingPathStrategy implements PathStrategy {
 
     @Override
     public void validateDistance(Position sourcePosition, Position targetPosition) {
-        int xPointGap = sourcePosition.getXPointGap(targetPosition);
-        int yPointGap = sourcePosition.getYPointGap(targetPosition);
+        validateNull(sourcePosition, targetPosition);
 
-        if (MAX_DISTANCE < Math.abs(xPointGap) || MAX_DISTANCE < Math.abs(yPointGap)) {
+        if (sourcePosition.isBiggerGapWith(targetPosition, MAX_DISTANCE)) {
             throw new NotMovableException(String.format("지정한 위치 %s는 킹이 이동할 수 없는 곳입니다.", targetPosition.getName()));
         }
     }

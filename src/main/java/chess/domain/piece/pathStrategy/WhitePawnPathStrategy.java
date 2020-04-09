@@ -21,32 +21,37 @@ public class WhitePawnPathStrategy implements PathStrategy {
 
     @Override
     public void validateDistance(Position sourcePosition, Position targetPosition) {
-        int xPointGap = sourcePosition.getXPointGap(targetPosition);
-        int yPointGap = sourcePosition.getYPointGap(targetPosition);
-
         if (sourcePosition.isYPointEqualsTwo()) {
-            if (isInvalidForwardPosition(xPointGap, yPointGap) && isInvalidDiagonalPosition(xPointGap, yPointGap)) {
+            if (isInvalidForwardPosition(sourcePosition, targetPosition) && isInvalidDiagonalPosition(sourcePosition,
+                                                                                                      targetPosition)) {
                 throw new NotMovableException(String.format("지정한 위치 %s는 하얀색 폰이 이동할 수 없는 곳입니다.",
                                                             targetPosition.getName()));
             }
         } else {
-            if (isInvalidXPointGap(xPointGap) || yPointGap != FORWARD_MIN_DISTANCE) {
+            if (isInvalidXPointGap(sourcePosition, targetPosition) || !sourcePosition.hasYGap(targetPosition,
+                                                                                              FORWARD_MIN_DISTANCE)) {
                 throw new NotMovableException(String.format("지정한 위치 %s는 하얀색 폰이 이동할 수 없는 곳입니다.",
                                                             targetPosition.getName()));
             }
         }
     }
 
-    private boolean isInvalidForwardPosition(int xPointGap, int yPointGap) {
-        return !(xPointGap == NO_DISTANCE && (yPointGap == FORWARD_MIN_DISTANCE || yPointGap == FORWARD_MAX_DISTANCE));
+    private boolean isInvalidForwardPosition(Position sourcePosition, Position targetPosition) {
+        return !(sourcePosition.hasXGap(targetPosition, NO_DISTANCE) &&
+                (sourcePosition.hasYGap(targetPosition, FORWARD_MIN_DISTANCE) ||
+                        (sourcePosition.hasYGap(targetPosition, FORWARD_MAX_DISTANCE))));
     }
 
-    private boolean isInvalidDiagonalPosition(int xPointGap, int yPointGap) {
-        return !((xPointGap == RIGHT_MAX_DISTANCE || xPointGap == LEFT_MAX_DISTANCE) && yPointGap == FORWARD_MIN_DISTANCE);
+    private boolean isInvalidDiagonalPosition(Position sourcePosition, Position targetPosition) {
+        return !((sourcePosition.hasXGap(targetPosition, RIGHT_MAX_DISTANCE) ||
+                sourcePosition.hasXGap(targetPosition, LEFT_MAX_DISTANCE) &&
+                        (sourcePosition.hasYGap(targetPosition, FORWARD_MIN_DISTANCE))));
     }
 
-    private boolean isInvalidXPointGap(int xPointGap) {
-        return !(xPointGap == NO_DISTANCE || xPointGap == LEFT_MAX_DISTANCE || xPointGap == RIGHT_MAX_DISTANCE);
+    private boolean isInvalidXPointGap(Position sourcePosition, Position targetPosition) {
+        return !(sourcePosition.hasXGap(targetPosition, NO_DISTANCE) ||
+                sourcePosition.hasXGap(targetPosition, LEFT_MAX_DISTANCE) ||
+                sourcePosition.hasXGap(targetPosition, RIGHT_MAX_DISTANCE));
     }
 
     @Override

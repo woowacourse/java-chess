@@ -26,11 +26,11 @@ public class Position {
         this.yPoint = Ypoint.of(Integer.parseInt(String.valueOf(position.charAt(1))));
     }
 
-    public int getXPointGap(Position targetPosition) {
+    private int getXPointGap(Position targetPosition) {
         return targetPosition.xPoint.getGapValue(this.xPoint);
     }
 
-    public int getYPointGap(Position targetPosition) {
+    private int getYPointGap(Position targetPosition) {
         return targetPosition.yPoint.getGapValue(this.yPoint);
     }
 
@@ -77,6 +77,26 @@ public class Position {
 
     public String getName() {
         return this.xPoint.getName() + this.yPoint.getName();
+    }
+
+    public boolean isNotSameXYGapWith(Position targetPosition) {
+        return Math.abs(getXPointGap(targetPosition)) != Math.abs(getYPointGap(targetPosition));
+    }
+
+    public boolean hasXGap(Position targetPosition, int distance) {
+        return getXPointGap(targetPosition) == distance;
+    }
+
+    public boolean hasYGap(Position targetPosition, int distance) {
+        return getYPointGap(targetPosition) == distance;
+    }
+
+    public boolean isBiggerGapWith(Position targetPosition, int distance) {
+        return distance < Math.abs(getXPointGap(targetPosition)) || distance < Math.abs(getYPointGap(targetPosition));
+    }
+
+    public int getXYGapSum(Position targetPosition) {
+        return Math.abs(getXPointGap(targetPosition)) + Math.abs(getYPointGap(targetPosition));
     }
 
     @Override

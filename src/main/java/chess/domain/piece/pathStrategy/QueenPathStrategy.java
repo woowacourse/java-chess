@@ -15,11 +15,8 @@ public class QueenPathStrategy implements PathStrategy {
     public void validateDistance(Position sourcePosition, Position targetPosition) {
         validateNull(sourcePosition, targetPosition);
 
-        int xPointGap = sourcePosition.getXPointGap(targetPosition);
-        int yPointGap = sourcePosition.getYPointGap(targetPosition);
-
         if (sourcePosition.isDifferentXPoint(targetPosition) && sourcePosition.isDifferentYPoint(targetPosition)
-                && (Math.abs(xPointGap) != Math.abs(yPointGap))) {
+                && sourcePosition.isNotSameXYGapWith(targetPosition)) {
             throw new NotMovableException(String.format("지정한 위치 %s는 퀸이 이동할 수 없는 곳입니다.", targetPosition.getName()));
         }
     }

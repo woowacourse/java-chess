@@ -13,10 +13,9 @@ public class KnightPathStrategy implements PathStrategy {
 
     @Override
     public void validateDistance(Position sourcePosition, Position targetPosition) {
-        int xPointGap = sourcePosition.getXPointGap(targetPosition);
-        int yPointGap = sourcePosition.getYPointGap(targetPosition);
-        int gapSum = Math.abs(xPointGap) + Math.abs(yPointGap);
+        validateNull(sourcePosition, targetPosition);
 
+        int gapSum = sourcePosition.getXYGapSum(targetPosition);
         if (gapSum != MOVABLE_DISTANCE_SUM) {
             throw new NotMovableException(String.format("지정한 위치 %s는 나이트가 이동할 수 없는 곳입니다.", targetPosition.getName()));
         }
