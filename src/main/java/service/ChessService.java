@@ -56,9 +56,6 @@ public class ChessService {
     }
 
     public ScoreDTO status() {
-//        JsonObject object = new JsonObject();
-//        object.addProperty("team", state.getPresentTurn().toString());
-//        object.addProperty("status", state.status());
         return new ScoreDTO(state.getPresentTurn().toString(), state.status());
     }
 
