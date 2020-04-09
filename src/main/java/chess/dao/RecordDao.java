@@ -9,52 +9,68 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RecordDao extends Dao {
-    public int countRecords() throws SQLException, ClassNotFoundException {
-        int recordCount = 0;
-        String query = "SELECT COUNT(*) FROM  record;";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+    public int countRecords() {
+        try {
+            int recordCount = 0;
+            String query = "SELECT COUNT(*) FROM  record;";
+            PreparedStatement pstmt = getConnection().prepareStatement(query);
+            ResultSet rs = pstmt.executeQuery();
 
-        if (rs.next()) {
-            recordCount = rs.getInt(1);
+            if (rs.next()) {
+                recordCount = rs.getInt(1);
+            }
+            closeConnection(getConnection());
+            return recordCount;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
-        closeConnection(getConnection());
-        return recordCount;
     }
 
-    public void addRecord(Record record) throws SQLException, ClassNotFoundException {
-        int number = this.countRecords() + 1;
+    public void addRecord(Record record) {
+        try {
+            int number = this.countRecords() + 1;
 
-        String query = "INSERT INTO record VALUES (?, ?, ?)";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-        pstmt.setInt(1, number);
-        pstmt.setString(2, record.getRecord());
-        pstmt.setString(3, record.getErrorMsg());
-        pstmt.executeUpdate();
+            String query = "INSERT INTO record VALUES (?, ?, ?)";
+            PreparedStatement pstmt = getConnection().prepareStatement(query);
+            pstmt.setInt(1, number);
+            pstmt.setString(2, record.getRecord());
+            pstmt.setString(3, record.getErrorMsg());
+            pstmt.executeUpdate();
 
-        closeConnection(getConnection());
-    }
-
-    public void clearRecord() throws SQLException, ClassNotFoundException {
-        String query = "TRUNCATE record";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-
-        pstmt.executeUpdate();
-        closeConnection(getConnection());
-    }
-
-    public List<Record> readRecords() throws SQLException, ClassNotFoundException {
-        String query = "SELECT * FROM record";
-        PreparedStatement pstmt = getConnection().prepareStatement(query);
-
-        ResultSet rs = pstmt.executeQuery();
-
-        List<Record> records = new ArrayList<>();
-
-        while (rs.next()) {
-            records.add(new Record(rs.getString("record"), rs.getString("errorMsg")));
+            closeConnection(getConnection());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
         }
-        closeConnection(getConnection());
-        return records;
+    }
+
+    public void clearRecord() {
+        try {
+            String query = "TRUNCATE record";
+            PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+            pstmt.executeUpdate();
+            closeConnection(getConnection());
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
+    }
+
+    public List<Record> readRecords() {
+        try {
+            String query = "SELECT * FROM record";
+            PreparedStatement pstmt = getConnection().prepareStatement(query);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            List<Record> records = new ArrayList<>();
+
+            while (rs.next()) {
+                records.add(new Record(rs.getString("record"), rs.getString("errorMsg")));
+            }
+            closeConnection(getConnection());
+            return records;
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
     }
 }

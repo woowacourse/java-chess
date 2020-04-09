@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Dao {
-    public Connection getConnection() throws SQLException, ClassNotFoundException {
+    public Connection getConnection() {
         Connection con = null;
         String server = "localhost:3306"; // MySQL 서버 주소
         String database = "board"; // MySQL DATABASE 이름
@@ -14,18 +14,31 @@ public class Dao {
         String password = "hwangbo"; // MySQL 서버 비밀번호
 
         // 드라이버 로딩
-        Class.forName("com.mysql.cj.jdbc.Driver");
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
+            e.printStackTrace();
+        }
 
         // 드라이버 연결
-        con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-        System.out.println("정상적으로 연결되었습니다.");
+        try {
+            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            System.out.println("정상적으로 연결되었습니다.");
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
 
         return con;
     }
 
     // 드라이버 연결해제
-    public void closeConnection(Connection con) throws SQLException {
-        if (con != null)
-            con.close();
+    public void closeConnection(Connection con) {
+        try {
+            if (con != null)
+                con.close();
+        } catch (SQLException e) {
+            throw new DataAccessException(e.getMessage());
+        }
     }
 }

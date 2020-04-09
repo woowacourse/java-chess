@@ -9,7 +9,6 @@ import chess.domains.position.Position;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -30,7 +29,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    public static String startGame(Board board) throws SQLException, ClassNotFoundException {
+    public static String startGame(Board board) {
         board.initialize();
 
         boardDAO.clearBoard();
@@ -49,7 +48,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    public static String move(Board board, String source, String target) throws SQLException, ClassNotFoundException {
+    public static String move(Board board, String source, String target) {
         movePiece(board, source, target);
         endGame(board);
 
@@ -64,7 +63,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    private static void movePiece(Board board, String source, String target) throws SQLException, ClassNotFoundException {
+    private static void movePiece(Board board, String source, String target) {
         Record move = new Record(MOVE_COMMAND + source + " " + target, "");
 
         try {
@@ -80,7 +79,7 @@ public class WebController {
         recordDAO.addRecord(move);
     }
 
-    public static String resumeGame(Board board) throws SQLException, ClassNotFoundException {
+    public static String resumeGame(Board board) {
         board.initialize();
         List<Record> records = recordDAO.readRecords();
         board.recoverRecords(records);
@@ -95,7 +94,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    private static void endGame(Board board) throws SQLException, ClassNotFoundException {
+    private static void endGame(Board board) {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
             recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));
