@@ -46,16 +46,13 @@ public class WebUIChessApplication {
 		});
 
 		Spark.post("/chess/rooms", (request, response) -> {
-			final String requestType = request.queryParams("selection");
 			final String roomName = request.queryParams("room_name");
+			return responseToEnterOrCreateRoom(response, roomName);
+		});
 
-			if (requestType.equals("enter_or_create")) {
-				return responseToEnterOrCreateRoom(response, roomName);
-			}
-			if (requestType.equals("delete")) {
-				return responseToDeleteRoom(response, roomName);
-			}
-			return "";
+		Spark.delete("/chess/rooms", (request, response) -> {
+			final String roomName = request.queryParams("room_name");
+			return responseToDeleteRoom(response, roomName);
 		});
 
 		Spark.get("/chess/rooms/:id", (request, response) -> {
