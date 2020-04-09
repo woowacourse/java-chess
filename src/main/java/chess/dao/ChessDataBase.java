@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessDataBase implements ChessBoardDao {
-    public void addPiece(Piece piece) throws SQLException {
+    public void addPiece(Piece piece) {
         String query = "INSERT INTO chess(name,xposition,yposition,team) VALUES (?, ?, ?, ?)";
         try (Connection connection = Connector.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)
