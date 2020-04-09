@@ -31,6 +31,26 @@ public class BoardDaoImpl implements BoardDao {
 		}));
 	}
 
+	@Override
+	public Board getBoard() {
+		String query = "SELECT * FROM board";
+		return jdbcTemplate.query(query, resultSet -> {
+			Map<Coordinates, Piece> pieces = new HashMap<>();
+			while (resultSet.next()) {
+				Coordinates coordinates = Coordinates.of(resultSet.getString(1));
+				Piece piece = PieceFactory.createByName(resultSet.getString(2));
+				pieces.put(coordinates, piece);
+			}
+			return new Board(pieces);
+		});
+	}
+
+	@Override
+	public void deleteBoard() {
+		String query = "DELETE FROM board";
+		jdbcTemplate.update(query);
+	}
+
 	private void prepareInsertStatements(List<Cell> cells, PreparedStatement preparedStatement) throws SQLException {
 		for (Cell cell : cells) {
 			preparedStatement.setString(1, cell.getCoordinatesName());
@@ -49,20 +69,6 @@ public class BoardDaoImpl implements BoardDao {
 	}
 
 	@Override
-	public Board getBoard() {
-		String query = "SELECT * FROM board";
-		return jdbcTemplate.query(query, resultSet -> {
-			Map<Coordinates, Piece> pieces = new HashMap<>();
-			while (resultSet.next()) {
-				Coordinates coordinates = Coordinates.of(resultSet.getString(1));
-				Piece piece = PieceFactory.createByName(resultSet.getString(2));
-				pieces.put(coordinates, piece);
-			}
-			return new Board(pieces);
-		});
-	}
-
-	@Override
 	public void insertOrUpdatePieceBy(Coordinates coordinates, Piece piece) {
 		String query = "INSERT INTO board VALUES(?, ?) ON DUPLICATE KEY UPDATE piece_type=(?)";
 		jdbcTemplate.update(query, preparedStatement -> {
@@ -70,12 +76,6 @@ public class BoardDaoImpl implements BoardDao {
 			preparedStatement.setString(2, PieceNameConverter.toPieceType(piece));
 			preparedStatement.setString(3, PieceNameConverter.toPieceType(piece));
 		});
-	}
-
-	@Override
-	public void deleteBoard() {
-		String query = "DELETE FROM board";
-		jdbcTemplate.update(query);
 	}
 
 	@Override
