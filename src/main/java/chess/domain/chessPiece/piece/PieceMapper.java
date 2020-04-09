@@ -8,7 +8,7 @@ import chess.domain.chessPiece.team.WhiteTeam;
 import java.util.Arrays;
 import java.util.function.BiFunction;
 
-public enum PieceCreator {
+public enum PieceMapper {
 	PAWN("p", (position, team) -> {
 		return new Pawn(Position.of(position), team);
 	}), ROOK("r", (position, team) -> {
@@ -28,14 +28,14 @@ public enum PieceCreator {
 	private final String name;
 	private final BiFunction<String, TeamStrategy, Piece> creator;
 
-	PieceCreator(final String name, final BiFunction<String, TeamStrategy, Piece> creator) {
+	PieceMapper(final String name, final BiFunction<String, TeamStrategy, Piece> creator) {
 		this.name = name;
 		this.creator = creator;
 	}
 
 	public static Piece create(final String pieceType, final String position) {
 		TeamStrategy team = findTeam(pieceType);
-		return Arrays.stream(PieceCreator.values())
+		return Arrays.stream(PieceMapper.values())
 				.filter(x -> x.name.equalsIgnoreCase(pieceType))
 				.map(x -> x.creator.apply(position, team))
 				.findFirst()

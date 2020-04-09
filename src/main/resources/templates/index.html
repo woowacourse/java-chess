@@ -141,7 +141,7 @@
 		$.ajax({
 			type: 'post',
 			url: 'movePiece',
-			data: {sourcePosition: sourcePosition, targetPosition: targetPosition},
+			data: {source: sourcePosition, target: targetPosition},
 			dataType: 'json',
 			error: moveError,
 			success: moveSuccess

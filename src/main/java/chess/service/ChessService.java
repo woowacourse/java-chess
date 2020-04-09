@@ -1,0 +1,80 @@
+package chess.service;
+
+import chess.domain.chessPiece.piece.Piece;
+import chess.domain.chessPiece.piece.PieceDao;
+import chess.domain.chessPiece.piece.PieceMapper;
+import chess.domain.chessPiece.position.Position;
+import chess.domain.chessboard.ChessBoard;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import static jdk.nashorn.internal.runtime.linker.NameCodec.*;
+
+public class ChessService {
+	private static final PieceDao pieceDao = new PieceDao();
+	private static ChessBoard chessBoard;
+
+	public void DBInit() throws Exception {
+		chessBoard = new ChessBoard();
+		List<Piece> pieces = chessBoard.getPieces();
+		pieceDao.deleteAll();
+		for (Piece piece : pieces) {
+			pieceDao.addPiece(piece);
+		}
+	}
+
+	public Map<String, Object> getPiecesInfo() throws Exception {
+		HashMap<String, Object> model = new HashMap<>();
+		List<Map<String, Object>> pieceInfos = pieceDao.readPieces();
+		List<Piece> pieces = new ArrayList<>();
+		for (Map<String, Object> pieceInfo : pieceInfos) {
+			String position = String.valueOf(pieceInfo.get("file")) + pieceInfo.get("rank");
+			String pieceName = String.valueOf(pieceInfo.get("name"));
+			Piece piece = PieceMapper.create(pieceName, position);
+			pieces.add(piece);
+			model.put(position, pieceName);
+		}
+		return model;
+	}
+
+	public Map<String, Object> getMoveInfo(final String source, final String target) {
+		Map<String, Object> model = new HashMap<>();
+		Position sourcePosition = Position.of(source);
+		Position targetPosition = Position.of(target);
+		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
+
+		model.put("sourcePosition", source);
+		model.put("targetPosition", target);
+		model.put("sourcePieceType", findPieceType(sourcePosition, chessBoard));
+		model.put("targetPieceType", findPieceType(targetPosition, chessBoard));
+		model.put("isAttack", isAttack);
+
+		return model;
+	}
+
+	private String findPieceType(final Position position, final ChessBoard chessBoard) {
+		Optional<Piece> piece = chessBoard.findPieceByPosition(position);
+		return piece.map(Piece::getPieceName).orElse(EMPTY_NAME);
+	}
+
+	public void move(final String source, final String target) throws Exception {
+		Position sourcePosition = Position.of(source);
+		Position targetPosition = Position.of(target);
+		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
+
+		chessBoard.movePiece(sourcePosition, targetPosition);
+		updateDatabase(sourcePosition, targetPosition, isAttack);
+	}
+
+	private void updateDatabase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {
+		if (isAttack) {
+			pieceDao.deletePiece(targetPosition);
+		}
+		pieceDao.updatePiece(sourcePosition, targetPosition);
+	}
+}
