@@ -58,8 +58,7 @@ public class PawnTest {
 
     @ParameterizedTest
     @DisplayName("검은색 폰이 이동할 수 없는 목표 위치값이 들어오면 예외가 발생해야 함")
-    @CsvSource(value = {"a7,c6", "d7,b5", "b4,b2", "b4,b1", "h7, h4", "b4,c2", "a7,a8", "d7,f8", "e7,d7", "c5,h5",
-            "e7,f8"})
+    @CsvSource(value = {"a7,c6", "d7,b5", "b4,b2", "b4,b1", "h7, h4", "b4,c2", "a7,a8", "d7,f8", "e7,d7", "c5,h5"})
     void inputBlackPawnNotMovablePositionThenThrowException(String source, String target) {
         Pawn pawn = new BlackPawn(PositionFactory.of(source));
 
