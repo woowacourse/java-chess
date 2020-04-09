@@ -1,5 +1,6 @@
 package chess;
 
+import chess.domain.chessboard.ChessBoard;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -16,6 +17,7 @@ public class ChessWebApplication {
 
 	private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
 	private static final ChessService chessService = new ChessService();
+	private static ChessBoard chessBoard;
 
 	public static void main(String[] args) {
 		staticFileLocation("/templates");
@@ -26,22 +28,21 @@ public class ChessWebApplication {
 		});
 
 		get("/init", (req, res) -> {
-			chessService.DBInit();
+			chessBoard = new ChessBoard();
+			chessService.DBInit(chessBoard);
 			Map<String, Object> model = chessService.getPiecesInfo();
 			return gson.toJson(model);
 		});
 
 		get("/continue", (req, res) -> {
 			Map<String, Object> model = chessService.getPiecesInfo();
+			chessBoard = chessService.chessBoardContinue();
 			return gson.toJson(model);
 		});
 
 		post("/movePiece", (req, res) -> {
-			String source = req.queryParams("source");
-			String target = req.queryParams("target");
-
-			Map<String, Object> model = chessService.getMoveInfo(source, target);
-			chessService.move(source, target);
+			Map<String, Object> model = chessService.getMoveInfo(req, chessBoard);
+			chessService.move(req, chessBoard);
 			return gson.toJson(model);
 		});
 	}
