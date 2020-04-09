@@ -3,7 +3,8 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.database.ChessCommand;
 import chess.database.ChessCommandDao;
-import chess.web.MoveDto;
+import chess.web.MoveResponse;
+import chess.web.StartResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
@@ -23,19 +24,15 @@ public class ChessWebController {
 
     private final ChessCommandDao chessCommandDao = new ChessCommandDao();
     private ChessManager chessManager;
-    private MoveDto moveDto;
+    private MoveResponse moveResponse;
 
     public void play() {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
-            moveDto = new MoveDto(chessManager);
+            moveResponse = new MoveResponse(chessManager);
 
-            if (!chessCommandDao.selectCommands().isEmpty()) {
-                //TODO: 이렇게 하면 안됨. dto따로 만들어줘야 한다......아니면 service에서 조립해서 여기엔 모델만 ㄴ넘겨주기 
-                moveDto.getModel().put("hasLastGameRecord", "true");
-            }
-            return render(moveDto.getModel(), "chessGameStart.html");
+            return render(new StartResponse(chessManager).getModel(), "chessGameStart.html");
         });
 
         //play last game
@@ -45,13 +42,13 @@ public class ChessWebController {
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }
-            return render(moveDto.getModel(), "chessGame.html");
+            return render(moveResponse.getModel(), "chessGame.html");
         });
 
         //play new game
         get("/playing/newGame", (req, res) -> {
             initializeDatabase();
-            return render(moveDto.getModel(), "chessGame.html");
+            return render(moveResponse.getModel(), "chessGame.html");
         });
 
         //move source target
@@ -70,7 +67,7 @@ public class ChessWebController {
             if (!chessManager.isPlaying()) {
                 initializeDatabase();
             }
-            return GSON.toJson(moveDto.getModel());
+            return GSON.toJson(moveResponse.getModel());
         });
 
         //end
