@@ -20,7 +20,6 @@ public class MySQLDataSource implements DataSource {
 
 	@Override
 	public Connection getConnection() {
-		Connection connection = null;
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			return DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", server, database, option),
@@ -30,18 +29,7 @@ public class MySQLDataSource implements DataSource {
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
 		}
-		return connection;
-	}
-
-	@Override
-	public void closeConnection(Connection connection) {
-		try {
-			if (connection != null) {
-				connection.close();
-			}
-		} catch (SQLException e) {
-			System.err.println("connection 오류:" + e.getMessage());
-		}
+		return null;
 	}
 
 	private static class LazyHolder {
