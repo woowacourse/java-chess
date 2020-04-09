@@ -22,7 +22,7 @@ public class ChessGame {
 	}
 
 	public void reset() {
-		pieces = PiecesInitializer.reset();
+		pieces = PiecesInitializer.operate();
 		turn = new Turn(Color.WHITE);
 	}
 
