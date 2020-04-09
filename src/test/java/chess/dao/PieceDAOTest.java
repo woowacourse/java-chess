@@ -1,6 +1,6 @@
-package chess.controller.dao;
+package chess.dao;
 
-import chess.controller.dto.TileDto;
+import chess.dto.TileDTO;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
@@ -23,11 +23,11 @@ public class PieceDAOTest {
     @DisplayName("피스 정보 추가")
     @Test
     void addPieceTest() throws Exception {
-        TileDto a2WhitePawn = new TileDto("a2");
+        TileDTO a2WhitePawn = new TileDTO("a2");
         a2WhitePawn.setPieceImageUrl("p_white");
-        TileDto a6BlackPawn = new TileDto("a6");
+        TileDTO a6BlackPawn = new TileDTO("a6");
         a6BlackPawn.setPieceImageUrl("P_black");
-        List<TileDto> tileDtos = new ArrayList<>(Arrays.asList(
+        List<TileDTO> tileDtos = new ArrayList<>(Arrays.asList(
                 a2WhitePawn, a6BlackPawn
         ));
         ChessBoard chessBoard = new ChessBoard(12);

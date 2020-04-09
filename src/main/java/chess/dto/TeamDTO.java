@@ -1,9 +1,9 @@
-package chess.controller.dto;
+package chess.dto;
 
-public class TeamDto {
+public class TeamDTO {
     private final String teamName;
 
-    public TeamDto(final String teamName) {
+    public TeamDTO(final String teamName) {
         this.teamName = teamName;
     }
 

@@ -1,7 +1,5 @@
 package chess.domain;
 
-import chess.controller.dto.BoardScoreDto;
-import chess.controller.dto.TileDto;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
 import chess.domain.board.Tile;
@@ -9,6 +7,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
+import chess.dto.BoardScoreDTO;
+import chess.dto.TileDTO;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -106,14 +106,14 @@ public class ChessRunner {
         return currentTeamScore.getBoardScore();
     }
 
-    public List<BoardScoreDto> calculateScores() {
-        List<BoardScoreDto> scores = new ArrayList<>();
-        BoardScoreDto currentTeam = new BoardScoreDto(calculateScore());
+    public List<BoardScoreDTO> calculateScores() {
+        List<BoardScoreDTO> scores = new ArrayList<>();
+        BoardScoreDTO currentTeam = new BoardScoreDTO(calculateScore());
         currentTeam.setTeam(this.currentTeam.name());
         scores.add(currentTeam);
 
         BoardScore oppositeTeamScore = this.board.calculateScore(this.currentTeam.changeTeam());
-        BoardScoreDto oppositeTeam = new BoardScoreDto(oppositeTeamScore.getBoardScore());
+        BoardScoreDTO oppositeTeam = new BoardScoreDTO(oppositeTeamScore.getBoardScore());
         oppositeTeam.setTeam(this.currentTeam.changeTeam().name());
         scores.add(oppositeTeam);
 
@@ -137,9 +137,9 @@ public class ChessRunner {
         return winner.map(Enum::name).orElse(StringUtils.EMPTY);
     }
 
-    public List<TileDto> entireTileDtos() {
-        List<TileDto> tileDtos = Position.getPositions().stream()
-                .map(TileDto::new)
+    public List<TileDTO> entireTileDtos() {
+        List<TileDTO> tileDtos = Position.getPositions().stream()
+                .map(TileDTO::new)
                 .collect(Collectors.toList());
 
         setTileDtoTeam(tileDtos);
@@ -148,18 +148,18 @@ public class ChessRunner {
         return Collections.unmodifiableList(tileDtos);
     }
 
-    private void setTileDtoTeam(List<TileDto> tileDtos) {
+    private void setTileDtoTeam(List<TileDTO> tileDtos) {
         List<Integer> indexes = Position.getPositionsIndex();
         for (int i = 0; i < indexes.size(); i++) {
-            TileDto tileDto = tileDtos.get(i);
+            TileDTO tileDto = tileDtos.get(i);
             tileDto.setStyle(indexes.get(i));
         }
     }
 
-    private void setTileDtoImage(List<TileDto> tileDtos) {
+    private void setTileDtoImage(List<TileDTO> tileDtos) {
         List<Tile> tiles = this.board.tiles();
         for (Tile tile : tiles) {
-            TileDto tileDto = tileDtos.stream()
+            TileDTO tileDto = tileDtos.stream()
                     .filter(td -> td.getPosition().equals(tile.position()))
                     .findFirst()
                     .orElseThrow(IllegalArgumentException::new);
@@ -167,10 +167,10 @@ public class ChessRunner {
         }
     }
 
-    public List<TileDto> pieceTileDtos() {
-        List<TileDto> tileDtos = this.board.tiles().stream()
+    public List<TileDTO> pieceTileDtos() {
+        List<TileDTO> tileDtos = this.board.tiles().stream()
                 .map((tile) -> {
-                    TileDto tileDto = new TileDto(tile.position());
+                    TileDTO tileDto = new TileDTO(tile.position());
                     tileDto.setPieceImageUrl(tile.pieceImageUrl());
                     return tileDto;
                 }).collect(Collectors.toList());

@@ -1,10 +1,10 @@
-package chess.controller.dto;
+package chess.dto;
 
-public class MoveResultDto {
+public class MoveResultDTO {
     private final String message;
     private final String style;
 
-    public MoveResultDto(String message, String style) {
+    public MoveResultDTO(String message, String style) {
         this.message = message;
         this.style = style;
     }

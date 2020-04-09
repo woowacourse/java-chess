@@ -1,6 +1,6 @@
 package chess.domain;
 
-import chess.controller.dto.TileDto;
+import chess.dto.TileDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -74,7 +74,7 @@ class ChessRunnerTest {
 
     @Test
     void tileDtosTest() {
-        List<TileDto> tileDtos = chessRunner.entireTileDtos();
+        List<TileDTO> tileDtos = chessRunner.entireTileDtos();
     }
 
     @DisplayName("게임이 종료되지 않았을 때 승자를 출력 시 빈 문자열 출력")

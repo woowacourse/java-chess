@@ -1,6 +1,6 @@
-package chess.controller.dao;
+package chess.dao;
 
-import chess.controller.dto.TileDto;
+import chess.dto.TileDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -11,9 +11,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class PieceDAO {
-    public void addPiece(ChessBoard chessBoard, List<TileDto> tileDtos) throws SQLException {
+    public void addPiece(ChessBoard chessBoard, List<TileDTO> tileDtos) throws SQLException {
         Connection con = ConnectionManager.getConnection();
-        for (TileDto tileDto : tileDtos) {
+        for (TileDTO tileDto : tileDtos) {
             String query = "INSERT INTO piece (position, pieceImageUrl, chessBoardId) "
                     + "VALUES(?, ?, ?)";
             PreparedStatement pstmt = con.prepareStatement(query);

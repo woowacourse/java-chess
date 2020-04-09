@@ -1,4 +1,4 @@
-package chess.controller.dao;
+package chess.dao;
 
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

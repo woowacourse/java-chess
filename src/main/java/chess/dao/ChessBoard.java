@@ -1,4 +1,4 @@
-package chess.controller.dao;
+package chess.dao;
 
 import java.util.Objects;
 

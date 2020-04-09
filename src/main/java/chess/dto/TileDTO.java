@@ -1,6 +1,6 @@
-package chess.controller.dto;
+package chess.dto;
 
-public class TileDto {
+public class TileDTO {
     private static final String WHITE = "white";
     private static final String BLACK = "black";
 
@@ -8,7 +8,7 @@ public class TileDto {
     private String pieceImageUrl;
     private String style;
 
-    public TileDto(final String position) {
+    public TileDTO(final String position) {
         this.position = position;
         this.pieceImageUrl = "";
     }

@@ -1,9 +1,9 @@
-package chess.controller.dto;
+package chess.dto;
 
-public class StatusDto {
+public class StatusDTO {
     private final String message;
 
-    public StatusDto(String message) {
+    public StatusDTO(String message) {
         this.message = message;
     }
 

@@ -1,10 +1,10 @@
 package chess;
 
 import chess.controller.WebChessController;
-import chess.controller.dao.Player;
-import chess.controller.dto.MoveResultDto;
-import chess.controller.dto.TeamDto;
-import chess.controller.dto.TileDto;
+import chess.dao.Player;
+import chess.dto.MoveResultDTO;
+import chess.dto.TeamDTO;
+import chess.dto.TileDTO;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -49,8 +49,8 @@ public class WebUIChessApplication {
 
             Player player = new Player(whitePlayer, blackPlayer);
             webChessController.newGame(player);
-            List<TileDto> tileDtos = webChessController.getTiles();
-            TeamDto teamDto = webChessController.getCurrentTeam();
+            List<TileDTO> tileDtos = webChessController.getTiles();
+            TeamDTO teamDto = webChessController.getCurrentTeam();
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
@@ -65,8 +65,8 @@ public class WebUIChessApplication {
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
 
             webChessController.continueGame(chessBoardId);
-            List<TileDto> tileDtos = webChessController.getTiles();
-            TeamDto teamDto = webChessController.getCurrentTeam();
+            List<TileDTO> tileDtos = webChessController.getTiles();
+            TeamDTO teamDto = webChessController.getCurrentTeam();
             Player player = webChessController.getPlayer();
 
             model.put("tiles", tileDtos);
@@ -82,9 +82,9 @@ public class WebUIChessApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            MoveResultDto moveResultDto = webChessController.move(source, target);
-            List<TileDto> tileDtos = webChessController.getTiles();
-            TeamDto teamDto = webChessController.getCurrentTeam();
+            MoveResultDTO moveResultDto = webChessController.move(source, target);
+            List<TileDTO> tileDtos = webChessController.getTiles();
+            TeamDTO teamDto = webChessController.getCurrentTeam();
             Player player = webChessController.getPlayer();
 
             model.put("tiles", tileDtos);
@@ -103,8 +103,8 @@ public class WebUIChessApplication {
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            List<TileDto> tileDtos = webChessController.getTiles();
-            TeamDto teamDto = webChessController.getCurrentTeam();
+            List<TileDTO> tileDtos = webChessController.getTiles();
+            TeamDTO teamDto = webChessController.getCurrentTeam();
             String message = webChessController.getScores();
             Player player = webChessController.getPlayer();
 

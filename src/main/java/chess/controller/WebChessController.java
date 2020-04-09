@@ -1,10 +1,10 @@
 package chess.controller;
 
-import chess.controller.dao.*;
-import chess.controller.dto.MoveResultDto;
-import chess.controller.dto.TeamDto;
-import chess.controller.dto.TileDto;
+import chess.dao.*;
 import chess.domain.ChessRunner;
+import chess.dto.MoveResultDTO;
+import chess.dto.TeamDTO;
+import chess.dto.TileDTO;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -36,7 +36,7 @@ public class WebChessController {
         this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
         currentTeamDAO.addCurrentTeam(this.chessBoard, this.currentTeam);
 
-        List<TileDto> tileDtos = this.chessRunner.pieceTileDtos();
+        List<TileDTO> tileDtos = this.chessRunner.pieceTileDtos();
         pieceDAO.addPiece(this.chessBoard, tileDtos);
         updateOriginalPieces(pieceDAO);
 
@@ -77,14 +77,14 @@ public class WebChessController {
         this.originalPieces = PieceOnBoards.create(pieces);
     }
 
-    public MoveResultDto move(final String source, final String target) throws Exception {
+    public MoveResultDTO move(final String source, final String target) throws Exception {
         try {
             this.chessRunner.update(source, target);
             updateChessBoard(source, target);
             String moveResult = moveResult(this.chessRunner, source, target);
-            return new MoveResultDto(moveResult, MESSAGE_STYLE_BLACK);
+            return new MoveResultDTO(moveResult, MESSAGE_STYLE_BLACK);
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
-            return new MoveResultDto(e.getMessage(), MESSAGE_STYLE_RED);
+            return new MoveResultDTO(e.getMessage(), MESSAGE_STYLE_RED);
         }
     }
 
@@ -130,11 +130,11 @@ public class WebChessController {
         chessBoardDAO.deleteChessBoard(this.chessBoard);
     }
 
-    public TeamDto getCurrentTeam() {
-        return new TeamDto(this.chessRunner.getCurrentTeam());
+    public TeamDTO getCurrentTeam() {
+        return new TeamDTO(this.chessRunner.getCurrentTeam());
     }
 
-    public List<TileDto> getTiles() {
+    public List<TileDTO> getTiles() {
         return this.chessRunner.entireTileDtos();
     }
 
