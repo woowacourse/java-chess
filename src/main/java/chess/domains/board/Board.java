@@ -19,6 +19,7 @@ public class Board {
     public static final int TWO_KINGS = 2;
     public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
     public static final int COLUMN_SIZE = 8;
+    public static final String DELIMITER = " ";
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
@@ -135,7 +136,7 @@ public class Board {
     public void recoverRecords(List<Record> records) {
         for (Record record : records) {
             String recordMessage = record.getRecord();
-            String[] recordMessages = recordMessage.split(" ");
+            String[] recordMessages = recordMessage.split(DELIMITER);
             if (recordMessage.startsWith("move") && record.getErrorMsg().equals("")) {
                 this.move(Position.ofPositionName(recordMessages[1]), Position.ofPositionName(recordMessages[2]));
             }

@@ -6,9 +6,13 @@ import chess.domains.Record;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class WebController {
     public static final String START_COMMAND = "start";
@@ -20,7 +24,13 @@ public class WebController {
     private static final BoardDAO boardDAO = new BoardDAO();
     private static final RecordDAO recordDAO = new RecordDAO();
 
-    public static void startGame(Board board) throws SQLException {
+    public static String game(Board board) {
+        board.initialize();
+        Map<String, Object> model = new HashMap<>();
+        return render(model, "index.html");
+    }
+
+    public static String startGame(Board board) throws SQLException {
         board.initialize();
 
         boardDAO.clearBoard();
@@ -28,9 +38,33 @@ public class WebController {
 
         recordDAO.clearRecord();
         recordDAO.addRecord(new Record(START_COMMAND, ""));
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("records", recordDAO.readRecords());
+        model.put("pieces", boardDAO.showPieces());
+        model.put("turn", WebController.printTurn(WebController.turn(board)));
+        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+
+        return render(model, "index.html");
     }
 
-    public static void movePiece(Board board, String source, String target) throws SQLException {
+    public static String move(Board board, String source, String target) throws SQLException {
+        movePiece(board, source, target);
+        endGame(board);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("records", recordDAO.readRecords());
+        model.put("end", board.isGameOver());
+        model.put("pieces", boardDAO.showPieces());
+        model.put("turn", WebController.printTurn(WebController.turn(board)));
+        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+
+        return render(model, "index.html");
+    }
+
+    private static void movePiece(Board board, String source, String target) throws SQLException {
         Record move = new Record(MOVE_COMMAND + source + " " + target, "");
 
         try {
@@ -46,13 +80,22 @@ public class WebController {
         recordDAO.addRecord(move);
     }
 
-    public static void resumeGame(Board board) throws SQLException {
+    public static String resumeGame(Board board) throws SQLException {
         board.initialize();
         List<Record> records = recordDAO.readRecords();
         board.recoverRecords(records);
+
+        Map<String, Object> model = new HashMap<>();
+        model.put("records", recordDAO.readRecords());
+        model.put("pieces", boardDAO.showPieces());
+        model.put("turn", WebController.printTurn(WebController.turn(board)));
+        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+
+        return render(model, "index.html");
     }
 
-    public static void endGame(Board board) throws SQLException {
+    private static void endGame(Board board) throws SQLException {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
             recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));
@@ -69,5 +112,9 @@ public class WebController {
 
     public static double calculateScore(Board board, PieceColor pieceColor) {
         return board.calculateScore(pieceColor);
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
