@@ -17,7 +17,23 @@ import chess.domain.position.Position;
 
 public class BoardDAO {
 	public void initialize(String gameId, List<Piece> board) {
-		board.forEach(piece -> addPiece(gameId, piece));
+		String query = "INSERT INTO board VALUES (?, ?, ?)";
+		try {
+			Connection con = getConnection();
+			PreparedStatement pstmt = con.prepareStatement(query);
+			for (Piece piece : board) {
+				pstmt.setString(1, gameId);
+				pstmt.setString(2, piece.getPosition().getName());
+				pstmt.setString(3, piece.getSymbol());
+				pstmt.addBatch();
+				pstmt.clearParameters();
+			}
+			pstmt.executeBatch();
+			pstmt.close();
+			closeConnection(con);
+		} catch (SQLException e) {
+			throw new IllegalArgumentException(e.getMessage());
+		}
 	}
 
 	public void addPiece(String gameId, Piece piece) {
@@ -87,14 +103,15 @@ public class BoardDAO {
 			pstmt.setString(1, source.getSymbol());
 			pstmt.setString(2, gameId);
 			pstmt.setString(3, target.getPosition().getName());
-			pstmt.executeUpdate();
-			pstmt.close();
+			pstmt.addBatch();
+			pstmt.clearParameters();
 
-			pstmt = con.prepareStatement(query);
 			pstmt.setString(1, Name.EMPTY.getBlackSymbol());
 			pstmt.setString(2, gameId);
 			pstmt.setString(3, source.getPosition().getName());
-			pstmt.executeUpdate();
+			pstmt.addBatch();
+			pstmt.executeBatch();
+
 			pstmt.close();
 			closeConnection(con);
 		} catch (SQLException e) {
