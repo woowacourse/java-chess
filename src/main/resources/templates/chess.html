@@ -9,7 +9,7 @@
 <body>
 <div class="container">
     <div class="board">
-        {{#board.boardDto}}
+        {{#board.board}}
         <div class="rows">
             {{#.}}
             <div class="cell">
@@ -17,7 +17,7 @@
             </div>
             {{/.}}
         </div>
-        {{/board.boardDto}}
+        {{/board.board}}
     </div>
     <div class="side">
         <form method="post" action="/chess">
@@ -33,6 +33,10 @@
         {{#error}}
         <label>{{.}}</label>
         {{/error}}
+        <br/>
+        {{#board.turn}}
+        <label>현재 턴 : {{.}}</label>
+        {{/board.turn}}
         <br/>
         {{#status}}
         <br/>

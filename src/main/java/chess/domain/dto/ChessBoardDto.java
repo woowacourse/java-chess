@@ -3,22 +3,25 @@ package chess.domain.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import chess.domain.ChessBoard;
+import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 
 public class ChessBoardDto {
 	private static final String BLANK = "blank";
 
-	private List<List<String>> boardDto;
+	private List<List<String>> board;
+	private String turn;
 
-	private ChessBoardDto(List<List<String>> boardDto) {
-		this.boardDto = boardDto;
+	private ChessBoardDto(List<List<String>> board, String turn) {
+		this.board = board;
+		this.turn = turn;
 	}
 
-	public static ChessBoardDto of(ChessBoard board) {
+	public static ChessBoardDto of(ChessGame chessGame) {
 		List<List<String>> initBoard = initBoard();
-		deployPiece(board.getPieces(), initBoard);
-		return new ChessBoardDto(initBoard);
+		deployPiece(chessGame.getBoard().getPieces(), initBoard);
+		String turn = chessGame.getTurn().name();
+		return new ChessBoardDto(initBoard, turn);
 	}
 
 	private static void deployPiece(List<Piece> board, List<List<String>> initBoard) {
@@ -45,7 +48,11 @@ public class ChessBoardDto {
 		return board;
 	}
 
-	public List<List<String>> getBoardDto() {
-		return boardDto;
+	public List<List<String>> getBoard() {
+		return board;
+	}
+
+	public String getTurn() {
+		return turn;
 	}
 }
