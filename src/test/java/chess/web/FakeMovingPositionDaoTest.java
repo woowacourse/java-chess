@@ -1,5 +1,6 @@
-package chess.domain.web;
+package chess.web;
 
+import chess.dao.FakeHistoryDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

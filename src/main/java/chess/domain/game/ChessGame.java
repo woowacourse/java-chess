@@ -7,7 +7,7 @@ import chess.domain.piece.pieces.PiecesInitializer;
 import chess.domain.position.Position;
 import chess.domain.position.PositionFactory;
 import chess.domain.position.positions.Positions;
-import chess.domain.web.BoardDto;
+import chess.dto.BoardDto;
 
 import java.util.List;
 import java.util.stream.Collectors;

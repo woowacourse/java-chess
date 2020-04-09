@@ -1,4 +1,7 @@
-package chess.domain.web;
+package chess.dao;
+
+import chess.web.ConnectionManager;
+import chess.web.MovingPosition;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

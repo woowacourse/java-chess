@@ -2,9 +2,9 @@ package chess.service;
 
 import chess.domain.game.ChessGame;
 import chess.domain.position.PositionFactory;
-import chess.domain.web.HistoryDao;
-import chess.domain.web.MovingPosition;
-import chess.domain.web.NormalStatus;
+import chess.dao.HistoryDao;
+import chess.web.MovingPosition;
+import chess.web.NormalStatus;
 
 import java.sql.SQLException;
 import java.util.HashMap;

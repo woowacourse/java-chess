@@ -1,4 +1,4 @@
-package chess.domain.web;
+package chess.web;
 
 public enum NormalStatus {
 	YES(true),
