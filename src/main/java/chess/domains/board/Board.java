@@ -152,6 +152,6 @@ public class Board {
     }
 
     public String findPieceByPosition(String source) {
-        return board.get(Position.ofPositionName(source)).name();
+        return board.get(Position.ofPositionName(source)).chessPiece();
     }
 }
