@@ -80,18 +80,17 @@ public class BoardDAO {
         }
     }
 
-    public BoardDTO getBoard() {
+    public BoardDTO getBoard() throws SQLException {
         String query = "SELECT * FROM board";
         try (PreparedStatement pstmt = this.connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
             Map<String, String> board = new HashMap<>();
-
             while (rs.next()) {
                 board.put(rs.getString(1), rs.getString(2));
             }
             return new BoardDTO(board);
         } catch (SQLException e) {
-            return null;
+            throw new SQLException("데이터 베이스에서 SQLException이 발생했습니다.");
         }
     }
 }

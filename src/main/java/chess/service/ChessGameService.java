@@ -12,6 +12,7 @@ import chess.dto.BoardDTO;
 import chess.dto.Cell;
 import chess.dto.TurnDTO;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -31,12 +32,16 @@ public class ChessGameService {
         this.boardDAO = BoardDAO.getInstance();
         this.turnDAO = TurnDAO.getInstance();
 
-        if (boardDAO.getBoard() == null || turnDAO.getTurn() == null) {
-            this.board = new Board();
-        } else {
-            BoardDTO boardDTO = boardDAO.getBoard();
-            TurnDTO turnDTO = turnDAO.getTurn();
-            this.board = new Board(boardDTO.createBoard(), turnDTO.createTeam());
+        try {
+            if (boardDAO.getBoard() == null || turnDAO.getTurn() == null) {
+                this.board = new Board();
+            } else {
+                BoardDTO boardDTO = boardDAO.getBoard();
+                TurnDTO turnDTO = turnDAO.getTurn();
+                this.board = new Board(boardDTO.createBoard(), turnDTO.createTeam());
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
 
         this.gameResult = this.board.createGameResult();

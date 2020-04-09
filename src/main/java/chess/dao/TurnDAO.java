@@ -71,7 +71,7 @@ public class TurnDAO {
         }
     }
 
-    public TurnDTO getTurn() {
+    public TurnDTO getTurn() throws SQLException {
         String query = "SELECT * FROM turn";
         try (PreparedStatement pstmt = this.connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
@@ -80,7 +80,7 @@ public class TurnDAO {
             }
             return new TurnDTO(rs.getString("teamName"));
         } catch (SQLException e) {
-            return null;
+            throw new SQLException("데이터 베이스에서 SQLException이 발생했습니다.");
         }
     }
 }
