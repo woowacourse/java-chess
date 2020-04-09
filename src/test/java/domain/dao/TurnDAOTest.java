@@ -29,7 +29,7 @@ public class TurnDAOTest {
     @DisplayName("턴이 바뀌는 지")
     void changeTurn() throws SQLException {
         turnDAO.start();
-        turnDAO.changeTurn();
+        turnDAO.changeTurn(Team.BLACK);
         assertThat(turnDAO.getTurn()).isEqualTo(Team.BLACK);
     }
 
