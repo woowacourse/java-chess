@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import com.google.gson.JsonObject;
 import dao.PiecesDAO;
@@ -11,13 +11,13 @@ import domain.team.Team;
 import java.sql.SQLException;
 import java.util.Map;
 
-public class WebController {
+public class ChessService {
 
     private State state;
     private PiecesDAO piecesDAO;
     private TurnDAO turnDAO;
 
-    public WebController() {
+    public ChessService() {
         piecesDAO = PiecesDAO.getInstance();
         turnDAO = TurnDAO.getInstance();
     }
