@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcTemplate {
-	DataSource dataSource;
+	private final DataSource dataSource;
 
 	public JdbcTemplate(DataSource dataSource) {
 		this.dataSource = dataSource;
