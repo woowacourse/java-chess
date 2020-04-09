@@ -12,7 +12,15 @@ public abstract class SelectJdbcTemplate {
     public Object select(String query) throws SQLException {
         try (
                 Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement(query);
+                PreparedStatement statement = connection.prepareStatement(query)
+        ) {
+            setParameters(statement);
+            return executeQuery(statement);
+        }
+    }
+
+    private Object executeQuery(PreparedStatement statement) throws SQLException {
+        try (
                 ResultSet rs = statement.executeQuery()
         ) {
             return mapRow(rs);
