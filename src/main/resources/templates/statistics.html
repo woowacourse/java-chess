@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="/css/header.css">
+    <link rel="stylesheet" href="/css/statistics.css">
     <title>우아체스 - 통계</title>
 </head>
 <body>
@@ -12,7 +13,7 @@
         <img src="/images/logo.png" alt="우아한형제들 로고" id="logo">
     </div>
 </div>
-<div>
+<div class="content_box">
     {{#status_record_with_room_names}}
     <strong>{{roomName}} </strong> {{gameDate}}
     <p>{{{record}}}</p>

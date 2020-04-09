@@ -17,6 +17,7 @@ import domain.state.StateType;
 import domain.state.exceptions.StateException;
 import domain.team.Team;
 import dto.*;
+import service.RoomService;
 import spark.ModelAndView;
 import spark.Response;
 import spark.Spark;
@@ -30,17 +31,17 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class WebUIChessApplication {
-	public static HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+	private final static HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+	private final static RoomService ROOM_SERVICE = new RoomService();
 
 	public static void main(String[] args) {
 		Spark.port(8080);
 		Spark.staticFiles.location("/statics");
 
 		Spark.get("/chess/rooms", (request, response) -> {
-			final RoomDao roomDao = new RoomDao();
-			final List<RoomDto> roomDtos = roomDao.findAllRooms();
+			final List<RoomDto> rooms = ROOM_SERVICE.findAllRooms();
 			final Map<String, Object> map = new HashMap<>();
-			map.put("rooms", roomDtos);
+			map.put("rooms", rooms);
 			return render(map, "/rooms.html");
 		});
 
@@ -210,6 +211,6 @@ public class WebUIChessApplication {
 	}
 
 	public static String render(final Map<String, Object> model, final String templatePath) {
-		return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
+		return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, templatePath));
 	}
 }

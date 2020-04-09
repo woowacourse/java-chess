@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="/css/roomDtos.css">
+    <link rel="stylesheet" href="/css/rooms.css">
     <link rel="stylesheet" href="/css/header.css">
     <title>우아체스 - 방 목록</title>
 </head>
@@ -16,9 +16,9 @@
 <div class="content_box_wrapper">
     <div class="content_box">
         <ul>
-            {{#roomDtos}}
+            {{#rooms}}
             <li>{{roomName}}</li>
-            {{/roomDtos}}
+            {{/rooms}}
         </ul>
         <form method="post" id="room_form">
             <label for="room_name">방</label>
