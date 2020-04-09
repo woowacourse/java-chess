@@ -4,6 +4,7 @@ import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.WebDto;
+import chess.dao.JDBCChessDAO;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
@@ -17,7 +18,7 @@ import static spark.Spark.post;
 
 public class ChessWebController {
 
-    private ChessService chessService = new ChessService();
+    private ChessService chessService = new ChessService(new JDBCChessDAO());
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));

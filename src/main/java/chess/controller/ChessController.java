@@ -7,7 +7,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    private ChessService chessService = new ChessService();
+    private ChessService chessService = new ChessService(null);
 
     public void run() {
         OutputView.printInitialMessage();

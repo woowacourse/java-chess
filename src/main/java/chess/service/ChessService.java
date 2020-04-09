@@ -16,9 +16,10 @@ import java.util.function.Function;
 public class ChessService {
     private final Map<Command, Function<RequestDto, ResponseDto>> commands = new HashMap<>();
     private final Map<Long, ChessGame> chessGames = new HashMap<>();
-    private final ChessDAO chessDAO = new ChessDAO();
+    private final ChessDAO chessDAO;
 
-    public ChessService() {
+    public ChessService(ChessDAO chessDAO) {
+        this.chessDAO = chessDAO;
         commands.put(Command.START, this::start);
         commands.put(Command.MOVE, this::move);
         commands.put(Command.END, this::end);
@@ -33,6 +34,7 @@ public class ChessService {
         try {
             ChessGame chessGame = ChessGame.start();
             long id = chessDAO.createChessGame(chessGame);
+            chessGames.put(id, chessGame);
             return new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
                     chessGame.getStatus(), id);
         } catch (SQLException | IllegalArgumentException | UnsupportedOperationException e) {
@@ -41,7 +43,7 @@ public class ChessService {
     }
 
     public ResponseDto move(final RequestDto requestDto) {
-        long id = Long.valueOf(requestDto.getId());
+        long id = requestDto.getId();
         ChessGame chessGame = chessGames.get(id);
         ResponseDto responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
                 chessGame.getStatus(), id);
