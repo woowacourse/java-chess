@@ -9,7 +9,7 @@ import chess.domain.FinishFlag;
 import chess.domain.dao.RoomDao;
 
 public class ChessGameService {
-	private static final String BLANK_MARK = ".";
+	public static final String BLANK_MARK = ".";
 
 	private final RoomDao roomDao;
 
