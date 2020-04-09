@@ -1,6 +1,6 @@
 package chess.domain.piece.piece;
 
-import chess.dao.ChessBoardDaoImpl;
+import chess.dao.ChessDataBase;
 import chess.database.Connector;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
@@ -15,12 +15,12 @@ import java.sql.Connection;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ChessBoardDaoImplTest {
-    private ChessBoardDaoImpl chessBoardDaoImpl;
+class ChessDataBaseTest {
+    private ChessDataBase chessDataBase;
 
     @BeforeEach
     void setUp() {
-        chessBoardDaoImpl = new ChessBoardDaoImpl();
+        chessDataBase = new ChessDataBase();
     }
 
     @Test
@@ -34,7 +34,7 @@ class ChessBoardDaoImplTest {
     void addPieceTest() {
         Piece piece = new Pawn(Position.of("a1"), new BlackTeam());
         try {
-            chessBoardDaoImpl.addPiece(piece);
+            chessDataBase.addPiece(piece);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -49,9 +49,9 @@ class ChessBoardDaoImplTest {
         Position sourcePosition = Position.of("c1");
         Position targetPosition = Position.of("b3");
         try {
-            chessBoardDaoImpl.addPiece(knight);
-            chessBoardDaoImpl.addPiece(pawn);
-            chessBoardDaoImpl.updatePiece(sourcePosition, targetPosition);
+            chessDataBase.addPiece(knight);
+            chessDataBase.addPiece(pawn);
+            chessDataBase.updatePiece(sourcePosition, targetPosition);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -64,7 +64,7 @@ class ChessBoardDaoImplTest {
 
         Position deletePosition = Position.of("a1");
         try {
-            chessBoardDaoImpl.deletePiece(deletePosition);
+            chessDataBase.deletePiece(deletePosition);
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -75,7 +75,7 @@ class ChessBoardDaoImplTest {
     @DisplayName("모든 pieces가 삭제된다.")
     void deleteAll() {
         try {
-            chessBoardDaoImpl.deleteAll();
+            chessDataBase.deleteAll();
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
@@ -86,7 +86,7 @@ class ChessBoardDaoImplTest {
     @DisplayName("database에 남아있는 pieces의 정보를 가져온다.")
     void find() {
         try {
-            chessBoardDaoImpl.find();
+            chessDataBase.find();
         } catch (Exception e) {
             System.out.println("error");
             e.printStackTrace();
