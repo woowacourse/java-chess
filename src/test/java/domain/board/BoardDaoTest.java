@@ -1,9 +1,7 @@
 package domain.board;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.api.Assertions.*;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -24,12 +22,6 @@ public class BoardDaoTest {
 	@BeforeEach
 	void setUp() {
 		boardDao = new BoardDao();
-	}
-
-	@Test
-	public void connection() {
-		Connection con = boardDao.getConnection();
-		assertNotNull(con);
 	}
 
 	@DisplayName("Board 저장, 불러오기, 삭제 테스트")

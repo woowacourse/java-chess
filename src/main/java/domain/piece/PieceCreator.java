@@ -33,11 +33,12 @@ public enum PieceCreator {
 		this.pieceCreator = pieceCreator;
 	}
 
-	public static PieceCreator of(String symbol) {
+	public static Piece of(String symbol, Position position) {
 		return Arrays.stream(PieceCreator.values())
 			.filter(pc -> pc.symbol.equals(symbol))
 			.findFirst()
-			.orElseThrow(() -> new IllegalArgumentException("잘못된 심볼입니다."));
+			.orElseThrow(() -> new IllegalArgumentException("존재하지 않는 심볼입니다."))
+			.pieceCreator.apply(position);
 	}
 
 	public Function<Position, Piece> getPieceCreator() {
