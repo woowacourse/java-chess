@@ -4,7 +4,9 @@ import chess.handler.CanNotMoveExceptionHandler;
 import chess.handler.EndGameExceptionHandler;
 import chess.handler.NoSuchElementExceptionHandler;
 import chess.handler.NumberFormatExceptionHandler;
+import chess.handler.SqlExeptionHandler;
 import chess.handler.exception.AlreadyEndGameException;
+import chess.handler.exception.SqlExecuteException;
 import chess.service.ChessService;
 import chess.service.dto.ChessBoardResponse;
 import chess.service.dto.DefaultResponse;
@@ -90,6 +92,7 @@ public class ChessController {
         exception(AlreadyEndGameException.class, new EndGameExceptionHandler());
         exception(NumberFormatException.class, new NumberFormatExceptionHandler());
         exception(NoSuchElementException.class, new NoSuchElementExceptionHandler());
+        exception(SqlExecuteException.class, new SqlExeptionHandler());
     }
 
 }

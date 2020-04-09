@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.entity.Movement;
+import chess.handler.exception.SqlExecuteException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -15,10 +16,10 @@ import java.util.List;
 
 import static chess.dao.ChessConnection.getConnection;
 
-public class MariaMovementDAO implements MovementDAO {
+public class MariaMovementDao implements MovementDao {
     private final ConnectionProperties connectionProperties;
 
-    public MariaMovementDAO(ConnectionProperties connectionProperties) {
+    public MariaMovementDao(ConnectionProperties connectionProperties) {
         this.connectionProperties = connectionProperties;
     }
 
@@ -35,25 +36,24 @@ public class MariaMovementDAO implements MovementDAO {
             preparedStatement.setTimestamp(4, Timestamp.valueOf(createdTime));
 
             preparedStatement.execute();
-            ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
 
-            return getMovement(entity, createdTime, generatedKeys);
+            return getMovement(entity, createdTime, preparedStatement);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return entity;
+            throw new SqlExecuteException(e.getMessage());
         }
-
-
     }
 
-    private Movement getMovement(Movement entity, LocalDateTime createdTime, ResultSet generatedKeys) throws SQLException {
-        if (!generatedKeys.next()) {
-            return entity;
+    private Movement getMovement(Movement entity, LocalDateTime createdTime, PreparedStatement preparedStatement) {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (!generatedKeys.next()) {
+                throw new SqlExecuteException("엔티티 저장 실패");
+            }
+            long id = generatedKeys.getLong("id");
+            return new Movement(id, entity, createdTime);
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
         }
-        long id = generatedKeys.getLong("id");
-        generatedKeys.close();
 
-        return new Movement(id, entity, createdTime);
     }
 
     @Override
@@ -65,21 +65,23 @@ public class MariaMovementDAO implements MovementDAO {
         try (Connection connection = getConnection(connectionProperties);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, chessId);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            return collectEntities(resultSet);
+            return collectEntities(preparedStatement);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return new ArrayList<>();
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 
-    private List<Movement> collectEntities(ResultSet resultSet) throws SQLException {
-        List<Movement> movements = new ArrayList<>();
-        while (resultSet.next()) {
-            movements.add(collectEntity(resultSet));
+    private List<Movement> collectEntities(PreparedStatement preparedStatement) {
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<Movement> movements = new ArrayList<>();
+            while (resultSet.next()) {
+                movements.add(collectEntity(resultSet));
+            }
+            return movements;
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
         }
-        return movements;
     }
 
     private Movement collectEntity(ResultSet resultSet) throws SQLException {
@@ -99,7 +101,7 @@ public class MariaMovementDAO implements MovementDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 }

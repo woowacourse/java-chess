@@ -11,7 +11,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-public class InMemoryChessDAO implements ChessDAO {
+public class InMemoryChessDao implements ChessDao {
     private final Map<Long, ChessGame> memory = new Hashtable<>();
     private Long autoIncrement = 0L;
 

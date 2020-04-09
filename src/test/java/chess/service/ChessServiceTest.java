@@ -1,9 +1,9 @@
 package chess.service;
 
-import chess.dao.ChessDAO;
-import chess.dao.InMemoryChessDAO;
-import chess.dao.InMemoryMovementDAO;
-import chess.dao.MovementDAO;
+import chess.dao.ChessDao;
+import chess.dao.InMemoryChessDao;
+import chess.dao.InMemoryMovementDao;
+import chess.dao.MovementDao;
 import chess.entity.ChessGame;
 import chess.piece.Team;
 import chess.service.dto.ChessBoardResponse;
@@ -25,14 +25,14 @@ class ChessServiceTest {
 
     private ChessService chessService;
 
-    private MovementDAO movementDAO;
-    private ChessDAO chessDAO;
+    private MovementDao movementDAO;
+    private ChessDao chessDAO;
 
     @DisplayName("메모리로 테스트")
     @BeforeEach
     void setUp() {
-        chessDAO = new InMemoryChessDAO();
-        movementDAO = new InMemoryMovementDAO();
+        chessDAO = new InMemoryChessDao();
+        movementDAO = new InMemoryMovementDao();
         chessService = new ChessService(chessDAO, movementDAO);
     }
 

@@ -4,7 +4,7 @@ import chess.entity.Movement;
 
 import java.util.List;
 
-public interface MovementDAO {
+public interface MovementDao {
 
     Movement save(Movement entity);
 

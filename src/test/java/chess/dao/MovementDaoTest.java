@@ -12,21 +12,21 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class MovementDAOTest {
+class MovementDaoTest {
 
-    private MovementDAO movementDAO;
-    private ChessDAO chessDAO;
+    private MovementDao movementDAO;
+    private ChessDao chessDAO;
 
     @DisplayName("디비 연결 실패시 메모리로 테스트")
     @BeforeEach
     void setUp() {
         try {
             ConnectionProperties connectionProperties = new ConnectionProperties();
-            chessDAO = new MariaChessDAO(connectionProperties);
-            movementDAO = new MariaMovementDAO(connectionProperties);
+            chessDAO = new MariaChessDao(connectionProperties);
+            movementDAO = new MariaMovementDao(connectionProperties);
         } catch (Exception e) {
-            chessDAO = new InMemoryChessDAO();
-            movementDAO = new InMemoryMovementDAO();
+            chessDAO = new InMemoryChessDao();
+            movementDAO = new InMemoryMovementDao();
         }
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class InMemoryMovementDAO implements MovementDAO {
+public class InMemoryMovementDao implements MovementDao {
 
     private final Map<Long, Movement> memory = new Hashtable<>();
     private Long autoIncrement = 0L;

@@ -13,18 +13,18 @@ import java.util.NoSuchElementException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessDAOTest {
+class ChessDaoTest {
 
-    private ChessDAO chessDAO;
+    private ChessDao chessDAO;
 
     @DisplayName("실제 디비 없는 경우 메모리로 테스트")
     @BeforeEach
     void setUp() {
         try {
             ConnectionProperties connectionProperties = new ConnectionProperties();
-            chessDAO = new MariaChessDAO(connectionProperties);
+            chessDAO = new MariaChessDao(connectionProperties);
         } catch (Exception e) {
-            chessDAO = new InMemoryChessDAO();
+            chessDAO = new InMemoryChessDao();
         }
     }
 
@@ -55,7 +55,7 @@ class ChessDAOTest {
         //when
         ChessGame actual = chessDAO.findById(chessGame.getId())
                 .orElseThrow(NoSuchElementException::new);
-
+        System.out.println(actual.getCreatedTime());
         //then
         assertThat(chessGame.getId()).isEqualTo(actual.getId());
     }

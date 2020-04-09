@@ -1,6 +1,7 @@
 package chess.dao;
 
 import chess.entity.ChessGame;
+import chess.handler.exception.SqlExecuteException;
 import chess.piece.Team;
 
 import java.sql.Connection;
@@ -17,10 +18,10 @@ import java.util.Optional;
 
 import static chess.dao.ChessConnection.getConnection;
 
-public class MariaChessDAO implements ChessDAO {
+public class MariaChessDao implements ChessDao {
     private final ConnectionProperties connectionProperties;
 
-    public MariaChessDAO(ConnectionProperties connectionProperties) {
+    public MariaChessDao(ConnectionProperties connectionProperties) {
         this.connectionProperties = connectionProperties;
     }
 
@@ -42,20 +43,20 @@ public class MariaChessDAO implements ChessDAO {
 
             return getChessGame(entity, preparedStatement, createdTime);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return entity;
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 
-    private ChessGame getChessGame(ChessGame entity, PreparedStatement preparedStatement, LocalDateTime createdTime) throws SQLException {
-        ResultSet generatedKeys = preparedStatement.getGeneratedKeys();
-        if (!generatedKeys.next()) {
-            return entity;
+    private ChessGame getChessGame(ChessGame entity, PreparedStatement preparedStatement, LocalDateTime createdTime) {
+        try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
+            if (!generatedKeys.next()) {
+                throw new SqlExecuteException("엔티티 저장 실패");
+            }
+            long id = generatedKeys.getLong("id");
+            return new ChessGame(id, createdTime, entity);
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
         }
-        long id = generatedKeys.getLong("id");
-        generatedKeys.close();
-
-        return new ChessGame(id, createdTime, entity);
     }
 
     @Override
@@ -68,23 +69,24 @@ public class MariaChessDAO implements ChessDAO {
         try (Connection connection = getConnection(connectionProperties);
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
 
-            return getChessGame(resultSet);
+            return getChessGame(preparedStatement);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return Optional.empty();
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 
-    private Optional<ChessGame> getChessGame(ResultSet resultSet) throws SQLException {
-        if (!resultSet.next()) {
-            return Optional.empty();
-        }
-        ChessGame chessGame = collectEntity(resultSet);
-        resultSet.close();
+    private Optional<ChessGame> getChessGame(PreparedStatement preparedStatement) {
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (!resultSet.next()) {
+                return Optional.empty();
+            }
+            ChessGame chessGame = collectEntity(resultSet);
 
-        return Optional.of(chessGame);
+            return Optional.of(chessGame);
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
+        }
     }
 
     private ChessGame collectEntity(ResultSet resultSet) throws SQLException {
@@ -111,7 +113,7 @@ public class MariaChessDAO implements ChessDAO {
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 
@@ -125,22 +127,24 @@ public class MariaChessDAO implements ChessDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             return getChessGames(preparedStatement);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return new ArrayList<>();
+            throw new SqlExecuteException(e.getMessage());
         }
 
 
     }
 
-    private List<ChessGame> getChessGames(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet resultSet = preparedStatement.executeQuery();
-
-        List<ChessGame> chessGames = new ArrayList<>();
-        while (resultSet.next()) {
-            chessGames.add(collectEntity(resultSet));
+    private List<ChessGame> getChessGames(PreparedStatement preparedStatement) {
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<ChessGame> chessGames = new ArrayList<>();
+            while (resultSet.next()) {
+                chessGames.add(collectEntity(resultSet));
+            }
+            return chessGames;
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
         }
-        resultSet.close();
-        return chessGames;
+
+
     }
 
     @Override
@@ -156,19 +160,21 @@ public class MariaChessDAO implements ChessDAO {
 
             return getChessGamesActive(preparedStatement);
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            return new ArrayList<>();
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 
-    private List<ChessGame> getChessGamesActive(PreparedStatement preparedStatement) throws SQLException {
-        ResultSet resultSet = preparedStatement.executeQuery();
-        List<ChessGame> chessGames = new ArrayList<>();
-        while (resultSet.next()) {
-            ChessGame chessGame = collectEntity(resultSet);
-            chessGames.add(chessGame);
+    private List<ChessGame> getChessGamesActive(PreparedStatement preparedStatement) {
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            List<ChessGame> chessGames = new ArrayList<>();
+            while (resultSet.next()) {
+                ChessGame chessGame = collectEntity(resultSet);
+                chessGames.add(chessGame);
+            }
+            return chessGames;
+        } catch (SQLException e) {
+            throw new SqlExecuteException(e.getMessage());
         }
-        return chessGames;
     }
 
     @Override
@@ -178,7 +184,7 @@ public class MariaChessDAO implements ChessDAO {
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            throw new SqlExecuteException(e.getMessage());
         }
     }
 }

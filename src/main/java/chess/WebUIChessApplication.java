@@ -1,10 +1,10 @@
 package chess;
 
 import chess.dao.ConnectionProperties;
-import chess.dao.InMemoryChessDAO;
-import chess.dao.InMemoryMovementDAO;
-import chess.dao.MariaChessDAO;
-import chess.dao.MariaMovementDAO;
+import chess.dao.InMemoryChessDao;
+import chess.dao.InMemoryMovementDao;
+import chess.dao.MariaChessDao;
+import chess.dao.MariaMovementDao;
 import chess.service.ChessService;
 import chess.web.ChessController;
 
@@ -18,11 +18,11 @@ public class WebUIChessApplication {
         port(8080);
         staticFileLocation("/static");
 
-        ChessService chessService = new ChessService(new InMemoryChessDAO(), new InMemoryMovementDAO());
+        ChessService chessService = new ChessService(new InMemoryChessDao(), new InMemoryMovementDao());
 
         ConnectionProperties connectionProperties = new ConnectionProperties();
         if (getConnection(connectionProperties) != null) {
-            chessService = new ChessService(new MariaChessDAO(connectionProperties), new MariaMovementDAO(connectionProperties));
+            chessService = new ChessService(new MariaChessDao(connectionProperties), new MariaMovementDao(connectionProperties));
         }
 
         final ChessController chessController = new ChessController(chessService);
