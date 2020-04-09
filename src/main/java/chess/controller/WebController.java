@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.dao.BoardDAO;
-import chess.dao.RecordDAO;
+import chess.dao.BoardDao;
+import chess.dao.RecordDao;
 import chess.domains.Record;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
@@ -21,8 +21,8 @@ public class WebController {
     public static final String TURN_MESSAGE = "의 순서입니다.";
     public static final String WINNER_MESSAGE = "의 승리";
 
-    private static final BoardDAO boardDAO = new BoardDAO();
-    private static final RecordDAO recordDAO = new RecordDAO();
+    private static final BoardDao boardDAO = new BoardDao();
+    private static final RecordDao recordDAO = new RecordDao();
 
     public static String game(Board board) {
         board.initialize();
@@ -30,7 +30,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    public static String startGame(Board board) throws SQLException {
+    public static String startGame(Board board) throws SQLException, ClassNotFoundException {
         board.initialize();
 
         boardDAO.clearBoard();
@@ -49,7 +49,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    public static String move(Board board, String source, String target) throws SQLException {
+    public static String move(Board board, String source, String target) throws SQLException, ClassNotFoundException {
         movePiece(board, source, target);
         endGame(board);
 
@@ -64,7 +64,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    private static void movePiece(Board board, String source, String target) throws SQLException {
+    private static void movePiece(Board board, String source, String target) throws SQLException, ClassNotFoundException {
         Record move = new Record(MOVE_COMMAND + source + " " + target, "");
 
         try {
@@ -80,7 +80,7 @@ public class WebController {
         recordDAO.addRecord(move);
     }
 
-    public static String resumeGame(Board board) throws SQLException {
+    public static String resumeGame(Board board) throws SQLException, ClassNotFoundException {
         board.initialize();
         List<Record> records = recordDAO.readRecords();
         board.recoverRecords(records);
@@ -95,7 +95,7 @@ public class WebController {
         return render(model, "index.html");
     }
 
-    private static void endGame(Board board) throws SQLException {
+    private static void endGame(Board board) throws SQLException, ClassNotFoundException {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
             recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));

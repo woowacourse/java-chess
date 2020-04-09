@@ -6,21 +6,22 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class RecordDAOTest {
-    private static RecordDAO recordDao;
+class RecordDaoTest {
+    private static RecordDao recordDao;
 
     @BeforeAll
     public static void setup() {
-        recordDao = new RecordDAO();
+        recordDao = new RecordDao();
     }
 
     @DisplayName("연결 가능 여부 테스트")
     @Test
-    public void connection() {
+    public void connection() throws SQLException, ClassNotFoundException {
         Connection con = recordDao.getConnection();
         assertNotNull(con);
     }

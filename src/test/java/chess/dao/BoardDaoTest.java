@@ -9,20 +9,21 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class BoardDAOTest {
-    private static BoardDAO boardDao;
+class BoardDaoTest {
+    private static BoardDao boardDao;
 
     @BeforeAll
     public static void setup() {
-        boardDao = new BoardDAO();
+        boardDao = new BoardDao();
     }
 
     @DisplayName("연결 가능 여부 테스트")
     @Test
-    public void connection() {
+    public void connection() throws SQLException, ClassNotFoundException {
         Connection con = boardDao.getConnection();
         assertNotNull(con);
     }
