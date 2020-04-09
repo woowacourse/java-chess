@@ -4,7 +4,6 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 import static util.JsonUtil.json;
 
-import com.google.gson.Gson;
 import java.util.HashMap;
 import java.util.Map;
 import service.ChessService;
@@ -12,7 +11,6 @@ import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
-    private static Gson gson = new Gson();
     private final ChessService chessService;
 
     public WebChessController(ChessService chessService) {
