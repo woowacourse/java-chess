@@ -1,5 +1,7 @@
 package chess.repository;
 
+import java.util.Optional;
+
 import chess.domain.game.Game;
 import chess.domain.state.GameStateFactory;
 import chess.utils.jdbc.JDBCTemplate;
@@ -11,7 +13,7 @@ public class JDBCGameDAO implements GameDAO {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 
-	public Game findById(int userId) {
+	public Optional<Game> findById(int userId) {
 		String query = "SELECT * FROM game WHERE id = ?";
 		return jdbcTemplate.executeQuery(query, rs -> new Game(GameStateFactory.of(
 			rs.getString("state"),
