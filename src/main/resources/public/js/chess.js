@@ -51,7 +51,7 @@ window.onload = function () {
 
     (async function () {
         const chessGame = await getChessGame();
-        const board = chessGame["board"];
+        const board = chessGame["boardDto"]["board"];
         const turn = chessGame["turn"];
         const score = chessGame["score"]["scores"];
 
@@ -71,7 +71,8 @@ window.onload = function () {
                 startPosition = data.position;
                 console.log(data.normalStatus);
                 if (data.normalStatus === false) {
-                    alert(data.exception);
+                    alert(data.exception + "hahaha");
+                    startPosition = null;
                     return;
                 }
                 const positions = data.movable;

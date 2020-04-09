@@ -1,101 +1,36 @@
 package chess.service;
 
-import chess.domain.game.ChessGame;
-import chess.domain.position.PositionFactory;
 import chess.dao.HistoryDao;
+import chess.domain.game.ChessGame;
+import chess.domain.piece.Color;
+import chess.domain.position.PositionFactory;
+import chess.dto.*;
 import chess.web.MovingPosition;
 import chess.web.NormalStatus;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class ChessWebService {
-	public Map<String, Object> index(ChessGame chessGame) {
-		Map<String, Object> model = new HashMap<>();
-
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-		chessGame.reset();
-
-		return model;
+	public void clearHistory() throws SQLException {
+		HistoryDao historyDao = new HistoryDao();
+		historyDao.clear();
 	}
 
-	public Map<String, Object> startGame(ChessGame chessGame) throws SQLException {
-		Map<String, Object> model = new HashMap<>();
+	public ChessGameDto setBoard() throws SQLException {
+		ChessGame chessGame = new ChessGame();
 
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-		chessGame.reset();
-		clearHistory();
+		load(chessGame);
 
-		return model;
+		return new ChessGameDto(new BoardDto(chessGame.getPieces()), chessGame.getTurn(), chessGame.calculateScore(), NormalStatus.YES.isNormalStatus());
 	}
 
-	public Map<String, Object> loadGame(ChessGame chessGame) throws SQLException {
-		Map<String, Object> model = new HashMap<>();
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-
+	private void load(ChessGame chessGame) throws SQLException {
 		List<MovingPosition> histories = selectAllHistory();
 
 		for (MovingPosition movingPosition : histories) {
-			move(movingPosition.getStart(), movingPosition.getEnd(), chessGame);
+			chessGame.move(PositionFactory.of(movingPosition.getStart()), PositionFactory.of(movingPosition.getEnd()));
 		}
-		return model;
-	}
-
-	public Map<String, Object> setBoard(ChessGame chessGame) {
-		Map<String, Object> model = new HashMap<>();
-
-		model.put("board", chessGame.createBoardDto().getBoardDto());
-		model.put("turn", chessGame.getTurn());
-		model.put("score", chessGame.calculateScore());
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-
-		return model;
-	}
-
-	public Map<String, Object> move(String start, String end, ChessGame chessGame) {
-		try {
-			return updateMoving(start, end, chessGame);
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
-			Map<String, Object> model = new HashMap<>();
-
-			model.put("errorStatus", NormalStatus.NO);
-			model.put("exception", e.getMessage());
-			model.put("destination", "chess.html");
-			return model;
-		}
-	}
-
-	public Map<String, Object> chooseFirstPosition(String position, ChessGame chessGame) {
-		Map<String, Object> model = new HashMap<>();
-		try {
-			List<String> movablePositionNames = chessGame.findMovablePositionNames(position);
-
-			model.put("movable", movablePositionNames);
-			model.put("position", position);
-			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-
-			return model;
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("normalStatus", NormalStatus.NO.isNormalStatus());
-			model.put("exception", e.getMessage());
-			return model;
-		}
-	}
-
-	public Map<String, Object> chooseSecondPosition(String position) {
-		Map<String, Object> model = new HashMap<>();
-
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-		model.put("position", position);
-
-		return model;
-	}
-
-	private void clearHistory() throws SQLException {
-		HistoryDao historyDao = new HistoryDao();
-		historyDao.clear();
 	}
 
 	private List<MovingPosition> selectAllHistory() throws SQLException {
@@ -103,32 +38,52 @@ public class ChessWebService {
 		return historyDao.selectAll();
 	}
 
+	public MoveStatusDto move(String start, String end) {
+		try { // TODO: 2020/04/09 이거 꼭 필요?
+
+			if (start.equals(end)) {
+				return new MoveStatusDto(NormalStatus.YES);
+			}
+
+			ChessGame chessGame = new ChessGame();
+
+			load(chessGame);
+			chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
+
+			if (chessGame.isKingDead()) {
+				MoveStatusDto moveStatusDto = new MoveStatusDto(NormalStatus.YES, chessGame.getAliveKingColor());
+				clearHistory();
+				return moveStatusDto;
+			}
+
+			insertHistory(start, end);
+
+			return new MoveStatusDto(NormalStatus.YES);
+		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
+			return new MoveStatusDto(NormalStatus.NO, e.getMessage(), Color.NONE);
+		}
+	}
+
+
 	private void insertHistory(String start, String end) throws SQLException {
 		HistoryDao historyDao = new HistoryDao();
 		historyDao.insert(start, end);
 	}
 
-	private Map<String, Object> updateMoving(String start, String end, ChessGame chessGame) throws SQLException {
-		Map<String, Object> model = new HashMap<>();
+	public MovablePositionsDto chooseFirstPosition(String position) {
+		try {
+			ChessGame chessGame = new ChessGame();
+			load(chessGame);
 
-		if (start.equals(end)) {
-			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-			model.put("destination", "chess.html");
-			return model;
+			List<String> movablePositionNames = chessGame.findMovablePositionNames(position);
+
+			return new MovablePositionsDto(movablePositionNames, position, NormalStatus.YES);
+		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException | SQLException e) {
+			return new MovablePositionsDto(e.getMessage());
 		}
+	}
 
-		chessGame.move(PositionFactory.of(start), PositionFactory.of(end));
-		insertHistory(start, end);
-		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-
-		if (chessGame.isKingDead()) {
-			model.put("winner", chessGame.getAliveKingColor());
-			chessGame.reset();
-			clearHistory();
-			model.put("destination", "result.html");
-			return model;
-		}
-		model.put("destination", "chess.html");
-		return model;
+	public MovableStatusDto chooseSecondPosition(String position) {
+		return new MovableStatusDto(NormalStatus.YES, position);
 	}
 }

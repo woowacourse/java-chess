@@ -10,7 +10,7 @@ public class ChessWebUIApplication {
 
 		ChessWebController chessWebController = new ChessWebController();
 
-		chessWebController.run();
+		chessWebController.route();
 	}
 }
 
