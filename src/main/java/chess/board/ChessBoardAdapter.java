@@ -3,11 +3,12 @@ package chess.board;
 import chess.coordinate.Coordinate;
 import chess.observer.Observable;
 import chess.observer.Publishable;
+import chess.piece.Piece;
 import chess.piece.Team;
 
 import java.util.Map;
 
-public class ChessBoardAdapter implements Publishable {
+public class ChessBoardAdapter implements Publishable<Piece> {
     private final ChessBoard chessBoard;
     private Observable observable;
 
@@ -21,28 +22,29 @@ public class ChessBoardAdapter implements Publishable {
     }
 
     @Override
-    public void push(final Object object) {
-        observable.update(object);
+    public void push(final Piece piece) {
+        observable.update(piece);
     }
 
     public boolean isNotSameTeam(final String source, final Team currentTeam) {
         return chessBoard.isNotSameTeam(source, currentTeam);
     }
 
-    public boolean move(final String source, final String target) {
-        try {
-            push(chessBoard.replace(source, target));
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
+    public Piece move(final String source, final String target) {
+        Piece deadPiece = chessBoard.replace(source, target);
+        push(deadPiece);
+        return deadPiece;
     }
 
-    public double calculateScore(final Team currentTeam) {
-        return chessBoard.calculateScore(currentTeam);
+    public double calculateScore(final Team team) {
+        return chessBoard.calculateScore(team);
     }
 
     public Map<Coordinate, Tile> getChessBoard() {
         return chessBoard.getChessBoard();
+    }
+
+    public Piece findByKey(String key) {
+        return chessBoard.findByKey(key);
     }
 }

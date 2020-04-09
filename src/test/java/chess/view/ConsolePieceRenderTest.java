@@ -1,0 +1,26 @@
+package chess.view;
+
+import chess.piece.Piece;
+import chess.piece.Pieces;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+class ConsolePieceRenderTest {
+
+    @DisplayName("피스에 따라 뷰에 보여지는 토큰을 반환한다.")
+    @ParameterizedTest
+    @CsvSource(value = {"BLACK_KING,K", "WHITE_KING,k", "BLACK_MOVED_PAWN,P", "BLACK_NOT_MOVED_PAWN,P", "WHITE_MOVED_PAWN,p", "WHITE_NOT_MOVED_PAWN,p"})
+    void findTokenByPiece(Pieces pieces, String expect) {
+        //given
+        Piece piece = pieces.getPiece();
+
+        //when
+        String actual = ConsolePieceRender.findTokenByPiece(piece);
+
+        //then
+        assertThat(actual).isEqualTo(expect);
+    }
+}

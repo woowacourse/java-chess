@@ -21,10 +21,10 @@ public class BoardGenerator {
     public static ChessBoardAdapter create() {
         ChessBoard chessBoard = ChessBoard.empty();
         addTopAndBottom(chessBoard, Rank.EIGHT, Team.BLACK);
-        addTopAndBottom(chessBoard, Rank.ONE, Team.WHITE);
         addPawn(chessBoard, Rank.SEVEN, Team.BLACK);
-        addPawn(chessBoard, Rank.TWO, Team.WHITE);
         addBlank(chessBoard);
+        addPawn(chessBoard, Rank.TWO, Team.WHITE);
+        addTopAndBottom(chessBoard, Rank.ONE, Team.WHITE);
         return new ChessBoardAdapter(chessBoard);
     }
 

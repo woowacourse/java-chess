@@ -1,5 +1,5 @@
 package chess.observer;
 
-public interface Observable {
-    void update(Object object);
+public interface Observable<T> {
+    void update(T t);
 }

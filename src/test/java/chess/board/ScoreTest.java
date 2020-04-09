@@ -69,4 +69,5 @@ class ScoreTest {
         //then
         assertThat(sumOfBlack).isEqualTo(expect);
     }
+
 }

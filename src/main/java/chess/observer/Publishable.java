@@ -1,7 +1,7 @@
 package chess.observer;
 
-public interface Publishable {
+public interface Publishable<T> {
     void subscribe(Observable observable);
 
-    void push(Object object);
+    void push(T t);
 }

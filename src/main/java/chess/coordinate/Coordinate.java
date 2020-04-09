@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public final class Coordinate {
+public final class Coordinate implements Comparable<Coordinate> {
     private final File file;
     private final Rank rank;
 
@@ -36,7 +36,30 @@ public final class Coordinate {
         return new Vector(this.file.subtract(source.file), this.rank.subtract(source.rank));
     }
 
+    @Override
+    public int compareTo(Coordinate o) {
+        int file = this.file.getValue();
+        int rank = this.rank.getValue();
+        int otherFile = o.file.getValue();
+        int otherRank = o.rank.getValue();
+
+        int rankCompare = Integer.compare(otherRank, rank);
+        if (rankCompare == 0) {
+            return Integer.compare(file, otherFile);
+        }
+        return rankCompare;
+    }
+
+    public String getRawKey() {
+        return this.file.getSymbol() + this.rank.getValue();
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
     private static class CoordinateCache {
+
         private static final Map<String, Coordinate> cache;
 
         static {
@@ -49,9 +72,6 @@ public final class Coordinate {
             return Arrays.stream(Rank.values())
                     .map(rank -> new Coordinate(file, rank));
         }
-    }
 
-    public Rank getRank() {
-        return rank;
     }
 }
