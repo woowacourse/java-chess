@@ -14,7 +14,7 @@ import static spark.Spark.*;
 
 public class WebChessController {
 
-    private static final String MOVE_SUCCESS = "";
+    private static final String SUCCESS = "";
 
     private ChessBoard chessBoard;
     private Service service;
@@ -30,14 +30,11 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-        get("/chessStart", (req, res) -> {
-            Map<String, Object> model;
-
+        post("/chessStart", (req, res) -> {
             service.initialChessBoard();
             chessBoard = service.createInitialChessBoard();
-            model = service.settingChessBoard(chessBoard);
 
-            return render(model, "contents/chess.html");
+            return SUCCESS;
         });
 
         get("/chess", (req, res) -> {
@@ -51,10 +48,8 @@ public class WebChessController {
 
 
         post("/move", (req, res) -> {
-             Map<String, Object> model = new HashMap<>();
             ChessPositionDTO chessPositionDTO =
                     new ChessPositionDTO(req.queryParams("source"), req.queryParams("target"));
-
             try {
                 service.moveChessBoard(chessBoard, chessPositionDTO);
                 chessBoard.playerTurnChange();
@@ -62,12 +57,11 @@ public class WebChessController {
                 if (chessBoard.isCaughtKing()) {
                     return chessBoard.getPlayerColor().getColor() + "이 승리했습니다!";
                 }
-                return MOVE_SUCCESS;
+                return SUCCESS;
             } catch (Exception e) {
                 res.status(403);
                 return e.getMessage();
             }
-
         });
 
         post("/status", (req, res) -> {

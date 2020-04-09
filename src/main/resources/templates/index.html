@@ -8,6 +8,7 @@
     <link href="css/index.css" rel="stylesheet"/>
     <link href="css/fontawesome.min.css" rel="stylesheet"/>
     <link href="css/all.min.css" rel="stylesheet"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </head>
 <body>
 <div id="wrapper">
@@ -19,10 +20,10 @@
     <nav>
         <div class="wrapper">
             <div class="box">
-                <form action="/chessStart" method="get">
-                    <input type="submit" value="&#xf197;" class="fa-3x">
+                <form>
+                    <input type="button" onclick="chessStart()" value="&#xf197;" class="fa-3x">
                 </form>
-                <span class="arrowIcon">새로 시작</span>
+                    <span class="arrowIcon">새로 시작</span>
             </div>
             <div class="box">
                 <form action="/chess" method="get">
@@ -42,5 +43,24 @@
         </p>
     </footer>
 </div>
+<script>
+    function chessStart() {
+
+
+        $.ajax({
+            type: "post",
+            url: "/chessStart",
+
+            dataType: "text",
+            success: function (data, status, jqXHR) {
+                location.href = '/chess';
+            },
+            error: function (jqXHR) {
+                console.log('error');
+                alert(jqXHR.responseText);
+            }
+        });
+    }
+</script>
 </body>
 </html>

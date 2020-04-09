@@ -7,7 +7,7 @@
 }
 
 
-input[type="submit"] {
+input[type="submit"],input[type="button"] {
     font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;
     border-radius: 10px;
