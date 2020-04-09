@@ -1,5 +1,6 @@
 package chess;
 
+import controller.ChessRoomsController;
 import dao.*;
 import dao.exceptions.DaoNoneSelectedException;
 import domain.command.exceptions.CommandTypeException;
@@ -16,10 +17,11 @@ import domain.state.State;
 import domain.state.StateType;
 import domain.state.exceptions.StateException;
 import domain.team.Team;
-import dto.*;
-import service.RoomService;
+import dto.AnnouncementDto;
+import dto.PieceDto;
+import dto.StateDto;
+import dto.StatusRecordWithRoomNameDto;
 import spark.ModelAndView;
-import spark.Response;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import view.Announcement;
@@ -27,33 +29,23 @@ import view.BoardToTable;
 import view.board.Board;
 
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class WebUIChessApplication {
-	private final static HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
-	private final static RoomService ROOM_SERVICE = new RoomService();
+	private static final int PORT = 8080;
+	private static final String STATIC_FILES = "/statics";
+	private static final HandlebarsTemplateEngine HANDLEBARS_TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
+	private static final ChessRoomsController ROOM_CONTROLLER = ChessRoomsController.getInstance();
 
 	public static void main(String[] args) {
-		Spark.port(8080);
-		Spark.staticFiles.location("/statics");
+		Spark.port(PORT);
+		Spark.staticFiles.location(STATIC_FILES);
 
-		Spark.get("/chess/rooms", (request, response) -> {
-			final List<RoomDto> rooms = ROOM_SERVICE.findAllRooms();
-			final Map<String, Object> map = new HashMap<>();
-			map.put("rooms", rooms);
-			return render(map, "/rooms.html");
-		});
-
-		Spark.post("/chess/rooms", (request, response) -> {
-			final String roomName = request.queryParams("room_name");
-			return responseToEnterOrCreateRoom(response, roomName);
-		});
-
-		Spark.delete("/chess/rooms", (request, response) -> {
-			final String roomName = request.queryParams("room_name");
-			return responseToDeleteRoom(response, roomName);
-		});
+		ROOM_CONTROLLER.run();
 
 		Spark.get("/chess/rooms/:id", (request, response) -> {
 			final int roomId = Integer.parseInt(request.params(":id"));
@@ -113,24 +105,6 @@ public class WebUIChessApplication {
 		});
 	}
 
-	private static String responseToEnterOrCreateRoom(final Response response, final String roomName) throws SQLException {
-		final RoomDao roomDao = new RoomDao();
-		try {
-			final RoomDto roomDto = roomDao.findRoomByRoomName(roomName);
-			response.redirect("/chess/rooms/" + roomDto.getId());
-		} catch (DaoNoneSelectedException e) {
-			final int resultNum = roomDao.addRoomByRoomName(roomName);
-			response.redirect("/chess/rooms");
-		}
-		return "";
-	}
-
-	private static String responseToDeleteRoom(final Response response, final String roomName) throws SQLException {
-		final RoomDao roomDao = new RoomDao();
-		final int resultNum = roomDao.deleteRoomByRoomName(roomName);
-		response.redirect("/chess/rooms");
-		return "";
-	}
 
 	private static String responseWhenHasState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
