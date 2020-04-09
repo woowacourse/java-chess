@@ -17,7 +17,7 @@ public enum OperationType {
 	private final String name;
 	private final BooleanSupplier operationHandler;
 
-	OperationType(String name,  BooleanSupplier operationHandler) {
+	OperationType(String name, BooleanSupplier operationHandler) {
 		this.name = name;
 		this.operationHandler = operationHandler;
 	}
