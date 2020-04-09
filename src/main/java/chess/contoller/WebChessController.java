@@ -3,20 +3,15 @@ package chess.contoller;
 import chess.dao.ChessBoardDao;
 import chess.dao.ChessGameDao;
 import chess.domain.*;
-import chess.domain.dto.ChessBoardAssembler;
-import chess.domain.dto.PieceAssembler;
-import chess.domain.dto.PieceNameConverter;
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
+import chess.dto.ChessBoardAssembler;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class WebChessController {
 	private ChessGame chessGame;
@@ -32,48 +27,29 @@ public class WebChessController {
 
 	public String startGame(Request request, Response response) {
 		chessGame = new ChessGame(ChessBoardFactory.create());
-		try {
-			gameId = chessGameDao.add(chessGame.getTurn());
-			chessBoardDao.addPieces(PieceAssembler.createDtos(chessGame.getChessBoard()), gameId);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			renderStartError(e);
-		}
+		gameId = chessGameDao.add(chessGame.getTurn());
+		chessBoardDao.addPieces(chessGame.getChessBoard(), gameId);
 		return render();
 	}
 
-	public String continueGame(Request request, Response response) {
+	public String continueGame(Request request, Response response) throws RuntimeException {
 		try {
 			gameId = Integer.parseInt(request.queryParams("gameId"));
-			List<Piece> pieces = chessBoardDao.findByGameId(gameId)
-					.stream()
-					.map(PieceNameConverter::toPiece)
-					.collect(Collectors.toList());
-			chessGame = new ChessGame(new ChessBoard(pieces), chessGameDao.findTrunByGameId(gameId));
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return renderStartError(e);
+		} catch (NumberFormatException e) {
+			throw new RuntimeException("게임 id를 입력해주세요.");
 		}
+		ChessBoard chessBoard = chessBoardDao.findByGameId(gameId);
+		chessGame = new ChessGame(chessBoard, chessGameDao.findTrunByGameId(gameId));
 		return render();
 	}
 
 	public String runGame(Request request, Response response) {
-		try {
-			chessGame.move(new Position(request.queryParams("source")), new Position(request.queryParams("target")));
-			chessBoardDao.deleteByGameId(gameId);
-			chessBoardDao.addPieces(PieceAssembler.createDtos(chessGame.getChessBoard()), gameId);
-			chessGameDao.updateTurn(gameId, chessGame.getTurn());
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			return renderError(e);
-		}
+		chessGame.move(Position.of(request.queryParams("source")), Position.of(request.queryParams("target")));
+		chessBoardDao.deleteByGameId(gameId);
+		chessBoardDao.addPieces(chessGame.getChessBoard(), gameId);
+		chessGameDao.updateTurn(gameId, chessGame.getTurn());
 		if (chessGame.isEnd()) {
-			try {
-				chessGameDao.deleteByGameId(gameId);
-			} catch (Exception e) {
-				System.out.println(e.getMessage());
-				renderError(e);
-			}
+			chessGameDao.deleteByGameId(gameId);
 			return renderEnd();
 		}
 		return render();
@@ -85,12 +61,7 @@ public class WebChessController {
 
 	public String endGame(Request request, Response response) {
 		chessGame.end();
-		try {
-			chessBoardDao.deleteByGameId(gameId);
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			renderError(e);
-		}
+		chessBoardDao.deleteByGameId(gameId);
 		return renderEnd();
 	}
 
@@ -111,15 +82,17 @@ public class WebChessController {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, "end.html"));
 	}
 
-	private String renderStartError(Exception e) {
+	public void renderStartError(Exception e, Request request, Response response) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("error", e.getMessage());
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, "starterror.html"));
+		response.status(400);
+		response.body(new HandlebarsTemplateEngine().render(new ModelAndView(model, "starterror.html")));
 	}
 
-	private String renderError(Exception e) {
+	public void renderError(Exception e, Request request, Response response) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("error", e.getMessage());
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, "error.html"));
+		response.status(400);
+		response.body(new HandlebarsTemplateEngine().render(new ModelAndView(model, "error.html")));
 	}
 }

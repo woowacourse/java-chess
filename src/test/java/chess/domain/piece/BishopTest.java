@@ -13,7 +13,7 @@ class BishopTest {
 	@CsvSource(value = {"d1,false", "d8,false", "a4,false", "f4,false", "c3,true", "b2,true", "b3,false"})
 	@DisplayName("갈 수 있는 지 확인")
 	void canMove(String target, boolean expected) {
-		Piece piece = new Bishop(Side.WHITE, new Position("d4"));
-		assertThat(piece.canMove(new Position(target))).isEqualTo(expected);
+		Piece piece = new Bishop(Side.WHITE, Position.of("d4"));
+		assertThat(piece.canMove(Position.of(target))).isEqualTo(expected);
 	}
 }

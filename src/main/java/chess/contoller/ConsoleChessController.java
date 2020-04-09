@@ -5,8 +5,8 @@ import chess.domain.ChessBoardFactory;
 import chess.domain.ChessGame;
 import chess.domain.ChessStatus;
 import chess.domain.Side;
-import chess.domain.dto.ChessBoardAssembler;
 import chess.domain.position.Position;
+import chess.dto.ChessBoardAssembler;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -36,7 +36,7 @@ public class ConsoleChessController {
 				break;
 			case MOVE:
 				userCommand.validateOptionCount();
-				chessGame.move(new Position(userCommand.pollOption()), new Position(userCommand.pollOption()));
+				chessGame.move(Position.of(userCommand.pollOption()), Position.of(userCommand.pollOption()));
 				OutputView.printBoard(ChessBoardAssembler.create(chessGame.getChessBoard()));
 				break;
 			case STATUS:

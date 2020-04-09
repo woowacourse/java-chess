@@ -1,6 +1,11 @@
 package chess.dao;
 
-import chess.domain.dto.PieceDto;
+import chess.domain.ChessBoard;
+import chess.domain.piece.Piece;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
+import chess.dto.PieceNameConverter;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -9,45 +14,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoardDao extends DaoTemplate {
-	public void add(PieceDto pieceDto, int gameId) throws SQLException {
+	public void addPieces(ChessBoard chessBoard, int gameId) throws RuntimeException {
 		String query = "INSERT INTO piece VALUES (?, ?, ?, ?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-			pstmt.setString(1, pieceDto.getName());
-			pstmt.setInt(2, pieceDto.getCol());
-			pstmt.setInt(3, pieceDto.getRow());
-			pstmt.setInt(4, gameId);
-			pstmt.executeUpdate();
+			for (Piece piece : chessBoard.getPieces()) {
+				Position position = piece.getPosition();
+				Column column = position.getCol();
+				Row row = position.getRow();
+				pstmt.setString(1, PieceNameConverter.toName(piece));
+				pstmt.setInt(2, column.getValue());
+				pstmt.setInt(3, row.getSymbol());
+				pstmt.setInt(4, gameId);
+				pstmt.addBatch();
+			}
+			pstmt.executeBatch();
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 데이터 삽입 중 오류가 발생했습니다.");
 		}
 	}
 
-	public void addPieces(List<PieceDto> pieceDtos, int gameId) throws SQLException {
-		for (PieceDto pieceDto : pieceDtos) {
-			add(pieceDto, gameId);
-		}
-	}
-
-	public void deleteByGameId(int gameId) throws SQLException {
+	public void deleteByGameId(int gameId) throws RuntimeException {
 		String query = "DELETE FROM piece WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
 			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 데이터 제거 중 오류가 발생했습니다.");
 		}
 	}
 
-	public List<PieceDto> findByGameId(int gameId) throws SQLException {
-		List<PieceDto> piecesDtos = new ArrayList<>();
+	public ChessBoard findByGameId(int gameId) throws RuntimeException {
+		List<Piece> pieces = new ArrayList<>();
 		String query = "SELECT * FROM piece WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
 			try (ResultSet rs = pstmt.executeQuery()) {
 				while (rs.next()) {
-					piecesDtos.add(new PieceDto(rs.getString("name"), rs.getInt("col"), rs.getInt("row")));
+					pieces.add(PieceNameConverter.toPiece(rs.getString("name"), rs.getInt("col"), rs.getInt("row")));
 				}
-				if (piecesDtos.isEmpty()) {
+				if (pieces.isEmpty()) {
 					throw new IllegalArgumentException("id에 해당하는 정보가 없습니다.");
 				}
-				return piecesDtos;
+				return new ChessBoard(pieces);
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 검색 중 오류가 발생했습니다.");
 		}
 	}
 }

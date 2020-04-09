@@ -24,9 +24,9 @@ class ChessStatusTest {
 	@Test
 	@DisplayName("체스판 점수 계산 - 폰이 같은 줄에 있을 때")
 	void calculateScoreWithPawnsInSameColumn() {
-		List<Piece> pieces = Arrays.asList(new Pawn(Side.WHITE, new Position("c2")),
-				new Pawn(Side.WHITE, new Position("c3")),
-				new Pawn(Side.WHITE, new Position("c4")));
+		List<Piece> pieces = Arrays.asList(new Pawn(Side.WHITE, Position.of("c2")),
+				new Pawn(Side.WHITE, Position.of("c3")),
+				new Pawn(Side.WHITE, Position.of("c4")));
 		chessStatus = new ChessStatus(pieces);
 		assertThat(chessStatus.calculateScore(Side.WHITE)).isEqualTo(1.5);
 	}

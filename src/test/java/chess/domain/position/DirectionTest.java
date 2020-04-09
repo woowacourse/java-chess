@@ -19,11 +19,11 @@ class DirectionTest {
 
 	private static Stream<Arguments> provideDirection() {
 		return Stream.of(
-				Arguments.of(Direction.COL, new Position("a8"), new Position("a7")),
-				Arguments.of(Direction.ROW, new Position("a8"), new Position("b8")),
-				Arguments.of(Direction.NEGATIVE_DIAGONAL, new Position("a8"), new Position("c6")),
-				Arguments.of(Direction.POSITIVE_DIAGONAL, new Position("c5"), new Position("e7")),
-				Arguments.of(Direction.NON_LINEAR, new Position("a8"), new Position("d7"))
+				Arguments.of(Direction.COL, Position.of("a8"), Position.of("a7")),
+				Arguments.of(Direction.ROW, Position.of("a8"), Position.of("b8")),
+				Arguments.of(Direction.NEGATIVE_DIAGONAL, Position.of("a8"), Position.of("c6")),
+				Arguments.of(Direction.POSITIVE_DIAGONAL, Position.of("c5"), Position.of("e7")),
+				Arguments.of(Direction.NON_LINEAR, Position.of("a8"), Position.of("d7"))
 		);
 	}
 
@@ -36,10 +36,10 @@ class DirectionTest {
 
 	private static Stream<Arguments> provideDirectionAndBoolean() {
 		return Stream.of(
-				Arguments.of(Direction.COL, new Position("a8"), new Position("a7"), true),
-				Arguments.of(Direction.ROW, new Position("a8"), new Position("b8"), true),
-				Arguments.of(Direction.POSITIVE_DIAGONAL, new Position("a8"), new Position("c6"), false),
-				Arguments.of(Direction.NEGATIVE_DIAGONAL, new Position("c5"), new Position("e7"), false)
+				Arguments.of(Direction.COL, Position.of("a8"), Position.of("a7"), true),
+				Arguments.of(Direction.ROW, Position.of("a8"), Position.of("b8"), true),
+				Arguments.of(Direction.POSITIVE_DIAGONAL, Position.of("a8"), Position.of("c6"), false),
+				Arguments.of(Direction.NEGATIVE_DIAGONAL, Position.of("c5"), Position.of("e7"), false)
 		);
 	}
 }

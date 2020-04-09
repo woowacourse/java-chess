@@ -7,6 +7,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
 	public static void main(String[] args) {
 		staticFiles.location("/static");
+
 		WebChessController webChessController = new WebChessController();
 
 		get("/start_game", webChessController::startGame);
@@ -18,5 +19,9 @@ public class WebUIChessApplication {
 		post("/game", webChessController::runGame);
 
 		post("/end", webChessController::endGame);
+
+		exception(RuntimeException.class, webChessController::renderStartError);
+
+		exception(IllegalArgumentException.class, webChessController::renderError);
 	}
 }

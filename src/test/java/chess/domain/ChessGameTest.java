@@ -18,7 +18,7 @@ class ChessGameTest {
 	@DisplayName("게임이 종료되지 않았으면 계속 진행되는 지 테스트")
 	void move() {
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
-		chessGame.move(new Position("a2"), new Position("a4"));
+		chessGame.move(Position.of("a2"), Position.of("a4"));
 		assertThat(chessGame.getTurn()).isEqualTo(Side.BLACK);
 	}
 
@@ -26,10 +26,10 @@ class ChessGameTest {
 	@DisplayName("게임이 종료될 조건인지 확인")
 	void moveAndEnd() {
 		List<Piece> pieces = new ArrayList<>(Arrays.asList(
-				new King(Side.WHITE, new Position("d4")),
-				new King(Side.BLACK, new Position("d5"))));
+				new King(Side.WHITE, Position.of("d4")),
+				new King(Side.BLACK, Position.of("d5"))));
 		ChessGame chessGame = new ChessGame(new ChessBoard(pieces));
-		chessGame.move(new Position("d4"), new Position("d5"));
+		chessGame.move(Position.of("d4"), Position.of("d5"));
 		assertThat(chessGame.isEnd()).isTrue();
 	}
 
@@ -44,7 +44,7 @@ class ChessGameTest {
 	@DisplayName("자기 턴이 아닌 경우에 상대 말을 움직이면 에러 처리")
 	void moveWithOtherSidePiece() {
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
-		assertThatThrownBy(() -> chessGame.move(new Position("a7"), new Position("a6")))
+		assertThatThrownBy(() -> chessGame.move(Position.of("a7"), Position.of("a6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("본인의 말만 움직일 수 있습니다.");
 	}

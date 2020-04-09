@@ -17,12 +17,14 @@ public abstract class DaoTemplate {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			System.out.println(e.getMessage());
+			throw new RuntimeException("jdbc 드라이버를 호출할 수 없습니다.");
 		}
 
 		try {
 			connection = DriverManager.getConnection("jdbc:mysql://" + address + "/" + database + option, id, password);
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());
+			throw new RuntimeException("연결할 수 없습니다.");
 		}
 
 		return connection;

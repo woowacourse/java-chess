@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ChessGameDao extends DaoTemplate {
-	public int add(Side side) throws Exception {
+	public int add(Side side) throws RuntimeException {
 		String query = "INSERT INTO game(turn) VALUES (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			pstmt.setString(1, side.name());
@@ -19,27 +19,33 @@ public class ChessGameDao extends DaoTemplate {
 				}
 				return rs.getInt(1);
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 데이터 삽입 중 오류가 발생했습니다.");
 		}
 	}
 
-	public void updateTurn(int gameId, Side side) throws SQLException {
+	public void updateTurn(int gameId, Side side) throws RuntimeException {
 		String query = "UPDATE game SET turn = (?) WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setString(1, side.name());
 			pstmt.setInt(2, gameId);
 			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 업데이트 중 오류가 발생했습니다.");
 		}
 	}
 
-	public void deleteByGameId(int gameId) throws SQLException {
+	public void deleteByGameId(int gameId) throws RuntimeException {
 		String query = "DELETE FROM game WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
 			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 데이터 삭제 중 오류가 발생했습니다.");
 		}
 	}
 
-	public Side findTrunByGameId(int gameId) throws Exception {
+	public Side findTrunByGameId(int gameId) throws RuntimeException {
 		String query = "SELECT * FROM game WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
@@ -49,6 +55,8 @@ public class ChessGameDao extends DaoTemplate {
 				}
 				return Side.valueOf(rs.getString("turn"));
 			}
+		} catch (SQLException e) {
+			throw new RuntimeException("DB 검색 중 오류가 발생했습니다.");
 		}
 	}
 }

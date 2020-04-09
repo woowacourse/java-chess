@@ -13,7 +13,7 @@ class KnightTest {
 	@CsvSource(value = {"b3,true", "c6,true", "a4,false", "f4,false", "e6,true", "b2,false", "c4,false"})
 	@DisplayName("갈 수 있는 지 확인")
 	void canMove(String target, boolean expected) {
-		Piece piece = new Knight(Side.WHITE, new Position("d4"));
-		assertThat(piece.canMove(new Position(target))).isEqualTo(expected);
+		Piece piece = new Knight(Side.WHITE, Position.of("d4"));
+		assertThat(piece.canMove(Position.of(target))).isEqualTo(expected);
 	}
 }

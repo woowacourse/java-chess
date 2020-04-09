@@ -1,10 +1,13 @@
 package chess.dao;
 
-import chess.domain.dto.PieceDto;
+import chess.domain.ChessBoard;
+import chess.domain.piece.Piece;
+import chess.dto.PieceNameConverter;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -26,21 +29,17 @@ class ChessBoardDaoTest {
 	}
 
 	@Test
-	void add() throws Exception {
-		chessBoardDao.add(new PieceDto("\u265A", 1, 1), 1);
-	}
-
-	@Test
 	void delete() throws Exception {
 		chessBoardDao.deleteByGameId(0);
 	}
 
 	@Test
 	void crud() throws Exception {
-		PieceDto pieceDto = new PieceDto("\u265A", 1, 1);
+		Piece piece = PieceNameConverter.toPiece("\u265A", 1, 1);
+		ChessBoard chessBoard = new ChessBoard(Collections.singletonList(piece));
 		chessBoardDao.deleteByGameId(0);
-		chessBoardDao.add(pieceDto, 0);
-		assertThat(chessBoardDao.findByGameId(0)).contains(pieceDto);
+		chessBoardDao.addPieces(chessBoard, 0);
+		assertThat(chessBoardDao.findByGameId(0).getPieces().get(0)).isEqualToComparingFieldByField(piece);
 	}
 
 	@Test

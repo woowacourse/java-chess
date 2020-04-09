@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import chess.domain.Side;
 import chess.domain.piece.*;
@@ -32,10 +32,6 @@ public enum PieceNameConverter {
 				.orElseThrow(AssertionError::new);
 	}
 
-	public static Piece toPiece(PieceDto pieceDto) {
-		return toPiece(pieceDto.getName(), pieceDto.getCol(), pieceDto.getRow());
-	}
-
 	public static Piece toPiece(String name, int col, int row) {
 		return Arrays.stream(values())
 				.filter(pieceInfo -> pieceInfo.blackName.equals(name))
@@ -54,7 +50,7 @@ public enum PieceNameConverter {
 
 	private Piece createPiece(Side side, int col, int row) {
 		try {
-			return pieceClass.getDeclaredConstructor(Side.class, Position.class).newInstance(side, new Position(col, row));
+			return pieceClass.getDeclaredConstructor(Side.class, Position.class).newInstance(side, Position.of(col, row));
 		} catch (Exception e) {
 			throw new RuntimeException(e.getMessage());
 		}
