@@ -8,6 +8,7 @@ import chess.model.domain.piece.Color;
 import chess.model.dto.MoveDto;
 import chess.model.dto.PromotionTypeDto;
 import chess.model.dto.ResultDto;
+import chess.model.dto.SourceDto;
 import chess.model.service.ChessGameService;
 import com.google.gson.Gson;
 import java.util.HashMap;
@@ -32,22 +33,27 @@ public class ApplicationUI {
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Map<Color, String> userNames = getUserNames(req);
-            String gameId = chessGameService.getId("r01");
-            model.put("gameId", gameId);
-            chessGameService.createChessGame(gameId, userNames);
+            model.put("gameId", chessGameService.createChessGame(1, userNames));
             return render(model, "/game.html");
         });
 
         post("/followGame", (req, res) -> {
+            Map<Color, String> userNames = new HashMap<>();
+            userNames.put(Color.BLACK, "BLACK");
+            userNames.put(Color.WHITE, "WHITE");
             Map<String, Object> model = new HashMap<>();
-            String gameIdBefore = chessGameService.getIdBefore("r01");
-            model.put("gameId", gameIdBefore);
+            model.put("gameId", chessGameService.getIdBefore(1));
             return render(model, "/game.html");
         });
 
         post("/move", (req, res) -> {
             MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
             return new Gson().toJson(chessGameService.move(moveDTO));
+        });
+
+        post("/path", (req, res) -> {
+            SourceDto sourceDto = gson.fromJson(req.body(), SourceDto.class);
+            return new Gson().toJson(chessGameService.getPath(sourceDto));
         });
 
         post("/promotion", (req, res) -> {

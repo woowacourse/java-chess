@@ -68,6 +68,10 @@
             vertical-align: middle;
             border: 6px solid lightyellow;
         }
+
+        .path {
+            background-color: indianred;
+        }
     </style>
 </head>
 <body>
@@ -194,6 +198,19 @@
                 document.getElementById('clickTiming').innerText
                     = '말이 이동할 경로(after)를 선택하세요.';
                 cell.style.backgroundColor = 'STEELBLUE';
+                fetch('/path', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        source, gameId
+                    })
+                }).then(res => res.json()).then(data => {
+                    cells.forEach(cell => {
+                        cell.classList.remove('path');
+                    })
+                    data.path.forEach(path => {
+                        document.getElementById(path).classList.add('path');
+                    })
+                })
                 return;
             }
             document.getElementById('clickTiming').innerText
@@ -209,6 +226,7 @@
             }).then(res => res.json()).then(data => {
                 cells.forEach(cell => {
                     cell.innerHTML = data.pieces.shift();
+                    cell.classList.remove('path');
                 }),
                     turn.innerText = data.turn,
                     state.innerText = data.state
@@ -228,6 +246,7 @@
             }).then(res => res.json()).then(data => {
                 cells.forEach(cell => {
                     cell.innerHTML = data.pieces.shift();
+                    cell.classList.remove('path');
                 }),
                     turn.innerText = data.turn,
                     state.innerText = data.state
@@ -243,6 +262,7 @@
     }).then(res => res.json()).then(data => {
         cells.forEach(cell => {
                 cell.innerHTML = data.pieces.shift();
+                cell.classList.remove('path');
             },
             turn.innerText = data.turn,
             state.innerText = data.state

@@ -40,7 +40,7 @@ class ChessResultDaoTest {
         TeamScore defaultTeamScore = new ChessGame().getTeamScore();
         Map<Color, Double> teamScore = defaultTeamScore.getTeamScore();
         Map<Color, Double> teamScoreUpdate = new HashMap<>(teamScore);
-        String gameId = "T01-20200405-001";
+        int gameId = 1;
 
         // Select
         assertThat(chessResultDao.selectTeamScore(gameId)).isEmpty();

@@ -4,9 +4,9 @@ public class MoveDto {
 
     private final String source;
     private final String target;
-    private final String gameId;
+    private final int gameId;
 
-    public MoveDto(String source, String target, String gameId) {
+    public MoveDto(String source, String target, int gameId) {
         this.source = source;
         this.target = target;
         this.gameId = gameId;
@@ -20,7 +20,7 @@ public class MoveDto {
         return target;
     }
 
-    public String getGameId() {
+    public int getGameId() {
         return gameId;
     }
 }

@@ -14,6 +14,7 @@ import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -124,6 +125,17 @@ public class ChessGame {
         board.putAll(enPassant.getEnPassantBoard(gameTurn));
         return movePieceBefore.getCheatSheet(moveSquareBefore, board, castlingElements)
             .contains(moveSquareAfter);
+    }
+
+    public Set<BoardSquare> getCheatSheet(BoardSquare beforeSquare) {
+        Piece beforePiece = chessBoard.get(beforeSquare);
+        if (!chessBoard.containsKey(beforeSquare) || !beforePiece.isSameColor(gameTurn)) {
+            return new HashSet<>();
+        }
+        Map<BoardSquare, Piece> board = new HashMap<>();
+        board.putAll(chessBoard);
+        board.putAll(enPassant.getEnPassantBoard(gameTurn));
+        return beforePiece.getCheatSheet(beforeSquare, board, castlingElements);
     }
 
     public boolean isPawnSpecialMove(MoveSquare moveSquare) {
