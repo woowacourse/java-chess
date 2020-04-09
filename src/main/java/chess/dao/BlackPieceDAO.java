@@ -29,43 +29,9 @@ public class BlackPieceDAO {
             "('g8','n')," +
             "('h8','r')";
 
-    private Connection con = null;
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
-
-    public Connection getConnection() {
-        String server = "localhost:3306";
-        String database = "chessBoard";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "1234";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
-    }
-
-    private void closeConnection() {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
+    private ConnectionDAO connectionDAO = new ConnectionDAO();
 
     private void closeResultSet() {
         try {
@@ -86,41 +52,44 @@ public class BlackPieceDAO {
     }
 
     public void deleteBlackTable() {
+        Connection connection = connectionDAO.getConnection();
+
         try {
             String dropQuery = "DELETE FROM black";
-            preparedStatement = getConnection().prepareStatement(dropQuery);
+            preparedStatement = connection.prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("deleteBlackTable 오류:" + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void insertInitialBlackPiece() {
-
-        String setBlackPieceQuery = "INSERT INTO black VALUES " +
-                BLACK_INITIAL_BOARD;
+        Connection connection = connectionDAO.getConnection();
 
         try {
-            preparedStatement = getConnection().prepareStatement(setBlackPieceQuery);
+            String setBlackPieceQuery = "INSERT INTO black VALUES " +
+                    BLACK_INITIAL_BOARD;
+            preparedStatement = connection.prepareStatement(setBlackPieceQuery);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("insertBoard 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void selectBlackBoard(Map<Position, ChessPiece> chessBoard) {
-        String setBlackQuery = "SELECT * FROM black";
+        Connection connection = connectionDAO.getConnection();
 
         try {
-            preparedStatement = getConnection().prepareStatement(setBlackQuery);
+            String setBlackQuery = "SELECT * FROM black";
+            preparedStatement = connection.prepareStatement(setBlackQuery);
 
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -134,14 +103,16 @@ public class BlackPieceDAO {
         } finally {
             closeResultSet();
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void updatePiece(ChessPositionDTO chessPositionDTO) {
-        String query = "UPDATE black SET position = ? WHERE position = ?";
+        Connection connection = connectionDAO.getConnection();
+
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "UPDATE black SET position = ? WHERE position = ?";
+            preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.setString(2, chessPositionDTO.getSourcePosition());
@@ -151,14 +122,16 @@ public class BlackPieceDAO {
             System.err.println("updatePiece 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void deleteCaughtPiece(ChessPositionDTO chessPositionDTO) {
-        String query = "DELETE  FROM black WHERE position = ?";
+        Connection connection = connectionDAO.getConnection();
+
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "DELETE  FROM black WHERE position = ?";
+            preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.executeUpdate();
@@ -167,7 +140,7 @@ public class BlackPieceDAO {
             System.err.println("deleteCaughtPiece 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 }

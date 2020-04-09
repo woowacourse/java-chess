@@ -29,41 +29,17 @@ public class WhitePieceDAO {
             "('g1','N')," +
             "('h1','R')";
 
-    private Connection con = null;
+    private ConnectionDAO connectionDAO = new ConnectionDAO();
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
 
-    public Connection getConnection() {
-        String server = "localhost:3306";
-        String database = "chessBoard";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "1234";
 
+    private void closePrepareStatement() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
+            if (preparedStatement != null)
+                preparedStatement.close();
         } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
-    }
-
-    private void closeConnection() {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            System.err.println("preparedStatement 오류:" + e.getMessage());
         }
     }
 
@@ -76,51 +52,45 @@ public class WhitePieceDAO {
         }
     }
 
-    private void closePrepareStatement() {
-        try {
-            if (preparedStatement != null)
-                preparedStatement.close();
-        } catch (SQLException e) {
-            System.err.println("preparedStatement 오류:" + e.getMessage());
-        }
-    }
-
     public void deleteWhiteTable() {
+        Connection connection = connectionDAO.getConnection();
+
         try {
             String dropQuery = "DELETE FROM white";
-            preparedStatement = getConnection().prepareStatement(dropQuery);
+            preparedStatement = connection.prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("deleteWhiteTable 오류:" + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
 
     public void insertInitialWhitePiece() {
-        String setWhitePieceQuery = "INSERT INTO white VALUES " +
-                WHITE_INITIAL_BOARD;
+        Connection connection = connectionDAO.getConnection();
 
         try {
-            preparedStatement = getConnection().prepareStatement(setWhitePieceQuery);
+            String setWhitePieceQuery = "INSERT INTO white VALUES " +
+                    WHITE_INITIAL_BOARD;
+            preparedStatement = connection.prepareStatement(setWhitePieceQuery);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("insertBoard 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
 
     }
 
     public void selectWhiteBoard(Map<Position, ChessPiece> chessBoard) {
-        String setWhiteQuery = "SELECT * FROM white";
-
+        Connection connection = connectionDAO.getConnection();
         try {
-            preparedStatement = getConnection().prepareStatement(setWhiteQuery);
+            String setWhiteQuery = "SELECT * FROM white";
+            preparedStatement = connection.prepareStatement(setWhiteQuery);
 
             resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -134,14 +104,15 @@ public class WhitePieceDAO {
         } finally {
             closeResultSet();
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void updatePiece(ChessPositionDTO chessPositionDTO) {
-        String query = "UPDATE white SET position = ? WHERE position = ?";
+        Connection connection = connectionDAO.getConnection();
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "UPDATE white SET position = ? WHERE position = ?";
+            preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.setString(2, chessPositionDTO.getSourcePosition());
@@ -151,14 +122,15 @@ public class WhitePieceDAO {
             System.err.println("updatePiece 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void deleteCaughtPiece(ChessPositionDTO chessPositionDTO) {
-        String query = "DELETE  FROM white WHERE position = ?";
+        Connection connection = connectionDAO.getConnection();
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "DELETE  FROM white WHERE position = ?";
+            preparedStatement = connection.prepareStatement(query);
 
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.executeUpdate();
@@ -167,7 +139,7 @@ public class WhitePieceDAO {
             System.err.println("deleteCaughtPiece 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 }

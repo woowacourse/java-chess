@@ -5,43 +5,11 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 import java.sql.*;
 
 public class PlayerTurnDAO {
-    private Connection con = null;
+
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
+    private ConnectionDAO connectionDAO = new ConnectionDAO();
 
-    public Connection getConnection() {
-        String server = "localhost:3306";
-        String database = "chessBoard";
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root";
-        String password = "1234";
-
-        try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
-        }
-
-        try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
-            System.out.println("정상적으로 연결되었습니다.");
-        } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
-        }
-
-        return con;
-    }
-
-    private void closeConnection() {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
 
     private void closeResultSet() {
         try {
@@ -63,37 +31,42 @@ public class PlayerTurnDAO {
     }
 
     public void deletePlayerTurn() {
+        Connection connection = connectionDAO.getConnection();
         try {
             String dropQuery = "DELETE FROM playerTurn";
-            preparedStatement = getConnection().prepareStatement(dropQuery);
+            preparedStatement = connection.prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("deletePlayerTurn 오류:" + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public void insertInitialPlayerTurn() {
-        String query = "INSERT INTO playerTurn VALUES ('WHITE')";
+        Connection connection = connectionDAO.getConnection();
+
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "INSERT INTO playerTurn VALUES ('WHITE')";
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("initialPlayerTurn 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 
     public String selectPlayerTurn() {
-        String query = "SELECT * FROM playerTurn";
+        Connection connection = connectionDAO.getConnection();
         String playerTurn = null;
+
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "SELECT * FROM playerTurn";
+            preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 playerTurn = resultSet.getString("turn");
@@ -103,17 +76,20 @@ public class PlayerTurnDAO {
         } finally {
             closeResultSet();
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
         return playerTurn;
     }
 
 
     public void updatePlayerTurn(PieceColor pieceColor) {
-        String query = "UPDATE playerTurn SET turn = ?";
+        Connection connection = connectionDAO.getConnection();
+
         try {
-            preparedStatement = getConnection().prepareStatement(query);
+            String query = "UPDATE playerTurn SET turn = ?";
             String playerTurn = pieceColor.getColor();
+
+            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, playerTurn.toUpperCase());
 
             preparedStatement.executeUpdate();
@@ -121,7 +97,7 @@ public class PlayerTurnDAO {
             System.err.println("updatePlayerTurn 오류: " + e.getMessage());
         } finally {
             closePrepareStatement();
-            closeConnection();
+            connectionDAO.closeConnection();
         }
     }
 }
