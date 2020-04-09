@@ -18,6 +18,7 @@ public class ChessGameController {
     }
 
     public static String move(Request request, Response response) throws SQLException {
+        GameService gameService = GameService.getInstance();
         QueryParamsMap map = request.queryMap();
         String startX = map.get("startX").value();
         String startY = map.get("startY").value();
@@ -26,7 +27,6 @@ public class ChessGameController {
         Position startPosition = Position.of(Coordinate.of(startX), Coordinate.of(startY));
         Position targetPosition = Position.of(Coordinate.of(targetX), Coordinate.of(targetY));
         MovingInfo movingInfo = MovingInfo.of(startPosition, targetPosition);
-        GameService gameService = GameService.getInstance();
 
         return gameService.move(movingInfo);
     }
