@@ -20,5 +20,6 @@ public class WebUIChessApplication {
 		post(GameController.MOVE_URL, GameController::movePiece);
 		get(GameController.STATUS_URL, GameController::showStatus);
 		get(GameController.LOAD_URL, GameController::loadGame);
+		get(GameController.GET_URL, GameController::getMovablePositions);
 	}
 }

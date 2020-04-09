@@ -1,6 +1,7 @@
 package chess.service;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import chess.dao.GameDAO;
 import chess.dao.RoomDAO;
@@ -69,5 +70,15 @@ public class GameService {
 	public String getCurrentColor(final int roomId) throws SQLException {
 		RoomDAO roomDAO = RoomDAO.getInstance();
 		return roomDAO.findRoomColorById(roomId).name();
+	}
+
+	public List<String> getMovablePositions(final int roomId, final String sourcePosition) throws SQLException {
+		GameDAO gameDAO = GameDAO.getInstance();
+		RoomDAO roomDAO = RoomDAO.getInstance();
+
+		Pieces pieces = new Pieces(gameDAO.findAllPiecesById(roomId));
+		GameManager gameManager = new GameManager(pieces, roomDAO.findRoomColorById(roomId));
+
+		return gameManager.getMovablePositions(Position.of(sourcePosition));
 	}
 }

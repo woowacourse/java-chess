@@ -31,6 +31,10 @@
     filter: blur(8px);
 }
 
+.movable {
+    border: 3px solid blue;
+}
+
 #text {
     position: absolute;
     top: 50%;
