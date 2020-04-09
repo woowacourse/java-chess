@@ -11,14 +11,16 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class WebController {
-
     public static final String START_COMMAND = "start";
     public static final String MOVE_COMMAND = "move ";
     public static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
     public static final String TURN_MESSAGE = "의 순서입니다.";
     public static final String WINNER_MESSAGE = "의 승리";
 
-    public static void startGame(Board board, BoardDAO boardDAO, RecordDAO recordDAO) throws SQLException {
+    private static final BoardDAO boardDAO = new BoardDAO();
+    private static final RecordDAO recordDAO = new RecordDAO();
+
+    public static void startGame(Board board) throws SQLException {
         board.initialize();
 
         boardDAO.clearBoard();
@@ -29,8 +31,6 @@ public class WebController {
     }
 
     public static void movePiece(Board board, String source, String target) throws SQLException {
-        BoardDAO boardDAO = new BoardDAO();
-        RecordDAO recordDAO = new RecordDAO();
         Record move = new Record(MOVE_COMMAND + source + " " + target, "");
 
         try {
@@ -46,14 +46,13 @@ public class WebController {
         recordDAO.addRecord(move);
     }
 
-    public static void resumeGame(Board board, RecordDAO recordDAO) throws SQLException {
+    public static void resumeGame(Board board) throws SQLException {
         board.initialize();
         List<Record> records = recordDAO.readRecords();
         board.recoverRecords(records);
     }
 
     public static void endGame(Board board) throws SQLException {
-        RecordDAO recordDAO = new RecordDAO();
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
             recordDAO.addRecord(new Record(GAME_END_MESSAGE, winner + WINNER_MESSAGE));

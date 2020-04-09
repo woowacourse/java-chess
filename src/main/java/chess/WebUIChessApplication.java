@@ -28,7 +28,7 @@ public class WebUIChessApplication {
         });
 
         get("/start", (req, res) -> {
-            WebController.startGame(board, boardDAO, recordDAO);
+            WebController.startGame(board);
 
             Map<String, Object> model = new HashMap<>();
             model.put("records", recordDAO.readRecords());
@@ -41,7 +41,7 @@ public class WebUIChessApplication {
         });
 
         get("/resume", (req, res) -> {
-            WebController.resumeGame(board, recordDAO);
+            WebController.resumeGame(board);
 
             Map<String, Object> model = new HashMap<>();
             model.put("records", recordDAO.readRecords());
