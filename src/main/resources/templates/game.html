@@ -28,18 +28,6 @@
 
     <div>현재 턴은 <span id="turn"></span>입니다.</div>
 
-    <div class="form-row">
-        <div class="col">
-            <input class="form-control" id="sourceInput" placeholder="source position" type="text">
-        </div>
-        <div class="col">
-            <input class="form-control" id="targetInput" placeholder="target position" type="text">
-        </div>
-        <div class="col">
-            <button class="btn btn-primary" id="moveButton" type="submit">이동하기</button>
-        </div>
-    </div>
-
     <button class="btn btn-primary" id="statusButton">점수보기</button>
 
     <button class="btn btn-primary" id="saveButton">저장하기</button>
@@ -174,9 +162,7 @@
         }
 
         function addBorder(movablePosition) {
-            console.log(movablePosition);
             let element = document.getElementById(movablePosition);
-            console.log(element);
             addClass(element, "movable");
         }
 
@@ -189,12 +175,11 @@
             let xhr = new XMLHttpRequest();
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
-                    let chessJson = JSON.parse(xhr.responseText);
-                    movablePositions = chessJson;
+                    movablePositions = JSON.parse(xhr.responseText);
                     applyMovablePosition(movablePositions);
                     isChooseSourcePosition = true;
                 }
-            }
+            };
             xhr.open('GET', '/game/get?roomId={{roomId}}&sourcePosition=' + sourcePosition, true);
             xhr.send();
         }
@@ -263,7 +248,7 @@
                     showCurrentColor(chessJson.currentColor);
 
                 }
-            }
+            };
             xhr.open('GET', '/game/init?roomId={{roomId}}', true);
             xhr.send();
         });
@@ -275,7 +260,7 @@
                     let statusResponse = JSON.parse(xhr.responseText);
                     showStatus(statusResponse.whiteScore, statusResponse.blackScore);
                 }
-            }
+            };
             xhr.open('GET', '/game/status?roomId={{roomId}}', true);
             xhr.send();
         });
@@ -290,7 +275,7 @@
                 } else {
                     alert("불러오지 못했습니다!");
                 }
-            }
+            };
             xhr.open('GET', '/game/load?roomId={{roomId}}', true);
             xhr.send();
         });
@@ -305,10 +290,14 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     let chessJson = JSON.parse(xhr.responseText);
-                    applyPieces(JSON.parse(chessJson.pieces));
-                    let currentColor = chessJson.currentColor;
-                    isKingDead(currentColor, chessJson.kingDead);
-                    showCurrentColor(currentColor);
+                    if (typeof chessJson.errorMessage == "undefined") {
+                        applyPieces(JSON.parse(chessJson.pieces));
+                        let currentColor = chessJson.currentColor;
+                        isKingDead(currentColor, chessJson.kingDead);
+                        showCurrentColor(currentColor);
+                    } else {
+                        alert("아래와 같은 오류가 발생했습니다! : " + chessJson.errorMessage);
+                    }
                 }
             };
             xhr.open('POST', '/game/move?roomId={{roomId}}&sourcePosition='

@@ -4,6 +4,8 @@ import static spark.Spark.*;
 
 import chess.controller.GameController;
 import chess.controller.RoomController;
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 
 public class WebUIChessApplication {
 	public static void main(String[] args) {
@@ -21,5 +23,13 @@ public class WebUIChessApplication {
 		get(GameController.STATUS_URL, GameController::showStatus);
 		get(GameController.LOAD_URL, GameController::loadGame);
 		get(GameController.GET_URL, GameController::getMovablePositions);
+
+		exception(IllegalArgumentException.class, (e, req, res) -> {
+			Gson gson = new Gson();
+			JsonObject object = new JsonObject();
+
+			object.addProperty("errorMessage", e.getMessage());
+			res.body(gson.toJson(object));
+		});
 	}
 }
