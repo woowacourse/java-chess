@@ -11,7 +11,7 @@ public class Connector {
     private static final String USERNAME = "root";
     private static final String PASSWORD = "root";
     private static final String URL = String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION);
-    private static final String WRONG_CONNECTION_MESSAGE = "잘못된 값이 연결 되었습니다";
+    private static final String WRONG_CONNECTION_MESSAGE = "잘못된 값이 연결 되었습니다 속성정보를 확인해주세요";
 
     public static Connection getConnection() {
         try {
