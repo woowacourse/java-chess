@@ -1,7 +1,13 @@
 package chess.piece;
 
 public enum Team {
-    BLACK, WHITE, NONE;
+    BLACK('B'), WHITE('W'), NONE(' ');
+
+    private final char symbol;
+
+    Team(char symbol) {
+        this.symbol = symbol;
+    }
 
     public boolean isBlack() {
         return this == BLACK;
@@ -17,5 +23,9 @@ public enum Team {
 
     public Team getOppositeTeam() {
         return isWhite() ? BLACK : WHITE;
+    }
+
+    public char getSymbol() {
+        return symbol;
     }
 }

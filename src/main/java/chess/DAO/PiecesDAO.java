@@ -1,5 +1,6 @@
 package chess.DAO;
 
+import chess.DBConnector;
 import chess.piece.Piece;
 import chess.position.Position;
 
@@ -14,8 +15,8 @@ public class PiecesDAO {
 
     private final Connection conn;
 
-    public PiecesDAO(Connection conn) {
-        this.conn = conn;
+    public PiecesDAO() {
+        this.conn = DBConnector.getConnection();
     }
 
     public Map<Position, Piece> load() throws SQLException {

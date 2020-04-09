@@ -10,7 +10,7 @@ import chess.strategy.NormalInitStrategy;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
 
-public class ConsoleChessGame {
+public class ConsoleChessController {
     private final Board board = new Board(new NormalInitStrategy());
 
     public void run() {

@@ -1,5 +1,6 @@
 package chess.DAO;
 
+import chess.DBConnector;
 import chess.piece.Team;
 
 import java.sql.Connection;
@@ -11,11 +12,11 @@ public class TurnDAO {
 
     private final Connection conn;
 
-    public TurnDAO(Connection conn) {
-        this.conn = conn;
+    public TurnDAO() {
+        this.conn = DBConnector.getConnection();
     }
 
-    public Team load() throws SQLException {
+    public Team  load() throws SQLException {
         String query = "SELECT * FROM turn";
         PreparedStatement pstmt = conn.prepareStatement(query);
         ResultSet rs = pstmt.executeQuery();

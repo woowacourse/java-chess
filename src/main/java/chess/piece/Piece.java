@@ -76,6 +76,13 @@ public class Piece {
         return team.isBlack() ? pieceType.getUpperCaseInitialCharacter() : pieceType.getLowerCaseInitialCharacter();
     }
 
+    public String getKey() {
+        if (isEmpty()) {
+            return ".";
+        }
+        return Character.toString(team.getSymbol()) + getSymbol();
+    }
+
     public boolean getHasMoved() {
         return this.hasMoved;
     }

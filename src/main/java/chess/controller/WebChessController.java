@@ -1,8 +1,11 @@
-package chess;
+package chess.controller;
 
-import chess.controller.WebChessGame;
+import chess.DAO.PiecesDAO;
+import chess.DAO.TurnDAO;
+import chess.DTO.BoardDTO;
+import chess.Scores;
 import chess.exception.InvalidMovementException;
-import chess.view.WebOutputView;
+import chess.service.ChessGameService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -12,14 +15,17 @@ import java.util.Map;
 
 import static spark.Spark.*;
 
-public class WebUIChessApplication {
+public class WebChessController {
     public static void main(String[] args) throws SQLException {
         staticFiles.location("/public");
-        WebChessGame game = new WebChessGame();
+        ChessGameService service = new ChessGameService(new PiecesDAO(), new TurnDAO());
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("board", WebOutputView.printBoard(game.getBoard()));
+            if (service.isEmpty()) {
+                service.init();
+            }
+            constructModel(service, model);
             return render(model, "index.html");
         });
 
@@ -28,30 +34,42 @@ public class WebUIChessApplication {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
             try {
-                game.play(source, target);
+                service.play(source, target);
             } catch (InvalidMovementException e) {
                 model.put("message", e.getMessage());
                 return render(model, "error.html");
             }
-            if (game.isFinished()) {
-                model.put("winner", game.isTurnWhite() ? "흑팀" : "백팀");
+            if (service.isFinished()) {
+                model.put("winner", service.isTurnWhite() ? "흑팀" : "백팀");
                 return render(model, "result.html");
             }
-            model.put("board", WebOutputView.printBoard(game.getBoard()));
+            constructModel(service, model);
             return render(model, "index.html");
         });
 
         post("/newgame", (req, res) -> {
-            game.init();
+            service.init();
             res.redirect("/");
             return null;
         });
 
         post("/scores", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            model.put("scores", Scores.calculateScores(game.getBoard()));
+            model.put("scores", Scores.calculateScores(service.getBoard()));
             return render(model, "scores.html");
         });
+    }
+
+    private static void constructModel(ChessGameService service, Map<String, Object> model) throws SQLException {
+        BoardDTO boardDTO = new BoardDTO(service.getBoard());
+        Map<String, String> pieces = boardDTO.getBoard();
+        for (String positionKey : pieces.keySet()) {
+            String imageName = pieces.get(positionKey);
+            if (imageName.equals(".")) {
+                imageName = "blank";
+            }
+            model.put(positionKey, imageName);
+        }
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
