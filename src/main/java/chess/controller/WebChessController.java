@@ -1,10 +1,8 @@
 package chess.controller;
 
 import chess.dao.ChessDAO;
-import chess.domain.Board;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
+import chess.domain.service.BoardService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -18,7 +16,7 @@ public class WebChessController implements ChessController {
     private static final String BLANK = "";
     private static final String WINNER_ALERT = "이 승리했습니다!";
 
-    private Board board = new Board();
+    private BoardService boardService = new BoardService();
 
     @Override
     public void run() {
@@ -27,22 +25,17 @@ public class WebChessController implements ChessController {
             return render(model, "index.html");
         });
 
-        get("/status", "application/json", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            model.put("pieces", printChessBoard(board));
-            model.put("score", getScore(board));
-            model.put("turn", board.getTurn());
-            return model;
-        }, new JsonTransformer());
+        get("/status", "application/json", (req, res) -> boardService.getStatus(), new JsonTransformer());
 
         post("/move", (req, res) -> {
             ChessDAO chessDAO = ChessDAO.getInstance();
             try {
-                board.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
-                chessDAO.saveGame(board.getAlivePieces(), board.getTurn());
-                if (!board.isBothKingAlive()) {
-                    return board.getWinner().getName() + WINNER_ALERT;
+                boardService.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
+                chessDAO.saveGame(boardService.getStatus());
+                if (boardService.checkEndOfGame()) {
+                    return boardService.getWinner().getName() + WINNER_ALERT;
                 }
+                ;
                 return BLANK;
             } catch (Exception e) {
                 res.status(400);
@@ -51,36 +44,17 @@ public class WebChessController implements ChessController {
         });
 
         get("/reset", (req, res) -> {
-            board = resetBoard();
+            boardService.resetBoard();
             res.redirect("/");
             return null;
         });
 
         get("/load", (req, res) -> {
             ChessDAO chessDAO = ChessDAO.getInstance();
-            board = chessDAO.loadGame();
+            boardService.loadGame(chessDAO.loadGame());
             res.redirect("/");
             return null;
         });
-    }
-
-    public Board resetBoard() {
-        return new Board();
-    }
-
-    private Map<String, Piece> printChessBoard(Board board) {
-        Map<String, Piece> model = new HashMap<>();
-        for (Piece piece : board.getAlivePieces()) {
-            model.put(piece.getPosition().toString(), piece);
-        }
-        return model;
-    }
-
-    private Map<String, Double> getScore(Board board) {
-        Map<String, Double> score = new HashMap<>();
-        score.put("blackScore", board.calculateScoreByTeam(Team.BLACK));
-        score.put("whiteScore", board.calculateScoreByTeam(Team.WHITE));
-        return score;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

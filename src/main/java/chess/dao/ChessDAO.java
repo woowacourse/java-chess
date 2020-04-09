@@ -4,13 +4,13 @@ import chess.domain.Board;
 import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.Turn;
+import chess.domain.dto.BoardStatusDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceGenerator;
 import chess.domain.piece.Team;
 
 import java.sql.*;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class ChessDAO {
@@ -58,12 +58,12 @@ public class ChessDAO {
         }
     }
 
-    public void saveGame(List<Piece> pieces, Turn turn) throws SQLException {
-        savePieces(pieces);
-        saveTurn(turn);
+    public void saveGame(BoardStatusDto boardStatusDto) throws SQLException {
+        savePieces(boardStatusDto.getPieces());
+        saveTurn(boardStatusDto.getTurn());
     }
 
-    private void savePieces(List<Piece> pieces) throws SQLException {
+    private void savePieces(Map<String, Piece> pieces) throws SQLException {
         try (
                 Connection connection = getConnection();
                 PreparedStatement pstmt = connection.prepareStatement("DELETE FROM Pieces");
@@ -71,7 +71,7 @@ public class ChessDAO {
             pstmt.executeUpdate();
         }
 
-        for (Piece piece : pieces) {
+        for (Piece piece : pieces.values()) {
             savePiece(piece);
         }
     }
