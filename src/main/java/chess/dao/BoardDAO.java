@@ -7,7 +7,6 @@ import chess.dto.GameStatusDTO;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import static chess.dao.ServerInfo.*;
@@ -22,7 +21,7 @@ public class BoardDAO {
         return instance;
     }
 
-    public Connection getConnection() {
+    public Connection getConnection() throws SQLException {
         loadDriver();
         return connectDriver();
     }
@@ -35,19 +34,17 @@ public class BoardDAO {
         }
     }
 
-    private Connection connectDriver() {
-        Connection connection = null;
-
+    private Connection connectDriver() throws SQLException {
         try {
             String url = "jdbc:mysql://" + SERVER.getInfo() + "/" + DATABASE.getInfo() + OPTION.getInfo();
-            connection = DriverManager.getConnection(url, USER_NAME.getInfo(), PASSWORD.getInfo());
+            return DriverManager.getConnection(url, USER_NAME.getInfo(), PASSWORD.getInfo());
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new SQLException("Connection Failed");
         }
-        return connection;
     }
 
-    public void initializeBoard() {
+    public void initializeBoard() throws SQLException {
         try (Connection connection = getConnection()) {
             String query = "truncate table board";
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -55,11 +52,12 @@ public class BoardDAO {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            e.printStackTrace();
+            throw new SQLException("Initialize Board Failed");
         }
     }
 
-    public void initializeGameStatus() {
+    public void initializeGameStatus() throws SQLException {
         try {
             Connection connection = getConnection();
             String query = "truncate table game_status";
@@ -68,12 +66,13 @@ public class BoardDAO {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            e.printStackTrace();
+            throw new SQLException("Initialize Game Status Failed");
         }
 
     }
 
-    public List<ChessPieceDTO> loadBoard() {
+    public List<ChessPieceDTO> loadBoard() throws SQLException {
         try (Connection connection = getConnection()) {
             List<ChessPieceDTO> chessPieces = new ArrayList<>();
             String query = "SELECT * FROM board";
@@ -84,8 +83,8 @@ public class BoardDAO {
             pstmt.close();
             return chessPieces;
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-            return Collections.emptyList();
+            e.printStackTrace();
+            throw new SQLException("Board Load Failed");
         }
     }
 
@@ -101,7 +100,7 @@ public class BoardDAO {
         }
     }
 
-    public GameStatusDTO loadGameStatus() {
+    public GameStatusDTO loadGameStatus() throws SQLException {
         try (Connection connection = getConnection()) {
             GameStatusDTO gameStatusDTO = new GameStatusDTO();
             String query = "SELECT * FROM game_status";
@@ -114,12 +113,12 @@ public class BoardDAO {
             pstmt.close();
             return gameStatusDTO;
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-            return null;
+            e.printStackTrace();
+            throw new SQLException("GameStatus Load Failed");
         }
     }
 
-    public void updateChessPiece(ChessPiece chessPiece, int i, int j) {
+    public void updateChessPiece(ChessPiece chessPiece, int i, int j) throws SQLException {
         try (Connection connection = getConnection()) {
             String query = "INSERT INTO board VALUES (?, ?, ?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -131,11 +130,12 @@ public class BoardDAO {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            e.printStackTrace();
+            throw new SQLException("Update Chess Piece Failed");
         }
     }
 
-    public void updateGameStatus(GameStatus gameStatus) {
+    public void updateGameStatus(GameStatus gameStatus) throws SQLException {
         try (Connection connection = getConnection()) {
             String query = "INSERT INTO game_status VALUES (?, ?)";
             PreparedStatement pstmt = connection.prepareStatement(query);
@@ -145,7 +145,8 @@ public class BoardDAO {
             pstmt.executeUpdate();
             pstmt.close();
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            e.printStackTrace();
+            throw new SQLException("Update Game Status Failed");
         }
     }
 }

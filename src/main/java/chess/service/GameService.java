@@ -16,6 +16,7 @@ import chess.dto.GameStatusDTO;
 import chess.generator.ChessPieceGenerator;
 import chess.generator.JSONGenerator;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public class GameService {
@@ -28,14 +29,14 @@ public class GameService {
         return instance;
     }
 
-    public String newGame() {
+    public String newGame() throws SQLException {
         Board board = BoardFactory.createBoard();
 
         updateToDB(board);
         return JSONGenerator.generateJSON(board);
     }
 
-    public String move(MovingInfo movingInfo) {
+    public String move(MovingInfo movingInfo) throws SQLException {
         Board board = loadFromDB();
 
         try {
@@ -47,13 +48,13 @@ public class GameService {
         return JSONGenerator.generateJSON(board);
     }
 
-    public String continueGame() {
+    public String continueGame() throws SQLException {
         Board board = loadFromDB();
 
         return JSONGenerator.generateJSON(board);
     }
 
-    private Board loadFromDB() {
+    private Board loadFromDB() throws SQLException {
         BoardDAO boardDAO = BoardDAO.getInstance();
         List<ChessPieceDTO> chessPieces = boardDAO.loadBoard();
         GameStatusDTO gameStatusDTO = boardDAO.loadGameStatus();
@@ -79,7 +80,7 @@ public class GameService {
         }
     }
 
-    private void updateToDB(Board board) {
+    private void updateToDB(Board board) throws SQLException {
         BoardDAO boardDAO = BoardDAO.getInstance();
 
         boardDAO.initializeBoard();
@@ -88,7 +89,7 @@ public class GameService {
         updateBoard(board);
     }
 
-    private void updateBoard(Board board) {
+    private void updateBoard(Board board) throws SQLException {
         List<Row> rows = board.getBoard();
 
         for (int i = 0; i < rows.size(); i++) {
@@ -98,7 +99,7 @@ public class GameService {
         }
     }
 
-    private void updateRow(List<ChessPiece> chessPieces, int i) {
+    private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
 
@@ -106,7 +107,7 @@ public class GameService {
         }
     }
 
-    private void addIfNotBlank(ChessPiece chessPiece, int i, int j) {
+    private void addIfNotBlank(ChessPiece chessPiece, int i, int j) throws SQLException {
         BoardDAO boardDAO = BoardDAO.getInstance();
 
         if (!(chessPiece instanceof Blank)) {
