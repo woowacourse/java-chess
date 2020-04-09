@@ -22,11 +22,11 @@ public class ChessBoard {
             return false;
         }
         ChessBoard chessBoard = (ChessBoard) o;
-        return Objects.equals(chessBoardId, chessBoard.chessBoardId);
+        return Objects.equals(this.chessBoardId, chessBoard.chessBoardId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(chessBoardId);
+        return Objects.hash(this.chessBoardId);
     }
 }

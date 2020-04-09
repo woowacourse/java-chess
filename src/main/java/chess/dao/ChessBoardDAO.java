@@ -6,59 +6,68 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ChessBoardDAO {
-    public void addChessBoard() throws SQLException {
-        Connection con = ConnectionManager.getConnection();
+    public void addChessBoard() {
         String query = "INSERT INTO chessBoard VALUES()";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.executeUpdate();
-        ConnectionManager.closeConnection(con);
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ChessBoard findRecentChessBoard() throws SQLException {
-        Connection con = ConnectionManager.getConnection();
+    public ChessBoard findRecentChessBoard() {
         String query = "SELECT * FROM chessBoard ORDER BY chessBoardId DESC limit 1";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        ResultSet rs = pstmt.executeQuery();
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+            if (!rs.next()) {
+                return null;
+            }
 
-        if (!rs.next()) {
-            ConnectionManager.closeConnection(con);
+            ChessBoard chessBoard = new ChessBoard(
+                    rs.getInt("chessBoardId")
+            );
+            ConnectionManager.closeResultSet(rs);
+            return chessBoard;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
-
-        ChessBoard chessBoard = new ChessBoard(
-                rs.getInt("chessBoardId")
-        );
-        ConnectionManager.closeConnection(con);
-        return chessBoard;
     }
 
-    public void deleteChessBoard(ChessBoard chessBoard) throws SQLException {
+    public void deleteChessBoard(ChessBoard chessBoard) {
         if (chessBoard == null) {
             return;
         }
-
-        Connection con = ConnectionManager.getConnection();
         String query = "DELETE FROM chessBoard WHERE chessBoardId = ?";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setInt(1, chessBoard.getChessBoardId());
-        pstmt.executeUpdate();
-        ConnectionManager.closeConnection(con);
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query);) {
+            pstmt.setInt(1, chessBoard.getChessBoardId());
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public ChessBoard findById(int chessBoardId) throws SQLException {
-        Connection con = ConnectionManager.getConnection();
+    public ChessBoard findById(int chessBoardId) {
         String query = "SELECT * FROM chessBoard WHERE chessBoardId=?";
-        PreparedStatement pstmt = con.prepareStatement(query);
-        pstmt.setInt(1, chessBoardId);
-        ResultSet rs = pstmt.executeQuery();
+        try (Connection con = ConnectionManager.getConnection();
+             PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setInt(1, chessBoardId);
+            ResultSet rs = pstmt.executeQuery();
+            while (!rs.next()) {
+                return null;
+            }
 
-        while (!rs.next()) {
+            ChessBoard chessBoard = new ChessBoard(
+                    rs.getInt("chessBoardId")
+            );
+            ConnectionManager.closeResultSet(rs);
+            return chessBoard;
+        } catch (SQLException e) {
+            e.printStackTrace();
             return null;
         }
-        ChessBoard chessBoard = new ChessBoard(
-                rs.getInt("chessBoardId")
-        );
-        ConnectionManager.closeConnection(con);
-        return chessBoard;
     }
 }

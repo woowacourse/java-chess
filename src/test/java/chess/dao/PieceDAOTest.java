@@ -22,7 +22,7 @@ public class PieceDAOTest {
     @Disabled
     @DisplayName("피스 정보 추가")
     @Test
-    void addPieceTest() throws Exception {
+    void addPieceTest() {
         TileDTO a2WhitePawn = new TileDTO("a2");
         a2WhitePawn.setPieceImageUrl("p_white");
         TileDTO a6BlackPawn = new TileDTO("a6");
@@ -30,7 +30,7 @@ public class PieceDAOTest {
         List<TileDTO> tileDtos = new ArrayList<>(Arrays.asList(
                 a2WhitePawn, a6BlackPawn
         ));
-        ChessBoard chessBoard = new ChessBoard(12);
+        ChessBoard chessBoard = new ChessBoard(1);
 
         pieceDAO.addPiece(chessBoard, tileDtos);
     }
@@ -38,8 +38,8 @@ public class PieceDAOTest {
     @Disabled
     @DisplayName("피스 삭제")
     @Test
-    void deletePieceTest() throws Exception {
-        PieceOnBoard a2WhitePawn = new PieceOnBoard(4, "a3", "p_white", 1);
+    void deletePieceTest() {
+        PieceOnBoard a2WhitePawn = new PieceOnBoard(29, "a1", "r_white", 1);
 
         pieceDAO.deletePiece(a2WhitePawn);
     }
@@ -47,23 +47,23 @@ public class PieceDAOTest {
     @Disabled
     @DisplayName("저장되어 있는 피스 정보 불러오기")
     @Test
-    void findPieceTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(12);
+    void findPieceTest() {
+        ChessBoard chessBoard = new ChessBoard(1);
         List<PieceOnBoard> pieceOnBoards = pieceDAO.findPiece(chessBoard);
 
-        Assertions.assertThat(pieceOnBoards).containsExactly(
-                new PieceOnBoard(6, "a2", "p_white", 12),
-                new PieceOnBoard(7, "a6", "P_black", 12)
+        Assertions.assertThat(pieceOnBoards).contains(
+                new PieceOnBoard(33, "a2", "p_white", 1),
+                new PieceOnBoard(26, "a6", "P_black", 1)
         );
     }
 
     @Disabled
     @DisplayName("피스 정보 업데이트")
     @Test
-    void updatePieceTest() throws Exception {
-        PieceOnBoard pieceOnBoard = new PieceOnBoard(141, "a1",
-                "r_white", 17);
+    void updatePieceTest() {
+        PieceOnBoard pieceOnBoard = new PieceOnBoard(33, "a2",
+                "p_white", 1);
 
-        pieceDAO.updatePiece(pieceOnBoard, "a2");
+        pieceDAO.updatePiece(pieceOnBoard, "a3");
     }
 }

@@ -19,8 +19,8 @@ public class PlayerDAOTest {
     @Disabled
     @DisplayName("게임이 시작할 때 플레이어가 저장되는지 테스트")
     @Test
-    void addPlayerTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(5);
+    void addPlayerTest() {
+        ChessBoard chessBoard = new ChessBoard(4);
         Player player = new Player("pobi", "json");
 
         this.playerDAO.addPlayer(chessBoard, player);
@@ -29,8 +29,8 @@ public class PlayerDAOTest {
     @Disabled
     @DisplayName("체스 아이디에 맞는 플레이어 정보 찾기")
     @Test
-    void findPlayerTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(5);
+    void findPlayerTest() {
+        ChessBoard chessBoard = new ChessBoard(4);
         Player player = this.playerDAO.findPlayer(chessBoard);
 
         Assertions.assertThat(player.getWhitePlayer()).isEqualTo("pobi");
@@ -41,7 +41,7 @@ public class PlayerDAOTest {
     @DisplayName("게임이 끝나고 플레이어 정보 삭제")
     @Test
     void deletePlayerTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(5);
+        ChessBoard chessBoard = new ChessBoard(4);
 
         this.playerDAO.deletePlayer(chessBoard);
     }
@@ -51,8 +51,8 @@ public class PlayerDAOTest {
     @Test
     void findAllPlayerTest() throws Exception {
         List<Player> players = this.playerDAO.findAllPlayer();
-        Player expected = new Player("pobi", "json");
-        expected.setChessBoardId(8);
+        Player expected = new Player("lavine", "lavine2");
+        expected.setChessBoardId(1);
 
         Assertions.assertThat(players).contains(expected);
     }

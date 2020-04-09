@@ -37,12 +37,13 @@ public class Player {
             return false;
         }
         Player player = (Player) o;
-        return Objects.equals(whitePlayer, player.whitePlayer)
-                && Objects.equals(blackPlayer, player.blackPlayer);
+        return Objects.equals(this.whitePlayer, player.whitePlayer)
+                && Objects.equals(this.blackPlayer, player.blackPlayer)
+                && Objects.equals(this.chessBoardId, player.chessBoardId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(whitePlayer, blackPlayer);
+        return Objects.hash(this.whitePlayer, this.blackPlayer, this.chessBoardId);
     }
 }

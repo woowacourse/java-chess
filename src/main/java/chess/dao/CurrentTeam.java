@@ -22,11 +22,11 @@ public class CurrentTeam {
             return false;
         }
         CurrentTeam currentTeam = (CurrentTeam) o;
-        return Objects.equals(currentTeam, currentTeam.currentTeam);
+        return Objects.equals(this.currentTeam, currentTeam.currentTeam);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(currentTeam);
+        return Objects.hash(this.currentTeam);
     }
 }

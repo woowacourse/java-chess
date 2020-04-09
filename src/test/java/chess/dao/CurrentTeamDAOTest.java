@@ -17,9 +17,9 @@ public class CurrentTeamDAOTest {
     @Disabled
     @DisplayName("현재 팀 정보 추가")
     @Test
-    void addCurrentTeamTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(2);
-        CurrentTeam currentTeam = new CurrentTeam("white");
+    void addCurrentTeamTest() {
+        ChessBoard chessBoard = new ChessBoard(1);
+        CurrentTeam currentTeam = new CurrentTeam("black");
 
         this.currentTeamDAO.addCurrentTeam(chessBoard, currentTeam);
     }
@@ -27,9 +27,9 @@ public class CurrentTeamDAOTest {
     @Disabled
     @DisplayName("현재 팀 정보 업데이트")
     @Test
-    void updateCurrentTeamTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(2);
-        CurrentTeam currentTeam = new CurrentTeam("black");
+    void updateCurrentTeamTest() {
+        ChessBoard chessBoard = new ChessBoard(1);
+        CurrentTeam currentTeam = new CurrentTeam("WHITE");
 
         this.currentTeamDAO.updateCurrentTeam(chessBoard, currentTeam);
     }
@@ -37,8 +37,8 @@ public class CurrentTeamDAOTest {
     @Disabled
     @DisplayName("현재 팀 삭제")
     @Test
-    void deleteCurrentTeamTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(2);
+    void deleteCurrentTeamTest() {
+        ChessBoard chessBoard = new ChessBoard(1);
 
         this.currentTeamDAO.deleteCurrentTeam(chessBoard);
     }
@@ -46,11 +46,11 @@ public class CurrentTeamDAOTest {
     @Disabled
     @DisplayName("현재 팀 검색")
     @Test
-    void findCurrentTeamTest() throws Exception {
-        ChessBoard chessBoard = new ChessBoard(3);
+    void findCurrentTeamTest() {
+        ChessBoard chessBoard = new ChessBoard(1);
         CurrentTeam currentTeam = currentTeamDAO.findCurrentTeam(chessBoard);
 
         Assertions.assertThat(currentTeam).isNotNull();
-        Assertions.assertThat(currentTeam.getCurrentTeam()).isEqualTo("white");
+        Assertions.assertThat(currentTeam.getCurrentTeam()).isEqualTo("WHITE");
     }
 }
