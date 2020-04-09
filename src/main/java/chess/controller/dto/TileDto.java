@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
+import chess.web.Tile;
 
 import java.util.LinkedHashMap;
 import java.util.List;

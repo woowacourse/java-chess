@@ -1,7 +1,7 @@
 package chess.web;
 
 import chess.controller.ChessManager;
-import chess.database.ChessCommandDao;
+import chess.database.ChessDao;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -9,11 +9,11 @@ import java.util.Map;
 
 public class StartResponse {
     private final ChessManager chessManager;
-    private ChessCommandDao chessCommandDao;
+    private final ChessDao chessCommandDao;
 
-    public StartResponse(ChessManager chessManager, ChessCommandDao chessCommandDao) {
+    public StartResponse(ChessManager chessManager, ChessDao chessDao) {
         this.chessManager = chessManager;
-        this.chessCommandDao = chessCommandDao;
+        this.chessCommandDao = chessDao;
     }
 
     public Map<String, Object> getModel() throws SQLException {

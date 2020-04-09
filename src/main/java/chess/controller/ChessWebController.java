@@ -1,8 +1,9 @@
 package chess.controller;
 
 import chess.controller.command.Command;
-import chess.database.ChessCommand;
-import chess.database.ChessCommandDao;
+import chess.database.ChessDao;
+import chess.database.MySqlChessDao;
+import chess.web.ChessCommand;
 import chess.web.MoveResponse;
 import chess.web.StartResponse;
 import com.google.gson.Gson;
@@ -23,24 +24,24 @@ public class ChessWebController {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
     private ChessManager chessManager;
-    private ChessCommandDao chessCommandDao;
+    private ChessDao chessDao;
     private MoveResponse moveResponse;
 
     public void play() {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
-            chessCommandDao = new ChessCommandDao();
+            chessDao = new MySqlChessDao();
             moveResponse = new MoveResponse(chessManager);
 
-            return render(new StartResponse(chessManager, chessCommandDao).getModel(), "chessGameStart.html");
+            return render(new StartResponse(chessManager, chessDao).getModel(), "chessGameStart.html");
         });
 
         //play last game
         get("/playing/lastGame", (req, res) -> {
-            List<String> commands = chessCommandDao.selectCommands();
-            for (String command : commands) {
-                Command.MOVE.apply(chessManager, command);
+            List<ChessCommand> commands = chessDao.selectCommands();
+            for (ChessCommand command : commands) {
+                Command.MOVE.apply(chessManager, command.get());
             }
             return render(moveResponse.getModel(), "chessGame.html");
         });
@@ -79,11 +80,11 @@ public class ChessWebController {
     }
 
     private void initializeDatabase() throws SQLException {
-        chessCommandDao.deleteCommands();
+        chessDao.clearCommands();
     }
 
     public void saveToDatabase(String command) throws SQLException {
-        chessCommandDao.addCommand(new ChessCommand(command));
+        chessDao.addCommand(new ChessCommand(command));
     }
 
     private String render(Map<String, Object> model, String templatePath) {

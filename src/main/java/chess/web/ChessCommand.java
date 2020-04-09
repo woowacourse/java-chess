@@ -1,4 +1,4 @@
-package chess.database;
+package chess.web;
 
 public class ChessCommand {
     String command;
@@ -7,7 +7,7 @@ public class ChessCommand {
         this.command = command;
     }
 
-    public String getCommand() {
+    public String get() {
         return command;
     }
 
