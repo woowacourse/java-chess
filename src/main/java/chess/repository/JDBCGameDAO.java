@@ -1,5 +1,6 @@
 package chess.repository;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import chess.domain.game.Game;
@@ -10,7 +11,7 @@ public class JDBCGameDAO implements GameDAO {
 	private final JDBCTemplate jdbcTemplate;
 
 	public JDBCGameDAO(JDBCTemplate jdbcTemplate) {
-		this.jdbcTemplate = jdbcTemplate;
+		this.jdbcTemplate = Objects.requireNonNull(jdbcTemplate);
 	}
 
 	public Optional<Game> findById(int userId) {

@@ -3,6 +3,7 @@ package chess.domain.state;
 import static chess.domain.piece.Team.*;
 
 import java.util.Map;
+import java.util.Objects;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
@@ -24,9 +25,9 @@ public abstract class GameState {
 
 	public GameState(int id, Board board, StateType stateType, Team turn) {
 		this.id = id;
-		this.board = board;
-		this.stateType = stateType;
-		this.turn = turn;
+		this.board = Objects.requireNonNull(board);
+		this.stateType = Objects.requireNonNull(stateType);
+		this.turn = Objects.requireNonNull(turn);
 	}
 
 	public abstract GameState start();

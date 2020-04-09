@@ -1,5 +1,6 @@
 package chess.domain.result;
 
+import static chess.domain.position.Position.*;
 import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
@@ -25,8 +26,8 @@ public class Result {
 	public static Result from(Board board) {
 		Map<Team, Double> collect = findDafaultScores(board);
 
-		for (int file = 1; file <= 8; file++) {
-			inputNthColumnPawnBonus(board, collect, file);
+		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
+			inputNthColumnPawnBonus(board, collect, col);
 		}
 		return new Result(collect);
 	}
@@ -43,7 +44,7 @@ public class Result {
 	}
 
 	private static Map<Team, Long> findNthColumnPawnSize(Board board, int col) {
-		return IntStream.rangeClosed(1, 8)
+		return IntStream.rangeClosed(MINIMUM_POSITION_NUMBER, MAXIMUM_POSITION_NUMBER)
 			.mapToObj(row -> board.findPiece(Position.of(col, row)))
 			.filter(Piece::isPawn)
 			.collect(groupingBy(Piece::getTeam, counting()));

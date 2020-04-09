@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 import chess.domain.board.Board;
@@ -24,7 +25,7 @@ public class Game {
 	private GameState state;
 
 	public Game(GameState state) {
-		this.state = state;
+		this.state = Objects.requireNonNull(state);
 	}
 
 	public void changeState(String request) {

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Team;
@@ -30,8 +31,8 @@ public class Position {
 	private final Cell row;
 
 	private Position(Cell file, Cell rank) {
-		this.col = file;
-		this.row = rank;
+		this.col = Objects.requireNonNull(file);
+		this.row = Objects.requireNonNull(rank);
 	}
 
 	public static Position of(String key) {

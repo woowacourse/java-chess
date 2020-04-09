@@ -10,8 +10,8 @@ public abstract class Piece {
 	protected final String symbol;
 
 	public Piece(Team team, String symbol) {
-		this.team = team;
-		this.symbol = symbol;
+		this.team = Objects.requireNonNull(team);
+		this.symbol = Objects.requireNonNull(symbol);
 	}
 
 	public String getSymbol() {

@@ -10,6 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -26,6 +27,10 @@ import chess.domain.position.Position;
 
 public class Board {
 	private static final int COUNT_OF_KING_TO_FINISH_GAME = 1;
+	private static final Pattern PIECES_PATTERN = Pattern.compile("([\\.pPbBrRkKnNqQ]{8}\\n){8}");
+	private static final String ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE = "문자열의 형태가 체스판의 형식이 아닙니다.";
+	private static final String ROW_SEPARATOR = "\n";
+	private static final String COLUMN_SEPARATOR = "";
 
 	private final Map<Position, Piece> pieces;
 
@@ -34,23 +39,39 @@ public class Board {
 	}
 
 	public Board(Map<Position, Piece> pieces) {
-		this.pieces = pieces;
+		this.pieces = Objects.requireNonNull(pieces);
 	}
 
 	public Board(String boards) {
+		validateBoardRegex(boards);
 		pieces = new HashMap<>();
-		if ("".equals(boards))
+		parse(boards);
+	}
+
+	private void parse(String boards) {
+		String[] boardRow = boards.split(ROW_SEPARATOR);
+		for (int row = MINIMUM_POSITION_NUMBER; row <= MAXIMUM_POSITION_NUMBER; row++) {
+			parseRow(boardRow[row - 1], row);
+		}
+	}
+
+	private void parseRow(String boardRow, int row) {
+		String[] rowElements = boardRow.split(COLUMN_SEPARATOR);
+		for (int col = 1; col <= MAXIMUM_POSITION_NUMBER; col++) {
+			parseOneElement(Position.of(col, MAXIMUM_POSITION_NUMBER + 1 - row), rowElements[col - 1]);
+		}
+	}
+
+	private void parseOneElement(Position of, String rowElement) {
+		if (".".equals(rowElement)) {
 			return;
-		String[] split = boards.split("\n");
-		for (int i = 0; i < split.length; i++) {
-			String s = split[i];
-			String[] split1 = s.split("");
-			for (int j = 0; j < split1.length; j++) {
-				String s1 = split1[j];
-				if (s1.equals("."))
-					continue;
-				pieces.put(Position.of(j + 1, 8 - i), PieceFactory.of(s1));
-			}
+		}
+		pieces.put(of, PieceFactory.of(rowElement));
+	}
+
+	private void validateBoardRegex(String boards) {
+		if (!PIECES_PATTERN.matcher(boards).matches()) {
+			throw new IllegalArgumentException(String.format(ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE+ "%s", boards));
 		}
 	}
 
@@ -88,9 +109,9 @@ public class Board {
 			.filter(Piece::isNotBlank)
 			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
 
-		for (int file = 1; file <= 8; file++) {
+		for (int file = MINIMUM_POSITION_NUMBER; file <= MAXIMUM_POSITION_NUMBER; file++) {
 			int finalFile = file;
-			Map<Team, Long> cnt = IntStream.rangeClosed(1, 8)
+			Map<Team, Long> cnt = IntStream.rangeClosed(MINIMUM_POSITION_NUMBER, MAXIMUM_POSITION_NUMBER)
 				.mapToObj(rank -> findPiece(Position.of(finalFile, rank)))
 				.filter(Piece::isPawn)
 				.collect(groupingBy(Piece::getTeam, counting()));
@@ -171,13 +192,17 @@ public class Board {
 
 	public String getAsString() {
 		StringBuilder builder = new StringBuilder();
-		for (int rank = 8; rank >= 1; rank--) {
-			for (int file = 1; file <= 8; file++) {
-				Piece piece = findPiece(Position.of(file, rank));
-				builder.append(piece.getSymbol());
-			}
-			builder.append("\n");
+		for (int row = MAXIMUM_POSITION_NUMBER; row >= MINIMUM_POSITION_NUMBER; row--) {
+			parseRowAsString(builder, row);
 		}
 		return builder.toString();
+	}
+
+	private void parseRowAsString(StringBuilder builder, int row) {
+		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
+			Piece piece = findPiece(Position.of(col, row));
+			builder.append(piece.getSymbol());
+		}
+		builder.append(ROW_SEPARATOR);
 	}
 }

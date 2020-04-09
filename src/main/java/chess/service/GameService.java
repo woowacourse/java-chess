@@ -3,6 +3,7 @@ package chess.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.domain.board.Board;
@@ -21,7 +22,7 @@ public class GameService {
 	private GameDAO gameDAO;
 
 	public GameService(GameDAO gameDAO) {
-		this.gameDAO = gameDAO;
+		this.gameDAO = Objects.requireNonNull(gameDAO);
 	}
 
 	public List<ScoreDTO> calculateScore() {

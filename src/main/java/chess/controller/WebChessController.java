@@ -5,6 +5,7 @@ import static chess.view.response.ResponseStatus.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 import chess.service.GameService;
@@ -20,7 +21,7 @@ public class WebChessController {
 	private final GameService gameService;
 
 	public WebChessController(GameService gameService) {
-		this.gameService = gameService;
+		this.gameService = Objects.requireNonNull(gameService);
 	}
 
 	public void run() {
