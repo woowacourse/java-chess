@@ -43,7 +43,7 @@ public class BoardDao {
 
     private void removeAll() throws SQLException {
         JdbcTemplate template = new JdbcTemplate();
-        String sql = "DELETE FROM piece";
+        final String sql = "DELETE FROM piece";
         template.executeUpdateWithoutPss(sql);
     }
 
@@ -54,7 +54,7 @@ public class BoardDao {
             statement.setString(3, piece.getTeam().getName());
         };
         JdbcTemplate template = new JdbcTemplate();
-        String sql = "INSERT INTO piece(position, type, team) VALUES (?, ?, ?)";
+        final String sql = "INSERT INTO piece(position, type, team) VALUES (?, ?, ?)";
         template.executeUpdate(sql, pss);
     }
 }
