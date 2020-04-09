@@ -33,20 +33,23 @@ public class ChessService {
 	public MoveResponseDto move(MoveRequestDto moveRequestDto) throws PieceMoveFailedException {
 		Board board = boardDao.getBoard();
 		Color turn = turnDao.getTurn();
-
 		ChessGame chessGame = new ChessGame(board, turn);
-		Coordinates from = Coordinates.of(moveRequestDto.getFrom());
-		Coordinates to = Coordinates.of(moveRequestDto.getTo());
-		Piece piece = chessGame.move(from, to);
 
-		boardDao.insertOrUpdatePieceBy(to, piece);
-		boardDao.deletePieceBy(from);
-		turnDao.update(chessGame.getTurn());
+		move(moveRequestDto, chessGame);
 		boolean isEndOfGame = chessGame.isEndOfGame();
 		if (isEndOfGame) {
 			initializeBoard();
 		}
 		return MoveResponseDto.ofSuccessToMove(true, isEndOfGame, chessGame.calculateScore());
+	}
+
+	private void move(MoveRequestDto moveRequestDto, ChessGame chessGame) {
+		Coordinates from = Coordinates.of(moveRequestDto.getFrom());
+		Coordinates to = Coordinates.of(moveRequestDto.getTo());
+		Piece piece = chessGame.move(from, to);
+		boardDao.insertOrUpdatePieceBy(to, piece);
+		boardDao.deletePieceBy(from);
+		turnDao.update(chessGame.getTurn());
 	}
 
 	public BoardResponseDto initializeBoard() {
