@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import chess.database.JDBCTemplate;
+import chess.database.JdbcTemplate;
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.coordinates.Coordinates;
@@ -15,9 +15,9 @@ import chess.domain.piece.PieceFactory;
 import chess.util.PieceNameConverter;
 
 public class BoardDaoImpl implements BoardDao {
-	private final JDBCTemplate jdbcTemplate;
+	private final JdbcTemplate jdbcTemplate;
 
-	public BoardDaoImpl(JDBCTemplate jdbcTemplate) {
+	public BoardDaoImpl(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 

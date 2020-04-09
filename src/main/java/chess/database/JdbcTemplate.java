@@ -5,10 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JDBCTemplate {
+public class JdbcTemplate {
 	DataSource dataSource;
 
-	public JDBCTemplate(DataSource dataSource) {
+	public JdbcTemplate(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
 
