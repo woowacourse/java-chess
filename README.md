@@ -105,8 +105,11 @@
 - [x] 받은 데이터 각각 알맞은 이미지와 매핑
 - [x] 매핑 후 html 리로딩
 
-##  여러 체스 게임을 플레이하기 위한 단계
-1. 매 통신 마다 ChessGame을 DB에서 SELECT하기
-2. Move 마다 DB에 값이 있는지 확인하기 
-3. 확인한 뒤 값이 없다면 Insert
-4. 확인한 뒤 값이 있다면 Update
+## 선택 과제
+- [ ] ChessController ChessGame 제거, 매번 새로운 ChessGame 생성
+ - [ ] 매 통신 마다 ChessGame을 DB에서 SELECT하기
+ - [ ] 매 통신마다 ChessGame을 생성해야한다.
+- [ ] Move 마다 DB에 값 Update
+- [ ] Start에 새로운 체스 판 생성
+ - [ ] DB 삽입
+- [ ] end 버튼 눌렀을 시 아무런 DB에 Piece 삽입하지 않도록 변경
