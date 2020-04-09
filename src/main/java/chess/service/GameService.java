@@ -4,6 +4,7 @@ import chess.dao.BoardDAO;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.board.Row;
+import chess.domain.chesspiece.Blank;
 import chess.domain.chesspiece.ChessPiece;
 import chess.domain.game.GameStatus;
 import chess.domain.game.Team;
@@ -98,12 +99,18 @@ public class GameService {
         }
     }
 
-    private void updateRow(List<ChessPiece> chessPieces, int i) throws SQLException {
-        BoardDAO boardDAO = BoardDAO.getInstance();
-
+    private void updateRow(List<ChessPiece> chessPieces, int i) {
         for (int j = 0; j < chessPieces.size(); j++) {
             ChessPiece chessPiece = chessPieces.get(j);
 
+            addIfNotBlank(chessPiece, i, j);
+        }
+    }
+
+    private void addIfNotBlank(ChessPiece chessPiece, int i, int j) {
+        BoardDAO boardDAO = BoardDAO.getInstance();
+
+        if (!(chessPiece instanceof Blank)) {
             boardDAO.updateChessPiece(chessPiece, i, j);
         }
     }
