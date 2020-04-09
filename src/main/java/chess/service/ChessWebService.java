@@ -86,15 +86,11 @@ public class ChessWebService {
 
 	public Map<String, Object> chooseSecondPosition(String position) {
 		Map<String, Object> model = new HashMap<>();
-		try {
-			model.put("normalStatus", NormalStatus.YES.isNormalStatus());
-			model.put("position", position);
-			return model;
-		} catch (IllegalArgumentException | UnsupportedOperationException | NullPointerException e) {
-			model.put("normalStatus", NormalStatus.NO.isNormalStatus());
-			model.put("exception", e.getMessage());
-			return model;
-		}
+
+		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
+		model.put("position", position);
+
+		return model;
 	}
 
 	private void clearHistory() throws SQLException {
