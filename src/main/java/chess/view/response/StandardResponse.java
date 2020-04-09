@@ -1,4 +1,4 @@
-package chess.jsonutil;
+package chess.view.response;
 
 import com.google.gson.JsonElement;
 

@@ -1,16 +1,16 @@
 package chess.controller;
 
-import static chess.jsonutil.JsonUtil.*;
-import static chess.jsonutil.ResponseStatus.*;
+import static chess.utils.json.JsonUtil.*;
+import static chess.view.response.ResponseStatus.*;
 import static spark.Spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.position.Position;
-import chess.jsonutil.StandardResponse;
 import chess.service.GameService;
 import chess.view.dto.requestdto.PositionRequestDTO;
+import chess.view.response.StandardResponse;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;

@@ -1,4 +1,4 @@
-package chess.jsonutil;
+package chess.view.response;
 
 public enum ResponseStatus {
 	SUCCESS("success"),
