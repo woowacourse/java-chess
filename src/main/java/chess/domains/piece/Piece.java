@@ -18,6 +18,7 @@ public abstract class Piece {
 
     protected final PieceColor pieceColor;
     private final PieceType type;
+    protected final String chessPiece = "";
 
     public Piece(PieceColor pieceColor, PieceType type) {
         this.pieceColor = pieceColor;
@@ -43,6 +44,13 @@ public abstract class Piece {
             return type.getName().toUpperCase();
         }
         return type.getName();
+    }
+
+    public String chessPiece() {
+        if (pieceColor == PieceColor.BLACK) {
+            return type.getBlackPiece();
+        }
+        return type.getWhitePiece();
     }
 
     public double score() {

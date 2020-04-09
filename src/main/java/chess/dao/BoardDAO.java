@@ -50,7 +50,7 @@ public class BoardDAO {
         String query = "INSERT INTO board VALUES (?, ?)";
         PreparedStatement pstmt = getConnection().prepareStatement(query);
         pstmt.setString(1, position.name());
-        pstmt.setString(2, piece.name());
+        pstmt.setString(2, piece.chessPiece());
         pstmt.executeUpdate();
     }
 

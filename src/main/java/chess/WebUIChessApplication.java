@@ -32,7 +32,7 @@ public class WebUIChessApplication {
 
             Map<String, Object> model = new HashMap<>();
             model.put("records", recordDAO.readRecords());
-            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("pieces", boardDAO.showPieces());
             model.put("turn", WebController.printTurn(WebController.turn(board)));
             model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
@@ -45,7 +45,7 @@ public class WebUIChessApplication {
 
             Map<String, Object> model = new HashMap<>();
             model.put("records", recordDAO.readRecords());
-            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("pieces", boardDAO.showPieces());
             model.put("turn", WebController.printTurn(WebController.turn(board)));
             model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
@@ -64,7 +64,7 @@ public class WebUIChessApplication {
             Map<String, Object> model = new HashMap<>();
             model.put("records", recordDAO.readRecords());
             model.put("end", board.isGameOver());
-            model.put("pieces", WebController.convertView(boardDAO.showPieces()));
+            model.put("pieces", boardDAO.showPieces());
             model.put("turn", WebController.printTurn(WebController.turn(board)));
             model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
             model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
