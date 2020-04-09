@@ -2,14 +2,11 @@ package chess.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import chess.domain.board.Board;
 import chess.domain.game.Game;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.repository.GameDAO;
 import chess.view.dto.requestdto.PositionRequestDTO;
@@ -30,23 +27,16 @@ public class GameService {
 	public List<ScoreDTO> calculateScore() {
 		Game game = gameDAO.findById(DEFAULT_USER_ID)
 			.orElseThrow(() -> new NoSuchElementException(NONE_ELEMENT_QUERY_RESULT_EXCEPTION_MESSAGE));
-		Map<Team, Double> status = game.status();
-		return status.entrySet().stream()
-			.map(entry -> new ScoreDTO(entry.getKey().name().toLowerCase(), entry.getValue()))
+
+		return game.status().entrySet().stream()
+			.map(entry -> new ScoreDTO(entry.getKey().getTeam(), entry.getValue()))
 			.collect(Collectors.toList());
 	}
 
 	public void changeState(String request) {
-		if (!"start".equals(request) && !"end".equals(request)) {
-			throw new IllegalArgumentException("유효한 명령어가 아닙니다.");
-		}
 		Game game = gameDAO.findById(DEFAULT_USER_ID)
-			.orElseThrow(() -> new NoSuchElementException(NONE_ELEMENT_QUERY_RESULT_EXCEPTION_MESSAGE));;
-		if ("start".equals(request)) {
-			game.start();
-		} else {
-			game.end();
-		}
+			.orElseThrow(() -> new NoSuchElementException(NONE_ELEMENT_QUERY_RESULT_EXCEPTION_MESSAGE));
+		game.changeState(request);
 		gameDAO.update(game);
 	}
 
@@ -54,9 +44,8 @@ public class GameService {
 		Game game = gameDAO.findById(DEFAULT_USER_ID)
 			.orElseThrow(() -> new NoSuchElementException(NONE_ELEMENT_QUERY_RESULT_EXCEPTION_MESSAGE));
 		Board board = game.getBoard();
-		Map<Position, Piece> pieces = board.getPieces();
 
-		return pieces.entrySet().stream()
+		return board.getPieces().entrySet().stream()
 			.map(entry -> new BoardDTO(entry.getKey().toString(), entry.getValue().getSymbol()))
 			.collect(Collectors.toList());
 	}
@@ -79,8 +68,8 @@ public class GameService {
 		Board board = game.getBoard();
 
 		List<BoardDTO> result = new ArrayList<>();
-		result.add(new BoardDTO(from.toString(), board.findPiece(from).getSymbol()));
-		result.add(new BoardDTO(to.toString(), board.findPiece(to).getSymbol()));
+		result.add(new BoardDTO(from.toString(), board.findSymbol(from)));
+		result.add(new BoardDTO(to.toString(), board.findSymbol(to)));
 		return result;
 	}
 

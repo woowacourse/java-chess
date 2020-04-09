@@ -58,9 +58,9 @@ public class WebChessController {
 
 		post("/chess/move", (req, res) ->
 				makeResponse(() -> {
-					PositionRequestDTO request = fromJson(req.body(), PositionRequestDTO.class);
-					this.gameService.move(request);
-					return new StandardResponse(SUCCESS, toJsonTree(gameService.findChangedPiecesOnBoard(request)));
+					PositionRequestDTO requestDTO = fromJson(req.body(), PositionRequestDTO.class);
+					this.gameService.move(requestDTO);
+					return new StandardResponse(SUCCESS, toJsonTree(gameService.findChangedPiecesOnBoard(requestDTO)));
 				}),
 			json()
 		);

@@ -33,4 +33,8 @@ public enum Team {
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("유효하지 않는 입력 값입니다."));
 	}
+
+	public String getTeam() {
+		return name().toLowerCase();
+	}
 }

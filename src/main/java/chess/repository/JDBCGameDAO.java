@@ -15,11 +15,13 @@ public class JDBCGameDAO implements GameDAO {
 
 	public Optional<Game> findById(int userId) {
 		String query = "SELECT * FROM game WHERE id = ?";
-		return jdbcTemplate.executeQuery(query, rs -> new Game(GameStateFactory.of(
-			rs.getString("state"),
-			rs.getString("turn"),
-			rs.getString("board"))
-		), userId);
+		return jdbcTemplate.executeQuery(query, rs ->
+			new Game(GameStateFactory.of(
+				rs.getString("state"),
+				rs.getString("turn"),
+				rs.getString("board")
+			)
+			), userId);
 	}
 
 	public void update(Game game) {

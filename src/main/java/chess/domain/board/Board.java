@@ -120,6 +120,10 @@ public class Board {
 		return pieces.getOrDefault(Objects.requireNonNull(position), EMPTY);
 	}
 
+	public String findSymbol(Position position) {
+		return findPiece(position).getSymbol();
+	}
+
 	private void validateSourceMovingRoute(Position from, Position to, Piece source, Piece target) {
 		BoardOccupyState occupyState = BoardOccupyState.of(source, target);
 		occupyState.checkMovable(this, source, from, to);
