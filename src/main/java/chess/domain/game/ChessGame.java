@@ -21,11 +21,6 @@ public class ChessGame {
 		turn = new Turn(Color.WHITE);
 	}
 
-	public void reset() {
-		pieces = PiecesInitializer.operate();
-		turn = new Turn(Color.WHITE);
-	}
-
 	public void move(Position start, Position end) {
 		pieces.move(start, end, turn.getColor());
 		turn = turn.change();
@@ -45,10 +40,6 @@ public class ChessGame {
 
 	public Board createBoard() {
 		return new Board(pieces);
-	}
-
-	public BoardDto createBoardDto() {
-		return new BoardDto(pieces);
 	}
 
 	public Positions findMovablePositions(Position position) {
