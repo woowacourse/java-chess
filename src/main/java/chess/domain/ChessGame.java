@@ -56,8 +56,8 @@ public class ChessGame {
 		return turn.reverse();
 	}
 
-	public String getTurn() {
-		return turn.name();
+	public Color getTurn() {
+		return turn;
 	}
 
 	public Map<Coordinates, Piece> getPieces() {

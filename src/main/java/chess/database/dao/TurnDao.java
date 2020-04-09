@@ -3,9 +3,9 @@ package chess.database.dao;
 import chess.domain.piece.Color;
 
 public interface TurnDao {
-	void insert(String turn);
+	void insert(Color turn);
 
-	void update(String turn);
+	void update(Color turn);
 
 	Color getTurn();
 

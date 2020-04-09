@@ -11,15 +11,15 @@ public class TurnDaoImpl implements TurnDao {
 	}
 
 	@Override
-	public void insert(String turn) {
+	public void insert(Color turn) {
 		String query = "INSERT INTO turn VALUES (?)";
-		jdbcTemplate.update(query, preparedStatement -> preparedStatement.setString(1, turn));
+		jdbcTemplate.update(query, preparedStatement -> preparedStatement.setString(1, turn.name()));
 	}
 
 	@Override
-	public void update(String turn) {
+	public void update(Color turn) {
 		String query = "UPDATE turn SET current_turn = (?)";
-		jdbcTemplate.update(query, preparedStatement -> preparedStatement.setString(1, turn));
+		jdbcTemplate.update(query, preparedStatement -> preparedStatement.setString(1, turn.name()));
 	}
 
 	@Override

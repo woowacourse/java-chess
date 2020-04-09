@@ -4,10 +4,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import chess.domain.ChessGame;
+import chess.domain.piece.Color;
 
 public class BoardResponseDto {
 	private List<PieceResponseDto> pieces;
-	private String turn;
+	private Color turn;
 
 	public BoardResponseDto(ChessGame chessGame) {
 		this.turn = chessGame.getTurn();
@@ -19,10 +20,10 @@ public class BoardResponseDto {
 	}
 
 	public String getTurn() {
-		return turn;
+		return turn.name();
 	}
 
-	public void setTurn(String turn) {
+	public void setTurn(Color turn) {
 		this.turn = turn;
 	}
 
