@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import chess.domain.board.Board;
 import chess.domain.game.Game;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 import chess.repository.GameDAO;
 import chess.view.dto.requestdto.PositionRequestDTO;
 import chess.view.dto.responsedto.BoardDTO;
@@ -28,8 +29,8 @@ public class GameService {
 	public List<ScoreDTO> calculateScore() {
 		Game game = gameDAO.findById(DEFAULT_USER_ID)
 			.orElseThrow(() -> new NoSuchElementException(NONE_ELEMENT_QUERY_RESULT_EXCEPTION_MESSAGE));
-
-		return game.status().entrySet().stream()
+		Result status = game.status();
+		return status.getStatus().entrySet().stream()
 			.map(entry -> new ScoreDTO(entry.getKey().getTeam(), entry.getValue()))
 			.collect(Collectors.toList());
 	}

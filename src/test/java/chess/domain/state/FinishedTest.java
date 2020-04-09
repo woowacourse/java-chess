@@ -10,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 class FinishedTest {
 	private GameState state;
@@ -35,7 +36,8 @@ class FinishedTest {
 	void start_initial_pieces_test() {
 		state = state.start();
 		Board board = state.getBoard();
-		assertThat(board.status()).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
+		Result status = Result.from(board);
+		assertThat(status.getStatus()).containsOnly(entry(WHITE, 38.0), entry(BLACK, 38.0));
 	}
 
 	@DisplayName("종료상태의 객체에서 체스말 이동 시도시 USO 예외 발생")
@@ -51,7 +53,6 @@ class FinishedTest {
 	@Test
 	void statusTest() {
 		assertThatCode(() -> state.status()).doesNotThrowAnyException();
-		;
 	}
 
 	@DisplayName("게임 종료 상태 객체에서 end 호출시 USO 예외 발생한다.")

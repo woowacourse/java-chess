@@ -1,10 +1,9 @@
 package chess.domain.state;
 
-import java.util.Map;
-
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 public abstract class Finished extends GameState {
 	public Finished(Board board, StateType stateType, Team turn) {
@@ -23,8 +22,8 @@ public abstract class Finished extends GameState {
 	}
 
 	@Override
-	public Map<Team, Double> status() {
-		return board.status();
+	public Result status() {
+		return Result.from(board);
 	}
 
 	@Override

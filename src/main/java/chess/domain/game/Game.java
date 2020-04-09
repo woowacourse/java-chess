@@ -8,6 +8,7 @@ import java.util.function.Consumer;
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 import chess.domain.state.GameState;
 
 public class Game {
@@ -48,7 +49,7 @@ public class Game {
 		this.state = state.move(from, to);
 	}
 
-	public Map<Team, Double> status() {
+	public Result status() {
 		return state.status();
 	}
 

@@ -3,7 +3,6 @@ package chess.domain.board;
 import static chess.domain.piece.Empty.*;
 import static chess.domain.piece.Team.*;
 import static chess.domain.position.Position.*;
-import static java.util.stream.Collectors.*;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.regex.Pattern;
-import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import chess.domain.piece.Bishop;
@@ -71,7 +69,7 @@ public class Board {
 
 	private void validateBoardRegex(String boards) {
 		if (!PIECES_PATTERN.matcher(boards).matches()) {
-			throw new IllegalArgumentException(String.format(ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE+ "%s", boards));
+			throw new IllegalArgumentException(String.format(ILLEGAL_BOARD_REGEX_EXCEPTION_MESSAGE + "%s", boards));
 		}
 	}
 
@@ -101,26 +99,6 @@ public class Board {
 		for (int i = 0; i < MAXIMUM_POSITION_NUMBER; i++) {
 			pieces.put(Position.of((char)('a' + i) + String.valueOf(pawnsRow)), new Pawn(team));
 		}
-	}
-
-	// TODO: 2020/04/04 해당 기능 Result 클래스로 이동
-	public Map<Team, Double> status() {
-		HashMap<Team, Double> collect = pieces.values().stream()
-			.filter(Piece::isNotBlank)
-			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
-
-		for (int file = MINIMUM_POSITION_NUMBER; file <= MAXIMUM_POSITION_NUMBER; file++) {
-			int finalFile = file;
-			Map<Team, Long> cnt = IntStream.rangeClosed(MINIMUM_POSITION_NUMBER, MAXIMUM_POSITION_NUMBER)
-				.mapToObj(rank -> findPiece(Position.of(finalFile, rank)))
-				.filter(Piece::isPawn)
-				.collect(groupingBy(Piece::getTeam, counting()));
-
-			cnt.keySet().stream()
-				.filter(team -> cnt.get(team) == 1)
-				.forEach(team -> collect.put(team, collect.get(team) + 0.5));
-		}
-		return collect;
 	}
 
 	public void move(Position from, Position to) {

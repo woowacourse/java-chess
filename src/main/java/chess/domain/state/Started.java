@@ -3,11 +3,10 @@ package chess.domain.state;
 import static chess.domain.piece.Team.*;
 import static chess.domain.state.StateType.*;
 
-import java.util.Map;
-
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 public class Started extends GameState {
 	public Started(Board board) {
@@ -46,8 +45,8 @@ public class Started extends GameState {
 	}
 
 	@Override
-	public Map<Team, Double> status() {
-		return board.status();
+	public Result status() {
+		return Result.from(board);
 	}
 
 	@Override

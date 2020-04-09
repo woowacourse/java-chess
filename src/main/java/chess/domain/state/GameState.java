@@ -2,12 +2,12 @@ package chess.domain.state;
 
 import static chess.domain.piece.Team.*;
 
-import java.util.Map;
 import java.util.Objects;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 public abstract class GameState {
 	protected final int id;
@@ -34,7 +34,7 @@ public abstract class GameState {
 
 	public abstract GameState move(Position from, Position to);
 
-	public abstract Map<Team, Double> status();
+	public abstract Result status();
 
 	public abstract GameState end();
 

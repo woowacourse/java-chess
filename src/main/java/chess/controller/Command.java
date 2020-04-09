@@ -8,6 +8,7 @@ import java.util.regex.Pattern;
 
 import chess.domain.game.Game;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 import chess.view.OutputView;
 
 public enum Command {
@@ -16,8 +17,8 @@ public enum Command {
 		OutputView.printBoard(game.getBoard());
 	}),
 	STATUS(compile("status"), (game, command) -> {
-		game.status();
-		OutputView.printStatus(game.status());
+		Result status = game.status();
+		OutputView.printStatus(status.getStatus());
 	}),
 	MOVE(compile("move \\w\\d \\w\\d"), (game, command) -> {
 		String[] s = command.split(" ");

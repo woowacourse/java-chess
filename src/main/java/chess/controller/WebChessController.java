@@ -16,7 +16,8 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class WebChessController {
 	private static final HandlebarsTemplateEngine TEMPLATE_ENGINE = new HandlebarsTemplateEngine();
-	private static final ModelAndView DEFAULT_MODEL_AND_VIEW = new ModelAndView(new HashMap<String, Object>(), "index.html");
+	private static final ModelAndView DEFAULT_MODEL_AND_VIEW = new ModelAndView(new HashMap<String, Object>(),
+		"index.html");
 
 	private final GameService gameService;
 

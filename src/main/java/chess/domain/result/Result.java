@@ -1,5 +1,6 @@
 package chess.domain.result;
 
+import static chess.domain.piece.Team.*;
 import static chess.domain.position.Position.*;
 import static java.util.stream.Collectors.*;
 
@@ -25,7 +26,6 @@ public class Result {
 
 	public static Result from(Board board) {
 		Map<Team, Double> collect = findDafaultScores(board);
-
 		for (int col = MINIMUM_POSITION_NUMBER; col <= MAXIMUM_POSITION_NUMBER; col++) {
 			inputNthColumnPawnBonus(board, collect, col);
 		}
@@ -35,6 +35,16 @@ public class Result {
 	private static void inputNthColumnPawnBonus(Board board, Map<Team, Double> collect, int file) {
 		Map<Team, Long> cnt = findNthColumnPawnSize(board, file);
 		addPawnBonusScore(collect, cnt);
+	}
+
+	private static HashMap<Team, Double> findDafaultScores(Board board) {
+		HashMap<Team, Double> collect = board.getPieces().values().stream()
+			.filter(Piece::isNotBlank)
+			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
+
+		collect.putIfAbsent(BLACK, 0d);
+		collect.putIfAbsent(WHITE, 0d);
+		return collect;
 	}
 
 	private static void addPawnBonusScore(Map<Team, Double> collect, Map<Team, Long> cnt) {
@@ -50,9 +60,12 @@ public class Result {
 			.collect(groupingBy(Piece::getTeam, counting()));
 	}
 
-	private static HashMap<Team, Double> findDafaultScores(Board board) {
-		return board.getPieces().values().stream()
-			.filter(Piece::isNotBlank)
-			.collect(groupingBy(Piece::getTeam, HashMap::new, summingDouble(Piece::getScore)));
+	public Team findWinner() {
+		return status.get(BLACK) < status.get(WHITE) ? WHITE :
+			!status.get(BLACK).equals(status.get(WHITE)) ? BLACK : NONE;
+	}
+
+	public Map<Team, Double> getStatus() {
+		return status;
 	}
 }

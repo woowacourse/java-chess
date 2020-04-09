@@ -17,6 +17,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 public class BoardTest {
 	private Board board;
@@ -68,7 +69,8 @@ public class BoardTest {
 	@Test
 	void calculateScoreTest() {
 		board.start();
-		Map<Team, Double> status = board.status();
+		Result result = Result.from(board);
+		Map<Team, Double> status = result.getStatus();
 		assertThat(status).containsOnly(entry(Team.BLACK, 38.0), entry(WHITE, 38.0));
 	}
 

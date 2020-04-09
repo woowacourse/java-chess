@@ -3,11 +3,10 @@ package chess.domain.state;
 import static chess.domain.piece.Team.*;
 import static chess.domain.state.StateType.*;
 
-import java.util.Map;
-
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
 public class Ready extends GameState {
 	public Ready(Board board) {
@@ -30,7 +29,7 @@ public class Ready extends GameState {
 	}
 
 	@Override
-	public Map<Team, Double> status() {
+	public Result status() {
 		throw new UnsupportedOperationException("게임을 시작해야 합니다.");
 	}
 
