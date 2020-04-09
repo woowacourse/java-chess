@@ -32,11 +32,7 @@ public class WebChessController implements ChessController {
             try {
                 boardService.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
                 chessDAO.saveGame(boardService.getStatus());
-                if (boardService.checkEndOfGame()) {
-                    return boardService.getWinner().getName() + WINNER_ALERT;
-                }
-                ;
-                return BLANK;
+                return parseMoveMessage();
             } catch (Exception e) {
                 res.status(400);
                 return e.getMessage();
@@ -55,6 +51,13 @@ public class WebChessController implements ChessController {
             res.redirect("/");
             return null;
         });
+    }
+
+    private String parseMoveMessage() {
+        if (boardService.checkEndOfGame()) {
+            return boardService.getWinner().getName() + WINNER_ALERT;
+        }
+        return BLANK;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
