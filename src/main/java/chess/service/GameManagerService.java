@@ -1,6 +1,5 @@
 package chess.service;
 
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,7 +22,7 @@ public class GameManagerService {
 		this.turnDao = new TurnDao();
 	}
 
-	public void move(Position targetPosition, Position destination) throws SQLException {
+	public void move(Position targetPosition, Position destination) {
 		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
@@ -35,7 +34,7 @@ public class GameManagerService {
 		turnDao.editTurn(gameManager.getCurrentTurn());
 	}
 
-	public void resetGame() throws SQLException {
+	public void resetGame() {
 		boardDao.deleteAll();
 		turnDao.editTurn(Color.WHITE);
 		Board board = BoardFactory.create();
@@ -46,15 +45,15 @@ public class GameManagerService {
 		boardDao.addAllPieces(pieces);
 	}
 
-	public Board getBoard() throws SQLException {
+	public Board getBoard() {
 		return new Board(boardDao.findAllPieces());
 	}
 
-	public Color getCurrentTurn() throws SQLException {
+	public Color getCurrentTurn() {
 		return turnDao.findTurn();
 	}
 
-	public boolean isKingAlive() throws SQLException {
+	public boolean isKingAlive() {
 		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
@@ -62,7 +61,7 @@ public class GameManagerService {
 		return gameManager.isKingAlive();
 	}
 
-	public Map<Color, Double> calculateEachScore() throws SQLException {
+	public Map<Color, Double> calculateEachScore() {
 		Board board = new Board(boardDao.findAllPieces());
 		Color turn = turnDao.findTurn();
 		GameManager gameManager = new GameManager(board, turn);
