@@ -11,9 +11,9 @@ public class StartResponse {
     private final ChessManager chessManager;
     private ChessCommandDao chessCommandDao;
 
-    public StartResponse(ChessManager chessManager) {
+    public StartResponse(ChessManager chessManager, ChessCommandDao chessCommandDao) {
         this.chessManager = chessManager;
-        this.chessCommandDao = new ChessCommandDao();
+        this.chessCommandDao = chessCommandDao;
     }
 
     public Map<String, Object> getModel() throws SQLException {
@@ -22,7 +22,7 @@ public class StartResponse {
         model.put("currentTeam", chessManager.getCurrentTeam());
         model.put("currentTeamScore", chessManager.calculateScore());
         if (!chessCommandDao.selectCommands().isEmpty()) {
-            model.put("hasLastGameRecord", "true");
+            model.put("haveLastGameRecord", "true");
         }
 
         return model;

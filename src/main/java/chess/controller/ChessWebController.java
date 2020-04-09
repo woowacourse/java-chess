@@ -22,23 +22,23 @@ public class ChessWebController {
     private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    private final ChessCommandDao chessCommandDao = new ChessCommandDao();
     private ChessManager chessManager;
+    private ChessCommandDao chessCommandDao;
     private MoveResponse moveResponse;
 
     public void play() {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
+            chessCommandDao = new ChessCommandDao();
             moveResponse = new MoveResponse(chessManager);
 
-            return render(new StartResponse(chessManager).getModel(), "chessGameStart.html");
+            return render(new StartResponse(chessManager, chessCommandDao).getModel(), "chessGameStart.html");
         });
 
         //play last game
         get("/playing/lastGame", (req, res) -> {
             List<String> commands = chessCommandDao.selectCommands();
-
             for (String command : commands) {
                 Command.MOVE.apply(chessManager, command);
             }

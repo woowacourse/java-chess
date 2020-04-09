@@ -32,7 +32,8 @@ public class ChessCommandDao {
 
     public void addCommand(ChessCommand command) throws SQLException {
         String query = "INSERT INTO commands VALUES (?)";
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.setString(1, command.getCommand());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -44,7 +45,8 @@ public class ChessCommandDao {
 
     public void deleteCommands() throws SQLException {
         String query = "TRUNCATE commands";
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
             preparedStatement.execute();
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
@@ -56,7 +58,8 @@ public class ChessCommandDao {
         String query = "SELECT * FROM commands";
         List<String> commands = new ArrayList<>();
 
-        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+        try (Connection connection = getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
                 commands.add(rs.getString("command"));

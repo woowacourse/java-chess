@@ -53,6 +53,7 @@ function move(source, target) {
             let winner = response.body.winner;
             if (winner != null) {
                 alert(winner + "팀이 이겼습니다.");
+                window.location = "http://localhost:4567/start";
                 return;
             }
             update(board, team, currentTeamScore);
