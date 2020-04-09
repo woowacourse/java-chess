@@ -6,12 +6,11 @@ import static spark.Spark.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
-import chess.domain.position.Position;
 import chess.service.GameService;
 import chess.view.dto.requestdto.PositionRequestDTO;
 import chess.view.response.StandardResponse;
-import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -29,77 +28,63 @@ public class WebChessController {
 	public void run() {
 		get("/", (req, res) -> render(new HashMap<>(), "index.html"));
 
-		get("/chess/state", (req, res) -> {
-			try {
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(gameService.getCurrentState()));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		get("/chess/state", (req, res) ->
+				makeResponse(() ->
+					new StandardResponse(SUCCESS, toJsonTree(gameService.getCurrentState()))),
+			json()
+		);
 
-		post("/chess/state", (req, res) -> {
-			String request = req.body();
-			if ("start".equals(request)) {
-				try {
-					gameService.startNewGame();
+		post("/chess/state", (req, res) ->
+				makeResponse(() -> {
+					gameService.changeState(req.body());
 					return new StandardResponse(SUCCESS);
-				} catch (RuntimeException e) {
-					return new StandardResponse(ERROR, e.getMessage());
-				}
-			} else if ("end".equals(request)) {
-				try {
-					gameService.endGame();
-					return new StandardResponse(SUCCESS);
-				} catch (RuntimeException e) {
-					return new StandardResponse(ERROR, e.getMessage());
-				}
-			} else {
-				return new StandardResponse(ERROR, "유효한 명령이 아닙니다");
-			}
-		}, json());
+				}),
+			json()
+		);
 
-		get("/chess/pieces", (req, res) -> {
-			try {
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(gameService.findAllPiecesOnBoard()));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		get("/chess/pieces", (req, res) ->
+				makeResponse(() ->
+					new StandardResponse(SUCCESS, toJsonTree(this.gameService.findAllPiecesOnBoard()))
+				),
+			json()
+		);
 
-		get("/chess/record", (req, res) -> {
-			try {
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(gameService.calculateScore()));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		get("/chess/record", (req, res) ->
+				makeResponse(() ->
+					new StandardResponse(SUCCESS, toJsonTree(this.gameService.calculateScore()))
+				),
+			json()
+		);
 
-		post("/chess/move", (req, res) -> {
-			try {
-				PositionRequestDTO request = fromJson(req.body(), PositionRequestDTO.class);
-				gameService.move(Position.of(request.getFrom()), Position.of(request.getTo()));
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(
-					gameService.findChangedPiecesOnBoard(Position.of(request.getFrom()),
-						Position.of(request.getTo()))));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		post("/chess/move", (req, res) ->
+				makeResponse(() -> {
+					PositionRequestDTO request = fromJson(req.body(), PositionRequestDTO.class);
+					this.gameService.move(request);
+					return new StandardResponse(SUCCESS, toJsonTree(gameService.findChangedPiecesOnBoard(request)));
+				}),
+			json()
+		);
 
-		get("/chess/isnotfinish", (req, res) -> {
-			try {
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(gameService.isNotFinish()));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		get("/chess/isnotfinish", (req, res) ->
+				makeResponse(() ->
+					new StandardResponse(SUCCESS, toJsonTree(this.gameService.isNotFinish()))
+				),
+			json()
+		);
 
-		get("/chess/result", (req, res) -> {
-			try {
-				return new StandardResponse(SUCCESS, new Gson().toJsonTree(gameService.getWinner()));
-			} catch (RuntimeException e) {
-				return new StandardResponse(ERROR, e.getMessage());
-			}
-		}, json());
+		get("/chess/result", (req, res) ->
+				makeResponse(() ->
+					new StandardResponse(SUCCESS, toJsonTree(this.gameService.getWinner()))
+				),
+			json()
+		);
+	}
+
+	private StandardResponse makeResponse(Supplier<StandardResponse> responseGenerator) {
+		try {
+			return responseGenerator.get();
+		} catch (RuntimeException e) {
+			return new StandardResponse(ERROR, e.getMessage());
+		}
 	}
 }

@@ -11,6 +11,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.repository.GameDAO;
+import chess.view.dto.requestdto.PositionRequestDTO;
 import chess.view.dto.responsedto.BoardDTO;
 import chess.view.dto.responsedto.GameDTO;
 import chess.view.dto.responsedto.ScoreDTO;
@@ -30,9 +31,16 @@ public class GameService {
 			.collect(Collectors.toList());
 	}
 
-	public void startNewGame() {
+	public void changeState(String request) {
+		if (!"start".equals(request) && !"end".equals(request)) {
+			throw new IllegalArgumentException("유효한 명령어가 아닙니다.");
+		}
 		Game game = gameDAO.findById(1);
-		game.start();
+		if ("start".equals(request)) {
+			game.start();
+		} else {
+			game.end();
+		}
 		gameDAO.update(game);
 	}
 
@@ -46,13 +54,17 @@ public class GameService {
 			.collect(Collectors.toList());
 	}
 
-	public void move(Position from, Position to) {
+	public void move(PositionRequestDTO positionRequestDTO) {
+		Position from = Position.of(positionRequestDTO.getFrom());
+		Position to = Position.of(positionRequestDTO.getTo());
 		Game game = gameDAO.findById(1);
 		game.move(from, to);
 		gameDAO.update(game);
 	}
 
-	public List<BoardDTO> findChangedPiecesOnBoard(Position from, Position to) {
+	public List<BoardDTO> findChangedPiecesOnBoard(PositionRequestDTO positionRequestDTO) {
+		Position from = Position.of(positionRequestDTO.getFrom());
+		Position to = Position.of(positionRequestDTO.getTo());
 		Game game = gameDAO.findById(1);
 		Board board = game.getBoard();
 		List<BoardDTO> result = new ArrayList<>();
@@ -64,12 +76,6 @@ public class GameService {
 	public GameDTO getCurrentState() {
 		Game game = gameDAO.findById(1);
 		return GameDTO.of(game.getTurn(), game.getStateType());
-	}
-
-	public void endGame() {
-		Game game = gameDAO.findById(1);
-		game.end();
-		gameDAO.update(game);
 	}
 
 	public String getWinner() {
