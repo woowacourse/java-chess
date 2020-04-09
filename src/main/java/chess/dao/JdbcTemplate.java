@@ -26,24 +26,12 @@ public class JdbcTemplate {
     }
 
     public Object executeQuery(String sql, RowMapper rm) throws SQLException {
-        Connection con = null;
-        PreparedStatement statement = null;
-        ResultSet rs = null;
-        try {
-            con = ConnectionManager.getConnection();
-            statement = con.prepareStatement(sql);
-            rs = statement.executeQuery();
+        try (
+            Connection con = ConnectionManager.getConnection();
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+        ) {
             return rm.mapRow(rs);
-        } finally {
-            if (rs != null) {
-                rs.close();
-            }
-            if (statement != null) {
-                statement.close();
-            }
-            if (con != null) {
-                con.close();
-            }
         }
     }
 }

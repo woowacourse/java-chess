@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.List;
+import java.util.Objects;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
@@ -96,5 +97,20 @@ public class Board {
 
     public Team getWinner() {
         return pieces.teamWithAliveKing();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Board board = (Board)o;
+        return Objects.equals(pieces, board.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

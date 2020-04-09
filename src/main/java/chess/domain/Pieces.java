@@ -3,6 +3,7 @@ package chess.domain;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.domain.piece.Piece;
@@ -61,5 +62,20 @@ public class Pieces {
 
     public Map<Position, Piece> getPieces() {
         return pieces;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
+        Pieces pieces1 = (Pieces)o;
+        return Objects.equals(pieces, pieces1.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

@@ -47,7 +47,7 @@ public class BoardDao {
         template.executeUpdateWithoutPss(sql);
     }
 
-    public void savePiece(Piece piece) throws SQLException {
+    private void savePiece(Piece piece) throws SQLException {
         PreparedStatementSetter pss = statement -> {
             statement.setString(1, piece.getPosition());
             statement.setString(2, piece.toString());
