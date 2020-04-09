@@ -6,9 +6,9 @@ import java.sql.SQLException;
 import java.util.List;
 
 public interface ChessDao {
-    void addCommand(ChessCommand command) throws SQLException;
+    void addCommand(ChessCommand command);
 
-    void clearCommands() throws SQLException;
+    void clearCommands();
 
-    List<ChessCommand> selectCommands() throws SQLException;
+    List<ChessCommand> selectCommands();
 }

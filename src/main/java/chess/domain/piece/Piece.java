@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 
+import java.util.Objects;
+
 public class Piece {
     private final PieceType pieceType;
     private final Team team;
@@ -51,5 +53,19 @@ public class Piece {
     @Override
     public String toString() {
         return pieceType.toString() + "_" + team.toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType &&
+                team == piece.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, team);
     }
 }

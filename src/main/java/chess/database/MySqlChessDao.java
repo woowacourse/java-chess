@@ -12,7 +12,7 @@ import java.util.List;
 public class MySqlChessDao implements ChessDao {
 
     @Override
-    public void addCommand(ChessCommand command) throws SQLException {
+    public void addCommand(ChessCommand command) {
         String query = "INSERT INTO commands VALUES (?)";
         try (Connection connection = MySqlConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -22,11 +22,10 @@ public class MySqlChessDao implements ChessDao {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
     }
 
     @Override
-    public void clearCommands() throws SQLException {
+    public void clearCommands() {
         String query = "TRUNCATE commands";
         try (Connection connection = MySqlConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -38,7 +37,7 @@ public class MySqlChessDao implements ChessDao {
     }
 
     @Override
-    public List<ChessCommand> selectCommands() throws SQLException {
+    public List<ChessCommand> selectCommands() {
         String query = "SELECT * FROM commands";
         List<ChessCommand> commands = new ArrayList<>();
 

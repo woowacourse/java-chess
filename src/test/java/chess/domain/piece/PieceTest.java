@@ -49,4 +49,6 @@ class PieceTest {
         assertThat(whitePawn.isPawn()).isTrue();
         assertThat(blackQueen.isPawn()).isFalse();
     }
+
+
 }

@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.database.ChessDao;
-import chess.database.MySqlChessDao;
 import chess.web.ChessCommand;
 import chess.web.MoveResponse;
 import chess.web.StartResponse;
@@ -11,7 +10,6 @@ import com.google.gson.GsonBuilder;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,15 +21,18 @@ public class ChessWebController {
     private static final String MOVE_ERROR_MESSAGE = "이동할 수 없는 곳입니다. 다시 입력해주세요";
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
 
-    private ChessManager chessManager;
     private ChessDao chessDao;
+    private ChessManager chessManager;
     private MoveResponse moveResponse;
+
+    public ChessWebController(ChessDao chessDao) {
+        this.chessDao = chessDao;
+    }
 
     public void play() {
         //start
         get("/start", (req, res) -> {
             chessManager = new ChessManager();
-            chessDao = new MySqlChessDao();
             moveResponse = new MoveResponse(chessManager);
 
             return render(new StartResponse(chessManager, chessDao).getModel(), "chessGameStart.html");
@@ -79,11 +80,11 @@ public class ChessWebController {
         });
     }
 
-    private void initializeDatabase() throws SQLException {
+    private void initializeDatabase() {
         chessDao.clearCommands();
     }
 
-    public void saveToDatabase(String command) throws SQLException {
+    private void saveToDatabase(String command) {
         chessDao.addCommand(new ChessCommand(command));
     }
 
