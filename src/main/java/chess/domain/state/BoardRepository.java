@@ -1,11 +1,10 @@
 package chess.domain.state;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.TreeMap;
 
 import chess.domain.Board;
 import chess.domain.Team;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.king.King;
@@ -21,7 +20,11 @@ public class BoardRepository {
 
 	public static Board create() {
 		TreeMap<Position, Piece> initialBoard = new TreeMap<>();
-
+		for (int i = 1; i <= 8; i++) {
+			for (int j = 1; j <= 8; j++) {
+				initialBoard.put(Position.of(i, j), new Blank(Position.of(i, j)));
+			}
+		}
 		for (int i = 'a'; i <= 'h'; i++) {
 			initialBoard.put(Position.of((char)i + BLACK_PAWN),
 				Pawn.of(Team.WHITE, Position.of((char)i + BLACK_PAWN)));

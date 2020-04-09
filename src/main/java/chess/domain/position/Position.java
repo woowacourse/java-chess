@@ -54,6 +54,14 @@ public class Position implements Comparable<Position> {
 		return row;
 	}
 
+	public int getColumnIntValue() {
+		return column.intValue();
+	}
+
+	public int getRowIntValue() {
+		return row.intValue();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)

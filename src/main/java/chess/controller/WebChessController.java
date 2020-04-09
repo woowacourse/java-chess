@@ -15,6 +15,7 @@ import chess.dto.TurnDto;
 import chess.dto.UnitsDto;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -93,24 +94,24 @@ public class WebChessController {
 	private String move(Request request, Response response) throws SQLException {
 		int id = Integer.parseInt(request.params(":id"));
 		ChessGame game = ChessGame.createGameByMoves(moveDao.findMovesByGameId(id));
-		Map<String, String> map = gson.fromJson(request.body(), Map.class);
-		game.move(Position.of(Integer.parseInt(map.get("sourceX")), Integer.parseInt(map.get("sourceY"))),
-			Position.of(Integer.parseInt(map.get("targetX")), Integer.parseInt(map.get("targetY"))));
-		UnitsDto updatedUnits = new UnitsDto(game.board().getBoard());
+		Map<String, Integer> map = gson.fromJson(request.body(), new TypeToken<Map<String, Integer>>() {}.getType());
+		game.move(Position.of((map.get("sourceX")), (map.get("sourceY"))),
+			Position.of((map.get("targetX")), (map.get("targetY"))));
+		UnitsDto updateUnits = new UnitsDto(game.board().getBoard());
 		saveMove(id, map);
-		return gson.toJson(updatedUnits);
+		return gson.toJson(updateUnits);
 	}
 
-	private void saveMove(int id, Map<String, String> map) throws SQLException {
-		int sourceX = Integer.parseInt(map.get("sourceX")) + 96;
-		int targetX = Integer.parseInt(map.get("targetX")) + 96;
-		moveDao.save((char)(sourceX) + map.get("sourceY"), (char)(targetX) + map.get("targetY"), id);
+	private void saveMove(int id, Map<String, Integer> map) throws SQLException {
+		int sourceX = map.get("sourceX") + 96;
+		int targetX = map.get("targetX") + 96;
+		moveDao.save((char)(sourceX) + String.valueOf(map.get("sourceY")),
+			(char)(targetX) + String.valueOf(map.get("targetY")), id);
 	}
 
 	private String users(Request request, Response response) throws SQLException {
-		Map req = gson.fromJson(request.body(), Map.class);
-		int gameId = gamesDao.createGame(String.valueOf(req.get("user1")),
-			String.valueOf(req.get("user2")));
+		Map<String, String> req = gson.fromJson(request.body(), new TypeToken<Map<String, String>>() {}.getType());
+		int gameId = gamesDao.createGame(req.get("user1"), req.get("user2"));
 		HashMap<String, Object> model = new HashMap<>();
 		model.put("id", gameId);
 		return gson.toJson(model);

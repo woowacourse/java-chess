@@ -14,8 +14,8 @@ public class UnitsDto {
 	public UnitsDto(Map<Position, Piece> units) {
 		this.units = units.values().stream()
 			.map(piece -> new UnitDto(
-				piece.getPosition().getColumn().intValue(),
-				piece.getPosition().getRow().intValue(),
+				piece.getColumnValue(),
+				piece.getRowValue(),
 				piece.getTeam().name(),
 				piece.getSymbol()
 			)).collect(Collectors.toList());

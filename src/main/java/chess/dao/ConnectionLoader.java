@@ -18,13 +18,11 @@ public class ConnectionLoader {
 			Class.forName(DRIVER);
 		} catch (ClassNotFoundException e) {
 			System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-			e.printStackTrace();
 		}
 		try {
 			con = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DB_NAME + OPTION, NAME, PASSWORD);
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
-			e.printStackTrace();
 		}
 		return con;
 	}

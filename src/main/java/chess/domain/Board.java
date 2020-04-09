@@ -8,6 +8,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.exception.InvalidTurnException;
@@ -34,6 +35,7 @@ public class Board {
 		checkTurn(turn, source);
 		source = source.move(from, to, getTeamBoard());
 		board.remove(from);
+		board.put(from, new Blank(from));
 		checkKingDead(to);
 		board.put(to, source);
 	}
@@ -71,6 +73,7 @@ public class Board {
 
 	public Map<Position, Team> getTeamBoard() {
 		return board.entrySet().stream()
+			.filter(entry -> entry.getValue().isNotNone())
 			.collect(Collectors.toMap(
 				Map.Entry::getKey,
 				entry -> entry.getValue().getTeam()

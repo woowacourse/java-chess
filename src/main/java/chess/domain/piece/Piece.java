@@ -40,8 +40,20 @@ public abstract class Piece {
 		return turn.isSameTeam(team);
 	}
 
+	public boolean isNotNone() {
+		return true;
+	};
+
 	public Position getPosition() {
 		return position;
+	}
+
+	public int getColumnValue() {
+		return position.getColumnIntValue();
+	}
+
+	public int getRowValue() {
+		return position.getRowIntValue();
 	}
 
 	public Team getTeam() {
