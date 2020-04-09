@@ -62,6 +62,13 @@ public class WebController {
 			model.put("message", "저장되었습니다.");
 			return render(model, "game.html");
 		});
+
+		get("/loading", (req, res) -> {
+			ChessGameDto chessGameDto = boardService.findByTitle(req.queryParams("title"));
+			Map<String, Object> model = new HashMap<>();
+			model.put("data", chessGameDto);
+			return render(model, "game.html");
+		});
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {

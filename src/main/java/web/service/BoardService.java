@@ -47,4 +47,11 @@ public class BoardService {
 		ChessGameDto chessGameDto = new ChessGameDto(title, board, turn.getName(), score);
 		boardDAO.addBoard(chessGameDto);
 	}
+
+	public ChessGameDto findByTitle(String title) throws SQLException {
+		ChessGameDto chessGameDto = boardDAO.findByTitle(title);
+		List<Rank> board = chessGameDto.getBoard();
+		Map<Team, Double> score = Score.calculateScore(board);
+		return new ChessGameDto(chessGameDto.getTitle(), board, chessGameDto.getTurn(), score);
+	}
 }

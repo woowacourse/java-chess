@@ -1,4 +1,4 @@
-package web;
+package web.util;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,7 +24,15 @@ public class UnicodeConverter {
 		unicode.put(".", "");
 	}
 
-	public static String convert(String symbol) {
+	public static String toUnicodeFrom(String symbol) {
 		return unicode.get(symbol);
 	}
+
+	/*public static String toSymbolFrom(String inputUnicode) {
+		return unicode.entrySet().stream()
+			.filter(value -> value.getValue().equals(inputUnicode))
+			.findFirst()
+			.orElseThrow(() -> new InvalidArgumentException())
+			.getKey();
+	}*/
 }
