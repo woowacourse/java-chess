@@ -65,7 +65,7 @@ window.onload = function () {
     })();
 
     function chooseFirstPosition(position) {
-        fetch(`http://localhost:4567/start?start=${position}`, {method: "POST"})
+        fetch(`http://localhost:4567/source?source=${position}`, {method: "POST"})
             .then(res => res.json())
             .then(data => {
                 startPosition = data.position;
@@ -89,22 +89,22 @@ window.onload = function () {
     }
 
     function chooseSecondPosition(position) {
-        fetch(`http://localhost:4567/end?end=${position}`, {method: "POST"})
+        fetch(`http://localhost:4567/destination?destination=${position}`, {method: "POST"})
             .then(res => res.json())
             .then(data => {
                 if (data.normalStatus === false) {
                     alert(data.exception);
                     return;
                 }
-                const start = startPosition;
-                const end = data.position;
+                const source = startPosition;
+                const destination = data.position;
                 startPosition = null;
 
-                if (start === end) {
+                if (source === destination) {
                     alert("이동을 취소합니다.");
                 }
 
-                post_to_url("/board", {"start": start, "end": end});
+                post_to_url("/board", {"source": source, "destination": destination});
             });
     }
 

@@ -1,12 +1,12 @@
 package chess.controller;
 
+import chess.domain.game.NormalStatus;
 import chess.domain.piece.Color;
+import chess.domain.position.MovingPosition;
 import chess.dto.DestinationPositionDto;
 import chess.dto.MovablePositionsDto;
 import chess.dto.MoveStatusDto;
 import chess.service.ChessWebService;
-import chess.domain.position.MovingPosition;
-import chess.domain.game.NormalStatus;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -28,7 +28,7 @@ public class ChessWebController {
 	}
 
 	public void route() {
-		get("/", this::start);
+		get("/", this::index);
 
 		get("/new", this::startNewGame);
 
@@ -38,12 +38,12 @@ public class ChessWebController {
 
 		post("/board", this::postBoard);
 
-		post("/start", this::getMovablePositions, json());
+		post("/source", this::getMovablePositions, json());
 
-		post("/end", this::move, json());
+		post("/destination", this::move, json());
 	}
 
-	private String start(Request req, Response res) {
+	private String index(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
@@ -70,7 +70,7 @@ public class ChessWebController {
 		Map<String, Object> model = new HashMap<>();
 
 		try {
-			MoveStatusDto moveStatusDto = chessWebService.move(new MovingPosition(req.queryParams("start"), req.queryParams("end")));
+			MoveStatusDto moveStatusDto = chessWebService.move(new MovingPosition(req.queryParams("source"), req.queryParams("destination")));
 
 			model.put("normalStatus", moveStatusDto.getNormalStatus());
 			model.put("winner", moveStatusDto.getWinner());
@@ -90,7 +90,7 @@ public class ChessWebController {
 	private Map<String, Object> getMovablePositions(Request req, Response res) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 		try {
-			MovablePositionsDto movablePositionsDto = chessWebService.findMovablePositions(req.queryParams("start"));
+			MovablePositionsDto movablePositionsDto = chessWebService.findMovablePositions(req.queryParams("source"));
 
 			model.put("movable", movablePositionsDto.getMovablePositionNames());
 			model.put("position", movablePositionsDto.getPosition());
@@ -108,7 +108,7 @@ public class ChessWebController {
 	private Map<String, Object> move(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 
-		DestinationPositionDto destinationPositionDto = chessWebService.chooseDestinationPosition(req.queryParams("end"));
+		DestinationPositionDto destinationPositionDto = chessWebService.chooseDestinationPosition(req.queryParams("destination"));
 
 		model.put("normalStatus", destinationPositionDto.getNormalStatus().isNormalStatus());
 		model.put("position", destinationPositionDto.getPosition());
