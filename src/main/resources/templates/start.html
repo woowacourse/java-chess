@@ -24,10 +24,12 @@
         화이트팀 이름(기본 WHITE) : <input type="text" name="WhiteName" maxlength="10"/><br>
         블랙팀 이름(기본 BLACK) : <input type="text" name="BlackName" maxlength="10"/><br>
         <input type="submit" value="게임 시작"/>
+        <input type="text" name="roomId" value={{roomId}} hidden/>
     </form>
 </div>
 <form method="post" action="/followGame">
     <input type="submit" value="게임 이어하기"/>
+    <input type="text" name="roomId" value={{roomId}} hidden/>
 </form>
 </body>
 </html>

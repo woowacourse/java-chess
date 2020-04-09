@@ -75,11 +75,10 @@ public class ChessBoardDao extends ChessDB {
     }
 
     public Set<CastlingSetting> getCastlingElements(int gameId) throws SQLException {
-        String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND CASTLING_ELEMENT_YN = ?";
+        String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND CASTLING_ELEMENT_YN = 'Y'";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
             pstmt.setInt(1, gameId);
-            pstmt.setString(2, "Y");
             Set<CastlingSetting> castlingElements = new HashSet<>();
             try (ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {

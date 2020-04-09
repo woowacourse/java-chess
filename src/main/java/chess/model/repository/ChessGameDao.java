@@ -131,4 +131,22 @@ public class ChessGameDao extends ChessDB {
         }
     }
 
+    public void updateProceedNByRoomId(int roomId) throws SQLException {
+        StringBuilder query = new StringBuilder();
+        query.append("UPDATE CHESS_GAME_TB");
+        query.append("   SET PROCEEDING_YN = 'N'");
+        query.append(" WHERE ID IN ( ");
+        query.append("SELECT ID ");
+        query.append("FROM ( ");
+        query.append("SELECT GAME.ID ");
+        query.append("  FROM CHESS_GAME_TB AS GAME ");
+        query.append("  JOIN ROOM_TB AS ROOM ");
+        query.append(" WHERE GAME.ROOM_ID = ROOM.ID ");
+        query.append("   AND ROOM.ID = ?) AS ID_TB)");
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query.toString())) {
+            pstmt.setInt(1, roomId);
+            pstmt.executeUpdate();
+        }
+    }
 }

@@ -43,19 +43,19 @@ class ChessResultDaoTest {
         int gameId = 1;
 
         // Select
-        assertThat(chessResultDao.selectTeamScore(gameId)).isEmpty();
+        assertThat(chessResultDao.select(gameId)).isEmpty();
 
         // Insert
-        chessResultDao.insertTeamScore(gameId, teamScore);
-        assertThat(chessResultDao.selectTeamScore(gameId)).isEqualTo(teamScore);
+        chessResultDao.insert(gameId, new TeamScore(teamScore));
+        assertThat(chessResultDao.select(gameId)).isEqualTo(teamScore);
 
         // Update
         teamScoreUpdate.put(Color.BLACK, 1.0);
-        chessResultDao.updateTeamScore(gameId, teamScoreUpdate);
-        assertThat(chessResultDao.selectTeamScore(gameId)).isEqualTo(teamScoreUpdate);
+        chessResultDao.update(gameId, new TeamScore(teamScoreUpdate));
+        assertThat(chessResultDao.select(gameId)).isEqualTo(teamScoreUpdate);
 
         // Delete
-        chessResultDao.deleteTeamScore(gameId);
-        assertThat(chessResultDao.selectTeamScore(gameId)).isEmpty();
+        chessResultDao.delete(gameId);
+        assertThat(chessResultDao.select(gameId)).isEmpty();
     }
 }

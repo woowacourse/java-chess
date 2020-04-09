@@ -3,14 +3,16 @@ package chess;
 import static spark.Spark.get;
 import static spark.Spark.post;
 
-import chess.model.domain.board.ChessGame;
 import chess.model.domain.piece.Color;
+import chess.model.dto.CreateRoomDto;
+import chess.model.dto.DeleteRoomDto;
 import chess.model.dto.MoveDto;
 import chess.model.dto.PromotionTypeDto;
-import chess.model.dto.ResultDto;
 import chess.model.dto.SourceDto;
 import chess.model.service.ChessGameService;
+import chess.model.service.RoomService;
 import com.google.gson.Gson;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import spark.ModelAndView;
@@ -20,20 +22,36 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ApplicationUI {
 
+    private static final Gson GSON = new Gson();
+    private static final ChessGameService CHESS_GAME_SERVICE = ChessGameService.getInstance();
+    private static final RoomService ROOM_SERVICE = RoomService.getInstance();
+    private static final Map<Color, String> DEFAULT_NAMES;
+
+    static {
+        Map<Color, String> defaultNames = new HashMap<>();
+        defaultNames.put(Color.BLACK, "BLACK");
+        defaultNames.put(Color.WHITE, "WHITE");
+        DEFAULT_NAMES = Collections.unmodifiableMap(new HashMap<>(defaultNames));
+    }
+
     public static void main(String[] args) {
-        ChessGame chessGame = new ChessGame();
-        ChessGameService chessGameService = ChessGameService.getInstance();
-        Gson gson = new Gson();
+        post("/start", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", req.queryParams("roomId"));
+            return render(model, "/start.html");
+        });
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return render(model, "/start.html");
+            return render(model, "/room.html");
         });
 
         post("/game", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             Map<Color, String> userNames = getUserNames(req);
-            model.put("gameId", chessGameService.createChessGame(1, userNames));
+            int roomId = Integer.parseInt(req.queryParams("roomId"));
+            System.out.println(roomId + ">>>>>>>>>>>>>>>>>>>>>>>>.");
+            model.put("gameId", CHESS_GAME_SERVICE.createChessGame(roomId, userNames));
             return render(model, "/game.html");
         });
 
@@ -42,50 +60,59 @@ public class ApplicationUI {
             userNames.put(Color.BLACK, "BLACK");
             userNames.put(Color.WHITE, "WHITE");
             Map<String, Object> model = new HashMap<>();
-            model.put("gameId", chessGameService.getIdBefore(1));
+            int roomId = Integer.parseInt(req.queryParams("roomId"));
+            model.put("gameId", CHESS_GAME_SERVICE.getIdBefore(roomId, DEFAULT_NAMES));
             return render(model, "/game.html");
         });
 
         post("/move", (req, res) -> {
-            MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
-            return new Gson().toJson(chessGameService.move(moveDTO));
+            MoveDto moveDTO = GSON.fromJson(req.body(), MoveDto.class);
+            return GSON.toJson(CHESS_GAME_SERVICE.move(moveDTO));
         });
 
         post("/path", (req, res) -> {
-            SourceDto sourceDto = gson.fromJson(req.body(), SourceDto.class);
-            return new Gson().toJson(chessGameService.getPath(sourceDto));
+            SourceDto sourceDto = GSON.fromJson(req.body(), SourceDto.class);
+            return GSON.toJson(CHESS_GAME_SERVICE.getPath(sourceDto));
         });
 
         post("/promotion", (req, res) -> {
-            PromotionTypeDto promotionTypeDTO = gson.fromJson(req.body(), PromotionTypeDto.class);
-            return new Gson().toJson(chessGameService.promotion(promotionTypeDTO));
+            PromotionTypeDto promotionTypeDTO = GSON.fromJson(req.body(), PromotionTypeDto.class);
+            return GSON.toJson(CHESS_GAME_SERVICE.promotion(promotionTypeDTO));
         });
 
         post("/board", (req, res) -> {
-            MoveDto moveDTO = gson.fromJson(req.body(), MoveDto.class);
-            return new Gson().toJson(chessGameService.loadChessGame(moveDTO.getGameId()));
+            MoveDto moveDTO = GSON.fromJson(req.body(), MoveDto.class);
+            return GSON.toJson(CHESS_GAME_SERVICE.loadChessGame(moveDTO.getGameId()));
         });
 
-        get("/end", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            ResultDto resultDTO = new ResultDto(chessGame.getTeamScore());
-            model.put("winner", resultDTO.getWinner());
-            model.put("blackScore", resultDTO.getBlackScore());
-            model.put("whiteScore", resultDTO.getWhiteScore());
-            return render(model, "/end.html");
+        post("/end", (req, res) -> {
+            MoveDto moveDTO = GSON.fromJson(req.body(), MoveDto.class);
+            return GSON.toJson(CHESS_GAME_SERVICE.endGame(moveDTO));
+        });
+
+        get("/viewRooms", (req, res) -> GSON.toJson(ROOM_SERVICE.getUsedRooms()));
+
+        post("/createRoom", (req, res) -> {
+            ROOM_SERVICE.addRoom(GSON.fromJson(req.body(), CreateRoomDto.class));
+            return GSON.toJson(ROOM_SERVICE.getUsedRooms());
+        });
+
+        post("/deleteRoom", (req, res) -> {
+            ROOM_SERVICE.deleteRoom(GSON.fromJson(req.body(), DeleteRoomDto.class));
+            return GSON.toJson(ROOM_SERVICE.getUsedRooms());
         });
     }
 
     private static Map<Color, String> getUserNames(Request req) {
         Map<Color, String> userNames = new HashMap<>();
-        userNames.put(Color.BLACK, getUserName(req.queryParams("BlackName"), "BLACK"));
-        userNames.put(Color.WHITE, getUserName(req.queryParams("WhiteName"), "WHITE"));
+        userNames.put(Color.BLACK, getUserName(Color.BLACK, req.queryParams("BlackName")));
+        userNames.put(Color.WHITE, getUserName(Color.WHITE, req.queryParams("WhiteName")));
         return userNames;
     }
 
-    private static String getUserName(String inputName, String defaultName) {
+    private static String getUserName(Color color, String inputName) {
         if (inputName == null || inputName.trim().isEmpty()) {
-            return defaultName;
+            return DEFAULT_NAMES.get(color);
         }
         return inputName;
     }

@@ -76,21 +76,20 @@
 </head>
 <body>
 
-<label id="gameId">{{gameId}}</label>
-
-<form mothod="get" action="/end" target="_blank">
-    <label>현재 점수 및 고득점자 확인 (새 탭) - 게임 이어 진행 가능</label>
-    <button type="submit">status</button>
-</form>
-
-<form method="get" action="/end">
-    <label>현재 점수 및 고득점자 확인 (현재 탭) - 게임 종료</label>
-    <button type="submit">end</button>
-</form>
+<label>게임 종료</label>
+<button id="close-button">end</button>
+<label id="gameId" hidden>{{gameId}}</label>
 
 <div class="result">
     <br/>
-    현재 턴 : <label id="turn"></label><br/>
+    Black [<label id="blackName"></label>] : <label id="blackScore"></label><br/>
+    White [<label id="whiteName"></label>] : <label id="whiteScore"></label><br/>
+    고득점자 : [<label id="winner"></label>]
+</div>
+
+<div class="result">
+    <br/>
+    <label id="turn"></label><br/>
     <label id="clickTiming">말이 이동할 경로(before)를 선택하세요.</label><br/>
     <label id="state"></label><br/>
 </div>
@@ -183,12 +182,41 @@
     const cells = document.querySelectorAll('.cell');
     const turn = document.getElementById('turn');
     const state = document.getElementById('state');
+    const clickTiming = document.getElementById('clickTiming');
     const promotions = document.querySelectorAll('.promotion');
+    const blackScore = document.getElementById('blackScore');
+    const whiteScore = document.getElementById('whiteScore');
+    const blackName = document.getElementById('blackName');
+    const whiteName = document.getElementById('whiteName');
+    const winner = document.getElementById('winner');
+    const closeButton = document.getElementById('close-button');
 
     let firstClick = true;
     let source = null;
     let target = null;
     let gameId = document.getElementById('gameId').innerText;
+
+    closeButton.onclick = () => {
+        fetch('/end', {
+            method: 'POST',
+            body: JSON.stringify({
+                gameId
+            })
+        }).then(res => res.json()).then(data => {
+            cells.forEach(cell => {
+                cell.innerHTML = data.pieces.shift();
+                cell.classList.remove('path');
+            });
+            turn.innerText = '';
+            state.innerText = '';
+            clickTiming.innerText = '게임이 종료되었습니다.';
+            blackScore.innerText = data.blackScore;
+            whiteScore.innerText = data.whiteScore;
+            blackName.innerText = data.blackName;
+            whiteName.innerText = data.whiteName;
+            winner.innerText = data.winner;
+        })
+    }
 
     cells.forEach(cell => {
         cell.onclick = () => {
@@ -206,11 +234,11 @@
                 }).then(res => res.json()).then(data => {
                     cells.forEach(cell => {
                         cell.classList.remove('path');
-                    })
+                    });
                     data.path.forEach(path => {
                         document.getElementById(path).classList.add('path');
                     })
-                })
+                });
                 return;
             }
             document.getElementById('clickTiming').innerText
@@ -227,9 +255,14 @@
                 cells.forEach(cell => {
                     cell.innerHTML = data.pieces.shift();
                     cell.classList.remove('path');
-                }),
-                    turn.innerText = data.turn,
-                    state.innerText = data.state
+                });
+                turn.innerText = '현재 턴 : ' + data.turn;
+                state.innerText = data.state;
+                blackScore.innerText = data.blackScore;
+                whiteScore.innerText = data.whiteScore;
+                blackName.innerText = data.blackName;
+                whiteName.innerText = data.whiteName;
+                winner.innerText = data.winner;
             })
         }
     });
@@ -247,9 +280,14 @@
                 cells.forEach(cell => {
                     cell.innerHTML = data.pieces.shift();
                     cell.classList.remove('path');
-                }),
-                    turn.innerText = data.turn,
-                    state.innerText = data.state
+                });
+                turn.innerText = '현재 턴 : ' + data.turn;
+                state.innerText = data.state;
+                blackScore.innerText = data.blackScore;
+                whiteScore.innerText = data.whiteScore;
+                blackName.innerText = data.blackName;
+                whiteName.innerText = data.whiteName;
+                winner.innerText = data.winner;
             })
         }
     });
@@ -261,12 +299,16 @@
         })
     }).then(res => res.json()).then(data => {
         cells.forEach(cell => {
-                cell.innerHTML = data.pieces.shift();
-                cell.classList.remove('path');
-            },
-            turn.innerText = data.turn,
-            state.innerText = data.state
-        )
+            cell.innerHTML = data.pieces.shift();
+            cell.classList.remove('path');
+        });
+        turn.innerText = '현재 턴 : ' + data.turn;
+        state.innerText = data.state;
+        blackScore.innerText = data.blackScore;
+        whiteScore.innerText = data.whiteScore;
+        blackName.innerText = data.blackName;
+        whiteName.innerText = data.whiteName;
+        winner.innerText = data.winner;
     });
 
 </script>

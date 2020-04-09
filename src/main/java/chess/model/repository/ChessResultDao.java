@@ -1,5 +1,6 @@
 package chess.model.repository;
 
+import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -19,14 +20,14 @@ public class ChessResultDao extends ChessDB {
         return INSTANCE;
     }
 
-    public void put(int gameId, Map<Color, Double> teamScore) throws SQLException {
-        if (selectTeamScore(gameId).isEmpty()) {
-            insertTeamScore(gameId, teamScore);
+    public void put(int gameId, TeamScore teamScore) throws SQLException {
+        if (select(gameId).isEmpty()) {
+            insert(gameId, teamScore);
         }
-        updateTeamScore(gameId, teamScore);
+        update(gameId, teamScore);
     }
 
-    public void updateTeamScore(int gameId, Map<Color, Double> teamScore) throws SQLException {
+    public void update(int gameId, TeamScore teamScore) throws SQLException {
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -37,7 +38,7 @@ public class ChessResultDao extends ChessDB {
         }
     }
 
-    public void insertTeamScore(int gameId, Map<Color, Double> teamScore) throws SQLException {
+    public void insert(int gameId, TeamScore teamScore) throws SQLException {
         String query = "INSERT INTO CHESS_RESULT_TB(GAME_ID, BLACK_SCORE, WHITE_SCORE) VALUES (?, ?, ?)";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -48,7 +49,7 @@ public class ChessResultDao extends ChessDB {
         }
     }
 
-    public void deleteTeamScore(int gameId) throws SQLException {
+    public void delete(int gameId) throws SQLException {
         String query = "DELETE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -57,7 +58,7 @@ public class ChessResultDao extends ChessDB {
         }
     }
 
-    public Map<Color, Double> selectTeamScore(int gameId) throws SQLException {
+    public Map<Color, Double> select(int gameId) throws SQLException {
         String query = "SELECT BLACK_SCORE, WHITE_SCORE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {

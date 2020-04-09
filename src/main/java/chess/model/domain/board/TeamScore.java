@@ -24,6 +24,11 @@ public class TeamScore {
             .unmodifiableMap(getTeamScore(pieces, pawnSameFileCountByColor));
     }
 
+    public TeamScore(Map<Color, Double> teamScore) {
+        NullChecker.validateNotNull(teamScore);
+        this.teamScore = Collections.unmodifiableMap(new HashMap<>(teamScore));
+    }
+
     private Map<Color, Double> getTeamScore(Collection<Piece> pieces,
         Map<Color, Integer> pawnSameFileByColor) {
         Map<Color, Double> teamScore = new HashMap<>();
@@ -62,5 +67,10 @@ public class TeamScore {
 
     public Map<Color, Double> getTeamScore() {
         return teamScore;
+    }
+
+    public double get(Color color) {
+        NullChecker.validateNotNull(color);
+        return teamScore.get(color);
     }
 }
