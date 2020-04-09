@@ -55,7 +55,7 @@ public class Position {
         return isSameXPosition(target.xPosition);
     }
 
-    public boolean isSameXPosition(XPosition XPosition) {
+    private boolean isSameXPosition(XPosition XPosition) {
         return this.xPosition == XPosition;
     }
 

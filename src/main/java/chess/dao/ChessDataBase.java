@@ -9,7 +9,6 @@ import chess.domain.piece.position.Position;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -86,7 +85,7 @@ public class ChessDataBase implements ChessBoardDao {
         return ChessBoard.create(pieces);
     }
 
-    public void addPieces(List<Piece> pieces) throws SQLException {
+    public void addPieces(List<Piece> pieces) {
         for (Piece piece : pieces) {
             addPiece(piece);
         }

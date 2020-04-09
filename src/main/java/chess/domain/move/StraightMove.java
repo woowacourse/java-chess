@@ -8,7 +8,7 @@ public class StraightMove implements Move {
     private final Direction direction;
     private final int count;
 
-    public StraightMove(Position source, Position target) {
+    StraightMove(Position source, Position target) {
         this.direction = findStraightMove(source, target);
         this.count = findDistance(source, target);
     }

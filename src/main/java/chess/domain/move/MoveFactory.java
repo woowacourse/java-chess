@@ -20,19 +20,19 @@ public class MoveFactory {
         throw new IllegalArgumentException(Piece.ERROR_MESSAGE_NOT_MOVABLE);
     }
 
-    public static boolean isCrossPattern(Position source, Position target) {
+    private static boolean isCrossPattern(Position source, Position target) {
         return Math.abs(source.calculateRankDistance(target))
                 == Math.abs(source.calculateFileDistance(target));
     }
 
-    public static boolean isKnightPattern(Position source, Position target) {
+    private static boolean isKnightPattern(Position source, Position target) {
         return (Math.abs(source.calculateFileDistance(target)) == ONE_POINT
                 && Math.abs(source.calculateRankDistance(target)) == TWO_POINT)
                 || (Math.abs(source.calculateRankDistance(target)) == ONE_POINT
                 && Math.abs(source.calculateFileDistance(target)) == TWO_POINT);
     }
 
-    public static boolean isStraightPattern(Position source, Position target) {
+    private static boolean isStraightPattern(Position source, Position target) {
         return source.isSameRank(target) || source.isSameXPosition(target);
     }
 }
