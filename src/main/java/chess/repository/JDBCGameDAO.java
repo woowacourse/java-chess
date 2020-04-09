@@ -26,7 +26,7 @@ public class JDBCGameDAO implements GameDAO {
 
 	public void update(Game game) {
 		String query = "UPDATE game SET state=?, turn=?, board=? WHERE id=?";
-		jdbcTemplate.executeUpdate(query, game.getStateType().getState(), game.getTurn().name(),
+		jdbcTemplate.executeUpdate(query, game.getStateType(), game.getTurn().name(),
 			game.getBoard().getAsString(), game.getId());
 	}
 }

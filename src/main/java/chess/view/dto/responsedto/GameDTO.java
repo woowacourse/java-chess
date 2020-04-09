@@ -3,7 +3,6 @@ package chess.view.dto.responsedto;
 import java.util.Objects;
 
 import chess.domain.piece.Team;
-import chess.domain.state.StateType;
 
 public class GameDTO {
 	String turn;
@@ -14,8 +13,8 @@ public class GameDTO {
 		this.gameState = gameState;
 	}
 
-	public static GameDTO of(Team turn, StateType stateType) {
-		return new GameDTO(turn.name().toLowerCase(), stateType.name().toLowerCase());
+	public static GameDTO of(Team turn, String stateType) {
+		return new GameDTO(turn.getTeam(), stateType);
 	}
 
 	@Override

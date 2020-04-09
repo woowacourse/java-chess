@@ -8,7 +8,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
-import chess.domain.state.StateType;
 
 public class Game {
 	private static final String ILLEGAL_STATE_CHANGE_REQUEST_EXCEPTION_MESSAGE = "유효하지 않는 변경 요청입니다.";
@@ -60,7 +59,7 @@ public class Game {
 		return state.getTurn();
 	}
 
-	public StateType getStateType() {
+	public String getStateType() {
 		return state.getStateType();
 	}
 

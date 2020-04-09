@@ -51,8 +51,8 @@ public abstract class GameState {
 		return turn;
 	}
 
-	public StateType getStateType() {
-		return stateType;
+	public String getStateType() {
+		return stateType.getState();
 	}
 
 	public int getId() {
