@@ -34,7 +34,6 @@ public class ChessDAO {
 
     public Connection getConnection() {
         Connection con = null;
-
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             con = DriverManager.getConnection("jdbc:mysql://" + SERVER_URL + "/" + DATABASE_NAME + OPTION, USERNAME, PASSWORD);
@@ -68,22 +67,6 @@ public class ChessDAO {
         }
     }
 
-    private void addEachPiece(PreparedStatement pstmt, Piece piece) throws SQLException {
-        pstmt.setString(1, piece.getPosition().toString());
-        pstmt.setString(2, piece.toString());
-        pstmt.setString(3, piece.getTeam().toString());
-        pstmt.addBatch();
-    }
-
-    private void clearPieces() throws SQLException {
-        try (
-                Connection connection = getConnection();
-                PreparedStatement statement = connection.prepareStatement("DELETE FROM Pieces")
-        ) {
-            statement.executeUpdate();
-        }
-    }
-
     private void saveTurn(Turn turn) throws SQLException {
         String query = "INSERT INTO Turn (turn) VALUES (?) ON DUPLICATE KEY UPDATE turn=?";
         try (
@@ -93,6 +76,15 @@ public class ChessDAO {
             String team = turn.getTeam().toString();
             statement.setString(1, team);
             statement.setString(2, team);
+            statement.executeUpdate();
+        }
+    }
+
+    private void clearPieces() throws SQLException {
+        try (
+                Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("DELETE FROM Pieces")
+        ) {
             statement.executeUpdate();
         }
     }
@@ -110,13 +102,7 @@ public class ChessDAO {
         ) {
             Map<Position, Piece> pieces = new HashMap<>();
             while (rs.next()) {
-                Position position = new Position(rs.getString("position"));
-                Piece piece = PieceGenerator.generate(
-                        rs.getString("representation"),
-                        rs.getString("team"),
-                        rs.getString("position")
-                );
-                pieces.put(position, piece);
+                pieces.put(new Position(rs.getString("position")), generatePiece(rs));
             }
             return new Pieces(pieces);
         }
@@ -134,5 +120,20 @@ public class ChessDAO {
             }
             return new Turn(Team.valueOf(rs.getString("turn")));
         }
+    }
+
+    private void addEachPiece(PreparedStatement pstmt, Piece piece) throws SQLException {
+        pstmt.setString(1, piece.getPosition().toString());
+        pstmt.setString(2, piece.toString());
+        pstmt.setString(3, piece.getTeam().toString());
+        pstmt.addBatch();
+    }
+
+    private Piece generatePiece(ResultSet rs) throws SQLException {
+        return PieceGenerator.generate(
+                rs.getString("representation"),
+                rs.getString("team"),
+                rs.getString("position")
+        );
     }
 }
