@@ -9,6 +9,7 @@ import chess.domain.position.MovingPosition;
 import chess.domain.game.NormalStatus;
 import spark.ModelAndView;
 import spark.Request;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
@@ -27,29 +28,29 @@ public class ChessWebController {
 	}
 
 	public void route() {
-		get("/", (req, res) -> start());
+		get("/", this::start);
 
-		get("/new", (req, res) -> startNewGame());
+		get("/new", this::startNewGame);
 
-		get("/loading", (req, res) -> loadGame());
+		get("/loading", this::loadGame);
 
 		get("/board", (req, res) -> chessWebService.setBoard(), json());
 
-		post("/board", (req, res) -> postBoard(req));
+		post("/board", this::postBoard);
 
-		post("/start", (req, res) -> getMovablePositions(req), json());
+		post("/start", this::getMovablePositions, json());
 
-		post("/end", (req, res) -> move(req), json());
+		post("/end", this::move, json());
 	}
 
-	private String start() {
+	private String start(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 		return render(model, "index.html");
 	}
 
-	private String startNewGame() throws SQLException {
+	private String startNewGame(Request req, Response res) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
@@ -58,14 +59,14 @@ public class ChessWebController {
 		return render(model, "chess.html");
 	}
 
-	private String loadGame() {
+	private String loadGame(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 		model.put("normalStatus", NormalStatus.YES.isNormalStatus());
 
 		return render(model, "chess.html");
 	}
 
-	private String postBoard(Request req) {
+	private String postBoard(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 
 		try {
@@ -86,7 +87,7 @@ public class ChessWebController {
 		}
 	}
 
-	private Map<String, Object> getMovablePositions(Request req) throws SQLException {
+	private Map<String, Object> getMovablePositions(Request req, Response res) throws SQLException {
 		Map<String, Object> model = new HashMap<>();
 		try {
 			MovablePositionsDto movablePositionsDto = chessWebService.findMovablePositions(req.queryParams("start"));
@@ -104,7 +105,7 @@ public class ChessWebController {
 		}
 	}
 
-	private Map<String, Object> move(Request req) {
+	private Map<String, Object> move(Request req, Response res) {
 		Map<String, Object> model = new HashMap<>();
 
 		DestinationPositionDto destinationPositionDto = chessWebService.chooseDestinationPosition(req.queryParams("end"));
