@@ -13,46 +13,35 @@ import chess.exception.PieceMoveFailedException;
 import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 public class ChessGameController {
 	private final ChessService chessService;
+	private final Gson gson;
 
-	public ChessGameController(ChessService chessService) {
+	public ChessGameController(ChessService chessService, Gson gson) {
 		this.chessService = chessService;
+		this.gson = gson;
 	}
 
 	public void run() {
-		get("/", (request, response) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.handlebars");
-		});
+		get("/", (request, response) -> render(new HashMap<>(), "index.handlebars"));
+		post("/move", (request, response) -> gson.toJson(move(request), MoveResponseDto.class));
+		get("/resume", (request, response) -> gson.toJson(chessService.resumeGame(), BoardResponseDto.class));
+		get("/start", (request, response) -> gson.toJson(chessService.initializeBoard(), BoardResponseDto.class));
+	}
 
-		post("/move", (request, response) -> {
-			try {
-				MoveRequestDto moveRequestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
-				return toJson(chessService.move(moveRequestDto));
-			} catch (PieceMoveFailedException exception) {
-				return toJson(MoveResponseDto.ofFailedToMove(exception.getMessage()));
-			}
-		});
-
-		get("/resume", (request, response) -> {
-			BoardResponseDto boardResponseDto = chessService.resumeGame();
-			return toJson(boardResponseDto);
-		});
-
-		get("/start", (request, response) -> {
-			BoardResponseDto boardResponseDto = chessService.initializeBoard();
-			return toJson(boardResponseDto);
-		});
+	private MoveResponseDto move(Request request) {
+		try {
+			MoveRequestDto moveRequestDto = new Gson().fromJson(request.body(), MoveRequestDto.class);
+			return chessService.move(moveRequestDto);
+		} catch (PieceMoveFailedException exception) {
+			return MoveResponseDto.ofFailedToMove(exception.getMessage());
+		}
 	}
 
 	private String render(Map<String, Object> model, String templatePath) {
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-	}
-
-	private String toJson(Object object) {
-		return new Gson().toJson(object);
 	}
 }
