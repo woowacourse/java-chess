@@ -10,7 +10,6 @@ for (i = 0; i < tiles.length; i++) {
 }
 
 function checkSourceOrTarget(clickedPosition) {
-    console.log(clickedPosition);
     if (source == null) {
         source = clickedPosition;
         return;
@@ -48,8 +47,6 @@ function move(source, target) {
             });
         })
         .then(response => {
-            console.log("리스폰스 ");
-            console.log(response.body);
             let board = response.body.chessPieces;
             let team = response.body.currentTeam;
             let currentTeamScore = response.body.currentTeamScore;

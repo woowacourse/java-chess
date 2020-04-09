@@ -21,47 +21,50 @@ public class ChessCommandDao {
         }
 
         try {
-            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password); //진짜 연결
+            connection = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
             e.printStackTrace();
         }
-
         return connection;
-    }
-
-    public void closeConnection(Connection connection) {
-        try {
-            if (connection != null) {
-                connection.close();
-            }
-        } catch (SQLException e) {
-            System.err.println("connection 오류: " + e.getMessage());
-        }
     }
 
     public void addCommand(ChessCommand command) throws SQLException {
         String query = "INSERT INTO commands VALUES (?)";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.setString(1, command.getCommand());
-        preparedStatement.executeUpdate();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.setString(1, command.getCommand());
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
+
     }
 
     public void deleteCommands() throws SQLException {
         String query = "TRUNCATE commands";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        preparedStatement.execute();
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query)) {
+            preparedStatement.execute();
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     public List<String> selectCommands() throws SQLException {
         String query = "SELECT * FROM commands";
-        PreparedStatement preparedStatement = getConnection().prepareStatement(query);
-        ResultSet rs = preparedStatement.executeQuery();
-
         List<String> commands = new ArrayList<>();
-        while (rs.next()) {
-            commands.add(rs.getString("command"));
+
+        try (PreparedStatement preparedStatement = getConnection().prepareStatement(query);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            while (rs.next()) {
+                commands.add(rs.getString("command"));
+            }
+            return commands;
+        } catch (SQLException e) {
+            System.err.println("연결 오류:" + e.getMessage());
+            e.printStackTrace();
         }
         return commands;
     }
