@@ -4,10 +4,10 @@ import chess.domain.game.Game;
 import chess.domain.state.GameStateFactory;
 import chess.utils.jdbc.JDBCTemplate;
 
-public class MySQLGameDAO implements GameDAO {
+public class JDBCGameDAO implements GameDAO {
 	private final JDBCTemplate jdbcTemplate;
 
-	public MySQLGameDAO(JDBCTemplate jdbcTemplate) {
+	public JDBCGameDAO(JDBCTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
 

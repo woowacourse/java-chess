@@ -19,8 +19,8 @@ public class JDBCTemplate {
 	public <T> T executeQuery(String query, RowMapper<T> mapper, Object... params) {
 		try (Connection con = getConnection();
 			 PreparedStatement preparedStatement = con.prepareStatement(query)) {
-			for (int i = 1; i <= params.length; i++) {
-				preparedStatement.setObject(i, params[i]);
+			for (int i = 0; i < params.length; i++) {
+				preparedStatement.setObject(i + 1, params[i]);
 			}
 			ResultSet resultSet = preparedStatement.executeQuery();
 			if (!resultSet.next()) {
@@ -35,8 +35,8 @@ public class JDBCTemplate {
 	public int executeUpdate(String query, Object... params) {
 		try (Connection con = getConnection();
 			 PreparedStatement preparedStatement = con.prepareStatement(query)) {
-			for (int i = 1; i <= params.length; i++) {
-				preparedStatement.setObject(i, params[i]);
+			for (int i = 0; i < params.length; i++) {
+				preparedStatement.setObject(i + 1, params[i]);
 			}
 			return preparedStatement.executeUpdate();
 		} catch (SQLException e) {
