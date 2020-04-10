@@ -20,9 +20,12 @@ public class PositionFixture {
 	public static final Position D1 = Position.of(Column.of("D"), Row.of("1"));
 	public static final Position D2 = Position.of(Column.of("D"), Row.of("2"));
 	public static final Position D4 = Position.of(Column.of("D"), Row.of("4"));
+	public static final Position D6 = Position.of(Column.of("D"), Row.of("6"));
+	public static final Position D7 = Position.of(Column.of("D"), Row.of("7"));
 
 	public static final Position E1 = Position.of(Column.of("E"), Row.of("1"));
 	public static final Position E2 = Position.of(Column.of("E"), Row.of("2"));
+	public static final Position E8 = Position.of(Column.of("E"), Row.of("8"));
 
 	public static final Position F1 = Position.of(Column.of("F"), Row.of("1"));
 	public static final Position F3 = Position.of(Column.of("F"), Row.of("3"));

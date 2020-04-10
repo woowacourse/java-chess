@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -30,7 +31,7 @@ class RookTest {
 
 	@ParameterizedTest
 	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
+	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) throws SQLException {
 		Map<Position, Piece> pieces = new HashMap<>();
 		pieces.put(A1, new Rook(Color.WHITE));
 		pieces.put(A8, new Rook(Color.BLACK));
@@ -39,7 +40,7 @@ class RookTest {
 
 		Piece rook = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = rook.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = rook.findMovablePositions(currentPosition, board.getPieces());
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }

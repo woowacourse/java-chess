@@ -2,11 +2,12 @@ package chess.domain;
 
 import static chess.domain.piece.Color.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
 import chess.domain.board.Board;
-import chess.domain.command.Command;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -23,10 +24,17 @@ public class GameManager {
 		this.currentTurn = WHITE;
 	}
 
-	public void move(Command command) {
-		Position targetPosition = command.getTargetPosition();
-		Position destination = command.getDestination();
+	public GameManager(Board board, Color turn) {
+		this.board = board;
+		this.currentTurn = turn;
+	}
 
+	public GameManager() {
+		this.board = new Board(new HashMap<>());
+		this.currentTurn = WHITE;
+	}
+
+	public void move(Position targetPosition, Position destination){
 		validateMove(targetPosition, destination);
 
 		board.movePiece(targetPosition, destination);
@@ -47,7 +55,7 @@ public class GameManager {
 
 	private void validateMovablePosition(Piece target, Position targetPosition, Position destination) {
 		Set<Position> movablePositions = target.findMovablePositions(targetPosition,
-			(position) -> board.findPieceBy(position));
+			board.getPieces());
 		if (!movablePositions.contains(destination)) {
 			throw new IllegalArgumentException(NOT_MOVABLE_MESSAGE);
 		}
@@ -72,5 +80,11 @@ public class GameManager {
 
 	public Board getBoard() {
 		return board;
+	}
+
+	public void resetGame() {
+		board.deleteAll();
+		board = BoardFactory.create();
+		currentTurn = WHITE;
 	}
 }

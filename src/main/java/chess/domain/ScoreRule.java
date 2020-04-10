@@ -1,6 +1,6 @@
 package chess.domain;
 
-import static chess.domain.piece.BlackPawn.*;
+import static chess.domain.piece.Pawn.*;
 
 import java.util.Map;
 import java.util.stream.Collectors;

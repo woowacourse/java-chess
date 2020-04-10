@@ -6,14 +6,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 
@@ -47,9 +46,9 @@ public class BoardFactory {
 			.map(Column::getName)
 			.forEach(x -> {
 				pieces.put(Position.of(x + WHITE_PAWN_ROW),
-					new WhitePawn());
+					new Pawn(Color.WHITE));
 				pieces.put(Position.of(x + BLACK_PAWN_ROW),
-					new BlackPawn());
+					new Pawn(Color.BLACK));
 			});
 
 		return pieces;

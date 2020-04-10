@@ -3,8 +3,6 @@ package chess;
 import static chess.view.OutputView.*;
 
 import chess.domain.GameManager;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -24,8 +22,8 @@ public class Application {
 	}
 
 	public static void startGame() {
-		Board board = BoardFactory.create();
-		GameManager gameManager = new GameManager(board);
+		GameManager gameManager = new GameManager();
+		gameManager.resetGame();
 
 		resumeGame(gameManager);
 	}
@@ -38,7 +36,7 @@ public class Application {
 			if (!command.isMove()) {
 				break;
 			}
-			gameManager.move(command);
+			gameManager.move(command.getTargetPosition(), command.getDestination());
 		} while (command.isMove() && gameManager.isKingAlive());
 		printResult(gameManager, command);
 		return command;

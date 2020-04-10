@@ -24,7 +24,6 @@ public class Board {
 
 	public void movePiece(Position from, Position to) {
 		Piece target = pieces.remove(from);
-
 		pieces.put(to, target);
 	}
 
@@ -39,5 +38,9 @@ public class Board {
 
 	private boolean isKingOf(Color color, Piece piece) {
 		return piece.isSameColor(color) && piece instanceof King;
+	}
+
+	public void deleteAll() {
+
 	}
 }

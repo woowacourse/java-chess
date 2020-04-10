@@ -104,6 +104,10 @@ public class Position {
 		return row;
 	}
 
+	public String getValue() {
+		return column.getName() + row.getName();
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(column, row);

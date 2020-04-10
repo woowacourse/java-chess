@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,16 +29,16 @@ class KnightTest {
 
 	@ParameterizedTest
 	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
+	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) throws SQLException {
 		Map<Position, Piece> pieces = new HashMap<>();
 		pieces.putAll(BoardFactory.initializePawn(pieces));
-		pieces.put(E2, new BlackPawn());
+		pieces.put(E2, new Pawn(Color.BLACK));
 		pieces.put(B1, new Knight(Color.WHITE));
 		pieces.put(G1, new Knight(Color.WHITE));
 		Board board = new Board(pieces);
 		Piece knight = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = knight.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = knight.findMovablePositions(currentPosition, board.getPieces());
 		System.out.println(positions);
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}

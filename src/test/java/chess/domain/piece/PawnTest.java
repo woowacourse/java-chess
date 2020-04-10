@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.position.PositionFixture.*;
 import static org.assertj.core.api.Assertions.*;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -32,14 +33,14 @@ class PawnTest {
 
 	@ParameterizedTest
 	@MethodSource("generatePositions")
-	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) {
+	void findMovablePositionsTest(Position currentPosition, Position destination, boolean expect) throws SQLException {
 		Map<Position, Piece> pieces = new HashMap<>();
 		pieces.put(A3, new Bishop(Color.BLACK));
 		pieces.put(C3, new Bishop(Color.WHITE));
 		Board board = new Board(BoardFactory.initializePawn(pieces));
 		Piece pawn = board.findPieceBy(currentPosition);
 
-		Set<Position> positions = pawn.findMovablePositions(currentPosition, board::findPieceBy);
+		Set<Position> positions = pawn.findMovablePositions(currentPosition, board.getPieces());
 		assertThat(positions.contains(destination)).isEqualTo(expect);
 	}
 }
