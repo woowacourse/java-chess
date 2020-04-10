@@ -29,6 +29,7 @@
 ###### 1단계
 - [x] 체스판을 만드는 기능
 - [x] 체스판에 말을 배치하는 기능
+
 ###### 2단계
 - [x] 체스판의 말을 움직이는 기능
     - [x] [예외] 출발지와 목적지가 같을 경우 예외 처리
@@ -41,10 +42,32 @@
     - [x] 비숍
     - [x] 킹
     - [x] 퀸
+
 ###### 3단계
 - [x] 킹이 잡혔을 때 게임을 종료하는 기능
 - [x] 각 진영의 남은 말로 점수를 계산하는 기능
 - [x] status 명령을 입력받으면 각 진영의 점수를 출력하는 기능
 - [x] 각 말들에 점수를 매기는 기능
-    
+
+###### 4단계
+![web_chess](https://raw.githubusercontent.com/hotheadfactory/java-chess/chess-step2/web_chess.png)
+- [x] 웹을 통해 게임을 진행할 수 있는 기능
+- [x] 흑과 백의 차례에 따라 상대편 말을 이동하는 것을 제한하는 기능
+
+###### 5단계
+**테이블 생성 SQL문**
+```
+CREATE TABLE `Pieces` (
+`position` VARCHAR(20) NOT NULL,
+`representation` CHAR(1) NOT NULL,
+`team` VARCHAR(10) NOT NULL,
+PRIMARY KEY (`position`));
+
+CREATE TABLE `turn` (
+`turn` VARCHAR(10) NOT NULL,
+PRIMARY KEY (`turn`));
+```
+- [x] MySQL DB에 게임 진행 상태를 저장하는 기능
+- [x] MySQL DB로부터 이전 진행 상태를 불러오는 기능
+
     

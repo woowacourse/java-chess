@@ -1,62 +1,63 @@
 package chess.controller;
 
-import chess.domain.Board;
-import chess.domain.Pieces;
+import chess.dao.ChessDAO;
 import chess.domain.Position;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceFactory;
-import chess.domain.piece.Team;
+import chess.domain.service.BoardService;
 import spark.ModelAndView;
-import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-import static spark.Spark.*;
+import static spark.Spark.get;
+import static spark.Spark.post;
 
-public class WebChessController implements ChessController{
+public class WebChessController implements ChessController {
+    private static final String BLANK = "";
+    private static final String WINNER_ALERT = "이 승리했습니다!";
+
+    private BoardService boardService = new BoardService();
+
     @Override
     public void run() {
-        Board board = new Board();
-        get("/", (req, res) -> render(printChessBoard(board), "index.html"));
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
+
+        get("/status", "application/json", (req, res) -> boardService.getStatus(), new JsonTransformer());
 
         post("/move", (req, res) -> {
+            ChessDAO chessDAO = ChessDAO.getInstance();
             try {
-                Map<String, String> bodyMap = new HashMap<>();
-                for (String body : req.body().split("&")) {
-                    String[] instruction = body.split("=");
-                    bodyMap.put(instruction[0], instruction[1]);
-                }
-                board.movePiece(new Position(bodyMap.get("source")), new Position(bodyMap.get("destination")));
-                res.redirect("/");
-            }catch(Exception e) {
-                res.body(e.getMessage());
-                res.redirect("/");
+                boardService.movePiece(new Position(req.queryParams("source")), new Position(req.queryParams("destination")));
+                chessDAO.saveGame(boardService.getStatus());
+                return parseMoveMessage();
+            } catch (Exception e) {
+                res.status(400);
+                return e.getMessage();
             }
+        });
+
+        get("/reset", (req, res) -> {
+            boardService.resetBoard();
+            res.redirect("/");
+            return null;
+        });
+
+        get("/load", (req, res) -> {
+            ChessDAO chessDAO = ChessDAO.getInstance();
+            boardService.loadGame(chessDAO.loadGame());
+            res.redirect("/");
             return null;
         });
     }
 
-    private Map<String, Object> printChessBoard(Board board) {
-        Map<String, Object> model = new HashMap<>();
-        model.put("notification", "테스트 안내 입니다.");
-        model.putAll(getScore(board));
-        Pieces pieces = board.getPieces();
-        for (Piece piece : pieces.getAlivePieces()) {
-            model.put(piece.getPosition().toString(), piece);
+    private String parseMoveMessage() {
+        if (boardService.checkEndOfGame()) {
+            return boardService.getWinner().getName() + WINNER_ALERT;
         }
-        return model;
-    }
-
-    private Map<String, Double> getScore(Board board) {
-        Map<String, Double> score = new HashMap<>();
-        score.put("blackScore", board.calculateScoreByTeam(Team.BLACK));
-        score.put("whiteScore", board.calculateScoreByTeam(Team.WHITE));
-        return score;
+        return BLANK;
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

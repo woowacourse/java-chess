@@ -1,0 +1,81 @@
+@charset "utf-8";
+
+body {
+    background-image: url("/img/background.png");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.chessBoardWrapper {
+    width: 1000px;
+    height: 770px;
+    margin-top: 70px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    background-color: saddlebrown;
+}
+
+.chessBoard {
+    background-color: darkgoldenrod;
+    margin: 10px;
+    width: 960px;
+    height: 730px;
+    padding: 10px;
+    display: flex;
+}
+
+.scoreArea {
+    border-style: solid;
+    border-width: 2px;
+    width: 230px;
+    height: 705px;
+    margin-left: 10px;
+    padding: 10px;
+    text-align: center;
+    border-color: saddlebrown;
+}
+
+.playArea {
+    border-style: solid;
+    border-width: 2px;
+    border-color: saddlebrown;
+}
+
+.tile {
+    text-align: center;
+}
+
+.light {
+    width: 80px;
+    height: 80px;
+    background-color: blanchedalmond;
+}
+
+.dark {
+    width: 80px;
+    height: 80px;
+    background-color: saddlebrown;
+}
+
+.fileIndicator {
+    text-align: center;
+}
+
+.source {
+    background-color: blue !important;
+}
+
+.destination {
+    background-color: red !important;
+}
+
+#buttonCombo {
+    margin-top: 30px;
+    margin-bottom: 10px;
+}
+
+.button {
+    width: 100px;
+    height: 30px;
+}
