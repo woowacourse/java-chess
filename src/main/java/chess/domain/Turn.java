@@ -7,8 +7,13 @@ public class Turn {
 		this.team = team;
 	}
 
-	public void switchTurn() {
+	public static Turn from(String turn) {
+		return new Turn(Team.valueOf(turn));
+	}
+
+	public Turn switchTurn() {
 		team = team.switchTeam();
+		return new Turn(team);
 	}
 
 	public Team getTeam() {

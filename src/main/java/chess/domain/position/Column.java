@@ -34,4 +34,8 @@ public enum Column {
 	public String getName() {
 		return name;
 	}
+
+	public int intValue() {
+		return column;
+	}
 }

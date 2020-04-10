@@ -24,13 +24,13 @@ public enum Direction {
 	WWN(-2, 1),
 	WWS(-2, -1);
 
-	private static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
-	private static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-	private static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
-	private static final List<Direction> EVERY_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST,
+	public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+	public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+	public static final List<Direction> KNIGHT_DIRECTION = Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
+	public static final List<Direction> EVERY_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST, NORTHEAST, SOUTHEAST,
 		SOUTHWEST, NORTHWEST);
-	private static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
-	private static final List<Direction> LINEAR_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST);
+	public static final List<Direction> DIAGONAL_DIRECTION = Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+	public static final List<Direction> LINEAR_DIRECTION = Arrays.asList(NORTH, EAST, SOUTH, WEST);
 
 	private int xDegree;
 	private int yDegree;
@@ -56,35 +56,11 @@ public enum Direction {
 		return (dir.yDegree / (double)dir.xDegree) == tangent;
 	}
 
-	public static List linearDirection() {
-		return LINEAR_DIRECTION;
-	}
-
-	public static List diagonalDirection() {
-		return DIAGONAL_DIRECTION;
-	}
-
-	public static List everyDirection() {
-		return EVERY_DIRECTION;
-	}
-
-	public static List knightDirection() {
-		return KNIGHT_DIRECTION;
-	}
-
-	public static List whitePawnDirection() {
-		return WHITE_PAWN_DIRECTION;
-	}
-
-	public static List blackPawnDirection() {
-		return BLACK_PAWN_DIRECTION;
-	}
-
-	public static List findPawnDirectionBy(Team team) {
+	public static List<Direction> findPawnDirectionBy(Team team) {
 		if (team == Team.WHITE) {
-			return whitePawnDirection();
+			return WHITE_PAWN_DIRECTION;
 		}
-		return blackPawnDirection();
+		return BLACK_PAWN_DIRECTION;
 	}
 
 	public int getXDegree() {

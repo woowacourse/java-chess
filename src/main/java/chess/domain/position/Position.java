@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import chess.domain.Direction;
 
-public class Position {
+public class Position implements Comparable<Position> {
 	private final Column column;
 	private final Row row;
 
@@ -24,12 +24,8 @@ public class Position {
 			.orElseThrow(IllegalArgumentException::new);
 	}
 
-	public Column getColumn() {
-		return column;
-	}
-
-	public Row getRow() {
-		return row;
+	public static Position of(int x, int y) {
+		return of((char)(x + 96) + String.valueOf(y));
 	}
 
 	public int minusRow(Position target) {
@@ -46,6 +42,26 @@ public class Position {
 		return new Position(column.plus(x), row.plus(y));
 	}
 
+	public boolean equalsX(int x) {
+		return this.column.intValue() == x;
+	}
+
+	public Column getColumn() {
+		return column;
+	}
+
+	public Row getRow() {
+		return row;
+	}
+
+	public int getColumnIntValue() {
+		return column.intValue();
+	}
+
+	public int getRowIntValue() {
+		return row.intValue();
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -60,5 +76,16 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(getColumn(), getRow());
+	}
+
+	@Override
+	public int compareTo(Position position) {
+		if (row.intValue() > position.row.intValue()) {
+			return -1;
+		}
+		if (row.intValue() < position.row.intValue()) {
+			return 1;
+		}
+		return column.intValue() - position.column.intValue();
 	}
 }

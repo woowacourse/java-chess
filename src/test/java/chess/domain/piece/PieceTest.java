@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.Team;
 import chess.domain.Turn;
 import chess.domain.piece.king.King;
+import chess.domain.piece.pawn.Pawn;
 import chess.domain.piece.queen.Queen;
 import chess.domain.position.Position;
 
@@ -45,5 +46,14 @@ class PieceTest {
 	void isNotKing() {
 		Queen instance = Queen.of(Team.WHITE, Position.of("a1"));
 		assertThat(instance.isKing()).isFalse();
+	}
+
+	@Test
+	@DisplayName("폰인 경우에만 isPawn이 True를 반환합니다.")
+	void isPawnTest() {
+		Pawn pawn = Pawn.of(Team.WHITE, Position.of("a1"));
+		King king = King.of(Team.WHITE, Position.of("a1"));
+		assertThat(pawn.isPawn()).isTrue();
+		assertThat(king.isPawn()).isFalse();
 	}
 }

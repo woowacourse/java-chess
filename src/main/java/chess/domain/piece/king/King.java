@@ -7,9 +7,9 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class King extends Piece {
-	public static final String WHITE_KING = "\u2654";
-	public static final String BLACK_KING = "\u265a";
-	public static final double KING_SCORE = 0;
+	private static final double KING_SCORE = 0;
+
+	private final String symbol = "k";
 
 	public King(Team team, Position position) {
 		super(new KingStrategy(), team, position);
@@ -17,14 +17,6 @@ public class King extends Piece {
 
 	public static King of(Team team, Position position) {
 		return new King(team, position);
-	}
-
-	@Override
-	public String toString() {
-		if (team.equals(Team.WHITE)) {
-			return WHITE_KING;
-		}
-		return BLACK_KING;
 	}
 
 	@Override
@@ -37,5 +29,9 @@ public class King extends Piece {
 	@Override
 	public double getScore() {
 		return KING_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }

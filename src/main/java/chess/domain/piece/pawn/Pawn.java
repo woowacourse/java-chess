@@ -7,9 +7,9 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
-	public static final String WHITE_PAWN = "\u2659";
-	public static final String BLACK_PAWN = "\u265f";
-	public static final int PAWN_SCORE = 1;
+	private static final int PAWN_SCORE = 1;
+
+	private final String symbol = "p";
 
 	public Pawn(Team team, Position position) {
 		super(new PawnStrategy(team), team, position);
@@ -20,16 +20,13 @@ public class Pawn extends Piece {
 	}
 
 	@Override
-	public String toString() {
-		if (team.equals(Team.WHITE)) {
-			return WHITE_PAWN;
-		}
-		return BLACK_PAWN;
+	public boolean isPawn() {
+		return true;
 	}
 
 	@Override
-	public Piece move(Position from, Position to, Map<Position, Team> dto) {
-		strategy.validateMove(from, to, dto);
+	public Piece move(Position from, Position to, Map<Position, Team> teamBoard) {
+		strategy.validateMove(from, to, teamBoard);
 		this.position = to;
 		return this;
 	}
@@ -37,5 +34,9 @@ public class Pawn extends Piece {
 	@Override
 	public double getScore() {
 		return PAWN_SCORE;
+	}
+
+	public String getSymbol() {
+		return symbol;
 	}
 }

@@ -10,7 +10,7 @@ import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 public class RookStrategy extends MovingStrategy {
-	private static final List<Direction> directions = Direction.linearDirection();
+	private static final List<Direction> directions = Direction.LINEAR_DIRECTION;
 
 	@Override
 	protected void checkDirection(Position source, Position target) {
