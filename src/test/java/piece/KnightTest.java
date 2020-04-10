@@ -4,6 +4,7 @@ import chess.domain.board.Position;
 import chess.domain.board.PositionFactory;
 import chess.domain.piece.Knight;
 import chess.domain.piece.PieceColor;
+import chess.exception.NotMovableException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,8 +21,8 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.BLACK, PositionFactory.of(input));
 
         Assertions.assertThatThrownBy(() -> knight.getPathTo(PositionFactory.of(input)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("현재 자리한 위치로는 이동할 수 없습니다.");
+                .isInstanceOf(NotMovableException.class)
+                .hasMessage(String.format("현재 자리한 위치(%s)로는 이동할 수 없습니다.", input));
     }
 
     @ParameterizedTest
@@ -42,7 +43,7 @@ public class KnightTest {
         Knight knight = new Knight(PieceColor.BLACK, PositionFactory.of("d4"));
 
         Assertions.assertThatThrownBy(() -> knight.getPathTo(PositionFactory.of(target)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("나이트가 이동할 수 없는 위치입니다.");
+                .isInstanceOf(NotMovableException.class)
+                .hasMessage(String.format("지정한 위치 %s는 나이트가 이동할 수 없는 곳입니다.", target));
     }
 }

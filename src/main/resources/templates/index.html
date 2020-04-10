@@ -2,9 +2,134 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>:: 체스 게임 ::</title>
+
+    <link href="images/cool-lime.ico" rel="shortcut icon" type="image/x-icon"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <style>
+        @font-face {
+            font-family: 'BMHANNAPro';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'BMHANNAAir';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
+    <link href="css/indexStyle.css" rel="stylesheet" type="text/css"/>
+
 </head>
+
 <body>
-Hello World!!
+<div id="title">
+    :: 체 스 게 임 ::
+</div>
+<div id="btnBox">
+    <a href="/chess-game"><input class="btn" type="button" value="이어서 하기"></a>
+    <a href="/new-chess-game"><input class="btn" type="button" value="새 게임"></a>
+    <a href="/"><input class="endBtn" type="button" value="끝내기"></a>
+</div>
+
+<div>
+    <div id="background">
+        <div id="chessBoardBackground">
+            <div class="rank" style="margin-top: 10px; margin-bottom: -20px">
+                <div class="rankElement">a</div>
+                <div class="rankElement">b</div>
+                <div class="rankElement">c</div>
+                <div class="rankElement">d</div>
+                <div class="rankElement">e</div>
+                <div class="rankElement">f</div>
+                <div class="rankElement">g</div>
+                <div class="rankElement">h</div>
+            </div>
+
+            <div id="chessBoard" style="background: url(./images/board.png); background-size: contain">
+                <div class="file" style="float: left">
+                    <div class="fileElement">8</div>
+                    <div class="fileElement">7</div>
+                    <div class="fileElement">6</div>
+                    <div class="fileElement">5</div>
+                    <div class="fileElement">4</div>
+                    <div class="fileElement">3</div>
+                    <div class="fileElement">2</div>
+                    <div class="fileElement">1</div>
+                </div>
+
+                {{#cells}}
+                <div class="{{tileColor}}" id="{{position}}">
+                    <img src="images/{{pieceColor}}{{piece}}.png" style="width: 100%">
+                </div>
+                {{/cells}}
+
+            </div>
+        </div>
+        <div id="panelBackground">
+
+            <div id="teamNotice">
+                <p class="subTitle" style="margin-bottom: 0px"> - 현재 차례 - </p> <br>
+                <div id="team">{{currentTeam}}</div>
+            </div>
+
+            <div id="moveForms">
+                <form action="/move" method="POST">
+                    <input class="moveForm" name="source" placeholder="체스말 선택" readonly type="text"/><br>
+                    <input class="moveForm" name="target" placeholder="옮길 위치 선택" readonly type="text"/><br>
+                    <input class="btn" id="moveBtn" style="color: greenyellow; width: 70px" type="submit" value="이 동">
+                    <a href="/chess-game"><input class="btn" style="width: 70px" type="button" value="초기화"></a>
+                </form>
+            </div>
+
+            <div id="status">
+                <p class="subTitle"> - 점수 현황 - </p>
+                <div id="blackTeam"> BLACK {{blackScore}} 점</div>
+                <br>
+                <div id="whiteTeam"> WHITE {{whiteScore}} 점</div>
+            </div>
+
+            <div id="helpBox">
+                <p class="subTitle" style="margin-bottom: 20px"> - 도움말 - </p>
+                <div id="errorMessage">
+                    {{error}}
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function teamChangeEvent() {
+        let team = document.getElementById("team").innerText;
+        if (team === "White") {
+            document.getElementById("team").innerHTML = "<div id=\"whiteTeam\"> WHITE </div>";
+        }
+        if (team === "Black") {
+            document.getElementById("team").innerHTML = "<div id=\"blackTeam\"> BLACK </div>";
+        }
+    }
+
+    teamChangeEvent();
+
+    $(document).ready(function () {
+        $('.WHITE, .BLACK').click(function () {
+            let selectCellName = $(this).attr('id');
+            if ($("input[name='source']").val() !== "") {
+                $("input[name='target']").attr('value', selectCellName);
+            } else {
+                $("input[name='source']").attr('value', selectCellName);
+            }
+        });
+    });
+
+</script>
+
 </body>
 </html>

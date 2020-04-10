@@ -1,0 +1,194 @@
+#title {
+    width: 100%;
+    height: 100px;
+    line-height: 100px;
+    font-size: 70px;
+    text-align: center;
+    font-family: BMHANNAPro, sans-serif;
+}
+
+#btnBox {
+    text-align: center;
+    margin-bottom: 16px;
+}
+
+.btn {
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
+    color: white;
+    font-weight: bolder;
+    width: 100px;
+    margin: 10px 5px;
+    padding: 10px 0;
+    border-radius: 10px;
+    background-color: rgba(75, 0, 130, 0.5);
+    border: 1px solid rgba(75, 0, 130, 0.5);
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: rgba(75, 0, 130, 0.8);
+    border: 1px solid rgba(75, 0, 130, 0.8);
+}
+
+.endBtn {
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
+    color: rgba(75, 0, 130, 0.5);
+    font-weight: bolder;
+    width: 100px;
+    margin: 10px 5px;
+    padding: 10px 0;
+    border-radius: 10px;
+    border: 1px solid rgba(75, 0, 130, 0.5);
+    background-color: white;
+    cursor: pointer;
+}
+
+.endBtn:hover {
+    background-color: rgba(205, 92, 92, 0.8);
+    border: 1px solid rgba(205, 92, 92, 0.8);
+    color: white;
+}
+
+#background {
+    width: 1000px;
+    height: 570px;
+    text-align: center;
+    margin: 0 auto;
+}
+
+#chessBoardBackground {
+    width: 65%;
+    height: 100%;
+    background-color: rgba(252, 255, 163, 0.55);
+    display: inline-block;
+    float: left;
+    text-align: center;
+}
+
+.rank {
+    width: 500px;
+    margin: 0 auto;
+}
+
+.rankElement {
+    font-family: "BMHANNAAir", sans-serif;
+    font-style: italic;
+    font-size: 20px;
+    display: inline-block;
+    width: 55px;
+    text-align: center;
+}
+
+.file {
+    width: 55px;
+    display: inline-block;
+    float: left;
+    margin: 20px -60px;
+}
+
+.fileElement {
+    font-family: "BMHANNAAir", sans-serif;
+    font-style: italic;
+    font-size: 20px;
+    height: 60px;
+    text-align: center;
+}
+
+#chessBoard {
+    width: 480px;
+    height: 480px;
+    position: relative;
+    display: inline-block;
+    margin: 26px;
+    padding: 10px;
+}
+
+.WHITE {
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    background-color: white;
+    display: inline-block;
+    float: left;
+}
+
+.BLACK {
+    background-color: #cc7e1c;
+    width: 60px;
+    height: 60px;
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+}
+
+#panelBackground {
+    width: 35%;
+    height: 100%;
+    background: rgba(144, 238, 144, 0.7);
+    display: inline-block;
+    float: left;
+}
+
+#teamNotice {
+    font-family: BMHANNAPro, sans-serif;
+    margin-top: -6px;
+}
+
+.subTitle {
+    font-size: 30px;
+    color: indigo;
+    text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
+    margin-bottom: 16px;
+}
+
+#whiteTeam {
+    color: white;
+    text-shadow: -0.5px 0 black, 0 0.5px black, 0.5px 0 black, 0 -0.5px black;
+    font-size: 26px;
+}
+
+#blackTeam {
+    color: black;
+    text-shadow: -0.5px 0 white, 0 0.5px white, 0.5px 0 white, 0 -0.5px white;
+    font-size: 26px;
+}
+
+#moveForms {
+    font-family: BMHANNAPro, sans-serif;
+    margin-top: 10px;
+    margin-bottom: -16px;
+}
+
+.moveForm {
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
+    width: 160px;
+    height: 30px;
+    border: 0;
+    border-radius: 10px;
+    margin: 5px 0;
+    text-align: center;
+}
+
+#status {
+    font-family: "BMHANNAPro", sans-serif;
+}
+
+#helpBox {
+    font-family: "BMHANNAPro", sans-serif;
+    font-size: 25px;
+    text-align: center;
+}
+
+#errorMessage {
+    width: 85%;
+    margin: -14px auto;
+    padding: 10px;
+    text-align: justify;
+    background-color: rgba(144, 238, 195, 1);
+    color: indianred;
+    font-family: "BMHANNAAir", sans-serif;
+    font-size: 20px;
+}

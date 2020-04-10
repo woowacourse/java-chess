@@ -53,12 +53,7 @@ public class OutputView {
     }
 
     public static void printResult(GameResult gameResult) {
-        if (gameResult.isBlackWin()) {
-            System.out.println("<승자> Black <패자> White");
-        }
-        if (gameResult.isWhiteWin()) {
-            System.out.println("<승자> White <패자> Black");
-        }
+        System.out.println("<승자> " + gameResult.getWinner() + " <패자> " + gameResult.getLoser());
         System.out.println(String.format("점수 : White - %.1f점 / Black - %.1f점",
                                          gameResult.getAliveWhitePieceScoreSum(),
                                          gameResult.getAliveBlackPieceScoreSum()));

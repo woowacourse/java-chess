@@ -6,6 +6,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 public class PieceColorTest {
 
@@ -27,5 +28,12 @@ public class PieceColorTest {
     @DisplayName("색이 없는 체스말의 이름을 그대로 반환하는지 확인")
     void ifNoneColorPieceThenReturnName() {
         Assertions.assertThat(PieceColor.NONE.getPieceName(".")).isEqualTo(".");
+    }
+
+    @ParameterizedTest
+    @DisplayName("필드 변수로 갖고 있는 문자를 입력받으면 enum 클래스(PieceColor)를 정상 반환해야 함")
+    @ValueSource(strings = {"White", "Black", "None"})
+    void inputVarStringThenReturnPieceColorClass(String input) {
+        Assertions.assertThat(PieceColor.of(input)).isInstanceOf(PieceColor.class);
     }
 }

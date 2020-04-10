@@ -3,6 +3,8 @@ package board;
 import chess.domain.board.Board;
 import chess.domain.board.PositionFactory;
 import chess.domain.piece.*;
+import chess.exception.AnotherTeamPieceException;
+import chess.exception.PieceNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
@@ -16,17 +18,6 @@ public class BoardTest {
     @BeforeAll
     static void setBoard() {
         board = new Board();
-    }
-
-    @ParameterizedTest
-    @DisplayName("EmptyPiece가 있는 위치값이 입력되면 예외가 발생해야 함")
-    @ValueSource(strings = {"a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
-            "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
-            "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
-            "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
-    void inputEmptyPiecePositionThenThrowException(String input) {
-        Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.NONE)).hasMessage(
-                "움직일 수 있는 체스말이 없습니다.");
     }
 
     @Test
@@ -52,15 +43,15 @@ public class BoardTest {
     }
 
     @ParameterizedTest
-    @DisplayName("체스말이 없는 위치값으로 체스말을 찾을 때 예외가 발생해야 함")
+    @DisplayName("체스말이 없는, 즉 EmptyPiece가 있는 위치값으로 체스말을 찾을 때 예외가 발생해야 함")
     @ValueSource(strings = {"a3", "b3", "c3", "d3", "e3", "f3", "g3", "h3",
             "a4", "b4", "c4", "d4", "e4", "f4", "g4", "h4",
             "a5", "b5", "c5", "d5", "e5", "f5", "g5", "h5",
             "a6", "b6", "c6", "d6", "e6", "f6", "g6", "h6"})
     void inputNoPiecePositionThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.NONE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("움직일 수 있는 체스말이 없습니다.");
+                .isInstanceOf(PieceNotFoundException.class)
+                .hasMessage(String.format("위치(sourcePosition) %s에 움직일 수 있는 체스말이 없습니다.", input));
     }
 
     @ParameterizedTest
@@ -69,8 +60,9 @@ public class BoardTest {
             "h7"})
     void findDifferentPieceColorPositionThenThrowException(String input) {
         Assertions.assertThatThrownBy(() -> board.findPiece(PositionFactory.of(input), PieceColor.WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("다른 색의 말을 움직일 수 없습니다.");
+                .isInstanceOf(AnotherTeamPieceException.class)
+                .hasMessage(String.format("위치(sourcePosition) %s의 말은 현재 차례인 %s의 말이 아니므로 움직일 수 없습니다.", input,
+                                          this.board.getTeam().getName()));
     }
 
     @Test

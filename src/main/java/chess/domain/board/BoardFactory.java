@@ -6,9 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class BoardFactory {
-    private static Map<Position, Piece> board = createBoard();
 
-    private static Map<Position, Piece> createBoard() {
+    static Map<Position, Piece> createBoard() {
         Map<Position, Piece> cells = createEmptyBoard();
         setBlackPieces(cells);
         setWhitePieces(cells);
@@ -38,13 +37,13 @@ public class BoardFactory {
         cells.put(PositionFactory.of("h8"), new Rook(PieceColor.BLACK, PositionFactory.of("h8")));
 
         for (char xPoint = 'a'; xPoint <= 'h'; xPoint++) {
-            cells.put(PositionFactory.of(xPoint, '7'), new Pawn(PieceColor.BLACK, PositionFactory.of(xPoint, '7')));
+            cells.put(PositionFactory.of(xPoint, '7'), new BlackPawn(PositionFactory.of(xPoint, '7')));
         }
     }
 
     private static void setWhitePieces(Map<Position, Piece> cells) {
         for (char xPoint = 'a'; xPoint <= 'h'; xPoint++) {
-            cells.put(PositionFactory.of(xPoint, '2'), new Pawn(PieceColor.WHITE, PositionFactory.of(xPoint, '2')));
+            cells.put(PositionFactory.of(xPoint, '2'), new WhitePawn(PositionFactory.of(xPoint, '2')));
         }
         cells.put(PositionFactory.of("a1"), new Rook(PieceColor.WHITE, PositionFactory.of("a1")));
         cells.put(PositionFactory.of("b1"), new Knight(PieceColor.WHITE, PositionFactory.of("b1")));
@@ -54,9 +53,5 @@ public class BoardFactory {
         cells.put(PositionFactory.of("f1"), new Bishop(PieceColor.WHITE, PositionFactory.of("f1")));
         cells.put(PositionFactory.of("g1"), new Knight(PieceColor.WHITE, PositionFactory.of("g1")));
         cells.put(PositionFactory.of("h1"), new Rook(PieceColor.WHITE, PositionFactory.of("h1")));
-    }
-
-    public static Map<Position, Piece> getBoard() {
-        return board;
     }
 }

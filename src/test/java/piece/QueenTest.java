@@ -4,6 +4,7 @@ import chess.domain.board.Position;
 import chess.domain.board.PositionFactory;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
+import chess.exception.NotMovableException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,8 +23,8 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.BLACK, PositionFactory.of(input));
 
         Assertions.assertThatThrownBy(() -> queen.getPathTo(PositionFactory.of(input)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("현재 자리한 위치로는 이동할 수 없습니다.");
+                .isInstanceOf(NotMovableException.class)
+                .hasMessage(String.format("현재 자리한 위치(%s)로는 이동할 수 없습니다.", input));
     }
 
     @Test
@@ -44,7 +45,7 @@ public class QueenTest {
         Queen queen = new Queen(PieceColor.BLACK, PositionFactory.of(source));
 
         Assertions.assertThatThrownBy(() -> queen.getPathTo(PositionFactory.of(target)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("퀸이 이동할 수 없는 위치입니다.");
+                .isInstanceOf(NotMovableException.class)
+                .hasMessage(String.format("지정한 위치 %s는 퀸이 이동할 수 없는 곳입니다.", target));
     }
 }

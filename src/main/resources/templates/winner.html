@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>:: 체스 게임 ::</title>
+
+    <link href="images/cool-lime.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <style>
+        @font-face {
+            font-family: 'BMHANNAPro';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_seven@1.0/BMHANNAPro.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        @font-face {
+            font-family: 'BMHANNAAir';
+            src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_four@1.0/BMHANNAAir.woff') format('woff');
+            font-weight: normal;
+            font-style: normal;
+        }
+    </style>
+
+    <link href="css/winnerStyle.css" rel="stylesheet" type="text/css"/>
+
+</head>
+<body>
+
+<div id="background">
+    <h2><span style="background-color: rgba(205, 92, 92, 0.36);"> 킹이 잡혔습니다! </span></h2>
+    <h1>
+        승자 <span id="winner">{{winner}}</span>
+        & 패자 <span id="loser">{{loser}}</span>
+    </h1>
+    <h3>
+        WHITE <span id="whiteTeam" style="font-size: 50px"> {{whiteScore}} 점 </span>
+        / BLACK <span id="blackTeam" style="font-size: 50px"> {{blackScore}} 점 </span>
+    </h3>
+
+    <a href="/"><input id="backBtn" type="submit" value="돌아가기"></a>
+</div>
+
+<script>
+    function changeTeamColor() {
+        let winnerTeam = document.getElementById("winner").innerText;
+        if (winnerTeam === "White") {
+            document.getElementById("winner").innerHTML = "<span id=\"whiteTeam\"> WHITE </span>";
+            document.getElementById("loser").innerHTML = "<span id=\"blackTeam\"> BLACK </span>";
+        }
+        if (winnerTeam === "Black") {
+            document.getElementById("winner").innerHTML = "<span id=\"blackTeam\"> BLACK </span>";
+            document.getElementById("loser").innerHTML = "<span id=\"whiteTeam\"> WHITE </span>";
+        }
+    }
+
+    changeTeamColor();
+</script>
+
+</body>
+
+</html>
