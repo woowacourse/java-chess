@@ -1,4 +1,4 @@
-package chess.domain.team;
+package chess.domain.piece.team;
 
 public interface TeamStrategy {
     String pawnName();
@@ -15,4 +15,7 @@ public interface TeamStrategy {
 
     boolean isBlackTeam();
 
+    boolean isWhiteTeam();
+
+    boolean isSameTeam(TeamStrategy teamStrategy);
 }

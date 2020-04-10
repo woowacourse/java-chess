@@ -1,4 +1,4 @@
-package chess.domain.team;
+package chess.domain.piece.team;
 
 public class BlackTeam implements TeamStrategy {
     private static final String BLACK_PAWN_NAME = "p";
@@ -41,5 +41,20 @@ public class BlackTeam implements TeamStrategy {
     @Override
     public boolean isBlackTeam() {
         return true;
+    }
+
+    @Override
+    public boolean isWhiteTeam() {
+        return false;
+    }
+
+    @Override
+    public boolean isSameTeam(TeamStrategy teamStrategy) {
+        return teamStrategy instanceof BlackTeam;
+    }
+
+    @Override
+    public String toString() {
+        return "black";
     }
 }

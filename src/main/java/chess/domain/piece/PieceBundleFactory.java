@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.XPosition;
-import chess.domain.YPosition;
-import chess.domain.team.TeamStrategy;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.position.XPosition;
+import chess.domain.piece.position.YPosition;
+import chess.domain.piece.team.TeamStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,6 @@ public class PieceBundleFactory {
         List<Piece> pieceBundle = new ArrayList<>();
         YPosition pawnYPosition = YPosition.SEVEN;
         YPosition otherYPosition = YPosition.EIGHT;
-
         if (teamStrategy.isBlackTeam()) {
             pawnYPosition = YPosition.TWO;
             otherYPosition = YPosition.ONE;

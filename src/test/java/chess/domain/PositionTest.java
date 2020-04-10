@@ -1,5 +1,8 @@
 package chess.domain;
 
+import chess.domain.piece.position.Position;
+import chess.domain.piece.position.XPosition;
+import chess.domain.piece.position.YPosition;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,53 +10,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
     @Test
-    @DisplayName("of 테스트")
+    @DisplayName("of 테스트 - String 입력")
     void of() {
         Position result = Position.of(XPosition.F, YPosition.SIX);
 
         assertThat(Position.of("f6")).isEqualTo(result);
     }
 
+    @DisplayName("of 테스트 - position 입력")
     @Test
-    @DisplayName("newLine 일경우 True를 반환한다")
-    void newLineTest() {
-        Position position = Position.of("a8");
-        assertThat(position.isNewLine()).isTrue();
-    }
+    void of2() {
+        Position position = Position.of("a1");
+        Position newPosition = Position.of(position);
 
-    @Test
-    @DisplayName("같은 랭크이면 True를 반환한다")
-    void sameRankTest() {
-        Position source = Position.of("a8");
-        Position target = Position.of("b8");
-
-        assertThat(source.isSameRank(target)).isTrue();
-    }
-
-    @Test
-    @DisplayName("같은 파일이면 True를 반환한다")
-    void sameFileTest() {
-        Position source = Position.of("b7");
-        Position target = Position.of("b8");
-
-        assertThat(source.isSameFile(target)).isTrue();
-    }
-
-    @Test
-    @DisplayName("같은 파일이면 True를 반환한다")
-    void calculateRankDistance() {
-        Position source = Position.of("b7");
-        Position target = Position.of("b8");
-
-        assertThat(source.calculateYPositionDistance(target)).isEqualTo(-1);
-    }
-
-    @Test
-    @DisplayName("같은 파일이면 True를 반환한다")
-    void calculateFileDistance() {
-        Position source = Position.of("a8");
-        Position target = Position.of("b8");
-
-        assertThat(source.calculateXPositionDistance(target)).isEqualTo(-1);
+        assertThat(position == newPosition).isFalse();
     }
 }

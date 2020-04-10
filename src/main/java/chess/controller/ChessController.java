@@ -1,55 +1,57 @@
 package chess.controller;
 
-import chess.domain.Position;
-import chess.domain.board.ChessBoard;
-import chess.view.InputView;
-import chess.view.OutputView;
+import chess.dao.ChessDataBase;
+import chess.domain.piece.position.Position;
+import chess.service.ChessService;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import spark.ModelAndView;
+import spark.Request;
+import spark.Response;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class ChessController {
-    private static final int FILE_INDEX = 0;
-    private static final int RANK_INDEX = 1;
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
+    private static final Gson gson = new GsonBuilder().setPrettyPrinting().create();
+    private static final HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
+    private static final ChessService chessService = new ChessService(new ChessDataBase());
 
-    public static void run() {
-        String gameState = InputView.inputGameState();
-        if (START_COMMAND.equalsIgnoreCase(gameState)) {
-            chessStart();
-        } else if (END_COMMAND.equalsIgnoreCase(gameState)) {
-            OutputView.printGameEndMessage();
-            return;
+    private static String render(Map<String, Object> model, String templatePath) {
+        return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
+    }
+
+    public void run() {
+        get("/", this::rendChessBoard);
+        post("/move", this::move);
+        get("/init", this::initChessBoard);
+        get("/continue", this::restartChessBoard);
+    }
+
+    private String rendChessBoard(Request req, Response res) {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+    }
+
+    private String initChessBoard(Request req, Response res) throws Exception {
+        return gson.toJson(chessService.initChessBoard());
+    }
+
+    private String restartChessBoard(Request req, Response res) throws Exception {
+        return gson.toJson(chessService.board());
+    }
+
+    private String move(Request req, Response res) throws Exception {
+            String source = req.queryParams("sourcePosition");
+            String target = req.queryParams("targetPosition");
+            Position sourcePosition = Position.of(source);
+            Position targetPosition = Position.of(target);
+
+            return gson.toJson(chessService.move(sourcePosition, targetPosition));
         }
-        throw new IllegalArgumentException();
     }
 
-    private static void chessStart() {
-        ChessBoard chessBoard = new ChessBoard();
-        OutputView.printChessBoard(chessBoard);
-
-        while (chessBoard.isSurviveKings()) {
-            gameRun(chessBoard);
-        }
-
-        OutputView.calculateScore(chessBoard);
-    }
-
-    private static void gameRun(ChessBoard chessBoard) {
-        try {
-            List<String> positionsToMove = InputView.inputMoveCommand();
-            pieceMove(positionsToMove, chessBoard);
-            OutputView.printChessBoard(chessBoard);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            OutputView.printChessBoard(chessBoard);
-            gameRun(chessBoard);
-        }
-    }
-
-    private static void pieceMove(List<String> movePositions, ChessBoard chessBoard) {
-        Position source = Position.of(movePositions.get(FILE_INDEX));
-        Position target = Position.of(movePositions.get(RANK_INDEX));
-        chessBoard.movePiece(source, target);
-    }
-}

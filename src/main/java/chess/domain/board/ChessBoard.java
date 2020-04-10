@@ -1,147 +1,109 @@
 package chess.domain.board;
 
-import chess.domain.Position;
-import chess.domain.XPosition;
-import chess.domain.move.MoveType;
-import chess.domain.move.MoveTypeFactory;
-import chess.domain.piece.*;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.move.Direction;
+import chess.domain.move.Move;
+import chess.domain.move.MoveFactory;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceBundleFactory;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
+import chess.domain.piece.team.WhiteTeam;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class ChessBoard {
-    private static final String ERROR_MESSAGE_NOT_MOVABLE = "해당 말이 갈 수 없는 칸입니다.";
-    private static final String ERROR_MESSAGE_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다.";
-    private static final int INIT_SCORE = 0;
-    private static final int ONE_PAWN_COUNT = 1;
-    private static final double ONE_PAWN_BONUS = 0.5;
-    private final List<Position> positions;
-    private final List<Piece> blackTeam;
-    private final List<Piece> whiteTeam;
+    private static final int INIT_KING_COUNT = 2;
+    private static final String ERROR_MESSAGE_EXIST_PIECE_ON_PATH = "경로에 다른 말이 존재합니다";
+    private static final String ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM = "해당 칸에 같은 팀의 말이 존재 합니다";
+    private static final String ERROR_MESSAGE_SOURCE_EMPTY = "해당 칸은 비어있습니다";
 
-    public ChessBoard() {
-        this.positions = ChessBoardFactory.create();
-        this.blackTeam = PieceBundleFactory.createPieceSet(new BlackTeam());
-        this.whiteTeam = PieceBundleFactory.createPieceSet(new WhiteTeam());
+    private final List<Piece> pieces;
+
+    private ChessBoard(List<Piece> pieces) {
+        this.pieces = new ArrayList<>(pieces);
     }
 
-    public List<Position> getPositions() {
-        return Collections.unmodifiableList(positions);
+    public static ChessBoard initPieces() {
+        List<Piece> pieces = PieceBundleFactory.createPieceSet(new BlackTeam());
+        pieces.addAll(PieceBundleFactory.createPieceSet(new WhiteTeam()));
+        return new ChessBoard(pieces);
     }
 
-
-    public Piece findPieceByPosition(Position position) {
-        Piece piece = blackTeam.stream()
-                .filter(x -> x.isEqualPosition(position))
-                .findAny()
-                .orElse(null);
-        if (piece == null) {
-            return whiteTeam.stream()
-                    .filter(x -> x.isEqualPosition(position))
-                    .findAny()
-                    .orElse(null);
-        }
-        return piece;
+    public static ChessBoard create(List<Piece> pieces) {
+        return new ChessBoard(pieces);
     }
 
     public void movePiece(Position sourcePosition, Position targetPosition) {
-        validSameTeam(sourcePosition, targetPosition);
-        validMovable(sourcePosition, targetPosition);
+        Piece sourcePiece = findPieceByPosition(sourcePosition)
+                .orElseThrow(() -> new IllegalArgumentException(ERROR_MESSAGE_SOURCE_EMPTY));
+        validateMovable(sourcePosition, targetPosition);
+        validateTargetTeam(sourcePiece, targetPosition);
 
-        Piece targetPiece = findPieceByPosition(targetPosition);
-        Piece pieceToMove = findPieceByPosition(sourcePosition);
-        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
-
-        if (targetPiece != null) {
-            removePiece(targetPiece);
-        }
-
-        pieceToMove.move(moveType, this);
+        removeAttackedPiece(targetPosition);
+        sourcePiece.move(targetPosition);
     }
 
-    private void validMovable(Position sourcePosition, Position targetPosition) {
-        MoveType moveType = MoveTypeFactory.of(sourcePosition, targetPosition);
-        Piece targetPiece = findPieceByPosition(targetPosition);
-        Piece pieceToMove = findPieceByPosition(sourcePosition);
+    private void validateMovable(Position sourcePosition, Position targetPosition) {
+        Move move = MoveFactory.findMovePattern(sourcePosition, targetPosition);
+        findPieceByPosition(sourcePosition)
+                .ifPresent(piece -> {
+                    piece.validateMovePattern(move, targetPosition, pieces);
+                });
 
-        if (pieceToMove instanceof Pawn) {
-            Pawn pawn = (Pawn) pieceToMove;
-            if (pawn.isMovable(moveType, targetPiece)) {
-                return;
-            }
-            throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
-        }
-
-        if (pieceToMove.isMovable(moveType)) {
-            return;
-        }
-        throw new IllegalArgumentException(ERROR_MESSAGE_NOT_MOVABLE);
+        findPieceByPosition(sourcePosition).filter(Piece::isNotKnight)
+                .ifPresent(piece -> validatePath(sourcePosition, move));
     }
 
-    private void validSameTeam(Position sourcePosition, Position targetPosition) {
-        Piece pieceToMove = findPieceByPosition(sourcePosition);
-        Piece targetPiece = findPieceByPosition(targetPosition);
+    public Optional<Piece> findPieceByPosition(Position position) {
+        return pieces.stream()
+                .filter(x -> x.isEqualPosition(position))
+                .findAny();
+    }
 
-        if (pieceToMove.isSameTeam(targetPiece)) {
-            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_SAME_TEAM);
+    private void validatePath(Position sourcePosition, Move move) {
+        Position positionInPath = Position.of(sourcePosition);
+        Direction direction = move.getDirection();
+        int count = move.getCount();
+
+        for (int i = 1; i < count; i++) {
+            positionInPath.move(direction);
+            checkIsExistPieceOnPath(positionInPath);
         }
     }
 
-    public void removePiece(Piece targetPiece) {
-        if (blackTeam.contains(targetPiece)) {
-            blackTeam.remove(targetPiece);
-            return;
+    private void checkIsExistPieceOnPath(Position positionInPath) {
+        if (findPieceByPosition(positionInPath).isPresent()) {
+            throw new IllegalArgumentException(ERROR_MESSAGE_EXIST_PIECE_ON_PATH);
         }
-        whiteTeam.remove(targetPiece);
     }
 
-    public boolean isExistPiece(Position position) {
-        return findPieceByPosition(position) != null;
+    private void validateTargetTeam(Piece sourcePiece, Position targetPosition) {
+        findPieceByPosition(targetPosition)
+                .filter(sourcePiece::isSameTeam)
+                .ifPresent(piece -> {
+                    throw new IllegalArgumentException(ERROR_MESSAGE_POSITION_EXIST_SAME_TEAM);
+                });
+    }
+
+    public void removeAttackedPiece(Position position) {
+        findPieceByPosition(position).ifPresent(pieces::remove);
     }
 
     public boolean isSurviveKings() {
-        return blackTeam.stream().anyMatch(x -> x instanceof King)
-                && whiteTeam.stream().anyMatch(x -> x instanceof King);
+        return pieces.stream()
+                .filter(x -> x instanceof King)
+                .count() == INIT_KING_COUNT;
     }
 
-    public double calculateBlackTeamScore() {
-        double blackTeamScore = INIT_SCORE;
-        for (XPosition XPosition : XPosition.values()) {
-            blackTeamScore += calculateXPositionScore(blackTeam, XPosition);
-        }
-        return blackTeamScore;
+    public List<Piece> getPieces() {
+        return this.pieces;
     }
 
-    public double calculateWhiteTeamScore() {
-        double whiteTeamScore = INIT_SCORE;
-        for (XPosition XPosition : XPosition.values()) {
-            whiteTeamScore += calculateXPositionScore(whiteTeam, XPosition);
-        }
-        return whiteTeamScore;
-    }
-
-    private double calculateXPositionScore(List<Piece> team, XPosition XPosition) {
-        double XPositionScore = INIT_SCORE;
-        List<Piece> pieces = team.stream()
-                .filter(x -> x.isSameFile(XPosition))
-                .collect(Collectors.toList());
-        XPositionScore = addBonusWhenOnePawn(XPositionScore, pieces);
-        XPositionScore += pieces.stream()
-                .map(PieceAbility::getScore)
-                .reduce((double) INIT_SCORE, Double::sum);
-        return XPositionScore;
-    }
-
-    private double addBonusWhenOnePawn(double result, List<Piece> pieces) {
-        boolean isOnePawn = pieces.stream()
-                .filter(x -> x instanceof Pawn)
-                .count() == ONE_PAWN_COUNT;
-        if (isOnePawn) {
-            result += ONE_PAWN_BONUS;
-        }
-        return result;
+    public boolean isPieceInPosition(Position position) {
+        Optional<Piece> pieceByPosition = findPieceByPosition(position);
+        return pieceByPosition.isPresent();
     }
 }

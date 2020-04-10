@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece.position;
 
 import java.util.Arrays;
 
@@ -20,10 +20,6 @@ public enum XPosition {
         this.number = number;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public static XPosition of(String fileValue) {
         return Arrays.stream(XPosition.values())
                 .filter(x -> x.name.equals(fileValue))
@@ -36,5 +32,17 @@ public enum XPosition {
                 .filter(x -> x.number == number)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int calculateDistance(XPosition XPosition) {
+        return this.number - XPosition.number;
     }
 }

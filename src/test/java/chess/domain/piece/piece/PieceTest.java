@@ -1,11 +1,10 @@
 package chess.domain.piece.piece;
 
-import chess.domain.Position;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
+import chess.domain.piece.team.WhiteTeam;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,10 +19,9 @@ class PieceTest {
 
     @Test
     void teamTestBlack2() {
-        BlackTeam blackTeam = new BlackTeam();
-        Piece blackPawn = new Pawn(Position.of("a3"), blackTeam);
-        Piece blackBishop = new Bishop(Position.of("a4"), blackTeam);
-        assertThat(blackPawn.isSameTeam(blackBishop)).isTrue();
+        Piece blackPawn = new Pawn(Position.of("a3"), new BlackTeam());
+        Piece blackPawn2 = new Pawn(Position.of("a4"), new BlackTeam());
+        assertThat(blackPawn.isSameTeam(blackPawn2)).isTrue();
     }
 
     @Test
@@ -35,9 +33,9 @@ class PieceTest {
 
     @Test
     void teamTestWhite2() {
-        WhiteTeam whiteTeam = new WhiteTeam();
-        Piece blackPawn = new Pawn(Position.of("a3"), whiteTeam);
-        Piece blackBishop = new Bishop(Position.of("a4"), whiteTeam);
-        assertThat(blackPawn.isSameTeam(blackBishop)).isTrue();
+        Piece whitePawn1 = new Pawn(Position.of("a3"), new WhiteTeam());
+        Piece whitePawn2 = new Pawn(Position.of("a4"), new WhiteTeam());
+        assertThat(whitePawn1.isSameTeam(whitePawn2)).isTrue();
     }
+
 }

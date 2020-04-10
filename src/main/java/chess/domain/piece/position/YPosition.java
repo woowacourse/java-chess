@@ -1,8 +1,6 @@
-package chess.domain;
+package chess.domain.piece.position;
 
 import java.util.Arrays;
-
-import static java.lang.Integer.parseInt;
 
 public enum YPosition {
     EIGHT(8),
@@ -20,12 +18,8 @@ public enum YPosition {
         this.number = number;
     }
 
-    public int getNumber() {
-        return number;
-    }
-
     public static YPosition of(String rankValue) {
-        return of(parseInt(rankValue));
+        return of(Integer.parseInt(rankValue));
     }
 
     public static YPosition of(int number) {
@@ -33,5 +27,13 @@ public enum YPosition {
                 .filter(x -> x.number == number)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public int calculateDistance(YPosition yPosition) {
+        return this.number - yPosition.number;
     }
 }

@@ -1,16 +1,16 @@
 package chess.domain.piece.piece;
 
-import chess.domain.Position;
-import chess.domain.move.MoveType;
-import chess.domain.move.MoveTypeFactory;
+import chess.domain.board.ChessBoard;
+import chess.domain.move.Move;
+import chess.domain.move.MoveFactory;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.BlackTeam;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
     @Test
@@ -18,11 +18,11 @@ class KnightTest {
     void movable() {
         Position source = Position.of("d2");
         Position target = Position.of("f3");
-
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        ChessBoard chessBoard = ChessBoard.initPieces();
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece knight = new Knight(source, new BlackTeam());
 
-        assertThat(knight.isMovable(moveType)).isTrue();
+        knight.validateMovePattern(move, null, chessBoard.getPieces());
     }
 
     @Test
@@ -30,31 +30,12 @@ class KnightTest {
     void isNotMovable() {
         Position source = Position.of("d2");
         Position target = Position.of("e3");
-
-        MoveType moveType = MoveTypeFactory.of(source, target);
+        ChessBoard chessBoard = ChessBoard.initPieces();
+        Move move = MoveFactory.findMovePattern(source, target);
         Piece knight = new Knight(source, new BlackTeam());
 
-        assertThat(knight.isMovable(moveType)).isFalse();
-    }
-
-    @Test
-    @DisplayName("나이트의 이름이 블랙팀이면 나이트의 이름이 'n' 가 된다.")
-    void blackTeamBishopNameTest() {
-        Piece knight = new Knight(Position.of("e1"), new BlackTeam());
-        assertThat(knight.pieceName()).isEqualTo("n");
-    }
-
-    @Test
-    @DisplayName("나이트의 이름이 화이트팀이면 나이트의 이름이 'N' 가 된다.")
-    void whiteTeamBishopNameTest() {
-        Piece knight = new Knight(Position.of("e1"), new WhiteTeam());
-        assertThat(knight.pieceName()).isEqualTo("N");
-    }
-
-    @Test
-    @DisplayName("나이트의 점수가 2.5점이다")
-    void bishopScoreTest() {
-        Piece knight = new Knight(Position.of("e1"), new BlackTeam());
-        assertThat(knight.getScore()).isEqualTo(2.5);
+        assertThatThrownBy(() -> knight.validateMovePattern(move, null, chessBoard.getPieces()))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 말이 갈 수 없는 칸입니다");
     }
 }

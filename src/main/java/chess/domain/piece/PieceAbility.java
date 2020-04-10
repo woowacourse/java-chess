@@ -1,14 +1,20 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.move.MoveType;
+import chess.domain.move.Move;
+import chess.domain.piece.position.Position;
+
+import java.util.List;
 
 public interface PieceAbility {
-    boolean isMovable(MoveType moveType);
+    void validateMovePattern(Move move, Position targetPosition, List<Piece> pieces);
 
-    String pieceName();
+    void move(Position position);
 
     boolean isEqualPosition(Position position);
 
-    double getScore();
+    boolean isBlackTeam();
+
+    boolean isNotKnight();
+
+    String getPieceName();
 }

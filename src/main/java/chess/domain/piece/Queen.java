@@ -1,30 +1,25 @@
 package chess.domain.piece;
 
-import chess.domain.Position;
-import chess.domain.move.CrossType;
-import chess.domain.move.MoveType;
-import chess.domain.move.StraightType;
-import chess.domain.team.TeamStrategy;
+import chess.domain.move.CrossMove;
+import chess.domain.move.Move;
+import chess.domain.move.StraightMove;
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.TeamStrategy;
+
+import java.util.List;
 
 public class Queen extends Piece {
-    private static final int QUEEN_SCORE = 9;
-
     public Queen(Position position, TeamStrategy teamStrategy) {
         super(position, teamStrategy);
     }
 
     @Override
-    public boolean isMovable(MoveType moveType) {
-        return moveType instanceof StraightType || moveType instanceof CrossType;
+    protected boolean isMovablePattern(Move move, Position targetPosition, List<Piece> pieces) {
+        return move instanceof StraightMove || move instanceof CrossMove;
     }
 
     @Override
-    public String pieceName() {
+    public String getPieceName() {
         return teamStrategy.queenName();
-    }
-
-    @Override
-    public double getScore() {
-        return QUEEN_SCORE;
     }
 }

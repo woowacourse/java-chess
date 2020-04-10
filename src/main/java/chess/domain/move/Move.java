@@ -1,6 +1,6 @@
 package chess.domain.move;
 
-public interface MoveType {
+public interface Move {
     Direction getDirection();
 
     int getCount();
