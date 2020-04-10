@@ -30,6 +30,11 @@ public class State {
         changeTurn();
     }
 
+    public void move(Team team, String input) {
+        stateStrategy = stateStrategy.move(team, input);
+        changeTurn();
+    }
+
     public double status() {
         stateStrategy = stateStrategy.status();
         return getPieces().score(team);

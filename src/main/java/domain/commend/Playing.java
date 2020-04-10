@@ -36,7 +36,16 @@ public class Playing extends GameState {
         List<String> splitInput = Arrays.asList(input.split(BLANK));
         MovePoint movePoint = new MovePoint(Point.of(splitInput.get(1)),
             Point.of(splitInput.get(2)));
+
+        return process(turn, movePoint);
+    }
+
+    private StateStrategy process(Team turn, MovePoint movePoint) {
         pieces.move(turn, movePoint);
+        return getGameState();
+    }
+
+    private StateStrategy getGameState() {
         if (pieces.isTargetKing()) {
             return end();
         }

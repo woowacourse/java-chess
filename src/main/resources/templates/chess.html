@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./chess.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Chess Game</title>
+</head>
+<body>
+<div>
+    <div id="score-white">
+        <h1>WHITE</h1>
+        <div id="WHITE">
+
+        </div>
+    </div>
+    <table>
+        <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+            <th>F</th>
+            <th>G</th>
+            <th>H</th>
+            <th></th>
+        </tr>
+        <tr id="row 8">
+            <th>8</th>
+            <td id="a8">{{ a8 }}</td>
+            <td id="b8">{{ b8 }}</td>
+            <td id="c8">{{ c8 }}</td>
+            <td id="d8">{{ d8 }}</td>
+            <td id="e8">{{ e8 }}</td>
+            <td id="f8">{{ f8 }}</td>
+            <td id="g8">{{ g8 }}</td>
+            <td id="h8">{{ h8 }}</td>
+            <th>8</th>
+        </tr>
+        <tr id="row 7">
+            <th>7</th>
+            <td id="a7">{{ a7 }}</td>
+            <td id="b7">{{ b7 }}</td>
+            <td id="c7">{{ c7 }}</td>
+            <td id="d7">{{ d7 }}</td>
+            <td id="e7">{{ e7 }}</td>
+            <td id="f7">{{ f7 }}</td>
+            <td id="g7">{{ g7 }}</td>
+            <td id="h7">{{ h7 }}</td>
+            <th>7</th>
+        </tr>
+        <tr id="row 6">
+            <th>6</th>
+            <td id="a6">{{ a6 }}</td>
+            <td id="b6">{{ b6 }}</td>
+            <td id="c6">{{ c6 }}</td>
+            <td id="d6">{{ d6 }}</td>
+            <td id="e6">{{ e6 }}</td>
+            <td id="f6">{{ f6 }}</td>
+            <td id="g6">{{ g6 }}</td>
+            <td id="h6">{{ h6 }}</td>
+            <th>6</th>
+        </tr>
+        <tr id="row 5">
+            <th>5</th>
+            <td id="a5">{{ a5 }}</td>
+            <td id="b5">{{ b5 }}</td>
+            <td id="c5">{{ c5 }}</td>
+            <td id="d5">{{ d5 }}</td>
+            <td id="e5">{{ e5 }}</td>
+            <td id="f5">{{ f5 }}</td>
+            <td id="g5">{{ g5 }}</td>
+            <td id="h5">{{ h5 }}</td>
+            <th>5</th>
+        </tr>
+        <tr id="row 4">
+            <th>4</th>
+            <td id="a4">{{ a4 }}</td>
+            <td id="b4">{{ b4 }}</td>
+            <td id="c4">{{ c4 }}</td>
+            <td id="d4">{{ d4 }}</td>
+            <td id="e4">{{ e4 }}</td>
+            <td id="f4">{{ f4 }}</td>
+            <td id="g4">{{ g4 }}</td>
+            <td id="h4">{{ h4 }}</td>
+            <th>4</th>
+        </tr>
+        <tr id="row 3">
+            <th>3</th>
+            <td id="a3">{{ a3 }}</td>
+            <td id="b3">{{ b3 }}</td>
+            <td id="c3">{{ c3 }}</td>
+            <td id="d3">{{ d3 }}</td>
+            <td id="e3">{{ e3 }}</td>
+            <td id="f3">{{ f3 }}</td>
+            <td id="g3">{{ g3 }}</td>
+            <td id="h3">{{ h3 }}</td>
+            <th>3</th>
+        </tr>
+        <tr id="row 2">
+            <th>2</th>
+            <td id="a2">{{ a2 }}</td>
+            <td id="b2">{{ b2 }}</td>
+            <td id="c2">{{ c2 }}</td>
+            <td id="d2">{{ d2 }}</td>
+            <td id="e2">{{ e2 }}</td>
+            <td id="f2">{{ f2 }}</td>
+            <td id="g2">{{ g2 }}</td>
+            <td id="h2">{{ h2 }}</td>
+            <th>2</th>
+        </tr>
+        <tr id="row 1">
+            <th>1</th>
+            <td id="a1">{{ a1 }}</td>
+            <td id="b1">{{ b1 }}</td>
+            <td id="c1">{{ c1 }}</td>
+            <td id="d1">{{ d1 }}</td>
+            <td id="e1">{{ e1 }}</td>
+            <td id="f1">{{ f1 }}</td>
+            <td id="g1">{{ g1 }}</td>
+            <td id="h1">{{ h1 }}</td>
+            <th>1</th>
+        </tr>
+        <tr>
+            <th></th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+            <th>E</th>
+            <th>F</th>
+            <th>G</th>
+            <th>H</th>
+            <th></th>
+        </tr>
+    </table>
+    <div id="score-black">
+        <h1>BLACK</h1>
+        <div id="BLACK">
+
+        </div>
+    </div>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label class="input-group-text">Commend</label>
+    </div>
+    <select class="custom-select" id="commends">
+        <option selected>명령어 선택</option>
+        <option value="move">move</option>
+        <option value="status">status</option>
+    </select>
+    <select class="custom-select" id="from">
+        <option selected>움직일 말</option>
+        <option value="a1">a1</option>
+        <option value="a2">a2</option>
+        <option value="a3">a3</option>
+        <option value="a4">a4</option>
+        <option value="a5">a5</option>
+        <option value="a6">a6</option>
+        <option value="a7">a7</option>
+        <option value="a8">a8</option>
+        <option value="b1">b1</option>
+        <option value="b2">b2</option>
+        <option value="b3">b3</option>
+        <option value="b4">b4</option>
+        <option value="b5">b5</option>
+        <option value="b6">b6</option>
+        <option value="b7">b7</option>
+        <option value="b8">b8</option>
+        <option value="c1">c1</option>
+        <option value="c2">c2</option>
+        <option value="c3">c3</option>
+        <option value="c4">c4</option>
+        <option value="c5">c5</option>
+        <option value="c6">c6</option>
+        <option value="c7">c7</option>
+        <option value="c8">c8</option>
+        <option value="d1">d1</option>
+        <option value="d2">d2</option>
+        <option value="d3">d3</option>
+        <option value="d4">d4</option>
+        <option value="d5">d5</option>
+        <option value="d6">d6</option>
+        <option value="d7">d7</option>
+        <option value="d8">d8</option>
+        <option value="e1">e1</option>
+        <option value="e2">e2</option>
+        <option value="e3">e3</option>
+        <option value="e4">e4</option>
+        <option value="e5">e5</option>
+        <option value="e6">e6</option>
+        <option value="e7">e7</option>
+        <option value="e8">e8</option>
+        <option value="f1">f1</option>
+        <option value="f2">f2</option>
+        <option value="f3">f3</option>
+        <option value="f4">f4</option>
+        <option value="f5">f5</option>
+        <option value="f6">f6</option>
+        <option value="f7">f7</option>
+        <option value="f8">f8</option>
+        <option value="g1">g1</option>
+        <option value="g2">g2</option>
+        <option value="g3">g3</option>
+        <option value="g4">g4</option>
+        <option value="g5">g5</option>
+        <option value="g6">g6</option>
+        <option value="g7">g7</option>
+        <option value="g8">g8</option>
+        <option value="h1">h1</option>
+        <option value="h2">h2</option>
+        <option value="h3">h3</option>
+        <option value="h4">h4</option>
+        <option value="h5">h5</option>
+        <option value="h6">h6</option>
+        <option value="h7">h7</option>
+        <option value="h8">h8</option>
+    </select>
+    <select class="custom-select" id="to">
+        <option selected>움직일 곳</option>
+        <option value="a1">a1</option>
+        <option value="a2">a2</option>
+        <option value="a3">a3</option>
+        <option value="a4">a4</option>
+        <option value="a5">a5</option>
+        <option value="a6">a6</option>
+        <option value="a7">a7</option>
+        <option value="a8">a8</option>
+        <option value="b1">b1</option>
+        <option value="b2">b2</option>
+        <option value="b3">b3</option>
+        <option value="b4">b4</option>
+        <option value="b5">b5</option>
+        <option value="b6">b6</option>
+        <option value="b7">b7</option>
+        <option value="b8">b8</option>
+        <option value="c1">c1</option>
+        <option value="c2">c2</option>
+        <option value="c3">c3</option>
+        <option value="c4">c4</option>
+        <option value="c5">c5</option>
+        <option value="c6">c6</option>
+        <option value="c7">c7</option>
+        <option value="c8">c8</option>
+        <option value="d1">d1</option>
+        <option value="d2">d2</option>
+        <option value="d3">d3</option>
+        <option value="d4">d4</option>
+        <option value="d5">d5</option>
+        <option value="d6">d6</option>
+        <option value="d7">d7</option>
+        <option value="d8">d8</option>
+        <option value="e1">e1</option>
+        <option value="e2">e2</option>
+        <option value="e3">e3</option>
+        <option value="e4">e4</option>
+        <option value="e5">e5</option>
+        <option value="e6">e6</option>
+        <option value="e7">e7</option>
+        <option value="e8">e8</option>
+        <option value="f1">f1</option>
+        <option value="f2">f2</option>
+        <option value="f3">f3</option>
+        <option value="f4">f4</option>
+        <option value="f5">f5</option>
+        <option value="f6">f6</option>
+        <option value="f7">f7</option>
+        <option value="f8">f8</option>
+        <option value="g1">g1</option>
+        <option value="g2">g2</option>
+        <option value="g3">g3</option>
+        <option value="g4">g4</option>
+        <option value="g5">g5</option>
+        <option value="g6">g6</option>
+        <option value="g7">g7</option>
+        <option value="g8">g8</option>
+        <option value="h1">h1</option>
+        <option value="h2">h2</option>
+        <option value="h3">h3</option>
+        <option value="h4">h4</option>
+        <option value="h5">h5</option>
+        <option value="h6">h6</option>
+        <option value="h7">h7</option>
+        <option value="h8">h8</option>
+    </select>
+    <div class="input-group-append">
+        <button class="btn btn-success" type="button" id="button-addon2" onclick="commend()">실행</button>
+    </div>
+</div>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="./chess.js"></script>
+</body>
+</html>
