@@ -20,7 +20,7 @@ public class ChessBoardDao extends DaoTemplate {
 			setBatch(gameId, pstmt, chessBoard.getPieces());
 			pstmt.executeBatch();
 		} catch (SQLException e) {
-			throw new RuntimeException("DB 데이터 삽입 중 오류가 발생했습니다.");
+			throw new DataAccessException("DB 데이터 삽입 중 오류가 발생했습니다.", e);
 		}
 	}
 
@@ -43,7 +43,7 @@ public class ChessBoardDao extends DaoTemplate {
 			pstmt.setInt(1, gameId);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			throw new RuntimeException("DB 데이터 제거 중 오류가 발생했습니다.");
+			throw new DataAccessException("DB 데이터 제거 중 오류가 발생했습니다.", e);
 		}
 	}
 
@@ -57,12 +57,12 @@ public class ChessBoardDao extends DaoTemplate {
 					pieces.add(PieceNameConverter.toPiece(rs.getString("name"), rs.getInt("col"), rs.getInt("row")));
 				}
 				if (pieces.isEmpty()) {
-					throw new RuntimeException("id에 해당하는 정보가 없습니다.");
+					throw new DataAccessException("id에 해당하는 정보가 없습니다.");
 				}
 				return new ChessBoard(pieces);
 			}
 		} catch (SQLException e) {
-			throw new RuntimeException("DB 검색 중 오류가 발생했습니다.");
+			throw new DataAccessException("DB 검색 중 오류가 발생했습니다.", e);
 		}
 	}
 }

@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ChessBoardDaoTest {
-
 	private ChessBoardDao chessBoardDao;
 
 	@BeforeEach
@@ -29,12 +28,12 @@ class ChessBoardDaoTest {
 	}
 
 	@Test
-	void delete() throws Exception {
+	void delete() {
 		chessBoardDao.deleteByGameId(0);
 	}
 
 	@Test
-	void crud() throws Exception {
+	void crud() {
 		Piece piece = PieceNameConverter.toPiece("\u265A", 1, 1);
 		ChessBoard chessBoard = new ChessBoard(Collections.singletonList(piece));
 		chessBoardDao.deleteByGameId(0);
@@ -43,7 +42,7 @@ class ChessBoardDaoTest {
 	}
 
 	@Test
-	void findWithException() throws Exception {
+	void findWithException() {
 		chessBoardDao.deleteByGameId(0);
 		assertThatThrownBy(() -> chessBoardDao.findByGameId(0))
 				.isInstanceOf(IllegalArgumentException.class)

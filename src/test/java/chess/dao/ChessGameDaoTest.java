@@ -9,7 +9,6 @@ import java.sql.Connection;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessGameDaoTest {
-
 	private ChessGameDao chessGameDao;
 
 	@BeforeEach
@@ -25,12 +24,12 @@ class ChessGameDaoTest {
 	}
 
 	@Test
-	void add() throws Exception {
+	void add() {
 		chessGameDao.add(Side.BLACK);
 	}
 
 	@Test
-	void delete() throws Exception {
+	void delete() {
 		chessGameDao.deleteByGameId(0);
 	}
 }

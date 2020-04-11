@@ -39,7 +39,7 @@ public class WebChessController {
 			throw new RuntimeException("게임 id를 입력해주세요.");
 		}
 		ChessBoard chessBoard = chessBoardDao.findByGameId(gameId);
-		chessGame = new ChessGame(chessBoard, chessGameDao.findTrunByGameId(gameId));
+		chessGame = new ChessGame(chessBoard, chessGameDao.findTurnByGameId(gameId));
 		return render();
 	}
 
