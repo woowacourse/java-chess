@@ -12,6 +12,5 @@ class JdbcUtilTest {
     void getConnection() {
         Connection conn = JdbcUtil.getConnection();
         assertNotNull(conn);
-        JdbcUtil.closeConnection(conn);
     }
 }

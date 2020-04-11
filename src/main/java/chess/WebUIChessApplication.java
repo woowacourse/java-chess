@@ -25,23 +25,23 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        post("/enter", (req, res) -> {
+        post("/ready", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String user_id = req.queryParams("user_id");
-            boolean canResume = webService.canResume(user_id);
+            String gameId = req.queryParams("game_id");
+            boolean canResume = webService.canResume(gameId);
 
-            model.put("user_id", user_id);
+            model.put("game_id", gameId);
             model.put("canResume", canResume);
             return render(model, "game_room.html");
         });
 
-        post("/start", (req, res) -> {
+        post("/play", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String user_id = req.queryParams("user_id");
+            String gameId = req.queryParams("game_id");
 
-            webService.startNewGame(board, user_id);
+            webService.startNewGame(board, gameId);
 
-            model.put("user_id", user_id);
+            model.put("game_id", gameId);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
@@ -51,11 +51,11 @@ public class WebUIChessApplication {
 
         post("/resume", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String user_id = req.queryParams("user_id");
+            String gameId = req.queryParams("game_id");
 
-            webService.resumeGame(board, user_id);
+            webService.resumeGame(board, gameId);
 
-            model.put("user_id", user_id);
+            model.put("game_id", gameId);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));
@@ -65,23 +65,23 @@ public class WebUIChessApplication {
 
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String user_id = req.queryParams("user_id");
+            String gameId = req.queryParams("game_id");
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            webService.move(board, user_id, source, target);
+            webService.move(board, gameId, source, target);
 
             boolean gameOver = webService.isGameOver(board);
             if (gameOver) {
-                webService.deleteSaved(user_id);
+                webService.deleteSaved(gameId);
                 String winningMsg = webService.winningMsg(board);
-                model.put("user_id", user_id);
+                model.put("game_id", gameId);
                 model.put("end", winningMsg);
                 model.put("pieces", webService.convertPieces(board));
                 return render(model, "game_room.html");
             }
 
-            model.put("user_id", user_id);
+            model.put("game_id", gameId);
             model.put("pieces", webService.convertPieces(board));
             model.put("turn", webService.turnMsg(board));
             model.put("white_score", webService.calculateScore(board, PieceColor.WHITE));

@@ -16,8 +16,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ChessWebService {
-    private static final int BOARD_CELLS = 64;
-    private static final int BOARD_CELLS_COUNT = BOARD_CELLS;
+    public static final int BOARD_CELLS_NUMBER = 64;
 
     private final PieceDao pieceDao;
     private final MoveHistoryDao moveHistoryDao;
@@ -27,28 +26,28 @@ public class ChessWebService {
         this.moveHistoryDao = moveHistoryDao;
     }
 
-    public boolean canResume(String user_id) {
-        int savedCount = pieceDao.countSavedInfo(user_id);
-        return savedCount == BOARD_CELLS_COUNT;
+    public boolean canResume(String gameId) {
+        int savedPiecesNumber = pieceDao.countSavedPieces(gameId);
+        return savedPiecesNumber == BOARD_CELLS_NUMBER;
     }
 
-    public void startNewGame(Board board, String user_id) {
-        deleteSaved(user_id);
+    public void startNewGame(Board board, String gameId) {
+        deleteSaved(gameId);
 
         board.initialize();
 
         Position.stream()
-                .forEach(position -> pieceDao.addPiece(user_id, position, board.getPieceByPosition(position)));
+                .forEach(position -> pieceDao.addPiece(gameId, position, board.getPieceByPosition(position)));
     }
 
-    public void resumeGame(Board board, String user_id) {
+    public void resumeGame(Board board, String gameId) {
         Map<Position, Piece> savedBoard = Position.stream()
                 .collect(Collectors.toMap(Function.identity(), position -> {
-                    String pieceName = pieceDao.findPieceNameByPosition(user_id, position);
+                    String pieceName = pieceDao.findPieceNameByPosition(gameId, position);
                     return BoardFactory.findPieceByPieceName(pieceName);
                 }));
 
-        Optional<String> lastTurn = moveHistoryDao.figureLastTurn(user_id);
+        Optional<String> lastTurn = moveHistoryDao.figureLastTurn(gameId);
 
         board.resume(savedBoard, lastTurn);
     }
@@ -58,16 +57,16 @@ public class ChessWebService {
         return turn + "의 순서입니다.";
     }
 
-    public void move(Board board, String user_id, String sourceName, String targetName) {
+    public void move(Board board, String gameId, String sourceName, String targetName) {
         Position source = Position.ofPositionName(sourceName);
         Position target = Position.ofPositionName(targetName);
         PieceColor currentTeam = board.getTeamColor();
 
         board.move(source, target);
 
-        pieceDao.updatePiece(user_id, source, board.getPieceByPosition(source));
-        pieceDao.updatePiece(user_id, target, board.getPieceByPosition(target));
-        moveHistoryDao.addMoveHistory(user_id, currentTeam, source, target);
+        pieceDao.updatePiece(gameId, source, board.getPieceByPosition(source));
+        pieceDao.updatePiece(gameId, target, board.getPieceByPosition(target));
+        moveHistoryDao.addMoveHistory(gameId, currentTeam, source, target);
     }
 
     public boolean isGameOver(Board board) {
@@ -78,9 +77,9 @@ public class ChessWebService {
         return board.calculateScore(pieceColor);
     }
 
-    public void deleteSaved(String user_id) {
-        pieceDao.deleteSavedInfo(user_id);
-        moveHistoryDao.deleteMoveHistory(user_id);
+    public void deleteSaved(String gameId) {
+        pieceDao.deleteBoardStatus(gameId);
+        moveHistoryDao.deleteMoveHistory(gameId);
     }
 
     public List<String> convertPieces(Board board) {

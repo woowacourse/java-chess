@@ -8,10 +8,10 @@ window.onload = function () {
         alert(end);
     }
 
-    if (window.location.pathname !== "/enter") {
+    if (window.location.pathname !== "/ready") {
         startBtn.value = "재시작";
     }
-    if (window.location.pathname === "/enter") {
+    if (window.location.pathname === "/ready") {
         moveBtn.setAttribute("disabled", "disabled");
     }
 };

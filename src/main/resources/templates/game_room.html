@@ -108,13 +108,13 @@
                 <td class="coordinate">G</td>
                 <td class="coordinate">H</td>
                 <td class="coordinate">
-                    <form action="/start" method="post">
-                        <input class="user_id" name="user_id" type="hidden" value="{{user_id}}">
+                    <form action="/play" method="post">
+                        <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
                         <input id="startBtn" type="submit" value="게임시작"/>
                     </form>
                     {{#canResume}}
                     <form action="/resume" method="post">
-                        <input class="user_id" name="user_id" type="hidden" value="{{user_id}}">
+                        <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
                         <input id="resumeBtn" type="submit" value="이어하기">
                     </form>
                     {{/canResume}}
@@ -127,7 +127,7 @@
         <h3 id="turn">{{turn}}</h3>
         <h3 id="end">{{end}}</h3>
         <form action="/move" class="game_interface" method="post">
-            <input class="user_id" name="user_id" type="hidden" value="{{user_id}}">
+            <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
             <input class="command" name="source" placeholder="출발지를 입력하세요. ex) a2" type="text"/>
             <input class="command" name="target" placeholder="도착지를 입력하세요. ex) 32" type="text"/>
             <input id="moveBtn" type="submit" value="이동"/>

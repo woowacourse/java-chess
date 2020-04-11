@@ -4,13 +4,13 @@ import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
 public interface PieceDao {
-    int countSavedInfo(String user_id);
+    int countSavedPieces(String gameId);
 
-    void addPiece(String user_id, Position position, Piece piece);
+    void addPiece(String gameId, Position position, Piece piece);
 
-    String findPieceNameByPosition(String user_id, Position position);
+    String findPieceNameByPosition(String gameId, Position position);
 
-    void updatePiece(String user_id, Position position, Piece piece);
+    void updatePiece(String gameId, Position position, Piece piece);
 
-    void deleteSavedInfo(String user_id);
+    void deleteBoardStatus(String gameId);
 }

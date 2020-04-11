@@ -11,8 +11,8 @@ import java.sql.SQLException;
 
 public class ChessPieceDao implements PieceDao {
     @Override
-    public int countSavedInfo(String user_id) {
-        String query = "SELECT COUNT(*) FROM SAVED WHERE USER_ID = ?";
+    public int countSavedPieces(String gameId) {
+        String query = "SELECT COUNT(*) FROM board_status WHERE game_id = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -21,7 +21,7 @@ public class ChessPieceDao implements PieceDao {
         try {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user_id);
+            pstmt.setString(1, gameId);
             rs = pstmt.executeQuery();
             rs.next();
             return rs.getInt("count(*)");
@@ -34,8 +34,8 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public void addPiece(String user_id, Position position, Piece piece) {
-        String query = "INSERT INTO SAVED VALUES (?, ?, ?)";
+    public void addPiece(String gameId, Position position, Piece piece) {
+        String query = "INSERT INTO board_status VALUES (?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -43,7 +43,7 @@ public class ChessPieceDao implements PieceDao {
         try {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user_id);
+            pstmt.setString(1, gameId);
             pstmt.setString(2, position.name());
             pstmt.setString(3, piece.name());
             pstmt.executeUpdate();
@@ -55,8 +55,8 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public String findPieceNameByPosition(String user_id, Position position) {
-        String query = "SELECT * FROM SAVED WHERE USER_ID = ? and POSITION = ?";
+    public String findPieceNameByPosition(String gameId, Position position) {
+        String query = "SELECT * FROM board_status WHERE game_id = ? and POSITION = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -65,7 +65,7 @@ public class ChessPieceDao implements PieceDao {
         try {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user_id);
+            pstmt.setString(1, gameId);
             pstmt.setString(2, position.name());
             rs = pstmt.executeQuery();
             rs.next();
@@ -79,8 +79,8 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public void updatePiece(String user_id, Position position, Piece piece) {
-        String query = "UPDATE SAVED SET PIECE = ? WHERE USER_ID = ? AND POSITION = ?";
+    public void updatePiece(String gameId, Position position, Piece piece) {
+        String query = "UPDATE board_status SET piece = ? WHERE game_id = ? AND position = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -89,7 +89,7 @@ public class ChessPieceDao implements PieceDao {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
             pstmt.setString(1, piece.name());
-            pstmt.setString(2, user_id);
+            pstmt.setString(2, gameId);
             pstmt.setString(3, position.name());
             pstmt.executeUpdate();
         } catch (SQLException e) {
@@ -100,8 +100,8 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public void deleteSavedInfo(String user_id) {
-        String query = "DELETE FROM SAVED WHERE USER_ID = ?";
+    public void deleteBoardStatus(String gameId) {
+        String query = "DELETE FROM board_status WHERE game_id = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -109,7 +109,7 @@ public class ChessPieceDao implements PieceDao {
         try {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, user_id);
+            pstmt.setString(1, gameId);
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();

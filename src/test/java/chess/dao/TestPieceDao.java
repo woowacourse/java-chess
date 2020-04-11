@@ -13,56 +13,56 @@ public class TestPieceDao implements PieceDao {
         this.testDB = new HashMap<>();
     }
 
-    public TestPieceDao(String user_id, Map<Position, Piece> saved) {
+    public TestPieceDao(String gameId, Map<Position, Piece> boardStatus) {
         this.testDB = new HashMap<>();
-        testDB.put(user_id, saved);
+        testDB.put(gameId, boardStatus);
     }
 
     @Override
-    public int countSavedInfo(String user_id) {
-        if (!testDB.containsKey(user_id)) {
+    public int countSavedPieces(String gameId) {
+        if (!testDB.containsKey(gameId)) {
             return 0;
         }
 
-        Map<Position, Piece> saved = testDB.get(user_id);
-        return saved.size();
+        Map<Position, Piece> boardStatus = testDB.get(gameId);
+        return boardStatus.size();
     }
 
     @Override
-    public void addPiece(String user_id, Position position, Piece piece) {
-        if (!testDB.containsKey(user_id)) {
-            testDB.put(user_id, new HashMap<>());
+    public void addPiece(String gameId, Position position, Piece piece) {
+        if (!testDB.containsKey(gameId)) {
+            testDB.put(gameId, new HashMap<>());
         }
-        Map<Position, Piece> saved = testDB.get(user_id);
-        saved.put(position, piece);
+        Map<Position, Piece> boardStatus = testDB.get(gameId);
+        boardStatus.put(position, piece);
     }
 
     @Override
-    public String findPieceNameByPosition(String user_id, Position position) {
-        if (!testDB.containsKey(user_id)) {
+    public String findPieceNameByPosition(String gameId, Position position) {
+        if (!testDB.containsKey(gameId)) {
             return null;
         }
 
-        Map<Position, Piece> saved = testDB.get(user_id);
-        if (!saved.containsKey(position)) {
+        Map<Position, Piece> boardStatus = testDB.get(gameId);
+        if (!boardStatus.containsKey(position)) {
             return null;
         }
 
-        Piece piece = saved.get(position);
+        Piece piece = boardStatus.get(position);
         return piece.name();
     }
 
     @Override
-    public void updatePiece(String user_id, Position position, Piece piece) {
-        if (!testDB.containsKey(user_id)) {
+    public void updatePiece(String gameId, Position position, Piece piece) {
+        if (!testDB.containsKey(gameId)) {
             return;
         }
-        Map<Position, Piece> saved = testDB.get(user_id);
-        saved.put(position, piece);
+        Map<Position, Piece> boardStatus = testDB.get(gameId);
+        boardStatus.put(position, piece);
     }
 
     @Override
-    public void deleteSavedInfo(String user_id) {
-        testDB.remove(user_id);
+    public void deleteBoardStatus(String gameId) {
+        testDB.remove(gameId);
     }
 }
