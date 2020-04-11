@@ -17,23 +17,27 @@ public class ChessBoardDao extends DaoTemplate {
 	public void addPieces(ChessBoard chessBoard, int gameId) throws RuntimeException {
 		String query = "INSERT INTO piece VALUES (?, ?, ?, ?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-			for (Piece piece : chessBoard.getPieces()) {
-				Position position = piece.getPosition();
-				Column column = position.getCol();
-				Row row = position.getRow();
-				pstmt.setString(1, PieceNameConverter.toName(piece));
-				pstmt.setInt(2, column.getValue());
-				pstmt.setInt(3, row.getSymbol());
-				pstmt.setInt(4, gameId);
-				pstmt.addBatch();
-			}
+			setBatch(gameId, pstmt, chessBoard.getPieces());
 			pstmt.executeBatch();
 		} catch (SQLException e) {
 			throw new RuntimeException("DB 데이터 삽입 중 오류가 발생했습니다.");
 		}
 	}
 
-	public void deleteByGameId(int gameId) throws RuntimeException {
+	private void setBatch(int gameId, PreparedStatement pstmt, List<Piece> pieces) throws SQLException {
+		for (Piece piece : pieces) {
+			Position position = piece.getPosition();
+			Column column = position.getCol();
+			Row row = position.getRow();
+			pstmt.setString(1, PieceNameConverter.toName(piece));
+			pstmt.setInt(2, column.getValue());
+			pstmt.setInt(3, row.getSymbol());
+			pstmt.setInt(4, gameId);
+			pstmt.addBatch();
+		}
+	}
+
+	public void deleteByGameId(int gameId) {
 		String query = "DELETE FROM piece WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
@@ -43,7 +47,7 @@ public class ChessBoardDao extends DaoTemplate {
 		}
 	}
 
-	public ChessBoard findByGameId(int gameId) throws RuntimeException {
+	public ChessBoard findByGameId(int gameId) {
 		List<Piece> pieces = new ArrayList<>();
 		String query = "SELECT * FROM piece WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
