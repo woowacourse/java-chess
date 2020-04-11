@@ -27,7 +27,7 @@ public class DataSource {
     private Properties readPropertiesFile() {
         Properties properties = null;
         try {
-            String file = "src\\jdbc.properties";
+            String file = "src/jdbc.properties";
             FileInputStream fileInputStream = new FileInputStream(file);
             properties = new Properties();
             properties.load(fileInputStream);
