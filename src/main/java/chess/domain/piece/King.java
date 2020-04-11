@@ -8,7 +8,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected List<Direction> movableDirections(Piece piece, Direction direction) {
+    protected List<Direction> movableDirections(Piece piece) {
         return Direction.EVERY_DIRECTION;
     }
 

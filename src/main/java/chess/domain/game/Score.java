@@ -7,39 +7,43 @@ import chess.domain.piece.Position;
 
 public class Score {
     private static final double PAWN_HALF_SCORE = 0.5;
+    private static final double PAWN_COUNT = 2;
+
     private final double score;
 
-    public Score(double score) {
+    Score(double score) {
         this.score = score;
     }
 
     public static Score calculate(List<Piece> pieces) {
-        return new Score(totalScore(pieces) - pawnScore(pieces));
+        return new Score(sum(pieces) - pawnScore(pieces));
+    }
+
+    private static double sum(List<Piece> pieces) {
+        return pieces.stream()
+            .mapToDouble(Piece::score)
+            .sum();
     }
 
     private static double pawnScore(List<Piece> pieces) {
         int count = 0;
-        for (int x = Position.START_POSITION_X; x < Position.END_POSITION_X; x++) {
-            count += countPawnOnSameFile(pieces, x);
+        for (int x = Position.BEGIN_X; x < Position.END_X; x++) {
+            count += countOfPawnIfOverOne(pieces, x);
         }
-        return count * PAWN_HALF_SCORE;
+        return PAWN_HALF_SCORE * count;
     }
 
-    private static int countPawnOnSameFile(List<Piece> pieces, int x) {
-        int count = (int)pieces.stream()
+    private static int countOfPawnIfOverOne(List<Piece> pieces, int x) {
+        long count = pieces.stream()
             .filter(piece -> piece.isPawn() && piece.getPosition().equalsX(x))
             .count();
-        if (count >= 2) {
-            return count;
+        if (count >= PAWN_COUNT) {
+            return (int)count;
         }
         return 0;
     }
 
-    private static double totalScore(List<Piece> pieces) {
-        return pieces.stream().mapToDouble(Piece::score).sum();
-    }
-
-    public boolean isHigherThan(Score that) {
+    public boolean isOverThan(Score that) {
         return this.score > that.score;
     }
 

@@ -7,18 +7,18 @@ import java.util.Map;
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
-    public static final int START_POSITION_Y = 0;
-    public static final int START_POSITION_X = 0;
-    public static final int END_POSITION_Y = 8;
-    public static final int END_POSITION_X = 8;
+    public static final int BEGIN_X = 0;
+    public static final int BEGIN_Y = 0;
+    public static final int END_X = 8;
+    public static final int END_Y = 8;
     private static final Map<String, Position> POSITIONS = new HashMap<>();
 
     private final int x;
     private final int y;
 
     static {
-        for (int y = START_POSITION_Y; y < END_POSITION_Y; y++) {
-            for (int x = START_POSITION_X; x < END_POSITION_X; x++) {
+        for (int y = BEGIN_Y; y < END_Y; y++) {
+            for (int x = BEGIN_X; x < END_X; x++) {
                 POSITIONS.put(key(x, y), new Position(x, y));
             }
         }
@@ -97,5 +97,4 @@ public class Position implements Comparable<Position> {
         }
         return x - position.x;
     }
-
 }

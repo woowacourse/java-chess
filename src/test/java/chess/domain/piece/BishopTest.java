@@ -15,19 +15,20 @@ public class BishopTest {
     }
 
     @ParameterizedTest
-    @DisplayName("비숍의 이동 가능한 경로가 존재")
+    @DisplayName("비숍 이동")
     @CsvSource(value = {"c1,d2", "c1,e3", "c1,a3", "c1,b2"})
-    void pathTo(String source, String target) {
+    void move(String source, String target) {
         Piece piece = new Bishop(Position.from(source), Color.WHITE);
-        assertThat(piece.pathTo(new Blank(Position.from(target)))).isInstanceOf(Path.class);
+        piece.move(new Blank(Position.from(target)));
+        assertThat(piece.getPosition()).isEqualTo(Position.from(target));
     }
 
     @ParameterizedTest
-    @DisplayName("비숍의 이동 가능한 경로가 아닌 경우 예외 발생")
+    @DisplayName("비숍이 이동할 수 없는 위치인 경우 예외 발생")
     @CsvSource(value = {"c1,d1", "c1,c2", "c7,d7", "c7,e6"})
-    void pathTo_invalid_direction(String source, String target) {
+    void move_invalid_direction(String source, String target) {
         Piece piece = new Bishop(Position.from(source), Color.WHITE);
         assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-            () -> piece.pathTo(new Blank(Position.from(target))));
+            () -> piece.move(new Blank(Position.from(target))));
     }
 }

@@ -68,7 +68,7 @@ public class DirectionTest {
     }
 
     @Test
-    @DisplayName("8방향아 아닌 경우 예외 발생")
+    @DisplayName("8방향이 아닌 경우 예외 발생")
     void ofEvery_invalid() {
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Direction.ofEvery(1, 2));
         assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(() -> Direction.ofEvery(1, -2));

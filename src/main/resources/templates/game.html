@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>체스 게임 {{ id }}</title>
+    <link rel="stylesheet" href="../css/game.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="chess-menu">
+        <div class="chess-games"></div>
+        <div class="chess-create">
+          <div class="chess-create-submit">방 만들기</div>
+        </div>
+      </div>
+      <div class="chess-board">
+        <div class="chess-file">
+          <div class="chess-symbol">A</div>
+          <div class="chess-symbol">B</div>
+          <div class="chess-symbol">C</div>
+          <div class="chess-symbol">D</div>
+          <div class="chess-symbol">E</div>
+          <div class="chess-symbol">F</div>
+          <div class="chess-symbol">G</div>
+          <div class="chess-symbol">H</div>
+        </div>
+        <div class="chess-container">
+          <div class="chess-rank">
+            <div class="chess-symbol">1</div>
+            <div class="chess-symbol">2</div>
+            <div class="chess-symbol">3</div>
+            <div class="chess-symbol">4</div>
+            <div class="chess-symbol">5</div>
+            <div class="chess-symbol">6</div>
+            <div class="chess-symbol">7</div>
+            <div class="chess-symbol">8</div>
+          </div>
+          <div class="chess-map">
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="7"></div>
+              <div class="chess-col" data-x="1" data-y="7"></div>
+              <div class="chess-col" data-x="2" data-y="7"></div>
+              <div class="chess-col" data-x="3" data-y="7"></div>
+              <div class="chess-col" data-x="4" data-y="7"></div>
+              <div class="chess-col" data-x="5" data-y="7"></div>
+              <div class="chess-col" data-x="6" data-y="7"></div>
+              <div class="chess-col" data-x="7" data-y="7"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="6"></div>
+              <div class="chess-col" data-x="1" data-y="6"></div>
+              <div class="chess-col" data-x="2" data-y="6"></div>
+              <div class="chess-col" data-x="3" data-y="6"></div>
+              <div class="chess-col" data-x="4" data-y="6"></div>
+              <div class="chess-col" data-x="5" data-y="6"></div>
+              <div class="chess-col" data-x="6" data-y="6"></div>
+              <div class="chess-col" data-x="7" data-y="6"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="5"></div>
+              <div class="chess-col" data-x="1" data-y="5"></div>
+              <div class="chess-col" data-x="2" data-y="5"></div>
+              <div class="chess-col" data-x="3" data-y="5"></div>
+              <div class="chess-col" data-x="4" data-y="5"></div>
+              <div class="chess-col" data-x="5" data-y="5"></div>
+              <div class="chess-col" data-x="6" data-y="5"></div>
+              <div class="chess-col" data-x="7" data-y="5"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="4"></div>
+              <div class="chess-col" data-x="1" data-y="4"></div>
+              <div class="chess-col" data-x="2" data-y="4"></div>
+              <div class="chess-col" data-x="3" data-y="4"></div>
+              <div class="chess-col" data-x="4" data-y="4"></div>
+              <div class="chess-col" data-x="5" data-y="4"></div>
+              <div class="chess-col" data-x="6" data-y="4"></div>
+              <div class="chess-col" data-x="7" data-y="4"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="3"></div>
+              <div class="chess-col" data-x="1" data-y="3"></div>
+              <div class="chess-col" data-x="2" data-y="3"></div>
+              <div class="chess-col" data-x="3" data-y="3"></div>
+              <div class="chess-col" data-x="4" data-y="3"></div>
+              <div class="chess-col" data-x="5" data-y="3"></div>
+              <div class="chess-col" data-x="6" data-y="3"></div>
+              <div class="chess-col" data-x="7" data-y="3"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="2"></div>
+              <div class="chess-col" data-x="1" data-y="2"></div>
+              <div class="chess-col" data-x="2" data-y="2"></div>
+              <div class="chess-col" data-x="3" data-y="2"></div>
+              <div class="chess-col" data-x="4" data-y="2"></div>
+              <div class="chess-col" data-x="5" data-y="2"></div>
+              <div class="chess-col" data-x="6" data-y="2"></div>
+              <div class="chess-col" data-x="7" data-y="2"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="1"></div>
+              <div class="chess-col" data-x="1" data-y="1"></div>
+              <div class="chess-col" data-x="2" data-y="1"></div>
+              <div class="chess-col" data-x="3" data-y="1"></div>
+              <div class="chess-col" data-x="4" data-y="1"></div>
+              <div class="chess-col" data-x="5" data-y="1"></div>
+              <div class="chess-col" data-x="6" data-y="1"></div>
+              <div class="chess-col" data-x="7" data-y="1"></div>
+            </div>
+            <div class="chess-row">
+              <div class="chess-col" data-x="0" data-y="0"></div>
+              <div class="chess-col" data-x="1" data-y="0"></div>
+              <div class="chess-col" data-x="2" data-y="0"></div>
+              <div class="chess-col" data-x="3" data-y="0"></div>
+              <div class="chess-col" data-x="4" data-y="0"></div>
+              <div class="chess-col" data-x="5" data-y="0"></div>
+              <div class="chess-col" data-x="6" data-y="0"></div>
+              <div class="chess-col" data-x="7" data-y="0"></div>
+            </div>
+          </div>
+          <div class="chess-rank">
+            <div class="chess-symbol">1</div>
+            <div class="chess-symbol">2</div>
+            <div class="chess-symbol">3</div>
+            <div class="chess-symbol">4</div>
+            <div class="chess-symbol">5</div>
+            <div class="chess-symbol">6</div>
+            <div class="chess-symbol">7</div>
+            <div class="chess-symbol">8</div>
+          </div>
+        </div>
+        <div class="chess-file">
+          <div class="chess-symbol">A</div>
+          <div class="chess-symbol">B</div>
+          <div class="chess-symbol">C</div>
+          <div class="chess-symbol">D</div>
+          <div class="chess-symbol">E</div>
+          <div class="chess-symbol">F</div>
+          <div class="chess-symbol">G</div>
+          <div class="chess-symbol">H</div>
+        </div>
+      </div>
+      <div class="chess-status">
+        <div class="chess-score-board">
+          <div id="black-score" class="chess-score"></div>
+          <div class="chess-piece pawn black"></div>
+        </div>
+        <div class="chess-score-board">
+          <div id="white-score" class="chess-score"></div>
+          <div class="chess-piece pawn white"></div>
+        </div>
+      </div>
+      <div class="chess-alert hide">
+        <div class="chess-alert-message"></div>
+      </div>
+      <div class="chess-result hide">
+        <div class="chess-result-message"></div>
+        <div class="chess-result-restart">새로 시작</div>
+      </div>
+    </div>
+    <script>
+      const gameId = {{id}};
+    </script>
+    <script src="../js/game.js"></script>
+  </body>
+</html>

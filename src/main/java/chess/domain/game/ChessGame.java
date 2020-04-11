@@ -1,13 +1,14 @@
 package chess.domain.game;
 
 import chess.domain.game.state.State;
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class ChessGame {
+    private final int id;
     private State state;
 
-    public ChessGame(State state) {
+    public ChessGame(int id, State state) {
+        this.id = id;
         this.state = state;
     }
 
@@ -27,13 +28,23 @@ public class ChessGame {
         return state.board();
     }
 
+    public Turn turn() {
+        return state.turn();
+    }
+
     public boolean isFinished() {
         return state.isFinished();
     }
 
     public Status status() {
-        Score whiteScore = state.score(Color.WHITE);
-        Score blackScore = state.score(Color.BLACK);
-        return new Status(whiteScore, blackScore);
+        return state.status();
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public State getState() {
+        return state;
     }
 }

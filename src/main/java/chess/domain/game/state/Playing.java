@@ -2,6 +2,8 @@ package chess.domain.game.state;
 
 import chess.domain.game.Board;
 import chess.domain.game.Score;
+import chess.domain.game.Status;
+import chess.domain.game.Turn;
 import chess.domain.game.exception.InvalidTurnException;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -23,7 +25,7 @@ public class Playing implements State {
 
     @Override
     public State end() {
-        return new Finished(Board.EMPTY);
+        return new Finished(board, turn);
     }
 
     @Override
@@ -32,15 +34,15 @@ public class Playing implements State {
         Piece targetPiece = board.findPiece(target);
         validateTurn(sourcePiece);
         sourcePiece.move(targetPiece);
-        if (board.isGameOver()) {
-            return new Finished(Board.EMPTY);
+        if (board.isKingDead()) {
+            return end();
         }
         nextTurn();
         return this;
     }
 
     private void validateTurn(Piece piece) {
-        if (!piece.isSameColor(turn.getColor())) {
+        if (piece.isDifferentColor(turn.getColor())) {
             throw new InvalidTurnException();
         }
     }
@@ -54,13 +56,36 @@ public class Playing implements State {
         return board;
     }
 
-    @Override
-    public Score score(Color color) {
+    private Score score(Color color) {
         return Score.calculate(board.findPiecesByColor(color));
+    }
+
+    @Override
+    public Turn turn() {
+        return turn;
     }
 
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Status status() {
+        Score whiteScore = score(Color.WHITE);
+        Score blackScore = score(Color.BLACK);
+        Color winner = Color.NONE;
+        if (whiteScore.isOverThan(blackScore)) {
+            winner = Color.WHITE;
+        }
+        if (blackScore.isOverThan(whiteScore)) {
+            winner = Color.BLACK;
+        }
+        return new Status(whiteScore, blackScore, winner);
+    }
+
+    @Override
+    public String toString() {
+        return "PLAYING";
     }
 }

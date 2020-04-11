@@ -32,7 +32,6 @@ public enum Direction {
         SOUTH_SOUTH_EAST, SOUTH_SOUTH_WEST, EAST_EAST_NORTH, EAST_EAST_SOUTH, WEST_WEST_NORTH, WEST_WEST_SOUTH);
     public static final List<Direction> WHITE_PAWN_DIRECTION = Arrays.asList(NORTH_EAST, NORTH_WEST, NORTH);
     public static final List<Direction> BLACK_PAWN_DIRECTION = Arrays.asList(SOUTH_EAST, SOUTH_WEST, SOUTH);
-    private static final int PAWN_FIRST_MOVE = 2;
 
     private final int x;
     private final int y;
@@ -70,15 +69,15 @@ public enum Direction {
         return convert(x, y);
     }
 
-    private static Direction convert(int x, int y) {
-        return of(Integer.compare(x, 0), Integer.compare(y, 0));
-    }
-
     public static Direction ofStart(int x, int y) {
-        if (Math.abs(y) == PAWN_FIRST_MOVE) {
+        if (Math.abs(y) == 2) {
             return convert(x, y);
         }
         return of(x, y);
+    }
+
+    private static Direction convert(int x, int y) {
+        return of(Integer.compare(x, 0), Integer.compare(y, 0));
     }
 
     public int getX() {

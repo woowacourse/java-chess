@@ -15,19 +15,20 @@ public class QueenTest {
     }
 
     @ParameterizedTest
-    @DisplayName("퀸의 이동 가능한 경로가 존재")
+    @DisplayName("퀸 이동")
     @CsvSource(value = {"e5,c5", "e5,e7", "e5,g7", "e5,e3", "e5,c3", "e5,c7", "e5,g5", "e5,g3"})
-    void pathTo(String source, String target) {
+    void move(String source, String target) {
         Piece piece = new Queen(Position.from(source), Color.WHITE);
-        assertThat(piece.pathTo(new Blank(Position.from(target)))).isInstanceOf(Path.class);
+        piece.move(new Blank(Position.from(target)));
+        assertThat(piece.getPosition()).isEqualTo(Position.from(target));
     }
 
     @ParameterizedTest
-    @DisplayName("퀸의 이동 가능한 경로가 아닌 경우 예외 발생")
+    @DisplayName("퀸이 이동할 수 없는 위치인 경우 예외 발생")
     @CsvSource(value = {"e5,c6", "e5,d7", "e5,f7", "e5,g6", "e5,g4", "e5,f3", "e5,c4", "e5,d3"})
-    void pathTo_invalid_direction(String source, String target) {
+    void move_invalid_direction(String source, String target) {
         Piece piece = new Queen(Position.from(source), Color.WHITE);
         assertThatExceptionOfType(RuntimeException.class).isThrownBy(
-            () -> piece.pathTo(new Blank(Position.from(target))));
+            () -> piece.move(new Blank(Position.from(target))));
     }
 }

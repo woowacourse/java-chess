@@ -8,7 +8,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    protected List<Direction> movableDirections(Piece piece, Direction direction) {
+    protected List<Direction> movableDirections(Piece piece) {
         throw new UnsupportedOperationException();
     }
 
