@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.dao.BlackPieceDAO;
-import chess.dao.PlayerTurnDAO;
+import chess.dao.ChessBoardStateDAO;
 import chess.dao.WhitePieceDAO;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.ChessPiece;
@@ -16,46 +16,43 @@ import java.util.List;
 import java.util.Map;
 
 public class Service {
+
+    private static final String SUCCESS = "";
+
     private BlackPieceDAO blackPieceDAO;
     private WhitePieceDAO whitePieceDAO;
-    private PlayerTurnDAO playerTurnDAO;
+    private ChessBoardStateDAO chessBoardStateDAO;
 
     public Service() {
         this.blackPieceDAO = new BlackPieceDAO();
         this.whitePieceDAO = new WhitePieceDAO();
-        this.playerTurnDAO = new PlayerTurnDAO();
+        this.chessBoardStateDAO = new ChessBoardStateDAO();
     }
 
-    public void initialChessBoard() {
+    public String initialChessBoard() {
         whitePieceDAO.deleteWhiteTable();
         blackPieceDAO.deleteBlackTable();
-        playerTurnDAO.deletePlayerTurn();
-        playerTurnDAO.insertInitialPlayerTurn();
+        chessBoardStateDAO.deleteChessBoardState();
+        chessBoardStateDAO.insertInitialChessBoardState();
         whitePieceDAO.insertInitialWhitePiece();
         blackPieceDAO.insertInitialBlackPiece();
+
+        return SUCCESS;
     }
 
-    public ChessBoard createInitialChessBoard() {
+    private ChessBoard createChessBoard() {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
         whitePieceDAO.selectWhiteBoard(chessBoard);
         blackPieceDAO.selectBlackBoard(chessBoard);
 
-        return new ChessBoard(chessBoard);
+        return new ChessBoard(chessBoard, chessBoardStateDAO.selectPlayerTurn());
     }
 
-    public ChessBoard createContinuousChessBoard() {
-        Map<Position, ChessPiece> chessBoard = new HashMap<>();
-        whitePieceDAO.selectWhiteBoard(chessBoard);
-        blackPieceDAO.selectBlackBoard(chessBoard);
-
-        return new ChessBoard(chessBoard, playerTurnDAO.selectPlayerTurn());
-    }
-
-    public Map<String, Object> settingChessBoard(ChessBoard chessBoard) {
+    public Map<String, Object> settingChessBoard() {
         Map<String, Object> model = new HashMap<>();
         List<ChessPieceDTO> chessPieceDTOArrayList = new ArrayList<>();
 
-        chessBoard.getChessBoard().entrySet().forEach(
+        createChessBoard().getChessBoard().entrySet().forEach(
                 (entry -> chessPieceDTOArrayList.add(
                         new ChessPieceDTO(entry.getKey().getPositionToString(), entry.getValue().getName()))
                 )
@@ -65,25 +62,31 @@ public class Service {
         return model;
     }
 
-    public void updatePlayerTurn(ChessBoard chessBoard) {
-        playerTurnDAO.updatePlayerTurn(chessBoard.getPlayerColor());
-    }
-
-    public void moveChessBoard(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
-        if (chessBoard.containsTargetPosition(Position.of(chessPositionDTO.getTargetPosition()))) {
+    public String moveChessBoard(ChessPositionDTO chessPositionDTO) {
+        ChessBoard chessBoard = createChessBoard();
+        if (chessBoard.containsPosition(Position.of(chessPositionDTO.getTargetPosition()))) {
             chessBoard.move(Position.of(chessPositionDTO.getSourcePosition()),
                     Position.of(chessPositionDTO.getTargetPosition())
             );
-            selectPieceDaoAtCaughtSituation(chessBoard, chessPositionDTO);
-            return;
+            determinePieceDaoAtCaughtSituation(chessBoard, chessPositionDTO);
+            updatePlayerTurn();
+            return isCaughtKing(chessBoard);
         }
         chessBoard.move(Position.of(chessPositionDTO.getSourcePosition()),
                 Position.of(chessPositionDTO.getTargetPosition()));
-        selectPieceDao(chessBoard, chessPositionDTO);
+        determinePieceDao(chessBoard, chessPositionDTO);
+        updatePlayerTurn();
+        return isCaughtKing(chessBoard);
     }
 
-    private void selectPieceDaoAtCaughtSituation(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
-        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getTargetPosition()))
+    private void updatePlayerTurn() {
+        ChessBoard chessBoard = createChessBoard();
+        chessBoard.playerTurnChange();
+        chessBoardStateDAO.updatePlayerTurn(chessBoard.getPlayerColor());
+    }
+
+    private void determinePieceDaoAtCaughtSituation(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
+        if (chessBoard.findSourcePieceSamePlayerColorBy(Position.of(chessPositionDTO.getTargetPosition()))
                 .isSamePieceColorWith(PieceColor.BLACK)) {
             whitePieceDAO.deleteCaughtPiece(chessPositionDTO);
             blackPieceDAO.updatePiece(chessPositionDTO);
@@ -93,12 +96,32 @@ public class Service {
         whitePieceDAO.updatePiece(chessPositionDTO);
     }
 
-    private void selectPieceDao(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
-        if (chessBoard.findSourceChessPieceFrom(Position.of(chessPositionDTO.getTargetPosition()))
+    private void determinePieceDao(ChessBoard chessBoard, ChessPositionDTO chessPositionDTO) {
+        if (chessBoard.findSourcePieceSamePlayerColorBy(Position.of(chessPositionDTO.getTargetPosition()))
                 .isSamePieceColorWith(PieceColor.BLACK)) {
             blackPieceDAO.updatePiece(chessPositionDTO);
             return;
         }
         whitePieceDAO.updatePiece(chessPositionDTO);
+    }
+
+    public double calculateScore() {
+        ChessBoard chessBoard = createChessBoard();
+        return chessBoard.calculateScore();
+    }
+
+    public String getColor() {
+        ChessBoard chessBoard = createChessBoard();
+        PieceColor pieceColor = chessBoard.getPlayerColor();
+
+        return pieceColor.getColor();
+    }
+
+    private String isCaughtKing(ChessBoard chessBoard) {
+        if (chessBoard.isCaughtKing()) {
+            chessBoardStateDAO.updateCaughtKing(createChessBoard());
+            return chessBoard.getPlayerColor().getColor() + "이 승리했습니다!";
+        }
+        return SUCCESS;
     }
 }

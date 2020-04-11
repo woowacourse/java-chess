@@ -1,10 +1,11 @@
 package chess.dao;
 
+import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.pieceType.PieceColor;
 
 import java.sql.*;
 
-public class PlayerTurnDAO {
+public class ChessBoardStateDAO {
 
     private PreparedStatement preparedStatement = null;
     private ResultSet resultSet = null;
@@ -30,10 +31,10 @@ public class PlayerTurnDAO {
         }
     }
 
-    public void deletePlayerTurn() {
+    public void deleteChessBoardState() {
         Connection connection = connectionDAO.getConnection();
         try {
-            String dropQuery = "DELETE FROM playerTurn";
+            String dropQuery = "DELETE FROM chessBoardState";
             preparedStatement = connection.prepareStatement(dropQuery);
             preparedStatement.executeUpdate();
 
@@ -45,11 +46,11 @@ public class PlayerTurnDAO {
         }
     }
 
-    public void insertInitialPlayerTurn() {
+    public void insertInitialChessBoardState() {
         Connection connection = connectionDAO.getConnection();
 
         try {
-            String query = "INSERT INTO playerTurn VALUES ('WHITE')";
+            String query = "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)";
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -65,7 +66,7 @@ public class PlayerTurnDAO {
         String playerTurn = null;
 
         try {
-            String query = "SELECT * FROM playerTurn";
+            String query = "SELECT * FROM chessBoardState";
             preparedStatement = connection.prepareStatement(query);
             resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -81,16 +82,34 @@ public class PlayerTurnDAO {
         return playerTurn;
     }
 
-
     public void updatePlayerTurn(PieceColor pieceColor) {
         Connection connection = connectionDAO.getConnection();
 
         try {
-            String query = "UPDATE playerTurn SET turn = ?";
+            String query = "UPDATE chessBoardState SET turn = ?";
             String playerTurn = pieceColor.getColor();
 
             preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, playerTurn.toUpperCase());
+
+            preparedStatement.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("updatePlayerTurn 오류: " + e.getMessage());
+        } finally {
+            closePrepareStatement();
+            connectionDAO.closeConnection();
+        }
+    }
+
+    public void updateCaughtKing(ChessBoard chessBoard) {
+        Connection connection = connectionDAO.getConnection();
+
+        try {
+            String query = "UPDATE chessBoardState SET caughtKing = ?";
+            boolean caughtKing = chessBoard.isCaughtKing();
+
+            preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setBoolean(1, caughtKing);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

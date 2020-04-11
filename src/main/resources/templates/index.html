@@ -45,14 +45,12 @@
 </div>
 <script>
     function chessStart() {
-
-
         $.ajax({
             type: "post",
             url: "/chessStart",
 
             dataType: "text",
-            success: function (data, status, jqXHR) {
+            success: function () {
                 location.href = '/chess';
             },
             error: function (jqXHR) {

@@ -32,14 +32,14 @@ public class ChessBoard {
         Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
         Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
 
-        ChessPiece sourceChessPiece = findSourceChessPieceFrom(sourcePosition);
+        ChessPiece sourceChessPiece = findSourcePieceSamePlayerColorBy(sourcePosition);
 
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
     }
 
-    public ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
+    public ChessPiece findSourcePieceSamePlayerColorBy(Position sourcePosition) {
         ChessPiece sourceChessPiece = chessBoard.get(sourcePosition);
 
         if (Objects.isNull(chessBoard.get(sourcePosition))) {
@@ -126,9 +126,8 @@ public class ChessBoard {
         return chessBoardState.isCaughtKing();
     }
 
-    public boolean containsTargetPosition(Position targetPosition) {
-        ChessPiece chessPiece = chessBoard.get(targetPosition);
-        return Objects.nonNull(chessPiece);
+    public boolean containsPosition(Position position) {
+        return chessBoard.containsKey(position);
     }
 
     public void playerTurnChange() {

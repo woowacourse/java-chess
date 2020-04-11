@@ -1,7 +1,5 @@
 package chess;
 
-import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.dto.ChessPositionDTO;
 import chess.service.Service;
 import spark.ModelAndView;
@@ -14,9 +12,6 @@ import static spark.Spark.*;
 
 public class WebChessController {
 
-    private static final String SUCCESS = "";
-
-    private ChessBoard chessBoard;
     private Service service;
 
     public WebChessController() {
@@ -30,34 +25,18 @@ public class WebChessController {
             return render(model, "index.html");
         });
 
-        post("/chessStart", (req, res) -> {
-            service.initialChessBoard();
-            chessBoard = service.createInitialChessBoard();
-
-            return SUCCESS;
-        });
+        post("/chessStart", (req, res) -> service.initialChessBoard());
 
         get("/chess", (req, res) -> {
-            Map<String, Object> model;
-
-            chessBoard = service.createContinuousChessBoard();
-            model = service.settingChessBoard(chessBoard);
-
+            Map<String, Object> model = service.settingChessBoard();
             return render(model, "contents/chess.html");
         });
-
 
         post("/move", (req, res) -> {
             ChessPositionDTO chessPositionDTO =
                     new ChessPositionDTO(req.queryParams("source"), req.queryParams("target"));
             try {
-                service.moveChessBoard(chessBoard, chessPositionDTO);
-                chessBoard.playerTurnChange();
-                service.updatePlayerTurn(chessBoard);
-                if (chessBoard.isCaughtKing()) {
-                    return chessBoard.getPlayerColor().getColor() + "이 승리했습니다!";
-                }
-                return SUCCESS;
+                return service.moveChessBoard(chessPositionDTO);
             } catch (Exception e) {
                 res.status(403);
                 return e.getMessage();
@@ -65,8 +44,7 @@ public class WebChessController {
         });
 
         post("/status", (req, res) -> {
-            PieceColor playerTurn = chessBoard.getPlayerColor();
-            res.body(String.format("%s점수: %.1f", playerTurn.getColor(), chessBoard.calculateScore()));
+            res.body(String.format("%s점수: %.1f", service.getColor(), service.calculateScore()));
             return res.body();
         });
     }
