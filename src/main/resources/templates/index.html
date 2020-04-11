@@ -131,9 +131,9 @@
             <input id="input" type="submit" value="입력"/>
         </form>
         <div class="command_history">
-            {{#records}}
-            <p>{{this.record}} {{this.source}} {{this.target}} {{this.errorMsg}}</p>
-            {{/records}}
+            {{#commandHistories}}
+            <p>{{this.commandHistory}} {{this.source}} {{this.target}} {{this.errorMsg}}</p>
+            {{/commandHistories}}
         </div>
         <div class="score_board">
             <div class="score_box">

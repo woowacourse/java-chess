@@ -1,6 +1,6 @@
 package chess.domains.board;
 
-import chess.domains.Record;
+import chess.domains.CommandHistory;
 import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
@@ -133,11 +133,11 @@ public class Board {
         return 0;
     }
 
-    public void recoverRecords(List<Record> records) {
-        for (Record record : records) {
-            String recordMessage = record.getRecord();
+    public void recoverRecords(List<CommandHistory> commandHistories) {
+        for (CommandHistory commandHistory : commandHistories) {
+            String recordMessage = commandHistory.getCommandHistory();
             String[] recordMessages = recordMessage.split(DELIMITER);
-            if (recordMessage.startsWith("move") && record.getErrorMsg().equals("")) {
+            if (recordMessage.startsWith("move") && commandHistory.getErrorMsg().equals("")) {
                 this.move(Position.ofPositionName(recordMessages[1]), Position.ofPositionName(recordMessages[2]));
             }
         }

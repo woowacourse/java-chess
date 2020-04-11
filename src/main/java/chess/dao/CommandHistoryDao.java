@@ -1,6 +1,6 @@
 package chess.dao;
 
-import chess.domains.Record;
+import chess.domains.CommandHistory;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RecordDao extends ConnectionManager {
+public class CommandHistoryDao extends ConnectionManager {
     public int countRecords() {
         String query = "SELECT COUNT(*) FROM  record;";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query);
@@ -25,15 +25,15 @@ public class RecordDao extends ConnectionManager {
         }
     }
 
-    public void addRecord(Record record) {
+    public void addRecord(CommandHistory commandHistory) {
         String query = "INSERT INTO record VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             int number = this.countRecords() + 1;
             pstmt.setInt(1, number);
-            pstmt.setString(2, record.getRecord());
-            pstmt.setString(3, record.getErrorMsg());
-            pstmt.setString(4, record.getSource());
-            pstmt.setString(5, record.getTarget());
+            pstmt.setString(2, commandHistory.getCommandHistory());
+            pstmt.setString(3, commandHistory.getErrorMsg());
+            pstmt.setString(4, commandHistory.getSource());
+            pstmt.setString(5, commandHistory.getTarget());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
@@ -49,17 +49,17 @@ public class RecordDao extends ConnectionManager {
         }
     }
 
-    public List<Record> readRecords() {
+    public List<CommandHistory> readRecords() {
         String query = "SELECT * FROM record";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
-            List<Record> records = new ArrayList<>();
+            List<CommandHistory> commandHistories = new ArrayList<>();
 
             while (rs.next()) {
-                records.add(new Record(rs.getString("record"),
+                commandHistories.add(new CommandHistory(rs.getString("record"),
                         rs.getString("source"), rs.getString("target"), rs.getString("errorMsg")));
             }
-            return records;
+            return commandHistories;
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }

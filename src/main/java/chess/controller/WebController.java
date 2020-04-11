@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.dao.BoardDao;
-import chess.dao.RecordDao;
-import chess.domains.Record;
+import chess.dao.CommandHistoryDao;
+import chess.domains.CommandHistory;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
@@ -23,12 +23,12 @@ public class WebController {
     public static final String EMPTY_STRING = "";
 
     private final BoardDao boardDAO;
-    private final RecordDao recordDAO;
+    private final CommandHistoryDao commandHistoryDAO;
     private Board board;
 
     public WebController() {
         this.boardDAO = new BoardDao();
-        this.recordDAO = new RecordDao();
+        this.commandHistoryDAO = new CommandHistoryDao();
         this.board = new Board();
     }
 
@@ -44,11 +44,11 @@ public class WebController {
         boardDAO.clearBoard();
         boardDAO.addBoard(board.getBoard());
 
-        recordDAO.clearRecord();
-        recordDAO.addRecord(new Record(START_COMMAND, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
+        commandHistoryDAO.clearRecord();
+        commandHistoryDAO.addRecord(new CommandHistory(START_COMMAND, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
 
         Map<String, Object> model = new HashMap<>();
-        model.put("records", recordDAO.readRecords());
+        model.put("records", commandHistoryDAO.readRecords());
         model.put("pieces", boardDAO.showPieces());
         model.put("turn", printTurn(turn()));
         model.put("white_score", calculateScore(PieceColor.WHITE));
@@ -64,7 +64,7 @@ public class WebController {
         endGame();
 
         Map<String, Object> model = new HashMap<>();
-        model.put("records", recordDAO.readRecords());
+        model.put("records", commandHistoryDAO.readRecords());
         model.put("end", board.isGameOver());
         model.put("pieces", boardDAO.showPieces());
         model.put("turn", printTurn(turn()));
@@ -75,7 +75,7 @@ public class WebController {
     }
 
     private void movePiece(Board board, String source, String target) {
-        Record move = new Record(MOVE_COMMAND, source, target, "");
+        CommandHistory move = new CommandHistory(MOVE_COMMAND, source, target, "");
 
         try {
             Position sourcePosition = Position.ofPositionName(source);
@@ -87,16 +87,16 @@ public class WebController {
             move.setErrorMsg(e.getMessage());
         }
 
-        recordDAO.addRecord(move);
+        commandHistoryDAO.addRecord(move);
     }
 
     public String resumeGame() {
         board.initialize();
-        List<Record> records = recordDAO.readRecords();
-        board.recoverRecords(records);
+        List<CommandHistory> commandHistories = commandHistoryDAO.readRecords();
+        board.recoverRecords(commandHistories);
 
         Map<String, Object> model = new HashMap<>();
-        model.put("records", recordDAO.readRecords());
+        model.put("commandHistories", commandHistoryDAO.readRecords());
         model.put("pieces", boardDAO.showPieces());
         model.put("turn", printTurn(turn()));
         model.put("white_score", calculateScore(PieceColor.WHITE));
@@ -108,7 +108,7 @@ public class WebController {
     private void endGame() {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
-            recordDAO.addRecord(new Record(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
+            commandHistoryDAO.addRecord(new CommandHistory(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
         }
     }
 
