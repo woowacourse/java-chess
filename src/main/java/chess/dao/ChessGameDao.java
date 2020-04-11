@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class ChessGameDao extends DaoTemplate {
-	public int add(Side side) throws RuntimeException {
+	public int add(Side side) {
 		String query = "INSERT INTO game(turn) VALUES (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			pstmt.setString(1, side.name());
@@ -24,7 +24,7 @@ public class ChessGameDao extends DaoTemplate {
 		}
 	}
 
-	public void updateTurn(int gameId, Side side) throws RuntimeException {
+	public void updateTurn(int gameId, Side side) {
 		String query = "UPDATE game SET turn = (?) WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setString(1, side.name());
@@ -35,7 +35,7 @@ public class ChessGameDao extends DaoTemplate {
 		}
 	}
 
-	public void deleteByGameId(int gameId) throws RuntimeException {
+	public void deleteByGameId(int gameId) {
 		String query = "DELETE FROM game WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
@@ -45,7 +45,7 @@ public class ChessGameDao extends DaoTemplate {
 		}
 	}
 
-	public Side findTrunByGameId(int gameId) throws RuntimeException {
+	public Side findTrunByGameId(int gameId) {
 		String query = "SELECT * FROM game WHERE id = (?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			pstmt.setInt(1, gameId);

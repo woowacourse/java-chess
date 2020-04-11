@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ChessBoardDao extends DaoTemplate {
-	public void addPieces(ChessBoard chessBoard, int gameId) throws RuntimeException {
+	public void addPieces(ChessBoard chessBoard, int gameId) {
 		String query = "INSERT INTO piece VALUES (?, ?, ?, ?)";
 		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
 			setBatch(gameId, pstmt, chessBoard.getPieces());
