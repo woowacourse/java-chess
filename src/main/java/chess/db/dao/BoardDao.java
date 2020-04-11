@@ -23,6 +23,7 @@ public class BoardDao {
 	private static final String ADDRESS = "localhost:13306";
 	private static final String NAME = "chess";
 	private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+	private static final String CONNECTION_FORMAT = String.format("jdbc:mysql://%s/%s%s", ADDRESS, NAME, OPTION);
 	private static final String ID = "root";
 	private static final String PASSWORD = "root";
 	private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
@@ -40,8 +41,7 @@ public class BoardDao {
 
 		// 드라이버 연결
 		try {
-			con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", ADDRESS, NAME, OPTION)
-				, ID, PASSWORD);
+			con = DriverManager.getConnection(CONNECTION_FORMAT, ID, PASSWORD);
 			System.out.println("정상적으로 연결되었습니다.");
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
