@@ -1,9 +1,9 @@
 package chess.controller;
 
-import chess.dto.BoardDto;
-import chess.dto.PositionDto;
 import chess.domain.ChessManager;
 import chess.domain.position.Positions;
+import chess.dto.BoardDto;
+import chess.dto.PositionDto;
 import chess.view.ConsoleOutputView;
 import chess.view.OutputView;
 

@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.dto.CommandDto;
 import chess.database.InMemoryDatabase;
+import chess.dto.CommandDto;
 
 import java.util.List;
 

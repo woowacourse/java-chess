@@ -1,7 +1,7 @@
 package chess.dao;
 
-import chess.dto.CommandDto;
 import chess.database.MySqlConnector;
+import chess.dto.CommandDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

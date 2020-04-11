@@ -2,8 +2,8 @@ package chess.service;
 
 import chess.controller.command.Command;
 import chess.dao.ChessDao;
-import chess.dto.CommandDto;
 import chess.domain.ChessManager;
+import chess.dto.CommandDto;
 import chess.dto.GameResponse;
 
 import java.util.HashMap;

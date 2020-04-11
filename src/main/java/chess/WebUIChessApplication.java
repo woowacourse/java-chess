@@ -1,11 +1,11 @@
 package chess;
 
-import chess.service.ChessService;
 import chess.controller.WebController;
 import chess.dao.ChessDao;
 import chess.dao.InMemoryChessDao;
 import chess.dao.MySqlChessDao;
 import chess.database.MySqlConnector;
+import chess.service.ChessService;
 
 import static spark.Spark.staticFiles;
 
