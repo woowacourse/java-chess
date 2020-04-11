@@ -38,7 +38,7 @@ public class ChessWebApplication {
 			String source = req.queryParams("source");
 			String target = req.queryParams("target");
 
-			Map<String, Object> model = chessService.getMoveInfo(source, target);
+			Map<String, Object> model = chessService.move(source, target);
 			return gson.toJson(model);
 		});
 	}

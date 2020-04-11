@@ -49,7 +49,7 @@ public class ChessService {
 		return new ChessBoard(pieces);
 	}
 
-	public Map<String, Object> getMoveInfo(final String source, final String target) throws Exception {
+	public Map<String, Object> move(final String source, final String target) throws Exception {
 		Map<String, Object> model = new HashMap<>();
 		ChessBoard chessBoard = chessBoardFromDatabase();
 		Position sourcePosition = Position.of(source);
