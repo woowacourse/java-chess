@@ -31,7 +31,7 @@ class BoardTest {
 
     @DisplayName("입력한 위치의 말을 찾는 기능 확인")
     @ParameterizedTest
-    @CsvSource(value = {"a1, r", "a8, R", "d1, k", "h7, P"})
+    @CsvSource(value = {"a1, ♖", "a8, ♜", "d1, ♔", "h7, ♟"})
     void findPieceByPosition(String position, String piece) {
         assertThat(board.findPieceByPosition(position)).isEqualTo(piece);
     }

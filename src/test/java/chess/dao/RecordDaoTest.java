@@ -34,7 +34,7 @@ class RecordDaoTest {
     @DisplayName("레코드 추가 테스트")
     @Test
     public void addRecord() {
-        Record record = new Record("start", "");
+        Record record = new Record("start", "", "", "");
         recordDao.addRecord(record);
     }
 }

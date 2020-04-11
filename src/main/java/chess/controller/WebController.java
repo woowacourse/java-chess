@@ -7,6 +7,7 @@ import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
@@ -19,18 +20,25 @@ public class WebController {
     public static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
     public static final String TURN_MESSAGE = "의 순서입니다.";
     public static final String WINNER_MESSAGE = "의 승리";
-
-    private static final BoardDao boardDAO = new BoardDao();
-    private static final RecordDao recordDAO = new RecordDao();
     public static final String EMPTY_STRING = "";
 
-    public static String game(Board board) {
+    private final BoardDao boardDAO;
+    private final RecordDao recordDAO;
+    private Board board;
+
+    public WebController() {
+        this.boardDAO = new BoardDao();
+        this.recordDAO = new RecordDao();
+        this.board = new Board();
+    }
+
+    public String game() {
         board.initialize();
         Map<String, Object> model = new HashMap<>();
         return render(model, "index.html");
     }
 
-    public static String startGame(Board board) {
+    public String startGame() {
         board.initialize();
 
         boardDAO.clearBoard();
@@ -42,29 +50,31 @@ public class WebController {
         Map<String, Object> model = new HashMap<>();
         model.put("records", recordDAO.readRecords());
         model.put("pieces", boardDAO.showPieces());
-        model.put("turn", WebController.printTurn(WebController.turn(board)));
-        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+        model.put("turn", printTurn(turn()));
+        model.put("white_score", calculateScore(PieceColor.WHITE));
+        model.put("black_score", calculateScore(PieceColor.BLACK));
 
         return render(model, "index.html");
     }
 
-    public static String move(Board board, String source, String target) {
+    public String move(Request req) {
+        String source = req.queryParams("source");
+        String target = req.queryParams("target");
         movePiece(board, source, target);
-        endGame(board);
+        endGame();
 
         Map<String, Object> model = new HashMap<>();
         model.put("records", recordDAO.readRecords());
         model.put("end", board.isGameOver());
         model.put("pieces", boardDAO.showPieces());
-        model.put("turn", WebController.printTurn(WebController.turn(board)));
-        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+        model.put("turn", printTurn(turn()));
+        model.put("white_score", calculateScore(PieceColor.WHITE));
+        model.put("black_score", calculateScore(PieceColor.BLACK));
 
         return render(model, "index.html");
     }
 
-    private static void movePiece(Board board, String source, String target) {
+    private void movePiece(Board board, String source, String target) {
         Record move = new Record(MOVE_COMMAND, source, target, "");
 
         try {
@@ -80,7 +90,7 @@ public class WebController {
         recordDAO.addRecord(move);
     }
 
-    public static String resumeGame(Board board) {
+    public String resumeGame() {
         board.initialize();
         List<Record> records = recordDAO.readRecords();
         board.recoverRecords(records);
@@ -88,33 +98,33 @@ public class WebController {
         Map<String, Object> model = new HashMap<>();
         model.put("records", recordDAO.readRecords());
         model.put("pieces", boardDAO.showPieces());
-        model.put("turn", WebController.printTurn(WebController.turn(board)));
-        model.put("white_score", WebController.calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", WebController.calculateScore(board, PieceColor.BLACK));
+        model.put("turn", printTurn(turn()));
+        model.put("white_score", calculateScore(PieceColor.WHITE));
+        model.put("black_score", calculateScore(PieceColor.BLACK));
 
         return render(model, "index.html");
     }
 
-    private static void endGame(Board board) {
+    private void endGame() {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
             recordDAO.addRecord(new Record(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
         }
     }
 
-    public static String printTurn(String turn) {
+    public String printTurn(String turn) {
         return turn + TURN_MESSAGE;
     }
 
-    public static String turn(Board board) {
+    public String turn() {
         return board.getTeamColor().name();
     }
 
-    public static double calculateScore(Board board, PieceColor pieceColor) {
+    public double calculateScore(PieceColor pieceColor) {
         return board.calculateScore(pieceColor);
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
+    private String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
