@@ -1,6 +1,8 @@
 package chess;
 
 import chess.contoller.WebChessController;
+import chess.contoller.WebErrorController;
+import chess.dao.DataAccessException;
 
 import static spark.Spark.*;
 
@@ -9,6 +11,7 @@ public class WebUIChessApplication {
 		staticFiles.location("/static");
 
 		WebChessController webChessController = new WebChessController();
+		WebErrorController webErrorController = new WebErrorController();
 
 		get("/start_game", webChessController::startGame);
 
@@ -20,8 +23,8 @@ public class WebUIChessApplication {
 
 		post("/end", webChessController::endGame);
 
-		exception(RuntimeException.class, webChessController::renderStartError);
+		exception(DataAccessException.class, webErrorController::renderStartError);
 
-		exception(IllegalArgumentException.class, webChessController::renderError);
+		exception(IllegalArgumentException.class, webErrorController::renderError);
 	}
 }

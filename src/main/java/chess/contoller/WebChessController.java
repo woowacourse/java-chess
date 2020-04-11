@@ -2,6 +2,7 @@ package chess.contoller;
 
 import chess.dao.ChessBoardDao;
 import chess.dao.ChessGameDao;
+import chess.dao.DataAccessException;
 import chess.domain.*;
 import chess.domain.position.Position;
 import chess.dto.ChessBoardAssembler;
@@ -36,7 +37,7 @@ public class WebChessController {
 		try {
 			gameId = Integer.parseInt(request.queryParams("gameId"));
 		} catch (NumberFormatException e) {
-			throw new RuntimeException("게임 id를 입력해주세요.");
+			throw new DataAccessException("게임 id(숫자)를 입력해주세요.");
 		}
 		ChessBoard chessBoard = chessBoardDao.findByGameId(gameId);
 		chessGame = new ChessGame(chessBoard, chessGameDao.findTurnByGameId(gameId));
@@ -80,19 +81,5 @@ public class WebChessController {
 		Map<String, Object> model = new HashMap<>();
 		model.put("turn", chessGame.getTurn());
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, "end.html"));
-	}
-
-	public void renderStartError(Exception e, Request request, Response response) {
-		Map<String, Object> model = new HashMap<>();
-		model.put("error", e.getMessage());
-		response.status(400);
-		response.body(new HandlebarsTemplateEngine().render(new ModelAndView(model, "starterror.html")));
-	}
-
-	public void renderError(Exception e, Request request, Response response) {
-		Map<String, Object> model = new HashMap<>();
-		model.put("error", e.getMessage());
-		response.status(400);
-		response.body(new HandlebarsTemplateEngine().render(new ModelAndView(model, "error.html")));
 	}
 }
