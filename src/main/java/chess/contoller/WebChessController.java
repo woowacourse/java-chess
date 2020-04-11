@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class WebChessController {
-	private int gameId;
 	private ChessBoardDao chessBoardDao;
 	private ChessGameDao chessGameDao;
 
@@ -26,28 +25,29 @@ public class WebChessController {
 
 	public String startGame(Request request, Response response) {
 		ChessGame chessGame = new ChessGame(ChessBoardFactory.create());
-		gameId = chessGameDao.add(chessGame.getTurn());
+		int gameId = chessGameDao.add(chessGame.getTurn());
 		chessBoardDao.addPieces(chessGame.getChessBoard(), gameId);
-		return render(chessGame);
+		return render(chessGame, gameId);
 	}
 
-	private ChessGame getChessGame() {
+	private ChessGame loadChessGame(int gameId) {
 		ChessBoard chessBoard = chessBoardDao.findByGameId(gameId);
 		return new ChessGame(chessBoard, chessGameDao.findTurnByGameId(gameId));
 	}
 
 	public String continueGame(Request request, Response response) throws RuntimeException {
 		try {
-			gameId = Integer.parseInt(request.queryParams("gameId"));
+			int gameId = Integer.parseInt(request.queryParams("gameId"));
+			ChessGame chessGame = loadChessGame(gameId);
+			return render(chessGame, gameId);
 		} catch (NumberFormatException e) {
 			throw new DataAccessException("게임 id(숫자)를 입력해주세요.");
 		}
-		ChessGame chessGame = getChessGame();
-		return render(chessGame);
 	}
 
 	public String runGame(Request request, Response response) {
-		ChessGame chessGame = getChessGame();
+		int gameId = Integer.parseInt(request.queryParams("game_id"));
+		ChessGame chessGame = loadChessGame(gameId);
 		chessGame.move(Position.of(request.queryParams("source")), Position.of(request.queryParams("target")));
 		chessBoardDao.deleteByGameId(gameId);
 		chessBoardDao.addPieces(chessGame.getChessBoard(), gameId);
@@ -56,29 +56,31 @@ public class WebChessController {
 			chessGameDao.deleteByGameId(gameId);
 			return renderEnd(chessGame);
 		}
-		return render(chessGame);
+		return render(chessGame, gameId);
 	}
 
 	public String showGame(Request request, Response response) {
-		ChessGame chessGame = getChessGame();
-		return render(chessGame);
+		int gameId = Integer.parseInt(request.queryParams("game_id"));
+		ChessGame chessGame = loadChessGame(gameId);
+		return render(chessGame, gameId);
 	}
 
 	public String endGame(Request request, Response response) {
-		ChessGame chessGame = getChessGame();
+		int gameId = Integer.parseInt(request.queryParams("game_id"));
+		ChessGame chessGame = loadChessGame(gameId);
 		chessGame.end();
 		chessBoardDao.deleteByGameId(gameId);
 		return renderEnd(chessGame);
 	}
 
-	private String render(ChessGame chessGame) {
+	private String render(ChessGame chessGame, int gameId) {
 		ChessStatus chessStatus = chessGame.createStatus();
 		Map<String, Object> model = new HashMap<>();
 		model.put("piece", ChessBoardAssembler.create(chessGame.getChessBoard()));
 		model.put("blackscore", chessStatus.calculateScore(Side.BLACK));
 		model.put("whitescore", chessStatus.calculateScore(Side.WHITE));
 		model.put("turn", chessGame.getTurn());
-		model.put("id", gameId);
+		model.put("game_id", gameId);
 		return new HandlebarsTemplateEngine().render(new ModelAndView(model, "game.html"));
 	}
 

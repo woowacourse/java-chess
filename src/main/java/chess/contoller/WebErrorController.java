@@ -19,6 +19,7 @@ public class WebErrorController {
     public void renderError(Exception e, Request request, Response response) {
         Map<String, Object> model = new HashMap<>();
         model.put("error", e.getMessage());
+        model.put("game_id", request.queryParams("game_id"));
         response.status(400);
         response.body(new HandlebarsTemplateEngine().render(new ModelAndView(model, "error.html")));
     }
