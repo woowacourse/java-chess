@@ -3,8 +3,8 @@ package chess.service;
 import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
-import chess.dao.ChessDAO;
-import chess.dao.InMemoryChessDAO;
+import chess.dao.ChessDao;
+import chess.dao.InMemoryChessDao;
 import chess.domain.game.ChessGame;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessServiceTest {
-    private ChessDAO chessDAO = new InMemoryChessDAO();
+    private ChessDao chessDAO = new InMemoryChessDao();
     private ChessService chessService = new ChessService(chessDAO);
     private RequestDto moveRequest;
     private RequestDto saveRequest;

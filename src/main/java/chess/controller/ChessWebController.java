@@ -4,7 +4,7 @@ import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.controller.dto.WebDto;
-import chess.dao.JDBCChessDAO;
+import chess.dao.JdbcChessDao;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Request;
@@ -18,7 +18,7 @@ import static spark.Spark.post;
 
 public class ChessWebController {
 
-    private ChessService chessService = new ChessService(new JDBCChessDAO());
+    private ChessService chessService = new ChessService(new JdbcChessDao());
 
     private static String render(Map<String, Object> model, String templatePath) {
         return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
@@ -103,7 +103,7 @@ public class ChessWebController {
     private RequestDto makeRequestDto(final Request req) {
         return new RequestDto(Command.of(req.queryParams("command")),
                 new ArrayList<>(Arrays.asList(req.queryParams("parameter").split("_"))),
-                Long.valueOf(req.queryParams("id").trim()));
+                Long.parseLong(req.queryParams("id").trim()));
     }
 
     private List<WebDto> makeRoomIdDto(final ResponseDto responseDto) {

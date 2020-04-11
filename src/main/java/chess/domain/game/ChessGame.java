@@ -19,7 +19,7 @@ public class ChessGame {
         this.board = board;
         this.turn = turn;
         this.status = Status.of(board);
-        this.isEnd = false;
+        this.isEnd = board.isEnd();
     }
 
     public static ChessGame start() {
@@ -41,14 +41,6 @@ public class ChessGame {
             return;
         }
         throw new UnsupportedOperationException("이미 게임이 종료되었습니다.");
-    }
-
-    public void end() {
-        isEnd = true;
-    }
-
-    public void status() {
-        status.update(board);
     }
 
     public Map<Position, String> getBoardAndString() {

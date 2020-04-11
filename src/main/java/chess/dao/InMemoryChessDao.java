@@ -8,10 +8,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class InMemoryChessDAO implements ChessDAO {
+public class InMemoryChessDao implements ChessDao {
     public final Map<Long, ChessGame> inMemoryDB = new HashMap<>();
 
-    public InMemoryChessDAO() {
+    public InMemoryChessDao() {
     }
 
     @Override

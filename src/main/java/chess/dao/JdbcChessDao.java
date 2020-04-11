@@ -12,7 +12,7 @@ import java.sql.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class JDBCChessDAO implements ChessDAO {
+public class JdbcChessDao implements ChessDao {
     public Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
@@ -49,19 +49,15 @@ public class JDBCChessDAO implements ChessDAO {
             String turn = chessGame.getTurn().toString();
             pstmt.setString(1, turn);
             pstmt.executeUpdate();
-            Long id = getCurrentGameId(con);
+            String getIdQuery = "SELECT MAX(id) as recentId FROM chessGameTable";
+            PreparedStatement getIdPstmt = con.prepareStatement(getIdQuery);
+            ResultSet resultSet = getIdPstmt.executeQuery();
+            if (!resultSet.next()) {
+                return 0;
+            }
+            long id = resultSet.getLong("recentId");
             addBoard(id, chessGame);
             return id;
-        } catch (SQLException e) {
-            throw e;
-        }
-    }
-
-    private long getCurrentGameId(Connection connection) throws SQLException {
-        try (PreparedStatement pstmt = connection.prepareStatement("SELECT MAX(id) as recentId FROM chessGameTable");
-             ResultSet rs = pstmt.executeQuery()
-        ) {
-            return rs.getLong("recentId");
         } catch (SQLException e) {
             throw e;
         }

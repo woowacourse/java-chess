@@ -113,4 +113,8 @@ public class Board {
                 .mapToDouble(entry -> entry.getValue().getPoint())
                 .sum();
     }
+
+    public boolean isEnd() {
+        return isLost(Player.WHITE) || isLost(Player.BLACK);
+    }
 }

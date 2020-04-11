@@ -3,7 +3,7 @@ package chess.service;
 import chess.command.Command;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
-import chess.dao.ChessDAO;
+import chess.dao.ChessDao;
 import chess.domain.game.ChessGame;
 import chess.domain.game.MoveParameter;
 
@@ -16,9 +16,9 @@ import java.util.function.Function;
 public class ChessService {
     private final Map<Command, Function<RequestDto, ResponseDto>> commands = new HashMap<>();
     private final Map<Long, ChessGame> chessGames = new HashMap<>();
-    private final ChessDAO chessDAO;
+    private final ChessDao chessDAO;
 
-    public ChessService(ChessDAO chessDAO) {
+    public ChessService(ChessDao chessDAO) {
         this.chessDAO = chessDAO;
         commands.put(Command.START, this::start);
         commands.put(Command.MOVE, this::move);
@@ -63,6 +63,7 @@ public class ChessService {
     private void setWinner(final ChessGame chessGame, final ResponseDto responseDto) {
         if (chessGame.isEnd()) {
             responseDto.setWinner(chessGame.getWinner());
+            responseDto.setMessage(chessGame.getWinner() + "가 승리했습니다.");
         }
     }
 

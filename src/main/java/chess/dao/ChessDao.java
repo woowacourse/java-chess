@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
-public interface ChessDAO {
+public interface ChessDao {
     long createChessGame(ChessGame chessGame) throws SQLException;
 
     void addBoard(long chessGameId, ChessGame chessGame) throws SQLException;

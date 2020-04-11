@@ -74,7 +74,6 @@ public class ResponseDto {
     }
 
     public long getId() {
-
         return id;
     }
 
