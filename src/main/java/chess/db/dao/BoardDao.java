@@ -3,13 +3,14 @@ package chess.db.dao;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.Optional;
 
-import chess.db.BlackPieceMapper;
-import chess.db.WhitePieceMapper;
+import chess.db.BlackPieceRowMapper;
+import chess.db.PieceRowMapper;
+import chess.db.RowMapper;
+import chess.db.WhitePieceRowMapper;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.piece.Piece;
@@ -27,6 +28,7 @@ public class BoardDao {
 	private static final String ID = "root";
 	private static final String PASSWORD = "root";
 	private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
+	private static final String SELECT_FROM_BOARD_WHERE_POSITION = "SELECT * FROM board WHERE position = ?";
 
 	public Connection getConnection() {
 		Connection con = null;
@@ -60,62 +62,20 @@ public class BoardDao {
 	}
 
 	private void addPieceTo(Position position, Piece piece) throws SQLException {
-		String query = "INSERT INTO board VALUES (?, ?, ?)";
-		try (Connection con = getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
-
-			pstmt.setString(1, position.getPosition());
-			if (Objects.isNull(piece)) {
-				pstmt.setString(2, null);
-				pstmt.setString(3, null);
-			} else {
-				pstmt.setString(2, piece.getSymbol());
-				pstmt.setString(3, piece.getState().toString());
-			}
-			pstmt.executeUpdate();
-		}
+		executeUpdate("INSERT INTO board VALUES (?, ?, ?)"
+			, position.getPosition(), piece.getSymbol(), piece.getState().toString());
 	}
 
 	public Optional<Piece> findPieceBy(String position) throws SQLException {
-		Piece piece;
-		String[] selected = executeSelectQuery(position);
-
-		if (Objects.isNull(selected[0])) {
-			return Optional.empty();
-		}
-
-		piece = WhitePieceMapper.mappingBy(selected[0], selected[1]);
-		if (Objects.isNull(piece)) {
-			piece = BlackPieceMapper.mappingBy(selected[0], selected[1]);
-		}
-
-		return Optional.ofNullable(piece);
+		return Optional.ofNullable(executeQuery(SELECT_FROM_BOARD_WHERE_POSITION, new PieceRowMapper(), position));
 	}
 
 	public Optional<Piece> findWhitePieceBy(String position) throws SQLException {
-		Piece piece;
-		String[] selected = executeSelectQuery(position);
-
-		if (Objects.isNull(selected[0])) {
-			return Optional.empty();
-		}
-
-		piece = WhitePieceMapper.mappingBy(selected[0], selected[1]);
-
-		return Optional.ofNullable(piece);
+		return Optional.ofNullable(executeQuery(SELECT_FROM_BOARD_WHERE_POSITION, new WhitePieceRowMapper(), position));
 	}
 
 	public Optional<Piece> findBlackPieceBy(String position) throws SQLException {
-		Piece piece;
-		String[] selected = executeSelectQuery(position);
-
-		if (Objects.isNull(selected[0])) {
-			return Optional.empty();
-		}
-
-		piece = BlackPieceMapper.mappingBy(selected[0], selected[1]);
-
-		return Optional.ofNullable(piece);
+		return Optional.ofNullable(executeQuery(SELECT_FROM_BOARD_WHERE_POSITION, new BlackPieceRowMapper(), position));
 	}
 
 	public void updateBoard(String position, Piece piece) throws SQLException {
@@ -125,27 +85,6 @@ public class BoardDao {
 			return;
 		}
 		executeUpdate(query, piece.getSymbol(), piece.getState().toString(), position);
-	}
-
-	public String[] executeSelectQuery(String position) throws SQLException {
-		String[] selectPiece = new String[2];
-		String query = "SELECT * FROM board WHERE position = ?";
-		try (Connection con = getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)) {
-			pstmt.setString(1, position);
-			ResultSet rs = pstmt.executeQuery();
-			if (!rs.next()) {
-				selectPiece[0] = null;
-				selectPiece[1] = null;
-				return selectPiece;
-			}
-
-			selectPiece[0] = rs.getString("pieceSymbol");
-			selectPiece[1] = rs.getString("pieceState");
-			rs.close();
-
-			return selectPiece;
-		}
 	}
 
 	public void executeUpdate(String query, String... args) throws SQLException {
@@ -158,4 +97,13 @@ public class BoardDao {
 		}
 	}
 
+	public <T> T executeQuery(String query, RowMapper<T> rowMapper, String... args) throws SQLException {
+		try (Connection con = getConnection();
+			 PreparedStatement pstmt = con.prepareStatement(query)) {
+			for (int i = 1; i <= args.length; i++) {
+				pstmt.setString(i, args[i - 1]);
+			}
+			return rowMapper.mapRow(pstmt.executeQuery());
+		}
+	}
 }
