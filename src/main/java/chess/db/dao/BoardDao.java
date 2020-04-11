@@ -36,7 +36,6 @@ public class BoardDao {
 			Class.forName(DRIVER_NAME);
 		} catch (ClassNotFoundException e) {
 			System.err.println(String.format(" !! JDBC Driver load 오류: %s", e.getMessage()));
-			e.printStackTrace();
 		}
 
 		// 드라이버 연결
@@ -45,7 +44,6 @@ public class BoardDao {
 			System.out.println("정상적으로 연결되었습니다.");
 		} catch (SQLException e) {
 			System.err.println("연결 오류:" + e.getMessage());
-			e.printStackTrace();
 		}
 
 		return con;
