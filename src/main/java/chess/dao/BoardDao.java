@@ -12,6 +12,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
 
 public class BoardDao {
+    JdbcTemplate template = new JdbcTemplate();
 
     public Board find() throws SQLException {
         RowMapper rm = new RowMapper() {
@@ -28,8 +29,6 @@ public class BoardDao {
                 return new Board(new Pieces(positionPairs));
             }
         };
-
-        JdbcTemplate template = new JdbcTemplate();
         final String sql = "SELECT type, position, team FROM piece";
         return (Board)template.executeQuery(sql, rm);
     }
@@ -42,7 +41,6 @@ public class BoardDao {
     }
 
     private void removeAll() throws SQLException {
-        JdbcTemplate template = new JdbcTemplate();
         final String sql = "DELETE FROM piece";
         template.executeUpdateWithoutPss(sql);
     }
@@ -53,7 +51,6 @@ public class BoardDao {
             statement.setString(2, piece.toString());
             statement.setString(3, piece.getTeam().getName());
         };
-        JdbcTemplate template = new JdbcTemplate();
         final String sql = "INSERT INTO piece(position, type, team) VALUES (?, ?, ?)";
         template.executeUpdate(sql, pss);
     }
