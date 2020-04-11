@@ -1,0 +1,124 @@
+#chessboard {
+	margin: 0 5% 5% 5%;
+	position: absolute;
+	width: 720px;
+	height: 720px;
+	left: 20%;
+}
+
+.cell {
+	margin: .2% 0 .2% 0;
+	table-layout: fixed;
+	width: 85px;
+	height: 85px;
+	text-align: center;
+}
+
+.cell:hover {
+	table-layout: fixed;
+	width: 85px;
+	height: 85px;
+	text-align: center;
+	background-color: lightpink;
+}
+
+
+.gray {
+	background-color: lightgray;
+}
+
+.selected {
+	transform: translateX(10px) translateY(-10px);
+}
+
+.navbar {
+	height: 59px;
+}
+
+.reStart {
+	margin-right: 10px;
+}
+
+.K {
+	background-image: url("./image/whiteKing.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.k {
+	background-image: url("./image/blackKing.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.q {
+	background-image: url("./image/blackQueen.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.Q {
+	background-image: url("./image/whiteQueen.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.b {
+	background-image: url("./image/blackBishop.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.B {
+	background-image: url("./image/whiteBishop.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.n {
+	background-image: url("./image/blackKnight.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.N {
+	background-image: url("./image/whiteKnight.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.r {
+	background-image: url("./image/blackRook.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.R {
+	background-image: url("./image/whiteRook.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.p {
+	background-image: url("./image/blackPawn.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}
+
+.P {
+	background-image: url("./image/whitePawn.png");
+	background-repeat: no-repeat;
+	background-size: 77%;
+	background-position: center;
+}

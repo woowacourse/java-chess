@@ -158,4 +158,12 @@ public class ChessBoardTest {
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage("해당 말이 갈 수 없는 칸입니다");
 	}
+
+	@DisplayName("bishop 전진 테스트, 실패")
+	@Test
+	void movePieceBishop() {
+		chessBoard.movePiece(Position.of("d2"), Position.of("d4"));
+		chessBoard.movePiece(Position.of("c1"), Position.of("d2"));
+		chessBoard.movePiece(Position.of("d2"), Position.of("a5"));
+	}
 }

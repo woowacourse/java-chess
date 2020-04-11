@@ -1,10 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>로또</title>
+	<meta charset="UTF-8">
+	<title>체스</title>
+	<link href="./style.css" rel="stylesheet">
+	<script
+			crossorigin="anonymous"
+			integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+			src="https://code.jquery.com/jquery-3.4.1.js"></script>
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css" rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-Hello World!!
+<nav class="navbar navbar-inverse">
+	<div class="container-fluid">
+		<div class="navbar-right">
+			<button class="btn btn-default navbar-btn reStart" type="button">새게임</button>
+		</div>
+		<h3 class="navbar-text">체스</h3>
+	</div>
+	<label for="sourcePositionRecord"></label><input hidden id="sourcePositionRecord" value="nonSelectPosition">
+</nav>
+<div id="chessboard">
+	<div class="table">
+		<div>
+			<button class="gray cell" id="a8"></button>
+			<button class="cell" id="b8"></button>
+			<button class="gray cell" id="c8"></button>
+			<button class="cell" id="d8"></button>
+			<button class="gray cell" id="e8"></button>
+			<button class="cell" id="f8"></button>
+			<button class="gray cell" id="g8"></button>
+			<button class="cell" id="h8"></button>
+		</div>
+		<div>
+			<button class="cell" id="a7"></button>
+			<button class="gray cell" id="b7"></button>
+			<button class="cell" id="c7"></button>
+			<button class="gray cell" id="d7"></button>
+			<button class="cell" id="e7"></button>
+			<button class="gray cell" id="f7"></button>
+			<button class="cell" id="g7"></button>
+			<button class="gray cell" id="h7"></button>
+		</div>
+		<div>
+			<button class="gray cell" id="a6"></button>
+			<button class="cell" id="b6"></button>
+			<button class="gray cell" id="c6"></button>
+			<button class="cell" id="d6"></button>
+			<button class="gray cell" id="e6"></button>
+			<button class="cell" id="f6"></button>
+			<button class="gray cell" id="g6"></button>
+			<button class="cell" id="h6"></button>
+		</div>
+		<div>
+			<button class="cell" id="a5"></button>
+			<button class="gray cell" id="b5"></button>
+			<button class="cell" id="c5"></button>
+			<button class="gray cell" id="d5"></button>
+			<button class="cell" id="e5"></button>
+			<button class="gray cell" id="f5"></button>
+			<button class="cell" id="g5"></button>
+			<button class="gray cell" id="h5"></button>
+		</div>
+		<div>
+			<button class="gray cell" id="a4"></button>
+			<button class="cell" id="b4"></button>
+			<button class="gray cell" id="c4"></button>
+			<button class="cell" id="d4"></button>
+			<button class="gray cell" id="e4"></button>
+			<button class="cell" id="f4"></button>
+			<button class="gray cell" id="g4"></button>
+			<button class="cell" id="h4"></button>
+		</div>
+		<div>
+			<button class="cell" id="a3"></button>
+			<button class="gray cell" id="b3"></button>
+			<button class="cell" id="c3"></button>
+			<button class="gray cell" id="d3"></button>
+			<button class="cell" id="e3"></button>
+			<button class="gray cell" id="f3"></button>
+			<button class="cell" id="g3"></button>
+			<button class="gray cell" id="h3"></button>
+		</div>
+		<div>
+			<button class="gray cell" id="a2"></button>
+			<button class="cell" id="b2"></button>
+			<button class="gray cell" id="c2"></button>
+			<button class="cell" id="d2"></button>
+			<button class="gray cell" id="e2"></button>
+			<button class="cell" id="f2"></button>
+			<button class="gray cell" id="g2"></button>
+			<button class="cell" id="h2"></button>
+		</div>
+		<div>
+			<button class="cell" id="a1"></button>
+			<button class="gray cell" id="b1"></button>
+			<button class="cell" id="c1"></button>
+			<button class="gray cell" id="d1"></button>
+			<button class="cell" id="e1"></button>
+			<button class="gray cell" id="f1"></button>
+			<button class="cell" id="g1"></button>
+			<button class="gray cell" id="h1"></button>
+		</div>
+	</div>
+</div>
+
+<script>
+	const initValueOfSourcePositionRecord = "nonSelectPosition";
+
+	$(document).ready(function () {
+		$.ajax({
+			type: 'get',
+			url: 'continue',
+			dataType: 'json',
+			error: getPieceInfoError,
+			success: getPieceInfoSuccess
+		});
+	});
+
+	$(".cell").click(function () {
+		const sourcePosition = $("#sourcePositionRecord").val();
+
+		if (sourcePosition === initValueOfSourcePositionRecord) {
+			$("#sourcePositionRecord").val(this.id);
+			$(this).addClass("selected");
+			return;
+		}
+
+		validateMovable(sourcePosition, this.id);
+	});
+
+	function validateMovable(sourcePosition, targetPosition) {
+		console.log(sourcePosition, targetPosition);
+		document.getElementById('sourcePositionRecord').value = initValueOfSourcePositionRecord;
+		document.getElementById(sourcePosition).classList.remove("selected");
+
+		//좌표를 post 전송
+		$.ajax({
+			type: 'post',
+			url: 'movePiece',
+			data: {source: sourcePosition, target: targetPosition},
+			dataType: 'json',
+			error: moveError,
+			success: moveSuccess
+		});
+	}
+
+	function moveError() {
+		alert("해당말이 갈 수 없는 칸입니다.")
+	}
+
+	function moveSuccess(response) {
+		var sourcePosition = response.sourcePosition;
+		var targetPosition = response.targetPosition;
+		var sourcePieceType = response.sourcePieceType;
+		var targetPieceType = response.targetPieceType;
+		var isAttack = response.isAttack;
+
+		document.getElementById(sourcePosition).classList.remove(sourcePieceType);
+		if (isAttack) {
+			document.getElementById(targetPosition).classList.remove(targetPieceType);
+			if (targetPieceType === "K" || targetPieceType === "k") {
+				printGameEndMessage(targetPieceType);
+			}
+		}
+		document.getElementById(targetPosition).classList.add(sourcePieceType);
+	}
+
+	function printGameEndMessage(targetPieceType) {
+		var winner = "블랙팀";
+		if (targetPieceType === "k") {
+			winner = "화이트팀"
+		}
+		alert("게임이 종료되었습니다. " + winner + " 승");
+	}
+
+	$(".reStart").click(function () {
+		if (confirm("새로운 게임을 시작하겠습니까?")) {
+			$.ajax({
+				type: 'get',
+				url: 'init',
+				dataType: 'json',
+				error: getPieceInfoError,
+				success: getPieceInfoSuccess
+			});
+			setInterval('location.reload()', 1000);
+		}
+	});
+
+	function getPieceInfoError() {
+		alert("error");
+	}
+
+	function getPieceInfoSuccess(response) {
+		for (position in response) {
+			const pieceName = response[position];
+			document.getElementById(position).classList.add(pieceName);
+		}
+	}
+</script>
 </body>
 </html>

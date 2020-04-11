@@ -52,4 +52,9 @@ public class BlackTeam implements TeamStrategy {
 	public boolean isSameTeam(TeamStrategy teamStrategy) {
 		return teamStrategy instanceof BlackTeam;
 	}
+
+	@Override
+	public String toString() {
+		return "black";
+	}
 }

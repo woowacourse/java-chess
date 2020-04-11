@@ -30,6 +30,11 @@ public class ChessBoard {
 		this.pieces = initPieces();
 	}
 
+	public ChessBoard(List<Piece> pieces) {
+		this.chessBoard = ChessBoardFactory.create();
+		this.pieces = pieces;
+	}
+
 	private List<Piece> initPieces() {
 		List<Piece> pieces = PieceBundleFactory.createPieceSet(new BlackTeam());
 		pieces.addAll(PieceBundleFactory.createPieceSet(new WhiteTeam()));
@@ -116,5 +121,9 @@ public class ChessBoard {
 
 	public List<Position> getChessBoard() {
 		return Collections.unmodifiableList(chessBoard);
+	}
+
+	public List<Piece> getPieces() {
+		return this.pieces;
 	}
 }
