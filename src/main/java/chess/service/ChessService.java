@@ -18,7 +18,8 @@ import static jdk.nashorn.internal.runtime.linker.NameCodec.*;
 public class ChessService {
 	private static final PieceDao pieceDao = new PieceDao();
 
-	public void initDatabase(final ChessBoard chessBoard) throws Exception {
+	public void initDatabase() throws Exception {
+		ChessBoard chessBoard = new ChessBoard();
 		List<Piece> pieces = chessBoard.getPieces();
 		pieceDao.deleteAll();
 		for (Piece piece : pieces) {
@@ -37,7 +38,7 @@ public class ChessService {
 		return model;
 	}
 
-	public ChessBoard chessBoardContinue() throws Exception {
+	public ChessBoard chessBoardFromDatabase() throws Exception {
 		List<Piece> pieces = new ArrayList<>();
 		List<Map<String, Object>> pieceInfos = pieceDao.readPieces();
 		for (Map<String, Object> pieceInfo : pieceInfos) {
@@ -48,8 +49,9 @@ public class ChessService {
 		return new ChessBoard(pieces);
 	}
 
-	public Map<String, Object> getMoveInfo(final String source, final String target, final ChessBoard chessBoard) {
+	public Map<String, Object> getMoveInfo(final String source, final String target) throws Exception {
 		Map<String, Object> model = new HashMap<>();
+		ChessBoard chessBoard = chessBoardFromDatabase();
 		Position sourcePosition = Position.of(source);
 		Position targetPosition = Position.of(target);
 		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
@@ -60,21 +62,14 @@ public class ChessService {
 		model.put("targetPieceType", findPieceType(targetPosition, chessBoard));
 		model.put("isAttack", isAttack);
 
+		chessBoard.movePiece(sourcePosition, targetPosition);
+		updateDatabase(sourcePosition, targetPosition, isAttack);
 		return model;
 	}
 
 	private String findPieceType(final Position position, final ChessBoard chessBoard) {
 		Optional<Piece> piece = chessBoard.findPieceByPosition(position);
 		return piece.map(Piece::getPieceName).orElse(EMPTY_NAME);
-	}
-
-	public void move(final String source, final String target, final ChessBoard chessBoard) throws Exception {
-		Position sourcePosition = Position.of(source);
-		Position targetPosition = Position.of(target);
-		boolean isAttack = chessBoard.findPieceByPosition(targetPosition).isPresent();
-
-		chessBoard.movePiece(sourcePosition, targetPosition);
-		updateDatabase(sourcePosition, targetPosition, isAttack);
 	}
 
 	private void updateDatabase(final Position sourcePosition, final Position targetPosition, final boolean isAttack) throws SQLException {
