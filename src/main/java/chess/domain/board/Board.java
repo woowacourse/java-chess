@@ -35,17 +35,15 @@ public class Board {
     }
 
     private boolean checkWhiteKing() {
-        for (Piece piece : board.values()) {
-            if (piece.isWhiteKing()) return true;
-        }
-        return false;
+        return board.values()
+                .stream()
+                .anyMatch(Piece::isWhiteKing);
     }
 
     private boolean checkBlackKing() {
-        for (Piece piece : board.values()) {
-            if (piece.isBlackKing()) return true;
-        }
-        return false;
+        return board.values()
+                .stream()
+                .anyMatch(Piece::isBlackKing);
     }
 
     public boolean isEmpty(final Position position) {

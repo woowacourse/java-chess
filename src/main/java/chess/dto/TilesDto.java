@@ -1,24 +1,23 @@
-package chess.controller.dto;
+package chess.dto;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.web.Tile;
 
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class TileDto {
-    private final List<Tile> tiles;
+public class TilesDto {
+    private final List<TileDto> tiles;
 
-    public TileDto(Board board) {
+    public TilesDto(Board board) {
         this.tiles = toDto(board);
     }
 
-    private List<Tile> toDto(Board board) {
+    private List<TileDto> toDto(Board board) {
         Map<Position, Piece> fragmentedBoard = board.get();
         List<Position> positions = Positions.getPositions();
 
@@ -29,10 +28,10 @@ public class TileDto {
 
         return entireBoard.entrySet()
                 .stream()
-                .map(entry -> new Tile(entry.getKey(), entry.getValue())).collect(Collectors.toList());
+                .map(entry -> new TileDto(entry.getKey(), entry.getValue())).collect(Collectors.toList());
     }
 
-    public List<Tile> getTiles() {
+    public List<TileDto> get() {
         return tiles;
     }
 }

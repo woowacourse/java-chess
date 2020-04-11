@@ -10,7 +10,7 @@ import chess.domain.score.Score;
 import java.util.Optional;
 
 public class ChessRunner {
-    private Board board;
+    private final Board board;
     private Team currentTeam;
 
     public ChessRunner() {

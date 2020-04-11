@@ -1,7 +1,8 @@
 package chess.controller;
 
-import chess.controller.dto.BoardDto;
-import chess.controller.dto.PositionDto;
+import chess.dto.BoardDto;
+import chess.dto.PositionDto;
+import chess.domain.ChessManager;
 import chess.domain.position.Positions;
 import chess.view.ConsoleOutputView;
 import chess.view.OutputView;
@@ -9,12 +10,12 @@ import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 
-public class ChessConsoleController {
+public class ConsoleController {
     private static OutputView outputView = new ConsoleOutputView();
 
     public static void start(ChessManager chessManager, String input) {
         chessManager.start();
-        printBoard(chessManager.getBoard());
+        printBoard(new BoardDto(chessManager.getBoard()));
     }
 
     public static void end(ChessManager chessManager, String input) {
@@ -24,11 +25,9 @@ public class ChessConsoleController {
     public static void move(ChessManager chessManager, String input) {
         List<String> moveCommand = Arrays.asList(input.split(" "));
         chessManager.move(moveCommand.get(1), moveCommand.get(2));
-        printBoard(chessManager.getBoard());
+        printBoard(new BoardDto(chessManager.getBoard()));
 
-        if (chessManager.getWinner().isPresent()) {
-            outputView.printWinner(chessManager.getWinner().get());
-        }
+        chessManager.getWinner().ifPresent(outputView::printWinner);
     }
 
     public static void status(ChessManager chessManager, String input) {

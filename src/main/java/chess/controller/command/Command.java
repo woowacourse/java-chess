@@ -1,7 +1,7 @@
 package chess.controller.command;
 
-import chess.controller.ChessConsoleController;
-import chess.controller.ChessManager;
+import chess.controller.ConsoleController;
+import chess.domain.ChessManager;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.function.BiConsumer;
 
 public enum Command {
-    START("start", ChessConsoleController::start),
-    END("end", ChessConsoleController::end),
-    MOVE("move", ChessConsoleController::move),
-    STATUS("status", ChessConsoleController::status);
+    START("start", ConsoleController::start),
+    END("end", ConsoleController::end),
+    MOVE("move", ConsoleController::move),
+    STATUS("status", ConsoleController::status);
 
     private final String command;
     private final BiConsumer<ChessManager, String> action;

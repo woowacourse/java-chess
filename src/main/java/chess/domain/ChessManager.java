@@ -1,8 +1,6 @@
-package chess.controller;
+package chess.domain;
 
-import chess.controller.dto.BoardDto;
-import chess.controller.dto.TileDto;
-import chess.domain.ChessRunner;
+import chess.domain.board.Board;
 import chess.domain.piece.Team;
 
 import java.util.Optional;
@@ -38,16 +36,12 @@ public class ChessManager {
         return playing;
     }
 
-    public BoardDto getBoard() {
-        return new BoardDto(chessRunner.getBoard());
-    }
-
-    public TileDto getTileDto() {
-        return new TileDto(chessRunner.getBoard());
-    }
-
     public double calculateScore() {
         return chessRunner.calculateScore();
+    }
+
+    public Board getBoard() {
+        return chessRunner.getBoard();
     }
 
     public Team getCurrentTeam() {

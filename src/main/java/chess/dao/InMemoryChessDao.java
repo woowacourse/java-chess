@@ -1,6 +1,7 @@
-package chess.database;
+package chess.dao;
 
-import chess.web.ChessCommand;
+import chess.dto.CommandDto;
+import chess.database.InMemoryDatabase;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class InMemoryChessDao implements ChessDao {
     private final InMemoryDatabase commands = new InMemoryDatabase();
 
     @Override
-    public void addCommand(ChessCommand command) {
+    public void addCommand(CommandDto command) {
         commands.add(command);
     }
 
@@ -19,7 +20,7 @@ public class InMemoryChessDao implements ChessDao {
     }
 
     @Override
-    public List<ChessCommand> selectCommands() {
+    public List<CommandDto> selectCommands() {
         return commands.get();
     }
 }

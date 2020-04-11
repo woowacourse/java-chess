@@ -1,6 +1,7 @@
-package chess.database;
+package chess.dao;
 
-import chess.web.ChessCommand;
+import chess.dto.CommandDto;
+import chess.database.MySqlConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,7 @@ import java.util.List;
 public class MySqlChessDao implements ChessDao {
 
     @Override
-    public void addCommand(ChessCommand command) {
+    public void addCommand(CommandDto command) {
         String query = "INSERT INTO commands VALUES (?)";
         try (Connection connection = MySqlConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -37,16 +38,16 @@ public class MySqlChessDao implements ChessDao {
     }
 
     @Override
-    public List<ChessCommand> selectCommands() {
+    public List<CommandDto> selectCommands() {
         String query = "SELECT * FROM commands";
-        List<ChessCommand> commands = new ArrayList<>();
+        List<CommandDto> commands = new ArrayList<>();
 
         try (Connection connection = MySqlConnector.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(query);
              ResultSet rs = preparedStatement.executeQuery()) {
             while (rs.next()) {
-                ChessCommand chessCommand = new ChessCommand(rs.getString("command"));
-                commands.add(chessCommand);
+                CommandDto commandDto = new CommandDto(rs.getString("command"));
+                commands.add(commandDto);
             }
             return commands;
         } catch (SQLException e) {

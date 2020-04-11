@@ -1,13 +1,14 @@
 package chess.database;
 
-import chess.controller.ChessWebController;
-import chess.web.ChessCommand;
+import chess.dao.ChessDao;
+import chess.dao.InMemoryChessDao;
+import chess.dao.MySqlChessDao;
+import chess.dto.CommandDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ChessDaoTest {
 
@@ -18,8 +19,8 @@ class ChessDaoTest {
         if (MySqlConnector.getConnection() != null) {
             chessDao = new MySqlChessDao();
         }
-        chessDao.addCommand(new ChessCommand("move a2 a4"));
-        chessDao.addCommand(new ChessCommand("move a7 a5"));
+        chessDao.addCommand(new CommandDto("move a2 a4"));
+        chessDao.addCommand(new CommandDto("move a7 a5"));
     }
 
     @DisplayName("테이블 행 삭제")

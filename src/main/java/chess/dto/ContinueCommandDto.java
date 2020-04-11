@@ -1,4 +1,4 @@
-package chess.controller.dto;
+package chess.dto;
 
 import chess.controller.command.Command;
 

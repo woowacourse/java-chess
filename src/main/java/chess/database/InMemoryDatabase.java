@@ -1,18 +1,18 @@
 package chess.database;
 
-import chess.web.ChessCommand;
+import chess.dto.CommandDto;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryDatabase {
-    private List<ChessCommand> commands;
+    private List<CommandDto> commands;
 
     public InMemoryDatabase() {
         this.commands = new ArrayList<>();
     }
 
-    public void add(ChessCommand command) {
+    public void add(CommandDto command) {
         commands.add(command);
     }
 
@@ -20,7 +20,7 @@ public class InMemoryDatabase {
         commands.clear();
     }
 
-    public List<ChessCommand> get() {
+    public List<CommandDto> get() {
         return commands;
     }
 }
