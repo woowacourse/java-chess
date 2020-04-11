@@ -1,10 +1,25 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
 </head>
 <body>
-Hello World!!
+
+<form>
+    <h3>방 만들기</h3><br/>
+    user id : <input id="creatorId" type="text"> <br/>
+    room name : <input id="makeRoomName" type="text">
+    <button class="btn-makeRoom" type="button"> create</button>
+</form>
+<br/>
+<form>
+    <h3>방 참여하기</h3> <br/>
+    user id : <input id="joinerId" type="text"> <br/>
+    room name : <input id="joinRoomName" type="text">
+    <button class="btn-joinRoom" type="button"> join</button>
+</form>
+<script src="index.js"></script>
 </body>
 </html>

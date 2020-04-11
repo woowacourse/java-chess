@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <style>
+        #board td {
+            background: #3d3d3d;
+            height: 100px;
+            width: 100px;
+            font-size: xx-large;
+            text-align: center;
+        }
+
+        #board tr:nth-child(odd) td:nth-child(even),
+        #board tr:nth-child(even) td:nth-child(odd) {
+            background: #d3d3d3;
+        }
+
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js" type="text/javascript"></script>
+</head>
+<body>
+<button class="btn-quit" type="button"> 나가기</button>
+<div>
+    <p>room id : <span id="roomId"></span></p>
+    <p>black score : <span id="blackScore"></span></p>
+    <p>white score : <span id="whiteScore"></span></p>
+</div>
+<div class="board">
+    <table cellpadding="0" cellspacing="0" id="board">
+        <thead>
+        <tr>
+            <th></th>
+            <th><span>a</span></th>
+            <th><span>b</span></th>
+            <th><span>c</span></th>
+            <th><span>d</span></th>
+            <th><span>e</span></th>
+            <th><span>f</span></th>
+            <th><span>g</span></th>
+            <th><span>h</span></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <th><span>8</span></th>
+            <td class="square" id="a8"></td>
+            <td class="square" id="b8"></td>
+            <td class="square" id="c8"></td>
+            <td class="square" id="d8"></td>
+            <td class="square" id="e8"></td>
+            <td class="square" id="f8"></td>
+            <td class="square" id="g8"></td>
+            <td class="square" id="h8"></td>
+            <th><span>8</span></th>
+        </tr>
+        <tr>
+            <th><span>7</span></th>
+            <td class="square" id="a7"></td>
+            <td class="square" id="b7"></td>
+            <td class="square" id="c7"></td>
+            <td class="square" id="d7"></td>
+            <td class="square" id="e7"></td>
+            <td class="square" id="f7"></td>
+            <td class="square" id="g7"></td>
+            <td class="square" id="h7"></td>
+            <th><span>7</span></th>
+        </tr>
+        <tr>
+            <th><span>6</span></th>
+            <td class="square" id="a6"></td>
+            <td class="square" id="b6"></td>
+            <td class="square" id="c6"></td>
+            <td class="square" id="d6"></td>
+            <td class="square" id="e6"></td>
+            <td class="square" id="f6"></td>
+            <td class="square" id="g6"></td>
+            <td class="square" id="h6"></td>
+            <th><span>6</span></th>
+        </tr>
+        <tr>
+            <th><span>5</span></th>
+            <td class="square" id="a5"></td>
+            <td class="square" id="b5"></td>
+            <td class="square" id="c5"></td>
+            <td class="square" id="d5"></td>
+            <td class="square" id="e5"></td>
+            <td class="square" id="f5"></td>
+            <td class="square" id="g5"></td>
+            <td class="square" id="h5"></td>
+            <th><span>5</span></th>
+        </tr>
+        <tr>
+            <th><span>4</span></th>
+            <td class="square" id="a4"></td>
+            <td class="square" id="b4"></td>
+            <td class="square" id="c4"></td>
+            <td class="square" id="d4"></td>
+            <td class="square" id="e4"></td>
+            <td class="square" id="f4"></td>
+            <td class="square" id="g4"></td>
+            <td class="square" id="h4"></td>
+            <th><span>4</span></th>
+        </tr>
+        <tr>
+            <th><span>3</span></th>
+            <td class="square" id="a3"></td>
+            <td class="square" id="b3"></td>
+            <td class="square" id="c3"></td>
+            <td class="square" id="d3"></td>
+            <td class="square" id="e3"></td>
+            <td class="square" id="f3"></td>
+            <td class="square" id="g3"></td>
+            <td class="square" id="h3"></td>
+            <th><span>3</span></th>
+        </tr>
+        <tr>
+            <th><span>2</span></th>
+            <td class="square" id="a2"></td>
+            <td class="square" id="b2"></td>
+            <td class="square" id="c2"></td>
+            <td class="square" id="d2"></td>
+            <td class="square" id="e2"></td>
+            <td class="square" id="f2"></td>
+            <td class="square" id="g2"></td>
+            <td class="square" id="h2"></td>
+            <th><span>2</span></th>
+        </tr>
+        <tr>
+            <th><span>1</span></th>
+            <td class="square" id="a1"></td>
+            <td class="square" id="b1"></td>
+            <td class="square" id="c1"></td>
+            <td class="square" id="d1"></td>
+            <td class="square" id="e1"></td>
+            <td class="square" id="f1"></td>
+            <td class="square" id="g1"></td>
+            <td class="square" id="h1"></td>
+            <th><span>1</span></th>
+        </tr>
+        </tbody>
+        <tfoot>
+        <tr>
+            <th></th>
+            <th><span>a</span></th>
+            <th><span>b</span></th>
+            <th><span>c</span></th>
+            <th><span>d</span></th>
+            <th><span>e</span></th>
+            <th><span>f</span></th>
+            <th><span>g</span></th>
+            <th><span>h</span></th>
+            <th></th>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+<script src="board.js"></script>
+</body>
+</html>

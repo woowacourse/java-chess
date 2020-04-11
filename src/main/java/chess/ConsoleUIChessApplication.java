@@ -1,6 +1,6 @@
 package chess;
 
-import chess.view.GameManager;
+import chess.consolView.GameManager;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
