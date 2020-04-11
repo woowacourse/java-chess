@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 import chess.domain.coordinates.Coordinates;
 import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
+import chess.exception.PieceMoveFailedException;
 
 class BoardTest {
 	private Board board;
@@ -42,7 +43,7 @@ class BoardTest {
 	@Test
 	void movePiece_ExistAlly_ExceptionThrown() {
 		assertThatThrownBy(() -> board.movePiece(Coordinates.of("D1"), Coordinates.of("D2")))
-				.isInstanceOf(IllegalArgumentException.class)
+				.isInstanceOf(PieceMoveFailedException.class)
 				.hasMessageContaining("같은 팀의 piece");
 	}
 }

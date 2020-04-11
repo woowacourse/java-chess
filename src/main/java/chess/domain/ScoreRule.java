@@ -19,14 +19,21 @@ public class ScoreRule {
 	}
 
 	public GameResult calculateScore() {
-		Map<Color, Double> eachScore = pieces.values()
+		Map<Color, Double> eachScore = sumAllScoreOfTeams();
+		discountScore(eachScore);
+		return new GameResult(eachScore);
+	}
+
+	private Map<Color, Double> sumAllScoreOfTeams() {
+		return pieces.values()
 				.stream()
 				.collect(Collectors.toMap(Piece::getColor, Piece::getScore, Double::sum));
+	}
 
+	private void discountScore(Map<Color, Double> eachScore) {
 		for (Color color : Color.values()) {
 			eachScore.put(color, eachScore.get(color) - discountPawnScore(color));
 		}
-		return new GameResult(eachScore);
 	}
 
 	private double discountPawnScore(Color color) {
@@ -34,8 +41,8 @@ public class ScoreRule {
 				.values()
 				.stream()
 				.filter(pawnScore -> pawnScore >= MIN_COLUMN_PAWN_COUNT)
-				.map(pawnScore -> pawnScore * PAWN_SCORE_DISCOUNT_FACTOR)
-				.count();
+				.mapToDouble(pawnScore -> pawnScore * PAWN_SCORE_DISCOUNT_FACTOR)
+				.sum();
 	}
 
 	private Map<Column, Long> findEachColumnPawnCountBy(Color color) {

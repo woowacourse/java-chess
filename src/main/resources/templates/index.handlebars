@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Woowa Chess</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+<h1>Woowa Chess</h1>
+
+<label id="turn"></label>
+<label id="score"></label>
+
+<div class="board">
+    <div class="row">
+        <div class="coordinates black-box" id="a8"></div>
+        <div class="coordinates white-box" id="b8"></div>
+        <div class="coordinates black-box" id="c8"></div>
+        <div class="coordinates white-box" id="d8"></div>
+        <div class="coordinates black-box" id="e8"></div>
+        <div class="coordinates white-box" id="f8"></div>
+        <div class="coordinates black-box" id="g8"></div>
+        <div class="coordinates white-box" id="h8"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates white-box" id="a7"></div>
+        <div class="coordinates black-box" id="b7"></div>
+        <div class="coordinates white-box" id="c7"></div>
+        <div class="coordinates black-box" id="d7"></div>
+        <div class="coordinates white-box" id="e7"></div>
+        <div class="coordinates black-box" id="f7"></div>
+        <div class="coordinates white-box" id="g7"></div>
+        <div class="coordinates black-box" id="h7"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates black-box" id="a6"></div>
+        <div class="coordinates white-box" id="b6"></div>
+        <div class="coordinates black-box" id="c6"></div>
+        <div class="coordinates white-box" id="d6"></div>
+        <div class="coordinates black-box" id="e6"></div>
+        <div class="coordinates white-box" id="f6"></div>
+        <div class="coordinates black-box" id="g6"></div>
+        <div class="coordinates white-box" id="h6"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates white-box" id="a5"></div>
+        <div class="coordinates black-box" id="b5"></div>
+        <div class="coordinates white-box" id="c5"></div>
+        <div class="coordinates black-box" id="d5"></div>
+        <div class="coordinates white-box" id="e5"></div>
+        <div class="coordinates black-box" id="f5"></div>
+        <div class="coordinates white-box" id="g5"></div>
+        <div class="coordinates black-box" id="h5"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates black-box" id="a4"></div>
+        <div class="coordinates white-box" id="b4"></div>
+        <div class="coordinates black-box" id="c4"></div>
+        <div class="coordinates white-box" id="d4"></div>
+        <div class="coordinates black-box" id="e4"></div>
+        <div class="coordinates white-box" id="f4"></div>
+        <div class="coordinates black-box" id="g4"></div>
+        <div class="coordinates white-box" id="h4"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates white-box" id="a3"></div>
+        <div class="coordinates black-box" id="b3"></div>
+        <div class="coordinates white-box" id="c3"></div>
+        <div class="coordinates black-box" id="d3"></div>
+        <div class="coordinates white-box" id="e3"></div>
+        <div class="coordinates black-box" id="f3"></div>
+        <div class="coordinates white-box" id="g3"></div>
+        <div class="coordinates black-box" id="h3"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates black-box" id="a2"></div>
+        <div class="coordinates white-box" id="b2"></div>
+        <div class="coordinates black-box" id="c2"></div>
+        <div class="coordinates white-box" id="d2"></div>
+        <div class="coordinates black-box" id="e2"></div>
+        <div class="coordinates white-box" id="f2"></div>
+        <div class="coordinates black-box" id="g2"></div>
+        <div class="coordinates white-box" id="h2"></div>
+    </div>
+    <div class="row">
+        <div class="coordinates white-box" id="a1"></div>
+        <div class="coordinates black-box" id="b1"></div>
+        <div class="coordinates white-box" id="c1"></div>
+        <div class="coordinates black-box" id="d1"></div>
+        <div class="coordinates white-box" id="e1"></div>
+        <div class="coordinates black-box" id="f1"></div>
+        <div class="coordinates white-box" id="g1"></div>
+        <div class="coordinates black-box" id="h1"></div>
+    </div>
+</div>
+
+<div class="buttons">
+    <button class="button" id="start" onclick="initializeBoard()">게임 시작</button>
+    <button class="button" id="resume" onclick="resumeGame()">게임 불러오기</button>
+</div>
+
+<script type="application/javascript" src="/js/index.js"></script>
+
+</body>
+</html>
