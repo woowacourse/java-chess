@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+// TODO: 2020-04-11 SavedPiece 클래스 추가 후 select 결과로 객체 리턴?
 public class ChessPieceDao implements PieceDao {
     @Override
     public int countSavedPieces(String gameId) {
