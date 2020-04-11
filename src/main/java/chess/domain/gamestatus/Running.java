@@ -42,4 +42,9 @@ public class Running extends Started {
         return new Finished(this.board);
     }
 
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
+
 }

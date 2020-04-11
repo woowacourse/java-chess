@@ -5,12 +5,11 @@ import chess.domain.Team;
 public class Pawn extends Piece {
 
     private static final String EXPRESSION = "p";
-
-    private final double scoreWhenDowngraded;
+    private static final double NORMAL_SCORE = 1;
+    private static final double DOWNGRADED_SCORE = 0.5;
 
     public Pawn(Team team) {
-        super(team, EXPRESSION, 1);
-        this.scoreWhenDowngraded = 0.5;
+        super(team, EXPRESSION, NORMAL_SCORE);
     }
 
     @Override
@@ -38,7 +37,7 @@ public class Pawn extends Piece {
     @Override
     public double getScore(boolean mustPawnScoreDowngraded) {
         if (mustPawnScoreDowngraded) {
-            return scoreWhenDowngraded;
+            return DOWNGRADED_SCORE;
         }
         return this.score;
     }

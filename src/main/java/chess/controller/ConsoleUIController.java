@@ -9,7 +9,7 @@ import chess.domain.score.Score;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class Controller {
+public class ConsoleUIController {
 
     public static void run() {
         try {

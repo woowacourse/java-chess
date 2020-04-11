@@ -1,10 +1,10 @@
 package chess;
 
-import chess.controller.Controller;
+import chess.controller.ConsoleUIController;
 
 public class ConsoleUIApplication {
 
     public static void main(String[] args) {
-        Controller.run();
+        ConsoleUIController.run();
     }
 }

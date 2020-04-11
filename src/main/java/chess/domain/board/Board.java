@@ -77,4 +77,8 @@ public class Board {
     public Score calculateScore() {
         return ScoreCalculator.calculate(Collections.unmodifiableMap(board));
     }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(this.board);
+    }
 }

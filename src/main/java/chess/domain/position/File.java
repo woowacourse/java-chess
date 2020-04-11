@@ -60,10 +60,6 @@ public enum File {
         return canDecrease(file.x);
     }
 
-    public File decrease(final File file) {
-        return decrease(file.x);
-    }
-
     public File decrease(final int x) {
         if (!canDecrease(x)) {
             throw new IllegalArgumentException("현재 X 위치에서 " + x + "만큼 decrease 할 수 없습니다.");

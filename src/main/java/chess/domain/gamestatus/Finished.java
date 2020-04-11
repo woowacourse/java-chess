@@ -26,4 +26,9 @@ public class Finished extends Started {
     public GameStatus finish() {
         throw new UnsupportedOperationException("게임이 이미 끝났습니다.");
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

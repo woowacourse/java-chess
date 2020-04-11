@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="./css/chess.css"/>
+  <title>Chess</title>
+</head>
+<body>
+<header>
+  <div id="title">Chess</div>
+</header>
+<section id="main">
+  <div id="board">
+    <div class="row" id="row1">
+      <div class="square" id="a8">
+          <img class="piece" src="image/peace/{{a8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b8">
+          <img class="piece" src="image/peace/{{b8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c8">
+          <img class="piece" src="image/peace/{{c8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d8">
+          <img class="piece" src="image/peace/{{d8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e8">
+          <img class="piece" src="image/peace/{{e8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f8">
+          <img class="piece" src="image/peace/{{f8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g8">
+          <img class="piece" src="image/peace/{{g8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h8">
+          <img class="piece" src="image/peace/{{h8.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row2">
+      <div class="square" id="a7">
+          <img class="piece" src="image/peace/{{a7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b7">
+          <img class="piece" src="image/peace/{{b7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c7">
+          <img class="piece" src="image/peace/{{c7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d7">
+          <img class="piece" src="image/peace/{{d7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e7">
+          <img class="piece" src="image/peace/{{e7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f7">
+          <img class="piece" src="image/peace/{{f7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g7">
+          <img class="piece" src="image/peace/{{g7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h7">
+          <img class="piece" src="image/peace/{{h7.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row3">
+      <div class="square" id="a6">
+          <img class="piece" src="image/peace/{{a6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b6">
+          <img class="piece" src="image/peace/{{b6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c6">
+          <img class="piece" src="image/peace/{{c6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d6">
+          <img class="piece" src="image/peace/{{d6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e6">
+          <img class="piece" src="image/peace/{{e6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f6">
+          <img class="piece" src="image/peace/{{f6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g6">
+          <img class="piece" src="image/peace/{{g6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h6">
+          <img class="piece" src="image/peace/{{h6.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row4">
+      <div class="square" id="a5">
+          <img class="piece" src="image/peace/{{a5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b5">
+          <img class="piece" src="image/peace/{{b5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c5">
+          <img class="piece" src="image/peace/{{c5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d5">
+          <img class="piece" src="image/peace/{{d5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e5">
+          <img class="piece" src="image/peace/{{e5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f5">
+          <img class="piece" src="image/peace/{{f5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g5">
+          <img class="piece" src="image/peace/{{g5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h5">
+          <img class="piece" src="image/peace/{{h5.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row5">
+      <div class="square" id="a4">
+          <img class="piece" src="image/peace/{{a4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b4">
+          <img class="piece" src="image/peace/{{b4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c4">
+          <img class="piece" src="image/peace/{{c4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d4">
+          <img class="piece" src="image/peace/{{d4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e4">
+          <img class="piece" src="image/peace/{{e4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f4">
+          <img class="piece" src="image/peace/{{f4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g4">
+          <img class="piece" src="image/peace/{{g4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h4">
+          <img class="piece" src="image/peace/{{h4.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row6">
+      <div class="square" id="a3">
+          <img class="piece" src="image/peace/{{a3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b3">
+          <img class="piece" src="image/peace/{{b3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c3">
+          <img class="piece" src="image/peace/{{c3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d3">
+          <img class="piece" src="image/peace/{{d3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e3">
+          <img class="piece" src="image/peace/{{e3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f3">
+          <img class="piece" src="image/peace/{{f3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g3">
+          <img class="piece" src="image/peace/{{g3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h3">
+          <img class="piece" src="image/peace/{{h3.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row7">
+      <div class="square" id="a2">
+          <img class="piece" src="image/peace/{{a2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b2">
+          <img class="piece" src="image/peace/{{b2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c2">
+          <img class="piece" src="image/peace/{{c2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d2">
+          <img class="piece" src="image/peace/{{d2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e2">
+          <img class="piece" src="image/peace/{{e2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f2">
+          <img class="piece" src="image/peace/{{f2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g2">
+          <img class="piece" src="image/peace/{{g2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h2">
+          <img class="piece" src="image/peace/{{h2.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+    <div class="row" id="row8">
+      <div class="square" id="a1">
+          <img class="piece" src="image/peace/{{a1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="b1">
+          <img class="piece" src="image/peace/{{b1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="c1">
+          <img class="piece" src="image/peace/{{c1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="d1">
+          <img class="piece" src="image/peace/{{d1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="e1">
+          <img class="piece" src="image/peace/{{e1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="f1">
+          <img class="piece" src="image/peace/{{f1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="g1">
+          <img class="piece" src="image/peace/{{g1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+      <div class="square" id="h1">
+          <img class="piece" src="image/peace/{{h1.acronym}}.png" onerror="this.src='{{empty-image}}'">
+      </div>
+    </div>
+  </div>
+  <div id="move">
+    <form action="/" method="post">
+      move
+      <input type="text" placeholder="from" name="from-position">
+      <input type="text" placeholder="to" name="to-position">
+      <button type="submit">GO!</button>
+    </form>
+  </div>
+</section>
+</body>
+</html>

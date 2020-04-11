@@ -53,10 +53,6 @@ public enum Rank {
         return canIncrease(-y);
     }
 
-    public Rank decrease(Rank rank) {
-        return decrease(rank.y);
-    }
-
     public Rank decrease(int y) {
         if (!canDecrease(y)) {
             throw new IllegalArgumentException("현재 Y 위치에서 " + y + "만큼 decrease 할 수 없습니다.");
