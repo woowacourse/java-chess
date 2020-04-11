@@ -42,6 +42,20 @@ public abstract class Piece {
 	}
 
 	public String getName() {
-		return name.getName();
+		if (Team.WHITE == team) {
+			return name.getName().toLowerCase();
+		}
+		return name.getName().toUpperCase();
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
+	public String getSymbol() {
+		if (Team.WHITE == team) {
+			return name.getWhiteSymbol();
+		}
+		return name.getBlackSymbol();
 	}
 }

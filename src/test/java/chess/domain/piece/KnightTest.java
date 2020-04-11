@@ -15,19 +15,19 @@ public class KnightTest {
 	}
 
 	@Test
-	void moveTo() {
+	void moveTo_FromC3() {
 		knight.moveTo(A2);
 		assertThat(knight.getPosition()).isEqualTo(A2);
 	}
 
 	@Test
-	void canNotMoveTo_Return_True() {
+	void canNotMoveTo_Return_True_When_OutOfMovableArea() {
 		Piece target = new Empty(B3);
 		assertThat(knight.canNotMoveTo(target)).isTrue();
 	}
 
 	@Test
-	void canNotMoveTo_Return_False() {
+	void canNotMoveTo_Return_False_When_InMovableArea() {
 		Piece target = new Empty(A2);
 		assertThat(knight.canNotMoveTo(target)).isFalse();
 	}

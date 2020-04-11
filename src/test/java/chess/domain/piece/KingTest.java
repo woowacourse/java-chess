@@ -15,19 +15,19 @@ class KingTest {
 	}
 
 	@Test
-	void moveTo() {
+	void moveTo_FromC3() {
 		king.moveTo(C4);
 		assertThat(king.getPosition()).isEqualTo(C4);
 	}
 
 	@Test
-	void canNotMoveTo_Return_True() {
+	void canNotMoveTo_Return_True_When_OutOfMovableArea() {
 		Piece target = new Empty(D5);
 		assertThat(king.canNotMoveTo(target)).isTrue();
 	}
 
 	@Test
-	void canNotMoveTo_Return_False() {
+	void canNotMoveTo_Return_False_When_InMovableArea() {
 		Piece target = new Empty(C4);
 		assertThat(king.canNotMoveTo(target)).isFalse();
 	}

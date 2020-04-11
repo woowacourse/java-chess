@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Team {
 	BLACK("흑"),
 	WHITE("백"),
@@ -9,6 +11,13 @@ public enum Team {
 
 	Team(String name) {
 		this.name = name;
+	}
+
+	public static Team of(String name) {
+		return Arrays.stream(Team.values())
+			.filter(value -> value.name.equals(name))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("적절하지 않은 팀 이름 입니다."));
 	}
 
 	public Team next() {
@@ -33,13 +42,6 @@ public enum Team {
 
 	public boolean isNotEnemy(Team team) {
 		return !isEnemy(team);
-	}
-
-	public static String getPieceName(Piece piece) {
-		if (piece.isSameTeam(WHITE)) {
-			return piece.getName().toLowerCase();
-		}
-		return piece.getName();
 	}
 
 	public String getName() {
