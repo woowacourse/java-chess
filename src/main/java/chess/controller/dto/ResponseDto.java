@@ -80,8 +80,4 @@ public class ResponseDto {
     public List<Long> getRoomId() {
         return roomId;
     }
-
-    public void setRoomId(final List<Long> roomId) {
-        this.roomId = roomId;
-    }
 }

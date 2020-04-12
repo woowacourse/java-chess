@@ -2,7 +2,6 @@ package chess.dao;
 
 import chess.domain.game.ChessGame;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +21,12 @@ public class InMemoryChessDao implements ChessDao {
     }
 
     @Override
-    public void addBoard(final long chessGameId, final ChessGame chessGame) throws SQLException {
+    public void addBoard(final long chessGameId, final ChessGame chessGame) {
         inMemoryDB.put(chessGameId, chessGame);
     }
 
     @Override
-    public void deleteGame(final long chessGameId) throws SQLException {
+    public void deleteGame(final long chessGameId) {
         inMemoryDB.remove(chessGameId);
     }
 
@@ -37,7 +36,7 @@ public class InMemoryChessDao implements ChessDao {
     }
 
     @Override
-    public List<Long> getRoomId() throws SQLException {
+    public List<Long> getRoomId() {
         return new ArrayList<>(inMemoryDB.keySet());
     }
 

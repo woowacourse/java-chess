@@ -45,13 +45,13 @@ public class JdbcChessDao implements ChessDao {
     public long createChessGame(ChessGame chessGame) throws SQLException {
         String query = "INSERT INTO chessGameTable (turn) VALUES (?)";
         try (Connection con = getConnection()) {
-            PreparedStatement pstmt = con.prepareStatement(query);
+            PreparedStatement prepareStatement = con.prepareStatement(query);
             String turn = chessGame.getTurn().toString();
-            pstmt.setString(1, turn);
-            pstmt.executeUpdate();
+            prepareStatement.setString(1, turn);
+            prepareStatement.executeUpdate();
             String getIdQuery = "SELECT MAX(id) as recentId FROM chessGameTable";
-            PreparedStatement getIdPstmt = con.prepareStatement(getIdQuery);
-            ResultSet resultSet = getIdPstmt.executeQuery();
+            PreparedStatement getIdPrepareStatement = con.prepareStatement(getIdQuery);
+            ResultSet resultSet = getIdPrepareStatement.executeQuery();
             if (!resultSet.next()) {
                 return 0;
             }
@@ -72,18 +72,18 @@ public class JdbcChessDao implements ChessDao {
 
     private void updateTurn(long chessGameId, ChessGame chessGame, Connection connection) throws SQLException {
         String updateTurnQuery = "UPDATE chessGameTable SET turn = ? where id = ?";
-        try (PreparedStatement updatePstmt = connection.prepareStatement(updateTurnQuery)) {
-            updatePstmt.setString(1, chessGame.getTurn().toString());
-            updatePstmt.setLong(2, chessGameId);
-            updatePstmt.executeUpdate();
+        try (PreparedStatement updatePrepareStatement = connection.prepareStatement(updateTurnQuery)) {
+            updatePrepareStatement.setString(1, chessGame.getTurn().toString());
+            updatePrepareStatement.setLong(2, chessGameId);
+            updatePrepareStatement.executeUpdate();
         }
     }
 
     private void deleteBoard(final long chessGameId, final Connection connection) throws SQLException {
         String deleteBoardQuery = "DELETE FROM boardTable WHERE gameId = (?)";
-        try (PreparedStatement deleteBoardPstmt = connection.prepareStatement(deleteBoardQuery)) {
-            deleteBoardPstmt.setLong(1, chessGameId);
-            deleteBoardPstmt.executeUpdate();
+        try (PreparedStatement deleteBoardPrepareStatement = connection.prepareStatement(deleteBoardQuery)) {
+            deleteBoardPrepareStatement.setLong(1, chessGameId);
+            deleteBoardPrepareStatement.executeUpdate();
         }
     }
 
@@ -92,15 +92,15 @@ public class JdbcChessDao implements ChessDao {
         String deleteGameQuery = "DELETE FROM chessGameTable WHERE id = (?);";
         String alterGameQuery = "ALTER TABLE chessGameTable AUTO_INCREMENT = ?;";
         try (Connection connection = getConnection();
-             PreparedStatement deleteGamePstmt = connection.prepareStatement(deleteGameQuery);
-             PreparedStatement alterGamePstmt = connection.prepareStatement(alterGameQuery)
+             PreparedStatement deleteGamePrepareStatement = connection.prepareStatement(deleteGameQuery);
+             PreparedStatement alterGamePrepareStatement = connection.prepareStatement(alterGameQuery)
         ) {
             deleteBoard(chessGameId, connection);
-            deleteGamePstmt.setLong(1, chessGameId);
-            deleteGamePstmt.executeUpdate();
-            deleteGamePstmt.close();
-            alterGamePstmt.setInt(1, (int) chessGameId);
-            alterGamePstmt.executeUpdate();
+            deleteGamePrepareStatement.setLong(1, chessGameId);
+            deleteGamePrepareStatement.executeUpdate();
+            deleteGamePrepareStatement.close();
+            alterGamePrepareStatement.setInt(1, (int) chessGameId);
+            alterGamePrepareStatement.executeUpdate();
         }
     }
 
@@ -116,12 +116,12 @@ public class JdbcChessDao implements ChessDao {
             String position = entry.getKey().getName();
             String piece = entry.getValue().toString();
             String team = entry.getValue().getPlayer().toString();
-            try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-                pstmt.setString(1, position);
-                pstmt.setString(2, piece);
-                pstmt.setString(3, team);
-                pstmt.setLong(4, chessGameId);
-                pstmt.executeUpdate();
+            try (PreparedStatement prepareStatement = connection.prepareStatement(query)) {
+                prepareStatement.setString(1, position);
+                prepareStatement.setString(2, piece);
+                prepareStatement.setString(3, team);
+                prepareStatement.setLong(4, chessGameId);
+                prepareStatement.executeUpdate();
             }
         }
     }
@@ -142,9 +142,9 @@ public class JdbcChessDao implements ChessDao {
                 "inner join pieceTable pi on pi.id=board.pieceId  " +
                 "inner join teamTable team on team.id = board.teamId " +
                 "where gameId = (?);";
-        try (PreparedStatement pstmt = connection.prepareStatement(query)) {
-            pstmt.setLong(1, id);
-            ResultSet rs = pstmt.executeQuery();
+        try (PreparedStatement prepareStatement = connection.prepareStatement(query)) {
+            prepareStatement.setLong(1, id);
+            ResultSet rs = prepareStatement.executeQuery();
             Map<Position, PieceState> board = new HashMap<>();
             while (rs.next()) {
                 Position position = Position.of(rs.getString("position"));
@@ -158,9 +158,9 @@ public class JdbcChessDao implements ChessDao {
 
     private Turn getCurrentTurn(final long id, final Connection connection) throws SQLException {
         String getTurnQuery = "SELECT turn from chessGameTable where id = (?);";
-        try (PreparedStatement pstmt2 = connection.prepareStatement(getTurnQuery)) {
-            pstmt2.setLong(1, id);
-            ResultSet rs = pstmt2.executeQuery();
+        try (PreparedStatement prepareStatement = connection.prepareStatement(getTurnQuery)) {
+            prepareStatement.setLong(1, id);
+            ResultSet rs = prepareStatement.executeQuery();
             if (!rs.next()) {
                 return null;
             }
@@ -178,8 +178,8 @@ public class JdbcChessDao implements ChessDao {
         String query = "SELECT id FROM chessGameTable";
         List<Long> roomId = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement pstmt = connection.prepareStatement(query);
-             ResultSet rs = pstmt.executeQuery()
+             PreparedStatement prepareStatement = connection.prepareStatement(query);
+             ResultSet rs = prepareStatement.executeQuery()
         ) {
             while (rs.next()) {
                 roomId.add(rs.getLong("id"));
