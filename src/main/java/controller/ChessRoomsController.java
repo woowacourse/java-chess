@@ -2,7 +2,7 @@ package controller;
 
 import dao.exceptions.DaoNoneSelectedException;
 import dto.RoomDto;
-import service.RoomsService;
+import service.ChessRoomsService;
 import spark.Response;
 import spark.Spark;
 
@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessRoomsController {
-	private static final String PATH = "/chess/rooms";
+	public static final String PATH = "/chess/rooms";
 	private static final String STATIC_PATH = "/rooms.html";
 	private static final String EMPTY = "";
 	private static final String SLASH = "/";
@@ -20,14 +20,14 @@ public class ChessRoomsController {
 	private static final String ROOMS_KEY = "rooms";
 	private static final ChessRoomsController ROOMS_CONTROLLER;
 
-	private final RoomsService roomsService;
+	private final ChessRoomsService chessRoomsService;
 
 	static {
-		ROOMS_CONTROLLER = new ChessRoomsController(RoomsService.getInstance());
+		ROOMS_CONTROLLER = new ChessRoomsController(ChessRoomsService.getInstance());
 	}
 
-	private ChessRoomsController(final RoomsService roomsService) {
-		this.roomsService = roomsService;
+	private ChessRoomsController(final ChessRoomsService chessRoomsService) {
+		this.chessRoomsService = chessRoomsService;
 	}
 
 	public void run() {
@@ -38,7 +38,7 @@ public class ChessRoomsController {
 
 	private void routeGetMethod() {
 		Spark.get(PATH, (request, response) -> {
-			final List<RoomDto> rooms = roomsService.findAllRooms();
+			final List<RoomDto> rooms = chessRoomsService.findAllRooms();
 			final Map<String, Object> model = mapRooms(rooms);
 			return Renderer.getInstance().render(model, STATIC_PATH);
 		});
@@ -67,12 +67,12 @@ public class ChessRoomsController {
 	}
 
 	private void responseToEnterRoom(final Response response, final String roomName) throws SQLException {
-		final RoomDto roomDto = roomsService.findRoomByRoomName(roomName);
+		final RoomDto roomDto = chessRoomsService.findRoomByRoomName(roomName);
 		response.redirect(PATH + SLASH + roomDto.getId());
 	}
 
 	private void responseToCreateRoom(final Response response, final String roomName) throws SQLException {
-		roomsService.addRoomByRoomName(roomName);
+		chessRoomsService.addRoomByRoomName(roomName);
 		response.redirect(PATH);
 	}
 
@@ -84,7 +84,7 @@ public class ChessRoomsController {
 	}
 
 	private String responseToDeleteRoom(final Response response, final String roomName) throws SQLException {
-		roomsService.deleteRoomByRoomName(roomName);
+		chessRoomsService.deleteRoomByRoomName(roomName);
 		response.redirect(PATH);
 		return EMPTY;
 	}

@@ -6,20 +6,20 @@ import dto.RoomDto;
 import java.sql.SQLException;
 import java.util.List;
 
-public class RoomsService {
-	private static final RoomsService ROOMS_SERVICE;
+public class ChessRoomsService {
+	private static final ChessRoomsService ROOMS_SERVICE;
 
 	static {
-		ROOMS_SERVICE = new RoomsService(new RoomDao());
+		ROOMS_SERVICE = new ChessRoomsService(new RoomDao());
 	}
 
 	private final RoomDao roomDao;
 
-	private RoomsService(final RoomDao roomDao) {
+	private ChessRoomsService(final RoomDao roomDao) {
 		this.roomDao = roomDao;
 	}
 
-	public static RoomsService getInstance() {
+	public static ChessRoomsService getInstance() {
 		return ROOMS_SERVICE;
 	}
 

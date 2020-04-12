@@ -23,11 +23,11 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class RoomService {
-	private static final RoomService ROOM_SERVICE;
+public class ChessRoomService {
+	private static final ChessRoomService ROOM_SERVICE;
 
 	static {
-		ROOM_SERVICE = new RoomService(new StateDao(), new PieceDao(), new StatusRecordDao(),
+		ROOM_SERVICE = new ChessRoomService(new StateDao(), new PieceDao(), new StatusRecordDao(),
 				new AnnouncementDao());
 	}
 
@@ -36,7 +36,7 @@ public class RoomService {
 	private final StatusRecordDao statusRecordDao;
 	private final AnnouncementDao announcementDao;
 
-	private RoomService(final StateDao stateDao, final PieceDao pieceDao
+	private ChessRoomService(final StateDao stateDao, final PieceDao pieceDao
 			, final StatusRecordDao statusRecordDao, final AnnouncementDao announcementDao) {
 		this.stateDao = stateDao;
 		this.pieceDao = pieceDao;
@@ -44,7 +44,7 @@ public class RoomService {
 		this.announcementDao = announcementDao;
 	}
 
-	public static RoomService getInstance() {
+	public static ChessRoomService getInstance() {
 		return ROOM_SERVICE;
 	}
 
