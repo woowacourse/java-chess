@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="../css/chessStyle.css" rel="stylesheet" type="text/css"/>
+    <title>엘리의 크리스마스 체스</title>
+</head>
+
+<body>
+<div id="gameUI">
+    <h1 id="title">크리스마스 체스</h1>
+    <div id="chessBoard">
+        {{#chessPieces}}
+        <div id="{{position}}" class="tile">
+            {{#if piece}}
+            <img alt="position" class="tileImage" src="../images/{{piece}}.png"/>
+            {{else}}
+            <img alt="empty" src="../images/blank.png"/>
+            {{/if}}
+        </div>
+        {{/chessPieces}}
+    </div>
+
+    <div id="commandUI">
+        <div id="current_team">{{currentTeam}}팀 차례입니다.</div>
+        {{#if currentTeamScore}}
+        <div id="chess_score">{{currentTeam}}팀의 현재 점수는 {{currentTeamScore}}점 입니다.</div>
+        {{/if}}
+
+        <form action="/end" method="get">
+            <button>종료하기</button>
+        </form>
+    </div>
+</div>
+<script type="text/javascript" src="../js/chess.js"></script>
+</body>
+
+</html>

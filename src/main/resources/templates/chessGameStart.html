@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="./css/chessStyle.css" rel="stylesheet" type="text/css"/>
+    <title>엘리의 크리스마스 체스</title>
+</head>
+<body>
+{{#if haveLastGameRecord}}
+<button onclick="playLastGame()">기존 게임 시작하기</button>
+{{/if}}
+<button onclick="playNewGame()">새 게임 시작하기</button>
+</body>
+<script>
+    const playLastGame = function () {
+        window.location = "http://localhost:4567/playing/lastGame";
+    };
+
+    const playNewGame = function () {
+        window.location = "http://localhost:4567/playing/newGame";
+    }
+</script>
+</html>

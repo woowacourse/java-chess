@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.controller.dto.ContinueCommandDto;
-import chess.controller.dto.StartCommandDto;
+import chess.dto.ContinueCommandDto;
+import chess.dto.StartCommandDto;
 
 public interface InputView {
 

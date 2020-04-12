@@ -1,22 +1,24 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.WebController;
+import chess.dao.ChessDao;
+import chess.dao.InMemoryChessDao;
+import chess.dao.MySqlChessDao;
+import chess.database.MySqlConnector;
+import chess.service.ChessService;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.staticFiles;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        staticFiles.location("/public");
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        ChessDao chessDao = new InMemoryChessDao();
+        if (MySqlConnector.getConnection() != null) {
+            chessDao = new MySqlChessDao();
+        }
+
+        WebController controller = new WebController(new ChessService(chessDao));
+        controller.play();
     }
 }

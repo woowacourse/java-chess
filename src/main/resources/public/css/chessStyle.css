@@ -1,0 +1,74 @@
+#gameUI {
+    width: 100%;
+    margin: 30px;
+    text-align: center;
+}
+
+#chessBoard {
+    display: inline-block;
+    width: 480px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+#chessBoard div {
+    display: inline-block;
+    margin: -3px;
+    width: 60px;
+    height: 60px;
+    text-align: center;
+}
+
+#commandUI {
+    display: inline-block;
+    width: 30%;
+    margin: 30px;
+}
+
+#commandUI div {
+    margin: 10px;
+}
+
+#chess_informator {
+    padding: 10px;
+    border: 1px solid;
+}
+
+h1 {
+    text-align: center;
+}
+
+.tile {
+    background-color: #62732a;
+}
+
+.tile:nth-child(-2n+7),
+.tile:nth-child(8) ~ .tile:nth-child(-2n+16),
+.tile:nth-child(16) ~ .tile:nth-child(-2n+23),
+.tile:nth-child(25) ~ .tile:nth-child(-2n+32),
+.tile:nth-child(32) ~ .tile:nth-child(-2n+39),
+.tile:nth-child(41) ~ .tile:nth-child(-2n+48),
+.tile:nth-child(47) ~ .tile:nth-child(-2n+55),
+.tile:nth-child(57) ~ .tile:nth-child(-2n+64) {
+    background-color: #b71a07;
+}
+
+button {
+    margin: 10px;
+    padding: 10px;
+}
+
+img {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+}
+
+
+.error {
+    color: #b71a07;
+    font-size: large;
+}

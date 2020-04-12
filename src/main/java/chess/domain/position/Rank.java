@@ -12,6 +12,8 @@ public enum Rank {
     TWO(2),
     ONE(1);
 
+    private static final String NUMBER = "^[0-9]$";
+
     private final int symbol;
 
     Rank(int symbol) {
@@ -19,7 +21,10 @@ public enum Rank {
     }
 
     public static Rank of(String rank) {
-        return of(Integer.parseInt(rank));
+        if (rank.matches(NUMBER)) {
+            return of(Integer.parseInt(rank));
+        }
+        return valueOf(rank);
     }
 
     public static Rank of(int rank) {

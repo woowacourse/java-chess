@@ -6,8 +6,8 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 public class PawnMoveStrategy extends MoveStrategy {
-    private static final int WHITE_POSITION = 2;
-    private static final int BLACK_POSITION = 7;
+    private static final int WHITE_START_POSITION = 2;
+    private static final int BLACK_START_POSITION = 7;
 
     @Override
     public boolean checkMovement(Position source, Position target, Board board) {
@@ -24,7 +24,7 @@ public class PawnMoveStrategy extends MoveStrategy {
                 return board.isEmpty(target);
             }
             if (fileGap == 0 && rankGap == -2) {
-                return source.getRank() == WHITE_POSITION;
+                return source.getRank() == WHITE_START_POSITION;
             }
             if (Math.abs(fileGap) == 1 && rankGap == -1) {
                 return !board.isEmpty(target) && sourcePiece.isEnemy(targetPiece);
@@ -35,7 +35,7 @@ public class PawnMoveStrategy extends MoveStrategy {
                 return board.isEmpty(target);
             }
             if (fileGap == 0 && rankGap == 2) {
-                return source.getRank() == BLACK_POSITION;
+                return source.getRank() == BLACK_START_POSITION;
             }
             if (Math.abs(fileGap) == 1 && rankGap == 1) {
                 return !board.isEmpty(target) && sourcePiece.isEnemy(targetPiece);

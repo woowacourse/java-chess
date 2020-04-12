@@ -1,17 +1,18 @@
-package chess.controller;
+package chess.domain;
 
-import chess.controller.dto.BoardDto;
-import chess.domain.ChessRunner;
+import chess.domain.board.Board;
 import chess.domain.piece.Team;
+
+import java.util.Optional;
 
 public class ChessManager {
 
     private ChessRunner chessRunner;
-    private boolean runFlag;
+    private boolean playing;
 
     public ChessManager() {
         this.chessRunner = new ChessRunner();
-        runFlag = true;
+        playing = true;
     }
 
     public void start() {
@@ -19,12 +20,12 @@ public class ChessManager {
     }
 
     public void end() {
-        runFlag = false;
+        playing = false;
     }
 
     public void move(String source, String target) {
         chessRunner.update(source, target);
-        runFlag = stopGameIfWinnerExists();
+        playing = stopGameIfWinnerExists();
     }
 
     private boolean stopGameIfWinnerExists() {
@@ -32,26 +33,22 @@ public class ChessManager {
     }
 
     public boolean isPlaying() {
-        return runFlag;
-    }
-
-    public BoardDto getBoard() {
-        return new BoardDto(chessRunner.getBoard());
-    }
-
-    public ChessManager get() {
-        return this;
+        return playing;
     }
 
     public double calculateScore() {
         return chessRunner.calculateScore();
     }
 
+    public Board getBoard() {
+        return chessRunner.getBoard();
+    }
+
     public Team getCurrentTeam() {
         return chessRunner.getCurrentTeam();
     }
 
-    public Team getWinner() {
-        return chessRunner.findWinner().get();
+    public Optional<Team> getWinner() {
+        return chessRunner.findWinner();
     }
 }
