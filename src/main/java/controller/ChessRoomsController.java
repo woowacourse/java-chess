@@ -33,7 +33,6 @@ public class ChessRoomsController {
 	public void run() {
 		routeGetMethod();
 		routePostMethod();
-		routeDeleteMethod();
 	}
 
 	private void routeGetMethod() {
@@ -52,7 +51,11 @@ public class ChessRoomsController {
 
 	private void routePostMethod() {
 		Spark.post(PATH, (request, response) -> {
+			final String method = request.queryParams("method");
 			final String roomName = request.queryParams(ROOM_NAME_OF_FORM);
+			if (method.equals("delete")) {
+				return responseToDeleteRoom(response, roomName);
+			}
 			return responseToEnterOrCreateRoom(response, roomName);
 		});
 	}
@@ -74,13 +77,6 @@ public class ChessRoomsController {
 	private void responseToCreateRoom(final Response response, final String roomName) throws SQLException {
 		chessRoomsService.addRoomByRoomName(roomName);
 		response.redirect(PATH);
-	}
-
-	private void routeDeleteMethod() {
-		Spark.delete(PATH, (request, response) -> {
-			final String roomName = request.queryParams(ROOM_NAME_OF_FORM);
-			return responseToDeleteRoom(response, roomName);
-		});
 	}
 
 	private String responseToDeleteRoom(final Response response, final String roomName) throws SQLException {
