@@ -8,6 +8,7 @@ import domain.piece.Piece;
 import domain.piece.PieceCreator;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
+import domain.template.EmptyDatabaseException;
 import domain.template.JdbcTemplate;
 import domain.template.PreparedStatementSetter;
 import domain.template.RowMapper;
@@ -81,18 +82,23 @@ public class BoardDao {
 		JdbcTemplate template = new JdbcTemplate();
 		PreparedStatementSetter pss = pstmt -> {
 		};
+		RowMapper<Rank> rowMapper = rs -> {
+			List<Piece> pieces = new ArrayList<>();
+			char rankOfPiece;
+			int pieceRank;
+			Position position;
 
-		RowMapper<Piece> rowMapper = rs -> {
-			Piece piece = null;
-			char rankOfPiece = rs.getString("piece_position").charAt(RANK_INDEX);
-			int pieceRank = Integer.parseInt(String.valueOf(rankOfPiece));
-			Position position = Position.of(rs.getString("piece_position"));
-			if (pieceRank == rankIndex) {
-				piece = PieceCreator.of(rs.getString("symbol"), position);
+			while (rs.next()) {
+				rankOfPiece = rs.getString("piece_position").charAt(RANK_INDEX);
+				pieceRank = Integer.parseInt(String.valueOf(rankOfPiece));
+				if (pieceRank == rankIndex) {
+					position = Position.of(rs.getString("piece_position"));
+					pieces.add(PieceCreator.of(rs.getString("symbol"), position));
+				}
 			}
-			return piece;
+			return new Rank(pieces);
 		};
-		return new Rank(template.executeQuery(query, pss, rowMapper));
+		return template.executeQuery(query, pss, rowMapper);
 	}
 
 	public Team loadTurn() throws SQLException {
@@ -100,7 +106,12 @@ public class BoardDao {
 		String query = "SELECT * FROM turn";
 		PreparedStatementSetter pss = pstmt -> {
 		};
-		RowMapper<Team> rowMapper = rs -> Team.of(rs.getString("game_turn"));
-		return template.executeQuery(query, pss, rowMapper).get(0);
+		RowMapper<Team> rowMapper = rs -> {
+			if (rs.next()) {
+				return Team.of(rs.getString("game_turn"));
+			}
+			throw new EmptyDatabaseException(EmptyDatabaseException.EMPTY_DATA);
+		};
+		return template.executeQuery(query, pss, rowMapper);
 	}
 }

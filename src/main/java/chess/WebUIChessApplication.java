@@ -10,6 +10,7 @@ import java.util.Map;
 import domain.board.InvalidTurnException;
 import domain.piece.position.InvalidPositionException;
 import domain.piece.team.Team;
+import domain.template.EmptyDatabaseException;
 import service.WebService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -71,8 +72,8 @@ public class WebUIChessApplication {
 			Map<String, Object> model = new HashMap<>();
 			try {
 				webService.loadGame();
-			} catch (IndexOutOfBoundsException e) {
-				errorMessage.add(new ErrorMessage("DB에 불러올 게임 정보가 없습니다."));
+			} catch (EmptyDatabaseException e) {
+				errorMessage.add(new ErrorMessage(EmptyDatabaseException.EMPTY_DATA));
 			}
 
 			insertIntoModel(webService, errorMessage, model);

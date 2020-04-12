@@ -5,8 +5,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  *   class description
@@ -49,19 +47,12 @@ public class JdbcTemplate {
 		}
 	}
 
-	public <T> List<T> executeQuery(String query, PreparedStatementSetter pss, RowMapper<T> rowMapper) throws
-		SQLException {
-		List<T> items = new ArrayList<>();
+	public <T> T executeQuery(String query, PreparedStatementSetter pss, RowMapper<T> rowMapper) throws SQLException {
 		try (Connection connection = getConnection();
 			 PreparedStatement pstmt = connection.prepareStatement(query);
 			 ResultSet rs = pstmt.executeQuery()) {
 			pss.setParameters(pstmt);
-			while (rs.next()) {
-				if (rowMapper.rowMap(rs) != null) {
-					items.add(rowMapper.rowMap(rs));
-				}
-			}
-			return items;
+			return rowMapper.rowMap(rs);
 		}
 	}
 }
