@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
-import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,21 +12,27 @@ public class RoomDaoTest {
 	private RoomDao roomDao;
 
 	@BeforeEach
-	void setUp() {
+	void setUp() throws SQLException {
 		roomDao = new RoomDao();
+		String board = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
+		String turn = "WHITE";
+		String finishFlag = "N";
+		roomDao.addRoom("A", board, turn, finishFlag);
+		roomDao.addRoom("B", board, turn, finishFlag);
 	}
 
 	@Test
 	void findByRoomName() throws SQLException {
 		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
-		Optional<String> expectedBoard = roomDao.findByRoomName("A", "board");
+		String expectedBoard = roomDao.findByRoomName("A", "board")
+				.orElseThrow(NoSuchElementException::new);
 
-		assertThat(actualBoard).isEqualTo(expectedBoard.orElseThrow(NoSuchElementException::new));
+		assertThat(actualBoard).isEqualTo(expectedBoard);
 	}
 
 	@Test
 	void addRoom() throws SQLException {
-		String roomName = "A";
+		String roomName = "C";
 		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
 		String turn = "BLACK";
 		String finishFlag = "N";
@@ -44,10 +49,10 @@ public class RoomDaoTest {
 
 	@Test
 	void updateRoom() throws SQLException {
-		String roomName = "A";
-		String board = "RNBQKBNR........PPPPPPPP................pppppppp........rnbqkbnr";
+		String roomName = "B";
+		String board = "RNBQKBNR................................................rnbqkbnr";
 		String turn = "BLACK";
-		String finishFlag = "N";
+		String finishFlag = "Y";
 
 		roomDao.updateRoom(roomName, board, turn, finishFlag);
 	}
