@@ -58,8 +58,6 @@ public class JdbcChessDao implements ChessDao {
             long id = resultSet.getLong("recentId");
             addBoard(id, chessGame);
             return id;
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -80,8 +78,6 @@ public class JdbcChessDao implements ChessDao {
             updatePstmt.setString(1, chessGame.getTurn().toString());
             updatePstmt.setLong(2, chessGameId);
             updatePstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -90,8 +86,6 @@ public class JdbcChessDao implements ChessDao {
         try (PreparedStatement deleteBoardPstmt = connection.prepareStatement(deleteBoardQuery)) {
             deleteBoardPstmt.setLong(1, chessGameId);
             deleteBoardPstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -109,8 +103,6 @@ public class JdbcChessDao implements ChessDao {
             deleteGamePstmt.close();
             alterGamePstmt.setInt(1, (int) chessGameId);
             alterGamePstmt.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -132,8 +124,6 @@ public class JdbcChessDao implements ChessDao {
                 pstmt.setString(3, team);
                 pstmt.setLong(4, chessGameId);
                 pstmt.executeUpdate();
-            } catch (SQLException e) {
-                throw e;
             }
         }
     }
@@ -167,8 +157,6 @@ public class JdbcChessDao implements ChessDao {
                 board.put(position, pieceState);
             }
             return board;
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -204,8 +192,6 @@ public class JdbcChessDao implements ChessDao {
                 roomId.add(rs.getLong("id"));
             }
             return Collections.unmodifiableList(roomId);
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
