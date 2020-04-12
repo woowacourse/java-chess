@@ -10,7 +10,7 @@ public class ChessStatisticService {
 	private static final ChessStatisticService STATISTIC_SERVICE;
 
 	static {
-		STATISTIC_SERVICE = new ChessStatisticService(new StatusRecordWithRoomNameDao());
+		STATISTIC_SERVICE = new ChessStatisticService(StatusRecordWithRoomNameDao.getInstance());
 	}
 
 	private final StatusRecordWithRoomNameDao statusRecordWithRoomNameDao;

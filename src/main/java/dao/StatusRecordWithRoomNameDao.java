@@ -8,6 +8,19 @@ import java.util.List;
 
 // TODO test
 public class StatusRecordWithRoomNameDao {
+	private static final StatusRecordWithRoomNameDao STATUS_RECORD_WITH_ROOM_NAME_DAO;
+
+	static {
+		STATUS_RECORD_WITH_ROOM_NAME_DAO = new StatusRecordWithRoomNameDao();
+	}
+
+	private StatusRecordWithRoomNameDao() {
+	}
+
+	public static StatusRecordWithRoomNameDao getInstance() {
+		return STATUS_RECORD_WITH_ROOM_NAME_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		final String server = "localhost:13306"; // MySQL 서버 주소
