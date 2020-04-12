@@ -61,7 +61,7 @@ public enum Direction {
 	}
 
 	private List<Position> findRoutes(Position position, Position targetPosition) {
-		int loopCount = calculateLoopCount(position, targetPosition) - 1;
+		int loopCount = countOfLoop(position, targetPosition) - 1;
 		int routeRow = position.getRowNumber();
 		int routeColumn = position.getColumnNumber();
 		List<Position> route = new ArrayList<>();
@@ -73,7 +73,7 @@ public enum Direction {
 		return route;
 	}
 
-	private int calculateLoopCount(Position position, Position targetPosition) {
+	private int countOfLoop(Position position, Position targetPosition) {
 		int columnGap = Math.abs(position.calculateColumnGap(targetPosition));
 		int rowGap = Math.abs(position.calculateRowGap(targetPosition));
 		return Math.max(columnGap, rowGap);

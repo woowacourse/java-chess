@@ -27,7 +27,7 @@ public class Board {
 
 	boolean isKingAlive() {
 		int kingCount = ranks.stream()
-			.map(Rank::calculateCountOfKing)
+			.map(Rank::countOfKing)
 			.reduce(0, Integer::sum);
 
 		return INITIAL_KING_COUNT == kingCount;
