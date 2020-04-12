@@ -6,13 +6,13 @@ public class StatusRecordDto {
 	private final int id;
 	private final String record;
 	private final Date gameDate;
-	private final int roomId;
+	private final String roomName;
 
-	public StatusRecordDto(final int id, final String record, final Date gameDate, final int roomId) {
+	public StatusRecordDto(final int id, final String record, final Date gameDate, final String roomName) {
 		this.id = id;
 		this.record = record;
 		this.gameDate = gameDate;
-		this.roomId = roomId;
+		this.roomName = roomName;
 	}
 
 	public int getId() {
@@ -27,17 +27,7 @@ public class StatusRecordDto {
 		return gameDate;
 	}
 
-	public int getRoomId() {
-		return roomId;
-	}
-
-	@Override
-	public String toString() {
-		return "StatusRecord{" +
-				"id=" + id +
-				", record='" + record + '\'' +
-				", gameDate=" + gameDate +
-				", roomId=" + roomId +
-				'}';
+	public String getRoomName() {
+		return roomName;
 	}
 }

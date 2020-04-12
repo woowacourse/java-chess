@@ -1,9 +1,6 @@
 package service;
 
-import dao.AnnouncementDao;
-import dao.PieceDao;
-import dao.StateDao;
-import dao.StatusRecordDao;
+import dao.*;
 import domain.pieces.Piece;
 import domain.pieces.PieceType;
 import domain.pieces.Pieces;

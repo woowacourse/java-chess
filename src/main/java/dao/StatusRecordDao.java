@@ -1,15 +1,17 @@
 package dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import dto.StatusRecordDto;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO test
 public class StatusRecordDao {
-	private static final StatusRecordDao STATUS_RECORD_DAO;
+	private static final StatusRecordDao STATUS_RECORD_WITH_ROOM_NAME_DAO;
 
 	static {
-		STATUS_RECORD_DAO = new StatusRecordDao(ConnectionDao.getInstance());
+		STATUS_RECORD_WITH_ROOM_NAME_DAO = new StatusRecordDao(ConnectionDao.getInstance());
 	}
 
 	private final ConnectionDao connectionDao;
@@ -19,7 +21,36 @@ public class StatusRecordDao {
 	}
 
 	public static StatusRecordDao getInstance() {
-		return STATUS_RECORD_DAO;
+		return STATUS_RECORD_WITH_ROOM_NAME_DAO;
+	}
+
+	public List<StatusRecordDto> findStatusRecords() throws SQLException {
+		final String query = "SELECT record, game_date, room_name "
+				+ "FROM status_record "
+				+ "ORDER BY room_name";
+
+		try (final Connection connection = connectionDao.getConnection();
+			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			return prepareStatusRecordDtos(preparedStatement);
+		}
+	}
+
+	private List<StatusRecordDto> prepareStatusRecordDtos
+			(final PreparedStatement preparedStatement) throws SQLException {
+		try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+			return collectStatusRecordDtos(resultSet);
+		}
+	}
+
+	private List<StatusRecordDto> collectStatusRecordDtos(final ResultSet resultSet)
+			throws SQLException {
+		final List<StatusRecordDto> statusRecordsWithRoomNameDto = new ArrayList<>();
+		while (resultSet.next()) {
+			statusRecordsWithRoomNameDto.add(
+					new StatusRecordDto(resultSet.getInt("id"), resultSet.getString("record"),
+							resultSet.getDate("game_date"), resultSet.getString("room_name")));
+		}
+		return statusRecordsWithRoomNameDto;
 	}
 
 	public int addStatusRecord(final String record, final int roomId) throws SQLException {

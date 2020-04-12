@@ -1,6 +1,6 @@
 package controller;
 
-import dto.StatusRecordWithRoomNameDto;
+import dto.StatusRecordDto;
 import service.ChessStatisticService;
 import spark.Spark;
 
@@ -34,7 +34,7 @@ public class ChessStatisticController {
 
 	private void routeGetMethod() {
 		Spark.get(PATH, (request, response) -> {
-			final List<StatusRecordWithRoomNameDto> statusRecordWithRoomNames
+			final List<StatusRecordDto> statusRecordWithRoomNames
 					= chessStatisticService.loadStatusRecordsWithRoomName();
 
 			final Map<String, Object> map = new HashMap<>();
