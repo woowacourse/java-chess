@@ -8,6 +8,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoomDao {
+	private static final RoomDao ROOM_DAO;
+
+	static {
+		ROOM_DAO = new RoomDao();
+	}
+
+	private RoomDao() {
+	}
+
+	public static RoomDao getInstance() {
+		return ROOM_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		String server = "localhost:13306"; // MySQL 서버 주소

@@ -17,7 +17,7 @@ class RoomDaoTest {
 
 	@BeforeEach
 	void setUp() {
-		roomDao = new RoomDao();
+		roomDao = RoomDao.getInstance();
 	}
 
 	@Test

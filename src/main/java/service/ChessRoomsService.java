@@ -10,7 +10,7 @@ public class ChessRoomsService {
 	private static final ChessRoomsService ROOMS_SERVICE;
 
 	static {
-		ROOMS_SERVICE = new ChessRoomsService(new RoomDao());
+		ROOMS_SERVICE = new ChessRoomsService(RoomDao.getInstance());
 	}
 
 	private final RoomDao roomDao;
