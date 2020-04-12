@@ -46,7 +46,7 @@ public class ChessService {
         Board board = boards.get(blackUser).move(source, target);
         boards.put(blackUser, board);
         if (!board.isNotFinished()) {
-            delete(blackUser, board.getSecondUser());
+            delete(board.getBlackUser(), board.getWhiteUser());
         }
         return board;
     }

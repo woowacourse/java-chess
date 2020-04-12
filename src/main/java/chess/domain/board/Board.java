@@ -117,11 +117,11 @@ public class Board {
         return status.getTurn();
     }
 
-    public User getFirstUser() {
+    public User getBlackUser() {
         return first;
     }
 
-    public User getSecondUser() {
+    public User getWhiteUser() {
         return second;
     }
 

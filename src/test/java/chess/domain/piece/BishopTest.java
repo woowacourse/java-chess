@@ -37,7 +37,8 @@ class BishopTest {
     @DisplayName("이동 경로 찾기")
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         boardMap.put(source, gamePiece);
 
         Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
@@ -67,7 +68,8 @@ class BishopTest {
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         boardMap.put(source, gamePiece);
 
         Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
@@ -90,7 +92,8 @@ class BishopTest {
     @Test
     @DisplayName("장애물이 있을 경우")
     void obstacle() {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         Position source = Position.from("d5");
         Position target = Position.from("f7");
 

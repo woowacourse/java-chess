@@ -3,12 +3,10 @@ package chess.view;
 import java.util.List;
 import java.util.Map;
 
-import chess.domain.board.Board;
 import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
 import chess.dto.LineDto;
-import chess.dto.RowsDtoConverter;
 
 public class OutputView {
 

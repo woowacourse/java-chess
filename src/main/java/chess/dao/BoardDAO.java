@@ -42,7 +42,8 @@ public class BoardDAO {
 
         int boardId = rs.getInt(1);
 
-        return Optional.ofNullable(BoardFactory.of(cellDAO.findCellsByBoardId(boardId), rs.getInt(4), blackUser, whiteUser));
+        return Optional.ofNullable(
+                BoardFactory.of(cellDAO.findCellsByBoardId(boardId), rs.getInt(4), blackUser, whiteUser));
     }
 
     public void saveBoardByUserName(Board board, User blackUser, User whiteUser) throws SQLException {
@@ -69,7 +70,8 @@ public class BoardDAO {
 
         cellDAO.deleteCellsByUser(boardId);
 
-        dbConnector.executeUpdate("DELETE FROM board WHERE black = ? AND white = ?", blackUser.getName(), whiteUser.getName());
+        dbConnector.executeUpdate("DELETE FROM board WHERE black = ? AND white = ?", blackUser.getName(),
+                whiteUser.getName());
 
         return !findBoardByUser(blackUser, whiteUser).isPresent();
     }

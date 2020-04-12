@@ -97,7 +97,6 @@ class CommandTest {
         );
     }
 
-
     @ParameterizedTest
     @DisplayName("Command가 Status인지 확인")
     @MethodSource("createStatus")
@@ -137,7 +136,7 @@ class CommandTest {
         List<String> input = Collections.singletonList("start");
         Command command = Command.from(input);
 
-        assertThatThrownBy(() -> command.getSource())
+        assertThatThrownBy(command::getSource)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("move 명령만 사용할 수 있습니다.");
     }

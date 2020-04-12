@@ -35,7 +35,8 @@ class KnightTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         boardMap.put(source, gamePiece);
 
         Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
@@ -63,7 +64,8 @@ class KnightTest {
     @DisplayName("이동할 수 없는 source, target")
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         Position source = Position.from("d5");
 
         boardMap.put(source, gamePiece);

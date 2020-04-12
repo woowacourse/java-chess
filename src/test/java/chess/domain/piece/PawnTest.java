@@ -36,7 +36,8 @@ class PawnTest {
     @MethodSource("createSourceToTarget")
     void findMovePath(Position target, List<Position> expected) {
         Position source = Position.from("d2");
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
 
         boardMap.put(source, gamePiece);
         boardMap.put(Position.from("c3"), new King(PlayerColor.BLACK));
@@ -63,7 +64,8 @@ class PawnTest {
     @DisplayName("이동할 수 없는 source, target")
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         Position source = Position.from("d5");
 
         boardMap.put(source, gamePiece);
@@ -92,7 +94,8 @@ class PawnTest {
     @DisplayName("기물 플레이어 색에 따른 이동")
     @MethodSource("createPawnAndTarget")
     void blackMove(GamePiece piece, Position source, Position target) {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         boardMap.put(source, piece);
 
         Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
@@ -114,7 +117,8 @@ class PawnTest {
     @Test
     @DisplayName("original 위치가 아닌 곳에서 2칸 이동할 경우 예외 처리")
     void moveThrowException() {
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         GamePiece piece = new Pawn(PlayerColor.BLACK);
         Position source = Position.from("d5");
         boardMap.put(source, piece);

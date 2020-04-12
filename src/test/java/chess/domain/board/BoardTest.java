@@ -40,9 +40,11 @@ class BoardTest {
     @DisplayName("기물 이동")
     @MethodSource("createMovement")
     void move(GamePiece piece, String source, String target, int turn) {
-        Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         map.put(Position.from(source), piece);
-        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
+        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING), User.EMPTY_BOARD_USER,
+                User.EMPTY_BOARD_USER);
         board = board.move(source, target);
 
         assertThat(board.getBoard().get(Position.from(source))).isEqualTo(EmptyPiece.getInstance());
@@ -61,7 +63,8 @@ class BoardTest {
     @Test
     @DisplayName("Black Pawn이 위로 올라갈 경우")
     void moveWithImpossiblePawnMovement() {
-        Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         map.put(Position.from("d5"), new Pawn(BLACK));
         Board board = Board.of(map, new Status(1, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
 
@@ -84,9 +87,11 @@ class BoardTest {
     @DisplayName("자기턴이 아닌 때 움직이려고 하는 경우")
     @MethodSource("createBoardAndTurn")
     void moveWhenInvalidTurn(int turn, GamePiece gamePiece) {
-        Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         map.put(Position.from("d5"), gamePiece);
-        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
+        Board board = Board.of(map, new Status(turn, StatusType.PROCESSING), User.EMPTY_BOARD_USER,
+                User.EMPTY_BOARD_USER);
 
         assertThatThrownBy(() -> {
             board.move("d5", "g8");
@@ -106,7 +111,8 @@ class BoardTest {
     void samePlayerColor() {
         Position source = Position.from("d5");
         Position target = Position.from("d4");
-        Map<Position, GamePiece> boardMap = new TreeMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         GamePiece gamePiece = new Rook(BLACK);
         boardMap.put(source, gamePiece);
         boardMap.put(target, new Bishop(BLACK));
@@ -122,7 +128,8 @@ class BoardTest {
     @DisplayName("경로에 기물이 있는 경우")
     @MethodSource("createPathWithObstacle")
     void moveWithObstacle(GamePiece gamePiece, String source, String target) {
-        Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         map.put(Position.from(source), gamePiece);
         map.put(Position.from("e3"), new Bishop(BLACK));
         Board board = Board.of(map, new Status(0, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
@@ -145,7 +152,8 @@ class BoardTest {
     @DisplayName("Board가 Finish 여부 확인")
     @MethodSource("createFinish")
     void isBoardFinished(String source, String target, boolean expected) {
-        Map<Position, GamePiece> map = new HashMap<>(BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        Map<Position, GamePiece> map = new HashMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         map.put(Position.from("c5"), new King(WHITE));
         map.put(Position.from("d6"), new Pawn(BLACK));
         Board board = Board.of(map, new Status(1, StatusType.PROCESSING), User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
