@@ -22,7 +22,6 @@ public class ConnectionDao {
 	}
 
 	public Connection getConnection() throws SQLException {
-		Connection connection = null;
 		final String server = DatabaseInfo.SERVER;
 		final String database = DatabaseInfo.DATABASE;
 		final String option = DatabaseInfo.OPTION;
@@ -37,7 +36,7 @@ public class ConnectionDao {
 			throw new ConnectionDaoException(" !! JDBC Driver load 오류: " + e.getMessage());
 		}
 
-		connection = DriverManager.getConnection(
+		final Connection connection = DriverManager.getConnection(
 				protocol + server + SLASH + database + option, userName, password);
 		System.out.println("데이터베이스에 정상적으로 연결되었습니다.");
 
