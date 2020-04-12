@@ -83,8 +83,7 @@ public class RoomDao {
 	}
 
 	public int deleteRoomByRoomName(final String roomName) throws SQLException {
-		final String query = "DELETE FROM room "
-				+ "WHERE room_name = ?";
+		final String query = "DELETE FROM room WHERE room_name = ?";
 
 		try (final Connection connection = connectionDao.getConnection();
 			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
