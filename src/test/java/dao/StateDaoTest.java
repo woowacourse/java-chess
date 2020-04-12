@@ -14,7 +14,7 @@ class StateDaoTest {
 
 	@BeforeEach
 	void setUp() {
-		stateDao = new StateDao();
+		stateDao = StateDao.getInstance();
 	}
 
 	@Test

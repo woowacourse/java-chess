@@ -6,6 +6,19 @@ import dto.StateDto;
 import java.sql.*;
 
 public class StateDao {
+	private static final StateDao STATE_DAO;
+
+	static {
+		STATE_DAO = new StateDao();
+	}
+
+	private StateDao() {
+	}
+
+	public static StateDao getInstance() {
+		return STATE_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		String server = "localhost:13306"; // MySQL 서버 주소
