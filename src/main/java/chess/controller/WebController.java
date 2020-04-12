@@ -15,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 public class WebController {
-    public static final String START_COMMAND = "start";
-    public static final String MOVE_COMMAND = "move ";
     public static final String GAME_END_MESSAGE = "게임이 종료되었습니다.";
     public static final String TURN_MESSAGE = "의 순서입니다.";
     public static final String WINNER_MESSAGE = "의 승리";
@@ -45,7 +43,7 @@ public class WebController {
         boardDAO.addBoard(board.getBoard());
 
         commandHistoryDAO.clearRecord();
-        commandHistoryDAO.addRecord(new CommandHistory(START_COMMAND, EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
+        commandHistoryDAO.addRecord(new CommandHistory(Command.START.getCommand(), EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
 
         Map<String, Object> model = new HashMap<>();
         model.put("records", commandHistoryDAO.readRecords());
@@ -75,7 +73,7 @@ public class WebController {
     }
 
     private void movePiece(Board board, String source, String target) {
-        CommandHistory move = new CommandHistory(MOVE_COMMAND, source, target, "");
+        CommandHistory move = new CommandHistory(Command.MOVE.getCommand(), source, target, "");
 
         try {
             Position sourcePosition = Position.ofPositionName(source);

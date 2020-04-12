@@ -25,4 +25,8 @@ public enum Command {
     private boolean has(String commandMsg) {
         return this.command.equals(commandMsg);
     }
+
+    public String getCommand() {
+        return command;
+    }
 }

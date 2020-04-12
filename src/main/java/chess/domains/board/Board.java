@@ -1,5 +1,6 @@
 package chess.domains.board;
 
+import chess.controller.Command;
 import chess.domains.CommandHistory;
 import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
@@ -137,7 +138,9 @@ public class Board {
         for (CommandHistory commandHistory : commandHistories) {
             String recordMessage = commandHistory.getCommandHistory();
             String[] recordMessages = recordMessage.split(DELIMITER);
-            if (recordMessage.startsWith("move") && commandHistory.getErrorMsg().equals("")) {
+            Command command = Command.findCommand(recordMessage);
+
+            if (command == Command.MOVE && commandHistory.getErrorMsg().equals("")) {
                 this.move(Position.ofPositionName(recordMessages[1]), Position.ofPositionName(recordMessages[2]));
             }
         }
