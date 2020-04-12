@@ -41,10 +41,10 @@ public class DBConnector {
     }
 
     // 드라이버 연결해제
-    public static void closeConnection(Connection con) {
+    public void closeConnection() {
         try {
-            if (con != null)
-                con.close();
+            if (connection != null)
+                connection.close();
         } catch (SQLException e) {
             System.err.println("con 오류:" + e.getMessage());
         }

@@ -12,7 +12,7 @@ import chess.domain.board.Position;
 import chess.domain.board.Row;
 import chess.domain.piece.GamePiece;
 
-public class DtoConverter {
+public class RowsDtoConverter {
 
     public static List<LineDto> convertFrom(Map<Position, GamePiece> gamePieces) {
         Map<Row, LineDto> rows = gamePieces.entrySet()

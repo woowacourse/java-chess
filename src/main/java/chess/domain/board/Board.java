@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.TreeMap;
@@ -13,8 +12,6 @@ import chess.domain.piece.GamePiece;
 import chess.domain.player.PlayerColor;
 import chess.domain.player.User;
 import chess.domain.result.ChessResult;
-import chess.dto.DtoConverter;
-import chess.dto.LineDto;
 
 public class Board {
 
@@ -23,15 +20,15 @@ public class Board {
     private final User first;
     private final User second;
 
-    private Board(Map<Position, GamePiece> board, Status status, User first, User second) {
+    private Board(Map<Position, GamePiece> board, Status status, User blackUser, User whiteUser) {
         this.board = Collections.unmodifiableMap(new TreeMap<>(board));
         this.status = status;
-        this.first = first;
-        this.second = second;
+        this.first = blackUser;
+        this.second = whiteUser;
     }
 
-    static Board of(Map<Position, GamePiece> board, Status status, User first, User second) {
-        return new Board(board, status, first, second);
+    static Board of(Map<Position, GamePiece> board, Status status, User blackUser, User whiteUser) {
+        return new Board(board, status, blackUser, whiteUser);
     }
 
     public String searchPath(String sourceInput) {
@@ -110,10 +107,6 @@ public class Board {
 
     public ChessResult calculateResult() {
         return ChessResult.from(board);
-    }
-
-    public List<LineDto> getRows() {
-        return DtoConverter.convertFrom(board);
     }
 
     public Map<Position, GamePiece> getBoard() {

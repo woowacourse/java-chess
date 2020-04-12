@@ -36,6 +36,6 @@ public class UserDAO {
     public boolean deleteUserByUserName(String name) throws SQLException {
         dbConnector.executeUpdate("DELETE FROM user WHERE name = ?", name);
 
-        return findByUserName(name) == null;
+        return !findByUserName(name).isPresent();
     }
 }

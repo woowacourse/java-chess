@@ -1,5 +1,7 @@
 package chess;
 
+import java.sql.SQLException;
+
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
@@ -12,22 +14,42 @@ public class Application {
 
     public static void main(String[] args) {
         ChessService service = new ChessService();
-        OutputView.printBoard(service.createEmpty());
+        OutputView.printBoard(service.getBoard(User.EMPTY_BOARD_USER));
+        User blackUser = createBlackUser();
+        User whiteUser = createWhiteUser();
         Command command;
 
         OutputView.printStart();
         do {
             command = receiveCommand();
             if (command.isStart()) {
-                OutputView.printBoard(BoardFactory.createInitialBoard(new User("1"), new User("2")));
+                OutputView.printBoard(BoardFactory.createInitialBoard(blackUser, whiteUser));
             }
             if (command.isMove()) {
                 executeMovement(service, command);
             }
             if (command.isStatus()) {
-                OutputView.printScore(service.calculateResult(new User("1")));
+                OutputView.printScore(service.calculateResult(blackUser));
             }
-        } while (command.isNotEnd() && service.checkGameNotFinished(new User("1")));
+        } while (command.isNotEnd() && service.checkGameNotFinished(blackUser));
+    }
+
+    private static User createBlackUser() {
+        try {
+            return new User(InputView.receiveBlackUser());
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return createBlackUser();
+        }
+    }
+
+    private static User createWhiteUser() {
+        try {
+            return new User(InputView.receiveBlackUser());
+        } catch (IllegalArgumentException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            return createBlackUser();
+        }
     }
 
     private static Command receiveCommand() {
@@ -43,7 +65,7 @@ public class Application {
         try {
             Board board = service.move(new User("1"), command.getSource(), command.getTarget());
             OutputView.printBoard(board);
-        } catch (RuntimeException e) {
+        } catch (RuntimeException | SQLException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }

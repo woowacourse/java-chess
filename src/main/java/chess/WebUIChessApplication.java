@@ -3,12 +3,9 @@ package chess;
 import static spark.Spark.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-import chess.domain.board.Board;
 import chess.domain.player.User;
-import chess.dto.LineDto;
 import chess.service.ChessService;
 import spark.ModelAndView;
 import spark.Spark;
@@ -24,34 +21,29 @@ public class WebUIChessApplication {
 
         get("/main", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            Board board = chessService.createEmpty();
-            List<LineDto> rows = board.getRows();
-            model.put("rows", rows);
+            model.put("rows", chessService.getEmptyRowsDto());
             return render(model, "main.html");
         });
 
         post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("black");
-            String secondUserName = req.queryParams("white");
-            User first = new User(firstUserName);
-            User second = new User(secondUserName);
+            String blackUserName = req.queryParams("blackUserName");
+            String whiteUserName = req.queryParams("whiteUserName");
+            User blackUser = new User(blackUserName);
+            User whiteUser = new User(whiteUserName);
 
-            Board board = chessService.findByUserName(first, second);
-            List<LineDto> rows = board.getRows();
-            model.put("firstUser", firstUserName);
-            model.put("secondUser", secondUserName);
-            model.put("rows", rows);
+            model.put("blackUser", blackUserName);
+            model.put("whiteUser", whiteUserName);
+            model.put("rows", chessService.getRowsDto(blackUser, whiteUser));
+            model.put("turn", chessService.getTurn(blackUser));
             return render(model, "board.html");
         });
 
         post("/path", (req, res) -> {
             String source = req.queryParams("source");
-            String firstUserName = req.queryParams("black");
-            Board board;
+            String blackUserName = req.queryParams("blackUserName");
             try {
-                board = chessService.getBoard(new User(firstUserName));
-                return board.searchPath(source);
+                return chessService.searchPath(new User(blackUserName), source);
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
@@ -60,44 +52,40 @@ public class WebUIChessApplication {
         post("/move", (req, res) -> {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
-            String firstUserName = req.queryParams("black");
-            Board board;
+            String blackUserName = req.queryParams("blackUserName");
+            User blackUser = new User(blackUserName);
             try {
-                board = chessService.move(new User(firstUserName), source, target);
+                chessService.move(blackUser, source, target);
             } catch (RuntimeException e) {
                 return e.getMessage();
             }
-            if (board.isNotFinished()) {
+            if (chessService.checkGameNotFinished(blackUser)) {
                 return true;
             }
             return "finished";
         });
 
         post("/save", (req, res) -> {
-            String firstUserName = req.queryParams("black");
-            String secondUserName = req.queryParams("white");
-            chessService.save(new User(firstUserName), new User(secondUserName));
+            String blackUserName = req.queryParams("blackUserName");
+            String whiteUserName = req.queryParams("whiteUserName");
+            chessService.save(new User(blackUserName), new User(whiteUserName));
             Map<String, Object> model = new HashMap<>();
-            Board board = chessService.createEmpty();
-            List<LineDto> rows = board.getRows();
-            model.put("rows", rows);
+            model.put("rows", chessService.getEmptyRowsDto());
             return render(model, "main.html");
         });
 
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("black");
+            String blackUserName = req.queryParams("blackUserName");
             return render(model, "status.html");
         });
 
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            String firstUserName = req.queryParams("black");
-            String secondUserName = req.queryParams("white");
-            chessService.delete(new User(firstUserName), new User(secondUserName));
-            Board board = chessService.createEmpty();
-            List<LineDto> rows = board.getRows();
-            model.put("rows", rows);
+            String blackUserName = req.queryParams("blackUserName");
+            String whiteUserName = req.queryParams("whiteUserName");
+            chessService.delete(new User(blackUserName), new User(whiteUserName));
+            model.put("rows", chessService.getEmptyRowsDto());
             return render(model, "main.html");
         });
     }

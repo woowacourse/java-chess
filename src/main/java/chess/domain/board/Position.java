@@ -69,22 +69,22 @@ public class Position implements Comparable<Position> {
     }
 
     public Optional<Position> nextPositionOf(Direction direction) {
-        Column columnDestination = direction.findColumnDestination(column).orElse(null);
-        Row rowDestination = direction.findRowDestination(row).orElse(null);
+        Optional<Column> columnDestination = direction.findColumnDestination(column);
+        Optional<Row> rowDestination = direction.findRowDestination(row);
 
-        if (columnDestination == null || rowDestination == null) {
+        if (!columnDestination.isPresent() || !rowDestination.isPresent()) {
             return Optional.empty();
         }
 
-        return Optional.of(of(columnDestination, rowDestination));
+        return Optional.of(of(columnDestination.get(), rowDestination.get()));
     }
 
     public List<Position> pathTo(Direction direction, int count) {
         List<Position> path = new ArrayList<>();
         Position nextPosition = this;
 
-        for (int i = 0; i < count && nextPosition.nextPositionOf(direction).orElse(null) != null; i++) {
-            nextPosition = nextPosition.nextPositionOf(direction).orElse(null);
+        for (int i = 0; i < count && nextPosition.nextPositionOf(direction).isPresent(); i++) {
+            nextPosition = nextPosition.nextPositionOf(direction).get();
             path.add(nextPosition);
         }
         return path;

@@ -7,6 +7,7 @@ import chess.domain.player.PlayerColor;
 import chess.domain.result.ChessResult;
 import chess.domain.result.Score;
 import chess.dto.LineDto;
+import chess.dto.RowsDtoConverter;
 
 public class OutputView {
 
@@ -20,7 +21,7 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        board.getRows()
+        RowsDtoConverter.convertFrom(board.getBoard())
                 .stream()
                 .map(LineDto::getGamePieces)
                 .forEach(pieces -> {

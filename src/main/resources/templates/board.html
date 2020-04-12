@@ -11,6 +11,7 @@
 
 <body background="./img/treeboard.png">
     <div id="app">
+        <div class="turn-number">{{turn}}</div>
         <div class="board">
             {{#rows}}
             <div class="row">
@@ -25,31 +26,33 @@
         <div class="side">
             <div class="user">
                 <img src="./img/BLACK_P.png">
-                <p class="user-name">{{firstUser}}</p>
+                <p class="user-name">{{blackUser}}</p>
+                <p id="black-turn" class="turn">TURN</p>
             </div>
             <div class="button">
                 <form action="/status" method="post">
-                    <input type="hidden" name="black" value="{{firstUser}}">
+                    <input type="hidden" name="blackUserName" value="{{blackUser}}">
                     <input type="submit" value="STATUS">
                 </form>
             </div>
             <div class="button">
                 <form action="/save" method="post">
-                    <input type="hidden" name="black" value="{{firstUser}}">
-                    <input type="hidden" name="white" value="{{secondUser}}">
+                    <input type="hidden" name="blackUserName" value="{{blackUser}}">
+                    <input type="hidden" name="whiteUserName" value="{{whiteUser}}">
                     <input type="submit" value="SAVE">
                 </form>
             </div>
             <div class="button">
                 <form action="/end" method="post">
-                    <input type="hidden" name="black" value="{{firstUser}}">
-                    <input type="hidden" name="white" value="{{secondUser}}">
+                    <input type="hidden" name="blackUserName" value="{{blackUser}}">
+                    <input type="hidden" name="whiteUserName" value="{{whiteUser}}">
                     <input type="submit" value="END">
                 </form>
             </div>
             <div class="user">
                 <img src="./img/WHITE_p.png">
-                <p class="user-name">{{secondUser}}</p>
+                <p class="user-name">{{whiteUser}}</p>
+                <p id="white-turn" class="turn">TURN</p>
             </div>
         </div>
     </div>
@@ -67,11 +70,15 @@
         $(".cell:eq(" + i + ")").addClass(cell);
     }
 
+    let turn = $(".turn-number").text();
+    console.log(turn);
+    showTurn(turn);
+
     let source;
     let isFirstClick = true;
     let cell;
     let before;
-    var black = document.getElementsByClassName("user-name")[0].innerHTML;
+    var blackUserName = document.getElementsByClassName("user-name")[0].innerHTML;
 
     $(".cell").click(function () {
         if (document.querySelector(".selected-cell") !== null) {
@@ -89,7 +96,7 @@
 
             $.ajax({
                 url: "/path",
-                data: { source: source, black: black },
+                data: { source: source, blackUserName: blackUserName },
                 method: "POST",
                 // async: false,
                 // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
@@ -137,14 +144,18 @@
         // 두번째 클릭이라면 이동
         $.ajax({
             url: "/move",
-            data: { source: source, target: cellPosition, black: black },
+            data: { source: source, target: cellPosition, blackUserName: blackUserName },
             method: "POST",
             // async: false,
             // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
         }).done(function (possible) {
             if (possible == "finished") {
-                alert("게임이 끝났습니다.");
-                window.location.href = "main.html";
+                if (turn % 2 == 0) {
+                    alert("게임이 끝났습니다. 백팀이 승리했습니다.");
+                } else {
+                    alert("게임이 끝났습니다. 흑팀이 승리했습니다.");
+                }
+                window.location.replace("main.html");
                 return;
             } else if (possible !== "true") {
                 alert(possible);
@@ -156,6 +167,8 @@
             $(".y").removeClass("y");
             isFirstClick = true;
             source = null;
+            turn++;
+            showTurn(turn);
         });
     });
 
@@ -165,5 +178,15 @@
         document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild,
             document.getElementById(to).firstElementChild);
         document.getElementById(from).appendChild(img);
+    }
+
+    function showTurn(turn) {
+        if (turn % 2 === 0) {
+            document.getElementById("black-turn").style.opacity = 0;
+            document.getElementById("white-turn").style.opacity = 1;
+        } else {
+            document.getElementById("black-turn").style.opacity = 1;
+            document.getElementById("white-turn").style.opacity = 0;
+        }
     }
 </script>

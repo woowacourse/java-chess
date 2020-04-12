@@ -11,11 +11,17 @@ body {
     height: 773px;
 }
 
+.turn-number {
+    display: none;
+    width: 1;
+}
+
 .board {
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin: auto 20px;
+    margin-left: 0;
     height: 100%;
     width: 63%;
 }
@@ -92,7 +98,15 @@ body {
 .user-name {
     font-size: 50px;
     font-family: fantasy;
-    flex: 2;
+    text-align: center;
+    flex: 1;
+}
+
+.turn {
+    font-size: 50px;
+    font-family: fantasy;
+    color: hotpink;
+    flex: 1;
 }
 
 input[type="submit"] {
