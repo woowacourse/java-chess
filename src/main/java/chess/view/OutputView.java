@@ -1,5 +1,6 @@
 package chess.view;
 
+import java.util.List;
 import java.util.Map;
 
 import chess.domain.board.Board;
@@ -20,9 +21,8 @@ public class OutputView {
         );
     }
 
-    public static void printBoard(Board board) {
-        RowsDtoConverter.convertFrom(board.getBoard())
-                .stream()
+    public static void printBoard(List<LineDto> rows) {
+        rows.stream()
                 .map(LineDto::getGamePieces)
                 .forEach(pieces -> {
                     pieces.forEach(piece -> System.out.print(piece.getName()));

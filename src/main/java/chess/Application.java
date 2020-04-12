@@ -1,20 +1,21 @@
 package chess;
 
 import java.sql.SQLException;
+import java.util.List;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.command.Command;
 import chess.domain.player.User;
+import chess.dto.LineDto;
+import chess.dto.RowsDtoConverter;
 import chess.service.ChessService;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException {
         ChessService service = new ChessService();
-        OutputView.printBoard(service.getBoard(User.EMPTY_BOARD_USER));
+        OutputView.printBoard(service.getEmptyRowsDto());
         User blackUser = createBlackUser();
         User whiteUser = createWhiteUser();
         Command command;
@@ -23,10 +24,10 @@ public class Application {
         do {
             command = receiveCommand();
             if (command.isStart()) {
-                OutputView.printBoard(BoardFactory.createInitialBoard(blackUser, whiteUser));
+                OutputView.printBoard(service.getRowsDto(blackUser, whiteUser));
             }
             if (command.isMove()) {
-                executeMovement(service, command);
+                executeMovement(service, command, blackUser);
             }
             if (command.isStatus()) {
                 OutputView.printScore(service.calculateResult(blackUser));
@@ -61,10 +62,11 @@ public class Application {
         }
     }
 
-    private static void executeMovement(ChessService service, Command command) {
+    private static void executeMovement(ChessService service, Command command, User blackUser) {
         try {
-            Board board = service.move(new User("1"), command.getSource(), command.getTarget());
-            OutputView.printBoard(board);
+            List<LineDto> rows = RowsDtoConverter.convertFrom(
+                    service.move(blackUser, command.getSource(), command.getTarget()).getBoard());
+            OutputView.printBoard(rows);
         } catch (RuntimeException | SQLException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
