@@ -7,7 +7,6 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class commandHistoryDaoTest {
@@ -25,16 +24,10 @@ class commandHistoryDaoTest {
         assertNotNull(con);
     }
 
-    @DisplayName("레코드 갯수 카운트 테스트")
-    @Test
-    public void countRecords() {
-        assertThat(commandHistoryDao.countRecords()).isEqualTo(1);
-    }
-
     @DisplayName("레코드 추가 테스트")
     @Test
     public void addRecord() {
         CommandHistory commandHistory = new CommandHistory("start", "", "", "");
-        commandHistoryDao.addRecord(commandHistory);
+        commandHistoryDao.createRecord(commandHistory);
     }
 }

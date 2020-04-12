@@ -39,15 +39,15 @@ public class WebController {
     public String startGame() {
         board.initialize();
 
-        boardDAO.clearBoard();
-        boardDAO.addBoard(board.getBoard());
+        boardDAO.deleteBoard();
+        boardDAO.createBoard(board.getBoard());
 
-        commandHistoryDAO.clearRecord();
-        commandHistoryDAO.addRecord(new CommandHistory(Command.START.getCommand(), EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
+        commandHistoryDAO.deleteRecord();
+        commandHistoryDAO.createRecord(new CommandHistory(Command.START.getCommand(), EMPTY_STRING, EMPTY_STRING, EMPTY_STRING));
 
         Map<String, Object> model = new HashMap<>();
         model.put("records", commandHistoryDAO.readRecords());
-        model.put("pieces", boardDAO.showPieces());
+        model.put("pieces", boardDAO.readBoard());
         model.put("turn", printTurn(turn()));
         model.put("white_score", calculateScore(PieceColor.WHITE));
         model.put("black_score", calculateScore(PieceColor.BLACK));
@@ -64,7 +64,7 @@ public class WebController {
         Map<String, Object> model = new HashMap<>();
         model.put("records", commandHistoryDAO.readRecords());
         model.put("end", board.isGameOver());
-        model.put("pieces", boardDAO.showPieces());
+        model.put("pieces", boardDAO.readBoard());
         model.put("turn", printTurn(turn()));
         model.put("white_score", calculateScore(PieceColor.WHITE));
         model.put("black_score", calculateScore(PieceColor.BLACK));
@@ -85,7 +85,7 @@ public class WebController {
             move.setErrorMsg(e.getMessage());
         }
 
-        commandHistoryDAO.addRecord(move);
+        commandHistoryDAO.createRecord(move);
     }
 
     public String resumeGame() {
@@ -95,7 +95,7 @@ public class WebController {
 
         Map<String, Object> model = new HashMap<>();
         model.put("commandHistories", commandHistoryDAO.readRecords());
-        model.put("pieces", boardDAO.showPieces());
+        model.put("pieces", boardDAO.readBoard());
         model.put("turn", printTurn(turn()));
         model.put("white_score", calculateScore(PieceColor.WHITE));
         model.put("black_score", calculateScore(PieceColor.BLACK));
@@ -106,7 +106,7 @@ public class WebController {
     private void endGame() {
         if (board.isGameOver()) {
             String winner = board.getTeamColor().changeTeam().name();
-            commandHistoryDAO.addRecord(new CommandHistory(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
+            commandHistoryDAO.createRecord(new CommandHistory(GAME_END_MESSAGE, EMPTY_STRING, EMPTY_STRING, winner + WINNER_MESSAGE));
         }
     }
 
