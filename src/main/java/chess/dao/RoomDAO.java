@@ -18,6 +18,47 @@ public class RoomDAO {
 		return ROOM_DAO;
 	}
 
+	public void addRoom(String roomName, String roomColor) throws SQLException {
+		String query = "INSERT INTO room(room_name, room_color) VALUES (?, ?)";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, roomName);
+				pstmt.setString(2, roomColor);
+			}
+		};
+
+		jdbcTemplate.executeUpdate(query);
+	}
+
+	public void removeRoomById(int roomId) throws SQLException {
+		String query = "DELETE FROM room WHERE room_id = ?";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setInt(1, roomId);
+			}
+		};
+
+		jdbcTemplate.executeUpdate(query);
+	}
+
+	public void updateRoomColorById(int roomId, Color roomColor) throws SQLException {
+		String query = "UPDATE room SET room_color = ? WHERE room_id = ?";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, roomColor.name());
+				pstmt.setInt(2, roomId);
+			}
+		};
+
+		jdbcTemplate.executeUpdate(query);
+	}
+
 	public Room findRoomById(int roomId) throws SQLException {
 		String query = "SELECT room_id, room_name, room_color FROM room WHERE room_id = ?";
 
@@ -35,29 +76,6 @@ public class RoomDAO {
 					rs.getString("room_color")
 				);
 			}
-		}
-	}
-
-	public void addRoom(String roomName, String roomColor) throws SQLException {
-		String query = "INSERT INTO room(room_name, room_color) VALUES (?, ?)";
-
-		try (Connection con = JDBCConnector.getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)
-		) {
-			pstmt.setString(1, roomName);
-			pstmt.setString(2, roomColor);
-			pstmt.executeUpdate();
-		}
-	}
-
-	public void removeRoomById(int roomId) throws SQLException {
-		String query = "DELETE FROM room WHERE room_id = ?";
-
-		try (Connection con = JDBCConnector.getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)
-		) {
-			pstmt.setInt(1, roomId);
-			pstmt.executeUpdate();
 		}
 	}
 
@@ -95,18 +113,6 @@ public class RoomDAO {
 				}
 				return rooms;
 			}
-		}
-	}
-
-	public void updateRoomColorById(int roomId, Color roomColor) throws SQLException {
-		String query = "UPDATE room SET room_color = ? WHERE room_id = ?";
-
-		try (Connection con = JDBCConnector.getConnection();
-			 PreparedStatement pstmt = con.prepareStatement(query)
-		) {
-			pstmt.setString(1, roomColor.name());
-			pstmt.setInt(2, roomId);
-			pstmt.executeUpdate();
 		}
 	}
 
