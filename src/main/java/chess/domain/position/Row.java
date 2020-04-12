@@ -18,6 +18,14 @@ public enum Row {
 		this.symbol = symbol;
 	}
 
+	public static Row of(String row) {
+		try {
+			return of(Integer.parseInt(row));
+		} catch (NumberFormatException e) {
+			throw new IllegalArgumentException("Row는 숫자만 입력할 수 있습니다.");
+		}
+	}
+
 	public static Row of(int row) {
 		return Arrays.stream(values())
 				.filter(r -> r.symbol == row)

@@ -3,28 +3,47 @@ package chess.domain.position;
 import java.util.Objects;
 
 public class Position {
+	private static final int POSITION_STRING_LENGTH = 2;
 	private Column col;
 	private Row row;
 
-	public Position(String position) {
-		this(position.substring(0, 1), Integer.parseInt(position.substring(1)));
-	}
-
-	public Position(int col, int row) {
-		this(Column.of(col), Row.of(row));
-	}
-
-	public Position(String col, Row row) {
-		this(Column.of(col), row);
-	}
-
-	public Position(String col, int row) {
-		this(Column.of(col), Row.of(row));
-	}
-
-	public Position(Column col, Row row) {
+	private Position(Column col, Row row) {
 		this.col = col;
 		this.row = row;
+	}
+
+	public static Position of(Column col, Row row) {
+		return new Position(col, row);
+	}
+
+	public static Position of(String col, Row row) {
+		return new Position(Column.of(col), row);
+	}
+
+	public static Position of(String col, int row) {
+		return new Position(Column.of(col), Row.of(row));
+	}
+
+	public static Position of(int col, int row) {
+		return new Position(Column.of(col), Row.of(row));
+	}
+
+	public static Position of(String col, String row) {
+		return new Position(Column.of(col), Row.of(row));
+	}
+
+	public static Position of(String position) {
+		validate(position);
+		return of(position.substring(0, 1), position.substring(1));
+	}
+
+	private static void validate(String position) {
+		if (Objects.isNull(position) || position.isEmpty()) {
+			throw new IllegalArgumentException("빈 값을 입력하지 마세요.");
+		}
+		if (position.length() < POSITION_STRING_LENGTH) {
+			throw new IllegalArgumentException("위치를 정확히 입력해주세요.");
+		}
 	}
 
 	public Direction findDirection(Position target) {

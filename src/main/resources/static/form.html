@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+    <style type="text/css">
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: serif;
+        }
+
+        .hello {
+            max-width: 500px;
+            text-align: center;
+            height: 100%;
+            width: 100%;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+<body>
+<div class="hello">
+    <h1>90년대 컴퓨터 체스게임</h1>
+    <form action="/start_game" method="get">
+        <input type="submit" value="시작">
+    </form>
+    <form action="/continue_game" method="get">
+        <input type="text" name="gameId">
+        <input type="submit" value="계속하기">
+    </form>
+</div>
+</body>
+</html>

@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
@@ -9,10 +9,10 @@ public class PieceAssembler {
 	private PieceAssembler() {
 	}
 
-	public static PieceDto create(Piece piece) {
+	public static PieceDto createDto(Piece piece) {
 		Position position = piece.getPosition();
 		Column col = position.getCol();
 		Row row = position.getRow();
-		return new PieceDto(PieceNameConverter.run(piece), col.getValue(), row.getSymbol());
+		return new PieceDto(PieceNameConverter.toName(piece), col.getValue(), row.getSymbol());
 	}
 }

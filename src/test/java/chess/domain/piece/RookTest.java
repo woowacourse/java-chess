@@ -13,7 +13,7 @@ class RookTest {
 	@CsvSource(value = {"b3,false", "c6,false", "a4,true", "f4,true", "e6,false", "b2,false", "c4,true"})
 	@DisplayName("갈 수 있는 지 확인")
 	void canMove(String target, boolean expected) {
-		Piece piece = new Rook(Side.WHITE, new Position("d4"));
-		assertThat(piece.canMove(new Position(target))).isEqualTo(expected);
+		Piece piece = new Rook(Side.WHITE, Position.of("d4"));
+		assertThat(piece.canMove(Position.of(target))).isEqualTo(expected);
 	}
 }

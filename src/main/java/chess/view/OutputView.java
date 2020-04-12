@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.dto.ChessBoardDto;
+import chess.dto.ChessBoardDto;
 
 import java.util.List;
 

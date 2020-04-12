@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.dto;
 
 import chess.domain.ChessBoard;
 import chess.domain.piece.Piece;
@@ -12,7 +12,7 @@ public class ChessBoardAssembler {
 	private static final int INDEX_ADJUST = 1;
 	private static final int ROW_COUNT = Row.size();
 	private static final int COL_COUNT = Column.size();
-	private static final String BLANK_CHAR = ".";
+	private static final String BLANK_CHAR = "";
 
 	private ChessBoardAssembler() {
 	}
@@ -21,7 +21,7 @@ public class ChessBoardAssembler {
 		List<List<String>> board = createEmptyBoard();
 
 		for (Piece piece : chessBoard.getPieces()) {
-			PieceDto pieceDto = PieceAssembler.create(piece);
+			PieceDto pieceDto = PieceAssembler.createDto(piece);
 
 			List<String> boardRow = board.get(ROW_COUNT - pieceDto.getRow());
 			boardRow.set(pieceDto.getCol() - INDEX_ADJUST, pieceDto.getName());

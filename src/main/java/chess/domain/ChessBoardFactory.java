@@ -25,21 +25,21 @@ public class ChessBoardFactory {
 
 	private static List<Piece> createPawn(Side side) {
 		return Arrays.stream(Column.values())
-				.map(col -> new Pawn(side, new Position(col, side.getInitPawnRow())))
+				.map(col -> new Pawn(side, Position.of(col, side.getInitPawnRow())))
 				.collect(Collectors.toList());
 	}
 
 	private static List<Piece> createNoble(Side side) {
 		Row row = side.getInitNobleRow();
 		return Arrays.asList(
-				new Rook(side, new Position(Column.ONE, row)),
-				new Knight(side, new Position(Column.TWO, row)),
-				new Bishop(side, new Position(Column.THREE, row)),
-				new Queen(side, new Position(Column.FOUR, row)),
-				new King(side, new Position(Column.FIVE, row)),
-				new Bishop(side, new Position(Column.SIX, row)),
-				new Knight(side, new Position(Column.SEVEN, row)),
-				new Rook(side, new Position(Column.EIGHT, row))
+				new Rook(side, Position.of(Column.ONE, row)),
+				new Knight(side, Position.of(Column.TWO, row)),
+				new Bishop(side, Position.of(Column.THREE, row)),
+				new Queen(side, Position.of(Column.FOUR, row)),
+				new King(side, Position.of(Column.FIVE, row)),
+				new Bishop(side, Position.of(Column.SIX, row)),
+				new Knight(side, Position.of(Column.SEVEN, row)),
+				new Rook(side, Position.of(Column.EIGHT, row))
 		);
 	}
 }
