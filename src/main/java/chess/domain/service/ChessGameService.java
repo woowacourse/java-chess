@@ -21,6 +21,7 @@ public class ChessGameService {
 	}
 
 	public ChessGame create(String roomName) throws SQLException {
+		validateDuplicated(roomName);
 		ChessGame chessGame = ChessGame.start();
 
 		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
@@ -28,6 +29,16 @@ public class ChessGameService {
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.addRoom(roomName, board, turn, finishFlag);
 		return chessGame;
+	}
+
+	private void validateDuplicated(String roomName) throws SQLException {
+		if (isPresentRoom(roomName)) {
+			throw new IllegalArgumentException("입력한 방이 이미 존재합니다.");
+		}
+	}
+
+	private boolean isPresentRoom(String roomName) throws SQLException {
+		return roomDao.findByRoomName(roomName, "board").isPresent();
 	}
 
 	public ChessGame move(String roomName, String source, String target) throws SQLException {
@@ -46,6 +57,7 @@ public class ChessGameService {
 	}
 
 	public ChessGame load(String roomName) throws SQLException {
+		validatePresent(roomName);
 		String finishFlag = roomDao.findByRoomName(roomName, "finish_flag")
 				.orElseThrow(NoSuchElementException::new);
 		validateFinish(finishFlag);
@@ -55,6 +67,12 @@ public class ChessGameService {
 		String turn = roomDao.findByRoomName(roomName, "turn")
 				.orElseThrow(NoSuchElementException::new);
 		return new ChessGame(BoardConverter.convertToBoard(board), Side.valueOf(turn));
+	}
+
+	private void validatePresent(String roomName) throws SQLException {
+		if (!isPresentRoom(roomName)) {
+			throw new IllegalArgumentException("입력한 방이 없습니다.");
+		}
 	}
 
 	private void validateFinish(String finishFlag) {

@@ -40,8 +40,14 @@ public class WebController {
 	private void createRoom() {
 		post("/create", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			ChessGame chessGame = chessGameService.create(req.queryParams("room-name"));
-			putGameInfoToModel(chessGame, model);
+			try {
+				ChessGame chessGame = chessGameService.create(req.queryParams("room-name"));
+				putGameInfoToModel(chessGame, model);
+			} catch (RuntimeException e) {
+				model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+				model.put("error", e.getMessage());
+				return render(model, "index.html");
+			}
 			return render(model, "chess.html");
 		});
 	}
@@ -49,9 +55,15 @@ public class WebController {
 	private void joinRoom() {
 		post("/join", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			ChessGame chessGame = chessGameService.load(req.queryParams("room-name"));
-			putGameInfoToModel(chessGame, model);
-			return render(model, "chess.html");
+			try {
+				ChessGame chessGame = chessGameService.load(req.queryParams("room-name"));
+				putGameInfoToModel(chessGame, model);
+				return render(model, "chess.html");
+			} catch (RuntimeException e) {
+				model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+				model.put("error", e.getMessage());
+				return render(model, "index.html");
+			}
 		});
 	}
 
