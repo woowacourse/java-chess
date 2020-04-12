@@ -8,6 +8,6 @@ import java.sql.SQLException;
  *
  *   @author ParkDooWon
  */
-public interface ParametersSetter {
+public interface PreparedStatementSetter {
 	void setParameters(PreparedStatement pstmt) throws SQLException;
 }

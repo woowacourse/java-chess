@@ -9,6 +9,7 @@ import domain.piece.PieceCreator;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 import domain.template.JdbcTemplate;
+import domain.template.PreparedStatementSetter;
 import domain.template.RowMapper;
 
 /**
@@ -23,8 +24,10 @@ public class BoardDao {
 
 	public void clearBoardDb() throws SQLException {
 		String query = "DELETE FROM board";
+		PreparedStatementSetter pss = pstmt -> {
+		};
 		JdbcTemplate template = new JdbcTemplate();
-		template.executeUpdate(query);
+		template.executeUpdate(query, pss);
 	}
 
 	public void saveBoard(Board board) throws SQLException {
@@ -35,24 +38,34 @@ public class BoardDao {
 
 	private void savePiece(Rank rank) throws SQLException {
 		String query = "INSERT INTO board VALUES (?, ?)";
+		JdbcTemplate template = new JdbcTemplate();
+		PreparedStatementSetter pss;
 		for (Piece piece : rank.getPieces()) {
 			String position =
 				piece.getPosition().getColumn().getColumnName() + String.valueOf(piece.getPosition().getRow());
-			JdbcTemplate template = new JdbcTemplate();
-			template.executeUpdate(query, position, piece.showSymbol());
+			pss = pstmt -> {
+				pstmt.setString(1, position);
+				pstmt.setString(2, piece.showSymbol());
+			};
+			template.executeUpdate(query, pss);
 		}
 	}
 
 	public void clearTurn() throws SQLException {
 		String query = "DELETE FROM TURN";
 		JdbcTemplate template = new JdbcTemplate();
-		template.executeUpdate(query);
+		PreparedStatementSetter pss = pstmt -> {
+		};
+		template.executeUpdate(query, pss);
 	}
 
 	public void saveTurn(Team turn) throws SQLException {
 		String query = "INSERT INTO turn VALUES (?)";
 		JdbcTemplate template = new JdbcTemplate();
-		template.executeUpdate(query, turn.getName());
+		PreparedStatementSetter pss = pstmt -> {
+			pstmt.setString(1, turn.getName());
+		};
+		template.executeUpdate(query, pss);
 	}
 
 	public Board loadBoard() throws SQLException {
@@ -66,6 +79,8 @@ public class BoardDao {
 	private Rank loadRank(int rankIndex) throws SQLException {
 		String query = "SELECT * FROM board";
 		JdbcTemplate template = new JdbcTemplate();
+		PreparedStatementSetter pss = pstmt -> {
+		};
 
 		RowMapper<Piece> rowMapper = rs -> {
 			Piece piece = null;
@@ -77,13 +92,15 @@ public class BoardDao {
 			}
 			return piece;
 		};
-		return new Rank(template.executeQuery(query, rowMapper));
+		return new Rank(template.executeQuery(query, pss, rowMapper));
 	}
 
 	public Team loadTurn() throws SQLException {
 		JdbcTemplate template = new JdbcTemplate();
 		String query = "SELECT * FROM turn";
+		PreparedStatementSetter pss = pstmt -> {
+		};
 		RowMapper<Team> rowMapper = rs -> Team.of(rs.getString("game_turn"));
-		return template.executeQuery(query, rowMapper).get(0);
+		return template.executeQuery(query, pss, rowMapper).get(0);
 	}
 }

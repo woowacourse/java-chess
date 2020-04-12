@@ -41,22 +41,21 @@ public class JdbcTemplate {
 		return con;
 	}
 
-	public void executeUpdate(String query, Object... objects) throws SQLException {
-		try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(query)) {
-			for (int i = 0; i < objects.length; i++) {
-				pstmt.setString(i + 1, String.valueOf(objects[i]));
-			}
+	public void executeUpdate(String query, PreparedStatementSetter pss) throws SQLException {
+		try (Connection connection = getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(query)) {
+			pss.setParameters(pstmt);
 			pstmt.executeUpdate();
 		}
 	}
 
-	public <T> List<T> executeQuery(String query, RowMapper<T> rowMapper, Object... objects) throws SQLException {
+	public <T> List<T> executeQuery(String query, PreparedStatementSetter pss, RowMapper<T> rowMapper) throws
+		SQLException {
 		List<T> items = new ArrayList<>();
-		try (Connection connection = getConnection(); PreparedStatement pstmt = connection.prepareStatement(
-			query); ResultSet rs = pstmt.executeQuery()) {
-			for (int i = 0; i < objects.length; i++) {
-				pstmt.setString(i + 1, String.valueOf(objects[i]));
-			}
+		try (Connection connection = getConnection();
+			 PreparedStatement pstmt = connection.prepareStatement(query);
+			 ResultSet rs = pstmt.executeQuery()) {
+			pss.setParameters(pstmt);
 			while (rs.next()) {
 				if (rowMapper.rowMap(rs) != null) {
 					items.add(rowMapper.rowMap(rs));
