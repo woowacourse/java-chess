@@ -20,7 +20,7 @@ public class BoardDao extends ConnectionManager {
         String query = "INSERT INTO board VALUES (?, ?)";
         try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
             pstmt.setString(1, position.name());
-            pstmt.setString(2, piece.chessPiece());
+            pstmt.setString(2, piece.getChessPiece());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());

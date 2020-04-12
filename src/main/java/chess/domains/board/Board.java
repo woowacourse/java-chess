@@ -90,7 +90,7 @@ public class Board {
         double score = board.values()
                 .stream()
                 .filter(playingPiece -> playingPiece.isMine(teamColor))
-                .mapToDouble(Piece::score)
+                .mapToDouble(Piece::getScore)
                 .sum();
 
         int pawnCount = countOfPawnsInSameColumn(teamColor);
@@ -102,7 +102,7 @@ public class Board {
         double score = board.values()
                 .stream()
                 .filter(playingPiece -> playingPiece.isMine(pieceColor))
-                .mapToDouble(Piece::score)
+                .mapToDouble(Piece::getScore)
                 .sum();
 
         int pawnCount = countOfPawnsInSameColumn(pieceColor);
@@ -155,6 +155,6 @@ public class Board {
     }
 
     public String findPieceByPosition(String source) {
-        return board.get(Position.ofPositionName(source)).chessPiece();
+        return board.get(Position.ofPositionName(source)).getChessPiece();
     }
 }
