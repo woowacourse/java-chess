@@ -13,13 +13,14 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class JdbcChessDao implements ChessDao {
+    private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
+    private static final String DATABASE = "chess"; // MySQL DATABASE 이름
+    private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
+    private static final String USERNAME = "root"; //  MySQL 서버 아이디
+    private static final String PASSWORD = "root"; // MySQL 서버 비밀번호
+
     public Connection getConnection() {
         Connection con = null;
-        String server = "localhost:13306"; // MySQL 서버 주소
-        String database = "chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
-        String userName = "root"; //  MySQL 서버 아이디
-        String password = "root"; // MySQL 서버 비밀번호
 
         // 드라이버 로딩
         try {
@@ -31,7 +32,7 @@ public class JdbcChessDao implements ChessDao {
 
         // 드라이버 연결
         try {
-            con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
+            con = DriverManager.getConnection("jdbc:mysql://" + SERVER + "/" + DATABASE + OPTION, USERNAME, PASSWORD);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
             System.err.println("연결 오류:" + e.getMessage());
