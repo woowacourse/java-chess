@@ -25,7 +25,7 @@ public class StatusRecordDao {
 	}
 
 	public List<StatusRecordDto> findStatusRecords() throws SQLException {
-		final String query = "SELECT record, game_date, room_name "
+		final String query = "SELECT * "
 				+ "FROM status_record "
 				+ "ORDER BY room_name";
 
@@ -35,8 +35,8 @@ public class StatusRecordDao {
 		}
 	}
 
-	private List<StatusRecordDto> prepareStatusRecordDtos
-			(final PreparedStatement preparedStatement) throws SQLException {
+	private List<StatusRecordDto> prepareStatusRecordDtos(final PreparedStatement preparedStatement)
+			throws SQLException {
 		try (final ResultSet resultSet = preparedStatement.executeQuery()) {
 			return collectStatusRecordDtos(resultSet);
 		}
@@ -44,13 +44,13 @@ public class StatusRecordDao {
 
 	private List<StatusRecordDto> collectStatusRecordDtos(final ResultSet resultSet)
 			throws SQLException {
-		final List<StatusRecordDto> statusRecordsWithRoomNameDto = new ArrayList<>();
+		final List<StatusRecordDto> statusRecordDtos = new ArrayList<>();
 		while (resultSet.next()) {
-			statusRecordsWithRoomNameDto.add(
+			statusRecordDtos.add(
 					new StatusRecordDto(resultSet.getInt("id"), resultSet.getString("record"),
 							resultSet.getDate("game_date"), resultSet.getString("room_name")));
 		}
-		return statusRecordsWithRoomNameDto;
+		return statusRecordDtos;
 	}
 
 	public int addStatusRecord(final String record, final int roomId) throws SQLException {
