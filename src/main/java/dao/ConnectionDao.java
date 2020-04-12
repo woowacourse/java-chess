@@ -23,11 +23,11 @@ public class ConnectionDao {
 
 	public Connection getConnection() throws SQLException {
 		Connection connection = null;
-		final String server = DatabaseInfo.SERVER; // MySQL 서버 주소
-		final String database = DatabaseInfo.DATABASE; // MySQL DATABASE 이름
+		final String server = DatabaseInfo.SERVER;
+		final String database = DatabaseInfo.DATABASE;
 		final String option = DatabaseInfo.OPTION;
-		final String userName = DatabaseInfo.USER_NAME; //  MySQL 서버 아이디
-		final String password = DatabaseInfo.PASSWORD; // MySQL 서버 비밀번호
+		final String userName = DatabaseInfo.USER_NAME;
+		final String password = DatabaseInfo.PASSWORD;
 		final String protocol = DatabaseInfo.PROTOCOL;
 		final String driver = DatabaseInfo.DRIVER;
 
