@@ -23,7 +23,7 @@ public class ChessRoomsController {
 	private final RoomsService roomsService;
 
 	static {
-		ROOMS_CONTROLLER = new ChessRoomsController(new RoomsService());
+		ROOMS_CONTROLLER = new ChessRoomsController(RoomsService.getInstance());
 	}
 
 	private ChessRoomsController(final RoomsService roomsService) {

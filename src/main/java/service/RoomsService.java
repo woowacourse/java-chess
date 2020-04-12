@@ -7,21 +7,35 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class RoomsService {
-	public static final RoomDao ROOM_DAO = new RoomDao();
+	private static final RoomsService roomsService;
+
+	static {
+		roomsService = new RoomsService(new RoomDao());
+	}
+
+	public final RoomDao roomDao;
+
+	private RoomsService(final RoomDao roomDao) {
+		this.roomDao = roomDao;
+	}
+
+	public static RoomsService getInstance() {
+		return roomsService;
+	}
 
 	public List<RoomDto> findAllRooms() throws SQLException {
-		return ROOM_DAO.findAllRooms();
+		return roomDao.findAllRooms();
 	}
 
 	public RoomDto findRoomByRoomName(final String roomName) throws SQLException {
-		return ROOM_DAO.findRoomByRoomName(roomName);
+		return roomDao.findRoomByRoomName(roomName);
 	}
 
 	public int addRoomByRoomName(final String roomName) throws SQLException {
-		return ROOM_DAO.addRoomByRoomName(roomName);
+		return roomDao.addRoomByRoomName(roomName);
 	}
 
 	public int deleteRoomByRoomName(final String roomName) throws SQLException {
-		return ROOM_DAO.deleteRoomByRoomName(roomName);
+		return roomDao.deleteRoomByRoomName(roomName);
 	}
 }

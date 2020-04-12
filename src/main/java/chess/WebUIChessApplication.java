@@ -54,7 +54,6 @@ public class WebUIChessApplication {
 			} catch (DaoNoneSelectedException e) {
 				return responseWhenHasNoState(roomId);
 			}
-
 		});
 
 		Spark.post("/chess/rooms/:id", (request, response) -> {
@@ -107,22 +106,24 @@ public class WebUIChessApplication {
 
 
 	private static String responseWhenHasState(final int roomId) throws SQLException {
+		final Map<String, Object> map = new HashMap<>();
+
 		final StateDao stateDao = new StateDao();
-		final dao.PieceDao pieceDao = new dao.PieceDao();
-		final AnnouncementDao announcementDao = new AnnouncementDao();
-
 		final StateDto daoStateDto = stateDao.findStateByRoomId(roomId);
-		final List<PieceDto> daoPieceDtos = pieceDao.findPiecesByRoomId(roomId);
 
+		final PieceDao pieceDao = new dao.PieceDao();
+		final List<PieceDto> daoPieceDtos = pieceDao.findPiecesByRoomId(roomId);
 		final Set<Piece> domainPieces = mapDaoPiecesToDomainPieces(daoPieceDtos);
+
 		final State domainState = StateType.getFactory(daoStateDto.getState()).apply(
 				new Pieces(domainPieces));
-
-		final AnnouncementDto daoAnnouncement = announcementDao.findAnnouncementByRoomId(roomId);
-
-		final Map<String, Object> map = new HashMap<>();
 		map.put("table", createTableHtmlWhenHasState(domainPieces));
+
+
+		final AnnouncementDao announcementDao = new AnnouncementDao();
+		final AnnouncementDto daoAnnouncement = announcementDao.findAnnouncementByRoomId(roomId);
 		map.put("announcement", daoAnnouncement.getMessage());
+
 		return render(map, "/chess.html");
 	}
 
