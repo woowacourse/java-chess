@@ -9,6 +9,7 @@ public enum PieceType {
     QUEEN("q", 9, "♕", "♛"),
     ROOK("r", 5, "♖", "♜");
 
+    public static final String INVALID_OF_CHESS_PIECE_ERROR_MESSAGE = "상응하는 체스 타입이 없습니다.";
     private final String name;
     private final double score;
     private final String whitePiece;

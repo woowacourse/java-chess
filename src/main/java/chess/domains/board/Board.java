@@ -1,7 +1,5 @@
 package chess.domains.board;
 
-import chess.controller.Command;
-import chess.domains.CommandHistory;
 import chess.domains.piece.Blank;
 import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
@@ -9,10 +7,7 @@ import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -21,6 +16,7 @@ public class Board {
     public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
     public static final int COLUMN_SIZE = 8;
     public static final String DELIMITER = " ";
+    public static final String INVALID_RECOVER_BOARD_ERROR_MESSAGE = "맞는 체스말을 찾을 수 없습니다.";
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
@@ -134,16 +130,18 @@ public class Board {
         return 0;
     }
 
-    public void recoverRecords(List<CommandHistory> commandHistories) {
-        for (CommandHistory commandHistory : commandHistories) {
-            String recordMessage = commandHistory.getCommandHistory();
-            String[] recordMessages = recordMessage.split(DELIMITER);
-            Command command = Command.findCommand(recordMessage);
-
-            if (command == Command.MOVE && commandHistory.getErrorMsg().equals("")) {
-                this.move(Position.ofPositionName(recordMessages[1]), Position.ofPositionName(recordMessages[2]));
-            }
+    public void recoverBoard(Map<String, String> previousBoard) {
+        Map<Position, Piece> recovered = new HashMap<>();
+        for (String position : previousBoard.keySet()) {
+            Piece recoverPiece = board.values()
+                    .stream()
+                    .filter(piece -> piece.getChessPiece()
+                            .equals(previousBoard.get(position)))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(INVALID_RECOVER_BOARD_ERROR_MESSAGE));
+            recovered.put(Position.ofPositionName(position), recoverPiece);
         }
+        this.board.putAll(recovered);
     }
 
     public PieceColor getTeamColor() {

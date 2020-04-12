@@ -11,7 +11,6 @@ import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class WebController {
@@ -90,8 +89,8 @@ public class WebController {
 
     public String resumeGame() {
         board.initialize();
-        List<CommandHistory> commandHistories = commandHistoryDAO.readRecords();
-        board.recoverRecords(commandHistories);
+        Map<String, String> previousBoard = boardDAO.readBoard();
+        board.recoverBoard(previousBoard);
 
         Map<String, Object> model = new HashMap<>();
         model.put("commandHistories", commandHistoryDAO.readRecords());
