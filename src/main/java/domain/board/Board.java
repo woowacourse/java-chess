@@ -1,5 +1,6 @@
 package domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 import java.util.stream.Stream;
@@ -17,6 +18,8 @@ public class Board {
 	private static final double PAWNS_ON_SAME_COLUMN_SCORE = 0.5;
 	private static final int COUNT_OF_ALL_KING = 2;
 	private static final int MAX_PAWN_NUMBER_TO_GET_HIGH_SCORE = 1;
+	private static final int FIRST_RANK_INDEX = 0;
+	private static final int LAST_RANK_INDEX = 7;
 
 	private List<Rank> ranks;
 
@@ -103,5 +106,13 @@ public class Board {
 			.flatMap(rank -> rank.getPieces().stream())
 			.filter(piece -> piece instanceof King)
 			.anyMatch(piece -> piece.isSameTeam(Team.WHITE));
+	}
+
+	public List<String> showAllPieces() {
+		List<String> pieces = new ArrayList<>();
+		for (int i = FIRST_RANK_INDEX; i <= LAST_RANK_INDEX; i++) {
+			pieces.addAll(ranks.get(i).getRankPieces());
+		}
+		return pieces;
 	}
 }

@@ -1,11 +1,15 @@
 package domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import domain.piece.Piece;
+import domain.piece.position.Column;
 
 public class Rank {
+	private static final String BLANK = "";
+
 	private List<Piece> pieces;
 
 	public Rank(List<Piece> pieces) {
@@ -29,5 +33,20 @@ public class Rank {
 	@Override
 	public int hashCode() {
 		return Objects.hash(pieces);
+	}
+
+	public List<String> getRankPieces() {
+		List<String> rankPieces = new ArrayList<>();
+		for (Column column : Column.values()) {
+			if (pieces.stream().anyMatch(piece -> piece.isSameColumn(column))) {
+				pieces.stream()
+					.filter(piece -> piece.isSameColumn(column))
+					.findFirst()
+					.ifPresent(piece -> rankPieces.add(piece.showSymbol()));
+				continue;
+			}
+			rankPieces.add(BLANK);
+		}
+		return rankPieces;
 	}
 }

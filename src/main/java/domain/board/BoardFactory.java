@@ -20,27 +20,25 @@ public class BoardFactory {
 	private static final String BLACK_PAWN_RANK = "7";
 	private static final String BLACK_OTHER_PIECE_RANK = "8";
 	private static final int EMPTY_RANK_SIZE = 4;
-	private static final List<Rank> ranks = new ArrayList<>();
-
-	static {
-		createRank(WHITE_OTHER_PIECE_RANK, Team.WHITE);
-		createPawnRank(WHITE_PAWN_RANK, Team.WHITE);
-		createEmptyRank();
-		createPawnRank(BLACK_PAWN_RANK, Team.BLACK);
-		createRank(BLACK_OTHER_PIECE_RANK, Team.BLACK);
-	}
 
 	public static Board create() {
-		return new Board(new ArrayList<>(ranks));
+		List<Rank> ranks = new ArrayList<>();
+		createRank(ranks, WHITE_OTHER_PIECE_RANK, Team.WHITE);
+		createPawnRank(ranks, WHITE_PAWN_RANK, Team.WHITE);
+		createEmptyRank(ranks);
+		createPawnRank(ranks, BLACK_PAWN_RANK, Team.BLACK);
+		createRank(ranks, BLACK_OTHER_PIECE_RANK, Team.BLACK);
+
+		return new Board(ranks);
 	}
 
-	private static void createEmptyRank() {
+	private static void createEmptyRank(List<Rank> ranks) {
 		for (int i = 0; i < EMPTY_RANK_SIZE; i++) {
 			ranks.add(new Rank(new ArrayList<>()));
 		}
 	}
 
-	private static void createRank(String row, Team team) {
+	private static void createRank(List<Rank> ranks, String row, Team team) {
 		List<Piece> rank = new ArrayList<>();
 
 		rank.add(new Rook(Position.of("a" + row), team));
@@ -55,7 +53,7 @@ public class BoardFactory {
 		ranks.add(new Rank(rank));
 	}
 
-	private static void createPawnRank(String row, Team team) {
+	private static void createPawnRank(List<Rank> ranks, String row, Team team) {
 		List<Piece> rank = new ArrayList<>();
 		for (Column column : Column.values()) {
 			rank.add(new Pawn(Position.of(column.getColumnName() + row), team));

@@ -2,9 +2,300 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>체스</title>
+    <style>
+        .outer_box {
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+        }
+
+        .inner_box {
+            width: 75px;
+            height: 75px;
+            float: left;
+            text-align: center;
+            display: table;
+        }
+
+        .inner_box > div {
+            font-size: 55px;
+            vertical-align: middle;
+            display: table-cell;
+        }
+
+        .black {
+            background-color: sandybrown;
+        }
+
+        .white {
+            background-color: beige;
+        }
+
+        .errorMessage {
+            margin: 0 auto;
+            overflow: auto;
+            width: 450px;
+            height: 200px;
+        }
+
+        .flex_container {
+            display: flex;
+        }
+
+        .flex_container > .flex_item {
+            flex: auto;
+        }
+
+        .buttons {
+            display: flex;
+            margin: 0 auto;
+            width: 600px;
+            justify-content: center;
+        }
+    </style>
 </head>
 <body>
-Hello World!!
+<div>
+    <div class="buttons">
+        <form action="/start">
+            <button style="font-size: 30px">게임 시작</button>
+        </form>
+        <br/>
+        <form action="/save" method="post">
+            <button style="font-size: 30px">게임 저장</button>
+        </form>
+        <form action="/load" method="post">
+            <button style="font-size: 30px">불러오기</button>
+        </form>
+    </div>
+    <div class="flex_container">
+        <div class="flex_item">
+            <h2 style="text-align: center">{{turn}}</h2>
+        </div>
+        <div class="flex_item">
+            <h4 style="text-align: center">Black Team Score : {{blackTeamScore}}</h4>
+            <h4 style="text-align: center">White Team Score : {{whiteTeamScore}}</h4>
+        </div>
+    </div>
+
+    <div style="text-align: center">
+        <form action="/move" method="post">
+            <input name="source" placeholder="source Position" type="text">
+            <input name="target" placeholder="target Position" type="text">
+            <input type="submit" value="move!">
+        </form>
+    </div>
+    <br/>
+
+    <div class="errorMessage">
+        {{#errorMessage}}
+        <p>{{this.message}}</p>
+        {{/errorMessage}}
+    </div>
+</div>
+
+<div class="outer_box">
+    <div class="inner_box black ">
+        <div>{{pieces.56}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.57}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.58}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.59}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.60}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.61}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.62}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.63}}</div>
+    </div>
+
+    <div class="inner_box white ">
+        <div>{{pieces.48}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.49}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.50}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.51}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.52}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.53}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.54}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.55}}</div>
+    </div>
+
+    <div class="inner_box black ">
+        <div>{{pieces.40}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.41}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.42}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.43}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.44}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.45}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.46}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.47}}</div>
+    </div>
+
+    <div class="inner_box white ">
+        <div>{{pieces.32}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.33}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.34}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.35}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.36}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.37}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.38}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.39}}</div>
+    </div>
+
+    <div class="inner_box black ">
+        <div>{{pieces.24}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.25}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.26}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.27}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.28}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.29}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.30}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.31}}</div>
+    </div>
+
+    <div class="inner_box white ">
+        <div>{{pieces.16}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.17}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.18}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.19}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.20}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.21}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.22}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.23}}</div>
+    </div>
+
+    <div class="inner_box black ">
+        <div>{{pieces.8}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.9}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.10}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.11}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.12}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.13}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.14}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.15}}</div>
+    </div>
+
+    <div class="inner_box white ">
+        <div>{{pieces.0}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.1}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.2}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.3}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.4}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.5}}</div>
+    </div>
+    <div class="inner_box white ">
+        <div>{{pieces.6}}</div>
+    </div>
+    <div class="inner_box black ">
+        <div>{{pieces.7}}</div>
+    </div>
+</div>
+<br/>
 </body>
 </html>

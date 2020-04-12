@@ -5,8 +5,8 @@ import java.util.List;
 
 import domain.board.Board;
 import domain.board.Rank;
-import domain.piece.Piece;
 import domain.piece.Pawn;
+import domain.piece.Piece;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
@@ -19,7 +19,7 @@ import domain.piece.team.Team;
  * 5  . E . . . . . .
  * 4  . . . . . . . .
  * 3  p . . . . . E .
- * 2  . . . . E p . .
+ * 2  p . . . E p p .
  * 1  p p . p p p p .
  *    A B C D E F G H
  * */
@@ -36,8 +36,10 @@ public class PawnBoard {
 		makePawn(rank1, "g1", Team.WHITE);
 
 		List<Piece> rank2 = new ArrayList<>();
+		makePawn(rank2, "a2", Team.WHITE);
 		makePawn(rank2, "e2", Team.BLACK);
 		makePawn(rank2, "f2", Team.WHITE);
+		makePawn(rank2, "g2", Team.WHITE);
 
 		List<Piece> rank3 = new ArrayList<>();
 		makePawn(rank3, "a3", Team.WHITE);
