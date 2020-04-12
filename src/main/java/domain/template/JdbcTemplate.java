@@ -19,6 +19,7 @@ public class JdbcTemplate {
 	private static final String OPTION = "?useSSL=false&serverTimezone=UTC";
 	private static final String USER_NAME = "root";//  MySQL 서버 아이디
 	private static final String PASSWORD = "1234";// MySQL 서버 비밀번호
+	public static final String URL = String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION);
 
 	public Connection getConnection() {
 		Connection con = null;
@@ -33,8 +34,7 @@ public class JdbcTemplate {
 		// 드라이버 연결
 		try {
 			System.out.println("정상적으로 연결되었습니다.");
-			con = DriverManager.getConnection(String.format("jdbc:mysql://%s/%s%s", SERVER, DATABASE, OPTION),
-				USER_NAME, PASSWORD);
+			con = DriverManager.getConnection(URL, USER_NAME, PASSWORD);
 		} catch (SQLException e) {
 			System.err.println(String.format("연결 오류:%s", e.getMessage()));
 		}
