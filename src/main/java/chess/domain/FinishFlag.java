@@ -21,6 +21,10 @@ public enum FinishFlag {
 				.orElseThrow(() -> new IllegalArgumentException("일치하는 FinishFlag가 없습니다."));
 	}
 
+	public boolean isFinish(String symbol) {
+		return FINISH.symbol.equals(symbol);
+	}
+
 	public String getSymbol() {
 		return symbol;
 	}

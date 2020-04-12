@@ -58,7 +58,7 @@ public class ChessGameService {
 	}
 
 	private void validateFinish(String finishFlag) {
-		if ("Y".equals(finishFlag)) {
+		if (FinishFlag.FINISH.isFinish(finishFlag)) {
 			throw new IllegalArgumentException("종료된 게임입니다.");
 		}
 	}

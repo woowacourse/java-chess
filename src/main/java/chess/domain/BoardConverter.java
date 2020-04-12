@@ -15,14 +15,14 @@ public class BoardConverter {
 		int col = 0;
 		int row = 8;
 
-		for (String boardName : board.split("")) {
-			Side side = convertToSide(boardName);
-			Optional<Piece> piece = PieceFactory.of(boardName.toLowerCase(), side, new Position((col % 8) + 1, row));
+		for (String pieceName : board.split("")) {
+			Optional<Piece> piece = PieceFactory.of(pieceName.toLowerCase(), convertToSide(pieceName),
+					new Position((col % 8) + 1, row));
+
 			if (piece.isPresent()) {
 				pieces.add(piece.orElseThrow(NoSuchElementException::new));
 			}
-			col++;
-			if (col % 8 == 0) {
+			if (++col % 8 == 0) {
 				row--;
 			}
 		}
