@@ -106,10 +106,13 @@
 - [x] 매핑 후 html 리로딩
 
 ## 선택 과제
+- [ ] Start에 새로운 체스 판 생성
+ - [ ] DB 삽입
+ 
 - [ ] ChessController ChessGame 제거, 매번 새로운 ChessGame 생성
  - [ ] 매 통신 마다 ChessGame을 DB에서 SELECT하기
  - [ ] 매 통신마다 ChessGame을 생성해야한다.
+ 
 - [ ] Move 마다 DB에 값 Update
-- [ ] Start에 새로운 체스 판 생성
- - [ ] DB 삽입
+
 - [ ] end 버튼 눌렀을 시 아무런 DB에 Piece 삽입하지 않도록 변경

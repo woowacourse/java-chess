@@ -50,6 +50,13 @@ public class ChessWebController {
             Map<String, Object> model = new HashMap<>();
             return render(model, "start.html");
         });
+
+        post("/start/new/game", (req, res) -> {
+            String whitePlayerName = req.queryParams("whitePlayerName");
+            String blackPlayerName = req.queryParams("blackPlayerName");
+            System.out.println(whitePlayerName + " , " + blackPlayerName + " 이시다!");
+            return null;
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

@@ -105,11 +105,13 @@
 
     <div id='turn'>It's whites Turn!</div>
 
+    <p style="margin-left: 60px;">
+        화이트 플레이어 : <input type="text" id="white_name" size="15" style="margin-top: 8px;">
+        블랙 플레이어 : <input type="text" id="black_name" size="15" style="margin-top: 8px;">
+    </p>
 
-    <p style="margin-left: 60px; margin-top: 8px;">
-        <form action="/start/new/game" method="get">
-            <input class="start-button" type="submit" value="Start" style="margin-left: 60px; margin-top: 8px;"/>
-        </form>
+    <p style="margin-top: 8px;">
+        <input class="start-button" type="submit" value="Start" style="margin-left: 60px; margin-top: 8px;" onclick="postNewGame();"/>
 
         <form action="/end" method="get">
             <input class="end-button" type="submit" value="End" style="margin-left: 60px; margin-top: 8px;"/>

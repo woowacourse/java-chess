@@ -45,7 +45,7 @@ function getChessBoard(id) {
     $.ajax({
         url: "/start/board",
         type: "get",
-        data: { id: id },
+        data: {id: id},
         success: function (data) {
             $('.gamecell').html('');
             $('.gamecell').attr('chess', 'null');
@@ -104,7 +104,7 @@ function postChessBoard(json) {
         },
         success: function (data) {
             var jsonData = JSON.parse(data);
-            console.log(JSON.stringify(jsonData));
+            // console.log(JSON.stringify(jsonData));
 
             if (jsonData.progress == "CONTINUE") {
                 var nowImg = $('#' + json.now).html();
@@ -148,7 +148,7 @@ function getChessGames() {
         type: "get",
         success: function (data) {
             var res = JSON.parse(data);
-            console.log(JSON.stringify(data));
+            // console.log(JSON.stringify(data));
             var chessGameDtos = res.chessGameDtos;
             for (var i = 0; i < chessGameDtos.length; i++) {
                 add(chessGameDtos[i].id);
@@ -180,4 +180,47 @@ $(document).ready(function () {
         "ondragover": "allowDrop(event)"
     });
 });
+
+
+function postNewGame() {
+    var whitePlayerName = document.getElementById("white_name").value;
+    var blackPlayerName = document.getElementById("black_name").value;
+
+    console.log(whitePlayerName, blackPlayerName);
+
+    var postNewGameData = {"whitePlayerName": whitePlayerName.toString(), "blackPlayerName": blackPlayerName.toString()};
+
+    $.ajax({
+            type: 'post',
+            url: '/start/new/game',
+            data: postNewGameData,
+            dataType: 'text',
+            error: function (xhr, status, error) {
+                alert(error.toString());
+            },
+            success: function (data) {
+                // var jsonData = JSON.parse(data);
+                //
+                // if (jsonData.progress == "CONTINUE") {
+                //     var nowImg = $('#' + json.now).html();
+                //     $('#' + json.des).html(nowImg);
+                //     $('#' + json.des).attr('chess', $('#' + json.now).chess);
+                //     $('#' + json.now).html('');
+                //     $('#' + json.now).attr('chess', 'null');
+                //
+                //     $('#whiteScore').html("whiteScore : " + jsonData.chessGameScoresDto.whiteScore.value);
+                //     $('#blackScore').html("blackScore : " + jsonData.chessGameScoresDto.blackScore.value);
+                //
+                //     $('#turn').html("It's " + jsonData.turn + " Turn!");
+                // }
+                // if (jsonData.progress == "ERROR") {
+                //     alert("움직일 수 없는 경우입니다.");
+                // }
+                // if (jsonData.progress == "END") {
+                //     getChessBoardResult();
+                // }
+            }
+        }
+    );
+}
 
