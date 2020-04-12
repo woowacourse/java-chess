@@ -16,15 +16,17 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessServiceTest {
-    private ChessDao chessDAO = new InMemoryChessDao();
-    private ChessService chessService = new ChessService(chessDAO);
+    private ChessDao chessDAO;
+    private ChessService chessService;
     private RequestDto moveRequest;
     private RequestDto saveRequest;
     private RequestDto endRequest;
 
     @BeforeEach
-    void setUp() throws SQLException {
-        chessService.start(null);
+    void setUp() {
+        chessDAO = new InMemoryChessDao();
+        chessService = new ChessService(chessDAO);
+        chessService.start();
         moveRequest = new RequestDto(Command.of("move"), Arrays.asList("a2", "a4"), 1L);
         saveRequest = new RequestDto(Command.of("end"), Arrays.asList("save", ""), 1L);
         endRequest = new RequestDto(Command.of("end"), Arrays.asList("", ""), 1L);
@@ -32,25 +34,25 @@ class ChessServiceTest {
 
     @Test
     void start() throws SQLException {
-        ResponseDto responseDto = chessService.start(null);
+        ResponseDto responseDto = chessService.start();
         assertThat(chessDAO.findGameById(responseDto.getId())).isInstanceOf(ChessGame.class);
     }
 
     @Test
-    void move() throws SQLException {
+    void move() {
         ResponseDto responseDto = chessService.move(moveRequest);
         assertThat(responseDto.getBoard().get(Position.of("a4"))).isEqualTo("WHITEPAWN");
     }
 
     @Test
     void save() throws SQLException {
-        ResponseDto responseDto = chessService.end(saveRequest);
+        chessService.end(saveRequest);
         assertThat(chessDAO.getDatabase().get(saveRequest.getId())).isInstanceOf(ChessGame.class);
     }
 
     @Test
     void end() throws SQLException {
-        ResponseDto responseDto = chessService.end(endRequest);
+        chessService.end(endRequest);
         assertThat(chessDAO.getDatabase().get(endRequest.getId())).isNull();
     }
 }

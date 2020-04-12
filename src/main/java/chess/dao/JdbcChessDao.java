@@ -131,7 +131,9 @@ public class JdbcChessDao implements ChessDao {
         try (Connection connection = getConnection()) {
             Map<Position, PieceState> board = getCurrentBoard(id, connection);
             Turn turn = getCurrentTurn(id, connection);
-            if (turn == null) return null;
+            if (turn == null) {
+                return null;
+            }
             return ChessGame.load(Board.of(board), turn);
         }
     }

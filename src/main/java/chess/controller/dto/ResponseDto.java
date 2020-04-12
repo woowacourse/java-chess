@@ -34,6 +34,10 @@ public class ResponseDto {
         this.message = message;
     }
 
+    public static ResponseDto unknownCommand() {
+        return new ResponseDto("알 수 없는 명령어 입니다.");
+    }
+
     public Map<Position, String> getBoard() {
         return board;
     }

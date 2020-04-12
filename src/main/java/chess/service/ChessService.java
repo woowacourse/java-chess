@@ -20,17 +20,21 @@ public class ChessService {
 
     public ChessService(ChessDao chessDAO) {
         this.chessDAO = chessDAO;
-        commands.put(Command.START, this::start);
+        commands.put(Command.START, null);
         commands.put(Command.MOVE, this::move);
         commands.put(Command.END, this::end);
         commands.put(Command.UNKNOWN, this::unknown);
     }
 
     public ResponseDto run(RequestDto requestDto) {
+        Command command = requestDto.getCommand();
+        if (command == Command.START) {
+            return start();
+        }
         return commands.get(requestDto.getCommand()).apply(requestDto);
     }
 
-    public ResponseDto start(RequestDto requestDto) {
+    public ResponseDto start() {
         try {
             ChessGame chessGame = ChessGame.start();
             long id = chessDAO.createChessGame(chessGame);
@@ -94,7 +98,7 @@ public class ChessService {
 
 
     private ResponseDto unknown(RequestDto requestDto) {
-        return new ResponseDto("알 수 없는 명령어 입니다.");
+        return ResponseDto.unknownCommand();
     }
 
     public boolean isEnd(long id) {

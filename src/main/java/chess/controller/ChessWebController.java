@@ -34,7 +34,7 @@ public class ChessWebController {
         });
 
         post("/createChessGame", (req, res) -> {
-            ResponseDto responseDto = chessService.start(null);
+            ResponseDto responseDto = chessService.start();
             Map<String, Object> model = new HashMap<>();
             model.put("id", responseDto.getId());
             return render(model, "create.html");
@@ -131,56 +131,4 @@ public class ChessWebController {
                 new WebDto(entry.getKey().getName(), entry.getValue()))
                 .collect(Collectors.toList());
     }
-//
-//
-//        get("/", (req, res) -> {
-//            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
-//            Map<String, Object> model = new HashMap<>();
-//            model.put("roomId", roomDto);
-//            return render(model, "index.html");
-//        });
-//    private List<WebDto> getRoomDto(List<Long> roomIds) {
-//        if (Objects.isNull(roomIds)) {
-//            return null;
-//        }
-//        return roomIds.stream()
-//                .map(room -> {
-//                    String key = String.valueOf(room);
-//                    String value = String.valueOf(room);
-//                    return new WebDto(key, value);
-//                })
-//                .collect(Collectors.toList());
-
-//    }
-//    private static WebDto getTurnDto(final Player turn) {
-//        if (Objects.isNull(turn)) {
-//            return null;
-//        }
-//        return new WebDto(turn.toString(), turn.toString());
-//    }
-//
-//    private static List<WebDto> getBoardDto(Map<Position, PieceDto> board) {
-//        return board.entrySet()
-//                .stream()
-//                .map(entry -> {
-//                    Position position = entry.getKey();
-//                    PieceDto pieceDto = entry.getValue();
-//                    String key = position.getFile().toString() + position.getRank().getRank();
-//                    String value = pieceDto.getTeam() + pieceDto.getPieceType();
-//                    return new WebDto(key, value);
-//                })
-//                .collect(Collectors.toList());
-//    }
-//
-//    private static List<WebDto> getScoreDto(final Map<Player, Double> scores) {
-//        return scores.entrySet()
-//                .stream()
-//                .map(entry -> {
-//                    String key = entry.getKey().toString();
-//                    String value = String.valueOf(entry.getValue());
-//                    return new WebDto(key, value);
-//                })
-//                .collect(Collectors.toList());
-//    }
-//
 }
