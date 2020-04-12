@@ -62,7 +62,6 @@ public class ChessWebController {
         post("/start/new/game", (req, res) -> {
             String whitePlayerName = req.queryParams("whitePlayerName");
             String blackPlayerName = req.queryParams("blackPlayerName");
-            System.out.println(whitePlayerName + " , " + blackPlayerName + " 이시다!");
             return null;
         });
     }
