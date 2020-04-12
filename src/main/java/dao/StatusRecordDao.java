@@ -23,7 +23,8 @@ public class StatusRecordDao {
 	}
 
 	public int addStatusRecord(final String record, final int roomId) throws SQLException {
-		final String query = "INSERT INTO status_record(record, room_id) VALUES(?, ?)";
+		final String query = "INSERT INTO status_record(record, room_name) "
+				+ "VALUES(?, (SELECT room_name FROM room WHERE room.id = ?))";
 
 		try (final Connection connection = connectionDao.getConnection();
 			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -32,5 +33,4 @@ public class StatusRecordDao {
 			return preparedStatement.executeUpdate();
 		}
 	}
-
 }

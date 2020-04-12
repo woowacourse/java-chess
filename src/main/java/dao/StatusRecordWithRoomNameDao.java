@@ -25,9 +25,9 @@ public class StatusRecordWithRoomNameDao {
 	}
 
 	public List<StatusRecordWithRoomNameDto> findStatusRecordWithRoomName() throws SQLException {
-		final String query = "SELECT status_record.record, status_record.game_date, room.room_name "
-				+ "FROM status_record JOIN room ON status_record.room_id = room.id "
-				+ "ORDER BY room.room_name";
+		final String query = "SELECT record, game_date, room_name "
+				+ "FROM status_record "
+				+ "ORDER BY room_name";
 
 		try (final Connection connection = connectionDao.getConnection();
 			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
@@ -47,8 +47,8 @@ public class StatusRecordWithRoomNameDao {
 		final List<StatusRecordWithRoomNameDto> statusRecordsWithRoomNameDto = new ArrayList<>();
 		while (resultSet.next()) {
 			statusRecordsWithRoomNameDto.add(
-					new StatusRecordWithRoomNameDto(resultSet.getString("status_record.record"),
-							resultSet.getDate("status_record.game_date"), resultSet.getString("room.room_name")));
+					new StatusRecordWithRoomNameDto(resultSet.getString("record"),
+							resultSet.getDate("game_date"), resultSet.getString("room_name")));
 		}
 		return statusRecordsWithRoomNameDto;
 	}
