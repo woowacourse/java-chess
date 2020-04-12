@@ -2,18 +2,18 @@ package view;
 
 import java.util.List;
 
-public class BoardToTable {
+public class BoardToHtml {
 	private final String boardHtml;
 
-	private BoardToTable(final String boardHtml) {
+	private BoardToHtml(final String boardHtml) {
 		this.boardHtml = boardHtml;
 	}
 
-	public static BoardToTable of(List<List<String>> board) {
+	public static BoardToHtml of(List<List<String>> board) {
 		final String stringBuilder = "<table>"
 				+ createTable(board)
 				+ "</table>";
-		return new BoardToTable(stringBuilder);
+		return new BoardToHtml(stringBuilder);
 	}
 
 	private static StringBuilder createTable(final List<List<String>> board) {
@@ -42,7 +42,7 @@ public class BoardToTable {
 		return stringBuilder;
 	}
 
-	public String getTableHtml() {
+	public String getHtml() {
 		return boardHtml;
 	}
 }

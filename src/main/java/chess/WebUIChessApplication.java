@@ -1,6 +1,7 @@
 package chess;
 
 import controller.ChessRoomsController;
+import controller.Renderer;
 import dao.*;
 import dao.exceptions.DaoNoneSelectedException;
 import domain.command.exceptions.CommandTypeException;
@@ -21,11 +22,13 @@ import dto.AnnouncementDto;
 import dto.PieceDto;
 import dto.StateDto;
 import dto.StatusRecordWithRoomNameDto;
+import service.AnnouncementService;
+import service.RoomService;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import view.Announcement;
-import view.BoardToTable;
+import view.BoardToHtml;
 import view.board.Board;
 
 import java.sql.SQLException;
@@ -106,25 +109,14 @@ public class WebUIChessApplication {
 
 
 	private static String responseWhenHasState(final int roomId) throws SQLException {
+		final String boardHtml = RoomService.getInstance().loadBoardHtml(roomId);
+		final String announcementMessage = AnnouncementService.getInstance().loadAnnouncementMessage(roomId);
+
 		final Map<String, Object> map = new HashMap<>();
+		map.put("table", boardHtml);
+		map.put("announcement", announcementMessage);
 
-		final StateDao stateDao = new StateDao();
-		final StateDto daoStateDto = stateDao.findStateByRoomId(roomId);
-
-		final PieceDao pieceDao = new dao.PieceDao();
-		final List<PieceDto> daoPieceDtos = pieceDao.findPiecesByRoomId(roomId);
-		final Set<Piece> domainPieces = mapDaoPiecesToDomainPieces(daoPieceDtos);
-
-		final State domainState = StateType.getFactory(daoStateDto.getState()).apply(
-				new Pieces(domainPieces));
-		map.put("table", createTableHtmlWhenHasState(domainPieces));
-
-
-		final AnnouncementDao announcementDao = new AnnouncementDao();
-		final AnnouncementDto daoAnnouncement = announcementDao.findAnnouncementByRoomId(roomId);
-		map.put("announcement", daoAnnouncement.getMessage());
-
-		return render(map, "/chess.html");
+		return Renderer.getInstance().render(map, "/chess.html");
 	}
 
 	private static String createRightAnnouncement(domain.state.State domainState) {
@@ -137,25 +129,19 @@ public class WebUIChessApplication {
 		return Announcement.ofEnd().getString();
 	}
 
-	private static Set<Piece> mapDaoPiecesToDomainPieces(final List<PieceDto> daoPieceDtos) {
-		return daoPieceDtos.stream()
-				.map(daoPieceDto -> PieceType.getFactoryOfName(daoPieceDto.getPieceType()).apply(
-						Team.of(daoPieceDto.getTeam()), Coordinate.of(daoPieceDto.getCoordinate())))
-				.collect(Collectors.toSet());
-	}
-
 	private static String responseWhenHasNoState(final int roomId) throws SQLException {
 		final StateDao stateDao = new StateDao();
-		final dao.PieceDao pieceDao = new dao.PieceDao();
-		final AnnouncementDao announcementDao = new AnnouncementDao();
+		stateDao.addState("ended", roomId);
 
-		final Set<domain.pieces.Piece> pieces = new StartPieces().getInstance();
+		final dao.PieceDao pieceDao = new dao.PieceDao();
+		final Set<Piece> pieces = new StartPieces().getInstance();
 		pieceDao.deletePiece(roomId);
 		for (Piece piece : pieces) {
 			pieceDao.addPiece(piece.getPieceTypeName(), piece.getTeamName(),
 					piece.getCoordinateRepresentation(), roomId);
 		}
-		stateDao.addState("ended", roomId);
+
+		final AnnouncementDao announcementDao = new AnnouncementDao();
 		announcementDao.addAnnouncement("게임을 시작하려면 start를 입력해주세요.", roomId);
 
 		final Map<String, Object> map = new HashMap<>();
@@ -164,12 +150,8 @@ public class WebUIChessApplication {
 		return render(map, "/chess.html");
 	}
 
-	private static String createTableHtmlWhenHasState(final Set<Piece> pieces) {
-		return createTableHtml(pieces);
-	}
-
 	private static String createTableHtmlWhenHasNoState(int roomId) throws SQLException {
-		final dao.PieceDao pieceDao = new PieceDao();
+		final PieceDao pieceDao = new PieceDao();
 		final Set<Piece> pieces = pieceDao.findPiecesByRoomId(roomId).stream()
 				.map(pieceDto -> PieceType.getFactoryOfName(pieceDto.getPieceType()).apply(
 						Team.of(pieceDto.getTeam()), Coordinate.of(pieceDto.getCoordinate())))
@@ -179,7 +161,7 @@ public class WebUIChessApplication {
 
 	private static String createTableHtml(final Set<Piece> pieces) {
 		final List<List<String>> board = Board.of(pieces).getLists();
-		return BoardToTable.of(board).getTableHtml();
+		return BoardToHtml.of(board).getHtml();
 	}
 
 	public static String render(final Map<String, Object> model, final String templatePath) {
