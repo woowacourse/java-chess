@@ -5,7 +5,10 @@ import chess.domain.chessPiece.ChessPieceCache;
 import chess.domain.position.Position;
 import chess.dto.ChessPositionDTO;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 
 public class BlackPieceDAO {
@@ -29,118 +32,72 @@ public class BlackPieceDAO {
             "('g8','n')," +
             "('h8','r')";
 
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
-    private ConnectionDAO connectionDAO = new ConnectionDAO();
-
-    private void closeResultSet() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-        } catch (SQLException e) {
-            System.err.println("ResultSet 오류:" + e.getMessage());
-        }
-    }
-
-    private void closePrepareStatement() {
-        try {
-            if (preparedStatement != null)
-                preparedStatement.close();
-        } catch (SQLException e) {
-            System.err.println("preparedStatement 오류:" + e.getMessage());
-        }
-    }
-
     public void deleteBlackTable() {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String dropQuery = "DELETE FROM black";
-            preparedStatement = connection.prepareStatement(dropQuery);
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM black")
+        ) {
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
-            System.err.println("deleteBlackTable 오류:" + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("deleteBlackTable 오류:" + e.getMessage());
         }
     }
 
     public void insertInitialBlackPiece() {
-        Connection connection = connectionDAO.getConnection();
 
-        try {
-            String setBlackPieceQuery = "INSERT INTO black VALUES " +
-                    BLACK_INITIAL_BOARD;
-            preparedStatement = connection.prepareStatement(setBlackPieceQuery);
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO black VALUES "
+                        + BLACK_INITIAL_BOARD)
+        ) {
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
-            System.err.println("insertBoard 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("insertBoard 오류: " + e.getMessage());
         }
     }
 
     public void selectBlackBoard(Map<Position, ChessPiece> chessBoard) {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String setBlackQuery = "SELECT * FROM black";
-            preparedStatement = connection.prepareStatement(setBlackQuery);
-
-            resultSet = preparedStatement.executeQuery();
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM black");
+                ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
             while (resultSet.next()) {
                 chessBoard.put(Position.of(resultSet.getString(POSITION_COLUMN)),
                         ChessPieceCache.getChessPiece(resultSet.getString(CHESS_PIECE_COLUMN)
                                 , resultSet.getString(POSITION_COLUMN)));
             }
         } catch (SQLException e) {
-            System.err.println("selectBlackBoard 오류: " + e.getMessage());
-
-        } finally {
-            closeResultSet();
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("selectBlackBoard 오류: " + e.getMessage());
         }
     }
 
     public void updatePiece(ChessPositionDTO chessPositionDTO) {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String query = "UPDATE black SET position = ? WHERE position = ?";
-            preparedStatement = connection.prepareStatement(query);
-
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("UPDATE black SET position = ? WHERE position = ?");
+        ) {
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.setString(2, chessPositionDTO.getSourcePosition());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
-            System.err.println("updatePiece 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("updatePiece 오류: " + e.getMessage());
         }
     }
 
     public void deleteCaughtPiece(ChessPositionDTO chessPositionDTO) {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String query = "DELETE  FROM black WHERE position = ?";
-            preparedStatement = connection.prepareStatement(query);
-
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("DELETE  FROM black WHERE position = ?");
+        ) {
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.executeUpdate();
 
         } catch (SQLException e) {
             System.err.println("deleteCaughtPiece 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
         }
     }
 }

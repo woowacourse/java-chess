@@ -119,7 +119,7 @@ public class Service {
 
     private String isCaughtKing(ChessBoard chessBoard) {
         if (chessBoard.isCaughtKing()) {
-            chessBoardStateDAO.updateCaughtKing(createChessBoard());
+            chessBoardStateDAO.updateCaughtKing(chessBoard);
             return chessBoard.getPlayerColor().getColor() + "이 승리했습니다!";
         }
         return SUCCESS;

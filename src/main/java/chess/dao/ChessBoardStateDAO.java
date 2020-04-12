@@ -3,120 +3,77 @@ package chess.dao;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.pieceType.PieceColor;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class ChessBoardStateDAO {
 
-    private PreparedStatement preparedStatement = null;
-    private ResultSet resultSet = null;
-    private ConnectionDAO connectionDAO = new ConnectionDAO();
-
-
-    private void closeResultSet() {
-        try {
-            if (resultSet != null)
-                resultSet.close();
-        } catch (SQLException e) {
-            System.err.println("ResultSet 오류:" + e.getMessage());
-        }
-    }
-
-
-    private void closePrepareStatement() {
-        try {
-            if (preparedStatement != null)
-                preparedStatement.close();
-        } catch (SQLException e) {
-            System.err.println("preparedStatement 오류:" + e.getMessage());
-        }
-    }
-
     public void deleteChessBoardState() {
-        Connection connection = connectionDAO.getConnection();
-        try {
-            String dropQuery = "DELETE FROM chessBoardState";
-            preparedStatement = connection.prepareStatement(dropQuery);
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM chessBoardState");
+        ) {
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
-            System.err.println("deletePlayerTurn 오류:" + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("deletePlayerTurn 오류:" + e.getMessage());
         }
     }
 
     public void insertInitialChessBoardState() {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String query = "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)";
-            preparedStatement = connection.prepareStatement(query);
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement(
+                        "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)");
+        ) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("initialPlayerTurn 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("initialPlayerTurn 오류: " + e.getMessage());
         }
     }
 
     public String selectPlayerTurn() {
-        Connection connection = connectionDAO.getConnection();
         String playerTurn = null;
-
-        try {
-            String query = "SELECT * FROM chessBoardState";
-            preparedStatement = connection.prepareStatement(query);
-            resultSet = preparedStatement.executeQuery();
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM chessBoardState");
+                ResultSet resultSet = preparedStatement.executeQuery();
+        ) {
             if (resultSet.next()) {
                 playerTurn = resultSet.getString("turn");
             }
         } catch (SQLException e) {
-            System.err.println("selectPlayerTurn 오류: " + e.getMessage());
-        } finally {
-            closeResultSet();
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("selectPlayerTurn 오류: " + e.getMessage());
         }
         return playerTurn;
     }
 
     public void updatePlayerTurn(PieceColor pieceColor) {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String query = "UPDATE chessBoardState SET turn = ?";
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("UPDATE chessBoardState SET turn = ?");
+        ) {
             String playerTurn = pieceColor.getColor();
-
-            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, playerTurn.toUpperCase());
-
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("updatePlayerTurn 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("updatePlayerTurn 오류: " + e.getMessage());
         }
     }
 
     public void updateCaughtKing(ChessBoard chessBoard) {
-        Connection connection = connectionDAO.getConnection();
-
-        try {
-            String query = "UPDATE chessBoardState SET caughtKing = ?";
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement preparedStatement =
+                        connection.prepareStatement("UPDATE chessBoardState SET caughtKing = ?");
+        ) {
             boolean caughtKing = chessBoard.isCaughtKing();
-
-            preparedStatement = connection.prepareStatement(query);
             preparedStatement.setBoolean(1, caughtKing);
-
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            System.err.println("updatePlayerTurn 오류: " + e.getMessage());
-        } finally {
-            closePrepareStatement();
-            connectionDAO.closeConnection();
+            throw new SQLExecuteException("updatePlayerTurn 오류: " + e.getMessage());
         }
     }
 }

@@ -4,10 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class ConnectionDAO {
-    private java.sql.Connection con = null;
+public class ConnectionFactory {
+    private static Connection con = null;
 
-    public java.sql.Connection getConnection() {
+    public static Connection getConnection() {
         String server = "localhost:3306";
         String database = "chessBoard";
         String option = "?useSSL=false&serverTimezone=UTC";
@@ -30,14 +30,5 @@ public class ConnectionDAO {
         }
 
         return con;
-    }
-
-    public void closeConnection() {
-        try {
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 }
