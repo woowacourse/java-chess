@@ -16,11 +16,6 @@ class AnnouncementDaoTest {
 	}
 
 	@Test
-	void getConnection() {
-		assertThat(announcementDao.getConnection()).isNotNull();
-	}
-
-	@Test
 	void addAnnouncement() throws SQLException {
 		final int resultNum = announcementDao.addAnnouncement("ㅋㅋㅋㅋㅋ", 1);
 		assertThat(resultNum).isEqualTo(1);
