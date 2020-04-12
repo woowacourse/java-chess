@@ -1,5 +1,7 @@
 package dao;
 
+import dao.exceptions.ConnectionDaoException;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -19,7 +21,7 @@ public class ConnectionDao {
 		return CONNECTION_DAO;
 	}
 
-	public Connection getConnection() {
+	public Connection getConnection() throws SQLException {
 		Connection connection = null;
 		final String server = DatabaseInfo.SERVER; // MySQL 서버 주소
 		final String database = DatabaseInfo.DATABASE; // MySQL DATABASE 이름
@@ -29,23 +31,15 @@ public class ConnectionDao {
 		final String protocol = DatabaseInfo.PROTOCOL;
 		final String driver = DatabaseInfo.DRIVER;
 
-		// 드라이버 로딩
 		try {
 			Class.forName(driver);
 		} catch (ClassNotFoundException e) {
-			System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-			e.printStackTrace();
+			throw new ConnectionDaoException(" !! JDBC Driver load 오류: " + e.getMessage());
 		}
 
-		// 드라이버 연결
-		try {
-			connection = DriverManager.getConnection(
-					protocol + server + SLASH + database + option, userName, password);
-			System.out.println("정상적으로 연결되었습니다.");
-		} catch (SQLException e) {
-			System.err.println("연결 오류:" + e.getMessage());
-			e.printStackTrace();
-		}
+		connection = DriverManager.getConnection(
+				protocol + server + SLASH + database + option, userName, password);
+		System.out.println("데이터베이스에 정상적으로 연결되었습니다.");
 
 		return connection;
 	}
