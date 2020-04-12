@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class ConnectionFactory {
-    private static Connection con = null;
 
     public static Connection getConnection() {
         String server = "localhost:3306";
@@ -13,20 +12,19 @@ public class ConnectionFactory {
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root";
         String password = "1234";
+        Connection con;
 
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new ConnectionException(String.format("!! JDBC Driver load 오류: %s", e.getMessage()));
         }
 
         try {
             con = DriverManager.getConnection("jdbc:mysql://" + server + "/" + database + option, userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new SQLExecuteException(String.format("연결 오류: %s", e.getMessage()));
         }
 
         return con;

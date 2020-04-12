@@ -11,9 +11,8 @@ import java.sql.SQLException;
 public class ChessBoardStateDAO {
 
     public void deleteChessBoardState() {
-        try (
-                Connection connection = ConnectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM chessBoardState");
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM chessBoardState");
         ) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -22,11 +21,9 @@ public class ChessBoardStateDAO {
     }
 
     public void insertInitialChessBoardState() {
-        try (
-                Connection connection = ConnectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement(
-                        "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)");
-        ) {
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(
+                     "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)")) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLExecuteException("initialPlayerTurn 오류: " + e.getMessage());
@@ -35,11 +32,9 @@ public class ChessBoardStateDAO {
 
     public String selectPlayerTurn() {
         String playerTurn = null;
-        try (
-                Connection connection = ConnectionFactory.getConnection();
-                PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM chessBoardState");
-                ResultSet resultSet = preparedStatement.executeQuery();
-        ) {
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM chessBoardState");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             if (resultSet.next()) {
                 playerTurn = resultSet.getString("turn");
             }
@@ -50,11 +45,9 @@ public class ChessBoardStateDAO {
     }
 
     public void updatePlayerTurn(PieceColor pieceColor) {
-        try (
-                Connection connection = ConnectionFactory.getConnection();
-                PreparedStatement preparedStatement =
-                        connection.prepareStatement("UPDATE chessBoardState SET turn = ?");
-        ) {
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement("UPDATE chessBoardState SET turn = ?")) {
             String playerTurn = pieceColor.getColor();
             preparedStatement.setString(1, playerTurn.toUpperCase());
             preparedStatement.executeUpdate();
@@ -64,11 +57,9 @@ public class ChessBoardStateDAO {
     }
 
     public void updateCaughtKing(ChessBoard chessBoard) {
-        try (
-                Connection connection = ConnectionFactory.getConnection();
-                PreparedStatement preparedStatement =
-                        connection.prepareStatement("UPDATE chessBoardState SET caughtKing = ?");
-        ) {
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement("UPDATE chessBoardState SET caughtKing = ?")) {
             boolean caughtKing = chessBoard.isCaughtKing();
             preparedStatement.setBoolean(1, caughtKing);
             preparedStatement.executeUpdate();

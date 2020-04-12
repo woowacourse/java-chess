@@ -34,7 +34,7 @@ public class WhitePieceDAO {
 
     public void deleteWhiteTable() {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM white");) {
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM white")) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             System.err.println("deleteWhiteTable 오류:" + e.getMessage());
@@ -54,7 +54,7 @@ public class WhitePieceDAO {
     public void selectWhiteBoard(Map<Position, ChessPiece> chessBoard) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM white");
-             ResultSet resultSet = preparedStatement.executeQuery();) {
+             ResultSet resultSet = preparedStatement.executeQuery()) {
             while (resultSet.next()) {
                 chessBoard.put(Position.of(resultSet.getString(POSITION_COLUMN)),
                         ChessPieceCache.getChessPiece(resultSet.getString(CHESS_PIECE_COLUMN)
@@ -80,8 +80,7 @@ public class WhitePieceDAO {
     public void deleteCaughtPiece(ChessPositionDTO chessPositionDTO) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("DELETE  FROM white WHERE position = ?");
-        ) {
+                     connection.prepareStatement("DELETE  FROM white WHERE position = ?")) {
             preparedStatement.setString(1, chessPositionDTO.getTargetPosition());
             preparedStatement.executeUpdate();
         } catch (SQLException e) {

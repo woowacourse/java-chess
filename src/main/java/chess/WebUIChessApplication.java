@@ -1,9 +1,17 @@
 package chess;
 
+import chess.webController.*;
+
+import static spark.Spark.staticFileLocation;
+
 public class WebUIChessApplication {
     public static void main(String[] args) {
+        staticFileLocation("templates");
 
-        WebChessController webChessController = new WebChessController();
-        webChessController.run();
+        ChessMainPageUrlController.run();
+        ChessFirstStartUrlController.run();
+        ChessContinueStartUrlController.run();
+        ChessMoveUrlController.run();
+        ChessStatusUrlController.run();
     }
 }
