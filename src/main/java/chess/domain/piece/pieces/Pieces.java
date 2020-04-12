@@ -9,7 +9,7 @@ import chess.domain.position.positions.Positions;
 import java.util.List;
 
 public class Pieces {
-	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "잘못된 위치를 입력하셨습니다.";
+	private static final String INVALID_INPUT_EXCEPTION_MESSAGE = "유효한 입력이 아닙니다. 다시 입력해주세요";
 	private static final int DEFAULT_KING_COUNT = 2;
 
 	private final List<Piece> pieces;
@@ -37,7 +37,7 @@ public class Pieces {
 				.orElseGet(Blank::new);
 	}
 
-	private Piece findBy(Position start, Color color) {
+	public Piece findBy(Position start, Color color) {
 		Piece piece = findBy(start);
 		if (piece.isSameColor(color)) {
 			return piece;

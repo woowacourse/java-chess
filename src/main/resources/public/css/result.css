@@ -1,0 +1,12 @@
+.result {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.result p {
+    font-size: 32px;
+}
+
+#go-main {
+    font-size: 28px;
+}

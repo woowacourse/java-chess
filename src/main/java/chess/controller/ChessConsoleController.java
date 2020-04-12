@@ -3,12 +3,12 @@ package chess.controller;
 import chess.domain.game.ChessGame;
 import chess.domain.game.OperationType;
 import chess.domain.game.Operations;
-import chess.domain.position.PositionFactory;
 import chess.view.OutputView;
+import chess.domain.position.MovingPosition;
 
 import static chess.view.InputView.inputOperation;
 
-public class ChessController {
+public class ChessConsoleController {
 	public void run() {
 		OutputView.printOperationsFormat();
 
@@ -51,7 +51,8 @@ public class ChessController {
 		Operations operations = inputOperation();
 		OperationType operationType = operations.getOperationType();
 		if (operationType.isMove()) {
-			chessGame.move(PositionFactory.of(operations.getFirstArgument()), PositionFactory.of(operations.getSecondArgument()));
+			MovingPosition movingPosition = new MovingPosition(operations.getFirstArgument(), operations.getSecondArgument());
+			chessGame.move(movingPosition);
 		}
 		return (operationType.canExecuteMore() && !chessGame.isKingDead());
 	}

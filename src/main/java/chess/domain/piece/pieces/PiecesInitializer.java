@@ -11,15 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PiecesInitializer {
-	private static List<Piece> pieces = new ArrayList<>();
-
-	static {
-		for (Column column : Column.getInitialColumns()) {
-			addPieceBy(column);
-		}
+	public static Pieces operate() {
+		return makeInitialPieces();
 	}
 
-	private static void addPieceBy(Column column) {
+	private static Pieces makeInitialPieces() {
+		List<Piece> pieces = new ArrayList<>();
+
+		for (Column column : Column.getInitialColumns()) {
+			addPieceBy(column, pieces);
+		}
+
+		return new Pieces(pieces);
+	}
+
+	private static void addPieceBy(Column column, List<Piece> pieces) {
 		for (Row row : Row.values()) {
 			pieces.add(create(row, column));
 		}
@@ -34,9 +40,5 @@ public class PiecesInitializer {
 		}
 
 		return new Piece(position, row.getPieceType(), color);
-	}
-
-	public static Pieces operate() {
-		return new Pieces(pieces);
 	}
 }

@@ -53,11 +53,7 @@ public class Position {
 		if (column.isWhitePawnInitial() && color.isWhite()) {
 			return true;
 		}
-		return column.isBlackPawnInitial()&& color.isBlack();
-	}
-
-	public boolean isHalfBottom() {
-		return column.isOnHalfBottom();
+		return column.isBlackPawnInitial() && color.isBlack();
 	}
 
 	public boolean isDifferentRow(Position position) {

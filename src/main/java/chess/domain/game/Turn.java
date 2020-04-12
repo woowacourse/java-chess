@@ -16,7 +16,6 @@ public class Turn {
 		);
 	}
 
-
 	public Turn(Color color) {
 		validate(color);
 		this.color = color;

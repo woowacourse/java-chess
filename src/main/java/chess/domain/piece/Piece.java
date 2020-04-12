@@ -74,4 +74,8 @@ public class Piece {
 	public double getScore() {
 		return pieceType.getScore();
 	}
+
+	public PieceType getPieceType() {
+		return pieceType;
+	}
 }
