@@ -7,50 +7,51 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class GameResultTest {
-    private static List<Piece> INITIALIZED_POSITIONS;
+    private static Map<Position, Piece> INITIALIZED_POSITIONS;
     private GameResult gameResult = new GameResult();
 
     @BeforeEach
     void setUp() {
-        INITIALIZED_POSITIONS = new ArrayList<>();
+        INITIALIZED_POSITIONS = new HashMap<>();
         for (int row = 1; row <= 8; row++) {
             for (int col = 1; col <= 8; col++) {
-                INITIALIZED_POSITIONS.add(Blank.create(new Position(col, row)));
+                String position = (char)(col + 96) + String.valueOf(row);
+                INITIALIZED_POSITIONS.put(Position.of(position), Piece.of(PieceType.BLANK));
             }
         }
-        INITIALIZED_POSITIONS.set(36, Bishop.createWhite(new Position(5, 5)));
-        INITIALIZED_POSITIONS.set(54, Rook.createBlack(new Position(7, 7)));
-        INITIALIZED_POSITIONS.set(0, Queen.createWhite(new Position(1, 1)));
-        INITIALIZED_POSITIONS.set(60, King.createWhite(new Position(5, 8)));
-        INITIALIZED_POSITIONS.set(27, Rook.createWhite(new Position(4, 4)));
-        INITIALIZED_POSITIONS.set(37, Bishop.createBlack(new Position(6, 5)));
-        INITIALIZED_POSITIONS.set(20, Pawn.createWhite(new Position(5, 3)));
-        INITIALIZED_POSITIONS.set(33, Knight.createBlack(new Position(2, 5)));
-        INITIALIZED_POSITIONS.set(53, Pawn.createBlack(new Position(6, 7)));
+        INITIALIZED_POSITIONS.put(Position.of("e5"), Piece.of(PieceType.WHITE_BISHOP));
+        INITIALIZED_POSITIONS.put(Position.of("g7"), Piece.of(PieceType.BLACK_ROOK));
+        INITIALIZED_POSITIONS.put(Position.of("a1"), Piece.of(PieceType.WHITE_QUEEN));
+        INITIALIZED_POSITIONS.put(Position.of("e8"), Piece.of(PieceType.WHITE_KING));
+        INITIALIZED_POSITIONS.put(Position.of("d4"), Piece.of(PieceType.WHITE_ROOK));
+        INITIALIZED_POSITIONS.put(Position.of("f5"), Piece.of(PieceType.BLACK_BISHOP));
+        INITIALIZED_POSITIONS.put(Position.of("e3"), Piece.of(PieceType.WHITE_PAWN));
+        INITIALIZED_POSITIONS.put(Position.of("b5"), Piece.of(PieceType.BLACK_KNIGHT));
+        INITIALIZED_POSITIONS.put(Position.of("f7"), Piece.of(PieceType.FIRST_BLACK_PAWN));
     }
 
     @DisplayName("체스판 위 남은 말들로 점수 계산")
     @Test
     void result() {
         Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(gameResult.calculateScore(board, Turn.WHITE)).isEqualTo(18);
-        assertThat(gameResult.calculateScore(board, Turn.BLACK)).isEqualTo(11.5);
+        assertThat(gameResult.calculateScore(board, Team.WHITE)).isEqualTo(18);
+        assertThat(gameResult.calculateScore(board, Team.BLACK)).isEqualTo(11.5);
     }
 
     @DisplayName("체스판 위 남은 말들로 점수 계산 : 같은 열에 pawn 여러개 있을 경우 0.5로 계산")
     @Test
     void resultConsideringPawn() {
-        INITIALIZED_POSITIONS.set(45, Pawn.createBlack(new Position(6, 6)));
-        INITIALIZED_POSITIONS.set(61, Pawn.createBlack(new Position(6, 8)));
+        INITIALIZED_POSITIONS.put(Position.of("f6"), Piece.of(PieceType.BLACK_PAWN));
+        INITIALIZED_POSITIONS.put(Position.of("f8"), Piece.of(PieceType.BLACK_PAWN));
 
         Board board = new Board(INITIALIZED_POSITIONS);
-        assertThat(gameResult.calculateScore(board, Turn.WHITE)).isEqualTo(18);
-        assertThat(gameResult.calculateScore(board, Turn.BLACK)).isEqualTo(12);
+        assertThat(gameResult.calculateScore(board, Team.WHITE)).isEqualTo(18);
+        assertThat(gameResult.calculateScore(board, Team.BLACK)).isEqualTo(12);
     }
 }

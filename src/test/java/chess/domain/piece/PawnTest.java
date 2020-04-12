@@ -19,18 +19,18 @@ public class PawnTest {
     @DisplayName("폰의 이동 가능 위치")
     @ParameterizedTest
     @MethodSource("getCasesForPawnMoveByDirection")
-    void pawnMove(MoveStrategy moveStrategy, Piece piece, List<Position> expectedToPositions) {
-        Board board = BoardFactory.createEmptyBoard();
-        assertThat(moveStrategy.possiblePositions(board, piece)).isEqualTo(expectedToPositions);
+    void pawnMove(MoveStrategy moveStrategy, Piece piece, Position position, List<Position> expectedToPositions) {
+        Board board = BoardFactory.createBoard();
+        assertThat(moveStrategy.possiblePositions(board, piece, position)).isEqualTo(expectedToPositions);
     }
 
     private static Stream<Arguments> getCasesForPawnMoveByDirection() {
         return Stream.of(
-                Arguments.of(new PawnMoveStrategy(), Pawn.createWhite(new Position(2, 2)),
-                        Arrays.asList(new Position(2, 3), new Position(2, 4))),
+                Arguments.of(new PawnMoveStrategy(), Piece.of(PieceType.FIRST_WHITE_PAWN), Position.of("b2"),
+                        Arrays.asList(Position.of("b3"), Position.of("b4"))),
 
-                Arguments.of(new PawnMoveStrategy(), Pawn.createBlack(new Position(2, 7)),
-                        Arrays.asList(new Position(2, 6), new Position(2, 5)))
-        );
+                Arguments.of(new PawnMoveStrategy(), Piece.of(PieceType.FIRST_BLACK_PAWN), Position.of("b7"),
+                        Arrays.asList(Position.of("b6"), Position.of("b5")))
+                );
     }
 }

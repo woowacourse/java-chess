@@ -29,8 +29,8 @@
             <input id="end" type="submit" name="command" value="게임 종료">
         </form>
     </div>
-    <div class="turn" id="turn-presenter">
-        <span>{{ turn }}</span> 의 차례입니다.
+    <div class="team" id="team-presenter">
+        <span>{{ team }}</span> 의 차례입니다.
     </div>
     <div class="controller-move">
         <form action="/move" method="post" id="moveForm">
@@ -294,7 +294,7 @@
         <div class="pop-layer">
             <div class="pop-container">
                 <div class="pop-conts">
-                    {{ turn }} 승리!!
+                    {{ team }} 승리!!
                     <div class="btn-r">
                         <form action="/end" method="post">
                             <input id="btn-layerClose" type="submit" name="command" value="게임 종료">

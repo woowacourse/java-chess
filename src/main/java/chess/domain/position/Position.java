@@ -2,88 +2,80 @@ package chess.domain.position;
 
 import chess.domain.util.Direction;
 import chess.exception.InvalidPositionException;
-import chess.exception.OutOfBoardRangeException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
-    private static final int ASCII_GAP = 96;
-    public static final int END_INDEX = 8;
     public static final int START_INDEX = 1;
-    public static final int ROW_SIZE = 8;
+    public static final int END_INDEX = 8;
+    private static final int ASCII_GAP = 96;
+    private static final Map<String, Position> ALL_POSITIONS = new HashMap<>();
 
-    private final int x;
-    private final int y;
+    private final int col;
+    private final int row;
 
-    public Position(final int x, final int y) {
-        if (!isInBoardRange(x, y)) {
-            throw new OutOfBoardRangeException();
+    static {
+        for (int row = START_INDEX; row <= END_INDEX; row++) {
+            for (int col = START_INDEX; col <= END_INDEX; col++) {
+                ALL_POSITIONS.put(convertToStringPosition(col, row), new Position(col, row));
+            }
         }
-        this.x = x;
-        this.y = y;
+    }
+
+    private Position(final int col, final int row) {
+        this.col = col;
+        this.row = row;
     }
 
     public static Position of(final String position) {
-        if (position.length() != 2) {
-            throw new InvalidPositionException(position);
-        }
-        return of(String.valueOf(position.charAt(0) - ASCII_GAP),
-                String.valueOf(position.charAt(1)));
+        return ALL_POSITIONS.keySet().stream()
+                .filter(key -> key.equals(position))
+                .map(ALL_POSITIONS::get)
+                .findFirst()
+                .orElseThrow(() -> new InvalidPositionException(position));
     }
 
-    public static Position of(final String x, final String y) {
-        return new Position(Integer.parseInt(x), Integer.parseInt(y));
+    public static Position of(final int col, final int row) {
+        return of(convertToStringPosition(col, row));
     }
 
-    public static List<Position> getAllPositions() {
-        List<Position> positions = new ArrayList<>();
-        for (int row = START_INDEX; row <= END_INDEX; row++) {
-            for (int col = START_INDEX; col <= END_INDEX; col++) {
-                positions.add(new Position(col, row));
-            }
-        }
-        return positions;
+    private static String convertToStringPosition(final int col, final int row) {
+        return (char) (col + ASCII_GAP) + String.valueOf(row);
     }
 
     public Position moveBy(final Direction direction) {
-        return new Position(x + direction.getColumn(), y + direction.getRow());
+        return Position.of(convertToStringPosition(col + direction.getColumn(), row + direction.getRow()));
     }
 
-    public static boolean isInBoardRange(final int x, final int y) {
-        return x <= END_INDEX && x >= START_INDEX &&
-                y <= END_INDEX && y >= START_INDEX;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
+    public boolean isNextPositionValidForward(final Direction direction) {
+        int nextCol = col + direction.getColumn();
+        int nextRow = row + direction.getRow();
+        return START_INDEX <= nextCol && nextCol <= END_INDEX
+                && START_INDEX <= nextRow && nextRow <= END_INDEX;
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) {
             return true;
         }
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position position = (Position) o;
-        return Objects.equals(x, position.x) &&
-                Objects.equals(y, position.y);
+        final Position position = (Position) o;
+        return col == position.col &&
+                row == position.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(col, row);
     }
 
     @Override
     public String toString() {
-        return String.valueOf((char)(x + 96)) + String.valueOf(y);
+        return convertToStringPosition(col, row);
     }
 }

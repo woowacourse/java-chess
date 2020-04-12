@@ -26,7 +26,7 @@ public enum Directions {
         this.directions = directions;
     }
 
-    public List<Direction> directions() {
+    public List<Direction> getDirections() {
         return directions;
     }
 }

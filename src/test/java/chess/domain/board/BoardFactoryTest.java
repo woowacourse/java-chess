@@ -9,7 +9,7 @@ public class BoardFactoryTest {
     @DisplayName("체스 보드 생성")
     @Test
     void createBoard() {
-        Board board = BoardFactory.createEmptyBoard();
+        Board board = BoardFactory.createBoard();
         assertThat(board).isNotNull();
     }
 }

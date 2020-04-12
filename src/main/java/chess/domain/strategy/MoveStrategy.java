@@ -7,5 +7,5 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public interface MoveStrategy {
-    List<Position> possiblePositions(Board board, Piece piece);
+    List<Position> possiblePositions(final Board board, final Piece piece, final Position position);
 }

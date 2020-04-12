@@ -2,7 +2,7 @@ package chess.controller;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.Turn;
+import chess.domain.piece.Team;
 import chess.domain.result.GameResult;
 import chess.domain.util.Command;
 import chess.exception.InvalidPositionException;
@@ -23,7 +23,7 @@ public class ConsoleChessController {
 
     public ConsoleChessController() {
         this.gameResult = new GameResult();
-        board = BoardFactory.createEmptyBoard();
+        board = BoardFactory.createBoard();
     }
 
     public void run() {
@@ -45,8 +45,8 @@ public class ConsoleChessController {
             }
 
             if (command.isStatus()) {
-                OutputView.printTeamScore(gameResult.calculateScore(board, Turn.WHITE),
-                        gameResult.calculateScore(board, Turn.BLACK));
+                OutputView.printTeamScore(gameResult.calculateScore(board, Team.WHITE),
+                        gameResult.calculateScore(board, Team.BLACK));
             }
 
             if (board.isFinished()) {
