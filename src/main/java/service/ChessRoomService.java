@@ -27,7 +27,7 @@ public class ChessRoomService {
 	private static final ChessRoomService ROOM_SERVICE;
 
 	static {
-		ROOM_SERVICE = new ChessRoomService(new StateDao(), new PieceDao(), new StatusRecordDao(),
+		ROOM_SERVICE = new ChessRoomService(new StateDao(), PieceDao.getInstance(), new StatusRecordDao(),
 				AnnouncementDao.getInstance());
 	}
 

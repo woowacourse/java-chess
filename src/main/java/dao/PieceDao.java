@@ -7,6 +7,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDao {
+	private static final PieceDao PIECE_DAO;
+
+	static {
+		PIECE_DAO = new PieceDao();
+	}
+
+	private PieceDao() {
+	}
+
+	public static PieceDao getInstance() {
+		return PIECE_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		final String server = "localhost:13306"; // MySQL 서버 주소

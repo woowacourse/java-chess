@@ -19,7 +19,7 @@ class PieceDaoTest {
 
 	@BeforeEach
 	void setUp() {
-		pieceDao = new PieceDao();
+		pieceDao = PieceDao.getInstance();
 	}
 
 	@Test
