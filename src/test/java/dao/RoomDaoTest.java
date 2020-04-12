@@ -21,18 +21,6 @@ class RoomDaoTest {
 	}
 
 	@Test
-	void getConnection() {
-		Connection connection = roomDao.getConnection();
-		assertThat(connection).isNotNull();
-	}
-
-	@Test
-	void closeConnection() {
-		Connection connection = roomDao.getConnection();
-		roomDao.closeConnection(connection);
-	}
-
-	@Test
 	void addRoomByRoomName() throws SQLException {
 		final int resultNum = roomDao.addRoomByRoomName(roomName);
 		assertThat(resultNum).isEqualTo(1);
