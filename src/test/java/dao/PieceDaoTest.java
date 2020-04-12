@@ -23,18 +23,6 @@ class PieceDaoTest {
 	}
 
 	@Test
-	void getConnection() {
-		Connection connection = pieceDao.getConnection();
-		assertThat(connection).isNotNull();
-	}
-
-	@Test
-	void closeConnection() {
-		Connection connection = pieceDao.getConnection();
-		pieceDao.closeConnection(connection);
-	}
-
-	@Test
 	void addPiece() throws SQLException {
 		final domain.pieces.Piece piece = new Queen(Team.BLACK, Coordinate.of("a2"));
 		final int resultNum = pieceDao.addPiece(piece.getPieceTypeName(),
