@@ -22,7 +22,6 @@ public class ChessBoardDao {
 
         try (Connection connection = connectionDao.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
-
             for (TileDto tile : chessBoardDto.getTiles()) {
                 pstmt.setInt(1, roomNumber);
                 pstmt.setString(2, tile.getPosition());
@@ -35,6 +34,7 @@ public class ChessBoardDao {
 
     public void deleteChessBoard(int roomNumber) throws SQLException {
         String query = "DELETE FROM chessboard WHERE room = ?";
+
         try (Connection connection = connectionDao.getConnection();
              PreparedStatement pstmt = connection.prepareStatement(query)) {
             pstmt.setInt(1, roomNumber);

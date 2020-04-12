@@ -9,6 +9,7 @@ import chess.domain.game.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Command;
 import chess.domain.game.GameStatus;
+import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -40,20 +41,13 @@ public class WebUIChessApplication {
 
         get("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            chessBoardDao.deleteChessBoard(gameDao.findMaxRoomNumber());
-            gameDao.updateEndState(gameDao.findMaxRoomNumber());
+            webController.end();
             return render(model, "main.html");
         });
 
         get("/loadGame", (req, res) -> {
             try {
-                int roomNumber = gameDao.findMaxRoomNumber();
-                ResponseDto responseDto = null;
-                if (gameDao.findState(roomNumber) == GameStatus.FINISH) {
-                    responseDto = webController.loadInitGame();
-                } else if (gameDao.findState(roomNumber) == GameStatus.RUNNING) {
-                    responseDto = webController.loadPlayingGame();
-                }
+                ResponseDto responseDto = webController.loadGame();
                 res.status(200);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {
@@ -62,27 +56,9 @@ public class WebUIChessApplication {
             }
         });
 
-        get("/move", (req, res) -> {
+        post("/move", (req, res) -> {
             try {
-                int roomNumber = gameDao.findMaxRoomNumber();
-                ChessBoard chessBoard = new ChessBoard(chessBoardDao.findPlayingChessBoard(roomNumber));
-                ChessGame chessGame = new ChessGame(chessBoard, gameDao.findTurn(roomNumber), GameStatus.RUNNING);
-
-                RequestDto requestDto = new RequestDto(Command.MOVE, req);
-                ResponseDto responseDto = chessGame.move(requestDto);
-
-                responseDto.setRoomNumber(roomNumber);
-
-                gameDao.updateGame(responseDto);
-                chessBoardDao.deleteChessBoard(roomNumber);
-                chessBoardDao.saveChessBoard(responseDto.getChessBoardDto(), roomNumber);
-
-                if (chessBoard.isGameOver()) {
-                    responseDto.dieKing();
-                    chessBoardDao.deleteChessBoard(roomNumber);
-                    gameDao.updateEndState(roomNumber);
-                }
-
+                ResponseDto responseDto = webController.moveChessPiece(req);
                 res.status(200);
                 return gson.toJson(responseDto);
             } catch (IllegalArgumentException | IllegalStateException e) {

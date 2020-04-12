@@ -45,7 +45,7 @@ $(document).ready(function () {
         let to = event.currentTarget.id;
 
         $.ajax({
-            type: 'get',
+            type: 'post',
             url: '/move',
             dataType: 'json',
             data: "from=" + from + "&to=" + to,
