@@ -70,7 +70,9 @@ public class Route {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         for (Map.Entry<Location, Piece> entry : route.entrySet()) {
-            sb.append(entry.getKey() + " : " + entry.getValue());
+            sb.append(entry.getKey())
+                    .append(" : ")
+                    .append(entry.getValue());
         }
         return sb.toString();
     }
