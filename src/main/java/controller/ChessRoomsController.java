@@ -3,10 +3,8 @@ package controller;
 import dao.exceptions.DaoNoneSelectedException;
 import dto.RoomDto;
 import service.RoomsService;
-import spark.ModelAndView;
 import spark.Response;
 import spark.Spark;
-import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -22,16 +20,13 @@ public class ChessRoomsController {
 	private static final String ROOMS_KEY = "rooms";
 	private static final ChessRoomsController ROOMS_CONTROLLER;
 
-	private final HandlebarsTemplateEngine handlebarsTemplateEngine;
 	private final RoomsService roomsService;
 
 	static {
-		ROOMS_CONTROLLER = new ChessRoomsController(new HandlebarsTemplateEngine(), new RoomsService());
+		ROOMS_CONTROLLER = new ChessRoomsController(new RoomsService());
 	}
 
-	private ChessRoomsController(final HandlebarsTemplateEngine handlebarsTemplateEngine,
-								 final RoomsService roomsService) {
-		this.handlebarsTemplateEngine = handlebarsTemplateEngine;
+	private ChessRoomsController(final RoomsService roomsService) {
 		this.roomsService = roomsService;
 	}
 
@@ -45,7 +40,7 @@ public class ChessRoomsController {
 		Spark.get(PATH, (request, response) -> {
 			final List<RoomDto> rooms = roomsService.findAllRooms();
 			final Map<String, Object> model = mapRooms(rooms);
-			return render(model, STATIC_PATH);
+			return Renderer.getInstance().render(model, STATIC_PATH);
 		});
 	}
 
@@ -92,10 +87,6 @@ public class ChessRoomsController {
 		roomsService.deleteRoomByRoomName(roomName);
 		response.redirect(PATH);
 		return EMPTY;
-	}
-
-	private String render(final Map<String, Object> model, final String templatePath) {
-		return handlebarsTemplateEngine.render(new ModelAndView(model, templatePath));
 	}
 
 	public static ChessRoomsController getInstance() {
