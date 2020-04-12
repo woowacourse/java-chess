@@ -12,7 +12,7 @@ class AnnouncementDaoTest {
 
 	@BeforeEach
 	void setUp() {
-		announcementDao = new AnnouncementDao();
+		announcementDao = AnnouncementDao.getInstance();
 	}
 
 	@Test

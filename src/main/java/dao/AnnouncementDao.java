@@ -6,6 +6,19 @@ import dto.AnnouncementDto;
 import java.sql.*;
 
 public class AnnouncementDao {
+	private static final AnnouncementDao ANNOUNCEMENT_DAO;
+
+	static {
+		ANNOUNCEMENT_DAO = new AnnouncementDao();
+	}
+
+	private AnnouncementDao() {
+	}
+
+	public static AnnouncementDao getInstance() {
+		return ANNOUNCEMENT_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		final String server = "localhost:13306"; // MySQL 서버 주소
