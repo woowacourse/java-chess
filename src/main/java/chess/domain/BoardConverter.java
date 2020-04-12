@@ -10,6 +10,8 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.position.Position;
 
 public class BoardConverter {
+	public static final String BLANK_MARK = ".";
+
 	public static ChessBoard convertToBoard(String board) {
 		List<Piece> pieces = new ArrayList<>();
 		int col = 0;
@@ -36,8 +38,8 @@ public class BoardConverter {
 		return Side.WHITE;
 	}
 
-	public static String convertToString(ChessBoard chessBoard, String marker) {
-		List<List<String>> boardInfo = makeStringBoard(chessBoard.getPieces(), marker);
+	public static String convertToString(ChessBoard chessBoard) {
+		List<List<String>> boardInfo = makeStringBoard(chessBoard.getPieces());
 
 		StringBuilder builder = new StringBuilder();
 		for (List<String> strings : boardInfo) {
@@ -48,9 +50,9 @@ public class BoardConverter {
 		return builder.toString();
 	}
 
-	public static List<List<String>> makeStringBoard(List<Piece> pieces, String marker) {
+	public static List<List<String>> makeStringBoard(List<Piece> pieces) {
 		List<List<String>> board = new ArrayList<>();
-		makeEmptyBoard(marker, board);
+		makeEmptyBoard(board);
 		deployPieces(pieces, board);
 		return board;
 	}
@@ -62,11 +64,11 @@ public class BoardConverter {
 		}
 	}
 
-	private static void makeEmptyBoard(String marker, List<List<String>> board) {
+	private static void makeEmptyBoard(List<List<String>> board) {
 		for (int i = 0; i < 8; i++) {
 			List<String> emptyRow = new ArrayList<>();
 			for (int j = 0; j < 8; j++) {
-				emptyRow.add(marker);
+				emptyRow.add(BLANK_MARK);
 			}
 			board.add(emptyRow);
 		}

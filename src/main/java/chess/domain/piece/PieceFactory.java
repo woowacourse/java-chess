@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import static chess.domain.service.ChessGameService.*;
+import static chess.domain.BoardConverter.*;
 
 import java.util.Arrays;
 import java.util.Optional;

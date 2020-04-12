@@ -16,7 +16,7 @@ public class OutputView {
 	}
 
 	public static void printInitBoard(ChessBoard chessBoard) {
-		List<List<String>> stringBoard = BoardConverter.makeStringBoard(chessBoard.getPieces(), ".");
+		List<List<String>> stringBoard = BoardConverter.makeStringBoard(chessBoard.getPieces());
 		for (List<String> strings : stringBoard) {
 			for (String string : strings) {
 				System.out.print(string);

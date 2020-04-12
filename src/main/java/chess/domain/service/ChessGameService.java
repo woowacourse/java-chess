@@ -14,8 +14,6 @@ import chess.domain.dto.RoomDto;
 import chess.domain.position.Position;
 
 public class ChessGameService {
-	public static final String BLANK_MARK = ".";
-
 	private final RoomDao roomDao;
 
 	public ChessGameService(RoomDao roomDao) {
@@ -26,7 +24,7 @@ public class ChessGameService {
 		validateDuplicated(roomName);
 		ChessGame chessGame = ChessGame.start();
 
-		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
+		String board = BoardConverter.convertToString(chessGame.getBoard());
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.addRoom(roomName, board, turn, finishFlag);
@@ -47,7 +45,7 @@ public class ChessGameService {
 		ChessGame chessGame = load(roomName);
 		chessGame.move(new Position(source), new Position(target));
 
-		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
+		String board = BoardConverter.convertToString(chessGame.getBoard());
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.updateRoom(roomName, board, turn, finishFlag);
@@ -89,7 +87,7 @@ public class ChessGameService {
 	public ChessGame restart(String roomName) throws SQLException {
 		ChessGame chessGame = ChessGame.start();
 
-		String board = BoardConverter.convertToString(chessGame.getBoard(), BLANK_MARK);
+		String board = BoardConverter.convertToString(chessGame.getBoard());
 		String turn = chessGame.getTurn().name();
 		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
 		roomDao.updateRoom(roomName, board, turn, finishFlag);
