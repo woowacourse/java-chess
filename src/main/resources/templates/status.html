@@ -14,7 +14,7 @@
 	cursor:pointer;
 	color:#666666;
 	font-family:Arial;
-	font-size:100px;
+	font-size:50px;
 	font-weight:bold;
 	padding:6px 24px;
 	text-decoration:none;
@@ -38,12 +38,17 @@ div#button_wrapper {
 
 
 
+
     </style>
 </head>
 <body>
+<div>
+    <h1 align="center">White 팀: {{whiteStatus}}</h1>
+    <h1 align="center">Black 팀: {{blackStatus}}</h1>
+</div>
 <div id="button_wrapper">
     <form action="/start">
-        <button class="myButton" type="submit">게임 시작</button>
+        <button class="myButton" type="submit">게임으로 돌아가기</button>
     </form>
 </div>
 </body>

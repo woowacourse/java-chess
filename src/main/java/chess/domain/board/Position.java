@@ -91,6 +91,10 @@ public class Position {
 		return file.getColumn();
 	}
 
+	public String getPosition() {
+		return file.getFile() + rank.getRow();
+	}
+
 	private static class PositionCache {
 		private static final Map<String, Position> BOARD = new HashMap<>();
 

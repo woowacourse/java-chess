@@ -20,4 +20,9 @@ public class Captured extends Started {
 	public boolean isAlive() {
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Captured";
+	}
 }

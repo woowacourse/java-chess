@@ -19,7 +19,7 @@ import chess.domain.piece.WhitePiecesFactory;
 public class Board {
 	private final Map<Position, Piece> board;
 
-	private Board() {
+	public Board() {
 		board = new HashMap<>();
 
 		for (Rank rank : Rank.values()) {
@@ -45,15 +45,14 @@ public class Board {
 		}
 	}
 
-	public static Board getInstance() {
-		return BoardLazyHolder.INSTANCE;
-	}
-
 	public boolean canMoveBy(List<Position> trace) {
 		Position source = trace.remove(0);
 		Position target = trace.remove(trace.size() - 1);
 
-		if (canPawnAttack(source, target) || trace.size() == 0) {
+		if (board.get(source).isPawn()) {
+			return canPawnAttack(source, target) || canPawnMove(source, target);
+		}
+		if (trace.size() == 0) {
 			return true;
 		}
 		return trace.stream()
@@ -61,9 +60,14 @@ public class Board {
 	}
 
 	private boolean canPawnAttack(Position source, Position target) {
-		return Objects.nonNull(board.get(source))
-			&& board.get(source).isPawn()
+		return Objects.nonNull(board.get(target))
 			&& source.nextPosition(Direction.DIAGONAL_DIRECTION).stream()
+			.anyMatch(position -> position.equals(target));
+	}
+
+	private boolean canPawnMove(Position source, Position target) {
+		return Objects.isNull(board.get(target))
+			&& source.nextPosition(Direction.PAWN_MOVE_DIRECTION).stream()
 			.anyMatch(position -> position.equals(target));
 	}
 
@@ -75,9 +79,5 @@ public class Board {
 
 	public Map<Position, Piece> getBoard() {
 		return board;
-	}
-
-	private static class BoardLazyHolder {
-		private final static Board INSTANCE = new Board();
 	}
 }

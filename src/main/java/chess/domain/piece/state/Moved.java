@@ -10,4 +10,9 @@ public class Moved extends Initialized {
 	public boolean isInitial() {
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		return "Moved";
+	}
 }
