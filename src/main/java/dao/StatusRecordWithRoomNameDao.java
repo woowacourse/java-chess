@@ -11,53 +11,17 @@ public class StatusRecordWithRoomNameDao {
 	private static final StatusRecordWithRoomNameDao STATUS_RECORD_WITH_ROOM_NAME_DAO;
 
 	static {
-		STATUS_RECORD_WITH_ROOM_NAME_DAO = new StatusRecordWithRoomNameDao();
+		STATUS_RECORD_WITH_ROOM_NAME_DAO = new StatusRecordWithRoomNameDao(ConnectionDao.getInstance());
 	}
 
-	private StatusRecordWithRoomNameDao() {
+	private final ConnectionDao connectionDao;
+
+	private StatusRecordWithRoomNameDao(final ConnectionDao connectionDao) {
+		this.connectionDao = connectionDao;
 	}
 
 	public static StatusRecordWithRoomNameDao getInstance() {
 		return STATUS_RECORD_WITH_ROOM_NAME_DAO;
-	}
-
-	public Connection getConnection() {
-		Connection connection = null;
-		final String server = "localhost:13306"; // MySQL 서버 주소
-		final String database = "woowachess"; // MySQL DATABASE 이름
-		final String option = "?useSSL=false&serverTimezone=UTC&characterEncoding=utf8";
-		final String userName = "root"; //  MySQL 서버 아이디
-		final String password = "root"; // MySQL 서버 비밀번호
-
-		// 드라이버 로딩
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-			e.printStackTrace();
-		}
-
-		// 드라이버 연결
-		try {
-			connection = DriverManager.getConnection(
-					"jdbc:mysql://" + server + "/" + database + option, userName, password);
-			System.out.println("정상적으로 연결되었습니다.");
-		} catch (SQLException e) {
-			System.err.println("연결 오류:" + e.getMessage());
-			e.printStackTrace();
-		}
-
-		return connection;
-	}
-
-	// 드라이버 연결해제
-	public void closeConnection(Connection connection) {
-		try {
-			if (connection != null)
-				connection.close();
-		} catch (SQLException e) {
-			System.err.println("con 오류:" + e.getMessage());
-		}
 	}
 
 	public List<StatusRecordWithRoomNameDto> findStatusRecordWithRoomName() throws SQLException {
@@ -65,14 +29,27 @@ public class StatusRecordWithRoomNameDao {
 				+ "FROM status_record JOIN room ON status_record.room_id = room.id "
 				+ "ORDER BY room.room_name";
 
-		final Connection connection = getConnection();
-		final PreparedStatement preparedStatement = connection.prepareStatement(query);
-		final ResultSet resultSet = preparedStatement.executeQuery();
-		final List<StatusRecordWithRoomNameDto> list = new ArrayList<>();
-		while (resultSet.next()) {
-			list.add(new StatusRecordWithRoomNameDto(resultSet.getString("status_record.record"),
-					resultSet.getDate("status_record.game_date"), resultSet.getString("room.room_name")));
+		try (final Connection connection = connectionDao.getConnection();
+			 final PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+			return prepareStatusRecordsWithRoomNameDto(preparedStatement);
 		}
-		return list;
+	}
+
+	private List<StatusRecordWithRoomNameDto> prepareStatusRecordsWithRoomNameDto
+			(final PreparedStatement preparedStatement) throws SQLException {
+		try (final ResultSet resultSet = preparedStatement.executeQuery()) {
+			return collectStatusRecordsWithRoomNameDto(resultSet);
+		}
+	}
+
+	private List<StatusRecordWithRoomNameDto> collectStatusRecordsWithRoomNameDto(final ResultSet resultSet)
+			throws SQLException {
+		final List<StatusRecordWithRoomNameDto> statusRecordsWithRoomNameDto = new ArrayList<>();
+		while (resultSet.next()) {
+			statusRecordsWithRoomNameDto.add(
+					new StatusRecordWithRoomNameDto(resultSet.getString("status_record.record"),
+							resultSet.getDate("status_record.game_date"), resultSet.getString("room.room_name")));
+		}
+		return statusRecordsWithRoomNameDto;
 	}
 }
