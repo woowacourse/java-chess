@@ -3,7 +3,8 @@ package domain.piece.team;
 import domain.piece.Pawn;
 
 public enum Team {
-	BLACK("Black", Pawn.BLACK_START_RANK_INDEX), WHITE("white", Pawn.WHITE_START_RANK_INDEX);
+	BLACK("Black", Pawn.BLACK_START_RANK_INDEX),
+	WHITE("white", Pawn.WHITE_START_RANK_INDEX);
 
 	private String name;
 	private int startRankIndex;
