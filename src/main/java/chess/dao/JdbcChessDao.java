@@ -10,7 +10,6 @@ import chess.domain.position.Position;
 
 import java.sql.*;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class JdbcChessDao implements ChessDao {
     private static final String SERVER = "localhost:13306"; // MySQL 서버 주소
@@ -68,8 +67,6 @@ public class JdbcChessDao implements ChessDao {
             deleteBoard(chessGameId, connection);
             updateTurn(chessGameId, chessGame, connection);
             insertBoard(chessGameId, chessGame, connection);
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -136,8 +133,6 @@ public class JdbcChessDao implements ChessDao {
             Turn turn = getCurrentTurn(id, connection);
             if (turn == null) return null;
             return ChessGame.load(Board.of(board), turn);
-        } catch (SQLException e) {
-            throw e;
         }
     }
 
@@ -169,10 +164,7 @@ public class JdbcChessDao implements ChessDao {
             if (!rs.next()) {
                 return null;
             }
-            Turn turn = Turn.from(Player.valueOf(rs.getString("turn")));
-            return turn;
-        } catch (SQLException e) {
-            throw e;
+            return Turn.from(Player.valueOf(rs.getString("turn")));
         }
     }
 
@@ -198,16 +190,12 @@ public class JdbcChessDao implements ChessDao {
 
     @Override
     public Map<Long, ChessGame> getDatabase() throws SQLException {
-        return getRoomId()
-                .stream()
-                .collect(Collectors.toMap(
-                        id -> id,
-                        id -> {
-                            try {
-                                return findGameById(id);
-                            } catch (SQLException e) {
-                                return null;
-                            }
-                        }));
+        List<Long> rooms = getRoomId();
+        Map<Long, ChessGame> database = new HashMap<>();
+
+        for (Long room : rooms) {
+            database.put(room, findGameById(room));
+        }
+        return database;
     }
 }
