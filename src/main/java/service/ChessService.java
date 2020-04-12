@@ -32,8 +32,7 @@ public class ChessService {
         return GSON.toJson(chessGamesDto);
     }
 
-    public String findBoard(Request req) throws SQLException {
-        int boardId = Integer.parseInt(req.queryParams("id"));
+    public String findBoard(int boardId) throws SQLException {
         List<PieceVo> pieceVos = pieceDao.findAll(boardId);
 
         ChessGameDto chessGameDto = chessGameDao.findChessGameBy(boardId);
@@ -47,10 +46,7 @@ public class ChessService {
         return GSON.toJson(boardDto);
     }
 
-    public String move(Request req, ChessGame chessGame) {
-        LocationDto nowDto = new LocationDto(req.queryParams("now"));
-        LocationDto destinationDto = new LocationDto(req.queryParams("des"));
-
+    public String move(LocationDto nowDto,LocationDto destinationDto, ChessGame chessGame) {
         Location nowLocation = new Location(nowDto.getRow(), nowDto.getCol());
         Location destinationLocation =
                 new Location(destinationDto.getRow(), destinationDto.getCol());

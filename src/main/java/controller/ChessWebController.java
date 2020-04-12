@@ -1,6 +1,7 @@
 package controller;
 
 import chess.game.ChessGame;
+import dto.LocationDto;
 import service.ChessService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -39,9 +40,16 @@ public class ChessWebController {
 
         get("/start/boards", (req, res) -> chessService.findAllBoards());
 
-        get("/start/board", (req, res) -> chessService.findBoard(req));
+        get("/start/board", (req, res) -> {
+            int boardId = Integer.parseInt(req.queryParams("id"));
+            return chessService.findBoard(boardId);
+        });
 
-        post("/start/move", (req, res) -> chessService.move(req, chessGame));
+        post("/start/move", (req, res) -> {
+            LocationDto nowDto = new LocationDto(req.queryParams("now"));
+            LocationDto destinationDto = new LocationDto(req.queryParams("des"));
+            return chessService.move(nowDto, destinationDto, chessGame);
+        });
 
         get("/start/winner", (req, res) -> chessService.findWinner(chessGame));
 
