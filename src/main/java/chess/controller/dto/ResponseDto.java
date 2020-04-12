@@ -54,7 +54,7 @@ public class ResponseDto {
     }
 
     public Player getWinner() {
-        return status.getWinner();
+        return winner;
     }
 
     public void setWinner(final Player winner) {

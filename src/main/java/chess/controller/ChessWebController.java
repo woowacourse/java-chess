@@ -97,7 +97,10 @@ public class ChessWebController {
     }
 
     private WebDto makeWinnerDto(final ResponseDto responseDto) {
-        return new WebDto(responseDto.getWinner().toString(), responseDto.getWinner().toString());
+        if (Objects.nonNull(responseDto.getWinner())) {
+            return new WebDto(responseDto.getWinner().toString(), responseDto.getWinner().toString());
+        }
+        return null;
     }
 
     private RequestDto makeRequestDto(final Request req) {

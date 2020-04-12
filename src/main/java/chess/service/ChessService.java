@@ -47,7 +47,6 @@ public class ChessService {
         ChessGame chessGame = chessGames.get(id);
         ResponseDto responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
                 chessGame.getStatus(), id);
-        responseDto.setStatus(chessGame.getStatus());
         try {
             chessGame.move(MoveParameter.of(requestDto.getParameter()));
             responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
