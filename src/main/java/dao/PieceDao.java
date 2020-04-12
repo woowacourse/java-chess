@@ -82,7 +82,7 @@ public class PieceDao {
 		return pieceDtos;
 	}
 
-	public int deletePiece(final int roomId) throws SQLException {
+	public int deletePieces(final int roomId) throws SQLException {
 		final String query = "DELETE FROM piece WHERE room_id = ?";
 		final Connection connection = getConnection();
 		final PreparedStatement preparedStatement = connection.prepareStatement(query);
