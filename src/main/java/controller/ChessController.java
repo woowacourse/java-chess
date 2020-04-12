@@ -33,7 +33,7 @@ public class ChessController {
 			}
 
 			if (command.isStatus()) {
-				Map<Team, Double> score = Score.calculateScore(board.getRanks(), Team.values());
+				Map<Team, Double> score = Score.calculateScore(board.getPieces(), Team.values());
 				OutputView.printScore(score);
 			}
 

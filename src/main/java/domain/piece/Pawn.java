@@ -19,6 +19,7 @@ public class Pawn extends Piece {
 	private static final double SCORE = 1;
 	private static final String SYMBOL = "p";
 	private static final int START_STEP_SIZE = 2;
+	private static final int DEFAULT_SAME_COLUMN = 1;
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
@@ -48,9 +49,10 @@ public class Pawn extends Piece {
 	}
 
 	public boolean hasSameColumn(List<Pawn> pawns) {
-		pawns.remove(this);
-		return pawns.stream()
-			.anyMatch(pawn -> pawn.position.isSameColumn(this.position));
+		int count = (int)pawns.stream()
+			.filter(pawn -> pawn.position.isSameColumn(this.position))
+			.count();
+		return count > DEFAULT_SAME_COLUMN;
 	}
 
 	@Override

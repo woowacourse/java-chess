@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Score;
+import domain.board.Board;
 import domain.board.Rank;
 import domain.piece.team.Team;
 import web.util.BoardConverter;
@@ -24,7 +25,7 @@ public class ChessGameDto {
 		this.symbols = BoardConverter.toSymbolsFromSymbol(symbol);
 		this.unicodeBoard = BoardConverter.boardToUnicode(symbols);
 		this.board = BoardConverter.toBoardFromSymbol(symbol);
-		this.score = ScoreConverter.convert(Score.calculateScore(board, Team.values()));
+		this.score = ScoreConverter.convert(Score.calculateScore(new Board(board).getPieces(), Team.values()));
 		this.turn = turn;
 	}
 

@@ -28,7 +28,7 @@ public class BoardService {
 	public ChessGameDto createGame(String title) {
 		this.title = title;
 		List<Rank> board = boardGame.getReverse();
-		Map<Team, Double> score = Score.calculateScore(board);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces());
 		return new ChessGameDto(title, board, turn.getName(), score);
 	}
 
@@ -37,13 +37,13 @@ public class BoardService {
 		boardGame.move(moveCommand, turn);
 		turn = Team.changeTurn(turn);
 		List<Rank> board = boardGame.getReverse();
-		Map<Team, Double> score = Score.calculateScore(board);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces());
 		return new ChessGameDto(title, board, turn.getName(), score);
 	}
 
 	public void addBoard() throws SQLException {
 		List<Rank> board = boardGame.getReverse();
-		Map<Team, Double> score = Score.calculateScore(board);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces());
 		ChessGameDto chessGameDto = new ChessGameDto(title, board, turn.getName(), score);
 		boardDAO.addBoard(chessGameDto);
 	}
@@ -51,7 +51,7 @@ public class BoardService {
 	public ChessGameDto findByTitle(String title) throws SQLException {
 		ChessGameDto chessGameDto = boardDAO.findByTitle(title);
 		List<Rank> board = chessGameDto.getBoard();
-		Map<Team, Double> score = Score.calculateScore(board);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces());
 		return new ChessGameDto(chessGameDto.getTitle(), board, chessGameDto.getTurn(), score);
 	}
 }

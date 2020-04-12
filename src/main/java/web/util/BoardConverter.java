@@ -91,7 +91,15 @@ public class BoardConverter {
 		return toSymbolFromSymbols(symbols);
 	}
 
-	public static List<String> toSymbolsFromBoard(List<Rank> board) {
+	public static List<String> toSymbolsFromSymbol(String inputSymbol) {
+		List<String> symbols = new ArrayList<>();
+		for (int i = 0; i < inputSymbol.length(); i++) {
+			symbols.add(String.valueOf(inputSymbol.charAt(i)));
+		}
+		return symbols;
+	}
+
+	private static List<String> toSymbolsFromBoard(List<Rank> board) {
 		List<String> symbols = new ArrayList<>();
 		for (Rank rank : board) {
 			for (int i = MIN_COLUMN_COUNT; i <= MAX_COLUMN_COUNT; i++) {
@@ -107,15 +115,7 @@ public class BoardConverter {
 		return symbols;
 	}
 
-	public static String toSymbolFromSymbols(List<String> inputSymbol) {
+	private static String toSymbolFromSymbols(List<String> inputSymbol) {
 		return String.join("", inputSymbol);
-	}
-
-	public static List<String> toSymbolsFromSymbol(String inputSymbol) {
-		List<String> symbols = new ArrayList<>();
-		for (int i = 0; i < inputSymbol.length(); i++) {
-			symbols.add(String.valueOf(inputSymbol.charAt(i)));
-		}
-		return symbols;
 	}
 }

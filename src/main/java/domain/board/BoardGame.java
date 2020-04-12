@@ -44,4 +44,8 @@ public class BoardGame {
 	public List<Rank> getRanks() {
 		return board.getRanks();
 	}
+
+	public List<Piece> getPieces() {
+		return board.getPieces();
+	}
 }

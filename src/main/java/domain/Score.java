@@ -1,36 +1,34 @@
 package domain;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import domain.board.Rank;
 import domain.piece.Pawn;
+import domain.piece.Piece;
 import domain.piece.team.Team;
 
 public class Score {
-	public static Map<Team, Double> calculateScore(List<Rank> ranks, Team... teams) {
+	public static Map<Team, Double> calculateScore(List<Piece> pieces, Team... teams) {
 		return Arrays.stream(teams)
-			.collect(Collectors.toMap(team -> team, team -> calculateScoreByTeam(ranks, team)));
+			.collect(Collectors.toMap(team -> team, team -> calculateScoreByTeam(pieces, team)));
 	}
 
-	private static double calculateScoreByTeam(List<Rank> ranks, Team team) {
-		double sum = ranks.stream()
-			.map(rank -> rank.calculateScore(team))
+	private static double calculateScoreByTeam(List<Piece> pieces, Team team) {
+		double sum = pieces.stream()
+			.filter(piece -> piece.isTeam(team))
+			.map(Piece::getScore)
 			.reduce(0.0, Double::sum);
-
-		return applyPawnScore(ranks, team, sum);
+		return applyPawnScore(pieces, team, sum);
 	}
 
-	private static double applyPawnScore(List<Rank> ranks, Team team, double sum) {
-		List<Pawn> pawn = new ArrayList<>();
-
-		ranks.stream()
-			.map(rank -> rank.findPawn(team))
-			.map(pawn::addAll)
-			.close();
+	private static double applyPawnScore(List<Piece> pieces, Team team, double sum) {
+		List<Pawn> pawn = pieces.stream()
+			.filter(value -> value instanceof Pawn)
+			.filter(value -> value.isTeam(team))
+			.map(piece -> (Pawn)piece)
+			.collect(Collectors.toList());
 
 		if (hasSameColumnPawn(pawn)) {
 			sum += pawn.size() * Pawn.PAWN_SCORE_WHEN_HAS_SAME_COLUMN;

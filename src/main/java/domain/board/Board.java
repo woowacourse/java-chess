@@ -1,5 +1,6 @@
 package domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -45,5 +46,11 @@ public class Board {
 
 	public List<Rank> getRanks() {
 		return ranks;
+	}
+
+	public List<Piece> getPieces() {
+		List<Piece> pieces = new ArrayList<>();
+		ranks.forEach(rank -> pieces.addAll(rank.getPieces()));
+		return pieces;
 	}
 }
