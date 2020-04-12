@@ -7,6 +7,19 @@ import java.sql.SQLException;
 
 // TODO test
 public class StatusRecordDao {
+	private static final StatusRecordDao STATUS_RECORD_DAO;
+
+	static {
+		STATUS_RECORD_DAO = new StatusRecordDao();
+	}
+
+	private StatusRecordDao() {
+	}
+
+	public static StatusRecordDao getInstance() {
+		return STATUS_RECORD_DAO;
+	}
+
 	public Connection getConnection() {
 		Connection connection = null;
 		final String server = "localhost:13306"; // MySQL 서버 주소
