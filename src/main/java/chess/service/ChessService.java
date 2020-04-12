@@ -71,16 +71,14 @@ public class ChessService {
         long id = requestDto.getId();
         ChessGame chessGame = chessGames.get(id);
         List<String> parameter = requestDto.getParameter();
-        ResponseDto responseDto = new ResponseDto("");
         try {
             saveGame(id, chessGame, parameter);
             endGame(id, parameter);
             chessGames.remove(id);
-            responseDto.setRoomId(chessDAO.getRoomId());
+            return new ResponseDto(chessDAO.getRoomId());
         } catch (SQLException e) {
-            responseDto.setMessage(e.getMessage());
+            return new ResponseDto(e.getMessage());
         }
-        return responseDto;
     }
 
     private void endGame(final long id, final List<String> parameter) throws SQLException {
@@ -113,10 +111,9 @@ public class ChessService {
     }
 
     public ResponseDto load(final RequestDto requestDto) {
-        ResponseDto responseDto = new ResponseDto("");
+        ResponseDto responseDto = getRoomId();
         long id = requestDto.getId();
         try {
-            responseDto.setRoomId(chessDAO.getRoomId());
             ChessGame chessGame = chessDAO.findGameById(id);
             chessGames.put(id, chessGame);
             responseDto = new ResponseDto(chessGame.getBoardAndString(), chessGame.getTurn(),
