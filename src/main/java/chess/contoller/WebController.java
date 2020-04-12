@@ -7,7 +7,6 @@ import java.util.Map;
 
 import chess.domain.ChessGame;
 import chess.domain.dto.ChessBoardDto;
-import chess.domain.dto.RoomsDto;
 import chess.domain.dto.StatusDto;
 import chess.domain.service.ChessGameService;
 import spark.ModelAndView;
@@ -32,7 +31,7 @@ public class WebController {
 	private void mainRendering() {
 		get("/", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+			model.put("room", chessGameService.findAllRooms());
 			return render(model, "index.html");
 		});
 	}
@@ -44,7 +43,7 @@ public class WebController {
 				ChessGame chessGame = chessGameService.create(req.queryParams("room-name"));
 				putGameInfoToModel(chessGame, model);
 			} catch (RuntimeException e) {
-				model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+				model.put("room", chessGameService.findAllRooms());
 				model.put("error", e.getMessage());
 				return render(model, "index.html");
 			}
@@ -60,7 +59,7 @@ public class WebController {
 				putGameInfoToModel(chessGame, model);
 				return render(model, "chess.html");
 			} catch (RuntimeException e) {
-				model.put("room", new RoomsDto(chessGameService.findAllRooms()));
+				model.put("room", chessGameService.findAllRooms());
 				model.put("error", e.getMessage());
 				return render(model, "index.html");
 			}

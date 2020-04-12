@@ -3,12 +3,14 @@ package chess.domain.service;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import chess.domain.BoardConverter;
 import chess.domain.ChessGame;
 import chess.domain.FinishFlag;
 import chess.domain.Side;
 import chess.domain.dao.RoomDao;
+import chess.domain.dto.RoomDto;
 import chess.domain.position.Position;
 
 public class ChessGameService {
@@ -52,8 +54,11 @@ public class ChessGameService {
 		return chessGame;
 	}
 
-	public List<String> findAllRooms() throws SQLException {
-		return roomDao.findAll();
+	public List<RoomDto> findAllRooms() throws SQLException {
+		List<String> rooms = roomDao.findAll();
+		return rooms.stream()
+				.map(RoomDto::new)
+				.collect(Collectors.toList());
 	}
 
 	public ChessGame load(String roomName) throws SQLException {
