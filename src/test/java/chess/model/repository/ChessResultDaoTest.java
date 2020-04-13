@@ -5,11 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.model.domain.board.ChessGame;
 import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,17 +19,6 @@ class ChessResultDaoTest {
     @BeforeEach
     public void setup() {
         chessResultDao = ChessResultDao.getInstance();
-    }
-
-    @DisplayName("Connection Test")
-    @Test
-    public void connection() {
-        Connection con = chessResultDao.getConnection();
-        assertThat(Objects.nonNull(con)).isTrue();
-    }
-
-    @Test
-    void closeConnection() {
     }
 
     @DisplayName("ChessGameResult CRUD")

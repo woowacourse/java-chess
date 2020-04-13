@@ -1,12 +1,13 @@
-package chess.model.repository;
+package chess.model.repository.connector;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public abstract class ChessDB {
+public class ChessMySqlConnector {
 
-    public java.sql.Connection getConnection() {
-        java.sql.Connection con = null;
+    public static Connection getConnection() {
+        Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
         String database = "Chess"; // MySQL DATABASE 이름
         String option = "?useSSL=false&serverTimezone=UTC";
@@ -28,5 +29,4 @@ public abstract class ChessDB {
         }
         return con;
     }
-
 }

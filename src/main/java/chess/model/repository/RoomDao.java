@@ -1,5 +1,7 @@
 package chess.model.repository;
 
+import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -8,7 +10,7 @@ import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
-public class RoomDao extends ChessDB {
+public class RoomDao {
 
     private final static RoomDao INSTANCE = new RoomDao();
 

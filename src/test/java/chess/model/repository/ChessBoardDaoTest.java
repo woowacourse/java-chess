@@ -10,13 +10,10 @@ import chess.model.domain.piece.Pawn;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Map;
-import java.util.Objects;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ChessBoardDaoTest {
@@ -26,17 +23,6 @@ class ChessBoardDaoTest {
     @BeforeEach
     public void setup() {
         chessBoardDao = ChessBoardDao.getInstance();
-    }
-
-    @DisplayName("Connection Test")
-    @Test
-    public void connection() {
-        Connection con = chessBoardDao.getConnection();
-        assertThat(Objects.nonNull(con)).isTrue();
-    }
-
-    @Test
-    void closeConnection() {
     }
 
     @Test
