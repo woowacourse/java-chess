@@ -13,6 +13,8 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class BishopInitializer implements InitializeStrategy {
+    private static final String BISHOP_SYMBOL = "b";
+
     private enum InitialBishop {
         BLACK_LEFT(Position.of("c8"), new Bishop(PieceType.BISHOP, Team.BLACK)),
         BLACK_RIGHT(Position.of("f8"), new Bishop(PieceType.BISHOP, Team.BLACK)),
@@ -41,9 +43,9 @@ public final class BishopInitializer implements InitializeStrategy {
     }
 
     @Override
-    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+    public Map<Position, Piece> initialize(Map<String, String> pieceOnBoards) {
         Map<String, String> bishops = pieceOnBoards.entrySet().stream()
-                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals("b"))
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals(BISHOP_SYMBOL))
                 .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
 
         Map<Position, Piece> board = bishops.entrySet().stream()
@@ -56,7 +58,7 @@ public final class BishopInitializer implements InitializeStrategy {
 
     private Piece initializeBishop(String key) {
         String pieceTypeSymbol = key.substring(0, 1);
-        String teamName = key.substring(2).toUpperCase();
+        String teamName = key.substring(1).toUpperCase();
         PieceType pieceType = PieceType.of(pieceTypeSymbol);
         Team team = Team.valueOf(teamName);
         return new Bishop(pieceType, team);

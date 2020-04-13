@@ -15,13 +15,13 @@ public class RookInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("a2", "r_white");
-        pieceOnBoard.put("b2", "p_white");
-        pieceOnBoard.put("f6", "P_black");
-        pieceOnBoard.put("c8", "R_black");
-        pieceOnBoard.put("d4", "r_white");
+        pieceOnBoard.put("a2", "rwhite");
+        pieceOnBoard.put("b2", "pwhite");
+        pieceOnBoard.put("f6", "Pblack");
+        pieceOnBoard.put("c8", "Rblack");
+        pieceOnBoard.put("d4", "rwhite");
         InitializeStrategy rookInitializer = new RookInitializer();
-        Map<Position, Piece> board = rookInitializer.webInitialize(pieceOnBoard);
+        Map<Position, Piece> board = rookInitializer.initialize(pieceOnBoard);
 
         Assertions.assertThat(board.keySet()).contains(
                 Position.of("a2"), Position.of("c8"), Position.of("d4")

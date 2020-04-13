@@ -34,7 +34,7 @@ public class BoardInitializer {
         Map<Position, Piece> board = new HashMap<>();
 
         for (InitializeStrategy strategy : INITIALIZER) {
-            board.putAll(strategy.webInitialize(pieceOnBoards));
+            board.putAll(strategy.initialize(pieceOnBoards));
         }
 
         return board;

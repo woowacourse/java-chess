@@ -1,7 +1,6 @@
 package chess.controller;
 
-import chess.dao.*;
-import chess.domain.ChessRunner;
+import chess.dao.Player;
 import chess.dto.MoveResultDTO;
 import chess.dto.TeamDTO;
 import chess.dto.TileDTO;
@@ -12,25 +11,11 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController {
-    private static final String MESSAGE_STYLE_BLACK = "color:black;";
-    private static final String MESSAGE_STYLE_RED = "color:red;";
-    private static final String DELIMITER = ": ";
-    private static final String NEW_LINE = "\n";
-    private static final String ARROW = " -> ";
-    private static final String WINNER = " 가 이겼습니다.";
-
-    private ChessRunner chessRunner;
-    private ChessBoard chessBoard;
-    private CurrentTeam currentTeam;
-    private PieceOnBoards originalPieces;
-
     private ChessService chessService;
 
     public void playChess() {
@@ -75,175 +60,74 @@ public class WebChessController {
 
             return render(model, "game.html");
         });
-//
-//        post("/continueGame", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
-//
-//            webChessController.continueGame(chessBoardId);
-//            List<TileDTO> tileDtos = webChessController.getTiles();
-//            TeamDTO teamDto = webChessController.getCurrentTeam();
-//            Player player = webChessController.getPlayer();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//            model.put("player", player);
-//
-//            return render(model, "game.html");
-//        });
-//
-//        post("/move", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            String source = req.queryParams("source");
-//            String target = req.queryParams("target");
-//
-//            MoveResultDTO moveResultDto = webChessController.move(source, target);
-//            List<TileDTO> tileDtos = webChessController.getTiles();
-//            TeamDTO teamDto = webChessController.getCurrentTeam();
-//            Player player = webChessController.getPlayer();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//            model.put("message", moveResultDto.getMessage());
-//            model.put("style", moveResultDto.getStyle());
-//            model.put("player", player);
-//
-//            if (webChessController.isEndGame()) {
-//                webChessController.deleteChessGame();
-//                return render(model, "end.html");
-//            }
-//            return render(model, "game.html");
-//        });
-//
-//        post("/status", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            List<TileDTO> tileDtos = webChessController.getTiles();
-//            TeamDTO teamDto = webChessController.getCurrentTeam();
-//            String message = webChessController.getScores();
-//            Player player = webChessController.getPlayer();
-//
-//            model.put("tiles", tileDtos);
-//            model.put("currentTeam", teamDto);
-//            model.put("message", message);
-//            model.put("player", player);
-//
-//            return render(model, "game.html");
-//        });
-//
-//        post("/end", (req, res) -> {
-//            Map<String, Object> model = new HashMap<>();
-//
-//            webChessController.deleteChessGame();
-//            String message = webChessController.getScores();
-//
-//            model.put("message", message);
-//
-//            return render(model, "end.html");
-//        });
-    }
 
-//    public List<Player> players() throws Exception {
-//        PlayerDAO playerDAO = new PlayerDAO();
-//
-//        return Collections.unmodifiableList(playerDAO.findAllPlayer());
-//    }
+        post("/continueGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
 
-    public Player getPlayer() {
-        PlayerDAO playerDAO = new PlayerDAO();
+            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
 
-        return playerDAO.findPlayer(this.chessBoard);
-    }
+            this.chessService.continueGame(chessBoardId);
+            List<TileDTO> tileDtos = this.chessService.getTiles();
+            TeamDTO teamDto = this.chessService.getCurrentTeam();
+            Player player = this.chessService.getPlayer();
 
-    public void continueGame(int chessBoardId) throws Exception {
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
-        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
-        PieceOnBoardDAO pieceOnBoardDAO = new PieceOnBoardDAO();
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("player", player);
 
-        this.chessBoard = chessBoardDAO.findById(chessBoardId);
+            return render(model, "game.html");
+        });
 
-        this.currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard);
+        post("/move", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
 
-        updateOriginalPieces(pieceOnBoardDAO);
-//        Map<String, String> pieceOnBoards = this.originalPieces.getPieceOnBoards().stream()
-//                .collect(Collectors.toMap(entry -> entry.getPosition(),
-//                        entry -> entry.getPieceImageUrl(),
-//                        (e1, e2) -> e1, HashMap::new));
-//        this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
-    }
+            String source = req.queryParams("source");
+            String target = req.queryParams("target");
 
-    private void updateOriginalPieces(PieceOnBoardDAO pieceOnBoardDAO) throws Exception {
-        List<PieceOnBoard> pieces = pieceOnBoardDAO.findPiece(this.chessBoard);
-        this.originalPieces = PieceOnBoards.create(pieces);
-    }
+            MoveResultDTO moveResultDto = this.chessService.move(source, target);
+            List<TileDTO> tileDtos = this.chessService.getTiles();
+            TeamDTO teamDto = this.chessService.getCurrentTeam();
+            Player player = this.chessService.getPlayer();
 
-    public MoveResultDTO move(final String source, final String target) throws Exception {
-        try {
-            this.chessRunner.update(source, target);
-            updateChessBoard(source, target);
-            String moveResult = moveResult(this.chessRunner, source, target);
-            return new MoveResultDTO(moveResult, MESSAGE_STYLE_BLACK);
-        } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
-            return new MoveResultDTO(e.getMessage(), MESSAGE_STYLE_RED);
-        }
-    }
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("message", moveResultDto.getMessage());
+            model.put("style", moveResultDto.getStyle());
+            model.put("player", player);
 
-    private void updateChessBoard(final String source, final String target) throws Exception {
-        PieceOnBoard deletedPiece = null;
-        PieceOnBoardDAO pieceOnBoardDAO = new PieceOnBoardDAO();
-        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
+            if (this.chessService.isEndGame()) {
+                this.chessService.deleteChessGame();
+                return render(model, "end.html");
+            }
+            return render(model, "game.html");
+        });
 
-        Optional<PieceOnBoard> targetPiece = this.originalPieces.find(target);
-        if (targetPiece.isPresent()) {
-            deletedPiece = targetPiece.get();
-            pieceOnBoardDAO.deletePiece(deletedPiece);
-        }
-        Optional<PieceOnBoard> sourcePiece = this.originalPieces.find(source);
-        pieceOnBoardDAO.updatePiece(sourcePiece.get(), target);
-        this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
-        currentTeamDAO.updateCurrentTeam(this.chessBoard, this.currentTeam);
-        updateOriginalPieces(pieceOnBoardDAO);
-    }
+        post("/status", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
 
-    private String moveResult(final ChessRunner chessRunner, final String source, final String target) {
-        if (!this.isEndGame()) {
-            return source + ARROW + target;
-        }
-        return chessRunner.getWinner() + WINNER;
-    }
+            List<TileDTO> tileDtos = this.chessService.getTiles();
+            TeamDTO teamDto = this.chessService.getCurrentTeam();
+            String message = this.chessService.getScores();
+            Player player = this.chessService.getPlayer();
 
-    public boolean isEndGame() {
-        return this.chessRunner.isEndChess();
-    }
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("message", message);
+            model.put("player", player);
 
-    public void deleteChessGame() throws Exception {
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
-        PieceOnBoardDAO pieceOnBoardDAO = new PieceOnBoardDAO();
-        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
-        PlayerDAO playerDAO = new PlayerDAO();
+            return render(model, "game.html");
+        });
 
-        currentTeamDAO.deleteCurrentTeam(this.chessBoard);
-        for (PieceOnBoard pieceOnBoard : this.originalPieces.getPieceOnBoards()) {
-            pieceOnBoardDAO.deletePiece(pieceOnBoard);
-        }
-        playerDAO.deletePlayer(this.chessBoard);
-        chessBoardDAO.deleteChessBoard(this.chessBoard);
-    }
+        post("/end", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
 
-    public TeamDTO getCurrentTeam() {
-        return new TeamDTO(this.chessRunner.getCurrentTeam());
-    }
+            this.chessService.deleteChessGame();
+            String message = this.chessService.getScores();
 
-    public List<TileDTO> getTiles() {
-        return this.chessRunner.entireTileDtos();
-    }
+            model.put("message", message);
 
-    public String getScores() {
-        return this.chessRunner.calculateScores().stream()
-                .map(dto -> dto.getTeam() + DELIMITER + dto.getBoardScore())
-                .collect(Collectors.joining(NEW_LINE));
+            return render(model, "end.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

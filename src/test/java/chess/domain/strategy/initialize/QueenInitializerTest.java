@@ -15,13 +15,13 @@ public class QueenInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("a2", "q_white");
-        pieceOnBoard.put("b2", "p_white");
-        pieceOnBoard.put("f6", "P_black");
-        pieceOnBoard.put("c8", "Q_black");
-        pieceOnBoard.put("d4", "q_white");
+        pieceOnBoard.put("a2", "qwhite");
+        pieceOnBoard.put("b2", "pwhite");
+        pieceOnBoard.put("f6", "Pblack");
+        pieceOnBoard.put("c8", "Qblack");
+        pieceOnBoard.put("d4", "qwhite");
         InitializeStrategy queenInitializer = new QueenInitializer();
-        Map<Position, Piece> board = queenInitializer.webInitialize(pieceOnBoard);
+        Map<Position, Piece> board = queenInitializer.initialize(pieceOnBoard);
 
         Assertions.assertThat(board.keySet()).contains(
                 Position.of("a2"), Position.of("c8"), Position.of("d4")

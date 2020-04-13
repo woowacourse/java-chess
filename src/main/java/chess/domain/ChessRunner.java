@@ -25,7 +25,7 @@ public class ChessRunner {
 
     public ChessRunner(Map<String, String> pieceOnBoards, String currentTeam) {
         this.board = Board.webBoard(pieceOnBoards);
-        this.currentTeam = Team.valueOf(currentTeam.toUpperCase());
+        this.currentTeam = Team.valueOf(currentTeam);
     }
 
     public void update(String source, String target) {

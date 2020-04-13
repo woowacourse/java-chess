@@ -15,13 +15,13 @@ public class KnightInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("a2", "n_white");
-        pieceOnBoard.put("b2", "p_white");
-        pieceOnBoard.put("f6", "P_black");
-        pieceOnBoard.put("c8", "N_black");
-        pieceOnBoard.put("d4", "n_white");
+        pieceOnBoard.put("a2", "nwhite");
+        pieceOnBoard.put("b2", "pwhite");
+        pieceOnBoard.put("f6", "Pblack");
+        pieceOnBoard.put("c8", "Nblack");
+        pieceOnBoard.put("d4", "nwhite");
         InitializeStrategy knightInitializer = new KnightInitializer();
-        Map<Position, Piece> board = knightInitializer.webInitialize(pieceOnBoard);
+        Map<Position, Piece> board = knightInitializer.initialize(pieceOnBoard);
 
         Assertions.assertThat(board.keySet()).contains(
                 Position.of("a2"), Position.of("c8"), Position.of("d4")
