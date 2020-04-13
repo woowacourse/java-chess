@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.List;
+
 import chess.domain.board.Position;
 import chess.domain.piece.Path;
 import chess.domain.piece.Piece;
@@ -9,19 +11,23 @@ public class GameManager {
 	private Pieces pieces;
 	private Color currentColor;
 
-	public GameManager(Pieces pieces) {
+	public GameManager(Pieces pieces, Color currentColor) {
 		this.pieces = pieces;
-		this.currentColor = Color.WHITE;
+		this.currentColor = currentColor;
 	}
 
 	public void moveFromTo(Position sourcePosition, Position targetPosition) {
-		validateEmptySourcePosition(sourcePosition);
 		validateOtherPieceSourcePosition(sourcePosition);
 		validateSameColorTargetPosition(targetPosition);
 
 		movePiece(sourcePosition, targetPosition);
 
 		nextTurn();
+	}
+
+	public List<String> getMovablePositions(Position sourcePosition) {
+		Path path = pieces.movablePositions(sourcePosition);
+		return path.getPositions();
 	}
 
 	private void movePiece(Position sourcePosition, Position targetPosition) {
@@ -35,14 +41,8 @@ public class GameManager {
 		this.currentColor = currentColor.reverse();
 	}
 
-	private void validateEmptySourcePosition(Position sourcePosition) {
-		if (pieces.isBlank(sourcePosition)) {
-			throw new IllegalArgumentException("source에 빈 칸을 선택하셨습니다! 다시 선택해주세요!");
-		}
-	}
-
 	private void validateOtherPieceSourcePosition(Position sourcePosition) {
-		if (!pieces.isSameColor(sourcePosition, currentColor)) {
+		if (pieces.isSameColor(sourcePosition, currentColor.reverse())) {
 			throw new IllegalArgumentException("source에 상대방의 말을 선택하셨습니다! 다시 선택해주세요!");
 		}
 	}
@@ -69,5 +69,9 @@ public class GameManager {
 
 	public Piece getPiece(Position position) {
 		return pieces.getPieceByPosition(position);
+	}
+
+	public Color getCurrentColor() {
+		return currentColor;
 	}
 }

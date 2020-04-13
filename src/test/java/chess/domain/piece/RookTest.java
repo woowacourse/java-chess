@@ -24,7 +24,7 @@ class RookTest {
 		originPiece = new HashMap<>();
 		PiecesFactory.createBlankPieces(originPiece);
 		pieces = new Pieces(originPiece);
-		gameManager = new GameManager(pieces);
+		gameManager = new GameManager(pieces, Color.WHITE);
 	}
 
 	@DisplayName("Rook 클래스가 PieceScore에 있는 Enum Rook 동일한지 테스트")

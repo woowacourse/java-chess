@@ -1,0 +1,340 @@
+<!DOCTYPE>
+<html>
+<head>
+    <meta charset="UTF-i.imgUrl">
+    <link href="/css/index.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+            integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+            integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+            crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+            integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+
+<div id="overlay">
+    <div id="text">
+        <p><span id="winner"></span>가 이겼습니다!</p>
+    </div>
+</div>
+
+<div class="container" id="all">
+    <h1>이곳은 {{roomId}}번 방입니다!</h1>
+
+    <div>현재 턴은 <span id="turn"></span>입니다.</div>
+
+    <button class="btn btn-primary" id="statusButton">점수보기</button>
+
+    <button class="btn btn-primary" id="saveButton">저장하기</button>
+
+    <button class="btn btn-primary" id="loadButton">불러오기</button>
+
+    <button class="btn btn-primary" id="initButton">체스판 초기화</button>
+
+    <table class="chessPiece">
+        <tr>
+            <td class="chessPosition" id="a8"></td>
+            <td class="chessPosition" id="b8"></td>
+            <td class="chessPosition" id="c8"></td>
+            <td class="chessPosition" id="d8"></td>
+            <td class="chessPosition" id="e8"></td>
+            <td class="chessPosition" id="f8"></td>
+            <td class="chessPosition" id="g8"></td>
+            <td class="chessPosition" id="h8"></td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a7"></td>
+            <td class="chessPosition" id="b7"></td>
+            <td class="chessPosition" id="c7"></td>
+            <td class="chessPosition" id="d7"></td>
+            <td class="chessPosition" id="e7"></td>
+            <td class="chessPosition" id="f7"></td>
+            <td class="chessPosition" id="g7"></td>
+            <td class="chessPosition" id="h7"></td>
+            <td>7</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a6"></td>
+            <td class="chessPosition" id="b6"></td>
+            <td class="chessPosition" id="c6"></td>
+            <td class="chessPosition" id="d6"></td>
+            <td class="chessPosition" id="e6"></td>
+            <td class="chessPosition" id="f6"></td>
+            <td class="chessPosition" id="g6"></td>
+            <td class="chessPosition" id="h6"></td>
+            <td>6</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a5"></td>
+            <td class="chessPosition" id="b5"></td>
+            <td class="chessPosition" id="c5"></td>
+            <td class="chessPosition" id="d5"></td>
+            <td class="chessPosition" id="e5"></td>
+            <td class="chessPosition" id="f5"></td>
+            <td class="chessPosition" id="g5"></td>
+            <td class="chessPosition" id="h5"></td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a4"></td>
+            <td class="chessPosition" id="b4"></td>
+            <td class="chessPosition" id="c4"></td>
+            <td class="chessPosition" id="d4"></td>
+            <td class="chessPosition" id="e4"></td>
+            <td class="chessPosition" id="f4"></td>
+            <td class="chessPosition" id="g4"></td>
+            <td class="chessPosition" id="h4"></td>
+            <td>4</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a3"></td>
+            <td class="chessPosition" id="b3"></td>
+            <td class="chessPosition" id="c3"></td>
+            <td class="chessPosition" id="d3"></td>
+            <td class="chessPosition" id="e3"></td>
+            <td class="chessPosition" id="f3"></td>
+            <td class="chessPosition" id="g3"></td>
+            <td class="chessPosition" id="h3"></td>
+            <td>3</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a2"></td>
+            <td class="chessPosition" id="b2"></td>
+            <td class="chessPosition" id="c2"></td>
+            <td class="chessPosition" id="d2"></td>
+            <td class="chessPosition" id="e2"></td>
+            <td class="chessPosition" id="f2"></td>
+            <td class="chessPosition" id="g2"></td>
+            <td class="chessPosition" id="h2"></td>
+            <td>2</td>
+        </tr>
+        <tr>
+            <td class="chessPosition" id="a1"></td>
+            <td class="chessPosition" id="b1"></td>
+            <td class="chessPosition" id="c1"></td>
+            <td class="chessPosition" id="d1"></td>
+            <td class="chessPosition" id="e1"></td>
+            <td class="chessPosition" id="f1"></td>
+            <td class="chessPosition" id="g1"></td>
+            <td class="chessPosition" id="h1"></td>
+            <td>1</td>
+        </tr>
+        <tr>
+            <td>a</td>
+            <td>b</td>
+            <td>c</td>
+            <td>d</td>
+            <td>e</td>
+            <td>f</td>
+            <td>g</td>
+            <td>h</td>
+            <td class="chessPosition"></td>
+        </tr>
+    </table>
+</div>
+
+<script src="/js/util.js" type="text/javascript"></script>
+<script type="text/javascript">
+    let allChessPosition = document.querySelectorAll(".chessPosition");
+    let isChooseSourcePosition = false;
+
+    let sourcePosition;
+    let movablePositions;
+
+    window.onload = function () {
+
+        function applyMovablePosition(movablePositions) {
+            movablePositions.forEach(function (movablePosition) {
+                addBorder(movablePosition);
+            });
+        }
+
+        function cancelMovablePosition(movablePositions) {
+            movablePositions.forEach(function (movablePosition) {
+                removeBorder(movablePosition);
+            });
+        }
+
+        function addBorder(movablePosition) {
+            let element = document.getElementById(movablePosition);
+            addClass(element, "movable");
+        }
+
+        function removeBorder(movablePosition) {
+            let element = document.getElementById(movablePosition);
+            removeClass(element, "movable");
+        }
+
+        function getMovablePosition(sourcePosition) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    movablePositions = JSON.parse(xhr.responseText);
+                    applyMovablePosition(movablePositions);
+                    isChooseSourcePosition = true;
+                }
+            };
+            xhr.open('GET', '/game/get?roomId={{roomId}}&sourcePosition=' + sourcePosition, true);
+            xhr.send();
+        }
+
+        function applyPieces(pieces) {
+            pieces.forEach(function (piece) {
+                applyBackgroundImg(piece.position, piece.imgUrl);
+            });
+        }
+
+        function applyBackgroundImg(piecePosition, pieceImgUrl) {
+            let element = document.getElementById(piecePosition);
+            element.style.backgroundImage = "url(/img/" + pieceImgUrl + ")";
+            element.style.backgroundSize = "cover";
+        }
+
+        function showStatus(whiteScore, blackScore) {
+            alert("현재 White의 점수 : " + whiteScore + "\n" + "현재 Black의 점수 : " + blackScore);
+        }
+
+        function addBlur() {
+            let containerValue = document.getElementById("all");
+            addClass(containerValue, "blur");
+        }
+
+        function removeBlur() {
+            let containerValue = document.getElementById("all");
+            removeClass(containerValue, "blur");
+        }
+
+        function addOverlay() {
+            document.getElementById("overlay").style.display = "block";
+        }
+
+        function removeOverlay() {
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        // TODO : 임시방편 왕이 죽는 순간 Turn도 바뀌지 않고 끝나야 함.
+        function applyWinnerColor(currentColor) {
+            if (currentColor === "WHITE") {
+                document.getElementById("winner").innerText = "BLACK";
+            } else {
+                document.getElementById("winner").innerText = "WHITE";
+            }
+        }
+
+        function showCurrentColor(currentColor) {
+            document.getElementById("turn").innerText = currentColor;
+        }
+
+        function isKingDead(currentColor, kingDead) {
+            if (kingDead === true) {
+                addOverlay();
+                addBlur();
+                applyWinnerColor(currentColor);
+            }
+        }
+
+        document.getElementById("initButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    applyPieces(JSON.parse(chessJson.pieces));
+                    showCurrentColor(chessJson.currentColor);
+
+                }
+            };
+            xhr.open('GET', '/game/init?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("statusButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let statusResponse = JSON.parse(xhr.responseText);
+                    showStatus(statusResponse.whiteScore, statusResponse.blackScore);
+                }
+            };
+            xhr.open('GET', '/game/status?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("loadButton").addEventListener('click', function () {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    applyPieces(JSON.parse(chessJson.pieces));
+                    alert("정상적으로 불러왔습니다!");
+                } else {
+                    alert("불러오지 못했습니다!");
+                }
+            };
+            xhr.open('GET', '/game/load?roomId={{roomId}}', true);
+            xhr.send();
+        });
+
+        document.getElementById("saveButton").addEventListener('click', function () {
+            alert("정상적으로 저장되었습니다!");
+        });
+
+
+        function move(sourcePosition, targetPosition) {
+            let xhr = new XMLHttpRequest();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    let chessJson = JSON.parse(xhr.responseText);
+                    if (typeof chessJson.errorMessage == "undefined") {
+                        applyPieces(JSON.parse(chessJson.pieces));
+                        let currentColor = chessJson.currentColor;
+                        isKingDead(currentColor, chessJson.kingDead);
+                        showCurrentColor(currentColor);
+                    } else {
+                        alert("아래와 같은 오류가 발생했습니다! : " + chessJson.errorMessage);
+                    }
+                }
+            };
+            xhr.open('POST', '/game/move?roomId={{roomId}}&sourcePosition='
+                + sourcePosition
+                + '&targetPosition='
+                + targetPosition,
+                true);
+            xhr.send();
+        }
+
+        for (let i = 0; i < allChessPosition.length; i++) {
+            allChessPosition[i].addEventListener('click', function () {
+                if (!isChooseSourcePosition) {
+                    sourcePosition = allChessPosition[i].id;
+                    getMovablePosition(sourcePosition);
+                }
+
+            });
+        }
+
+        for (let i = 0; i < allChessPosition.length; i++) {
+            allChessPosition[i].addEventListener('click', function () {
+                if (isChooseSourcePosition) {
+                    let targetPosition = allChessPosition[i].id;
+                    move(sourcePosition, targetPosition);
+                    isChooseSourcePosition = false;
+                    cancelMovablePosition(movablePositions);
+                }
+            });
+        }
+
+        document.getElementById("overlay").addEventListener('click', function () {
+            removeBlur();
+            removeOverlay();
+        });
+    }
+</script>
+
+</body>
+</html>

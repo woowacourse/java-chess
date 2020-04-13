@@ -26,6 +26,13 @@ public class Pieces {
 		return pieces;
 	}
 
+	public void move(Position sourcePosition, Position targetPosition) {
+		Piece sourcePiece = pieces.get(sourcePosition);
+
+		pieces.put(sourcePosition, Blank.getInstance());
+		pieces.put(targetPosition, sourcePiece);
+	}
+
 	public boolean isSameColor(Position position, Color currentColor) {
 		return pieces.get(position).isSameColor(currentColor);
 	}
@@ -41,11 +48,8 @@ public class Pieces {
 		return piece.findPathByRule(path, pieces);
 	}
 
-	public void move(Position sourcePosition, Position targetPosition) {
-		Piece sourcePiece = pieces.get(sourcePosition);
-
-		pieces.put(sourcePosition, Blank.of());
-		pieces.put(targetPosition, sourcePiece);
+	public Map<Position, Piece> getPieces() {
+		return pieces;
 	}
 
 	public boolean isKingDead(Color currentColor) {

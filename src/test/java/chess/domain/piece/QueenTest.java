@@ -24,7 +24,7 @@ class QueenTest {
 		originPiece = new HashMap<>();
 		PiecesFactory.createBlankPieces(originPiece);
 		pieces = new Pieces(originPiece);
-		gameManager = new GameManager(pieces);
+		gameManager = new GameManager(pieces, Color.WHITE);
 	}
 
 	@DisplayName("Queen 클래스가 PieceScore에 있는 Enum Queen 동일한지 테스트")

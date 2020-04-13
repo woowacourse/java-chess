@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import chess.domain.board.Position;
 
@@ -110,5 +111,11 @@ public class Path {
 
 	public boolean isMovable(Position target) {
 		return positions.contains(target);
+	}
+
+	public List<String> getPositions() {
+		return positions.stream()
+			.map(Position::getPosition)
+			.collect(Collectors.toList());
 	}
 }

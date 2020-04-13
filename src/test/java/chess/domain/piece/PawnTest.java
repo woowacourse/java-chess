@@ -23,7 +23,7 @@ class PawnTest {
 		originPiece = new HashMap<>();
 		PiecesFactory.createBlankPieces(originPiece);
 		pieces = new Pieces(originPiece);
-		gameManager = new GameManager(pieces);
+		gameManager = new GameManager(pieces, Color.WHITE);
 	}
 
 	@DisplayName("폰이 처음으로 두 칸 갈 수 있는지 하는지 테스트")

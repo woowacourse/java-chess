@@ -28,7 +28,7 @@ public class GameManagerTest {
 	@BeforeEach
 	void setUp() {
 		pieces = new Pieces(Pieces.initPieces());
-		gameManager = new GameManager(pieces);
+		gameManager = new GameManager(pieces, Color.WHITE);
 	}
 
 	@DisplayName("체스판을 생성하면 초기화 상태로 들어가있는지 테스트")
@@ -76,7 +76,7 @@ public class GameManagerTest {
 		board.addPiece(Position.of("d4"), whitePawn);
 		board.addPiece(Position.of("e5"), blackPawn);
 
-		gameManager = new GameManager(board);
+		gameManager = new GameManager(board, Color.WHITE);
 
 		gameManager.moveFromTo(Position.of("d4"), Position.of("e5"));
 		assertThat(gameManager.getPiece("e5")).isEqualTo(whitePawn);
