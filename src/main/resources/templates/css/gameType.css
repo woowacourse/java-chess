@@ -5,11 +5,12 @@
     src: url(../ttf/BMHANNAPro.ttf);
 }
 
-h1 {
-    font-family: BMHANNAPro;
+div {
+    float: left;
 }
 
-#menu-button {
+#name-button,
+#load-button {
     width: 80px;
     height: 50px;
     font-family: BMHANNAPro;
@@ -18,7 +19,8 @@ h1 {
     font-size: 20px;
 }
 
-#menu-button:hover {
+#name-button:hover,
+#load-button:hover {
     background-color: black;
     color: white;
 }

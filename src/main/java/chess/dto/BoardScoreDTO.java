@@ -1,10 +1,10 @@
-package chess.controller.dto;
+package chess.dto;
 
-public class BoardScoreDto {
+public class BoardScoreDTO {
     private final double boardScore;
     private String team;
 
-    public BoardScoreDto(final double boardScore) {
+    public BoardScoreDTO(final double boardScore) {
         this.boardScore = boardScore;
     }
 

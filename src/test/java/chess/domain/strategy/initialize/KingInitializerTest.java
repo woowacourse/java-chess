@@ -15,13 +15,13 @@ public class KingInitializerTest {
     @Test
     void webInitializeTest() {
         Map<String, String> pieceOnBoard = new HashMap<>();
-        pieceOnBoard.put("a2", "k_white");
-        pieceOnBoard.put("b2", "p_white");
-        pieceOnBoard.put("f6", "P_black");
-        pieceOnBoard.put("c8", "K_black");
-        pieceOnBoard.put("d4", "k_white");
+        pieceOnBoard.put("a2", "kwhite");
+        pieceOnBoard.put("b2", "pwhite");
+        pieceOnBoard.put("f6", "Pblack");
+        pieceOnBoard.put("c8", "Kblack");
+        pieceOnBoard.put("d4", "kwhite");
         InitializeStrategy kingInitializer = new KingInitializer();
-        Map<Position, Piece> board = kingInitializer.webInitialize(pieceOnBoard);
+        Map<Position, Piece> board = kingInitializer.initialize(pieceOnBoard);
 
         Assertions.assertThat(board.keySet()).contains(
                 Position.of("a2"), Position.of("c8"), Position.of("d4")

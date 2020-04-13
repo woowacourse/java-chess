@@ -1,14 +1,14 @@
 package chess.domain;
 
-import chess.controller.dto.BoardScoreDto;
-import chess.controller.dto.TileDto;
+import chess.dao.PieceOnBoard;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
-import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
+import chess.dto.BoardScoreDTO;
+import chess.dto.TileDTO;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
@@ -25,7 +25,7 @@ public class ChessRunner {
 
     public ChessRunner(Map<String, String> pieceOnBoards, String currentTeam) {
         this.board = Board.webBoard(pieceOnBoards);
-        this.currentTeam = Team.valueOf(currentTeam.toUpperCase());
+        this.currentTeam = Team.valueOf(currentTeam);
     }
 
     public void update(String source, String target) {
@@ -106,14 +106,14 @@ public class ChessRunner {
         return currentTeamScore.getBoardScore();
     }
 
-    public List<BoardScoreDto> calculateScores() {
-        List<BoardScoreDto> scores = new ArrayList<>();
-        BoardScoreDto currentTeam = new BoardScoreDto(calculateScore());
+    public List<BoardScoreDTO> calculateScores() {
+        List<BoardScoreDTO> scores = new ArrayList<>();
+        BoardScoreDTO currentTeam = new BoardScoreDTO(calculateScore());
         currentTeam.setTeam(this.currentTeam.name());
         scores.add(currentTeam);
 
         BoardScore oppositeTeamScore = this.board.calculateScore(this.currentTeam.changeTeam());
-        BoardScoreDto oppositeTeam = new BoardScoreDto(oppositeTeamScore.getBoardScore());
+        BoardScoreDTO oppositeTeam = new BoardScoreDTO(oppositeTeamScore.getBoardScore());
         oppositeTeam.setTeam(this.currentTeam.changeTeam().name());
         scores.add(oppositeTeam);
 
@@ -137,44 +137,45 @@ public class ChessRunner {
         return winner.map(Enum::name).orElse(StringUtils.EMPTY);
     }
 
-    public List<TileDto> entireTileDtos() {
-        List<TileDto> tileDtos = Position.getPositions().stream()
-                .map(TileDto::new)
+    public List<TileDTO> entireTileDtos() {
+        List<TileDTO> tileDtos = Position.getPositions().stream()
+                .map(TileDTO::new)
                 .collect(Collectors.toList());
 
-        setTileDtoTeam(tileDtos);
+        setTileDtoStyle(tileDtos);
         setTileDtoImage(tileDtos);
 
         return Collections.unmodifiableList(tileDtos);
     }
 
-    private void setTileDtoTeam(List<TileDto> tileDtos) {
+    private void setTileDtoStyle(List<TileDTO> tileDtos) {
         List<Integer> indexes = Position.getPositionsIndex();
         for (int i = 0; i < indexes.size(); i++) {
-            TileDto tileDto = tileDtos.get(i);
+            TileDTO tileDto = tileDtos.get(i);
             tileDto.setStyle(indexes.get(i));
         }
     }
 
-    private void setTileDtoImage(List<TileDto> tileDtos) {
-        List<Tile> tiles = this.board.tiles();
-        for (Tile tile : tiles) {
-            TileDto tileDto = tileDtos.stream()
-                    .filter(td -> td.getPosition().equals(tile.position()))
+    private void setTileDtoImage(List<TileDTO> tileDtos) {
+        Map<Position, Piece> board = this.board.getBoard();
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            tileDtos.stream()
+                    .filter(td -> td.getPosition().equals(entry.getKey().toString()))
                     .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            tileDto.setPieceImageUrl(tile.pieceImageUrl());
+                    .orElseThrow(IllegalArgumentException::new)
+                    .setPieceImageUrl(entry.getValue().toSymbol() + entry.getValue().teamName().toLowerCase());
         }
     }
 
-    public List<TileDto> pieceTileDtos() {
-        List<TileDto> tileDtos = this.board.tiles().stream()
-                .map((tile) -> {
-                    TileDto tileDto = new TileDto(tile.position());
-                    tileDto.setPieceImageUrl(tile.pieceImageUrl());
-                    return tileDto;
+    public List<PieceOnBoard> getPieceOnBoards(int chessBoardId) {
+        List<PieceOnBoard> pieces = this.board.getBoard().entrySet().stream()
+                .map((entry) -> {
+                    String position = entry.getKey().toString();
+                    String pieceType = entry.getValue().toSymbol();
+                    String team = entry.getValue().teamName();
+                    return new PieceOnBoard(position, pieceType, team, chessBoardId);
                 }).collect(Collectors.toList());
 
-        return Collections.unmodifiableList(tileDtos);
+        return Collections.unmodifiableList(pieces);
     }
 }

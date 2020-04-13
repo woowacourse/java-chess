@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class QueenInitializer implements InitializeStrategy {
+
+    private static final String QUEEN_SYMBOL = "q";
+
     private enum InitialQueen {
         BLACK_QUEEN(Position.of("d8"), new Queen(PieceType.QUEEN, Team.BLACK)),
         WHITE_QUEEN(Position.of("d1"), new Queen(PieceType.QUEEN, Team.WHITE));
@@ -39,9 +42,9 @@ public final class QueenInitializer implements InitializeStrategy {
     }
 
     @Override
-    public Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+    public Map<Position, Piece> initialize(Map<String, String> pieceOnBoards) {
         Map<String, String> queens = pieceOnBoards.entrySet().stream()
-                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals("q"))
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals(QUEEN_SYMBOL))
                 .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
 
         Map<Position, Piece> board = queens.entrySet().stream()
@@ -54,7 +57,7 @@ public final class QueenInitializer implements InitializeStrategy {
 
     private Piece initializeQueen(String key) {
         String pieceTypeSymbol = key.substring(0, 1);
-        String teamName = key.substring(2).toUpperCase();
+        String teamName = key.substring(1).toUpperCase();
         PieceType pieceType = PieceType.of(pieceTypeSymbol);
         Team team = Team.valueOf(teamName);
         return new Queen(pieceType, team);

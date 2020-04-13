@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.controller.dto.TeamDto;
 import chess.domain.ChessRunner;
+import chess.dto.TeamDTO;
 import chess.view.ConsoleInputView;
 import chess.view.ConsoleOutputView;
 import chess.view.InputView;
@@ -75,7 +75,7 @@ public class ChessController {
 
     private static void printWinner(ChessRunner chessRunner) {
         if (chessRunner.isEndChess()) {
-            TeamDto teamDto = new TeamDto(chessRunner.getWinner());
+            TeamDTO teamDto = new TeamDTO(chessRunner.getWinner());
             outputView.printWinner(teamDto.getTeamName());
         }
     }

@@ -1,17 +1,23 @@
-package chess.controller.dao;
+package chess.dao;
 
 import java.util.Objects;
 
 public class PieceOnBoard {
     private int pieceId;
     private String position;
-    private String pieceImageUrl;
+    private String pieceType;
+    private String team;
     private int chessBoardId;
 
-    public PieceOnBoard(int pieceId, String position, String pieceImageUrl, int chessBoardId) {
+    public PieceOnBoard(String position, String pieceType, String team, int chessBoardId) {
+        this(0, position, pieceType, team, chessBoardId);
+    }
+
+    public PieceOnBoard(int pieceId, String position, String pieceType, String team, int chessBoardId) {
         this.pieceId = pieceId;
         this.position = position;
-        this.pieceImageUrl = pieceImageUrl;
+        this.pieceType = pieceType;
+        this.team = team;
         this.chessBoardId = chessBoardId;
     }
 
@@ -23,8 +29,12 @@ public class PieceOnBoard {
         return position;
     }
 
-    public String getPieceImageUrl() {
-        return this.pieceImageUrl;
+    public String getPieceType() {
+        return this.pieceType;
+    }
+
+    public String getTeam() {
+        return this.team;
     }
 
     public int getChessBoardId() {
@@ -42,12 +52,13 @@ public class PieceOnBoard {
         PieceOnBoard pieceOnBoard = (PieceOnBoard) o;
         return Objects.equals(pieceId, pieceOnBoard.pieceId)
                 && Objects.equals(position, pieceOnBoard.position)
-                && Objects.equals(pieceImageUrl, pieceOnBoard.pieceImageUrl)
+                && Objects.equals(pieceType, pieceOnBoard.pieceType)
+                && Objects.equals(team, pieceOnBoard.team)
                 && Objects.equals(chessBoardId, pieceOnBoard.chessBoardId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceId, position, pieceImageUrl, chessBoardId);
+        return Objects.hash(pieceId, position, pieceType, team, chessBoardId);
     }
 }

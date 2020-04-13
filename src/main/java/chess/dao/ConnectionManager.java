@@ -1,7 +1,8 @@
-package chess.controller.dao;
+package chess.dao;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ConnectionManager {
@@ -11,7 +12,7 @@ public class ConnectionManager {
     public static Connection getConnection() {
         Connection con = null;
         String server = "localhost:13306";
-        String database = "chess";
+        String database = "webChess";
         String option = "?useSSL=false&serverTimezone=UTC";
         String userName = "root";
         String password = "root";
@@ -35,12 +36,13 @@ public class ConnectionManager {
         return con;
     }
 
-    public static void closeConnection(Connection con) {
+    public static void closeResultSet(ResultSet rs) {
         try {
-            if (con != null)
-                con.close();
+            if (rs != null) {
+                rs.close();
+            }
         } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
+            System.err.println("rs 오류:" + e.getMessage());
         }
     }
 }

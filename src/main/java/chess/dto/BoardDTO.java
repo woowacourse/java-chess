@@ -1,12 +1,12 @@
-package chess.controller.dto;
+package chess.dto;
 
 import java.util.Collections;
 import java.util.Map;
 
-public class BoardDto {
+public class BoardDTO {
     private final Map<String, String> board;
 
-    public BoardDto(final Map<String, String> board) {
+    public BoardDTO(final Map<String, String> board) {
         this.board = board;
     }
 

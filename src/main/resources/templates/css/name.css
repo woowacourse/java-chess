@@ -5,20 +5,34 @@
     src: url(../ttf/BMHANNAPro.ttf);
 }
 
-h1 {
+#name-label {
     font-family: BMHANNAPro;
+    font-size: 30px;
 }
 
-#menu-button {
+#white-label,
+#black-label {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}
+
+#white-team,
+#black-team {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+    width: 200px;
+}
+
+#submit-button {
+    font-family: BMHANNAPro;
     width: 80px;
     height: 50px;
-    font-family: BMHANNAPro;
     border: solid 1px;
     border-radius: 5px;
     font-size: 20px;
 }
 
-#menu-button:hover {
+#submit-button:hover {
     background-color: black;
     color: white;
 }

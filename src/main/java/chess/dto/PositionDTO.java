@@ -1,12 +1,12 @@
-package chess.controller.dto;
+package chess.dto;
 
 import java.util.Collections;
 import java.util.List;
 
-public class PositionDto {
+public class PositionDTO {
     private final List<String> positions;
 
-    public PositionDto(final List<String> positions) {
+    public PositionDTO(final List<String> positions) {
         this.positions = positions;
     }
 
