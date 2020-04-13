@@ -26,12 +26,9 @@ public class ChessGameDao {
     public int insert(int roomId, Color gameTurn, Map<Color, String> userNames) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_GAME_TB(ROOM_ID, TURN_NM, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?)";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setInt(1, roomId);
-            pstmt.setString(2, gameTurn.getName());
-            pstmt.setString(3, userNames.get(Color.BLACK));
-            pstmt.setString(4, userNames.get(Color.WHITE));
-        };
+        PreparedStatementSetter pss = JdbcTemplate
+            .getPssFromParams(roomId, gameTurn.getName(), userNames.get(Color.BLACK),
+                userNames.get(Color.WHITE));
         return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
@@ -45,10 +42,8 @@ public class ChessGameDao {
     public void updateTurn(int gameId, Color gameTurn) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET TURN_NM = ? WHERE ID = ? AND PROCEEDING_YN = 'Y'";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setString(1, gameTurn.getName());
-            pstmt.setInt(2, gameId);
-        };
+        PreparedStatementSetter pss = pstmt -> JdbcTemplate
+            .getPssFromParams(gameTurn.getName(), gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
@@ -70,7 +65,7 @@ public class ChessGameDao {
             }
             return Optional.of(rs.getInt("ID"));
         };
-        return jdbcTemplate.executeQuery(query, mapper, pss);
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Optional<Color> getGameTurn(int gameId) {
@@ -83,7 +78,7 @@ public class ChessGameDao {
             }
             return Optional.ofNullable(Color.of(rs.getString("TURN_NM")));
         };
-        return jdbcTemplate.executeQuery(query, mapper, pss);
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Map<Color, String> getUserNames(int gameId) {
@@ -99,7 +94,7 @@ public class ChessGameDao {
             userNames.put(Color.WHITE, rs.getString("WHITE_USER_NM"));
             return Collections.unmodifiableMap(userNames);
         };
-        return jdbcTemplate.executeQuery(query, mapper, pss);
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Optional<Boolean> isProceeding(int gameId) {
@@ -112,7 +107,7 @@ public class ChessGameDao {
             }
             return Optional.of(rs.getString("PROCEEDING_YN").equalsIgnoreCase("Y"));
         };
-        return jdbcTemplate.executeQuery(query, mapper, pss);
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public void updateProceedNByRoomId(int roomId) {
@@ -150,7 +145,7 @@ public class ChessGameDao {
             }
             return users;
         };
-        return jdbcTemplate.executeQuery(query.toString(), mapper, pstmt -> {
-        });
+        return jdbcTemplate.executeQuery(query.toString(), pstmt -> {
+        }, mapper);
     }
 }

@@ -29,22 +29,16 @@ public class ChessResultDao {
     public void update(int gameId, TeamScore teamScore) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setDouble(1, teamScore.get(Color.BLACK));
-            pstmt.setDouble(2, teamScore.get(Color.WHITE));
-            pstmt.setInt(3, gameId);
-        };
+        PreparedStatementSetter pss = JdbcTemplate
+            .getPssFromParams(teamScore.get(Color.BLACK), teamScore.get(Color.WHITE), gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void insert(int gameId, TeamScore teamScore) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_RESULT_TB(GAME_ID, BLACK_SCORE, WHITE_SCORE) VALUES (?, ?, ?)";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setInt(1, gameId);
-            pstmt.setDouble(2, teamScore.get(Color.BLACK));
-            pstmt.setDouble(3, teamScore.get(Color.WHITE));
-        };
+        PreparedStatementSetter pss = JdbcTemplate
+            .getPssFromParams(gameId, teamScore.get(Color.BLACK), teamScore.get(Color.WHITE));
         jdbcTemplate.executeUpdate(query, pss);
     }
 
@@ -68,6 +62,6 @@ public class ChessResultDao {
             selectTeamScore.put(Color.WHITE, rs.getDouble("WHITE_SCORE"));
             return selectTeamScore;
         };
-        return jdbcTemplate.executeQuery(query, mapper, pss);
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 }

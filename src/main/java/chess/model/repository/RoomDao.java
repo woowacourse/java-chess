@@ -20,20 +20,14 @@ public class RoomDao {
     public int insert(String roomName, String roomPW) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO ROOM_TB(NM, PW) VALUES (?, ?)";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setString(1, roomName);
-            pstmt.setString(2, roomPW);
-        };
+        PreparedStatementSetter pss = JdbcTemplate.getPssFromParams(roomName, roomPW);
         return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
     public void updateUsedN(int roomId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE ROOM_TB SET USED_YN = 'N' WHERE ID = ?";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setInt(1, roomId);
-            pstmt.executeUpdate();
-        };
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
@@ -47,7 +41,8 @@ public class RoomDao {
             }
             return rooms;
         };
-        return jdbcTemplate.executeQuery(query, mapper, pstmt -> {
-        });
+        return jdbcTemplate.executeQuery(query, pstmt -> {
+        }, mapper);
     }
+
 }
