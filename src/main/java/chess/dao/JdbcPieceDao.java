@@ -19,49 +19,51 @@ public class JdbcPieceDao implements PieceDao {
     @Override
     public void addPiece(PieceDto pieceDto) throws SQLException {
         String query = "INSERT INTO piece VALUES (?, ?, ?)";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDto.getPosition());
-        pstmt.setString(2, pieceDto.getTeam());
-        pstmt.setString(3, pieceDto.getPieceType());
-        pstmt.executeUpdate();
-        pstmt.close();
-        dataSource.closeConnection(connection);
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(query)
+        ) {
+            pstmt.setString(1, pieceDto.getPosition());
+            pstmt.setString(2, pieceDto.getTeam());
+            pstmt.setString(3, pieceDto.getPieceType());
+            pstmt.executeUpdate();
+        }
     }
 
     @Override
     public void updatePiece(PieceDto pieceDto) throws SQLException {
         String query = "UPDATE SET team=? pieceType=? WHERE position=?";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        pstmt.setString(1, pieceDto.getTeam());
-        pstmt.setString(2, pieceDto.getPieceType());
-        pstmt.setString(3, pieceDto.getPosition());
-        pstmt.executeUpdate();
-        pstmt.close();
-        dataSource.closeConnection(connection);
+
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+        ) {
+            pstmt.setString(1, pieceDto.getTeam());
+            pstmt.setString(2, pieceDto.getPieceType());
+            pstmt.setString(3, pieceDto.getPosition());
+            pstmt.executeUpdate();
+        }
     }
 
     @Override
     public List<PieceDto> findPiece() throws SQLException {
         String query = "SELECT * FROM piece";
-        Connection connection = dataSource.getConnection();
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet resultSet = pstmt.executeQuery();
+        
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement pstmt = connection.prepareStatement(query);
+                ResultSet resultSet = pstmt.executeQuery();
+        ) {
+            List<PieceDto> pieceDtos = new ArrayList<>();
 
-        List<PieceDto> pieceDtos = new ArrayList<>();
+            while (resultSet.next()) {
+                String position = resultSet.getString("position");
+                String team = resultSet.getString("team");
+                String pieceType = resultSet.getString("pieceType");
+                pieceDtos.add(new PieceDto(position, team, pieceType));
+            }
 
-        while (resultSet.next()) {
-            String position = resultSet.getString("position");
-            String team = resultSet.getString("team");
-            String pieceType = resultSet.getString("pieceType");
-            pieceDtos.add(new PieceDto(position, team, pieceType));
+            return pieceDtos;
         }
-
-        resultSet.close();
-        pstmt.close();
-        dataSource.closeConnection(connection);
-
-        return pieceDtos;
     }
 }
