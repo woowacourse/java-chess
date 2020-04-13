@@ -65,18 +65,6 @@ public class ChessService {
         this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
     }
 
-    public List<TileDTO> getTiles() {
-        return this.chessRunner.entireTileDtos();
-    }
-
-    public TeamDTO getCurrentTeam() {
-        return new TeamDTO(this.chessRunner.getCurrentTeam());
-    }
-
-    public Player getPlayer() {
-        return this.playerDAO.findPlayer(this.chessBoard);
-    }
-
     public MoveResultDTO move(String source, String target) {
         try {
             this.chessRunner.update(source, target);
@@ -89,18 +77,23 @@ public class ChessService {
     }
 
     private void updateChessBoard(String source, String target) {
-        PieceOnBoard deletedPiece = null;
+        PieceOnBoard piece = null;
 
-        Optional<PieceOnBoard> targetPiece = this.originalPieces.find(target);
-        if (targetPiece.isPresent()) {
-            deletedPiece = targetPiece.get();
-            this.pieceOnBoardDAO.deletePiece(deletedPiece);
-        }
-        Optional<PieceOnBoard> sourcePiece = this.originalPieces.find(source);
-        this.pieceOnBoardDAO.updatePiece(sourcePiece.get(), target);
+        piece = getPieceOnBoard(target, piece);
+        this.pieceOnBoardDAO.deletePiece(piece);
+        piece = getPieceOnBoard(source, piece);
+        this.pieceOnBoardDAO.updatePiece(piece, target);
         this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
         this.currentTeamDAO.updateCurrentTeam(this.chessBoard, this.currentTeam);
         updateOriginalPieces(this.pieceOnBoardDAO);
+    }
+
+    private PieceOnBoard getPieceOnBoard(String position, PieceOnBoard piece) {
+        Optional<PieceOnBoard> pieceOnBoard = this.originalPieces.find(position);
+        if (pieceOnBoard.isPresent()) {
+            piece = pieceOnBoard.get();
+        }
+        return piece;
     }
 
     private String moveResult(final ChessRunner chessRunner, final String source, final String target) {
@@ -127,5 +120,17 @@ public class ChessService {
         return this.chessRunner.calculateScores().stream()
                 .map(dto -> dto.getTeam() + DELIMITER + dto.getBoardScore())
                 .collect(Collectors.joining(NEW_LINE));
+    }
+
+    public List<TileDTO> getTiles() {
+        return this.chessRunner.entireTileDtos();
+    }
+
+    public TeamDTO getCurrentTeam() {
+        return new TeamDTO(this.chessRunner.getCurrentTeam());
+    }
+
+    public Player getPlayer() {
+        return this.playerDAO.findPlayer(this.chessBoard);
     }
 }

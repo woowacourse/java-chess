@@ -20,11 +20,11 @@ public class PieceOnBoards {
     }
 
     public Optional<PieceOnBoard> find(String position) {
-        Optional<PieceOnBoard> targetPiece = Optional.ofNullable(this.pieceOnBoards.stream()
+        Optional<PieceOnBoard> piece = Optional.ofNullable(this.pieceOnBoards.stream()
                 .filter(p -> p.getPosition().equals(position))
                 .findFirst()
                 .orElse(null));
 
-        return targetPiece;
+        return piece;
     }
 }
