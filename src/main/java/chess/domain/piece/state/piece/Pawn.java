@@ -1,5 +1,6 @@
 package chess.domain.piece.state.piece;
 
+import chess.config.BoardConfig;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.position.Position;
@@ -10,8 +11,6 @@ import java.util.stream.IntStream;
 
 public abstract class Pawn extends Initialized {
     private static final Score SCORE_WITH_PEER = new Score(0.5);
-    private static final int LINE_START_INDEX = 1;
-    private static final int LINE_END_INDEX = 8;
 
     protected Pawn(InitializedBuilder builder) {
         super(builder);
@@ -27,7 +26,7 @@ public abstract class Pawn extends Initialized {
 
     private boolean hasPeerOnSameCollumn(Board board) {
         int collumn = position.getX();
-        return IntStream.rangeClosed(LINE_START_INDEX, LINE_END_INDEX)
+        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
                 .mapToObj(row -> board.getPiece(Position.of(collumn, row)))
                 .anyMatch(hasPeerOnSameCollumn());
     }

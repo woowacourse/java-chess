@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.config.BoardConfig;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
@@ -10,11 +11,8 @@ import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RunningBoard implements Board {
-    private static final int LINE_START_INDEX = 1;
-    private static final int LINE_END_INDEX = 8;
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
     private static final int BLANK_START_INDEX = 3;
@@ -61,18 +59,18 @@ public class RunningBoard implements Board {
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.BLACK, LINE_END_INDEX);
+        initializeEdge(pieces, Team.BLACK, BoardConfig.LINE_END);
         initializePawns(BLACK_PAWN_ROW, Team.BLACK, pieces);
 
     }
 
     private static void initializeWhiteTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.WHITE, LINE_START_INDEX);
+        initializeEdge(pieces, Team.WHITE, BoardConfig.LINE_START);
         initializePawns(WHITE_PAWN_ROW, Team.WHITE, pieces);
     }
 
     private static void initializeEdge(Map<Position, Piece> pieces, Team team, int edgeRow) {
-        for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
+        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
             Position position = Position.of(x, edgeRow);
             Piece piece = PieceFactory.createInitializedPieceWithInitialColumn(x, position, team);
             pieces.put(position, piece);
@@ -80,7 +78,7 @@ public class RunningBoard implements Board {
     }
 
     private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
-        for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
+        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
             Position position = Position.of(x, row);
             Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, team);
             pieces.put(position, initializedPawn);
@@ -94,7 +92,7 @@ public class RunningBoard implements Board {
     }
 
     private static void initializeBlanks(Map<Position, Piece> pieces, int y) {
-        for (int x = LINE_START_INDEX; x <= LINE_END_INDEX; x++) {
+        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
             Position position = Position.of(x, y);
             Blank blank = Blank.of();
             pieces.put(position, blank);

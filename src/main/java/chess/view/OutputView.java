@@ -1,15 +1,15 @@
 package chess.view;
 
+import chess.config.BoardConfig;
+
 import java.util.Collections;
 import java.util.Map;
 import java.util.stream.IntStream;
 
 public class OutputView {
-    private static final int LINE_START = 1;
-    private static final int LINE_END = 8;
 
     public static void printBoard(Map<String, String> board) {
-        IntStream.rangeClosed(LINE_START, LINE_END)
+        IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
                 .boxed()
                 .sorted(Collections.reverseOrder())
                 .forEach(y -> printRow(y, board));
@@ -26,7 +26,7 @@ public class OutputView {
     }
 
     private static void printRow(int y, Map<String, String> board) {
-        IntStream.rangeClosed(LINE_START, LINE_END)
+        IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
                 .forEach(x -> printPosition(x, y, board));
         System.out.println();
     }
