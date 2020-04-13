@@ -1,23 +1,24 @@
 package chess.webController;
 
-import chess.dto.ChessPositionDTO;
-import chess.service.Service;
+import chess.service.ChessGameService;
 
+import static spark.Spark.exception;
 import static spark.Spark.post;
 
 public class ChessMoveUrlController {
     public static void run() {
-        Service service = new Service();
+        ChessGameService chessGameService = new ChessGameService();
 
         post("/move", (req, res) -> {
-            ChessPositionDTO chessPositionDTO =
-                    new ChessPositionDTO(req.queryParams("source"), req.queryParams("target"));
             try {
-                return service.moveChessBoard(chessPositionDTO);
+                return chessGameService.moveChessBoard(req.queryParams("source"), req.queryParams("target"));
             } catch (Exception e) {
-                res.status(403);
-                return e.getMessage();
+                throw new MoveException(e.getMessage());
             }
+        });
+        exception(MoveException.class, (exception, req, res)-> {
+            res.status(403);
+            res.body(exception.getMessage());
         });
     }
 }

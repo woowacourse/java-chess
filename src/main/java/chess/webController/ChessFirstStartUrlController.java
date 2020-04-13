@@ -1,13 +1,13 @@
 package chess.webController;
 
 
-import chess.service.Service;
+import chess.service.ChessGameService;
 
 import static spark.Spark.post;
 
 public class ChessFirstStartUrlController {
     public static void run() {
-        Service service = new Service();
-        post("/chessStart", (req, res) -> service.initialChessBoard());
+        ChessGameService chessGameService = new ChessGameService();
+        post("/chessStart", (req, res) -> chessGameService.initialChessBoard());
     }
 }
