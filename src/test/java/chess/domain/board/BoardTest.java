@@ -74,7 +74,7 @@ public class BoardTest {
 		assertThat(status).containsOnly(entry(Team.BLACK, 38.0), entry(WHITE, 38.0));
 	}
 
-	@DisplayName("displayName")
+	@DisplayName("문자열로 체스판 입력 받아 보드 객체 생성")
 	@Test
 	void constructWithStringTest() {
 		String boards =

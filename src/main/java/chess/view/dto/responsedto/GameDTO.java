@@ -5,8 +5,8 @@ import java.util.Objects;
 import chess.domain.piece.Team;
 
 public class GameDTO {
-	String turn;
-	String gameState;
+	private final String turn;
+	private final String gameState;
 
 	private GameDTO(String turn, String gameState) {
 		this.turn = turn;

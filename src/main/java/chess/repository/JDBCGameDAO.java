@@ -14,20 +14,25 @@ public class JDBCGameDAO implements GameDAO {
 		this.jdbcTemplate = Objects.requireNonNull(jdbcTemplate);
 	}
 
-	public Optional<Game> findById(int userId) {
+	@Override
+	public Optional<Game> findById(int gameId) {
 		String query = "SELECT * FROM game WHERE id = ?";
 		return jdbcTemplate.executeQuery(query, rs ->
 			new Game(GameStateFactory.of(
 				rs.getString("state"),
 				rs.getString("turn"),
 				rs.getString("board")
-			)
-			), userId);
+			)), pstmt -> pstmt.setInt(1, gameId));
 	}
 
+	@Override
 	public void update(Game game) {
 		String query = "UPDATE game SET state=?, turn=?, board=? WHERE id=?";
-		jdbcTemplate.executeUpdate(query, game.getStateType(), game.getTurn().name(),
-			game.getBoard().getAsString(), game.getId());
+		jdbcTemplate.executeUpdate(query, preparedStatement -> {
+			preparedStatement.setString(1, game.getStateType());
+			preparedStatement.setString(2, game.getTurn().name());
+			preparedStatement.setString(3, game.getBoard().getAsString());
+			preparedStatement.setInt(4, game.getId());
+		});
 	}
 }

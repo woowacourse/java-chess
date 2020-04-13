@@ -1,8 +1,13 @@
 package chess.view.dto.requestdto;
 
 public class PositionRequestDTO {
-	String from;
-	String to;
+	private final String from;
+	private final String to;
+
+	public PositionRequestDTO(String from, String to) {
+		this.from = from;
+		this.to = to;
+	}
 
 	public String getFrom() {
 		return from;

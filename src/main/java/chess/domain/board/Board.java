@@ -41,7 +41,7 @@ public class Board {
 	}
 
 	public Board(String boards) {
-		validateBoardRegex(boards);
+		validateBoardRegex(Objects.requireNonNull(boards));
 		pieces = new HashMap<>();
 		parse(boards);
 	}

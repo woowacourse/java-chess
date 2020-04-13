@@ -3,8 +3,8 @@ package chess.view.dto.responsedto;
 import java.util.Objects;
 
 public class BoardDTO {
-	String position;
-	String symbol;
+	private final String position;
+	private final String symbol;
 
 	public BoardDTO(String position, String symbol) {
 		this.position = position;

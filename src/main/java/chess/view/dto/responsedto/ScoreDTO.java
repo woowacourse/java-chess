@@ -3,8 +3,8 @@ package chess.view.dto.responsedto;
 import java.util.Objects;
 
 public class ScoreDTO {
-	String team;
-	double score;
+	private final String team;
+	private final double score;
 
 	public ScoreDTO(String team, double score) {
 		this.team = team;
