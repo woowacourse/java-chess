@@ -57,7 +57,15 @@ public class WebUIChessApplication {
             String destination = req.queryParams("destination");
             try {
                 board.movePiece(new Position(source), new Position(destination));
-                boardDao.save(board);
+                Pieces pieces = board.getPieces();
+                Piece destinationPiece = pieces.findByPosition(new Position(destination));
+                if (destinationPiece == null) {
+                    boardDao.editPiece(source, destination);
+                }
+                if (destinationPiece != null) {
+                    boardDao.removePiece(destination);
+                    boardDao.editPiece(source, destination);
+                }
                 res.redirect("/");
             } catch (Exception e) {
                 res.redirect("/exception");

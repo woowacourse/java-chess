@@ -33,6 +33,26 @@ public class BoardDao {
         return (Board)template.executeQuery(sql, rm);
     }
 
+    public Piece findByPosition(String position) throws SQLException {
+        PreparedStatementSetter pss = statement -> statement.setString(1, position);
+        RowMapper rm = rs -> PieceRule.makeNewPiece(
+            rs.getString("type").charAt(0),
+            rs.getString("position"),
+            rs.getString("team")
+        );
+        String query = "SELECT * FROM piece WHERE position = ?";
+        return (Piece)template.executeQueryWithPss(query, pss, rm);
+    }
+
+    public void editPiece(String position, String newPosition) throws SQLException {
+        PreparedStatementSetter pss = statement -> {
+            statement.setString(1, newPosition);
+            statement.setString(2, position);
+        };
+        final String query = "UPDATE piece SET position = ? WHERE position = ?";
+        template.executeUpdate(query, pss);
+    }
+
     public void save(Board board) throws SQLException {
         removeAll();
         for (Piece alivePiece : board.getPieces().getAlivePieces()) {
@@ -43,6 +63,12 @@ public class BoardDao {
     private void removeAll() throws SQLException {
         final String sql = "DELETE FROM piece";
         template.executeUpdateWithoutPss(sql);
+    }
+
+    public void removePiece(String position) throws SQLException {
+        PreparedStatementSetter pss = statement -> statement.setString(1, position);
+        String query = "DELETE FROM piece WHERE position = ?";
+        template.executeUpdate(query, pss);
     }
 
     private void savePiece(Piece piece) throws SQLException {
