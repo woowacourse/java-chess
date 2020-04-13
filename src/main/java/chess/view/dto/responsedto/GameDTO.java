@@ -17,6 +17,14 @@ public class GameDTO {
 		return new GameDTO(turn.getTeam(), stateType);
 	}
 
+	public String getTurn() {
+		return turn;
+	}
+
+	public String getGameState() {
+		return gameState;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
