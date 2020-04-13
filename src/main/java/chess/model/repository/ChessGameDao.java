@@ -1,13 +1,9 @@
 package chess.model.repository;
 
-import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
-
 import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import chess.model.repository.template.ResultSetMapper;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -67,62 +63,58 @@ public class ChessGameDao {
 
     // TODO ROOMID와 연동 - 조인해서 가져오기
     public Optional<Integer> getGameNumberLatest(int roomId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT ID FROM CHESS_GAME_TB WHERE ID LIKE ? ORDER BY ID DESC";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, roomId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
-                return Optional.of(rs.getInt("ID"));
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
+        ResultSetMapper<Optional<Integer>> mapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
             }
-        }
+            return Optional.of(rs.getInt("ID"));
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Optional<Color> getGameTurn(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT TURN_NM FROM CHESS_GAME_TB WHERE ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
-                return Optional.ofNullable(Color.of(rs.getString("TURN_NM")));
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Optional<Color>> mapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
             }
-        }
+            return Optional.ofNullable(Color.of(rs.getString("TURN_NM")));
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Map<Color, String> getUserNames(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BLACK_USER_NM, WHITE_USER_NM FROM CHESS_GAME_TB WHERE ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Map<Color, String>> mapper = rs -> {
             Map<Color, String> userNames = new HashMap<>();
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (!rs.next()) {
-                    return userNames;
-                }
-                userNames.put(Color.BLACK, rs.getString("BLACK_USER_NM"));
-                userNames.put(Color.WHITE, rs.getString("WHITE_USER_NM"));
+            if (!rs.next()) {
+                return userNames;
             }
+            userNames.put(Color.BLACK, rs.getString("BLACK_USER_NM"));
+            userNames.put(Color.WHITE, rs.getString("WHITE_USER_NM"));
             return Collections.unmodifiableMap(userNames);
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Optional<Boolean> isProceeding(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT PROCEEDING_YN FROM CHESS_GAME_TB WHERE ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
-                return Optional.of(rs.getString("PROCEEDING_YN").equalsIgnoreCase("Y"));
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Optional<Boolean>> mapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
             }
-        }
+            return Optional.of(rs.getString("PROCEEDING_YN").equalsIgnoreCase("Y"));
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public void updateProceedNByRoomId(int roomId) throws SQLException {
@@ -143,6 +135,7 @@ public class ChessGameDao {
     }
 
     public List<String> getUsers() throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("SELECT DISTINCT(BLACK_USER_NM) AS NM ");
         query.append("FROM CHESS_GAME_TB ");
@@ -152,14 +145,14 @@ public class ChessGameDao {
         query.append("FROM CHESS_GAME_TB ");
         query.append("WHERE PROCEEDING_YN = 'N' ");
         query.append("ORDER BY NM ");
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query.toString());
-            ResultSet rs = pstmt.executeQuery()) {
+        ResultSetMapper<List<String>> mapper = rs -> {
             List<String> users = new ArrayList<>();
             while (rs.next()) {
                 users.add(rs.getString("NM"));
             }
             return users;
-        }
+        };
+        return jdbcTemplate.executeQuery(query.toString(), pstmt -> {
+        }, mapper);
     }
 }

@@ -41,4 +41,15 @@ public class JdbcTemplate {
             }
         }
     }
+
+    public <T> T executeQuery(String query, PreparedStatementSetter pss, ResultSetMapper<T> mapper)
+        throws SQLException {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pss.setParameter(pstmt);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return mapper.setRow(rs);
+            }
+        }
+    }
 }

@@ -1,7 +1,5 @@
 package chess.model.repository;
 
-import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
-
 import chess.model.domain.board.BoardSquare;
 import chess.model.domain.board.CastlingSetting;
 import chess.model.domain.board.EnPassant;
@@ -11,9 +9,7 @@ import chess.model.domain.state.MoveOrder;
 import chess.model.domain.state.MoveSquare;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import chess.model.repository.template.ResultSetMapper;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -79,52 +75,49 @@ public class ChessBoardDao {
     }
 
     public Set<CastlingSetting> getCastlingElements(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND CASTLING_ELEMENT_YN = 'Y'";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Set<CastlingSetting>> mapper = rs -> {
             Set<CastlingSetting> castlingElements = new HashSet<>();
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    castlingElements
-                        .add(CastlingSetting.of(BoardSquare.of(rs.getString("BOARDSQUARE_NM")),
-                            PieceFactory.of(rs.getString("PIECE_NM"))));
-                }
+            while (rs.next()) {
+                castlingElements
+                    .add(CastlingSetting.of(BoardSquare.of(rs.getString("BOARDSQUARE_NM")),
+                        PieceFactory.of(rs.getString("PIECE_NM"))));
             }
             return castlingElements;
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public EnPassant getEnpassantBoard(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT EN_PASSANT_NM, BOARDSQUARE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM IS NOT NULL";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<EnPassant> mapper = rs -> {
             Map<BoardSquare, BoardSquare> board = new HashMap<>();
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    board.put(BoardSquare.of(rs.getString("EN_PASSANT_NM")),
-                        BoardSquare.of(rs.getString("BOARDSQUARE_NM")));
-                }
+            while (rs.next()) {
+                board.put(BoardSquare.of(rs.getString("EN_PASSANT_NM")),
+                    BoardSquare.of(rs.getString("BOARDSQUARE_NM")));
             }
             return new EnPassant(board);
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public Map<BoardSquare, Piece> getBoard(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Map<BoardSquare, Piece>> mapper = rs -> {
             Map<BoardSquare, Piece> board = new HashMap<>();
-            try (ResultSet rs = pstmt.executeQuery()) {
-                while (rs.next()) {
-                    board.put(BoardSquare.of(rs.getString("BOARDSQUARE_NM")),
-                        PieceFactory.of(rs.getString("PIECE_NM")));
-                }
+            while (rs.next()) {
+                board.put(BoardSquare.of(rs.getString("BOARDSQUARE_NM")),
+                    PieceFactory.of(rs.getString("PIECE_NM")));
             }
             return board;
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 
     public void delete(int gameId) throws SQLException {

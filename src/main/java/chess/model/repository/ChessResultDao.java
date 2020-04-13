@@ -1,14 +1,10 @@
 package chess.model.repository;
 
-import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
-
 import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import chess.model.repository.template.ResultSetMapper;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -61,19 +57,18 @@ public class ChessResultDao {
     }
 
     public Map<Color, Double> select(int gameId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BLACK_SCORE, WHITE_SCORE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, gameId);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Map<Color, Double>> mapper = rs -> {
             Map<Color, Double> selectTeamScore = new HashMap<>();
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (!rs.next()) {
-                    return selectTeamScore;
-                }
-                selectTeamScore.put(Color.BLACK, rs.getDouble("BLACK_SCORE"));
-                selectTeamScore.put(Color.WHITE, rs.getDouble("WHITE_SCORE"));
+            if (!rs.next()) {
+                return selectTeamScore;
             }
+            selectTeamScore.put(Color.BLACK, rs.getDouble("BLACK_SCORE"));
+            selectTeamScore.put(Color.WHITE, rs.getDouble("WHITE_SCORE"));
             return selectTeamScore;
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
     }
 }

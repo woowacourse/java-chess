@@ -1,12 +1,8 @@
 package chess.model.repository;
 
-import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
-
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import chess.model.repository.template.ResultSetMapper;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
@@ -43,15 +39,16 @@ public class RoomDao {
     }
 
     public Map<Integer, String> selectUsedOnly() throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT ID, NM FROM ROOM_TB WHERE USED_YN = 'Y'";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query);
-            ResultSet rs = pstmt.executeQuery()) {
+        ResultSetMapper<Map<Integer, String>> mapper = rs -> {
             Map<Integer, String> rooms = new HashMap<>();
             while (rs.next()) {
                 rooms.put(rs.getInt("ID"), rs.getString("NM"));
             }
             return rooms;
-        }
+        };
+        return jdbcTemplate.executeQuery(query, pstmt -> {
+        }, mapper);
     }
 }
