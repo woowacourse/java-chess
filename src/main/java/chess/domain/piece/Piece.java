@@ -80,6 +80,10 @@ public abstract class Piece {
         return pieceType.getScore();
     }
 
+    public String getName() {
+        return pieceType.name();
+    }
+
     public abstract Piece getNextPiece();
 
     @Override

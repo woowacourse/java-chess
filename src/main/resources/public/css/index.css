@@ -106,7 +106,6 @@ header .inner h1 {
 }
 
 .inner .chess-row {
-    width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -137,8 +136,7 @@ header .inner h1 {
     font-weight: bold;
 }
 
-.inner .chess-row .square .col {
-    margin-top: 3px;
+.inner .chess-row .col {
     color: #fff;
     font-size: 14px;
     font-weight: bold;

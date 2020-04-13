@@ -1,8 +1,12 @@
 package chess.domain.board;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
+import chess.domain.position.Position;
+
+import java.sql.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class BoardDAO {
     private Connection connection;
@@ -47,35 +51,35 @@ public class BoardDAO {
         }
     }
 
-//    public void placePiece(Piece piece) throws SQLException {
-//        String query = "INSERT INTO board (position, piece) VALUES (?, ?) ON DUPLICATE KEY UPDATE position=?, piece=?";
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//        preparedStatement.setString(1, piece.toString());
-//        preparedStatement.setString(2, piece.getName());
-//        preparedStatement.setString(3, piece.toString());
-//        preparedStatement.setString(4, piece.getName());
-//        preparedStatement.executeUpdate();
-//    }
-//
-//    public void deletePieces() throws SQLException {
-//        String query = "TRUNCATE board";
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//        preparedStatement.executeUpdate();
-//    }
-//
-//    public List<Piece> findAllPieces() throws SQLException {
-//        String query = "SELECT * FROM board";
-//        PreparedStatement preparedStatement = connection.prepareStatement(query);
-//        ResultSet resultSet = preparedStatement.executeQuery();
-//
-//        List<Piece> output = new ArrayList<>();
-//        while (resultSet.next()) {
-//            Piece piece = PieceCreator.of(resultSet.getString("piece"),
-//                    Position.of(resultSet.getString("position")));
-//            output.add(piece);
-//        }
-//        return output;
-//    }
+    public void placePiece(final Board board, final Position position) throws SQLException {
+        String query = "INSERT INTO board (position, piece) VALUES (?, ?) ON DUPLICATE KEY UPDATE position=?, piece=?";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, position.toString());
+        preparedStatement.setString(2, board.findBy(position).getName());
+        preparedStatement.setString(3, position.toString());
+        preparedStatement.setString(4, board.findBy(position).getName());
+        preparedStatement.executeUpdate();
+    }
+
+    public void deletePieces() throws SQLException {
+        String query = "TRUNCATE board";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.executeUpdate();
+    }
+
+    public Map<Position, Piece> findAllPieces() throws SQLException {
+        String query = "SELECT * FROM board";
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        Map<Position, Piece> output = new HashMap<>();
+        while (resultSet.next()) {
+            Piece piece = Piece.of(PieceType.valueOf(resultSet.getString("piece")));
+            Position position = Position.of(resultSet.getString("position"));
+            output.put(position, piece);
+        }
+        return output;
+    }
 //
 //    public Optional<Piece> findPiece(Board board, Position position) throws SQLException {
 //        String query = "SELECT * FROM board WHERE position = ?";
