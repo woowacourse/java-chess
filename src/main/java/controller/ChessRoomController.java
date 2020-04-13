@@ -16,11 +16,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessRoomController {
+	private static final ChessRoomController CHESS_ROOM_CONTROLLER;
 	private static final String PATH = "/chess/rooms/:id";
 	private static final String STATIC_PATH = "/chess.html";
 	private static final String SLASH = "/";
 	private static final String EMPTY = "";
-	private static final ChessRoomController CHESS_ROOM_CONTROLLER;
 	private static final String ID_PARAM = ":id";
 	private static final String COMMEND_QUERYPARAM = "commend";
 	private static final String TABLE_KEY = "table";

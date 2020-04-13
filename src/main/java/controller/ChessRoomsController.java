@@ -12,13 +12,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessRoomsController {
+	private static final ChessRoomsController ROOMS_CONTROLLER;
 	public static final String PATH = "/chess/rooms";
 	private static final String STATIC_PATH = "/rooms.html";
 	private static final String EMPTY = "";
 	private static final String SLASH = "/";
 	private static final String ROOM_NAME_OF_FORM = "room_name";
 	private static final String ROOMS_KEY = "rooms";
-	private static final ChessRoomsController ROOMS_CONTROLLER;
 
 	private final ChessRoomsService chessRoomsService;
 
