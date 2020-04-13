@@ -1,5 +1,8 @@
+package controller;
+
 import chess.GameManager;
 import chess.board.Location;
+import chess.gamestate.GameState;
 import chess.piece.PieceFactory;
 import command.FirstCommand;
 import command.RunningCommand;
@@ -7,7 +10,8 @@ import view.InputView;
 import view.OutputView;
 
 public class ChessController {
-	public final GameManager gameManage = new GameManager(new PieceFactory().createPieces());
+	public final GameManager gameManage = new GameManager(new PieceFactory().createPieces(),
+		GameState.RUNNING_WHITE_TURN);
 
 	public void run() {
 		start();

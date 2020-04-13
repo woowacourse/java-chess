@@ -3,8 +3,8 @@ package chess.team;
 import java.util.Arrays;
 
 public enum Team {
-	BLACK(true, "블랙팀"),
-	WHITE(false, "흰색팀");
+	BLACK(true, "Black"),
+	WHITE(false, "White");
 
 	private final boolean isBlack;
 	private final String name;
@@ -17,6 +17,13 @@ public enum Team {
 	public static Team of(boolean black) {
 		return Arrays.stream(values())
 			.filter(isBlack -> isBlack.isBlack == black)
+			.findAny()
+			.orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다."));
+	}
+
+	public static Team of(String input) {
+		return Arrays.stream(values())
+			.filter(team -> team.name.equals(input))
 			.findAny()
 			.orElseThrow(() -> new IllegalArgumentException("팀을 찾을 수 없습니다."));
 	}

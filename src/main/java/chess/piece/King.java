@@ -11,13 +11,13 @@ public class King extends Piece {
 	private static final char name = 'k';
 	private static final double score = 0;
 
-	private King(Team team) {
-		super(team, new KingMoveStrategy(team));
+	public King(Team team) {
+		super(team, editName(name, team), new KingMoveStrategy(team));
 	}
 
 	public static King of(Team team) {
 		King king = KingCache.kingCache.get(team);
-		Objects.requireNonNull(king, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(king, "킹이 존재하지 않습니다.");
 		return king;
 	}
 
@@ -29,11 +29,6 @@ public class King extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class KingCache {

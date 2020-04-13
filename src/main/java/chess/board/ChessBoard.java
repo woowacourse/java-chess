@@ -14,6 +14,8 @@ import chess.team.Team;
 public class ChessBoard {
 	public static final int ROW_LENGTH = 8;
 	public static final int COLUMN_LENGTH = 8;
+	private static final int TEAM_LENGTH = 2;
+
 
 	private final Map<Location, Piece> board;
 
@@ -29,13 +31,12 @@ public class ChessBoard {
 	}
 
 	private void validateLocation(Location now, Location destination) {
-		if (!board.containsKey(now)) {
-			throw new IllegalArgumentException("출발지가 빈칸입니다.");
-		}
 		Piece piece = board.get(now);
 
 		checkLocationSameTeam(piece, destination);
-		checkObstacleJumper(piece, now, destination);
+		if (piece.isNotJumper()) {
+			checkObstacleJumper(piece, now, destination);
+		}
 		piece.checkStrategy(now, destination, existEnemyInLocation(destination, piece));
 	}
 
@@ -53,10 +54,11 @@ public class ChessBoard {
 		for (int weight = 2; weight <= 8 && nextLocation != destination; weight++) {
 			if (board.containsKey(nextLocation)) {
 				obstacle = true;
+				break;
 			}
 			nextLocation = now.calculateNextLocation(destination, weight);
 		}
-		if (obstacle && piece.isNotJumper()) {
+		if (obstacle) {
 			throw new IllegalArgumentException("경로 사이에 피스가 있습니다.");
 		}
 	}
@@ -114,6 +116,10 @@ public class ChessBoard {
 		return kingCount == 2;
 	}
 
+	public boolean isNotPiece(Location now) {
+		return !board.containsKey(now);
+	}
+
 	public boolean isNotSameTeam(GameState gameState, Location now) {
 		Piece startingPiece = board.get(now);
 		return !startingPiece.isSameTeam(gameState.getTeam());
@@ -121,5 +127,20 @@ public class ChessBoard {
 
 	public Map<Location, Piece> getBoard() {
 		return board;
+	}
+
+	public Team findWinner() {
+		List<Piece> kings = board.values().stream()
+			.filter(Piece::isKing)
+			.collect(Collectors.toList());
+
+		if (kings.size() == TEAM_LENGTH) {
+			throw new IllegalArgumentException("게임이 종료되지 않았습니다.");
+		}
+
+		if (kings.get(0).isSameTeam(Team.BLACK)) {
+			return Team.BLACK;
+		}
+		return Team.WHITE;
 	}
 }

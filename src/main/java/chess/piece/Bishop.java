@@ -12,7 +12,7 @@ public class Bishop extends Piece {
 	private static final double score = 3;
 
 	private Bishop(Team team) {
-		super(team, new BishopMoveStrategy(team));
+		super(team, editName(name, team), new BishopMoveStrategy(team));
 	}
 
 	public static Bishop of(Team team) {
@@ -29,11 +29,6 @@ public class Bishop extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class BishopCache {

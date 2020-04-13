@@ -12,12 +12,12 @@ public class Pawn extends Piece {
 	private static final double score = 1;
 
 	private Pawn(Team team) {
-		super(team, new PawnMoveStrategy(team));
+		super(team, editName(name, team), new PawnMoveStrategy(team));
 	}
 
 	public static Pawn of(Team team) {
 		Pawn pawn = PawnCache.pawnCache.get(team);
-		Objects.requireNonNull(pawn, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(pawn, "폰이 존재하지 않습니다.");
 		return pawn;
 	}
 
@@ -29,11 +29,6 @@ public class Pawn extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class PawnCache {

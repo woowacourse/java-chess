@@ -2,9 +2,37 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>홍토체스</title>
 </head>
 <body>
-Hello World!!
+대기열
+{{#rooms}}
+
+<a href="/{{.}}" style="display: inline-block">{{.}}번방</a>
+<a href="#" id="{{.}}" onclick="delete_button(this)">삭제</a>
+<br>
+{{/rooms}}
+<form action="/" method="post">
+    <button>방 만들기</button>
+</form>
+
+
+<script crossOrigin="anonymous" integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+        src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<script crossOrigin="anonymous"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+<script crossOrigin="anonymous"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+<script>
+    function delete_button(room_id) {
+        $.ajax({
+            url: `/${room_id.id}`,
+            method: "DELETE",
+            success: () => location.reload("/")
+        });
+    }
+</script>
 </body>
 </html>

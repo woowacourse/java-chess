@@ -12,12 +12,12 @@ public class Queen extends Piece {
 	private static final double score = 9;
 
 	private Queen(Team team) {
-		super(team, new QueenMoveStrategy(team));
+		super(team, editName(name, team), new QueenMoveStrategy(team));
 	}
 
 	public static Queen of(Team team) {
 		Queen queen = QueenCache.queenCache.get(team);
-		Objects.requireNonNull(queen, "비숍이 존재하지 않습니다.");
+		Objects.requireNonNull(queen, "퀸이 존재하지 않습니다.");
 		return queen;
 	}
 
@@ -29,11 +29,6 @@ public class Queen extends Piece {
 	@Override
 	public boolean isNotJumper() {
 		return true;
-	}
-
-	@Override
-	protected char getName() {
-		return name;
 	}
 
 	private static class QueenCache {

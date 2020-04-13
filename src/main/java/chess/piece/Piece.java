@@ -1,5 +1,7 @@
 package chess.piece;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 import chess.board.Location;
@@ -7,19 +9,38 @@ import chess.piece.stategy.MoveStrategy;
 import chess.team.Team;
 
 public abstract class Piece {
+	private final static Map<String, Piece> pieceCache = new HashMap<>();
+
 	protected final Team team;
+	protected final char name;
 	protected final MoveStrategy moveStrategy;
 
-	public Piece(Team team, MoveStrategy moveStrategy) {
+	public Piece(Team team, char name, MoveStrategy moveStrategy) {
 		this.team = team;
+		this.name = name;
 		this.moveStrategy = moveStrategy;
+	}
+
+	public static Piece createOnePiece(String name, Team team) {
+		pieceCache.put("p", Pawn.of(team));
+		pieceCache.put("k", King.of(team));
+		pieceCache.put("r", Rook.of(team));
+		pieceCache.put("q", Queen.of(team));
+		pieceCache.put("n", Knight.of(team));
+		pieceCache.put("b", Bishop.of(team));
+		return pieceCache.get(name.toLowerCase());
+	}
+
+	protected static char editName(char c, Team team) {
+		if (Team.BLACK == team) {
+			return Character.toUpperCase(c);
+		}
+		return c;
 	}
 
 	public abstract double getScore();
 
 	public abstract boolean isNotJumper();
-
-	protected abstract char getName();
 
 	public boolean isSameTeam(Team team) {
 		return team == this.team;
@@ -46,11 +67,28 @@ public abstract class Piece {
 		return this instanceof King;
 	}
 
+	public char getName() {
+		return name;
+	}
+
+	public Team getTeam() {
+		return team;
+	}
+
 	@Override
-	public String toString() {
-		if (team == Team.BLACK) {
-			return String.valueOf(Character.toUpperCase(getName()));
-		}
-		return String.valueOf(getName());
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Piece piece = (Piece)o;
+		return name == piece.name &&
+			team == piece.team &&
+			Objects.equals(moveStrategy, piece.moveStrategy);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(team, name, moveStrategy);
 	}
 }

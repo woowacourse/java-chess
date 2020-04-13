@@ -18,10 +18,14 @@ public class GameManager {
 	private final ChessBoard chessBoard;
 	private GameState gameState;
 
-	public GameManager(Map<Location, Piece> pieces) {
+	public GameManager(Map<Location, Piece> pieces, GameState gameState) {
 		Objects.requireNonNull(pieces, "pieces의 정보가 없습니다.");
 		this.chessBoard = new ChessBoard(pieces);
-		this.gameState = GameState.RUNNING_WHITE_TURN;
+		this.gameState = gameState;
+		// todo : 추가된 방어로직
+		if (!chessBoard.hasTwoKings()) {
+			this.gameState = GameState.END;
+		}
 	}
 
 	public boolean isRunning() {
@@ -29,9 +33,19 @@ public class GameManager {
 	}
 
 	public void movePiece(Location now, Location destination) {
+		if (!isRunning()) {
+			throw new IllegalArgumentException("게임이 종료되었습니다.");
+		}
+		checkStarting(now);
 		checkTurn(now);
 		chessBoard.move(now, destination);
 		gameState = gameState.of(chessBoard.hasTwoKings());
+	}
+
+	private void checkStarting(Location now) {
+		if (chessBoard.isNotPiece(now)) {
+			throw new IllegalArgumentException("출발지가 빈칸입니다.");
+		}
 	}
 
 	private void checkTurn(Location now) {
@@ -52,7 +66,15 @@ public class GameManager {
 		return gameStatistics;
 	}
 
+	public Team findWinner() {
+		return chessBoard.findWinner();
+	}
+
 	public Map<Location, Piece> getBoard() {
 		return chessBoard.getBoard();
+	}
+
+	public GameState getGameState() {
+		return gameState;
 	}
 }
