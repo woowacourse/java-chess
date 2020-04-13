@@ -5,9 +5,12 @@ import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
+import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -40,6 +43,18 @@ class KnightTest {
 
         assertThatThrownBy(() -> knight.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("#calculateScore() : should return score of Knight")
+    void calculateScore() {
+        //given
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, Position.of(5, 5), Team.WHITE);
+        Board board = RunningBoard.initiaize();
+        //when
+        Score score = knight.calculateScore(board);
+        //then
+        assertThat(score).isEqualTo(PieceType.KNIGHT.getScore());
     }
 
     private static Stream<Arguments> getCasesForMoveSucceed() {

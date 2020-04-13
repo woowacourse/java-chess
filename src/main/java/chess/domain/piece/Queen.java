@@ -5,12 +5,12 @@ import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.state.piece.NotPawn;
+import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 
 import java.util.List;
 
-public class Queen extends NotPawn {
+public class Queen extends Initialized {
     private Queen(QueenBuilder builder) {
         super(builder);
     }
@@ -30,6 +30,11 @@ public class Queen extends NotPawn {
     @Override
     public boolean hasHindrance(Position to, Board board) {
         return hasHindranceStraightInBetween(to, board);
+    }
+
+    @Override
+    public Score calculateScore(Board board) {
+        return score;
     }
 
     public static class QueenBuilder extends InitializedBuilder {

@@ -1,17 +1,21 @@
 package chess.domain.piece;
 
+import chess.config.BoardConfig;
 import chess.domain.board.Board;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.state.piece.Pawn;
+import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class InitializedPawn extends Pawn {
+public class InitializedPawn extends Initialized {
+    private static final Score SCORE_WITH_PEER = new Score(0.5);
     public static final int MAX_DISTANCE = 2;
 
     private InitializedPawn(InitializedPawnBuilder builder) {
@@ -41,6 +45,14 @@ public class InitializedPawn extends Pawn {
         return hasHindrance(board);
     }
 
+    @Override
+    public Score calculateScore(Board board) {
+        if (hasPeerOnSameCollumn(board)) {
+            return SCORE_WITH_PEER;
+        }
+        return score;
+    }
+
     public static class InitializedPawnBuilder extends InitializedBuilder {
         public InitializedPawnBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
             super(name, position, team, canNotMoveStrategies, score);
@@ -50,6 +62,19 @@ public class InitializedPawn extends Pawn {
         public Piece build() {
             return new InitializedPawn(this);
         }
+    }
+
+    private boolean hasPeerOnSameCollumn(Board board) {
+        int collumn = position.getX();
+        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
+                .mapToObj(row -> board.getPiece(Position.of(collumn, row)))
+                .anyMatch(hasPeerOnSameCollumn());
+    }
+
+    private Predicate<Piece> hasPeerOnSameCollumn() {
+        return piece -> (piece instanceof InitializedPawn || piece instanceof MovedPawn)
+                && !this.equals(piece)
+                && this.isSameTeam(piece);
     }
 
     private boolean hasHindrance(Board board) {

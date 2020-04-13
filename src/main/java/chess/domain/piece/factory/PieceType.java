@@ -74,7 +74,7 @@ public enum PieceType {
         return canNotMoveStrategies;
     }
 
-    Score getScore() {
+    public Score getScore() {
         return score;
     }
 

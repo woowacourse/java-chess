@@ -5,6 +5,8 @@ import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.score.Score;
+import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -49,6 +51,26 @@ class InitializedPawnTest {
 
         assertThatThrownBy(() -> initializedPawn.move(to, board))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("#calculateScore() : should return score of pawn as to board and position")
+    @MethodSource({"getCasesForCalculateScore"})
+    void calculateScore(Position position, Score expected) {
+        //given
+        Piece pawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, Team.WHITE);
+        Board board = RunningBoard.initiaize();
+        //when
+        Score score = pawn.calculateScore(board);
+        //then
+        assertThat(score).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCalculateScore() {
+        return Stream.of(
+                Arguments.of(Position.of(1,2), new Score(1)),
+                Arguments.of(Position.of(2,3), new Score(0.5))
+        );
     }
 
     private static Stream<Arguments> getCasesForHasHindrance() {
