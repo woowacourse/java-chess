@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
-import chess.domain.board.Tile;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -142,13 +141,13 @@ public class ChessRunner {
                 .map(TileDTO::new)
                 .collect(Collectors.toList());
 
-        setTileDtoTeam(tileDtos);
+        setTileDtoStyle(tileDtos);
         setTileDtoImage(tileDtos);
 
         return Collections.unmodifiableList(tileDtos);
     }
 
-    private void setTileDtoTeam(List<TileDTO> tileDtos) {
+    private void setTileDtoStyle(List<TileDTO> tileDtos) {
         List<Integer> indexes = Position.getPositionsIndex();
         for (int i = 0; i < indexes.size(); i++) {
             TileDTO tileDto = tileDtos.get(i);
@@ -156,25 +155,37 @@ public class ChessRunner {
         }
     }
 
+    private void setTileDtoPiece(List<TileDTO> tileDtos) {
+//        Map<Position, Piece> board = this.board.getBoard();
+//        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+//            tileDtos.stream()
+//                    .filter(td -> td.getPosition().equals(entry.getKey()))
+//                    .findFirst()
+//                    .orElseThrow(IllegalArgumentException::new)
+//                    .
+//        }
+    }
+
     private void setTileDtoImage(List<TileDTO> tileDtos) {
-        List<Tile> tiles = this.board.tiles();
-        for (Tile tile : tiles) {
-            TileDTO tileDto = tileDtos.stream()
-                    .filter(td -> td.getPosition().equals(tile.position()))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new);
-            tileDto.setPieceImageUrl(tile.pieceImageUrl());
-        }
+//        List<Tile> tiles = this.board.tiles();
+//        for (Tile tile : tiles) {
+//            TileDTO tileDto = tileDtos.stream()
+//                    .filter(td -> td.getPosition().equals(tile.position()))
+//                    .findFirst()
+//                    .orElseThrow(IllegalArgumentException::new);
+//            tileDto.setPieceImageUrl(tile.pieceImageUrl());
+//        }
     }
 
     public List<TileDTO> pieceTileDtos() {
-        List<TileDTO> tileDtos = this.board.tiles().stream()
-                .map((tile) -> {
-                    TileDTO tileDto = new TileDTO(tile.position());
-                    tileDto.setPieceImageUrl(tile.pieceImageUrl());
-                    return tileDto;
-                }).collect(Collectors.toList());
-
-        return Collections.unmodifiableList(tileDtos);
+//        List<TileDTO> tileDtos = this.board.tiles().stream()
+//                .map((tile) -> {
+//                    TileDTO tileDto = new TileDTO(tile.position());
+//                    tileDto.setPieceImageUrl(tile.pieceImageUrl());
+//                    return tileDto;
+//                }).collect(Collectors.toList());
+//
+//        return Collections.unmodifiableList(tileDtos);
+        return null;
     }
 }

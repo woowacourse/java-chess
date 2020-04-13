@@ -5,9 +5,18 @@ import chess.domain.ChessRunner;
 import chess.dto.MoveResultDTO;
 import chess.dto.TeamDTO;
 import chess.dto.TileDTO;
+import chess.service.ChessService;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static spark.Spark.get;
+import static spark.Spark.post;
 
 public class WebChessController {
     private static final String MESSAGE_STYLE_BLACK = "color:black;";
@@ -21,6 +30,118 @@ public class WebChessController {
     private ChessBoard chessBoard;
     private CurrentTeam currentTeam;
     private PieceOnBoards originalPieces;
+
+    private ChessService chessService;
+
+    public void playChess() {
+        get("/", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            return render(model, "index.html");
+        });
+
+        post("/name", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            return render(model, "name.html");
+        });
+
+        post("/load", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            List<Player> players = this.chessService.players();
+
+            model.put("gameData", players);
+
+            return render(model, "table.html");
+        });
+
+        post("/newGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+
+            String whitePlayer = req.queryParams("white-player");
+            String blackPlayer = req.queryParams("black-player");
+
+            Player player = new Player(whitePlayer, blackPlayer);
+            newGame(player);
+            List<TileDTO> tileDtos = getTiles();
+            TeamDTO teamDto = getCurrentTeam();
+
+            model.put("tiles", tileDtos);
+            model.put("currentTeam", teamDto);
+            model.put("player", player);
+
+            return render(model, "game.html");
+        });
+//
+//        post("/continueGame", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//
+//            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
+//
+//            webChessController.continueGame(chessBoardId);
+//            List<TileDTO> tileDtos = webChessController.getTiles();
+//            TeamDTO teamDto = webChessController.getCurrentTeam();
+//            Player player = webChessController.getPlayer();
+//
+//            model.put("tiles", tileDtos);
+//            model.put("currentTeam", teamDto);
+//            model.put("player", player);
+//
+//            return render(model, "game.html");
+//        });
+//
+//        post("/move", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//
+//            String source = req.queryParams("source");
+//            String target = req.queryParams("target");
+//
+//            MoveResultDTO moveResultDto = webChessController.move(source, target);
+//            List<TileDTO> tileDtos = webChessController.getTiles();
+//            TeamDTO teamDto = webChessController.getCurrentTeam();
+//            Player player = webChessController.getPlayer();
+//
+//            model.put("tiles", tileDtos);
+//            model.put("currentTeam", teamDto);
+//            model.put("message", moveResultDto.getMessage());
+//            model.put("style", moveResultDto.getStyle());
+//            model.put("player", player);
+//
+//            if (webChessController.isEndGame()) {
+//                webChessController.deleteChessGame();
+//                return render(model, "end.html");
+//            }
+//            return render(model, "game.html");
+//        });
+//
+//        post("/status", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//
+//            List<TileDTO> tileDtos = webChessController.getTiles();
+//            TeamDTO teamDto = webChessController.getCurrentTeam();
+//            String message = webChessController.getScores();
+//            Player player = webChessController.getPlayer();
+//
+//            model.put("tiles", tileDtos);
+//            model.put("currentTeam", teamDto);
+//            model.put("message", message);
+//            model.put("player", player);
+//
+//            return render(model, "game.html");
+//        });
+//
+//        post("/end", (req, res) -> {
+//            Map<String, Object> model = new HashMap<>();
+//
+//            webChessController.deleteChessGame();
+//            String message = webChessController.getScores();
+//
+//            model.put("message", message);
+//
+//            return render(model, "end.html");
+//        });
+    }
 
     public void newGame(Player player) throws Exception {
         ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
@@ -43,11 +164,11 @@ public class WebChessController {
         playerDAO.addPlayer(this.chessBoard, player);
     }
 
-    public List<Player> players() throws Exception {
-        PlayerDAO playerDAO = new PlayerDAO();
-
-        return Collections.unmodifiableList(playerDAO.findAllPlayer());
-    }
+//    public List<Player> players() throws Exception {
+//        PlayerDAO playerDAO = new PlayerDAO();
+//
+//        return Collections.unmodifiableList(playerDAO.findAllPlayer());
+//    }
 
     public Player getPlayer() throws Exception {
         PlayerDAO playerDAO = new PlayerDAO();
@@ -142,5 +263,9 @@ public class WebChessController {
         return this.chessRunner.calculateScores().stream()
                 .map(dto -> dto.getTeam() + DELIMITER + dto.getBoardScore())
                 .collect(Collectors.joining(NEW_LINE));
+    }
+
+    private static String render(Map<String, Object> model, String templatePath) {
+        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
     }
 }
