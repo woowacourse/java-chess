@@ -6,7 +6,7 @@ public class TileDTO {
 
     private final String position;
     private String team;
-    private String piece;
+    private String pieceType;
     private String pieceImageUrl;
     private String style;
 
@@ -27,8 +27,8 @@ public class TileDTO {
         this.team = team;
     }
 
-    public void setPiece(String piece) {
-        this.piece = piece;
+    public void setPieceType(String pieceType) {
+        this.pieceType = pieceType;
     }
 
     public void setPieceImageUrl(String pieceImageUrl) {
@@ -45,5 +45,13 @@ public class TileDTO {
 
     public String getPieceImageUrl() {
         return this.pieceImageUrl;
+    }
+
+    public String getPieceType() {
+        return this.pieceType;
+    }
+
+    public String getTeam() {
+        return this.team;
     }
 }

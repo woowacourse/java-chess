@@ -9,7 +9,7 @@ import java.util.List;
 public class ChessService {
     private final ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
     private final CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
-    private final PieceDAO pieceDAO = new PieceDAO();
+    private final PieceOnBoardDAO pieceOnBoardDAO = new PieceOnBoardDAO();
     private final PlayerDAO playerDAO = new PlayerDAO();
 
     private ChessRunner chessRunner;
