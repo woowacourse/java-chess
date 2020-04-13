@@ -13,25 +13,26 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessService {
     private ChessDAO chessDAO = new ChessDAO();
     private Map<Long, ChessGame> chessGames = new HashMap<>();
 
     public Long createGame() {
-        ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        ChessGame chessGame = ChessGame.of(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
         Long id = chessDAO.createChessGame(chessGame);
         chessGames.put(id, chessGame);
         return id;
     }
 
     public void restart(final Long id) {
-        ChessGame chessGame = new ChessGame(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        ChessGame chessGame = ChessGame.of(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
         chessGames.put(id, chessGame);
     }
 
     public void load(final Long id) {
-        ChessGame chessGame = chessDAO.findGameById(id);
+        ChessGame chessGame = findChessGame(id);
         chessGames.put(id, chessGame);
     }
 
@@ -45,19 +46,38 @@ public class ChessService {
         chessGames.remove(id);
     }
 
-    public void move(Long id, List<String> parameters) {
-        chessGames.get(id).move(MoveParameter.of(parameters));
+    public void move(final Long id, final List<String> parameters) {
+        loadIfNotExisting(id);
+        ChessGame chessGame = chessGames.get(id);
+        chessGame.move(MoveParameter.of(parameters));
     }
 
-    public List<Position> getMovablePositions(Long id, Position source) {
-        return chessGames.get(id).getMovablePositions(source);
+    public List<Position> getMovablePositions(final Long id, final Position source) {
+        loadIfNotExisting(id);
+        ChessGame chessGame = chessGames.get(id);
+        return chessGame.getMovablePositions(source);
     }
 
-    public ResponseDto getResponseDto(Long id) {
+    public ResponseDto getResponseDto(final Long id) {
+        if (!chessGames.containsKey(id)) {
+            ChessGame chessGame = findChessGame(id);
+            return ResponseDto.of(chessGame);
+        }
         return ResponseDto.of(chessGames.get(id));
     }
 
     public List<Long> getRoomId() {
         return chessDAO.getRoomId();
+    }
+
+    private ChessGame findChessGame(final Long id) {
+        Optional<ChessGame> chessGameOptional = chessDAO.findGameById(id);
+        return chessGameOptional.orElseThrow(() -> new IllegalArgumentException("잘못된 게임 번호입니다."));
+    }
+
+    private void loadIfNotExisting(final Long id) {
+        if (!chessGames.containsKey(id)) {
+            load(id);
+        }
     }
 }

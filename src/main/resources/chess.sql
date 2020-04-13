@@ -1,24 +1,24 @@
 create table chessGameTable
 (
-    id   int auto_increment
+    id int auto_increment
         primary key,
     turn varchar(5) not null
 );
 create table pieceTable
 (
-    id    int auto_increment
+    id int auto_increment
         primary key,
     piece varchar(6) not null
 );
 create table positionTable
 (
-    id       int auto_increment
+    id int auto_increment
         primary key,
     position char(2) not null
 );
 create table teamTable
 (
-    id   int auto_increment
+    id int auto_increment
         primary key,
     team varchar(5) not null
 );

@@ -67,10 +67,6 @@ public class ResponseDto {
         return turn;
     }
 
-    public void setTurn(final Team turn) {
-        this.turn = turn;
-    }
-
     public Team getWinner() {
         return winner;
     }

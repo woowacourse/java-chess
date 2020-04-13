@@ -14,7 +14,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static spark.Spark.get;
@@ -25,6 +24,12 @@ public class ChessWebController {
     private ChessService chessService = new ChessService();
 
     public void run() {
+        get("/", (req, res) -> {
+            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
+            Map<String, Object> model = new HashMap<>();
+            model.put("roomId", roomDto);
+            return render(model, "index.html");
+        });
 
         post("/createChessGame", (req, res) -> {
             Long id = chessService.createGame();
@@ -110,13 +115,6 @@ public class ChessWebController {
             return render(model, "index.html");
         });
 
-        get("/", (req, res) -> {
-            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
-            Map<String, Object> model = new HashMap<>();
-            model.put("roomId", roomDto);
-            return render(model, "index.html");
-        });
-
         get("/movable/:id/:position", (req, res) -> {
             Long id = Long.valueOf(req.params(":id"));
             Position position = Position.of(req.params(":position"));
@@ -127,9 +125,6 @@ public class ChessWebController {
     }
 
     private List<WebDto> getRoomDto(List<Long> roomIds) {
-        if (Objects.isNull(roomIds)) {
-            return null;
-        }
         return roomIds.stream()
                 .map(room -> {
                     String key = String.valueOf(room);
@@ -140,9 +135,6 @@ public class ChessWebController {
     }
 
     private static WebDto getTurnDto(final Team turn) {
-        if (Objects.isNull(turn)) {
-            return null;
-        }
         return new WebDto(turn.toString(), turn.toString());
     }
 

@@ -112,4 +112,8 @@ public class OutputView {
             System.out.println(id + "번 게임");
         }
     }
+
+    public void printGameId(Long runningGameId) {
+        System.out.println(runningGameId + "번 게임에 입장하셨습니다.");
+    }
 }

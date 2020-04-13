@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessDAO {
 
@@ -130,13 +131,17 @@ public class ChessDAO {
     }
 
 
-    public ChessGame findGameById(long id) {
-        Board board = getCurrentBoard(id);
-        Turn turn = getCurrentTurn(id);
-        return new ChessGame(board, turn);
+    public Optional<ChessGame> findGameById(long id) {
+        try {
+            Board board = getCurrentBoard(id);
+            Turn turn = getCurrentTurn(id);
+            return Optional.of(ChessGame.of(board, turn));
+        } catch (SQLException e) {
+            return Optional.empty();
+        }
     }
 
-    private Board getCurrentBoard(final long id) {
+    private Board getCurrentBoard(final long id) throws SQLException {
         String query = "SELECT position, piece, team FROM boardTable board " +
                 "inner join positionTable po on po.id=board.positionId " +
                 "inner join pieceTable pi on pi.id=board.pieceId  " +
@@ -157,15 +162,10 @@ public class ChessDAO {
             return Board.of(board);
         };
 
-        try {
-            return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
-        }
+        return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
     }
 
-    private Turn getCurrentTurn(final long id) {
+    private Turn getCurrentTurn(final long id) throws SQLException {
         String query = "SELECT turn FROM chessGameTable WHERE id = ?;";
         PreparedStatementSetter preparedStatementSetter = preparedStatement -> {
             preparedStatement.setLong(1, id);
@@ -177,12 +177,7 @@ public class ChessDAO {
             }
             throw new IllegalArgumentException("턴 정보가 없습니다.");
         };
-        try {
-            return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException();
-        }
+        return jdbcTemplate.executeQuery(query, preparedStatementSetter, resultSetMapper);
     }
 
     private PieceState createPieceState(final String piece, final Position position, final Team team) {

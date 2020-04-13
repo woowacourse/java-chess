@@ -17,9 +17,13 @@ public class ChessGame {
     private Board board;
     private Turn turn;
 
-    public ChessGame(final Board board, final Turn turn) {
+    private ChessGame(final Board board, final Turn turn) {
         this.board = board;
         this.turn = turn;
+    }
+
+    public static ChessGame of(final Board board, final Turn turn) {
+        return new ChessGame(board, turn);
     }
 
     public boolean isEnd() {
