@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 public class SQLExecuteException extends RuntimeException {
     public SQLExecuteException(String message) {

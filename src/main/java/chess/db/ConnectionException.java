@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 public class ConnectionException extends RuntimeException {
     public ConnectionException(String message) {

@@ -1,5 +1,7 @@
-package chess.dao;
+package chess.db.dao;
 
+import chess.db.ConnectionFactory;
+import chess.db.SQLExecuteException;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.pieceType.PieceColor;
 
@@ -20,10 +22,11 @@ public class ChessBoardStateDAO {
         }
     }
 
-    public void insertInitialChessBoardState() {
+    public void insertChessBoardState(String chessBoardState) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO chessBoardState(turn,caughtKing) VALUES ('WHITE' , 0)")) {
+                     "INSERT INTO chessBoardState(turn,caughtKing) VALUES ?")) {
+            preparedStatement.setString(1,chessBoardState);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLExecuteException("initialPlayerTurn 오류: " + e.getMessage());
