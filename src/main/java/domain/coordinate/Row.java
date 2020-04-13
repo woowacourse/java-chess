@@ -1,4 +1,6 @@
-package domain.point;
+package domain.coordinate;
+
+import domain.coordinate.exceptions.CoordinateException;
 
 import java.util.Arrays;
 
@@ -28,7 +30,7 @@ public enum Row {
 		return Arrays.stream(values())
 				.filter(row -> row.representation.equals(input))
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new CoordinateException(input + " 행을 찾을 수 없습니다."));
 	}
 
 	public static Row find(int index) {

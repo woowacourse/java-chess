@@ -1,6 +1,6 @@
 package view.board;
 
-import domain.point.Column;
+import domain.coordinate.Column;
 
 import java.util.ArrayList;
 import java.util.Collections;

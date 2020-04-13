@@ -1,6 +1,6 @@
 package domain.pieces;
 
-import domain.point.Coordinate;
+import domain.coordinate.Coordinate;
 import domain.team.Team;
 
 import java.util.Arrays;

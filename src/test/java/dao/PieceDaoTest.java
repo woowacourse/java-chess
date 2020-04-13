@@ -1,13 +1,12 @@
 package dao;
 
 import domain.pieces.Queen;
-import domain.point.Coordinate;
+import domain.coordinate.Coordinate;
 import domain.team.Team;
 import dto.PieceDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;

@@ -3,6 +3,7 @@ package controller;
 import dao.exceptions.DaoNoneSelectedException;
 import domain.command.exceptions.CommandTypeException;
 import domain.command.exceptions.MoveCommandTokensException;
+import domain.coordinate.exceptions.CoordinateException;
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
@@ -86,7 +87,8 @@ public class ChessRoomController {
 					| CanNotMoveException
 					| CanNotAttackException
 					| CanNotReachException
-					| StateException e) {
+					| StateException
+					| CoordinateException e) {
 				chessRoomService.saveAnnouncementMessage(roomId, Announcement.of(e.getMessage()).getString());
 			}
 			response.redirect(ChessRoomsController.PATH + SLASH + request.params(ID_PARAM));

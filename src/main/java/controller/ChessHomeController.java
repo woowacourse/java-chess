@@ -25,8 +25,7 @@ public class ChessHomeController {
 	}
 
 	private void routeGetMethod() {
-		Spark.get(PATH, (request, response) -> {
-			return Renderer.getInstance().render(Collections.emptyMap(), STATIC_PATH);
-		});
+		Spark.get(PATH, (request, response)
+				-> Renderer.getInstance().render(Collections.emptyMap(), STATIC_PATH));
 	}
 }

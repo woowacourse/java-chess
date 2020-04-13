@@ -5,7 +5,7 @@ import domain.pieces.Piece;
 import domain.pieces.PieceType;
 import domain.pieces.Pieces;
 import domain.pieces.StartPieces;
-import domain.point.Coordinate;
+import domain.coordinate.Coordinate;
 import domain.state.State;
 import domain.state.StateType;
 import domain.team.Team;

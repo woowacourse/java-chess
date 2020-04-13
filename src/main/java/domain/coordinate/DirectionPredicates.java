@@ -1,4 +1,4 @@
-package domain.point;
+package domain.coordinate;
 
 public class DirectionPredicates {
 

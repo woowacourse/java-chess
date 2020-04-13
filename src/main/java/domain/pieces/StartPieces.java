@@ -1,22 +1,22 @@
 package domain.pieces;
 
-import static domain.point.Column.A;
-import static domain.point.Column.B;
-import static domain.point.Column.C;
-import static domain.point.Column.D;
-import static domain.point.Column.E;
-import static domain.point.Column.F;
-import static domain.point.Column.G;
-import static domain.point.Column.H;
-import static domain.point.Row.EIGHT;
-import static domain.point.Row.ONE;
-import static domain.point.Row.SEVEN;
-import static domain.point.Row.TWO;
+import static domain.coordinate.Column.A;
+import static domain.coordinate.Column.B;
+import static domain.coordinate.Column.C;
+import static domain.coordinate.Column.D;
+import static domain.coordinate.Column.E;
+import static domain.coordinate.Column.F;
+import static domain.coordinate.Column.G;
+import static domain.coordinate.Column.H;
+import static domain.coordinate.Row.EIGHT;
+import static domain.coordinate.Row.ONE;
+import static domain.coordinate.Row.SEVEN;
+import static domain.coordinate.Row.TWO;
 import static domain.team.Team.BLACK;
 import static domain.team.Team.WHITE;
 
-import domain.point.Column;
-import domain.point.Coordinate;
+import domain.coordinate.Column;
+import domain.coordinate.Coordinate;
 
 import java.util.Collections;
 import java.util.HashSet;

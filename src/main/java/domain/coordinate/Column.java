@@ -1,4 +1,6 @@
-package domain.point;
+package domain.coordinate;
+
+import domain.coordinate.exceptions.CoordinateException;
 
 import java.util.Arrays;
 
@@ -28,7 +30,7 @@ public enum Column {
 		return Arrays.stream(values())
 				.filter(column -> column.representation.equals(input))
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new CoordinateException(input + " 열을 찾을 수 없습니다."));
 	}
 
 	private Column find(int index) {

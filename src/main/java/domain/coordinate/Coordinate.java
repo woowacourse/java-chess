@@ -1,4 +1,4 @@
-package domain.point;
+package domain.coordinate;
 
 import java.util.Arrays;
 import java.util.Objects;

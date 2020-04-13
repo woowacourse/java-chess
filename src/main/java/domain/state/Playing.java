@@ -1,7 +1,7 @@
 package domain.state;
 
 import domain.pieces.Pieces;
-import domain.point.Coordinate;
+import domain.coordinate.Coordinate;
 import domain.state.exceptions.StateException;
 
 public abstract class Playing extends GameState {

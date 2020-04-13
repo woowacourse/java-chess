@@ -1,10 +1,10 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
-import domain.point.Column;
-import domain.point.Direction;
-import domain.point.Distance;
-import domain.point.Coordinate;
+import domain.coordinate.Column;
+import domain.coordinate.Direction;
+import domain.coordinate.Distance;
+import domain.coordinate.Coordinate;
 import domain.team.Team;
 
 import java.util.Collections;

@@ -3,13 +3,11 @@ package domain.pieces;
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
-import domain.point.Direction;
-import domain.point.Distance;
-import domain.point.Coordinate;
-import domain.point.Row;
+import domain.coordinate.Direction;
+import domain.coordinate.Distance;
+import domain.coordinate.Coordinate;
+import domain.coordinate.Row;
 import domain.team.Team;
-
-import java.util.Objects;
 
 public class Pawn extends Piece {
 	public Pawn(Team team, Coordinate coordinate) {

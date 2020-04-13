@@ -1,7 +1,7 @@
 package view.board;
 
 import domain.pieces.Piece;
-import domain.point.Row;
+import domain.coordinate.Row;
 
 import java.util.*;
 
