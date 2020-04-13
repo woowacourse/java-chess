@@ -5,12 +5,11 @@ import chess.domain.Square;
 import chess.domain.TeamScore;
 import chess.domain.Winner;
 import chess.domain.piece.Color;
-import chess.dto.ChessBoardDTO;
 import chess.dto.MoveStateDTO;
-import chess.service.ChessBoardService;
 import chess.service.MoveStateService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import static spark.Spark.*;
 public class WebChessController implements Controller {
 
     private ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
-    private ChessBoardService chessBoardService = new ChessBoardService();
     private MoveStateService moveStateService = new MoveStateService();
     private Gson gson = new Gson();
 
@@ -32,59 +30,18 @@ public class WebChessController implements Controller {
             return render(model, "index.html");
         });
 
-        post("/con", (req, res) -> {
-            try {
-                Map<String, String> moveStates = moveStateService.searchMoveHistory("id");
-                String moveTrack = "";
-                chessBoard = new ChessBoard("id", Color.WHITE);
-                for (Map.Entry<String, String> moveState : moveStates.entrySet()) {
-                    moveTrack = moveTrack + moveState.getKey() + " " + moveState.getValue() +" ";
-                    chessBoard.getMoveState()
-                            .move(Square.of(moveState.getKey()), Square.of(moveState.getValue()), chessBoard);
-                }
-                return gson.toJson(moveTrack);
-
-            } catch (Exception e) {
-                res.status(400);
-                return e.getMessage();
-            }
-        });
+        post("/continue", (req, res) -> continueGame(res));
 
 
-        get("/status", (req, res) -> {
-            try {
-                Map<Color, Double> scores = TeamScore.calculateTeamScore(chessBoard.getChessBoard());
-                double black = scores.get(Color.BLACK);
-                double white = scores.get(Color.WHITE);
-                StringBuilder win = new StringBuilder();
-                for (Color winner : Winner.getWinners(chessBoard.getChessBoard())) {
-                    win.append(winner.getName());
-                    win.append(" ");
-                }
-                return black + " " + white + " " + win;
+        get("/status", (req, res) -> calculateGameStatus(res));
 
-            } catch (Exception e) {
-                res.status(400);
-                return e.getMessage();
-            }
-        });
+        get("/refresh", (req, res) -> restartGame(res));
 
-        get("/refresh", (req, res) -> {
-            try {
-                ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
-                chessBoardService.deleteChessBoard(chessBoardDTO);
-                MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
-                moveStateService.deleteMoveStates(moveStateDTO);
-                res.redirect("/");
-                chessBoard = new ChessBoard("id", Color.WHITE);
-                externalStaticFileLocation("/templates");
-                return null;
-            } catch (Exception e) {
-                res.status(400);
-                return e.getMessage();
-            }
-        });
+        movePiece();
 
+    }
+
+    private void movePiece() {
         post("/move", (req, res) -> {
             try {
                 chessBoard.getMoveState()
@@ -100,11 +57,58 @@ public class WebChessController implements Controller {
             }
             MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
             moveStateService.addMoveState(moveStateDTO);
-            ChessBoardDTO chessBoardDTO = new ChessBoardDTO(chessBoard);
-            chessBoardService.updateChessBoard(chessBoardDTO);
             return req.queryParams("before") + " " + req.queryParams("after");
         });
+    }
 
+    private Object restartGame(Response res) {
+        try {
+            MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+            moveStateService.deleteMoveStates(moveStateDTO);
+            res.redirect("/");
+            chessBoard = new ChessBoard("id", Color.WHITE);
+            externalStaticFileLocation("/templates");
+            return null;
+        } catch (Exception e) {
+            res.status(400);
+            return e.getMessage();
+        }
+    }
+
+    private Object calculateGameStatus(Response res) {
+        try {
+            Map<Color, Double> scores = TeamScore.calculateTeamScore(chessBoard.getChessBoard());
+            double black = scores.get(Color.BLACK);
+            double white = scores.get(Color.WHITE);
+            StringBuilder win = new StringBuilder();
+            for (Color winner : Winner.getWinners(chessBoard.getChessBoard())) {
+                win.append(winner.getName());
+                win.append(" ");
+            }
+            return black + " " + white + " " + win;
+
+        } catch (Exception e) {
+            res.status(400);
+            return e.getMessage();
+        }
+    }
+
+    private Object continueGame(Response res) {
+        try {
+            Map<String, String> moveStates = moveStateService.searchMoveHistory("id");
+            StringBuilder moveTrack = new StringBuilder();
+            chessBoard = new ChessBoard("id", Color.WHITE);
+            for (Map.Entry<String, String> moveState : moveStates.entrySet()) {
+                moveTrack.append(moveState.getKey()).append(" ").append(moveState.getValue()).append(" ");
+                chessBoard.getMoveState()
+                        .move(Square.of(moveState.getKey()), Square.of(moveState.getValue()), chessBoard);
+            }
+            return gson.toJson(moveTrack.toString());
+
+        } catch (Exception e) {
+            res.status(400);
+            return e.getMessage();
+        }
     }
 
     private String render(Map<String, Object> model, String templatePath) {
