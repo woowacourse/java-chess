@@ -2,21 +2,20 @@ package chess;
 
 import static spark.Spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.ChessController;
+import chess.controller.WebChessController;
+import chess.dao.BoardDAO;
+import chess.dao.TurnInfoDAO;
+import chess.service.ChessService;
 
 public class WebUIChessApplication {
 	public static void main(String[] args) {
-		get("/", (req, res) -> {
-			Map<String, Object> model = new HashMap<>();
-			return render(model, "index.html");
-		});
-	}
+		staticFiles.location("/public");
 
-	private static String render(Map<String, Object> model, String templatePath) {
-		return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+		ChessService service = new ChessService(new BoardDAO(), new TurnInfoDAO());
+		ChessController controller = new WebChessController(service);
+
+		controller.start();
+		controller.playTurn();
 	}
 }
