@@ -5,45 +5,50 @@
     <meta charset="UTF-8">
     <title>Chess</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/board.css">
+    <link rel="stylesheet" href="./css/main.css">
     <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
 <body background="./img/treeboard.png">
-    <div id="app">
-        <div class="board">
-            {{#rows}}
-            <div class="row">
-                {{#gamePieces}}
-                <div id="{{position.name}}"class="cell">
-                    <img src="./img/{{playerColor.name}}_{{name}}.png">
-                </div>
-                {{/gamePieces}}
+<div id="app">
+    <div class="board">
+        {{#rows}}
+        <div class="row">
+            {{#gamePieces}}
+            <div id="{{position.name}}" class="cell">
+                <img src="./img/{{playerColor.name}}_{{name}}.png">
             </div>
-            {{/rows}}
+            {{/gamePieces}}
         </div>
-        <div class="side">
-        </div>
-        <div class="start">
-            <form action="/start" method="post">
-                첫번째 이용자 : <input type="text" name="user1">
-                두번째 이용자 : <input type="text" name="user2">
-                <input type="submit" value="START">
-            </form>
-        </div>
-
+        {{/rows}}
     </div>
+    <div class="start">
+        <form action="/start" method="post">
+            <div class="users">
+                <div class="user">
+                    첫번째 이용자 : <input type="text" name="blackUserName">
+                </div>
+                <div class="user">
+                    두번째 이용자 : <input type="text" name="whiteUserName">
+                </div>
+            </div>
+            <input type="submit" value="START">
+        </form>
+    </div>
+
+</div>
 </body>
 
 </html>
 
 <script>
     for (let i = 0; i < 64; i++) {
-        let backGroundColor = "white";
+        let cell = "white-cell"
         if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
             // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
-            backGroundColor = "black";
+            cell = "black-cell"
         }
-        $(".cell:eq(" + i + ")").css("background-color", backGroundColor);
+        $(".cell:eq(" + i + ")").addClass(cell);
     }
+
 </script>

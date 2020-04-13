@@ -17,4 +17,14 @@ public class InputView {
             return receiveCommand();
         }
     }
+
+    public static String receiveBlackUser() {
+        System.out.println("블랙 유저의 이름을 입력해 주세요.");
+        return scanner.nextLine();
+    }
+
+    public static String receiveWhiteUser() {
+        System.out.println("화이트 유저의 이름을 입력해 주세요.");
+        return scanner.nextLine();
+    }
 }

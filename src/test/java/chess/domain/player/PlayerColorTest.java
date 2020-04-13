@@ -38,8 +38,10 @@ class PlayerColorTest {
 
     static Stream<Arguments> createPosition() {
         return Stream.of(
-                Arguments.of(PlayerColor.BLACK, Collections.singletonList(Position.from("b1")), Collections.singletonList(Position.from("b8"))),
-                Arguments.of(PlayerColor.WHITE, Collections.singletonList(Position.from("b1")), Collections.singletonList(Position.from("b1")))
+                Arguments.of(PlayerColor.BLACK, Collections.singletonList(Position.from("b1")),
+                        Collections.singletonList(Position.from("b8"))),
+                Arguments.of(PlayerColor.WHITE, Collections.singletonList(Position.from("b1")),
+                        Collections.singletonList(Position.from("b1")))
         );
     }
 }

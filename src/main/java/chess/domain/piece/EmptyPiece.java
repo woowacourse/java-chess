@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import chess.domain.board.Position;
 import chess.domain.player.PlayerColor;
@@ -9,18 +9,16 @@ import chess.domain.player.PlayerColor;
 public class EmptyPiece extends GamePiece {
 
     private static final GamePiece instance = new EmptyPiece();
+    private static final String NAME = ".";
+    private static final int SCORE = 0;
+    private static final int MOVE_COUNT = 0;
 
     private EmptyPiece() {
-        super(".", 0, PlayerColor.NONE);
+        super(NAME, SCORE, PlayerColor.NONE, Collections.EMPTY_LIST, MOVE_COUNT);
     }
 
     public static GamePiece getInstance() {
         return instance;
-    }
-
-    @Override
-    public void validatePath(Map<Position, GamePiece> board, Position source, Position target) {
-        throw new UnsupportedOperationException("기물이 존재하지 않습니다.");
     }
 
     @Override

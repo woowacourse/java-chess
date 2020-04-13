@@ -10,50 +10,184 @@
 </head>
 
 <body background="./img/treeboard.png">
-    <div id="app">
-        <div class="board">
-            {{#rows}}
-            <div class="row">
-                {{#gamePieces}}
-                <div id="{{position.name}}" class="cell">
-                    <img src="./img/{{playerColor.name}}_{{name}}.png">
-                </div>
-                {{/gamePieces}}
+<div id="app">
+    <div class="turn-number">{{turn}}</div>
+    <div class="board">
+        {{#rows}}
+        <div class="row">
+            {{#gamePieces}}
+            <div id="{{position.name}}" class="cell">
+                <img src="./img/{{playerColor.name}}_{{name}}.png">
             </div>
-            {{/rows}}
+            {{/gamePieces}}
         </div>
-        <div class="side">
-            <div class="user">
-                <img src="./img/BLACK_P.png">
-                <p>{{firstUser}}</p>
-            </div>
-            <div class="button">
-                <form action="/status" method="post">
-                    <input type="submit" value="STATUS">
-                </form>
-            </div>
-            <div class="button">
-                <form action="/end" method="post">
-                    <input type="submit" value="END">
-                </form>
-            </div>
-            <div class="user">
-                <img src="./img/WHITE_p.png">
-                <p>{{secondUser}}</p>
-            </div>
+        {{/rows}}
+    </div>
+    <div class="side">
+        <div class="user">
+            <img src="./img/BLACK_P.png">
+            <p class="user-name">{{blackUser}}</p>
+            <p id="black-turn" class="turn">TURN</p>
+        </div>
+        <div class="button">
+            <form action="/status" method="post">
+                <input type="hidden" name="blackUserName" value="{{blackUser}}">
+                <input type="submit" value="STATUS">
+            </form>
+        </div>
+        <div class="button">
+            <form action="/save" method="post">
+                <input type="hidden" name="blackUserName" value="{{blackUser}}">
+                <input type="hidden" name="whiteUserName" value="{{whiteUser}}">
+                <input type="submit" value="SAVE">
+            </form>
+        </div>
+        <div class="button">
+            <form action="/end" method="post">
+                <input type="hidden" name="blackUserName" value="{{blackUser}}">
+                <input type="hidden" name="whiteUserName" value="{{whiteUser}}">
+                <input type="submit" value="END">
+            </form>
+        </div>
+        <div class="user">
+            <img src="./img/WHITE_p.png">
+            <p class="user-name">{{whiteUser}}</p>
+            <p id="white-turn" class="turn">TURN</p>
         </div>
     </div>
+</div>
 </body>
 
 </html>
 
 <script>
     for (let i = 0; i < 64; i++) {
-        let backGroundColor = "white";
+        let cell = "white-cell"
         if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
             // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
-            backGroundColor = "black";
+            cell = "black-cell"
         }
-        $(".cell:eq(" + i + ")").css("background-color", backGroundColor);
+        $(".cell:eq(" + i + ")").addClass(cell);
     }
+
+    let turn = $(".turn-number").text();
+    console.log(turn);
+    showTurn(turn);
+
+    let source;
+    let isFirstClick = true;
+    let cell;
+    let before;
+    var blackUserName = document.getElementsByClassName("user-name")[0].innerHTML;
+
+    $(".cell").click(function () {
+        if (document.querySelector(".selected-cell") !== null) {
+            before = $(".selected-cell");
+            source = before.attr("id");
+            isFirstClick = false;
+        }
+        cell = $(this);
+        let cellPosition = $(this).attr("id");
+        console.log($(this).attr('id'));
+
+        // 첫 클릭이라면 source에 포지션 저장
+        if (isFirstClick) {
+            source = cellPosition;
+
+            $.ajax({
+                url: "/path",
+                data: { source: source, blackUserName: blackUserName },
+                method: "POST",
+                // async: false,
+                // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
+            }).done(function (list) {
+                if (list === '이동할 수 없습니다.\n해당 플레이어의 턴이 아닙니다.') {
+                    alert(list);
+                    return;
+                }
+                console.log(list);
+                document.getElementById(cellPosition).classList.add("selected-cell");
+                const path = list.split(",");
+                path.forEach(position => {
+                    document.getElementById(position).classList.add("y");
+                })
+
+                // var refine = $(".board").html(board);
+                // cell.addClass("selected-cell");
+                // const currentBoard = document.querySelector(".board");
+                // document.getElementById("app").removeChild(currentBoard);
+                // document.getElementById("app").in할ertAdjacentHTML("afterbegin", board);
+                // // $(".board").html(refine);
+                // for (let i = 0; i < 64; i++) {
+                //     let cell = "white-cell"
+                //     if (((Math.floor(i / 8) % 2 === 0) && (i % 2 === 0)) || (Math.floor(i / 8) % 2 === 1) && (i % 2 === 1)) {
+                //         // 홀수 줄의 홀수 번째 칸 또는 짝수줄의 짝수번째 칸이라면
+                //         cell = "black-cell"
+                //     }
+                //     $(".cell:eq(" + i + ")").addClass(cell);
+                // }
+                // document.getElementById(cellPosition).classList.add("selected-cell");    
+            });
+            // cell.addClass("selected-cell");
+            return;
+        }
+
+        // 두번째 클릭이지만 똑같은 기물을 선택했다면 선택 취소
+        if (!isFirstClick && (source === cellPosition)) {
+            source = null;
+            isFirstClick = true;
+            before.removeClass("selected-cell");
+            $(".y").removeClass("y");
+            return;
+        }
+
+        // 두번째 클릭이라면 이동
+        $.ajax({
+            url: "/move",
+            data: { source: source, target: cellPosition, blackUserName: blackUserName },
+            method: "POST",
+            // async: false,
+            // dataType: "json" // 서버에서 보내줄 데이터의 타입 })
+        }).done(function (possible) {
+            if (possible == "finished") {
+                if (turn % 2 == 0) {
+                    alert("게임이 끝났습니다. 백팀이 승리했습니다.");
+                } else {
+                    alert("게임이 끝났습니다. 흑팀이 승리했습니다.");
+                }
+                window.location.replace("main.html");
+                return;
+            } else if (possible !== "true") {
+                alert(possible);
+                before.removeClass("selected-cell");
+                return;
+            }
+            move(source, cellPosition);
+            before.removeClass("selected-cell");
+            $(".y").removeClass("y");
+            isFirstClick = true;
+            source = null;
+            turn++;
+            showTurn(turn);
+        });
+    });
+
+    function move(from, to) {
+        var img = document.createElement("IMG");
+        img.src = "./img/NONE_..png";
+        document.getElementById(to).replaceChild(document.getElementById(from).firstElementChild,
+            document.getElementById(to).firstElementChild);
+        document.getElementById(from).appendChild(img);
+    }
+
+    function showTurn(turn) {
+        if (turn % 2 === 0) {
+            document.getElementById("black-turn").style.opacity = 0;
+            document.getElementById("white-turn").style.opacity = 1;
+        } else {
+            document.getElementById("black-turn").style.opacity = 1;
+            document.getElementById("white-turn").style.opacity = 0;
+        }
+    }
+
 </script>

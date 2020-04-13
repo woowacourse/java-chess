@@ -18,9 +18,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.board.Position;
 import chess.domain.exception.InvalidMovementException;
 import chess.domain.player.PlayerColor;
+import chess.domain.player.User;
 
 class BishopTest {
 
@@ -35,11 +37,14 @@ class BishopTest {
     @DisplayName("이동 경로 찾기")
     @MethodSource("createSourceToTarget")
     void findMovePath(Position source, Position target, List<Position> expected) {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        board.put(source, gamePiece);
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        boardMap.put(source, gamePiece);
+
+        Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
 
         assertThatCode(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).doesNotThrowAnyException();
 
     }
@@ -63,11 +68,14 @@ class BishopTest {
     @MethodSource("createInvalidTarget")
     void invalidMovementException(Position target) {
         Position source = Position.from("d5");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        board.put(source, gamePiece);
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
+        boardMap.put(source, gamePiece);
+
+        Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n이동할 수 없는 경로입니다.");
     }
@@ -84,17 +92,20 @@ class BishopTest {
     @Test
     @DisplayName("장애물이 있을 경우")
     void obstacle() {
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
+        Map<Position, GamePiece> boardMap = new TreeMap<>(
+                BoardFactory.createEmptyBoard(User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER).getBoard());
         Position source = Position.from("d5");
         Position target = Position.from("f7");
 
         Position obstacle = Position.from("e6");
 
-        board.put(source, gamePiece);
-        board.put(obstacle, new Pawn(BLACK));
+        boardMap.put(source, gamePiece);
+        boardMap.put(obstacle, new Pawn(BLACK));
+
+        Board board = BoardFactory.of(boardMap, 0, User.EMPTY_BOARD_USER, User.EMPTY_BOARD_USER);
 
         assertThatThrownBy(() -> {
-            gamePiece.validatePath(board, source, target);
+            gamePiece.validateMoveTo(board, source, target);
         }).isInstanceOf(InvalidMovementException.class)
                 .hasMessage("이동할 수 없습니다.\n경로에 기물이 존재합니다.");
     }

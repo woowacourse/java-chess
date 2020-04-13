@@ -13,8 +13,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Position;
-
 class CommandTest {
 
     @ParameterizedTest
@@ -99,7 +97,6 @@ class CommandTest {
         );
     }
 
-
     @ParameterizedTest
     @DisplayName("Command가 Status인지 확인")
     @MethodSource("createStatus")
@@ -122,7 +119,7 @@ class CommandTest {
         List<String> input = Arrays.asList("move", "b1", "b2");
         Command command = Command.from(input);
 
-        assertThat(command.getSource()).isEqualTo(Position.from("b1"));
+        assertThat(command.getSource()).isEqualTo("b1");
     }
 
     @Test
@@ -131,7 +128,7 @@ class CommandTest {
         List<String> input = Arrays.asList("move", "b1", "b2");
         Command command = Command.from(input);
 
-        assertThat(command.getTarget()).isEqualTo(Position.from("b2"));
+        assertThat(command.getTarget()).isEqualTo("b2");
     }
 
     @Test
@@ -139,7 +136,7 @@ class CommandTest {
         List<String> input = Collections.singletonList("start");
         Command command = Command.from(input);
 
-        assertThatThrownBy(() -> command.getSource())
+        assertThatThrownBy(command::getSource)
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("move 명령만 사용할 수 있습니다.");
     }

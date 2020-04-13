@@ -47,7 +47,8 @@ public class ChessResult {
                 .distinct()
                 .filter(gamePiece -> gamePiece != EmptyPiece.getInstance())
                 .filter(gamePiece -> gamePiece.is(playerColor))
-                .collect(Collectors.toMap(gamePiece -> gamePiece, gamePiece -> Collections.frequency(gamePieces, gamePiece)));
+                .collect(Collectors.toMap(gamePiece -> gamePiece,
+                        gamePiece -> Collections.frequency(gamePieces, gamePiece)));
     }
 
     private static int getSameColumnPawnCount(Map<Position, GamePiece> board, PlayerColor playerColor) {

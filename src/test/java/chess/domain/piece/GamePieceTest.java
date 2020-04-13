@@ -5,27 +5,16 @@ import static org.assertj.core.api.Assertions.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Stream;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.exception.InvalidMovementException;
 
 class GamePieceTest {
-
-    @Test
-    @DisplayName("플레이어별 game piece 생성")
-    void getGamePieces() {
-        assertThat(GamePiece.createGamePieces()).hasSize(12);
-    }
 
     @ParameterizedTest
     @DisplayName("gamepiece가 pawn인지 확인")
@@ -81,19 +70,5 @@ class GamePieceTest {
                 Arguments.of(new Rook(BLACK), false),
                 Arguments.of(new Rook(WHITE), true)
         );
-    }
-
-    @Test
-    void samePlayerColor() {
-        Position source = Position.from("d5");
-        Position target = Position.from("d4");
-        Map<Position, GamePiece> board = new TreeMap<>(Board.createEmpty().getBoard());
-        GamePiece gamePiece = new Rook(BLACK);
-        board.put(source, gamePiece);
-        board.put(target, new Bishop(BLACK));
-
-        assertThatThrownBy(() -> gamePiece.validateMoveTo(board, source, target))
-                .isInstanceOf(InvalidMovementException.class)
-                .hasMessage("이동할 수 없습니다.\n자신의 말은 잡을 수 없습니다.");
     }
 }

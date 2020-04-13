@@ -17,10 +17,14 @@ public class Position implements Comparable<Position> {
     static {
         positions = new HashMap<>();
         for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                String name = nameOf(column, row);
-                positions.put(name, new Position(column, row));
-            }
+            createPositions(column);
+        }
+    }
+
+    private static void createPositions(final Column column) {
+        for (Row row : Row.values()) {
+            String name = nameOf(column, row);
+            positions.put(name, new Position(column, row));
         }
     }
 
@@ -65,25 +69,22 @@ public class Position implements Comparable<Position> {
     }
 
     public Optional<Position> nextPositionOf(Direction direction) {
-        Column columnDestination = direction.findColumnDestination(column).orElse(null);
-        Row rowDestination = direction.findRowDestination(row).orElse(null);
+        Optional<Column> columnDestination = direction.findColumnDestination(column);
+        Optional<Row> rowDestination = direction.findRowDestination(row);
 
-        if (columnDestination == null || rowDestination == null) {
+        if (!columnDestination.isPresent() || !rowDestination.isPresent()) {
             return Optional.empty();
         }
 
-        return Optional.of(of(columnDestination, rowDestination));
+        return Optional.of(of(columnDestination.get(), rowDestination.get()));
     }
 
     public List<Position> pathTo(Direction direction, int count) {
         List<Position> path = new ArrayList<>();
         Position nextPosition = this;
 
-        for (int i = 0; i < count; i++) {
-            nextPosition = nextPosition.nextPositionOf(direction).orElse(null);
-            if (nextPosition == null) {
-                return path;
-            }
+        for (int i = 0; i < count && nextPosition.nextPositionOf(direction).isPresent(); i++) {
+            nextPosition = nextPosition.nextPositionOf(direction).get();
             path.add(nextPosition);
         }
         return path;
@@ -107,5 +108,21 @@ public class Position implements Comparable<Position> {
             return column.compareTo(position.column);
         }
         return -row.compareTo(position.row);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o)
+            return true;
+        if (!(o instanceof Position))
+            return false;
+        Position position = (Position)o;
+        return column == position.column &&
+                row == position.row;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(column, row);
     }
 }
