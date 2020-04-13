@@ -5,6 +5,7 @@ import static chess.model.repository.connector.ChessMySqlConnector.getConnection
 import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
+import chess.model.repository.template.PreparedStatementSetter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -31,43 +32,32 @@ public class ChessResultDao {
     }
 
     public void update(int gameId, TeamScore teamScore) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setDouble(1, teamScore.get(Color.BLACK));
-                pstmt.setDouble(2, teamScore.get(Color.WHITE));
-                pstmt.setInt(3, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setDouble(1, teamScore.get(Color.BLACK));
+            pstmt.setDouble(2, teamScore.get(Color.WHITE));
+            pstmt.setInt(3, gameId);
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void insert(int gameId, TeamScore teamScore) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.setDouble(2, teamScore.get(Color.BLACK));
-                pstmt.setDouble(3, teamScore.get(Color.WHITE));
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_RESULT_TB(GAME_ID, BLACK_SCORE, WHITE_SCORE) VALUES (?, ?, ?)";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, gameId);
+            pstmt.setDouble(2, teamScore.get(Color.BLACK));
+            pstmt.setDouble(3, teamScore.get(Color.WHITE));
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void delete(int gameId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public Map<Color, Double> select(int gameId) throws SQLException {

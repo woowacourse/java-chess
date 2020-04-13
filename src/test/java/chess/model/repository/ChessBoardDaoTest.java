@@ -27,6 +27,7 @@ class ChessBoardDaoTest {
 
     @Test
     public void crud() throws SQLException {
+
         int gameId = 1;
 
         assertThat(chessBoardDao.getBoard(gameId)).isEmpty();

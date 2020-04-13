@@ -4,6 +4,7 @@ import static chess.model.repository.connector.ChessMySqlConnector.getConnection
 
 import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
+import chess.model.repository.template.PreparedStatementSetter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -29,55 +30,39 @@ public class ChessGameDao {
 
     public int insert(int roomId, Color gameTurn, Map<Color, String> userNames)
         throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, roomId);
-                pstmt.setString(2, gameTurn.getName());
-                pstmt.setString(3, userNames.get(Color.BLACK));
-                pstmt.setString(4, userNames.get(Color.WHITE));
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_GAME_TB(ROOM_ID, TURN_NM, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?)";
-        return jdbcTemplate.executeUpdateWithGeneratedKey(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, roomId);
+            pstmt.setString(2, gameTurn.getName());
+            pstmt.setString(3, userNames.get(Color.BLACK));
+            pstmt.setString(4, userNames.get(Color.WHITE));
+        };
+        return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
     public void updateProceedN(int gameId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET PROCEEDING_YN = 'N' WHERE ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void updateTurn(int gameId, Color gameTurn) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameTurn.getName());
-                pstmt.setInt(2, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET TURN_NM = ? WHERE ID = ? AND PROCEEDING_YN = 'Y'";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setString(1, gameTurn.getName());
+            pstmt.setInt(2, gameId);
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void delete(int gameId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_GAME_TB WHERE ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     // TODO ROOMID와 연동 - 조인해서 가져오기
@@ -141,13 +126,7 @@ public class ChessGameDao {
     }
 
     public void updateProceedNByRoomId(int roomId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, roomId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("UPDATE CHESS_GAME_TB");
         query.append("   SET PROCEEDING_YN = 'N'");
@@ -159,7 +138,8 @@ public class ChessGameDao {
         query.append("  JOIN ROOM_TB AS ROOM ");
         query.append(" WHERE GAME.ROOM_ID = ROOM.ID ");
         query.append("   AND ROOM.ID = ?) AS ID_TB)");
-        jdbcTemplate.executeUpdate(query.toString());
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
+        jdbcTemplate.executeUpdate(query.toString(), pss);
     }
 
     public List<String> getUsers() throws SQLException {

@@ -3,6 +3,7 @@ package chess.model.repository;
 import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
 
 import chess.model.repository.template.JdbcTemplate;
+import chess.model.repository.template.PreparedStatementSetter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,28 +23,23 @@ public class RoomDao {
     }
 
     public int insert(String roomName, String roomPW) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, roomName);
-                pstmt.setString(2, roomPW);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO ROOM_TB(NM, PW) VALUES (?, ?)";
-        return jdbcTemplate.executeUpdateWithGeneratedKey(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setString(1, roomName);
+            pstmt.setString(2, roomPW);
+        };
+        return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
     public void updateUsedN(int roomId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, roomId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE ROOM_TB SET USED_YN = 'N' WHERE ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, roomId);
+            pstmt.executeUpdate();
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public Map<Integer, String> selectUsedOnly() throws SQLException {

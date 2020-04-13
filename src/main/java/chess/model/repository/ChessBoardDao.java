@@ -10,6 +10,7 @@ import chess.model.domain.piece.PieceFactory;
 import chess.model.domain.state.MoveOrder;
 import chess.model.domain.state.MoveSquare;
 import chess.model.repository.template.JdbcTemplate;
+import chess.model.repository.template.PreparedStatementSetter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,21 +33,19 @@ public class ChessBoardDao {
 
     public void insert(int gameId, Map<BoardSquare, Piece> board,
         Set<CastlingSetting> castlingElements) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                for (BoardSquare boardSquare : board.keySet()) {
-                    pstmt.setInt(1, gameId);
-                    pstmt.setString(2, boardSquare.getName());
-                    pstmt.setString(3, PieceFactory.getName(board.get(boardSquare)));
-                    pstmt.setString(4,
-                        getCastlingElement(boardSquare, board.get(boardSquare), castlingElements));
-                    pstmt.executeUpdate();
-                }
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
+        PreparedStatementSetter pss = pstmt -> {
+            for (BoardSquare boardSquare : board.keySet()) {
+                pstmt.setInt(1, gameId);
+                pstmt.setString(2, boardSquare.getName());
+                pstmt.setString(3, PieceFactory.getName(board.get(boardSquare)));
+                pstmt.setString(4,
+                    getCastlingElement(boardSquare, board.get(boardSquare), castlingElements));
+                pstmt.executeUpdate();
             }
         };
-        String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.executeUpdate(query);
+        jdbcTemplate.executeUpdateWhenLoop(query, pss);
     }
 
     private String getCastlingElement(BoardSquare boardSquare, Piece piece,
@@ -58,31 +57,25 @@ public class ChessBoardDao {
 
     public void insertBoard(int gameId, BoardSquare boardSquare, Piece piece)
         throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.setString(2, boardSquare.getName());
-                pstmt.setString(3, PieceFactory.getName(piece));
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, 'N')";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, gameId);
+            pstmt.setString(2, boardSquare.getName());
+            pstmt.setString(3, PieceFactory.getName(piece));
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void deleteBoardSquare(int gameId, BoardSquare boardSquare)
         throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.setString(2, boardSquare.getName());
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, gameId);
+            pstmt.setString(2, boardSquare.getName());
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public Set<CastlingSetting> getCastlingElements(int gameId) throws SQLException {
@@ -135,28 +128,14 @@ public class ChessBoardDao {
     }
 
     public void delete(int gameId) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void copyBoardSquare(int gameId, MoveSquare moveSquare) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.setString(2, moveSquare.get(MoveOrder.AFTER).getName());
-                pstmt.setInt(3, gameId);
-                pstmt.setString(4, moveSquare.get(MoveOrder.BEFORE).getName());
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("INSERT ");
         query
@@ -169,48 +148,47 @@ public class ChessBoardDao {
         query.append("AND GAME.PROCEEDING_YN = 'Y' ");
         query.append("AND GAME.ID = ? ");
         query.append("AND BOARDSQUARE_NM = ?), 'N')");
-        jdbcTemplate.executeUpdate(query.toString());
+
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, gameId);
+            pstmt.setString(2, moveSquare.get(MoveOrder.AFTER).getName());
+            pstmt.setInt(3, gameId);
+            pstmt.setString(4, moveSquare.get(MoveOrder.BEFORE).getName());
+        };
+        jdbcTemplate.executeUpdate(query.toString(), pss);
     }
 
     public void updatePromotion(int gameId, BoardSquare finishPawnBoard, Piece hopePiece)
         throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, PieceFactory.getName(hopePiece));
-                pstmt.setInt(2, gameId);
-                pstmt.setString(3, finishPawnBoard.getName());
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_BOARD_TB SET PIECE_NM = ? WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setString(1, PieceFactory.getName(hopePiece));
+            pstmt.setInt(2, gameId);
+            pstmt.setString(3, finishPawnBoard.getName());
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void deleteEnpassant(int gameId, BoardSquare enpassantSquare) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setInt(1, gameId);
-                pstmt.setString(2, enpassantSquare.getName());
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setInt(1, gameId);
+            pstmt.setString(2, enpassantSquare.getName());
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 
     public void updateEnPassant(int gameId, MoveSquare moveSquare) throws SQLException {
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
-            @Override
-            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, moveSquare.getBetweenWhenJumpRank().getName());
-                pstmt.setInt(2, gameId);
-                pstmt.setString(3, moveSquare.get(MoveOrder.AFTER).getName());
-                pstmt.executeUpdate();
-            }
-        };
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_BOARD_TB SET EN_PASSANT_NM = ? WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
-        jdbcTemplate.executeUpdate(query);
+        PreparedStatementSetter pss = pstmt -> {
+            pstmt.setString(1, moveSquare.getBetweenWhenJumpRank().getName());
+            pstmt.setInt(2, gameId);
+            pstmt.setString(3, moveSquare.get(MoveOrder.AFTER).getName());
+            pstmt.executeUpdate();
+        };
+        jdbcTemplate.executeUpdate(query, pss);
     }
 }

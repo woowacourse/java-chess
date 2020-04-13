@@ -8,20 +8,31 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class JdbcTemplate {
+public class JdbcTemplate {
 
-    public void executeUpdate(String query) throws SQLException {
+    public void executeUpdate(String query, PreparedStatementSetter pss) throws SQLException {
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
-            setParameterUpdate(pstmt);
+            pss.setParameter(pstmt);
+            pstmt.executeUpdate();
         }
     }
 
-    public int executeUpdateWithGeneratedKey(String query) throws SQLException {
+    public void executeUpdateWhenLoop(String query, PreparedStatementSetter loopPss)
+        throws SQLException {
+        try (Connection conn = getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(query)) {
+            loopPss.setParameter(pstmt);
+        }
+    }
+
+    public int executeUpdateWithGeneratedKey(String query, PreparedStatementSetter pss)
+        throws SQLException {
         try (Connection conn = getConnection();
             PreparedStatement pstmt =
                 conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            setParameterUpdate(pstmt);
+            pss.setParameter(pstmt);
+            pstmt.executeUpdate();
             try (ResultSet rs = pstmt.getGeneratedKeys()) {
                 if (rs.next()) {
                     return rs.getInt(1);
@@ -30,7 +41,4 @@ public abstract class JdbcTemplate {
             }
         }
     }
-
-    public abstract void setParameterUpdate(PreparedStatement pstmt)
-        throws SQLException;
 }
