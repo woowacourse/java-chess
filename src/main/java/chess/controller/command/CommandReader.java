@@ -27,20 +27,15 @@ public enum CommandReader {
     }
 
     public static Command from(String input) {
-        // todo: optional 활용해보기
-        List<String> inputs;
-        try {
-            inputs = StringUtils.splitIntoList(input);
-        } catch (NullPointerException e) {
+        List<String> inputs = StringUtils.splitIntoList(input);
+
+        if (inputs.isEmpty()) {
             return new None();
         }
-        //
-
-        List<String> splitInput = inputs;
 
         return Arrays.stream(values())
-                .filter(commandReader -> splitInput.get(0).equals(commandReader.firstValue))
-                .map(commandReader -> commandReader.commandCreator.apply(splitInput))
+                .filter(commandReader -> inputs.get(0).equals(commandReader.firstValue))
+                .map(commandReader -> commandReader.commandCreator.apply(inputs))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 명령어입니다."));
     }
