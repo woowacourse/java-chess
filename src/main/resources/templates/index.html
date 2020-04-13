@@ -29,8 +29,8 @@
             <input id="end" type="submit" name="command" value="게임 종료">
         </form>
     </div>
-    <div class="team" id="team-presenter">
-        <span>{{ team }}</span> 의 차례입니다.
+    <div class="turn" id="team-presenter">
+        {{ turn }}
     </div>
     <div class="controller-move">
         <form action="/move" method="post" id="moveForm">
@@ -225,28 +225,28 @@
         <!-- a2 ~ h2 -->
         <div class="chess-row center">
             <div class="square square-white" id="a2">
-                <img src="./images/{{a2}}.png" alt=""/>
+                <img src="./images/{{ a2 }}.png" alt=""/>
             </div>
             <div class="square square-black" id="b2">
-                <img src="./images/{{b2}}.png" alt=""/>
+                <img src="./images/{{ b2 }}.png" alt=""/>
             </div>
             <div class="square square-white" id="c2">
-                <img src="./images/{{c2}}.png" alt=""/>
+                <img src="./images/{{ c2 }}.png" alt=""/>
             </div>
             <div class="square square-black" id="d2">
-                <img src="./images/{{d2}}.png" alt=""/>
+                <img src="./images/{{ d2 }}.png" alt=""/>
             </div>
             <div class="square square-white" id="e2">
-                <img src="./images/{{e2}}.png" alt=""/>
+                <img src="./images/{{ e2 }}.png" alt=""/>
             </div>
             <div class="square square-black" id="f2">
-                <img src="./images/{{f2}}.png" alt=""/>
+                <img src="./images/{{ f2 }}.png" alt=""/>
             </div>
             <div class="square square-white" id="g2">
-                <img src="./images/{{g2}}.png" alt=""/>
+                <img src="./images/{{ g2 }}.png" alt=""/>
             </div>
             <div class="square square-black" id="h2">
-                <img src="./images/{{h2}}.png" alt=""/>
+                <img src="./images/{{ h2 }}.png" alt=""/>
             </div>
             <div class="row">2</div>
         </div>
@@ -292,25 +292,6 @@
             <div class="row"></div>
         </div>
     </div>
-
-
-    <!-- FINISH -->
-    <div id="layer" class="layer-wrap">
-        <div class="pop-layer">
-            <div class="pop-container">
-                <div class="pop-conts">
-                    {{ team }} 승리!!
-                    <div class="btn-r">
-                        <form action="/end" method="post">
-                            <input id="btn-layerClose" type="submit" name="command" value="게임 종료">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <input id="finish-checker" value={{isFinished}} />
-
 
     <script type="application/javascript" src="./js/index.js"></script>
 </body>

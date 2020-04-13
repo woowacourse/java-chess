@@ -41,7 +41,7 @@ public class Position {
         return of(convertToStringPosition(col, row));
     }
 
-    private static String convertToStringPosition(final int col, final int row) {
+    public static String convertToStringPosition(final int col, final int row) {
         return (char) (col + ASCII_GAP) + String.valueOf(row);
     }
 

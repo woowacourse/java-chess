@@ -9,6 +9,9 @@ import java.util.Map;
 
 public class Board {
     private static final int BOARD_SIZE = 64;
+    private static final int BLANK_START_INDEX = 3;
+    private static final int BLANK_END_INDEX = 6;
+
 
     private Map<Position, Piece> board;
     private boolean isFinished = false;
@@ -39,6 +42,12 @@ public class Board {
         board.put(Position.of("f2"), Piece.of(PieceType.FIRST_WHITE_PAWN));
         board.put(Position.of("g2"), Piece.of(PieceType.FIRST_WHITE_PAWN));
         board.put(Position.of("h2"), Piece.of(PieceType.FIRST_WHITE_PAWN));
+
+        for (int row = BLANK_START_INDEX; row <= BLANK_END_INDEX; row++) {
+            for (int col = Position.START_INDEX; col <= Position.END_INDEX; col++) {
+                board.put(Position.of(Position.convertToStringPosition(col, row)), Piece.of(PieceType.BLANK));
+            }
+        }
 
         board.put(Position.of("a7"), Piece.of(PieceType.FIRST_BLACK_PAWN));
         board.put(Position.of("b7"), Piece.of(PieceType.FIRST_BLACK_PAWN));
@@ -87,7 +96,7 @@ public class Board {
         }
     }
 
-    private void changeTurn() {
+    public void changeTurn() {
         if (currentTurn == Team.WHITE) {
             currentTurn = Team.BLACK;
             return;
@@ -109,8 +118,11 @@ public class Board {
         return isFinished;
     }
 
+    public Team getCurrentTurn() {
+        return currentTurn;
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }
-
 }
