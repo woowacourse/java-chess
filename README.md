@@ -67,3 +67,52 @@
 - [x] king이 죽었을 때 게임 종료
 
 - [x] 게임 종료 후 승패 결정
+
+## ERD 작성
+
+- user
+ - id
+ - score
+ 
+- piece
+ - id PK
+ - user_id
+ - type
+ - team
+ - row
+ - col
+
+- score
+ - id PK
+ - user
+
+## 4단계 기능 목록
+- [x] start 버튼으로 동적 페이지로 이동
+- [x] 버튼 클릭 후 다른 곳으로 이동 시 좌표 이동 API
+ - [x] 불가능할 경우 불가능하다는 콘솔 띄우기
+ - [x] 가능할 경우 좌표 변경
+- [x] Score 계산
+
+- [x] end 버튼 클릭 시 main 화면으로 돌아가기
+ - [x] end 버튼 클릭 시 Piece DB에 저장하기
+ 
+- [x] start 버튼 클릭 시 돌아오기    
+
+## 기능 테스트 
+- [x] 드래그 이벤트 리스너 테스트
+- [x] start, main 뷰 만들기 및 이동
+- [x] start 뷰로 넘어오면 `/start` url로 통신
+- [x] 받은 데이터 각각 알맞은 이미지와 매핑
+- [x] 매핑 후 html 리로딩
+
+## 선택 과제
+- [ ] Start에 새로운 체스 판 생성
+ - [ ] DB 삽입
+ 
+- [ ] ChessController ChessGame 제거, 매번 새로운 ChessGame 생성
+ - [ ] 매 통신 마다 ChessGame을 DB에서 SELECT하기
+ - [ ] 매 통신마다 ChessGame을 생성해야한다.
+ 
+- [ ] Move 마다 DB에 값 Update
+
+- [ ] end 버튼 눌렀을 시 아무런 DB에 Piece 삽입하지 않도록 변경

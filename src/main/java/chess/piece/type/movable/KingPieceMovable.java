@@ -1,5 +1,6 @@
 package chess.piece.type.movable;
 
+import chess.board.Route;
 import chess.location.Location;
 import chess.piece.type.Piece;
 
@@ -11,8 +12,8 @@ public class KingPieceMovable implements PieceMovable {
     private static final int KING_RANGE = 1;
 
     @Override
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return isKingRange(now, after) && hasNotObstacle(board, now, after);
+    public boolean canMove(Route route) {
+        return isKingRange(route.getNow(), route.getDestination());
     }
 
     private boolean isKingRange(Location now, Location destination) {

@@ -10,8 +10,7 @@ public enum Row {
     FIVE(5),
     SIX(6),
     SEVEN(7),
-    EIGHT(8),
-    OUT_OF_BOUND(-100);
+    EIGHT(8);
 
     private final int value;
 
@@ -21,7 +20,7 @@ public enum Row {
 
     public static Row of(int value) {
         if (isInValidRange(value)) {
-            return OUT_OF_BOUND;
+            throw new NoExistChessLocationException();
         }
         return Arrays.stream(Row.values())
                 .filter(row -> row.value == value)
@@ -31,10 +30,6 @@ public enum Row {
 
     private static boolean isInValidRange(int value) {
         return ONE.value > value || EIGHT.value < value;
-    }
-
-    public boolean is(int value) {
-        return this.value == value;
     }
 
     public boolean is(Row row) {

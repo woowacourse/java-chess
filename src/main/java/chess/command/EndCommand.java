@@ -2,15 +2,18 @@ package chess.command;
 
 import chess.progress.Progress;
 
-public class End extends Command {
+public class EndCommand implements Command {
     private static final String COMMAND = "end";
 
-    public End(String value) {
-        super(value, End::doEndCommand);
+    private final String value;
+
+    public EndCommand(String value) {
+        this.value = value;
     }
 
-    private static Progress doEndCommand(String command) {
-        if (command.equals(COMMAND)) {
+    @Override
+    public Progress conduct() {
+        if (COMMAND.equals(value)) {
             return Progress.END;
         }
         return Progress.ERROR;

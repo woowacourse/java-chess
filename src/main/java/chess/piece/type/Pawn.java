@@ -6,9 +6,9 @@ import chess.team.Team;
 
 public class Pawn extends Piece {
     private static final char NAME = 'p';
-    private static final int SCORE = 1;
+    private static final Score SCORE = new Score(1);
 
     public Pawn(Team team) {
-        super(NAME, new Score(SCORE), team, new PawnPieceMovable(team));
+        super(NAME, SCORE, team, new PawnPieceMovable(team));
     }
 }

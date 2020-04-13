@@ -1,7 +1,5 @@
 package chess.location;
 
-import static java.lang.Math.*;
-
 import java.util.Objects;
 
 // 팀별 초기위치를 갖고있는다.
@@ -9,36 +7,17 @@ public class Location {
     private final Row row;
     private final Col col;
 
-    public Location(final int row, final char col) {
-        this.row = Row.of(row);
-        this.col = Col.of(col);
-    }
-
     public Location(final Row row, final Col col) {
         this.row = row;
         this.col = col;
     }
 
+    public Location(final int row, final char col) {
+        this(Row.of(row), Col.of(col));
+    }
+
     public Location moveTo(final int row, final char col) {
         return new Location(row, col);
-    }
-
-    public boolean isDiagonal(Location destination) {
-        return abs(row.getValue() - destination.row.getValue())
-                == abs(col.getValue() - destination.col.getValue());
-    }
-
-    public boolean isStraight(Location destination) {
-        return row.is(destination.row) || isVertical(destination);
-    }
-
-    // 폰의 대각선위치인지 확인하는 메서드
-    public boolean isForwardDiagonal(Location after, int value) {
-        Col leftCol = col.minus(1);
-        Col rightCol = col.plus(1);
-
-        return row.plus(value).is(after.row)
-                && (leftCol.is(after.col) || rightCol.is(after.col));
     }
 
     public Location calculateNextLocation(Location destination, int weight) {
@@ -61,12 +40,8 @@ public class Location {
         return new Location(row.plus(rowWeight), col.plus(colWeight));
     }
 
-    private boolean isVertical(Location destination) {
-        return col.is(destination.col);
-    }
-
-    public boolean isSameRow(int row) {
-        return this.row.is(row);
+    public boolean isSameRow(Row row) {
+        return row.is(this.row);
     }
 
     public boolean isSameRow(Location location) {
@@ -77,11 +52,15 @@ public class Location {
         return col.is(after.col);
     }
 
+    public boolean isSame(Col col) {
+        return this.col.is(col);
+    }
+
     public Location plusRowBy(int value) {
         return new Location(row.plus(value), col);
     }
 
-    public Location plusBy(int rowValue ,int colValue) {
+    public Location plusBy(int rowValue, int colValue) {
         return new Location(row.plus(rowValue), col.plus(colValue));
     }
 
@@ -106,7 +85,7 @@ public class Location {
 
     @Override
     public String toString() {
-        return "[" + col + ", " + row + "]";
+        return col.getValue() + "_" + row.getValue();
     }
 
     @Override

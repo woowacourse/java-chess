@@ -1,9 +1,8 @@
 package chess.piece.type;
 
-import java.util.Map;
 import java.util.Objects;
 
-import chess.location.Location;
+import chess.board.Route;
 import chess.piece.type.movable.PieceMovable;
 import chess.score.Score;
 import chess.team.Team;
@@ -26,35 +25,37 @@ public abstract class Piece {
         return name;
     }
 
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return pieceMovable.canMove(board, now, after);
+    public boolean canMove(Route route) {
+        return pieceMovable.canMove(route);
     }
 
     public boolean isSameTeam(Team team) {
-        return isBlack() == team;
+        return getTeam() == team;
     }
 
     public boolean isNotSame(Team team) {
-        return isBlack() != team;
+        return getTeam() != team;
     }
 
     public boolean isNotSameTeam(Piece piece) {
-        return isBlack() != piece.isBlack();
+        return getTeam() != piece.getTeam();
     }
 
     public boolean isKing() {
         return this.getClass() == King.class;
     }
 
-    private Team isBlack() {
+    public boolean isReverseTeam(Piece piece) {
+        Team anotherTeam = piece.getTeam();
+        Team myTeam = this.getTeam();
+        return myTeam.isReverseTeam(anotherTeam);
+    }
+
+    public Team getTeam() {
         if (Character.isUpperCase(name)) {
             return Team.BLACK;
         }
         return Team.WHITE;
-    }
-
-    public boolean isReverseTeam(Team team) {
-        return team.isReverseTeam(isBlack());
     }
 
     public char getName() {

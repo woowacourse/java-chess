@@ -1,13 +1,16 @@
 package chess.location;
 
 public class LocationSubStringUtil {
+    private static final String UNDER_BAR = "_";
 
-    private static final String SPACE = " ";
-
-    public static Location substring(String str, int index) {
-        String location = str.split(SPACE)[index];
-        int row = location.charAt(1) - '0';
-        char col = location.charAt(0);
+    public static Location substring(String str) {
+        String[] colAndRow = str.split(UNDER_BAR);
+        char col = parseColAndRow(0, colAndRow);
+        int row = parseColAndRow(1, colAndRow) - '0';
         return new Location(row, col);
+    }
+
+    static char parseColAndRow(int i, String[] colAndRow) {
+        return colAndRow[i].charAt(0);
     }
 }

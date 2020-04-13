@@ -1,10 +1,14 @@
 package chess.piece.type;
 
 import chess.board.ChessBoard;
+import chess.board.ChessBoardCreater;
+import chess.board.Route;
 import chess.location.Location;
 import chess.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -13,7 +17,7 @@ class KingTest {
     @Test
     @DisplayName("갈 수 있는 곳 테스트")
     void canMove() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         King king = new King(Team.BLACK);
         Location now = new Location(5, 'e');
@@ -26,8 +30,10 @@ class KingTest {
                 if (i == 0 && j == 0) {
                     continue;
                 }
-                Location after = new Location(now.getRowValue() + dx[i], (char) (now.getCol().getValue() + dy[j]));
-                boolean afterActual = king.canMove(chessBoard.getBoard(), now, after);
+                Location after = new Location(now.getRowValue() + dx[i], (char) (now.getColValue() + dy[j]));
+                Route route = new Route(Collections.EMPTY_MAP, now, after);
+
+                boolean afterActual = king.canMove(route);
 
                 assertThat(afterActual).isTrue();
             }
@@ -37,13 +43,14 @@ class KingTest {
     @Test
     @DisplayName("갈 수 없는 곳 테스트")
     void canMove2() {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardCreater.create();
 
         King king = new King(Team.BLACK);
         Location now = new Location(8, 'e');
         Location cantAfter = new Location(6, 'c');
 
-        boolean cantActual = king.canMove(chessBoard.getBoard(), now, cantAfter);
+        Route route = new Route(Collections.EMPTY_MAP, now, cantAfter);
+        boolean cantActual = king.canMove(route);
         assertThat(cantActual).isFalse();
     }
 

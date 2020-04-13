@@ -1,17 +1,16 @@
 package chess.game;
 
+import chess.board.ChessBoardCreater;
 import chess.command.Command;
 import chess.board.ChessBoard;
 import chess.location.Location;
 import chess.progress.Progress;
 import chess.player.Player;
 import chess.result.ChessResult;
-import chess.result.Result;
-import chess.score.Score;
+import chess.result.ChessScores;
 import chess.team.Team;
 
-import static chess.location.LocationSubStringUtil.substring;
-import static chess.progress.Progress.*;
+import static chess.progress.Progress.END;
 import static chess.team.Team.BLACK;
 import static chess.team.Team.WHITE;
 
@@ -22,46 +21,40 @@ public class ChessGame {
     private Team turn;
 
     public ChessGame() {
-        chessBoard = new ChessBoard();
+        this(ChessBoardCreater.create(), Team.WHITE);
+    }
+
+    public ChessGame(ChessBoard chessBoard, Team turn) {
+        this.chessBoard = chessBoard;
         white = new Player(new ChessSet(chessBoard.giveMyPiece(WHITE)), WHITE);
         black = new Player(new ChessSet(chessBoard.giveMyPiece(BLACK)), BLACK);
-        turn = Team.WHITE;
+        this.turn = turn;
     }
 
     public void changeTurn() {
         turn = turn.changeTurn();
     }
 
-    // State 패턴
     public Progress doOneCommand(Command command) {
         return command.conduct();
     }
 
-    public Progress doMoveCommand(String command) {
-        Location now = substring(command, 1);
-        Location destination = substring(command, 2);
-
-        if (chessBoard.isNotExist(now)
-                || chessBoard.canNotMove(now, destination)
-                || chessBoard.isNotCorrectTeam(now, turn)) {
-            return Progress.ERROR;
+    public void movePieceInPlayerChessSet(Location now, Location destination) {
+        if (white.is(turn)) {
+            white.movePiece(now, destination);
+            return;
         }
-
-        deletePieceIfExistIn(destination, turn);
-        chessBoard.move(now, destination);
-
-        return finishIfKingDie();
+        black.movePiece(now, destination);
     }
 
-    private void deletePieceIfExistIn(Location destination, Team turn) {
-        Player counterplayer = white;
-        if (black.isNotSame(turn)) {
-            counterplayer = black;
+    public void deletePieceIfExistIn(Location location, Team turn) {
+        Player counterplayer = getCounterTurnPlayer(turn);
+        if (chessBoard.isExistPieceIn(location)) {
+            counterplayer.deletePieceIfExistIn(location);
         }
-        counterplayer.deletePieceIfExistIn(destination);
     }
 
-    private Progress finishIfKingDie() {
+    public Progress finishIfKingDie() {
         if (isExistKingDiePlayer()) {
             return END;
         }
@@ -72,32 +65,23 @@ public class ChessGame {
         return white.hasNotKing() || black.hasNotKing();
     }
 
+
     public ChessResult findWinner() {
-        if (isExistKingDiePlayer()) {
-            if (white.hasNotKing()) {
-                return new ChessResult(Result.WIN, black.getTeamName());
-            }
-            return new ChessResult(Result.WIN, white.getTeamName());
-        }
-        return compareScore();
+        return ChessResult.of(white, black);
     }
 
-    private ChessResult compareScore() {
-        Score whiteScore = calculateScore(white);
-        Score blackScore = calculateScore(black);
-        if (whiteScore.isHigherThan(blackScore)) {
-            return new ChessResult(Result.WIN, white.getTeamName());
-        }
-        if (blackScore.isHigherThan(whiteScore)) {
-            return new ChessResult(Result.WIN, black.getTeamName());
-        }
-        return new ChessResult(Result.DRAW, black.getTeamName());
+    public ChessScores calculateScores() {
+        return new ChessScores(
+                white.calculate(),
+                black.calculate()
+        );
     }
 
-    private Score calculateScore(Player player) {
-        Score scoreExceptPawnReduce = player.calculateScoreExceptPawnReduce();
-        Score pawnReduceScore = chessBoard.calculateReducePawnScore(player.getTeam());
-        return scoreExceptPawnReduce.minus(pawnReduceScore);
+    private Player getCounterTurnPlayer(Team turn) {
+        if(black.isNotSame(turn)) {
+            return black;
+        }
+        return white;
     }
 
     public Team getTurn() {

@@ -1,11 +1,14 @@
 package chess.player;
 
-import chess.location.Location;
 import chess.game.ChessSet;
+import chess.location.Location;
 import chess.score.Score;
+import chess.score.ScoreCalculator;
 import chess.team.Team;
 
 public class Player {
+    private static final ScoreCalculator scoreCalculator = new ScoreCalculator();
+
     private final ChessSet chessSet;
     private final Team team;
 
@@ -14,20 +17,32 @@ public class Player {
         this.team = team;
     }
 
-    public boolean isNotSame(Team team) {
-        return this.team.equals(team) == false;
+    public Score calculate() {
+        return scoreCalculator.calculate(chessSet);
     }
 
-    public void deletePieceIfExistIn(Location destination) {
-        chessSet.remove(destination);
+    Score calculateScoreExceptPawnReduce() {
+        return chessSet.calculateScoreExceptPawnReduce();
+    }
+
+    public boolean is(Team team) {
+        return this.team.equals(team);
+    }
+
+    public boolean isNotSame(Team team) {
+        return !is(team);
+    }
+
+    public void deletePieceIfExistIn(Location location) {
+        chessSet.remove(location);
     }
 
     public boolean hasNotKing() {
         return chessSet.hasNotKing();
     }
 
-    public Score calculateScoreExceptPawnReduce() {
-        return chessSet.calculateScoreExceptPawnReduce();
+    public void movePiece(Location now, Location after) {
+        chessSet.movePiece(now, after);
     }
 
     public Team getTeam() {

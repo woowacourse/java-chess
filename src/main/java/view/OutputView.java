@@ -9,7 +9,6 @@ import chess.piece.type.Piece;
 import chess.team.Team;
 
 public class OutputView {
-
     private static final int MAXIMUM_BOARD_SIZE = 8;
     private static final char FIRST_COLUMN_VALUE = 'a';
     private static final String EMPTY_SHAPE = ".";
@@ -33,19 +32,18 @@ public class OutputView {
     }
 
     private static String findPieceOrDefault(Map<Location, Piece> board, Location target) {
-        String value = EMPTY_SHAPE;
-        if (board.containsKey(target)) {
+        if(board.containsKey(target)) {
             Piece piece = board.get(target);
-            value = piece.toString();
+            return piece.toString();
         }
-        return value;
+        return EMPTY_SHAPE;
     }
 
     public static void printInformation() {
         System.out.println("> 체스 게임을 시작합니다.\n"
                 + "> 게임 시작 : start\n"
                 + "> 게임 종료 : end\n"
-                + "> 게임 이동 : Move source위치 target위치 - 예. Move b2 b3");
+                + "> 게임 이동 : move source위치 target위치 - 예. move b_2 b_3");
     }
 
     public static void printMoveErrorMessage() {

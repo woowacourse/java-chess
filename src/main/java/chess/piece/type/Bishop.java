@@ -6,10 +6,10 @@ import chess.team.Team;
 
 public class Bishop extends Piece {
     private static final char NAME = 'b';
-    private static final int SCORE = 3;
+    private static final Score SCORE = new Score(3);
 
     public Bishop(Team team) {
-        super(NAME, new Score(SCORE), team, new BishopMovable());
+        super(NAME, SCORE, team, new BishopMovable());
     }
 }
 

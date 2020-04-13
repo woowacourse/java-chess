@@ -1,13 +1,10 @@
 package chess.piece.type.movable;
 
-import chess.location.Location;
-import chess.piece.type.Piece;
-
-import java.util.Map;
+import chess.board.Route;
 
 public class RookPieceMovable implements PieceMovable {
     @Override
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return now.isStraight(after) && hasNotObstacle(board, now, after);
+    public boolean canMove(Route route) {
+        return route.isStraight() && hasNotObstacle(route);
     }
 }

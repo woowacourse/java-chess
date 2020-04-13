@@ -1,22 +1,23 @@
 package chess.piece.type.movable;
 
+import chess.board.Route;
 import chess.location.Location;
-import chess.piece.type.Piece;
-
-import java.util.Map;
 
 public interface PieceMovable {
-    boolean canMove(Map<Location, Piece> board, Location now, Location after);
+    boolean canMove(Route route);
 
-    default boolean hasNotObstacle(Map<Location, Piece> board, Location now, Location after) {
+    default boolean hasNotObstacle(Route route) {
         int weight = 1;
-        Location nowLocation = now.calculateNextLocation(after, weight);
-        while (!nowLocation.equals(after)) {
-            if (board.containsKey(nowLocation)) {
+        Location now = route.getNow();
+        Location destination = route.getDestination();
+
+        Location nowLocation = now.calculateNextLocation(destination, weight);
+        while (!nowLocation.equals(destination)) {
+            if (route.isExistPieceIn(nowLocation)) {
                 return false;
             }
             weight++;
-            nowLocation = now.calculateNextLocation(after, weight);
+            nowLocation = now.calculateNextLocation(destination, weight);
         }
         return true;
     }

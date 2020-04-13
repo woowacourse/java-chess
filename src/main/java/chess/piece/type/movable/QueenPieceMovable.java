@@ -1,18 +1,16 @@
 package chess.piece.type.movable;
 
-import chess.location.Location;
-import chess.piece.type.Piece;
-
-import java.util.Map;
+import chess.board.Route;
 
 public class QueenPieceMovable implements PieceMovable {
+
     @Override
-    public boolean canMove(Map<Location, Piece> board, Location now, Location after) {
-        return isQueenRange(now, after) && hasNotObstacle(board, now, after);
+    public boolean canMove(Route route) {
+        return isQueenRange(route) && hasNotObstacle(route);
     }
 
-    private boolean isQueenRange(Location now, Location destination) {
-        return now.isDiagonal(destination) || now.isStraight(destination);
+    private boolean isQueenRange(Route route) {
+        return route.isDiagonal() || route.isStraight();
     }
 
 }
