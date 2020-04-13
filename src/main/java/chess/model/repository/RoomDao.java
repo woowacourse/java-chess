@@ -2,11 +2,11 @@ package chess.model.repository;
 
 import static chess.model.repository.connector.ChessMySqlConnector.getConnection;
 
+import chess.model.repository.template.JdbcTemplate;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,30 +22,28 @@ public class RoomDao {
     }
 
     public int insert(String roomName, String roomPW) throws SQLException {
-        String query = "INSERT INTO ROOM_TB(NM, PW) VALUES (?, ?)";
-        try (
-            Connection conn = getConnection();
-            PreparedStatement pstmt = conn
-                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setString(1, roomName);
-            pstmt.setString(2, roomPW);
-            pstmt.executeUpdate();
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-                throw new SQLException();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+            @Override
+            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, roomName);
+                pstmt.setString(2, roomPW);
+                pstmt.executeUpdate();
             }
-        }
+        };
+        String query = "INSERT INTO ROOM_TB(NM, PW) VALUES (?, ?)";
+        return jdbcTemplate.executeUpdateWithGeneratedKey(query);
     }
 
     public void updateUsedN(int roomId) throws SQLException {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+            @Override
+            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
+                pstmt.setInt(1, roomId);
+                pstmt.executeUpdate();
+            }
+        };
         String query = "UPDATE ROOM_TB SET USED_YN = 'N' WHERE ID = ?";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query)) {
-            pstmt.setInt(1, roomId);
-            pstmt.executeUpdate();
-        }
+        jdbcTemplate.executeUpdate(query);
     }
 
     public Map<Integer, String> selectUsedOnly() throws SQLException {

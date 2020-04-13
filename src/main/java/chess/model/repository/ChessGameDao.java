@@ -8,7 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -30,22 +29,18 @@ public class ChessGameDao {
 
     public int insert(int roomId, Color gameTurn, Map<Color, String> userNames)
         throws SQLException {
-        String query = "INSERT INTO CHESS_GAME_TB(ROOM_ID, TURN_NM, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?)";
-        try (Connection conn = getConnection();
-            PreparedStatement pstmt = conn
-                .prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
-            pstmt.setInt(1, roomId);
-            pstmt.setString(2, gameTurn.getName());
-            pstmt.setString(3, userNames.get(Color.BLACK));
-            pstmt.setString(4, userNames.get(Color.WHITE));
-            pstmt.executeUpdate();
-            try (ResultSet rs = pstmt.getGeneratedKeys()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-                throw new SQLException();
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+            @Override
+            public void setParameterUpdate(PreparedStatement pstmt) throws SQLException {
+                pstmt.setInt(1, roomId);
+                pstmt.setString(2, gameTurn.getName());
+                pstmt.setString(3, userNames.get(Color.BLACK));
+                pstmt.setString(4, userNames.get(Color.WHITE));
+                pstmt.executeUpdate();
             }
-        }
+        };
+        String query = "INSERT INTO CHESS_GAME_TB(ROOM_ID, TURN_NM, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?)";
+        return jdbcTemplate.executeUpdateWithGeneratedKey(query);
     }
 
     public void updateProceedN(int gameId) throws SQLException {
