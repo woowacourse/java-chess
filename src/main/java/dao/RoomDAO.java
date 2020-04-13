@@ -47,12 +47,31 @@ public class RoomDAO {
 		}
 	}
 
+	public void createRoom(int roomID) throws SQLException {
+		String query = "INSERT INTO room value (?)";
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(query);
+
+		pstmt.setString(1, String.valueOf(roomID));
+		pstmt.executeUpdate();
+	}
+
 	public void delete(String roomID) throws SQLException {
 		String query = "DELETE FROM room WHERE id = ?";
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(query);
 
 		pstmt.setString(1, roomID);
+		pstmt.executeUpdate();
+
+		ConnectionManager.closeConnection(connection);
+	}
+
+	public void deleteAll() throws SQLException {
+		String query = "DELETE FROM room";
+		Connection connection = ConnectionManager.getConnection();
+		PreparedStatement pstmt = connection.prepareStatement(query);
+
 		pstmt.executeUpdate();
 
 		ConnectionManager.closeConnection(connection);

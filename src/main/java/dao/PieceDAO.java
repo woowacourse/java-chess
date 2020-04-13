@@ -12,17 +12,21 @@ import chess.piece.Piece;
 import chess.team.Team;
 
 public class PieceDAO {
-	public void addPiece(Long roomID, Location location, Piece piece) throws SQLException {
+	public void addAllPiece(Long roomID, Map<Location, Piece> mapper) throws SQLException {
 		String query = "INSERT INTO piece(room_id, location, name, team) VALUES (?, ?, ?, ?)";
 		Connection connection = ConnectionManager.getConnection();
 		PreparedStatement pstmt = connection.prepareStatement(query);
 
-		pstmt.setLong(1, roomID);
-		pstmt.setString(2, location.toString());
-		pstmt.setString(3, String.valueOf(piece.getName()));
-		pstmt.setString(4, piece.getTeam().getName());
-		pstmt.executeUpdate();
+		for (Location location : mapper.keySet()) {
+			Piece piece = mapper.get(location);
+			pstmt.setLong(1, roomID);
+			pstmt.setString(2, location.toString());
+			pstmt.setString(3, String.valueOf(piece.getName()));
+			pstmt.setString(4, piece.getTeam().getName());
 
+			pstmt.addBatch();
+		}
+		pstmt.executeBatch();
 		ConnectionManager.closeConnection(connection);
 	}
 
@@ -86,16 +90,6 @@ public class PieceDAO {
 		pstmt.setString(1, destination.toString());
 		pstmt.setLong(2, roomID);
 		pstmt.setString(3, now.toString());
-		pstmt.executeUpdate();
-
-		ConnectionManager.closeConnection(connection);
-	}
-
-	public void deleteAll(Long roomID) throws SQLException {
-		String query = "DELETE FROM	piece WHERE room_id	= ?";
-		Connection connection = ConnectionManager.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(query);
-		pstmt.setLong(1, roomID);
 		pstmt.executeUpdate();
 
 		ConnectionManager.closeConnection(connection);

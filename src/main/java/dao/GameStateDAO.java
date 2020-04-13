@@ -20,26 +20,6 @@ public class GameStateDAO {
 		ConnectionManager.closeConnection(connection);
 	}
 
-	public void delete(Long roomID) throws SQLException {
-		String query = "DELETE FROM gamestate WHERE room_id = ?";
-		Connection connection = ConnectionManager.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(query);
-		pstmt.setString(1, String.valueOf(roomID));
-		pstmt.executeUpdate();
-
-		ConnectionManager.closeConnection(connection);
-	}
-
-	public void deleteGameState(Long roomID, GameState gameState) throws SQLException {
-		String query = "DELETE FROM gamestate WHERE message = ?";
-		Connection connection = ConnectionManager.getConnection();
-		PreparedStatement pstmt = connection.prepareStatement(query);
-		pstmt.setString(1, String.valueOf(roomID));
-		pstmt.executeUpdate();
-
-		ConnectionManager.closeConnection(connection);
-	}
-
 	public GameState findGameState(Long roomID) throws SQLException {
 		String query = "SELECT * FROM gamestate WHERE room_id = ?";
 		Connection connection = ConnectionManager.getConnection();
@@ -52,8 +32,9 @@ public class GameStateDAO {
 			return null;
 		}
 
+		String message = resultSet.getString("message");
 		ConnectionManager.closeConnection(connection);
-		return GameState.of(resultSet.getString("message"));
+		return GameState.of(message);
 	}
 
 	public void updateMessage(Long roomID, GameState gameState, GameState opposingTeam) throws SQLException {

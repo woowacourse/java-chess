@@ -38,7 +38,14 @@ public class WebController {
 		Long roomID = Long.valueOf(request.params("roomID"));
 		String now = request.queryParams("now");
 		String destination = request.queryParams("destination");
-		return chessService.move(roomID, now, destination);
+
+		try {
+			return chessService.move(roomID, now, destination);
+		} catch (IllegalArgumentException | NullPointerException e) {
+			Map<String, String> message = new HashMap<>();
+			message.put("error", e.getMessage());
+			return message;
+		}
 	}
 
 	public Map<String, Object> findRoom() throws SQLException {
