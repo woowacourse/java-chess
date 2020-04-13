@@ -122,9 +122,6 @@ public class RunningBoard implements Board {
     }
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
-        return board.entrySet()
-                .stream()
-                .collect(Collectors.toMap(Map.Entry::getKey,
-                        Map.Entry::getValue));
+        return new HashMap<>(board);
     }
 }
