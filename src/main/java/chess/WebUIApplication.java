@@ -19,6 +19,7 @@ public class WebUIApplication {
     private static HandlebarsTemplateEngine handlebarsTemplateEngine = new HandlebarsTemplateEngine();
 
     public static void main(String[] args) {
+        port(8080);
         staticFileLocation("/templates");
 
         PieceDao pieceDao = new JdbcPieceDao(new DataSource());
