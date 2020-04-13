@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import chess.model.domain.board.ChessGame;
 import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +22,7 @@ class ChessResultDaoTest {
 
     @DisplayName("ChessGameResult CRUD")
     @Test
-    public void crud() throws SQLException {
+    public void crud() {
         TeamScore defaultTeamScore = new ChessGame().getTeamScore();
         Map<Color, Double> teamScore = defaultTeamScore.getTeamScore();
         Map<Color, Double> teamScoreUpdate = new HashMap<>(teamScore);

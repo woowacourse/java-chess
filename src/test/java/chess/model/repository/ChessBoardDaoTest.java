@@ -10,7 +10,6 @@ import chess.model.domain.piece.Pawn;
 import chess.model.domain.piece.Piece;
 import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +25,7 @@ class ChessBoardDaoTest {
     }
 
     @Test
-    public void crud() throws SQLException {
+    public void crud() {
 
         int gameId = 1;
 

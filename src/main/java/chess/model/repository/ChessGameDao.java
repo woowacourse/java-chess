@@ -42,8 +42,7 @@ public class ChessGameDao {
     public void updateTurn(int gameId, Color gameTurn) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET TURN_NM = ? WHERE ID = ? AND PROCEEDING_YN = 'Y'";
-        PreparedStatementSetter pss = pstmt -> JdbcTemplate
-            .getPssFromParams(gameTurn.getName(), gameId);
+        PreparedStatementSetter pss = JdbcTemplate.getPssFromParams(gameTurn.getName(), gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 

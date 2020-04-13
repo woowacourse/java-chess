@@ -3,7 +3,6 @@ package chess.model.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.domain.piece.Color;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +18,7 @@ class ChessGameDaoTest {
     }
 
     @Test
-    public void crud() throws SQLException {
+    public void crud() {
         Color gameTurn = Color.BLACK;
         Map<Color, String> userNames = new HashMap<>();
         userNames.put(Color.BLACK, "USER_BLACK");
