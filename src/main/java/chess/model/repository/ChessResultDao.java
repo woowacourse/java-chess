@@ -19,13 +19,6 @@ public class ChessResultDao {
         return INSTANCE;
     }
 
-    public void put(int gameId, TeamScore teamScore) {
-        if (select(gameId).isEmpty()) {
-            insert(gameId, teamScore);
-        }
-        update(gameId, teamScore);
-    }
-
     public void update(int gameId, TeamScore teamScore) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";

@@ -3,7 +3,6 @@ package chess.model.repository;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.model.domain.board.BoardSquare;
-import chess.model.domain.board.CastlingSetting;
 import chess.model.domain.board.ChessGame;
 import chess.model.domain.piece.Color;
 import chess.model.domain.piece.Pawn;
@@ -11,7 +10,7 @@ import chess.model.domain.piece.Piece;
 import chess.model.domain.state.MoveSquare;
 import chess.model.domain.state.MoveState;
 import java.util.Map;
-import java.util.Set;
+import java.util.stream.Collectors;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -35,12 +34,14 @@ class ChessBoardDaoTest {
 
         ChessGame chessGame = new ChessGame();
         Map<BoardSquare, Piece> board = chessGame.getChessBoard();
-        Set<CastlingSetting> castlingElements = CastlingSetting.getCastlingElements();
-
+        Map<BoardSquare, Boolean> castlingElements = board.keySet().stream()
+            .collect(Collectors.toMap(boardSquare -> boardSquare, boardSquare -> false));
+        BoardSquare castlingElement = BoardSquare.of("a1");
+        castlingElements.put(castlingElement, true);
         chessBoardDao.insert(gameId, board, castlingElements);
 
         assertThat(chessBoardDao.getBoard(gameId)).isEqualTo(board);
-        assertThat(chessBoardDao.getCastlingElements(gameId)).isEqualTo(castlingElements);
+        assertThat(chessBoardDao.getCastlingElements(gameId).size()).isEqualTo(1);
         assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
 
         BoardSquare boardSquareBefore = BoardSquare.of("a2");
@@ -55,7 +56,7 @@ class ChessBoardDaoTest {
 
         board = chessGame.getChessBoard();
         assertThat(chessBoardDao.getBoard(gameId)).isEqualTo(board);
-        assertThat(chessBoardDao.getCastlingElements(gameId)).isEqualTo(castlingElements);
+        assertThat(chessBoardDao.getCastlingElements(gameId).size()).isEqualTo(1);
         assertThat(chessBoardDao.getEnpassantBoard(gameId).getEnPassants()).isEmpty();
 
         chessBoardDao.delete(gameId);

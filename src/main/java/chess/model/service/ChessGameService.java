@@ -24,6 +24,7 @@ import chess.model.repository.ChessResultDao;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ChessGameService {
 
@@ -52,9 +53,24 @@ public class ChessGameService {
         CHESS_GAME_DAO.updateProceedNByRoomId(roomId);
         ChessGame chessGame = new ChessGame();
         int gameId = CHESS_GAME_DAO.insert(roomId, chessGame.getGameTurn(), userNames);
-        CHESS_BOARD_DAO.insert(gameId, chessGame.getChessBoard(), chessGame.getCastlingElements());
-        CHESS_RESULT_DAO.put(gameId, chessGame.getTeamScore());
+        CHESS_BOARD_DAO.insert(gameId, chessGame.getChessBoard(),
+            getCastlingElement(chessGame.getChessBoard(), chessGame.getCastlingElements()));
+        putChessResult(gameId, chessGame.getTeamScore());
         return gameId;
+    }
+
+    private Map<BoardSquare, Boolean> getCastlingElement(Map<BoardSquare, Piece> chessBoard,
+        Set<CastlingSetting> castlingElements) {
+        return chessBoard.keySet().stream()
+            .collect(Collectors.toMap(boardSquare -> boardSquare,
+                boardSquare -> getCastlingElement(boardSquare, chessBoard.get(boardSquare),
+                    castlingElements)));
+    }
+
+    private boolean getCastlingElement(BoardSquare boardSquare, Piece piece,
+        Set<CastlingSetting> castlingElements) {
+        return castlingElements.stream()
+            .anyMatch(castlingSetting -> castlingSetting.isCastlingBefore(boardSquare, piece));
     }
 
     public ChessGameDto loadChessGame(int gameId) {
@@ -98,7 +114,7 @@ public class ChessGameService {
         if (moveState == MoveState.SUCCESS) {
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
         }
-        CHESS_RESULT_DAO.put(gameId, chessGame.getTeamScore());
+        putChessResult(gameId, chessGame.getTeamScore());
         ChessGameDto chessGameDTO = new ChessGameDto(getChessGame(gameId), moveState,
             new TeamScore(CHESS_RESULT_DAO.select(gameId)), CHESS_GAME_DAO.getUserNames(gameId));
         if (moveState == MoveState.KING_CAPTURED) {
@@ -121,7 +137,7 @@ public class ChessGameService {
         if (moveState == MoveState.SUCCESS_PROMOTION) {
             CHESS_BOARD_DAO.updatePromotion(gameId, finishPawnBoard, hopePiece);
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
-            CHESS_RESULT_DAO.put(gameId, chessGame.getTeamScore());
+            putChessResult(gameId, chessGame.getTeamScore());
         }
         return new ChessGameDto(getChessGame(gameId), moveState,
             new TeamScore(CHESS_RESULT_DAO.select(gameId)), CHESS_GAME_DAO.getUserNames(gameId));
@@ -139,5 +155,12 @@ public class ChessGameService {
             CHESS_GAME_DAO.getUserNames(gameId));
         chessGameDto.clearPiece();
         return chessGameDto;
+    }
+
+    private void putChessResult(int gameId, TeamScore teamScore) {
+        if (CHESS_RESULT_DAO.select(gameId).isEmpty()) {
+            CHESS_RESULT_DAO.insert(gameId, teamScore);
+        }
+        CHESS_RESULT_DAO.update(gameId, teamScore);
     }
 }

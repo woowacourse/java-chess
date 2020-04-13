@@ -27,7 +27,7 @@ public class ChessBoardDao {
     }
 
     public void insert(int gameId, Map<BoardSquare, Piece> board,
-        Set<CastlingSetting> castlingElements) {
+        Map<BoardSquare, Boolean> castlingElements) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
         PreparedStatementSetter pss = pstmt -> {
@@ -35,19 +35,15 @@ public class ChessBoardDao {
                 pstmt.setInt(1, gameId);
                 pstmt.setString(2, boardSquare.getName());
                 pstmt.setString(3, PieceFactory.getName(board.get(boardSquare)));
-                pstmt.setString(4,
-                    getCastlingElement(boardSquare, board.get(boardSquare), castlingElements));
+                pstmt.setString(4, changeBooleanToString(castlingElements.get(boardSquare)));
                 pstmt.executeUpdate();
             }
         };
         jdbcTemplate.executeUpdateWhenLoop(query, pss);
     }
 
-    private String getCastlingElement(BoardSquare boardSquare, Piece piece,
-        Set<CastlingSetting> castlingElements) {
-        boolean containCastling = castlingElements.stream()
-            .anyMatch(castlingSetting -> castlingSetting.isCastlingBefore(boardSquare, piece));
-        return containCastling ? "Y" : "N";
+    private String changeBooleanToString(boolean changer) {
+        return changer ? "Y" : "N";
     }
 
     public void insertBoard(int gameId, BoardSquare boardSquare, Piece piece) {

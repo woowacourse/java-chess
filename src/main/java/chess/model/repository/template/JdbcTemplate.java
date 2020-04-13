@@ -17,7 +17,7 @@ public class JdbcTemplate {
             pss.setParameter(pstmt);
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new DataAccessException();
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -34,7 +34,7 @@ public class JdbcTemplate {
             PreparedStatement pstmt = conn.prepareStatement(query)) {
             loopPss.setParameter(pstmt);
         } catch (SQLException e) {
-            throw new DataAccessException();
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -51,7 +51,7 @@ public class JdbcTemplate {
                 throw new DataAccessException();
             }
         } catch (SQLException e) {
-            throw new DataAccessException();
+            throw new DataAccessException(e.getMessage());
         }
     }
 
@@ -64,7 +64,7 @@ public class JdbcTemplate {
                 return mapper.setRow(rs);
             }
         } catch (SQLException e) {
-            throw new DataAccessException();
+            throw new DataAccessException(e.getMessage());
         }
     }
 }
