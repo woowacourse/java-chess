@@ -3,12 +3,15 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
-import chess.domain.piece.state.piece.Started;
 import chess.domain.piece.team.Team;
 
-public class Blank extends Started {
+public class Blank implements Piece {
+    private final String name;
+    private final Team team;
+
     private Blank(String name, Team team) {
-        super(name, team);
+        this.name = name;
+        this.team = team;
     }
 
     public static Blank of() {
@@ -20,6 +23,11 @@ public class Blank extends Started {
     @Override
     public Piece move(Position to, Board board) {
         throw new IllegalStateException(String.format("해당 자리 %s가 비어있습니다.", to));
+    }
+
+    @Override
+    public Team getTeam() {
+        return team;
     }
 
     @Override
@@ -55,5 +63,10 @@ public class Blank extends Started {
     @Override
     public Score calculateScore(Board board) {
         throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

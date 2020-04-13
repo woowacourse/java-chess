@@ -14,14 +14,17 @@ import chess.domain.piece.team.Team;
 import java.util.List;
 import java.util.Objects;
 
-public abstract class Initialized extends Started {
+public abstract class Initialized implements Piece {
+    protected final String name;
+    protected final Team team;
     protected final List<CanNotMoveStrategy> canNotMoveStrategies;
     protected final Position position;
     protected final Score score;
     protected final MoveType moveType;
 
     protected Initialized(InitializedBuilder builder) {
-        super(builder.name, builder.team);
+        this.name = builder.name;
+        this.team = builder.team;
         this.canNotMoveStrategies = builder.canNotMoveStrategies;
         this.position = builder.position;
         this.score = builder.score;
@@ -58,6 +61,11 @@ public abstract class Initialized extends Started {
     @Override
     public boolean attackedKing() {
         return moveType == MoveType.ATTACKED_KING;
+    }
+
+    @Override
+    public Team getTeam() {
+        return team;
     }
 
     public boolean isSameTeam(Piece piece) {
@@ -160,6 +168,11 @@ public abstract class Initialized extends Started {
             }
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 
     @Override
