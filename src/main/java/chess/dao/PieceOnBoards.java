@@ -15,10 +15,6 @@ public class PieceOnBoards {
         return new PieceOnBoards(pieceOnBoards);
     }
 
-    public List<PieceOnBoard> getPieceOnBoards() {
-        return Collections.unmodifiableList(this.pieceOnBoards);
-    }
-
     public Optional<PieceOnBoard> find(String position) {
         Optional<PieceOnBoard> piece = Optional.ofNullable(this.pieceOnBoards.stream()
                 .filter(p -> p.getPosition().equals(position))
@@ -26,5 +22,9 @@ public class PieceOnBoards {
                 .orElse(null));
 
         return piece;
+    }
+
+    public List<PieceOnBoard> getPieceOnBoards() {
+        return Collections.unmodifiableList(this.pieceOnBoards);
     }
 }
