@@ -9,9 +9,11 @@ import chess.dto.MoveStateDTO;
 import chess.service.MoveStateService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
+import spark.Request;
 import spark.Response;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,33 +34,31 @@ public class WebChessController implements Controller {
 
         post("/continue", (req, res) -> continueGame(res));
 
-
         get("/status", (req, res) -> calculateGameStatus(res));
 
         get("/refresh", (req, res) -> restartGame(res));
 
-        movePiece();
+        post("/move", this::movePiece);
 
     }
 
-    private void movePiece() {
-        post("/move", (req, res) -> {
-            try {
-                chessBoard.getMoveState()
-                        .move(Square.of(req.queryParams("before")), Square.of(req.queryParams("after")), chessBoard);
-                if (chessBoard.isKingCaptured()) {
-                    Color turn = chessBoard.getTurn().getTurn();
-                    turn = turn.changeColor(turn);
-                    throw new UnsupportedOperationException(turn.getName() + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
-                }
-            } catch (Exception e) {
-                res.status(400);
-                return e.getMessage();
+
+    private Object movePiece(Request req, Response res) throws SQLException {
+        try {
+            chessBoard.getMoveState()
+                    .move(Square.of(req.queryParams("before")), Square.of(req.queryParams("after")), chessBoard);
+            if (chessBoard.isKingCaptured()) {
+                Color turn = chessBoard.getTurn().getTurn();
+                turn = turn.changeColor(turn);
+                throw new UnsupportedOperationException(turn.getName() + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
             }
-            MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
-            moveStateService.addMoveState(moveStateDTO);
-            return req.queryParams("before") + " " + req.queryParams("after");
-        });
+        } catch (Exception e) {
+            res.status(400);
+            return e.getMessage();
+        }
+        MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+        moveStateService.addMoveState(moveStateDTO);
+        return req.queryParams("before") + " " + req.queryParams("after");
     }
 
     private Object restartGame(Response res) {
