@@ -9,6 +9,10 @@ public class PieceOnBoard {
     private String team;
     private int chessBoardId;
 
+    public PieceOnBoard(String position, String pieceType, String team, int chessBoardId) {
+        this(0, position, pieceType, team, chessBoardId);
+    }
+
     public PieceOnBoard(int pieceId, String position, String pieceType, String team, int chessBoardId) {
         this.pieceId = pieceId;
         this.position = position;

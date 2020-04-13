@@ -34,6 +34,8 @@ public class WebChessController {
     private ChessService chessService;
 
     public void playChess() {
+        this.chessService = new ChessService();
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
@@ -63,9 +65,9 @@ public class WebChessController {
             String blackPlayer = req.queryParams("black-player");
 
             Player player = new Player(whitePlayer, blackPlayer);
-            newGame(player);
-            List<TileDTO> tileDtos = getTiles();
-            TeamDTO teamDto = getCurrentTeam();
+            this.chessService.newGame(player);
+            List<TileDTO> tileDtos = this.chessService.getTiles();
+            TeamDTO teamDto = this.chessService.getCurrentTeam();
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
@@ -143,34 +145,13 @@ public class WebChessController {
 //        });
     }
 
-    public void newGame(Player player) throws Exception {
-        ChessBoardDAO chessBoardDAO = new ChessBoardDAO();
-        CurrentTeamDAO currentTeamDAO = new CurrentTeamDAO();
-        PieceOnBoardDAO pieceOnBoardDAO = new PieceOnBoardDAO();
-        PlayerDAO playerDAO = new PlayerDAO();
-
-        this.chessRunner = new ChessRunner();
-
-        chessBoardDAO.addChessBoard();
-        this.chessBoard = chessBoardDAO.findRecentChessBoard();
-
-        this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
-        currentTeamDAO.addCurrentTeam(this.chessBoard, this.currentTeam);
-
-        List<TileDTO> tileDtos = this.chessRunner.pieceTileDtos();
-//        pieceOnBoardDAO.addPiece(this.chessBoard, tileDtos);
-        updateOriginalPieces(pieceOnBoardDAO);
-
-        playerDAO.addPlayer(this.chessBoard, player);
-    }
-
 //    public List<Player> players() throws Exception {
 //        PlayerDAO playerDAO = new PlayerDAO();
 //
 //        return Collections.unmodifiableList(playerDAO.findAllPlayer());
 //    }
 
-    public Player getPlayer() throws Exception {
+    public Player getPlayer() {
         PlayerDAO playerDAO = new PlayerDAO();
 
         return playerDAO.findPlayer(this.chessBoard);

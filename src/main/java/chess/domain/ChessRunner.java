@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.dao.PieceOnBoard;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
 import chess.domain.piece.Piece;
@@ -155,37 +156,26 @@ public class ChessRunner {
         }
     }
 
-    private void setTileDtoPiece(List<TileDTO> tileDtos) {
-//        Map<Position, Piece> board = this.board.getBoard();
-//        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-//            tileDtos.stream()
-//                    .filter(td -> td.getPosition().equals(entry.getKey()))
-//                    .findFirst()
-//                    .orElseThrow(IllegalArgumentException::new)
-//                    .
-//        }
-    }
-
     private void setTileDtoImage(List<TileDTO> tileDtos) {
-//        List<Tile> tiles = this.board.tiles();
-//        for (Tile tile : tiles) {
-//            TileDTO tileDto = tileDtos.stream()
-//                    .filter(td -> td.getPosition().equals(tile.position()))
-//                    .findFirst()
-//                    .orElseThrow(IllegalArgumentException::new);
-//            tileDto.setPieceImageUrl(tile.pieceImageUrl());
-//        }
+        Map<Position, Piece> board = this.board.getBoard();
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            tileDtos.stream()
+                    .filter(td -> td.getPosition().equals(entry.getKey().toString()))
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new)
+                    .setPieceImageUrl(entry.getValue().toSymbol() + entry.getValue().teamName().toLowerCase());
+        }
     }
 
-    public List<TileDTO> pieceTileDtos() {
-//        List<TileDTO> tileDtos = this.board.tiles().stream()
-//                .map((tile) -> {
-//                    TileDTO tileDto = new TileDTO(tile.position());
-//                    tileDto.setPieceImageUrl(tile.pieceImageUrl());
-//                    return tileDto;
-//                }).collect(Collectors.toList());
-//
-//        return Collections.unmodifiableList(tileDtos);
-        return null;
+    public List<PieceOnBoard> getPieceOnBoards(int chessBoardId) {
+        List<PieceOnBoard> pieces = this.board.getBoard().entrySet().stream()
+                .map((entry) -> {
+                    String position = entry.getKey().toString();
+                    String pieceType = entry.getValue().toSymbol();
+                    String team = entry.getValue().teamName();
+                    return new PieceOnBoard(position, pieceType, team, chessBoardId);
+                }).collect(Collectors.toList());
+
+        return Collections.unmodifiableList(pieces);
     }
 }
