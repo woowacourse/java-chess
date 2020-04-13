@@ -102,12 +102,11 @@ public class RunningBoard implements Board {
     }
 
     private Board movePiece(MovingFlow movingFlow, Board board) {
-        Map<Position, Piece> pieces = clonePieces(this.pieces);
         Position from = movingFlow.getFrom();
         Piece piece = board.getPiece(from);
         Position to = movingFlow.getTo();
         piece = piece.move(to, board);
-        updatePieces(pieces, from, to, piece);
+        Map<Position, Piece> pieces = updatePieces(from, to, piece);
         return updateBoard(pieces, piece);
     }
 
@@ -118,9 +117,11 @@ public class RunningBoard implements Board {
         return new RunningBoard(pieces);
     }
 
-    private void updatePieces(Map<Position, Piece> pieces, Position from, Position to, Piece piece) {
+    private Map<Position, Piece> updatePieces(Position from, Position to, Piece piece) {
+        Map<Position, Piece> pieces = clonePieces(this.pieces);
         pieces.put(from, Blank.of());
         pieces.put(to, piece);
+        return pieces;
     }
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
