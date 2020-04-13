@@ -1,4 +1,4 @@
-package chess.DAO;
+package chess.dao;
 
 import chess.DBConnector;
 import chess.piece.Piece;
@@ -11,11 +11,11 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PiecesDAO {
+public class PiecesDao {
 
     private final Connection conn;
 
-    public PiecesDAO() {
+    public PiecesDao() {
         this.conn = DBConnector.getConnection();
     }
 

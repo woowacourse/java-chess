@@ -1,6 +1,6 @@
 package chess;
 
-import chess.DAO.TurnDAO;
+import chess.dao.TurnDao;
 import chess.piece.Team;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,26 +10,26 @@ import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class TurnDAOTest {
-    private TurnDAO turnDAO;
+public class TurnDaoTest {
+    private TurnDao turnDao;
     private Team savedTurn;
 
     @BeforeEach
     public void setUp() throws SQLException {
-        turnDAO = new TurnDAO(DBConnector.getConnection());
-        savedTurn = turnDAO.load();
+        turnDao = new TurnDao();
+        savedTurn = turnDao.load();
     }
 
     @Test
     void saveTurnTest() throws SQLException {
-        turnDAO.save(Team.WHITE);
-        assertThat(turnDAO.load()).isEqualTo(Team.WHITE);
-        turnDAO.save(Team.BLACK);
-        assertThat(turnDAO.load()).isEqualTo(Team.BLACK);
+        turnDao.save(Team.WHITE);
+        assertThat(turnDao.load()).isEqualTo(Team.WHITE);
+        turnDao.save(Team.BLACK);
+        assertThat(turnDao.load()).isEqualTo(Team.BLACK);
     }
 
     @AfterEach
     void tearDown() throws SQLException {
-        turnDAO.save(savedTurn);
+        turnDao.save(savedTurn);
     }
 }

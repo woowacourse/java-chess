@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.DAO.PiecesDAO;
-import chess.DAO.TurnDAO;
-import chess.DTO.BoardDTO;
+import chess.dao.PiecesDao;
+import chess.dao.TurnDao;
+import chess.dto.BoardDto;
 import chess.Scores;
 import chess.exception.InvalidMovementException;
 import chess.service.ChessGameService;
@@ -16,9 +16,9 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebChessController {
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args) {
         staticFiles.location("/public");
-        ChessGameService service = new ChessGameService(new PiecesDAO(), new TurnDAO());
+        ChessGameService service = new ChessGameService(new PiecesDao(), new TurnDao());
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -61,7 +61,7 @@ public class WebChessController {
     }
 
     private static void constructModel(ChessGameService service, Map<String, Object> model) throws SQLException {
-        BoardDTO boardDTO = new BoardDTO(service.getBoard());
+        BoardDto boardDTO = new BoardDto(service.getBoard());
         Map<String, String> pieces = boardDTO.getBoard();
         for (String positionKey : pieces.keySet()) {
             String imageName = pieces.get(positionKey);

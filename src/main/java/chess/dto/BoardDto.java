@@ -1,4 +1,4 @@
-package chess.DTO;
+package chess.dto;
 
 import chess.Board;
 import chess.piece.Piece;
@@ -7,10 +7,10 @@ import chess.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BoardDTO {
+public class BoardDto {
     private Map<String, String> board;
 
-    public BoardDTO(Board board) {
+    public BoardDto(Board board) {
         Map<Position, Piece> originalPieces = board.getPieces();
         Map<String, String> result = new HashMap<>();
 

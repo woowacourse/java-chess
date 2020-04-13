@@ -1,8 +1,8 @@
 package chess.service;
 
 import chess.Board;
-import chess.DAO.PiecesDAO;
-import chess.DAO.TurnDAO;
+import chess.dao.PiecesDao;
+import chess.dao.TurnDao;
 import chess.piece.Team;
 import chess.position.Position;
 import chess.strategy.NormalInitStrategy;
@@ -10,10 +10,10 @@ import chess.strategy.NormalInitStrategy;
 import java.sql.SQLException;
 
 public class ChessGameService {
-    private PiecesDAO piecesDAO;
-    private TurnDAO turnDAO;
+    private PiecesDao piecesDAO;
+    private TurnDao turnDAO;
 
-    public ChessGameService(PiecesDAO piecesDAO, TurnDAO turnDAO) {
+    public ChessGameService(PiecesDao piecesDAO, TurnDao turnDAO) {
         this.piecesDAO = piecesDAO;
         this.turnDAO = turnDAO;
     }
