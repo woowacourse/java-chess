@@ -19,7 +19,7 @@ public class RoomDAO {
 	public void addRoom(String roomName, String roomColor) throws SQLException {
 		String query = "INSERT INTO room(room_name, room_color) VALUES (?, ?)";
 
-		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
 			@Override
 			public void setParameters(final PreparedStatement pstmt) throws SQLException {
 				pstmt.setString(1, roomName);
@@ -27,26 +27,28 @@ public class RoomDAO {
 			}
 		};
 
-		jdbcTemplate.executeUpdate(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		jdbcTemplate.executeUpdate(query, pss);
 	}
 
 	public void removeRoomById(int roomId) throws SQLException {
 		String query = "DELETE FROM room WHERE room_id = ?";
 
-		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
 			@Override
 			public void setParameters(final PreparedStatement pstmt) throws SQLException {
 				pstmt.setInt(1, roomId);
 			}
 		};
 
-		jdbcTemplate.executeUpdate(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		jdbcTemplate.executeUpdate(query, pss);
 	}
 
 	public void updateRoomColorById(int roomId, Color roomColor) throws SQLException {
 		String query = "UPDATE room SET room_color = ? WHERE room_id = ?";
 
-		JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
 			@Override
 			public void setParameters(final PreparedStatement pstmt) throws SQLException {
 				pstmt.setString(1, roomColor.name());
@@ -54,13 +56,21 @@ public class RoomDAO {
 			}
 		};
 
-		jdbcTemplate.executeUpdate(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		jdbcTemplate.executeUpdate(query, pss);
 	}
 
 	public Room findRoomById(int roomId) throws SQLException {
 		String query = "SELECT room_id, room_name, room_color FROM room WHERE room_id = ?";
 
-		SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setInt(1, roomId);
+			}
+		};
+
+		RowMapper rm = new RowMapper() {
 			@Override
 			public Object mapRow(final ResultSet rs) throws SQLException {
 				if (!rs.next()) {
@@ -72,20 +82,22 @@ public class RoomDAO {
 					rs.getString("room_color")
 				);
 			}
-
-			@Override
-			public void setParameters(final PreparedStatement pstmt) throws SQLException {
-				pstmt.setInt(1, roomId);
-			}
 		};
-
-		return (Room)selectJdbcTemplate.executeQuery(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		return (Room)jdbcTemplate.executeQuery(query, pss, rm);
 	}
 
 	public int findRoomIdByRoomName(String roomName) throws SQLException {
 		String query = "SELECT room_id FROM room WHERE room_name = ?";
 
-		SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, roomName);
+			}
+		};
+
+		RowMapper rm = new RowMapper() {
 			@Override
 			public Object mapRow(final ResultSet rs) throws SQLException {
 				if (!rs.next()) {
@@ -94,20 +106,22 @@ public class RoomDAO {
 
 				return rs.getInt("room_id");
 			}
-
-			@Override
-			public void setParameters(final PreparedStatement pstmt) throws SQLException {
-				pstmt.setString(1, roomName);
-			}
 		};
-
-		return (int)selectJdbcTemplate.executeQuery(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		return (int)jdbcTemplate.executeQuery(query, pss, rm);
 	}
 
 	public List<Room> findAllRoom() throws SQLException {
 		String query = "SELECT room_id, room_name, room_color FROM room";
 
-		SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+
+			}
+		};
+
+		RowMapper rm = new RowMapper() {
 			@Override
 			public Object mapRow(final ResultSet rs) throws SQLException {
 				List<Room> rooms = new ArrayList<>();
@@ -121,19 +135,22 @@ public class RoomDAO {
 				}
 				return rooms;
 			}
-
-			@Override
-			public void setParameters(final PreparedStatement pstmt) throws SQLException {
-			}
 		};
-
-		return (List<Room>)selectJdbcTemplate.executeQuery(query);
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		return (List<Room>)jdbcTemplate.executeQuery(query, pss, rm);
 	}
 
 	public Color findRoomColorById(int roomId) throws SQLException {
 		String query = "SELECT room_color FROM room WHERE room_id = ?";
 
-		SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+		PreparedStatementSetter pss = new PreparedStatementSetter() {
+			@Override
+			public void setParameters(final PreparedStatement pstmt) throws SQLException {
+				pstmt.setInt(1, roomId);
+			}
+		};
+
+		RowMapper rm = new RowMapper() {
 			@Override
 			public Object mapRow(final ResultSet rs) throws SQLException {
 				if (!rs.next()) {
@@ -141,12 +158,9 @@ public class RoomDAO {
 				}
 				return Color.valueOf(rs.getString("room_color"));
 			}
-
-			@Override
-			public void setParameters(final PreparedStatement pstmt) throws SQLException {
-				pstmt.setInt(1, roomId);
-			}
 		};
-		return (Color)selectJdbcTemplate.executeQuery(query);
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		return (Color)jdbcTemplate.executeQuery(query, pss, rm);
 	}
 }
