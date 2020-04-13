@@ -10,6 +10,7 @@ import chess.domain.ChessGame;
 import chess.domain.FinishFlag;
 import chess.domain.Side;
 import chess.domain.dao.RoomDao;
+import chess.domain.dto.ChessGameDto;
 import chess.domain.dto.RoomDto;
 import chess.domain.position.Position;
 
@@ -23,11 +24,7 @@ public class ChessGameService {
 	public ChessGame create(String roomName) throws SQLException {
 		validateDuplicated(roomName);
 		ChessGame chessGame = ChessGame.start();
-
-		String board = BoardConverter.convertToString(chessGame.getBoard());
-		String turn = chessGame.getTurn().name();
-		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
-		roomDao.addRoom(roomName, board, turn, finishFlag);
+		roomDao.addRoom(ChessGameDto.of(roomName, chessGame));
 		return chessGame;
 	}
 
@@ -44,11 +41,7 @@ public class ChessGameService {
 	public ChessGame move(String roomName, String source, String target) throws SQLException {
 		ChessGame chessGame = load(roomName);
 		chessGame.move(new Position(source), new Position(target));
-
-		String board = BoardConverter.convertToString(chessGame.getBoard());
-		String turn = chessGame.getTurn().name();
-		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
-		roomDao.updateRoom(roomName, board, turn, finishFlag);
+		roomDao.updateRoom(ChessGameDto.of(roomName, chessGame));
 		return chessGame;
 	}
 
@@ -86,11 +79,7 @@ public class ChessGameService {
 
 	public ChessGame restart(String roomName) throws SQLException {
 		ChessGame chessGame = ChessGame.start();
-
-		String board = BoardConverter.convertToString(chessGame.getBoard());
-		String turn = chessGame.getTurn().name();
-		String finishFlag = FinishFlag.of(chessGame.isEnd()).getSymbol();
-		roomDao.updateRoom(roomName, board, turn, finishFlag);
+		roomDao.updateRoom(ChessGameDto.of(roomName, chessGame));
 		return chessGame;
 	}
 }
