@@ -179,9 +179,6 @@
     {{#board}}
         document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
     {{/board}}
-    {{#if error-message}}
-        alert("{{error-message}}");
-    {{/if}}
     {{#if message}}
         alert("{{message}}");
     {{/if }}
@@ -192,6 +189,7 @@
         document.getElementById("{{winner.key}}-winner").innerText = '우승'
     {{/if}}
     document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
+
 
 </script>
 
