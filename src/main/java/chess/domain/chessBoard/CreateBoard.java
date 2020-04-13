@@ -4,28 +4,19 @@ import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.ChessPieceCache;
 import chess.domain.position.Position;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
 public class CreateBoard {
-    private static final String POSITION_COLUMN = "position";
-    private static final String CHESS_PIECE_COLUMN = "chessPiece";
 
-    public static Map<Position, ChessPiece> chessBoard(ResultSet whitePiece, ResultSet blackPiece) throws SQLException {
+    public static Map<Position, ChessPiece> chessBoard(Map<String, String> whitePiece, Map<String, String> blackPiece) {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
+        Map<String, String> chessBoardPieces = new HashMap<>();
+        chessBoardPieces.putAll(whitePiece);
+        chessBoardPieces.putAll(blackPiece);
 
-        while (whitePiece.next()) {
-            chessBoard.put(Position.of(whitePiece.getString(POSITION_COLUMN)),
-                    ChessPieceCache.getChessPiece(whitePiece.getString(CHESS_PIECE_COLUMN)
-                            , whitePiece.getString(POSITION_COLUMN)));
-        }
-        while (blackPiece.next()) {
-            chessBoard.put(Position.of(blackPiece.getString(POSITION_COLUMN)),
-                    ChessPieceCache.getChessPiece(blackPiece.getString(CHESS_PIECE_COLUMN)
-                            , blackPiece.getString(POSITION_COLUMN)));
-        }
+        chessBoardPieces.forEach((key, value) ->
+                chessBoard.put(Position.of(key), ChessPieceCache.getChessPiece(key, value)));
 
         return chessBoard;
     }

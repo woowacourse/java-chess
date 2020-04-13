@@ -1,30 +1,33 @@
 package chess.domain.initialChessBoard;
 
-public class InitialBlackChessBoardDTO implements InitialChessBoardDTO {
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
-    private String initialBlackBoard;
+public class InitialBlackChessBoardDTO {
 
-    public InitialBlackChessBoardDTO() {
-        this.initialBlackBoard = "('a7','p')," +
-                "('b7','p')," +
-                "('c7','p')," +
-                "('d7','p')," +
-                "('e7','p')," +
-                "('f7','p')," +
-                "('g7','p')," +
-                "('h7','p')," +
-                "('a8','r')," +
-                "('b8','n')," +
-                "('c8','b')," +
-                "('d8','q')," +
-                "('e8','k')," +
-                "('f8','b')," +
-                "('g8','n')," +
-                "('h8','r')";
+    private static Map<String, String> initialBlackBoard = new HashMap<>();
+
+    static {
+        initialBlackBoard.put("a7", "p");
+        initialBlackBoard.put("b7", "p");
+        initialBlackBoard.put("c7", "p");
+        initialBlackBoard.put("d7", "p");
+        initialBlackBoard.put("e7", "p");
+        initialBlackBoard.put("f7", "p");
+        initialBlackBoard.put("g7", "p");
+        initialBlackBoard.put("h7", "p");
+        initialBlackBoard.put("a8", "r");
+        initialBlackBoard.put("b8", "n");
+        initialBlackBoard.put("c8", "b");
+        initialBlackBoard.put("d8", "q");
+        initialBlackBoard.put("e8", "k");
+        initialBlackBoard.put("f8", "b");
+        initialBlackBoard.put("g8", "n");
+        initialBlackBoard.put("h8", "r");
     }
 
-    @Override
-    public String getInitialChessBoard() {
-        return this.initialBlackBoard;
+    public static Map<String, String> getInitialChessBoard() {
+        return Collections.unmodifiableMap(initialBlackBoard);
     }
 }

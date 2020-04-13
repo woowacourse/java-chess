@@ -1,13 +1,13 @@
 package chess.db.dao;
 
-import java.sql.ResultSet;
+import java.util.Map;
 
 public interface PieceDAO {
     void deleteTable();
 
-    void insertPiece(String piece);
+    void insertPiece(String position,String chessPiece);
 
-    ResultSet selectBoard();
+    Map<String,String> selectBoard();
 
     void updatePiece(String SourcePosition, String TargetPosition);
 

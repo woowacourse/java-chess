@@ -10,7 +10,6 @@ import chess.domain.chessBoard.CreateBoard;
 import chess.domain.chessPiece.ChessPiece;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.initialChessBoard.InitialBlackChessBoardDTO;
-import chess.domain.initialChessBoard.InitialChessBoardDTO;
 import chess.domain.initialChessBoard.InitialChessBoardStateDTO;
 import chess.domain.initialChessBoard.InitialWhiteChessBoardDTO;
 import chess.domain.position.Position;
@@ -42,35 +41,27 @@ public class ChessGameService {
         blackPieceDAO.deleteTable();
         chessBoardStateDAO.deleteChessBoardState();
 
-        InitialChessBoardDTO initialWhiteChessBoard = new InitialWhiteChessBoardDTO();
-        InitialChessBoardDTO initialBlackChessBoard = new InitialBlackChessBoardDTO();
-        InitialChessBoardStateDTO initialChessBoardStateDTO = new InitialChessBoardStateDTO();
-
-        chessBoardStateDAO.insertChessBoardState(initialChessBoardStateDTO.getChessBoardState());
-        whitePieceDAO.insertPiece(initialWhiteChessBoard.getInitialChessBoard());
-        blackPieceDAO.insertPiece(initialBlackChessBoard.getInitialChessBoard());
+        chessBoardStateDAO.insertChessBoardState(
+                InitialChessBoardStateDTO.getInitialTurn(), InitialChessBoardStateDTO.isCaughtKing());
+        InitialWhiteChessBoardDTO.getInitialChessBoard().forEach((key, value) -> whitePieceDAO.insertPiece(key, value));
+        InitialBlackChessBoardDTO.getInitialChessBoard().forEach((key, value) -> blackPieceDAO.insertPiece(key, value));
 
         return SUCCESS;
     }
 
     private ChessBoard createChessBoard() {
-        try (ResultSet whitePieceResultSet = whitePieceDAO.selectBoard();
-             ResultSet blackPieceResultSet = blackPieceDAO.selectBoard()) {
-            Map<Position, ChessPiece> chessBoard = CreateBoard.chessBoard(whitePieceResultSet, blackPieceResultSet);
+        Map<Position, ChessPiece> chessBoard =
+                CreateBoard.chessBoard(whitePieceDAO.selectBoard(), blackPieceDAO.selectBoard());
 
-            return new ChessBoard(chessBoard, chessBoardStateDAO.selectPlayerTurn());
-        } catch (SQLException e) {
-            throw new SQLExecuteException("ResultSet 에러!!!");
-        }
+        return new ChessBoard(chessBoard, chessBoardStateDAO.selectPlayerTurn());
     }
 
     public Map<String, Object> settingChessBoard() {
         Map<String, Object> model = new HashMap<>();
         List<ChessPieceDTO> chessPieceDTOArrayList = new ArrayList<>();
 
-        createChessBoard().getChessBoard().entrySet().forEach(
-                (entry -> chessPieceDTOArrayList.add(
-                        new ChessPieceDTO(entry.getKey().getPositionToString(), entry.getValue().getName()))
+        createChessBoard().getChessBoard().forEach(((key, value) -> chessPieceDTOArrayList.add(
+                new ChessPieceDTO(key.getPositionToString(), value.getName()))
                 )
         );
 

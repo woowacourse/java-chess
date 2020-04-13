@@ -22,11 +22,12 @@ public class ChessBoardStateDAO {
         }
     }
 
-    public void insertChessBoardState(String chessBoardState) {
+    public void insertChessBoardState(String playerTurn,boolean isCaughtKing) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(
-                     "INSERT INTO chessBoardState(turn,caughtKing) VALUES ?")) {
-            preparedStatement.setString(1,chessBoardState);
+                     "INSERT INTO chessBoardState(turn,caughtKing) VALUES (?,?)")) {
+            preparedStatement.setString(1,playerTurn);
+            preparedStatement.setBoolean(2,isCaughtKing);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
             throw new SQLExecuteException("initialPlayerTurn 오류: " + e.getMessage());

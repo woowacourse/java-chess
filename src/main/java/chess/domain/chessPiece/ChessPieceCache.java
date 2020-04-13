@@ -24,7 +24,7 @@ public class ChessPieceCache {
         chessPieceCache.put("K", () -> new King(PieceColor.WHITE));
     }
 
-    public static ChessPiece getChessPiece(String piece, String position) {
+    public static ChessPiece getChessPiece(String position,String piece) {
         Supplier<ChessPiece> chessPieceSupplier = chessPieceCache.get(piece);
         ChessPiece chessPiece = chessPieceSupplier.get();
 

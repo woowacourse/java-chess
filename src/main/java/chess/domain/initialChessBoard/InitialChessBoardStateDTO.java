@@ -1,13 +1,12 @@
 package chess.domain.initialChessBoard;
 
 public class InitialChessBoardStateDTO {
-    private String chessBoardState;
 
-    public InitialChessBoardStateDTO() {
-        this.chessBoardState = "('WHITE' , 0)";
+    public static String getInitialTurn() {
+        return "WHITE";
     }
 
-    public String getChessBoardState() {
-        return chessBoardState;
+    public static boolean isCaughtKing() {
+        return false;
     }
 }
