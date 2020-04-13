@@ -2,8 +2,6 @@ package chess.controller;
 
 import chess.controller.command.Command;
 import chess.controller.command.CommandReader;
-import chess.dao.DataSource;
-import chess.dao.JdbcPieceDao;
 import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.gamestate.GameState;
@@ -15,11 +13,11 @@ import java.sql.SQLException;
 import java.util.List;
 
 public class ChessGame {
-    private PieceDao pieceDao = new JdbcPieceDao(new DataSource());
-
+    private PieceDao pieceDao;
     private GameState gameState;
 
-    public ChessGame() {
+    public ChessGame(PieceDao pieceDao) {
+        this.pieceDao = pieceDao;
         this.gameState = new NothingHappened();
     }
 
@@ -29,12 +27,12 @@ public class ChessGame {
         Board board = gameState.getBoard();
 
         List<PieceDto> pieces = Assembler.convertMapToDTO(board.getPositionToPiece());
-        savePiecesInDB(pieces);
+        savePieces(pieces);
 
         return pieces;
     }
 
-    private void savePiecesInDB(List<PieceDto> pieces) {
+    private void savePieces(List<PieceDto> pieces) {
         try {
             for (PieceDto piece : pieces) {
                 pieceDao.updatePiece(piece);

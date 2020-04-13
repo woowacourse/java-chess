@@ -1,6 +1,9 @@
 package chess;
 
 import chess.controller.ChessGame;
+import chess.dao.DataSource;
+import chess.dao.JdbcPieceDao;
+import chess.dao.PieceDao;
 import chess.dto.PieceDto;
 import spark.ModelAndView;
 import spark.Route;
@@ -18,7 +21,8 @@ public class WebUIApplication {
     public static void main(String[] args) {
         staticFileLocation("/templates");
 
-        ChessGame chessGame = new ChessGame();
+        PieceDao pieceDao = new JdbcPieceDao(new DataSource());
+        ChessGame chessGame = new ChessGame(pieceDao);
 
         Route route = (req, res) -> {
             Map<String, Object> model = new LinkedHashMap<>();
