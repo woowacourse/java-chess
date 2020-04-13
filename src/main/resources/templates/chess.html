@@ -27,6 +27,9 @@
             <label>도착 좌표</label>
             <input type="text" name="target">
             <br/>
+            {{#room}}
+            <input type="text" name="room-name" value="{{.}}" hidden>
+            {{/room}}
             <input type="submit" value="이동">
         </form>
         <br/>
@@ -46,6 +49,9 @@
         {{/status}}
         <br/>
         <form method="post" action="/restart">
+            {{#room}}
+            <input type="text" name="room-name" value="{{.}}" hidden>
+            {{/room}}
             <input type="submit" value="재시작">
         </form>
         <form method="get" action="/">

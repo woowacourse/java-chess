@@ -40,8 +40,9 @@ public class WebController {
 		post("/create", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
-				ChessGame chessGame = chessGameService.create(req.queryParams("room-name"));
-				putGameInfoToModel(chessGame, model);
+				String roomName = req.queryParams("room-name");
+				ChessGame chessGame = chessGameService.create(roomName);
+				putGameInfoToModel(roomName, chessGame, model);
 			} catch (RuntimeException e) {
 				model.put("room", chessGameService.findAllRooms());
 				model.put("error", e.getMessage());
@@ -55,8 +56,9 @@ public class WebController {
 		post("/join", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
-				ChessGame chessGame = chessGameService.load(req.queryParams("room-name"));
-				putGameInfoToModel(chessGame, model);
+				String roomName = req.queryParams("room-name");
+				ChessGame chessGame = chessGameService.load(roomName);
+				putGameInfoToModel(roomName, chessGame, model);
 				return render(model, "chess.html");
 			} catch (RuntimeException e) {
 				model.put("room", chessGameService.findAllRooms());
@@ -70,13 +72,13 @@ public class WebController {
 		post("/chess", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
-				ChessGame chessGame = chessGameService.move(
-						req.queryParams("room-name"), req.queryParams("source"), req.queryParams("target"));
-				putGameInfoToModel(chessGame, model);
+				String roomName = req.queryParams("room-name");
+				ChessGame chessGame = chessGameService.move(roomName,
+						req.queryParams("source"), req.queryParams("target"));
+				putGameInfoToModel(roomName, chessGame, model);
 			} catch (RuntimeException e) {
 				model.put("error", e.getMessage());
 			}
-			transfer(chessGame, model);
 			return render(model, "chess.html");
 		});
 	}
@@ -84,14 +86,15 @@ public class WebController {
 	private void restartGame() {
 		post("/restart", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			ChessGame chessGame = chessGameService.restart(req.queryParams("room-name"));
-			return render(model, "index.html");
-			putGameInfoToModel(chessGame, model);
+			String roomName = req.queryParams("room-name");
+			ChessGame chessGame = chessGameService.restart(roomName);
+			putGameInfoToModel(roomName, chessGame, model);
 			return render(model, "chess.html");
 		});
 	}
 
-	private void putGameInfoToModel(ChessGame chessGame, Map<String, Object> model) {
+	private void putGameInfoToModel(String roomName, ChessGame chessGame, Map<String, Object> model) {
+		model.put("room", roomName);
 		model.put("board", ChessBoardDto.of(chessGame));
 		model.put("status", StatusDto.of(chessGame));
 	}
