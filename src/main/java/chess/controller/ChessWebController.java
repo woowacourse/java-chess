@@ -7,6 +7,7 @@ import chess.domain.player.Team;
 import chess.domain.position.Position;
 import chess.service.ChessService;
 import spark.ModelAndView;
+import spark.Request;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.LongConsumer;
 import java.util.stream.Collectors;
 
 import static spark.Spark.get;
@@ -38,37 +40,9 @@ public class ChessWebController {
             return render(model, "create.html");
         });
 
-        post("/restart", (req, res) -> {
-            String number = req.queryParams("id").trim();
-            Long id = Long.valueOf(number);
-            chessService.restart(id);
-            ResponseDto responseDto = chessService.getResponseDto(id);
-            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-            WebDto turnDto = getTurnDto(responseDto.getTurn());
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", boardDto);
-            model.put("score", scoreDto);
-            model.put("turn", turnDto);
-            model.put("id", id);
-            return render(model, "chessGame.html");
-        });
+        post("/restart", (req, res) -> fetchGame(req, chessService::restart));
 
-        post("/load", (req, res) -> {
-            String number = req.queryParams("id").trim();
-            Long id = Long.valueOf(number);
-            chessService.load(id);
-            ResponseDto responseDto = chessService.getResponseDto(id);
-            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-            WebDto turnDto = getTurnDto(responseDto.getTurn());
-            Map<String, Object> model = new HashMap<>();
-            model.put("board", boardDto);
-            model.put("score", scoreDto);
-            model.put("turn", turnDto);
-            model.put("id", id);
-            return render(model, "chessGame.html");
-        });
+        post("/load", (req, res) -> fetchGame(req, chessService::load));
 
         post("/move", (req, res) -> {
             String message = null;
@@ -81,17 +55,7 @@ public class ChessWebController {
             } catch (IllegalArgumentException | UnsupportedOperationException e) {
                 model.put("error-message", e.getMessage());
             }
-            ResponseDto responseDto = chessService.getResponseDto(id);
-            List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
-            List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
-            WebDto winnerDto = getTurnDto(responseDto.getWinner());
-            WebDto turnDto = getTurnDto(responseDto.getTurn());
-            model.put("board", boardDto);
-            model.put("score", scoreDto);
-            model.put("turn", turnDto);
-            model.put("message", responseDto.getMessage());
-            model.put("winner", winnerDto);
-            model.put("id", id);
+            putGameDto(id, model);
             return render(model, "chessGame.html");
         });
 
@@ -99,9 +63,7 @@ public class ChessWebController {
             String number = req.queryParams("id").trim();
             Long id = Long.valueOf(number);
             chessService.save(id);
-            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
-            Map<String, Object> model = new HashMap<>();
-            model.put("roomId", roomDto);
+            Map<String, Object> model = getIndexModel();
             return render(model, "index.html");
         });
 
@@ -109,9 +71,7 @@ public class ChessWebController {
             String number = req.queryParams("id").trim();
             Long id = Long.valueOf(number);
             chessService.remove(id);
-            List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
-            Map<String, Object> model = new HashMap<>();
-            model.put("roomId", roomDto);
+            Map<String, Object> model = getIndexModel();
             return render(model, "index.html");
         });
 
@@ -121,7 +81,33 @@ public class ChessWebController {
             List<Position> positions = chessService.getMovablePositions(id, position);
             return positions.stream().map(Position::getName).collect(Collectors.joining(","));
         });
+    }
 
+    private String fetchGame(Request req, LongConsumer function) {
+        String number = req.queryParams("id").trim();
+        Long id = Long.valueOf(number);
+        function.accept(id);
+        Map<String, Object> model = new HashMap<>();
+        putGameDto(id, model);
+        return render(model, "chessGame.html");
+    }
+
+    private void putGameDto(Long id, Map<String, Object> model) {
+        ResponseDto responseDto = chessService.getResponseDto(id);
+        List<WebDto> boardDto = getBoardDto(responseDto.getBoard());
+        List<WebDto> scoreDto = getScoreDto(responseDto.getScores());
+        WebDto turnDto = getTurnDto(responseDto.getTurn());
+        model.put("board", boardDto);
+        model.put("score", scoreDto);
+        model.put("turn", turnDto);
+        model.put("id", id);
+    }
+
+    private Map<String, Object> getIndexModel() {
+        Map<String, Object> model = new HashMap<>();
+        List<WebDto> roomDto = getRoomDto(chessService.getRoomId());
+        model.put("roomId", roomDto);
+        return model;
     }
 
     private List<WebDto> getRoomDto(List<Long> roomIds) {
