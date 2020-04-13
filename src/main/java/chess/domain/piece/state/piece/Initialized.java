@@ -117,7 +117,7 @@ public abstract class Initialized implements Piece {
                                   Team team,
                                   List<CanNotMoveStrategy> canNotMoveStrategies,
                                   Score score) {
-            this.name = name;
+            this.name = Team.convertName(name, team);
             this.position = position;
             this.team = team;
             this.canNotMoveStrategies = canNotMoveStrategies;
