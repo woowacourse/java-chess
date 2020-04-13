@@ -5,7 +5,6 @@ import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
 import chess.model.repository.template.ResultSetMapper;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,14 +19,14 @@ public class ChessResultDao {
         return INSTANCE;
     }
 
-    public void put(int gameId, TeamScore teamScore) throws SQLException {
+    public void put(int gameId, TeamScore teamScore) {
         if (select(gameId).isEmpty()) {
             insert(gameId, teamScore);
         }
         update(gameId, teamScore);
     }
 
-    public void update(int gameId, TeamScore teamScore) throws SQLException {
+    public void update(int gameId, TeamScore teamScore) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_RESULT_TB SET BLACK_SCORE = ?, WHITE_SCORE = ? WHERE GAME_ID = ?";
         PreparedStatementSetter pss = pstmt -> {
@@ -38,7 +37,7 @@ public class ChessResultDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void insert(int gameId, TeamScore teamScore) throws SQLException {
+    public void insert(int gameId, TeamScore teamScore) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_RESULT_TB(GAME_ID, BLACK_SCORE, WHITE_SCORE) VALUES (?, ?, ?)";
         PreparedStatementSetter pss = pstmt -> {
@@ -49,14 +48,14 @@ public class ChessResultDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void delete(int gameId) throws SQLException {
+    public void delete(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public Map<Color, Double> select(int gameId) throws SQLException {
+    public Map<Color, Double> select(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BLACK_SCORE, WHITE_SCORE FROM CHESS_RESULT_TB WHERE GAME_ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -69,6 +68,6 @@ public class ChessResultDao {
             selectTeamScore.put(Color.WHITE, rs.getDouble("WHITE_SCORE"));
             return selectTeamScore;
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 }

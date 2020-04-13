@@ -4,7 +4,6 @@ import chess.model.domain.piece.Color;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
 import chess.model.repository.template.ResultSetMapper;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -24,8 +23,7 @@ public class ChessGameDao {
         return INSTANCE;
     }
 
-    public int insert(int roomId, Color gameTurn, Map<Color, String> userNames)
-        throws SQLException {
+    public int insert(int roomId, Color gameTurn, Map<Color, String> userNames) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_GAME_TB(ROOM_ID, TURN_NM, BLACK_USER_NM, WHITE_USER_NM) VALUES (?, ?, ?, ?)";
         PreparedStatementSetter pss = pstmt -> {
@@ -37,14 +35,14 @@ public class ChessGameDao {
         return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
-    public void updateProceedN(int gameId) throws SQLException {
+    public void updateProceedN(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET PROCEEDING_YN = 'N' WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void updateTurn(int gameId, Color gameTurn) throws SQLException {
+    public void updateTurn(int gameId, Color gameTurn) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_GAME_TB SET TURN_NM = ? WHERE ID = ? AND PROCEEDING_YN = 'Y'";
         PreparedStatementSetter pss = pstmt -> {
@@ -54,7 +52,7 @@ public class ChessGameDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void delete(int gameId) throws SQLException {
+    public void delete(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_GAME_TB WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -62,7 +60,7 @@ public class ChessGameDao {
     }
 
     // TODO ROOMID와 연동 - 조인해서 가져오기
-    public Optional<Integer> getGameNumberLatest(int roomId) throws SQLException {
+    public Optional<Integer> getGameNumberLatest(int roomId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT ID FROM CHESS_GAME_TB WHERE ID LIKE ? ORDER BY ID DESC";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
@@ -72,10 +70,10 @@ public class ChessGameDao {
             }
             return Optional.of(rs.getInt("ID"));
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public Optional<Color> getGameTurn(int gameId) throws SQLException {
+    public Optional<Color> getGameTurn(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT TURN_NM FROM CHESS_GAME_TB WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -85,10 +83,10 @@ public class ChessGameDao {
             }
             return Optional.ofNullable(Color.of(rs.getString("TURN_NM")));
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public Map<Color, String> getUserNames(int gameId) throws SQLException {
+    public Map<Color, String> getUserNames(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BLACK_USER_NM, WHITE_USER_NM FROM CHESS_GAME_TB WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -101,10 +99,10 @@ public class ChessGameDao {
             userNames.put(Color.WHITE, rs.getString("WHITE_USER_NM"));
             return Collections.unmodifiableMap(userNames);
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public Optional<Boolean> isProceeding(int gameId) throws SQLException {
+    public Optional<Boolean> isProceeding(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT PROCEEDING_YN FROM CHESS_GAME_TB WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -114,10 +112,10 @@ public class ChessGameDao {
             }
             return Optional.of(rs.getString("PROCEEDING_YN").equalsIgnoreCase("Y"));
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public void updateProceedNByRoomId(int roomId) throws SQLException {
+    public void updateProceedNByRoomId(int roomId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("UPDATE CHESS_GAME_TB");
@@ -134,7 +132,7 @@ public class ChessGameDao {
         jdbcTemplate.executeUpdate(query.toString(), pss);
     }
 
-    public List<String> getUsers() throws SQLException {
+    public List<String> getUsers() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("SELECT DISTINCT(BLACK_USER_NM) AS NM ");
@@ -152,7 +150,7 @@ public class ChessGameDao {
             }
             return users;
         };
-        return jdbcTemplate.executeQuery(query.toString(), pstmt -> {
-        }, mapper);
+        return jdbcTemplate.executeQuery(query.toString(), mapper, pstmt -> {
+        });
     }
 }

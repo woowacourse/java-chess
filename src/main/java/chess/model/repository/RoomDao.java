@@ -3,7 +3,6 @@ package chess.model.repository;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
 import chess.model.repository.template.ResultSetMapper;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,7 +17,7 @@ public class RoomDao {
         return INSTANCE;
     }
 
-    public int insert(String roomName, String roomPW) throws SQLException {
+    public int insert(String roomName, String roomPW) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO ROOM_TB(NM, PW) VALUES (?, ?)";
         PreparedStatementSetter pss = pstmt -> {
@@ -28,7 +27,7 @@ public class RoomDao {
         return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
-    public void updateUsedN(int roomId) throws SQLException {
+    public void updateUsedN(int roomId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE ROOM_TB SET USED_YN = 'N' WHERE ID = ?";
         PreparedStatementSetter pss = pstmt -> {
@@ -38,7 +37,7 @@ public class RoomDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public Map<Integer, String> selectUsedOnly() throws SQLException {
+    public Map<Integer, String> selectUsedOnly() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT ID, NM FROM ROOM_TB WHERE USED_YN = 'Y'";
         ResultSetMapper<Map<Integer, String>> mapper = rs -> {
@@ -48,7 +47,7 @@ public class RoomDao {
             }
             return rooms;
         };
-        return jdbcTemplate.executeQuery(query, pstmt -> {
-        }, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pstmt -> {
+        });
     }
 }

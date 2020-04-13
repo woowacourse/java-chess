@@ -21,7 +21,6 @@ import chess.model.dto.SourceDto;
 import chess.model.repository.ChessBoardDao;
 import chess.model.repository.ChessGameDao;
 import chess.model.repository.ChessResultDao;
-import java.sql.SQLException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
@@ -40,7 +39,7 @@ public class ChessGameService {
         return INSTANCE;
     }
 
-    public int getIdBefore(int roomId, Map<Color, String> userNames) throws SQLException {
+    public int getIdBefore(int roomId, Map<Color, String> userNames) {
         Optional<Integer> gameNumberLatest = CHESS_GAME_DAO.getGameNumberLatest(roomId);
         if (gameNumberLatest.isPresent()) {
             return gameNumberLatest.get();
@@ -49,8 +48,7 @@ public class ChessGameService {
         return CHESS_GAME_DAO.getGameNumberLatest(roomId).orElseThrow(IllegalAccessError::new);
     }
 
-    public int createChessGame(int roomId, Map<Color, String> userNames)
-        throws SQLException {
+    public int createChessGame(int roomId, Map<Color, String> userNames) {
         CHESS_GAME_DAO.updateProceedNByRoomId(roomId);
         ChessGame chessGame = new ChessGame();
         int gameId = CHESS_GAME_DAO.insert(roomId, chessGame.getGameTurn(), userNames);
@@ -59,11 +57,11 @@ public class ChessGameService {
         return gameId;
     }
 
-    public ChessGameDto loadChessGame(int gameId) throws SQLException {
+    public ChessGameDto loadChessGame(int gameId) {
         return new ChessGameDto(getChessGame(gameId), CHESS_GAME_DAO.getUserNames(gameId));
     }
 
-    private ChessGame getChessGame(int gameId) throws SQLException {
+    private ChessGame getChessGame(int gameId) {
         BoardInitialization boardInitialByDB = new BoardInitialByDB(
             CHESS_BOARD_DAO.getBoard(gameId));
         Color gameTurn = CHESS_GAME_DAO.getGameTurn(gameId).orElseThrow(IllegalAccessError::new);
@@ -72,7 +70,7 @@ public class ChessGameService {
         return new ChessGame(boardInitialByDB, gameTurn, castlingElements, enPassant);
     }
 
-    public ChessGameDto move(MoveDto moveDTO) throws SQLException {
+    public ChessGameDto move(MoveDto moveDTO) {
         MoveSquare moveSquare = new MoveSquare(moveDTO.getSource(), moveDTO.getTarget());
         int gameId = moveDTO.getGameId();
         EnPassant enPassant = CHESS_BOARD_DAO.getEnpassantBoard(gameId);
@@ -113,7 +111,7 @@ public class ChessGameService {
         return chessGameDTO;
     }
 
-    public ChessGameDto promotion(PromotionTypeDto promotionTypeDTO) throws SQLException {
+    public ChessGameDto promotion(PromotionTypeDto promotionTypeDTO) {
         Type type = Type.of(promotionTypeDTO.getPromotionType());
         int gameId = promotionTypeDTO.getGameId();
         ChessGame chessGame = getChessGame(gameId);
@@ -129,12 +127,12 @@ public class ChessGameService {
             new TeamScore(CHESS_RESULT_DAO.select(gameId)), CHESS_GAME_DAO.getUserNames(gameId));
     }
 
-    public PathDto getPath(SourceDto sourceDto) throws SQLException {
+    public PathDto getPath(SourceDto sourceDto) {
         ChessGame chessGame = getChessGame(sourceDto.getGameId());
         return new PathDto(chessGame.getCheatSheet(BoardSquare.of(sourceDto.getSource())));
     }
 
-    public ChessGameDto endGame(MoveDto moveDto) throws SQLException {
+    public ChessGameDto endGame(MoveDto moveDto) {
         int gameId = moveDto.getGameId();
         CHESS_GAME_DAO.updateProceedN(gameId);
         ChessGameDto chessGameDto = new ChessGameDto(new TeamScore(CHESS_RESULT_DAO.select(gameId)),

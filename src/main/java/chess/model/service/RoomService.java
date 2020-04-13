@@ -5,7 +5,6 @@ import chess.model.dto.DeleteRoomDto;
 import chess.model.dto.RoomDto;
 import chess.model.repository.ChessGameDao;
 import chess.model.repository.RoomDao;
-import java.sql.SQLException;
 
 public class RoomService {
 
@@ -20,15 +19,15 @@ public class RoomService {
         return INSTANCE;
     }
 
-    public RoomDto getUsedRooms() throws SQLException {
+    public RoomDto getUsedRooms() {
         return new RoomDto(ROOM_DAO.selectUsedOnly());
     }
 
-    public void addRoom(CreateRoomDto createRoomDto) throws SQLException {
+    public void addRoom(CreateRoomDto createRoomDto) {
         ROOM_DAO.insert(createRoomDto.getRoomName(), createRoomDto.getRoomPassword());
     }
 
-    public void deleteRoom(DeleteRoomDto deleteRoomDto) throws SQLException {
+    public void deleteRoom(DeleteRoomDto deleteRoomDto) {
         ROOM_DAO.updateUsedN(deleteRoomDto.getRoomId());
         CHESS_GAME_DAO.updateProceedNByRoomId(deleteRoomDto.getRoomId());
     }

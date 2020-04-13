@@ -10,7 +10,6 @@ import chess.model.domain.state.MoveSquare;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
 import chess.model.repository.template.ResultSetMapper;
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,7 +27,7 @@ public class ChessBoardDao {
     }
 
     public void insert(int gameId, Map<BoardSquare, Piece> board,
-        Set<CastlingSetting> castlingElements) throws SQLException {
+        Set<CastlingSetting> castlingElements) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, ?)";
         PreparedStatementSetter pss = pstmt -> {
@@ -51,20 +50,14 @@ public class ChessBoardDao {
         return containCastling ? "Y" : "N";
     }
 
-    public void insertBoard(int gameId, BoardSquare boardSquare, Piece piece)
-        throws SQLException {
+    public void insertBoard(int gameId, BoardSquare boardSquare, Piece piece) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "INSERT INTO CHESS_BOARD_TB(GAME_ID, BOARDSQUARE_NM, PIECE_NM, CASTLING_ELEMENT_YN) VALUES (?, ?, ?, 'N')";
-        PreparedStatementSetter pss = pstmt -> {
-            pstmt.setInt(1, gameId);
-            pstmt.setString(2, boardSquare.getName());
-            pstmt.setString(3, PieceFactory.getName(piece));
-        };
-        jdbcTemplate.executeUpdate(query, pss);
+        jdbcTemplate
+            .executeUpdate(query, gameId, boardSquare.getName(), PieceFactory.getName(piece));
     }
 
-    public void deleteBoardSquare(int gameId, BoardSquare boardSquare)
-        throws SQLException {
+    public void deleteBoardSquare(int gameId, BoardSquare boardSquare) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
         PreparedStatementSetter pss = pstmt -> {
@@ -74,7 +67,7 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public Set<CastlingSetting> getCastlingElements(int gameId) throws SQLException {
+    public Set<CastlingSetting> getCastlingElements(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND CASTLING_ELEMENT_YN = 'Y'";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -87,10 +80,10 @@ public class ChessBoardDao {
             }
             return castlingElements;
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public EnPassant getEnpassantBoard(int gameId) throws SQLException {
+    public EnPassant getEnpassantBoard(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT EN_PASSANT_NM, BOARDSQUARE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM IS NOT NULL";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -102,10 +95,10 @@ public class ChessBoardDao {
             }
             return new EnPassant(board);
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public Map<BoardSquare, Piece> getBoard(int gameId) throws SQLException {
+    public Map<BoardSquare, Piece> getBoard(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "SELECT BOARDSQUARE_NM, PIECE_NM FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
@@ -117,17 +110,17 @@ public class ChessBoardDao {
             }
             return board;
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query, mapper, pss);
     }
 
-    public void delete(int gameId) throws SQLException {
+    public void delete(int gameId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ?";
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void copyBoardSquare(int gameId, MoveSquare moveSquare) throws SQLException {
+    public void copyBoardSquare(int gameId, MoveSquare moveSquare) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         StringBuilder query = new StringBuilder();
         query.append("INSERT ");
@@ -151,8 +144,7 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(query.toString(), pss);
     }
 
-    public void updatePromotion(int gameId, BoardSquare finishPawnBoard, Piece hopePiece)
-        throws SQLException {
+    public void updatePromotion(int gameId, BoardSquare finishPawnBoard, Piece hopePiece) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_BOARD_TB SET PIECE_NM = ? WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
         PreparedStatementSetter pss = pstmt -> {
@@ -163,7 +155,7 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void deleteEnpassant(int gameId, BoardSquare enpassantSquare) throws SQLException {
+    public void deleteEnpassant(int gameId, BoardSquare enpassantSquare) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "DELETE FROM CHESS_BOARD_TB WHERE GAME_ID = ? AND EN_PASSANT_NM = ?";
         PreparedStatementSetter pss = pstmt -> {
@@ -173,7 +165,7 @@ public class ChessBoardDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    public void updateEnPassant(int gameId, MoveSquare moveSquare) throws SQLException {
+    public void updateEnPassant(int gameId, MoveSquare moveSquare) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = "UPDATE CHESS_BOARD_TB SET EN_PASSANT_NM = ? WHERE GAME_ID = ? AND BOARDSQUARE_NM = ?";
         PreparedStatementSetter pss = pstmt -> {
