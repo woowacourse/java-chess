@@ -1,6 +1,9 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.*;
+import chess.domain.piece.InitializedPawn;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.MovedPawn;
 import chess.domain.piece.policy.move.*;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -13,11 +16,11 @@ import java.util.List;
 public enum PieceType {
     INITIALIZED_PAWN("p",
             initializedPawnCanNotMoveStrategies(),
-            new NullList(),
+            new ArrayList<>(),
             new Score(1)),
     MOVED_PAWN("p",
             movedPawnCanNotMoveStrategies(),
-            new NullList(),
+            new ArrayList<>(),
             new Score(1)),
     ROOK("r",
             rookCanNotMoveStrategies(),
@@ -142,12 +145,5 @@ public enum PieceType {
                 new IsHeadingStraightDirection(),
                 new IsAttackingSameTeam()
         );
-    }
-
-    private static class NullList extends ArrayList {
-        @Override
-        public boolean contains(Object o) {
-            return false;
-        }
     }
 }
