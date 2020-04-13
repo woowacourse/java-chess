@@ -1,85 +1,74 @@
-const white_bishop = img_create("../chess-img/bishop_white.png");
-const white_rook = img_create("../chess-img/rook_white.png");
-const white_knight = img_create("../chess-img/knight_white.png");
-const white_queen = img_create("../chess-img/queen_white.png");
-const white_king = img_create("../chess-img/king_white.png");
-const white_pawn = img_create("../chess-img/pawn_white.png");
-const black_bishop = img_create("../chess-img/bishop_black.png");
-const black_rook = img_create("../chess-img/rook_black.png");
-const black_knight = img_create("../chess-img/knight_black.png");
-const black_queen = img_create("../chess-img/queen_black.png");
-const black_king = img_create("../chess-img/king_black.png");
-const black_pawn = img_create("../chess-img/pawn_black.png");
-
-function img_create(src) {
+const createImage = function img_create(src) {
     const img = document.createElement('IMG');
     img.src = src;
     img.classList.add("piece");
     return img;
-}
+};
+const white_bishop = createImage("../chess-img/bishop_white.png");
+const white_rook = createImage("../chess-img/rook_white.png");
+const white_knight = createImage("../chess-img/knight_white.png");
+const white_queen = createImage("../chess-img/queen_white.png");
+const white_king = createImage("../chess-img/king_white.png");
+const white_pawn = createImage("../chess-img/pawn_white.png");
+const black_bishop = createImage("../chess-img/bishop_black.png");
+const black_rook = createImage("../chess-img/rook_black.png");
+const black_knight = createImage("../chess-img/knight_black.png");
+const black_queen = createImage("../chess-img/queen_black.png");
+const black_king = createImage("../chess-img/king_black.png");
+const black_pawn = createImage("../chess-img/pawn_black.png");
+
+const endGameButton = document.getElementById("end-game");
+const newGameButton = document.getElementById("new-game");
 
 const chessBoard = document.querySelector("#chess-board tbody");
 
-for (let i = 8; i > 0; i--) {
-    const tableRow = document.createElement("TR");
+const currentTurn = document.getElementById("current-turn");
+const currentState = document.getElementById("current-state");
 
-    for (let j = 1; j <= 8; j++) {
-        const tableColumn = document.createElement("TD");
-        tableColumn.setAttribute("id", String.fromCharCode(j + 'a'.charCodeAt(0) - 1) + i);
-        tableColumn.classList.add("cell-size", "cell", colorCell(i, j));
-        tableRow.appendChild(tableColumn);
-    }
-    chessBoard.appendChild(tableRow);
-}
-
-function colorCell(i, j) {
+const colorCell = function colorCell(i, j) {
     return (i + j) % 2 === 0 ? "white-cell" : "black-cell";
-}
+};
 
+(function() {
+    for (let i = 8; i > 0; i--) {
+        const tableRow = document.createElement("TR");
+        for (let j = 1; j <= 8; j++) {
+            const tableColumn = document.createElement("TD");
+            tableColumn.setAttribute("id", String.fromCharCode(j + 'a'.charCodeAt(0) - 1) + i);
+            tableColumn.classList.add("cell-size", "cell", colorCell(i, j));
+            tableRow.appendChild(tableColumn);
+        }
+        chessBoard.appendChild(tableRow);
+    }
+}());
 
 const cells = document.querySelectorAll("td.cell");
-cells.forEach(node => node.addEventListener('click', e => {
-    const clickedCell = e.currentTarget;
-    console.log(clickedCell);
-    toggleCell(clickedCell);
-    const count = findCountOfToggled(cells);
-    if (count === 0) {
-        localStorage.clear();
-    } else if (count === 1) {
-        localStorage.setItem('from', clickedCell.id);
-    } else if (count === 2) {
-        const obj = {'from': localStorage.getItem('from'), 'to': clickedCell.id}
-        localStorage.clear();
-        removeAllClickedToggle(cells);
-        requestMovePieces(JSON.stringify(obj));
-    }
-}));
 
-function toggleCell(node) {
+const toggleCell = function toggleCell(node) {
     if (node.classList.contains("clicked")) {
         node.classList.remove("clicked");
     } else {
         node.classList.add("clicked");
     }
-}
+};
 
-function findCountOfToggled(nodes) {
+const findCountOfToggled = function findCountOfToggled(nodes) {
     return Array.from(nodes).filter(node => node.classList.contains("clicked"))
         .length
-}
+};
 
-function removeAllClickedToggle(nodes) {
+const removeAllClickedToggle = function removeAllClickedToggle(nodes) {
     nodes.forEach(node => node.classList.remove("clicked"));
-}
+};
 
-function renderCurrentGameState(currentState) {
-    const turn = currentState["turn"];
-    const state = currentState["gameState"];
-    document.getElementById("current-turn").innerText = turn;
-    document.getElementById("exception-message").innerText = state;
-}
+const renderCurrentGameState = function renderCurrentGameState(currentTurnAndState) {
+    const turn = currentTurnAndState["turn"];
+    const state = currentTurnAndState["gameState"];
+    currentTurn.innerText = turn;
+    currentState.innerText = state;
+};
 
-function updateGameState() {
+const updateGameState = function updateGameState() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -93,9 +82,9 @@ function updateGameState() {
     };
     xhttp.open("GET", "/chess/state", true);
     xhttp.send();
-}
+};
 
-function requestMovePieces(data) {
+const requestMovePieces = function requestMovePieces(data) {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -114,9 +103,9 @@ function requestMovePieces(data) {
     };
     xhttp.open("POST", "/chess/move", true);
     xhttp.send(data);
-}
+};
 
-function checkWhetherGameIsFinished() {
+const checkWhetherGameIsFinished = function checkWhetherGameIsFinished() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -132,12 +121,9 @@ function checkWhetherGameIsFinished() {
     };
     xhttp.open("GET", "/chess/isnotfinish", true);
     xhttp.send();
-}
+};
 
-document.getElementById("end-game").addEventListener('click', requestEndGame);
-document.getElementById("new-game").addEventListener('click', requestNewGame);
-
-function requestEndGame() {
+const requestEndGame = function requestEndGame() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -152,9 +138,9 @@ function requestEndGame() {
     };
     xhttp.open("POST", "/chess/state", true);
     xhttp.send("end");
-}
+};
 
-function requestWinner() {
+const requestWinner = function requestWinner() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -168,9 +154,9 @@ function requestWinner() {
     };
     xhttp.open("GET", "/chess/result", true);
     xhttp.send();
-}
+};
 
-function requestNewGame() {
+const requestNewGame = function requestNewGame() {
     cleanBoard();
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
@@ -186,31 +172,52 @@ function requestNewGame() {
     };
     xhttp.open("POST", "/chess/state", true);
     xhttp.send("start");
-}
+};
 
-function cleanBoard() {
+const cellClickListener = function cellClickListener() {
+    return e => {
+        const clickedCell = e.currentTarget;
+        console.log(clickedCell);
+        toggleCell(clickedCell);
+        const count = findCountOfToggled(cells);
+        if (count === 0) {
+            localStorage.clear();
+        } else if (count === 1) {
+            localStorage.setItem('from', clickedCell.id);
+        } else if (count === 2) {
+            const obj = {'from': localStorage.getItem('from'), 'to': clickedCell.id};
+            localStorage.clear();
+            removeAllClickedToggle(cells);
+            requestMovePieces(JSON.stringify(obj));
+        }
+    };
+};
+
+cells.forEach(node => node.addEventListener('click', cellClickListener()));
+
+const cleanBoard = function cleanBoard() {
     cells.forEach(cell => cell.innerHTML = '');
-}
+};
 
-function updatePieceOnBoard(datas) {
+const updatePieceOnBoard = function updatePieceOnBoard(datas) {
     console.log(datas);
     moveAllPieces(datas);
-}
+};
 
-function moveAllPieces(piecesToUpdate) {
+const moveAllPieces = function moveAllPieces(piecesToUpdate) {
     for (let i = 0; i < piecesToUpdate.length; i++) {
         movePiece(piecesToUpdate[i]);
     }
-}
+};
 
-function movePiece(piecesToUpdate) {
+const movePiece = function movePiece(piecesToUpdate) {
     const position = piecesToUpdate["position"];
     const symbol = piecesToUpdate["symbol"];
     const element = document.querySelector("#" + position);
     renderPiece(element, symbol);
-}
+};
 
-function renderPiece(element, symbol) {
+const renderPiece = function renderPiece(element, symbol) {
     let img;
     element.innerHTML = '';
     if (symbol === '.') {
@@ -255,9 +262,9 @@ function renderPiece(element, symbol) {
             img = white_king.cloneNode(true);
     }
     element.appendChild(img);
-}
+};
 
-function requestRecord() {
+const requestRecord = function requestRecord() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -271,9 +278,9 @@ function requestRecord() {
     };
     xhttp.open("GET", "/chess/record", true);
     xhttp.send();
-}
+};
 
-function updateRecord(datas) {
+const updateRecord = function updateRecord(datas) {
     for (let i = 0; i < datas.length; i++) {
         let select = "";
         if (datas[i]["team"] === "black") {
@@ -283,9 +290,9 @@ function updateRecord(datas) {
         }
         select.innerHTML = datas[i]["score"];
     }
-}
+};
 
-function requestAllPieces() {
+const requestAllPieces = function requestAllPieces() {
     let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState === 4 && this.status === 200) {
@@ -300,11 +307,13 @@ function requestAllPieces() {
     };
     xhttp.open("GET", "/chess/pieces", true);
     xhttp.send();
-}
+};
 
-window.addEventListener('load', initialLoad);
-
-function initialLoad() {
+const initialLoad = function initialLoad() {
     updateGameState();
     requestAllPieces();
-}
+};
+
+endGameButton.onclick = requestEndGame;
+newGameButton.onclick = requestNewGame;
+window.onload = initialLoad;
