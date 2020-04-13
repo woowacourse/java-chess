@@ -103,9 +103,11 @@ public class RunningBoard implements Board {
 
     private Board movePiece(MovingFlow movingFlow, Board board) {
         Map<Position, Piece> pieces = clonePieces(this.pieces);
-        Piece piece = board.getPiece(movingFlow.getFrom());
-        piece = piece.move(movingFlow.getTo(), board);
-        updatePieces(pieces, movingFlow.getFrom(), movingFlow.getTo(), piece);
+        Position from = movingFlow.getFrom();
+        Piece piece = board.getPiece(from);
+        Position to = movingFlow.getTo();
+        piece = piece.move(to, board);
+        updatePieces(pieces, from, to, piece);
         return updateBoard(pieces, piece);
     }
 
