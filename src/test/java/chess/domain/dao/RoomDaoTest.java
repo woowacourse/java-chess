@@ -8,17 +8,20 @@ import java.util.NoSuchElementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.BoardConverter;
+import chess.domain.ChessGame;
+import chess.domain.Side;
+import chess.domain.dto.ChessGameDto;
+
 public class RoomDaoTest {
 	private RoomDao roomDao;
 
 	@BeforeEach
 	void setUp() throws SQLException {
 		roomDao = new RoomDao();
-		String board = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
-		String turn = "WHITE";
-		String finishFlag = "N";
-		roomDao.addRoom("A", board, turn, finishFlag);
-		roomDao.addRoom("B", board, turn, finishFlag);
+		ChessGameDto.of("A", ChessGame.start());
+		roomDao.addRoom(ChessGameDto.of("A", ChessGame.start()));
+		roomDao.addRoom(ChessGameDto.of("B", ChessGame.start()));
 	}
 
 	@Test
@@ -33,11 +36,11 @@ public class RoomDaoTest {
 	@Test
 	void addRoom() throws SQLException {
 		String roomName = "C";
-		String actualBoard = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
+		String board = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
 		String turn = "BLACK";
-		String finishFlag = "N";
+		ChessGame chessGame = new ChessGame(BoardConverter.convertToBoard(board), Side.valueOf(turn));
 
-		int newRoomId = roomDao.addRoom(roomName, actualBoard, turn, finishFlag);
+		roomDao.addRoom(ChessGameDto.of(roomName, chessGame));
 	}
 
 	@Test
@@ -50,10 +53,10 @@ public class RoomDaoTest {
 	@Test
 	void updateRoom() throws SQLException {
 		String roomName = "B";
-		String board = "RNBQKBNR................................................rnbqkbnr";
+		String board = "RNBQKBNRPPPPPPPP................................pppppppprnbqkbnr";
 		String turn = "BLACK";
-		String finishFlag = "Y";
+		ChessGame chessGame = new ChessGame(BoardConverter.convertToBoard(board), Side.valueOf(turn));
 
-		roomDao.updateRoom(roomName, board, turn, finishFlag);
+		roomDao.updateRoom(ChessGameDto.of(roomName, chessGame));
 	}
 }

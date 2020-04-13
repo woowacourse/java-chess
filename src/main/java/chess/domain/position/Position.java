@@ -58,7 +58,7 @@ public class Position {
 	}
 
 	public boolean isNegativeDiagonal(Position position) {
-		return this.row.calculateDifference(position.row) == this.col.calculateDifference(position.col) * -1;
+		return this.row.calculateDifference(position.row) == (this.col.calculateDifference(position.col) * -1);
 	}
 
 	public boolean isLinear(Position position) {
@@ -103,6 +103,14 @@ public class Position {
 	@Override
 	public int hashCode() {
 		return Objects.hash(col, row);
+	}
+
+	@Override
+	public String toString() {
+		return "Position{" +
+				"col=" + col +
+				", row=" + row +
+				'}';
 	}
 }
 
