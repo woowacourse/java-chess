@@ -10,7 +10,7 @@ public class ChessMySqlConnector {
         Connection con = null;
         String server = "localhost:13306"; // MySQL 서버 주소
         String database = "Chess"; // MySQL DATABASE 이름
-        String option = "?useSSL=false&serverTimezone=UTC";
+        String option = "?useSSL=false&serverTimezone=UTC&useUnicode=true&characterEncoding=utf8";
         String userName = "root"; //  MySQL 서버 아이디
         String password = "root"; // MySQL 서버 비밀번호
 
