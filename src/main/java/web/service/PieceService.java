@@ -5,7 +5,9 @@ import static domain.board.Board.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import domain.Score;
 import domain.board.BoardGame;
 import domain.board.Rank;
 import domain.command.MoveCommand;
@@ -13,12 +15,14 @@ import domain.piece.Piece;
 import domain.piece.team.Team;
 import web.dao.PieceDao;
 import web.dao.TurnDao;
-import web.dto.PieceDto;
 import web.dto.BoardDto;
+import web.dto.PieceDto;
 import web.dto.TurnDto;
+import web.util.ScoreConverter;
 import web.util.UnicodeConverter;
 
 public class PieceService {
+	private static final String BLANK = "";
 	private PieceDao pieceDao = PieceDao.getInstance();
 	private TurnDao turnDao = TurnDao.getInstance();
 
@@ -48,7 +52,8 @@ public class PieceService {
 		BoardGame boardGame = new BoardGame(pieces, turnDto.getTurn());
 
 		List<String> symbols = convert(boardGame.getReverse());
-		return new BoardDto(symbols);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
 	private void addTurn(BoardGame boardGame) throws SQLException {
@@ -69,7 +74,8 @@ public class PieceService {
 			addPieces(piece);
 		}
 		List<String> symbols = convert(boardGame.getReverse());
-		return new BoardDto(symbols);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
 	private void addPieces(Piece piece) throws SQLException {
@@ -83,7 +89,8 @@ public class PieceService {
 		SQLException {
 		pieceDao.update(originalPosition, newPosition);
 		List<String> symbols = convert(boardGame.getReverse());
-		return new BoardDto(symbols);
+		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
 	private List<String> convert(List<Rank> board) {
@@ -95,7 +102,7 @@ public class PieceService {
 					.filter(p -> p.equalsColumn(columnNumber))
 					.map(Piece::showSymbol)
 					.findFirst()
-					.orElse("");
+					.orElse(BLANK);
 				pieces.add(UnicodeConverter.toUnicodeFrom(pieceSymbol));
 			}
 		}

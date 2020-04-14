@@ -28,8 +28,13 @@
 <form action="/loading" method="get">
     <button>불러오기</button>
 </form>
-
-{{error}}
+<div>
+    {{#each response.score}}
+    {{@key}} : {{this}}
+    <br>
+    {{/each}}
+</div>
+<h2>{{error}}</h2>
 <div class="chessboard">
     <!-- 1st -->
     <div class="white">{{response.piece.0}}</div>
