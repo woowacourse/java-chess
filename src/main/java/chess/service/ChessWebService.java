@@ -9,6 +9,7 @@ import chess.domains.piece.Piece;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,14 +28,14 @@ public class ChessWebService {
         this.moveHistoryDao = moveHistoryDao;
     }
 
-    public boolean canResume(Map<String, Object> model, String gameId) {
+    public boolean canResume(Map<String, Object> model, String gameId) throws SQLException {
         int savedPiecesNumber = pieceDao.countSavedPieces(gameId);
         boolean canResume = savedPiecesNumber == BOARD_CELLS_NUMBER;
         model.put("canResume", canResume);
         return canResume;
     }
 
-    public void startNewGame(Board board, String gameId) {
+    public void startNewGame(Board board, String gameId) throws SQLException {
         deleteSavedBoardStatus(gameId);
         board.initialize();
 
@@ -48,10 +49,15 @@ public class ChessWebService {
         pieceDao.addInitialPieces(chessPieces);
     }
 
-    public void resumeGame(Board board, String gameId) {
+    public void resumeGame(Board board, String gameId) throws SQLException {
         Map<Position, Piece> savedBoardStatus = Position.stream()
                 .collect(Collectors.toMap(Function.identity(), position -> {
-                    String pieceName = pieceDao.findPieceNameByPosition(gameId, position);
+                    String pieceName = null;
+                    try {
+                        pieceName = pieceDao.findPieceNameByPosition(gameId, position);
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
                     return BoardFactory.findPieceByPieceName(pieceName);
                 }));
 
@@ -60,7 +66,7 @@ public class ChessWebService {
         board.resume(savedBoardStatus, lastTurn);
     }
 
-    public void move(Board board, String gameId, String sourceName, String targetName) {
+    public void move(Board board, String gameId, String sourceName, String targetName) throws SQLException {
         Position source = Position.ofPositionName(sourceName);
         Position target = Position.ofPositionName(targetName);
         PieceColor currentTeam = board.getTeamColor();
@@ -72,7 +78,7 @@ public class ChessWebService {
         moveHistoryDao.addMoveHistory(gameId, currentTeam, source, target);
     }
 
-    public void checkGameOver(Map<String, Object> model, Board board, String gameId) {
+    public void checkGameOver(Map<String, Object> model, Board board, String gameId) throws SQLException {
         if (board.isGameOver()) {
             deleteSavedBoardStatus(gameId);
             model.put("end", winningMsg(board));
@@ -86,7 +92,7 @@ public class ChessWebService {
         model.put("black_score", calculateScore(board, PieceColor.BLACK));
     }
 
-    private void deleteSavedBoardStatus(String gameId) {
+    private void deleteSavedBoardStatus(String gameId) throws SQLException {
         pieceDao.deleteBoardStatus(gameId);
         moveHistoryDao.deleteMoveHistory(gameId);
     }

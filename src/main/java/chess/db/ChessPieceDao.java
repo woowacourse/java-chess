@@ -3,7 +3,8 @@ package chess.db;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 import chess.util.JdbcTemplate;
-import chess.util.SelectJdbcTemplate;
+import chess.util.ParameterSetter;
+import chess.util.RowMapper;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,12 +17,16 @@ public class ChessPieceDao implements PieceDao {
     public int countSavedPieces(String gameId) throws SQLException {
         String query = "SELECT COUNT(*) FROM board_status WHERE game_id = ?";
 
-        SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        ParameterSetter parameterSetter = new ParameterSetter() {
             @Override
             public void setParameters(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, gameId);
             }
+        };
 
+        RowMapper rowMapper = new RowMapper() {
             @Override
             public Object mapRow(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -31,7 +36,7 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        return (Integer) selectJdbcTemplate.executeQuery(query);
+        return (Integer) jdbcTemplate.executeQuery(query, parameterSetter, rowMapper);
     }
 
     @Override
@@ -45,7 +50,9 @@ public class ChessPieceDao implements PieceDao {
     public void addPiece(ChessPiece piece) throws SQLException {
         String query = "INSERT INTO board_status (game_id, position, piece) VALUES (?, ?, ?)";
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        ParameterSetter parameterSetter = new ParameterSetter() {
             @Override
             public void setParameters(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, piece.getGameId());
@@ -54,20 +61,24 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        jdbcTemplate.executeUpdate(query);
+        jdbcTemplate.executeUpdate(query, parameterSetter);
     }
 
     @Override
     public String findPieceNameByPosition(String gameId, Position position) throws SQLException {
         String query = "SELECT piece FROM board_status WHERE game_id = ? AND position = ?";
 
-        SelectJdbcTemplate selectJdbcTemplate = new SelectJdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        ParameterSetter parameterSetter = new ParameterSetter() {
             @Override
             public void setParameters(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, gameId);
                 pstmt.setString(2, position.name());
             }
+        };
 
+        RowMapper rowMapper = new RowMapper() {
             @Override
             public Object mapRow(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
@@ -77,14 +88,16 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        return (String) selectJdbcTemplate.executeQuery(query);
+        return (String) jdbcTemplate.executeQuery(query, parameterSetter, rowMapper);
     }
 
     @Override
     public void updatePiece(String gameId, Position position, Piece piece) throws SQLException {
         String query = "UPDATE board_status SET piece = ? WHERE game_id = ? AND position = ?";
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        ParameterSetter parameterSetter = new ParameterSetter() {
             @Override
             public void setParameters(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, piece.name());
@@ -93,20 +106,22 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        jdbcTemplate.executeUpdate(query);
+        jdbcTemplate.executeUpdate(query, parameterSetter);
     }
 
     @Override
     public void deleteBoardStatus(String gameId) throws SQLException {
         String query = "DELETE FROM board_status WHERE game_id = ?";
 
-        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+
+        ParameterSetter parameterSetter = new ParameterSetter() {
             @Override
             public void setParameters(PreparedStatement pstmt) throws SQLException {
                 pstmt.setString(1, gameId);
             }
         };
 
-        jdbcTemplate.executeUpdate(query);
+        jdbcTemplate.executeUpdate(query, parameterSetter);
     }
 }

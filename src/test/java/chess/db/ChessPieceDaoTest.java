@@ -10,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.sql.SQLException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +27,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에서 id에 해당하는 게임 히스토리 읽어오기 테스트")
     @Test
-    void test() {
+    void test() throws SQLException {
         Board board = new Board();      // 초기화된 board 생성
         List<ChessPiece> chessPieces = Position.stream()
                 .map(position -> {
@@ -46,7 +47,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에서 id에 해당하는 게임 히스토리 읽어오기 테스트")
     @Test
-    void test2() {
+    void test2() throws SQLException {
         int savedPiecesNumber = pieceDao.countSavedPieces("test");
 
         assertThat(savedPiecesNumber).isEqualTo(0);
@@ -54,7 +55,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에 한 row 추가 테스트")
     @Test
-    void name() {
+    void name() throws SQLException {
         int rowCountBeforeInsert = pieceDao.countSavedPieces("test");
         assertThat(rowCountBeforeInsert).isEqualTo(0);
 
@@ -69,7 +70,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에서 원하는 위치의 piece 값 읽기 테스트")
     @Test
-    void name2() {
+    void name2() throws SQLException {
         ChessPiece aPiece = new ChessPiece("test", "c2", new Pawn(PieceColor.WHITE).name());
         pieceDao.addPiece(aPiece);
 
@@ -81,7 +82,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에서 원하는 위치의 piece 정보 업데이트 테스트")
     @Test
-    void name3() {
+    void name3() throws SQLException {
         Pawn pawn = new Pawn(PieceColor.WHITE);
         Rook rook = new Rook(PieceColor.WHITE);
         ChessPiece aPiece = new ChessPiece("test", "c2", new Pawn(PieceColor.WHITE).name());
@@ -101,7 +102,7 @@ class ChessPieceDaoTest {
 
     @DisplayName("board_status 테이블에서 board_status 기록 전체 삭제")
     @Test
-    void name5() {
+    void name5() throws SQLException {
         ChessPiece aPiece = new ChessPiece("test", "c2", new Pawn(PieceColor.WHITE).name());
         ChessPiece aPiece2 = new ChessPiece("test", "d2", new Pawn(PieceColor.WHITE).name());
         pieceDao.addPiece(aPiece);

@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domains.board.Board;
 import chess.service.ChessWebService;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,7 +14,7 @@ public class ChessWebController {
         this.service = service;
     }
 
-    public Map<String, Object> canResume(String gameId) {
+    public Map<String, Object> canResume(String gameId) throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
         service.canResume(model, gameId);
@@ -22,7 +23,7 @@ public class ChessWebController {
         return model;
     }
 
-    public Map<String, Object> startNewGame(Board board, String gameId) {
+    public Map<String, Object> startNewGame(Board board, String gameId) throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
         service.startNewGame(board, gameId);
@@ -32,7 +33,7 @@ public class ChessWebController {
         return model;
     }
 
-    public Map<String, Object> resumeGame(Board board, String gameId) {
+    public Map<String, Object> resumeGame(Board board, String gameId) throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
         service.resumeGame(board, gameId);
@@ -42,7 +43,7 @@ public class ChessWebController {
         return model;
     }
 
-    public Map<String, Object> move(Board board, String gameId, String source, String target) {
+    public Map<String, Object> move(Board board, String gameId, String source, String target) throws SQLException {
         Map<String, Object> model = new HashMap<>();
 
         service.move(board, gameId, source, target);
