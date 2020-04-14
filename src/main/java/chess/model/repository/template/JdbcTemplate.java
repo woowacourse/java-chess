@@ -67,4 +67,13 @@ public class JdbcTemplate {
             throw new DataAccessException(e.getMessage());
         }
     }
+
+    public static String makeQuery(String... params) {
+        StringBuilder query = new StringBuilder();
+        for (String param : params) {
+            query.append(param);
+            query.append(" ");
+        }
+        return query.toString();
+    }
 }
