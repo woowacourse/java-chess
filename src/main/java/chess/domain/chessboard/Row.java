@@ -55,6 +55,10 @@ public class Row {
 		return chessPiece.isMatchTeam(team) && chessPiece.getClass() == Pawn.class;
 	}
 
+	public List<ChessPiece> getChessPieces() {
+		return Collections.unmodifiableList(chessPieces);
+	}
+
 	public ChessPiece get(int x) {
 		return chessPieces.get(x);
 	}

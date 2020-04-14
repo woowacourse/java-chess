@@ -36,7 +36,10 @@ public class BoardFactory {
 	private static final int BISHOP_SECOND_INDEX = 6;
 	private static final int KNIGHT_SECOND_INDEX = 7;
 	private static final int ROOK_SECOND_INDEX = 8;
-	private static final int DEFAULT_INDEX = 0;
+	private static final int ROW_SIZE = 8;
+	private static final int ALL_PIECE_NUMBER = 64;
+	private static final String NOT_MATCH_ALL_PIECE_NUMBER_MESSAGE = "64개의 ChessDTO가 아닙니다.";
+	private static final String  NOT_MATCH_POSITION_MESSAGE = "찾을 수 없는 포지션입니다.";
 	private static final String POSITION_FORMAT = "%c%d";
 
 	public static ChessBoard createBoard() {
@@ -44,7 +47,7 @@ public class BoardFactory {
 		board.addAll(createBlackTeam());
 		board.addAll(createBlankTeam());
 		board.addAll(createWhiteTeam());
-		return new ChessBoard(1, board, new Turn(true));
+		return new ChessBoard(board, new Turn(true));
 	}
 
 	private static List<Row> createBlackTeam() {
@@ -96,26 +99,32 @@ public class BoardFactory {
 		return new Row(chessPieces);
 	}
 
-	public static ChessBoard createBoard(ChessDTO chessDTO) {
-		List<Row> rows = new ArrayList<>();
-		int column = BOARD_TO_INDEX;
-		for (String row : chessDTO.getSplitRows()) {
-			rows.add(createRow(row, column--));
+	public static ChessBoard createBoard(List<ChessDTO> chessDTOS, Turn turn) {
+		if (chessDTOS.size() != ALL_PIECE_NUMBER) {
+			throw new IllegalArgumentException(NOT_MATCH_ALL_PIECE_NUMBER_MESSAGE);
 		}
-		ChessBoard chessBoard = new ChessBoard(chessDTO.getId(), rows, new Turn(chessDTO.isWhiteTurn()));
-		return chessBoard;
+		List<Row> rows = new ArrayList<>();
+		for (int x = 1; x <= 8; x++) {
+			rows.add(createRow(chessDTOS, x));
+		}
+		return new ChessBoard(rows, turn);
 	}
 
-	private static Row createRow(String row, int column) {
+	private static Row createRow(List<ChessDTO> chessDTOS, int x) {
 		List<ChessPiece> chessPieces = new ArrayList<>();
-		int index = DEFAULT_INDEX;
 		for (int y = 'a'; y <= 'h'; y++) {
-			char name = row.charAt(index++);
-			String position = String.format(POSITION_FORMAT, (char)y, column);
-			ChessPiece chessPiece = PieceConverter.convert(name, position);
-			chessPieces.add(chessPiece);
+			ChessDTO chessDTO = findByPosition(chessDTOS, String.format(POSITION_FORMAT, y, x));
+			String name = chessDTO.getName();
+			String position = chessDTO.getPosition();
+			chessPieces.add(PieceConverter.convert(name, position));
 		}
 		return new Row(chessPieces);
 	}
 
+	private static ChessDTO findByPosition(List<ChessDTO> chessDTOS, String position) {
+		return chessDTOS.stream()
+			.filter(chessDTO -> chessDTO.getPosition().equals(position))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException(NOT_MATCH_POSITION_MESSAGE));
+	}
 }

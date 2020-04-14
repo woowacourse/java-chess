@@ -57,8 +57,8 @@ public abstract class ChessPiece {
 		positions.validateCanMovePath(findByPosition);
 	}
 
-	public Position getPosition() {
-		return position;
+	public String getPositionName() {
+		return position.toString();
 	}
 
 	public abstract boolean isNotNeedCheckPath();

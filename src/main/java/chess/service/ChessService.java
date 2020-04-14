@@ -1,80 +1,82 @@
 package chess.service;
 
-import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import chess.dao.ChessDAO;
+import chess.dao.TurnDAO;
 import chess.domain.Result;
 import chess.domain.Status;
 import chess.domain.Team;
+import chess.domain.Turn;
 import chess.domain.chessboard.ChessBoard;
 import chess.domain.chesspiece.ChessPiece;
+import chess.domain.factory.BoardFactory;
 import chess.domain.position.Position;
 import chess.dto.ChessDTO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import spark.Request;
+import chess.view.OutputView;
 
 public class ChessService {
-	private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
-
 	private final ChessDAO chessDAO;
-	private ChessBoard chessBoard;
+	private final TurnDAO turnDAO;
 
-	public ChessService() throws SQLException {
-		this.chessDAO = new ChessDAO();
-		chessBoard = chessDAO.find();
+	public ChessService() {
+		chessDAO = new ChessDAO();
+		turnDAO = new TurnDAO();
 	}
 
-	public String move(Request req) throws SQLException {
-		try {
-			Position startPosition = Position.of(req.queryParams("startPosition"));
-			Position targetPosition = Position.of(req.queryParams("targetPosition"));
-			chessBoard.move(startPosition, targetPosition);
-			chessDAO.update(new ChessDTO(chessBoard));
-			return getBoardJson();
-		} catch (RuntimeException e) {
-			return e.getMessage();
+	public ChessBoard move(Position startPosition, Position targetPosition) {
+		ChessBoard chessBoard = find();
+		ChessPiece startPiece = chessBoard.findByPosition(startPosition);
+		chessBoard.move(startPosition, targetPosition);
+		chessDAO.update(targetPosition, startPiece.getName());
+		chessDAO.update(startPosition, ".");
+		turnDAO.changeTurn(chessBoard.isWhiteTurn());
+		return chessBoard;
+	}
+
+	public ChessBoard find() {
+		List<ChessDTO> chessDTOS = chessDAO.findAll();
+		Turn turn = turnDAO.find();
+		if (chessDTOS.isEmpty()) {
+			return createBoard(BoardFactory.createBoard());
 		}
+		ChessBoard chessBoard = BoardFactory.createBoard(chessDTOS, turn);
+		return chessBoard;
 	}
 
-	public String getBoardJson() {
-		Map<String, Object> model = new HashMap<>();
-		for (ChessPiece chessPiece : chessBoard.findAll()) {
-			Position position = chessPiece.getPosition();
-			model.put(position.toString(), chessPiece.getName());
+	private ChessBoard createBoard(ChessBoard chessBoard) {
+		List<ChessPiece> chessPieces = chessBoard.findAll();
+		for (ChessPiece chessPiece : chessPieces) {
+			String position = chessPiece.getPositionName();
+			String name = chessPiece.getName();
+			chessDAO.addPiece(new ChessDTO(position, name));
 		}
-		return GSON.toJson(model);
+		return chessBoard;
 	}
 
-	public String isEnd() {
-		Map<String, Object> model = new HashMap<>();
-		if (chessBoard.isLiveBothKing()) {
-			model.put("isEnd", false);
-			return GSON.toJson(model);
-		}
-		model.put("isEnd", true);
-		if (chessBoard.isLiveKing(Team.BLACK)) {
-			model.put("message", "BLACK팀 승리!");
-			return GSON.toJson(model);
-		}
-		model.put("message", "WHITE팀 승리!");
-		return GSON.toJson(model);
+	public boolean restart() {
+		chessDAO.removeAll();
+		turnDAO.removeAll();
+		return true;
 	}
 
-	public String restart() throws SQLException {
-		chessDAO.remove(new ChessDTO(chessBoard));
-		chessBoard = chessDAO.find();
-		return getBoardJson();
+	public boolean isEnd() {
+		ChessBoard chessBoard = find();
+		return chessBoard.isLiveBothKing() == false;
 	}
 
-	public String status() {
+	public boolean isWinWhiteTeam() {
+		ChessBoard chessBoard = find();
+		return chessBoard.isLiveKing(Team.WHITE);
+	}
+
+	public Result status() {
+		ChessBoard chessBoard = find();
+		System.out.println("체스보드");
+		OutputView.printBoard(chessBoard);
 		Status status = chessBoard.createStatus();
-		Result result = status.getResult();
-		Map<String, Object> model = new HashMap<>();
-		model.put("blackTeamScore", result.getBlackTeamScore());
-		model.put("whiteTeamScore", result.getWhiteTeamScore());
-		return GSON.toJson(model);
+		return status.getResult();
 	}
 }

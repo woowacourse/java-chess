@@ -19,12 +19,10 @@ public class ChessBoard {
 	private static final String SAME_TEAM_MESSAGE = "같은 팀입니다.";
 	private static final String NOT_CHESS_PIECE_MESSAGE = "체스 말이 아닙니다.";
 
-	private final int id;
 	private final List<Row> rows;
 	private final Turn turn;
 
-	public ChessBoard(int id, List<Row> rows, Turn turn) {
-		this.id = id;
+	public ChessBoard(List<Row> rows, Turn turn) {
 		this.rows = new ArrayList<>(rows);
 		this.turn = turn;
 	}
@@ -39,6 +37,13 @@ public class ChessBoard {
 	}
 
 	public List<ChessPiece> findAll() {
+		return rows.stream()
+			.map(row -> row.getChessPieces())
+			.flatMap(chessPieces -> chessPieces.stream())
+			.collect(Collectors.toList());
+	}
+
+	public List<ChessPiece> findPieces() {
 		List<ChessPiece> chessPieces = findByTeam(Team.WHITE);
 		chessPieces.addAll(findByTeam(Team.BLACK));
 		return chessPieces;
@@ -114,10 +119,6 @@ public class ChessBoard {
 		return turn.isWhiteTurn();
 	}
 
-	public int getId() {
-		return id;
-	}
-
 	@Override
 	public boolean equals(Object o) {
 		if (this == o)
@@ -125,13 +126,12 @@ public class ChessBoard {
 		if (o == null || getClass() != o.getClass())
 			return false;
 		ChessBoard that = (ChessBoard)o;
-		return id == that.id &&
-			rows.equals(that.rows) &&
-			turn.equals(that.turn);
+		return Objects.equals(rows, that.rows) &&
+			Objects.equals(turn, that.turn);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, rows, turn);
+		return Objects.hash(rows, turn);
 	}
 }

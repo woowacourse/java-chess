@@ -15,7 +15,7 @@ function initSuccess(response) {
         const pieceName = response[position];
         document.getElementById(position).classList.add(pieceName);
     }
-    status();
+    setTimeout(() => status(), 0);
 }
 
 let startPosition = '';
@@ -75,21 +75,20 @@ function checkKingDie() {
             alert("isEnd Error")
         },
         success: function (response) {
-            console.log(response);
             if (response.isEnd == false) {
                 return;
             }
             $('.result').show();
             $('.result > .message').html(response.message);
             $('.result > .submit').click(() => {
-                reStart();
+                restart();
             })
         }
     })
 }
 
 $('.reload').click(() => {
-    reStart();
+    restart();
 });
 
 $('.cancel').click(() => {
@@ -97,12 +96,12 @@ $('.cancel').click(() => {
 });
 
 
-function reStart() {
+function restart() {
     $.ajax({
         type: 'get',
         url: '/restart',
     });
-    location.reload()
+    setTimeout(() => location.reload(), 0);
 }
 
 function status() {
