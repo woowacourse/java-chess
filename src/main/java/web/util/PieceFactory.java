@@ -14,25 +14,28 @@ import domain.piece.position.Position;
 import domain.piece.team.Team;
 
 public enum PieceFactory {
-	WHITE_PAWN("p", position -> new Pawn(Position.of(position), Team.WHITE)),
-	WHITE_ROOK("r", position -> new Rook(Position.of(position), Team.WHITE)),
-	WHITE_KNIGHT("n", position -> new Knight(Position.of(position), Team.WHITE)),
-	WHITE_BISHOP("b", position -> new Bishop(Position.of(position), Team.WHITE)),
-	WHITE_QUEEN("q", position -> new Queen(Position.of(position), Team.WHITE)),
-	WHITE_KING("k", position -> new King(Position.of(position), Team.WHITE)),
+	WHITE_PAWN("p", "♙", position -> new Pawn(Position.of(position), Team.WHITE)),
+	WHITE_ROOK("r", "♖", position -> new Rook(Position.of(position), Team.WHITE)),
+	WHITE_KNIGHT("n", "♘", position -> new Knight(Position.of(position), Team.WHITE)),
+	WHITE_BISHOP("b", "♗", position -> new Bishop(Position.of(position), Team.WHITE)),
+	WHITE_QUEEN("q", "♕", position -> new Queen(Position.of(position), Team.WHITE)),
+	WHITE_KING("k", "♔", position -> new King(Position.of(position), Team.WHITE)),
 
-	BLACK_PAWN("P", position -> new Pawn(Position.of(position), Team.BLACK)),
-	BLACK_ROOK("R", position -> new Rook(Position.of(position), Team.BLACK)),
-	BLACK_KNIGHT("N", position -> new Knight(Position.of(position), Team.BLACK)),
-	BLACK_BISHOP("B", position -> new Bishop(Position.of(position), Team.BLACK)),
-	BLACK_QUEEN("Q", position -> new Queen(Position.of(position), Team.BLACK)),
-	BLACK_KING("K", position -> new King(Position.of(position), Team.BLACK));
+	BLACK_PAWN("P", "♟", position -> new Pawn(Position.of(position), Team.BLACK)),
+	BLACK_ROOK("R", "♜", position -> new Rook(Position.of(position), Team.BLACK)),
+	BLACK_KNIGHT("N", "♞", position -> new Knight(Position.of(position), Team.BLACK)),
+	BLACK_BISHOP("B", "♝", position -> new Bishop(Position.of(position), Team.BLACK)),
+	BLACK_QUEEN("Q", "♛", position -> new Queen(Position.of(position), Team.BLACK)),
+	BLACK_KING("K", "♚", position -> new King(Position.of(position), Team.BLACK));
 
 	private String symbol;
+	private String unicode;
 	private Function<String, Piece> generate;
 
-	PieceFactory(String symbol, Function<String, Piece> generate) {
+	PieceFactory(String symbol, String unicode,
+		Function<String, Piece> generate) {
 		this.symbol = symbol;
+		this.unicode = unicode;
 		this.generate = generate;
 	}
 
@@ -41,6 +44,14 @@ public enum PieceFactory {
 			.filter(piece -> piece.symbol.equals(symbol))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("해당 말이 존재하지 않습니다."));
+	}
+
+	public static String convert(String symbol) {
+		return Arrays.stream(values())
+			.filter(piece -> piece.symbol.equals(symbol))
+			.map(piece -> piece.unicode)
+			.findFirst()
+			.orElse("");
 	}
 
 	public Function<String, Piece> getGenerate() {

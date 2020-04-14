@@ -18,8 +18,8 @@ import web.dao.TurnDao;
 import web.dto.BoardDto;
 import web.dto.PieceDto;
 import web.dto.TurnDto;
+import web.util.PieceFactory;
 import web.util.ScoreConverter;
-import web.util.UnicodeConverter;
 
 public class PieceService {
 	private static final String BLANK = "";
@@ -103,7 +103,7 @@ public class PieceService {
 					.map(Piece::showSymbol)
 					.findFirst()
 					.orElse(BLANK);
-				pieces.add(UnicodeConverter.toUnicodeFrom(pieceSymbol));
+				pieces.add(PieceFactory.convert(pieceSymbol));
 			}
 		}
 		return pieces;
