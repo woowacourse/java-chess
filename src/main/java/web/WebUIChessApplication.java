@@ -1,12 +1,12 @@
 package web;
 
 import web.controller.WebController;
-import web.service.BoardService;
+import web.service.PieceService;
 
 public class WebUIChessApplication {
 	public static void main(String[] args) {
-		BoardService boardService = new BoardService();
-		WebController webController = new WebController(boardService);
+		PieceService service = new PieceService();
+		WebController webController = new WebController(service);
 		webController.run();
 	}
 }

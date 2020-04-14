@@ -80,6 +80,10 @@ public abstract class Piece {
 		return getSymbol().toUpperCase();
 	}
 
+	public Team getTeam() {
+		return team;
+	}
+
 	public Position getPosition() {
 		return position;
 	}

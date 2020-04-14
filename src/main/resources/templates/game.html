@@ -6,14 +6,18 @@
     <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
-<h1 id="title"> Chess Game</h1>
+<h1 id="title"> Chess Game </h1>
 
 <form action="/start" method="get">
-    <input type="text" name="title">
     <button>시작하기</button>
 </form>
 
-<form action="/end" method="get">
+<form action="/move" method="get">
+    <input type="text" name="moveCommand">
+    <button>이동하기</button>
+</form>
+
+<form action="/" method="get">
     <button>게임종료</button>
 </form>
 
@@ -22,100 +26,83 @@
 </form>
 
 <form action="/loading" method="get">
-    <input type="text" name="title">
-    <input type="submit" value="불러오기">
+    <button>불러오기</button>
 </form>
-
-<div>
-    {{#each data.score}}
-    {{@key}} : {{this}}
-    <br>
-    {{/each}}
-</div>
-
-<div class="move">
-    <span>움직일 말의 위치와 움직일 위치를 입력하세요.(ex. move a2 a4)</span>
-    <br>
-    <form action="/move" method="post">
-        <input type="text" name="moveCommand">
-        <input type="submit" value="이동">
-    </form>
-</div>
 
 {{error}}
 <div class="chessboard">
     <!-- 1st -->
-    <div class="white">{{data.unicodeBoard.0}}</div>
-    <div class="black">{{data.unicodeBoard.1}}</div>
-    <div class="white">{{data.unicodeBoard.2}}</div>
-    <div class="black">{{data.unicodeBoard.3}}</div>
-    <div class="white">{{data.unicodeBoard.4}}</div>
-    <div class="black">{{data.unicodeBoard.5}}</div>
-    <div class="white">{{data.unicodeBoard.6}}</div>
-    <div class="black">{{data.unicodeBoard.7}}</div>
+    <div class="white">{{response.piece.0}}</div>
+    <div class="black">{{response.piece.1}}</div>
+    <div class="white">{{response.piece.2}}</div>
+    <div class="black">{{response.piece.3}}</div>
+    <div class="white">{{response.piece.4}}</div>
+    <div class="black">{{response.piece.5}}</div>
+    <div class="white">{{response.piece.6}}</div>
+    <div class="black">{{response.piece.7}}</div>
     <!-- 2nd -->
-    <div class="black">{{data.unicodeBoard.8}}</div>
-    <div class="white">{{data.unicodeBoard.9}}</div>
-    <div class="black">{{data.unicodeBoard.10}}</div>
-    <div class="white">{{data.unicodeBoard.11}}</div>
-    <div class="black">{{data.unicodeBoard.12}}</div>
-    <div class="white">{{data.unicodeBoard.13}}</div>
-    <div class="black">{{data.unicodeBoard.14}}</div>
-    <div class="white">{{data.unicodeBoard.15}}</div>
+    <div class="black">{{response.piece.8}}</div>
+    <div class="white">{{response.piece.9}}</div>
+    <div class="black">{{response.piece.10}}</div>
+    <div class="white">{{response.piece.11}}</div>
+    <div class="black">{{response.piece.12}}</div>
+    <div class="white">{{response.piece.13}}</div>
+    <div class="black">{{response.piece.14}}</div>
+    <div class="white">{{response.piece.15}}</div>
     <!-- 3th -->
-    <div class="white">{{data.unicodeBoard.16}}</div>
-    <div class="black">{{data.unicodeBoard.17}}</div>
-    <div class="white">{{data.unicodeBoard.18}}</div>
-    <div class="black">{{data.unicodeBoard.19}}</div>
-    <div class="white">{{data.unicodeBoard.20}}</div>
-    <div class="black">{{data.unicodeBoard.21}}</div>
-    <div class="white">{{data.unicodeBoard.22}}</div>
-    <div class="black">{{data.unicodeBoard.23}}</div>
+    <div class="white">{{response.piece.16}}</div>
+    <div class="black">{{response.piece.17}}</div>
+    <div class="white">{{response.piece.18}}</div>
+    <div class="black">{{response.piece.19}}</div>
+    <div class="white">{{response.piece.20}}</div>
+    <div class="black">{{response.piece.21}}</div>
+    <div class="white">{{response.piece.22}}</div>
+    <div class="black">{{response.piece.23}}</div>
     <!-- 4st -->
-    <div class="black">{{data.unicodeBoard.24}}</div>
-    <div class="white">{{data.unicodeBoard.25}}</div>
-    <div class="black">{{data.unicodeBoard.26}}</div>
-    <div class="white">{{data.unicodeBoard.27}}</div>
-    <div class="black">{{data.unicodeBoard.28}}</div>
-    <div class="white">{{data.unicodeBoard.29}}</div>
-    <div class="black">{{data.unicodeBoard.30}}</div>
-    <div class="white">{{data.unicodeBoard.31}}</div>
+    <div class="black">{{response.piece.24}}</div>
+    <div class="white">{{response.piece.25}}</div>
+    <div class="black">{{response.piece.26}}</div>
+    <div class="white">{{response.piece.27}}</div>
+    <div class="black">{{response.piece.28}}</div>
+    <div class="white">{{response.piece.29}}</div>
+    <div class="black">{{response.piece.30}}</div>
+    <div class="white">{{response.piece.31}}</div>
     <!-- 5th -->
-    <div class="white">{{data.unicodeBoard.32}}</div>
-    <div class="black">{{data.unicodeBoard.33}}</div>
-    <div class="white">{{data.unicodeBoard.34}}</div>
-    <div class="black">{{data.unicodeBoard.35}}</div>
-    <div class="white">{{data.unicodeBoard.36}}</div>
-    <div class="black">{{data.unicodeBoard.37}}</div>
-    <div class="white">{{data.unicodeBoard.38}}</div>
-    <div class="black">{{data.unicodeBoard.39}}</div>
+    <div class="white">{{response.piece.32}}</div>
+    <div class="black">{{response.piece.33}}</div>
+    <div class="white">{{response.piece.34}}</div>
+    <div class="black">{{response.piece.35}}</div>
+    <div class="white">{{response.piece.36}}</div>
+    <div class="black">{{response.piece.37}}</div>
+    <div class="white">{{response.piece.38}}</div>
+    <div class="black">{{response.piece.39}}</div>
     <!-- 6th -->
-    <div class="black">{{data.unicodeBoard.40}}</div>
-    <div class="white">{{data.unicodeBoard.41}}</div>
-    <div class="black">{{data.unicodeBoard.42}}</div>
-    <div class="white">{{data.unicodeBoard.43}}</div>
-    <div class="black">{{data.unicodeBoard.44}}</div>
-    <div class="white">{{data.unicodeBoard.45}}</div>
-    <div class="black">{{data.unicodeBoard.46}}</div>
-    <div class="white">{{data.unicodeBoard.47}}</div>
+    <div class="black">{{response.piece.40}}</div>
+    <div class="white">{{response.piece.41}}</div>
+    <div class="black">{{response.piece.42}}</div>
+    <div class="white">{{response.piece.43}}</div>
+    <div class="black">{{response.piece.44}}</div>
+    <div class="white">{{response.piece.45}}</div>
+    <div class="black">{{response.piece.46}}</div>
+    <div class="white">{{response.piece.47}}</div>
     <!-- 7th -->
-    <div class="white">{{data.unicodeBoard.48}}</div>
-    <div class="black">{{data.unicodeBoard.49}}</div>
-    <div class="white">{{data.unicodeBoard.50}}</div>
-    <div class="black">{{data.unicodeBoard.51}}</div>
-    <div class="white">{{data.unicodeBoard.52}}</div>
-    <div class="black">{{data.unicodeBoard.53}}</div>
-    <div class="white">{{data.unicodeBoard.54}}</div>
-    <div class="black">{{data.unicodeBoard.55}}</div>
+    <div class="white">{{response.piece.48}}</div>
+    <div class="black">{{response.piece.49}}</div>
+    <div class="white">{{response.piece.50}}</div>
+    <div class="black">{{response.piece.51}}</div>
+    <div class="white">{{response.piece.52}}</div>
+    <div class="black">{{response.piece.53}}</div>
+    <div class="white">{{response.piece.54}}</div>
+    <div class="black">{{response.piece.55}}</div>
     <!-- 8th -->
-    <div class="black">{{data.unicodeBoard.56}}</div>
-    <div class="white">{{data.unicodeBoard.57}}</div>
-    <div class="black">{{data.unicodeBoard.58}}</div>
-    <div class="white">{{data.unicodeBoard.59}}</div>
-    <div class="black">{{data.unicodeBoard.60}}</div>
-    <div class="white">{{data.unicodeBoard.61}}</div>
-    <div class="black">{{data.unicodeBoard.62}}</div>
-    <div class="white">{{data.unicodeBoard.63}}</div>
+    <div class="black">{{response.piece.56}}</div>
+    <div class="white">{{response.piece.57}}</div>
+    <div class="black">{{response.piece.58}}</div>
+    <div class="white">{{response.piece.59}}</div>
+    <div class="black">{{response.piece.60}}</div>
+    <div class="white">{{response.piece.61}}</div>
+    <div class="black">{{response.piece.62}}</div>
+    <div class="white">{{response.piece.63}}</div>
 </div>
 
 </body>

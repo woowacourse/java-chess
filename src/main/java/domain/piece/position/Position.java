@@ -47,6 +47,10 @@ public class Position {
 		return this.equals(position);
 	}
 
+	public boolean isSameRow(Row row) {
+		return this.row.equals(row);
+	}
+
 	public boolean isSameColumn(Position position) {
 		return this.column.equals(position.column);
 	}
@@ -69,5 +73,10 @@ public class Position {
 
 	public int getRankIndex() {
 		return row.getRankIndex();
+	}
+
+	@Override
+	public String toString() {
+		return column.getColumnName() + row.getNumber();
 	}
 }

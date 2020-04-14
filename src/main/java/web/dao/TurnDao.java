@@ -1,0 +1,54 @@
+package web.dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import web.dto.TurnDto;
+
+public class TurnDao {
+	private static final TurnDao TURN_DAO = new TurnDao();
+	private static final String TABLE_NAME = "board";
+
+	private DBConnector connector = new DBConnector();
+
+	private TurnDao() {
+	}
+
+	public static TurnDao getInstance() {
+		return TURN_DAO;
+	}
+
+	public void add(TurnDto turnDto) throws SQLException {
+		String query = "INSERT INTO " + TABLE_NAME + " VALUES(?)";
+		try (
+			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+		) {
+			pstmt.setString(1, turnDto.getTurn());
+			pstmt.executeUpdate();
+		}
+	}
+
+	public TurnDto find() throws SQLException {
+		String query = "SELECT * FROM " + TABLE_NAME;
+		ResultSet rs;
+		try (
+			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+		) {
+			rs = pstmt.executeQuery();
+			if (!rs.next())
+				return null;
+			return new TurnDto(rs.getString("turn"));
+		}
+	}
+
+	public void update(TurnDto turnDto) throws SQLException {
+		String query = "UPDATE " + TABLE_NAME + " SET turn = ?";
+		try (
+			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+		) {
+			pstmt.setString(1, turnDto.getTurn());
+			pstmt.executeUpdate();
+		}
+	}
+}

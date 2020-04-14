@@ -1,5 +1,7 @@
 package domain.piece.team;
 
+import java.util.Arrays;
+
 import domain.piece.Pawn;
 
 public enum Team {
@@ -12,6 +14,13 @@ public enum Team {
 	Team(String name, int startRankIndex) {
 		this.name = name;
 		this.startRankIndex = startRankIndex;
+	}
+
+	public static Team of(String name) {
+		return Arrays.stream(values())
+			.filter(team -> team.name.equals(name))
+			.findFirst()
+			.orElseThrow(() -> new IllegalArgumentException("해당 팀이 존재하지 않습니다."));
 	}
 
 	public static Team changeTurn(Team turn) {
