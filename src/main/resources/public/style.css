@@ -57,6 +57,10 @@ img {
     width: 60px;
 }
 
+.error-message{
+    background-color: red;
+}
+
 .source-and-target{
     display: flex;
     flex-direction: column;

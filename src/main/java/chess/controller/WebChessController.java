@@ -1,9 +1,10 @@
 package chess.controller;
 
+import chess.Scores;
+import chess.dao.IsFinishedDao;
 import chess.dao.PiecesDao;
 import chess.dao.TurnDao;
 import chess.dto.BoardDto;
-import chess.Scores;
 import chess.exception.InvalidMovementException;
 import chess.service.ChessGameService;
 import spark.ModelAndView;
@@ -18,7 +19,7 @@ import static spark.Spark.*;
 public class WebChessController {
     public static void main(String[] args) {
         staticFiles.location("/public");
-        ChessGameService service = new ChessGameService(new PiecesDao(), new TurnDao());
+        ChessGameService service = new ChessGameService(new PiecesDao(), new TurnDao(), new IsFinishedDao());
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -35,9 +36,10 @@ public class WebChessController {
             String target = req.queryParams("target");
             try {
                 service.play(source, target);
-            } catch (InvalidMovementException e) {
-                model.put("message", e.getMessage());
-                return render(model, "error.html");
+            } catch (RuntimeException e) {
+                model.put("error-message", e.getMessage());
+                constructModel(service, model);
+                return render(model, "index.html");
             }
             if (service.isFinished()) {
                 model.put("winner", service.isTurnWhite() ? "흑팀" : "백팀");

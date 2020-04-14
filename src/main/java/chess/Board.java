@@ -17,23 +17,28 @@ import static chess.piece.Team.WHITE;
 public class Board {
     private final Map<Position, Piece> pieces;
     private Team turn;
-    private boolean isFinished = false;
+    private boolean isFinished;
 
-    public Board(Map<Position, Piece> pieces, Team turn) {
+    public Board(Map<Position, Piece> pieces, Team turn, boolean isFinished) {
         this.pieces = pieces;
         this.turn = turn;
+        this.isFinished = isFinished;
+    }
+
+    public Board(Map<Position, Piece> pieces, Team turn) {
+        this(pieces, turn, false);
     }
 
     public Board(Map<Position, Piece> pieces) {
-        this(pieces, WHITE);
+        this(pieces, WHITE, false);
     }
 
     public Board(PiecesInitStrategy piecesInitStrategy, Team turn) {
-        this(piecesInitStrategy.init(), turn);
+        this(piecesInitStrategy.init(), turn, false);
     }
 
     public Board(PiecesInitStrategy piecesInitStrategy) {
-        this(piecesInitStrategy.init(), WHITE);
+        this(piecesInitStrategy.init(), WHITE, false);
     }
 
     public void moveIfPossible(Position source, Position target) {

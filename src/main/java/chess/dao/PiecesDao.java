@@ -56,4 +56,10 @@ public class PiecesDao {
         pstmt.setString(3, position.getKey());
         pstmt.executeUpdate();
     }
+
+    public void delete() throws SQLException {
+        String query = "DELETE FROM pieces";
+        PreparedStatement pstmt = conn.prepareStatement(query);
+        pstmt.executeUpdate();
+    }
 }
