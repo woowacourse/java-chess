@@ -3,87 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <title>Jamie's Chess</title>
+    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/room.css" rel="stylesheet"/>
 </head>
 <body>
-체스 방을 선택하세요.
-<!-- 방 보여주기 -->
-<form method="post" action="/start">
-    <select id="rooms" name="roomId">
-    </select>
-    <input type="submit" value="입장"/>
-    <input type="button" id="delete-room" value="삭제"/>
-</form>
-<br>
-<!-- 새로운 방 생성 -->
-<input type="text" id="room-name" maxlength="10" minlength="1"/>
-<button id="create-room">방만들기</button>
-<!-- 방 선택하는 input Box -->
-<script type="text/javascript">
-    const rooms = document.getElementById("rooms");
-    const createRoomName = document.getElementById("room-name");
-    const creatRoom = document.getElementById("create-room");
-    const deleteRoom = document.getElementById("delete-room");
-
-    let roomName = null;
-    let roomPassword = null;
-    let roomsChild = null;
-    let index = null;
-    let roomId = null;
-
-    fetch('/viewRooms').then(res => res.json()).then(data => {
-        for (key in data.rooms) {
-            let opt = document.createElement("option");
-            opt.value = key;
-            opt.textContent = data.rooms[key];
-            rooms.appendChild(opt);
-        }
-    });
-
-    deleteRoom.onclick = () => {
-        roomId = rooms.value;
-        roomsChild = rooms.children;
-        for (index = 0; index < rooms.childElementCount;) {
-            rooms.removeChild(roomsChild.item(index));
-        }
-        fetch("/deleteRoom", {
-            method: 'Post',
-            body: JSON.stringify({
-                roomId
-            })
-        }).then(res => res.json()).then(data => {
-            for (key in data.rooms) {
-                let opt = document.createElement("option");
-                opt.value = key;
-                opt.textContent = data.rooms[key];
-                rooms.appendChild(opt);
-                createRoomName.value = "";
-            }
-        })
-    };
-
-    creatRoom.onclick = () => {
-        roomsChild = rooms.children;
-        for (index = 0; index < rooms.childElementCount;) {
-            rooms.removeChild(roomsChild.item(index));
-        }
-        roomName = createRoomName.value;
-        roomPassword = '';
-        fetch('/createRoom', {
-            method: 'POST',
-            body: JSON.stringify({
-                roomName, roomPassword
-            })
-        }).then(res => res.json()).then(data => {
-            for (key in data.rooms) {
-                let opt = document.createElement("option");
-                opt.value = key;
-                opt.textContent = data.rooms[key];
-                rooms.appendChild(opt);
-                createRoomName.value = "";
-            }
-        })
-    };
-
-</script>
+<header>
+    Jamie's Chess Game
+</header>
+<section>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">체스 방을 선택하여 입장 또는 삭제하세요.</label><br/>
+        <br/>
+        <form action="/start" id="start" method="post">
+            <select class="room-combo" id="rooms" name="roomId">
+            </select>
+        </form>
+        <button class="room-button" id="into-room">입장</button>
+        <button class="room-button" id="delete-room">삭제</button>
+    </div>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">새로운 방을 생성하세요.</label><br/>
+        <br/>
+        <input class="room-name" id="room-name" maxlength="10" minlength="1" type="text"/>
+        <button class="room-button" id="create-room">방만들기</button>
+    </div>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">그 동안의 결과를 확인하세요.</label><br/>
+        <br/>
+        <form action="/result" id="result-game" method="post">
+            <button class="room-button" id="result-button">게임 결과보기</button>
+        </form>
+    </div>
+</section>
+<script src="/js/room.js" type="text/javascript"></script>
 </body>
 </html>

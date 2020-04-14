@@ -188,4 +188,21 @@ public class ChessGameDao {
         return jdbcTemplate.executeQuery(query, pstmt -> {
         }, mapper);
     }
+
+    public Optional<Integer> getRoomId(int gameId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = makeQuery(
+            "SELECT ROOM_ID",
+            "  FROM CHESS_GAME_TB",
+            " WHERE ID = ?"
+        );
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, gameId);
+        ResultSetMapper<Optional<Integer>> mapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
+            }
+            return Optional.of(rs.getInt("ROOM_ID"));
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
+    }
 }

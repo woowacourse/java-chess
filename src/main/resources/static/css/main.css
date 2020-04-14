@@ -1,0 +1,23 @@
+body {
+    background-color: rgba(0, 58, 68, 1);
+    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
+}
+
+header {
+    text-align: center;
+    font-size: 3em;
+    padding: 10px;
+    font-weight: bolder;
+    color: #c2dde4;
+}
+
+section {
+    margin: 0 auto;
+    overflow: scroll;
+    width: 1400px;
+    align-content: center;
+}
+
+.black {
+    height: 50px;
+}

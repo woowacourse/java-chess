@@ -9,11 +9,24 @@ const blackName = document.getElementById('blackName');
 const whiteName = document.getElementById('whiteName');
 const winner = document.getElementById('winner');
 const closeButton = document.getElementById('close-button');
+const newGame = document.getElementById('new-game');
+const newGameId = document.getElementById('new-game-id');
+const newButton = document.getElementById('new-button');
+const roomButton = document.getElementById('room-button');
 
 let firstClick = true;
 let source = null;
 let target = null;
 let gameId = document.getElementById('gameId').innerText;
+
+roomButton.onclick = () => {
+    location.href = '/'
+};
+
+newButton.onclick = () => {
+    newGameId.value = gameId;
+    newGame.submit();
+};
 
 closeButton.onclick = () => {
     fetch('/end', {
@@ -35,7 +48,7 @@ closeButton.onclick = () => {
         blackName.innerText = data.blackName;
         whiteName.innerText = data.whiteName;
         winner.innerText = data.winner;
-        closeButton.innerText = "게임 종료됨";
+        closeButton.innerText = "종료됨";
         closeButton.disable = true;
     })
 };
@@ -132,3 +145,4 @@ fetch('/board', {
     whiteName.innerText = data.whiteName;
     winner.innerText = data.winner;
 });
+

@@ -165,4 +165,8 @@ public class ChessGameService {
         }
         CHESS_RESULT_DAO.update(gameId, teamScore);
     }
+
+    public int getRoomId(int gameId) {
+        return CHESS_GAME_DAO.getRoomId(gameId).orElseThrow(IllegalAccessError::new);
+    }
 }

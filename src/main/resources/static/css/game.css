@@ -1,21 +1,3 @@
-body {
-    background-color: powderblue;
-    font-family: 'DejaVu Sans', Arial, Helvetica, sans-serif;
-}
-
-header {
-    text-align: center;
-    font-size: 3em;
-    padding: 10px;
-    font-weight: bolder;
-}
-
-section {
-    overflow: scroll;
-    width: 1400px;
-    align-content: center;
-}
-
 .chessboard {
     float: left;
     width: 640px;
@@ -80,12 +62,21 @@ section {
     align-content: center;
 }
 
-.promo {
-    border: #333333 solid;
+.result2 {
     float: left;
     width: 180px;
-    height: 520px;
+    height: 690px;
     margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+    font-weight: bold;
+    align-content: center;
+}
+
+.promo {
+    border: #333333 solid;
+    height: 520px;
     background-color: lightyellow;
     text-align: center;
     vertical-align: middle;
@@ -97,7 +88,7 @@ section {
 
 .promotion {
     float: left;
-    width: 165px;
+    width: 160px;
     height: 80px;
     background-color: lightgrey;
     font-size: 50px;
@@ -129,4 +120,14 @@ section {
 
 .path {
     background-color: indianred;
+}
+
+.button-div {
+    background-color: #66a4ac;
+    font-size: 2em;
+    height: 58px;
+    align-items: center;
+    text-align: center;
+    border: #333333 solid;
+    margin-top: 10px;
 }

@@ -42,6 +42,17 @@ public class ChessUIController {
             return render(model, "/start.html");
         });
 
+        post("/newGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            System.out.println(req.queryParams("gameId") + ">>>>>>>>><<<<<<");
+            model.put("roomId",
+                CHESS_GAME_SERVICE.getRoomId(Integer.parseInt(req.queryParams("gameId"))));
+            System.out.println(
+                CHESS_GAME_SERVICE.getRoomId(Integer.parseInt(req.queryParams("gameId")))
+                    + ">>>>>>>>>");
+            return render(model, "/start.html");
+        });
+
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "/room.html");
@@ -57,8 +68,9 @@ public class ChessUIController {
 
         post("/followGame", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            Map<Color, String> userNames = getUserNames(req);
             int roomId = Integer.parseInt(req.queryParams("roomId"));
-            model.put("gameId", CHESS_GAME_SERVICE.getIdBefore(roomId, DEFAULT_NAMES));
+            model.put("gameId", CHESS_GAME_SERVICE.getIdBefore(roomId, userNames));
             return render(model, "/game.html");
         });
 

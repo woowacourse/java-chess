@@ -3,36 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Jamie's Chess</title>
-    <style type="text/css">
-        .result {
-            width: 300px;
-            height: 120px;
-            margin: 20px;
-            background-color: lightsteelblue;
-            text-align: center;
-            vertical-align: middle;
-            font-size: large;
-            font-weight: bold;
-            align-content: center;
-        }
-    </style>
+    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/room.css" rel="stylesheet"/>
 </head>
 <body>
-체스 게임을 시작하시겠습니까?
-<div class="result">
-    <form method="post" action="/game">
-        화이트팀 이름(기본 WHITE) : <input type="text" name="WhiteName" maxlength="10"/><br>
-        블랙팀 이름(기본 BLACK) : <input type="text" name="BlackName" maxlength="10"/><br>
-        <input type="submit" value="게임 시작"/>
-        <input type="text" name="roomId" value={{roomId}} hidden/>
-    </form>
-</div>
-<form method="post" action="/followGame">
-    <input type="submit" value="게임 이어하기"/>
-    <input type="text" name="roomId" value={{roomId}} hidden/>
-</form>
-<form action="/result" method="post">
-    <input type="submit" value="게임 결과보기"/>
-</form>
+<header>
+    Jamie's Chess Game
+</header>
+<section>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">체스 게임을 시작하시겠습니까?</label><br/>
+        <br/>
+        <form action="/game" id="start-game" method="post">
+            <label class="room-name">화이트팀 이름(기본 WHITE) : </label>
+            <input class="room-combo" id="white-name" maxlength="10" name="WhiteName"
+                   type="text"/><br>
+            <label class="room-name">블랙팀 이름(기본 BLACK) : </label>
+            <input class="room-combo" id="black-name" maxlength="10" name="BlackName"
+                   type="text"/><br>
+            <input hidden name="roomId" type="text" value={{roomId}}/>
+        </form>
+        <button class="room-button" id="start-button">게임 시작하기</button>
+        <button class="room-button" id="follow-button">게임 이어하기</button>
+        <br/>
+        <br/>
+        <label class="red-label">* 게임 이어하기시, 이어할 게임이 없으면 위의 이름들로 새 게임을 진행합니다.</label>
+        <form action="/followGame" hidden id="follow-game" method="post">
+            <input hidden name="roomId" type="text" value={{roomId}}/>
+            <input hidden id="white-name-follow" maxlength="10" name="WhiteName" type="text"/><br>
+            <input hidden id="black-name-follow" maxlength="10" name="BlackName" type="text"/><br>
+        </form>
+    </div>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">그 동안의 결과를 확인하세요.</label><br/>
+        <br/>
+        <form action="/result" id="result-game" method="post">
+            <button class="room-button" id="result-button">게임 결과보기</button>
+        </form>
+    </div>
+</section>
+<script src="/js/start.js" type="text/javascript"></script>
 </body>
 </html>
