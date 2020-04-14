@@ -1,12 +1,16 @@
-package chess.dao;
+package chess.db;
 
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 
+import java.util.List;
+
 public interface PieceDao {
     int countSavedPieces(String gameId);
 
-    void addPiece(String gameId, Position position, Piece piece);
+    void addInitialPieces(List<ChessPiece> pieces);
+
+    void addPiece(ChessPiece piece);
 
     String findPieceNameByPosition(String gameId, Position position);
 

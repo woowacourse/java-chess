@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;

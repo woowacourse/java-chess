@@ -1,7 +1,7 @@
 package chess;
 
-import chess.dao.ChessPieceDao;
-import chess.dao.MoveHistoryDao;
+import chess.db.ChessPieceDao;
+import chess.db.MoveHistoryDao;
 import chess.domains.board.Board;
 import chess.domains.piece.PieceColor;
 import chess.service.ChessWebService;

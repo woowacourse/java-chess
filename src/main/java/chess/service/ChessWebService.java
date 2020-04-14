@@ -1,7 +1,8 @@
 package chess.service;
 
-import chess.dao.MoveHistoryDao;
-import chess.dao.PieceDao;
+import chess.db.ChessPiece;
+import chess.db.MoveHistoryDao;
+import chess.db.PieceDao;
 import chess.domains.board.Board;
 import chess.domains.board.BoardFactory;
 import chess.domains.piece.Piece;
@@ -36,8 +37,14 @@ public class ChessWebService {
 
         board.initialize();
 
-        Position.stream()
-                .forEach(position -> pieceDao.addPiece(gameId, position, board.getPieceByPosition(position)));
+        List<ChessPiece> chessPieces = Position.stream()
+                .map(position -> {
+                    Piece piece = board.getPieceByPosition(position);
+                    return new ChessPiece(gameId, position.name(), piece.name());
+                })
+                .collect(Collectors.toList());
+
+        pieceDao.addInitialPieces(chessPieces);
     }
 
     public void resumeGame(Board board, String gameId) {

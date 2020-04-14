@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.db;
 
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
@@ -8,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 // TODO: 2020-04-11 SavedPiece 클래스 추가 후 select 결과로 객체 리턴?
 public class ChessPieceDao implements PieceDao {
@@ -35,7 +36,14 @@ public class ChessPieceDao implements PieceDao {
     }
 
     @Override
-    public void addPiece(String gameId, Position position, Piece piece) {
+    public void addInitialPieces(List<ChessPiece> chessPieces) {
+        for (ChessPiece piece : chessPieces) {
+            addPiece(piece);
+        }
+    }
+
+    @Override
+    public void addPiece(ChessPiece piece) {
         String query = "INSERT INTO board_status (game_id, position, piece) VALUES (?, ?, ?)";
 
         Connection conn = null;
@@ -44,9 +52,9 @@ public class ChessPieceDao implements PieceDao {
         try {
             conn = JdbcUtil.getConnection();
             pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, gameId);
-            pstmt.setString(2, position.name());
-            pstmt.setString(3, piece.name());
+            pstmt.setString(1, piece.getGameId());
+            pstmt.setString(2, piece.getPosition());
+            pstmt.setString(3, piece.getPiece());
             pstmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
