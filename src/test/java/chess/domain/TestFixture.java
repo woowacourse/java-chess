@@ -40,7 +40,7 @@ public class TestFixture {
 
 	public static ChessBoard BISHOP_TEST_BOARD() {
 		return new ChessBoard(Arrays.asList(
-				BISHOP_D4,
+				new Bishop(WHITE, D4),
 				new Pawn(WHITE, C5),
 				new Pawn(WHITE, E3),
 				new Pawn(WHITE, C3)
@@ -49,15 +49,8 @@ public class TestFixture {
 
 	public static ChessBoard PAWN_TEST_BOARD() {
 		return new ChessBoard(Arrays.asList(
-				PAWN_D4,
-				new Pawn(BLACK, D5)
-		));
-	}
-
-	public static ChessBoard ATTACK_TEST_BOARD() {
-		return new ChessBoard(Arrays.asList(
-				ROOK_D4,
-				new Rook(BLACK, D5)
+				new Pawn(WHITE, D4),
+				new Pawn(WHITE, D5)
 		));
 	}
 

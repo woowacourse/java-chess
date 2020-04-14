@@ -21,11 +21,15 @@ public class ChessGame {
 		return new ChessGame(ChessBoardFactory.create(), Side.WHITE);
 	}
 
-	public ChessGame move(Position source, Position target) {
+	public void move(Position source, Position target) {
 		validateTurn(source);
 		board.move(source, target);
 
-		return new ChessGame(board, turn.reverse());
+		changeTurn();
+	}
+
+	private void changeTurn() {
+		turn = turn.reverse();
 	}
 
 	private void validateTurn(Position source) {
@@ -42,11 +46,15 @@ public class ChessGame {
 		return board.isEnd() || isEnd;
 	}
 
-	public ChessGame end() {
-		return new ChessGame(board, turn, true);
+	public void end() {
+		isEnd = true;
 	}
 
 	public ChessBoard getBoard() {
 		return board;
+	}
+
+	public Side getTurn() {
+		return turn;
 	}
 }

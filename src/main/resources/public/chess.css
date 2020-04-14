@@ -1,0 +1,61 @@
+body {
+    margin: 0;
+}
+
+.container {
+    width: 100vw;
+    height: 90vh;
+    margin: 5vh 0;
+}
+
+.board {
+    display: inline-block;
+    width: calc(70vw - 44px);
+    height: 100%;
+    margin: 0 20px;
+    border: 2px solid black;
+}
+
+.rows {
+    display: inline-flex;
+    width: 100%;
+    height: 12.5%;
+}
+
+.cell {
+    display: inherit;
+    width: 12.5%;
+    height: 100%;
+}
+
+.piece-image {
+    width: auto;
+    height: auto;
+    margin: auto;
+    max-width: 75%;
+    max-height: 80%;
+}
+
+.rows:nth-child(2n) .cell:nth-child(2n) {
+    background-color: lightyellow;
+}
+
+.rows:nth-child(2n) .cell:nth-child(2n-1) {
+    background-color: lightblue;
+}
+
+.rows:nth-child(2n-1) .cell:nth-child(2n) {
+    background-color: lightblue;
+}
+
+.rows:nth-child(2n-1) .cell:nth-child(2n-1) {
+    background-color: lightyellow;
+}
+
+.side {
+    display: inline-block;
+    width: calc(30vw - 45px);
+    height: 100%;
+    margin: 0 20px;
+    vertical-align: top;
+}

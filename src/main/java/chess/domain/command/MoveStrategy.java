@@ -10,6 +10,7 @@ public class MoveStrategy implements CommandStrategy {
 	public ChessGame execute(List<String> splitedInput, ChessGame chessGame) {
 		Position sourcePosition = new Position(splitedInput.get(1));
 		Position targetPosition = new Position(splitedInput.get(2));
-		return chessGame.move(sourcePosition, targetPosition);
+		chessGame.move(sourcePosition, targetPosition);
+		return chessGame;
 	}
 }

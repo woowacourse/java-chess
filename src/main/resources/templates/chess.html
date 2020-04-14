@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+    <link rel="stylesheet" type="text/css" href="/chess.css">
+    <script src="/chess.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="board">
+        {{#board.board}}
+        <div class="rows">
+            {{#.}}
+            <div class="cell">
+                <img class="piece-image" src="/img/{{.}}.png">
+            </div>
+            {{/.}}
+        </div>
+        {{/board.board}}
+    </div>
+    <div class="side">
+        <form method="post" action="/chess">
+            <label>출발 좌표</label>
+            <input type="text" name="source">
+            <br/>
+            <label>도착 좌표</label>
+            <input type="text" name="target">
+            <br/>
+            {{#room}}
+            <input type="text" name="room-name" value="{{.}}" hidden>
+            {{/room}}
+            <input type="submit" value="이동">
+        </form>
+        <br/>
+        {{#error}}
+        <label>{{.}}</label>
+        {{/error}}
+        <br/>
+        {{#board.turn}}
+        <label>현재 턴 : {{.}}</label>
+        {{/board.turn}}
+        <br/>
+        {{#status}}
+        <br/>
+        <label>흰색 점수 : {{whiteScore}}</label>
+        <br/>
+        <label>검은색 점수 : {{blackScore}}</label>
+        {{/status}}
+        <br/>
+        <form method="post" action="/restart">
+            {{#room}}
+            <input type="text" name="room-name" value="{{.}}" hidden>
+            {{/room}}
+            <input type="submit" value="재시작">
+        </form>
+        <form method="get" action="/">
+            <input type="submit" onclick="exitRoom()" value="나가기">
+        </form>
+    </div>
+</div>
+</body>
+</html>
