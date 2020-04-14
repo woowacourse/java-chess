@@ -36,10 +36,9 @@ public class BoardFactory {
 	private static final int BISHOP_SECOND_INDEX = 6;
 	private static final int KNIGHT_SECOND_INDEX = 7;
 	private static final int ROOK_SECOND_INDEX = 8;
-	private static final int ROW_SIZE = 8;
 	private static final int ALL_PIECE_NUMBER = 64;
 	private static final String NOT_MATCH_ALL_PIECE_NUMBER_MESSAGE = "64개의 ChessDTO가 아닙니다.";
-	private static final String  NOT_MATCH_POSITION_MESSAGE = "찾을 수 없는 포지션입니다.";
+	private static final String NOT_MATCH_POSITION_MESSAGE = "찾을 수 없는 포지션입니다.";
 	private static final String POSITION_FORMAT = "%c%d";
 
 	public static ChessBoard createBoard() {
@@ -104,7 +103,7 @@ public class BoardFactory {
 			throw new IllegalArgumentException(NOT_MATCH_ALL_PIECE_NUMBER_MESSAGE);
 		}
 		List<Row> rows = new ArrayList<>();
-		for (int x = 1; x <= 8; x++) {
+		for (int x = BOARD_FROM_INDEX; x <= BOARD_TO_INDEX; x++) {
 			rows.add(createRow(chessDTOS, x));
 		}
 		return new ChessBoard(rows, turn);

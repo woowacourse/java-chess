@@ -30,7 +30,8 @@ public class Connector {
 			if (con != null)
 				con.close();
 		} catch (SQLException e) {
-			System.err.println("con 오류:" + e.getMessage());
+			e.printStackTrace();
+			throw new DataAccessException(e);
 		}
 	}
 }

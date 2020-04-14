@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import chess.domain.Turn;
-import chess.domain.chessboard.ChessBoard;
 import jdbc.DataAccessException;
 
 public class TurnDAO {

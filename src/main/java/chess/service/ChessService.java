@@ -1,8 +1,6 @@
 package chess.service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import chess.dao.ChessDAO;
 import chess.dao.TurnDAO;
@@ -15,7 +13,6 @@ import chess.domain.chesspiece.ChessPiece;
 import chess.domain.factory.BoardFactory;
 import chess.domain.position.Position;
 import chess.dto.ChessDTO;
-import chess.view.OutputView;
 
 public class ChessService {
 	private final ChessDAO chessDAO;
@@ -74,8 +71,6 @@ public class ChessService {
 
 	public Result status() {
 		ChessBoard chessBoard = find();
-		System.out.println("체스보드");
-		OutputView.printBoard(chessBoard);
 		Status status = chessBoard.createStatus();
 		return status.getResult();
 	}
