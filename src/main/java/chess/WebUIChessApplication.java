@@ -73,7 +73,7 @@ public class WebUIChessApplication {
 
             boolean gameOver = webService.isGameOver(board);
             if (gameOver) {
-                webService.deleteSaved(gameId);
+                webService.deleteSavedBoardStatus(gameId);
                 String winningMsg = webService.winningMsg(board);
                 model.put("game_id", gameId);
                 model.put("end", winningMsg);

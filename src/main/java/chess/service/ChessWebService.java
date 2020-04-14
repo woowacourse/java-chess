@@ -32,7 +32,7 @@ public class ChessWebService {
     }
 
     public void startNewGame(Board board, String gameId) {
-        deleteSaved(gameId);
+        deleteSavedBoardStatus(gameId);
 
         board.initialize();
 
@@ -77,7 +77,7 @@ public class ChessWebService {
         return board.calculateScore(pieceColor);
     }
 
-    public void deleteSaved(String gameId) {
+    public void deleteSavedBoardStatus(String gameId) {
         pieceDao.deleteBoardStatus(gameId);
         moveHistoryDao.deleteMoveHistory(gameId);
     }

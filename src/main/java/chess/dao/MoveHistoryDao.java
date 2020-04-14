@@ -12,7 +12,8 @@ import java.util.Optional;
 
 public class MoveHistoryDao {
     public void addMoveHistory(String gameId, PieceColor team, Position source, Position target) {
-        String query = "INSERT INTO move_history VALUES (?, (SELECT IFNULL(MAX(moves) + 1, 1) FROM move_history AS INNERTABLE WHERE game_id = ?), ?, ?, ?)";
+        String query = "INSERT INTO move_history (game_id, moves, team, source_position, target_position) " +
+                "VALUES (?, (SELECT IFNULL(MAX(moves) + 1, 1) FROM move_history AS INNERTABLE WHERE game_id = ?), ?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -34,7 +35,7 @@ public class MoveHistoryDao {
     }
 
     public Optional<String> figureLastTurn(String gameId) {
-        String query = "SELECT TEAM FROM move_history WHERE game_id = ? ORDER BY moves DESC LIMIT 1";
+        String query = "SELECT team FROM move_history WHERE game_id = ? ORDER BY moves DESC LIMIT 1";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -46,7 +47,7 @@ public class MoveHistoryDao {
             pstmt.setString(1, gameId);
             rs = pstmt.executeQuery();
             rs.next();
-            return Optional.ofNullable(rs.getString("TEAM"));
+            return Optional.ofNullable(rs.getString("team"));
         } catch (SQLException e) {
             e.printStackTrace();
             return Optional.empty();

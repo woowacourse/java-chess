@@ -36,7 +36,7 @@ public class ChessPieceDao implements PieceDao {
 
     @Override
     public void addPiece(String gameId, Position position, Piece piece) {
-        String query = "INSERT INTO board_status VALUES (?, ?, ?)";
+        String query = "INSERT INTO board_status (game_id, position, piece) VALUES (?, ?, ?)";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -57,7 +57,7 @@ public class ChessPieceDao implements PieceDao {
 
     @Override
     public String findPieceNameByPosition(String gameId, Position position) {
-        String query = "SELECT * FROM board_status WHERE game_id = ? and POSITION = ?";
+        String query = "SELECT piece FROM board_status WHERE game_id = ? AND position = ?";
 
         Connection conn = null;
         PreparedStatement pstmt = null;
