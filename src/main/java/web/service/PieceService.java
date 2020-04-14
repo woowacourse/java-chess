@@ -42,6 +42,15 @@ public class PieceService {
 		return updateBoard(boardGame, originalPosition, newPosition);
 	}
 
+	public ResponseDto load() throws SQLException {
+		List<Piece> pieces = pieceDao.findAll();
+		TurnDto turnDto = turnDao.find();
+		BoardGame boardGame = new BoardGame(pieces, turnDto.getTurn());
+
+		List<String> symbols = convert(boardGame.getReverse());
+		return new ResponseDto(symbols);
+	}
+
 	private void addTurn(BoardGame boardGame) throws SQLException {
 		Team turn = boardGame.getTurn();
 		TurnDto turnDto = new TurnDto(turn.getName());

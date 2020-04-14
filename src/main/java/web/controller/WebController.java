@@ -44,6 +44,20 @@ public class WebController {
 			}
 			return render(model, GAME_VIEW);
 		});
+
+		get("/save", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			model.put("message", "저장되었습니다.");
+			return render(model, GAME_VIEW);
+		});
+
+		get("/loading", (req, res) -> {
+			Map<String, Object> model = new HashMap<>();
+			ResponseDto responseDto = service.load();
+			model.put("response", responseDto);
+			return render(model, GAME_VIEW);
+		});
+
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
