@@ -1,5 +1,6 @@
 package chess;
 
+import chess.controller.ChessWebController;
 import chess.db.ChessPieceDao;
 import chess.db.MoveHistoryDao;
 import chess.domains.board.Board;
@@ -17,6 +18,7 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         final HandlebarsTemplateEngine templateEngine = new HandlebarsTemplateEngine();
         final ChessWebService webService = new ChessWebService(new ChessPieceDao(), new MoveHistoryDao());
+        final ChessWebController controller = new ChessWebController(webService);
         final Board board = new Board();
 
         staticFiles.location("/");
@@ -26,39 +28,35 @@ public class WebUIChessApplication {
         });
 
         post("/ready", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameId = req.queryParams("game_id");
 
-            webService.canResume(model, gameId);
+            Map<String, Object> model = controller.canResume(gameId);
 
             return render(templateEngine, model, "game_room.html");
         });
 
         post("/play", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameId = req.queryParams("game_id");
 
-            webService.startNewGame(model, board, gameId);
+            Map<String, Object> model = controller.startNewGame(board, gameId);
 
             return render(templateEngine, model, "game_room.html");
         });
 
         post("/resume", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameId = req.queryParams("game_id");
 
-            webService.resumeGame(model, board, gameId);
+            Map<String, Object> model = controller.resumeGame(board, gameId);
 
             return render(templateEngine, model, "game_room.html");
         });
 
         post("/move", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
             String gameId = req.queryParams("game_id");
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            webService.move(model, board, gameId, source, target);
+            Map<String, Object> model = controller.move(board, gameId, source, target);
 
             return render(templateEngine, model, "game_room.html");
         });
