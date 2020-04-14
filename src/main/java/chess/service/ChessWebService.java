@@ -27,14 +27,16 @@ public class ChessWebService {
         this.moveHistoryDao = moveHistoryDao;
     }
 
-    public boolean canResume(String gameId) {
+    public boolean canResume(Map<String, Object> model, String gameId) {
         int savedPiecesNumber = pieceDao.countSavedPieces(gameId);
-        return savedPiecesNumber == BOARD_CELLS_NUMBER;
+        boolean canResume = savedPiecesNumber == BOARD_CELLS_NUMBER;
+        model.put("game_id", gameId);
+        model.put("canResume", canResume);
+        return canResume;
     }
 
-    public void startNewGame(Board board, String gameId) {
+    public void startNewGame(Map<String, Object> model, Board board, String gameId) {
         deleteSavedBoardStatus(gameId);
-
         board.initialize();
 
         List<ChessPiece> chessPieces = Position.stream()
@@ -45,10 +47,21 @@ public class ChessWebService {
                 .collect(Collectors.toList());
 
         pieceDao.addInitialPieces(chessPieces);
+
+        model.put("game_id", gameId);
+        model.put("pieces", convertPieces(board));
+        model.put("turn", turnMsg(board));
+        model.put("white_score", calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", calculateScore(board, PieceColor.BLACK));
     }
 
-    public void resumeGame(Board board, String gameId) {
-        Map<Position, Piece> savedBoard = Position.stream()
+    public void deleteSavedBoardStatus(String gameId) {
+        pieceDao.deleteBoardStatus(gameId);
+        moveHistoryDao.deleteMoveHistory(gameId);
+    }
+
+    public void resumeGame(Map<String, Object> model, Board board, String gameId) {
+        Map<Position, Piece> savedBoardStatus = Position.stream()
                 .collect(Collectors.toMap(Function.identity(), position -> {
                     String pieceName = pieceDao.findPieceNameByPosition(gameId, position);
                     return BoardFactory.findPieceByPieceName(pieceName);
@@ -56,15 +69,21 @@ public class ChessWebService {
 
         Optional<String> lastTurn = moveHistoryDao.figureLastTurn(gameId);
 
-        board.resume(savedBoard, lastTurn);
+        board.resume(savedBoardStatus, lastTurn);
+
+        model.put("game_id", gameId);
+        model.put("pieces", convertPieces(board));
+        model.put("turn", turnMsg(board));
+        model.put("white_score", calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", calculateScore(board, PieceColor.BLACK));
     }
 
     public String turnMsg(Board board) {
-        String turn = board.getTeamColor().name();
-        return turn + "의 순서입니다.";
+        PieceColor team = board.getTeamColor();
+        return team.name() + "의 순서입니다.";
     }
 
-    public void move(Board board, String gameId, String sourceName, String targetName) {
+    public void move(Map<String, Object> model, Board board, String gameId, String sourceName, String targetName) {
         Position source = Position.ofPositionName(sourceName);
         Position target = Position.ofPositionName(targetName);
         PieceColor currentTeam = board.getTeamColor();
@@ -74,29 +93,24 @@ public class ChessWebService {
         pieceDao.updatePiece(gameId, source, board.getPieceByPosition(source));
         pieceDao.updatePiece(gameId, target, board.getPieceByPosition(target));
         moveHistoryDao.addMoveHistory(gameId, currentTeam, source, target);
-    }
 
-    public boolean isGameOver(Board board) {
-        return board.isGameOver();
-    }
+        model.put("game_id", gameId);
+        model.put("pieces", convertPieces(board));
 
-    public double calculateScore(Board board, PieceColor pieceColor) {
-        return board.calculateScore(pieceColor);
-    }
+        if (board.isGameOver()) {
+            deleteSavedBoardStatus(gameId);
+            model.put("end", winningMsg(board));
+            return;
+        }
 
-    public void deleteSavedBoardStatus(String gameId) {
-        pieceDao.deleteBoardStatus(gameId);
-        moveHistoryDao.deleteMoveHistory(gameId);
+        model.put("turn", turnMsg(board));
+        model.put("white_score", calculateScore(board, PieceColor.WHITE));
+        model.put("black_score", calculateScore(board, PieceColor.BLACK));
     }
 
     public List<String> convertPieces(Board board) {
         List<Piece> pieces = board.showBoard();
         return convertView(pieces);
-    }
-
-    public String winningMsg(Board board) {
-        PieceColor winner = board.getTeamColor().changeTeam();
-        return winner + "이/가 이겼습니다.";
     }
 
     private static List<String> convertView(List<Piece> pieces) {
@@ -145,5 +159,14 @@ public class ChessWebService {
             }
         }
         return pieceCodes;
+    }
+
+    public String winningMsg(Board board) {
+        PieceColor winner = board.getTeamColor().changeTeam();
+        return winner + "이/가 이겼습니다.";
+    }
+
+    public double calculateScore(Board board, PieceColor pieceColor) {
+        return board.calculateScore(pieceColor);
     }
 }
