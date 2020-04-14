@@ -9,7 +9,7 @@ public abstract class Started implements GameState {
     protected Board board = BoardFactory.createInitially();
 
     @Override
-    public List<List<String>> getBoard() {
-        return board.getBoard();
+    public List<List<String>> getBoardForPrint() {
+        return board.getBoardForPrinting();
     }
 }

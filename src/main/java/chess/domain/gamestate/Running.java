@@ -1,6 +1,7 @@
 package chess.domain.gamestate;
 
 import chess.domain.Team;
+import chess.domain.board.Board;
 
 import java.util.List;
 
@@ -27,13 +28,18 @@ public class Running extends Started {
     }
 
     @Override
-    public List<List<String>> getBoard() {
-        return board.getBoard();
+    public List<List<String>> getBoardForPrint() {
+        return board.getBoardForPrinting();
     }
 
     @Override
     public GameState finish() {
         return new Finished(board);
+    }
+
+    @Override
+    public Board getBoard() {
+        return board;
     }
 
     @Override

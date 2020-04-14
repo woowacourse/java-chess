@@ -36,7 +36,29 @@
 
 - [x] King을 잡았을 경우 게임이 종료
 
-### view 기능
+### Console view 기능
 - [x] 게임 시작 및 종료를 위한 명령어 안내문 출력
 - [x] 게임 시작 및 종료를 위한 명령어 입력
 - [x] 체스판 출력
+
+### Web view 기능
+- [x] 폼을 통해서 request에 command를 담아 서버로 전달
+
+### Web controller 기능
+- [x] 요청 받은 command를 실행
+- [ ] error를 받을 경우 
+- [x] Map인 Board를 List<Piece>로 변환
+- [x] List<Piece>를 웹클라이언트로 전달
+
+### Web service 기능
+- [ ] dao를 통한 board 상태 find
+- [ ] dao를 통한 board 상태 add
+- [ ] dao를 통한 board 상태 update
+- [ ] dao를 통한 board 상태 delete
+
+### DB 기능
+- [x] Piece 테이블의 필드 : position, pieceType, team
+- [x] DB로 전달할 Piece 객체의 필드를 담을 PieceDTO 생성
+- [x] PieceDTO를 DB에 CRUD하기 위한 PieceDAO 인터페이스 생성
+    - [x] jdbc를 통해 DB에 접속하는 JdbcTemplatePieceDAO 생성
+    - [x] 도메인을 테스트를 위해 DB에 대한 의존성을 제거한 InMemoryPieceDAO 생성

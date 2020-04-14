@@ -7,7 +7,12 @@ import chess.domain.route.Route;
 public class Empty implements Placeable {
     private static final String UNSUPPORT_MESSAGE = "위치한 기물이 없습니다.";
 
+    private Team team;
+    private PieceType pieceType;
+
     public Empty() {
+        this.team = Team.NONE;
+        this.pieceType = PieceType.EMPTY;
     }
 
     @Override
@@ -32,12 +37,12 @@ public class Empty implements Placeable {
 
     @Override
     public Team getTeam() {
-        throw new UnsupportedOperationException(UNSUPPORT_MESSAGE);
+        return team;
     }
 
     @Override
     public PieceType getPieceType() {
-        throw new UnsupportedOperationException(UNSUPPORT_MESSAGE);
+        return pieceType;
     }
 
     @Override
