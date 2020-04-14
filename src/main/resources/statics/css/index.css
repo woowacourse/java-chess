@@ -1,0 +1,11 @@
+.content_box {
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    text-align: center;
+}
+
+#woowachess_home {
+    display: block;
+}

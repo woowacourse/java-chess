@@ -1,12 +1,12 @@
 package testAssistant;
 
-import domain.board.Board;
-import domain.board.RowOfBoard;
+import view.board.Board;
+import view.board.RowOfBoard;
 import domain.command.MoveCommandTokens;
 import domain.pieces.*;
-import domain.point.Direction;
-import domain.point.Distance;
-import domain.point.Point;
+import domain.coordinate.Direction;
+import domain.coordinate.Distance;
+import domain.coordinate.Coordinate;
 import domain.state.Ended;
 import domain.state.Moved;
 import domain.state.Started;
@@ -21,8 +21,8 @@ public class creationAssistant {
 		return Team.valueOf(string.toUpperCase());
 	}
 
-	public static Point createPoint(String point) {
-		return Point.of(point);
+	public static Coordinate createPoint(String point) {
+		return Coordinate.of(point);
 	}
 
 	public static Direction createDirection(String direction) {
@@ -47,10 +47,6 @@ public class creationAssistant {
 
 	public static Pawn createPawn(String team, String point) {
 		return new Pawn(createTeam(team), createPoint(point));
-	}
-
-	public static Pawn createPawnOnceMoved(String team, String point) {
-		return new Pawn(createTeam(team), createPoint(point), false);
 	}
 
 	public static Queen createQueen(String team, String point) {

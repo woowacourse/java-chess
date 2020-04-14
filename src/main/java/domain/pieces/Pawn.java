@@ -3,28 +3,20 @@ package domain.pieces;
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
 import domain.pieces.exceptions.CanNotReachException;
-import domain.point.Direction;
-import domain.point.Distance;
-import domain.point.Point;
+import domain.coordinate.Direction;
+import domain.coordinate.Distance;
+import domain.coordinate.Coordinate;
+import domain.coordinate.Row;
 import domain.team.Team;
 
-import java.util.Objects;
-
 public class Pawn extends Piece {
-	private final boolean canMoveTwoDistance;
-
-	public Pawn(Team team, Point point) {
-		this(team, point, true);
-	}
-
-	public Pawn(Team team, Point point, boolean canMoveTwoDistance) {
-		super(PieceType.PAWN, team, point);
-		this.canMoveTwoDistance = canMoveTwoDistance;
+	public Pawn(Team team, Coordinate coordinate) {
+		super(PieceType.PAWN, team, coordinate);
 	}
 
 	@Override
-	public Piece move(Point afterPoint) {
-		return new Pawn(getTeam(), afterPoint, false);
+	public Piece move(Coordinate afterCoordinate) {
+		return new Pawn(getTeam(), afterCoordinate);
 	}
 
 	@Override
@@ -39,13 +31,13 @@ public class Pawn extends Piece {
 	}
 
 	private void validateIsSouth(Direction direction) {
-		if (direction != Direction.S) {
+		if (direction != Direction.SOUTH) {
 			throw new CanNotMoveException("흑색 팀 Pawn은 아래로만 움직일 수 있습니다.");
 		}
 	}
 
 	private void validateIsNorth(Direction direction) {
-		if (direction != Direction.N) {
+		if (direction != Direction.NORTH) {
 			throw new CanNotMoveException("백색 팀 Pawn은 위로만 움직일 수 있습니다.");
 		}
 	}
@@ -79,7 +71,7 @@ public class Pawn extends Piece {
 
 	@Override
 	public void validateReach(Distance distance) {
-		if (distance == Distance.VERTICAL_TWO && canMoveTwoDistance) {
+		if (distance == Distance.VERTICAL_TWO && getCoordinate().matchRow(Row.TWO, Row.SEVEN)) {
 			return;
 		}
 
@@ -88,20 +80,6 @@ public class Pawn extends Piece {
 					+ System.lineSeparator()
 					+ "단, 처음엔 두 칸 앞으로 갈 수 있습니다.");
 		}
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-		if (!super.equals(o)) return false;
-		Pawn pawn = (Pawn) o;
-		return canMoveTwoDistance == pawn.canMoveTwoDistance;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), canMoveTwoDistance);
 	}
 }
 

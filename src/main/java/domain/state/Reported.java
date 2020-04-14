@@ -4,6 +4,6 @@ import domain.pieces.Pieces;
 
 public class Reported extends NotPlaying {
     public Reported(Pieces pieces) {
-        super(pieces);
+        super(StateType.REPORTED, pieces);
     }
 }

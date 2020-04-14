@@ -1,8 +1,8 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
-import domain.point.Direction;
-import domain.point.Point;
+import domain.coordinate.Direction;
+import domain.coordinate.Coordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -14,10 +14,10 @@ class QueenTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("a2");
+		Coordinate coordinate = createPoint("a2");
 		Queen expect = createQueen("black", "a2");
 
-		assertThat(queen.move(point)).isEqualTo(expect);
+		assertThat(queen.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

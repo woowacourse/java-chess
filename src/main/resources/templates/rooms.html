@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="/css/rooms.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <title>우아체스 - 방 목록</title>
+</head>
+<body>
+<div class="header_box">
+    <div class="title_box">
+        <a href="/chess/home"><strong class="title_text">우아체스</strong></a>
+        <img src="/images/logo.png" alt="우아한형제들 로고" id="logo">
+    </div>
+</div>
+<div class="content_box_wrapper">
+    <div class="content_box">
+        <ul>
+            {{#rooms}}
+            <li>{{roomName}}</li>
+            {{/rooms}}
+        </ul>
+        <form method="post" id="room_form">
+            <label for="room_name">방</label>
+            <input type="text" name="room_name" id="room_name"><br />
+            <input type="radio" name="method" value="post" id="enter_or_create" checked="checked"/>
+            <label for="enter_or_create">입장/생성</label><br />
+            <input type="radio" name="method" value="delete" id="delete" />
+            <label for="delete">삭제</label>
+        </form>
+        <button form="room_form">입력</button>
+        <a href="/chess/statistics">통계보러가기</a>
+    </div>
+</div>
+</body>
+</html>

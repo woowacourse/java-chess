@@ -1,0 +1,23 @@
+html, body {
+    position: absolute;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 95%;
+}
+
+.content_box_wrapper {
+    height: 100%;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+    display: table;
+}
+
+.content_box {
+    display: table-cell;
+    width: max-content;
+    height: max-content;
+    vertical-align: middle;
+}
+

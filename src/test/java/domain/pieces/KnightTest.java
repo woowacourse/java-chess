@@ -1,8 +1,8 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
-import domain.point.Direction;
-import domain.point.Point;
+import domain.coordinate.Direction;
+import domain.coordinate.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +20,10 @@ class KnightTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("b3");
+		Coordinate coordinate = createPoint("b3");
 		Knight expect = createKnight("black", "b3");
 
-		assertThat(knight.move(point)).isEqualTo(expect);
+		assertThat(knight.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

@@ -2,10 +2,10 @@ package domain.pieces;
 
 import domain.pieces.exceptions.CanNotAttackException;
 import domain.pieces.exceptions.CanNotMoveException;
-import domain.point.Column;
-import domain.point.Direction;
-import domain.point.Distance;
-import domain.point.Point;
+import domain.coordinate.Column;
+import domain.coordinate.Direction;
+import domain.coordinate.Distance;
+import domain.coordinate.Coordinate;
 import domain.team.Team;
 
 import java.util.Objects;
@@ -13,15 +13,15 @@ import java.util.Objects;
 public abstract class Piece {
     private final PieceType pieceType;
     private final Team team;
-    private final Point point;
+    private final Coordinate coordinate;
 
-    protected Piece(PieceType pieceType, Team team, Point point) {
+    protected Piece(PieceType pieceType, Team team, Coordinate coordinate) {
         this.pieceType = pieceType;
         this.team = team;
-        this.point = point;
+        this.coordinate = coordinate;
     }
 
-    public abstract Piece move(Point afterPoint);
+    public abstract Piece move(Coordinate afterCoordinate);
 
     public abstract void validateMoveDirection(Direction direction);
 
@@ -44,12 +44,12 @@ public abstract class Piece {
     public void validateReach(Distance distance) {
     }
 
-    public boolean matchPoint(Point point) {
-        return this.point.equals(point);
+    public boolean matchPoint(Coordinate coordinate) {
+        return this.coordinate.equals(coordinate);
     }
 
     public boolean matchColumnPoint(Column column) {
-        return point.matchColumn(column);
+        return coordinate.matchColumn(column);
     }
 
     public boolean isTeam(Team team) {
@@ -65,23 +65,35 @@ public abstract class Piece {
     }
 
     public int getRowIndex() {
-        return point.getRowIndex();
+        return coordinate.getRowIndex();
     }
 
     public int getColumnIndex() {
-        return point.getColumnIndex();
+        return coordinate.getColumnIndex();
     }
 
     public Team getTeam() {
         return team;
     }
 
-    public Point getPoint() {
-        return point;
+    public Coordinate getCoordinate() {
+        return coordinate;
     }
 
     public double getScore() {
         return pieceType.getScore();
+    }
+
+    public String getPieceTypeName() {
+        return pieceType.getName();
+    }
+
+    public String getTeamName() {
+        return team.getName();
+    }
+
+    public String getCoordinateRepresentation() {
+        return coordinate.getRepresentation();
     }
 
     @Override
@@ -91,12 +103,12 @@ public abstract class Piece {
         Piece piece = (Piece) o;
         return pieceType == piece.pieceType &&
                 team == piece.team &&
-                Objects.equals(point, piece.point);
+                Objects.equals(coordinate, piece.coordinate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(pieceType, team, point);
+        return Objects.hash(pieceType, team, coordinate);
     }
 
     @Override
@@ -104,7 +116,7 @@ public abstract class Piece {
         return "Piece{" +
                 "pieceType=" + pieceType +
                 ", team=" + team +
-                ", point=" + point +
+                ", point=" + coordinate +
                 '}';
     }
 }

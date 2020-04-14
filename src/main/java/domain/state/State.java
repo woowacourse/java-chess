@@ -12,7 +12,11 @@ public interface State {
 
 	boolean isPlaying();
 
+	boolean isEnded();
+
 	Set<Piece> getSet();
 
 	Pieces getPieces();
+
+	String getStateName();
 }

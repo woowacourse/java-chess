@@ -1,8 +1,8 @@
 package domain.pieces;
 
 import domain.pieces.exceptions.CanNotMoveException;
-import domain.point.Direction;
-import domain.point.Point;
+import domain.coordinate.Direction;
+import domain.coordinate.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -20,10 +20,10 @@ class RookTest {
 
 	@Test
 	void move() {
-		Point point = createPoint("a2");
+		Coordinate coordinate = createPoint("a2");
 		Rook expect = createRook("black", "a2");
 
-		assertThat(rook.move(point)).isEqualTo(expect);
+		assertThat(rook.move(coordinate)).isEqualTo(expect);
 	}
 
 	@Test

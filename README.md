@@ -140,3 +140,28 @@ abcdefgh
     - Queen: 9, Rook: 5, Bishop: 3, Knight: 2.5
     - Pawn: 기본 1, 세로줄에 같은 팀 폰이 있다면 0.5
     - King: 점수 X
+
+### 4 단계
+
+ [x] 웹에 체스판을 렌더링하는 기능
+    [x] 체스말 이미지를 출력하는 기능
+ [x] 체스 말에 명령을 입력하는 기능
+ [x] 안내문을 출력하는 기능
+ [x] status를 출력하는 기능
+ [x] 변경된 체스판을 출력하는 기능
+ 
+ ### 5 단계
+ 
+ [x] 데이터베이스 생성
+ [x] 데이터베이스 연결
+ [x] 데이터베이스 테이블 생성
+ [x] roomDto DAO
+    [x] Create, Read, Delete
+    [x] 컨트롤러에 적용
+    [x] 뷰 추가
+ [ ] stateDto DAO
+    [x] Create, Read, Update
+    [ ] 컨트롤러에 적용
+ [ ] pieceDto DAO
+    [ ] Create, Read, Delete
+    [ ] 컨트롤러에 적용

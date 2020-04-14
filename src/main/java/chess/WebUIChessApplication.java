@@ -1,35 +1,26 @@
 package chess;
 
-import domain.board.Board;
-import domain.state.Ended;
-import domain.state.State;
-import domain.pieces.Pieces;
-import domain.pieces.StartPieces;
-import view.InputView;
-import view.OutputView;
+import controller.ChessHomeController;
+import controller.ChessRoomController;
+import controller.ChessRoomsController;
+import controller.ChessStatisticController;
+import spark.Spark;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
-        OutputView.printStart();
-        Pieces startPieces = new Pieces(new StartPieces().getInstance());
-        State state = new Ended(startPieces);
-        while (true) {
-            state = state.pushCommend(InputView.inputGameCommend());
-            printIfPlaying(state);
-            printIfStatus(state);
-        }
-    }
 
-    private static void printIfPlaying(State state) {
-        if (state.isPlaying()) {
-            OutputView.printBoard(Board.of(state.getSet()));
-        }
-    }
+	private static final ChessRoomsController ROOMS_CONTROLLER = ChessRoomsController.getInstance();
+	private static final ChessRoomController ROOM_CONTROLLER = ChessRoomController.getInstance();
+	private static final ChessStatisticController STATISTIC_CONTROLLER
+			= ChessStatisticController.getInstance();
+	private static final ChessHomeController HOME_CONTROLLER = ChessHomeController.getInstance();
 
-    private static void printIfStatus(State state) {
-        if (state.isReported()) {
-            OutputView.printStatus(state.getPieces());
-        }
-    }
+	public static void main(String[] args) {
+		Spark.port(ServerInfo.PORT);
+		Spark.staticFiles.location(ServerInfo.STATIC_FILES);
 
+		ROOMS_CONTROLLER.run();
+		ROOM_CONTROLLER.run();
+		STATISTIC_CONTROLLER.run();
+		HOME_CONTROLLER.run();
+	}
 }
