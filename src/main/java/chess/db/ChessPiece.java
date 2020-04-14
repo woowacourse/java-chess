@@ -5,6 +5,9 @@ public class ChessPiece {
     private String position;
     private String piece;
 
+    public ChessPiece() {
+    }
+
     public ChessPiece(String gameId, String position, String piece) {
         this.gameId = gameId;
         this.position = position;

@@ -13,7 +13,6 @@ public class ChessWebController {
         this.service = service;
     }
 
-
     public Map<String, Object> canResume(String gameId) {
         Map<String, Object> model = new HashMap<>();
 

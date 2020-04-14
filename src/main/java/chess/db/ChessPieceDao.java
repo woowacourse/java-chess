@@ -2,6 +2,7 @@ package chess.db;
 
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
+import chess.util.JdbcTemplate;
 import chess.util.JdbcUtil;
 
 import java.sql.Connection;
@@ -46,21 +47,17 @@ public class ChessPieceDao implements PieceDao {
     public void addPiece(ChessPiece piece) {
         String query = "INSERT INTO board_status (game_id, position, piece) VALUES (?, ?, ?)";
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 
-        try {
-            conn = JdbcUtil.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, piece.getGameId());
-            pstmt.setString(2, piece.getPosition());
-            pstmt.setString(3, piece.getPiece());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtil.close(conn, pstmt);
-        }
+            @Override
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, piece.getGameId());
+                pstmt.setString(2, piece.getPosition());
+                pstmt.setString(3, piece.getPiece());
+            }
+        };
+
+        jdbcTemplate.executeUpdate(query);
     }
 
     @Override
@@ -91,39 +88,29 @@ public class ChessPieceDao implements PieceDao {
     public void updatePiece(String gameId, Position position, Piece piece) {
         String query = "UPDATE board_status SET piece = ? WHERE game_id = ? AND position = ?";
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 
-        try {
-            conn = JdbcUtil.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, piece.name());
-            pstmt.setString(2, gameId);
-            pstmt.setString(3, position.name());
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtil.close(conn, pstmt);
-        }
+            @Override
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, piece.name());
+                pstmt.setString(2, gameId);
+                pstmt.setString(3, position.name());
+            }
+        };
+        jdbcTemplate.executeUpdate(query);
     }
 
     @Override
     public void deleteBoardStatus(String gameId) {
         String query = "DELETE FROM board_status WHERE game_id = ?";
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
+        JdbcTemplate jdbcTemplate = new JdbcTemplate() {
 
-        try {
-            conn = JdbcUtil.getConnection();
-            pstmt = conn.prepareStatement(query);
-            pstmt.setString(1, gameId);
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            JdbcUtil.close(conn, pstmt);
-        }
+            @Override
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
+                pstmt.setString(1, gameId);
+            }
+        };
+        jdbcTemplate.executeUpdate(query);
     }
 }
