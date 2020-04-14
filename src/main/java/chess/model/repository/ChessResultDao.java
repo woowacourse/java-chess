@@ -5,11 +5,13 @@ import static chess.model.repository.template.JdbcTemplate.makeQuery;
 
 import chess.model.domain.board.TeamScore;
 import chess.model.domain.piece.Color;
+import chess.model.dto.GameResultDto;
 import chess.model.repository.template.JdbcTemplate;
 import chess.model.repository.template.PreparedStatementSetter;
 import chess.model.repository.template.ResultSetMapper;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 public class ChessResultDao {
 
@@ -73,6 +75,41 @@ public class ChessResultDao {
             selectTeamScore.put(Color.BLACK, rs.getDouble("BLACK_SCORE"));
             selectTeamScore.put(Color.WHITE, rs.getDouble("WHITE_SCORE"));
             return selectTeamScore;
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
+    }
+
+    public Optional<GameResultDto> getWinOrDraw(String userName) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = makeQuery(
+            "SELECT SUM(WIN) AS WIN",
+            "     , SUM(DRAW) AS DRAW",
+            "     , SUM(LOSE) AS LOSE",
+            "  FROM (SELECT BLACK_SCORE > WHITE_SCORE AS WIN",
+            "             , BLACK_SCORE = WHITE_SCORE AS DRAW",
+            "             , BLACK_SCORE < WHITE_SCORE AS LOSE",
+            "          FROM CHESS_RESULT_TB",
+            "         WHERE GAME_ID IN(",
+            "               SELECT ID",
+            "                 FROM CHESS_GAME_TB",
+            "                WHERE BLACK_USER_NM = ?)",
+            "         UNION ALL",
+            "        SELECT BLACK_SCORE < WHITE_SCORE AS WIN",
+            "             , BLACK_SCORE = WHITE_SCORE AS DRAW",
+            "             , BLACK_SCORE > WHITE_SCORE AS LOSE",
+            "          FROM CHESS_RESULT_TB",
+            "         WHERE GAME_ID IN(",
+            "               SELECT ID",
+            "                 FROM CHESS_GAME_TB",
+            "                WHERE WHITE_USER_NM = ?)) AS TOTAL"
+        );
+        PreparedStatementSetter pss = getPssFromParams(userName, userName);
+        ResultSetMapper<Optional<GameResultDto>> mapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
+            }
+            return Optional
+                .of(new GameResultDto(rs.getInt("WIN"), rs.getInt("DRAW"), rs.getInt("LOSE")));
         };
         return jdbcTemplate.executeQuery(query, pss, mapper);
     }

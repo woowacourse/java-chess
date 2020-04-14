@@ -169,14 +169,15 @@ public class ChessGameDao {
     public List<String> getUsers() {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = makeQuery(
-            "SELECT DISTINCT(BLACK_USER_NM) AS NM",
-            "  FROM CHESS_GAME_TB",
-            " WHERE PROCEEDING_YN = 'N'",
-            " UNION ALL",
-            "SELECT DISTINCT(WHITE_USER_NM)",
-            "  FROM CHESS_GAME_TB",
-            " WHERE PROCEEDING_YN = 'N'",
-            " ORDER BY NM"
+            "SELECT DISTINCT(NM) AS NM",
+            "  FROM (SELECT DISTINCT(BLACK_USER_NM) AS NM",
+            "          FROM CHESS_GAME_TB",
+            "         WHERE PROCEEDING_YN = 'N'",
+            "         UNION ALL",
+            "        SELECT DISTINCT(WHITE_USER_NM)",
+            "          FROM CHESS_GAME_TB",
+            "         WHERE PROCEEDING_YN = 'N'",
+            "         ORDER BY NM) AS TOTAL"
         );
         ResultSetMapper<List<String>> mapper = rs -> {
             List<String> users = new ArrayList<>();

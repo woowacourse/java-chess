@@ -10,7 +10,9 @@ import chess.model.dto.DeleteRoomDto;
 import chess.model.dto.MoveDto;
 import chess.model.dto.PromotionTypeDto;
 import chess.model.dto.SourceDto;
+import chess.model.dto.UserNameDto;
 import chess.model.service.ChessGameService;
+import chess.model.service.ResultService;
 import chess.model.service.RoomService;
 import com.google.gson.Gson;
 import java.util.Collections;
@@ -25,6 +27,7 @@ public class ChessUIController {
     private static final Gson GSON = new Gson();
     private static final ChessGameService CHESS_GAME_SERVICE = ChessGameService.getInstance();
     private static final RoomService ROOM_SERVICE = RoomService.getInstance();
+    private static final ResultService RESULT_SERVICE = ResultService.getInstance();
     private static final Map<Color, String> DEFAULT_NAMES;
 
     static {
@@ -101,6 +104,8 @@ public class ChessUIController {
 
         get("/viewRooms", (req, res) -> GSON.toJson(ROOM_SERVICE.getUsedRooms()));
 
+        get("/viewUsers", (req, res) -> GSON.toJson(RESULT_SERVICE.getUsers()));
+
         post("/createRoom", (req, res) -> {
             ROOM_SERVICE.addRoom(GSON.fromJson(req.body(), CreateRoomDto.class));
             return GSON.toJson(ROOM_SERVICE.getUsedRooms());
@@ -109,6 +114,16 @@ public class ChessUIController {
         post("/deleteRoom", (req, res) -> {
             ROOM_SERVICE.deleteRoom(GSON.fromJson(req.body(), DeleteRoomDto.class));
             return GSON.toJson(ROOM_SERVICE.getUsedRooms());
+        });
+
+        post("/userResult", (req, res) -> {
+            return GSON
+                .toJson(RESULT_SERVICE.getResult(GSON.fromJson(req.body(), UserNameDto.class)));
+        });
+
+        post("/result", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "/result.html");
         });
     }
 

@@ -13,6 +13,8 @@ const newGame = document.getElementById('new-game');
 const newGameId = document.getElementById('new-game-id');
 const newButton = document.getElementById('new-button');
 const roomButton = document.getElementById('room-button');
+const resultButton = document.getElementById('result-button');
+const resultGame = document.getElementById('result-game');
 
 let firstClick = true;
 let source = null;
@@ -21,6 +23,10 @@ let gameId = document.getElementById('gameId').innerText;
 
 roomButton.onclick = () => {
     location.href = '/'
+};
+
+resultButton.onclick = () => {
+    resultGame.submit();
 };
 
 newButton.onclick = () => {
