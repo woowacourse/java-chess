@@ -28,7 +28,8 @@ public class TurnDao {
     }
 
     public void save(Team turn) throws SQLException {
-        String query = "UPDATE turn SET isWhite = ?";
+        delete();
+        String query = "INSERT INTO turn VALUES (?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setBoolean(1, turn.isWhite());
         pstmt.executeUpdate();

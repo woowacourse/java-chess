@@ -43,17 +43,18 @@ public class PiecesDao {
     }
 
     public void save(Map<Position, Piece> pieces) throws SQLException {
+        delete();
         for (Position position : pieces.keySet()) {
             savePiece(position, pieces.get(position));
         }
     }
 
     private void savePiece(Position position, Piece piece) throws SQLException {
-        String query = "UPDATE pieces SET piece = ?, hasMoved = ? WHERE position = ?";
+        String query = "INSERT INTO pieces VALUES (?, ?, ?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setString(1, Character.toString(piece.getSymbol()));
-        pstmt.setBoolean(2, piece.getHasMoved());
-        pstmt.setString(3, position.getKey());
+        pstmt.setString(1, position.getKey());
+        pstmt.setString(2, Character.toString(piece.getSymbol()));
+        pstmt.setBoolean(3, piece.getHasMoved());
         pstmt.executeUpdate();
     }
 

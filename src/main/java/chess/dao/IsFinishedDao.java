@@ -27,7 +27,8 @@ public class IsFinishedDao {
     }
 
     public void save(boolean isFinished) throws SQLException {
-        String query = "UPDATE isFinished SET isFinished = ?";
+        delete();
+        String query = "INSERT INTO isFinished VALUES (?)";
         PreparedStatement pstmt = conn.prepareStatement(query);
         pstmt.setBoolean(1, isFinished);
         pstmt.executeUpdate();

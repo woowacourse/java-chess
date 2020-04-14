@@ -10,6 +10,7 @@ import chess.strategy.PiecesInitStrategy;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static chess.piece.Team.NONE;
 import static chess.piece.Team.WHITE;

@@ -3,6 +3,8 @@ package chess.piece;
 import chess.Board;
 import chess.position.Position;
 
+import java.util.Objects;
+
 public class Piece {
     private final Team team;
     private final PieceType pieceType;
@@ -89,5 +91,20 @@ public class Piece {
 
     public double getScore() {
         return this.pieceType.getScore();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return hasMoved == piece.hasMoved &&
+                team == piece.team &&
+                pieceType == piece.pieceType;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, pieceType, hasMoved);
     }
 }

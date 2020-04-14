@@ -33,18 +33,27 @@ public class ChessGameServiceTest {
         savedIsFinished = isFinishedDao.load();
     }
 
-    @DisplayName("아무 데이터가 없을 때에도 정상적으로 작동하는지 테스트")
+    @DisplayName("아무 데이터가 없을 때 init을 실행하는 것과 보통 때에 init을 실행하는 것에 차이가 없는지 테스트")
     @Test
     void initTest() throws SQLException {
-        ChessGameService expectedService = new ChessGameService(piecesDao, turnDao, isFinishedDao);
-
         ChessGameService actualService = new ChessGameService(piecesDao, turnDao, isFinishedDao);
         actualService.delete();
         actualService.init();
 
-        assertThat(actualService.getBoard()).isEqualTo(expectedService.getBoard());
+        ChessGameService expectedService = new ChessGameService(piecesDao, turnDao, isFinishedDao);
+        expectedService.init();
+
+        Board actualBoard = actualService.getBoard();
+        Board expectedBoard = expectedService.getBoard();
+
+        assertThat(isEquals(actualBoard.getPieces(), expectedBoard.getPieces())).isTrue();
         assertThat(actualService.isTurnWhite()).isEqualTo(expectedService.isTurnWhite());
         assertThat(actualService.isFinished()).isEqualTo(expectedService.isFinished());
+    }
+
+    private boolean isEquals(Map<Position, Piece> pieces1, Map<Position, Piece> pieces2) {
+        return pieces1.keySet().stream()
+                .allMatch(position -> pieces1.get(position).equals(pieces2.get(position)));
     }
 
     @AfterEach
