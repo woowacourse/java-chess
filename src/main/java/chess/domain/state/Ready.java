@@ -1,23 +1,20 @@
 package chess.domain.state;
 
-import java.util.Map;
+import static chess.domain.piece.Team.*;
+import static chess.domain.state.StateType.*;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
 
-public class Ready implements GameState {
-	private final Board board;
-	private Team turn;
-
+public class Ready extends GameState {
 	public Ready(Board board) {
-		this.board = board;
-		this.turn = Team.WHITE;
+		this(board, NONE);
 	}
 
 	public Ready(Board board, Team turn) {
-		this.board = board;
-		this.turn = turn;
+		super(board, READY, turn);
 	}
 
 	@Override
@@ -32,7 +29,7 @@ public class Ready implements GameState {
 	}
 
 	@Override
-	public Map<Team, Double> status() {
+	public Result status() {
 		throw new UnsupportedOperationException("게임을 시작해야 합니다.");
 	}
 
@@ -42,12 +39,7 @@ public class Ready implements GameState {
 	}
 
 	@Override
-	public Board getBoard() {
-		return board;
-	}
-
-	@Override
 	public GameState end() {
-		return new SuspendFinish(board, turn);
+		return new SuspendFinished(board, turn);
 	}
 }

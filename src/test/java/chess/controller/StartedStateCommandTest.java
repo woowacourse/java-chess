@@ -10,7 +10,6 @@ import org.junit.jupiter.params.provider.ValueSource;
 import chess.domain.board.Board;
 import chess.domain.game.Game;
 import chess.domain.state.GameState;
-import chess.domain.state.Ready;
 import chess.domain.state.Started;
 
 class StartedStateCommandTest {
