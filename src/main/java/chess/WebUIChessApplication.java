@@ -17,7 +17,7 @@ public class WebUIChessApplication {
         get("/", controller.getChessGameRoute());
         get("/result", controller.getResultRoute());
         get("/exception", controller.getExceptionRoute());
-        post("/move", controller.getMoveRoute());
-        post("/initialize", controller.getInitializeRoute());
+        post("/move", controller.postMoveRoute());
+        post("/initialize", controller.postInitializeRoute());
     }
 }

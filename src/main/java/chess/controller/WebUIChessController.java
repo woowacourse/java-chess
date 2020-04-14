@@ -58,7 +58,7 @@ public class WebUIChessController {
         };
     }
 
-    public Route getMoveRoute() {
+    public Route postMoveRoute() {
         return (req, res) -> {
             Board board = service.getSavedBoard();
             String source = req.queryParams("source");
@@ -73,7 +73,7 @@ public class WebUIChessController {
         };
     }
 
-    public Route getInitializeRoute() {
+    public Route postInitializeRoute() {
         return (req, res) -> {
             service.initBoard();
             res.redirect("/");
