@@ -1,53 +1,83 @@
 package chess.service;
 
-import chess.controller.dto.PieceDto;
 import chess.controller.dto.ResponseDto;
+import chess.dao.ChessDAO;
 import chess.domain.MoveParameter;
 import chess.domain.board.Board;
+import chess.domain.board.initializer.AutomatedBoardInitializer;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Turn;
 import chess.domain.player.Team;
 import chess.domain.position.Position;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 public class ChessService {
+    private ChessDAO chessDAO = new ChessDAO();
+    private Map<Long, ChessGame> chessGames = new HashMap<>();
 
-    private ChessGame chessGame = new ChessGame();
-
-    public boolean isEnd() {
-        return chessGame.isEnd();
+    public Long createGame() {
+        ChessGame chessGame = ChessGame.of(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        Long id = chessDAO.createChessGame(chessGame);
+        chessGames.put(id, chessGame);
+        return id;
     }
 
-    public ResponseDto start(List<String> parameters) {
-        chessGame.start();
-        return new ResponseDto(createBoardDto());
+    public void restart(final Long id) {
+        ChessGame chessGame = ChessGame.of(Board.of(new AutomatedBoardInitializer()), Turn.from(Team.WHITE));
+        chessGames.put(id, chessGame);
     }
 
-    public ResponseDto end(List<String> parameters) {
-        chessGame.end();
-        return new ResponseDto(createBoardDto());
+    public void load(final Long id) {
+        ChessGame chessGame = findChessGame(id);
+        chessGames.put(id, chessGame);
     }
 
-    public ResponseDto move(List<String> parameters) {
+    public void save(final Long id) {
+        chessDAO.addBoard(id, chessGames.get(id));
+        chessGames.remove(id);
+    }
+
+    public void remove(final Long id) {
+        chessDAO.deleteGame(id);
+        chessGames.remove(id);
+    }
+
+    public void move(final Long id, final List<String> parameters) {
+        loadIfNotExisting(id);
+        ChessGame chessGame = chessGames.get(id);
         chessGame.move(MoveParameter.of(parameters));
-        return new ResponseDto(createBoardDto());
     }
 
-    public ResponseDto status(List<String> parameters) {
-        Map<Team, Double> score = chessGame.getStatus();
-        return new ResponseDto(createBoardDto(), score);
+    public List<Position> getMovablePositions(final Long id, final Position source) {
+        loadIfNotExisting(id);
+        ChessGame chessGame = chessGames.get(id);
+        return chessGame.getMovablePositions(source);
     }
 
-    private Map<Position, PieceDto> createBoardDto() {
-        Board board = chessGame.getBoard();
-        return board.getBoard()
-                .entrySet()
-                .stream()
-                .collect(Collectors.toMap(
-                        entry -> entry.getKey(),
-                        entry -> PieceDto.of(entry.getValue())
-                ));
+    public ResponseDto getResponseDto(final Long id) {
+        if (!chessGames.containsKey(id)) {
+            ChessGame chessGame = findChessGame(id);
+            return ResponseDto.of(chessGame);
+        }
+        return ResponseDto.of(chessGames.get(id));
+    }
+
+    public List<Long> getRoomId() {
+        return chessDAO.getRoomId();
+    }
+
+    private ChessGame findChessGame(final Long id) {
+        Optional<ChessGame> chessGameOptional = chessDAO.findGameById(id);
+        return chessGameOptional.orElseThrow(() -> new IllegalArgumentException("잘못된 게임 번호입니다."));
+    }
+
+    private void loadIfNotExisting(final Long id) {
+        if (!chessGames.containsKey(id)) {
+            load(id);
+        }
     }
 }

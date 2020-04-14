@@ -41,9 +41,9 @@
 ### Piece란 체스 말을 의미한다
 - [x] Piece는 자신의 위치를 알아야 한다.
 - [x] Piece는 자신이 속한 Player가 누구인지 알아야 한다.
-- [ ] Piece는 자신의 이동 규칙을 판단할 수 있어야 한다.
-- [ ] Piece는 입력받은 위치에 이동 가능한지를 알아야 한다.
-- [ ] Piece는 입력받은 위치에 이동가능하다면 이동할 수 있어야 한다.
+- [x] Piece는 자신의 이동 규칙을 판단할 수 있어야 한다.
+- [x] Piece는 입력받은 위치에 이동 가능한지를 알아야 한다.
+- [x] Piece는 입력받은 위치에 이동가능하다면 이동할 수 있어야 한다.
 
 #### Piece 종류
 - Pawn
@@ -64,7 +64,9 @@
     
  ### Board란 체스 판을 의미한다
 - [x] Board는 Position과 Piece를 Map으로 가지고 있다.
-- [ ] Board는 source position과 target position을 받아 해당하는 말의 이동을 수행할 수 있다. 
+- [x] Board는 source position과 target position을 받아 해당하는 말의 이동을 수행할 수 있다. 
 
 TODO
-- Board에서 이동 후에 연결이 끊어진 Piece가 Position 정보를 가지고 있을텐데, 더 이상 Board에서 접근할 수 없기 때문에 상관 없나?
+- 이동 가능한 경로를 보여줄 때 이미지로 보여주면 좋을 듯
+- DAO 연결 부분에서 DB와의 연결이 자주 일어나는 부분을 한 번만 커넥션을 꽂아도 되도록 변경
+

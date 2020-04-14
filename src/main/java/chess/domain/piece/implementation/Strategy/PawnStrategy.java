@@ -40,14 +40,6 @@ public class PawnStrategy implements MoveStrategy {
     }
 
     @Override
-    public List<Position> getMovablePositionsWithoutObstacles(Position source) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(pawnMoveStrategy.getMovablePositionsWithoutObstacles(source));
-        positions.addAll(pawnAttackStrategy.getMovablePositionsWithoutObstacles(source));
-        return positions;
-    }
-
-    @Override
     public List<Position> getMovablePositions(Position source, BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(pawnMoveStrategy.getMovablePositions(source, boardSituation));

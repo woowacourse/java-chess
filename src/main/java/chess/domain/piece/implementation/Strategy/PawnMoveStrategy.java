@@ -19,21 +19,6 @@ class PawnMoveStrategy {
         this.startRank = startRank;
     }
 
-    List<Position> getMovablePositionsWithoutObstacles(Position source) {
-        List<Position> positions = new ArrayList<>();
-        if (source.canMoveBy(moveDirection)) {
-            positions.add(source.moveByDirection(moveDirection));
-            putIfStartPosition(source, positions);
-        }
-        return positions;
-    }
-
-    private void putIfStartPosition(Position source, List<Position> positions) {
-        if (isFirstMove(source)) {
-            positions.add(source.moveByDirection(moveDirection).moveByDirection(moveDirection));
-        }
-    }
-
     List<Position> getMovablePositions(Position source, BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         if (source.canMoveBy(moveDirection)) {

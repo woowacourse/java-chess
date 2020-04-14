@@ -2,10 +2,11 @@ package chess.controller.dto;
 
 public enum Command {
 
+    CREATE,
+    ENTER,
     START,
     END,
     MOVE,
-    STATUS,
     UNKNOWN;
 
     public static Command of(String command) {

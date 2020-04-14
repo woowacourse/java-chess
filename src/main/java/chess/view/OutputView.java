@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -32,8 +33,10 @@ public class OutputView {
 
     public void printInitialMessage() {
         System.out.println("> 체스 게임을 시작합니다.");
-        System.out.println("> 게임 시작 : start");
-        System.out.println("> 게임 종료 : end");
+        System.out.println("> 새 게임 생성: create");
+        System.out.println("> 게임 입장 enter 방번호 - 예. enter 1");
+        System.out.println("> 게임 시작 : start new/load - 예 start new / start load");
+        System.out.println("> 게임 종료 : end - 예. end / end save");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
@@ -50,6 +53,10 @@ public class OutputView {
 
         if (responseDto.getScores() != null) {
             printStatus(responseDto.getScores());
+        }
+
+        if (responseDto.getMessage() != null) {
+            System.out.println(responseDto.getMessage());
         }
     }
 
@@ -98,5 +105,15 @@ public class OutputView {
                 .stream()
                 .map(entry -> entry.getKey().toString() + " : " + entry.getValue())
                 .forEach(System.out::println);
+    }
+
+    public void printRoom(List<Long> roomId) {
+        for (Long id : roomId) {
+            System.out.println(id + "번 게임");
+        }
+    }
+
+    public void printGameId(Long runningGameId) {
+        System.out.println(runningGameId + "번 게임에 입장하셨습니다.");
     }
 }

@@ -7,7 +7,7 @@ public class PieceDto {
     private String pieceType;
     private String team;
 
-    public PieceDto(String pieceType, String team) {
+    private PieceDto(String pieceType, String team) {
         this.pieceType = pieceType;
         this.team = team;
     }

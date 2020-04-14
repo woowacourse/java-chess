@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스게임 {{id}}게임</title>
+    <link href="style-game.css" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+    <div class="game-container">
+        <div class="title-container">
+            <div class="title"><h1><a href="/" id="main-title">체스체스체스체스</a></h1></div>
+        </div>
+        <div class="chess-board-container">
+            <div class="board" id="board">
+                <div class="rank-board">
+                    <div class="rank-set">
+                        <div class="rank">
+                            <div class='cell white-cell' id='A8'></div>
+                            <div class='cell black-cell' id='B8'></div>
+                            <div class='cell white-cell' id='C8'></div>
+                            <div class='cell black-cell' id='D8'></div>
+                            <div class='cell white-cell' id='E8'></div>
+                            <div class='cell black-cell' id='F8'></div>
+                            <div class='cell white-cell' id='G8'></div>
+                            <div class='cell black-cell' id='H8'></div>
+                            <div class='rank_text cell'>8</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell black-cell' id='A7'></div>
+                            <div class='cell white-cell' id='B7'></div>
+                            <div class='cell black-cell' id='C7'></div>
+                            <div class='cell white-cell' id='D7'></div>
+                            <div class='cell black-cell' id='E7'></div>
+                            <div class='cell white-cell' id='F7'></div>
+                            <div class='cell black-cell' id='G7'></div>
+                            <div class='cell white-cell' id='H7'></div>
+                            <div class='rank_text cell'>7</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell white-cell' id='A6'></div>
+                            <div class='cell black-cell' id='B6'></div>
+                            <div class='cell white-cell' id='C6'></div>
+                            <div class='cell black-cell' id='D6'></div>
+                            <div class='cell white-cell' id='E6'></div>
+                            <div class='cell black-cell' id='F6'></div>
+                            <div class='cell white-cell' id='G6'></div>
+                            <div class='cell black-cell' id='H6'></div>
+                            <div class='rank_text cell'>6</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell black-cell' id='A5'></div>
+                            <div class='cell white-cell' id='B5'></div>
+                            <div class='cell black-cell' id='C5'></div>
+                            <div class='cell white-cell' id='D5'></div>
+                            <div class='cell black-cell' id='E5'></div>
+                            <div class='cell white-cell' id='F5'></div>
+                            <div class='cell black-cell' id='G5'></div>
+                            <div class='cell white-cell' id='H5'></div>
+                            <div class='rank_text cell'>5</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell white-cell' id='A4'></div>
+                            <div class='cell black-cell' id='B4'></div>
+                            <div class='cell white-cell' id='C4'></div>
+                            <div class='cell black-cell' id='D4'></div>
+                            <div class='cell white-cell' id='E4'></div>
+                            <div class='cell black-cell' id='F4'></div>
+                            <div class='cell white-cell' id='G4'></div>
+                            <div class='cell black-cell' id='H4'></div>
+                            <div class='rank_text cell'>4</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell black-cell' id='A3'></div>
+                            <div class='cell white-cell' id='B3'></div>
+                            <div class='cell black-cell' id='C3'></div>
+                            <div class='cell white-cell' id='D3'>
+                                <img alt="" src="">
+                            </div>
+                            <div class='cell black-cell' id='E3'></div>
+                            <div class='cell white-cell' id='F3'></div>
+                            <div class='cell black-cell' id='G3'></div>
+                            <div class='cell white-cell' id='H3'></div>
+                            <div class='rank_text cell'>3</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell white-cell' id='A2'></div>
+                            <div class='cell black-cell' id='B2'></div>
+                            <div class='cell white-cell' id='C2'></div>
+                            <div class='cell black-cell' id='D2'></div>
+                            <div class='cell white-cell' id='E2'></div>
+                            <div class='cell black-cell' id='F2'></div>
+                            <div class='cell white-cell' id='G2'></div>
+                            <div class='cell black-cell' id='H2'></div>
+                            <div class='rank_text cell'>2</div>
+                        </div>
+                        <div class="rank">
+                            <div class='cell black-cell' id='A1'></div>
+                            <div class='cell white-cell' id='B1'></div>
+                            <div class='cell black-cell' id='C1'></div>
+                            <div class='cell white-cell' id='D1'></div>
+                            <div class='cell black-cell' id='E1'></div>
+                            <div class='cell white-cell' id='F1'></div>
+                            <div class='cell black-cell' id='G1'></div>
+                            <div class='cell white-cell' id='H1'></div>
+                            <div class='rank_text cell'>1</div>
+                        </div>
+                        <div class="rank">
+                            <div class='file-text cell' id='A'>A</div>
+                            <div class='file-text cell' id='B'>B</div>
+                            <div class='file-text cell' id='C'>C</div>
+                            <div class='file-text cell' id='D'>D</div>
+                            <div class='file-text cell' id='E'>E</div>
+                            <div class='file-text cell' id='F'>F</div>
+                            <div class='file-text cell' id='G'>G</div>
+                            <div class='file-text cell' id='H'>H</div>
+                            <div class='rank_text cell'></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="buttons">
+            <div class="restart-button">
+                <form action="/restart" method="post">
+                    <input hidden="hidden" name="command" type="text" value="start">
+                    <input hidden="hidden" name="parameter" type="text" value="new">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
+                    <input type="submit" value="새 게임"/>
+                </form>
+            </div>
+            <div class="save-button">
+                <form action="/save" method="post">
+                    <input hidden="hidden" name="command" type="text" value="end">
+                    <input hidden="hidden" name="parameter" type="text" value="save">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
+                    <input type="submit" value="게임 저장"/>
+                </form>
+            </div>
+            <div class="end-button">
+                <form action="/end" method="post">
+                    <input hidden="hidden" name="command" type="text" value="end">
+                    <input hidden="hidden" name="parameter" type="text" value="">
+                    <input hidden="hidden" name="id" type="text" value="{{id}}">
+                    <input type="submit" value="게임 종료"/>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="score-board-container">
+        <div class="score-board black-score-board">
+            <div class="winner" id="BLACK-winner"></div>
+            <div class="player-name black-player-name">BLACK</div>
+            <div class="player-image black-player-image">
+                <img class="doo" src="img/doo.jpg">
+            </div>
+            <div class="player-turn" id="BLACK-player-turn"></div>
+            <div class="player-score black-player-score" id="BLACK-SCORE">
+            </div>
+        </div>
+        <div class="score-board-boarder"></div>
+        <div class="score-board white-score-board">
+            <div class="winner" id="WHITE-winner"></div>
+            <div class="player-name white-player-name">WHITE</div>
+            <div class="player-image white-player-image">
+                <img class="doo" src="img/doo.jpg">
+            </div>
+            <div class="player-turn" id="WHITE-player-turn"></div>
+            <div class="player-score white-player-score" id="WHITE-SCORE">
+            </div>
+        </div>
+    </div>
+    <div id="chessGameId" style="display: none">
+        {{id}}
+    </div>
+</div>
+</body>
+<script id="board-data" type="text/x-mustache">
+    {{#board}}
+        document.getElementById("{{key}}").innerHTML = '<div class="piece"><img class="piece-img" src="../img/piece/{{value}}.png"></div>'
+    {{/board}}
+    {{#if message}}
+        alert("{{message}}");
+    {{/if }}
+    {{#score}}
+        document.getElementById("{{key}}-SCORE").innerText = {{value}}
+    {{/score}}
+    {{#if winner}}
+        document.getElementById("{{winner.key}}-winner").innerText = '우승'
+    {{/if}}
+    document.getElementById("{{turn.key}}-player-turn").innerText = '현재 턴'
+
+
+</script>
+
+<script>
+    var x = document.getElementById('board-data');
+    eval(x.innerText);
+</script>
+<script>
+    let params = "";
+    let pieceCell = document.getElementsByClassName('cell');
+    for (let i = 0; i < pieceCell.length; i++) {
+        pieceCell.item(i).addEventListener('mouseover', function (event) {
+            event.target.style.backgroundColor = 'red';
+            event.target.style.opacity = 0.5;
+        }, false);
+        pieceCell.item(i).addEventListener('mouseout', function (event) {
+            event.target.style.backgroundColor = '';
+            event.target.style.opacity = 1.0;
+        }, false);
+        pieceCell.item(i).addEventListener('click', function (event) {
+            if (params == "") {
+                params += pieceCell.item(i).getAttribute("id");
+                params += "_";
+                let id = document.getElementById("chessGameId");
+                fetch("/movable/" + id.innerText.trim() + "/" + pieceCell.item(i).getAttribute("id"))
+                    .then(response => response.text())
+                    .then(positionText => positionText.split(","))
+                    .then(positions => {
+                        positions.forEach(position => {
+                            let cell = document.getElementById(position);
+                            cell.innerText = "여기";
+                        })
+                    })
+                    .catch(error => {
+                        alert(error.toString());
+                        location.reload();
+                    });
+            } else {
+                params += pieceCell.item(i).getAttribute("id");
+                let method = "post";
+                let path = "/move";
+                let form = document.createElement("form");
+                form.setAttribute("method", method);
+                form.setAttribute("action", path);
+
+                let command = document.createElement("input");
+                command.setAttribute("type", "hidden");
+                command.setAttribute("name", "command");
+                command.setAttribute("value", "move");
+                form.appendChild(command);
+
+                let parameter = document.createElement("input");
+                parameter.setAttribute("type", "hidden");
+                parameter.setAttribute("name", "parameter");
+                parameter.setAttribute("value", params);
+                form.appendChild(parameter);
+
+                let gameId = document.createElement("input");
+                let id = document.getElementById("chessGameId");
+                gameId.setAttribute("type", "hidden");
+                gameId.setAttribute("name", "id");
+                gameId.setAttribute("value", id.innerText);
+                form.appendChild(gameId);
+
+                params = "";
+                form.appendChild(parameter);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    }
+</script>
+
+</html>

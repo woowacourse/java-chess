@@ -18,13 +18,6 @@ class PawnAttackStrategy {
         this.team = team;
     }
 
-    List<Position> getMovablePositionsWithoutObstacles(Position source) {
-        return attackDirections.stream()
-                .filter(source::canMoveBy)
-                .map(source::moveByDirection)
-                .collect(Collectors.toList());
-    }
-
     List<Position> getMovablePositions(Position source, BoardSituation boardSituation) {
         return attackDirections.stream()
                 .filter(source::canMoveBy)

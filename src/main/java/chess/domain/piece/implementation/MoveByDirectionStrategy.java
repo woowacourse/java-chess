@@ -20,25 +20,6 @@ public abstract class MoveByDirectionStrategy implements MoveStrategy {
     }
 
     @Override
-    public List<Position> getMovablePositionsWithoutObstacles(Position source) {
-        List<Position> positions = new ArrayList<>();
-        for (MovingDirection direction : directions) {
-            positions.addAll(getMovablePositionsByDirection(direction, source));
-        }
-        return positions;
-    }
-
-    private List<Position> getMovablePositionsByDirection(MovingDirection direction, Position source) {
-        List<Position> positions = new ArrayList<>();
-        Position startPosition = source;
-        while (startPosition.canMoveBy(direction)) {
-            startPosition = startPosition.moveByDirection(direction);
-            positions.add(startPosition);
-        }
-        return positions;
-    }
-
-    @Override
     public List<Position> getMovablePositions(Position source, BoardSituation boardSituation) {
         List<Position> positions = new ArrayList<>();
         for (MovingDirection direction : directions) {
