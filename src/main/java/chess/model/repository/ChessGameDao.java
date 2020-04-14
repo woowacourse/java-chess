@@ -53,10 +53,17 @@ public class ChessGameDao {
         jdbcTemplate.executeUpdate(query, pss);
     }
 
-    // TODO ROOMID와 연동 - 조인해서 가져오기
     public Optional<Integer> getGameNumberLatest(int roomId) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
-        String query = "SELECT ID FROM CHESS_GAME_TB WHERE ID LIKE ? ORDER BY ID DESC";
+        StringBuilder query = new StringBuilder();
+        query.append("SELECT GAME.ID ");
+        query.append("  FROM CHESS_GAME_TB AS GAME ");
+        query.append("  JOIN ROOM_TB AS ROOM ");
+        query.append(" WHERE GAME.ROOM_ID = ROOM.ID ");
+        query.append("   AND GAME.PROCEEDING_YN = 'Y'");
+        query.append("   AND ROOM.ID = ? ");
+        query.append(" ORDER BY ID DESC ");
+        query.append(" LIMIT 1");
         PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
         ResultSetMapper<Optional<Integer>> mapper = rs -> {
             if (!rs.next()) {
@@ -64,7 +71,7 @@ public class ChessGameDao {
             }
             return Optional.of(rs.getInt("ID"));
         };
-        return jdbcTemplate.executeQuery(query, pss, mapper);
+        return jdbcTemplate.executeQuery(query.toString(), pss, mapper);
     }
 
     public Optional<Color> getGameTurn(int gameId) {
