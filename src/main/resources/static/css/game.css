@@ -107,6 +107,26 @@ section {
     border: 6px solid lightyellow;
 }
 
+.result-black {
+    background-color: #999;
+    border: #333333 solid;
+}
+
+.result-highScore {
+    background-color: #9fddbb;
+    border: #333333 solid;
+}
+
+.result-white {
+    background-color: white;
+    border: #333333 solid;
+}
+
+.result-state {
+    background-color: #9fddbb;
+    border: #333333 solid;
+}
+
 .path {
     background-color: indianred;
 }
