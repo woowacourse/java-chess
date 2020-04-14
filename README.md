@@ -68,13 +68,11 @@
     - 이동 버튼에 대한 url 처리
 
 3. 테이블 설계
-    아래를 필드로 갖는 board 테이블 생성
-    - id
-    - board
-    - turn
-    - title
+   [테이블](src\main\resources\image\tableArchitecture.PNG)
 
 4. mysql-connector-java를 dependencies에 추가
 
 5. DAO & DaoTest 생성
-    - board 테이블에 접근을 위한 BoardDao 생성
+    - DB connection을 관리하는 DBConnector 생성
+    - Piece 테이블 접근을 위한 PieceDao 생성
+    - Turn 테이블 접근을 위한 TurnDao 생성
