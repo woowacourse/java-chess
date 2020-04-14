@@ -7,7 +7,9 @@ import java.sql.SQLException;
 import jdbc.DataAccessException;
 
 public class Connector {
-	public static Connection getConnection() {
+	private static Connection connection;
+
+	static {
 		String server = "localhost:3306"; // MySQL 서버 주소
 		String database = "chess"; // MySQL DATABASE 이름
 		String option = "?useSSL=false&serverTimezone=UTC";
@@ -16,7 +18,7 @@ public class Connector {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			return DriverManager.getConnection(
+			connection = DriverManager.getConnection(
 				"jdbc:mysql://" + server + "/" + database + option, userName, password);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -24,14 +26,8 @@ public class Connector {
 		}
 	}
 
-	// 드라이버 연결해제
-	public static void closeConnection(Connection con) {
-		try {
-			if (con != null)
-				con.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DataAccessException(e);
-		}
+	public static Connection getConnection() {
+		return connection;
 	}
+
 }
