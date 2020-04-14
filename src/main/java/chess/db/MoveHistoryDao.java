@@ -3,10 +3,8 @@ package chess.db;
 import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 import chess.util.JdbcTemplate;
-import chess.util.ParameterSetter;
 import chess.util.RowMapper;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -18,18 +16,7 @@ public class MoveHistoryDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
-            @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-                pstmt.setString(2, gameId);
-                pstmt.setString(3, team.name());
-                pstmt.setString(4, source.name());
-                pstmt.setString(5, target.name());
-            }
-        };
-
-        jdbcTemplate.executeUpdate(query, parameterSetter);
+        jdbcTemplate.executeUpdate(query, gameId, gameId, team.name(), source.name(), target.name());
     }
 
     public Optional<String> figureLastTurn(String gameId) throws SQLException {
@@ -37,16 +24,9 @@ public class MoveHistoryDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
+        RowMapper<Optional<String>> rowMapper = new RowMapper<Optional<String>>() {
             @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-            }
-        };
-
-        RowMapper rowMapper = new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet rs) throws SQLException {
+            public Optional<String> mapRow(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
                     return Optional.empty();
                 }
@@ -54,7 +34,7 @@ public class MoveHistoryDao {
             }
         };
 
-        return (Optional<String>) jdbcTemplate.executeQuery(query, parameterSetter, rowMapper);
+        return jdbcTemplate.executeQuery(query, rowMapper, gameId);
     }
 
     public void deleteMoveHistory(String gameId) throws SQLException {
@@ -62,14 +42,7 @@ public class MoveHistoryDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
-            @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-            }
-        };
-
-        jdbcTemplate.executeUpdate(query, parameterSetter);
+        jdbcTemplate.executeUpdate(query, gameId);
     }
 
 }

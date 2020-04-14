@@ -3,15 +3,12 @@ package chess.db;
 import chess.domains.piece.Piece;
 import chess.domains.position.Position;
 import chess.util.JdbcTemplate;
-import chess.util.ParameterSetter;
 import chess.util.RowMapper;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
-// TODO: 2020-04-11 SavedPiece 클래스 추가 후 select 결과로 객체 리턴?
 public class ChessPieceDao implements PieceDao {
     @Override
     public int countSavedPieces(String gameId) throws SQLException {
@@ -19,16 +16,9 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
+        RowMapper<Integer> rowMapper = new RowMapper<Integer>() {
             @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-            }
-        };
-
-        RowMapper rowMapper = new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet rs) throws SQLException {
+            public Integer mapRow(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
                     return 0;
                 }
@@ -36,7 +26,7 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        return (Integer) jdbcTemplate.executeQuery(query, parameterSetter, rowMapper);
+        return jdbcTemplate.executeQuery(query, rowMapper, gameId);
     }
 
     @Override
@@ -52,16 +42,7 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
-            @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, piece.getGameId());
-                pstmt.setString(2, piece.getPosition());
-                pstmt.setString(3, piece.getPiece());
-            }
-        };
-
-        jdbcTemplate.executeUpdate(query, parameterSetter);
+        jdbcTemplate.executeUpdate(query, piece.getGameId(), piece.getPosition(), piece.getPiece());
     }
 
     @Override
@@ -70,17 +51,9 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
+        RowMapper<String> rowMapper = new RowMapper<String>() {
             @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-                pstmt.setString(2, position.name());
-            }
-        };
-
-        RowMapper rowMapper = new RowMapper() {
-            @Override
-            public Object mapRow(ResultSet rs) throws SQLException {
+            public String mapRow(ResultSet rs) throws SQLException {
                 if (!rs.next()) {
                     return null;
                 }
@@ -88,7 +61,7 @@ public class ChessPieceDao implements PieceDao {
             }
         };
 
-        return (String) jdbcTemplate.executeQuery(query, parameterSetter, rowMapper);
+        return jdbcTemplate.executeQuery(query, rowMapper, gameId, position.name());
     }
 
     @Override
@@ -97,16 +70,7 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
-            @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, piece.name());
-                pstmt.setString(2, gameId);
-                pstmt.setString(3, position.name());
-            }
-        };
-
-        jdbcTemplate.executeUpdate(query, parameterSetter);
+        jdbcTemplate.executeUpdate(query, piece.name(), gameId, position.name());
     }
 
     @Override
@@ -115,13 +79,6 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        ParameterSetter parameterSetter = new ParameterSetter() {
-            @Override
-            public void setParameters(PreparedStatement pstmt) throws SQLException {
-                pstmt.setString(1, gameId);
-            }
-        };
-
-        jdbcTemplate.executeUpdate(query, parameterSetter);
+        jdbcTemplate.executeUpdate(query, gameId);
     }
 }

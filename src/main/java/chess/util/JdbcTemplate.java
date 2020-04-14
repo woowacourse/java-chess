@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class JdbcTemplate {
+
     public void executeUpdate(String query, ParameterSetter ps) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
@@ -16,11 +17,22 @@ public class JdbcTemplate {
             ps.setParameters(pstmt);
             pstmt.executeUpdate();
         } finally {
-            JdbcUtil.close(conn, pstmt);
+            try {
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                System.err.println("con 오류:" + e.getMessage());
+            }
         }
     }
 
-    public Object executeQuery(String query, ParameterSetter ps, RowMapper mapper) throws SQLException {
+    public void executeUpdate(String query, Object... parameters) throws SQLException {
+        executeUpdate(query, createParameterSetter(parameters));
+    }
+
+    public <T> T executeQuery(String query, RowMapper<T> mapper, ParameterSetter ps) throws SQLException {
         Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
@@ -32,7 +44,31 @@ public class JdbcTemplate {
             rs = pstmt.executeQuery();
             return mapper.mapRow(rs);
         } finally {
-            JdbcUtil.close(conn, pstmt, rs);
+            try {
+                if (rs != null)
+                    rs.close();
+                if (pstmt != null)
+                    pstmt.close();
+                if (conn != null)
+                    conn.close();
+            } catch (SQLException e) {
+                System.err.println("con 오류:" + e.getMessage());
+            }
         }
+    }
+
+    public <T> T executeQuery(String query, RowMapper<T> mapper, Object... parameters) throws SQLException {
+        return executeQuery(query, mapper, createParameterSetter(parameters));
+    }
+
+    private ParameterSetter createParameterSetter(Object[] parameters) {
+        return new ParameterSetter() {
+            @Override
+            public void setParameters(PreparedStatement pstmt) throws SQLException {
+                for (int i = 0; i < parameters.length; i++) {
+                    pstmt.setObject(i + 1, parameters[i]);
+                }
+            }
+        };
     }
 }

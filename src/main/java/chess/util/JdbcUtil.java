@@ -1,6 +1,8 @@
 package chess.util;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
 public class JdbcUtil {
     public static Connection getConnection() {
@@ -29,31 +31,5 @@ public class JdbcUtil {
         }
 
         return conn;
-    }
-
-    // 연결해제
-    public static void close(Connection con, PreparedStatement pstmt) {
-        try {
-            if (pstmt != null)
-                pstmt.close();
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
-    }
-
-    // 연결해제
-    public static void close(Connection con, PreparedStatement pstmt, ResultSet rs) {
-        try {
-            if (rs != null)
-                rs.close();
-            if (pstmt != null)
-                pstmt.close();
-            if (con != null)
-                con.close();
-        } catch (SQLException e) {
-            System.err.println("con 오류:" + e.getMessage());
-        }
     }
 }
