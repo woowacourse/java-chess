@@ -13,15 +13,16 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
+
     public static void main(String[] args) {
+        final HandlebarsTemplateEngine templateEngine = new HandlebarsTemplateEngine();
+        final ChessWebService webService = new ChessWebService(new ChessPieceDao(), new MoveHistoryDao());
+        final Board board = new Board();
+
         staticFiles.location("/");
 
-        ChessWebService webService = new ChessWebService(new ChessPieceDao(), new MoveHistoryDao());
-        Board board = new Board();
-
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            return render(templateEngine, new HashMap<>(), "index.html");
         });
 
         post("/ready", (req, res) -> {
@@ -30,7 +31,7 @@ public class WebUIChessApplication {
 
             webService.canResume(model, gameId);
 
-            return render(model, "game_room.html");
+            return render(templateEngine, model, "game_room.html");
         });
 
         post("/play", (req, res) -> {
@@ -39,7 +40,7 @@ public class WebUIChessApplication {
 
             webService.startNewGame(model, board, gameId);
 
-            return render(model, "game_room.html");
+            return render(templateEngine, model, "game_room.html");
         });
 
         post("/resume", (req, res) -> {
@@ -48,7 +49,7 @@ public class WebUIChessApplication {
 
             webService.resumeGame(model, board, gameId);
 
-            return render(model, "game_room.html");
+            return render(templateEngine, model, "game_room.html");
         });
 
         post("/move", (req, res) -> {
@@ -58,11 +59,12 @@ public class WebUIChessApplication {
             String target = req.queryParams("target");
 
             webService.move(model, board, gameId, source, target);
-            return render(model, "game_room.html");
+
+            return render(templateEngine, model, "game_room.html");
         });
     }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+    private static String render(HandlebarsTemplateEngine templateEngine, Map<String, Object> model, String templatePath) {
+        return templateEngine.render(new ModelAndView(model, templatePath));
     }
 }
