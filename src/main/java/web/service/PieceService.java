@@ -14,7 +14,7 @@ import domain.piece.team.Team;
 import web.dao.PieceDao;
 import web.dao.TurnDao;
 import web.dto.PieceDto;
-import web.dto.ResponseDto;
+import web.dto.BoardDto;
 import web.dto.TurnDto;
 import web.util.UnicodeConverter;
 
@@ -22,13 +22,13 @@ public class PieceService {
 	private PieceDao pieceDao = PieceDao.getInstance();
 	private TurnDao turnDao = TurnDao.getInstance();
 
-	public ResponseDto createPieces() throws SQLException {
+	public BoardDto createPieces() throws SQLException {
 		BoardGame boardGame = new BoardGame();
 		addTurn(boardGame);
 		return addBoard(boardGame);
 	}
 
-	public ResponseDto move(String command) throws SQLException {
+	public BoardDto move(String command) throws SQLException {
 		List<Piece> pieces = pieceDao.findAll();
 		TurnDto turnDto = turnDao.find();
 
@@ -42,13 +42,13 @@ public class PieceService {
 		return updateBoard(boardGame, originalPosition, newPosition);
 	}
 
-	public ResponseDto load() throws SQLException {
+	public BoardDto load() throws SQLException {
 		List<Piece> pieces = pieceDao.findAll();
 		TurnDto turnDto = turnDao.find();
 		BoardGame boardGame = new BoardGame(pieces, turnDto.getTurn());
 
 		List<String> symbols = convert(boardGame.getReverse());
-		return new ResponseDto(symbols);
+		return new BoardDto(symbols);
 	}
 
 	private void addTurn(BoardGame boardGame) throws SQLException {
@@ -63,13 +63,13 @@ public class PieceService {
 		turnDao.update(turnDto);
 	}
 
-	private ResponseDto addBoard(BoardGame boardGame) throws SQLException {
+	private BoardDto addBoard(BoardGame boardGame) throws SQLException {
 		List<Piece> pieces = boardGame.getPieces();
 		for (Piece piece : pieces) {
 			addPieces(piece);
 		}
 		List<String> symbols = convert(boardGame.getReverse());
-		return new ResponseDto(symbols);
+		return new BoardDto(symbols);
 	}
 
 	private void addPieces(Piece piece) throws SQLException {
@@ -79,11 +79,11 @@ public class PieceService {
 		pieceDao.add(pieceDto);
 	}
 
-	private ResponseDto updateBoard(BoardGame boardGame, String originalPosition, String newPosition) throws
+	private BoardDto updateBoard(BoardGame boardGame, String originalPosition, String newPosition) throws
 		SQLException {
 		pieceDao.update(originalPosition, newPosition);
 		List<String> symbols = convert(boardGame.getReverse());
-		return new ResponseDto(symbols);
+		return new BoardDto(symbols);
 	}
 
 	private List<String> convert(List<Rank> board) {

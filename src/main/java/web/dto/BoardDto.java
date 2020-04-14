@@ -2,10 +2,10 @@ package web.dto;
 
 import java.util.List;
 
-public class ResponseDto {
+public class BoardDto {
 	private List<String> Piece;
 
-	public ResponseDto(List<String> piece) {
+	public BoardDto(List<String> piece) {
 		Piece = piece;
 	}
 

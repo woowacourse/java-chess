@@ -7,7 +7,7 @@ import java.util.Map;
 
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
-import web.dto.ResponseDto;
+import web.dto.BoardDto;
 import web.service.PieceService;
 
 public class WebController {
@@ -28,17 +28,17 @@ public class WebController {
 		});
 
 		get("/start", (req, res) -> {
-			ResponseDto responseDto = service.createPieces();
+			BoardDto boardDto = service.createPieces();
 			Map<String, Object> model = new HashMap<>();
-			model.put("response", responseDto);
+			model.put("response", boardDto);
 			return render(model, GAME_VIEW);
 		});
 
 		get("/move", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
 			try {
-				ResponseDto responseDto = service.move(req.queryParams("moveCommand"));
-				model.put("response", responseDto);
+				BoardDto boardDto = service.move(req.queryParams("moveCommand"));
+				model.put("response", boardDto);
 			} catch (IllegalArgumentException e) {
 				model.put("error", e);
 			}
@@ -53,8 +53,8 @@ public class WebController {
 
 		get("/loading", (req, res) -> {
 			Map<String, Object> model = new HashMap<>();
-			ResponseDto responseDto = service.load();
-			model.put("response", responseDto);
+			BoardDto boardDto = service.load();
+			model.put("response", boardDto);
 			return render(model, GAME_VIEW);
 		});
 
