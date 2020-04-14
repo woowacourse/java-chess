@@ -10,6 +10,7 @@ import chess.domain.Pieces;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceRule;
+import chess.exception.DataAccessException;
 
 public class BoardDao {
     JdbcTemplate template = new JdbcTemplate();
@@ -34,7 +35,7 @@ public class BoardDao {
             final String sql = "SELECT type, position, team FROM piece";
             return (Board)template.executeQuery(sql, rm);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 
@@ -49,7 +50,7 @@ public class BoardDao {
             String query = "SELECT * FROM piece WHERE position = ?";
             return (Piece)template.executeQueryWithPss(query, pss, rm);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 
@@ -62,7 +63,7 @@ public class BoardDao {
             final String query = "UPDATE piece SET position = ? WHERE position = ?";
             template.executeUpdate(query, pss);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 
@@ -78,7 +79,7 @@ public class BoardDao {
             final String sql = "DELETE FROM piece";
             template.executeUpdateWithoutPss(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 
@@ -88,7 +89,7 @@ public class BoardDao {
             String query = "DELETE FROM piece WHERE position = ?";
             template.executeUpdate(query, pss);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 
@@ -102,7 +103,7 @@ public class BoardDao {
             final String sql = "INSERT INTO piece(position, type, team) VALUES (?, ?, ?)";
             template.executeUpdate(sql, pss);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            throw new DataAccessException();
         }
     }
 }
