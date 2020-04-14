@@ -1,22 +1,21 @@
 package chess.webController;
 
-import chess.service.ChessGameService;
+import chess.service.ChessGameMove;
 
 import static spark.Spark.exception;
 import static spark.Spark.post;
 
 public class ChessMoveUrlController {
-    public static void run() {
-        ChessGameService chessGameService = new ChessGameService();
+    public static void run(ChessGameMove chessGameMove) {
 
         post("/move", (req, res) -> {
             try {
-                return chessGameService.moveChessBoard(req.queryParams("source"), req.queryParams("target"));
+                return chessGameMove.moveChessBoard(req.queryParams("source"), req.queryParams("target"));
             } catch (Exception e) {
                 throw new MoveException(e.getMessage());
             }
         });
-        exception(MoveException.class, (exception, req, res)-> {
+        exception(MoveException.class, (exception, req, res) -> {
             res.status(403);
             res.body(exception.getMessage());
         });
