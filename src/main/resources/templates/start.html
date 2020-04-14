@@ -22,7 +22,7 @@
             <label class="room-name">블랙팀 이름(기본 BLACK) : </label>
             <input class="room-combo" id="black-name" maxlength="10" name="BlackName"
                    type="text"/><br>
-            <input hidden name="roomId" type="text" value={{roomId}}/>
+            <input hidden name="roomId" value={{roomId}} type="text"/>
         </form>
         <button class="room-button" id="start-button">게임 시작하기</button>
         <button class="room-button" id="follow-button">게임 이어하기</button>
@@ -30,7 +30,7 @@
         <br/>
         <label class="red-label">* 게임 이어하기시, 이어할 게임이 없으면 위의 이름들로 새 게임을 진행합니다.</label>
         <form action="/followGame" hidden id="follow-game" method="post">
-            <input hidden name="roomId" type="text" value={{roomId}}/>
+            <input hidden name="roomId" value={{roomId}} type="text"/>
             <input hidden id="white-name-follow" maxlength="10" name="WhiteName" type="text"/><br>
             <input hidden id="black-name-follow" maxlength="10" name="BlackName" type="text"/><br>
         </form>
