@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import util.NullChecker;
@@ -77,12 +78,11 @@ public class ChessGame {
         return moveState;
     }
 
-    public BoardSquare getFinishPawnBoard() {
+    public Optional<BoardSquare> getFinishPawnBoard() {
         return chessBoard.keySet().stream()
             .filter(boardSquare -> chessBoard.get(boardSquare) instanceof Pawn)
             .filter(BoardSquare::isLastRank)
-            .findFirst()
-            .orElseThrow(IllegalAccessError::new);
+            .findFirst();
     }
 
     public boolean isNeedPromotion() {
@@ -94,7 +94,8 @@ public class ChessGame {
     public MoveState promotion(Type hopeType) {
         MoveState moveState = PROMOTION_MOVE_CHECKER.check(this);
         if (moveState == MoveState.NEEDS_PROMOTION) {
-            chessBoard.put(getFinishPawnBoard(), getHopePiece(hopeType));
+            chessBoard.put(getFinishPawnBoard().orElseThrow(IllegalAccessError::new),
+                getHopePiece(hopeType));
             moveState = MoveState.SUCCESS_PROMOTION;
             gameTurn = moveState.turnTeam(gameTurn);
         }

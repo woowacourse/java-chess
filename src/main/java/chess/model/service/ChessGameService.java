@@ -131,11 +131,13 @@ public class ChessGameService {
         Type type = Type.of(promotionTypeDTO.getPromotionType());
         int gameId = promotionTypeDTO.getGameId();
         ChessGame chessGame = getChessGame(gameId);
-        BoardSquare finishPawnBoard = chessGame.getFinishPawnBoard();
+        Optional<BoardSquare> finishPawnBoard = chessGame.getFinishPawnBoard();
         Piece hopePiece = chessGame.getHopePiece(type);
         MoveState moveState = chessGame.promotion(type);
         if (moveState == MoveState.SUCCESS_PROMOTION) {
-            CHESS_BOARD_DAO.updatePromotion(gameId, finishPawnBoard, hopePiece);
+            CHESS_BOARD_DAO
+                .updatePromotion(gameId, finishPawnBoard.orElseThrow(IllegalAccessError::new),
+                    hopePiece);
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
             putChessResult(gameId, chessGame.getTeamScore());
         }

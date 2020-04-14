@@ -2,6 +2,7 @@ package chess;
 
 import static spark.Spark.get;
 import static spark.Spark.post;
+import static spark.Spark.staticFileLocation;
 
 import chess.model.domain.piece.Color;
 import chess.model.dto.CreateRoomDto;
@@ -35,6 +36,7 @@ public class ApplicationUI {
     }
 
     public static void main(String[] args) {
+        staticFileLocation("/static");
         post("/start", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             model.put("roomId", req.queryParams("roomId"));
