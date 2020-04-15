@@ -26,7 +26,8 @@ public class ChessController {
 
 	public String start() {
 		Map<String, Object> model = new HashMap<>();
-		return HANDLEBARS_TEMPLATE_ENGINE.render(new ModelAndView(model, "index.html"));
+		ModelAndView modelAndView = new ModelAndView(model, "index.html");
+		return HANDLEBARS_TEMPLATE_ENGINE.render(modelAndView);
 	}
 
 	public String init() {

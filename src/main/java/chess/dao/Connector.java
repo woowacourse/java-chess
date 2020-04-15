@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import jdbc.DataAccessException;
 
 public class Connector {
-	private static Connection connection;
+	private static final Connection CONNECTION;
 
 	static {
 		String server = "localhost:3306"; // MySQL 서버 주소
@@ -18,7 +18,7 @@ public class Connector {
 
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			connection = DriverManager.getConnection(
+			CONNECTION = DriverManager.getConnection(
 				"jdbc:mysql://" + server + "/" + database + option, userName, password);
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -27,7 +27,7 @@ public class Connector {
 	}
 
 	public static Connection getConnection() {
-		return connection;
+		return CONNECTION;
 	}
 
 }

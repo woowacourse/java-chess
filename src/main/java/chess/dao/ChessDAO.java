@@ -2,6 +2,7 @@ package chess.dao;
 
 import static chess.dao.Connector.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,10 +17,10 @@ public class ChessDAO {
 
 	public List<ChessDTO> findAll() {
 		String query = "SELECT * FROM board";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-			try (ResultSet resultSet = pstmt.executeQuery()) {
-				return createDTOS(resultSet);
-			}
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			ResultSet resultSet = pstmt.executeQuery();
+			return createDTOS(resultSet);
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}
@@ -37,7 +38,8 @@ public class ChessDAO {
 
 	public void addPiece(ChessDTO chessDTO) {
 		String query = "INSERT INTO board (position, name) VALUES (?, ?)";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setString(1, chessDTO.getPosition());
 			pstmt.setString(2, chessDTO.getName());
 			pstmt.executeUpdate();
@@ -48,7 +50,8 @@ public class ChessDAO {
 
 	public void removeAll() {
 		String query = "TRUNCATE board";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
@@ -57,7 +60,8 @@ public class ChessDAO {
 
 	public void update(Position position, String name) {
 		String query = "UPDATE board SET name = (?) WHERE position = (?)";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setString(1, name);
 			pstmt.setString(2, position.toString());
 			pstmt.executeUpdate();

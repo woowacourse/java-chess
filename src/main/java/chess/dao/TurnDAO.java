@@ -2,6 +2,7 @@ package chess.dao;
 
 import static chess.dao.Connector.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,10 +14,10 @@ public class TurnDAO {
 
 	public Turn find() {
 		String query = "SELECT * FROM turn";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
-			try (ResultSet resultSet = pstmt.executeQuery()) {
-				return createTurn(resultSet);
-			}
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
+			ResultSet resultSet = pstmt.executeQuery();
+			return createTurn(resultSet);
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
 		}
@@ -33,7 +34,8 @@ public class TurnDAO {
 
 	public void removeAll() {
 		String query = "TRUNCATE turn";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new DataAccessException(e);
@@ -42,7 +44,8 @@ public class TurnDAO {
 
 	public void addTurn(boolean isWhiteTurn) {
 		String query = "INSERT INTO turn VALUES (?)";
-		try (PreparedStatement pstmt = getConnection().prepareStatement(query)) {
+		try (Connection connection = getConnection()) {
+			PreparedStatement pstmt = connection.prepareStatement(query);
 			pstmt.setBoolean(1, isWhiteTurn);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
