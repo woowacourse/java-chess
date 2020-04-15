@@ -116,10 +116,8 @@ public class ChessUIController {
             return GSON.toJson(ROOM_SERVICE.getUsedRooms());
         });
 
-        post("/userResult", (req, res) -> {
-            return GSON
-                .toJson(RESULT_SERVICE.getResult(GSON.fromJson(req.body(), UserNameDto.class)));
-        });
+        post("/userResult", (req, res) -> GSON
+            .toJson(RESULT_SERVICE.getResult(GSON.fromJson(req.body(), UserNameDto.class))));
 
         post("/result", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

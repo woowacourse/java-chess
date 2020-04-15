@@ -16,16 +16,19 @@ submit.onclick = () => {
         body: JSON.stringify({
             userName
         })
-    }).then(res => res.json()).then(data => {
-        winDrawLose.innerText = userName + ' : ' + data.winOrDraw;
+    }).then(res => res.json()).then(gameResult => {
+        let {winCount, drawCount, loseCount} = gameResult;
+        winDrawLose.innerText = userName + ' : '
+            + (winCount + drawCount + loseCount) + "전 " + winCount + "승 "
+            + drawCount + "무 " + loseCount + "패";
     })
 };
 
 fetch('/viewUsers').then(res => res.json()).then(data => {
-    for (key in data.userNames) {
+    for (let userName of data.userNames) {
         let opt = document.createElement("option");
-        opt.value = data.userNames[key];
-        opt.textContent = data.userNames[key];
+        opt.value = userName;
+        opt.textContent = userName;
         userNames.appendChild(opt);
     }
 });
