@@ -20,14 +20,14 @@ public class RoomDao {
         return INSTANCE;
     }
 
-    public void insert(String roomName, String roomPW) {
+    public int insert(String roomName, String roomPW) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
         String query = makeQuery(
             "INSERT INTO ROOM_TB(NM, PW)",
             "VALUES (?, ?)"
         );
         PreparedStatementSetter pss = getPssFromParams(roomName, roomPW);
-        jdbcTemplate.executeUpdate(query, pss);
+        return jdbcTemplate.executeUpdateWithGeneratedKey(query, pss);
     }
 
     public void updateUsedN(int roomId) {
@@ -60,4 +60,33 @@ public class RoomDao {
         }, mapper);
     }
 
+    public Map<String, String> select(int roomId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = makeQuery(
+            "SELECT NM, PW, USED_YN",
+            "  FROM ROOM_TB",
+            " WHERE ID = ?"
+        );
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
+        ResultSetMapper<Map<String, String>> mapper = rs -> {
+            Map<String, String> result = new HashMap<>();
+            while (rs.next()) {
+                result.put("NM", rs.getString("NM"));
+                result.put("PW", rs.getString("PW"));
+                result.put("USED_YN", rs.getString("USED_YN"));
+            }
+            return result;
+        };
+        return jdbcTemplate.executeQuery(query, pss, mapper);
+    }
+
+    public void delete(int roomId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = makeQuery(
+            "DELETE FROM ROOM_TB",
+            "WHERE ID = ?"
+        );
+        PreparedStatementSetter pss = pstmt -> pstmt.setInt(1, roomId);
+        jdbcTemplate.executeUpdate(query, pss);
+    }
 }
