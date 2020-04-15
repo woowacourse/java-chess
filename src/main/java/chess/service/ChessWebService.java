@@ -16,9 +16,12 @@ import java.util.stream.Collectors;
 
 public class ChessWebService {
     public static final int BOARD_CELLS_NUMBER = 64;
+    private static final String TURN_MSG_FORMAT = "%s의 순서입니다.";
+    private static final String WINNING_MSG_FORMAT = "%s이/가 이겼습니다.";
 
     private final PieceDao pieceDao;
     private final MoveHistoryDao moveHistoryDao;
+    private final Map<String, Board> playingBoards = new HashMap<>();
 
     public ChessWebService(PieceDao pieceDao, MoveHistoryDao moveHistoryDao) {
         this.pieceDao = pieceDao;
@@ -30,9 +33,11 @@ public class ChessWebService {
         return savedPiecesNumber == BOARD_CELLS_NUMBER;
     }
 
-    public void startNewGame(Board board, String gameId) throws SQLException {
-        deleteSavedBoardStatus(gameId);
-        board.initialize();
+    public void startNewGame(String gameId) throws SQLException {
+        deleteSavedGame(gameId);
+
+        Board board = new Board();
+        playingBoards.put(gameId, board);
 
         List<ChessPiece> chessPieces = Position.stream()
                 .map(position -> {
@@ -40,11 +45,10 @@ public class ChessWebService {
                     return new ChessPiece(gameId, position.name(), piece.name());
                 })
                 .collect(Collectors.toList());
-
         pieceDao.addInitialPieces(chessPieces);
     }
 
-    public void resumeGame(Board board, String gameId) throws SQLException {
+    public void resumeGame(String gameId) throws SQLException {
         Map<Position, Piece> savedBoardStatus = Position.stream()
                 .collect(Collectors.toMap(Function.identity(), position -> {
                     String pieceName = null;
@@ -58,13 +62,18 @@ public class ChessWebService {
 
         Optional<String> lastTurn = moveHistoryDao.figureLastTurn(gameId);
 
-        board.resume(savedBoardStatus, lastTurn);
+        Board board = new Board();
+        board.recoverBoard(savedBoardStatus, lastTurn);
+
+        playingBoards.put(gameId, board);
     }
 
-    public void move(Board board, String gameId, String sourceName, String targetName) throws SQLException {
+    public void move(String gameId, String sourceName, String targetName) throws SQLException {
+        Board board = playingBoards.get(gameId);
+        PieceColor currentTeam = board.getTeamColor();
+
         Position source = Position.ofPositionName(sourceName);
         Position target = Position.ofPositionName(targetName);
-        PieceColor currentTeam = board.getTeamColor();
 
         board.move(source, target);
 
@@ -73,17 +82,20 @@ public class ChessWebService {
         moveHistoryDao.addMoveHistory(gameId, currentTeam, source, target);
     }
 
-    public String provideWinner(Board board, String gameId) throws SQLException {
+    public String provideWinner(String gameId) throws SQLException {
+        Board board = playingBoards.get(gameId);
+
         if (board.isGameOver()) {
-            deleteSavedBoardStatus(gameId);
+            deleteSavedGame(gameId);
             return winningMsg(board);
         }
         return null;
     }
 
-    public Map<String, Object> provideGameInfo(Board board) {
-        Map<String, Object> gameInfo = new HashMap<>();
+    public Map<String, Object> provideGameInfo(String gameId) {
+        Board board = playingBoards.get(gameId);
 
+        Map<String, Object> gameInfo = new HashMap<>();
         gameInfo.put("pieces", convertPieces(board));
         gameInfo.put("turn", turnMsg(board));
         gameInfo.put("white_score", calculateScore(board, PieceColor.WHITE));
@@ -92,9 +104,10 @@ public class ChessWebService {
         return gameInfo;
     }
 
-    private void deleteSavedBoardStatus(String gameId) throws SQLException {
+    private void deleteSavedGame(String gameId) throws SQLException {
         pieceDao.deleteBoardStatus(gameId);
         moveHistoryDao.deleteMoveHistory(gameId);
+        playingBoards.remove(gameId);
     }
 
     private List<String> convertPieces(Board board) {
@@ -149,7 +162,7 @@ public class ChessWebService {
 
     private String turnMsg(Board board) {
         PieceColor team = board.getTeamColor();
-        return team.name() + "의 순서입니다.";
+        return String.format(TURN_MSG_FORMAT, team.name());
     }
 
     private double calculateScore(Board board, PieceColor pieceColor) {
@@ -158,6 +171,6 @@ public class ChessWebService {
 
     private String winningMsg(Board board) {
         PieceColor winner = board.getTeamColor().changeTeam();
-        return winner + "이/가 이겼습니다.";
+        return String.format(WINNING_MSG_FORMAT, winner);
     }
 }

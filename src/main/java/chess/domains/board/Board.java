@@ -11,22 +11,16 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
-    public static final int TWO_KINGS = 2;
-    public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
-    public static final int COLUMN_SIZE = 8;
+    static final int COLUMN_SIZE = 8;
+    private static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
+    private static final int TWO_KINGS = 2;
+    private static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
     private static final String GAME_ENDED_ERR_MSG = "종료된 게임입니다.";
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
 
-    public void initialize() {
-        Map<Position, Piece> board = BoardFactory.getBoard();
-        this.board.putAll(board);
-        this.teamColor = PieceColor.WHITE;
-    }
-
-    public void resume(Map<Position, Piece> savedBoard, Optional<String> lastTurn) {
+    public void recoverBoard(Map<Position, Piece> savedBoard, Optional<String> lastTurn) {
         this.board.putAll(savedBoard);
         String lastTeamColor = lastTurn.orElseGet(() -> "BLACK");
         this.teamColor = PieceColor.of(lastTeamColor).changeTeam();
