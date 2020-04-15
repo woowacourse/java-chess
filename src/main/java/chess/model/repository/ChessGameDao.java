@@ -16,7 +16,6 @@ import java.util.Optional;
 
 public class ChessGameDao {
 
-
     private final static ChessGameDao INSTANCE = new ChessGameDao();
 
     private ChessGameDao() {
