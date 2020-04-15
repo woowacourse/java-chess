@@ -23,7 +23,9 @@ public class WebUIChessController {
     public void run() {
         staticFiles.location("/public");
 
-        get("/", (req, res) -> render(chessGameService.receiveEmptyBoard(), "index.html"));
+        get("/", (req, res) -> {
+            return render(chessGameService.receiveLoadedBoard(), "index.html");
+        });
 
         post("/start", (req, res) -> {
             chessGameService.initializeTurn();
@@ -32,10 +34,7 @@ public class WebUIChessController {
 
         post("/end", (req, res) -> render(chessGameService.receiveEmptyBoard(), "index.html"));
 
-        post("/load", (req, res) -> {
-            Map<String, Object> model = chessGameService.receiveLoadedBoard();
-            return render(model, "index.html");
-        });
+        post("/load", (req, res) -> render(chessGameService.receiveLoadedBoard(), "index.html"));
 
         post("/move", (req, res) -> {
             Map<String, Object> model = chessGameService.receiveLoadedBoard();
@@ -43,7 +42,7 @@ public class WebUIChessController {
                 model = chessGameService.receiveMovedBoard(
                         req.queryParams("fromPiece"), req.queryParams("toPiece"));
                 if (chessGameService.isFinish()) {
-                    chessGameService.initialize();
+                    chessGameService.initializeFinish();
                     res.redirect("/finish");
                 }
             } catch(InvalidPositionException | PieceImpossibleMoveException | TakeTurnException e) {

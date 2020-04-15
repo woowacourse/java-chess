@@ -7,9 +7,8 @@ import java.sql.*;
 public class TurnDAO {
     private Connection connection;
 
-    public TurnDAO() throws SQLException {
+    public TurnDAO() {
         this.connection = getConnection();
-        updateTurn(Team.WHITE);
     }
 
     private Connection getConnection() {
@@ -49,16 +48,10 @@ public class TurnDAO {
     }
 
     public void updateTurn(Team targetTeam) throws SQLException {
-        deleteTurn();
-        String query = "INSERT INTO turn (team) VALUES (?)";
+        String query = "INSERT INTO turn (team) VALUES (?) ON DUPLICATE KEY UPDATE team=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, targetTeam.name());
-        preparedStatement.executeUpdate();
-    }
-
-    public void deleteTurn() throws SQLException {
-        String query = "TRUNCATE turn";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(2, targetTeam.name());
         preparedStatement.executeUpdate();
     }
 

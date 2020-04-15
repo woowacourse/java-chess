@@ -46,18 +46,13 @@ public class FinishDAO {
     }
 
     public void updateFinish(final boolean isFinish) throws SQLException {
-        deleteFinish();
-        String query = "INSERT INTO finish (isFinish) VALUES (?)";
+        String query = "INSERT INTO finish (isFinish) VALUES (?) ON DUPLICATE KEY UPDATE isFinish=?";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.setString(1, String.valueOf(isFinish));
+        preparedStatement.setString(2, String.valueOf(isFinish));
         preparedStatement.executeUpdate();
     }
 
-    public void deleteFinish() throws SQLException {
-        String query = "TRUNCATE finish";
-        PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.executeUpdate();
-    }
 
     public String getIsFinish() throws SQLException {
         String query = "SELECT * FROM finish";

@@ -55,7 +55,7 @@ header .inner h1 {
     top: 27%;
     left: 4%;
     font-size: 25px;
-    color: #fff;
+    color: darkgreen;
     font-weight: bold;
     display: flex;
     align-items: center;
@@ -90,7 +90,7 @@ header .inner h1 {
     flex-direction: column;
     font-size: 25px;
     font-weight: bold;
-    color: whitesmoke;
+    color: darkgreen;
 }
 
 #score-status .score {

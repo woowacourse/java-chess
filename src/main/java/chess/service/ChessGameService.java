@@ -24,11 +24,14 @@ public class ChessGameService {
         this.boardDAO = new BoardDAO();
         this.finishDAO = new FinishDAO();
         this.turnDAO = new TurnDAO();
+        if (getCurrentTurn() == Team.BLANK) {
+            turnDAO.updateTurn(Team.WHITE);
+        }
     }
 
-    public Map<String, Object> receiveEmptyBoard() {
-        Board board = BoardFactory.createBoard();
-        return createBoardModel(board);
+    public Map<String, Object> receiveEmptyBoard() throws SQLException {
+        boardDAO.deletePieces();
+        return new HashMap<>();
     }
 
     public Map<String, Object> receiveInitializedBoard() throws SQLException {
@@ -46,6 +49,9 @@ public class ChessGameService {
     }
 
     public Map<String, Object> receiveLoadedBoard() throws SQLException {
+        if (boardDAO.findAllPieces().isEmpty()) {
+            return receiveEmptyBoard();
+        }
         Board board = new Board(boardDAO.findAllPieces());
         Map<String, Object> model = createBoardModel(board);
         model.put("turn", getCurrentTurn() + "차례 입니다.");
@@ -61,7 +67,6 @@ public class ChessGameService {
         board.move(fromPiece, toPiece);
         updateFinish(board.isFinished());
 
-        boardDAO.deletePieces();
         for (Position position : board.getBoard().keySet()) {
             boardDAO.placePiece(board, position);
         }
@@ -103,7 +108,6 @@ public class ChessGameService {
     }
 
     public void initializeTurn() throws SQLException {
-        turnDAO.deleteTurn();
         turnDAO.updateTurn(Team.WHITE);
     }
 
@@ -127,8 +131,7 @@ public class ChessGameService {
         return finishDAO.getIsFinish().equals("true");
     }
 
-    public void initialize() throws SQLException {
+    public void initializeFinish() throws SQLException {
         finishDAO.updateFinish(false);
     }
-
 }
