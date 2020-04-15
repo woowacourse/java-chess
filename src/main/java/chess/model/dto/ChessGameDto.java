@@ -128,14 +128,6 @@ public class ChessGameDto {
         return pieces;
     }
 
-    public void clearPiece() {
-        int piecesSize = pieces.size();
-        pieces.clear();
-        for (int i = 0; i < piecesSize; i++) {
-            pieces.add("");
-        }
-    }
-
     public String getBlackScore() {
         return blackScore;
     }

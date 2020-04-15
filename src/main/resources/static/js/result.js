@@ -3,21 +3,21 @@ const winDrawLose = document.getElementById('win-draw-lose');
 const submit = document.getElementById('submit');
 const userNames = document.getElementById('user-names');
 
-let userName = null;
-
 reset.onclick = () => {
+    userNames.value = 1;
+    userNames.focus();
     winDrawLose.innerText = "";
 };
 
 submit.onclick = () => {
-    userName = userNames.value;
+    let userName = userNames.value;
     fetch('/userResult', {
         method: 'POST',
         body: JSON.stringify({
             userName
         })
-    }).then(res => res.json()).then(gameResult => {
-        let {winCount, drawCount, loseCount} = gameResult;
+    }).then(res => res.json()).then(data => {
+        let {winCount, drawCount, loseCount} = data;
         winDrawLose.innerText = userName + ' : '
             + (winCount + drawCount + loseCount) + "전 " + winCount + "승 "
             + drawCount + "무 " + loseCount + "패";

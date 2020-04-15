@@ -10,7 +10,7 @@ public enum MoveState {
     FAIL_CAN_NOT_MOVE(false, "해당 경로로 이동할 수 없습니다."),
     FAIL_MUST_PAWN_PROMOTION(false, "실패하였습니다, 승격되지 않은 폰이 존재합니다."),
     READY(false, "준비중"),
-    KING_CAPTURED(false, "왕이 잡혔습니다."),
+    KING_CAPTURED(true, "왕이 잡혔습니다."),
     NO_PAWN_PROMOTION(false, "승격이 가능하지 않습니다."),
     NEEDS_PROMOTION(false, "승격이 필요합니다."),
     EMPTY(false, ""),

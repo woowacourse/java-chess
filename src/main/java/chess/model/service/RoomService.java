@@ -2,7 +2,7 @@ package chess.model.service;
 
 import chess.model.dto.CreateRoomDto;
 import chess.model.dto.DeleteRoomDto;
-import chess.model.dto.RoomDto;
+import chess.model.dto.RoomsDto;
 import chess.model.repository.ChessGameDao;
 import chess.model.repository.RoomDao;
 
@@ -19,8 +19,8 @@ public class RoomService {
         return INSTANCE;
     }
 
-    public RoomDto getUsedRooms() {
-        return new RoomDto(ROOM_DAO.selectUsedOnly());
+    public RoomsDto getUsedRooms() {
+        return new RoomsDto(ROOM_DAO.selectUsedOnly());
     }
 
     public void addRoom(CreateRoomDto createRoomDto) {

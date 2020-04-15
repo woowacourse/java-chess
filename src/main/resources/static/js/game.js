@@ -41,21 +41,8 @@ closeButton.onclick = () => {
             gameId
         })
     }).then(res => res.json()).then(data => {
-        cells.forEach(cell => {
-            cell.innerHTML = data.pieces.shift();
-            cell.classList.remove('path');
-        });
-        cells = null;
-        turn.innerText = '';
-        state.innerText = '';
-        clickTiming.innerText = '게임이 종료되었습니다.';
-        blackScore.innerText = data.blackScore;
-        whiteScore.innerText = data.whiteScore;
-        blackName.innerText = data.blackName;
-        whiteName.innerText = data.whiteName;
-        winner.innerText = data.winner;
-        closeButton.innerText = "종료됨";
-        closeButton.disable = true;
+        gameSetting(data);
+        gameFinish();
     })
 };
 
@@ -93,42 +80,24 @@ cells.forEach(cell => {
                 source, target, gameId
             })
         }).then(res => res.json()).then(data => {
-            cells.forEach(cell => {
-                cell.innerHTML = data.pieces.shift();
-                cell.classList.remove('path');
-            });
-            turn.innerText = '현재 턴 : ' + data.turn;
-            state.innerText = data.state;
-            blackScore.innerText = data.blackScore;
-            whiteScore.innerText = data.whiteScore;
-            blackName.innerText = data.blackName;
-            whiteName.innerText = data.whiteName;
-            winner.innerText = data.winner;
+            gameSetting(data);
+            if (data.state.includes("왕")) {
+                gameFinish();
+            }
         })
     }
 });
 
-let promotionType = null;
 promotions.forEach(promotion => {
     promotion.onclick = () => {
-        promotionType = promotion.id;
+        let promotionType = promotion.id;
         fetch('/promotion', {
             method: 'POST',
             body: JSON.stringify({
                 promotionType, gameId
             })
         }).then(res => res.json()).then(data => {
-            cells.forEach(cell => {
-                cell.innerHTML = data.pieces.shift();
-                cell.classList.remove('path');
-            });
-            turn.innerText = '현재 턴 : ' + data.turn;
-            state.innerText = data.state;
-            blackScore.innerText = data.blackScore;
-            whiteScore.innerText = data.whiteScore;
-            blackName.innerText = data.blackName;
-            whiteName.innerText = data.whiteName;
-            winner.innerText = data.winner;
+            gameSetting(data);
         })
     }
 });
@@ -139,6 +108,10 @@ fetch('/board', {
         gameId
     })
 }).then(res => res.json()).then(data => {
+    gameSetting(data);
+});
+
+function gameSetting(data) {
     cells.forEach(cell => {
         cell.innerHTML = data.pieces.shift();
         cell.classList.remove('path');
@@ -150,5 +123,15 @@ fetch('/board', {
     blackName.innerText = data.blackName;
     whiteName.innerText = data.whiteName;
     winner.innerText = data.winner;
-});
+}
 
+function gameFinish() {
+    cells.forEach(cell => {
+        cell.innerHTML = "";
+        cell.classList.remove('cell');
+    });
+    cells = null;
+    clickTiming.innerText = '게임이 종료되었습니다.';
+    closeButton.innerText = "종료됨";
+    closeButton.disable = true;
+}

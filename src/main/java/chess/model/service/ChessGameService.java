@@ -114,17 +114,12 @@ public class ChessGameService {
         if (moveState == MoveState.SUCCESS) {
             CHESS_GAME_DAO.updateTurn(gameId, chessGame.getGameTurn());
         }
-        putChessResult(gameId, chessGame.getTeamScore());
-        ChessGameDto chessGameDTO = new ChessGameDto(getChessGame(gameId), moveState,
-            new TeamScore(CHESS_RESULT_DAO.select(gameId)), CHESS_GAME_DAO.getUserNames(gameId));
         if (moveState == MoveState.KING_CAPTURED) {
-            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.AFTER));
-            CHESS_BOARD_DAO.copyBoardSquare(gameId, moveSquare);
-            CHESS_BOARD_DAO.deleteBoardSquare(gameId, moveSquare.get(MoveOrder.BEFORE));
             CHESS_GAME_DAO.updateProceedN(gameId);
-            chessGameDTO.clearPiece();
         }
-        return chessGameDTO;
+        putChessResult(gameId, chessGame.getTeamScore());
+        return new ChessGameDto(getChessGame(gameId), moveState,
+            new TeamScore(CHESS_RESULT_DAO.select(gameId)), CHESS_GAME_DAO.getUserNames(gameId));
     }
 
     public ChessGameDto promotion(PromotionTypeDto promotionTypeDTO) {
@@ -153,10 +148,8 @@ public class ChessGameService {
     public ChessGameDto endGame(MoveDto moveDto) {
         int gameId = moveDto.getGameId();
         CHESS_GAME_DAO.updateProceedN(gameId);
-        ChessGameDto chessGameDto = new ChessGameDto(new TeamScore(CHESS_RESULT_DAO.select(gameId)),
+        return new ChessGameDto(new TeamScore(CHESS_RESULT_DAO.select(gameId)),
             CHESS_GAME_DAO.getUserNames(gameId));
-        chessGameDto.clearPiece();
-        return chessGameDto;
     }
 
     private void putChessResult(int gameId, TeamScore teamScore) {
