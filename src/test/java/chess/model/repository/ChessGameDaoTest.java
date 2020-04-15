@@ -29,7 +29,7 @@ class ChessGameDaoTest {
     private int gameId;
 
     @BeforeEach
-    public void setup() {
+    void setup() {
         gameId = CHESS_GAME_DAO.insert(ROOM_ID, GAME_TURN, USER_NAMES);
     }
 
