@@ -5,7 +5,6 @@ import chess.domains.position.Position;
 import chess.util.JdbcTemplate;
 import chess.util.RowMapper;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -16,14 +15,11 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        RowMapper<Integer> rowMapper = new RowMapper<Integer>() {
-            @Override
-            public Integer mapRow(ResultSet rs) throws SQLException {
-                if (!rs.next()) {
-                    return 0;
-                }
-                return rs.getInt("count(*)");
+        RowMapper<Integer> rowMapper = rs -> {
+            if (!rs.next()) {
+                return 0;
             }
+            return rs.getInt("count(*)");
         };
 
         return jdbcTemplate.executeQuery(query, rowMapper, gameId);
@@ -51,14 +47,11 @@ public class ChessPieceDao implements PieceDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        RowMapper<String> rowMapper = new RowMapper<String>() {
-            @Override
-            public String mapRow(ResultSet rs) throws SQLException {
-                if (!rs.next()) {
-                    return null;
-                }
-                return rs.getString("piece");
+        RowMapper<String> rowMapper = rs -> {
+            if (!rs.next()) {
+                return null;
             }
+            return rs.getString("piece");
         };
 
         return jdbcTemplate.executeQuery(query, rowMapper, gameId, position.name());

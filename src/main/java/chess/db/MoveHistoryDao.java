@@ -5,7 +5,6 @@ import chess.domains.position.Position;
 import chess.util.JdbcTemplate;
 import chess.util.RowMapper;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Optional;
 
@@ -24,14 +23,11 @@ public class MoveHistoryDao {
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate();
 
-        RowMapper<Optional<String>> rowMapper = new RowMapper<Optional<String>>() {
-            @Override
-            public Optional<String> mapRow(ResultSet rs) throws SQLException {
-                if (!rs.next()) {
-                    return Optional.empty();
-                }
-                return Optional.ofNullable(rs.getString("team"));
+        RowMapper<Optional<String>> rowMapper = rs -> {
+            if (!rs.next()) {
+                return Optional.empty();
             }
+            return Optional.ofNullable(rs.getString("team"));
         };
 
         return jdbcTemplate.executeQuery(query, rowMapper, gameId);
@@ -44,5 +40,4 @@ public class MoveHistoryDao {
 
         jdbcTemplate.executeUpdate(query, gameId);
     }
-
 }
