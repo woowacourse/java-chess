@@ -53,10 +53,9 @@ public class ChessService {
 		return chessBoard;
 	}
 
-	public boolean restart() {
+	public void restart() {
 		chessDAO.removeAll();
 		turnDAO.removeAll();
-		return true;
 	}
 
 	public boolean isEnd() {

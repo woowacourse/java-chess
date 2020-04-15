@@ -7,12 +7,15 @@ $.ajax({
     error: function () {
         alert("initError");
     },
-    success: initSuccess
+    success: showBoard
 });
 
-function initSuccess(response) {
+function showBoard(response) {
     for (position in response) {
         const pieceName = response[position];
+        if (pieceName == '.') {
+            continue;
+        }
         document.getElementById(position).classList.add(pieceName);
     }
     setTimeout(() => status(), 0);
@@ -100,8 +103,24 @@ function restart() {
     $.ajax({
         type: 'get',
         url: '/restart',
+        dataType: 'json',
+        error: function () {
+            alert("restart Error");
+        },
+        success: function (response) {
+            setTimeout(() => remove(response), 0);
+            setTimeout(() => showBoard(response), 0);
+        }
     });
-    setTimeout(() => location.reload(), 0);
+}
+
+function remove(response) {
+    for (position in response) {
+        const className = getChessPieceClassName(position);
+        if (className != '') {
+            getClassList(position).remove(className);
+        }
+    }
 }
 
 function status() {
