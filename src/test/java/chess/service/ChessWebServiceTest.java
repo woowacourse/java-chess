@@ -9,7 +9,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +22,7 @@ class ChessWebServiceTest {
         TestPieceDao dao = new TestPieceDao("guest", boardStatus);
         ChessWebService webService = new ChessWebService(dao, new MoveHistoryDao());
 
-        boolean actual = webService.canResume(new HashMap<>(), "guest");
+        boolean actual = webService.canResume("guest");
 
         assertThat(actual).isTrue();
     }
@@ -37,7 +36,7 @@ class ChessWebServiceTest {
         TestPieceDao dao = new TestPieceDao("guest", boardStatus);
         ChessWebService webService = new ChessWebService(dao, new MoveHistoryDao());
 
-        boolean actual = webService.canResume(new HashMap<>(), "guest");
+        boolean actual = webService.canResume("guest");
 
         assertThat(actual).isFalse();
     }

@@ -10,10 +10,7 @@ import chess.domains.piece.PieceColor;
 import chess.domains.position.Position;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -28,11 +25,9 @@ public class ChessWebService {
         this.moveHistoryDao = moveHistoryDao;
     }
 
-    public boolean canResume(Map<String, Object> model, String gameId) throws SQLException {
+    public boolean canResume(String gameId) throws SQLException {
         int savedPiecesNumber = pieceDao.countSavedPieces(gameId);
-        boolean canResume = savedPiecesNumber == BOARD_CELLS_NUMBER;
-        model.put("canResume", canResume);
-        return canResume;
+        return savedPiecesNumber == BOARD_CELLS_NUMBER;
     }
 
     public void startNewGame(Board board, String gameId) throws SQLException {
@@ -78,18 +73,23 @@ public class ChessWebService {
         moveHistoryDao.addMoveHistory(gameId, currentTeam, source, target);
     }
 
-    public void checkGameOver(Map<String, Object> model, Board board, String gameId) throws SQLException {
+    public String provideWinner(Board board, String gameId) throws SQLException {
         if (board.isGameOver()) {
             deleteSavedBoardStatus(gameId);
-            model.put("end", winningMsg(board));
+            return winningMsg(board);
         }
+        return null;
     }
 
-    public void provideGameInfo(Map<String, Object> model, Board board) {
-        model.put("pieces", convertPieces(board));
-        model.put("turn", turnMsg(board));
-        model.put("white_score", calculateScore(board, PieceColor.WHITE));
-        model.put("black_score", calculateScore(board, PieceColor.BLACK));
+    public Map<String, Object> provideGameInfo(Board board) {
+        Map<String, Object> gameInfo = new HashMap<>();
+
+        gameInfo.put("pieces", convertPieces(board));
+        gameInfo.put("turn", turnMsg(board));
+        gameInfo.put("white_score", calculateScore(board, PieceColor.WHITE));
+        gameInfo.put("black_score", calculateScore(board, PieceColor.BLACK));
+
+        return gameInfo;
     }
 
     private void deleteSavedBoardStatus(String gameId) throws SQLException {

@@ -25,53 +25,55 @@ public class ChessWebController {
         return templateEngine.render(new ModelAndView(model, templatePath));
     }
 
-    public String gameId() {
+    public String chessGame() {
         return render(templateEngine, new HashMap<>(), "index.html");
     }
 
-    public String canResume(Request req) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
+    public String enterGameRoom(Request req) throws SQLException {
         String gameId = req.queryParams("game_id");
 
-        service.canResume(model, gameId);
+        boolean canResume = service.canResume(gameId);
 
+        Map<String, Object> model = new HashMap<>();
+        model.put("canResume", canResume);
         model.put("game_id", gameId);
         return render(templateEngine, model, "game_room.html");
     }
 
-    public String startNewGame(Request req) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
+    public String startGame(Request req) throws SQLException {
         String gameId = req.queryParams("game_id");
 
         service.startNewGame(board, gameId);
 
-        service.provideGameInfo(model, board);
+        Map<String, Object> gameInfo = service.provideGameInfo(board);
+        Map<String, Object> model = new HashMap<>(gameInfo);
         model.put("game_id", gameId);
         return render(templateEngine, model, "game_room.html");
     }
 
     public String resumeGame(Request req) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
         String gameId = req.queryParams("game_id");
 
         service.resumeGame(board, gameId);
 
-        service.provideGameInfo(model, board);
+        Map<String, Object> gameInfo = service.provideGameInfo(board);
+        Map<String, Object> model = new HashMap<>(gameInfo);
         model.put("game_id", gameId);
         return render(templateEngine, model, "game_room.html");
     }
 
     public String move(Request req) throws SQLException {
-        Map<String, Object> model = new HashMap<>();
         String gameId = req.queryParams("game_id");
         String source = req.queryParams("source");
         String target = req.queryParams("target");
 
         service.move(board, gameId, source, target);
-        service.checkGameOver(model, board, gameId);
+        String winnerInfo = service.provideWinner(board, gameId);
 
-        service.provideGameInfo(model, board);
+        Map<String, Object> gameInfo = service.provideGameInfo(board);
+        Map<String, Object> model = new HashMap<>(gameInfo);
         model.put("game_id", gameId);
+        model.put("end", winnerInfo);
         return render(templateEngine, model, "game_room.html");
     }
 }

@@ -11,11 +11,11 @@ public class WebUIChessApplication {
 
         staticFiles.location("/");
 
-        get("/", (req, res) -> controller.gameId());
+        get("/", (req, res) -> controller.chessGame());
 
-        post("/ready", (req, res) -> controller.canResume(req));
+        post("/ready", (req, res) -> controller.enterGameRoom(req));
 
-        post("/play", (req, res) -> controller.startNewGame(req));
+        post("/play", (req, res) -> controller.startGame(req));
 
         post("/resume", (req, res) -> controller.resumeGame(req));
 
