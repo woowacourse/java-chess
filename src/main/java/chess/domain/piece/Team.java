@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public enum Team {
-    WHITE("white"),
-    BLACK("black"),
-    BLANK("blank");
+    WHITE("WHITE"),
+    BLACK("BLACK"),
+    BLANK("BLANK");
 
     private static final Map<String, Team> ENUM_MAP = new HashMap<>();
 

@@ -1,9 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.position.Position;
 import chess.exception.InvalidPositionException;
-import chess.exception.TakeTurnException;
 
 import java.util.Map;
 
@@ -12,10 +12,8 @@ public class Board {
     private static final int BLANK_START_INDEX = 3;
     private static final int BLANK_END_INDEX = 6;
 
-
     private Map<Position, Piece> board;
     private boolean isFinished = false;
-    private Team currentTurn = Team.WHITE;
 
     public Board(final Map<Position, Piece> board) {
         if (isNotProperBoardSize(board)) {
@@ -25,6 +23,8 @@ public class Board {
     }
 
     public void initialize() {
+        isFinished = false;
+
         board.put(Position.of("a1"), Piece.of(PieceType.WHITE_ROOK));
         board.put(Position.of("b1"), Piece.of(PieceType.WHITE_KNIGHT));
         board.put(Position.of("c1"), Piece.of(PieceType.WHITE_BISHOP));
@@ -83,25 +83,11 @@ public class Board {
         Piece fromPiece = board.get(fromPosition);
         Piece toPiece = board.get(toPosition);
 
-        if (!fromPiece.isSameTeam(currentTurn)) {
-            throw new TakeTurnException("체스 게임 순서를 지켜주세요.");
-        }
-
         if (fromPiece.isMovable(this, fromPosition, toPosition)) {
             board.put(toPosition, fromPiece.getNextPiece());
             board.put(fromPosition, Piece.of(PieceType.BLANK));
-
-            changeTurn();
-            changeFlagWhenKingCaptured(toPiece);
         }
-    }
-
-    public void changeTurn() {
-        if (currentTurn == Team.WHITE) {
-            currentTurn = Team.BLACK;
-            return;
-        }
-        currentTurn = Team.WHITE;
+        changeFlagWhenKingCaptured(toPiece);
     }
 
     public void changeFlagWhenKingCaptured(final Piece toPiece) {
@@ -116,10 +102,6 @@ public class Board {
 
     public boolean isFinished() {
         return isFinished;
-    }
-
-    public Team getCurrentTurn() {
-        return currentTurn;
     }
 
     public Map<Position, Piece> getBoard() {
