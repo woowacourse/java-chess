@@ -41,7 +41,8 @@ public class ChessBoardDao {
                 pstmt.setString(2, boardSquare.getName());
                 pstmt.setString(3, PieceFactory.getName(board.get(boardSquare)));
                 pstmt.setString(4, changeBooleanToString(castlingElements.get(boardSquare)));
-                pstmt.executeUpdate();
+                pstmt.addBatch();
+                pstmt.clearParameters();
             }
         };
         jdbcTemplate.executeUpdateWhenLoop(query, pss);

@@ -10,10 +10,6 @@ public class RoomsDto {
 
     public RoomsDto(Map<Integer, String> rooms) {
         this.rooms = Collections.unmodifiableMap(new HashMap<>(rooms));
-        /*this.rooms = rooms.keySet().stream()
-            .sorted(Comparator.comparing(Integer::intValue))
-            .collect(Collectors.toMap(room -> room, room -> "# " + room + " - " + rooms.get(room),
-                (oldValue, newValue) -> oldValue, TreeMap::new));*/
     }
 
     public Map<Integer, String> getRooms() {

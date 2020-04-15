@@ -33,6 +33,7 @@ public class JdbcTemplate {
         try (Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query)) {
             loopPss.setParameter(pstmt);
+            pstmt.executeBatch();
         } catch (SQLException e) {
             throw new DataAccessException(e.getMessage());
         }
