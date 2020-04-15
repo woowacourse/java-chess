@@ -2,9 +2,155 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <title>chess game</title>
+    <link href="./css/chess.css" rel="stylesheet" type="text/css"/>
+    <script
+            crossorigin="anonymous"
+            integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+            src="https://code.jquery.com/jquery-3.4.1.min.js">
+    </script>
 </head>
-<body>
-Hello World!!
+<body oncontextmenu="return false" ondragstart="return false" onselectstart="return false">
+<div class="container">
+    <div class="game_ui">
+        <table cellpadding="0" cellspacing="0" id="chess_board">
+            <tr>
+                <td class="cell" id="A8">{{pieces.a8}}</td>
+                <td class="cell" id="B8">{{pieces.b8}}</td>
+                <td class="cell" id="C8">{{pieces.c8}}</td>
+                <td class="cell" id="D8">{{pieces.d8}}</td>
+                <td class="cell" id="E8">{{pieces.e8}}</td>
+                <td class="cell" id="F8">{{pieces.f8}}</td>
+                <td class="cell" id="G8">{{pieces.g8}}</td>
+                <td class="cell" id="H8">{{pieces.h8}}</td>
+                <td class="coordinate">8</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A7">{{pieces.a7}}</td>
+                <td class="cell" id="B7">{{pieces.b7}}</td>
+                <td class="cell" id="C7">{{pieces.c7}}</td>
+                <td class="cell" id="D7">{{pieces.d7}}</td>
+                <td class="cell" id="E7">{{pieces.e7}}</td>
+                <td class="cell" id="F7">{{pieces.f7}}</td>
+                <td class="cell" id="G7">{{pieces.g7}}</td>
+                <td class="cell" id="H7">{{pieces.h7}}</td>
+                <td class="coordinate">7</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A6">{{pieces.a6}}</td>
+                <td class="cell" id="B6">{{pieces.b6}}</td>
+                <td class="cell" id="C6">{{pieces.c6}}</td>
+                <td class="cell" id="D6">{{pieces.d6}}</td>
+                <td class="cell" id="E6">{{pieces.e6}}</td>
+                <td class="cell" id="F6">{{pieces.f6}}</td>
+                <td class="cell" id="G6">{{pieces.g6}}</td>
+                <td class="cell" id="H6">{{pieces.h6}}</td>
+                <td class="coordinate">6</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A5">{{pieces.a5}}</td>
+                <td class="cell" id="B5">{{pieces.b5}}</td>
+                <td class="cell" id="C5">{{pieces.c5}}</td>
+                <td class="cell" id="D5">{{pieces.d5}}</td>
+                <td class="cell" id="E5">{{pieces.e5}}</td>
+                <td class="cell" id="F5">{{pieces.f5}}</td>
+                <td class="cell" id="G5">{{pieces.g5}}</td>
+                <td class="cell" id="H5">{{pieces.h5}}</td>
+                <td class="coordinate">5</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A4">{{pieces.a4}}</td>
+                <td class="cell" id="B4">{{pieces.b4}}</td>
+                <td class="cell" id="C4">{{pieces.c4}}</td>
+                <td class="cell" id="D4">{{pieces.d4}}</td>
+                <td class="cell" id="E4">{{pieces.e4}}</td>
+                <td class="cell" id="F4">{{pieces.f4}}</td>
+                <td class="cell" id="G4">{{pieces.g4}}</td>
+                <td class="cell" id="H4">{{pieces.h4}}</td>
+                <td class="coordinate">4</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A3">{{pieces.a3}}</td>
+                <td class="cell" id="B3">{{pieces.b3}}</td>
+                <td class="cell" id="C3">{{pieces.c3}}</td>
+                <td class="cell" id="D3">{{pieces.d3}}</td>
+                <td class="cell" id="E3">{{pieces.e3}}</td>
+                <td class="cell" id="F3">{{pieces.f3}}</td>
+                <td class="cell" id="G3">{{pieces.g3}}</td>
+                <td class="cell" id="H3">{{pieces.h3}}</td>
+                <td class="coordinate">3</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A2">{{pieces.a2}}</td>
+                <td class="cell" id="B2">{{pieces.b2}}</td>
+                <td class="cell" id="C2">{{pieces.c2}}</td>
+                <td class="cell" id="D2">{{pieces.d2}}</td>
+                <td class="cell" id="E2">{{pieces.e2}}</td>
+                <td class="cell" id="F2">{{pieces.f2}}</td>
+                <td class="cell" id="G2">{{pieces.g2}}</td>
+                <td class="cell" id="H2">{{pieces.h2}}</td>
+                <td class="coordinate">2</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A1">{{pieces.a1}}</td>
+                <td class="cell" id="B1">{{pieces.b1}}</td>
+                <td class="cell" id="C1">{{pieces.c1}}</td>
+                <td class="cell" id="D1">{{pieces.d1}}</td>
+                <td class="cell" id="E1">{{pieces.e1}}</td>
+                <td class="cell" id="F1">{{pieces.f1}}</td>
+                <td class="cell" id="G1">{{pieces.g1}}</td>
+                <td class="cell" id="H1">{{pieces.h1}}</td>
+                <td class="coordinate">1</td>
+            </tr>
+            <tr>
+                <td class="coordinate">A</td>
+                <td class="coordinate">B</td>
+                <td class="coordinate">C</td>
+                <td class="coordinate">D</td>
+                <td class="coordinate">E</td>
+                <td class="coordinate">F</td>
+                <td class="coordinate">G</td>
+                <td class="coordinate">H</td>
+                <td class="coordinate">
+                    <button id="startBtn">게임시작</button>
+                    <button id="resumeBtn">게임재개</button>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- game_ui end -->
+    <div class="game_info">
+        <h3 style="text-align: center;">게임 명령 입력할 거야</h3>
+        <h4 style="text-align: center">{{turn}}</h4>
+        <h4 style="text-align: center">{{errorMsg}}</h4>
+        <form action="/move" class="game_interface" method="post">
+            <input class="command" name="source" onfocus="this.value='';return true;" type="text"
+                   value="이동할 말의 위치를 입력하세요."/>
+            <input class="command" name="target" onfocus="this.value='';return true;" type="text"
+                   value="이동할 위치를 입력하세요."/>
+            <input id="input" type="submit" value="입력"/>
+        </form>
+        <div class="command_history">
+            {{#commandHistories}}
+            <p>{{this.commandHistory}} {{this.source}} {{this.target}} {{this.errorMsg}}</p>
+            {{/commandHistories}}
+        </div>
+        <div class="score_board">
+            <div class="score_box">
+                WHITE
+                <br/>
+                <p class="score">{{white_score}}</p>
+            </div>
+            <div class="score_box">
+                BLACK
+                <br/>
+                <p class="score">{{black_score}}</p>
+            </div>
+        </div>
+    </div>
+    <div id="end">{{end}}</div>
+</div>
+<script src="./js/buttonClickEvent.js" type="text/javascript"></script>
+<script src="./js/inputClickEvent.js" type="text/javascript"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domains.board.Board;
-import chess.service.ChessService;
+import chess.domains.position.Position;
 import chess.view.OutputView;
 
 public class GameController {
@@ -30,12 +30,15 @@ public class GameController {
     }
 
     private static void printStatus(Board board) {
-        double score = ChessService.calculateScore(board);
+        double score = board.calculateScore();
         OutputView.printScore(score);
     }
 
     private static void move(Board board, String source, String target) {
-        ChessService.move(board, source, target);
+        Position sourcePosition = Position.ofPositionName(source);
+        Position targetPosition = Position.ofPositionName(target);
+
+        board.move(sourcePosition, targetPosition);
         OutputView.printBoard(board.showBoard());
     }
 

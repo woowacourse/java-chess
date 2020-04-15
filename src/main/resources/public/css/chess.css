@@ -1,0 +1,67 @@
+.container {
+    margin: auto;
+    display: flex;
+}
+
+#chess_board {
+    font-size: 50px;
+    text-align: center;
+}
+
+#chess_board td {
+    width: 80px;
+    height: 80px;
+}
+
+#chess_board tr:nth-child(odd) .cell:nth-child(even) {
+    background-color: gray;
+}
+
+#chess_board tr:nth-child(even) .cell:nth-child(odd) {
+    background-color: gray;
+}
+
+#chess_board tr .coordinate {
+    font-size: 20px;
+}
+
+.game_info {
+    background-color: cornflowerblue;
+    border: thin solid black;
+}
+
+.command {
+    width: 500px;
+    height: 20px;
+}
+
+.command_history {
+    width: 500px;
+    height: 500px;
+    border: thin solid black;
+    background-color:white;
+    margin: auto;
+    overflow: scroll;
+}
+.score_board {
+    text-align: center;
+    display: flex;
+    width: 400px;
+    height: 200px;
+    margin: auto;
+}
+
+.score_box {
+    border: thin solid black;
+    width: 200px;
+    height: 200px;
+    font-size: 30px;
+}
+
+.score {
+    font-size: 50px;
+}
+
+#end {
+    display: none;
+}

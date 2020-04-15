@@ -22,7 +22,7 @@ public class OutputView {
         StringBuilder sb = new StringBuilder(PLAYING_PIECES_COUNT);
 
         for (Piece piece : showingBoard) {
-            sb.append(piece.name());
+            sb.append(piece.getName());
         }
 
         for (int i = 0; i < ROW_SIZE; i++) {

@@ -7,10 +7,7 @@ import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -18,9 +15,17 @@ public class Board {
     public static final int TWO_KINGS = 2;
     public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
     public static final int COLUMN_SIZE = 8;
+    public static final String DELIMITER = " ";
+    public static final String INVALID_RECOVER_BOARD_ERROR_MESSAGE = "맞는 체스말을 찾을 수 없습니다.";
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
+
+    public void initialize() {
+        Map<Position, Piece> board = BoardFactory.getBoard();
+        this.board.putAll(board);
+        this.teamColor = PieceColor.WHITE;
+    }
 
     public List<Piece> showBoard() {
         ArrayList<Position> positions = new ArrayList<>(board.keySet());
@@ -44,7 +49,7 @@ public class Board {
         }
 
         exchange(source, target);
-        teamColor = teamColor.changeTeam();
+        this.teamColor = this.teamColor.changeTeam();
     }
 
     private void validRoute(List<Position> route) {
@@ -81,38 +86,73 @@ public class Board {
         double score = board.values()
                 .stream()
                 .filter(playingPiece -> playingPiece.isMine(teamColor))
-                .mapToDouble(Piece::score)
+                .mapToDouble(Piece::getScore)
                 .sum();
 
-        int pawnCount = countOfPawnsInSameColumn();
+        int pawnCount = countOfPawnsInSameColumn(teamColor);
 
         return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
 
-    private int countOfPawnsInSameColumn() {
+    public double calculateScore(PieceColor pieceColor) {
+        double score = board.values()
+                .stream()
+                .filter(playingPiece -> playingPiece.isMine(pieceColor))
+                .mapToDouble(Piece::getScore)
+                .sum();
+
+        int pawnCount = countOfPawnsInSameColumn(pieceColor);
+
+        return score - (pawnCount * SCORE_OF_PAWN_SAME_COLUMN);
+    }
+
+    private int countOfPawnsInSameColumn(PieceColor pieceColor) {
         int pawnCount = 0;
         for (Column column : Column.values()) {
-            pawnCount += countValidPawns(column);
+            pawnCount += countValidPawns(column, pieceColor);
         }
         return pawnCount;
     }
 
-    private int countValidPawns(Column column) {
+    private int countValidPawns(Column column, PieceColor pieceColor) {
         int sameColumnPiecesCount = (int) board.keySet()
                 .stream()
                 .filter(position -> position.isColumn(column))
                 .map(board::get)
-                .filter(playingPiece -> playingPiece.isMine(teamColor)
+                .filter(playingPiece -> playingPiece.isMine(pieceColor)
                         && playingPiece.is(PieceType.PAWN))
                 .count();
 
         if (sameColumnPiecesCount > 1) {
             return sameColumnPiecesCount;
         }
+
         return 0;
+    }
+
+    public void recoverBoard(Map<String, String> previousBoard) {
+        Map<Position, Piece> recovered = new HashMap<>();
+        for (String position : previousBoard.keySet()) {
+            Piece recoverPiece = board.values()
+                    .stream()
+                    .filter(piece -> piece.getChessPiece()
+                            .equals(previousBoard.get(position)))
+                    .findFirst()
+                    .orElseThrow(() -> new IllegalArgumentException(INVALID_RECOVER_BOARD_ERROR_MESSAGE));
+            recovered.put(Position.ofPositionName(position), recoverPiece);
+        }
+        this.board.putAll(recovered);
     }
 
     public PieceColor getTeamColor() {
         return teamColor;
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return board;
+    }
+
+    public String findPieceByPosition(String source) {
+        return board.get(Position.ofPositionName(source)).getChessPiece();
     }
 }

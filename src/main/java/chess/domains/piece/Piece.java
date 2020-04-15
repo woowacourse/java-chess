@@ -38,14 +38,21 @@ public abstract class Piece {
         return this.type == pieceType;
     }
 
-    public String name() {
+    public String getName() {
         if (pieceColor == PieceColor.BLACK) {
             return type.getName().toUpperCase();
         }
         return type.getName();
     }
 
-    public double score() {
+    public String getChessPiece() {
+        if (pieceColor == PieceColor.BLACK) {
+            return type.getBlackPiece();
+        }
+        return type.getWhitePiece();
+    }
+
+    public double getScore() {
         return type.getScore();
     }
 
