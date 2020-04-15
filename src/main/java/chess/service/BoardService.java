@@ -4,7 +4,9 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardDAO;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.domain.result.GameResult;
 import chess.exception.TakeTurnException;
 
 import java.sql.SQLException;
@@ -75,5 +77,18 @@ public class BoardService {
     public boolean isFinished() throws SQLException {
         Board board = new Board(boardDAO.findAllPieces());
         return board.isFinished();
+    }
+
+    public Map<String, Object> receiveScoreStatus() throws SQLException {
+        GameResult gameResult = new GameResult();
+        Board board = new Board(boardDAO.findAllPieces());
+
+        double blackScore = gameResult.calculateScore(board, Team.BLACK);
+        double whiteScore = gameResult.calculateScore(board, Team.WHITE);
+
+        Map<String, Object> model = createBoardModel(board);
+        model.put("black", blackScore);
+        model.put("white", whiteScore);
+        return model;
     }
 }

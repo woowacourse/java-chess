@@ -29,18 +29,14 @@ public class WebUIChessApplication {
     public static void main(String[] args) {
         staticFiles.location("/public");
 
-        get("/", (req, res) -> {
-            return render(boardService.receiveEmptyBoard(), "index.html");
-        });
+        get("/", (req, res) -> render(boardService.receiveEmptyBoard(), "index.html"));
 
         post("/start", (req, res) -> {
             turnService.initializeTurn();
             return render(boardService.receiveInitializedBoard(), "index.html");
         });
 
-        post("/end", (req, res) -> {
-            return render(boardService.receiveEmptyBoard(), "index.html");
-        });
+        post("/end", (req, res) -> render(boardService.receiveEmptyBoard(), "index.html"));
 
         post("/load", (req, res) -> {
             Map<String, Object> model = boardService.receiveLoadedBoard(turnService);
@@ -61,29 +57,18 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/finish", (req, res) -> {
-            return render(turnService.receiveOnlyTurn(), "finish.html");
-        });
+        get("/finish", (req, res) -> render(turnService.receiveOnlyTurn(), "finish.html"));
 
         get("/exception", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "exception.html");
         });
 
-//        post("/status", (req, res) -> {
-//            GameResult gameResult = new GameResult();
-//            double blackScore = gameResult.calculateScore(board, Team.BLACK);
-//            double whiteScore = gameResult.calculateScore(board, Team.WHITE);
-//            if (blackScore == 0 && whiteScore == 0) {
-//                return render(BoardService.receiveEmptyBoard(), "index.html");
-//            } else {
-//                Map<String, Object> model = BoardService.receiveLoadedBoard(boardDAO);
-//                model.put("black", blackScore);
-//                model.put("white", whiteScore);
-//                model.put("turn", board.getCurrentTurn());
-//                return render(model, "index.html");
-//            }
-//        });
+        post("/status", (req, res) -> {
+            Map<String, Object> model = boardService.receiveScoreStatus();
+            model.put("turn", turnService.getCurrentTurn() + "차례입니다.");
+            return render(model, "index.html");
+        });
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
