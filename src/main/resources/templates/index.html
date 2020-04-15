@@ -1,10 +1,121 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
+    <title>체스게임 made by 그래</title>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
-Hello World!!
+<h1>핵꿀잼 체스</h1>
+<div class="container">
+    <div class="chess-board">
+        <table>
+            <tr>
+                <td class="a8"><img src="{{a8}}.png"></td>
+                <td class="b8"><img src="{{b8}}.png"></td>
+                <td class="c8"><img src="{{c8}}.png"></td>
+                <td class="d8"><img src="{{d8}}.png"></td>
+                <td class="e8"><img src="{{e8}}.png"></td>
+                <td class="f8"><img src="{{f8}}.png"></td>
+                <td class="g8"><img src="{{g8}}.png"></td>
+                <td class="h8"><img src="{{h8}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a7"><img src="{{a7}}.png"></td>
+                <td class="b7"><img src="{{b7}}.png"></td>
+                <td class="c7"><img src="{{c7}}.png"></td>
+                <td class="d7"><img src="{{d7}}.png"></td>
+                <td class="e7"><img src="{{e7}}.png"></td>
+                <td class="f7"><img src="{{f7}}.png"></td>
+                <td class="g7"><img src="{{g7}}.png"></td>
+                <td class="h7"><img src="{{h7}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a6"><img src="{{a6}}.png"></td>
+                <td class="b6"><img src="{{b6}}.png"></td>
+                <td class="c6"><img src="{{c6}}.png"></td>
+                <td class="d6"><img src="{{d6}}.png"></td>
+                <td class="e6"><img src="{{e6}}.png"></td>
+                <td class="f6"><img src="{{f6}}.png"></td>
+                <td class="g6"><img src="{{g6}}.png"></td>
+                <td class="h6"><img src="{{h6}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a5"><img src="{{a5}}.png"></td>
+                <td class="b5"><img src="{{b5}}.png"></td>
+                <td class="c5"><img src="{{c5}}.png"></td>
+                <td class="d5"><img src="{{d5}}.png"></td>
+                <td class="e5"><img src="{{e5}}.png"></td>
+                <td class="f5"><img src="{{f5}}.png"></td>
+                <td class="g5"><img src="{{g5}}.png"></td>
+                <td class="h5"><img src="{{h5}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a4"><img src="{{a4}}.png"></td>
+                <td class="b4"><img src="{{b4}}.png"></td>
+                <td class="c4"><img src="{{c4}}.png"></td>
+                <td class="d4"><img src="{{d4}}.png"></td>
+                <td class="e4"><img src="{{e4}}.png"></td>
+                <td class="f4"><img src="{{f4}}.png"></td>
+                <td class="g4"><img src="{{g4}}.png"></td>
+                <td class="h4"><img src="{{h4}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a3"><img src="{{a3}}.png"></td>
+                <td class="b3"><img src="{{b3}}.png"></td>
+                <td class="c3"><img src="{{c3}}.png"></td>
+                <td class="d3"><img src="{{d3}}.png"></td>
+                <td class="e3"><img src="{{e3}}.png"></td>
+                <td class="f3"><img src="{{f3}}.png"></td>
+                <td class="g3"><img src="{{g3}}.png"></td>
+                <td class="h3"><img src="{{h3}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a2"><img src="{{a2}}.png"></td>
+                <td class="b2"><img src="{{b2}}.png"></td>
+                <td class="c2"><img src="{{c2}}.png"></td>
+                <td class="d2"><img src="{{d2}}.png"></td>
+                <td class="e2"><img src="{{e2}}.png"></td>
+                <td class="f2"><img src="{{f2}}.png"></td>
+                <td class="g2"><img src="{{g2}}.png"></td>
+                <td class="h2"><img src="{{h2}}.png"></td>
+            </tr>
+            <tr>
+                <td class="a1"><img src="{{a1}}.png"></td>
+                <td class="b1"><img src="{{b1}}.png"></td>
+                <td class="c1"><img src="{{c1}}.png"></td>
+                <td class="d1"><img src="{{d1}}.png"></td>
+                <td class="e1"><img src="{{e1}}.png"></td>
+                <td class="f1"><img src="{{f1}}.png"></td>
+                <td class="g1"><img src="{{g1}}.png"></td>
+                <td class="h1"><img src="{{h1}}.png"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="error-message">
+        {{error-message}}
+    </div>
+    <div class="source-and-target">
+        <div class="source-and-target-message">
+            출발지와 목적지를 입력해주세요.
+        </div>
+        <form class="source-and-target-inputs" method="POST" action="/">
+            <input type="text" name="source" placeholder="a1">
+            ->
+            <input type="text" name="target" placeholder="a2">
+            <input type="submit" value="이동">
+        </form>
+    </div>
+    <div class="buttons">
+        <form method="POST" action="/newgame">
+            <input type="submit" value="새 게임">
+        </form>
+        <form method="POST" action="/scores">
+            <input type="submit" value="점수 보기">
+        </form>
+    </div>
+</div>
 </body>
 </html>

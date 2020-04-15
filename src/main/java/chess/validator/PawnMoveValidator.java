@@ -22,6 +22,9 @@ public class PawnMoveValidator extends MoveValidator {
         if (source.isNotSameFile(target)) {
             return false;
         }
+        if (board.isExistAt(target)) {
+            return false;
+        }
         int forwardMoveAmountOfRank = board.forwardMoveAmountOfRank(source, target);
         if (board.hasMoved(source)) {
             return forwardMoveAmountOfRank == MINIMUM_MOVEMENT_RANK;
@@ -43,10 +46,5 @@ public class PawnMoveValidator extends MoveValidator {
                     .collect(Collectors.toList());
         }
         return Collections.emptyList();
-    }
-
-    @Override
-    protected boolean isKingKilledIfMoves(Board board, Position source, Position target) {
-        return board.isKingKilledIfMoves(source, target);
     }
 }

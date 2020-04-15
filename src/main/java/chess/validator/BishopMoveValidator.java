@@ -15,9 +15,4 @@ public class BishopMoveValidator extends MoveValidator {
     protected List<Position> movePathExceptSourceAndTarget(Position source, Position target) {
         return Position.findDiagonalTrace(source, target);
     }
-
-    @Override
-    protected boolean isKingKilledIfMoves(Board board, Position source, Position target) {
-        return board.isKingKilledIfMoves(source, target);
-    }
 }

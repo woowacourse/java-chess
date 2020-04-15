@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class OutputView {
+public class ConsoleOutputView {
 
     private static final String GAME_INTRO_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String START_COMMAND_INFORMATION_MESSAGE = "> 게임 시작 : start";
@@ -34,13 +34,13 @@ public class OutputView {
 
     public static void printBoard(Map<Position, Piece> pieces) {
         StringBuilder builder = new StringBuilder();
-        for (Rank rank : ReverseOrderOfRankValuesExceptNone()) {
+        for (Rank rank : reverseOrderOfRankValuesExceptNone()) {
             builder.append(informationOf(pieces, rank));
         }
         System.out.println(builder);
     }
 
-    public static List<Rank> ReverseOrderOfRankValuesExceptNone() {
+    public static List<Rank> reverseOrderOfRankValuesExceptNone() {
         return Arrays.stream(Rank.valuesExceptNone())
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());

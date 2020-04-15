@@ -23,8 +23,8 @@ public enum Direction {
 
     public static Direction of(Position source, Position target) {
         return Arrays.stream(values())
-                .filter(direction -> direction.increaseAmountOfFile == source.increaseAmountOfFile(target)
-                        && direction.increaseAmountOfRank == source.increaseAmountOfRank(target))
+                .filter(direction -> direction.increaseAmountOfFile == source.increaseAmountOfFile(target))
+                .filter(direction -> direction.increaseAmountOfRank == source.increaseAmountOfRank(target))
                 .findFirst()
                 .orElse(NONE);
     }
