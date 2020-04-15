@@ -4,6 +4,7 @@ import chess.exception.InvalidPositionException;
 import chess.exception.PieceImpossibleMoveException;
 import chess.exception.TakeTurnException;
 import chess.service.BoardService;
+import chess.service.FinishService;
 import chess.service.TurnService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -17,6 +18,7 @@ import static spark.Spark.*;
 public class WebUIChessApplication {
     private static BoardService boardService = new BoardService();
     private static TurnService turnService;
+    private static FinishService finishService = new FinishService();
 
     static {
         try {
@@ -47,8 +49,9 @@ public class WebUIChessApplication {
             Map<String, Object> model = boardService.receiveLoadedBoard(turnService);
             try {
                 model = boardService.receiveMovedBoard(
-                        req.queryParams("fromPiece"), req.queryParams("toPiece"), turnService);
-                if (boardService.isFinished()) {
+                        req.queryParams("fromPiece"), req.queryParams("toPiece"), turnService, finishService);
+                if (finishService.isFinish()) {
+                    finishService.initialize();
                     res.redirect("/finish");
                 }
             } catch(InvalidPositionException | PieceImpossibleMoveException | TakeTurnException e) {
@@ -57,7 +60,7 @@ public class WebUIChessApplication {
             return render(model, "index.html");
         });
 
-        get("/finish", (req, res) -> render(turnService.receiveOnlyTurn(), "finish.html"));
+        get("/finish", (req, res) -> render(turnService.receiveWinner(), "finish.html"));
 
         get("/exception", (req, res) -> {
             Map<String, Object> model = new HashMap<>();

@@ -1,17 +1,11 @@
-package chess.domain.board;
-
-import chess.domain.piece.Piece;
-import chess.domain.piece.PieceType;
-import chess.domain.position.Position;
+package chess.domain.dao;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
-public class BoardDAO {
+public class FinishDAO {
     private Connection connection;
 
-    public BoardDAO() {
+    public FinishDAO() {
         this.connection = getConnection();
     }
 
@@ -51,34 +45,29 @@ public class BoardDAO {
         }
     }
 
-    public void placePiece(final Board board, final Position position) throws SQLException {
-        String query = "INSERT INTO board (position, piece) VALUES (?, ?) ON DUPLICATE KEY UPDATE position=?, piece=?";
+    public void updateFinish(final boolean isFinish) throws SQLException {
+        deleteFinish();
+        String query = "INSERT INTO finish (isFinish) VALUES (?)";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
-        preparedStatement.setString(1, position.toString());
-        preparedStatement.setString(2, board.findBy(position).getName());
-        preparedStatement.setString(3, position.toString());
-        preparedStatement.setString(4, board.findBy(position).getName());
+        preparedStatement.setString(1, String.valueOf(isFinish));
         preparedStatement.executeUpdate();
     }
 
-    public void deletePieces() throws SQLException {
-        String query = "TRUNCATE board";
+    public void deleteFinish() throws SQLException {
+        String query = "TRUNCATE finish";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         preparedStatement.executeUpdate();
     }
 
-    public Map<Position, Piece> findAllPieces() throws SQLException {
-        String query = "SELECT * FROM board";
+    public String getIsFinish() throws SQLException {
+        String query = "SELECT * FROM finish";
         PreparedStatement preparedStatement = connection.prepareStatement(query);
         ResultSet resultSet = preparedStatement.executeQuery();
 
-        Map<Position, Piece> output = new HashMap<>();
-        while (resultSet.next()) {
-            Piece piece = Piece.of(PieceType.valueOf(resultSet.getString("piece")));
-            Position position = Position.of(resultSet.getString("position"));
-            output.put(position, piece);
+        String output = "";
+        while(resultSet.next()) {
+            output = resultSet.getString("isFinish");
         }
         return output;
     }
 }
-

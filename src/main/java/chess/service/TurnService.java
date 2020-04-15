@@ -1,6 +1,6 @@
 package chess.service;
 
-import chess.domain.board.TurnDAO;
+import chess.domain.dao.TurnDAO;
 import chess.domain.piece.Team;
 
 import java.sql.SQLException;
@@ -31,7 +31,8 @@ public class TurnService {
         return turnDAO.findTurn();
     }
 
-    public Map<String, Object> receiveOnlyTurn() throws SQLException {
+    public Map<String, Object> receiveWinner() throws SQLException {
+        updateTurn();
         Team team = turnDAO.findTurn();
         Map<String, Object> model = new HashMap<>();
         model.put("turn", team);

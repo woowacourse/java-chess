@@ -1,7 +1,7 @@
 package chess.service;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardDAO;
+import chess.domain.dao.BoardDAO;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -36,7 +36,7 @@ public class BoardService {
 
 
         Map<String, Object> model = createBoardModel(board);
-        model.put("turn",  "WHITE 가 먼저 시작합니다.");
+        model.put("turn", "WHITE 가 먼저 시작합니다.");
         return model;
     }
 
@@ -47,13 +47,15 @@ public class BoardService {
         return model;
     }
 
-    public Map<String, Object> receiveMovedBoard(final String fromPiece, final String toPiece, final TurnService turnService) throws SQLException {
+    public Map<String, Object> receiveMovedBoard(final String fromPiece, final String toPiece, final TurnService turnService, final FinishService finishService) throws SQLException {
         Board board = new Board(boardDAO.findAllPieces());
         Piece piece = board.findBy(Position.of(fromPiece));
         if (!piece.isSameTeam(turnService.getCurrentTurn())) {
             throw new TakeTurnException("체스 게임 순서를 지켜주세요.");
         }
         board.move(fromPiece, toPiece);
+        finishService.updateFinish(board.isFinished());
+
         boardDAO.deletePieces();
         for (Position position : board.getBoard().keySet()) {
             boardDAO.placePiece(board, position);
