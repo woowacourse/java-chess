@@ -24,34 +24,34 @@ public enum PieceType {
             new Score(1)),
     ROOK("r",
             rookCanNotMoveStrategies(),
-            Arrays.asList(new InitialColumn(1), new InitialColumn(8)),
+            Arrays.asList(new Column(1), new Column(8)),
             new Score(5)),
     KNIGHT("n",
             knightCanNotMoveStrategies(),
-            Arrays.asList(new InitialColumn(2), new InitialColumn(7)),
+            Arrays.asList(new Column(2), new Column(7)),
             new Score(2.5)),
     BISHOP("b",
             bishopCanNotMoveStrategies(),
-            Arrays.asList(new InitialColumn(3), new InitialColumn(6)),
+            Arrays.asList(new Column(3), new Column(6)),
             new Score(3)),
     QUEEN("q",
             queenCanNotMoveStrategies(),
-            Collections.singletonList(new InitialColumn(4)),
+            Collections.singletonList(new Column(4)),
             new Score(9)),
     KING("k",
             kingCanNotMoveStrategies(),
-            Collections.singletonList(new InitialColumn(5)),
+            Collections.singletonList(new Column(5)),
             new Score(0));
 
 
     private final String name;
     private final List<CanNotMoveStrategy> canNotMoveStrategies;
-    private final List<InitialColumn> initialColumns;
+    private final List<Column> initialColumns;
     private final Score score;
 
     PieceType(String name,
               List<CanNotMoveStrategy> canNotMoveStrategies,
-              List<InitialColumn> initialColumns,
+              List<Column> initialColumns,
               Score score) {
         this.name = name;
         this.canNotMoveStrategies = canNotMoveStrategies;
@@ -61,7 +61,7 @@ public enum PieceType {
 
     static PieceType findByInitialColumn(int initialColumn) {
         return Arrays.stream(values())
-                .filter(pieceType -> pieceType.initialColumns.contains(new InitialColumn(initialColumn)))
+                .filter(pieceType -> pieceType.initialColumns.contains(new Column(initialColumn)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn)));
     }
