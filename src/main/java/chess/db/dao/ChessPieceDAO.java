@@ -10,34 +10,32 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class BlackPieceDAO implements PieceDAO {
+public class ChessPieceDAO {
 
-    @Override
     public void deleteTable() {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM black")) {
+             PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM chessPiece")) {
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLExecuteException("deleteBlackTable 오류:" + e.getMessage());
+            throw new SQLExecuteException("deleteTable 오류:" + e.getMessage());
         }
     }
 
-    @Override
-    public void insertPiece(String position,String chessPiece) {
+    public void insertPiece(String position, String chessPiece) {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO black VALUES (?,?)")) {
-            preparedStatement.setString(1,position);
-            preparedStatement.setString(2,chessPiece);
+             PreparedStatement preparedStatement =
+                     connection.prepareStatement("INSERT INTO chessPiece VALUES (?,?)")) {
+            preparedStatement.setString(1, position);
+            preparedStatement.setString(2, chessPiece);
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
-            throw new SQLExecuteException("insertBoard 오류: " + e.getMessage());
+            throw new SQLExecuteException("insertPiece 오류: " + e.getMessage());
         }
     }
 
-    @Override
-    public Map<String,String> selectBoard() {
+    public Map<String,String> selectChessPiece() {
         try (Connection connection = ConnectionFactory.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM black");
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM chessPiece");
              ResultSet resultSet = preparedStatement.executeQuery()) {
             Map<String,String> pieces = new HashMap<>();
 
@@ -47,34 +45,30 @@ public class BlackPieceDAO implements PieceDAO {
 
             return pieces;
         } catch (SQLException e) {
-            throw new SQLExecuteException("selectBlackBoard 오류: " + e.getMessage());
+            throw new SQLExecuteException("selectChessPiece 오류: " + e.getMessage());
         }
     }
 
-    @Override
-    public void updatePiece(String sourcePosition,String targetPosition) {
+    public void updatePiece(String sourcePosition, String targetPosition) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("UPDATE black SET position = ? WHERE position = ?")) {
+                     connection.prepareStatement("UPDATE chessPiece SET position = ? WHERE position = ?")) {
             preparedStatement.setString(1, targetPosition);
             preparedStatement.setString(2, sourcePosition);
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             throw new SQLExecuteException("updatePiece 오류: " + e.getMessage());
         }
     }
 
-    @Override
-    public void deleteCaughtPiece(String position) {
+    public void deletePiece(String position) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement =
-                     connection.prepareStatement("DELETE  FROM black WHERE position = ?")) {
+                     connection.prepareStatement("DELETE  FROM chessPiece WHERE position = ?")) {
             preparedStatement.setString(1, position);
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
-            System.err.println("deleteCaughtPiece 오류: " + e.getMessage());
+            throw new SQLExecuteException("deletePiece 오류: " + e.getMessage());
         }
     }
 }

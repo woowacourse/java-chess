@@ -1,9 +1,6 @@
 package chess.service;
 
-import chess.db.dao.BlackPieceDAO;
-import chess.db.dao.ChessBoardStateDAO;
-import chess.db.dao.PieceDAO;
-import chess.db.dao.WhitePieceDAO;
+import chess.db.dao.*;
 import chess.domain.chessBoard.ChessBoardState;
 import chess.dto.ChessPieceDTO;
 
@@ -14,13 +11,11 @@ import java.util.Map;
 
 public class ChessGameSettingService {
 
-    private PieceDAO whitePieceDAO;
-    private PieceDAO blackPieceDAO;
+    private ChessPieceDAO chessPieceDAO;
     private ChessBoardStateDAO chessBoardStateDAO;
 
     public ChessGameSettingService() {
-        whitePieceDAO = new WhitePieceDAO();
-        blackPieceDAO = new BlackPieceDAO();
+        chessPieceDAO = new ChessPieceDAO();
         chessBoardStateDAO = new ChessBoardStateDAO();
     }
 
@@ -28,7 +23,7 @@ public class ChessGameSettingService {
         Map<String, Object> model = new HashMap<>();
         List<ChessPieceDTO> chessPieceDTOArrayList = new ArrayList<>();
 
-        CreateChessBoardFromDB.createChessBoard(whitePieceDAO,blackPieceDAO,chessBoardStateDAO).getChessBoard()
+        CreateChessBoardFromDB.createChessBoard(chessPieceDAO,chessBoardStateDAO).getChessBoard()
                 .forEach(((key, value) -> chessPieceDTOArrayList.add(
                         new ChessPieceDTO(key.getPositionToString(), value.getName()))
                 )

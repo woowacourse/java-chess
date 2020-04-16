@@ -9,11 +9,9 @@ import java.util.Map;
 
 public class CreateChessBoard {
 
-    public static Map<Position, ChessPiece> from(Map<String, String> whitePiece, Map<String, String> blackPiece) {
+    public static Map<Position, ChessPiece> from(Map<String, String> chessPieces) {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
-        Map<String, String> chessBoardPieces = new HashMap<>();
-        chessBoardPieces.putAll(whitePiece);
-        chessBoardPieces.putAll(blackPiece);
+        Map<String, String> chessBoardPieces = new HashMap<>(chessPieces);
 
         chessBoardPieces.forEach((key, value) ->
                 chessBoard.put(Position.of(key), ChessPieceCache.getChessPiece(key, value)));

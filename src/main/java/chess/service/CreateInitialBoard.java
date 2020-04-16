@@ -1,36 +1,30 @@
 package chess.service;
 
-import chess.db.dao.BlackPieceDAO;
 import chess.db.dao.ChessBoardStateDAO;
-import chess.db.dao.PieceDAO;
-import chess.db.dao.WhitePieceDAO;
-import chess.domain.initialChessBoard.InitialBlackChessBoardDTO;
+import chess.db.dao.ChessPieceDAO;
 import chess.domain.initialChessBoard.InitialChessBoardStateDTO;
-import chess.domain.initialChessBoard.InitialWhiteChessBoardDTO;
+import chess.domain.initialChessBoard.InitialChessPiecesDTO;
 
 public class CreateInitialBoard {
 
     private static final String SUCCESS = "";
 
-    private PieceDAO blackPieceDAO;
-    private PieceDAO whitePieceDAO;
+    private ChessPieceDAO chessPieceDAO;
     private ChessBoardStateDAO chessBoardStateDAO;
 
     public CreateInitialBoard() {
-        this.blackPieceDAO = new BlackPieceDAO();
-        this.whitePieceDAO = new WhitePieceDAO();
+        chessPieceDAO = new ChessPieceDAO();
+
         this.chessBoardStateDAO = new ChessBoardStateDAO();
     }
 
     public String initialChessBoard() {
-        whitePieceDAO.deleteTable();
-        blackPieceDAO.deleteTable();
+        chessPieceDAO.deleteTable();
         chessBoardStateDAO.deleteChessBoardState();
 
         chessBoardStateDAO.insertChessBoardState(
                 InitialChessBoardStateDTO.getInitialTurn(), InitialChessBoardStateDTO.isCaughtKing());
-        InitialWhiteChessBoardDTO.getInitialChessBoard().forEach((key, value) -> whitePieceDAO.insertPiece(key, value));
-        InitialBlackChessBoardDTO.getInitialChessBoard().forEach((key, value) -> blackPieceDAO.insertPiece(key, value));
+        InitialChessPiecesDTO.getInitialChessBoard().forEach((key, value) -> chessPieceDAO.insertPiece(key, value));
 
         return SUCCESS;
     }
