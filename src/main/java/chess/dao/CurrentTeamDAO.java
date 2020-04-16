@@ -16,7 +16,7 @@ public class CurrentTeamDAO {
             pstmt.setInt(2, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -28,7 +28,7 @@ public class CurrentTeamDAO {
             pstmt.setInt(2, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -39,7 +39,7 @@ public class CurrentTeamDAO {
             pstmt.setInt(1, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -59,8 +59,7 @@ public class CurrentTeamDAO {
             ConnectionManager.closeResultSet(rs);
             return currentTeam;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 }

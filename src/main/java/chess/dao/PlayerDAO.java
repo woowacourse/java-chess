@@ -17,7 +17,7 @@ public class PlayerDAO {
             pstmt.setInt(3, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -39,8 +39,7 @@ public class PlayerDAO {
             ConnectionManager.closeResultSet(rs);
             return player;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -51,7 +50,7 @@ public class PlayerDAO {
             pstmt.setInt(1, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -73,8 +72,7 @@ public class PlayerDAO {
             ConnectionManager.closeResultSet(rs);
             return players;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 }

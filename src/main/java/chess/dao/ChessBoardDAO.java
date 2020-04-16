@@ -12,7 +12,7 @@ public class ChessBoardDAO {
              PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -31,8 +31,7 @@ public class ChessBoardDAO {
             ConnectionManager.closeResultSet(rs);
             return chessBoard;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -46,7 +45,7 @@ public class ChessBoardDAO {
             pstmt.setInt(1, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -66,8 +65,7 @@ public class ChessBoardDAO {
             ConnectionManager.closeResultSet(rs);
             return chessBoard;
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 }

@@ -1,0 +1,11 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
+}
+
+#result {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}

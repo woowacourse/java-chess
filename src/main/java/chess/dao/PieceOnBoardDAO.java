@@ -27,7 +27,7 @@ public class PieceOnBoardDAO {
                 ConnectionManager.closePreparedStatement(pstmt);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -41,7 +41,7 @@ public class PieceOnBoardDAO {
             pstmt.setInt(1, pieceOnBoard.getPieceId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -66,8 +66,7 @@ public class PieceOnBoardDAO {
             ConnectionManager.closeResultSet(rs);
             return Collections.unmodifiableList(pieceOnBoards);
         } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -79,7 +78,7 @@ public class PieceOnBoardDAO {
             pstmt.setInt(2, pieceOnBoard.getPieceId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 }

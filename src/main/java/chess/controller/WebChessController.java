@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.dao.ChessBoard;
+import chess.dao.CustomSQLException;
 import chess.dao.Player;
 import chess.dto.MoveResultDTO;
 import chess.dto.TeamDTO;
@@ -37,11 +38,16 @@ public class WebChessController {
         post("/load", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            List<Player> players = this.chessService.players();
+            try {
+                List<Player> players = this.chessService.players();
 
-            model.put("gameData", players);
+                model.put("gameData", players);
 
-            return render(model, "table.html");
+                return render(model, "table.html");
+            } catch (CustomSQLException e) {
+                model.put("errMessage", e.getMessage());
+                return render(model, "error.html");
+            }
         });
 
         post("/newGame", (req, res) -> {
@@ -50,18 +56,23 @@ public class WebChessController {
             String whitePlayer = req.queryParams("white-player");
             String blackPlayer = req.queryParams("black-player");
 
-            Player player = new Player(whitePlayer, blackPlayer);
-            this.chessService.newGame(player);
-            List<TileDTO> tileDtos = this.chessService.getTiles();
-            TeamDTO teamDto = this.chessService.getCurrentTeam();
-            ChessBoard chessBoard = this.chessService.getRecentChessBoard();
+            try {
+                Player player = new Player(whitePlayer, blackPlayer);
+                this.chessService.newGame(player);
+                List<TileDTO> tileDtos = this.chessService.getTiles();
+                TeamDTO teamDto = this.chessService.getCurrentTeam();
+                ChessBoard chessBoard = this.chessService.getRecentChessBoard();
 
-            model.put("tiles", tileDtos);
-            model.put("currentTeam", teamDto);
-            model.put("player", player);
-            model.put("chessBoard", chessBoard);
+                model.put("tiles", tileDtos);
+                model.put("currentTeam", teamDto);
+                model.put("player", player);
+                model.put("chessBoard", chessBoard);
 
-            return render(model, "game.html");
+                return render(model, "game.html");
+            } catch (CustomSQLException e) {
+                model.put("errMessage", e.getMessage());
+                return render(model, "error.html");
+            }
         });
 
         post("/continueGame", (req, res) -> {
@@ -69,18 +80,23 @@ public class WebChessController {
 
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
 
-            this.chessService.continueGame(chessBoardId);
-            List<TileDTO> tileDtos = this.chessService.getTiles();
-            TeamDTO teamDto = this.chessService.getCurrentTeam();
-            Player player = this.chessService.getPlayer(chessBoardId);
-            ChessBoard chessBoard = new ChessBoard(chessBoardId);
+            try {
+                this.chessService.continueGame(chessBoardId);
+                List<TileDTO> tileDtos = this.chessService.getTiles();
+                TeamDTO teamDto = this.chessService.getCurrentTeam();
+                Player player = this.chessService.getPlayer(chessBoardId);
+                ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
-            model.put("tiles", tileDtos);
-            model.put("currentTeam", teamDto);
-            model.put("player", player);
-            model.put("chessBoard", chessBoard);
+                model.put("tiles", tileDtos);
+                model.put("currentTeam", teamDto);
+                model.put("player", player);
+                model.put("chessBoard", chessBoard);
 
-            return render(model, "game.html");
+                return render(model, "game.html");
+            } catch (CustomSQLException e) {
+                model.put("errMessage", e.getMessage());
+                return render(model, "error.html");
+            }
         });
 
         post("/move", (req, res) -> {
@@ -90,24 +106,29 @@ public class WebChessController {
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            MoveResultDTO moveResultDto = this.chessService.move(chessBoardId, source, target);
-            List<TileDTO> tileDtos = this.chessService.getTiles();
-            TeamDTO teamDto = this.chessService.getCurrentTeam();
-            Player player = this.chessService.getPlayer(chessBoardId);
-            ChessBoard chessBoard = new ChessBoard(chessBoardId);
+            try {
+                MoveResultDTO moveResultDto = this.chessService.move(chessBoardId, source, target);
+                List<TileDTO> tileDtos = this.chessService.getTiles();
+                TeamDTO teamDto = this.chessService.getCurrentTeam();
+                Player player = this.chessService.getPlayer(chessBoardId);
+                ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
-            model.put("tiles", tileDtos);
-            model.put("currentTeam", teamDto);
-            model.put("message", moveResultDto.getMessage());
-            model.put("style", moveResultDto.getStyle());
-            model.put("player", player);
-            model.put("chessBoard", chessBoard);
+                model.put("tiles", tileDtos);
+                model.put("currentTeam", teamDto);
+                model.put("message", moveResultDto.getMessage());
+                model.put("style", moveResultDto.getStyle());
+                model.put("player", player);
+                model.put("chessBoard", chessBoard);
 
-            if (this.chessService.isEndGame()) {
-                this.chessService.deleteChessGame(chessBoardId);
-                return render(model, "end.html");
+                if (this.chessService.isEndGame()) {
+                    this.chessService.deleteChessGame(chessBoardId);
+                    return render(model, "end.html");
+                }
+                return render(model, "game.html");
+            } catch (CustomSQLException e) {
+                model.put("errorMessage", e.getMessage());
+                return render(model, "error.html");
             }
-            return render(model, "game.html");
         });
 
         post("/status", (req, res) -> {
@@ -115,19 +136,24 @@ public class WebChessController {
 
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id-status"));
 
-            List<TileDTO> tileDtos = this.chessService.getTiles();
-            TeamDTO teamDto = this.chessService.getCurrentTeam();
-            String message = this.chessService.getScores();
-            Player player = this.chessService.getPlayer(chessBoardId);
-            ChessBoard chessBoard = new ChessBoard(chessBoardId);
+            try {
+                List<TileDTO> tileDtos = this.chessService.getTiles();
+                TeamDTO teamDto = this.chessService.getCurrentTeam();
+                String message = this.chessService.getScores();
+                Player player = this.chessService.getPlayer(chessBoardId);
+                ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
-            model.put("tiles", tileDtos);
-            model.put("currentTeam", teamDto);
-            model.put("message", message);
-            model.put("player", player);
-            model.put("chessBoard", chessBoard);
+                model.put("tiles", tileDtos);
+                model.put("currentTeam", teamDto);
+                model.put("message", message);
+                model.put("player", player);
+                model.put("chessBoard", chessBoard);
 
-            return render(model, "game.html");
+                return render(model, "game.html");
+            } catch (CustomSQLException e) {
+                model.put("errorMessage", e.getMessage());
+                return render(model, "error.html");
+            }
         });
 
         post("/end", (req, res) -> {
@@ -135,12 +161,17 @@ public class WebChessController {
 
             int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id-end"));
 
-            this.chessService.deleteChessGame(chessBoardId);
-            String message = this.chessService.getScores();
+            try {
+                this.chessService.deleteChessGame(chessBoardId);
+                String message = this.chessService.getScores();
 
-            model.put("message", message);
+                model.put("message", message);
 
-            return render(model, "end.html");
+                return render(model, "end.html");
+            } catch (CustomSQLException e) {
+                model.put("errorMessage", e.getMessage());
+                return render(model, "error.html");
+            }
         });
     }
 

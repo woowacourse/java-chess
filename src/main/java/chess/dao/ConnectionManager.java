@@ -17,8 +17,7 @@ public class ConnectionManager {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            System.err.println(" !! JDBC Driver load 오류: " + e.getMessage());
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
 
         try {
@@ -26,8 +25,7 @@ public class ConnectionManager {
                     userName, password);
             System.out.println("정상적으로 연결되었습니다.");
         } catch (SQLException e) {
-            System.err.println("연결 오류:" + e.getMessage());
-            e.printStackTrace();
+            throw new CustomSQLException(e.getMessage(), e);
         }
 
         return con;
@@ -39,7 +37,7 @@ public class ConnectionManager {
                 rs.close();
             }
         } catch (SQLException e) {
-            System.err.println("rs 오류:" + e.getMessage());
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 
@@ -49,7 +47,7 @@ public class ConnectionManager {
                 pstmt.close();
             }
         } catch (SQLException e) {
-            System.out.println("pstmt 오류: " + e.getMessage());
+            throw new CustomSQLException(e.getMessage(), e);
         }
     }
 }
