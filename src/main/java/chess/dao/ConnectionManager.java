@@ -1,9 +1,6 @@
 package chess.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class ConnectionManager {
     private ConnectionManager() {
@@ -43,6 +40,16 @@ public class ConnectionManager {
             }
         } catch (SQLException e) {
             System.err.println("rs 오류:" + e.getMessage());
+        }
+    }
+
+    public static void closePreparedStatement(PreparedStatement pstmt) {
+        try {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        } catch (SQLException e) {
+            System.out.println("pstmt 오류: " + e.getMessage());
         }
     }
 }

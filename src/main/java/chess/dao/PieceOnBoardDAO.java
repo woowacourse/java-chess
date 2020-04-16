@@ -20,6 +20,7 @@ public class PieceOnBoardDAO {
                 pstmt.setString(3, pieceOnBoard.getTeam());
                 pstmt.setInt(4, chessBoard.getChessBoardId());
                 pstmt.executeUpdate();
+                ConnectionManager.closePreparedStatement(pstmt);
             }
         } catch (SQLException e) {
             e.printStackTrace();

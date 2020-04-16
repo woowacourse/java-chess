@@ -42,7 +42,7 @@ public class ChessBoardDAO {
         }
         String query = "DELETE FROM chessBoard WHERE chessBoardId = ?";
         try (Connection con = ConnectionManager.getConnection();
-             PreparedStatement pstmt = con.prepareStatement(query);) {
+             PreparedStatement pstmt = con.prepareStatement(query)) {
             pstmt.setInt(1, chessBoard.getChessBoardId());
             pstmt.executeUpdate();
         } catch (SQLException e) {
