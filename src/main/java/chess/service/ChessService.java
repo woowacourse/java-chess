@@ -133,4 +133,8 @@ public class ChessService {
     public Player getPlayer() {
         return this.playerDAO.findPlayer(this.chessBoard);
     }
+
+    public ChessBoard getChessBoard() {
+        return this.chessBoardDAO.findRecentChessBoard();
+    }
 }

@@ -19,12 +19,18 @@
 </div>
 
 <div id="content">
-    <p id="white-player">White: {{player.whitePlayer}}</p>
-    <p id="black-player">Black: {{player.blackPlayer}}</p>
-    <br/>
-    <p id="currentTeam">현재 차례는 {{currentTeam.teamName}} 입니다</p>
-    <br/>
     <form action="/move" method="post">
+        <p id="chess-board-id-label">
+            <label>Id:
+                <input type="text" style="border:none" id="chess-board-id" name="chess-board-id"
+                       value="{{chessBoard.chessBoardId}}" readonly/>
+            </label>
+        </p>
+        <p id="white-player">White: {{player.whitePlayer}}</p>
+        <p id="black-player">Black: {{player.blackPlayer}}</p>
+        <br/>
+        <p id="currentTeam">현재 차례는 {{currentTeam.teamName}} 입니다</p>
+        <br/>
         <p>
             <label id="source-label" for="source">Source</label>
             <input type="text" id="source" name="source"/>

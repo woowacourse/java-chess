@@ -1,5 +1,6 @@
 package chess.controller;
 
+import chess.dao.ChessBoard;
 import chess.dao.Player;
 import chess.dto.MoveResultDTO;
 import chess.dto.TeamDTO;
@@ -53,10 +54,12 @@ public class WebChessController {
             this.chessService.newGame(player);
             List<TileDTO> tileDtos = this.chessService.getTiles();
             TeamDTO teamDto = this.chessService.getCurrentTeam();
+            ChessBoard chessBoard = this.chessService.getChessBoard();
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("player", player);
+            model.put("chessBoard", chessBoard);
 
             return render(model, "game.html");
         });

@@ -5,10 +5,17 @@
     src: url(../ttf/BMHANNAPro.ttf);
 }
 
+#chess-board-id-label,
+#chess-board-id,
 #white-player,
 #black-player {
     font-family: BMHANNAPro;
     font-size: 30px;
+}
+
+#chess-board-id {
+    width: 200px;
+    height: 50px;
 }
 
 #chess-board {
