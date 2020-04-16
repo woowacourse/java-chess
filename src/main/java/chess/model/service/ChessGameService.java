@@ -45,11 +45,11 @@ public class ChessGameService {
         if (gameNumberLatest.isPresent()) {
             return gameNumberLatest.get();
         }
-        createChessGame(roomId, userNames);
+        newChessGame(roomId, userNames);
         return CHESS_GAME_DAO.getGameNumberLatest(roomId).orElseThrow(IllegalAccessError::new);
     }
 
-    public int createChessGame(int roomId, Map<Color, String> userNames) {
+    public int newChessGame(int roomId, Map<Color, String> userNames) {
         CHESS_GAME_DAO.updateProceedNByRoomId(roomId);
         ChessGame chessGame = new ChessGame();
         int gameId = CHESS_GAME_DAO.insert(roomId, chessGame.getGameTurn(), userNames);
@@ -161,5 +161,10 @@ public class ChessGameService {
 
     public int getRoomId(int gameId) {
         return CHESS_GAME_DAO.getRoomId(gameId).orElseThrow(IllegalAccessError::new);
+    }
+
+    public int endAndNewChessGame(int gameId, Map<Color, String> userNames) {
+        return newChessGame(
+            CHESS_GAME_DAO.getRoomId(gameId).orElseThrow(IllegalArgumentException::new), userNames);
     }
 }

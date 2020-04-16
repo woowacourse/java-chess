@@ -125,9 +125,8 @@
 .button-div {
     background-color: #66a4ac;
     font-size: 2em;
-    height: 58px;
+    height: 45px;
     align-items: center;
     text-align: center;
     border: #333333 solid;
-    margin-top: 10px;
 }

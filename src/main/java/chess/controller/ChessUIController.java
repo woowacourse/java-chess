@@ -45,15 +45,19 @@ public class ChessUIController {
             return render(model, "/start.html");
         });
 
-        post("/newGame", (req, res) -> {
+        post("/choiceGame", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            System.out.println(req.queryParams("gameId") + ">>>>>>>>><<<<<<");
             model.put("roomId",
                 CHESS_GAME_SERVICE.getRoomId(Integer.parseInt(req.queryParams("gameId"))));
-            System.out.println(
-                CHESS_GAME_SERVICE.getRoomId(Integer.parseInt(req.queryParams("gameId")))
-                    + ">>>>>>>>>");
             return render(model, "/start.html");
+        });
+
+        post("/newGame", (req, res) -> {
+            Map<String, Object> model = new HashMap<>();
+            Map<Color, String> userNames = getUserNames(req);
+            model.put("gameId", CHESS_GAME_SERVICE
+                .endAndNewChessGame(Integer.parseInt(req.queryParams("gameId")), userNames));
+            return render(model, "/game.html");
         });
 
         get("/", (req, res) -> {
@@ -65,7 +69,7 @@ public class ChessUIController {
             Map<String, Object> model = new HashMap<>();
             Map<Color, String> userNames = getUserNames(req);
             int roomId = Integer.parseInt(req.queryParams("roomId"));
-            model.put("gameId", CHESS_GAME_SERVICE.createChessGame(roomId, userNames));
+            model.put("gameId", CHESS_GAME_SERVICE.newChessGame(roomId, userNames));
             return render(model, "/game.html");
         });
 
