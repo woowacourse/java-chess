@@ -88,7 +88,9 @@
 #source,
 #target {
     font-family: BMHANNAPro;
-    size: 50px;
+    width: 200px;
+    height: 30px;
+    font-size: 30px;
 }
 
 #currentTeam {

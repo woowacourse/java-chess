@@ -54,7 +54,7 @@ public class WebChessController {
             this.chessService.newGame(player);
             List<TileDTO> tileDtos = this.chessService.getTiles();
             TeamDTO teamDto = this.chessService.getCurrentTeam();
-            ChessBoard chessBoard = this.chessService.getChessBoard();
+            ChessBoard chessBoard = this.chessService.getRecentChessBoard();
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
@@ -72,11 +72,13 @@ public class WebChessController {
             this.chessService.continueGame(chessBoardId);
             List<TileDTO> tileDtos = this.chessService.getTiles();
             TeamDTO teamDto = this.chessService.getCurrentTeam();
-            Player player = this.chessService.getPlayer();
+            Player player = this.chessService.getPlayer(chessBoardId);
+            ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("player", player);
+            model.put("chessBoard", chessBoard);
 
             return render(model, "game.html");
         });
@@ -84,22 +86,25 @@ public class WebChessController {
         post("/move", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
+            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id"));
             String source = req.queryParams("source");
             String target = req.queryParams("target");
 
-            MoveResultDTO moveResultDto = this.chessService.move(source, target);
+            MoveResultDTO moveResultDto = this.chessService.move(chessBoardId, source, target);
             List<TileDTO> tileDtos = this.chessService.getTiles();
             TeamDTO teamDto = this.chessService.getCurrentTeam();
-            Player player = this.chessService.getPlayer();
+            Player player = this.chessService.getPlayer(chessBoardId);
+            ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("message", moveResultDto.getMessage());
             model.put("style", moveResultDto.getStyle());
             model.put("player", player);
+            model.put("chessBoard", chessBoard);
 
             if (this.chessService.isEndGame()) {
-                this.chessService.deleteChessGame();
+                this.chessService.deleteChessGame(chessBoardId);
                 return render(model, "end.html");
             }
             return render(model, "game.html");
@@ -108,15 +113,19 @@ public class WebChessController {
         post("/status", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
+            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id-status"));
+
             List<TileDTO> tileDtos = this.chessService.getTiles();
             TeamDTO teamDto = this.chessService.getCurrentTeam();
             String message = this.chessService.getScores();
-            Player player = this.chessService.getPlayer();
+            Player player = this.chessService.getPlayer(chessBoardId);
+            ChessBoard chessBoard = new ChessBoard(chessBoardId);
 
             model.put("tiles", tileDtos);
             model.put("currentTeam", teamDto);
             model.put("message", message);
             model.put("player", player);
+            model.put("chessBoard", chessBoard);
 
             return render(model, "game.html");
         });
@@ -124,7 +133,9 @@ public class WebChessController {
         post("/end", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
 
-            this.chessService.deleteChessGame();
+            int chessBoardId = Integer.parseInt(req.queryParams("chess-board-id-end"));
+
+            this.chessService.deleteChessGame(chessBoardId);
             String message = this.chessService.getScores();
 
             model.put("message", message);

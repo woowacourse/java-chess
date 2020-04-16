@@ -42,14 +42,18 @@
         <button id="move-button" value="move">Move</button>
     </form>
     <br/>
-    <textarea id="message" readonly style="{{style}}">{{message}}</textarea>
-    <br/>
     <form action="/status" method="post">
+        <textarea id="message" readonly style="{{style}}">{{message}}</textarea>
+        <br/>
         <button id="status-button" value="stauts">Status</button>
+        <input type="hidden" id="chess-board-id-status" name="chess-board-id-status"
+               value="{{chessBoard.chessBoardId}}"/>
     </form>
     <br/>
     <form action="/end" method="post">
         <button id="end-button" value="end">End</button>
+        <input type="hidden" id="chess-board-id-end" name="chess-board-id-end"
+               value="{{chessBoard.chessBoardId}}"/>
     </form>
 </div>
 </body>

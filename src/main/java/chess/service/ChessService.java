@@ -23,9 +23,6 @@ public class ChessService {
     private final PlayerDAO playerDAO = new PlayerDAO();
 
     private ChessRunner chessRunner;
-    private ChessBoard chessBoard;
-    private CurrentTeam currentTeam;
-    private PieceOnBoards originalPieces;
 
     public List<Player> players() {
         return Collections.unmodifiableList(this.playerDAO.findAllPlayer());
@@ -34,41 +31,33 @@ public class ChessService {
     public void newGame(Player player) {
         this.chessRunner = new ChessRunner();
 
-        chessBoardDAO.addChessBoard();
-        this.chessBoard = chessBoardDAO.findRecentChessBoard();
+        this.chessBoardDAO.addChessBoard();
+        ChessBoard chessBoard = this.chessBoardDAO.findRecentChessBoard();
 
-        this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
-        currentTeamDAO.addCurrentTeam(this.chessBoard, this.currentTeam);
+        CurrentTeam currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+        this.currentTeamDAO.addCurrentTeam(chessBoard, currentTeam);
 
-        List<PieceOnBoard> pieces = this.chessRunner.getPieceOnBoards(this.chessBoard.getChessBoardId());
-        pieceOnBoardDAO.addPiece(this.chessBoard, pieces);
-        updateOriginalPieces(pieceOnBoardDAO);
+        List<PieceOnBoard> pieces = this.chessRunner.getPieceOnBoards(chessBoard.getChessBoardId());
+        this.pieceOnBoardDAO.addPiece(chessBoard, pieces);
 
-        playerDAO.addPlayer(this.chessBoard, player);
-    }
-
-    private void updateOriginalPieces(PieceOnBoardDAO pieceOnBoardDAO) {
-        List<PieceOnBoard> pieces = pieceOnBoardDAO.findPiece(this.chessBoard);
-        this.originalPieces = PieceOnBoards.create(pieces);
+        this.playerDAO.addPlayer(chessBoard, player);
     }
 
     public void continueGame(int chessBoardId) {
-        this.chessBoard = chessBoardDAO.findById(chessBoardId);
+        ChessBoard chessBoard = this.chessBoardDAO.findById(chessBoardId);
+        CurrentTeam currentTeam = this.currentTeamDAO.findCurrentTeam(chessBoard);
 
-        this.currentTeam = currentTeamDAO.findCurrentTeam(this.chessBoard);
-
-        updateOriginalPieces(pieceOnBoardDAO);
-        Map<String, String> pieceOnBoards = this.originalPieces.getPieceOnBoards().stream()
-                .collect(Collectors.toMap(entry -> entry.getPosition(),
-                        entry -> entry.getPieceType() + entry.getTeam(),
+        List<PieceOnBoard> pieces = this.pieceOnBoardDAO.findPiece(chessBoard);
+        Map<String, String> pieceOnBoards = pieces.stream()
+                .collect(Collectors.toMap(p -> p.getPosition(), p -> p.getPieceType() + p.getTeam(),
                         (e1, e2) -> e1, HashMap::new));
-        this.chessRunner = new ChessRunner(pieceOnBoards, this.currentTeam.getCurrentTeam());
+        this.chessRunner = new ChessRunner(pieceOnBoards, currentTeam.getCurrentTeam());
     }
 
-    public MoveResultDTO move(String source, String target) {
+    public MoveResultDTO move(int chessBoardId, String source, String target) {
         try {
             this.chessRunner.update(source, target);
-            updateChessBoard(source, target);
+            updateChessBoard(chessBoardId, source, target);
             String moveResult = moveResult(this.chessRunner, source, target);
             return new MoveResultDTO(moveResult, MESSAGE_STYLE_BLACK);
         } catch (IllegalArgumentException | StringIndexOutOfBoundsException e) {
@@ -76,20 +65,22 @@ public class ChessService {
         }
     }
 
-    private void updateChessBoard(String source, String target) {
+    private void updateChessBoard(int chessBoardId, String source, String target) {
         PieceOnBoard piece = null;
+        ChessBoard chessBoard = this.chessBoardDAO.findById(chessBoardId);
 
-        piece = getPieceOnBoard(target, piece);
+        piece = getPieceOnBoard(chessBoard, target, piece);
         this.pieceOnBoardDAO.deletePiece(piece);
-        piece = getPieceOnBoard(source, piece);
+        piece = getPieceOnBoard(chessBoard, source, piece);
         this.pieceOnBoardDAO.updatePiece(piece, target);
-        this.currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
-        this.currentTeamDAO.updateCurrentTeam(this.chessBoard, this.currentTeam);
-        updateOriginalPieces(this.pieceOnBoardDAO);
+        CurrentTeam currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+        this.currentTeamDAO.updateCurrentTeam(chessBoard, currentTeam);
     }
 
-    private PieceOnBoard getPieceOnBoard(String position, PieceOnBoard piece) {
-        Optional<PieceOnBoard> pieceOnBoard = this.originalPieces.find(position);
+    private PieceOnBoard getPieceOnBoard(ChessBoard chessBoard, String position, PieceOnBoard piece) {
+        List<PieceOnBoard> pieces = this.pieceOnBoardDAO.findPiece(chessBoard);
+        PieceOnBoards originalPieces = PieceOnBoards.create(pieces);
+        Optional<PieceOnBoard> pieceOnBoard = originalPieces.find(position);
         if (pieceOnBoard.isPresent()) {
             piece = pieceOnBoard.get();
         }
@@ -107,13 +98,16 @@ public class ChessService {
         return this.chessRunner.isEndChess();
     }
 
-    public void deleteChessGame() {
-        this.currentTeamDAO.deleteCurrentTeam(this.chessBoard);
-        for (PieceOnBoard pieceOnBoard : this.originalPieces.getPieceOnBoards()) {
+    public void deleteChessGame(int chessBoardId) {
+        ChessBoard chessBoard = this.chessBoardDAO.findById(chessBoardId);
+        List<PieceOnBoard> pieces = this.pieceOnBoardDAO.findPiece(chessBoard);
+
+        this.currentTeamDAO.deleteCurrentTeam(chessBoard);
+        for (PieceOnBoard pieceOnBoard : pieces) {
             this.pieceOnBoardDAO.deletePiece(pieceOnBoard);
         }
-        this.playerDAO.deletePlayer(this.chessBoard);
-        this.chessBoardDAO.deleteChessBoard(this.chessBoard);
+        this.playerDAO.deletePlayer(chessBoard);
+        this.chessBoardDAO.deleteChessBoard(chessBoard);
     }
 
     public String getScores() {
@@ -130,11 +124,12 @@ public class ChessService {
         return new TeamDTO(this.chessRunner.getCurrentTeam());
     }
 
-    public Player getPlayer() {
-        return this.playerDAO.findPlayer(this.chessBoard);
+    public Player getPlayer(int chessBoardId) {
+        ChessBoard chessBoard = this.chessBoardDAO.findById(chessBoardId);
+        return this.playerDAO.findPlayer(chessBoard);
     }
 
-    public ChessBoard getChessBoard() {
+    public ChessBoard getRecentChessBoard() {
         return this.chessBoardDAO.findRecentChessBoard();
     }
 }
