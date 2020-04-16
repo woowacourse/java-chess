@@ -1,19 +1,23 @@
 package chess.dao;
 
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
+
 import java.util.Objects;
 
 public class PieceOnBoard {
     private int pieceId;
-    private String position;
-    private String pieceType;
-    private String team;
+    private Position position;
+    private PieceType pieceType;
+    private Team team;
     private int chessBoardId;
 
-    public PieceOnBoard(String position, String pieceType, String team, int chessBoardId) {
+    public PieceOnBoard(Position position, PieceType pieceType, Team team, int chessBoardId) {
         this(0, position, pieceType, team, chessBoardId);
     }
 
-    public PieceOnBoard(int pieceId, String position, String pieceType, String team, int chessBoardId) {
+    public PieceOnBoard(int pieceId, Position position, PieceType pieceType, Team team, int chessBoardId) {
         this.pieceId = pieceId;
         this.position = position;
         this.pieceType = pieceType;
@@ -22,19 +26,19 @@ public class PieceOnBoard {
     }
 
     public int getPieceId() {
-        return pieceId;
+        return this.pieceId;
     }
 
     public String getPosition() {
-        return position;
+        return this.position.toString();
     }
 
     public String getPieceType() {
-        return this.pieceType;
+        return this.pieceType.getSymbol();
     }
 
     public String getTeam() {
-        return this.team;
+        return this.team.name();
     }
 
     public int getChessBoardId() {

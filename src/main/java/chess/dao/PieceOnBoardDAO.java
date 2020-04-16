@@ -1,5 +1,9 @@
 package chess.dao;
 
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,9 +56,9 @@ public class PieceOnBoardDAO {
             while (rs.next()) {
                 PieceOnBoard pieceOnBoard = new PieceOnBoard(
                         rs.getInt("pieceId"),
-                        rs.getString("position"),
-                        rs.getString("pieceType"),
-                        rs.getString("team"),
+                        Position.of(rs.getString("position")),
+                        PieceType.of(rs.getString("pieceType")),
+                        Team.valueOf(rs.getString("team")),
                         rs.getInt("chessBoardId")
                 );
                 pieceOnBoards.add(pieceOnBoard);

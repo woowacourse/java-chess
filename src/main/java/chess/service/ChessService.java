@@ -2,6 +2,7 @@ package chess.service;
 
 import chess.dao.*;
 import chess.domain.ChessRunner;
+import chess.domain.piece.Team;
 import chess.dto.MoveResultDTO;
 import chess.dto.TeamDTO;
 import chess.dto.TileDTO;
@@ -34,7 +35,7 @@ public class ChessService {
         this.chessBoardDAO.addChessBoard();
         ChessBoard chessBoard = this.chessBoardDAO.findRecentChessBoard();
 
-        CurrentTeam currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+        CurrentTeam currentTeam = new CurrentTeam(Team.valueOf(this.chessRunner.getCurrentTeam()));
         this.currentTeamDAO.addCurrentTeam(chessBoard, currentTeam);
 
         List<PieceOnBoard> pieces = this.chessRunner.getPieceOnBoards(chessBoard.getChessBoardId());
@@ -73,7 +74,7 @@ public class ChessService {
         this.pieceOnBoardDAO.deletePiece(piece);
         piece = getPieceOnBoard(chessBoard, source, piece);
         this.pieceOnBoardDAO.updatePiece(piece, target);
-        CurrentTeam currentTeam = new CurrentTeam(this.chessRunner.getCurrentTeam());
+        CurrentTeam currentTeam = new CurrentTeam(Team.valueOf(this.chessRunner.getCurrentTeam()));
         this.currentTeamDAO.updateCurrentTeam(chessBoard, currentTeam);
     }
 

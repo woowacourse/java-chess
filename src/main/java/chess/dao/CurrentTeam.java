@@ -1,16 +1,18 @@
 package chess.dao;
 
+import chess.domain.piece.Team;
+
 import java.util.Objects;
 
 public class CurrentTeam {
-    private String currentTeam;
+    private Team currentTeam;
 
-    public CurrentTeam(String currentTeam) {
+    public CurrentTeam(Team currentTeam) {
         this.currentTeam = currentTeam;
     }
 
     public String getCurrentTeam() {
-        return this.currentTeam;
+        return this.currentTeam.name();
     }
 
     @Override

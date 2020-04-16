@@ -4,6 +4,7 @@ import chess.dao.PieceOnBoard;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
@@ -170,9 +171,12 @@ public class ChessRunner {
     public List<PieceOnBoard> getPieceOnBoards(int chessBoardId) {
         List<PieceOnBoard> pieces = this.board.getBoard().entrySet().stream()
                 .map((entry) -> {
-                    String position = entry.getKey().toString();
-                    String pieceType = entry.getValue().toSymbol();
-                    String team = entry.getValue().teamName();
+                    Position position = Position.of(entry.getKey().toString());
+                    PieceType pieceType = PieceType.of(entry.getValue().toSymbol());
+                    Team team = Team.valueOf(entry.getValue().teamName());
+//                    String position = entry.getKey().toString();
+//                    String pieceType = entry.getValue().toSymbol();
+//                    String team = entry.getValue().teamName();
                     return new PieceOnBoard(position, pieceType, team, chessBoardId);
                 }).collect(Collectors.toList());
 

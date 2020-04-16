@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.piece.Team;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -52,7 +54,7 @@ public class CurrentTeamDAO {
             }
 
             CurrentTeam currentTeam = new CurrentTeam(
-                    rs.getString("team")
+                    Team.valueOf(rs.getString("team"))
             );
             ConnectionManager.closeResultSet(rs);
             return currentTeam;
