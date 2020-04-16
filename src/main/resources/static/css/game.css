@@ -1,0 +1,132 @@
+.chessboard {
+    float: left;
+    width: 640px;
+    height: 640px;
+    margin: 10px;
+    border: 25px solid #333;
+}
+
+.king {
+    width: 300px;
+    height: 80px;
+    font-size: 50px;
+    text-align: center;
+    align-content: center;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+.black {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #999;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+.white {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    font-weight: normal;
+}
+
+#container {
+    float: left;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 640px;
+    height: 640px;
+}
+
+.result {
+    float: left;
+    width: 300px;
+    height: 690px;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+    font-weight: bold;
+    align-content: center;
+}
+
+.result2 {
+    float: left;
+    width: 180px;
+    height: 690px;
+    margin: 10px;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+    font-weight: bold;
+    align-content: center;
+}
+
+.promo {
+    border: #333333 solid;
+    height: 520px;
+    background-color: lightyellow;
+    text-align: center;
+    vertical-align: middle;
+    font-size: large;
+    font-weight: bold;
+    align-content: center;
+    align-items: center;
+}
+
+.promotion {
+    float: left;
+    width: 160px;
+    height: 80px;
+    background-color: lightgrey;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+    border: 6px solid lightyellow;
+}
+
+.result-black {
+    background-color: #999;
+    border: #333333 solid;
+}
+
+.result-highScore {
+    background-color: #9fddbb;
+    border: #333333 solid;
+}
+
+.result-white {
+    background-color: white;
+    border: #333333 solid;
+}
+
+.result-state {
+    background-color: #9fddbb;
+    border: #333333 solid;
+}
+
+.path {
+    background-color: indianred;
+}
+
+.button-div {
+    background-color: #66a4ac;
+    font-size: 2em;
+    height: 45px;
+    align-items: center;
+    text-align: center;
+    border: #333333 solid;
+}

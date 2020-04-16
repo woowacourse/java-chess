@@ -1,0 +1,37 @@
+.mini-title {
+    font-size: 1.5em;
+    font-weight: bolder;
+}
+
+.room-button {
+    font-size: 18px;
+}
+
+.room-name {
+    font-size: 18px;
+    margin-right: 3px;
+    width: 250px;
+}
+
+.room-combo {
+    font-size: 18px;
+    width: 250px;
+    margin-bottom: 8px;
+}
+
+.room {
+    padding: 20px;
+    text-align: center;
+    margin: 0 auto;
+    align-self: center;
+    align-content: center;
+    align-items: center;
+    width: 500px;
+    border: #333333 solid;
+    background-color: #66a4ac;
+}
+
+.red-label {
+    color: darkred;
+    font-style: italic;
+}

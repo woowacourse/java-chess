@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jamie's Chess</title>
+    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/room.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    Jamie's Chess Game
+</header>
+<section>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">사용자를 선택해주세요.</label><br/>
+        <br/>
+        <select class="room-combo" id="user-names">
+        </select>
+        <button class="room-button" id="submit">확인</button>
+        <button class="room-button" id="reset">초기화</button>
+        <div id="results">
+            <div id="win-draw-lose" style="font-size: 1.3em"></div>
+        </div>
+    </div>
+    <div class="blank">&nbsp;</div>
+    <div class="room">
+        <label class="mini-title">다시 방을 선택 하시겠습니까?</label><br/>
+        <br/>
+        <button class="room-button" id="room-button">방 선택</button>
+    </div>
+</section>
+</body>
+<script src="/js/result.js" type="text/javascript"></script>
+</html>

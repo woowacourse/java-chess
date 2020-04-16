@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Jamie's Chess</title>
+    <link href="/css/main.css" rel="stylesheet"/>
+    <link href="/css/game.css" rel="stylesheet"/>
+</head>
+<body>
+<header>
+    Jamie's Chess Game
+</header>
+<section>
+    <div class="chessboard">
+        <!-- 1st -->
+        <div class="cell white" id="a8"></div>
+        <div class="cell black" id="b8"></div>
+        <div class="cell white" id="c8"></div>
+        <div class="cell black" id="d8"></div>
+        <div class="cell white" id="e8"></div>
+        <div class="cell black" id="f8"></div>
+        <div class="cell white" id="g8"></div>
+        <div class="cell black" id="h8"></div>
+        <!-- 2nd -->
+        <div class="cell black" id="a7"></div>
+        <div class="cell white" id="b7"></div>
+        <div class="cell black" id="c7"></div>
+        <div class="cell white" id="d7"></div>
+        <div class="cell black" id="e7"></div>
+        <div class="cell white" id="f7"></div>
+        <div class="cell black" id="g7"></div>
+        <div class="cell white" id="h7"></div>
+        <!-- 3th -->
+        <div class="cell white" id="a6"></div>
+        <div class="cell black" id="b6"></div>
+        <div class="cell white" id="c6"></div>
+        <div class="cell black" id="d6"></div>
+        <div class="cell white" id="e6"></div>
+        <div class="cell black" id="f6"></div>
+        <div class="cell white" id="g6"></div>
+        <div class="cell black" id="h6"></div>
+        <!-- 4st -->
+        <div class="cell black" id="a5"></div>
+        <div class="cell white" id="b5"></div>
+        <div class="cell black" id="c5"></div>
+        <div class="cell white" id="d5"></div>
+        <div class="cell black" id="e5"></div>
+        <div class="cell white" id="f5"></div>
+        <div class="cell black" id="g5"></div>
+        <div class="cell white" id="h5"></div>
+        <!-- 5th -->
+        <div class="cell white" id="a4"></div>
+        <div class="cell black" id="b4"></div>
+        <div class="cell white" id="c4"></div>
+        <div class="cell black" id="d4"></div>
+        <div class="cell white" id="e4"></div>
+        <div class="cell black" id="f4"></div>
+        <div class="cell white" id="g4"></div>
+        <div class="cell black" id="h4"></div>
+        <!-- 6th -->
+        <div class="cell black" id="a3"></div>
+        <div class="cell white" id="b3"></div>
+        <div class="cell black" id="c3"></div>
+        <div class="cell white" id="d3"></div>
+        <div class="cell black" id="e3"></div>
+        <div class="cell white" id="f3"></div>
+        <div class="cell black" id="g3"></div>
+        <div class="cell white" id="h3"></div>
+        <!-- 7th -->
+        <div class="cell white" id="a2"></div>
+        <div class="cell black" id="b2"></div>
+        <div class="cell white" id="c2"></div>
+        <div class="cell black" id="d2"></div>
+        <div class="cell white" id="e2"></div>
+        <div class="cell black" id="f2"></div>
+        <div class="cell white" id="g2"></div>
+        <div class="cell black" id="h2"></div>
+        <!-- 8th -->
+        <div class="cell black" id="a1"></div>
+        <div class="cell white" id="b1"></div>
+        <div class="cell black" id="c1"></div>
+        <div class="cell white" id="d1"></div>
+        <div class="cell black" id="e1"></div>
+        <div class="cell white" id="f1"></div>
+        <div class="cell black" id="g1"></div>
+        <div class="cell white" id="h1"></div>
+    </div>
+    <div class="result">
+        <div class="result-black">
+            <div class="king">♚</div>
+            <div class="king_support">
+                Black Team<br/>
+                - <label id="blackName"></label> -<br/>
+                Score : <label id="blackScore"></label><br/>
+                <br/>
+            </div>
+        </div>
+        <br/>
+        <div class="result-highScore">
+            <br/>
+            고득점 플레이어<br/>
+            - <label id="winner"></label> -<br/>
+            <br/>
+        </div>
+        <br/>
+        <div class="result-white">
+            <div class="king">♔</div>
+            <div class="king_support">
+                White Team<br/>
+                - <label id="whiteName"></label> - <br/>
+                Score : <label id="whiteScore"></label><br/>
+                <br/>
+            </div>
+        </div>
+        <br/>
+
+        <div class="result-state">
+            <br/>
+            <label id="turn"></label><br/>
+            <label id="clickTiming">말이 이동할 경로(before)를 선택하세요.</label><br/>
+            <label id="state"></label><br/>
+            <br/>
+        </div>
+
+        <br/>
+        <button id="close-button" style="font-size: 2em">게임종료</button>
+        <button id="new-button" style="font-size: 2em">새 게임</button>
+        <form action="/newGame" hidden id="new-game" method="post">
+            <input id="new-game-id" name="gameId" type="text"/>
+            <input id="new-black-name" name="BlackName" type="text"/>
+            <input id="new-white-name" name="WhiteName" type="text"/>
+        </form>
+        <label hidden id="gameId">{{gameId}}</label>
+
+    </div>
+
+    <div class="result2">
+        <div class="promo">
+            <br/>
+            승격할 피스 종류 선택<br/>
+            <br/>
+            승격(Promotion)이<br/>
+            필요한 경우에만<br/>
+            사용해주세요.<br/>
+            <br/>
+            <div class="promotion" id="knight">♘♞</div>
+            <div class="promotion" id="rook">♖♜</div>
+            <div class="promotion" id="bishop">♗♝</div>
+            <div class="promotion" id="queen">♕♛</div>
+        </div>
+        <div class="button-div" id="room-button">방 선택</div>
+        <div class="button-div" id="choice-button">게임 선택</div>
+        <div class="button-div" id="result-button">결과 보기</div>
+        <form action="/choiceGame" hidden id="choice-game" method="post">
+            <input id="choice-game-id" name="gameId" type="text"/>
+        </form>
+        <form action="/result" hidden id="result-game" method="post">
+        </form>
+    </div>
+
+</section>
+<script src="/js/game.js" type="text/javascript"></script>
+</body>
+</html>
