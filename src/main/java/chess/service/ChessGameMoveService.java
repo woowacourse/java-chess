@@ -1,19 +1,30 @@
 package chess.service;
 
+import chess.db.dao.BlackPieceDAO;
+import chess.db.dao.ChessBoardStateDAO;
+import chess.db.dao.PieceDAO;
+import chess.db.dao.WhitePieceDAO;
 import chess.domain.chessBoard.ChessBoard;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
-public class ChessGameMove extends createBoard {
+public class ChessGameMoveService {
 
     private static final String SUCCESS = "";
 
-    public ChessGameMove() {
-        super();
+    private PieceDAO whitePieceDAO;
+    private PieceDAO blackPieceDAO;
+    private ChessBoardStateDAO chessBoardStateDAO;
+
+    public ChessGameMoveService() {
+        this.whitePieceDAO = new WhitePieceDAO();
+        this.blackPieceDAO = new BlackPieceDAO();
+        chessBoardStateDAO = new ChessBoardStateDAO();
     }
 
     public String moveChessBoard(String sourcePosition, String targetPosition) {
-        ChessBoard chessBoard = createChessBoard();
+        ChessBoard chessBoard =
+                CreateChessBoardFromDB.createChessBoard(whitePieceDAO, blackPieceDAO, chessBoardStateDAO);
 
         if (chessBoard.containsPosition(Position.of(targetPosition))) {
             chessBoard.move(Position.of(sourcePosition), Position.of(targetPosition));
@@ -29,7 +40,8 @@ public class ChessGameMove extends createBoard {
     }
 
     private void updatePlayerTurn() {
-        ChessBoard chessBoard = createChessBoard();
+        ChessBoard chessBoard =
+                CreateChessBoardFromDB.createChessBoard(whitePieceDAO, blackPieceDAO, chessBoardStateDAO);
         chessBoard.playerTurnChange();
         chessBoardStateDAO.updatePlayerTurn(chessBoard.getPlayerColor());
     }

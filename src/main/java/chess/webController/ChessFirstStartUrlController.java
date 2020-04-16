@@ -1,12 +1,12 @@
 package chess.webController;
 
 
-import chess.service.createInitialBoard;
+import chess.service.CreateInitialBoard;
 
 import static spark.Spark.post;
 
 public class ChessFirstStartUrlController {
-    public static void run(createInitialBoard createInitialBoard) {
+    public static void run(CreateInitialBoard createInitialBoard) {
         post("/chessStart", (req, res) ->
                 createInitialBoard.initialChessBoard());
     }

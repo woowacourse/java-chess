@@ -1,12 +1,12 @@
 package chess.webController;
 
-import chess.service.ChessGameMove;
+import chess.service.ChessGameMoveService;
 
 import static spark.Spark.exception;
 import static spark.Spark.post;
 
 public class ChessMoveUrlController {
-    public static void run(ChessGameMove chessGameMove) {
+    public static void run(ChessGameMoveService chessGameMove) {
 
         post("/move", (req, res) -> {
             try {

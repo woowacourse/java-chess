@@ -1,6 +1,6 @@
 package chess.webController;
 
-import chess.service.ChessGameSetting;
+import chess.service.ChessGameSettingService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -9,10 +9,10 @@ import java.util.Map;
 import static spark.Spark.get;
 
 public class ChessContinueStartUrlController {
-    public static void run(ChessGameSetting chessGameSetting) {
+    public static void run(ChessGameSettingService chessGameSettingService) {
 
         get("/chess", (req, res) -> {
-            Map<String, Object> model = chessGameSetting.settingChessBoard();
+            Map<String, Object> model = chessGameSettingService.settingChessBoard();
             return render(model, "contents/chess.html");
         });
     }

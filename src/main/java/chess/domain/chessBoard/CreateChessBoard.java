@@ -7,9 +7,9 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CreateBoard {
+public class CreateChessBoard {
 
-    public static Map<Position, ChessPiece> chessBoard(Map<String, String> whitePiece, Map<String, String> blackPiece) {
+    public static Map<Position, ChessPiece> from(Map<String, String> whitePiece, Map<String, String> blackPiece) {
         Map<Position, ChessPiece> chessBoard = new HashMap<>();
         Map<String, String> chessBoardPieces = new HashMap<>();
         chessBoardPieces.putAll(whitePiece);

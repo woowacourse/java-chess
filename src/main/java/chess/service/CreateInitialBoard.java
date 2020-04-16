@@ -8,7 +8,7 @@ import chess.domain.initialChessBoard.InitialBlackChessBoardDTO;
 import chess.domain.initialChessBoard.InitialChessBoardStateDTO;
 import chess.domain.initialChessBoard.InitialWhiteChessBoardDTO;
 
-public class createInitialBoard {
+public class CreateInitialBoard {
 
     private static final String SUCCESS = "";
 
@@ -16,7 +16,7 @@ public class createInitialBoard {
     private PieceDAO whitePieceDAO;
     private ChessBoardStateDAO chessBoardStateDAO;
 
-    public createInitialBoard() {
+    public CreateInitialBoard() {
         this.blackPieceDAO = new BlackPieceDAO();
         this.whitePieceDAO = new WhitePieceDAO();
         this.chessBoardStateDAO = new ChessBoardStateDAO();

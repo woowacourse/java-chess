@@ -1,12 +1,9 @@
 package chess;
 
-import chess.db.dao.BlackPieceDAO;
-import chess.db.dao.ChessBoardStateDAO;
-import chess.db.dao.WhitePieceDAO;
-import chess.service.ChessGameCalculatorScore;
-import chess.service.createInitialBoard;
-import chess.service.ChessGameMove;
-import chess.service.ChessGameSetting;
+import chess.service.ChessGameCalculatorScoreService;
+import chess.service.CreateInitialBoard;
+import chess.service.ChessGameMoveService;
+import chess.service.ChessGameSettingService;
 import chess.webController.*;
 
 import static spark.Spark.staticFileLocation;
@@ -17,12 +14,12 @@ public class WebUIChessApplication {
 
         ChessMainPageUrlController.run();
 
-        ChessFirstStartUrlController.run(new createInitialBoard());
+        ChessFirstStartUrlController.run(new CreateInitialBoard());
 
-        ChessContinueStartUrlController.run(new ChessGameSetting());
+        ChessContinueStartUrlController.run(new ChessGameSettingService());
 
-        ChessMoveUrlController.run(new ChessGameMove());
+        ChessMoveUrlController.run(new ChessGameMoveService());
 
-        ChessStatusUrlController.run(new ChessGameCalculatorScore());
+        ChessStatusUrlController.run(new ChessGameCalculatorScoreService());
     }
 }
