@@ -114,16 +114,17 @@ public class ChessGame {
     public boolean canMove(MoveSquare moveSquare) {
         BoardSquare moveSquareBefore = moveSquare.get(MoveOrder.BEFORE);
         BoardSquare moveSquareAfter = moveSquare.get(MoveOrder.AFTER);
-        Piece movePieceBefore = chessBoard.get(moveSquareBefore);
+        Piece movePieceBefore = whoMovePiece(moveSquare);
         if (!chessBoard.containsKey(moveSquareBefore) || !movePieceBefore.isSameColor(gameTurn)) {
             return false;
         }
         if (isPawnSpecialMove(moveSquare)) {
             enPassant.addIfPawnSpecialMove(movePieceBefore, moveSquare);
         }
-        Map<BoardSquare, Piece> board = new HashMap<>();
-        board.putAll(chessBoard);
-        board.putAll(enPassant.getEnPassantBoard(gameTurn));
+        Map<BoardSquare, Piece> board = new HashMap<>(chessBoard);
+        if (movePieceBefore instanceof Pawn) {
+            board.putAll(enPassant.getEnPassantBoard(gameTurn));
+        }
         return movePieceBefore.getCheatSheet(moveSquareBefore, board, castlingElements)
             .contains(moveSquareAfter);
     }
@@ -235,5 +236,9 @@ public class ChessGame {
 
     public Set<CastlingSetting> getCastlingElements() {
         return castlingElements;
+    }
+
+    public Piece whoMovePiece(MoveSquare moveSquare) {
+        return chessBoard.get(moveSquare.get(MoveOrder.BEFORE));
     }
 }

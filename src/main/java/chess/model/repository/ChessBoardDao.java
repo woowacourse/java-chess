@@ -1,5 +1,6 @@
 package chess.model.repository;
 
+import static chess.model.repository.template.JdbcTemplate.getPssFromParams;
 import static chess.model.repository.template.JdbcTemplate.makeQuery;
 
 import chess.model.domain.board.BoardSquare;
@@ -202,6 +203,20 @@ public class ChessBoardDao {
         PreparedStatementSetter pss = JdbcTemplate
             .getPssFromParams(moveSquare.getBetweenWhenJumpRank().getName(), gameId,
                 moveSquare.get(MoveOrder.AFTER).getName());
+        jdbcTemplate.executeUpdate(query, pss);
+    }
+
+    public void deleteMyEnpassant(int gameId) {
+        JdbcTemplate jdbcTemplate = new JdbcTemplate();
+        String query = makeQuery(
+            "UPDATE CHESS_BOARD_TB",
+            "   SET EN_PASSANT_NM = NULL",
+            " WHERE GAME_ID = ?",
+            "   AND PIECE_NM = (SELECT CONCAT(TURN_NM, '_PAWN')",
+            "                     FROM CHESS_GAME_TB",
+            "                    WHERE ID = ?)"
+        );
+        PreparedStatementSetter pss = getPssFromParams(gameId, gameId);
         jdbcTemplate.executeUpdate(query, pss);
     }
 }
