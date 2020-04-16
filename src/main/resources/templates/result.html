@@ -95,18 +95,18 @@
     </table>
 </article>
 <article class="king__caught">
-    {{#is_king_caught}} {{piece_color.color}}가 왕을 잡았습니다!!! {{/is_king_caught}}
+    {{#is_king_caught}} {{piece_color.pieceColor}}가 왕을 잡았습니다!!! {{/is_king_caught}}
 </article>
 <article class="chess__status">
     <div id="chess__status__area">
-        {{#statuses}}
-        {{turn}}의 점수 : {{score}}
+        {{#status}}
+        {{pieceColor}}의 점수 : {{score}}
         <br/>
-        {{/statuses}}
+        {{/status}}
     </div>
 </article>
 <article class="chess_command">
-    <form action="/chessRestart" method="POST">
+    <form action="/chess_new" method="POST">
         <input class="restart__command__submit" type="submit" value="다시시작"/>
     </form>
 </article>

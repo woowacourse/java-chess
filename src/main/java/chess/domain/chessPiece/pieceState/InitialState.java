@@ -1,6 +1,6 @@
 package chess.domain.chessPiece.pieceState;
 
-public class InitialState extends ChessMoveState {
+public class InitialState implements PieceState {
 
 	private static final int INITIAL_STATE_PAWN_MOVABLE_RANGE = 2;
 

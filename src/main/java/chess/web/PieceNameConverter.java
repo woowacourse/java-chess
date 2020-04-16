@@ -2,27 +2,30 @@ package chess.web;
 
 import java.util.Arrays;
 
+// NOTE: 2020/04/16 web, console용 컨버터 생성해보기.
 public enum PieceNameConverter {
 
-	BLACK_PAWN("P", "<img class=\"chessboard\" src=\"./images/black-pawn.png\">"),
-	WHITE_PAWN("p", "<img class=\"chessboard\" src=\"./images/white-pawn.png\">"),
-	BLACK_KNIGHT("N", "<img class=\"chessboard\" src=\"./images/black-knight.png\">"),
-	WHITE_KNIGHT("n", "<img class=\"chessboard\" src=\"./images/white-knight.png\">"),
-	BLACK_BISHOP("B", "<img class=\"chessboard\" src=\"./images/black-bishop.png\">"),
-	WHITE_BISHOP("b", "<img class=\"chessboard\" src=\"./images/white-bishop.png\">"),
-	BLACK_ROOK("R", "<img class=\"chessboard\" src=\"./images/black-rook.png\">"),
-	WHITE_ROOK("r", "<img class=\"chessboard\" src=\"./images/white-rook.png\">"),
-	BLACK_QUEEN("Q", "<img class=\"chessboard\" src=\"./images/black-queen.png\">"),
-	WHITE_QUEEN("q", "<img class=\"chessboard\" src=\"./images/white-queen.png\">"),
-	BLACK_KING("K", "<img class=\"chessboard\" src=\"./images/black-king.png\">"),
-	WHITE_KING("k", "<img class=\"chessboard\" src=\"./images/white-king.png\">");
+	BLACK_KING("K", "black-king"),
+	WHITE_KING("k", "white-king"),
+	BLACK_KNIGHT("N", "black-knight"),
+	WHITE_KNIGHT("n", "white-knight"),
+	BLACK_QUEEN("Q", "black-queen"),
+	WHITE_QUEEN("q", "white-queen"),
+	BLACK_ROOK("R", "black-rook"),
+	WHITE_ROOK("r", "white-rook"),
+	BLACK_BISHOP("B", "black-bishop"),
+	WHITE_BISHOP("b", "white-bishop"),
+	BLACK_PAWN("P", "black-pawn"),
+	WHITE_PAWN("p", "white-pawn");
+
+	private static final String IMAGE_SOURCE_FORMAT = "<img class=\"chessboard\" src=\"./images/%s.png\">";
 
 	private final String chessPieceName;
-	private final String imageUrl;
+	private final String imageFileName;
 
-	PieceNameConverter(final String chessPieceName, final String imageUrl) {
+	PieceNameConverter(final String chessPieceName, final String imageFileName) {
 		this.chessPieceName = chessPieceName;
-		this.imageUrl = imageUrl;
+		this.imageFileName = imageFileName;
 	}
 
 	public static PieceNameConverter of(String chessPieceName) {
@@ -32,8 +35,8 @@ public enum PieceNameConverter {
 			.orElseThrow(() -> new IllegalArgumentException("체스 피스가 유효하지 않습니다."));
 	}
 
-	public String getImageUrl() {
-		return imageUrl;
+	public String getImageFileName() {
+		return String.format(IMAGE_SOURCE_FORMAT, imageFileName);
 	}
 
 }

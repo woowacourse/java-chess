@@ -4,6 +4,6 @@ import chess.domain.position.Position;
 
 public interface Catchable {
 
-	boolean canCatch(Position sourcePosition, Position targetPosition);
+	boolean canCatch(final Position sourcePosition, final Position targetPosition);
 
 }

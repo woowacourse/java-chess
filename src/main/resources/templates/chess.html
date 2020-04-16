@@ -12,7 +12,7 @@
 </header>
 <article class="chessgame__turn">
     <div id="chessgame__turn__area">
-        {{#turns}} {{color}}턴입니다. {{/turns}}
+        {{#piece_color}} {{pieceColor}}턴입니다. {{/piece_color}}
     </div>
 </article>
 <article class="chessboard">
@@ -101,13 +101,13 @@
 </article>
 <article class="chess__status">
     <div id="chess__status__area">
-        {{#statuses}} {{turn}}의 점수 : {{score}}
+        {{#status}} {{pieceColor}}의 점수 : {{score}}
         <br/>
-        {{/statuses}}
+        {{/status}}
     </div>
 </article>
 <article class="move__command">
-    <form action="/chessMove" method="POST">
+    <form action="/chess_play" method="POST">
         이동시킬 피스 :&nbsp;
         <input class="move__command__area" name="sourcePosition" placeholder="b1" type="text"/>
         <br/>
@@ -118,10 +118,10 @@
     </form>
 </article>
 <article class="chess_command">
-    <form action="/chessRestart" method="POST">
+    <form action="/chess_new" method="POST">
         <input class="restart__command__submit" type="submit" value="다시시작"/>
     </form>
-    <form action="/chessEnd" method="POST">
+    <form action="/chess_end" method="POST">
         <input class="end__command__submit" type="submit" value="게임종료"/>
     </form>
 </article>

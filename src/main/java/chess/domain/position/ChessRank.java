@@ -18,29 +18,29 @@ public enum ChessRank {
 
 	private final int chessRank;
 
-	ChessRank(int chessRank) {
+	ChessRank(final int chessRank) {
 		this.chessRank = chessRank;
 	}
 
-	public static ChessRank from(int chessRank) {
+	public static ChessRank from(final int chessRank) {
 		return Arrays.stream(values())
 			.filter(value -> value.chessRank == chessRank)
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("체스 랭크가 존재하지 않습니다."));
 	}
 
-	public static ChessRank from(char chessRank) {
+	public static ChessRank from(final char chessRank) {
 		return Arrays.stream(values())
 			.filter(value -> value.chessRank == getNumericValue(chessRank))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("체스 랭크가 존재하지 않습니다."));
 	}
 
-	public ChessRank move(int movingRankValue) {
+	public ChessRank move(final int movingRankValue) {
 		return from(this.chessRank + movingRankValue);
 	}
 
-	public int gapTo(ChessRank targetChessRank) {
+	public int gapTo(final ChessRank targetChessRank) {
 		Objects.requireNonNull(targetChessRank, "체스 랭크가 null입니다.");
 		return targetChessRank.chessRank - this.chessRank;
 	}

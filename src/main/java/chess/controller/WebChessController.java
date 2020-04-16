@@ -2,16 +2,14 @@ package chess.controller;
 
 import static spark.Spark.*;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
-import chess.domain.chessGame.ChessCommand;
-import chess.domain.chessGame.ChessGame;
 import chess.service.ChessService;
-import chess.web.dao.JdbcChessHistoryDao;
-import chess.web.dto.ChessBoardDto;
+import chess.service.dto.ChessBoardDto;
+import chess.service.dto.ChessGameDto;
+import chess.service.dto.ChessStatusDtos;
 import spark.ModelAndView;
 import spark.Request;
 import spark.Response;
@@ -21,8 +19,9 @@ public class WebChessController {
 
 	private final ChessService chessService;
 
-	public WebChessController() {
-		this.chessService = new ChessService(new JdbcChessHistoryDao());
+	public WebChessController(final ChessService chessService) {
+		Objects.requireNonNull(chessService, "체스 서비스가 null입니다.");
+		this.chessService = chessService;
 	}
 
 	private static String render(Map<String, Object> model, String templatePath) {
@@ -33,71 +32,53 @@ public class WebChessController {
 		return render(new HashMap<>(), "index.html");
 	}
 
-	public void start() {
-		ChessGame chessGame = chessService.loadChessGame();
-
+	public void run() {
 		get("/", this::renderStart);
-		get("/chess", (request, response) -> renderChessBoard(chessGame));
+		get("/chess", (request, response) -> render(chessService.loadChessGame()));
+
+		post("/chess_play", this::playChessGame);
+		post("/chess_new", this::newChessGame);
+		post("/chess_end", this::endChessGame);
 	}
 
-	private String renderChessBoard(final ChessGame chessGame) {
-		ChessBoardDto chessBoardDto = chessGame.getChessBoardDto();
-		Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoard());
+	private String render(final ChessGameDto chessGameDto) {
+		final ChessBoardDto chessBoardDto = chessGameDto.getChessBoardDto();
+		final ChessStatusDtos chessStatusDtos = chessGameDto.getChessStatusDtos();
 
-		model.put("turns", chessGame.getCurrentTurnPieceColorDto());
-		model.put("statuses", chessGame.getChessStatusDtos());
+		final Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoard());
+		model.put("piece_color", chessGameDto.getPieceColorDto());
+		model.put("status", chessStatusDtos.getChessStatusDtos());
 		return render(model, "chess.html");
 	}
 
-	public void run() {
-		post("/chessMove", this::playChessGame);
-		post("/chessRestart", this::restartChessGame);
-		post("/chessEnd", this::endChessGame);
-	}
-
 	private String playChessGame(final Request request, final Response response) {
-		ChessGame chessGame = chessService.loadChessGame();
-		String sourcePosition = request.queryParams("sourcePosition").trim();
-		String targetPosition = request.queryParams("targetPosition").trim();
-		moveChessPiece(chessGame, sourcePosition, targetPosition);
+		final String sourcePosition = request.queryParams("sourcePosition").trim();
+		final String targetPosition = request.queryParams("targetPosition").trim();
+		final ChessGameDto chessGameDto = chessService.playChessGame(sourcePosition, targetPosition);
 
-		if (chessGame.isEndState()) {
-			return renderChessEnd(chessGame);
+		if (chessGameDto.isEndState()) {
+			return renderEnd(chessGameDto);
 		}
-		return renderChessBoard(chessGame);
+		return render(chessGameDto);
 	}
 
-	private void moveChessPiece(final ChessGame chessGame, final String sourcePosition, final String targetPosition) {
-		List<String> commandArguments = Arrays.asList("move", sourcePosition, targetPosition);
-		ChessCommand chessCommand = ChessCommand.of(commandArguments);
+	private String renderEnd(final ChessGameDto chessGameDto) {
+		final ChessBoardDto chessBoardDto = chessGameDto.getChessBoardDto();
+		final ChessStatusDtos chessStatusDtos = chessGameDto.getChessStatusDtos();
 
-		chessGame.move(chessCommand);
-		chessService.moveChessPiece(sourcePosition, targetPosition);
-	}
-
-	private String renderChessEnd(final ChessGame chessGame) {
-		ChessBoardDto chessBoardDto = chessGame.getChessBoardDto();
-
-		Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoard());
-		model.put("is_king_caught", chessGame.isKingCaught());
-		model.put("piece_color", chessGame.getCurrentTurnPieceColorDto());
-		model.put("statuses", chessGame.getChessStatusDtos());
-
+		final Map<String, Object> model = new HashMap<>(chessBoardDto.getChessBoard());
+		model.put("is_king_caught", chessGameDto.isKingCaught());
+		model.put("piece_color", chessGameDto.getPieceColorDto());
+		model.put("status", chessStatusDtos.getChessStatusDtos());
 		return render(model, "result.html");
 	}
 
-	private String restartChessGame(final Request request, final Response response) {
-		chessService.deleteChessGame();
-		ChessGame chessGame = chessService.loadChessGame();
-
-		return renderChessBoard(chessGame);
+	private String newChessGame(final Request request, final Response response) {
+		return render(chessService.createChessGame());
 	}
 
 	private String endChessGame(final Request request, final Response response) {
-		ChessGame chessGame = chessService.loadChessGame();
-		chessGame.end();
-
-		return renderChessEnd(chessGame);
+		return renderEnd(chessService.endChessGame());
 	}
 
 }

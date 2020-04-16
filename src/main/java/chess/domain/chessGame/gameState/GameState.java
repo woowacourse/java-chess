@@ -4,9 +4,17 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 
 public interface GameState {
 
-	GameState shiftNextTurnState();
+	default GameState shiftNextTurnState() {
+		throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+	}
 
-	GameState shiftEndState(boolean isKingOnTargetPosition);
+	default GameState shiftEndState(final boolean isKingOnTargetPosition) {
+		throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+	}
+
+	boolean isEndState();
+
+	boolean isKingCaughtState();
 
 	PieceColor getPieceColor();
 
