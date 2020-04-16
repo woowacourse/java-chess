@@ -6,11 +6,16 @@ const blackName = document.getElementById("black-name");
 const whiteName = document.getElementById("white-name");
 const blackNameFollow = document.getElementById("black-name-follow");
 const whiteNameFollow = document.getElementById("white-name-follow");
+const roomButton = document.getElementById("room-button");
 
 startButton.onclick = () => {
     if (checkNames()) {
         startGame.submit();
     }
+};
+
+roomButton.onclick = () => {
+    location.href = '/'
 };
 
 followButton.onclick = () => {

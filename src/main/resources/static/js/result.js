@@ -2,6 +2,11 @@ const reset = document.getElementById('reset');
 const winDrawLose = document.getElementById('win-draw-lose');
 const submit = document.getElementById('submit');
 const userNames = document.getElementById('user-names');
+const roomButton = document.getElementById("room-button");
+
+roomButton.onclick = () => {
+    location.href = '/'
+};
 
 reset.onclick = () => {
     userNames.value = 1;
