@@ -95,7 +95,19 @@ public class Board {
         return Collections.unmodifiableMap(parseResult);
     }
 
+    public boolean contain(String position) {
+        return this.board.containsKey(Position.of(position));
+    }
+
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(this.board);
+    }
+
+    public Map.Entry<Position, Piece> getEntry(String position) {
+        Position entryPosition = Position.of(position);
+        return this.board.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(entryPosition))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치가 잘못되었습니다."));
     }
 }

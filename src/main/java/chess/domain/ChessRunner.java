@@ -14,6 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessRunner {
     private Board board;
@@ -109,13 +110,12 @@ public class ChessRunner {
 
     public List<BoardScoreDTO> calculateScores() {
         List<BoardScoreDTO> scores = new ArrayList<>();
-        BoardScoreDTO currentTeam = new BoardScoreDTO(calculateScore());
-        currentTeam.setTeam(this.currentTeam.name());
+        BoardScoreDTO currentTeam = new BoardScoreDTO(calculateScore(), this.currentTeam.name());
         scores.add(currentTeam);
 
         BoardScore oppositeTeamScore = this.board.calculateScore(this.currentTeam.changeTeam());
-        BoardScoreDTO oppositeTeam = new BoardScoreDTO(oppositeTeamScore.getBoardScore());
-        oppositeTeam.setTeam(this.currentTeam.changeTeam().name());
+        BoardScoreDTO oppositeTeam = new BoardScoreDTO(oppositeTeamScore.getBoardScore(),
+                this.currentTeam.changeTeam().name());
         scores.add(oppositeTeam);
 
         return Collections.unmodifiableList(scores);
@@ -139,33 +139,21 @@ public class ChessRunner {
     }
 
     public List<TileDTO> entireTileDtos() {
-        List<TileDTO> tileDtos = Position.getPositions().stream()
-                .map(TileDTO::new)
-                .collect(Collectors.toList());
-
-        setTileDtoStyle(tileDtos);
-        setTileDtoImage(tileDtos);
-
-        return Collections.unmodifiableList(tileDtos);
-    }
-
-    private void setTileDtoStyle(List<TileDTO> tileDtos) {
+        List<String> positions = Position.getPositions();
         List<Integer> indexes = Position.getPositionsIndex();
-        for (int i = 0; i < indexes.size(); i++) {
-            TileDTO tileDto = tileDtos.get(i);
-            tileDto.setStyle(indexes.get(i));
-        }
-    }
+        List<TileDTO> tileDTOS = IntStream.range(0, positions.size())
+                .mapToObj((index) -> {
+                    String position = positions.get(index);
+                    int styleIndex = indexes.get(index);
+                    if (this.board.contain(position)) {
+                        Map.Entry<Position, Piece> entry = this.board.getEntry(position);
+                        String pieceImageUrl = entry.getValue().toSymbol() + entry.getValue().teamName().toLowerCase();
+                        return new TileDTO(position, pieceImageUrl, styleIndex);
+                    }
+                    return new TileDTO(position, StringUtils.EMPTY, styleIndex);
+                }).collect(Collectors.toList());
 
-    private void setTileDtoImage(List<TileDTO> tileDtos) {
-        Map<Position, Piece> board = this.board.getBoard();
-        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-            tileDtos.stream()
-                    .filter(td -> td.getPosition().equals(entry.getKey().toString()))
-                    .findFirst()
-                    .orElseThrow(IllegalArgumentException::new)
-                    .setPieceImageUrl(entry.getValue().toSymbol() + entry.getValue().teamName().toLowerCase());
-        }
+        return Collections.unmodifiableList(tileDTOS);
     }
 
     public List<PieceOnBoard> getPieceOnBoards(int chessBoardId) {
@@ -174,9 +162,6 @@ public class ChessRunner {
                     Position position = Position.of(entry.getKey().toString());
                     PieceType pieceType = PieceType.of(entry.getValue().toSymbol());
                     Team team = Team.valueOf(entry.getValue().teamName());
-//                    String position = entry.getKey().toString();
-//                    String pieceType = entry.getValue().toSymbol();
-//                    String team = entry.getValue().teamName();
                     return new PieceOnBoard(position, pieceType, team, chessBoardId);
                 }).collect(Collectors.toList());
 

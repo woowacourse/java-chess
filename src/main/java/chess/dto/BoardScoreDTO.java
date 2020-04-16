@@ -2,13 +2,10 @@ package chess.dto;
 
 public class BoardScoreDTO {
     private final double boardScore;
-    private String team;
+    private final String team;
 
-    public BoardScoreDTO(final double boardScore) {
+    public BoardScoreDTO(final double boardScore, final String team) {
         this.boardScore = boardScore;
-    }
-
-    public void setTeam(final String team) {
         this.team = team;
     }
 

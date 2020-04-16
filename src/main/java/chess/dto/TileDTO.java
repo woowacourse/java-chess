@@ -5,23 +5,20 @@ public class TileDTO {
     private static final String STYLE_BLACK = "black";
 
     private final String position;
-    private String pieceImageUrl;
-    private String style;
+    private final String pieceImageUrl;
+    private final String style;
 
-    public TileDTO(final String position) {
+    public TileDTO(final String position, final String pieceImageUrl, final int index) {
         this.position = position;
-    }
-
-    public void setPieceImageUrl(String pieceImageUrl) {
         this.pieceImageUrl = pieceImageUrl;
+        this.style = setStyle(index);
     }
 
-    public void setStyle(int index) {
+    private String setStyle(int index) {
         if (index % 2 == 0) {
-            this.style = STYLE_WHITE;
-            return;
+            return STYLE_WHITE;
         }
-        this.style = STYLE_BLACK;
+        return STYLE_BLACK;
     }
 
     public String getPosition() {
