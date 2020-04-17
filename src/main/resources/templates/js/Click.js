@@ -40,7 +40,9 @@ function selectDestinationPiece(value) {
                 console.log(jqXHR.responseText);
                 alert(data);
             }
-            movePiece(value);
+            if (data !== "게임이 끝났습니다"){
+                movePiece(value);
+            }
         },
         error: function (jqXHR) {
             resetSourcePosition();
