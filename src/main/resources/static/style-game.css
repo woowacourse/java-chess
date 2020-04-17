@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css?family=Do+Hyeon&display=swap');
+
+html, body {
+    height: 1000px;
+    padding: 0px;
+    margin: 0px;
+    font-family: 'Do Hyeon', sans-serif;
+}
+
+a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.game-container {
+    width: 85%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url("img/game-background.jpg");
+}
+
+.title-container {
+    height: 15%;
+    color: white;
+    font-size: 30px;
+    display: flex;
+}
+
+.title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.chess-board-container {
+    height: 70%;
+    display: flex;
+    justify-content: center;
+}
+
+.buttons {
+    height: 15%;
+    display: flex;
+}
+
+.score-board-container {
+    width: 15%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    border: 1px black solid;
+    align-items: center;
+}
+
+.score-board {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.white-score-board {
+    background-image: url("img/white-scoreboard.jpeg");
+    color: black;
+}
+
+.black-score-board {
+    background-image: url("img/black-scoreboard.jpg");
+    color: white;
+}
+
+.player-name {
+    height: 10%;
+    display: flex;
+    align-items: center;
+}
+
+.black-player-name {
+    color: white;
+}
+
+.black-player-score {
+    color: white;
+}
+
+.player-image {
+    height: 80%;
+}
+
+.player-score {
+    height: 10%;
+    display: flex;
+}
+
+.score-board-boarder {
+    width: 100%;
+    border: black 2px solid;
+}
+
+.doo {
+    width: 100%;
+}
+
+.board {
+    width: 650px;
+    height: 650px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url("img/board-back.jpg");
+    background-clip: padding-box;
+    border-radius: 20px;
+    box-shadow: 10px 10px 20px #000808;
+}
+
+.rank-board {
+    display: flex;
+    flex-direction: row;
+}
+
+.rank-set {
+    box-shadow: 10px 10px 30px black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.file-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rank {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.cell {
+    width: 70px;
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.white-cell {
+    background-image: url("img/white-board.jpg");
+    background-clip: content-box;
+}
+
+.black-cell {
+    background-image: url("img/black-board2.jpg");
+    background-clip: content-box;
+}
+
+.piece-img {
+    width: 70px;
+    height: 70px;
+}
