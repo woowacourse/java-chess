@@ -1,5 +1,6 @@
 package web.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +23,8 @@ public class TurnDao {
 	public void add(TurnDto turnDto) throws SQLException {
 		String query = "INSERT INTO " + TABLE_NAME + " VALUES(?)";
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, turnDto.getTurn());
 			pstmt.executeUpdate();
@@ -33,7 +35,8 @@ public class TurnDao {
 		String query = "SELECT * FROM " + TABLE_NAME;
 		ResultSet rs;
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			rs = pstmt.executeQuery();
 			if (!rs.next())
@@ -45,7 +48,8 @@ public class TurnDao {
 	public void update(TurnDto turnDto) throws SQLException {
 		String query = "UPDATE " + TABLE_NAME + " SET turn = ?";
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, turnDto.getTurn());
 			pstmt.executeUpdate();

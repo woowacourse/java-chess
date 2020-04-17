@@ -1,5 +1,6 @@
 package web.dao;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,7 +27,8 @@ public class PieceDao {
 	public void add(PieceDto pieceDto) throws SQLException {
 		String query = "INSERT INTO " + TABLE_NAME + " VALUES(?,?,?)";
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, pieceDto.getSymbol());
 			pstmt.setString(2, pieceDto.getPosition());
@@ -40,7 +42,8 @@ public class PieceDao {
 		List<Piece> pieces = new ArrayList<>();
 		ResultSet rs;
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
@@ -54,7 +57,8 @@ public class PieceDao {
 	public void update(String originalPosition, String newPosition) throws SQLException {
 		String query = "UPDATE " + TABLE_NAME + " SET position = ? WHERE position = ?";
 		try (
-			PreparedStatement pstmt = connector.getConnection().prepareStatement(query)
+			Connection conn = connector.getConnection();
+			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, newPosition);
 			pstmt.setString(2, originalPosition);
