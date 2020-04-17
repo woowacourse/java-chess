@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final Player player;
+    protected final Player player;
     protected final PieceInfo pieceInfo;
 
     protected List<Direction> directions = new ArrayList<>();
@@ -36,8 +36,10 @@ public abstract class Piece {
     }
 
     public boolean validateDirection(Direction direction, Piece target) {
+        System.out.println("direction: " + direction);
         return hasDirection(direction);
     }
+
 
     protected final boolean hasDirection(Direction direction) {
         return directions.contains(direction);
@@ -45,6 +47,12 @@ public abstract class Piece {
 
     public List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
+    }
+
+    public abstract boolean needValidateObstacle();
+
+    public PieceInfo getPieceInfo() {
+        return pieceInfo;
     }
 
     public Player getPlayer() {
@@ -63,14 +71,14 @@ public abstract class Piece {
                 && validateTileSize(from, to);
     }
 
+    public boolean isPlayer(Player player) {
+        return this.player == player;
+    }
+
     public boolean isSamePlayer(Piece target) {
         if (Objects.isNull(target)) {
             return false;
         }
         return player == target.getPlayer();
-    }
-
-    public String getDisplay() {
-        return pieceInfo.getName(player);
     }
 }

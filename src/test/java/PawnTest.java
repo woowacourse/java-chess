@@ -1,8 +1,8 @@
-import chess.domain.game.Player;
-import chess.domain.chesspiece.Knight;
-import chess.domain.chesspiece.Pawn;
-import chess.domain.chesspiece.Rook;
+import chess.domain.chesspiece.concrete.Knight;
+import chess.domain.chesspiece.concrete.Pawn;
+import chess.domain.chesspiece.concrete.Rook;
 import chess.domain.direction.Direction;
+import chess.domain.game.Player;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
 import org.junit.jupiter.api.DisplayName;
@@ -19,7 +19,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generateDirection")
     void pawnDirectionsTest(Player player, Direction[] directions) {
-        Pawn pawn = new Pawn(player, Positions.of("a2"));
+        Pawn pawn = new Pawn(player);
         assertThat(pawn.getDirections()).containsExactly(directions);
     }
 
@@ -35,7 +35,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions")
     void tileSize_1(Player player, Position from, Position to) {
-        Pawn pawn = new Pawn(player, from);
+        Pawn pawn = new Pawn(player);
         assertThat(pawn.validateTileSize(from, to)).isTrue();
     }
 
@@ -52,7 +52,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions4")
     void tileSize_4(Player player, Position from, Position to) {
-        Pawn pawn = new Pawn(player, from);
+        Pawn pawn = new Pawn(player);
         assertThat(pawn.validateTileSize(from, to)).isFalse();
     }
 
@@ -66,30 +66,30 @@ public class PawnTest {
     @DisplayName("이동 칸 수: 초기 이동이 아닐 때 (가능) 1칸")
     @ParameterizedTest
     @MethodSource("generatePositions2")
-    void tileSize_1(Player player, Position initPosition, Position from, Position to) {
-        Pawn pawn = new Pawn(player, initPosition);
+    void tileSize_2(Player player, Position from, Position to) {
+        Pawn pawn = new Pawn(player);
         assertThat(pawn.validateTileSize(from, to)).isTrue();
     }
 
     static Stream<Arguments> generatePositions2() {
         return Stream.of(
-                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a3"), Positions.of("a4")),
-                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a6"), Positions.of("a5"))
-                );
+                Arguments.of(Player.WHITE, Positions.of("a3"), Positions.of("a4")),
+                Arguments.of(Player.BLACK, Positions.of("a6"), Positions.of("a5"))
+        );
     }
 
     @DisplayName("이동 칸 수: 초기 이동이 아닐 때 (불가능) 1칸 초과")
     @ParameterizedTest
     @MethodSource("generatePositions3")
-    void tileSize_2(Player player, Position initPosition, Position from, Position to) {
-        Pawn pawn = new Pawn(player, initPosition);
+    void tileSize_3(Player player, Position from, Position to) {
+        Pawn pawn = new Pawn(player);
         assertThat(pawn.validateTileSize(from, to)).isFalse();
     }
 
     static Stream<Arguments> generatePositions3() {
         return Stream.of(
-                Arguments.of(Player.WHITE, Positions.of("a2"), Positions.of("a3"), Positions.of("a5")),
-                Arguments.of(Player.BLACK, Positions.of("a7"), Positions.of("a6"), Positions.of("a4"))
+                Arguments.of(Player.WHITE, Positions.of("a3"), Positions.of("a5")),
+                Arguments.of(Player.BLACK, Positions.of("a6"), Positions.of("a4"))
         );
     }
 
@@ -98,8 +98,8 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions5")
     void 대각선_공격_성공_다른_팀(Player sourcePlayer, Position from, Player targetPlayer, Position to) {
-        Pawn source = new Pawn(sourcePlayer, from);
-        Pawn target = new Pawn(targetPlayer, to);
+        Pawn source = new Pawn(sourcePlayer);
+        Pawn target = new Pawn(targetPlayer);
 
         assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isTrue();
     }
@@ -118,7 +118,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions6")
     void 대각선_공격시_empty(Player sourcePlayer, Position from, Position to) {
-        Pawn source = new Pawn(sourcePlayer, from);
+        Pawn source = new Pawn(sourcePlayer);
         assertThat(source.validateDirection(Direction.getDirection(from, to), null)).isFalse();
     }
 
@@ -136,7 +136,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions7")
     void 대각선_공격_같은_팀(Player player, Position from, Position to) {
-        Pawn source = new Pawn(player, from);
+        Pawn source = new Pawn(player);
         Knight target = new Knight(player);
         assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
     }
@@ -155,7 +155,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions8")
     void 전진_성공_empty(Player player, Position from, Position to) {
-        Pawn source = new Pawn(player, from);
+        Pawn source = new Pawn(player);
         assertThat(source.validateDirection(Direction.getDirection(from, to), null));
     }
 
@@ -171,7 +171,7 @@ public class PawnTest {
     @ParameterizedTest
     @MethodSource("generatePositions9")
     void 전진_실패_장애물(Player player, Position from, Position to) {
-        Pawn source = new Pawn(player, from);
+        Pawn source = new Pawn(player);
         Rook target = new Rook(player);
         assertThat(source.validateDirection(Direction.getDirection(from, to), target)).isFalse();
     }

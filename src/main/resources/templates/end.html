@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <style>
+        * {
+            font-family: "Krabby Patty", serif;
+        }
+
+        body {
+            background: url("img/full_background2.png") repeat-y;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body>
+<script>
+    $.ajax({
+        type: 'get',
+        url: '/end',
+        dataType: 'json',
+        error: function (res) {
+            swal(res.responseText);
+        },
+        success: function (response) {
+            console.dir(response);
+            let scores = response["result"]["scores"];
+
+            let whiteScore, blackScore;
+            scores.forEach(function (item, index, array) {
+                if (item.player == "WHITE") {
+                    whiteScore = item.score;
+                }
+                if (item.player == "BLACK") {
+                    blackScore = item.score;
+                }
+            });
+
+            let winners;
+            if (response.result.isDraw) {
+                winners = "무승부입니다.";
+            }
+
+            if (!response.result.isDraw) {
+                winners += "우승자: ";
+                response["result"]["winners"].forEach(function (item, index, array) {
+                    winners += item;
+                    console.log("winner (player) "+item);
+                });
+            }
+
+            swal("whiteScore: "+whiteScore+"\n"+"blackScore: "+blackScore+"\n"+winners);
+        }
+    });
+</script>
+</body>
+</html>

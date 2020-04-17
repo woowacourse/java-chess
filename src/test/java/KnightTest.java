@@ -1,5 +1,5 @@
 import chess.domain.game.Player;
-import chess.domain.chesspiece.Knight;
+import chess.domain.chesspiece.concrete.Knight;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;

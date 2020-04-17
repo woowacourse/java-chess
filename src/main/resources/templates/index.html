@@ -1,10 +1,31 @@
-<!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>로또</title>
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <style type="text/css">
+        @import url("css/index.css");
+    </style>
+    <script src="js/index.js"></script>
+    <title>체스게임!</title>
 </head>
 <body>
-Hello World!!
+<div id="wrap">
+    <button class="btn-container" id="end-btn" onclick="location.href='/end.html'"></button>
+    <button id="turn-btn" class="btn-container">
+        <span id="turn"> </span>
+    </button>
+    <div class="white-score-container score-container">
+        <span class="score" style="color: white">White Score</span>
+        <span id="white-score"></span>
+    </div>
+    <div class="black-score-container score-container">
+        <span class="score" style="color: black"> Black Score</span>
+        <span id="black-score"></span>
+    </div>
+</div>
 </body>
 </html>

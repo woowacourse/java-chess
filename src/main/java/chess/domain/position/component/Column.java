@@ -44,7 +44,7 @@ public enum Column {
         return column2;
     }
 
-    public List<Column> between(Column biggerColumn){
+    public List<Column> between(Column biggerColumn) {
         return Arrays.asList(values())
                 .subList(ordinal() + 1, biggerColumn.ordinal());
     }

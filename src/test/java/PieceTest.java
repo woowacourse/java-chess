@@ -1,6 +1,6 @@
 import chess.domain.game.Player;
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Queen;
+import chess.domain.chesspiece.concrete.King;
+import chess.domain.chesspiece.concrete.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

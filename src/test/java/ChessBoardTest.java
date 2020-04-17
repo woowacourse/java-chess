@@ -1,15 +1,14 @@
-import chess.Exception.NotMoveException;
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.concrete.King;
+import chess.domain.chesspiece.concrete.Pawn;
 import chess.domain.chesspiece.Piece;
-import chess.domain.chesspiece.Queen;
+import chess.domain.chesspiece.concrete.Queen;
 import chess.domain.game.ChessBoard;
-import chess.domain.game.PieceFactory;
+import chess.domain.game.ChessBoardFactory;
 import chess.domain.game.Player;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
-import chess.domain.status.Result;
-import chess.domain.status.Status;
+import chess.domain.result.Result;
+import chess.domain.result.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -29,8 +28,7 @@ public class ChessBoardTest {
     @DisplayName("초기 체스판 개수 확인")
     @Test
     void initChessBoard() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
+        ChessBoard chessBoard = ChessBoardFactory.create();
         int actual = chessBoard.getChessBoard().size();
         int expected = 32;
         assertThat(actual).isEqualTo(expected);
@@ -39,20 +37,18 @@ public class ChessBoardTest {
     @DisplayName("(예외) 같은 위치로 이동")
     @Test
     void moveSamePosition() {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
+        ChessBoard chessBoard = ChessBoardFactory.create();
         Position position = Positions.of("a1");
         assertThatThrownBy(() -> chessBoard.move(position, position))
-                .isInstanceOf(NotMoveException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("점수 계산")
     @ParameterizedTest
     @EnumSource(value = Player.class)
     void createStatusTest(Player player) {
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.create(PieceFactory.create());
-        Status result = chessBoard.createStatus(player);
+        ChessBoard chessBoard = ChessBoardFactory.create();
+        Score result = chessBoard.createStatus(player);
         double actual = result.getScore();
         double expected = 38;
         assertThat(actual).isEqualTo(expected);
@@ -62,20 +58,20 @@ public class ChessBoardTest {
     @ParameterizedTest
     @MethodSource("generatePositions3")
     void existPawnNumberTest(List<Piece> columnLine, Player player, int exptectd) {
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = ChessBoardFactory.create();
         assertThat(chessBoard.getPawnCountPerStage(columnLine, player)).isEqualTo(exptectd);
     }
 
     static Stream<Arguments> generatePositions3() {
-        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
+        List<Piece> whitePawnWhiteKing = Arrays.asList(new Pawn(Player.WHITE),
                 new King(Player.WHITE));
-        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.WHITE, Positions.of("a2")),
-                new Pawn(Player.WHITE, Positions.of("a3"))
+        List<Piece> whitePawn3 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE),
+                new Pawn(Player.WHITE)
         );
-        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE, Positions.of("a1")),
-                new Pawn(Player.BLACK, Positions.of("a2")),
-                new Pawn(Player.BLACK, Positions.of("a3")));
+        List<Piece> whitePawn1BlackPawn2 = Arrays.asList(new Pawn(Player.WHITE),
+                new Pawn(Player.BLACK),
+                new Pawn(Player.BLACK));
         List<Piece> whiteKingBlackQueen = Arrays.asList(new King(Player.WHITE), new Queen(Player.BLACK));
 
         return Stream.of(Arguments.of(whitePawnWhiteKing, Player.WHITE, 1),
@@ -87,11 +83,11 @@ public class ChessBoardTest {
     @DisplayName("우승자 확인")
     @Test
     void 우승자_확인() {
-        List<Status> statuses = new ArrayList<>();
-        statuses.add(new Status(Player.WHITE, 10));
-        statuses.add(new Status(Player.BLACK, 20));
+        List<Score> scores = new ArrayList<>();
+        scores.add(new Score(Player.WHITE, 10));
+        scores.add(new Score(Player.BLACK, 20));
 
-        Result result = new Result(statuses);
+        Result result = new Result(scores);
         assertThat(result.getWinners()).isEqualTo(Arrays.asList(Player.BLACK));
     }
 }

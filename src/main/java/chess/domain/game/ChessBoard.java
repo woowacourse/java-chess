@@ -1,53 +1,44 @@
 package chess.domain.game;
 
-import chess.Exception.NotMoveException;
-import chess.domain.chesspiece.King;
-import chess.domain.chesspiece.Pawn;
+import chess.domain.chesspiece.concrete.King;
+import chess.domain.chesspiece.concrete.Pawn;
 import chess.domain.chesspiece.Piece;
 import chess.domain.chesspiece.PieceInfo;
 import chess.domain.direction.Direction;
 import chess.domain.position.Position;
 import chess.domain.position.component.Row;
-import chess.domain.status.Result;
-import chess.domain.status.Status;
+import chess.domain.result.Result;
+import chess.domain.result.Score;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ChessBoard implements ChessBoardStrategy {
-    private final Map<Position, Piece> chessBoard = new HashMap<>();
-    private boolean isKingTaken;
+public class ChessBoard {
+    private final Map<Position, Piece> chessBoard;
+//    private boolean isKingTaken;
 
-    public ChessBoard() {
-        isKingTaken = false;
+    public ChessBoard(Map<Position, Piece> initPieces) {
+        this.chessBoard = initPieces;
+//        isKingTaken = false;
     }
 
-    @Override
-    public Map<Position, Piece> create(Map<Piece, List<Position>> initPieces) {
-        for (Map.Entry<Piece, List<Position>> entry : initPieces.entrySet()) {
-            entry.getValue().forEach(position -> chessBoard.put(position, entry.getKey()));
-        }
-        return chessBoard;
-    }
-
-    public boolean move(Position from, Position to) {
+    public void move(Position from, Position to) {
         Piece source = chessBoard.get(from);
         Piece target = chessBoard.get(to);
         validateSamePosition(from, to);
         validateSource(source);
         validateIsPlayer(source, target);
 
-        if (movable(from, to)) {
-            chessBoard.put(to, source);
-            chessBoard.remove(from);
-
-            if (target instanceof King) {
-                this.isKingTaken = true;
-            }
-
-            return true;
+        if (!movable(from, to)) {
+            throw new IllegalArgumentException("이동할 수 없습니다.");
         }
-        return false;
+
+        chessBoard.put(to, source);
+        chessBoard.remove(from);
+
+//        if (target instanceof King) {
+//            this.isKingTaken = true;
+//        }
     }
 
     private void validateSamePosition(Position from, Position to) {
@@ -55,19 +46,19 @@ public class ChessBoard implements ChessBoardStrategy {
         Objects.requireNonNull(to);
 
         if (from == to) {
-            throw new NotMoveException("같은 위치로 이동할 수 없습니다.");
+            throw new IllegalArgumentException("같은 위치로 이동할 수 없습니다.");
         }
     }
 
     private void validateSource(Piece source) {
         if (Objects.isNull(source)) {
-            throw new NotMoveException("empty에서는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("empty에서는 이동할 수 없습니다.");
         }
     }
 
     private void validateIsPlayer(Piece source, Piece target) {
         if (Objects.nonNull(target) && source.isSamePlayer(target)) {
-            throw new NotMoveException("같은 Player의 기물로는 이동할 수 없습니다.");
+            throw new IllegalArgumentException("같은 Player의 기물로는 이동할 수 없습니다.");
         }
     }
 
@@ -76,17 +67,34 @@ public class ChessBoard implements ChessBoardStrategy {
         Piece target = chessBoard.get(to);
         Direction direction = Direction.getDirection(from, to);
 
+        if (source.needValidateObstacle()) {
+            return source.validateTileSize(from, to)
+                    && source.validateDirection(direction, target)
+                    && validateObstacles(getRoutes(from, to));
+        }
         return source.validateTileSize(from, to)
-                && source.validateDirection(direction, target)
-                && validateObstacles(getRoutes(from, to));
+                && source.validateDirection(direction, target);
     }
 
-    public boolean isGameOver() {
-        return isKingTaken;
-    }
+//    public boolean isGameFinished() {
+//        return isKingTaken;
+//    }
 
     private boolean validateObstacles(List<Position> routes) {
-        return routes.isEmpty();
+        for (Position position : routes) {
+            if (Objects.nonNull(chessBoard.get(position))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean validateTurn(Position position, Player player) {
+        Piece piece = chessBoard.get(position);
+        if (Objects.isNull(piece)) {
+            return false;
+        }
+        return piece.isPlayer(player);
     }
 
     public Map<Position, Piece> getChessBoard() {
@@ -98,18 +106,30 @@ public class ChessBoard implements ChessBoardStrategy {
         return direction.getPositionsBetween(from, to);
     }
 
-    public Status createStatus(Player player) {
+    public Score createStatus(Player player) {
+        if (checkKingTaken(player)) {
+            return new Score(player, 0);
+        }
+
         double score = getPlayerPieces(player)
                 .stream()
                 .mapToDouble(Piece::getScore)
                 .sum();
         score -= PieceInfo.PAWN_SCORE_DIFF * getPawnCount(player);
-        return new Status(player, score);
+        return new Score(player, score);
+    }
+
+    public boolean checkKingTaken(Player player) {
+        int kingCount = (int) getPlayerPieces(player)
+                .stream()
+                .filter(piece -> piece instanceof King)
+                .count();
+        return kingCount == 0;
     }
 
     public Result createResult() {
-        List<Status> statuses = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
-        return new Result(statuses);
+        List<Score> scores = Arrays.asList(createStatus(Player.WHITE), createStatus(Player.BLACK));
+        return new Result(scores);
     }
 
     private List<Piece> getPlayerPieces(Player player) {
