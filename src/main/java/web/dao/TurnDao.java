@@ -11,8 +11,6 @@ public class TurnDao {
 	private static final TurnDao TURN_DAO = new TurnDao();
 	private static final String TABLE_NAME = "board";
 
-	private DBConnector connector = new DBConnector();
-
 	private TurnDao() {
 	}
 
@@ -23,7 +21,7 @@ public class TurnDao {
 	public void add(TurnDto turnDto) throws SQLException {
 		String query = "INSERT INTO " + TABLE_NAME + " VALUES(?)";
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, turnDto.getTurn());
@@ -35,7 +33,7 @@ public class TurnDao {
 		String query = "SELECT * FROM " + TABLE_NAME;
 		ResultSet rs;
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			rs = pstmt.executeQuery();
@@ -48,7 +46,7 @@ public class TurnDao {
 	public void update(TurnDto turnDto) throws SQLException {
 		String query = "UPDATE " + TABLE_NAME + " SET turn = ?";
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, turnDto.getTurn());

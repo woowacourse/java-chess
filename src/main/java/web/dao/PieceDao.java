@@ -15,8 +15,6 @@ public class PieceDao {
 	private static final PieceDao PIECE_DAO = new PieceDao();
 	private static final String TABLE_NAME = "piece";
 
-	private DBConnector connector = new DBConnector();
-
 	private PieceDao() {
 	}
 
@@ -27,7 +25,7 @@ public class PieceDao {
 	public void add(PieceDto pieceDto) throws SQLException {
 		String query = "INSERT INTO " + TABLE_NAME + " VALUES(?,?,?)";
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, pieceDto.getSymbol());
@@ -42,7 +40,7 @@ public class PieceDao {
 		List<Piece> pieces = new ArrayList<>();
 		ResultSet rs;
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			rs = pstmt.executeQuery();
@@ -57,7 +55,7 @@ public class PieceDao {
 	public void update(String originalPosition, String newPosition) throws SQLException {
 		String query = "UPDATE " + TABLE_NAME + " SET position = ? WHERE position = ?";
 		try (
-			Connection conn = connector.getConnection();
+			Connection conn = DBConnector.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(query)
 		) {
 			pstmt.setString(1, newPosition);
