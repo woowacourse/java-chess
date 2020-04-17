@@ -48,6 +48,13 @@ public class BoardFactory {
     }
 
     public static Map<Position, Piece> getBoard() {
-        return board;
+        return new HashMap<>(board);
+    }
+
+    public static Piece findPieceByPieceName(String name) {
+        return board.values().stream()
+                .filter(piece -> name.equals(piece.name()))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 이름이 입력되었습니다."));
     }
 }

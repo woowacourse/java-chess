@@ -7,23 +7,27 @@ import chess.domains.piece.PieceType;
 import chess.domains.position.Column;
 import chess.domains.position.Position;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Board {
-    public static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
-    public static final int TWO_KINGS = 2;
-    public static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
-    public static final int COLUMN_SIZE = 8;
+    static final int COLUMN_SIZE = 8;
+    private static final String INVALID_ROUTE_ERR_MSG = "말을 뛰어넘을 수 없습니다.";
+    private static final int TWO_KINGS = 2;
+    private static final double SCORE_OF_PAWN_SAME_COLUMN = 0.5;
+    private static final String GAME_ENDED_ERR_MSG = "종료된 게임입니다.";
 
     private final Map<Position, Piece> board = BoardFactory.getBoard();
     private PieceColor teamColor = PieceColor.WHITE;
 
+    public void recoverBoard(Map<Position, Piece> savedBoard, Optional<String> lastTurn) {
+        this.board.putAll(savedBoard);
+        String lastTeamColor = lastTurn.orElseGet(() -> "BLACK");
+        this.teamColor = PieceColor.of(lastTeamColor).changeTeam();
+    }
+
     public List<Piece> showBoard() {
-        ArrayList<Position> positions = new ArrayList<>(board.keySet());
+        List<Position> positions = new ArrayList<>(board.keySet());
         Collections.sort(positions);
 
         return positions.stream()
@@ -32,6 +36,10 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
+        if (isGameOver()) {
+            throw new IllegalStateException(GAME_ENDED_ERR_MSG);
+        }
+
         Piece sourcePiece = board.get(source);
         Piece targetPiece = board.get(target);
 
@@ -89,6 +97,18 @@ public class Board {
         return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
     }
 
+    public double calculateScore(PieceColor pieceColor) {
+        double score = board.values()
+                .stream()
+                .filter(playingPiece -> playingPiece.isMine(pieceColor))
+                .mapToDouble(Piece::score)
+                .sum();
+
+        int pawnCount = countOfPawnsInSameColumn();
+
+        return score - pawnCount * SCORE_OF_PAWN_SAME_COLUMN;
+    }
+
     private int countOfPawnsInSameColumn() {
         int pawnCount = 0;
         for (Column column : Column.values()) {
@@ -114,5 +134,9 @@ public class Board {
 
     public PieceColor getTeamColor() {
         return teamColor;
+    }
+
+    public Piece getPieceByPosition(Position position) {
+        return this.board.get(position);
     }
 }

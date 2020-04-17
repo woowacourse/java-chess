@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>chess game</title>
+    <link href="/css/chess_web.css" rel="stylesheet" type="text/css"/>
+    <script src="/js/chess_web.js" type="text/javascript"></script>
+</head>
+<body>
+<div class="container">
+    <div class="game_ui">
+        <table cellpadding="0" cellspacing="0" id="chess_board">
+            <tr>
+                <td class="cell" id="A8">{{pieces.0}}</td>
+                <td class="cell" id="B8">{{pieces.1}}</td>
+                <td class="cell" id="C8">{{pieces.2}}</td>
+                <td class="cell" id="D8">{{pieces.3}}</td>
+                <td class="cell" id="E8">{{pieces.4}}</td>
+                <td class="cell" id="F8">{{pieces.5}}</td>
+                <td class="cell" id="G8">{{pieces.6}}</td>
+                <td class="cell" id="H8">{{pieces.7}}</td>
+                <td class="coordinate">8</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A7">{{pieces.8}}</td>
+                <td class="cell" id="B7">{{pieces.9}}</td>
+                <td class="cell" id="C7">{{pieces.10}}</td>
+                <td class="cell" id="D7">{{pieces.11}}</td>
+                <td class="cell" id="E7">{{pieces.12}}</td>
+                <td class="cell" id="F7">{{pieces.13}}</td>
+                <td class="cell" id="G7">{{pieces.14}}</td>
+                <td class="cell" id="H7">{{pieces.15}}</td>
+                <td class="coordinate">7</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A6">{{pieces.16}}</td>
+                <td class="cell" id="B6">{{pieces.17}}</td>
+                <td class="cell" id="C6">{{pieces.18}}</td>
+                <td class="cell" id="D6">{{pieces.19}}</td>
+                <td class="cell" id="E6">{{pieces.20}}</td>
+                <td class="cell" id="F6">{{pieces.21}}</td>
+                <td class="cell" id="G6">{{pieces.22}}</td>
+                <td class="cell" id="H6">{{pieces.23}}</td>
+                <td class="coordinate">6</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A5">{{pieces.24}}</td>
+                <td class="cell" id="B5">{{pieces.25}}</td>
+                <td class="cell" id="C5">{{pieces.26}}</td>
+                <td class="cell" id="D5">{{pieces.27}}</td>
+                <td class="cell" id="E5">{{pieces.28}}</td>
+                <td class="cell" id="F5">{{pieces.29}}</td>
+                <td class="cell" id="G5">{{pieces.30}}</td>
+                <td class="cell" id="H5">{{pieces.31}}</td>
+                <td class="coordinate">5</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A4">{{pieces.32}}</td>
+                <td class="cell" id="B4">{{pieces.33}}</td>
+                <td class="cell" id="C4">{{pieces.34}}</td>
+                <td class="cell" id="D4">{{pieces.35}}</td>
+                <td class="cell" id="E4">{{pieces.36}}</td>
+                <td class="cell" id="F4">{{pieces.37}}</td>
+                <td class="cell" id="G4">{{pieces.38}}</td>
+                <td class="cell" id="H4">{{pieces.39}}</td>
+                <td class="coordinate">4</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A3">{{pieces.40}}</td>
+                <td class="cell" id="B3">{{pieces.41}}</td>
+                <td class="cell" id="C3">{{pieces.42}}</td>
+                <td class="cell" id="D3">{{pieces.43}}</td>
+                <td class="cell" id="E3">{{pieces.44}}</td>
+                <td class="cell" id="F3">{{pieces.45}}</td>
+                <td class="cell" id="G3">{{pieces.46}}</td>
+                <td class="cell" id="H3">{{pieces.47}}</td>
+                <td class="coordinate">3</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A2">{{pieces.48}}</td>
+                <td class="cell" id="B2">{{pieces.49}}</td>
+                <td class="cell" id="C2">{{pieces.50}}</td>
+                <td class="cell" id="D2">{{pieces.51}}</td>
+                <td class="cell" id="E2">{{pieces.52}}</td>
+                <td class="cell" id="F2">{{pieces.53}}</td>
+                <td class="cell" id="G2">{{pieces.54}}</td>
+                <td class="cell" id="H2">{{pieces.55}}</td>
+                <td class="coordinate">2</td>
+            </tr>
+            <tr>
+                <td class="cell" id="A1">{{pieces.56}}</td>
+                <td class="cell" id="B1">{{pieces.57}}</td>
+                <td class="cell" id="C1">{{pieces.58}}</td>
+                <td class="cell" id="D1">{{pieces.59}}</td>
+                <td class="cell" id="E1">{{pieces.60}}</td>
+                <td class="cell" id="F1">{{pieces.61}}</td>
+                <td class="cell" id="G1">{{pieces.62}}</td>
+                <td class="cell" id="H1">{{pieces.63}}</td>
+                <td class="coordinate">1</td>
+            </tr>
+            <tr>
+                <td class="coordinate">A</td>
+                <td class="coordinate">B</td>
+                <td class="coordinate">C</td>
+                <td class="coordinate">D</td>
+                <td class="coordinate">E</td>
+                <td class="coordinate">F</td>
+                <td class="coordinate">G</td>
+                <td class="coordinate">H</td>
+                <td class="coordinate">
+                    <form action="/play" method="post">
+                        <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
+                        <input id="startBtn" type="submit" value="게임시작"/>
+                    </form>
+                    {{#canResume}}
+                    <form action="/resume" method="post">
+                        <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
+                        <input id="resumeBtn" type="submit" value="이어하기">
+                    </form>
+                    {{/canResume}}
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- game_ui end -->
+    <div class="game_info">
+        <h3 id="turn">{{turn}}</h3>
+        <h3 id="end">{{end}}</h3>
+        <form action="/move" class="game_interface" method="post">
+            <input class="game_id" name="game_id" type="hidden" value="{{game_id}}">
+            <input class="command" name="source" placeholder="출발지를 입력하세요. ex) a2" type="text"/>
+            <input class="command" name="target" placeholder="도착지를 입력하세요. ex) 32" type="text"/>
+            <input id="moveBtn" type="submit" value="이동"/>
+        </form>
+        <br/><br/>
+        <div class="score_board">
+            <div class="score_box">
+                WHITE
+                <br/>
+                <p class="score">{{white_score}}</p>
+            </div>
+            <div class="score_box">
+                BLACK
+                <br/>
+                <p class="score">{{black_score}}</p>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

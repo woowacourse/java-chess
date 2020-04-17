@@ -2,6 +2,7 @@ package chess.domains.position;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Position implements Comparable<Position> {
     private static final Map<String, Position> cachedPositions;
@@ -88,6 +89,14 @@ public class Position implements Comparable<Position> {
         int xGap = this.xGapBetween(target);
 
         return Direction.findDirection(xGap, yGap);
+    }
+
+    public String name() {
+        return String.valueOf(this.x.getColumn()) + this.y.getRow();
+    }
+
+    public static Stream<Position> stream() {
+        return cachedPositions.values().stream();
     }
 
     @Override
