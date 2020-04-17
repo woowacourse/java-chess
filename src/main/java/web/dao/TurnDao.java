@@ -38,7 +38,7 @@ public class TurnDao {
 		) {
 			rs = pstmt.executeQuery();
 			if (!rs.next())
-				return null;
+				return new TurnDto("");
 			return new TurnDto(rs.getString("turn"));
 		}
 	}
