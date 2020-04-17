@@ -51,9 +51,7 @@ public class ChessService {
 		TurnDto turnDto = turnDao.find();
 		ChessGame chessGame = new ChessGame(pieces, turnDto.getTurn());
 
-		List<String> symbols = convertToUnicode(chessGame.getReverse());
-		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
-		return new BoardDto(symbols, ScoreConverter.convert(score));
+		return createBoardDto(chessGame);
 	}
 
 	private void addTurn(ChessGame chessGame) throws SQLException {
@@ -73,9 +71,7 @@ public class ChessService {
 		for (Piece piece : pieces) {
 			addPieces(piece);
 		}
-		List<String> symbols = convertToUnicode(chessGame.getReverse());
-		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
-		return new BoardDto(symbols, ScoreConverter.convert(score));
+		return createBoardDto(chessGame);
 	}
 
 	private void addPieces(Piece piece) throws SQLException {
@@ -88,6 +84,10 @@ public class ChessService {
 	private BoardDto updateBoard(ChessGame chessGame, String originalPosition, String newPosition) throws
 		SQLException {
 		pieceDao.update(originalPosition, newPosition);
+		return createBoardDto(chessGame);
+	}
+
+	private BoardDto createBoardDto(ChessGame chessGame) {
 		List<String> symbols = convertToUnicode(chessGame.getReverse());
 		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
