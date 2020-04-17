@@ -18,8 +18,8 @@ import web.dao.TurnDao;
 import web.dto.BoardDto;
 import web.dto.PieceDto;
 import web.dto.TurnDto;
-import web.util.PieceFactory;
 import web.util.ScoreConverter;
+import web.util.UnicodeConverter;
 
 public class ChessService {
 	private static final String BLANK = "";
@@ -51,7 +51,7 @@ public class ChessService {
 		TurnDto turnDto = turnDao.find();
 		ChessGame chessGame = new ChessGame(pieces, turnDto.getTurn());
 
-		List<String> symbols = convert(chessGame.getReverse());
+		List<String> symbols = convertToUnicode(chessGame.getReverse());
 		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
@@ -73,7 +73,7 @@ public class ChessService {
 		for (Piece piece : pieces) {
 			addPieces(piece);
 		}
-		List<String> symbols = convert(chessGame.getReverse());
+		List<String> symbols = convertToUnicode(chessGame.getReverse());
 		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
@@ -88,24 +88,28 @@ public class ChessService {
 	private BoardDto updateBoard(ChessGame chessGame, String originalPosition, String newPosition) throws
 		SQLException {
 		pieceDao.update(originalPosition, newPosition);
-		List<String> symbols = convert(chessGame.getReverse());
+		List<String> symbols = convertToUnicode(chessGame.getReverse());
 		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
-	private List<String> convert(List<Rank> board) {
+	private List<String> convertToUnicode(List<Rank> board) {
 		List<String> pieces = new ArrayList<>();
 		for (Rank rank : board) {
-			for (int i = MIN_COLUMN_COUNT; i <= MAX_COLUMN_COUNT; i++) {
-				final int columnNumber = i;
-				String pieceSymbol = rank.getPieces().stream()
-					.filter(p -> p.equalsColumn(columnNumber))
-					.map(Piece::showSymbol)
-					.findFirst()
-					.orElse(BLANK);
-				pieces.add(PieceFactory.convert(pieceSymbol));
-			}
+			convertRank(pieces, rank);
 		}
 		return pieces;
+	}
+
+	private void convertRank(List<String> pieces, Rank rank) {
+		for (int i = MIN_COLUMN_COUNT; i <= MAX_COLUMN_COUNT; i++) {
+			final int columnNumber = i;
+			String pieceSymbol = rank.getPieces().stream()
+				.filter(p -> p.equalsColumn(columnNumber))
+				.map(Piece::showSymbol)
+				.findFirst()
+				.orElse(BLANK);
+			pieces.add(UnicodeConverter.convert(pieceSymbol));
+		}
 	}
 }
