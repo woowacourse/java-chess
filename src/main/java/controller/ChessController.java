@@ -5,7 +5,7 @@ import static view.InputView.*;
 import java.util.Map;
 
 import domain.Score;
-import domain.board.BoardGame;
+import domain.board.ChessGame;
 import domain.command.Command;
 import domain.command.InvalidCommandException;
 import domain.command.MoveCommand;
@@ -14,11 +14,11 @@ import view.OutputView;
 
 public class ChessController {
 	ChessController() {
-		BoardGame game = new BoardGame();
+		ChessGame game = new ChessGame();
 		run(game);
 	}
 
-	private void run(BoardGame board) {
+	private void run(ChessGame board) {
 		OutputView.printChessBoard(board.getReverse());
 		Command command;
 		do {

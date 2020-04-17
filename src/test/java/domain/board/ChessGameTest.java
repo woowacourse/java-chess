@@ -10,19 +10,19 @@ import org.junit.jupiter.params.provider.CsvSource;
 import domain.command.MoveCommand;
 import domain.piece.position.InvalidPositionException;
 
-public class BoardGameTest {
-	private BoardGame boardGame;
+public class ChessGameTest {
+	private ChessGame chessGame;
 
 	@BeforeEach
 	void setUp() {
-		boardGame = new BoardGame();
+		chessGame = new ChessGame();
 	}
 
 	@DisplayName("입력한 source 위치에 말이 없으면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"move d5 a1", "move c5 a1", "move f6 a1"})
 	void move_InvalidPosition_ExceptionThrown(MoveCommand moveCommand) {
-		assertThatThrownBy(() -> boardGame.move(moveCommand))
+		assertThatThrownBy(() -> chessGame.move(moveCommand))
 			.isInstanceOf(InvalidPositionException.class)
 			.hasMessage(InvalidPositionException.INVALID_SOURCE_POSITION);
 	}

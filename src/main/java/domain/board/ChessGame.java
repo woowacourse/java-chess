@@ -10,24 +10,24 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class BoardGame {
+public class ChessGame {
 	private Board board;
 	private Team turn;
 
-	public BoardGame(Board board, Team turn) {
+	public ChessGame(Board board, Team turn) {
 		this.board = board;
 		this.turn = turn;
 	}
 
-	public BoardGame(Board board) {
+	public ChessGame(Board board) {
 		this(board, Team.WHITE);
 	}
 
-	public BoardGame() {
+	public ChessGame() {
 		this(BoardFactory.create());
 	}
 
-	public BoardGame(List<Piece> pieces, String turn) {
+	public ChessGame(List<Piece> pieces, String turn) {
 		this(BoardFactory.create(pieces), Team.of(turn));
 	}
 

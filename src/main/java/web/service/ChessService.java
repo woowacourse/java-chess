@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 import domain.Score;
-import domain.board.BoardGame;
+import domain.board.ChessGame;
 import domain.board.Rank;
 import domain.command.MoveCommand;
 import domain.piece.Piece;
@@ -21,60 +21,60 @@ import web.dto.TurnDto;
 import web.util.PieceFactory;
 import web.util.ScoreConverter;
 
-public class PieceService {
+public class ChessService {
 	private static final String BLANK = "";
 	private PieceDao pieceDao = PieceDao.getInstance();
 	private TurnDao turnDao = TurnDao.getInstance();
 
 	public BoardDto createPieces() throws SQLException {
-		BoardGame boardGame = new BoardGame();
-		addTurn(boardGame);
-		return addBoard(boardGame);
+		ChessGame chessGame = new ChessGame();
+		addTurn(chessGame);
+		return addBoard(chessGame);
 	}
 
 	public BoardDto move(String command) throws SQLException {
 		List<Piece> pieces = pieceDao.findAll();
 		TurnDto turnDto = turnDao.find();
 
-		BoardGame boardGame = new BoardGame(pieces, turnDto.getTurn());
+		ChessGame chessGame = new ChessGame(pieces, turnDto.getTurn());
 		MoveCommand moveCommand = new MoveCommand(command);
-		boardGame.move(moveCommand);
+		chessGame.move(moveCommand);
 
 		String originalPosition = moveCommand.getSourcePosition().toString();
 		String newPosition = moveCommand.getTargetPosition().toString();
-		updateTurn(boardGame);
-		return updateBoard(boardGame, originalPosition, newPosition);
+		updateTurn(chessGame);
+		return updateBoard(chessGame, originalPosition, newPosition);
 	}
 
 	public BoardDto load() throws SQLException {
 		List<Piece> pieces = pieceDao.findAll();
 		TurnDto turnDto = turnDao.find();
-		BoardGame boardGame = new BoardGame(pieces, turnDto.getTurn());
+		ChessGame chessGame = new ChessGame(pieces, turnDto.getTurn());
 
-		List<String> symbols = convert(boardGame.getReverse());
-		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		List<String> symbols = convert(chessGame.getReverse());
+		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
-	private void addTurn(BoardGame boardGame) throws SQLException {
-		Team turn = boardGame.getTurn();
+	private void addTurn(ChessGame chessGame) throws SQLException {
+		Team turn = chessGame.getTurn();
 		TurnDto turnDto = new TurnDto(turn.getName());
 		turnDao.add(turnDto);
 	}
 
-	private void updateTurn(BoardGame boardGame) throws SQLException {
-		Team turn = boardGame.getTurn();
+	private void updateTurn(ChessGame chessGame) throws SQLException {
+		Team turn = chessGame.getTurn();
 		TurnDto turnDto = new TurnDto(turn.getName());
 		turnDao.update(turnDto);
 	}
 
-	private BoardDto addBoard(BoardGame boardGame) throws SQLException {
-		List<Piece> pieces = boardGame.getPieces();
+	private BoardDto addBoard(ChessGame chessGame) throws SQLException {
+		List<Piece> pieces = chessGame.getPieces();
 		for (Piece piece : pieces) {
 			addPieces(piece);
 		}
-		List<String> symbols = convert(boardGame.getReverse());
-		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		List<String> symbols = convert(chessGame.getReverse());
+		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 
@@ -85,11 +85,11 @@ public class PieceService {
 		pieceDao.add(pieceDto);
 	}
 
-	private BoardDto updateBoard(BoardGame boardGame, String originalPosition, String newPosition) throws
+	private BoardDto updateBoard(ChessGame chessGame, String originalPosition, String newPosition) throws
 		SQLException {
 		pieceDao.update(originalPosition, newPosition);
-		List<String> symbols = convert(boardGame.getReverse());
-		Map<Team, Double> score = Score.calculateScore(boardGame.getPieces(), Team.values());
+		List<String> symbols = convert(chessGame.getReverse());
+		Map<Team, Double> score = Score.calculateScore(chessGame.getPieces(), Team.values());
 		return new BoardDto(symbols, ScoreConverter.convert(score));
 	}
 

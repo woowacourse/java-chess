@@ -5,15 +5,8 @@ import static org.assertj.core.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import domain.board.fixture.PawnBoard;
-import domain.board.fixture.RookBoard;
-import domain.command.MoveCommand;
-import domain.piece.position.InvalidPositionException;
-import domain.piece.team.Team;
 
 public class BoardTest {
 	private Board board;
@@ -32,7 +25,7 @@ public class BoardTest {
 	@DisplayName("King이 죽었을 때 isKingAlive를 호출하면 false반환")
 	@Test
 	void isKingAlive_KingIsDead_ReturnFalse() {
-		BoardGame boardWithoutKing = new BoardGame(new PawnBoard().create());
+		ChessGame boardWithoutKing = new ChessGame(new PawnBoard().create());
 		assertThat(boardWithoutKing.isKingAlive()).isFalse();
 	}
 }

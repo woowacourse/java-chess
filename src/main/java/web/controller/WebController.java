@@ -8,13 +8,13 @@ import java.util.Map;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import web.dto.BoardDto;
-import web.service.PieceService;
+import web.service.ChessService;
 
 public class WebController {
 	private static final String GAME_VIEW = "game.html";
-	private PieceService service;
+	private ChessService service;
 
-	public WebController(PieceService service) {
+	public WebController(ChessService service) {
 		this.service = service;
 	}
 
