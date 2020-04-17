@@ -31,7 +31,7 @@ public class ChessBoardState {
         this.playerTurnState = playerTurnState.getOppositeColor();
     }
 
-    public void checkCaughtPieceIsKing(ChessPiece chessPiece) {
+    public void caughtPieceIsKing(ChessPiece chessPiece) {
         if (chessPiece instanceof King) {
             this.caughtKing = true;
         }

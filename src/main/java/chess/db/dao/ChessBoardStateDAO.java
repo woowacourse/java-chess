@@ -48,6 +48,23 @@ public class ChessBoardStateDAO {
         return playerTurn;
     }
 
+    public boolean selectCaughtKing() {
+        boolean caughtKing =false;
+
+        try (Connection connection = ConnectionFactory.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM chessBoardState");
+             ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                caughtKing = resultSet.getBoolean("caughtKing");
+            }
+        } catch (SQLException e) {
+            throw new SQLExecuteException("selectPlayerTurn 오류: " + e.getMessage());
+        }
+
+        return caughtKing;
+    }
+
+
     public void updatePlayerTurn(PieceColor pieceColor) {
         try (Connection connection = ConnectionFactory.getConnection();
              PreparedStatement preparedStatement =

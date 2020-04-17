@@ -28,7 +28,7 @@ class ChessBoardStateDAOTest {
     void checkCaughtPieceIsKing() {
         ChessBoardState chessBoardState = ChessBoardState.of();
         ChessPiece chessPiece = new King(PieceColor.BLACK);
-        chessBoardState.checkCaughtPieceIsKing(chessPiece);
+        chessBoardState.caughtPieceIsKing(chessPiece);
 
         assertThat(chessBoardState.isCaughtKing()).isTrue();
     }

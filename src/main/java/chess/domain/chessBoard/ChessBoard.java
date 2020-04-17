@@ -79,7 +79,7 @@ public class ChessBoard {
         if (Objects.nonNull(targetChessPiece)) {
             sourceChessPiece.checkSamePieceColorWith(targetChessPiece);
             sourceChessPiece.checkPieceCanCatchWith(sourcePosition, targetPosition);
-            chessBoardState.checkCaughtPieceIsKing(targetChessPiece);
+            chessBoardState.caughtPieceIsKing(targetChessPiece);
             return;
         }
         sourceChessPiece.checkCanMoveWith(sourcePosition, targetPosition);

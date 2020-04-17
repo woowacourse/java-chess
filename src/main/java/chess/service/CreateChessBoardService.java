@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 
 import java.util.Map;
 
-public class CreateChessBoardFromDB {
+public class CreateChessBoardService {
     public static ChessBoard createChessBoard(ChessPieceDAO chessPieceDAO,
                                               ChessBoardStateDAO chessBoardStateDAO) {
         Map<Position, ChessPiece> chessBoard =

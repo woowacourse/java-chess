@@ -5,14 +5,14 @@ import chess.db.dao.ChessPieceDAO;
 import chess.domain.initialChessBoard.InitialChessBoardStateDTO;
 import chess.domain.initialChessBoard.InitialChessPiecesDTO;
 
-public class CreateInitialBoard {
+public class CreateInitialBoardService {
 
     private static final String SUCCESS = "";
 
     private ChessPieceDAO chessPieceDAO;
     private ChessBoardStateDAO chessBoardStateDAO;
 
-    public CreateInitialBoard() {
+    public CreateInitialBoardService() {
         chessPieceDAO = new ChessPieceDAO();
 
         this.chessBoardStateDAO = new ChessBoardStateDAO();
