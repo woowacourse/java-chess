@@ -1,0 +1,143 @@
+body {
+    margin: 0;
+    position: relative;
+    background: url("../images/bg.png");
+}
+
+.center {
+    margin: 0 auto;
+}
+
+/* HEADER */
+header {
+    width: 750px;
+    margin: 0;
+}
+
+header .inner {
+    height: 70px;
+    background-color: lightcoral;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+header .inner h1 {
+    color : whitesmoke;
+    font-weight: bold;
+}
+
+/* CONTROLLER */
+.controller {
+    position: absolute;
+    top: 30%;
+    right: 4%;
+    margin-right: 20px;
+    width: 150px;
+    height: 280px;
+    background-color: lightcoral;
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.controller input {
+    width: 90px;
+    height: 45px;
+    margin: 20px 0;
+}
+
+.turn {
+    position: absolute;
+    top: 27%;
+    left: 4%;
+    font-size: 25px;
+    color: darkgreen;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controller-move {
+    position: absolute;
+    top: 35%;
+    left: 4%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.controller-move input {
+    width: 50px;
+    height: 25px;
+    margin: 0 10px;
+}
+
+/* status */
+#score-status {
+    position: absolute;
+    top: 45%;
+    left: 5%;
+    float: left;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-size: 25px;
+    font-weight: bold;
+    color: darkgreen;
+}
+
+#score-status .score {
+    margin: 20px;
+    padding: 5px;
+}
+
+/* BOARD */
+.inner {
+    max-width: 680px;
+    padding: 10px;
+    text-align: center;
+}
+
+.inner .chess-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inner .chess-row .square {
+    width: 64px;
+    height: 64px;
+}
+
+.inner .chess-row .square-white {
+    background-color: #F5DEB3;
+}
+
+.inner .chess-row .square-black {
+    background-color: #4A2511;
+}
+
+.inner .chess-row .square img {
+    width: 64px;
+    height: 64px;
+}
+
+.inner .chess-row .row {
+    margin-left: 9px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.inner .chess-row .col {
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+}

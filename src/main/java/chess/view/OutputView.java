@@ -3,7 +3,7 @@ package chess.view;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 public class OutputView {
     private static final String NEW_LINE = System.lineSeparator();
@@ -17,10 +17,11 @@ public class OutputView {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printBoard(List<Piece> board) {
+    public static void printBoard(Map<Position, Piece> board) {
         for (int row = END_INDEX; row >= START_INDEX; row--) {
             for (int col = START_INDEX; col <= END_INDEX; col++) {
-                System.out.print(board.get((row - 1) * Position.ROW_SIZE + col - 1));
+                Position position = Position.of((char)(col + 96) + String.valueOf(row));
+                System.out.print(board.get(position));
             }
             System.out.print(NEW_LINE);
         }

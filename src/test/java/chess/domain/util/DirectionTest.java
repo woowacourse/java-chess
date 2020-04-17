@@ -21,22 +21,22 @@ public class DirectionTest {
 
     private static Stream<Arguments> getCasesForMoveByDirections() {
         return Stream.of(
-                Arguments.of(new Position(5, 5), Direction.EAST, new Position(6, 5)),
-                Arguments.of(new Position(5, 5), Direction.WEST, new Position(4, 5)),
-                Arguments.of(new Position(5, 5), Direction.NORTH, new Position(5, 6)),
-                Arguments.of(new Position(5, 5), Direction.SOUTH, new Position(5, 4)),
-                Arguments.of(new Position(5, 5), Direction.NORTH_EAST, new Position(6, 6)),
-                Arguments.of(new Position(5, 5), Direction.NORTH_WEST, new Position(4, 6)),
-                Arguments.of(new Position(5, 5), Direction.SOUTH_EAST, new Position(6, 4)),
-                Arguments.of(new Position(5, 5), Direction.SOUTH_WEST, new Position(4, 4)),
-                Arguments.of(new Position(5, 5), Direction.NORTH_NORTH_EAST, new Position(6, 7)),
-                Arguments.of(new Position(5, 5), Direction.NORTH_NORTH_WEST, new Position(4, 7)),
-                Arguments.of(new Position(5, 5), Direction.SOUTH_SOUTH_EAST, new Position(6, 3)),
-                Arguments.of(new Position(5, 5), Direction.SOUTH_SOUTH_WEST, new Position(4, 3)),
-                Arguments.of(new Position(5, 5), Direction.EAST_EAST_NORTH, new Position(7, 6)),
-                Arguments.of(new Position(5, 5), Direction.EAST_EAST_SOUTH, new Position(7, 4)),
-                Arguments.of(new Position(5, 5), Direction.WEST_WEST_NORTH, new Position(3, 6)),
-                Arguments.of(new Position(5, 5), Direction.WEST_WEST_SOUTH, new Position(3, 4))
+                Arguments.of(Position.of("e5"), Direction.EAST, Position.of("f5")),
+                Arguments.of(Position.of("e5"), Direction.WEST, Position.of("d5")),
+                Arguments.of(Position.of("e5"), Direction.NORTH, Position.of("e6")),
+                Arguments.of(Position.of("e5"), Direction.SOUTH, Position.of("e4")),
+                Arguments.of(Position.of("e5"), Direction.NORTH_EAST, Position.of("f6")),
+                Arguments.of(Position.of("e5"), Direction.NORTH_WEST, Position.of("d6")),
+                Arguments.of(Position.of("e5"), Direction.SOUTH_EAST, Position.of("f4")),
+                Arguments.of(Position.of("e5"), Direction.SOUTH_WEST, Position.of("d4")),
+                Arguments.of(Position.of("e5"), Direction.NORTH_NORTH_EAST, Position.of("f7")),
+                Arguments.of(Position.of("e5"), Direction.NORTH_NORTH_WEST, Position.of("d7")),
+                Arguments.of(Position.of("e5"), Direction.SOUTH_SOUTH_EAST, Position.of("f3")),
+                Arguments.of(Position.of("e5"), Direction.SOUTH_SOUTH_WEST, Position.of("d3")),
+                Arguments.of(Position.of("e5"), Direction.EAST_EAST_NORTH, Position.of("g6")),
+                Arguments.of(Position.of("e5"), Direction.EAST_EAST_SOUTH, Position.of("g4")),
+                Arguments.of(Position.of("e5"), Direction.WEST_WEST_NORTH, Position.of("c6")),
+                Arguments.of(Position.of("e5"), Direction.WEST_WEST_SOUTH, Position.of("c4"))
         );
     }
 }

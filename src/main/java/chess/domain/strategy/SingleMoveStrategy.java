@@ -8,22 +8,19 @@ import chess.domain.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class SingleMoveStrategy implements MoveStrategy {
+public class SingleMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> possiblePositions(final Board board, final Piece piece) {
+    public List<Position> possiblePositions(final Board board, final Piece piece, final Position position) {
         List<Position> possiblePositions = new ArrayList<>();
 
-        for (Direction direction : getDirections()) {
-
-            if (piece.isNextPositionValid(direction)) {
-                Position nextPosition = piece.getPosition().moveBy(direction);
-                Piece nextPiece = board.findPieceBy(nextPosition);
+        for (Direction direction : piece.getDirections()) {
+            if (position.isNextPositionValidForward(direction)) {
+                Position nextPosition = position.moveBy(direction);
+                Piece nextPiece = board.findBy(nextPosition);
 
                 if (nextPiece.isBlank()) {
                     possiblePositions.add(nextPosition);
-                }
-
-                else if (nextPiece.isOtherTeam(piece)) {
+                } else if (piece.isOtherTeam(nextPiece)) {
                     possiblePositions.add(nextPosition);
                 }
             }

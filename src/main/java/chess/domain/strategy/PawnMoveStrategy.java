@@ -8,16 +8,15 @@ import chess.domain.util.Direction;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class PawnMoveStrategy implements MoveStrategy {
+public class PawnMoveStrategy implements MoveStrategy {
     @Override
-    public List<Position> possiblePositions(Board board, Piece piece) {
+    public List<Position> possiblePositions(Board board, Piece piece, Position position) {
         List<Position> possiblePositions = new ArrayList<>();
 
-        for (Direction direction : getDirections()) {
-
-            if (piece.isNextPositionValid(direction)) {
-                Position nextPosition = piece.getPosition().moveBy(direction);
-                Piece nextPiece = board.findPieceBy(nextPosition);
+        for (Direction direction : piece.getDirections()) {
+            if(position.isNextPositionValidForward(direction)) {
+                Position nextPosition = position.moveBy(direction);
+                Piece nextPiece = board.findBy(nextPosition);
 
                 if (direction.isForwardDirection()) {
                     if (nextPiece.isBlank()) {
@@ -25,8 +24,7 @@ public abstract class PawnMoveStrategy implements MoveStrategy {
                     }
                     continue;
                 }
-
-                if (nextPiece.isOtherTeam(piece)) {
+                if (piece.isOtherTeam(nextPiece)) {
                     possiblePositions.add(nextPosition);
                 }
             }

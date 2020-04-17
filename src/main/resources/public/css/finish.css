@@ -1,0 +1,17 @@
+.btn-r {
+    width: 100%;
+    margin: 10px 0 20px;
+    padding-top: 10px;
+    border-top: 1px solid #DDD;
+    text-align: right;
+}
+a.btn-layerClose {
+    display: inline-block;
+    height: 25px;
+    padding: 0 14px 0;
+    border: 1px solid #304a8a;
+    background-color: #3f5a9d;
+    font-size: 13px;
+    color: #fff;
+    line-height: 25px;
+}

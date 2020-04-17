@@ -17,15 +17,15 @@ public class GameResult {
             double pawnScore = 0;
 
             for (int row = Position.START_INDEX; row <= Position.END_INDEX; row++) {
-                Piece piece = board.findPieceBy(Board.getBoardIndex(col, row));
+                Piece piece = board.findBy(Position.of(col, row));
 
                 if (piece.isSameTeam(team) && piece.isPawn()) {
                     pawnCount += 1;
-                    pawnScore += piece.score();
+                    pawnScore += piece.getScore();
                 }
 
                 if (piece.isSameTeam(team) && !piece.isPawn()) {
-                    totalScore += piece.score();
+                    totalScore += piece.getScore();
                 }
             }
 
@@ -33,7 +33,6 @@ public class GameResult {
                 totalScore += pawnScore / DIVIDEND_WHEN_MULTIPLE_PAWN_IN_COLUMN;
                 continue;
             }
-
             totalScore += pawnScore;
         }
         return totalScore;
