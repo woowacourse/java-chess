@@ -45,8 +45,10 @@ public class PieceDao {
 		) {
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				PieceFactory piece = PieceFactory.of(rs.getString("symbol"));
-				pieces.add(piece.getGenerate().apply(rs.getString("position")));
+				String symbol = rs.getString("symbol");
+				String position = rs.getString("position");
+				Piece piece = PieceFactory.of(symbol, position);
+				pieces.add(piece);
 			}
 		}
 		return pieces;

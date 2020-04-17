@@ -36,14 +36,11 @@ public enum PieceFactory {
 		this.generate = generate;
 	}
 
-	public static PieceFactory of(String symbol) {
-		return Arrays.stream(values())
+	public static Piece of(String symbol, String position) {
+		PieceFactory pieceFactory = Arrays.stream(values())
 			.filter(piece -> piece.symbol.equals(symbol))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("해당 말이 존재하지 않습니다."));
-	}
-
-	public Function<String, Piece> getGenerate() {
-		return generate;
+		return pieceFactory.generate.apply(position);
 	}
 }
