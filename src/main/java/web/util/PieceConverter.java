@@ -13,7 +13,7 @@ import domain.piece.Rook;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public enum PieceFactory {
+public enum PieceConverter {
 	WHITE_PAWN("p", position -> new Pawn(Position.of(position), Team.WHITE)),
 	WHITE_ROOK("r", position -> new Rook(Position.of(position), Team.WHITE)),
 	WHITE_KNIGHT("n", position -> new Knight(Position.of(position), Team.WHITE)),
@@ -31,16 +31,16 @@ public enum PieceFactory {
 	private String symbol;
 	private Function<String, Piece> generate;
 
-	PieceFactory(String symbol, Function<String, Piece> generate) {
+	PieceConverter(String symbol, Function<String, Piece> generate) {
 		this.symbol = symbol;
 		this.generate = generate;
 	}
 
 	public static Piece of(String symbol, String position) {
-		PieceFactory pieceFactory = Arrays.stream(values())
+		PieceConverter pieceConverter = Arrays.stream(values())
 			.filter(piece -> piece.symbol.equals(symbol))
 			.findFirst()
 			.orElseThrow(() -> new IllegalArgumentException("해당 말이 존재하지 않습니다."));
-		return pieceFactory.generate.apply(position);
+		return pieceConverter.generate.apply(position);
 	}
 }

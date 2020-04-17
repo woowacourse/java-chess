@@ -9,7 +9,7 @@ import java.util.List;
 
 import domain.piece.Piece;
 import web.dto.PieceDto;
-import web.util.PieceFactory;
+import web.util.PieceConverter;
 
 public class PieceDao {
 	private static final PieceDao PIECE_DAO = new PieceDao();
@@ -47,7 +47,7 @@ public class PieceDao {
 			while (rs.next()) {
 				String symbol = rs.getString("symbol");
 				String position = rs.getString("position");
-				Piece piece = PieceFactory.of(symbol, position);
+				Piece piece = PieceConverter.of(symbol, position);
 				pieces.add(piece);
 			}
 		}
