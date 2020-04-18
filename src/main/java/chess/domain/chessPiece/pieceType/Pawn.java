@@ -1,7 +1,9 @@
 package chess.domain.chessPiece.pieceType;
 
+import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRule;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnState;
 import chess.domain.chessPiece.ChessPiece;
+import chess.domain.position.Position;
 
 public class Pawn extends ChessPiece {
 
@@ -39,6 +41,22 @@ public class Pawn extends ChessPiece {
     @Override
     public double getScore() {
         return SCORE;
+    }
+
+    @Override
+    public boolean canMove(Position sourcePosition, Position targetPosition) {
+        if (isInitialState()) {
+            return canInitialMove(sourcePosition, targetPosition);
+        }
+        return rule.canMove(sourcePosition, targetPosition);
+    }
+
+    private boolean canInitialMove(Position sourcePosition, Position targetPosition) {
+        if (((PawnRule) rule).canInitialMove(sourcePosition, targetPosition)) {
+            switchedMovedState();
+            return true;
+        }
+        return false;
     }
 
     public void switchedMovedState() {

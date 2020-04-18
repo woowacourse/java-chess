@@ -5,8 +5,6 @@ import chess.service.CreateInitialBoardService;
 
 public class ChessStartUrlController {
 
-    private static final String SUCCESS = "";
-
     private CreateInitialBoardService createInitialBoardService;
 
     public ChessStartUrlController() {
@@ -14,7 +12,6 @@ public class ChessStartUrlController {
     }
 
     public String initialChessBoard() {
-        createInitialBoardService.initialChessBoard();
-        return SUCCESS;
+        return createInitialBoardService.initialChessBoard();
     }
 }

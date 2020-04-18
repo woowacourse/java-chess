@@ -26,24 +26,9 @@ public abstract class ChessPiece implements Movable, Catchable {
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
         if (this instanceof Pawn) {
-            return canMoveRuleOfPawn(sourcePosition, targetPosition);
+            return this.canMove(sourcePosition, targetPosition);
         }
         return rule.canMove(sourcePosition, targetPosition);
-    }
-
-    private boolean canMoveRuleOfPawn(Position sourcePosition, Position targetPosition) {
-        if (((Pawn) this).isInitialState()) {
-            return canInitialMove(sourcePosition, targetPosition);
-        }
-        return rule.canMove(sourcePosition, targetPosition);
-    }
-
-    private boolean canInitialMove(Position sourcePosition, Position targetPosition) {
-        if (((PawnRule) rule).canInitialMove(sourcePosition, targetPosition)) {
-            ((Pawn) this).switchedMovedState();
-            return true;
-        }
-        return false;
     }
 
     @Override
