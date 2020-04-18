@@ -56,13 +56,13 @@
 <div class="login-form">
     <form>
         <h4>체스게임 ID 입력</h4>
-        <input type="text" id = "ID" class="text-field" placeholder="아이디">
-        <input type="submit" value="이어서 하기" class="input submit-btn">
+        <input type="text" id="ID" class="text-field" placeholder="아이디">
         <input type="submit" value="ID 입력" class="input submit-btn" onclick="inputID()">
     </form>
 </div>
 </div>
 <script>
+
     function inputID() {
         let id = $("#ID").val();
         console.log(id);
@@ -70,17 +70,14 @@
             type: 'GET',
             async: true,
             url: '/login',
-            data : {
-                id : id
+            data: {
+                id: id
             },
             dataType: 'text',
-            error: alertMessage,
+            success: window.open("/game"),
         });
     }
 
-    function alertMessage(response) {
-        alert(response.responseText);
-    }
 </script>
 </body>
 </html>

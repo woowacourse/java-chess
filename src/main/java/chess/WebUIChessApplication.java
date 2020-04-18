@@ -5,7 +5,7 @@ import spark.Spark;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        Spark.staticFiles.location("/templates");
+        Spark.staticFiles.location("/templates/login.html");
         WebChessController chessController = new WebChessController();
         chessController.run();
     }

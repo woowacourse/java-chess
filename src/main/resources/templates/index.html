@@ -134,9 +134,10 @@
         <button id="h1" class="white" onclick="pick('h1')">&#9814;</button>
     </div>
     <div class="scoreBoard">
-        <br><br>
-        BLACK 점수 : <label id="blackScore">38</label><br><br>
-        WHITE 점수 : <label id="whiteScore">38</label><br><br>
+        <br>
+        <label id="playerId"></label>님의 게임입니다.<br><br>
+        BLACK 점수 : <label id="blackScore">38</label><br>
+        WHITE 점수 : <label id="whiteScore">38</label><br>
         우승자 : <label id="winner">BLACK WHITE</label><br>
     </div>
     <div class=selector>
@@ -147,6 +148,18 @@
 </div>
 
 <script>
+
+    $.ajax({
+        type: 'GET',
+        async: true,
+        url: '/game/id',
+        dataType: 'text',
+        success: setId,
+    });
+
+    function setId(id) {
+        $("#playerId").html(id);
+    }
 
     function endGame() {
         const winner = document.getElementById("winner");
@@ -225,8 +238,8 @@
         alert(response.responseText);
     }
 
-    async function move() {
-        await $.ajax({
+    function move() {
+        $.ajax({
             type: 'POST',
             async: true,
             url: '/game/move',

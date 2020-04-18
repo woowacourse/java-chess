@@ -27,10 +27,27 @@ public class WebChessController implements Controller {
     public void run() {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            return render(model, "login.html");
+        });
+
+        get("/login", (req, res) -> {
+            try {
+                String id = req.queryParams("id");
+                chessBoard = new ChessBoard(Color.WHITE);
+                moveState = new MoveState(id);
+                return "정상적으로 로그인되었습니다.";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        });
+
+        get("/game", (req, res) -> {
+            System.out.println(moveState.getPlayer().getPlayerId() + ">>>>>>>>>>>>>>>>>>>>>>>");
+            Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
         });
 
-        post("/continue", (req, res) -> continueGame(res));
+        get("/game/id", (req, res) -> moveState.getPlayer().getPlayerId());
 
         post("/game/continue", (req, res) -> continueGame(res));
 
@@ -40,14 +57,6 @@ public class WebChessController implements Controller {
 
         post("/game/move", this::movePiece);
 
-    }
-
-    private void startGame() {
-        get("/game", (req, res) -> {
-            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
     }
 
 
@@ -75,8 +84,9 @@ public class WebChessController implements Controller {
             MoveStateDTO moveStateDTO = new MoveStateDTO(moveState);
             moveStateService.deleteMoveStates(moveStateDTO);
             res.redirect("/game");
+            String id = moveState.getPlayer().getPlayerId();
             chessBoard = new ChessBoard(Color.WHITE);
-            moveState = new MoveState("id");
+            moveState = new MoveState(id);
             externalStaticFileLocation("/templates");
             return null;
         } catch (Exception e) {
@@ -105,10 +115,11 @@ public class WebChessController implements Controller {
 
     private Object continueGame(Response res) {
         try {
-            Map<String, String> states = moveStateService.searchMoveHistory("id");
+            String playerId = moveState.getPlayer().getPlayerId();
+            Map<String, String> states = moveStateService.searchMoveHistory(playerId);
             StringBuilder moveTrack = new StringBuilder();
             chessBoard = new ChessBoard(Color.WHITE);
-            moveState = new MoveState("id");
+            moveState = new MoveState(playerId);
             for (Map.Entry<String, String> state : states.entrySet()) {
                 moveTrack.append(state.getKey()).append(" ").append(state.getValue()).append(" ");
                 moveState.move(Square.of(state.getKey()), Square.of(state.getValue()), chessBoard);
