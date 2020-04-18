@@ -2,6 +2,7 @@ package chess.dao;
 
 import chess.domain.ChessBoard;
 import chess.domain.MoveState;
+import chess.domain.Player;
 import chess.domain.piece.Color;
 import chess.dto.MoveStateDTO;
 import org.junit.jupiter.api.BeforeEach;
@@ -17,8 +18,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class MoveStateDAOTest {
 
     private MoveStateDAO moveStateDAO = new MoveStateDAO();
-    private ChessBoard chessBoard = new ChessBoard("player1", Color.WHITE);
-    private MoveState moveState = chessBoard.getMoveState();
+    private ChessBoard chessBoard = new ChessBoard(Color.WHITE);
+    private MoveState moveState = new MoveState("player1");
 
     @BeforeEach
     public void setup() {

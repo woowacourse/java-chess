@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
@@ -140,8 +141,8 @@
     </div>
     <div class=selector>
        <button id="continue" onclick="continueGame()">이어서 하기</button>
-        <a href="/refresh"><button id="start">다시 시작하기</button></a>
-        <a href="/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
+        <a href="/game/refresh"><button id="start">다시 시작하기</button></a>
+        <a href="/game/refresh"><button id="end" onclick="endGame()">끝내기</button></a>
     </div>
 </div>
 
@@ -199,7 +200,7 @@
         $.ajax({
             type: 'GET',
             async: true,
-            url: '/status',
+            url: '/game/status',
             dataType: 'text',
             error: alertMessage,
             success: setScore,
@@ -224,7 +225,7 @@
         await $.ajax({
             type: 'POST',
             async: true,
-            url: '/move',
+            url: '/game/move',
             data: {
                 before: document.querySelector('.before').id,
                 after: document.querySelector('.after').id
@@ -236,42 +237,20 @@
         });
     }
 
-    function trackMove(response) {
-        alertMessage(response);
-        let pieces = `${response}`.toString().split(" ");
-        alertMessage(pieces);
-        for (let i = 0; i < pieces.size - 1; i=i+2) {
-            const movePiece = pieces[i] + " "+ pieces[i+1];
-            alertMessage(movePiece);
-            setPiece(movePiece);
-        }
-    }
-
     async function continueGame() {
         $.ajax({
             type: 'POST',
             async: true,
-            url: '/continue',
+            url: '/game/continue',
             dataType: 'text',
             success: function (response){
                 let pieces = response.replace("\"","").split(" ");
-                console.log(pieces);
                 for (let i = 0; i < pieces.length - 1; i=i+2) {
                     setPiece(pieces[i] + " "+ pieces[i+1]);
                 }
             }
         });
     }
-
-
-    function reset() {
-        $.ajax({
-            type: 'GET',
-            url: '/refresh',
-        });
-    }
-
-    window.onbeforeunload = reset
 
 </script>
 </body>

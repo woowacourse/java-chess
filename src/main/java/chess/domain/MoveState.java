@@ -14,8 +14,8 @@ public class MoveState {
 
     private static final String BLANK = " ";
 
-    public MoveState(Player player) {
-        this.player = player;
+    public MoveState(String id) {
+        this.player = new Player(id);
         this.moveCount = new MoveCount();
     }
 

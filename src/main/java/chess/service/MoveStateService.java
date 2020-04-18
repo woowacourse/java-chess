@@ -25,6 +25,9 @@ public class MoveStateService {
         String source;
         String target;
         ResultSet resultSet = moveStateDAO.findByPlayerId(playerId);
+        if(resultSet==null){
+            return moveHistory;
+        }
         resultSet.beforeFirst();
         while (resultSet.next()) {
             source = resultSet.getString("source").toLowerCase();

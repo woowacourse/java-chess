@@ -1,9 +1,6 @@
 package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.Square;
-import chess.domain.TeamScore;
-import chess.domain.Winner;
+import chess.domain.*;
 import chess.domain.piece.Color;
 import chess.dto.MoveStateDTO;
 import chess.service.MoveStateService;
@@ -21,7 +18,8 @@ import static spark.Spark.*;
 
 public class WebChessController implements Controller {
 
-    private ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+    private ChessBoard chessBoard;
+    private MoveState moveState;
     private MoveStateService moveStateService = new MoveStateService();
     private Gson gson = new Gson();
 
@@ -34,18 +32,28 @@ public class WebChessController implements Controller {
 
         post("/continue", (req, res) -> continueGame(res));
 
-        get("/status", (req, res) -> calculateGameStatus(res));
+        post("/game/continue", (req, res) -> continueGame(res));
 
-        get("/refresh", (req, res) -> restartGame(res));
+        get("/game/status", (req, res) -> calculateGameStatus(res));
 
-        post("/move", this::movePiece);
+        get("/game/refresh", (req, res) -> restartGame(res));
 
+        post("/game/move", this::movePiece);
+
+    }
+
+    private void startGame() {
+        get("/game", (req, res) -> {
+            System.out.println(">>>>>>>>>>>>>>>>>>>>>>>");
+            Map<String, Object> model = new HashMap<>();
+            return render(model, "index.html");
+        });
     }
 
 
     private Object movePiece(Request req, Response res) throws SQLException {
         try {
-            chessBoard.getMoveState()
+            moveState
                     .move(Square.of(req.queryParams("before")), Square.of(req.queryParams("after")), chessBoard);
             if (chessBoard.isKingCaptured()) {
                 Color turn = chessBoard.getTurn().getTurn();
@@ -56,17 +64,19 @@ public class WebChessController implements Controller {
             res.status(400);
             return e.getMessage();
         }
-        MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+        MoveStateDTO moveStateDTO = new MoveStateDTO(moveState);
         moveStateService.addMoveState(moveStateDTO);
         return req.queryParams("before") + " " + req.queryParams("after");
     }
 
+
     private Object restartGame(Response res) {
         try {
-            MoveStateDTO moveStateDTO = new MoveStateDTO(chessBoard.getMoveState());
+            MoveStateDTO moveStateDTO = new MoveStateDTO(moveState);
             moveStateService.deleteMoveStates(moveStateDTO);
-            res.redirect("/");
-            chessBoard = new ChessBoard("id", Color.WHITE);
+            res.redirect("/game");
+            chessBoard = new ChessBoard(Color.WHITE);
+            moveState = new MoveState("id");
             externalStaticFileLocation("/templates");
             return null;
         } catch (Exception e) {
@@ -95,13 +105,13 @@ public class WebChessController implements Controller {
 
     private Object continueGame(Response res) {
         try {
-            Map<String, String> moveStates = moveStateService.searchMoveHistory("id");
+            Map<String, String> states = moveStateService.searchMoveHistory("id");
             StringBuilder moveTrack = new StringBuilder();
-            chessBoard = new ChessBoard("id", Color.WHITE);
-            for (Map.Entry<String, String> moveState : moveStates.entrySet()) {
-                moveTrack.append(moveState.getKey()).append(" ").append(moveState.getValue()).append(" ");
-                chessBoard.getMoveState()
-                        .move(Square.of(moveState.getKey()), Square.of(moveState.getValue()), chessBoard);
+            chessBoard = new ChessBoard(Color.WHITE);
+            moveState = new MoveState("id");
+            for (Map.Entry<String, String> state : states.entrySet()) {
+                moveTrack.append(state.getKey()).append(" ").append(state.getValue()).append(" ");
+                moveState.move(Square.of(state.getKey()), Square.of(state.getValue()), chessBoard);
             }
             return gson.toJson(moveTrack.toString());
 

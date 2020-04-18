@@ -20,8 +20,8 @@ public class MoveStateServiceTest {
     @DisplayName("move 내역 테이블 받아서 맵으로 가공해 컨트롤러에게 전달")
     void searchMoveHistory() throws SQLException {
         MoveStateService moveStateService = new MoveStateService();
-        MoveState moveState = new MoveState(new Player("player"));
-        moveState.move("move a2 a3", new ChessBoard("player", Color.WHITE));
+        MoveState moveState = new MoveState("player");
+        moveState.move("move a2 a3", new ChessBoard(Color.WHITE));
 
         Map<String, String> moveHistory = new LinkedHashMap<>();
 

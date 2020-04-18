@@ -12,13 +12,9 @@ public class ChessBoard {
 
     private static final int FIRST_KINGS_NUMBER = 2;
     private Map<Square, Piece> chessBoard = new HashMap<>();
-    private Player player;
-    private MoveState moveState;
     private Turn turn;
 
-    public ChessBoard(String id, Color color) {
-        player = new Player(id);
-        moveState = new MoveState(player);
+    public ChessBoard(Color color) {
         for (File file : File.values()) {
             InitializingChessBoard.initPiecesLocation(file, chessBoard);
         }
@@ -65,25 +61,16 @@ public class ChessBoard {
         return turn;
     }
 
-    public MoveState getMoveState() {
-        return moveState;
-    }
-
-    public Player getPlayer() {
-        return player;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ChessBoard that = (ChessBoard) o;
-        return Objects.equals(player, that.player) &&
-                Objects.equals(turn, that.turn);
+        return Objects.equals(turn, that.turn);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(player, turn);
+        return Objects.hash(turn);
     }
 }

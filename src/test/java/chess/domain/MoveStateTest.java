@@ -10,10 +10,11 @@ public class MoveStateTest {
     @Test
     @DisplayName("move 수행시 moveCount 증가 확인")
     void moveCount() {
-        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
-        chessBoard.getMoveState().move("move a2 a4", chessBoard);
-        assertThat(chessBoard.getMoveState().getMoveCount().getMoveCount()).isEqualTo(1);
-        chessBoard.getMoveState().move("move a2 a4", chessBoard);
-        assertThat(chessBoard.getMoveState().getMoveCount().getMoveCount()).isEqualTo(1);
+        ChessBoard chessBoard = new ChessBoard(Color.WHITE);
+        MoveState moveState = new MoveState("id");
+        moveState.move("move a2 a4", chessBoard);
+        assertThat(moveState.getMoveCount().getMoveCount()).isEqualTo(1);
+        moveState.move("move a2 a4", chessBoard);
+        assertThat(moveState.getMoveCount().getMoveCount()).isEqualTo(1);
     }
 }

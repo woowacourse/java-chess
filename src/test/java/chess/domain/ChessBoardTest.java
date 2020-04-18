@@ -10,19 +10,19 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class ChessBoardTest {
 
-    public static final ChessBoard chessBoard = new ChessBoard("player1", Color.WHITE);
+    public static final ChessBoard chessBoard = new ChessBoard(Color.WHITE);
 
     @Test
     @DisplayName("체스보드 생성시 32개의 칸-말 셋트를 가지고 있는지 확인")
     void chessBoardSizeCheck() {
-        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(Color.WHITE);
         assertThat(chessBoard.getChessBoard().size()).isEqualTo(32);
     }
 
     @Test
     @DisplayName("move 수행이 가능한지 판단")
     void canMove() {
-        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(Color.WHITE);
         assertThatThrownBy(()->chessBoard.canMove(Square.of("c5"), Square.of("c6")))
                 .isInstanceOf(UnsupportedOperationException.class);
         //WhiteTurn

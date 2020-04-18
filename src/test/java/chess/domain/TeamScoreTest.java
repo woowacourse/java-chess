@@ -13,7 +13,7 @@ public class TeamScoreTest {
     @Test
     @DisplayName("게임 점수 계산")
     void calculateScore() {
-        ChessBoard chessBoard = new ChessBoard("id", Color.WHITE);
+        ChessBoard chessBoard = new ChessBoard(Color.WHITE);
         Map<Color, Double> teamScore = TeamScore.calculateTeamScore(chessBoard.getChessBoard());
         assertThat(teamScore.get(Color.BLACK)).isEqualTo(38);
         assertThat(teamScore.get(Color.WHITE)).isEqualTo(38);
