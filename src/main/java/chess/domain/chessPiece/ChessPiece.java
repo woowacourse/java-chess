@@ -25,9 +25,6 @@ public abstract class ChessPiece implements Movable, Catchable {
 
     @Override
     public boolean canMove(Position sourcePosition, Position targetPosition) {
-        if (this instanceof Pawn) {
-            return this.canMove(sourcePosition, targetPosition);
-        }
         return rule.canMove(sourcePosition, targetPosition);
     }
 

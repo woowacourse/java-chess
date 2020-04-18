@@ -48,7 +48,7 @@ public class Pawn extends ChessPiece {
         if (isInitialState()) {
             return canInitialMove(sourcePosition, targetPosition);
         }
-        return rule.canMove(sourcePosition, targetPosition);
+        return super.canMove(sourcePosition, targetPosition);
     }
 
     private boolean canInitialMove(Position sourcePosition, Position targetPosition) {
