@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class ResponseDto {
-    private static final ResponseDto unknownResponse = new ResponseDto("알 수 없는 명령어 입니다.");
+    public static final ResponseDto unknownResponse = new ResponseDto("알 수 없는 명령어 입니다.");
     private List<Long> roomId;
     private Map<Position, String> board;
     private Status status;

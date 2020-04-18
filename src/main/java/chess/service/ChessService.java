@@ -20,7 +20,6 @@ public class ChessService {
 
     public ChessService(ChessDao chessDAO) {
         this.chessDAO = chessDAO;
-        commands.put(Command.START, null);
         commands.put(Command.MOVE, this::move);
         commands.put(Command.END, this::end);
         commands.put(Command.UNKNOWN, this::unknown);
