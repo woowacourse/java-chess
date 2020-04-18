@@ -209,6 +209,10 @@
     }
 
     function setPiece(response) {
+        if(response === "Black" || response === "White"){
+            alert(response + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
+            return;
+        }
         const moveSquares = response.split(" ");
         const before = document.getElementById(moveSquares[0]);
         const after = document.getElementById(moveSquares[1]);

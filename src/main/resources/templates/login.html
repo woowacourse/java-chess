@@ -17,7 +17,7 @@
 
         .login-form {
             background-color: #EEEFF1;
-            width: 200px;
+            width: 300px;
             padding: 20px;
             border-radius: 3px;
         }
@@ -42,7 +42,7 @@
             color: #ffffff;
         }
 
-        .submit-btn:hover{
+        .submit-btn:hover {
             background-color: #2A9EE0;
         }
 
@@ -55,13 +55,32 @@
 <body>
 <div class="login-form">
     <form>
-        <input type="text" name="email" class="text-field" placeholder="아이디">
-        <input type="submit" value="Login" class="input submit-btn">
+        <h4>체스게임 ID 입력</h4>
+        <input type="text" id = "ID" class="text-field" placeholder="아이디">
+        <input type="submit" value="이어서 하기" class="input submit-btn">
+        <input type="submit" value="ID 입력" class="input submit-btn" onclick="inputID()">
     </form>
 </div>
 </div>
 <script>
+    function inputID() {
+        let id = $("#ID").val();
+        console.log(id);
+        $.ajax({
+            type: 'GET',
+            async: true,
+            url: '/login',
+            data : {
+                id : id
+            },
+            dataType: 'text',
+            error: alertMessage,
+        });
+    }
 
+    function alertMessage(response) {
+        alert(response.responseText);
+    }
 </script>
 </body>
 </html>

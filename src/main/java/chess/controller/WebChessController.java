@@ -58,7 +58,7 @@ public class WebChessController implements Controller {
             if (chessBoard.isKingCaptured()) {
                 Color turn = chessBoard.getTurn().getTurn();
                 turn = turn.changeColor(turn);
-                throw new UnsupportedOperationException(turn.getName() + "이(가) 승리했습니다. " + " 다시 시작하기 버튼을 눌러 새로 시작해주세요.");
+                return turn.getName();
             }
         } catch (Exception e) {
             res.status(400);
