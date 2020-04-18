@@ -56,36 +56,34 @@ public class SQLBoardDAO implements BoardDAO {
     public Optional<Piece> findPieceOn(Position position) throws SQLException {
         String query = "SELECT * FROM board WHERE position = ?";
 
-        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
-             PreparedStatement ps = con.prepareStatement(query)) {
+        return executeQuery(query, ps -> {
             ps.setString(1, position.toString());
             ResultSet rs = ps.executeQuery();
 
             if (!rs.next()) {
                 return Optional.empty();
             }
+
             return Optional.of(Piece.of(rs.getString("piece")));
-        }
+        });
     }
 
     @Override
     public Map<Position, Piece> findAllPieces() throws SQLException {
         String query = "SELECT * FROM board ";
 
-        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
-             PreparedStatement ps = con.prepareStatement(query)) {
+        return executeQuery(query, ps -> {
             ResultSet rs = ps.executeQuery();
 
             Map<Position, Piece> output = new HashMap<>();
             while (rs.next()) {
                 Position position = Position.of(rs.getString("position"));
                 Piece piece = Piece.of(rs.getString("piece"));
-
                 output.put(position, piece);
             }
 
             return output;
-        }
+        });
     }
 
     @Override
@@ -108,8 +106,22 @@ public class SQLBoardDAO implements BoardDAO {
         }
     }
 
+    private <R> R executeQuery(String query, throwingFunction<PreparedStatement, R> function) throws SQLException {
+        try (Connection con = DriverManager.getConnection(DESTINATION, USER_NAME, PASSWORD);
+             PreparedStatement ps = con.prepareStatement(query)) {
+            R r = function.accept(ps);
+
+            ps.close();
+            closeConnection(con);
+            return r;
+        }
+    }
+
     private interface throwingConsumer<T> {
         void accept(T t) throws SQLException;
     }
 
+    private interface throwingFunction<T, R> {
+        R accept(T t) throws SQLException;
+    }
 }
