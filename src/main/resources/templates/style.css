@@ -1,0 +1,38 @@
+#title {
+    margin: auto;
+    alignment: center;
+}
+
+.chessboard {
+    width: 640px;
+    height: 640px;
+    margin: 80px auto;
+    border: 25px solid #333;
+    alignment: center;
+}
+
+.black {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #999;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.white {
+    float: left;
+    width: 80px;
+    height: 80px;
+    background-color: #fff;
+    font-size: 50px;
+    text-align: center;
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.move {
+    align-content: center;
+}

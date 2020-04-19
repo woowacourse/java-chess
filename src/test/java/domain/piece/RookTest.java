@@ -58,7 +58,7 @@ class RookTest {
 	@DisplayName("목적지로 가는 경로에 기물이 있다면 예외 발생")
 	@ParameterizedTest
 	@CsvSource({"N, move a1 a4, WHITE", "S, move a8 a2, BLACK"})
-	void validateRoutecanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand,
+	void validateRouteCanMove_InvalidTargetPosition_ExceptionThrown(Direction direction, MoveCommand moveCommand,
 		Team team) {
 		Rook rook = new Rook(moveCommand.getSourcePosition(), team);
 

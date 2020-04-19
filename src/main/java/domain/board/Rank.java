@@ -21,7 +21,7 @@ public class Rank {
 			.findFirst();
 	}
 
-	public int calculateCountOfKing() {
+	public int countOfKing() {
 		return (int)pieces.stream()
 			.filter(value -> value instanceof King)
 			.count();

@@ -2,6 +2,8 @@ package domain.piece.position;
 
 import java.util.Arrays;
 
+import domain.piece.team.Team;
+
 public class Position {
 	private Column column;
 	private Row row;
@@ -45,6 +47,18 @@ public class Position {
 		return this.equals(position);
 	}
 
+	public boolean isSameRow(Row row) {
+		return this.row.equals(row);
+	}
+
+	public boolean isSameColumn(Position position) {
+		return this.column.equals(position.column);
+	}
+
+	public boolean isStartRow(Team team) {
+		return this.row.isStartRow(team.getStartRankIndex());
+	}
+
 	public Column getColumn() {
 		return column;
 	}
@@ -59,5 +73,10 @@ public class Position {
 
 	public int getRankIndex() {
 		return row.getRankIndex();
+	}
+
+	@Override
+	public String toString() {
+		return column.getColumnName() + row.getNumber();
 	}
 }

@@ -38,6 +38,63 @@ public class BoardFactory {
 		return new Board(new ArrayList<>(ranks));
 	}
 
+	public static Board create(List<Piece> pieces) {
+		List<Rank> ranks = new ArrayList<>();
+
+		List<Piece> rankOne = new ArrayList<>();
+		List<Piece> rankTwo = new ArrayList<>();
+		List<Piece> rankTree = new ArrayList<>();
+		List<Piece> rankFour = new ArrayList<>();
+		List<Piece> rankFive = new ArrayList<>();
+		List<Piece> rankSix = new ArrayList<>();
+		List<Piece> rankSeven = new ArrayList<>();
+		List<Piece> rankEight = new ArrayList<>();
+
+		for (Piece piece : pieces) {
+			if (piece.getPosition().isSameRow(Row.ONE)) {
+				rankOne.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.TWO)) {
+				rankTwo.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.THREE)) {
+				rankTree.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.FOUR)) {
+				rankFour.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.FIVE)) {
+				rankFive.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.SIX)) {
+				rankSix.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.SEVEN)) {
+				rankSeven.add(piece);
+				continue;
+			}
+			if (piece.getPosition().isSameRow(Row.EIGHT)) {
+				rankEight.add(piece);
+			}
+		}
+
+		ranks.add(new Rank(rankOne));
+		ranks.add(new Rank(rankTwo));
+		ranks.add(new Rank(rankTree));
+		ranks.add(new Rank(rankFour));
+		ranks.add(new Rank(rankFive));
+		ranks.add(new Rank(rankSix));
+		ranks.add(new Rank(rankSeven));
+		ranks.add(new Rank(rankEight));
+		return new Board(ranks);
+	}
+
 	private static void createEmptyRank() {
 		for (int i = 0; i < EMPTY_RANK_SIZE; i++) {
 			ranks.add(new Rank(new ArrayList<>()));

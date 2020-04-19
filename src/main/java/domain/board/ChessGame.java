@@ -10,28 +10,43 @@ import domain.piece.position.InvalidPositionException;
 import domain.piece.position.Position;
 import domain.piece.team.Team;
 
-public class BoardGame {
+public class ChessGame {
 	private Board board;
+	private Team turn;
 
-	public BoardGame(Board board) {
+	public ChessGame(Board board, Team turn) {
 		this.board = board;
+		this.turn = turn;
 	}
 
-	public BoardGame() {
+	public ChessGame(Board board) {
+		this(board, Team.WHITE);
+	}
+
+	public ChessGame() {
 		this(BoardFactory.create());
 	}
 
-	public void move(MoveCommand moveCommand, Team turn) {
+	public ChessGame(List<Piece> pieces, String turn) {
+		this(BoardFactory.create(pieces), Team.of(turn));
+	}
+
+	public void move(MoveCommand moveCommand) {
 		Position sourcePosition = moveCommand.getSourcePosition();
 		Position targetPosition = moveCommand.getTargetPosition();
 
 		Piece piece = board.findPiece(sourcePosition)
 			.orElseThrow(() -> new InvalidPositionException(InvalidPositionException.INVALID_SOURCE_POSITION));
 		piece.move(targetPosition, turn, board);
+		turn = Team.changeTurn(turn);
 	}
 
 	public boolean isKingAlive() {
 		return board.isKingAlive();
+	}
+
+	public Board getBoard() {
+		return board;
 	}
 
 	public List<Rank> getReverse() {
@@ -43,5 +58,13 @@ public class BoardGame {
 
 	public List<Rank> getRanks() {
 		return board.getRanks();
+	}
+
+	public List<Piece> getPieces() {
+		return board.getPieces();
+	}
+
+	public Team getTurn() {
+		return turn;
 	}
 }

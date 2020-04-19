@@ -47,8 +47,8 @@ public class BoardFactoryTest {
 		first.add(new Rook(Position.of("a1"), Team.WHITE));
 		first.add(new Knight(Position.of("b1"), Team.WHITE));
 		first.add(new Bishop(Position.of("c1"), Team.WHITE));
-		first.add(new King(Position.of("d1"), Team.WHITE));
-		first.add(new Queen(Position.of("e1"), Team.WHITE));
+		first.add(new Queen(Position.of("d1"), Team.WHITE));
+		first.add(new King(Position.of("e1"), Team.WHITE));
 		first.add(new Bishop(Position.of("f1"), Team.WHITE));
 		first.add(new Knight(Position.of("g1"), Team.WHITE));
 		first.add(new Rook(Position.of("h1"), Team.WHITE));
@@ -74,8 +74,8 @@ public class BoardFactoryTest {
 		eighth.add(new Rook(Position.of("a8"), Team.BLACK));
 		eighth.add(new Knight(Position.of("b8"), Team.BLACK));
 		eighth.add(new Bishop(Position.of("c8"), Team.BLACK));
-		eighth.add(new King(Position.of("d8"), Team.BLACK));
-		eighth.add(new Queen(Position.of("e8"), Team.BLACK));
+		eighth.add(new Queen(Position.of("d8"), Team.BLACK));
+		eighth.add(new King(Position.of("e8"), Team.BLACK));
 		eighth.add(new Bishop(Position.of("f8"), Team.BLACK));
 		eighth.add(new Knight(Position.of("g8"), Team.BLACK));
 		eighth.add(new Rook(Position.of("h8"), Team.BLACK));

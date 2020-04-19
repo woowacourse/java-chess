@@ -5,7 +5,7 @@ import static view.InputView.*;
 import java.util.Map;
 
 import domain.Score;
-import domain.board.BoardGame;
+import domain.board.ChessGame;
 import domain.command.Command;
 import domain.command.InvalidCommandException;
 import domain.command.MoveCommand;
@@ -14,12 +14,11 @@ import view.OutputView;
 
 public class ChessController {
 	ChessController() {
-		BoardGame game = new BoardGame();
-		Team turn = Team.WHITE;
-		run(game, turn);
+		ChessGame game = new ChessGame();
+		run(game);
 	}
 
-	private void run(BoardGame board, Team turn) {
+	private void run(ChessGame board) {
 		OutputView.printChessBoard(board.getReverse());
 		Command command;
 		do {
@@ -27,13 +26,12 @@ public class ChessController {
 			command = Command.of(inputCommand);
 			if (command.isMove()) {
 				MoveCommand moveCommand = new MoveCommand(inputCommand);
-				board.move(moveCommand, turn);
+				board.move(moveCommand);
 				OutputView.printChessBoard(board.getReverse());
-				turn = Team.changeTurn(turn);
 			}
 
 			if (command.isStatus()) {
-				Map<Team, Double> score = Score.calculateScore(board.getRanks(), Team.values());
+				Map<Team, Double> score = Score.calculateScore(board.getPieces(), Team.values());
 				OutputView.printScore(score);
 			}
 
