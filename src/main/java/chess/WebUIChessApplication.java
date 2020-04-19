@@ -1,15 +1,7 @@
 package chess;
 
 import chess.controller.WebController;
-import chess.controller.dao.ChessBoardDao;
-import chess.controller.dao.GameDao;
-import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
-import chess.domain.game.ChessBoard;
-import chess.domain.game.ChessGame;
-import chess.domain.game.Command;
-import chess.domain.game.GameStatus;
-import chess.service.ChessService;
 import com.google.gson.Gson;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
@@ -20,8 +12,6 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class WebUIChessApplication {
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
-    private static final GameDao gameDao = new GameDao();
     private static Gson gson = new Gson();
     private static final WebController webController = new WebController();
 

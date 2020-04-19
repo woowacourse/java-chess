@@ -7,9 +7,8 @@ import chess.domain.game.Command;
 import chess.views.InputView;
 import chess.views.OutputView;
 
-
 public class ConsoleChessApplication {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         ChessController chessController = new ChessController();
         RequestDto requestDto;
 

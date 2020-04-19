@@ -55,4 +55,8 @@ public class ResponseDto {
         this.isKing = true;
         this.turn = Player.reversePlayer(this.turn);
     }
+
+    public boolean isKing() {
+        return isKing;
+    }
 }

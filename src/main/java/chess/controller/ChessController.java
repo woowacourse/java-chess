@@ -18,7 +18,6 @@ public class ChessController {
         commands.put(Command.START, this::start);
         commands.put(Command.MOVE, this::move);
         commands.put(Command.STATUS, this::status);
-//        chessGame = new ChessGame();
     }
 
     public ResponseDto start(RequestDto requestDto) {
