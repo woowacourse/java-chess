@@ -1,18 +1,29 @@
 package chess;
 
+import chess.dao.SQLBoardDAO;
+import chess.domain.board.Board;
+import chess.webutil.WebRequest;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
-import java.util.HashMap;
 import java.util.Map;
 
-import static spark.Spark.get;
+import static spark.Spark.*;
 
 public class WebUIChessApplication {
+    private static Board board = new Board(new SQLBoardDAO());
+
     public static void main(String[] args) {
+        staticFiles.location("/public");
+
         get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
+            WebRequest webRequest = WebRequest.BLANK_BOARD;
+            return render(webRequest.generateModel(req, board), "index.html");
+        });
+
+        post("/", (req, res) -> {
+            WebRequest webRequest = WebRequest.of(req.queryParams("command"));
+            return render(webRequest.generateModel(req, board), "index.html");
         });
     }
 

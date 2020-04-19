@@ -1,116 +1,119 @@
 package chess.domain.board;
 
+import chess.dao.BoardDAO;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Side;
 import chess.domain.piece.Type;
 import chess.exceptions.InvalidInputException;
 
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Optional;
+import java.sql.SQLException;
+import java.util.*;
 import java.util.function.Function;
 
-import static java.util.stream.Collectors.summingInt;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.*;
 
 public class Board {
-    private final Map<Position, Optional<Piece>> board;
+    private static final int PAWN_OVERLAP_CONSTANT = 1;
 
-    public Board(final Map<Position, Optional<Piece>> board) {
-        this.board = board;
+    private BoardDAO boardDAO;
+    private Side turn;
+
+    public Board(final BoardDAO boardDAO) {
+        this.boardDAO = boardDAO;
+        this.turn = Side.WHITE;
     }
 
-    public static Board init() {
-        return new Board(placeInitialPieces(generateEmptyBoard()));
+    public void initialize() throws SQLException {
+        boardDAO.placeInitialPieces();
+        turn = Side.WHITE;
     }
 
-    private static Map<Position, Optional<Piece>> generateEmptyBoard() {
-        return Position.getAllPositions()
+    public Optional<Piece> findPieceOn(final Position position) throws SQLException {
+        return boardDAO.findPieceOn(position);
+    }
+
+    public Path generatePath(final Position start, final Position end) throws SQLException {
+        Map<Position, Piece> allPieces = boardDAO.findAllPieces();
+        return new Path(allPieces.keySet()
                 .stream()
-                .collect(toMap(Function.identity(), position -> Optional.empty()));
+                .filter(position -> position.inBetween(start, end) || position == start || position == end)
+                .collect(toMap(Function.identity(), allPieces::get)), start, end);
     }
 
-    private static Map<Position, Optional<Piece>> placeInitialPieces(Map<Position, Optional<Piece>> board) {
-        for (Piece piece : Piece.getPieces()) {
-            placeInitialPiece(board, piece);
+    public void move(final Position start, final Position end) throws SQLException {
+        if (start == null || end == null) {
+            throw new InvalidInputException();
         }
-        return board;
-    }
 
-    private static void placeInitialPiece(Map<Position, Optional<Piece>> board, Piece piece) {
-        piece.initialPositions()
-                .forEach(position -> board.put(position, Optional.of(piece)));
-    }
-
-    public Optional<Piece> findPieceBy(final Position position) {
-        return board.get(position);
-    }
-
-    public Path generatePath(final Position start, final Position end) {
-        if (isOnLine(start, end)) {
-            return generateLinePath(start, end);
+        Piece startPiece = getPiece(boardDAO.findPieceOn(start));
+        if (!startPiece.is(turn)) {
+            return;
         }
-        return generateNoLinePath(start, end);
-    }
-
-    private boolean isOnLine(final Position start, final Position end) {
-        return Position.columnGap(start, end) == 0
-                || Position.rowGap(start, end) == 0
-                || Position.columnGap(start, end) == Position.rowGap(start, end);
-    }
-
-    private Path generateLinePath(final Position start, final Position end) {
-        return new Path(board.keySet()
-                .stream()
-                .filter(position -> position.inBetween(start, end))
-                .collect(toMap(Function.identity(), board::get)), start, end);
-    }
-
-    private Path generateNoLinePath(final Position start, final Position end) {
-        Position middle = Position.of(start.getRow(), end.getColumn());
-        return new Path(board.keySet()
-                .stream()
-                .filter(position -> position.inBetween(start, middle) || position.inBetween(end, middle))
-                .collect(toMap(Function.identity(), board::get)), start, end);
-    }
-
-    public void move(final Position start, final Position end) {
-        validateNonEmptyStart(start);
         Path path = generatePath(start, end);
-        Piece mover = board.get(start).get();
-        if (!mover.isMovable(path)) {
-            throw new InvalidInputException();
-        }
-        board.put(end, Optional.of(mover));
-        board.put(start, Optional.empty());
+
+        checkMovable(startPiece, path);
+        boardDAO.placePieceOn(end, startPiece);
+        boardDAO.removePieceOn(start);
+        turn = turn.negate();
     }
 
-    private void validateNonEmptyStart(final Position start) {
-        if (!board.get(start).isPresent()) {
+    public List<Position> findMovablePositions(final Position start) throws SQLException {
+        if (start == null) {
+            throw new InvalidInputException();
+        }
+
+        Piece startPiece = getPiece(boardDAO.findPieceOn(start));
+        if (!startPiece.is(turn)) {
+            return new ArrayList<>();
+        }
+
+        List<Position> movablePositions = new ArrayList<>();
+        for (Position position : Position.getAllPositions()) {
+            if (startPiece.isMovable(generatePath(start, position))) {
+                movablePositions.add(position);
+            }
+        }
+        return movablePositions;
+    }
+
+    private Piece getPiece(final Optional<Piece> piece) {
+        if (!piece.isPresent()) {
+            throw new InvalidInputException();
+        }
+        return piece.get();
+    }
+
+    private void checkMovable(Piece piece, Path path) {
+        if (!piece.isMovable(path)) {
             throw new InvalidInputException();
         }
     }
 
-    public long count(final Type type, final Side side) {
-        return board.values()
+    public long count(final Type type, final Side side) throws SQLException {
+        return boardDAO.findAllPieces().values()
                 .stream()
-                .filter(piece -> piece.isPresent() && piece.get().is(type, side))
+                .filter(piece -> piece.is(type, side))
                 .count();
     }
 
-    public int countPawnsOnSameColumn(final Side side) {
-        return Arrays.stream(Column.values())
-                .mapToInt(column -> getPawnCount(side, column))
-                .filter(count -> count > 1)
-                .sum();
+    public int countPawnsOnSameColumn(final Side side) throws SQLException {
+        List<Position> pawnPositions = getPawnPositions(side);
+
+        Set<Column> pawnColumns = pawnPositions.stream()
+                .map(position -> position.getColumn())
+                .collect(toSet());
+
+        if (pawnColumns.size() == pawnPositions.size()) {
+            return 0;
+        }
+        return pawnPositions.size() - pawnColumns.size() + PAWN_OVERLAP_CONSTANT;
     }
 
-    private int getPawnCount(final Side side, final Column column) {
-        return board.keySet()
+    private List<Position> getPawnPositions(final Side side) throws SQLException {
+        return boardDAO.findAllPieces().entrySet()
                 .stream()
-                .filter(position -> board.get(position).isPresent()
-                        && position.isOn(column)
-                        && board.get(position).get().is(Type.PAWN, side))
-                .collect(summingInt(x -> 1));
+                .filter(entry -> entry.getValue().is(Type.PAWN, side))
+                .map(entry -> entry.getKey())
+                .collect(toList());
     }
 }

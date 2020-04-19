@@ -33,16 +33,18 @@ public interface MovingStrategy {
     }
 
     static boolean pawn(Path path) {
-        if (path.isOnInitialPosition()) {
-            return (path.distanceSquare() == 4 || path.distanceSquare() == 1)
-                && path.headingForward()
-                && path.isEndEmpty();
-        }
         if (path.isEnemyOnEnd()) {
             return path.distanceSquare() == 2
-                && path.headingForward();
+                    && path.headingForward();
         }
+
+        if (path.isOnInitialPosition()) {
+            return (path.distanceSquare() == 4 || path.distanceSquare() == 1)
+                    && path.headingForward()
+                    && path.isEndEmpty();
+        }
+
         return path.distanceSquare() == 1
-            && path.headingForward() && path.isEndEmpty();
+                && path.headingForward() && path.isEndEmpty();
     }
 }

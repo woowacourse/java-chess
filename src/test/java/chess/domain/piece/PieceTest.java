@@ -1,22 +1,19 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.*;
-import static org.junit.jupiter.params.provider.Arguments.*;
-
-import java.util.HashMap;
-import java.util.Optional;
-import java.util.stream.Stream;
-
+import chess.dao.BoardDAO;
+import chess.dao.FakeBoardDAO;
+import chess.domain.board.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import chess.domain.board.Board;
-import chess.domain.board.Column;
-import chess.domain.board.Path;
-import chess.domain.board.Position;
-import chess.domain.board.Row;
+import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.params.provider.Arguments.of;
 
 public class PieceTest {
     @DisplayName("체스 말 move test")
@@ -26,28 +23,29 @@ public class PieceTest {
         assertThat(Piece.of(type, Side.WHITE).isMovable(path)).isEqualTo(expected);
     }
 
-    static Stream<Arguments> movableParams() {
-        Board board = new Board(new HashMap<Position, Optional<Piece>>() {{
-            Position.getAllPositions().forEach(position -> put(position, Optional.empty()));
+    static Stream<Arguments> movableParams() throws SQLException {
+        BoardDAO boardDAO = new FakeBoardDAO(new HashMap<Position, Piece>() {{
             final Side side = Side.WHITE;
             final Row row = Row.ONE;
-            put(Position.of(row, Column.A), Optional.of(Piece.of(Type.ROOK, side)));
-            put(Position.of(row, Column.B), Optional.of(Piece.of(Type.KNIGHT, side)));
-            put(Position.of(row, Column.C), Optional.of(Piece.of(Type.BISHOP, side)));
-            put(Position.of(row, Column.D), Optional.of(Piece.of(Type.QUEEN, side)));
-            put(Position.of(row, Column.E), Optional.of(Piece.of(Type.KING, side)));
-            put(Position.of(row, Column.F), Optional.of(Piece.of(Type.PAWN, side)));
+            put(Position.of(row, Column.A), Piece.of(Type.ROOK, side));
+            put(Position.of(row, Column.B), Piece.of(Type.KNIGHT, side));
+            put(Position.of(row, Column.C), Piece.of(Type.BISHOP, side));
+            put(Position.of(row, Column.D), Piece.of(Type.QUEEN, side));
+            put(Position.of(row, Column.E), Piece.of(Type.KING, side));
+            put(Position.of(row, Column.F), Piece.of(Type.PAWN, side));
         }});
+
+        Board board = new Board(boardDAO);
         return Stream.of(
-            of(
-                "시작과 끝이 같은 경우 false",
-                Type.QUEEN, board.generatePath(Position.of(Row.ONE, Column.D), Position.of(Row.ONE, Column.D)),
-                false
-            ),
-            of(
-                "시작과 끝이 다른 경우 true",
-                Type.QUEEN, board.generatePath(Position.of(Row.ONE, Column.D), Position.of(Row.EIGHT, Column.D)),
-                true
+                of(
+                        "시작과 끝이 같은 경우 false",
+                        Type.QUEEN, board.generatePath(Position.of(Row.ONE, Column.D), Position.of(Row.ONE, Column.D)),
+                        false
+                ),
+                of(
+                        "시작과 끝이 다른 경우 true",
+                        Type.QUEEN, board.generatePath(Position.of(Row.ONE, Column.D), Position.of(Row.EIGHT, Column.D)),
+                        true
             ),
             of(
                 "King의 정상적인 이동",

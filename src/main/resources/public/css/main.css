@@ -1,0 +1,126 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    background: url("../image/wood.jpg");
+}
+
+h1 {
+    text-align: center;
+    padding: 35px 0;
+    color: white;
+    font-size: 4rem;
+    font-family: 'Do Hyeon', sans-serif;
+    font-weight: normal;
+}
+
+.border {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 540px;
+    padding: 30px 0;
+    margin: 0 auto;
+    background-color: cornsilk;
+}
+
+.board {
+    width: calc(100% - 60px);
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+.row {
+    display: flex;
+    position: relative;
+}
+
+.position {
+    width: calc(100% / 6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333333;
+    background-color: #ffffff;
+    background-size: 20px 40px;
+}
+
+.position:after {
+    content: "";
+    padding-bottom: 100%;
+}
+
+.piece {
+    position: absolute;
+    width: calc(100% / 8);
+}
+
+.movableMark {
+    position: absolute;
+    width: calc(100% / 25);
+}
+
+.row:nth-of-type(2n - 1) .position:nth-of-type(2n - 1),
+.row:nth-of-type(2n) .position:nth-of-type(2n) {
+    color: #ffffff;
+    background-color: #333333;
+}
+
+.row-location {
+    position: absolute;
+    left: -20px;
+    top: 25px;
+    font-family: serif;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.column-locations {
+    position: absolute;
+    justify-content: space-around;
+    width: calc(100% - 60px);
+    bottom: 10px;
+    font-family: serif;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    padding: 20px 0;
+    margin: 0 auto;
+}
+
+.menuButton {
+    margin: 0 20px;
+    width: 60px;
+    height: 40px;
+    font-family: serif;
+    font-size: 12px;
+    background-color: cornsilk;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.status {
+    text-align: center;
+    padding: 10px 0;
+    color: white;
+    font-size: 1.5rem;
+    font-family: 'Do Hyeon', sans-serif;
+}
