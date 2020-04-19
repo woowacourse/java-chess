@@ -18,7 +18,7 @@ public class Status {
 	}
 
 	public Result getResult() {
-		return new Result(sumScore(Team.BLACK),sumScore(Team.WHITE));
+		return new Result(sumScore(Team.BLACK), sumScore(Team.WHITE));
 	}
 
 	private double sumScore(Team team) {

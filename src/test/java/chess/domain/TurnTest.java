@@ -14,7 +14,7 @@ public class TurnTest {
 
 	@BeforeEach
 	void setUp() {
-		turn = new Turn();
+		turn = new Turn(true);
 	}
 
 	@Test

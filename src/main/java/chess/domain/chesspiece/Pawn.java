@@ -19,7 +19,7 @@ public class Pawn extends ChessPiece {
 
 	public Pawn(Position position, Team team) {
 		super(position, team);
-		isMoved = false;
+		this.isMoved = false;
 	}
 
 	@Override

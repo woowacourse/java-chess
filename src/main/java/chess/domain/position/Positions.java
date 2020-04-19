@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import chess.domain.Team;
 import chess.domain.chesspiece.ChessPiece;
 
 public class Positions {

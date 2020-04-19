@@ -2,6 +2,7 @@ package chess.domain.chessboard;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -54,7 +55,26 @@ public class Row {
 		return chessPiece.isMatchTeam(team) && chessPiece.getClass() == Pawn.class;
 	}
 
+	public List<ChessPiece> getChessPieces() {
+		return Collections.unmodifiableList(chessPieces);
+	}
+
 	public ChessPiece get(int x) {
 		return chessPieces.get(x);
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Row row = (Row)o;
+		return chessPieces.equals(row.chessPieces);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(chessPieces);
 	}
 }

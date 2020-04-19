@@ -1,0 +1,206 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+}
+
+.wrapper{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    font-family: 'Do Hyeon', sans-serif;
+    background-color: black;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    font-size: 50px;
+    letter-spacing: 10px;
+}
+
+.additional {
+    display: flex;
+    align-items: center;
+    -webkit-flex-direction: column;
+    flex-direction:column;
+    letter-spacing: 10px;
+
+}
+
+.status {
+    width: 300px;
+    height: 300px;
+    border: 1px solid white;
+}
+
+.right {
+    margin-left: 35px;
+}
+
+.left {
+    margin-right: 30px;
+}
+
+.reload {
+    width: 170px;
+    text-align: center;
+    border: 1px solid white;
+    font-size: 40px;
+    background-color: #ff110b;
+    color: white;
+    margin-left: -30px;
+    margin-bottom: 30px;
+    cursor: default;
+}
+
+.cancel {
+    width: 170px;
+    text-align: center;
+    border: 1px solid white;
+    font-size: 40px;
+    background-color: #5f49ff;
+    color: white;
+    margin-left: 30px;
+    margin-bottom: 30px;
+    cursor: default;
+}
+
+.teamName {
+    width: 300px;
+    text-align: center;
+    font-size: 50px;
+    border-bottom: 1px solid white;
+}
+
+.score {
+    display: flex;
+    align-items: center;
+    -webkit-flex-direction: column;
+    margin-top: 50px;
+    font-size: 100px;
+}
+
+.row {
+    width: 100%;
+    height: 100%;
+}
+
+.row > button {
+    border: 1px solid black;
+    width: 70px;
+    height: 70px;
+    margin-right: -3px;
+    margin-left: 1px;
+    margin-bottom: 2px;
+}
+
+.row > button:active {
+    background-color: #2025ed;
+    transform: translateY(4px);
+}
+
+
+.row > button:hover{
+    border: 4px solid black;
+}
+
+
+.cell {
+    background-color: #E6E6E6;
+    background-repeat: no-repeat;
+    background-size: 50%;
+    background-position: center;
+}
+
+.black {
+    background-color: #848484;
+}
+
+.k {
+    background-image: url("images/king_white.png");
+}
+
+.K {
+    background-image: url("images/king_black.png");
+}
+
+.b {
+    background-image: url("images/bishop_white.png");
+}
+
+.B {
+    background-image: url("images/bishop_black.png");
+}
+
+.n {
+    background-image: url("images/knight_white.png");
+}
+
+.N {
+    background-image: url("images/knight_black.png");
+}
+
+.p {
+    background-image: url("images/pawn_white.png");
+}
+
+.P {
+    background-image: url("images/pawn_black.png");
+}
+
+.q {
+    background-image: url("images/queen_white.png");
+}
+
+.Q {
+    background-image: url("images/queen_black.png");
+}
+
+.r {
+    background-image: url("images/rook_white.png");
+}
+
+.R {
+    background-image: url("images/rook_black.png");
+}
+
+.result {
+    margin-top: 50px;
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    height: 250px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+}
+
+.result > .message {
+    font-size: 45px;
+    margin-top: 10px;
+    padding-bottom: 50px;
+}
+
+.result > .submit {
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 30px;
+    text-align: center;
+    background-color: #f6f8ef;
+    border: 1px solid black;
+    cursor: default;
+}

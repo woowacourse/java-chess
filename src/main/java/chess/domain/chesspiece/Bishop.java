@@ -24,13 +24,13 @@ public class Bishop extends ValuablePiece {
 	}
 
 	@Override
-	public String getName() {
-		return NameUtils.parseName(NAME, team);
+	public Positions makePathAndValidate(ChessPiece targetPiece) {
+		return moveManager.makePath(targetPiece.position, DIRECTIONS);
 	}
 
 	@Override
-	public Positions makePathAndValidate(ChessPiece targetPiece) {
-		return moveManager.makePath(targetPiece.position, DIRECTIONS);
+	public String getName() {
+		return NameUtils.parseName(NAME, team);
 	}
 
 	@Override

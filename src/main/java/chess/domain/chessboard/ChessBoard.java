@@ -3,6 +3,7 @@ package chess.domain.chessboard;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import chess.domain.Status;
@@ -30,9 +31,22 @@ public class ChessBoard {
 		return isLiveKing(Team.BLACK) && isLiveKing(Team.WHITE);
 	}
 
-	private boolean isLiveKing(Team team) {
+	public boolean isLiveKing(Team team) {
 		return findByTeam(team).stream()
 			.anyMatch(chessPiece -> chessPiece.getClass() == King.class);
+	}
+
+	public List<ChessPiece> findAll() {
+		return rows.stream()
+			.map(row -> row.getChessPieces())
+			.flatMap(chessPieces -> chessPieces.stream())
+			.collect(Collectors.toList());
+	}
+
+	public List<ChessPiece> findPieces() {
+		List<ChessPiece> chessPieces = findByTeam(Team.WHITE);
+		chessPieces.addAll(findByTeam(Team.BLACK));
+		return chessPieces;
 	}
 
 	private List<ChessPiece> findByTeam(Team team) {
@@ -99,5 +113,25 @@ public class ChessBoard {
 
 	public List<Row> getRows() {
 		return Collections.unmodifiableList(rows);
+	}
+
+	public boolean isWhiteTurn() {
+		return turn.isWhiteTurn();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		ChessBoard that = (ChessBoard)o;
+		return Objects.equals(rows, that.rows) &&
+			Objects.equals(turn, that.turn);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(rows, turn);
 	}
 }

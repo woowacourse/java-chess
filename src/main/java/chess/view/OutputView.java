@@ -14,7 +14,7 @@ public class OutputView {
 
 	public static void printBoard(ChessBoard chessBoard) {
 		List<Row> board = chessBoard.getRows();
-		for (int column = BOARD_LAST_INDEX; column >= BOARD_FIRST_INDEX; column--) {
+		for (int column = BOARD_FIRST_INDEX; column <= BOARD_LAST_INDEX; column++) {
 			printRow(board.get(column));
 			System.out.println();
 		}

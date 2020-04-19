@@ -5,7 +5,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.*;
 import org.junit.jupiter.api.Test;
 
 import chess.domain.chessboard.ChessBoard;
-import chess.factory.BoardFactory;
+import chess.domain.factory.BoardFactory;
 
 public class StatusTest {
 

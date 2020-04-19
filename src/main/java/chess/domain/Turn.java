@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Objects;
+
 import chess.domain.chesspiece.ChessPiece;
 
 public class Turn {
@@ -7,8 +9,8 @@ public class Turn {
 
 	private boolean isWhiteTurn;
 
-	public Turn() {
-		this.isWhiteTurn = true;
+	public Turn(boolean isWhiteTurn) {
+		this.isWhiteTurn = isWhiteTurn;
 	}
 
 	public void validateTurn(ChessPiece chessPiece) {
@@ -27,5 +29,24 @@ public class Turn {
 
 	public void changeTurn() {
 		this.isWhiteTurn = !this.isWhiteTurn;
+	}
+
+	public boolean isWhiteTurn() {
+		return isWhiteTurn;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o)
+			return true;
+		if (o == null || getClass() != o.getClass())
+			return false;
+		Turn turn = (Turn)o;
+		return isWhiteTurn == turn.isWhiteTurn;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(isWhiteTurn);
 	}
 }
