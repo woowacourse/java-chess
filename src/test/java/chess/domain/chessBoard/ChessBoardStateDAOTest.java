@@ -7,28 +7,28 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ChessBoardStateTest {
+class ChessBoardStateDAOTest {
 
     @Test
     void ChessBoardState_initialState_returnPlayerColorBlackAndCaughtKingFalse() {
-        ChessBoardState chessBoardState = ChessBoardState.initialState();
+        ChessBoardState chessBoardState = ChessBoardState.of();
         assertThat(chessBoardState.isCaughtKing()).isFalse();
-        assertThat(chessBoardState.getPlayerTurnState()).isEqualTo(PieceColor.BLACK);
-    }
-
-    @Test
-    void playerTurnChange() {
-        ChessBoardState chessBoardState = ChessBoardState.initialState();
-        chessBoardState.playerTurnChange();
-
         assertThat(chessBoardState.getPlayerTurnState()).isEqualTo(PieceColor.WHITE);
     }
 
     @Test
+    void playerTurnChange() {
+        ChessBoardState chessBoardState = ChessBoardState.of();
+        chessBoardState.playerTurnChange();
+
+        assertThat(chessBoardState.getPlayerTurnState()).isEqualTo(PieceColor.BLACK);
+    }
+
+    @Test
     void checkCaughtPieceIsKing() {
-        ChessBoardState chessBoardState = ChessBoardState.initialState();
+        ChessBoardState chessBoardState = ChessBoardState.of();
         ChessPiece chessPiece = new King(PieceColor.BLACK);
-        chessBoardState.checkCaughtPieceIsKing(chessPiece);
+        chessBoardState.caughtPieceIsKing(chessPiece);
 
         assertThat(chessBoardState.isCaughtKing()).isTrue();
     }

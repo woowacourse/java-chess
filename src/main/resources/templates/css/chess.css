@@ -32,9 +32,16 @@ header {
     transform: translate(-50%, 0);
 }
 
+
 #contents-box {
     position: relative;
     min-height: calc(100vh - 25vh - 60px);
+    text-align: center;
+    padding-bottom: 5%;
+}
+
+.menu-center {
+    transform: translate(0, -100%);
 }
 
 table.board {
@@ -61,35 +68,24 @@ tr td {
     background-color: gray;
 }
 
-.nav {
-    position: relative;
-    width: 100%;
-    text-align: center;
-    min-height: 15vh;
-}
-
 .box {
     position: relative;
     left: 50%;
     transform: translate(-50%);
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
     margin-top: 15px;
-    background-color: gray;
 }
 
 .wrapper {
     position: relative;
     display: inline-block;
-    padding: 0 80px;
+    padding: 0 40px;
 }
 
-.icon {
+input[type="submit"] {
     position: relative;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    font-family: 'Font Awesome 5 Free', serif;
+    font-weight: 900;
+    border-radius: 10px;
 }
 
 

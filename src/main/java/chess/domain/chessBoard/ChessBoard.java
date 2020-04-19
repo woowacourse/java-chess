@@ -20,22 +20,26 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, ChessPiece> chessBoard) {
         this.chessBoard = chessBoard;
-        chessBoardState = ChessBoardState.initialState();
+        chessBoardState = ChessBoardState.of();
+    }
+
+    public ChessBoard(Map<Position, ChessPiece> chessBoard, String pieceColor) {
+        this.chessBoard = chessBoard;
+        chessBoardState = ChessBoardState.of(PieceColor.valueOf(pieceColor));
     }
 
     public void move(Position sourcePosition, Position targetPosition) {
         Objects.requireNonNull(sourcePosition, "소스 위치가 null입니다.");
         Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
 
-        ChessPiece sourceChessPiece = findSourceChessPieceFrom(sourcePosition);
+        ChessPiece sourceChessPiece = findSourcePieceSamePlayerColorBy(sourcePosition);
 
         checkLeapablePiece(sourceChessPiece, sourcePosition, targetPosition);
         checkMovableOrCatchable(sourceChessPiece, sourcePosition, targetPosition);
         moveChessPiece(sourceChessPiece, sourcePosition, targetPosition);
-        chessBoardState.playerTurnChange();
     }
 
-    private ChessPiece findSourceChessPieceFrom(Position sourcePosition) {
+    public ChessPiece findSourcePieceSamePlayerColorBy(Position sourcePosition) {
         ChessPiece sourceChessPiece = chessBoard.get(sourcePosition);
 
         if (Objects.isNull(chessBoard.get(sourcePosition))) {
@@ -75,7 +79,7 @@ public class ChessBoard {
         if (Objects.nonNull(targetChessPiece)) {
             sourceChessPiece.checkSamePieceColorWith(targetChessPiece);
             sourceChessPiece.checkPieceCanCatchWith(sourcePosition, targetPosition);
-            chessBoardState.checkCaughtPieceIsKing(targetChessPiece);
+            chessBoardState.caughtPieceIsKing(targetChessPiece);
             return;
         }
         sourceChessPiece.checkCanMoveWith(sourcePosition, targetPosition);
@@ -120,5 +124,15 @@ public class ChessBoard {
 
     public boolean isCaughtKing() {
         return chessBoardState.isCaughtKing();
+    }
+
+    public boolean containsPosition(Position position) {
+        return chessBoard.containsKey(position);
+    }
+
+    public void playerTurnChange() {
+        if (!chessBoardState.isCaughtKing()) {
+            chessBoardState.playerTurnChange();
+        }
     }
 }

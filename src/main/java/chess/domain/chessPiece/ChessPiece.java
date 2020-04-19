@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 
 import java.util.Objects;
 
+
 public abstract class ChessPiece implements Movable, Catchable {
 
     protected final PieceColor pieceColor;

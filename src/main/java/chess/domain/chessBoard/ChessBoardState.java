@@ -10,11 +10,20 @@ public class ChessBoardState {
 
     private ChessBoardState() {
         this.caughtKing = false;
-        this.playerTurnState = PieceColor.BLACK;
+        this.playerTurnState = PieceColor.WHITE;
     }
 
-    public static ChessBoardState initialState() {
+    private ChessBoardState(PieceColor pieceColor) {
+        this.caughtKing = false;
+        this.playerTurnState = pieceColor;
+    }
+
+    public static ChessBoardState of() {
         return new ChessBoardState();
+    }
+
+    public static ChessBoardState of(PieceColor pieceColor) {
+        return new ChessBoardState(pieceColor);
     }
 
 
@@ -22,7 +31,7 @@ public class ChessBoardState {
         this.playerTurnState = playerTurnState.getOppositeColor();
     }
 
-    public void checkCaughtPieceIsKing(ChessPiece chessPiece) {
+    public void caughtPieceIsKing(ChessPiece chessPiece) {
         if (chessPiece instanceof King) {
             this.caughtKing = true;
         }

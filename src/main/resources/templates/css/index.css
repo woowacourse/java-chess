@@ -7,7 +7,7 @@
 }
 
 
-input[type="submit"] {
+input[type="submit"],input[type="button"] {
     font-family: 'Font Awesome 5 Free', serif;
     font-weight: 900;
     border-radius: 10px;
@@ -33,31 +33,25 @@ body {
     background-size: 100% 100%;
 }
 
-#box {
+.wrapper {
     position: absolute;
-    top: 60%;
     left: 50%;
-    transform: translate(-50%, -50%);
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-}
-
-#rocket {
-    position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%);
+    text-align: center;
 }
 
-#start {
-    position: absolute;
-    top: 68%;
-    left: 50%;
+.box {
+    display: inline-block;
+    position: relative;
+}
+
+.start {
+    position: relative;
     width: max-content;
     height: max-content;
-    transform: translate(-50%, -50%);
 }
+
 
 footer {
     position: absolute;
