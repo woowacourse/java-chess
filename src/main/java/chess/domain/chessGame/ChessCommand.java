@@ -16,26 +16,22 @@ public class ChessCommand {
 	private final CommandType commandType;
 	private final List<String> commandArguments;
 
-	private ChessCommand(CommandType commandType, List<String> commandArguments) {
+	private ChessCommand(final CommandType commandType, final List<String> commandArguments) {
 		this.commandType = commandType;
 		this.commandArguments = commandArguments;
 	}
 
-	public static ChessCommand of(List<String> commandArguments) {
+	public static ChessCommand of(final List<String> commandArguments) {
 		validate(commandArguments);
+		final CommandType commandType = CommandType.of(commandArguments.get(COMMAND_STATUS_INDEX));
 
-		CommandType commandType = CommandType.of(commandArguments.get(COMMAND_STATUS_INDEX));
-		validateArgumentsSize(commandType, commandArguments.size());
+		if (!commandType.isCorrectArgumentsSize(commandArguments.size())) {
+			throw new IllegalArgumentException("유효한 명령어 인자가 아닙니다.");
+		}
 		return new ChessCommand(commandType, commandArguments);
 	}
 
-	private static void validateArgumentsSize(CommandType commandType, int argumentsSize) {
-		if (!commandType.isCorrectArgumentsSize(argumentsSize)) {
-			throw new IllegalArgumentException("유효한 명령어 인자가 아닙니다.");
-		}
-	}
-
-	private static void validate(List<String> commandArguments) {
+	private static void validate(final List<String> commandArguments) {
 		if (Objects.isNull(commandArguments) || commandArguments.isEmpty()) {
 			throw new IllegalArgumentException("유효한 체스 명령어가 아닙니다.");
 		}
@@ -82,6 +78,24 @@ public class ChessCommand {
 		if (!this.commandType.isStatusCommandType()) {
 			throw new UnsupportedOperationException("status 명령어만 지원하는 기능입니다.");
 		}
+	}
+
+	@Override
+	public boolean equals(final Object object) {
+		if (this == object) {
+			return true;
+		}
+		if (object == null || getClass() != object.getClass()) {
+			return false;
+		}
+		final ChessCommand that = (ChessCommand)object;
+		return commandType == that.commandType &&
+			Objects.equals(commandArguments, that.commandArguments);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(commandType, commandArguments);
 	}
 
 }

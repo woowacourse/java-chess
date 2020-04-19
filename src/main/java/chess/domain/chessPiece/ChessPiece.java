@@ -2,31 +2,50 @@ package chess.domain.chessPiece;
 
 import java.util.Objects;
 
+import chess.domain.chessPiece.pieceState.InitialState;
 import chess.domain.chessPiece.pieceState.PieceState;
 import chess.domain.chessPiece.pieceType.PieceColor;
+import chess.domain.chessPiece.pieceType.PieceType;
 import chess.domain.position.Position;
 
-public abstract class ChessPiece implements Movable, Catchable {
+public class ChessPiece implements Movable, Catchable {
 
-	protected final PieceColor pieceColor;
+	protected final PieceType pieceType;
 	protected PieceState pieceState;
 
-	protected ChessPiece(PieceColor pieceColor, PieceState pieceState) {
-		Objects.requireNonNull(pieceColor, "피스 색상이 null입니다.");
-		Objects.requireNonNull(pieceState, "피스 전략이 null입니다.");
-		this.pieceColor = pieceColor;
+	protected ChessPiece(final PieceType pieceType, final PieceState pieceState) {
+		Objects.requireNonNull(pieceType, "피스 타입이 null입니다.");
+		Objects.requireNonNull(pieceState, "피스 상태가 null입니다.");
+		this.pieceType = pieceType;
 		this.pieceState = pieceState;
 	}
 
-	@Override
-	public abstract boolean canLeap();
+	public ChessPiece(final PieceType pieceType) {
+		this(pieceType, new InitialState());
+	}
 
 	@Override
-	public boolean canMove(Position sourcePosition, Position targetPosition) {
+	public boolean canLeap() {
+		return this.pieceType.canLeap();
+	}
+
+	@Override
+	public boolean canMove(final Position sourcePosition, final Position targetPosition) {
 		validate(sourcePosition, targetPosition);
 
-		if (isMovable(sourcePosition, targetPosition)) {
-			pieceState = pieceState.shiftNextState();
+		if (this.pieceType.canMove(sourcePosition, targetPosition, pieceState.getPawnMovableRange())) {
+			this.pieceState = pieceState.shiftNextState();
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public boolean canCatch(final Position sourcePosition, final Position targetPosition) {
+		validate(sourcePosition, targetPosition);
+
+		if (this.pieceType.canCatch(sourcePosition, targetPosition)) {
+			this.pieceState = pieceState.shiftNextState();
 			return true;
 		}
 		return false;
@@ -37,34 +56,31 @@ public abstract class ChessPiece implements Movable, Catchable {
 		Objects.requireNonNull(targetPosition, "타겟 위치가 null입니다.");
 	}
 
-	protected abstract boolean isMovable(Position sourcePosition, Position targetPosition);
-
-	@Override
-	public boolean canCatch(Position sourcePosition, Position targetPosition) {
-		validate(sourcePosition, targetPosition);
-
-		if (isCatchable(sourcePosition, targetPosition)) {
-			pieceState = pieceState.shiftNextState();
-			return true;
-		}
-		return false;
-	}
-
-	protected abstract boolean isCatchable(Position sourcePosition, Position targetPosition);
-
-	public boolean isSamePieceColorWith(ChessPiece chessPiece) {
+	public boolean isSamePieceColor(final ChessPiece chessPiece) {
 		Objects.requireNonNull(chessPiece, "체스 피스가 null입니다.");
-		return this.pieceColor.equals(chessPiece.pieceColor);
+		return this.pieceType.isSamePieceColor(chessPiece.pieceType);
 	}
 
-	public boolean isSame(PieceColor pieceColor) {
+	public boolean isSame(final PieceColor pieceColor) {
 		Objects.requireNonNull(pieceColor, "체스 색상이 null입니다.");
-		return this.pieceColor.equals(pieceColor);
+		return this.pieceType.isSame(pieceColor);
 	}
 
-	public abstract String getName();
+	public boolean isPawn() {
+		return this.pieceType.isPawn();
+	}
 
-	public abstract double getScore();
+	public boolean isKing() {
+		return this.pieceType.isKing();
+	}
+
+	public String getName() {
+		return this.pieceType.getName();
+	}
+
+	public double getScore() {
+		return this.pieceType.getScore();
+	}
 
 	@Override
 	public boolean equals(final Object object) {
@@ -75,12 +91,12 @@ public abstract class ChessPiece implements Movable, Catchable {
 			return false;
 		}
 		final ChessPiece that = (ChessPiece)object;
-		return this.getName().equals(that.getName());
+		return this.pieceType.equals(that.pieceType);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(pieceColor, pieceState);
+		return Objects.hash(pieceType);
 	}
 
 }

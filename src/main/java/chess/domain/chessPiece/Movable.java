@@ -6,6 +6,6 @@ public interface Movable {
 
 	boolean canLeap();
 
-	boolean canMove(Position sourcePosition, Position targetPosition);
+	boolean canMove(final Position sourcePosition, final Position targetPosition);
 
 }

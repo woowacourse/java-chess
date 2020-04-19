@@ -8,6 +8,7 @@ import java.util.Objects;
 
 import chess.domain.chessGame.ChessCommand;
 import chess.domain.chessGame.ChessGame;
+import chess.util.ChessBoardRenderer;
 
 public class ChessController {
 
@@ -20,7 +21,7 @@ public class ChessController {
 
 	public void run() {
 		do {
-			printChessBoard(chessGame.getRenderedChessBoard());
+			printChessBoard(ChessBoardRenderer.render(chessGame.getChessBoard()));
 
 			ChessCommand chessCommand = receiveChessCommand();
 			playChessGameBy(chessCommand);
@@ -58,7 +59,7 @@ public class ChessController {
 
 	private boolean checkKingCaught() {
 		if (chessGame.isKingCaught()) {
-			printKingCaught(chessGame.getCurrentTurnColor());
+			printKingCaught(chessGame.getCurrentPieceColor());
 		}
 		return true;
 	}

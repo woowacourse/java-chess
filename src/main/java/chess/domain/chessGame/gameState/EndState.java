@@ -4,8 +4,13 @@ import chess.domain.chessPiece.pieceType.PieceColor;
 
 public class EndState extends ChessEndState {
 
-	protected EndState(PieceColor pieceColor) {
+	EndState(final PieceColor pieceColor) {
 		super(pieceColor);
+	}
+
+	@Override
+	public boolean isKingCaughtState() {
+		return false;
 	}
 
 }

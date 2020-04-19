@@ -14,11 +14,19 @@ import chess.domain.chessBoard.ChessBoardInitializer;
 
 class ChessBoardRendererTest {
 
+	@ParameterizedTest
+	@NullSource
+	void render_NullChessBoard_ExceptionThrown(final ChessBoard chessBoard) {
+		assertThatThrownBy(() -> ChessBoardRenderer.render(chessBoard))
+			.isInstanceOf(NullPointerException.class)
+			.hasMessage("체스 보드가 null입니다.");
+	}
+
 	@Test
 	void render_ChessBoard_ReturnRenderedChessBoardByStringList() {
-		ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.create());
+		final ChessBoard chessBoard = new ChessBoard(ChessBoardInitializer.create());
 
-		List<String> expected = Arrays.asList(
+		final List<String> expected = Arrays.asList(
 			"R N B Q K B N R	8",
 			"P P P P P P P P	7",
 			". . . . . . . .	6",
@@ -30,14 +38,6 @@ class ChessBoardRendererTest {
 			"",
 			"a b c d e f g h");
 		assertThat(ChessBoardRenderer.render(chessBoard)).isEqualTo(expected);
-	}
-
-	@ParameterizedTest
-	@NullSource
-	void render_NullChessBoard_ExceptionThrown(ChessBoard chessBoard) {
-		assertThatThrownBy(() -> ChessBoardRenderer.render(chessBoard))
-			.isInstanceOf(NullPointerException.class)
-			.hasMessage("체스 보드가 null입니다.");
 	}
 
 }

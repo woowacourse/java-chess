@@ -1,16 +1,12 @@
 package chess.domain.chessGame;
 
-import java.util.List;
 import java.util.Objects;
 
 import chess.domain.chessBoard.ChessBoard;
-import chess.domain.chessGame.gameState.ChessEndState;
 import chess.domain.chessGame.gameState.GameState;
-import chess.domain.chessGame.gameState.KingCaughtState;
 import chess.domain.chessGame.gameState.WhiteTurnState;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
-import chess.util.ChessBoardRenderer;
 
 public class ChessGame {
 
@@ -20,28 +16,30 @@ public class ChessGame {
 	private final ChessBoard chessBoard;
 	private GameState gameState;
 
-	private ChessGame(ChessBoard chessBoard, GameState gameState) {
+	private ChessGame(final ChessBoard chessBoard, final GameState gameState) {
 		this.chessBoard = chessBoard;
 		this.gameState = gameState;
 	}
 
-	public static ChessGame from(ChessBoard chessBoard) {
+	public static ChessGame from(final ChessBoard chessBoard) {
 		Objects.requireNonNull(chessBoard, "체스 보드가 null입니다.");
+
 		return new ChessGame(chessBoard, new WhiteTurnState());
 	}
 
-	public void move(ChessCommand chessCommand) {
+	public void move(final ChessCommand chessCommand) {
 		Objects.requireNonNull(chessCommand, "체스 명령이 null입니다.");
-		Position sourcePosition = chessCommand.getSourcePosition();
-		Position targetPosition = chessCommand.getTargetPosition();
 
-		boolean isKingOnTargetPosition = chessBoard.isKingOn(targetPosition);
+		final Position sourcePosition = chessCommand.getSourcePosition();
+		final Position targetPosition = chessCommand.getTargetPosition();
+
+		final boolean isKingOnTargetPosition = chessBoard.isKingOn(targetPosition);
 
 		moveChessPieceFrom(sourcePosition, targetPosition);
 		shiftGameStatusBy(isKingOnTargetPosition);
 	}
 
-	private void moveChessPieceFrom(Position sourcePosition, Position targetPosition) {
+	private void moveChessPieceFrom(final Position sourcePosition, final Position targetPosition) {
 		checkChessPieceExistOn(sourcePosition);
 		checkCorrectChessTurn(sourcePosition);
 		checkLeapable(sourcePosition, targetPosition);
@@ -49,7 +47,7 @@ public class ChessGame {
 		chessBoard.moveChessPiece(sourcePosition, targetPosition);
 	}
 
-	private void checkChessPieceExistOn(Position sourcePosition) {
+	private void checkChessPieceExistOn(final Position sourcePosition) {
 		if (!chessBoard.isChessPieceOn(sourcePosition)) {
 			throw new IllegalArgumentException("이동할 체스 피스가 존재하지 않습니다.");
 		}
@@ -61,13 +59,13 @@ public class ChessGame {
 		}
 	}
 
-	private void checkLeapable(Position sourcePosition, Position targetPosition) {
-		if (chessBoard.isLeapableChessPieceOn(sourcePosition)) {
+	private void checkLeapable(final Position sourcePosition, final Position targetPosition) {
+		if (!chessBoard.isLeapableChessPieceOn(sourcePosition)) {
 			chessBoard.checkChessPieceExistInRoute(sourcePosition, targetPosition);
 		}
 	}
 
-	private void checkMovableOrCatchable(Position sourcePosition, Position targetPosition) {
+	private void checkMovableOrCatchable(final Position sourcePosition, final Position targetPosition) {
 		if (!chessBoard.isChessPieceOn(targetPosition)) {
 			chessBoard.checkCanMove(sourcePosition, targetPosition);
 			return;
@@ -75,7 +73,7 @@ public class ChessGame {
 		chessBoard.checkCanCatch(sourcePosition, targetPosition);
 	}
 
-	private void shiftGameStatusBy(boolean isKingOnTargetPosition) {
+	private void shiftGameStatusBy(final boolean isKingOnTargetPosition) {
 		if (isKingOnTargetPosition) {
 			gameState = gameState.shiftEndState(KING_CAUGHT_STATE);
 			return;
@@ -83,9 +81,9 @@ public class ChessGame {
 		gameState = gameState.shiftNextTurnState();
 	}
 
-	public double status(ChessCommand chessCommand) {
+	public double status(final ChessCommand chessCommand) {
 		Objects.requireNonNull(chessCommand, "체스 명령이 null입니다.");
-		ChessStatus chessStatus = chessBoard.calculateScoreOf();
+		final ChessStatus chessStatus = chessBoard.calculateStatus();
 		return chessStatus.getStatusOf(chessCommand.getStatusPieceColor());
 	}
 
@@ -94,19 +92,23 @@ public class ChessGame {
 	}
 
 	public boolean isEndState() {
-		return gameState instanceof ChessEndState;
+		return gameState.isEndState();
 	}
 
 	public boolean isKingCaught() {
-		return gameState instanceof KingCaughtState;
+		return gameState.isKingCaughtState();
 	}
 
-	public PieceColor getCurrentTurnColor() {
+	public ChessStatus getChessGameStatus() {
+		return chessBoard.calculateStatus();
+	}
+
+	public PieceColor getCurrentPieceColor() {
 		return this.gameState.getPieceColor();
 	}
 
-	public List<String> getRenderedChessBoard() {
-		return ChessBoardRenderer.render(chessBoard);
+	public ChessBoard getChessBoard() {
+		return chessBoard;
 	}
 
 }

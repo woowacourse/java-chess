@@ -1,22 +1,36 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import static spark.Spark.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import chess.controller.WebChessController;
+import chess.dao.ChessGameDao;
+import chess.dao.ChessHistoryDao;
+import chess.dao.MySqlChessGameDao;
+import chess.dao.MySqlChessHistoryDao;
+import chess.service.ChessService;
+import chess.web.repository.ConnectionManager;
+import chess.web.repository.JdbcTemplate;
+import chess.web.repository.MySqlConnectionManager;
 
 public class WebUIChessApplication {
-    public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
-    }
+	public static void main(String[] args) {
+		port(8080);
+		staticFileLocation("/public");
+
+		WebChessController webChessController = initWebController();
+		webChessController.run();
+	}
+
+	private static WebChessController initWebController() {
+		ConnectionManager connectionManager = MySqlConnectionManager.getInstance();
+		JdbcTemplate template = new JdbcTemplate(connectionManager);
+
+		ChessGameDao chessGameDao = new MySqlChessGameDao(template);
+		ChessHistoryDao chessHistoryDao = new MySqlChessHistoryDao(template);
+		ChessService chessService = new ChessService(chessGameDao, chessHistoryDao);
+
+		return new WebChessController(chessService);
+	}
+
 }

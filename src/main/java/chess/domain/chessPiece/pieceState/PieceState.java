@@ -2,7 +2,9 @@ package chess.domain.chessPiece.pieceState;
 
 public interface PieceState {
 
-	PieceState shiftNextState();
+	default PieceState shiftNextState() {
+		return new MovedState();
+	}
 
 	int getPawnMovableRange();
 

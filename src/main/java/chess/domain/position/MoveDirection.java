@@ -1,7 +1,5 @@
 package chess.domain.position;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import java.util.function.BiPredicate;
 import java.util.function.UnaryOperator;
@@ -25,56 +23,28 @@ public enum MoveDirection {
 	NW((fileGap, rankGap) -> isSameGap(fileGap, rankGap) && fileGap <= 0 && rankGap >= 0,
 		(sourcePosition) -> sourcePosition.move(-1, 1));
 
-	private BiPredicate<Integer, Integer> isSameDirection;
-	private UnaryOperator<Position> moveNextPosition;
+	private final BiPredicate<Integer, Integer> isSameDirection;
+	private final UnaryOperator<Position> moveNextPosition;
 
-	MoveDirection(BiPredicate<Integer, Integer> isSameDirection, UnaryOperator<Position> moveNextPosition) {
+	MoveDirection(final BiPredicate<Integer, Integer> isSameDirection, final UnaryOperator<Position> moveNextPosition) {
 		this.isSameDirection = isSameDirection;
 		this.moveNextPosition = moveNextPosition;
 	}
 
-	private static boolean isSameGap(int fileGap, int rankGap) {
+	private static boolean isSameGap(final int fileGap, final int rankGap) {
 		return (Math.abs(fileGap) - Math.abs(rankGap)) == 0;
 	}
 
-	public boolean isSameDirectionFrom(Position sourcePosition, Position targetPosition) {
-		int chessFileGap = sourcePosition.calculateChessFileGapTo(targetPosition);
-		int chessRankGap = sourcePosition.calculateChessRankGapTo(targetPosition);
+	public boolean isSameDirectionFrom(final Position sourcePosition, final Position targetPosition) {
+		final int chessFileGap = sourcePosition.calculateChessFileGapTo(targetPosition);
+		final int chessRankGap = sourcePosition.calculateChessRankGapTo(targetPosition);
 
 		return this.isSameDirection.test(chessFileGap, chessRankGap);
 	}
 
-	public Position move(Position sourcePosition) {
+	public Position move(final Position sourcePosition) {
 		Objects.requireNonNull(sourcePosition, "유효한 위치가 아닙니다.");
 		return moveNextPosition.apply(sourcePosition);
-	}
-
-	public static List<MoveDirection> getQueenMovableDirections() {
-		return Arrays.asList(values());
-	}
-
-	public static List<MoveDirection> getRookMovableDirections() {
-		return Arrays.asList(N, E, S, W);
-	}
-
-	public static List<MoveDirection> getBishopMovableDirections() {
-		return Arrays.asList(NE, SE, SW, NW);
-	}
-
-	public static List<MoveDirection> getBlackPawnMovableDirections() {
-		return Arrays.asList(S);
-	}
-
-	public static List<MoveDirection> getBlackPawnCatchableDirections() {
-		return Arrays.asList(SW, SE);
-	}
-
-	public static List<MoveDirection> getWhitePawnMovableDirections() {
-		return Arrays.asList(N);
-	}
-
-	public static List<MoveDirection> getWhitePawnCatchableDirections() {
-		return Arrays.asList(NW, NE);
 	}
 
 }
