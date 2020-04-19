@@ -6,7 +6,9 @@ import java.util.Map;
 public interface OutputView {
     void printBoard(List<String> positions, Map<String, String> board);
 
-    void printStatus(double calculateScore, String teamName);
+    void printStatus(String scores);
 
     void printWinner(String teamName);
+
+    void printGameRule();
 }

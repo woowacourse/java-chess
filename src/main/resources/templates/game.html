@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <title>체스</title>
+    <link rel="stylesheet" type="text/css" href="css/game.css"/>
+</head>
+
+<body>
+<div id="chess-board">
+    {{#tiles}}
+    <div id="{{position}}" class="{{style}}">
+        <p>{{position}}</p>
+        {{#if pieceImageUrl}}
+        <img src="image/piece/{{pieceImageUrl}}.png"/>
+        {{/if}}
+    </div>
+    {{/tiles}}
+</div>
+
+<div id="content">
+    <form action="/move" method="post">
+        <p id="chess-board-id-label">
+            <label>Id:
+                <input type="text" style="border:none" id="chess-board-id" name="chess-board-id"
+                       value="{{chessBoard.chessBoardId}}" readonly/>
+            </label>
+        </p>
+        <p id="white-player">White: {{player.whitePlayer}}</p>
+        <p id="black-player">Black: {{player.blackPlayer}}</p>
+        <br/>
+        <p id="currentTeam">현재 차례는 {{currentTeam.teamName}} 입니다</p>
+        <br/>
+        <p>
+            <label id="source-label" for="source">Source</label>
+            <input type="text" id="source" name="source"/>
+        </p>
+        <p>
+            <label id="target-label" for="target">Target</label>
+            <input type="text" id="target" name="target"/>
+        </p>
+        <button id="move-button" value="move">Move</button>
+    </form>
+    <br/>
+    <form action="/status" method="post">
+        <textarea id="message" readonly style="{{style}}">{{message}}</textarea>
+        <br/>
+        <button id="status-button" value="stauts">Status</button>
+        <input type="hidden" id="chess-board-id-status" name="chess-board-id-status"
+               value="{{chessBoard.chessBoardId}}"/>
+    </form>
+    <br/>
+    <form action="/end" method="post">
+        <button id="end-button" value="end">End</button>
+        <input type="hidden" id="chess-board-id-end" name="chess-board-id-end"
+               value="{{chessBoard.chessBoardId}}"/>
+    </form>
+</div>
+</body>
+</html>

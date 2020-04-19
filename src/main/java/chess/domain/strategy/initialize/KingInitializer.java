@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class KingInitializer implements InitializeStrategy {
+
+    private static final String KING_SYMBOL = "k";
+
     private enum InitialKing {
         BLACK_KING(Position.of("e8"), new King(PieceType.KING, Team.BLACK)),
         WHITE_KING(Position.of("e1"), new King(PieceType.KING, Team.WHITE));
@@ -36,5 +39,27 @@ public final class KingInitializer implements InitializeStrategy {
     @Override
     public Map<Position, Piece> initialize() {
         return InitialKing.initializeKings();
+    }
+
+    @Override
+    public Map<Position, Piece> initialize(Map<String, String> pieceOnBoards) {
+        Map<String, String> kings = pieceOnBoards.entrySet().stream()
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals(KING_SYMBOL))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+        Map<Position, Piece> board = kings.entrySet().stream()
+                .collect(Collectors.toMap(entry -> Position.convert(entry.getKey()),
+                        entry -> initializeKing(entry.getValue()),
+                        (e1, e2) -> e1, HashMap::new));
+
+        return Collections.unmodifiableMap(board);
+    }
+
+    private Piece initializeKing(String key) {
+        String pieceTypeSymbol = key.substring(0, 1);
+        String teamName = key.substring(1).toUpperCase();
+        PieceType pieceType = PieceType.of(pieceTypeSymbol);
+        Team team = Team.valueOf(teamName);
+        return new King(pieceType, team);
     }
 }

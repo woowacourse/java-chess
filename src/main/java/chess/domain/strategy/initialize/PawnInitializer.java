@@ -13,6 +13,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class PawnInitializer implements InitializeStrategy {
+
+    private static final String PAWN_SYMBOL = "p";
+
     private enum InitialPawn {
         BLACK_A7(Position.of("a7"), new Pawn(PieceType.PAWN, Team.BLACK)),
         BLACK_B7(Position.of("b7"), new Pawn(PieceType.PAWN, Team.BLACK)),
@@ -51,5 +54,27 @@ public final class PawnInitializer implements InitializeStrategy {
     @Override
     public Map<Position, Piece> initialize() {
         return InitialPawn.initialPawns();
+    }
+
+    @Override
+    public Map<Position, Piece> initialize(Map<String, String> pieceOnBoards) {
+        Map<String, String> pawns = pieceOnBoards.entrySet().stream()
+                .filter(entry -> entry.getValue().substring(0, 1).toLowerCase().equals(PAWN_SYMBOL))
+                .collect(Collectors.toMap(entry -> entry.getKey(), entry -> entry.getValue()));
+
+        Map<Position, Piece> board = pawns.entrySet().stream()
+                .collect(Collectors.toMap(entry -> Position.convert(entry.getKey()),
+                        entry -> initializePawn(entry.getValue()),
+                        (e1, e2) -> e1, HashMap::new));
+
+        return Collections.unmodifiableMap(board);
+    }
+
+    private Piece initializePawn(String key) {
+        String pieceTypeSymbol = key.substring(0, 1);
+        String teamName = key.substring(1).toUpperCase();
+        PieceType pieceType = PieceType.of(pieceTypeSymbol);
+        Team team = Team.valueOf(teamName);
+        return new Pawn(pieceType, team);
     }
 }

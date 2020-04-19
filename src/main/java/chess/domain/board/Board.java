@@ -19,6 +19,10 @@ public class Board {
         this.board = board;
     }
 
+    public static Board webBoard(Map<String, String> pieceOnBoards) {
+        return new Board(BoardInitializer.webInitialize(pieceOnBoards));
+    }
+
     public void updateBoard(final Position sourcePosition, final Position targetPosition) {
         Piece selectedPiece = this.board.get(sourcePosition);
         this.board.put(targetPosition, selectedPiece);
@@ -82,12 +86,28 @@ public class Board {
     }
 
     public Map<String, String> parse() {
-        Map<String, String> parseResult = board.entrySet()
+        Map<String, String> parseResult = this.board.entrySet()
                 .stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().toString(),
                         entry -> entry.getValue().toSymbol(),
                         (e1, e2) -> e1, LinkedHashMap::new));
 
         return Collections.unmodifiableMap(parseResult);
+    }
+
+    public boolean contain(String position) {
+        return this.board.containsKey(Position.of(position));
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return Collections.unmodifiableMap(this.board);
+    }
+
+    public Map.Entry<Position, Piece> getEntry(String position) {
+        Position entryPosition = Position.of(position);
+        return this.board.entrySet().stream()
+                .filter(entry -> entry.getKey().equals(entryPosition))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("위치가 잘못되었습니다."));
     }
 }

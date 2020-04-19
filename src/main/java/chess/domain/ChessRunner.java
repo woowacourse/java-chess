@@ -1,15 +1,20 @@
 package chess.domain;
 
+import chess.dao.PieceOnBoard;
 import chess.domain.board.Board;
 import chess.domain.board.BoardScore;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.strategy.direction.Direction;
+import chess.dto.BoardScoreDTO;
+import chess.dto.TileDTO;
+import org.apache.commons.lang3.StringUtils;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class ChessRunner {
     private Board board;
@@ -18,6 +23,11 @@ public class ChessRunner {
     public ChessRunner() {
         this.board = new Board();
         this.currentTeam = Team.WHITE;
+    }
+
+    public ChessRunner(Map<String, String> pieceOnBoards, String currentTeam) {
+        this.board = Board.webBoard(pieceOnBoards);
+        this.currentTeam = Team.valueOf(currentTeam);
     }
 
     public void update(String source, String target) {
@@ -94,8 +104,21 @@ public class ChessRunner {
     }
 
     public double calculateScore() {
-        BoardScore boardScore = this.board.calculateScore(this.currentTeam);
-        return boardScore.getBoardScore();
+        BoardScore currentTeamScore = this.board.calculateScore(this.currentTeam);
+        return currentTeamScore.getBoardScore();
+    }
+
+    public List<BoardScoreDTO> calculateScores() {
+        List<BoardScoreDTO> scores = new ArrayList<>();
+        BoardScoreDTO currentTeam = new BoardScoreDTO(calculateScore(), this.currentTeam.name());
+        scores.add(currentTeam);
+
+        BoardScore oppositeTeamScore = this.board.calculateScore(this.currentTeam.changeTeam());
+        BoardScoreDTO oppositeTeam = new BoardScoreDTO(oppositeTeamScore.getBoardScore(),
+                this.currentTeam.changeTeam().name());
+        scores.add(oppositeTeam);
+
+        return Collections.unmodifiableList(scores);
     }
 
     public boolean isEndChess() {
@@ -112,6 +135,36 @@ public class ChessRunner {
 
     public String getWinner() {
         Optional<Team> winner = this.board.getWinner();
-        return winner.map(Enum::name).orElseThrow(AssertionError::new);
+        return winner.map(Enum::name).orElse(StringUtils.EMPTY);
+    }
+
+    public List<TileDTO> entireTileDtos() {
+        List<String> positions = Position.getPositions();
+        List<Integer> indexes = Position.getPositionsIndex();
+        List<TileDTO> tileDTOS = IntStream.range(0, positions.size())
+                .mapToObj((index) -> {
+                    String position = positions.get(index);
+                    int styleIndex = indexes.get(index);
+                    if (this.board.contain(position)) {
+                        Map.Entry<Position, Piece> entry = this.board.getEntry(position);
+                        String pieceImageUrl = entry.getValue().toSymbol() + entry.getValue().teamName().toLowerCase();
+                        return new TileDTO(position, pieceImageUrl, styleIndex);
+                    }
+                    return new TileDTO(position, StringUtils.EMPTY, styleIndex);
+                }).collect(Collectors.toList());
+
+        return Collections.unmodifiableList(tileDTOS);
+    }
+
+    public List<PieceOnBoard> getPieceOnBoards(int chessBoardId) {
+        List<PieceOnBoard> pieces = this.board.getBoard().entrySet().stream()
+                .map((entry) -> {
+                    Position position = Position.of(entry.getKey().toString());
+                    PieceType pieceType = PieceType.of(entry.getValue().toSymbol());
+                    Team team = Team.valueOf(entry.getValue().teamName());
+                    return new PieceOnBoard(position, pieceType, team, chessBoardId);
+                }).collect(Collectors.toList());
+
+        return Collections.unmodifiableList(pieces);
     }
 }

@@ -52,6 +52,15 @@ public class Position {
         return findPosition(File.of(fileSymbol), Rank.of(rankSymbol));
     }
 
+    public static Position convert(String value) {
+        String fileName = value.substring(0, 1);
+        String rankName = value.substring(1);
+        File file = File.of(fileName);
+        Rank rank = Rank.of(rankName);
+
+        return new Position(file, rank);
+    }
+
     public int calculateFileGap(final Position target) {
         return this.file.compareTo(target.file);
     }
@@ -67,6 +76,19 @@ public class Position {
         return Collections.unmodifiableList(parseResult);
     }
 
+    public static List<Integer> getPositionsIndex() {
+        List<Integer> indexes = positions.stream()
+                .map(Position::index)
+                .collect(Collectors.toList());
+
+        return Collections.unmodifiableList(indexes);
+    }
+
+    private int index() {
+        return ((this.rank.getSymbol() - 8) * -1)
+                + (this.file.getNumber() - 1);
+    }
+
     public int getFile() {
         return this.file.getNumber();
     }
@@ -77,7 +99,8 @@ public class Position {
 
     @Override
     public String toString() {
-        return file.name() + rank.name();
+        return this.file.getSymbol()
+                + this.rank.getSymbol();
     }
 
     @Override
@@ -85,8 +108,8 @@ public class Position {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
-        return file == position.file &&
-                rank == position.rank;
+        return file == position.file
+                && rank == position.rank;
     }
 
     @Override

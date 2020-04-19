@@ -29,4 +29,14 @@ public class BoardInitializer {
 
         return board;
     }
+
+    public static Map<Position, Piece> webInitialize(Map<String, String> pieceOnBoards) {
+        Map<Position, Piece> board = new HashMap<>();
+
+        for (InitializeStrategy strategy : INITIALIZER) {
+            board.putAll(strategy.initialize(pieceOnBoards));
+        }
+
+        return board;
+    }
 }

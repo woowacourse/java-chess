@@ -1,0 +1,44 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "BMHANNAPro";
+    src: url(../ttf/BMHANNAPro.ttf);
+}
+
+* {
+    font-family: BMHANNAPro;
+    font-size: 30px;
+}
+
+table {
+    border: 1px solid black;
+}
+
+th,
+td {
+    border: 1px solid black;
+    height: 50px;
+    width: 50px;
+    text-align: center;
+}
+
+#index,
+#white-player,
+#black-player {
+    width: 200px;
+    height: 50px;
+    font-size: 20px;
+}
+
+#game-start {
+    width: 100px;
+    height: 50px;
+    border: solid 1px;
+    border-radius: 5px;
+    font-size: 20px;
+}
+
+#game-start:hover {
+    background-color: black;
+    color: white;
+}
