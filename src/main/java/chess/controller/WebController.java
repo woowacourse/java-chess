@@ -1,7 +1,5 @@
 package chess.controller;
 
-import chess.controller.dao.ChessBoardDao;
-import chess.controller.dao.GameDao;
 import chess.controller.dto.RequestDto;
 import chess.controller.dto.ResponseDto;
 import chess.domain.game.Command;
@@ -12,13 +10,11 @@ import spark.Request;
 import java.sql.SQLException;
 
 public class WebController {
-    private static final ChessBoardDao chessBoardDao = new ChessBoardDao();
-    private static final GameDao gameDao = new GameDao();
     private static final ChessService chessService = new ChessService();
 
     public ResponseDto loadGame() throws SQLException {
         int roomNumber = chessService.findRoomNumber();
-        GameStatus state = gameDao.findState(roomNumber);
+        GameStatus state = chessService.findState(roomNumber);
 
         if (state == GameStatus.FINISH) {
             return loadInitGame();
@@ -40,18 +36,18 @@ public class WebController {
     }
 
     private ResponseDto loadPlayingGame() throws SQLException {
-        int roomNumber = gameDao.findMaxRoomNumber();
-        ChessBoard chessBoard = new ChessBoard(chessBoardDao.findPlayingChessBoard(roomNumber));
-        ChessGame chessGame = new ChessGame(chessBoard, gameDao.findTurn(roomNumber), GameStatus.RUNNING);
+        int roomNumber = chessService.findRoomNumber();
+        ChessBoard chessBoard = new ChessBoard(chessService.findPlayingChessBoard(roomNumber));
+        ChessGame chessGame = new ChessGame(chessBoard, chessService.findTurn(roomNumber), GameStatus.RUNNING);
 
         return chessGame.load(chessBoard);
     }
 
     public ResponseDto moveChessPiece(Request req) throws SQLException {
-        int roomNumber = gameDao.findMaxRoomNumber();
+        int roomNumber = chessService.findRoomNumber();
 
-        ChessBoard chessBoard = new ChessBoard(chessBoardDao.findPlayingChessBoard(roomNumber));
-        ChessGame chessGame = new ChessGame(chessBoard, gameDao.findTurn(roomNumber), GameStatus.RUNNING);
+        ChessBoard chessBoard = new ChessBoard(chessService.findPlayingChessBoard(roomNumber));
+        ChessGame chessGame = new ChessGame(chessBoard, chessService.findTurn(roomNumber), GameStatus.RUNNING);
         RequestDto requestDto = new RequestDto(Command.MOVE, req);
         ResponseDto responseDto = chessGame.move(requestDto);
         responseDto.setRoomNumber(roomNumber);
