@@ -2,11 +2,11 @@ package chess.domain.chessPiece;
 
 import chess.domain.RuleStrategy.Rule;
 import chess.domain.RuleStrategy.nonLeapableStrategy.pawnRuleStrategy.PawnRule;
-import chess.domain.chessPiece.pieceType.Pawn;
 import chess.domain.chessPiece.pieceType.PieceColor;
 import chess.domain.position.Position;
 
 import java.util.Objects;
+
 
 public abstract class ChessPiece implements Movable, Catchable {
 

@@ -3,8 +3,6 @@ package chess.webController;
 import chess.service.MoveChessPieceService;
 
 public class MoveUrlController {
-    private static final String SUCCESS = "";
-
     private MoveChessPieceService moveChessPieceService;
 
     public MoveUrlController() {
@@ -12,6 +10,6 @@ public class MoveUrlController {
     }
 
     public String moveChessPiece(String sourcePosition, String targetPosition) {
-        return moveChessPieceService.moveChessBoard(sourcePosition,targetPosition);
+        return moveChessPieceService.moveChessBoard(sourcePosition, targetPosition);
     }
 }
