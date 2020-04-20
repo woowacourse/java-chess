@@ -77,7 +77,6 @@ public enum Direction {
 
     }
     private static class NorthIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (from.getX() == to.getX()) && (from.getY() < to.getY());
@@ -85,7 +84,6 @@ public enum Direction {
 
     }
     private static class SouthIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (from.getX() == to.getX()) && (to.getY() < from.getY());
@@ -93,7 +91,6 @@ public enum Direction {
 
     }
     private static class EastIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (from.getX() < to.getX()) && (to.getY() == from.getY());
@@ -101,7 +98,6 @@ public enum Direction {
 
     }
     private static class WestIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (to.getX() < from.getX()) && (to.getY() == from.getY());
@@ -109,7 +105,6 @@ public enum Direction {
 
     }
     private static class NorthEastIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (from.getX() < to.getX()) && (from.getY() < to.getY());
@@ -117,7 +112,6 @@ public enum Direction {
 
     }
     private static class NorthWestIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (to.getX()) < from.getX() && (from.getY() < to.getY());
@@ -125,7 +119,6 @@ public enum Direction {
 
     }
     private static class SouthEastIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (from.getX() < to.getX()) && (to.getY() < from.getY());
@@ -133,7 +126,6 @@ public enum Direction {
 
     }
     private static class SouthWestIdentifier implements DirectionIdentifier {
-
         @Override
         public boolean identify(Position from, Position to) {
             return (to.getX() < from.getX()) && (to.getY() < from.getY());

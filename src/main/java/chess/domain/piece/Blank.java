@@ -31,6 +31,11 @@ public class Blank implements Piece {
     }
 
     @Override
+    public boolean hasHindrance(Position to, PiecesState piecesState) {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
     public Team getTeam() {
         return team;
     }

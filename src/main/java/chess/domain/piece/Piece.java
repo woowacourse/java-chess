@@ -10,6 +10,8 @@ public interface Piece {
 
     boolean canNotMove(Position to, PiecesState piecesState);
 
+    boolean hasHindrance(Position to, PiecesState piecesState);
+
     Team getTeam();
 
     Direction getForwardDirection();

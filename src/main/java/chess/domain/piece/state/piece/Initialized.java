@@ -31,8 +31,6 @@ public abstract class Initialized implements Piece {
         this.moveType = builder.moveType;
     }
 
-    public abstract boolean hasHindrance(Position to, PiecesState piecesState);
-
     @Override
     public boolean isNotBlank() {
         return true;
