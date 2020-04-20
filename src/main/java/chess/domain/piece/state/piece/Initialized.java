@@ -69,6 +69,11 @@ public abstract class Initialized implements Piece {
     }
 
     @Override
+    public Direction getForwardDirection() {
+        return team.getForwardDirection();
+    }
+
+    @Override
     public boolean isSameTeam(Piece piece) {
         return team.isSame(piece.getTeam());
     }

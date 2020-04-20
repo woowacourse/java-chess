@@ -10,7 +10,7 @@ public class IsNotHeadingForward implements CanNotMoveStrategy {
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
         Piece piece = piecesState.getPiece(from);
-        Direction forwardDirection = piece.getTeam().getForwardDirection();
+        Direction forwardDirection = piece.getForwardDirection();
         return to.isNotForward(from, forwardDirection);
     }
 }

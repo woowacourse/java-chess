@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -10,6 +11,8 @@ public interface Piece {
     boolean canNotMove(Position to, PiecesState piecesState);
 
     Team getTeam();
+
+    Direction getForwardDirection();
 
     boolean isNotBlank();
 
