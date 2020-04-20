@@ -8,8 +8,6 @@ import chess.domain.piece.team.Team;
 public interface Piece {
     Piece move(Position to, Piece exPiece);
 
-    boolean canNotMove(Position to, PiecesState piecesState);
-
     boolean hasHindrance(Position to, PiecesState piecesState);
 
     Team getTeam();

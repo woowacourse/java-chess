@@ -118,12 +118,6 @@ public abstract class Initialized implements Piece {
         public abstract Piece build();
     }
 
-    @Override
-    public boolean canNotMove(Position to, PiecesState piecesState) {
-        return canNotMoveStrategies.stream()
-                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(position, to, piecesState));
-    }
-
     protected boolean hasHindranceStraightInBetween(Position to, PiecesState piecesState) {
         if (position.isDiagonalDirection(to)) {
             return hasHindranceDiagonallyInBetween(to, piecesState);
