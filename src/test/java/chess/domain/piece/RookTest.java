@@ -32,32 +32,6 @@ class RookTest {
     }
 
     @ParameterizedTest
-    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Position from, Position to, Team team, boolean expected) {
-        Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-
-        boolean actual = rook.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(1, 1), Position.of(1, 1), team, true),
-                Arguments.of(Position.of(1, 1), Position.of(1, 3), team, true),
-                Arguments.of(Position.of(1, 1), Position.of(3, 1), team, true),
-                Arguments.of(Position.of(1, 1), Position.of(1, 2), team, true),
-                Arguments.of(Position.of(1, 1), Position.of(2, 2), team, true)
-
-        );
-    }
-
-
-
-    @ParameterizedTest
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {

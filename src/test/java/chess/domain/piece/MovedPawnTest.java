@@ -28,26 +28,6 @@ class MovedPawnTest {
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Position from, Position to, Team team, boolean expected) {
-        Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-
-        boolean actual = movedPawn.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(1, 2), Position.of(1, 4), team, true),
-                Arguments.of(Position.of(1, 2), Position.of(3, 4), team, true)
-        );
-    }
-
     private static Stream<Arguments> getCasesForMove() {
         Team team = Team.WHITE;
         return Stream.of(

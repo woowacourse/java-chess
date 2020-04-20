@@ -29,29 +29,6 @@ class QueenTest {
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Position from, Position to, Team team, boolean expected) {
-        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-
-        boolean actual = queen.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(4, 1), Position.of(4, 1), team, true),
-                Arguments.of(Position.of(4, 1), Position.of(4, 3), team, true),
-                Arguments.of(Position.of(4, 1), Position.of(4, 2), team, true),
-                Arguments.of(Position.of(4, 1), Position.of(6, 2), team, true)
-
-        );
-    }
-
     @Test
     @DisplayName("#calculateScore() : should return score of Queen")
     void calculateScore() {

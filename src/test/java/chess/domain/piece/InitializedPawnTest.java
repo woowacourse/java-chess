@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class InitializedPawnTest {
     @ParameterizedTest
@@ -38,27 +37,6 @@ class InitializedPawnTest {
 
         Piece moved = initializedPawn.move(to, exPiece);
         assertThat(moved).isInstanceOf(MovedPawn.class);
-    }
-
-    @ParameterizedTest
-    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Team team, Position from, Position to, boolean expected) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-        boolean actual = initializedPawn.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        return Stream.of(
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 5), true),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(2, 3), true),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 2), true),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(2, 2), true),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 1), true)
-        );
     }
 
     @ParameterizedTest

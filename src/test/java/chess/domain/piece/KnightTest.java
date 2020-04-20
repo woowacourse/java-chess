@@ -15,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightTest {
 
@@ -31,29 +30,6 @@ class KnightTest {
         Piece moved = knight.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
     }
-
-    @ParameterizedTest
-    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Position from, Position to, Team team, boolean expected) {
-        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-        boolean actual = knight.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(2, 1), Position.of(2, 1), team, true),
-                Arguments.of(Position.of(2, 1), Position.of(3, 4), team, true),
-                Arguments.of(Position.of(2, 1), Position.of(3, 2), team, true)
-
-        );
-    }
-
-
 
     @Test
     @DisplayName("#calculateScore() : should return score of Knight")

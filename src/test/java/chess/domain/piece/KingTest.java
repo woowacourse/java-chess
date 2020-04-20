@@ -29,28 +29,6 @@ class KingTest {
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForCanNotMove"})
-    void canNotMove(Position from, Position to, Team team, boolean expected) {
-        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
-
-        PiecesState piecesState = TestPiecesState.initialize();
-
-        boolean actual = king.canNotMove(to, piecesState);
-        assertThat(actual).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCanNotMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(5, 1), Position.of(5, 1), team, true),
-                Arguments.of(Position.of(5, 1), Position.of(5, 3), team, true),
-                Arguments.of(Position.of(5, 1), Position.of(5, 2), team, true)
-
-        );
-    }
-
 
     @Test
     @DisplayName("#calculateScore() : should return score of King")
