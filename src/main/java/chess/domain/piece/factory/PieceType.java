@@ -87,14 +87,6 @@ public enum PieceType {
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(piece.getPosition(), to, piecesState));
     }
 
-    public static List<CanNotMoveStrategy> getCanNotMoveStrategiesOf(Class<? extends Piece> type) {
-        return Arrays.stream(values())
-                .filter(pieceType -> pieceType.type == type)
-                .map(pieceType -> pieceType.canNotMoveStrategies)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 타입을 찾을 수 없습니다"));
-    }
-
     public String getName(Team team) {
         return Team.convertName(name, team);
     }
@@ -105,6 +97,14 @@ public enum PieceType {
 
     List<CanNotMoveStrategy> getCanNotMoveStrategies() {
         return canNotMoveStrategies;
+    }
+
+    private static List<CanNotMoveStrategy> getCanNotMoveStrategiesOf(Class<? extends Piece> type) {
+        return Arrays.stream(values())
+                .filter(pieceType -> pieceType.type == type)
+                .map(pieceType -> pieceType.canNotMoveStrategies)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 타입을 찾을 수 없습니다"));
     }
 
     private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {

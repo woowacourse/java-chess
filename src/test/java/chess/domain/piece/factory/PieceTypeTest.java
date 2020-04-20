@@ -37,13 +37,6 @@ class PieceTypeTest {
         assertThat(pieceType).isEqualTo(expected);
     }
 
-    @Test
-    @DisplayName("#getCanNotMoveStrategies() : should return CanNotMoveStrategies as to type")
-    void getCanNotMoveStrategiesOf() {
-        List<CanNotMoveStrategy> canNotMoveStrategies = PieceType.getCanNotMoveStrategiesOf(InitializedPawn.class);
-        assertThat(canNotMoveStrategies.size()).isEqualTo(7);
-    }
-
     private static Stream<Arguments> getCasesForValueOf() {
         return Stream.of(
                 Arguments.of(InitializedPawn.class, PieceType.INITIALIZED_PAWN)
