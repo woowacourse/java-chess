@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -32,6 +33,11 @@ public class Blank implements Piece {
     @Override
     public Team getTeam() {
         return team;
+    }
+
+    @Override
+    public Direction getForwardDirection() {
+        throw new IllegalStateException("체스 말이 아닙니다.");
     }
 
     @Override

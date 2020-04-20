@@ -15,10 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RunningBoard implements Board {
+    static final String NOT_FINISHED_ERROR = "게임이 끝나지 않아, 승패를 결정할 수 없습니다.";
+    static final int BLANK_START_INDEX = 3;
+    static final int BLANK_END_INDEX = 6;
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
-    private static final int BLANK_START_INDEX = 3;
-    private static final int BLANK_END_INDEX = 6;
 
     private final Map<Position, Piece> pieces;
 
@@ -61,7 +62,7 @@ public class RunningBoard implements Board {
 
     @Override
     public Result concludeResult() {
-        throw new IllegalStateException("게임이 끝나지 않아, 승패를 결정할 수 없습니다.");
+        throw new IllegalStateException(NOT_FINISHED_ERROR);
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {

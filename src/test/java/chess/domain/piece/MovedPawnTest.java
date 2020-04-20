@@ -13,7 +13,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MovedPawnTest {
 
@@ -45,9 +44,7 @@ class MovedPawnTest {
         Team team = Team.WHITE;
         return Stream.of(
                 Arguments.of(Position.of(1, 2), Position.of(1, 4), team, true),
-                Arguments.of(Position.of(1, 2), Position.of(3, 4), team, true),
-                Arguments.of(Position.of(1, 6), Position.of(1, 7), team, true)
-
+                Arguments.of(Position.of(1, 2), Position.of(3, 4), team, true)
         );
     }
 

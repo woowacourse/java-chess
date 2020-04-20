@@ -1,9 +1,6 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
-import chess.domain.piece.MovedPawn;
+import chess.domain.piece.*;
 import chess.domain.piece.policy.move.*;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -17,49 +14,66 @@ public enum PieceType {
     INITIALIZED_PAWN("p",
             initializedPawnCanNotMoveStrategies(),
             new ArrayList<>(),
-            new Score(1)),
+            new Score(1),
+            InitializedPawn.class),
     MOVED_PAWN("p",
             movedPawnCanNotMoveStrategies(),
             new ArrayList<>(),
-            new Score(1)),
+            new Score(1),
+            MovedPawn.class),
     ROOK("r",
             rookCanNotMoveStrategies(),
             Arrays.asList(new Column(1), new Column(8)),
-            new Score(5)),
+            new Score(5),
+            Rook.class),
     KNIGHT("n",
             knightCanNotMoveStrategies(),
             Arrays.asList(new Column(2), new Column(7)),
-            new Score(2.5)),
+            new Score(2.5),
+            Knight.class),
     BISHOP("b",
             bishopCanNotMoveStrategies(),
             Arrays.asList(new Column(3), new Column(6)),
-            new Score(3)),
+            new Score(3),
+            Bishop.class),
     QUEEN("q",
             queenCanNotMoveStrategies(),
             Collections.singletonList(new Column(4)),
-            new Score(9)),
+            new Score(9),
+            Queen.class),
     KING("k",
             kingCanNotMoveStrategies(),
             Collections.singletonList(new Column(5)),
-            new Score(0));
+            new Score(0),
+            King.class);
 
 
     private final String name;
     private final List<CanNotMoveStrategy> canNotMoveStrategies;
     private final List<Column> initialColumns;
     private final Score score;
+    private final Class<? extends Piece> type;
 
     PieceType(String name,
               List<CanNotMoveStrategy> canNotMoveStrategies,
               List<Column> initialColumns,
-              Score score) {
+              Score score,
+              Class<? extends Piece> type) {
         this.name = name;
         this.canNotMoveStrategies = canNotMoveStrategies;
         this.initialColumns = initialColumns;
         this.score = score;
+        this.type = type;
     }
 
-    static PieceType findByInitialColumn(int initialColumn) {
+    public static PieceType valueOf(Class<? extends Piece> type) {
+        return Arrays.stream(values())
+                .filter(pieceType -> pieceType.type == type)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("해당 타입을 찾을 수 없습니다"));
+    }
+
+    public static PieceType findByInitialColumn(int initialColumn) {
         return Arrays.stream(values())
                 .filter(pieceType -> pieceType.initialColumns.contains(new Column(initialColumn)))
                 .findFirst()
@@ -70,12 +84,12 @@ public enum PieceType {
         return Team.convertName(name, team);
     }
 
-    List<CanNotMoveStrategy> getCanNotMoveStrategies() {
-        return canNotMoveStrategies;
-    }
-
     public Score getScore() {
         return score;
+    }
+
+    List<CanNotMoveStrategy> getCanNotMoveStrategies() {
+        return canNotMoveStrategies;
     }
 
     private static List<CanNotMoveStrategy> initializedPawnCanNotMoveStrategies() {

@@ -1,5 +1,7 @@
 package chess.domain.piece.factory;
 
+import chess.domain.piece.InitializedPawn;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -18,6 +20,20 @@ class PieceTypeTest {
     void findByInitialColumn(int initialColumn, PieceType expected) {
         PieceType pieceType = PieceType.findByInitialColumn(initialColumn);
         assertThat(pieceType).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("#valueOf() :should return PieceType as to Class")
+    @MethodSource({"getCasesForValueOf"})
+    void valueOf(Class<? extends Piece> type, PieceType expected) {
+        PieceType pieceType = PieceType.valueOf(type);
+        assertThat(pieceType).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForValueOf() {
+        return Stream.of(
+                Arguments.of(InitializedPawn.class, PieceType.INITIALIZED_PAWN)
+        );
     }
 
     private static Stream<Arguments> getCasesForfindTypeByInitialColumn() {

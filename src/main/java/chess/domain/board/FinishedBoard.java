@@ -10,6 +10,8 @@ import chess.domain.piece.team.Team;
 import java.util.Map;
 
 public class FinishedBoard implements Board {
+    static final String FINISHED_ERROR = "게임이 종료되어, 체스말을 움직일 수 없습니다.";
+
     private final Map<Position, Piece> pieces;
 
     FinishedBoard(Map<Position, Piece> pieces) {
@@ -18,7 +20,7 @@ public class FinishedBoard implements Board {
 
     @Override
     public Board movePiece(MovingFlow movingFlow) {
-        throw new IllegalStateException("게임이 종료되어, 체스말을 움직일 수 없습니다.");
+        throw new IllegalStateException(FINISHED_ERROR);
     }
 
     @Override
