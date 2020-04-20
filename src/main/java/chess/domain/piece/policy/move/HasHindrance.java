@@ -5,7 +5,6 @@ import chess.domain.piece.position.Position;
 import chess.domain.piece.state.piece.Initialized;
 
 public class HasHindrance implements CanNotMoveStrategy {
-    //피스 받는 게 나음
     //todo refac
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {

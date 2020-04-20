@@ -6,7 +6,6 @@ import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Position;
 
 public class IsNotHeadingForward implements CanNotMoveStrategy {
-    //포지션이 나음
     //todo refac
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {

@@ -11,7 +11,6 @@ public class CanNotReach implements CanNotMoveStrategy {
         this.maxDistance = maxDistance;
     }
 
-    //포지션 받는 게 나음
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesStateO) {
         Distance distance = Distance.calculate(from, to);

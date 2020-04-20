@@ -15,20 +15,41 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BishopTest {
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForMoveSucceed"})
-    void moveSucceed(Position from, Position to, Team team, Piece expected) {
+    @MethodSource({"getCasesForMove"})
+    void move(Position from, Position to, Team team, Piece expected) {
         Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
         Piece moved = bishop.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, from, team);
+
+        PiecesState piecesState = TestPiecesState.initialize();
+
+        boolean actual = bishop.canNotMove(to, piecesState);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(Position.of(3, 1), Position.of(3, 1), team, true),
+                Arguments.of(Position.of(3, 1), Position.of(1, 3), team, true),
+                Arguments.of(Position.of(3, 1), Position.of(2, 2), team, true),
+                Arguments.of(Position.of(3, 1), Position.of(4, 3), team, true)
+        );
     }
 
     @ParameterizedTest
@@ -53,7 +74,7 @@ class BishopTest {
         assertThat(score).isEqualTo(PieceType.BISHOP.getScore());
     }
 
-    private static Stream<Arguments> getCasesForMoveSucceed() {
+    private static Stream<Arguments> getCasesForMove() {
         Team team = Team.WHITE;
         return Stream.of(
                 Arguments.of(Position.of(2, 2),

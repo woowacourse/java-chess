@@ -20,8 +20,8 @@ class RookTest {
 
     @ParameterizedTest
     @DisplayName("#move() : should return Piece as to Position 'from' and 'to'")
-    @MethodSource({"getCasesForMoveSucceed"})
-    void moveSucceed(Position from, Position to, Team team, Piece expected) {
+    @MethodSource({"getCasesForMove"})
+    void move(Position from, Position to, Team team, Piece expected) {
         Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
 
         PiecesState piecesState = TestPiecesState.initialize();
@@ -29,6 +29,30 @@ class RookTest {
 
         Piece moved = rook.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
+
+        PiecesState piecesState = TestPiecesState.initialize();
+
+        boolean actual = rook.canNotMove(to, piecesState);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(Position.of(1, 1), Position.of(1, 1), team, true),
+                Arguments.of(Position.of(1, 1), Position.of(1, 3), team, true),
+                Arguments.of(Position.of(1, 1), Position.of(3, 1), team, true),
+                Arguments.of(Position.of(1, 1), Position.of(1, 2), team, true),
+                Arguments.of(Position.of(1, 1), Position.of(2, 2), team, true)
+
+        );
     }
 
 
@@ -55,7 +79,7 @@ class RookTest {
         assertThat(score).isEqualTo(PieceType.ROOK.getScore());
     }
 
-    private static Stream<Arguments> getCasesForMoveSucceed() {
+    private static Stream<Arguments> getCasesForMove() {
         Team team = Team.WHITE;
         return Stream.of(
                 Arguments.of(Position.of(1, 2),

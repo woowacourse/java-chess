@@ -21,8 +21,8 @@ class KnightTest {
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForMoveSucceed"})
-    void moveSucceed(Position from, Position to, Team team, Piece expected) {
+    @MethodSource({"getCasesForMove"})
+    void move(Position from, Position to, Team team, Piece expected) {
         Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
         PiecesState piecesState = TestPiecesState.initialize();
@@ -30,6 +30,27 @@ class KnightTest {
 
         Piece moved = knight.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
+    }
+
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
+
+        PiecesState piecesState = TestPiecesState.initialize();
+        boolean actual = knight.canNotMove(to, piecesState);
+        assertThat(actual).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(Position.of(2, 1), Position.of(2, 1), team, true),
+                Arguments.of(Position.of(2, 1), Position.of(3, 4), team, true),
+                Arguments.of(Position.of(2, 1), Position.of(3, 2), team, true)
+
+        );
     }
 
 
@@ -46,7 +67,7 @@ class KnightTest {
         assertThat(score).isEqualTo(PieceType.KNIGHT.getScore());
     }
 
-    private static Stream<Arguments> getCasesForMoveSucceed() {
+    private static Stream<Arguments> getCasesForMove() {
         return Stream.of(
                 Arguments.of(Position.of(4, 4),
                         Position.of(5, 6),
