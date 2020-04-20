@@ -8,6 +8,7 @@ import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.service.PieceService;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
@@ -33,10 +34,14 @@ public class RunningBoard implements Board {
         return new RunningBoard(pieces);
     }
 
-
     @Override
     public Board movePiece(MovingFlow movingFlow) {
-        return movePiece(movingFlow, this);
+        Position from = movingFlow.getFrom();
+        Position to = movingFlow.getTo();
+        PiecesState piecesState = BoardToPiecesStateTranslator.translate(this);
+        Piece piece = PieceService.movePiece(from, to, piecesState);
+        Map<Position, Piece> pieces = updatePieces(from, to, piece);
+        return updateBoard(pieces, piece);
     }
 
     @Override
@@ -100,16 +105,7 @@ public class RunningBoard implements Board {
         }
     }
 
-    private Board movePiece(MovingFlow movingFlow, Board board) {
-        Position from = movingFlow.getFrom();
-        Piece piece = board.getPiece(from);
-        Position to = movingFlow.getTo();
-        Piece exPiece = board.getPiece(to);
-//        if (piece.canNotMove())
-        piece = piece.move(to, exPiece);
-        Map<Position, Piece> pieces = updatePieces(from, to, piece);
-        return updateBoard(pieces, piece);
-    }
+
 
     private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
         if (piece.attackedKing()) {
@@ -127,9 +123,5 @@ public class RunningBoard implements Board {
 
     private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
         return new HashMap<>(board);
-    }
-
-    private PiecesState translateToPiecesState() {
-        return new PiecesState(pieces);
     }
 }

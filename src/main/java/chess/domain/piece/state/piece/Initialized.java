@@ -82,32 +82,8 @@ public abstract class Initialized implements Piece {
         return to.isNotForward(position, team.getForwardDirection());
     }
 
-    public boolean isStayed(Position to) {
-        return position.equals(to);
-    }
-
-    public Distance calculateDistance(Position to) {
-        return position.calculateDistance(to);
-    }
-
-    public boolean isHeadingHeadingDiagonal(Position to) {
+    protected boolean isHeadingHeadingDiagonal(Position to) {
         return position.isDiagonalDirection(to);
-    }
-
-    public boolean isNotHeadingStraightDiagonal(Position to) {
-        return position.isNotStraightDiagonalDirection(to);
-    }
-
-    public boolean isHeadingVertical(Position to) {
-        return position.isVerticalDirection(to);
-    }
-
-    public boolean isNotHeadingStraight(Position to) {
-        return position.isNotStraightDirection(to);
-    }
-
-    public boolean isHeadingStraight(Position to) {
-        return position.isStraightDirection(to);
     }
 
     public abstract static class InitializedBuilder {
