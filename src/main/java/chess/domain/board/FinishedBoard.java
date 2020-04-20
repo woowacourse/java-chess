@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.PiecesState;
 import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -55,11 +56,12 @@ public class FinishedBoard implements Board {
     }
 
     private Score calculateScore(Team team) {
+        PiecesState piecesState = BoardToPiecesStateTranslator.translate(this);
         double sum = pieces.values()
                 .stream()
                 .filter(Piece::isNotBlank)
                 .filter(piece -> piece.isSameTeam(team))
-                .map(piece -> piece.calculateScore(this))
+                .map(piece -> piece.calculateScore(piecesState))
                 .mapToDouble(Score::getValue)
                 .sum();
         return new Score(sum);

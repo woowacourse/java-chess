@@ -1,13 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,31 +24,22 @@ class KingTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
-        Board board = RunningBoard.initiaize();
-        Piece moved = king.move(to, board);
+        PiecesState piecesState = TestPiecesState.initialize();
+        Piece exPiece = piecesState.getPiece(to);
+        Piece moved = king.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForMoveFail"})
-    void moveFail(Position from, Position to, Team team) {
-        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, from, team);
 
-        Board board = RunningBoard.initiaize();
-
-        assertThatThrownBy(() -> king.move(to, board))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     @DisplayName("#calculateScore() : should return score of King")
     void calculateScore() {
         //given
         Piece king = PieceFactory.createInitializedPiece(PieceType.KING, Position.of(5, 5), Team.WHITE);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
         //when
-        Score score = king.calculateScore(board);
+        Score score = king.calculateScore(piecesState);
         //then
         assertThat(score).isEqualTo(PieceType.KING.getScore());
     }
@@ -92,16 +80,6 @@ class KingTest {
                         Position.of(4, 5),
                         team,
                         PieceFactory.createMovedPiece(PieceType.KING, Position.of(4, 5), team, MoveType.MOVED))
-        );
-    }
-
-    private static Stream<Arguments> getCasesForMoveFail() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(5, 1), Position.of(5, 1), team),
-                Arguments.of(Position.of(5, 2), Position.of(5, 4), team),
-                Arguments.of(Position.of(5, 1), Position.of(5, 2), team)
-
         );
     }
 }

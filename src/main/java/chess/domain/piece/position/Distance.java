@@ -14,7 +14,7 @@ public class Distance {
         return new Distance(value);
     }
 
-    static Distance calculate(Position from, Position to) {
+    public static Distance calculate(Position from, Position to) {
         int xDifference = from.getX() - to.getX();
         int yDifference = from.getY() - to.getY();
         double calculated = Math.sqrt(Math.pow(xDifference, 2) + Math.pow(yDifference, 2));

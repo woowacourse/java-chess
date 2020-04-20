@@ -1,62 +1,30 @@
-package chess.domain.board;
+package chess.domain.piece;
 
 import chess.config.BoardConfig;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Piece;
-import chess.domain.piece.PiecesState;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
-import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class RunningBoard implements Board {
+public class TestPiecesState extends PiecesState {
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
     private static final int BLANK_START_INDEX = 3;
     private static final int BLANK_END_INDEX = 6;
 
-    private final Map<Position, Piece> pieces;
-
-    private RunningBoard(Map<Position, Piece> pieces) {
-        this.pieces = pieces;
+    TestPiecesState(Map<Position, Piece> pieces) {
+        super(pieces);
     }
 
-    public static RunningBoard initiaize() {
+    public static TestPiecesState initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeBlanks(pieces);
         initializeWhiteTeam(pieces);
-        return new RunningBoard(pieces);
-    }
-
-
-    @Override
-    public Board movePiece(MovingFlow movingFlow) {
-        return movePiece(movingFlow, this);
-    }
-
-    @Override
-    public Piece getPiece(Position position) {
-        return pieces.get(position);
-    }
-
-    @Override
-    public Map<Position, Piece> getPieces() {
-        return pieces;
-    }
-
-    @Override
-    public boolean isNotFinished() {
-        return true;
-    }
-
-    @Override
-    public Result concludeResult() {
-        throw new IllegalStateException("게임이 끝나지 않아, 승패를 결정할 수 없습니다.");
+        return new TestPiecesState(pieces);
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
@@ -100,36 +68,5 @@ public class RunningBoard implements Board {
         }
     }
 
-    private Board movePiece(MovingFlow movingFlow, Board board) {
-        Position from = movingFlow.getFrom();
-        Piece piece = board.getPiece(from);
-        Position to = movingFlow.getTo();
-        Piece exPiece = board.getPiece(to);
-//        if (piece.canNotMove())
-        piece = piece.move(to, exPiece);
-        Map<Position, Piece> pieces = updatePieces(from, to, piece);
-        return updateBoard(pieces, piece);
-    }
 
-    private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
-        if (piece.attackedKing()) {
-            return new FinishedBoard(pieces);
-        }
-        return new RunningBoard(pieces);
-    }
-
-    private Map<Position, Piece> updatePieces(Position from, Position to, Piece piece) {
-        Map<Position, Piece> pieces = clonePieces(this.pieces);
-        pieces.put(from, Blank.of());
-        pieces.put(to, piece);
-        return pieces;
-    }
-
-    private Map<Position, Piece> clonePieces(Map<Position, Piece> board) {
-        return new HashMap<>(board);
-    }
-
-    private PiecesState translateToPiecesState() {
-        return new PiecesState(pieces);
-    }
 }

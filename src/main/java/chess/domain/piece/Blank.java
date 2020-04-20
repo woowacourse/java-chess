@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -21,8 +20,13 @@ public class Blank implements Piece {
     }
 
     @Override
-    public Piece move(Position to, Board board) {
-        throw new IllegalStateException(String.format("해당 자리 %s가 비어있습니다.", to));
+    public Piece move(Position to, Piece exPiece) {
+        throw new IllegalStateException("해당 자리가 비어있습니다.");
+    }
+
+    @Override
+    public boolean canNotMove(Position to, PiecesState piecesState) {
+        return true;
     }
 
     @Override
@@ -61,7 +65,17 @@ public class Blank implements Piece {
     }
 
     @Override
-    public Score calculateScore(Board board) {
+    public boolean isSameTeam(Piece piece) {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public Position getPosition() {
+        throw new IllegalStateException("체스 말이 아닙니다.");
+    }
+
+    @Override
+    public Score calculateScore(PiecesState piecesState) {
         throw new IllegalStateException("체스 말이 아닙니다.");
     }
 

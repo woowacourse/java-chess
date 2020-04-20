@@ -1,9 +1,8 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.board.Board;
+import chess.domain.piece.PiecesState;
 import chess.domain.piece.position.Distance;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.piece.Initialized;
 
 public class CanNotReach implements CanNotMoveStrategy {
     private final double maxDistance;
@@ -12,9 +11,10 @@ public class CanNotReach implements CanNotMoveStrategy {
         this.maxDistance = maxDistance;
     }
 
+    //포지션 받는 게 나음
     @Override
-    public boolean canNotMove(Initialized initializedPiece, Position to, Board board) {
-        Distance distance = initializedPiece.calculateDistance(to);
+    public boolean canNotMove(Position from, Position to, PiecesState piecesStateO) {
+        Distance distance = Distance.calculate(from, to);
         return distance.isBiggerThan(maxDistance);
     }
 }

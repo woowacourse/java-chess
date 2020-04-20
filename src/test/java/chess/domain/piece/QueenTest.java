@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
@@ -17,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class QueenTest {
     @ParameterizedTest
@@ -26,21 +23,10 @@ class QueenTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
 
-        Board board = RunningBoard.initiaize();
-        Piece moved = queen.move(to, board);
+        PiecesState piecesState = TestPiecesState.initialize();
+        Piece exPiece = piecesState.getPiece(to);
+        Piece moved = queen.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForMoveFail"})
-    void moveFail(Position from, Position to, Team team) {
-        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
-
-        Board board = RunningBoard.initiaize();
-
-        assertThatThrownBy(() -> queen.move(to, board))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -48,9 +34,9 @@ class QueenTest {
     void calculateScore() {
         //given
         Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, Position.of(5, 5), Team.WHITE);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();;
         //when
-        Score score = queen.calculateScore(board);
+        Score score = queen.calculateScore(piecesState);
         //then
         assertThat(score).isEqualTo(PieceType.QUEEN.getScore());
     }
@@ -74,17 +60,6 @@ class QueenTest {
                         Position.of(4, 3),
                         team,
                         PieceFactory.createMovedPiece(PieceType.QUEEN, Position.of(4, 3), team, MoveType.MOVED))
-        );
-    }
-
-    private static Stream<Arguments> getCasesForMoveFail() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(4, 1), Position.of(4, 1), team),
-                Arguments.of(Position.of(4, 1), Position.of(4, 3), team),
-                Arguments.of(Position.of(4, 1), Position.of(4, 2), team),
-                Arguments.of(Position.of(4, 2), Position.of(6, 3), team)
-
         );
     }
 }

@@ -1,13 +1,8 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
-import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
+import chess.domain.piece.PiecesState;
+import chess.domain.piece.TestPiecesState;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.piece.Initialized;
-import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -25,11 +20,9 @@ class IsStayedTest {
     @DisplayName("#canNotMove() : return boolean as to position 'from' and 'to' isEqual")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        //given
-        Initialized initialized = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, Team.BLACK);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
 
-        boolean canNotMove = isStayed.canNotMove(initialized, to, board);
+        boolean canNotMove = isStayed.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }
 

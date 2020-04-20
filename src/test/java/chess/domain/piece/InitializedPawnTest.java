@@ -1,12 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
-import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,8 +21,9 @@ class InitializedPawnTest {
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
-        Board board = RunningBoard.initiaize();
-        boolean hasHindrance = initializedPawn.hasHindrance(to, board);
+        //todo: check package-dependency
+        PiecesState piecesState = TestPiecesState.initialize();
+        boolean hasHindrance = initializedPawn.hasHindrance(to, piecesState);
         assertThat(hasHindrance).isEqualTo(expected);
     }
 
@@ -35,22 +33,11 @@ class InitializedPawnTest {
     void moveSucceed(Team team, Position to) {
         Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, Position.of(1, 2), team);
 
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
+        Piece exPiece = piecesState.getPiece(to);
 
-        Piece moved = initializedPawn.move(to, board);
+        Piece moved = initializedPawn.move(to, exPiece);
         assertThat(moved).isInstanceOf(MovedPawn.class);
-    }
-
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to team and Position 'to'")
-    @MethodSource({"getCasesForMoveFail"})
-    void moveFail(Team team, Position from, Position to) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
-
-        Board board = RunningBoard.initiaize();
-
-        assertThatThrownBy(() -> initializedPawn.move(to, board))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -59,9 +46,9 @@ class InitializedPawnTest {
     void calculateScore(Position position, Score expected) {
         //given
         Piece pawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, Team.WHITE);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
         //when
-        Score score = pawn.calculateScore(board);
+        Score score = pawn.calculateScore(piecesState);
         //then
         assertThat(score).isEqualTo(expected);
     }
@@ -87,17 +74,6 @@ class InitializedPawnTest {
         return Stream.of(
                 Arguments.of(Team.WHITE, Position.of(1, 3)),
                 Arguments.of(Team.WHITE, Position.of(1, 4))
-        );
-    }
-
-    private static Stream<Arguments> getCasesForMoveFail() {
-        return Stream.of(
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 5)),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(2, 3)),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 2)),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(2, 2)),
-                Arguments.of(Team.WHITE, Position.of(1, 2), Position.of(1, 1)),
-                Arguments.of(Team.WHITE, Position.of(1, 1), Position.of(1, 2))
         );
     }
 }

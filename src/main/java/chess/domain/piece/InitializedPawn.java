@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
 import chess.config.BoardConfig;
-import chess.domain.board.Board;
+import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -22,32 +23,38 @@ public class InitializedPawn extends Initialized {
         super(builder);
     }
 
+//    @Override
+//    public Piece move(Position to, Board board) {
+//        if (canNotMove(to, board)) {
+//            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
+//        }
+//
+//        Piece exPiece = board.getPiece(to);
+//        MoveType moveType = this.moveType.update(this, exPiece);
+//
+//        return new MovedPawn.MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
+//                .moveType(moveType)
+//                .build();
+//    }
+
     @Override
-    public Piece move(Position to, Board board) {
-        if (canNotMove(to, board)) {
-            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
-        }
-
-        Piece exPiece = board.getPiece(to);
-        MoveType moveType = this.moveType.update(this, exPiece);
-
-        return new MovedPawn.MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
-                .moveType(moveType)
-                .build();
-    }
-
-    @Override
-    public boolean hasHindrance(Position to, Board board) {
+    public boolean hasHindrance(Position to, PiecesState piecesState) {
         if (isHeadingHeadingDiagonal(to)) {
             return false;
         }
 
-        return hasHindrance(board);
+        return hasHindrance(piecesState);
     }
 
     @Override
-    public Score calculateScore(Board board) {
-        if (hasPeerOnSameCollumn(board)) {
+    public Piece move(Position to, Piece exPiece) {
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, to, team, moveType);
+    }
+
+    @Override
+    public Score calculateScore(PiecesState piecesState) {
+        if (hasPeerOnSameCollumn(piecesState)) {
             return SCORE_WITH_PEER;
         }
         return score;
@@ -64,10 +71,10 @@ public class InitializedPawn extends Initialized {
         }
     }
 
-    private boolean hasPeerOnSameCollumn(Board board) {
+    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
         int collumn = position.getX();
         return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
-                .mapToObj(row -> board.getPiece(Position.of(collumn, row)))
+                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
                 .anyMatch(hasPeerOnSameCollumn());
     }
 
@@ -77,11 +84,11 @@ public class InitializedPawn extends Initialized {
                 && this.isSameTeam(piece);
     }
 
-    private boolean hasHindrance(Board board) {
+    private boolean hasHindrance(PiecesState piecesState) {
         Position forwardPosition = position.go(team.getForwardDirection());
         return Stream.iterate(forwardPosition, position -> position.go(team.getForwardDirection()))
                 .limit(MAX_DISTANCE)
-                .map(board::getPiece)
+                .map(piecesState::getPiece)
                 .anyMatch(Piece::isNotBlank);
     }
 }

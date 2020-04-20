@@ -1,13 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -28,31 +25,23 @@ class KnightTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
-        Board board = RunningBoard.initiaize();
-        Piece moved = knight.move(to, board);
+        PiecesState piecesState = TestPiecesState.initialize();
+        Piece exPiece = piecesState.getPiece(to);
+
+        Piece moved = knight.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from', 'to' and team")
-    @MethodSource({"getCasesForMoveFail"})
-    void moveFail(Position from, Position to, Team team) {
-        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
 
-        Board board = RunningBoard.initiaize();
-
-        assertThatThrownBy(() -> knight.move(to, board))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     @DisplayName("#calculateScore() : should return score of Knight")
     void calculateScore() {
         //given
         Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, Position.of(5, 5), Team.WHITE);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
         //when
-        Score score = knight.calculateScore(board);
+        Score score = knight.calculateScore(piecesState);
         //then
         assertThat(score).isEqualTo(PieceType.KNIGHT.getScore());
     }
@@ -91,18 +80,6 @@ class KnightTest {
                         Position.of(3, 6),
                         Team.WHITE,
                         PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3, 6), Team.WHITE, MoveType.MOVED))
-        );
-    }
-
-    private static Stream<Arguments> getCasesForMoveFail() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(4, 4), Position.of(4, 4), team),
-                Arguments.of(Position.of(4, 4), Position.of(5, 7), team),
-                Arguments.of(Position.of(4, 4), Position.of(4, 5), team),
-                Arguments.of(Position.of(4, 4), Position.of(5, 4), team),
-                Arguments.of(Position.of(4, 4), Position.of(5, 5), team)
-
         );
     }
 }

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.config.BoardConfig;
-import chess.domain.board.Board;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -21,12 +20,25 @@ public class MovedPawn extends Initialized {
         super(builder);
     }
 
+//    @Override
+//    public Piece move(Position to, Board board) {
+//        if (canNotMove(to, board)) {
+//            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
+//        }
+//        Piece exPiece = board.getPiece(to);
+//        MoveType moveType = this.moveType.update(this, exPiece);
+//        return new MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
+//                .moveType(moveType)
+//                .build();
+//    }
+
     @Override
-    public Piece move(Position to, Board board) {
-        if (canNotMove(to, board)) {
-            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", position, to));
-        }
-        Piece exPiece = board.getPiece(to);
+    public boolean hasHindrance(Position to, PiecesState piecesState) {
+        return hasHindranceStraightInBetween(to, piecesState);
+    }
+
+    @Override
+    public Piece move(Position to, Piece exPiece) {
         MoveType moveType = this.moveType.update(this, exPiece);
         return new MovedPawnBuilder(name, to, team, canNotMoveStrategies, score)
                 .moveType(moveType)
@@ -34,13 +46,8 @@ public class MovedPawn extends Initialized {
     }
 
     @Override
-    public boolean hasHindrance(Position to, Board board) {
-        return hasHindranceStraightInBetween(to, board);
-    }
-
-    @Override
-    public Score calculateScore(Board board) {
-        if (hasPeerOnSameCollumn(board)) {
+    public Score calculateScore(PiecesState piecesState) {
+        if (hasPeerOnSameCollumn(piecesState)) {
             return SCORE_WITH_PEER;
         }
         return score;
@@ -59,10 +66,10 @@ public class MovedPawn extends Initialized {
 
     }
 
-    private boolean hasPeerOnSameCollumn(Board board) {
+    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
         int collumn = position.getX();
         return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
-                .mapToObj(row -> board.getPiece(Position.of(collumn, row)))
+                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
                 .anyMatch(hasPeerOnSameCollumn());
     }
 

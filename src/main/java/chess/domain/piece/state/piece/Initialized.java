@@ -1,7 +1,7 @@
 package chess.domain.piece.state.piece;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PiecesState;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Direction;
@@ -31,7 +31,7 @@ public abstract class Initialized implements Piece {
         this.moveType = builder.moveType;
     }
 
-    public abstract boolean hasHindrance(Position to, Board board);
+    public abstract boolean hasHindrance(Position to, PiecesState piecesState);
 
     @Override
     public boolean isNotBlank() {
@@ -68,8 +68,14 @@ public abstract class Initialized implements Piece {
         return team;
     }
 
+    @Override
     public boolean isSameTeam(Piece piece) {
         return team.isSame(piece.getTeam());
+    }
+
+    @Override
+    public Position getPosition() {
+        return position;
     }
 
     public boolean isHeadingNotForward(Position to) {
@@ -133,36 +139,37 @@ public abstract class Initialized implements Piece {
         public abstract Piece build();
     }
 
-    protected boolean canNotMove(Position to, Board board) {
+    @Override
+    public boolean canNotMove(Position to, PiecesState piecesState) {
         return canNotMoveStrategies.stream()
-                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(this, to, board));
+                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(position, to, piecesState));
     }
 
-    protected boolean hasHindranceStraightInBetween(Position to, Board board) {
+    protected boolean hasHindranceStraightInBetween(Position to, PiecesState piecesState) {
         if (position.isDiagonalDirection(to)) {
-            return hasHindranceDiagonallyInBetween(to, board);
+            return hasHindranceDiagonallyInBetween(to, piecesState);
         }
 
-        return hasHindrancePerpendicularlyInBetween(to, board);
+        return hasHindrancePerpendicularlyInBetween(to, piecesState);
 
     }
 
-    protected boolean hasHindranceDiagonallyInBetween(Position to, Board board) {
+    protected boolean hasHindranceDiagonallyInBetween(Position to, PiecesState piecesState) {
         Distance amount = position.calculateHorizontalDistance(to);
         Direction direction = position.calculateDirection(to);
-        return hasHindranceInBetween(board, amount, direction, position);
+        return hasHindranceInBetween(piecesState, amount, direction, position);
     }
 
-    protected boolean hasHindrancePerpendicularlyInBetween(Position to, Board board) {
+    protected boolean hasHindrancePerpendicularlyInBetween(Position to, PiecesState piecesState) {
         Distance amount = position.calculateDistance(to);
         Direction direction = position.calculateDirection(to);
-        return hasHindranceInBetween(board, amount, direction, position);
+        return hasHindranceInBetween(piecesState, amount, direction, position);
     }
 
-    private boolean hasHindranceInBetween(Board board, Distance amount, Direction direction, Position targetPosition) {
+    private boolean hasHindranceInBetween(PiecesState piecesState, Distance amount, Direction direction, Position targetPosition) {
         for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
             targetPosition = targetPosition.go(direction);
-            Piece piece = board.getPiece(targetPosition);
+            Piece piece = piecesState.getPiece(targetPosition);
             if (piece.isNotBlank()) {
                 return true;
             }

@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
 public interface Piece {
-    Piece move(Position to, Board board);
+    Piece move(Position to, Piece exPiece);
+
+    boolean canNotMove(Position to, PiecesState piecesState);
 
     Team getTeam();
 
@@ -22,5 +23,9 @@ public interface Piece {
 
     boolean isSameTeam(Team team);
 
-    Score calculateScore(Board board);
+    boolean isSameTeam(Piece piece);
+
+    Position getPosition();
+
+    Score calculateScore(PiecesState piecesState);
 }

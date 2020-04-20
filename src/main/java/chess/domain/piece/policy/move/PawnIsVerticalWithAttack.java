@@ -1,14 +1,15 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PiecesState;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.piece.Initialized;
 
 public class PawnIsVerticalWithAttack implements CanNotMoveStrategy {
+    //피스가 나음
     @Override
-    public boolean canNotMove(Initialized initializedPiece, Position to, Board board) {
-        Piece piece = board.getPiece(to);
-        return initializedPiece.isHeadingVertical(to) && initializedPiece.isEnemy(piece);
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+        Piece fromPiece = piecesState.getPiece(from);
+        Piece toPiece = piecesState.getPiece(to);
+        return from.isVerticalDirection(to) && fromPiece.isEnemy(toPiece);
     }
 }

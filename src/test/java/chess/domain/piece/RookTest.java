@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
-import chess.domain.board.RunningBoard;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
@@ -17,7 +15,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
 
@@ -27,31 +24,22 @@ class RookTest {
     void moveSucceed(Position from, Position to, Team team, Piece expected) {
         Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
 
-        Board board = RunningBoard.initiaize();
-        Piece moved = rook.move(to, board);
+        PiecesState piecesState = TestPiecesState.initialize();
+        Piece exPiece = piecesState.getPiece(to);
+
+        Piece moved = rook.move(to, exPiece);
         assertThat(moved).isEqualTo(expected);
     }
 
-    @ParameterizedTest
-    @DisplayName("#move() : should throw IllegalArgumentException as to Position 'from' and 'to'")
-    @MethodSource({"getCasesForMoveFail"})
-    void moveFail(Position from, Position to, Team team) {
-        Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
 
-        Board board = RunningBoard.initiaize();
-
-
-        assertThatThrownBy(() -> rook.move(to, board))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @ParameterizedTest
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
         Rook rook = (Rook) PieceFactory.createInitializedPiece(PieceType.ROOK, from, team);
-        Board board = RunningBoard.initiaize();
-        boolean hasHindrance = rook.hasHindrance(to, board);
+        PiecesState piecesState = TestPiecesState.initialize();
+        boolean hasHindrance = rook.hasHindrance(to, piecesState);
         assertThat(hasHindrance).isEqualTo(expected);
     }
 
@@ -60,9 +48,9 @@ class RookTest {
     void calculateScore() {
         //given
         Piece rook = PieceFactory.createInitializedPiece(PieceType.ROOK, Position.of(5, 5), Team.WHITE);
-        Board board = RunningBoard.initiaize();
+        PiecesState piecesState = TestPiecesState.initialize();
         //when
-        Score score = rook.calculateScore(board);
+        Score score = rook.calculateScore(piecesState);
         //then
         assertThat(score).isEqualTo(PieceType.ROOK.getScore());
     }
@@ -82,18 +70,6 @@ class RookTest {
                         Position.of(1, 7),
                         team,
                         PieceFactory.createMovedPiece(PieceType.ROOK, Position.of(1, 7), team, MoveType.ATTACKED_SUBORDINATE))
-        );
-    }
-
-    private static Stream<Arguments> getCasesForMoveFail() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(1, 1), Position.of(1, 1), team),
-                Arguments.of(Position.of(1, 1), Position.of(1, 3), team),
-                Arguments.of(Position.of(1, 1), Position.of(3, 1), team),
-                Arguments.of(Position.of(1, 1), Position.of(1, 2), team),
-                Arguments.of(Position.of(1, 2), Position.of(2, 3), team)
-
         );
     }
 
