@@ -15,6 +15,7 @@ public class Pawn extends Piece {
 		super(new PawnStrategy(team), team, position);
 	}
 
+	// ??
 	public static Pawn of(Team team, Position position) {
 		return new Pawn(team, position);
 	}

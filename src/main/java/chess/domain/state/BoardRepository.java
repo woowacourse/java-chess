@@ -4,7 +4,7 @@ import java.util.TreeMap;
 
 import chess.domain.Board;
 import chess.domain.Team;
-import chess.domain.piece.Blank;
+import chess.domain.piece.blank.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.bishop.Bishop;
 import chess.domain.piece.king.King;
@@ -25,8 +25,8 @@ public class BoardRepository {
 				initialBoard.put(Position.of(i, j), new Blank(Position.of(i, j)));
 			}
 		}
-		for (int i = 'a'; i <= 'h'; i++) {
-			initialBoard.put(Position.of((char)i + BLACK_PAWN),
+		for (char i = 'a'; i <= 'h'; i++) {
+			initialBoard.put(Position.of(i + BLACK_PAWN),
 				Pawn.of(Team.WHITE, Position.of((char)i + BLACK_PAWN)));
 			initialBoard.put(Position.of((char)i + WHITE_PAWN),
 				Pawn.of(Team.BLACK, Position.of((char)i + WHITE_PAWN)));

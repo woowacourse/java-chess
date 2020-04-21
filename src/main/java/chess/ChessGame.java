@@ -2,6 +2,7 @@ package chess;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import chess.domain.Board;
 import chess.domain.Status;
@@ -51,6 +52,8 @@ public class ChessGame {
 	}
 
 	public static ChessGame createGameByMoves(Map<Integer, List<String>> moves) {
+		Objects.requireNonNull(moves);
+
 		ChessGame game = new ChessGame(new Playing(BoardRepository.create(), new Turn(Team.WHITE)));
 		for (List<String> value : moves.values()) {
 			game.move(Position.of(value.get(0)), Position.of(value.get(1)));

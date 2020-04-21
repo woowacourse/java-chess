@@ -8,7 +8,7 @@ import java.util.Objects;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-import chess.domain.piece.Blank;
+import chess.domain.piece.blank.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.exception.InvalidTurnException;

@@ -1,11 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.blank;
 
 import java.util.Map;
 
 import chess.domain.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-public class Blank extends Piece{
+public class Blank extends Piece {
 
 	public Blank(Position position) {
 		super(new BlankStrategy(), Team.NONE, position);

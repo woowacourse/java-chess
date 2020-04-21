@@ -20,13 +20,13 @@ public enum Row {
 		this.row = row;
 	}
 
-	public int minus(Row other) {
-		return other.row - this.row;
+	public int minus(Row operand) {
+		return operand.row - this.row;
 	}
 
-	public Row plus(int other) {
+	public Row plus(int operand) {
 		return Arrays.stream(values())
-			.filter(value -> value.row == this.row + other)
+			.filter(value -> value.row == this.row + operand)
 			.findFirst()
 			.orElseThrow(AssertionError::new);
 	}

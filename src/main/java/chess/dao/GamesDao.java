@@ -10,7 +10,7 @@ import java.util.Map;
 public class GamesDao {
 	private static final int ID_INDEX = 1;
 
-	public int createGame(String firstUser, String secondUser) throws SQLException {
+	public int createGame(String firstUser, String secondUser) throws SQLException, ClassNotFoundException {
 		String query = "insert into games(user1, user2) values (?, ?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query,
 			PreparedStatement.RETURN_GENERATED_KEYS)) {
@@ -30,7 +30,7 @@ public class GamesDao {
 		}
 	}
 
-	public Map<String, String> everyGames() throws SQLException {
+	public Map<String, String> everyGames() throws SQLException, ClassNotFoundException {
 		Map<String, String> games = new HashMap<>();
 		String query = "select * from games";
 		try (Connection con = ConnectionLoader.load();

@@ -45,7 +45,7 @@ public class Score {
 			.filter(piece -> piece.isPawn() && piece.getPosition().equalsX(x))
 			.count();
 		if (count >= PAWN_COUNT) {
-			return (int)count;
+			return (int) count;
 		}
 		return 0;
 	}

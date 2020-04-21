@@ -1,5 +1,7 @@
 package chess.dao;
 
+import chess.domain.position.Position;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,20 +12,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.mysql.cj.protocol.Resultset;
-
 public class MoveDao {
-	public void save(String source, String target, int gameId) throws SQLException {
+	public void save(Position source, Position target, int gameId) throws SQLException, ClassNotFoundException {
 		String query = "insert into move(game_id, source, target) values (?, ?, ?)";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {
 			pstmt.setInt(1, gameId);
-			pstmt.setString(2, source);
-			pstmt.setString(3, target);
+			pstmt.setString(2, source.getName());
+			pstmt.setString(3, target.getName());
 			pstmt.executeUpdate();
 		}
 	}
 
-	public Map<Integer, List<String>> findMovesByGameId(int gameId) throws SQLException {
+	public Map<Integer, List<String>> findMovesByGameId(int gameId) throws SQLException, ClassNotFoundException {
 		ResultSet rs = null;
 		String query = "select * from move where game_id = ?";
 		try (Connection con = ConnectionLoader.load(); PreparedStatement pstmt = con.prepareStatement(query)) {

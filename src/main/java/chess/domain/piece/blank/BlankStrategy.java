@@ -1,8 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.blank;
 
 import java.util.Map;
 
 import chess.domain.Team;
+import chess.domain.piece.MovingStrategy;
 import chess.domain.position.Position;
 
 public class BlankStrategy extends MovingStrategy {
