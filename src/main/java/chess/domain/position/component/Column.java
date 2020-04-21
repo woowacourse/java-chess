@@ -1,5 +1,7 @@
 package chess.domain.position.component;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public enum Column {
@@ -40,5 +42,10 @@ public enum Column {
             return column1;
         }
         return column2;
+    }
+
+    public List<Column> between(Column biggerColumn) {
+        return Arrays.asList(values())
+                .subList(ordinal() + 1, biggerColumn.ordinal());
     }
 }

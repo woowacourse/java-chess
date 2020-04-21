@@ -1,0 +1,36 @@
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./css/index.css">
+    <title>체스게임!</title>
+</head>
+<body>
+<div id="background">
+    <img src="./img/full_background.png">
+</div>
+<div id="wrap">
+    <div id="end-container" class="btn-container">
+        <button onclick="location.href='/end'" id="end-btn"></button>
+    </div>
+    <button id="turn-btn" class="btn-container">
+        <span id="turn"> </span>
+    </button>
+    <div class="white-score-container score-container">
+        <span class="score" style="color: white">White Score</span>
+        <span id="white-score"></span>
+    </div>
+    <div class="black-score-container score-container">
+        <span class="score" style="color: black"> Black Score</span>
+        <span id="black-score"></span>
+    </div>
+</div>
+</body>
+<script src="./js/index.js"></script>
+</html>

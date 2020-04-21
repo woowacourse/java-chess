@@ -17,11 +17,10 @@ public class EastWestPositionBetween implements BiFunction<Position, Position, L
         Objects.requireNonNull(to);
         Row smallerRow = Row.getSmaller(from.getRow(), to.getRow());
         Row biggerRow = Row.getBigger(from.getRow(), to.getRow());
-        List<Row> rows = Arrays.asList(Row.values())
-                .subList(smallerRow.ordinal() + 1, biggerRow.ordinal());
+        List<Row> rows = smallerRow.between(biggerRow);
+
         return rows.stream()
                 .map(row -> Positions.of(row, from.getColumn()))
                 .collect(Collectors.toList());
-
     }
 }

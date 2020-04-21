@@ -17,8 +17,8 @@ public class NorthSouthPositionBetween implements BiFunction<Position, Position,
         Objects.requireNonNull(to);
         Column smallerColumn = Column.getSmaller(from.getColumn(), to.getColumn());
         Column biggerColumn = Column.getBigger(from.getColumn(), to.getColumn());
-        List<Column> columns = Arrays.asList(Column.values())
-                .subList(smallerColumn.ordinal() + 1, biggerColumn.ordinal());
+        List<Column> columns = smallerColumn.between(biggerColumn);
+
         return columns.stream()
                 .map(column -> Positions.of(from.getRow(), column))
                 .collect(Collectors.toList());

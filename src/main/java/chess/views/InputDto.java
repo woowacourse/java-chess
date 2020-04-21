@@ -1,5 +1,5 @@
 package chess.views;
-import chess.Exceptions.IllegalInputException;
+
 import chess.controller.Command;
 import chess.domain.position.Position;
 import chess.domain.position.Positions;
@@ -23,7 +23,7 @@ public class InputDto {
         this.inputs = input.split(DELIMITER);
         this.command = Command.of(inputs[COMMAND_INDEX]);
         if (!validateSize()) {
-            throw new IllegalInputException("잘못된 입력입니다. ");
+            throw new IllegalArgumentException("잘못된 입력입니다. ");
         }
         if (command == Command.MOVE) {
             this.from = Positions.of(inputs[FROM_INDEX]);

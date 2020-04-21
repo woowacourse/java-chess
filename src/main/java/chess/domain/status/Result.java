@@ -1,6 +1,6 @@
 package chess.domain.status;
 
-import chess.domain.Player;
+import chess.domain.game.Player;
 
 import java.util.Comparator;
 import java.util.List;
@@ -20,17 +20,17 @@ public class Result {
     }
 
     private List<Player> createWinners() {
-         double maxScore =  statuses.stream()
+        double maxScore = statuses.stream()
                 .max(Comparator.comparingDouble(Status::getScore))
                 .orElseThrow(() -> new IllegalArgumentException("계산 오류 입니다."))
                 .getScore();
-
 
         List<Player> winners = statuses.stream()
                 .filter(status -> status.isSameScore(maxScore))
                 .map(Status::getPlayer)
                 .collect(Collectors.toList());
-        return winners;
+
+      return winners;
     }
 
     public List<Player> getWinners() {
@@ -43,5 +43,15 @@ public class Result {
 
     public boolean isDraw() {
         return isDraw;
+    }
+
+    public double getWhiteScore() {
+        System.out.println("whiteScore = " + statuses.get(0).getScore());
+        return statuses.get(0).getScore();
+    }
+
+    public double getBlackScore() {
+        System.out.println("blackScore = " + statuses.get(1).getScore());
+        return statuses.get(1).getScore();
     }
 }
