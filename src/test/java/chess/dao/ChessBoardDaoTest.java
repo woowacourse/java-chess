@@ -9,25 +9,25 @@ import java.sql.Connection;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class ChessBoardDAOTest {
-    private ChessBoardDAO chessBoardDAO;
+public class ChessBoardDaoTest {
+    private ChessBoardDao chessBoardDao;
 
     @BeforeEach
     void setUp() {
-        chessBoardDAO = ChessBoardDAO.getInstance();
+        chessBoardDao = ChessBoardDao.getInstance();
     }
 
     @Test
     public void connection() {
-        Connection con = chessBoardDAO.getConnection();
+        Connection con = chessBoardDao.getConnection();
         assertNotNull(con);
-        chessBoardDAO.closeConnection(con);
+        chessBoardDao.closeConnection(con);
     }
 
     @Test
     public void saveRetrieveTest() throws Exception {
         ChessBoard chessBoard = new ChessBoard();
-        chessBoardDAO.save(chessBoard);
-        assertEquals(chessBoard, chessBoardDAO.retrieve());
+        chessBoardDao.save(chessBoard);
+        assertEquals(chessBoard, chessBoardDao.retrieve());
     }
 }

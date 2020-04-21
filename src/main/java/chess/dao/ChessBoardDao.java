@@ -9,15 +9,15 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ChessBoardDAO {
-    private static ChessBoardDAO instance;
+public class ChessBoardDao {
+    private static ChessBoardDao instance;
 
-    public static ChessBoardDAO getInstance() {
-        if (instance == null) return new ChessBoardDAO();
+    public static ChessBoardDao getInstance() {
+        if (instance == null) return new ChessBoardDao();
         return instance;
     }
 
-    private ChessBoardDAO() {
+    private ChessBoardDao() {
     }
 
     public Connection getConnection() {

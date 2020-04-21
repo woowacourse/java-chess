@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.dao.ChessBoardDAO;
+import chess.dao.ChessBoardDao;
 import chess.domain.ChessBoard;
 import chess.domain.TeamScore;
 import chess.domain.piece.Color;
@@ -23,7 +23,7 @@ public class WebChessController {
     public static boolean blackTurn = false;
     public static String notification;
     public static TeamScore teamScore;
-    public static ChessBoardDAO chessBoardDAO = ChessBoardDAO.getInstance();
+    public static ChessBoardDao chessBoardDAO = ChessBoardDao.getInstance();
 
     public static void run() {
 
