@@ -30,16 +30,16 @@ public class GamesDao {
 		}
 	}
 
-	public Map<String, String> everyGames() throws SQLException, ClassNotFoundException {
-		Map<String, String> games = new HashMap<>();
-		String query = "select * from games";
-		try (Connection con = ConnectionLoader.load();
-			 PreparedStatement pstmt = con.prepareStatement(query);
-			 ResultSet rs = pstmt.executeQuery()) {
-			while (rs.next()) {
-				games.put(rs.getString("user1"), rs.getString("user2"));
-			}
-			return games;
-		}
-	}
+//	public Map<String, String> everyGames() throws SQLException, ClassNotFoundException {
+//		Map<String, String> games = new HashMap<>();
+//		String query = "select * from games";
+//		try (Connection con = ConnectionLoader.load();
+//			 PreparedStatement pstmt = con.prepareStatement(query);
+//			 ResultSet rs = pstmt.executeQuery()) {
+//			while (rs.next()) {
+//				games.put(rs.getString("user1"), rs.getString("user2"));
+//			}
+//			return games;
+//		}
+//	}
 }

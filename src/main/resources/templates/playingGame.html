@@ -448,6 +448,11 @@
     }
     const findChessCell = (x, y) => document.querySelector(`[data-x="${x - 1}"][data-y="${y - 1}"]`)
 
+    fetch("http://localhost:4567/board/" + {{id}})
+    .then((response) => console.dir(response)).then((board) => {
+
+    });
+
     fetch("http://localhost:4567/board/" + {{id}}).then((response) => response.json()).then((board) => {
         for (let i = 1; i < 9; i++) {
             for (let j = 1; j < 9; j++) {

@@ -2,17 +2,12 @@ package chess.controller;
 
 import static spark.Spark.*;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-import chess.ChessGame;
 import chess.dao.GamesDao;
 import chess.dao.MoveDao;
 import chess.domain.position.Position;
-import chess.dto.ScoreDto;
-import chess.dto.TurnDto;
-import chess.dto.UnitsDto;
 import chess.service.BoardService;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
@@ -39,11 +34,12 @@ public class BoardController {
         get("/", this::index);
         get("/init", this::init);
         get("/new_game/:id", this::createNewGame);
-        get("/games", this::games);
-        get("/turn/:id", this::turn);
+//        get("/games", this::games);
+//        get("/turn/:id", this::turn);
         get("/board/:id", this::board);
-        get("/score/:id", this::score);
+//        get("/score/:id", this::score);
         post("/move/:id", this::move);
+        post("/users", this::users);
     }
 
     private String index(Request request, Response response) {
@@ -66,6 +62,8 @@ public class BoardController {
     }
 
     private String createNewGame(Request request, Response response) {
+        System.out.println("@@@@@@@@@@@@@@@ come to new game");
+        System.out.println("@@@@@@@@@@@ id: "+request.params(":id"));
         try {
             HashMap<String, Object> model = new HashMap<>();
             model.put("id", request.params(":id"));
@@ -77,32 +75,32 @@ public class BoardController {
 
     }
 
-    private String games(Request request, Response response) {
-        try {
-            return gson.toJson(boardService.everyGames());
-        } catch (Exception e) {
-            response.status(500);
-            return gson.toJson(e.getMessage());
-        }
-    }
+//    private String games(Request request, Response response) {
+//        try {
+//            return gson.toJson(boardService.everyGames());
+//        } catch (Exception e) {
+//            response.status(500);
+//            return gson.toJson(e.getMessage());
+//        }
+//    }
 
-    private String turn(Request request, Response response) {
-        try {
-            int id = Integer.parseInt(request.params(":id"));
-            HashMap<String, Object> model = new HashMap<>();
-            model.put("turn", boardService.turn(id));
-            return gson.toJson(model);
-        } catch (Exception e) {
-            response.status(500);
-            return gson.toJson(e.getMessage());
-        }
-
-    }
+//    private String turn(Request request, Response response) {
+//        try {
+//            int id = Integer.parseInt(request.params(":id"));
+//            HashMap<String, Object> model = new HashMap<>();
+//            model.put("turn", boardService.turn(id));
+//            return gson.toJson(model);
+//        } catch (Exception e) {
+//            response.status(500);
+//            return gson.toJson(e.getMessage());
+//        }
+//
+//    }
 
     private String board(Request request, Response response) {
         try {
             int id = Integer.parseInt(request.params(":id"));
-            return gson.toJson(boardService.board(id));
+            return gson.toJson(boardService.load(id));
         } catch (Exception e) {
             response.status(500);
             return gson.toJson(e.getMessage());
@@ -110,18 +108,18 @@ public class BoardController {
 
     }
 
-    private String score(Request request, Response response) {
-        try {
-            int id = Integer.parseInt(request.params(":id"));
-            HashMap<String, Object> model = new HashMap<>();
-            model.put("score", boardService.score(id));
-            return gson.toJson(model);
-        } catch (Exception e) {
-            response.status(500);
-            return gson.toJson(e.getMessage());
-        }
-
-    }
+//    private String score(Request request, Response response) {
+//        try {
+//            int id = Integer.parseInt(request.params(":id"));
+//            HashMap<String, Object> model = new HashMap<>();
+//            model.put("score", boardService.score(id));
+//            return gson.toJson(model);
+//        } catch (Exception e) {
+//            response.status(500);
+//            return gson.toJson(e.getMessage());
+//        }
+//
+//    }
 
     private String move(Request request, Response response) {
         try {
@@ -136,6 +134,18 @@ public class BoardController {
             return gson.toJson(e.getMessage());
         }
 
+    }
+
+    private String users(Request request, Response response){
+        try {
+            int gameId = gamesDao.createGame(request.queryParams("user1"), request.queryParams("user2"));
+            HashMap<String, Object> model = new HashMap<>();
+            model.put("id", gameId);
+            return gson.toJson(model);
+        } catch (Exception e) {
+            response.status(500);
+            return gson.toJson(e.getMessage());
+        }
     }
 
     private static String render(Map<String, Object> model, String templatePath) {

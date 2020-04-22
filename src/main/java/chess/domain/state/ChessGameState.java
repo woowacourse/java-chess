@@ -5,6 +5,7 @@ import chess.domain.Team;
 import chess.domain.Turn;
 import chess.domain.position.Position;
 
+// 구현한 애들-board + turn()
 public interface ChessGameState {
 
 	boolean isEnd();
