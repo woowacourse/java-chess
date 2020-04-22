@@ -57,7 +57,10 @@ public class RunningBoard implements Board {
 
     @Override
     public boolean isNotFinished() {
-        return true;
+        boolean hasAttackedKing = pieces.values()
+                .stream()
+                .anyMatch(Piece::attackedKing);
+        return !hasAttackedKing;
     }
 
     @Override
