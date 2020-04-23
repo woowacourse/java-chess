@@ -6,6 +6,7 @@ import chess.domain.TeamScore;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
+import chess.service.ChessBoardService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -23,9 +24,10 @@ public class WebChessController {
     public static boolean blackTurn = false;
     public static String notification;
     public static TeamScore teamScore;
-    public static ChessBoardDao chessBoardDAO = ChessBoardDao.getInstance();
+    public static ChessBoardDao chessBoardDao = ChessBoardDao.getInstance();
 
     public static void run() {
+        ChessBoardService chessBoardService = new ChessBoardService(chessBoardDao);
 
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
@@ -46,7 +48,7 @@ public class WebChessController {
         get("/retrieve", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             try {
-                chessBoard = chessBoardDAO.retrieve();
+                chessBoard = chessBoardDao.retrieve();
             } catch (Exception e) {
                 notification = "저장된 게임이 없습니다";
             }
@@ -70,7 +72,7 @@ public class WebChessController {
         });
 
         post("/save", (req, res) -> {
-            chessBoardDAO.save(chessBoard);
+            chessBoardService.save(chessBoard);
             res.redirect("/");
             return null;
         });
