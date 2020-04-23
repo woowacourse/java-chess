@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
+import chess.domain.piece.strategy.AddMovableWhenKnight;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -21,6 +22,7 @@ public class Knight extends Piece {
 
     public Knight(Color color) {
         super(color);
+        addMovable = new AddMovableWhenKnight();
     }
 
     public static Knight of(Color color) {
@@ -29,26 +31,15 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Set<Square> getMovableSquares(Square centerSquare, Map<Square, Piece> chessBoard) {
+    public Set<Square> findMovable(Square centerSquare, Map<Square, Piece> chessBoard) {
         validate(centerSquare, chessBoard);
         Set<Square> availableSquares = new LinkedHashSet<>();
         availableSquares.add(centerSquare);
         for (Direction direction : Direction.knightDirection()) {
-            addMovableSquares(chessBoard, availableSquares, direction);
+            addMovable(chessBoard, availableSquares, direction);
         }
         availableSquares.remove(centerSquare);
         return availableSquares;
-    }
-
-    @Override
-    void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
-        Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-        Square squareToAdd = Square.moveTo(
-                direction.getFileDegree(), direction.getRankDegree(), centerSquare);
-        availableSquares.add(squareToAdd);
-        if (!squareToAdd.equals(centerSquare)) {
-            removeSameColorSquare(chessBoard, availableSquares, squareToAdd);
-        }
     }
 
     @Override
@@ -63,4 +54,11 @@ public class Knight extends Piece {
     public double getScore() {
         return type.getScore();
     }
+
+    @Override
+    public String toString() {
+        return color.getName()+type.getFullName();
+    }
+
+
 }

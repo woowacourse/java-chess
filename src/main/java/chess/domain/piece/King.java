@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.board.Square;
+import chess.domain.Square;
+import chess.domain.piece.strategy.AddMovableWhenKing;
 
 import java.util.HashMap;
 import java.util.LinkedHashSet;
@@ -21,6 +22,7 @@ public class King extends Piece {
 
     public King(Color color) {
         super(color);
+        addMovable = new AddMovableWhenKing();
     }
 
     public static King of(Color color) {
@@ -29,26 +31,17 @@ public class King extends Piece {
     }
 
     @Override
-    public Set<Square> getMovableSquares(Square centerSquare, Map<Square, Piece> chessBoard) {
+    public Set<Square> findMovable(Square centerSquare, Map<Square, Piece> chessBoard) {
         validate(centerSquare, chessBoard);
         Set<Square> availableSquares = new LinkedHashSet<>();
         availableSquares.add(centerSquare);
         for (Direction direction : Direction.linearAndDiagonalDirection()) {
-            addMovableSquares(chessBoard, availableSquares, direction);
+            addMovable(chessBoard, availableSquares, direction);
         }
+        availableSquares.remove(centerSquare);
         return availableSquares;
     }
 
-    @Override
-    void addMovableSquares(Map<Square, Piece> chessBoard, Set<Square> availableSquares, Direction direction) {
-        Square centerSquare = availableSquares.stream().findFirst().orElseThrow(IndexOutOfBoundsException::new);
-        Square squareToAdd = Square.moveTo(
-                direction.getFileDegree(), direction.getRankDegree(), centerSquare);
-        availableSquares.add(squareToAdd);
-        if (chessBoard.containsKey(squareToAdd) && !squareToAdd.equals(centerSquare)) {
-            removeSquareWhenSameColor(chessBoard, availableSquares, squareToAdd);
-        }
-    }
 
     @Override
     public String getLetter() {
@@ -61,5 +54,10 @@ public class King extends Piece {
     @Override
     public double getScore() {
         return type.getScore();
+    }
+
+    @Override
+    public String toString() {
+        return color.getName()+type.getFullName();
     }
 }

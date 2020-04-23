@@ -1,19 +1,18 @@
 package chess.controller;
 
-import chess.domain.GameState;
-import chess.domain.MoveState;
-import chess.domain.TeamScore;
-import chess.domain.Winner;
-import chess.domain.board.ChessBoard;
+import chess.domain.*;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ConsoleChessController implements Controller{
+public class ConsoleChessController implements Controller {
 
-    ChessBoard chessBoard;
+    private ChessBoard chessBoard;
+    private MoveState moveState;
 
-    public ConsoleChessController(){
-        chessBoard = new ChessBoard();
+    public ConsoleChessController() {
+        chessBoard = new ChessBoard(Color.WHITE);
+        moveState = new MoveState("id");
     }
 
     @Override
@@ -40,8 +39,8 @@ public class ConsoleChessController implements Controller{
 
     private boolean proceed() {
         String inputState = InputView.inputState();
-        if (MoveState.isMove(inputState)) {
-            MoveState.move(inputState, chessBoard);
+        if (moveState.isMove(inputState)) {
+            moveState.move(inputState, chessBoard);
             return !chessBoard.isKingCaptured();
         }
         if (GameState.START == GameState.of(inputState)) {

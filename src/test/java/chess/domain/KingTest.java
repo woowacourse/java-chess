@@ -1,6 +1,10 @@
-package chess.domain.piece;
+package chess.domain;
 
-import chess.domain.board.Square;
+import chess.domain.Square;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,10 +40,11 @@ public class KingTest {
         Map<Square, Piece> board = new HashMap<>();
         board.put(Square.of("a5"), Pawn.of(Color.WHITE));
         board.put(Square.of("b6"), Pawn.of(Color.BLACK));
+        board.put(Square.of("a6"), Pawn.of(Color.BLACK));
         King king = King.of(Color.BLACK);
-        Set<Square> availableSquares = king.getMovableSquares(Square.of("a6"), board);
+        Set<Square> availableSquares = king.findMovable(Square.of("a6"), board);
 
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
-        assertThat(availableSquares.size()).isEqualTo(5);
+        assertThat(availableSquares.size()).isEqualTo(4);
     }
 }

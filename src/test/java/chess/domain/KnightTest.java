@@ -1,6 +1,9 @@
-package chess.domain.piece;
+package chess.domain;
 
-import chess.domain.board.Square;
+import chess.domain.Square;
+import chess.domain.piece.Color;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -36,8 +39,9 @@ public class KnightTest {
         board.put(Square.of("d5"), Knight.of(Color.BLACK));
         board.put(Square.of("c2"), Knight.of(Color.WHITE));
         board.put(Square.of("g4"), Knight.of(Color.WHITE));
+        board.put(Square.of("e3"), Knight.of(Color.WHITE));
         Knight knight = Knight.of(Color.WHITE);
-        Set<Square> availableSquares = knight.getMovableSquares(Square.of("e3"), board);
+        Set<Square> availableSquares = knight.findMovable(Square.of("e3"), board);
         assertThat(availableSquares.contains(Square.of(input))).isTrue();
         assertThat(availableSquares.size()).isEqualTo(6);
     }
