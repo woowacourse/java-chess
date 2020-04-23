@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.dao.ChessBoardDao;
+import chess.database.dao.ChessBoardDao;
 import chess.domain.ChessBoard;
 import chess.domain.TeamScore;
 import chess.domain.piece.Color;
