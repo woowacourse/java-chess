@@ -37,17 +37,16 @@ public class Board {
     public Board movePiece(MovingFlow movingFlow) {
         Position from = movingFlow.getFrom();
         Position to = movingFlow.getTo();
-        PiecesState piecesState = new PiecesState(pieces);
+        PiecesState piecesState = new PiecesState(getPieces());
         Piece fromPiece = piecesState.getPiece(from);
         Piece toPiece = piecesState.getPiece(to);
 
         if (PieceType.canNotMove(fromPiece, to, piecesState)) {
             throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", from, to));
         }
-        Piece movedPiece = fromPiece.move(to, toPiece);
 
-        Map<Position, Piece> pieces = updatePieces(from, to, movedPiece);
-        return updateBoard(pieces, movedPiece);
+        Piece movedPiece = fromPiece.move(to, toPiece);
+        return new Board(updatePieces(from, to, movedPiece));
     }
 
     public Piece getPiece(Position position) {
@@ -110,15 +109,6 @@ public class Board {
             Blank blank = Blank.of();
             pieces.put(position, blank);
         }
-    }
-
-
-
-    private Board updateBoard(Map<Position, Piece> pieces, Piece piece) {
-//        if (piece.attackedKing()) {
-//            return new FinishedBoard(pieces);
-//        }
-        return new Board(pieces);
     }
 
     private Map<Position, Piece> updatePieces(Position from, Position to, Piece piece) {
