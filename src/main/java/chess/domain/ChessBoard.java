@@ -45,10 +45,10 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public boolean canMove(List<Square> squares, boolean blackTurn) {
+    public boolean canMove(List<Square> squares, Turn turn) {
         Square before = squares.get(0);
         Square after = squares.get(1);
-        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
+        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != turn.getTurn()) {
             return false;
         }
         return chessBoard.get(before).calculateMovableSquares(before, chessBoard).contains(after);

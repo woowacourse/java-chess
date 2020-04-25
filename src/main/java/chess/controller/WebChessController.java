@@ -1,12 +1,13 @@
 package chess.controller;
 
-import chess.database.dao.ChessBoardDao;
 import chess.domain.ChessBoard;
 import chess.domain.TeamScore;
+import chess.domain.Turn;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.square.Square;
 import chess.service.ChessBoardService;
+import chess.service.TurnService;
 import spark.ModelAndView;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 
@@ -20,15 +21,9 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController {
-    public static ChessBoard chessBoard = new ChessBoard();
-    public static boolean blackTurn = false;
     public static String notification;
-    public static TeamScore teamScore;
-    public static ChessBoardDao chessBoardDao = ChessBoardDao.getInstance();
 
-    public static void run() {
-        ChessBoardService chessBoardService = new ChessBoardService(chessBoardDao);
-
+    public static void run(ChessBoardService chessBoardService, TurnService turnService) {
         get("/", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
             return render(model, "index.html");
@@ -36,34 +31,46 @@ public class WebChessController {
 
         get("/onGame", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
-            return processGame(model);
+            ChessBoard chessBoard = chessBoardService.load();
+            Turn turn = turnService.load();
+            return processGame(model, chessBoard, turn);
         });
 
         get("/initialize", (req, res) -> {
-            chessBoard = new ChessBoard();
+            chessBoardService.initialize();
+            turnService.initialize();
             res.redirect("/onGame");
             return null;
         });
 
         get("/retrieve", (req, res) -> {
             Map<String, Object> model = new HashMap<>();
+            ChessBoard chessBoard = new ChessBoard();
+            Turn turn = Turn.WHITE;
             try {
-                chessBoard = chessBoardDao.retrieve();
+                chessBoard = chessBoardService.load();
+                turn = turnService.load();
             } catch (Exception e) {
                 notification = "저장된 게임이 없습니다";
             }
-            return processGame(model);
+            return processGame(model, chessBoard, turn);
         });
 
         post("/move", (req, res) -> {
-            List<Square> sourceDestination = Arrays.asList(Square.of(req.queryParams("source")), Square.of(req.queryParams("destination")));
-            if (chessBoard.canMove(sourceDestination, blackTurn)) {
+            ChessBoard chessBoard = chessBoardService.load();
+            Turn turn = turnService.load();
+
+            List<Square> sourceDestination =
+                    Arrays.asList(Square.of(req.queryParams("source")), Square.of(req.queryParams("destination")));
+            if (chessBoard.canMove(sourceDestination, turn)) {
                 chessBoard.movePiece(sourceDestination);
-                blackTurn = !blackTurn;
+                turn = turn.getOppositeTurn();
                 notification = "";
             } else {
                 notification = "움직일 수 없는 위치입니다";
             }
+            chessBoardService.saveBoard(chessBoard);
+            turnService.save(turn);
             if (chessBoard.isKingCaptured()) {
                 res.redirect("/endGame");
             }
@@ -72,19 +79,29 @@ public class WebChessController {
         });
 
         post("/save", (req, res) -> {
-            chessBoardService.save(chessBoard);
+            ChessBoard chessBoard = chessBoardService.load();
+            chessBoardService.saveBoard(chessBoard);
+
+            Turn turn = turnService.load();
+            turnService.save(turn);
+
             res.redirect("/");
             return null;
         });
 
         get("/endGame", (req, res) -> {
+            ChessBoard chessBoard = chessBoardService.load();
+            TeamScore teamScore = new TeamScore();
+            teamScore.updateTeamScore(chessBoard);
             Map<String, Object> model = new HashMap<>();
             Map<Square, Piece> board = chessBoard.getChessBoard();
             Map<String, Piece> boardView = new HashMap<>();
             for (Square square : board.keySet()) {
                 boardView.put(square.toString(), board.get(square));
             }
-            String winners = teamScore.getWinners().stream().map(t -> t.toString()).collect(Collectors.joining(","));
+            String winners = teamScore.getWinners().stream()
+                    .map(Enum::toString)
+                    .collect(Collectors.joining(","));
             model.put("chessBoard", boardView);
             model.put("notification", notification);
             model.put("winners", winners);
@@ -92,10 +109,10 @@ public class WebChessController {
         });
     }
 
-    private static Object processGame(Map<String, Object> model) {
+    private static Object processGame(Map<String, Object> model, ChessBoard chessBoard, Turn turn) {
         Map<Square, Piece> board = chessBoard.getChessBoard();
         Map<String, Piece> boardView = new HashMap<>();
-        teamScore = new TeamScore();
+        TeamScore teamScore = new TeamScore();
         teamScore.updateTeamScore(chessBoard);
         Map<String, Double> teamScoreView = new HashMap<>();
         for (Square square : board.keySet()) {

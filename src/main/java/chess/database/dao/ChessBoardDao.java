@@ -11,19 +11,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ChessBoardDao {
-    private static ChessBoardDao instance;
+    private static ChessBoardDao INSTANCE = new ChessBoardDao();
     private final Connection connection;
 
     public static ChessBoardDao getInstance() {
-        if (instance == null) return new ChessBoardDao();
-        return instance;
+        if (INSTANCE == null) return new ChessBoardDao();
+        return INSTANCE;
     }
 
     private ChessBoardDao() {
         this.connection = DBConnector.getConnection();
     }
 
-    public ChessBoard retrieve() throws SQLException {
+    public ChessBoard load() throws SQLException {
         final String sql = "SELECT square, piece FROM chessboard";
         try (
                 PreparedStatement statement = connection.prepareStatement(sql);
