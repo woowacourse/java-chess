@@ -8,7 +8,6 @@ import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.MovingFlow;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.service.PieceService;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
@@ -39,9 +38,16 @@ public class Board {
         Position from = movingFlow.getFrom();
         Position to = movingFlow.getTo();
         PiecesState piecesState = new PiecesState(pieces);
-        Piece piece = PieceService.movePiece(from, to, piecesState);
-        Map<Position, Piece> pieces = updatePieces(from, to, piece);
-        return updateBoard(pieces, piece);
+        Piece fromPiece = piecesState.getPiece(from);
+        Piece toPiece = piecesState.getPiece(to);
+
+        if (PieceType.canNotMove(fromPiece, to, piecesState)) {
+            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", from, to));
+        }
+        Piece movedPiece = fromPiece.move(to, toPiece);
+
+        Map<Position, Piece> pieces = updatePieces(from, to, movedPiece);
+        return updateBoard(pieces, movedPiece);
     }
 
     public Piece getPiece(Position position) {
