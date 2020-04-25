@@ -38,7 +38,7 @@ public class Board {
     public Board movePiece(MovingFlow movingFlow) {
         Position from = movingFlow.getFrom();
         Position to = movingFlow.getTo();
-        PiecesState piecesState = BoardToPiecesStateTranslator.translate(this);
+        PiecesState piecesState = new PiecesState(pieces);
         Piece piece = PieceService.movePiece(from, to, piecesState);
         Map<Position, Piece> pieces = updatePieces(from, to, piece);
         return updateBoard(pieces, piece);
