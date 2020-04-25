@@ -1,9 +1,8 @@
 package chess.controller;
 
-import chess.domain.board.Board;
 import chess.domain.board.BoardSerializer;
 import chess.domain.board.Result;
-import chess.domain.board.RunningBoard;
+import chess.domain.board.Board;
 import chess.domain.piece.position.MovingFlow;
 import chess.ui.Command;
 import chess.ui.Console;
@@ -22,7 +21,7 @@ public class Game {
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
-        Board board = RunningBoard.initiaize();
+        Board board = Board.initiaize();
         OutputView.printBoard(BoardSerializer.serialize(board));
         return board;
     }

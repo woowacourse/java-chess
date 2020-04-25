@@ -22,23 +22,23 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class RunningBoardTest {
+class BoardTest {
 
     @Test
     @DisplayName("#initialize() : should return initialized Board")
     void initiaize() {
-        RunningBoard runningBoard = RunningBoard.initiaize();
+        Board board = Board.initiaize();
         for (int i = BoardConfig.LINE_START; i <= BoardConfig.LINE_END; i++) {
             for (Integer row : Arrays.asList(BoardConfig.LINE_START,BoardConfig.LINE_END)) {
-                Piece piece = runningBoard.getPiece(Position.of(i, row));
+                Piece piece = board.getPiece(Position.of(i, row));
                 PieceType pieceType = PieceType.valueOf(piece.getClass());
                 assertThat(pieceType).isEqualTo(PieceType.findByInitialColumn(i));
             }
         }
 
         for (int i = BoardConfig.LINE_START; i <= BoardConfig.LINE_END; i++) {
-            for (int j = RunningBoard.BLANK_START_INDEX; j <= RunningBoard.BLANK_END_INDEX; j++) {
-                Piece piece = runningBoard.getPiece(Position.of(i, j));
+            for (int j = Board.BLANK_START_INDEX; j <= Board.BLANK_END_INDEX; j++) {
+                Piece piece = board.getPiece(Position.of(i, j));
                 assertTrue(piece.isBlank());
             }
         }
@@ -48,8 +48,8 @@ class RunningBoardTest {
     @DisplayName("#movePiece() : should return Board with moved piece")
     @MethodSource({"getCasesForMovePiece"})
     void movePiece(MovingFlow movingFlow, Piece expected) {
-        RunningBoard runningBoard = RunningBoard.initiaize();
-        Board movedBoard = runningBoard.movePiece(movingFlow);
+        Board board = Board.initiaize();
+        Board movedBoard = board.movePiece(movingFlow);
         Piece piece = movedBoard.getPiece(movingFlow.getTo());
         assertThat(piece).isEqualTo(expected);
 
@@ -58,18 +58,18 @@ class RunningBoardTest {
     @Test
     @DisplayName("#getPiece() : should return Piece as to Position")
     void getPiece() {
-        RunningBoard runningBoard = RunningBoard.initiaize();
-        Piece piece = runningBoard.getPiece(Position.of(1, 1));
+        Board board = Board.initiaize();
+        Piece piece = board.getPiece(Position.of(1, 1));
         assertThat(piece).isInstanceOf(Rook.class);
     }
 
     @Test
     @DisplayName("#concludeResult() : should throw IllegalStateException")
     void concludeResult() {
-        RunningBoard runningBoard = RunningBoard.initiaize();
-        assertThatThrownBy(runningBoard::concludeResult)
+        Board board = Board.initiaize();
+        assertThatThrownBy(board::concludeResult)
                 .isInstanceOf(IllegalStateException.class)
-                .hasMessage(RunningBoard.NOT_FINISHED_ERROR);
+                .hasMessage(Board.NOT_FINISHED_ERROR);
     }
 
     private static Stream<Arguments> getCasesForMovePiece() {
