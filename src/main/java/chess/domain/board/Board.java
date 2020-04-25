@@ -61,7 +61,8 @@ public class Board {
     }
 
     public Result concludeResult() {
-        throw new IllegalStateException(NOT_FINISHED_ERROR);
+        //todo check if pieces is better
+        return new Result(getPieces());
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
