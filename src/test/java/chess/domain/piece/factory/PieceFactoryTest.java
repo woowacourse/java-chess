@@ -1,15 +1,8 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.InitializedPawn;
-import chess.domain.piece.MovedPawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,7 +20,7 @@ class PieceFactoryTest {
     @DisplayName("#createInitializedPiece() : should return Class which implements Piece")
     @MethodSource("getCasesForCreatePiece")
     void createInitializedPiece(PieceType pieceType, Class<? extends Piece> expected) {
-        Piece piece = PieceFactory.createInitializedPiece(pieceType, Position.of(1, 1), Team.WHITE);
+        Piece piece = PieceFactory.createInitializedPiece(pieceType, Team.WHITE);
         assertThat(piece).isInstanceOf(expected);
     }
 
@@ -45,7 +38,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("#createMovedPiece() : should return Class which implements Piece")
     void createMovedPice() {
-        Piece piece = PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(1, 1), Team.WHITE, MoveType.MOVED);
+        Piece piece = PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Team.WHITE, MoveType.MOVED);
         assertThat(piece).isInstanceOf(MovedPawn.class);
     }
 

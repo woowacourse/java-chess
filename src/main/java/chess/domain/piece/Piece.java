@@ -8,7 +8,7 @@ import chess.domain.piece.team.Team;
 public interface Piece {
     Piece move(Position to, Piece exPiece);
 
-    boolean hasHindrance(Position to, PiecesState piecesState);
+    boolean canNotMove(Position from, Position to, PiecesState piecesState);
 
     Team getTeam();
 
@@ -27,8 +27,6 @@ public interface Piece {
     boolean isSameTeam(Team team);
 
     boolean isSameTeam(Piece piece);
-
-    Position getPosition();
 
     Score calculateScore(PiecesState piecesState);
 }

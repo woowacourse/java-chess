@@ -7,7 +7,6 @@ import java.util.Map;
 public class PiecesState {
     private final Map<Position, Piece> pieces;
 
-
     public PiecesState(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }

@@ -41,7 +41,7 @@ public class TestPiecesState extends PiecesState {
     private static void initializeEdge(Map<Position, Piece> pieces, Team team, int edgeRow) {
         for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
             Position position = Position.of(x, edgeRow);
-            Piece piece = PieceFactory.createInitializedPieceWithInitialColumn(x, position, team);
+            Piece piece = PieceFactory.createInitializedPieceWithInitialColumn(x, team);
             pieces.put(position, piece);
         }
     }
@@ -49,7 +49,7 @@ public class TestPiecesState extends PiecesState {
     private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
         for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
             Position position = Position.of(x, row);
-            Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, position, team);
+            Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, team);
             pieces.put(position, initializedPawn);
         }
     }

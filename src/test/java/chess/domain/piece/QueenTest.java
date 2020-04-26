@@ -21,7 +21,7 @@ class QueenTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMove"})
     void move(Position from, Position to, Team team, Piece expected) {
-        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, from, team);
+        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, team);
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -33,7 +33,7 @@ class QueenTest {
     @DisplayName("#calculateScore() : should return score of Queen")
     void calculateScore() {
         //given
-        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, Position.of(5, 5), Team.WHITE);
+        Piece queen = PieceFactory.createInitializedPiece(PieceType.QUEEN, Team.WHITE);
         PiecesState piecesState = TestPiecesState.initialize();;
         //when
         Score score = queen.calculateScore(piecesState);
@@ -47,19 +47,19 @@ class QueenTest {
                 Arguments.of(Position.of(4, 2),
                         Position.of(4, 6),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.QUEEN, Position.of(4, 6), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.QUEEN, team, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 2),
                         Position.of(1, 5),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.QUEEN, Position.of(1, 5), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.QUEEN, team, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 2),
                         Position.of(8, 6),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.QUEEN, Position.of(8, 6), team, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.QUEEN, team, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 6),
                         Position.of(4, 3),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.QUEEN, Position.of(4, 3), team, MoveType.MOVED))
+                        PieceFactory.createMovedPiece(PieceType.QUEEN, team, MoveType.MOVED))
         );
     }
 }

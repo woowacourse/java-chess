@@ -22,7 +22,7 @@ class KnightTest {
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMove"})
     void move(Position from, Position to, Team team, Piece expected) {
-        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, from, team);
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, team);
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -35,7 +35,7 @@ class KnightTest {
     @DisplayName("#calculateScore() : should return score of Knight")
     void calculateScore() {
         //given
-        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, Position.of(5, 5), Team.WHITE);
+        Piece knight = PieceFactory.createInitializedPiece(PieceType.KNIGHT, Team.WHITE);
         PiecesState piecesState = TestPiecesState.initialize();
         //when
         Score score = knight.calculateScore(piecesState);
@@ -48,35 +48,35 @@ class KnightTest {
                 Arguments.of(Position.of(4, 4),
                         Position.of(5, 6),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(5, 6), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(6, 5),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(6, 5), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(6, 3),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(6, 3), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(5, 2),
                         Team.BLACK,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(5, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(3, 2),
                         Team.BLACK,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3, 2), Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.BLACK, MoveType.ATTACKED_SUBORDINATE)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(2, 3),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(2, 3), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(2, 5),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(2, 5), Team.WHITE, MoveType.MOVED)),
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED)),
                 Arguments.of(Position.of(4, 4),
                         Position.of(3, 6),
                         Team.WHITE,
-                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3, 6), Team.WHITE, MoveType.MOVED))
+                        PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED))
         );
     }
 }

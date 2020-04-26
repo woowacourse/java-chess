@@ -7,6 +7,7 @@ import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Initialized {
@@ -17,18 +18,22 @@ public class Bishop extends Initialized {
     @Override
     public Piece move(Position to, Piece exPiece) {
         MoveType moveType = this.moveType.update(this, exPiece);
-        return new BishopBuilder(name, to, team, canNotMoveStrategies, score)
+        return new BishopBuilder(name, team, canNotMoveStrategies, score)
                 .moveType(moveType)
                 .build();
     }
 
-    @Override
-    public boolean hasHindrance(Position to, PiecesState piecesState) {
-        if (position.isNotStraightDiagonalDirection(to)) {
-            return true;
-        }
+//    public static boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+//        //todo: refac
+//        List<CanNotMoveStrategy> canNotMoveStrategies = new ArrayList<>();
+////                getCanNotMoveStrategiesOf(piece.getClass());
+//        return canNotMoveStrategies.stream()
+//                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, piecesState));
+//    }
 
-        return hasHindranceDiagonallyInBetween(to, piecesState);
+    @Override
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+        return false;
     }
 
     @Override
@@ -37,8 +42,8 @@ public class Bishop extends Initialized {
     }
 
     public static class BishopBuilder extends InitializedBuilder {
-        public BishopBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-            super(name, position, team, canNotMoveStrategies, score);
+        public BishopBuilder(String name, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name,  team, canNotMoveStrategies, score);
         }
 
         @Override

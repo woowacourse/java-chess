@@ -74,8 +74,8 @@ class BoardTest {
 
     private static Stream<Arguments> getCasesForMovePiece() {
         return Stream.of(
-                Arguments.of(MovingFlow.of("a2", "a3"), PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Position.of(1,3), Team.WHITE, MoveType.MOVED)),
-                Arguments.of(MovingFlow.of("b1", "c3"), PieceFactory.createMovedPiece(PieceType.KNIGHT, Position.of(3,3), Team.WHITE, MoveType.MOVED))
+                Arguments.of(MovingFlow.of("a2", "a3"), PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Team.WHITE, MoveType.MOVED)),
+                Arguments.of(MovingFlow.of("b1", "c3"), PieceFactory.createMovedPiece(PieceType.KNIGHT, Team.WHITE, MoveType.MOVED))
         );
     }
 }

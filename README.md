@@ -37,3 +37,11 @@
 
 6. 킹(KING)
    어떤 방향으로든 1칸만 이동 가능하다.
+
+PieceType 지우기
+
+canNotMove 어떻게 할 지 생각하기
+
+Piece는 move를 가질 필요가 없다...?
+
+hasHindrance 제거

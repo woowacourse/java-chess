@@ -15,16 +15,16 @@ public class Rook extends Initialized {
     }
 
     @Override
-    public boolean hasHindrance(Position to, PiecesState piecesState) {
-        return hasHindrancePerpendicularlyInBetween(to, piecesState);
+    public Piece move(Position to, Piece exPiece) {
+        MoveType moveType = this.moveType.update(this, exPiece);
+        return new RookBuilder(name, team, canNotMoveStrategies, score)
+                .moveType(moveType)
+                .build();
     }
 
     @Override
-    public Piece move(Position to, Piece exPiece) {
-        MoveType moveType = this.moveType.update(this, exPiece);
-        return new RookBuilder(name, to, team, canNotMoveStrategies, score)
-                .moveType(moveType)
-                .build();
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+        return false;
     }
 
     @Override
@@ -33,8 +33,8 @@ public class Rook extends Initialized {
     }
 
     public static class RookBuilder extends InitializedBuilder {
-        public RookBuilder(String name, Position position, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-            super(name, position, team, canNotMoveStrategies, score);
+        public RookBuilder(String name, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
+            super(name, team, canNotMoveStrategies, score);
         }
 
         @Override

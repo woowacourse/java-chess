@@ -26,8 +26,8 @@ public class Blank implements Piece {
     }
 
     @Override
-    public boolean hasHindrance(Position to, PiecesState piecesState) {
-        throw new IllegalStateException("체스 말이 아닙니다.");
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+        return true;
     }
 
     @Override
@@ -72,11 +72,6 @@ public class Blank implements Piece {
 
     @Override
     public boolean isSameTeam(Piece piece) {
-        throw new IllegalStateException("체스 말이 아닙니다.");
-    }
-
-    @Override
-    public Position getPosition() {
         throw new IllegalStateException("체스 말이 아닙니다.");
     }
 

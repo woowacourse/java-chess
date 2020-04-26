@@ -31,14 +31,12 @@ class MoveTypeTest {
                 Arguments.of(
                         new InitializedPawn.InitializedPawnBuilder(
                                 "p",
-                                Position.of(1, 2),
                                 Team.WHITE,
                                 new ArrayList<>(),
                                 new Score(1))
                                 .build(),
                         new InitializedPawn.InitializedPawnBuilder(
                                 "p",
-                                Position.of(1, 2),
                                 Team.WHITE,
                                 new ArrayList<>(),
                                 new Score(1))
@@ -47,7 +45,6 @@ class MoveTypeTest {
                 Arguments.of(
                         new InitializedPawn.InitializedPawnBuilder(
                                 "p",
-                                Position.of(1, 2),
                                 Team.WHITE,
                                 new ArrayList<>(),
                                 new Score(1))
@@ -57,14 +54,12 @@ class MoveTypeTest {
                 Arguments.of(
                         new InitializedPawn.InitializedPawnBuilder(
                                 "p",
-                                Position.of(1, 2),
                                 Team.WHITE,
                                 new ArrayList<>(),
                                 new Score(1))
                                 .build(),
                         new King.KingBuilder(
                                 "k",
-                                Position.of(2, 3),
                                 Team.BLACK,
                                 new ArrayList<>(),
                                 new Score(0))
@@ -73,14 +68,12 @@ class MoveTypeTest {
                 Arguments.of(
                         new InitializedPawn.InitializedPawnBuilder(
                                 "p",
-                                Position.of(1, 2),
                                 Team.WHITE,
                                 new ArrayList<>(),
                                 new Score(1))
                                 .build(),
                         new MovedPawn.MovedPawnBuilder(
                                 "p",
-                                Position.of(2, 3),
                                 Team.BLACK,
                                 new ArrayList<>(),
                                 new Score(1))

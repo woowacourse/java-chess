@@ -2,7 +2,6 @@ package chess.domain.piece.factory;
 
 import chess.domain.piece.*;
 import chess.domain.piece.policy.move.*;
-import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
@@ -79,12 +78,6 @@ public enum PieceType {
                 .filter(pieceType -> pieceType.initialColumns.contains(new Column(initialColumn)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("%d에 해당하는 체스 말을 찾을 수 없습니다.", initialColumn)));
-    }
-
-    public static boolean canNotMove(Piece piece, Position to, PiecesState piecesState) {
-        List<CanNotMoveStrategy> canNotMoveStrategies = getCanNotMoveStrategiesOf(piece.getClass());
-        return canNotMoveStrategies.stream()
-                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(piece.getPosition(), to, piecesState));
     }
 
     public String getName(Team team) {
