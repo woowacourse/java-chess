@@ -3,10 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.square.Square;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ChessBoard {
 
@@ -48,10 +45,11 @@ public class ChessBoard {
     public boolean canMove(List<Square> squares, Turn turn) {
         Square before = squares.get(0);
         Square after = squares.get(1);
-        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != turn.getTurn()) {
+        Piece formerPiece = chessBoard.get(before);
+        if (!chessBoard.containsKey(before) || formerPiece.isBlack() != turn.getTurn()) {
             return false;
         }
-        return chessBoard.get(before).calculateMovableSquares(before, chessBoard).contains(after);
+        return formerPiece.movableToDestination(before, chessBoard, after);
     }
 
     public void movePiece(List<Square> squares) {
