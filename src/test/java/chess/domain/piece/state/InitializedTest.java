@@ -1,7 +1,5 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
@@ -14,13 +12,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//todo: refac
 class InitializedTest {
 
     @ParameterizedTest
     @DisplayName("#isHeadingNotForward : return boolean as to current position and to")
     @MethodSource({"getCasesForIsHeadingBackward"})
     void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
-        Initialized initialized = (Initialized) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, team);
+        Initialized initialized = null;
 
         //todo: reafc
 //        initialized.isHeadingNotForward(to);

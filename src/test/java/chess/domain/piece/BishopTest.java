@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
@@ -16,13 +14,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//todo: refac
 class BishopTest {
 
     @ParameterizedTest
     @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMove"})
     void move(Position from, Position to, Team team, Piece expected) {
-        Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, team);
+        Piece bishop = null;
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -44,12 +43,12 @@ class BishopTest {
     @DisplayName("#calculateScore() : should return score of Bishop")
     void calculateScore() {
         //given
-        Piece bishop = PieceFactory.createInitializedPiece(PieceType.BISHOP, Team.WHITE);
+        Piece bishop = null;
         PiecesState piecesState = TestPiecesState.initialize();
         //when
         Score score = bishop.calculateScore(piecesState);
         //then
-        assertThat(score).isEqualTo(PieceType.BISHOP.getScore());
+        assertThat(score).isEqualTo(null);
     }
 
     private static Stream<Arguments> getCasesForMove() {
@@ -58,19 +57,17 @@ class BishopTest {
                 Arguments.of(Position.of(2, 2),
                         Position.of(6, 6),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.BISHOP, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(2, 2),
                         Position.of(7, 7),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.BISHOP, team, MoveType.ATTACKED_SUBORDINATE)),
+                        null),
                 Arguments.of(Position.of(2, 2),
                         Position.of(1, 3),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.BISHOP, team, MoveType.MOVED))
+                        null)
         );
     }
-
-
 
     private static Stream<Arguments> getCasesForHasHindrance() {
         return Stream.of(

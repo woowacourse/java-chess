@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.move.MoveType;
@@ -21,7 +19,7 @@ class KingTest {
     @DisplayName("#move() : should return King as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMove"})
     void move(Position from, Position to, Team team, Piece expected) {
-        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, team);
+        Piece king = null;
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -34,12 +32,12 @@ class KingTest {
     @DisplayName("#calculateScore() : should return score of King")
     void calculateScore() {
         //given
-        Piece king = PieceFactory.createInitializedPiece(PieceType.KING, Team.WHITE);
+        Piece king = null;
         PiecesState piecesState = TestPiecesState.initialize();
         //when
         Score score = king.calculateScore(piecesState);
         //then
-        assertThat(score).isEqualTo(PieceType.KING.getScore());
+        assertThat(score).isEqualTo(null);
     }
 
     private static Stream<Arguments> getCasesForMove() {
@@ -48,36 +46,36 @@ class KingTest {
                 Arguments.of(Position.of(5, 4),
                         Position.of(5, 5),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 5),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 4),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(6, 3),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(5, 3),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 3),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 4),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED)),
+                        null),
 
                 Arguments.of(Position.of(5, 4),
                         Position.of(4, 5),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.KING, team, MoveType.MOVED))
+                        null)
         );
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.piece.factory;
+package chess.domain.piece.column;
 
 import chess.config.BoardConfig;
 

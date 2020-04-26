@@ -7,7 +7,6 @@ import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Initialized {

@@ -1,9 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.move.MoveType;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -14,13 +11,14 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+//todo: refac
 class MovedPawnTest {
 
     @ParameterizedTest
     @DisplayName("#move() : should return MovedPawn as to Position 'from', 'to' and team")
     @MethodSource({"getCasesForMove"})
     void move(Position from, Position to, Team team, Piece expected) {
-        Piece movedPawn = PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, team);
+        Piece movedPawn = null;
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -34,17 +32,17 @@ class MovedPawnTest {
                 Arguments.of(Position.of(1, 3),
                         Position.of(1, 4),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, team, MoveType.MOVED)),
+                        null),
 
                 Arguments.of(Position.of(1, 6),
                         Position.of(2, 7),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, team, MoveType.ATTACKED_SUBORDINATE)),
+                        null),
 
                 Arguments.of(Position.of(1, 4),
                         Position.of(1, 5),
                         team,
-                        PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, team, MoveType.MOVED))
+                        null)
         );
     }
 
@@ -52,7 +50,7 @@ class MovedPawnTest {
     @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
     @MethodSource({"getCasesForHasHindrance"})
     void hasHindrance(Position from, Position to, Team team, boolean expected) {
-        MovedPawn runningPawn = (MovedPawn) PieceFactory.createInitializedPiece(PieceType.MOVED_PAWN, team);
+        MovedPawn runningPawn = null;
         PiecesState piecesState = TestPiecesState.initialize();
         //todo: refac
 //        runningPawn.hasHindrance(to, piecesState);

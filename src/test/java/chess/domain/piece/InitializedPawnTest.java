@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -30,7 +28,8 @@ class InitializedPawnTest {
     @DisplayName("#move() : should return Piece as to team and Position 'to'")
     @MethodSource({"getCasesForMove"})
     void move(Team team, Position to) {
-        Piece initializedPawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, team);
+        //todo: refac
+        Piece initializedPawn = null;
 
         PiecesState piecesState = TestPiecesState.initialize();
         Piece exPiece = piecesState.getPiece(to);
@@ -44,7 +43,7 @@ class InitializedPawnTest {
     @MethodSource({"getCasesForCalculateScore"})
     void calculateScore(Position position, Score expected) {
         //given
-        Piece pawn = PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, Team.WHITE);
+        Piece pawn = null;
         PiecesState piecesState = TestPiecesState.initialize();
         //when
         Score score = pawn.calculateScore(piecesState);

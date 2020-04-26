@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.factory.PieceType;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
@@ -23,7 +21,9 @@ public class InitializedPawn extends Initialized {
     @Override
     public Piece move(Position to, Piece exPiece) {
         MoveType moveType = this.moveType.update(this, exPiece);
-        return PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, team, moveType);
+        //todo: refac
+        return null;
+//                PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, team, moveType);
     }
 
     @Override

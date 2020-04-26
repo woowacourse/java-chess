@@ -13,32 +13,33 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+//todo: refac
 class PieceFactoryTest {
 
     @ParameterizedTest
     @DisplayName("#createInitializedPiece() : should return Class which implements Piece")
     @MethodSource("getCasesForCreatePiece")
-    void createInitializedPiece(PieceType pieceType, Class<? extends Piece> expected) {
-        Piece piece = PieceFactory.createInitializedPiece(pieceType, Team.WHITE);
+    void createInitializedPiece(Class<? extends Piece> expected) {
+        //todo: refac
+        Piece piece = null;
         assertThat(piece).isInstanceOf(expected);
     }
 
     private static Stream<Arguments> getCasesForCreatePiece() {
         return Stream.of(
-                Arguments.of(PieceType.INITIALIZED_PAWN, InitializedPawn.class),
-                Arguments.of(PieceType.MOVED_PAWN, MovedPawn.class),
-                Arguments.of(PieceType.ROOK, Rook.class),
-                Arguments.of(PieceType.BISHOP, Bishop.class),
-                Arguments.of(PieceType.QUEEN, Queen.class),
-                Arguments.of(PieceType.KING, King.class)
+                Arguments.of(null, InitializedPawn.class),
+                Arguments.of(null, MovedPawn.class),
+                Arguments.of(null, Rook.class),
+                Arguments.of(null, Bishop.class),
+                Arguments.of(null, Queen.class),
+                Arguments.of(null, King.class)
         );
     }
 
     @Test
     @DisplayName("#createMovedPiece() : should return Class which implements Piece")
     void createMovedPice() {
-        Piece piece = PieceFactory.createMovedPiece(PieceType.MOVED_PAWN, Team.WHITE, MoveType.MOVED);
+        Piece piece = null;
         assertThat(piece).isInstanceOf(MovedPawn.class);
     }
 
