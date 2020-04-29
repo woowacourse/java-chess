@@ -1,12 +1,9 @@
 package chess.domain.piece.policy.move;
 
 import chess.domain.piece.PiecesState;
-import chess.domain.piece.Square;
 import chess.domain.piece.position.Direction;
 import chess.domain.piece.position.Distance;
 import chess.domain.piece.position.Position;
-
-import java.util.stream.Stream;
 
 public class HasHindranceInTwoStep implements CanNotMoveStrategy {
     private final Direction forwardDirection;

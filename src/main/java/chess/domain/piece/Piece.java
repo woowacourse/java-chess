@@ -4,6 +4,8 @@ import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.team.Team;
 
+import java.util.Objects;
+
 public abstract class Piece {
     protected final Team team;
 

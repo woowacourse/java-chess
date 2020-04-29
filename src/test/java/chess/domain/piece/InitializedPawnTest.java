@@ -17,7 +17,7 @@ class InitializedPawnTest {
 //    @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
 //    @MethodSource({"getCasesForHasHindrance"})
 //    void hasHindrance(Position from, Position to, Team team, boolean expected) {
-//        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(PieceType.INITIALIZED_PAWN, from, team);
+//        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPieceWithInitialColumn(PieceType.INITIALIZED_PAWN, from, team);
 //        //todo: check package-dependency
 //        PiecesState piecesState = TestSquaresState.initialize();
 //        boolean hasHindrance = initializedPawn.hasHindrance(to, piecesState);

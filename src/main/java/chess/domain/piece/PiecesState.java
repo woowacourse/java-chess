@@ -42,12 +42,18 @@ public class PiecesState {
     public boolean isSameTeam(Position from, Position to) {
         Piece fromPiece = pieces.get(from);
         Piece toPiece = pieces.get(to);
-        return Objects.nonNull(from) && Objects.nonNull(to) && fromPiece.isSameTeam(toPiece);
+        if (Objects.isNull(fromPiece) || Objects.isNull(toPiece)) {
+            return false;
+        }
+        return fromPiece.isSameTeam(toPiece);
     }
 
     public boolean isOppositeTeam(Position from, Position to) {
         Piece fromPiece = pieces.get(from);
         Piece toPiece = pieces.get(to);
-        return Objects.nonNull(from) && Objects.nonNull(to) && fromPiece.isOppositeTeam(toPiece);
+        if (Objects.isNull(fromPiece) || Objects.isNull(toPiece)) {
+            return false;
+        }
+        return fromPiece.isOppositeTeam(toPiece);
     }
 }

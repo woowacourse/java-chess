@@ -19,7 +19,7 @@ class BishopTest {
 //    @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
 //    @MethodSource({"getCasesForHasHindrance"})
 //    void hasHindrance(Position from, Position to, Team team, boolean expected) {
-//        Bishop bishop = (Bishop) PieceFactory.createPiece(PieceType.BISHOP, from, team);
+//        Bishop bishop = (Bishop) PieceFactory.createPieceWithInitialColumn(PieceType.BISHOP, from, team);
 //        PiecesState piecesState = TestSquaresState.initialize();
 //        boolean hasHindrance = bishop.hasHindrance(to, piecesState);
 //        assertThat(hasHindrance).isEqualTo(expected);

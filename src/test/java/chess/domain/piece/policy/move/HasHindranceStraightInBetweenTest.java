@@ -12,24 +12,24 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IsAttackingSameTeamTest {
-
-    private final IsAttackingSameTeam isAttackingSameTeam = new IsAttackingSameTeam();
+class HasHindranceStraightInBetweenTest {
+    private final HasHindranceStraightInBetween hasHindranceStraightInBetween = new HasHindranceStraightInBetween();
 
     @ParameterizedTest
-    @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
+    @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
         PiecesState piecesState = TestSquaresState.initialize();
-        boolean canNotMove = isAttackingSameTeam.canNotMove(from, to, piecesState);
+        boolean canNotMove = hasHindranceStraightInBetween.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }
 
     private static Stream<Arguments> getCasesForCanNotMove() {
         return Stream.of(
-                Arguments.of(Position.of(1,1), Position.of(1,2), true),
-                Arguments.of(Position.of(1,1), Position.of(1,3), false),
-                Arguments.of(Position.of(1,1), Position.of(1,7), false)
+                Arguments.of(Position.of(1,1), Position.of(1,3), true),
+                Arguments.of(Position.of(1,1), Position.of(3,3), true),
+                Arguments.of(Position.of(1,2), Position.of(1,4), false),
+                Arguments.of(Position.of(1,2), Position.of(3,4), false)
         );
     }
 }

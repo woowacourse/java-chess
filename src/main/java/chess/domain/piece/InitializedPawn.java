@@ -20,8 +20,8 @@ public class InitializedPawn extends Piece {
                 new CanNotReach(MAX_DISTANCE),
                 new HasHindranceInTwoStep(team.getForwardDirection()),
                 new IsAttackingSameTeam(),
-                new PawnIsDiagonalWithoutAttack(),
-                new PawnIsVerticalWithAttack()
+                new IsDiagonalWithoutAttack(),
+                new IsVerticalWithAttack()
         );
 
         return new MultipleCanNotMoveStrategy(canNotMoveStrategies);

@@ -19,8 +19,13 @@ public class PieceFactory {
         pieceCreators.put(InitialColumn.KING, King::new);
     }
 
-    public static Piece createPiece(int initialColumn, Team team) {
+    public static Piece createPieceWithInitialColumn(int initialColumn, Team team) {
         PieceCreator pieceCreator = pieceCreators.get(InitialColumn.valueOf(initialColumn));
+        return pieceCreator.create(team);
+    }
+
+    public static Piece createInitializedPawn(Team team) {
+        PieceCreator pieceCreator = pieceCreators.get(InitialColumn.PAWN);
         return pieceCreator.create(team);
     }
 
