@@ -7,7 +7,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class ColumnTest {
-
     @Test
     void constructSucceed() {
         int validValue = BoardConfig.LINE_START;
