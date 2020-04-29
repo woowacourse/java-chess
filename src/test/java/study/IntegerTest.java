@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Integer {
+public class IntegerTest {
     @Test
     void ascii() {
         int a = 'a';

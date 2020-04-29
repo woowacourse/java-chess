@@ -1,8 +1,6 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.*;
-import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -17,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PieceFactoryTest {
 
     @ParameterizedTest
-    @DisplayName("#createInitializedPiece() : should return Class which implements Piece")
+    @DisplayName("#createPiece() : should return Class which implements Piece")
     @MethodSource("getCasesForCreatePiece")
     void createInitializedPiece(Class<? extends Piece> expected) {
         //todo: refac
@@ -28,7 +26,7 @@ class PieceFactoryTest {
     private static Stream<Arguments> getCasesForCreatePiece() {
         return Stream.of(
                 Arguments.of(null, InitializedPawn.class),
-                Arguments.of(null, MovedPawn.class),
+                Arguments.of(null, InitializedPawn.class),
                 Arguments.of(null, Rook.class),
                 Arguments.of(null, Bishop.class),
                 Arguments.of(null, Queen.class),
@@ -40,7 +38,7 @@ class PieceFactoryTest {
     @DisplayName("#createMovedPiece() : should return Class which implements Piece")
     void createMovedPice() {
         Piece piece = null;
-        assertThat(piece).isInstanceOf(MovedPawn.class);
+        assertThat(piece).isInstanceOf(InitializedPawn.class);
     }
 
 }

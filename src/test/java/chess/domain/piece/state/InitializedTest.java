@@ -1,7 +1,6 @@
 package chess.domain.piece.state;
 
 import chess.domain.piece.position.Position;
-import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +18,6 @@ class InitializedTest {
     @DisplayName("#isHeadingNotForward : return boolean as to current position and to")
     @MethodSource({"getCasesForIsHeadingBackward"})
     void isHeadingBackward(Position from, Position to, Team team, boolean expected) {
-        Initialized initialized = null;
 
         //todo: reafc
 //        initialized.isHeadingNotForward(to);

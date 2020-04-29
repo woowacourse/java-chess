@@ -17,39 +17,39 @@ class InitializedPawnTest {
 //    @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
 //    @MethodSource({"getCasesForHasHindrance"})
 //    void hasHindrance(Position from, Position to, Team team, boolean expected) {
-//        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createInitializedPiece(PieceType.INITIALIZED_PAWN, from, team);
+//        InitializedPawn initializedPawn = (InitializedPawn) PieceFactory.createPiece(PieceType.INITIALIZED_PAWN, from, team);
 //        //todo: check package-dependency
-//        PiecesState piecesState = TestPiecesState.initialize();
+//        PiecesState piecesState = TestSquaresState.initialize();
 //        boolean hasHindrance = initializedPawn.hasHindrance(to, piecesState);
 //        assertThat(hasHindrance).isEqualTo(expected);
 //    }
 
-    @ParameterizedTest
-    @DisplayName("#move() : should return Piece as to team and Position 'to'")
-    @MethodSource({"getCasesForMove"})
-    void move(Team team, Position to) {
-        //todo: refac
-        Piece initializedPawn = null;
-
-        PiecesState piecesState = TestPiecesState.initialize();
-        Piece exPiece = piecesState.getPiece(to);
-
-        Piece moved = initializedPawn.move(to, exPiece);
-        assertThat(moved).isInstanceOf(MovedPawn.class);
-    }
-
-    @ParameterizedTest
-    @DisplayName("#calculateScore() : should return score of pawn as to board and position")
-    @MethodSource({"getCasesForCalculateScore"})
-    void calculateScore(Position position, Score expected) {
-        //given
-        Piece pawn = null;
-        PiecesState piecesState = TestPiecesState.initialize();
-        //when
-        Score score = pawn.calculateScore(piecesState);
-        //then
-        assertThat(score).isEqualTo(expected);
-    }
+//    @ParameterizedTest
+//    @DisplayName("#move() : should return Piece as to team and Position 'to'")
+//    @MethodSource({"getCasesForMove"})
+//    void move(Team team, Position to) {
+//        //todo: refac
+//        Piece initializedPawn = null;
+//
+//        PiecesState boardState = TestSquaresState.initialize();
+//        Piece exPiece = boardState.getPiece(to);
+//
+//        Piece moved = initializedPawn.move(to, exPiece);
+//        assertThat(moved).isInstanceOf(MovedPawn.class);
+//    }
+//
+//    @ParameterizedTest
+//    @DisplayName("#calculateScore() : should return score of pawn as to board and position")
+//    @MethodSource({"getCasesForCalculateScore"})
+//    void calculateScore(Position position, Score expected) {
+//        //given
+//        Piece pawn = null;
+//        PiecesState boardState = TestSquaresState.initialize();
+//        //when
+//        Score score = pawn.calculateScore(boardState);
+//        //then
+//        assertThat(score).isEqualTo(expected);
+//    }
 
     private static Stream<Arguments> getCasesForCalculateScore() {
         return Stream.of(

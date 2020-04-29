@@ -1,47 +1,26 @@
 package chess.domain.piece;
 
-import chess.domain.piece.policy.move.CanNotMoveStrategy;
-import chess.domain.piece.position.Position;
-import chess.domain.piece.score.Score;
-import chess.domain.piece.state.move.MoveType;
-import chess.domain.piece.state.piece.Initialized;
+import chess.domain.piece.policy.move.*;
 import chess.domain.piece.team.Team;
 
+import java.util.Arrays;
 import java.util.List;
 
-public class Knight extends Initialized {
-    public static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
+public class Knight extends Piece {
+    private static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
 
-    private Knight(KnightBuilder builder) {
-        super(builder);
+    public Knight(Team team) {
+        super(team);
     }
 
     @Override
-    public Piece move(Position to, Piece exPiece) {
-        MoveType moveType = this.moveType.update(this, exPiece);
-        return new KnightBuilder(name, team, canNotMoveStrategies, score)
-                .moveType(moveType)
-                .build();
-    }
-
-    @Override
-    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
-        return false;
-    }
-
-    @Override
-    public Score calculateScore(PiecesState piecesState) {
-        return score;
-    }
-
-    public static class KnightBuilder extends InitializedBuilder {
-        public KnightBuilder(String name, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score score) {
-            super(name, team, canNotMoveStrategies, score);
-        }
-
-        @Override
-        public Piece build() {
-            return new Knight(this);
-        }
+    protected CanNotMoveStrategy constituteStrategy() {
+        List<CanNotMoveStrategy> canNotMoveStrategies = Arrays.asList(
+                new IsStayed(),
+                new CanNotReach(MAX_DISTANCE),
+                new IsHeadingStraightDirection(),
+                new IsAttackingSameTeam()
+        );
+        return new MultipleCanNotMoveStrategy(canNotMoveStrategies);
     }
 }

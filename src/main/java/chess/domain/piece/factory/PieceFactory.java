@@ -1,54 +1,30 @@
 package chess.domain.piece.factory;
 
-import chess.config.PieceConfig;
 import chess.domain.piece.*;
 import chess.domain.piece.column.InitialColumn;
-import chess.domain.piece.policy.move.CanNotMoveStrategy;
-import chess.domain.piece.score.Score;
-import chess.domain.piece.state.piece.Initialized;
 import chess.domain.piece.team.Team;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class PieceFactory {
-    private static Map<InitialColumn, PieceBuilderCreator> builderGetters = new HashMap<>();
+    private static Map<InitialColumn, PieceCreator> pieceCreators = new HashMap<>();
 
     static {
-        builderGetters.put(InitialColumn.PAWN, InitializedPawn.InitializedPawnBuilder::new);
-        builderGetters.put(InitialColumn.ROOK, Rook.RookBuilder::new);
-        builderGetters.put(InitialColumn.KNIGHT, Knight.KnightBuilder::new);
-        builderGetters.put(InitialColumn.BISHOP, Bishop.BishopBuilder::new);
-        builderGetters.put(InitialColumn.QUEEN, Queen.QueenBuilder::new);
-        builderGetters.put(InitialColumn.KING, King.KingBuilder::new);
+        pieceCreators.put(InitialColumn.PAWN, InitializedPawn::new);
+        pieceCreators.put(InitialColumn.ROOK, Rook::new);
+        pieceCreators.put(InitialColumn.KNIGHT, Knight::new);
+        pieceCreators.put(InitialColumn.BISHOP, Bishop::new);
+        pieceCreators.put(InitialColumn.QUEEN, Queen::new);
+        pieceCreators.put(InitialColumn.KING, King::new);
     }
 
-    public static Piece createInitializedPiece(int initialColumn, Team team) {
-        Initialized.InitializedBuilder builder = getBuilder(initialColumn, team);
-        return builder.build();
+    public static Piece createPiece(int initialColumn, Team team) {
+        PieceCreator pieceCreator = pieceCreators.get(InitialColumn.valueOf(initialColumn));
+        return pieceCreator.create(team);
     }
 
-
-    @FunctionalInterface
-    private interface PieceBuilderCreator {
-        Initialized.InitializedBuilder create(String name, Team team, List<CanNotMoveStrategy> canNotMoveStrategies, Score scores);
+    private interface PieceCreator {
+        Piece create(Team team);
     }
-
-    private static Initialized.InitializedBuilder getBuilder(int initialColumn, Team team) {
-        PieceBuilderCreator builderGetter = builderGetters.get(InitialColumn.valueOf(initialColumn));
-        return builderGetter.create(
-                PieceConfig.getName(InitialColumn.valueOf(initialColumn), team),
-                team,
-                new ArrayList<>(),
-                //todo: refac
-                new Score(0));
-    }
-
-    //    public static Piece createMovedPiece(PieceType pieceType, Team team, MoveType moveType) {
-//        Initialized.InitializedBuilder builder = getBuilder(pieceType, team);
-//        builder.moveType(moveType);
-//        return builder.build();
-//    }
 }

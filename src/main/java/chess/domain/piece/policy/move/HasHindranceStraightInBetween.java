@@ -18,12 +18,12 @@ public class HasHindranceStraightInBetween implements CanNotMoveStrategy {
     private boolean hasHindrancePerpendicularlyInBetween(Position from, Position to, PiecesState piecesState) {
         Distance amount = from.calculateDistance(to);
         Direction direction = from.calculateDirection(to);
-        return HasHindranceInBetween.check(piecesState, amount, direction, from);
+        return piecesState.hasHindranceInBetween(amount, direction, from);
     }
 
     private boolean hasHindranceDiagonallyInBetween(Position from, Position to, PiecesState piecesState) {
         Distance amount = from.calculateHorizontalDistance(to);
         Direction direction = from.calculateDirection(to);
-        return HasHindranceInBetween.check(piecesState, amount, direction, from);
+        return piecesState.hasHindranceInBetween(amount, direction, from);
     }
 }

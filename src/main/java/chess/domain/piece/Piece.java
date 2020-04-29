@@ -1,32 +1,30 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.Direction;
+import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.position.Position;
-import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
-public interface Piece {
-    Piece move(Position to, Piece exPiece);
+public abstract class Piece {
+    protected final Team team;
 
-    boolean canNotMove(Position from, Position to, PiecesState piecesState);
+    protected Piece(Team team) {
+        this.team = team;
+    }
 
-    Team getTeam();
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+        CanNotMoveStrategy canNotMoveStrategy = constituteStrategy();
+        return canNotMoveStrategy.canNotMove(from, to, piecesState);
+    }
 
-    Direction getForwardDirection();
+    protected abstract CanNotMoveStrategy constituteStrategy();
 
-    boolean isNotBlank();
+    boolean isSameTeam(Piece toPiece) {
+        //todo: getter??
+        return team.isSame(toPiece.team);
+    }
 
-    boolean isBlank();
+    boolean isOppositeTeam(Piece toPiece) {
+        return team.isOpposite(toPiece.team);
+    }
 
-    boolean isEnemy(Piece piece);
-
-    boolean isKing();
-
-    boolean attackedKing();
-
-    boolean isSameTeam(Team team);
-
-    boolean isSameTeam(Piece piece);
-
-    Score calculateScore(PiecesState piecesState);
 }

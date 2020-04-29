@@ -5,13 +5,18 @@ import chess.domain.piece.position.Position;
 
 import java.util.List;
 
-public abstract class MultipleCanNotMoveStrategy implements CanNotMoveStrategy {
+public class MultipleCanNotMoveStrategy implements CanNotMoveStrategy {
+    private final List<CanNotMoveStrategy> canNotMoveStrategies;
+
+    public MultipleCanNotMoveStrategy(List<CanNotMoveStrategy> canNotMoveStrategies) {
+        this.canNotMoveStrategies = canNotMoveStrategies;
+    }
+
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
-        List<CanNotMoveStrategy> canNotMoveStrategies = constitueStrategies();
         return canNotMoveStrategies.stream()
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, piecesState));
     }
 
-    protected abstract List<CanNotMoveStrategy> constitueStrategies();
+
 }
