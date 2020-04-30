@@ -13,8 +13,10 @@ import java.util.Objects;
 
 public class PiecesState {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
+    static final String NOT_STRAIGHT_ERROR = "%s와 %s의 방향을 측정할 수 없어, 장애물이 있는 지 없는 지 확인할 수 없습니다.";
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
+    private static final long INITIAL_KING_SIZE = 2L;
 
     private final Map<Position, Piece> pieces;
 
@@ -48,6 +50,10 @@ public class PiecesState {
     }
 
     public boolean hasHindranceInStraightBetween(Position from, Position to) {
+        if (from.isNotStraightDirection(to)) {
+            throw new IllegalArgumentException(String.format(NOT_STRAIGHT_ERROR, from, to));
+
+        }
         Distance amount = from.calculateStraightDistance(to);
         Direction direction = from.calculateDirection(to);
         Position targetPosition = from;
@@ -81,15 +87,15 @@ public class PiecesState {
 
     //todo: refac
     public boolean isNotFinished() {
-        long size = pieces.values()
+        long kingSize = pieces.values()
                 .stream()
                 .filter(piece -> piece instanceof King)
                 .count();
-        return size == 2L;
+        return kingSize == INITIAL_KING_SIZE;
     }
 
     public Result concludeResult() {
-        return new Result(pieces);
+        return Result.conclude(this);
     }
 
     public Map<String, String> serialize() {
@@ -98,6 +104,10 @@ public class PiecesState {
             serialized.put(element.getKey().toString(), element.getValue().toString());
         }
         return serialized;
+    }
+
+    Map<Position, Piece> getPieces() {
+        return pieces;
     }
 
     private Piece getPiece(Position position) {

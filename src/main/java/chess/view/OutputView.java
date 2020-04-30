@@ -22,8 +22,8 @@ public class OutputView {
         System.out.println("end");
     }
 
-    public static void printResult(String winner, String loser, String winnerScore, String loserScore) {
-        System.out.println(String.format("%s팀이 %s팀을 %s : %s 로 승리하였습니다.", winner, loser, winnerScore, loserScore));
+    public static void printResult(String winner, String whiteScore, String blackScore) {
+        System.out.println(String.format("%s팀이 이겼습니다. White 팀 점수: %s, Black 팀 점수: %s", winner, whiteScore, blackScore));
 
     }
 

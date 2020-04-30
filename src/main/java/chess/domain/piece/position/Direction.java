@@ -11,7 +11,8 @@ public enum Direction {
     NORTH_EAST(1, 1, new NorthEastIdentifier()),
     NORTH_WEST(-1, 1, new NorthWestIdentifier()),
     SOUTH_EAST(1, -1, new SouthEastIdentifier()),
-    SOUTH_WEST(-1, -1, new SouthWestIdentifier());
+    SOUTH_WEST(-1, -1, new SouthWestIdentifier()),
+    UNKNOWN(0, 0, new NullIdentifier());
 
     private final int horizontal;
     private final int vertical;
@@ -28,7 +29,7 @@ public enum Direction {
         return Arrays.stream(values())
                 .filter(direction -> direction.is(from, to))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("%s에서 %s로의 방향을 알 수 없습니다.", from, to)));
+                .orElse(UNKNOWN);
     }
 
     int getHorizontal() {
@@ -55,7 +56,8 @@ public enum Direction {
         return this == NORTH_WEST
                 || this == NORTH_EAST
                 || this == SOUTH_WEST
-                || this == SOUTH_EAST;
+                || this == SOUTH_EAST
+                || this == UNKNOWN;
     }
 
     private boolean isHorizontal() {
@@ -108,29 +110,42 @@ public enum Direction {
     private static class NorthEastIdentifier implements DirectionIdentifier {
         @Override
         public boolean identify(Position from, Position to) {
-            return (from.getX() < to.getX()) && (from.getY() < to.getY());
+            return (from.getX() < to.getX()) && (from.getY() < to.getY()) && (isStraight(from, to));
         }
-
     }
+
     private static class NorthWestIdentifier implements DirectionIdentifier {
         @Override
         public boolean identify(Position from, Position to) {
-            return (to.getX()) < from.getX() && (from.getY() < to.getY());
+            return (to.getX()) < from.getX() && (from.getY() < to.getY()) && (isStraight(from, to));
         }
 
     }
     private static class SouthEastIdentifier implements DirectionIdentifier {
         @Override
         public boolean identify(Position from, Position to) {
-            return (from.getX() < to.getX()) && (to.getY() < from.getY());
+            return (from.getX() < to.getX()) && (to.getY() < from.getY()) && (isStraight(from, to));
         }
 
     }
     private static class SouthWestIdentifier implements DirectionIdentifier {
         @Override
         public boolean identify(Position from, Position to) {
-            return (to.getX() < from.getX()) && (to.getY() < from.getY());
+            return (to.getX() < from.getX()) && (to.getY() < from.getY()) && (isStraight(from, to));
         }
 
+    }
+
+    private static class NullIdentifier implements DirectionIdentifier {
+        @Override
+        public boolean identify(Position from, Position to) {
+            return false;
+        }
+    }
+
+    private static boolean isStraight(Position from, Position to) {
+        int xDifference = Math.abs(from.getX() - to.getX());
+        int yDifference = Math.abs(from.getY() - to.getY());
+        return xDifference == yDifference;
     }
 }

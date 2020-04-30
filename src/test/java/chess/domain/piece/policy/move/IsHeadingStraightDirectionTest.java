@@ -26,10 +26,10 @@ class IsHeadingStraightDirectionTest {
 
     private static Stream<Arguments> getCasesForCanNotMove() {
         return Stream.of(
-                Arguments.of(Position.of(1,1), Position.of(1,2), true),
-                Arguments.of(Position.of(1,1), Position.of(2,1), true),
-                Arguments.of(Position.of(1,1), Position.of(3,3), true),
-                Arguments.of(Position.of(1,1), Position.of(2,3), false)
+//                Arguments.of(Position.of(1,1), Position.of(1,2), true),
+//                Arguments.of(Position.of(1,1), Position.of(2,1), true),
+                Arguments.of(Position.of(1,1), Position.of(3,3), true)
+//                Arguments.of(Position.of(1,1), Position.of(2,3), false)
         );
     }
 }

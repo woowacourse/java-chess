@@ -40,7 +40,7 @@ public class Game {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
         Result result = board.concludeResult();
-        OutputView.printResult(result.getWinner(), result.getLoser(), result.getWinnerScore(), result.getLoserScore());
+        OutputView.printResult(result.getWinner(), result.getWhiteScore(), result.getBlackScore());
         OutputView.printEnd();
     }
 }
