@@ -4,9 +4,11 @@ import chess.config.BoardConfig;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.IntStream;
 
 public class OutputView {
+    private static final String BLANK = ".";
 
     public static void printBoard(Map<String, String> board) {
         IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
@@ -34,6 +36,15 @@ public class OutputView {
     private static void printPosition(int x, int y, Map<String, String> board) {
         String position = String.valueOf(x) + String.valueOf(y);
         String piece = board.get(position);
-        System.out.print(piece);
+        if (isBlank(piece)) {
+            System.out.print(BLANK);
+        } else {
+            System.out.print(piece);
+        }
+
+    }
+
+    private static boolean isBlank(String piece) {
+        return Objects.isNull(piece);
     }
 }

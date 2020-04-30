@@ -14,7 +14,7 @@ public class TestPiecesState extends PiecesState {
 
     private final Map<Position, Piece> pieces;
 
-    TestPiecesState(Map<Position, Piece> pieces) {
+    private TestPiecesState(Map<Position, Piece> pieces) {
         super(pieces);
         this.pieces = pieces;
     }
@@ -26,7 +26,8 @@ public class TestPiecesState extends PiecesState {
         return new TestPiecesState(pieces);
     }
 
-    PiecesState movePiece(Position from, Position to) {
+    @Override
+    public PiecesState movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         pieces.put(to, piece);
         pieces.remove(from);

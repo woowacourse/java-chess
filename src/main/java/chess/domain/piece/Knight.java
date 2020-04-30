@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.policy.move.*;
 import chess.domain.piece.position.Position;
+import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
+    private static final Score score = new Score(2.5);
 
     private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = Collections.unmodifiableList(Arrays.asList(
             new IsStayed(),
@@ -19,7 +21,12 @@ public class Knight extends Piece {
     );
 
     public Knight(Team team) {
-        super(team);
+        super(team, Team.convertName("n", team));
+    }
+
+    @Override
+    public Score calculateScore(PiecesState piecesState) {
+        return score;
     }
 
     @Override

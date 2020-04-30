@@ -19,10 +19,6 @@ public enum Team {
         this.name = name;
     }
 
-    public Direction getForwardDirection() {
-        return forwardDirection;
-    }
-
     public boolean isSame(Team team) {
         return this == team;
     }

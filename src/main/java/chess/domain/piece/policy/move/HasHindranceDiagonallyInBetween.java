@@ -6,7 +6,6 @@ import chess.domain.piece.position.Distance;
 import chess.domain.piece.position.Position;
 
 public class HasHindranceDiagonallyInBetween implements CanNotMoveStrategy {
-
     @Override
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
         if (from.isNotStraightDiagonalDirection(to)) {

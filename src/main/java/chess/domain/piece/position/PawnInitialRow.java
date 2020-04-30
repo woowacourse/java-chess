@@ -5,8 +5,8 @@ import chess.domain.piece.team.Team;
 import java.util.Arrays;
 
 public enum PawnInitialRow {
-    TWO(Team.WHITE, 2),
-    SEVEN(Team.BLACK, 7);
+    WHITE(Team.WHITE, 2),
+    BLACK(Team.BLACK, 7);
 
     private final Team team;
     private final int value;

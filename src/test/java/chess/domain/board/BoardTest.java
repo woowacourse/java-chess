@@ -19,26 +19,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 //todo: refac
 class BoardTest {
 
-//    @Test
-//    @DisplayName("#initialize() : should return initialized Board")
-//    void initiaize() {
-//        Board board = Board.initiaize();
-//        for (int i = BoardConfig.LINE_START; i <= BoardConfig.LINE_END; i++) {
-//            for (IntegerTest PawnInitialRow : Arrays.asList(BoardConfig.LINE_START,BoardConfig.LINE_END)) {
-//                Piece piece = board.getPiece(Position.of(i, PawnInitialRow));
-//                //todo: refac
-////                assertThat().isEqualTo(null);
-//            }
-//        }
-//
-//        for (int i = BoardConfig.LINE_START; i <= BoardConfig.LINE_END; i++) {
-//            for (int j = Board.BLANK_START_INDEX; j <= Board.BLANK_END_INDEX; j++) {
-//                Piece piece = board.getPiece(Position.of(i, j));
-//                assertTrue(piece.isBlank());
-//            }
-//        }
-//    }
-//
 //    @ParameterizedTest
 //    @DisplayName("#movePiece() : should return Board with moved piece")
 //    @MethodSource({"getCasesForMovePiece"})
