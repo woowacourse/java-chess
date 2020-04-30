@@ -78,9 +78,9 @@ public class Board {
 //        }
 //    }
 //
-//    private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
+//    private static void initializePawns(int PawnInitialRow, Team team, Map<Position, Piece> pieces) {
 //        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
-//            Position position = Position.of(x, row);
+//            Position position = Position.of(x, PawnInitialRow);
 //            Piece initializedPawn = null;
 //            pieces.put(position, initializedPawn);
 //        }

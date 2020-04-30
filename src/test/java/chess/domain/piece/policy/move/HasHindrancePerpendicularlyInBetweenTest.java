@@ -1,10 +1,9 @@
 package chess.domain.piece.policy.move;
 
 import chess.domain.piece.PiecesState;
-import chess.domain.piece.TestSquaresState;
+import chess.domain.piece.TestPiecesState;
 import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -12,7 +11,6 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class HasHindrancePerpendicularlyInBetweenTest {
     private final HasHindrancePerpendicularlyInBetween hasHindrancePerpendicularlyInBetween = new HasHindrancePerpendicularlyInBetween();
@@ -21,7 +19,7 @@ class HasHindrancePerpendicularlyInBetweenTest {
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        PiecesState piecesState = TestSquaresState.initialize();
+        PiecesState piecesState = TestPiecesState.initialize();
         boolean canNotMove = hasHindrancePerpendicularlyInBetween.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }

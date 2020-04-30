@@ -14,17 +14,43 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
-//    @ParameterizedTest
-//    @DisplayName("#move() : should return King as to Position 'from', 'to' and team")
-//    @MethodSource({"getCasesForMove"})
-//    void move(Position from, Position to, Team team, Piece expected) {
-//        Piece king = null;
-//
-//        PiecesState boardState = TestSquaresState.initialize();
-//        Piece exPiece = boardState.getPiece(to);
-//        Piece moved = king.move(to, exPiece);
-//        assertThat(moved).isEqualTo(expected);
-//    }
+    private static final Position INITIAL_KING_POSITION = Position.of(5, 1);
+    private static final Position CURRENT_KING_POSITION = Position.of(5, 3);
+
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece king = new King(team);
+
+        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState piecesState = testPiecesState.movePiece(INITIAL_KING_POSITION, CURRENT_KING_POSITION);
+
+        boolean canNotMove = king.canNotMove(from, to, piecesState);
+        assertThat(canNotMove).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(CURRENT_KING_POSITION,
+                        CURRENT_KING_POSITION,
+                        team,
+                        true),
+                Arguments.of(CURRENT_KING_POSITION,
+                        Position.of(5, 5),
+                        team,
+                        true),
+                Arguments.of(CURRENT_KING_POSITION,
+                        Position.of(5, 2),
+                        team,
+                        true),
+                Arguments.of(CURRENT_KING_POSITION,
+                        Position.of(5, 4),
+                        team,
+                        false)
+        );
+    }
 
 
 //    @Test
@@ -32,49 +58,10 @@ class KingTest {
 //    void calculateScore() {
 //        //given
 //        Piece king = null;
-//        PiecesState boardState = TestSquaresState.initialize();
+//        PiecesState boardState = TestPiecesState.initialize();
 //        //when
 //        Score score = king.calculateScore(boardState);
 //        //then
 //        assertThat(score).isEqualTo(null);
 //    }
-
-    private static Stream<Arguments> getCasesForMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(5, 4),
-                        Position.of(5, 5),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(6, 5),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(6, 4),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(6, 3),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(5, 3),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(4, 3),
-                        team,
-                        null),
-                Arguments.of(Position.of(5, 4),
-                        Position.of(4, 4),
-                        team,
-                        null),
-
-                Arguments.of(Position.of(5, 4),
-                        Position.of(4, 5),
-                        team,
-                        null)
-        );
-    }
 }

@@ -14,7 +14,7 @@ public class PiecesState {
         this.pieces = pieces;
     }
 
-    public Piece getPiece(Position position) {
+    Piece getPiece(Position position) {
         return pieces.get(position);
     }
 

@@ -8,20 +8,31 @@ import chess.domain.piece.team.Team;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TestSquaresState extends PiecesState {
+public class TestPiecesState extends PiecesState {
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
 
-    TestSquaresState(Map<Position, Piece> pieces) {
+    private final Map<Position, Piece> pieces;
+
+    TestPiecesState(Map<Position, Piece> pieces) {
         super(pieces);
+        this.pieces = pieces;
     }
 
-    public static TestSquaresState initialize() {
+    public static TestPiecesState initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
-        return new TestSquaresState(pieces);
+        return new TestPiecesState(pieces);
     }
+
+    PiecesState movePiece(Position from, Position to) {
+        Piece piece = pieces.get(from);
+        pieces.put(to, piece);
+        pieces.remove(from);
+        return new TestPiecesState(pieces);
+    }
+
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
         initializeEdge(pieces, Team.BLACK, BoardConfig.LINE_END);

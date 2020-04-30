@@ -1,7 +1,7 @@
 package chess.domain.piece.policy.move;
 
 import chess.domain.piece.PiecesState;
-import chess.domain.piece.TestSquaresState;
+import chess.domain.piece.TestPiecesState;
 import chess.domain.piece.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -20,7 +20,7 @@ class IsAttackingSameTeamTest {
     @DisplayName("#canNotMove : return boolean as to isHeading to team which piece in the position belong to")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        PiecesState piecesState = TestSquaresState.initialize();
+        PiecesState piecesState = TestPiecesState.initialize();
         boolean canNotMove = isAttackingSameTeam.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }

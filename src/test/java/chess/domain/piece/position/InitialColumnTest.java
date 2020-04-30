@@ -1,6 +1,7 @@
-package chess.domain.piece.column;
+package chess.domain.piece.position;
 
 import chess.config.BoardConfig;
+import chess.domain.piece.position.InitialColumn;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;

@@ -38,10 +38,10 @@ class PieceFactoryTest {
     }
 
     @Test
-    @DisplayName("#createInitializedPawn() : should return InitializedPawn")
+    @DisplayName("#createInitializedPawn() : should return Pawn")
     void createInitializedPawn() {
         Piece piece = PieceFactory.createInitializedPawn(Team.WHITE);
-        assertThat(piece).isInstanceOf(InitializedPawn.class);
+        assertThat(piece).isInstanceOf(Pawn.class);
     }
 
 }

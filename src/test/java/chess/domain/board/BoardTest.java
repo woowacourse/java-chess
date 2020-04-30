@@ -24,8 +24,8 @@ class BoardTest {
 //    void initiaize() {
 //        Board board = Board.initiaize();
 //        for (int i = BoardConfig.LINE_START; i <= BoardConfig.LINE_END; i++) {
-//            for (IntegerTest row : Arrays.asList(BoardConfig.LINE_START,BoardConfig.LINE_END)) {
-//                Piece piece = board.getPiece(Position.of(i, row));
+//            for (IntegerTest PawnInitialRow : Arrays.asList(BoardConfig.LINE_START,BoardConfig.LINE_END)) {
+//                Piece piece = board.getPiece(Position.of(i, PawnInitialRow));
 //                //todo: refac
 ////                assertThat().isEqualTo(null);
 //            }

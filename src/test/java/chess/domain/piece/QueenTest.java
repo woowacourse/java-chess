@@ -14,26 +14,55 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
-//    @ParameterizedTest
-//    @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
-//    @MethodSource({"getCasesForMove"})
-//    void move(Position from, Position to, Team team, Piece expected) {
-//        //todo: refac
-//        Piece queen = null;
-//
-//        PiecesState boardState = TestSquaresState.initialize();
-//        Piece exPiece = boardState.getPiece(to);
-//        Piece moved = queen.move(to, exPiece);
-//        assertThat(moved).isEqualTo(expected);
-//    }
-//
+    private static final Position INITIAL_QUEEN_POSITION = Position.of(4, 1);
+    private static final Position CURRENT_QUEEN_POSITION = Position.of(4, 3);
+
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece queen = new Queen(team);
+
+        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState piecesState = testPiecesState.movePiece(INITIAL_QUEEN_POSITION, CURRENT_QUEEN_POSITION);
+
+        boolean canNotMove = queen.canNotMove(from, to, piecesState);
+        assertThat(canNotMove).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(CURRENT_QUEEN_POSITION,
+                        CURRENT_QUEEN_POSITION,
+                        team,
+                        true),
+                Arguments.of(CURRENT_QUEEN_POSITION,
+                        INITIAL_QUEEN_POSITION,
+                        team,
+                        true),
+                Arguments.of(CURRENT_QUEEN_POSITION,
+                        Position.of(4, 2),
+                        team,
+                        true),
+                Arguments.of(CURRENT_QUEEN_POSITION,
+                        Position.of(4, 2),
+                        team,
+                        true),
+                Arguments.of(CURRENT_QUEEN_POSITION,
+                        Position.of(6, 4),
+                        team,
+                        true)
+        );
+    }
+
 //    @Test
 //    @DisplayName("#calculateScore() : should return score of Queen")
 //    void calculateScore() {
 //        //given
 //        //todo: refac
 //        Piece queen = null;
-//        PiecesState boardState = TestSquaresState.initialize();
+//        PiecesState boardState = TestPiecesState.initialize();
 //        ;
 //        //when
 //        Score score = queen.calculateScore(boardState);
@@ -41,27 +70,4 @@ class QueenTest {
 //        //todo: refac
 //        assertThat(score).isEqualTo(null);
 //    }
-
-    //todo: refac
-    private static Stream<Arguments> getCasesForMove() {
-        Team team = Team.WHITE;
-        return Stream.of(
-                Arguments.of(Position.of(4, 2),
-                        Position.of(4, 6),
-                        team,
-                        null),
-                Arguments.of(Position.of(4, 2),
-                        Position.of(1, 5),
-                        team,
-                        null),
-                Arguments.of(Position.of(4, 2),
-                        Position.of(8, 6),
-                        team,
-                        null),
-                Arguments.of(Position.of(4, 6),
-                        Position.of(4, 3),
-                        team,
-                        null)
-        );
-    }
 }

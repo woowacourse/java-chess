@@ -1,68 +1,73 @@
 package chess.domain.piece;
 
-//todo: refac
+
+import chess.domain.piece.position.Position;
+import chess.domain.piece.team.Team;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
 class BishopTest {
+    private static final Position INITIAL_BISHOP_POSITION = Position.of(3, 1);
+    private static final Position CURRENT_BISHOP_POSITION = Position.of(1, 3);
 
-//    @ParameterizedTest
-//    @DisplayName("#move() : should return Bishop as to Position 'from', 'to' and team")
-//    @MethodSource({"getCasesForMove"})
-//    void move(Position from, Position to, Team team, Piece expected) {
-//        Piece bishop = null;
-//
-//        PiecesState boardState = TestSquaresState.initialize();
-//        Piece exPiece = boardState.getPiece(to);
-//        Piece moved = bishop.move(to, exPiece);
-//        assertThat(moved).isEqualTo(expected);
-//    }
+    @ParameterizedTest
+    @DisplayName("#canNotMove() : should return boolean as to Position 'from', 'to' and team")
+    @MethodSource({"getCasesForCanNotMove"})
+    void canNotMove(Position from, Position to, Team team, boolean expected) {
+        Piece bishop = new Bishop(team);
 
-//    @ParameterizedTest
-//    @DisplayName("#hasHindrance() : return boolean as to Position from, to and team")
-//    @MethodSource({"getCasesForHasHindrance"})
-//    void hasHindrance(Position from, Position to, Team team, boolean expected) {
-//        Bishop bishop = (Bishop) PieceFactory.createPieceWithInitialColumn(PieceType.BISHOP, from, team);
-//        PiecesState piecesState = TestSquaresState.initialize();
-//        boolean hasHindrance = bishop.hasHindrance(to, piecesState);
-//        assertThat(hasHindrance).isEqualTo(expected);
-//    }
+        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState piecesState = testPiecesState.movePiece(INITIAL_BISHOP_POSITION, CURRENT_BISHOP_POSITION);
+
+        boolean canNotMove = bishop.canNotMove(from, to, piecesState);
+        assertThat(canNotMove).isEqualTo(expected);
+    }
+
+    private static Stream<Arguments> getCasesForCanNotMove() {
+        Team team = Team.WHITE;
+        return Stream.of(
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        CURRENT_BISHOP_POSITION,
+                        team,
+                        true),
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        INITIAL_BISHOP_POSITION,
+                        team,
+                        true),
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        Position.of(2, 2),
+                        team,
+                        true),
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        Position.of(2, 5),
+                        team,
+                        true),
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        Position.of(1, 5),
+                        team,
+                        true),
+                Arguments.of(CURRENT_BISHOP_POSITION,
+                        Position.of(2, 4),
+                        team,
+                        false)
+        );
+    }
 
 //    @Test
 //    @DisplayName("#calculateScore() : should return score of Bishop")
 //    void calculateScore() {
 //        //given
 //        Piece bishop = null;
-//        PiecesState boardState = TestSquaresState.initialize();
+//        PiecesState boardState = TestPiecesState.initialize();
 //        //when
 //        Score score = bishop.calculateScore(boardState);
 //        //then
 //        assertThat(score).isEqualTo(null);
-//    }
-//
-//    private static Stream<Arguments> getCasesForMove() {
-//        Team team = Team.WHITE;
-//        return Stream.of(
-//                Arguments.of(Position.of(2, 2),
-//                        Position.of(6, 6),
-//                        team,
-//                        null),
-//                Arguments.of(Position.of(2, 2),
-//                        Position.of(7, 7),
-//                        team,
-//                        null),
-//                Arguments.of(Position.of(2, 2),
-//                        Position.of(1, 3),
-//                        team,
-//                        null)
-//        );
-//    }
-//
-//    private static Stream<Arguments> getCasesForHasHindrance() {
-//        return Stream.of(
-//                Arguments.of(Position.of(3, 2), Position.of(4, 4), Team.WHITE, true),
-//                Arguments.of(Position.of(3, 1), Position.of(5, 3), Team.WHITE, true),
-//                Arguments.of(Position.of(1, 3), Position.of(3, 1), Team.WHITE, true),
-//                Arguments.of(Position.of(5, 3), Position.of(3, 1), Team.WHITE, true),
-//                Arguments.of(Position.of(3, 1), Position.of(1, 3), Team.WHITE, true),
-//                Arguments.of(Position.of(2, 2), Position.of(6, 6), Team.WHITE, false)
-//        );
 //    }
 }

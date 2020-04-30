@@ -1,7 +1,7 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.*;
-import chess.domain.piece.column.InitialColumn;
+import chess.domain.piece.position.InitialColumn;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ public class PieceFactory {
     private static Map<InitialColumn, PieceCreator> pieceCreators = new HashMap<>();
 
     static {
-        pieceCreators.put(InitialColumn.PAWN, InitializedPawn::new);
+        pieceCreators.put(InitialColumn.PAWN, Pawn::new);
         pieceCreators.put(InitialColumn.ROOK, Rook::new);
         pieceCreators.put(InitialColumn.KNIGHT, Knight::new);
         pieceCreators.put(InitialColumn.BISHOP, Bishop::new);

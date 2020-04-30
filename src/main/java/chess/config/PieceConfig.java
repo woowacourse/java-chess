@@ -1,7 +1,7 @@
 package chess.config;
 
 import chess.domain.piece.PiecesState;
-import chess.domain.piece.column.InitialColumn;
+import chess.domain.piece.position.InitialColumn;
 import chess.domain.piece.policy.move.*;
 import chess.domain.piece.position.Position;
 import chess.domain.piece.score.Score;
