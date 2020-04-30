@@ -7,6 +7,7 @@ import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class TestPiecesState extends PiecesState {
     private static final int BLACK_PAWN_ROW = 7;
@@ -19,7 +20,7 @@ public class TestPiecesState extends PiecesState {
         this.pieces = pieces;
     }
 
-    public static TestPiecesState initialize() {
+    public static PiecesState initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
@@ -31,7 +32,7 @@ public class TestPiecesState extends PiecesState {
         Piece piece = pieces.get(from);
         pieces.put(to, piece);
         pieces.remove(from);
-        return new TestPiecesState(pieces);
+        return new PiecesState(pieces);
     }
 
 
@@ -62,5 +63,17 @@ public class TestPiecesState extends PiecesState {
         }
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+        TestPiecesState that = (TestPiecesState) o;
+        return Objects.equals(pieces, that.pieces);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), pieces);
+    }
 }

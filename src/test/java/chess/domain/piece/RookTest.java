@@ -22,7 +22,7 @@ class RookTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece rook = new Rook(team);
 
-        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState testPiecesState = TestPiecesState.initialize();
         PiecesState piecesState = testPiecesState.movePiece(INITIAL_ROOK_POSITION, CURRENT_ROOK_POSITION);
 
         boolean canNotMove = rook.canNotMove(from, to, piecesState);

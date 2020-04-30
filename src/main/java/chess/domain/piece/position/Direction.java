@@ -24,6 +24,7 @@ public enum Direction {
     }
 
     static Direction calculate(Position from, Position to) {
+        //todo: add test, check throw
         return Arrays.stream(values())
                 .filter(direction -> direction.is(from, to))
                 .findFirst()

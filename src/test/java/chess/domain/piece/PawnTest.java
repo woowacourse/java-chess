@@ -22,8 +22,8 @@ class PawnTest {
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         //given
-        TestPiecesState testPiecesState = TestPiecesState.initialize();
-        testPiecesState = (TestPiecesState) testPiecesState.movePiece(Position.of(1, 7), ENEMY_POSITION);
+        PiecesState testPiecesState = TestPiecesState.initialize();
+        testPiecesState = testPiecesState.movePiece(Position.of(1, 7), ENEMY_POSITION);
         PiecesState piecesState = testPiecesState.movePiece(Position.of(3,2), MOVED_PAWN_POSITION);
         Piece initializedPawn = new Pawn(team);
         //when

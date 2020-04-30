@@ -6,6 +6,7 @@ import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     protected final Team team;
@@ -42,6 +43,20 @@ public abstract class Piece {
 
     boolean isOppositeTeam(Piece toPiece) {
         return team.isOpposite(toPiece.team);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return team == piece.team &&
+                Objects.equals(name, piece.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, name);
     }
 
     @Override

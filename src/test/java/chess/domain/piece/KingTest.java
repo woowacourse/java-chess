@@ -23,7 +23,7 @@ class KingTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece king = new King(team);
 
-        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState testPiecesState = TestPiecesState.initialize();
         PiecesState piecesState = testPiecesState.movePiece(INITIAL_KING_POSITION, CURRENT_KING_POSITION);
 
         boolean canNotMove = king.canNotMove(from, to, piecesState);

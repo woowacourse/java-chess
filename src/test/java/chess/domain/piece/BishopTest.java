@@ -22,7 +22,7 @@ class BishopTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece bishop = new Bishop(team);
 
-        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState testPiecesState = TestPiecesState.initialize();
         PiecesState piecesState = testPiecesState.movePiece(INITIAL_BISHOP_POSITION, CURRENT_BISHOP_POSITION);
 
         boolean canNotMove = bishop.canNotMove(from, to, piecesState);

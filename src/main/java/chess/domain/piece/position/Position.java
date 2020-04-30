@@ -32,12 +32,12 @@ public class Position {
         return new Position(x, y);
     }
 
-    public Distance calculateDistance(Position to) {
+    Distance calculateDistance(Position to) {
         return Distance.calculate(this, to);
     }
 
-    public Distance calculateHorizontalDistance(Position to) {
-        return Distance.calculateHorizontal(this, to);
+    public Distance calculateStraightDistance(Position to) {
+        return Distance.calculateStraight(this, to);
     }
 
     public boolean isStraightDirection(Position to) {
@@ -58,6 +58,7 @@ public class Position {
         Direction direction = Direction.calculate(this, to);
         return direction.isDiagonal();
     }
+
 
     public boolean isNotStraightDiagonalDirection(Position to) {
         Distance verticalDistance = Distance.calculateVertical(this, to);
@@ -94,7 +95,7 @@ public class Position {
         return direction.isPerpendicular();
     }
 
-    private boolean isNotPerpendicularDirection(Position to) {
+    public boolean isNotPerpendicularDirection(Position to) {
         Direction direction = Direction.calculate(this, to);
         return direction.isNotPerpendicular();
     }

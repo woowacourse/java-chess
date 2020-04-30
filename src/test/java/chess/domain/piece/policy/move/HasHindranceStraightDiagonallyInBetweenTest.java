@@ -12,15 +12,15 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class HasHindranceDiagonallyInBetweenTest {
-    private final HasHindranceDiagonallyInBetween hasHindranceDiagonallyInBetween = new HasHindranceDiagonallyInBetween();
+class HasHindranceStraightDiagonallyInBetweenTest {
+    private final HasHindranceStraightDiagonallyInBetween hasHindranceStraightDiagonallyInBetween = new HasHindranceStraightDiagonallyInBetween();
 
     @ParameterizedTest
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
         PiecesState piecesState = TestPiecesState.initialize();
-        boolean canNotMove = hasHindranceDiagonallyInBetween.canNotMove(from, to, piecesState);
+        boolean canNotMove = hasHindranceStraightDiagonallyInBetween.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }
 

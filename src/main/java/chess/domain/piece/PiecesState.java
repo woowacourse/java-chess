@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class PiecesState {
+    static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
 
@@ -32,7 +33,7 @@ public class PiecesState {
     public PiecesState movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         if (piece.canNotMove(from, to, this)) {
-            throw new IllegalArgumentException(String.format("%s 위치의 말을 %s 위치로 옮길 수 없습니다.", from, to));
+            throw new IllegalArgumentException(String.format(CAN_NOT_MOVE_ERROR, from, to));
 
         }
 
@@ -46,10 +47,13 @@ public class PiecesState {
         return Objects.isNull(piece);
     }
 
-    public boolean hasHindranceInBetween(Distance amount, Direction direction, Position position) {
+    public boolean hasHindranceInStraightBetween(Position from, Position to) {
+        Distance amount = from.calculateStraightDistance(to);
+        Direction direction = from.calculateDirection(to);
+        Position targetPosition = from;
         for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
-            position = position.go(direction);
-            if (isFilled(position)) {
+            targetPosition = targetPosition.go(direction);
+            if (isFilled(targetPosition)) {
                 return true;
             }
         }
@@ -130,5 +134,18 @@ public class PiecesState {
             Piece initializedPawn = PieceFactory.createInitializedPawn(team);
             pieces.put(position, initializedPawn);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PiecesState that = (PiecesState) o;
+        return Objects.equals(pieces, that.pieces);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieces);
     }
 }

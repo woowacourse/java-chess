@@ -23,7 +23,7 @@ class QueenTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece queen = new Queen(team);
 
-        TestPiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState testPiecesState = TestPiecesState.initialize();
         PiecesState piecesState = testPiecesState.movePiece(INITIAL_QUEEN_POSITION, CURRENT_QUEEN_POSITION);
 
         boolean canNotMove = queen.canNotMove(from, to, piecesState);

@@ -31,6 +31,12 @@ public class Distance {
         return new Distance(calculated);
     }
 
+    static Distance calculateStraight(Position from, Position to) {
+        Distance horizontal = calculateHorizontal(from, to);
+        Distance vertical = calculateVertical(from, to);
+        return new Distance(Math.max(horizontal.value, vertical.value));
+    }
+
     public boolean isBiggerThan(double value) {
         return value < this.value;
     }

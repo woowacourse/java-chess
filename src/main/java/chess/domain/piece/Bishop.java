@@ -14,7 +14,7 @@ public class Bishop extends Piece {
 
     private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = Collections.unmodifiableList(Arrays.asList(
             new IsStayed(),
-            new HasHindranceDiagonallyInBetween(),
+            new HasHindranceStraightDiagonallyInBetween(),
             new IsAttackingSameTeam(),
             new IsNotHeadingStraightDiagonalDirection())
     );
