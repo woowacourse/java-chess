@@ -10,7 +10,7 @@ class BoardSerializerTest {
 
 //    @Test
 //    void serialize() {
-//        Board board = Board.initiaize();
+//        Board board = Board.initialize();
 //        Map<String, String> serialized = BoardSerializer.serialize(board);
 //        assertThat(serialized.get("11")).isEqualTo("r");
 //    }

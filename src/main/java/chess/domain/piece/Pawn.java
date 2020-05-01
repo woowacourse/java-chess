@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.piece.policy.move.*;
-import chess.domain.piece.position.PawnInitialRow;
-import chess.domain.piece.position.Position;
+import chess.domain.position.PawnInitialRow;
+import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ import java.util.List;
 public class Pawn extends Piece {
     private static final int INITIAL_MAX_DISTANCE = 2;
     private static final int DEFAULT_MAX_DISTANCE = 1;
-    private static final Score score = new Score(1);
+    private static final Score DEFAULT_SCORE = new Score(1);
 
-    private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = new ArrayList<>(
+    private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = Collections.unmodifiableList(
             Arrays.asList(
                     new IsStayed(),
                     new HasHindrancePerpendicularlyInBetween(),
@@ -31,9 +32,10 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Score calculateScore(PiecesState piecesState) {
+    public Score calculateScore(Pieces pieces) {
+
         //todo: refac
-        return score;
+        return DEFAULT_SCORE;
     }
 
     @Override

@@ -13,7 +13,6 @@ class HashMapTest {
         Map<Integer, String> map = new HashMap<>();
         map.put(1, "1");
         assertThat(map.get(1)).isEqualTo("1");
-        System.out.println(map.get(2));
     }
 
     @Test

@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
 
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
+import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
+import chess.domain.piece.state.TestPieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -22,10 +24,10 @@ class BishopTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece bishop = new Bishop(team);
 
-        PiecesState testPiecesState = TestPiecesState.initialize();
-        PiecesState piecesState = testPiecesState.movePiece(INITIAL_BISHOP_POSITION, CURRENT_BISHOP_POSITION);
+        Pieces testPieces = TestPieces.initialize();
+        Pieces pieces = testPieces.movePiece(INITIAL_BISHOP_POSITION, CURRENT_BISHOP_POSITION);
 
-        boolean canNotMove = bishop.canNotMove(from, to, piecesState);
+        boolean canNotMove = bishop.canNotMove(from, to, pieces);
         assertThat(canNotMove).isEqualTo(expected);
     }
 
@@ -64,7 +66,7 @@ class BishopTest {
 //    void calculateScore() {
 //        //given
 //        Piece bishop = null;
-//        PiecesState boardState = TestPiecesState.initialize();
+//        Pieces boardState = TestPieces.initialize();
 //        //when
 //        Score score = bishop.calculateScore(boardState);
 //        //then

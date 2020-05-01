@@ -1,17 +1,19 @@
-package chess.domain.piece;
+package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.position.Direction;
-import chess.domain.piece.position.Distance;
-import chess.domain.piece.position.Position;
+import chess.domain.position.Direction;
+import chess.domain.position.Distance;
+import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class PiecesState {
+public class Pieces {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
     static final String NOT_STRAIGHT_ERROR = "%s와 %s의 방향을 측정할 수 없어, 장애물이 있는 지 없는 지 확인할 수 없습니다.";
     private static final int BLACK_PAWN_ROW = 7;
@@ -21,18 +23,18 @@ public class PiecesState {
     private final Map<Position, Piece> pieces;
 
     //todo: check is good
-    PiecesState(Map<Position, Piece> pieces) {
+    Pieces(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
 
-    public static PiecesState initialize() {
+    public static Pieces initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
-        return new PiecesState(pieces);
+        return new Pieces(pieces);
     }
 
-    public PiecesState movePiece(Position from, Position to) {
+    public Pieces movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         if (piece.canNotMove(from, to, this)) {
             throw new IllegalArgumentException(String.format(CAN_NOT_MOVE_ERROR, from, to));
@@ -41,10 +43,10 @@ public class PiecesState {
 
         pieces.put(to, piece);
         pieces.remove(from);
-        return new PiecesState(pieces);
+        return new Pieces(pieces);
     }
 
-    public boolean isNotFilled(Position position) {
+    public boolean isBlank(Position position) {
         Piece piece = getPiece(position);
         return Objects.isNull(piece);
     }
@@ -59,7 +61,7 @@ public class PiecesState {
         Position targetPosition = from;
         for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
             targetPosition = targetPosition.go(direction);
-            if (isFilled(targetPosition)) {
+            if (isNotBlank(targetPosition)) {
                 return true;
             }
         }
@@ -114,7 +116,7 @@ public class PiecesState {
         return pieces.get(position);
     }
 
-    private boolean isFilled(Position position) {
+    private boolean isNotBlank(Position position) {
         Piece piece = getPiece(position);
         return Objects.nonNull(piece);
     }
@@ -150,7 +152,7 @@ public class PiecesState {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PiecesState that = (PiecesState) o;
+        Pieces that = (Pieces) o;
         return Objects.equals(pieces, that.pieces);
     }
 

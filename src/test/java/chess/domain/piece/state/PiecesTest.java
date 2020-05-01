@@ -1,7 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Rook;
+import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,12 +19,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PiecesStateTest {
+class PiecesTest {
     @Test
     @DisplayName("#initialize() : should return initialized Board")
     void initiaize() {
-        PiecesState piecesState = PiecesState.initialize();
-        Map<String, String> serialized = piecesState.serialize();
+        Pieces pieces = Pieces.initialize();
+        Map<String, String> serialized = pieces.serialize();
         assertThat(serialized.size()).isEqualTo(32);
         assertPawn(serialized, BoardConfig.LINE_START + 1, "p");
         assertPawn(serialized, BoardConfig.LINE_END - 1, "P");
@@ -33,11 +35,11 @@ class PiecesStateTest {
     @ParameterizedTest
     @MethodSource({"getCasesForMovePieceSucceed"})
     void movePieceSucceed(Position from, Position to) {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         pieces = pieces.movePiece(from, to);
 
-        PiecesState testPieces = TestPiecesState.initialize();
-        PiecesState movedPieces = testPieces.movePiece(from, to);
+        Pieces testPieces = TestPieces.initialize();
+        Pieces movedPieces = testPieces.movePiece(from, to);
 
         assertThat(pieces).isEqualTo(movedPieces);
 
@@ -46,23 +48,23 @@ class PiecesStateTest {
     @ParameterizedTest
     @MethodSource({"getCasesForMovePieceFail"})
     void movePieceFail(Position from, Position to) {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         assertThatThrownBy(() ->pieces.movePiece(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format(PiecesState.CAN_NOT_MOVE_ERROR, from, to));
+                .hasMessage(String.format(Pieces.CAN_NOT_MOVE_ERROR, from, to));
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsNotFilled"})
     void isNotFilled(Position position, boolean expected) {
-        PiecesState pieces = PiecesState.initialize();
-        assertThat(pieces.isNotFilled(position)).isEqualTo(expected);
+        Pieces pieces = Pieces.initialize();
+        assertThat(pieces.isBlank(position)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForHasHindranceInStraightBetween"})
     void hasHindranceInStraightBetweenWithStraightDirection(Position from, Position to, boolean expected) {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         boolean hasHindranceInBetween = pieces.hasHindranceInStraightBetween(from, to);
         assertThat(hasHindranceInBetween).isEqualTo(expected);
     }
@@ -71,35 +73,35 @@ class PiecesStateTest {
     void hasHindranceInStraightBetweenWithUnknownDirection() {
         Position from = Position.of(1, 2);
         Position to = Position.of(2,4);
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         assertThatThrownBy(() -> pieces.hasHindranceInStraightBetween(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format(PiecesState.NOT_STRAIGHT_ERROR, from, to));
+                .hasMessage(String.format(Pieces.NOT_STRAIGHT_ERROR, from, to));
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsSameTeam"})
     void isSameTeam(Position from, Position to, boolean expected) {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         assertThat(pieces.isSameTeam(from, to)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsOppositeTeam"})
     void isOppositeTeam(Position from, Position to, boolean expected) {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         assertThat(pieces.isOppositeTeam(from, to)).isEqualTo(expected);
     }
 
     @Test
     void isNotFinishedTrue() {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         assertThat(pieces.isNotFinished()).isEqualTo(true);
     }
 
     @Test
     void isNotFinishedFalse() {
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         killBlackKingOnPurpose(pieces);
         assertThat(pieces.isNotFinished()).isEqualTo(false);
     }
@@ -107,7 +109,7 @@ class PiecesStateTest {
     @Test
     void concludeResultWithInitializedPieces() {
         String initialScore = "38.0";
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         Result result = pieces.concludeResult();
         assertThat(result.getWinner()).isEqualTo(Team.NOT_ASSIGNED.toString());
         assertThat(result.getWhiteScore()).isEqualTo(initialScore);
@@ -118,7 +120,7 @@ class PiecesStateTest {
     void concludeResultWithWhiteWinPieces() {
         String whiteScore = "38.0";
         String blackScore = "37.0";
-        PiecesState pieces = PiecesState.initialize();
+        Pieces pieces = Pieces.initialize();
         killBlackKingOnPurpose(pieces);
         Result result = pieces.concludeResult();
         assertThat(result.getWinner()).isEqualTo(Team.WHITE.toString());
@@ -131,12 +133,12 @@ class PiecesStateTest {
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
             put(Position.of(1,1), new Rook(Team.WHITE));
         }};
-        PiecesState piecesState = new PiecesState(pieces);
+        Pieces piecesState = new Pieces(pieces);
         Map<String, String> serialized = piecesState.serialize();
         assertThat(serialized.toString()).isEqualTo("{11=r}");
     }
 
-    private void killBlackKingOnPurpose(PiecesState pieces) {
+    private void killBlackKingOnPurpose(Pieces pieces) {
         pieces.movePiece(Position.of(2,1), Position.of(3,3));
         pieces.movePiece(Position.of(3,3), Position.of(2,5));
         pieces.movePiece(Position.of(2,5), Position.of(3,7));

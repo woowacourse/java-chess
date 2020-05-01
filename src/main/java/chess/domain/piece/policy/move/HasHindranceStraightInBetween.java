@@ -1,15 +1,16 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.piece.PiecesState;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.CanNotMoveStrategy;
+import chess.domain.piece.state.Pieces;
+import chess.domain.position.Position;
 
 public class HasHindranceStraightInBetween implements CanNotMoveStrategy {
     @Override
-    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
+    public boolean canNotMove(Position from, Position to, Pieces pieces) {
         if (from.isNotStraightDirection(to)) {
             return false;
         }
 
-        return piecesState.hasHindranceInStraightBetween(from, to);
+        return pieces.hasHindranceInStraightBetween(from, to);
     }
 }

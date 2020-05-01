@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.piece.policy.move.*;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.policy.move.CanNotReach;
+import chess.domain.piece.policy.move.IsAttackingSameTeam;
+import chess.domain.piece.policy.move.IsHeadingStraightDirection;
+import chess.domain.piece.policy.move.IsStayed;
+import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
 
 import java.util.Arrays;
@@ -25,7 +29,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Score calculateScore(PiecesState piecesState) {
+    public Score calculateScore(Pieces pieces) {
         return score;
     }
 

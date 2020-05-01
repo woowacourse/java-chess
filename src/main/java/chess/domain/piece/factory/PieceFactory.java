@@ -1,7 +1,7 @@
 package chess.domain.piece.factory;
 
 import chess.domain.piece.*;
-import chess.domain.piece.position.InitialColumn;
+import chess.domain.position.InitialColumn;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;

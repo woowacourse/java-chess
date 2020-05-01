@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
 import chess.config.BoardConfig;
 import org.junit.jupiter.api.Test;

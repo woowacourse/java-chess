@@ -1,5 +1,7 @@
-package chess.domain.piece;
+package chess.domain.piece.state;
 
+import chess.domain.piece.King;
+import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 
@@ -19,7 +21,7 @@ public class Result {
         this.blackScore = blackScore;
     }
 
-    static Result conclude(PiecesState pieces) {
+    static Result conclude(Pieces pieces) {
         Team winner = concludeWinner(pieces);
         Team loser = winner.getOpposite();
         Score whiteScore = calculateScore(Team.WHITE, pieces);
@@ -39,7 +41,7 @@ public class Result {
         return blackScore.toString();
     }
 
-    private static Team concludeWinner(PiecesState pieces) {
+    private static Team concludeWinner(Pieces pieces) {
         //todo: 여기에도 isNotFinished일 때를 고려해야하나...?
         //todo: check instanceOf
         if (pieces.isNotFinished()) {
@@ -55,7 +57,7 @@ public class Result {
                 .orElseThrow(() -> new IllegalStateException("어떤 팀도 King을 가지고 있지 않습니다."));
     }
 
-    private static Score calculateScore(Team team, PiecesState pieces) {
+    private static Score calculateScore(Team team, Pieces pieces) {
         double sum = pieces.getPieces()
                 .values()
                 .stream()

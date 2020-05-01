@@ -1,29 +1,29 @@
 package chess.domain.board;
 
-import chess.domain.piece.PiecesState;
-import chess.domain.piece.Result;
-import chess.domain.piece.position.MovingFlow;
-import chess.domain.piece.position.Position;
+import chess.domain.piece.state.Pieces;
+import chess.domain.piece.state.Result;
+import chess.domain.position.MovingFlow;
+import chess.domain.position.Position;
 
 import java.util.Map;
 
 public class Board {
 
-    private final PiecesState pieces;
+    private final Pieces pieces;
 
-    private Board(PiecesState pieces) {
+    private Board(Pieces pieces) {
         this.pieces = pieces;
     }
 
-    public static Board initiaize() {
-        PiecesState pieces = PiecesState.initialize();
+    public static Board initialize() {
+        Pieces pieces = Pieces.initialize();
         return new Board(pieces);
     }
 
     public Board movePiece(MovingFlow movingFlow) {
         Position from = movingFlow.getFrom();
         Position to = movingFlow.getTo();
-        PiecesState pieces =this.pieces.movePiece(from, to);
+        Pieces pieces = this.pieces.movePiece(from, to);
         return new Board(pieces);
     }
 

@@ -1,6 +1,6 @@
 package chess.ui;
 
-import chess.domain.piece.position.MovingFlow;
+import chess.domain.position.MovingFlow;
 import chess.view.InputView;
 
 import java.util.Scanner;

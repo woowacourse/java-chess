@@ -1,38 +1,39 @@
-package chess.domain.piece;
+package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
+import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.piece.position.Position;
+import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TestPiecesState extends PiecesState {
+public class TestPieces extends Pieces {
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
 
     private final Map<Position, Piece> pieces;
 
-    private TestPiecesState(Map<Position, Piece> pieces) {
+    private TestPieces(Map<Position, Piece> pieces) {
         super(pieces);
         this.pieces = pieces;
     }
 
-    public static PiecesState initialize() {
+    public static Pieces initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
-        return new TestPiecesState(pieces);
+        return new TestPieces(pieces);
     }
 
     @Override
-    public PiecesState movePiece(Position from, Position to) {
+    public Pieces movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         pieces.put(to, piece);
         pieces.remove(from);
-        return new PiecesState(pieces);
+        return new Pieces(pieces);
     }
 
 
@@ -68,7 +69,7 @@ public class TestPiecesState extends PiecesState {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        TestPiecesState that = (TestPiecesState) o;
+        TestPieces that = (TestPieces) o;
         return Objects.equals(pieces, that.pieces);
     }
 

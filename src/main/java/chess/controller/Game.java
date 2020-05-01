@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Result;
-import chess.domain.piece.position.MovingFlow;
+import chess.domain.piece.state.Result;
+import chess.domain.position.MovingFlow;
 import chess.ui.Command;
 import chess.ui.Console;
 import chess.view.OutputView;
@@ -14,13 +14,12 @@ public class Game {
         this.console = console;
     }
 
-
     public Board start() {
         Command command = console.inputStart();
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
-        Board board = Board.initiaize();
+        Board board = Board.initialize();
         OutputView.printBoard(board.serialize());
         return board;
     }

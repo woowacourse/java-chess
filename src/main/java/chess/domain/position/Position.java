@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
 import chess.util.SmallLetterAsciiConverter;
 
@@ -77,12 +77,7 @@ public class Position {
         return Position.of(newX, newY);
     }
 
-    public boolean isNotForward(Position from, Direction teamForwardDirection) {
-        int standard = (y - from.y) * teamForwardDirection.getVertical();
-        return standard <= 0;
-    }
-
-    public int getX() {
+    int getX() {
         return x;
     }
 

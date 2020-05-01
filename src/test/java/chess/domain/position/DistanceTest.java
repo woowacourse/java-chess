@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

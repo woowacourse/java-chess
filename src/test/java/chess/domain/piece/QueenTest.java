@@ -1,10 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.piece.position.Position;
-import chess.domain.piece.score.Score;
+import chess.domain.position.Position;
+import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
+import chess.domain.piece.state.TestPieces;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -23,10 +23,10 @@ class QueenTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece queen = new Queen(team);
 
-        PiecesState testPiecesState = TestPiecesState.initialize();
-        PiecesState piecesState = testPiecesState.movePiece(INITIAL_QUEEN_POSITION, CURRENT_QUEEN_POSITION);
+        Pieces testPieces = TestPieces.initialize();
+        Pieces pieces = testPieces.movePiece(INITIAL_QUEEN_POSITION, CURRENT_QUEEN_POSITION);
 
-        boolean canNotMove = queen.canNotMove(from, to, piecesState);
+        boolean canNotMove = queen.canNotMove(from, to, pieces);
         assertThat(canNotMove).isEqualTo(expected);
     }
 
@@ -62,7 +62,7 @@ class QueenTest {
 //        //given
 //        //todo: refac
 //        Piece queen = null;
-//        PiecesState boardState = TestPiecesState.initialize();
+//        Pieces boardState = TestPieces.initialize();
 //        ;
 //        //when
 //        Score score = queen.calculateScore(boardState);

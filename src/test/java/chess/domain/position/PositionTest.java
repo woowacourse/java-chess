@@ -1,4 +1,4 @@
-package chess.domain.piece.position;
+package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,15 +37,6 @@ class PositionTest {
         Distance distance = from.calculateDistance(to);
         //then
         assertThat(distance).isEqualTo(expected);
-    }
-
-    @ParameterizedTest
-    @DisplayName("#isNotForward() : should return boolean as to Position 'to' identify forward than 'from'")
-    @MethodSource({"getCasesForIsBackward"})
-    void isBackward(Position from, Direction teamForwardDirection, boolean expected) {
-        Position to = Position.of(1,2);
-        assertThat(to.isNotForward(from, teamForwardDirection)).isEqualTo(expected);
-
     }
 
     private static Stream<Arguments> getCasesForCalculateDistance() {

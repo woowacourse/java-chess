@@ -1,20 +1,16 @@
 package chess.domain.piece.team;
 
-import chess.domain.piece.position.Direction;
-
 public enum Team {
-    WHITE(Direction.NORTH, Team::isBlack, "White"),
-    BLACK(Direction.SOUTH, Team::isWhite, "Black"),
-    NOT_ASSIGNED(Direction.STAY, (ignored) -> {
+    WHITE(Team::isBlack, "White"),
+    BLACK(Team::isWhite, "Black"),
+    NOT_ASSIGNED((ignored) -> {
         throw new IllegalStateException("팀이 정해져있지 않아 적을 식별할 수 없습니다.");
     }, "Not Assigned");
 
-    private final Direction forwardDirection;
     private final OppositeIdentifier oppositeIdentifier;
     private final String name;
 
-    Team(Direction forwardDirection, OppositeIdentifier oppositeIdentifier, String name) {
-        this.forwardDirection = forwardDirection;
+    Team(OppositeIdentifier oppositeIdentifier, String name) {
         this.oppositeIdentifier = oppositeIdentifier;
         this.name = name;
     }
