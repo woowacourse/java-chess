@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.piece.policy.score.CalculateScoreStrategy;
+import chess.domain.piece.state.File;
 import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.Pieces;
@@ -27,7 +29,7 @@ public abstract class Piece {
                 .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, pieces));
     }
 
-    public abstract Score calculateScore(Pieces pieces);
+    public abstract Score calculateScore(CalculateScoreStrategy calculateScoreStrategy);
 
     protected abstract List<CanNotMoveStrategy> constituteStrategies(Position from);
 

@@ -3,6 +3,7 @@ package chess.domain.piece.state;
 import chess.config.BoardConfig;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.score.Score;
 import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
@@ -105,6 +106,14 @@ class PiecesTest {
         killBlackKingOnPurpose(pieces);
         assertThat(pieces.isNotFinished()).isEqualTo(false);
     }
+
+    @Test
+    void calculateScoreOf() {
+        Pieces pieces = Pieces.initialize();
+        Score score = pieces.calculateScoreOf(Team.WHITE);
+        assertThat(score).isEqualTo(Score.of(38));
+    }
+
 
     @Test
     void concludeResultWithInitializedPieces() {

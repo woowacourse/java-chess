@@ -58,14 +58,15 @@ public class Result {
     }
 
     private static Score calculateScore(Team team, Pieces pieces) {
-        double sum = pieces.getPieces()
-                .values()
-                .stream()
-                .filter(piece -> piece.isSameTeam(team))
-                .map(piece -> piece.calculateScore(pieces))
-                .mapToDouble(Score::getValue)
-                .sum();
-        return new Score(sum);
+        //todo: refac
+//        double sum = pieces.getPieces()
+//                .values()
+//                .stream()
+//                .filter(piece -> piece.isSameTeam(team))
+//                .map(piece -> piece.calculateScore(pieces))
+//                .mapToDouble(Score::getValue)
+//                .sum();
+        return Score.zero();
     }
 
     @Override

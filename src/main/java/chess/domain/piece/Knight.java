@@ -4,6 +4,8 @@ import chess.domain.piece.policy.move.CanNotReach;
 import chess.domain.piece.policy.move.IsAttackingSameTeam;
 import chess.domain.piece.policy.move.IsHeadingStraightDirection;
 import chess.domain.piece.policy.move.IsStayed;
+import chess.domain.piece.policy.score.CalculateScoreStrategy;
+import chess.domain.piece.state.File;
 import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.Pieces;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class Knight extends Piece {
     private static final double MAX_DISTANCE = Math.sqrt(Math.pow(2, 2) + 1);
-    private static final Score score = new Score(2.5);
+    private static final Score score = Score.of(2.5);
 
     private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = Collections.unmodifiableList(Arrays.asList(
             new IsStayed(),
@@ -29,7 +31,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public Score calculateScore(Pieces pieces) {
+    public Score calculateScore(CalculateScoreStrategy calculateScoreStrategy) {
         return score;
     }
 

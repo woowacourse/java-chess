@@ -4,24 +4,25 @@ import chess.domain.piece.policy.move.HasHindranceStraightInBetween;
 import chess.domain.piece.policy.move.IsAttackingSameTeam;
 import chess.domain.piece.policy.move.IsNotHeadingStraightDirection;
 import chess.domain.piece.policy.move.IsStayed;
-import chess.domain.position.Position;
+import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.piece.score.Score;
-import chess.domain.piece.state.Pieces;
+import chess.domain.piece.state.File;
 import chess.domain.piece.team.Team;
+import chess.domain.position.Position;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final Score score = new Score(9);
+    private static final Score score = Score.of(9);
 
     public Queen(Team team) {
         super(team, Team.convertName("q", team));
     }
 
     @Override
-    public Score calculateScore(Pieces pieces) {
+    public Score calculateScore(CalculateScoreStrategy calculateScoreStrategy) {
         return score;
     }
 

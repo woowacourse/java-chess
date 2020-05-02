@@ -5,12 +5,25 @@ import java.util.Objects;
 public class Score {
     private final double value;
 
-    public Score(double value) {
+    private Score(double value) {
         this.value = value;
+    }
+
+    public static Score zero() {
+        return new Score(0);
+    }
+
+    public static Score of(double value) {
+        return new Score(value);
     }
 
     public double getValue() {
         return value;
+    }
+
+    //todo test
+    public Score add(Score other) {
+        return new Score(value + other.value);
     }
 
     @Override

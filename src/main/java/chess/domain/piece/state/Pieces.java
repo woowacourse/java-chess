@@ -4,14 +4,13 @@ import chess.config.BoardConfig;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
+import chess.domain.piece.score.Score;
 import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Pieces {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
@@ -45,6 +44,44 @@ public class Pieces {
         pieces.remove(from);
         return new Pieces(pieces);
     }
+
+    Score calculateScoreOf(Team team) {
+        Score sum = Score.zero();
+        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+            File file = getFile(column);
+            Score fileScore = file.calculateScoreOf(team);
+            sum = sum.add(fileScore);
+        }
+        return sum;
+    }
+
+    private File getFile(int column) {
+        List<Piece> pieces = new ArrayList<>();
+        for (int row = BoardConfig.LINE_START; row <= BoardConfig.LINE_END; row++) {
+            Position position = Position.of(column, row);
+            Piece piece = getPiece(position);
+            //todo check null, refac
+            if (piece == null) {
+                continue;
+            }
+            pieces.add(piece);
+        }
+        return new File(pieces);
+    }
+
+
+//    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
+//        int collumn = position.getX();
+//        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
+//                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
+//                .anyMatch(hasPeerOnSameCollumn());
+//    }
+//
+//    private Predicate<Piece> hasPeerOnSameCollumn() {
+//        return piece -> (piece instanceof InitializedPawn || piece instanceof MovedPawn)
+//                && !this.equals(piece)
+//                && this.isSameTeam(piece);
+//    }
 
     public boolean isBlank(Position position) {
         Piece piece = getPiece(position);
@@ -113,6 +150,7 @@ public class Pieces {
     }
 
     private Piece getPiece(Position position) {
+        //todo: check if throw is needed
         return pieces.get(position);
     }
 
