@@ -12,7 +12,6 @@ public class Result {
     private final Score whiteScore;
     private final Score blackScore;
 
-    //todo: check if board is good
     private Result(Team winner, Team loser, Score whiteScore,  Score blackScore) {
         this.winner = winner;
         this.loser = loser;
@@ -41,8 +40,6 @@ public class Result {
     }
 
     private static Team concludeWinner(PiecesState piecesState) {
-        //todo: 여기에도 isNotFinished일 때를 고려해야하나...?
-        //todo: check instanceOf
         if (piecesState.isNotFinished()) {
             return Team.NOT_ASSIGNED;
         }

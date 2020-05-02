@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
@@ -37,5 +38,9 @@ public class Board {
 
     public Map<String, String> serialize() {
         return piecesState.serialize();
+    }
+
+    Piece getPiece(Position position) {
+        return piecesState.findPiece(position);
     }
 }

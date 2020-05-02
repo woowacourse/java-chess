@@ -20,7 +20,6 @@ public class PiecesState {
 
     private final Map<Position, Piece> pieces;
 
-    //todo: check is good
     PiecesState(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
@@ -64,11 +63,15 @@ public class PiecesState {
         if (isBlank(from) || isBlank(to)) {
             return false;
         }
-        Piece fromPiece = getPiece(from)
-                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece fromPiece = findPiece(from);
         Piece toPiece = getPiece(to)
                 .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
         return fromPiece.isSameTeam(toPiece);
+    }
+
+    public Piece findPiece(Position position) {
+        return getPiece(position)
+                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", position)));
     }
 
     public boolean isOppositeTeam(Position from, Position to) {
@@ -76,8 +79,7 @@ public class PiecesState {
             return false;
         }
 
-        Piece fromPiece = getPiece(from)
-                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece fromPiece = findPiece(from);
         Piece toPiece = getPiece(to)
                 .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
 
@@ -139,8 +141,7 @@ public class PiecesState {
 
     private void addPiece(List<Piece> pieces, Position position) {
         if (isNotBlank(position)) {
-            Piece piece = getPiece(position)
-                    .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", position)));
+            Piece piece = findPiece(position);
             pieces.add(piece);
         }
     }

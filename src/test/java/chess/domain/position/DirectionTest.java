@@ -28,8 +28,8 @@ class DirectionTest {
                 Arguments.of(Position.of(2,2), Position.of(3,3), Direction.NORTH_EAST),
                 Arguments.of(Position.of(2,2), Position.of(1,3), Direction.NORTH_WEST),
                 Arguments.of(Position.of(2,2), Position.of(3,1), Direction.SOUTH_EAST),
-                Arguments.of(Position.of(2,2), Position.of(1,1), Direction.SOUTH_WEST)
+                Arguments.of(Position.of(2,2), Position.of(1,1), Direction.SOUTH_WEST),
+                Arguments.of(Position.of(1,1), Position.of(2,3), Direction.UNKNOWN)
         );
     }
-
 }

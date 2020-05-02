@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum InitialColumn {
     PAWN(new ArrayList<>()),
@@ -31,7 +32,10 @@ public enum InitialColumn {
         return initialColumns.contains(new Column(column));
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return String.join(", ", initialColumns.stream()
+                .map(Column::toString)
+                .collect(Collectors.toList()));
+    }
 }

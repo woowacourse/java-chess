@@ -43,8 +43,7 @@ enum Piece {
         return Arrays.stream(values())
                 .filter(piece -> piece.initialColumn == initialColumn)
                 .findAny()
-                //todo: refac
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 체스 말이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("칼럼 %s에 해당하는 체스말을 찾을 수 없습니다.", initialColumn)));
     }
 
     String getName(Team team) {

@@ -28,7 +28,6 @@ public class Piece {
         return team;
     }
 
-    //todo: refac from, to -> MovingFlow
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
         return canNotMoveStrategy.canNotMove(from, to, piecesState);
     }
@@ -39,7 +38,6 @@ public class Piece {
 
 
     public boolean isSameTeam(Piece toPiece) {
-        //todo: getter??
         return team.isSame(toPiece.team);
     }
 

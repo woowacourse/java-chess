@@ -17,7 +17,6 @@ public class Score {
         return new Score(value);
     }
 
-    //todo test
     public Score add(Score other) {
         return new Score(value + other.value);
     }
