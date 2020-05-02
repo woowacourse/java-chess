@@ -34,9 +34,9 @@ public class Pawn extends Piece {
 
     @Override
     public Score calculateScore(CalculateScoreStrategy calculateScoreStrategy) {
-//        if (file.hasMultiplePawn(team)) {
-//            return SCORE_WHEN_HAS_PEER;
-//        }
+        if (calculateScoreStrategy.hasMultiplePawnAtFile()) {
+            return SCORE_WHEN_HAS_PEER;
+        }
 
         return SCORE_WHEN_HAS_NOT_PEER;
     }

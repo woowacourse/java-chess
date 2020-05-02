@@ -6,6 +6,7 @@ import chess.domain.piece.Rook;
 import chess.domain.piece.score.Score;
 import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -109,9 +110,30 @@ class PiecesStateTest {
 
     @Test
     void calculateScoreOf() {
+        //given
         PiecesState piecesState = PiecesState.initialize();
+        //when
         Score score = piecesState.calculateScoreOf(Team.WHITE);
+        //then
         assertThat(score).isEqualTo(Score.of(38));
+        //given
+        piecesState = killWhiteNightOnPurpose(piecesState);
+        //when
+        score = piecesState.calculateScoreOf(Team.BLACK);
+        //then
+        assertThat(score).isEqualTo(Score.of(37));
+        //when
+        score = piecesState.calculateScoreOf(Team.WHITE);
+        //then
+        assertThat(score).isEqualTo(Score.of(35.5));
+    }
+
+    private PiecesState killWhiteNightOnPurpose(PiecesState piecesState) {
+        piecesState = piecesState.movePiece(Position.of(2,1), Position.of(3,3));
+        piecesState = piecesState.movePiece(Position.of(3,3), Position.of(2,5));
+        piecesState = piecesState.movePiece(Position.of(2,5), Position.of(4,6));
+        piecesState = piecesState.movePiece(Position.of(3,7), Position.of(4,6));
+        return piecesState;
     }
 
 
