@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.piece.state.PiecesState;
+import chess.domain.piece.state.TestPiecesState;
 import chess.domain.position.Position;
-import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.state.TestPieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -24,12 +24,12 @@ class PawnTest {
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         //given
-        Pieces testPieces = TestPieces.initialize();
-        testPieces = testPieces.movePiece(Position.of(1, 7), ENEMY_POSITION);
-        Pieces pieces = testPieces.movePiece(Position.of(3,2), MOVED_PAWN_POSITION);
+        PiecesState testPiecesState = TestPiecesState.initialize();
+        testPiecesState = testPiecesState.movePiece(Position.of(1, 7), ENEMY_POSITION);
+        PiecesState piecesState = testPiecesState.movePiece(Position.of(3,2), MOVED_PAWN_POSITION);
         Piece initializedPawn = new Pawn(team);
         //when
-        boolean canNotMove = initializedPawn.canNotMove(from, to, pieces);
+        boolean canNotMove = initializedPawn.canNotMove(from, to, piecesState);
         //then
         assertThat(canNotMove).isEqualTo(expected);
     }
@@ -92,7 +92,7 @@ class PawnTest {
 //    void calculateScore(Position position, Score expected) {
 //        //given
 //        Piece pawn = null;
-//        Pieces boardState = TestPieces.initialize();
+//        PiecesState boardState = TestPiecesState.initialize();
 //        //when
 //        Score score = pawn.calculateScore(boardState);
 //        //then

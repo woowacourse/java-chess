@@ -1,7 +1,7 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.piece.state.Pieces;
-import chess.domain.piece.state.TestPieces;
+import chess.domain.piece.state.PiecesState;
+import chess.domain.piece.state.TestPiecesState;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,7 +19,7 @@ class IsDiagonalWithoutAttackTest {
     @DisplayName("#canNotMove : return boolean as to Position 'from', 'to', team and the Piece at the position")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        Pieces boardState = TestPieces.initialize();
+        PiecesState boardState = TestPiecesState.initialize();
         boolean canNotMove = isDiagonalWithoutAttack.canNotMove(from, to, boardState);
         assertThat(canNotMove).isEqualTo(expected);
     }

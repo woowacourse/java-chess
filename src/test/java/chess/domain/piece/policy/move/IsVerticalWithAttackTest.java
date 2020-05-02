@@ -1,7 +1,7 @@
 package chess.domain.piece.policy.move;
 
-import chess.domain.piece.state.Pieces;
-import chess.domain.piece.state.TestPieces;
+import chess.domain.piece.state.PiecesState;
+import chess.domain.piece.state.TestPiecesState;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -19,8 +19,8 @@ class IsVerticalWithAttackTest {
     @DisplayName("#canNotMove() : should return boolean measuring Position to against MAX_DISTANCE")
     @MethodSource({"getCasesForCanNotMove"})
     void canNotMove(Position from, Position to, boolean expected) {
-        Pieces pieces = TestPieces.initialize();
-        boolean canNotMove = isVerticalWithAttack.canNotMove(from, to, pieces);
+        PiecesState piecesState = TestPiecesState.initialize();
+        boolean canNotMove = isVerticalWithAttack.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }
 

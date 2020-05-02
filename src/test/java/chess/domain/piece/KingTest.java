@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.piece.state.Pieces;
+import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.state.TestPieces;
+import chess.domain.piece.state.TestPiecesState;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -23,10 +23,10 @@ class KingTest {
     void canNotMove(Position from, Position to, Team team, boolean expected) {
         Piece king = new King(team);
 
-        Pieces testPieces = TestPieces.initialize();
-        Pieces pieces = testPieces.movePiece(INITIAL_KING_POSITION, CURRENT_KING_POSITION);
+        PiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState piecesState = testPiecesState.movePiece(INITIAL_KING_POSITION, CURRENT_KING_POSITION);
 
-        boolean canNotMove = king.canNotMove(from, to, pieces);
+        boolean canNotMove = king.canNotMove(from, to, piecesState);
         assertThat(canNotMove).isEqualTo(expected);
     }
 
@@ -58,7 +58,7 @@ class KingTest {
 //    void calculateScore() {
 //        //given
 //        Piece king = null;
-//        Pieces boardState = TestPieces.initialize();
+//        PiecesState boardState = TestPiecesState.initialize();
 //        //when
 //        Score score = king.calculateScore(boardState);
 //        //then

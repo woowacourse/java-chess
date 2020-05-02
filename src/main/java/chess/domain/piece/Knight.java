@@ -5,10 +5,8 @@ import chess.domain.piece.policy.move.IsAttackingSameTeam;
 import chess.domain.piece.policy.move.IsHeadingStraightDirection;
 import chess.domain.piece.policy.move.IsStayed;
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
-import chess.domain.piece.state.File;
 import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
-import chess.domain.piece.state.Pieces;
 import chess.domain.piece.team.Team;
 
 import java.util.Arrays;

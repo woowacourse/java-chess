@@ -20,12 +20,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-class PiecesTest {
+class PiecesStateTest {
     @Test
     @DisplayName("#initialize() : should return initialized Board")
     void initiaize() {
-        Pieces pieces = Pieces.initialize();
-        Map<String, String> serialized = pieces.serialize();
+        PiecesState piecesState = PiecesState.initialize();
+        Map<String, String> serialized = piecesState.serialize();
         assertThat(serialized.size()).isEqualTo(32);
         assertPawn(serialized, BoardConfig.LINE_START + 1, "p");
         assertPawn(serialized, BoardConfig.LINE_END - 1, "P");
@@ -36,37 +36,37 @@ class PiecesTest {
     @ParameterizedTest
     @MethodSource({"getCasesForMovePieceSucceed"})
     void movePieceSucceed(Position from, Position to) {
-        Pieces pieces = Pieces.initialize();
-        pieces = pieces.movePiece(from, to);
+        PiecesState piecesState = PiecesState.initialize();
+        piecesState = piecesState.movePiece(from, to);
 
-        Pieces testPieces = TestPieces.initialize();
-        Pieces movedPieces = testPieces.movePiece(from, to);
+        PiecesState testPiecesState = TestPiecesState.initialize();
+        PiecesState movedPiecesState = testPiecesState.movePiece(from, to);
 
-        assertThat(pieces).isEqualTo(movedPieces);
+        assertThat(piecesState).isEqualTo(movedPiecesState);
 
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForMovePieceFail"})
     void movePieceFail(Position from, Position to) {
-        Pieces pieces = Pieces.initialize();
-        assertThatThrownBy(() ->pieces.movePiece(from, to))
+        PiecesState piecesState = PiecesState.initialize();
+        assertThatThrownBy(() -> piecesState.movePiece(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format(Pieces.CAN_NOT_MOVE_ERROR, from, to));
+                .hasMessage(String.format(PiecesState.CAN_NOT_MOVE_ERROR, from, to));
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsNotFilled"})
     void isNotFilled(Position position, boolean expected) {
-        Pieces pieces = Pieces.initialize();
-        assertThat(pieces.isBlank(position)).isEqualTo(expected);
+        PiecesState piecesState = PiecesState.initialize();
+        assertThat(piecesState.isBlank(position)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForHasHindranceInStraightBetween"})
     void hasHindranceInStraightBetweenWithStraightDirection(Position from, Position to, boolean expected) {
-        Pieces pieces = Pieces.initialize();
-        boolean hasHindranceInBetween = pieces.hasHindranceInStraightBetween(from, to);
+        PiecesState piecesState = PiecesState.initialize();
+        boolean hasHindranceInBetween = piecesState.hasHindranceInStraightBetween(from, to);
         assertThat(hasHindranceInBetween).isEqualTo(expected);
     }
 
@@ -74,43 +74,43 @@ class PiecesTest {
     void hasHindranceInStraightBetweenWithUnknownDirection() {
         Position from = Position.of(1, 2);
         Position to = Position.of(2,4);
-        Pieces pieces = Pieces.initialize();
-        assertThatThrownBy(() -> pieces.hasHindranceInStraightBetween(from, to))
+        PiecesState piecesState = PiecesState.initialize();
+        assertThatThrownBy(() -> piecesState.hasHindranceInStraightBetween(from, to))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage(String.format(Pieces.NOT_STRAIGHT_ERROR, from, to));
+                .hasMessage(String.format(PiecesState.NOT_STRAIGHT_ERROR, from, to));
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsSameTeam"})
     void isSameTeam(Position from, Position to, boolean expected) {
-        Pieces pieces = Pieces.initialize();
-        assertThat(pieces.isSameTeam(from, to)).isEqualTo(expected);
+        PiecesState piecesState = PiecesState.initialize();
+        assertThat(piecesState.isSameTeam(from, to)).isEqualTo(expected);
     }
 
     @ParameterizedTest
     @MethodSource({"getCasesForIsOppositeTeam"})
     void isOppositeTeam(Position from, Position to, boolean expected) {
-        Pieces pieces = Pieces.initialize();
-        assertThat(pieces.isOppositeTeam(from, to)).isEqualTo(expected);
+        PiecesState piecesState = PiecesState.initialize();
+        assertThat(piecesState.isOppositeTeam(from, to)).isEqualTo(expected);
     }
 
     @Test
     void isNotFinishedTrue() {
-        Pieces pieces = Pieces.initialize();
-        assertThat(pieces.isNotFinished()).isEqualTo(true);
+        PiecesState piecesState = PiecesState.initialize();
+        assertThat(piecesState.isNotFinished()).isEqualTo(true);
     }
 
     @Test
     void isNotFinishedFalse() {
-        Pieces pieces = Pieces.initialize();
-        killBlackKingOnPurpose(pieces);
-        assertThat(pieces.isNotFinished()).isEqualTo(false);
+        PiecesState piecesState = PiecesState.initialize();
+        killBlackKingOnPurpose(piecesState);
+        assertThat(piecesState.isNotFinished()).isEqualTo(false);
     }
 
     @Test
     void calculateScoreOf() {
-        Pieces pieces = Pieces.initialize();
-        Score score = pieces.calculateScoreOf(Team.WHITE);
+        PiecesState piecesState = PiecesState.initialize();
+        Score score = piecesState.calculateScoreOf(Team.WHITE);
         assertThat(score).isEqualTo(Score.of(38));
     }
 
@@ -118,8 +118,8 @@ class PiecesTest {
     @Test
     void concludeResultWithInitializedPieces() {
         String initialScore = "38.0";
-        Pieces pieces = Pieces.initialize();
-        Result result = pieces.concludeResult();
+        PiecesState piecesState = PiecesState.initialize();
+        Result result = piecesState.concludeResult();
         assertThat(result.getWinner()).isEqualTo(Team.NOT_ASSIGNED.toString());
         assertThat(result.getWhiteScore()).isEqualTo(initialScore);
         assertThat(result.getBlackScore()).isEqualTo(initialScore);
@@ -129,9 +129,9 @@ class PiecesTest {
     void concludeResultWithWhiteWinPieces() {
         String whiteScore = "38.0";
         String blackScore = "37.0";
-        Pieces pieces = Pieces.initialize();
-        killBlackKingOnPurpose(pieces);
-        Result result = pieces.concludeResult();
+        PiecesState piecesState = PiecesState.initialize();
+        killBlackKingOnPurpose(piecesState);
+        Result result = piecesState.concludeResult();
         assertThat(result.getWinner()).isEqualTo(Team.WHITE.toString());
         assertThat(result.getWhiteScore()).isEqualTo(whiteScore);
         assertThat(result.getBlackScore()).isEqualTo(blackScore);
@@ -142,16 +142,16 @@ class PiecesTest {
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
             put(Position.of(1,1), new Rook(Team.WHITE));
         }};
-        Pieces piecesState = new Pieces(pieces);
+        PiecesState piecesState = new PiecesState(pieces);
         Map<String, String> serialized = piecesState.serialize();
         assertThat(serialized.toString()).isEqualTo("{11=r}");
     }
 
-    private void killBlackKingOnPurpose(Pieces pieces) {
-        pieces.movePiece(Position.of(2,1), Position.of(3,3));
-        pieces.movePiece(Position.of(3,3), Position.of(2,5));
-        pieces.movePiece(Position.of(2,5), Position.of(3,7));
-        pieces.movePiece(Position.of(3,7), Position.of(5,8));
+    private void killBlackKingOnPurpose(PiecesState piecesState) {
+        piecesState.movePiece(Position.of(2,1), Position.of(3,3));
+        piecesState.movePiece(Position.of(3,3), Position.of(2,5));
+        piecesState.movePiece(Position.of(2,5), Position.of(3,7));
+        piecesState.movePiece(Position.of(3,7), Position.of(5,8));
     }
 
     private static Stream<Arguments> getCasesForIsSameTeam() {

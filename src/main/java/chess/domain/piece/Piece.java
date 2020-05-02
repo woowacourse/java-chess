@@ -1,10 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
-import chess.domain.piece.state.File;
 import chess.domain.position.Position;
 import chess.domain.piece.score.Score;
-import chess.domain.piece.state.Pieces;
+import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.team.Team;
 
 import java.util.List;
@@ -23,10 +22,10 @@ public abstract class Piece {
         return team;
     }
 
-    public boolean canNotMove(Position from, Position to, Pieces pieces) {
+    public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
         List<CanNotMoveStrategy> canNotMoveStrategies = constituteStrategies(from);
         return canNotMoveStrategies.stream()
-                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, pieces));
+                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, piecesState));
     }
 
     public abstract Score calculateScore(CalculateScoreStrategy calculateScoreStrategy);

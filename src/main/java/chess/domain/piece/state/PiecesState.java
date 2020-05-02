@@ -12,7 +12,7 @@ import chess.domain.piece.team.Team;
 
 import java.util.*;
 
-public class Pieces {
+public class PiecesState {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
     static final String NOT_STRAIGHT_ERROR = "%s와 %s의 방향을 측정할 수 없어, 장애물이 있는 지 없는 지 확인할 수 없습니다.";
     private static final int BLACK_PAWN_ROW = 7;
@@ -22,71 +22,26 @@ public class Pieces {
     private final Map<Position, Piece> pieces;
 
     //todo: check is good
-    Pieces(Map<Position, Piece> pieces) {
+    PiecesState(Map<Position, Piece> pieces) {
         this.pieces = pieces;
     }
 
-    public static Pieces initialize() {
+    public static PiecesState initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
-        return new Pieces(pieces);
+        return new PiecesState(pieces);
     }
 
-    public Pieces movePiece(Position from, Position to) {
+    public PiecesState movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         if (piece.canNotMove(from, to, this)) {
             throw new IllegalArgumentException(String.format(CAN_NOT_MOVE_ERROR, from, to));
 
         }
-
-        pieces.put(to, piece);
-        pieces.remove(from);
-        return new Pieces(pieces);
+        return updatePiecesState(from, to, piece);
     }
 
-    Score calculateScoreOf(Team team) {
-        Score sum = Score.zero();
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
-            File file = getFile(column);
-            Score fileScore = file.calculateScoreOf(team);
-            sum = sum.add(fileScore);
-        }
-        return sum;
-    }
-
-    private File getFile(int column) {
-        List<Piece> pieces = new ArrayList<>();
-        for (int row = BoardConfig.LINE_START; row <= BoardConfig.LINE_END; row++) {
-            Position position = Position.of(column, row);
-            Piece piece = getPiece(position);
-            //todo check null, refac
-            if (piece == null) {
-                continue;
-            }
-            pieces.add(piece);
-        }
-        return new File(pieces);
-    }
-
-
-//    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
-//        int collumn = position.getX();
-//        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
-//                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
-//                .anyMatch(hasPeerOnSameCollumn());
-//    }
-//
-//    private Predicate<Piece> hasPeerOnSameCollumn() {
-//        return piece -> (piece instanceof InitializedPawn || piece instanceof MovedPawn)
-//                && !this.equals(piece)
-//                && this.isSameTeam(piece);
-//    }
-
-    public boolean isBlank(Position position) {
-        Piece piece = getPiece(position);
-        return Objects.isNull(piece);
-    }
 
     public boolean hasHindranceInStraightBetween(Position from, Position to) {
         if (from.isNotStraightDirection(to)) {
@@ -107,34 +62,43 @@ public class Pieces {
     }
 
     public boolean isSameTeam(Position from, Position to) {
-        Piece fromPiece = pieces.get(from);
-        Piece toPiece = pieces.get(to);
-        if (Objects.isNull(fromPiece) || Objects.isNull(toPiece)) {
+        if (isBlank(from) || isBlank(to)) {
             return false;
         }
+        Piece fromPiece = getPiece(from)
+                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece toPiece = getPiece(to)
+                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
         return fromPiece.isSameTeam(toPiece);
     }
 
     public boolean isOppositeTeam(Position from, Position to) {
-        Piece fromPiece = pieces.get(from);
-        Piece toPiece = pieces.get(to);
-        if (Objects.isNull(fromPiece) || Objects.isNull(toPiece)) {
+        if (isBlank(from) || isBlank(to)) {
             return false;
         }
+
+        Piece fromPiece = getPiece(from)
+                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece toPiece = getPiece(to)
+                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+
         return fromPiece.isOppositeTeam(toPiece);
     }
 
-    //todo: refac
     public boolean isNotFinished() {
         long kingSize = pieces.values()
                 .stream()
                 .filter(piece -> piece instanceof King)
                 .count();
-        return kingSize == INITIAL_KING_SIZE;
+        return INITIAL_KING_SIZE <= kingSize;
     }
 
     public Result concludeResult() {
         return Result.conclude(this);
+    }
+
+    public boolean isBlank(Position position) {
+        return !getPiece(position).isPresent();
     }
 
     public Map<String, String> serialize() {
@@ -145,18 +109,54 @@ public class Pieces {
         return serialized;
     }
 
+    Score calculateScoreOf(Team team) {
+        Score sum = Score.zero();
+        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+            File file = getFile(column);
+            Score fileScore = file.calculateScoreOf(team);
+            sum = sum.add(fileScore);
+        }
+        return sum;
+    }
+
     Map<Position, Piece> getPieces() {
         return pieces;
     }
 
-    private Piece getPiece(Position position) {
-        //todo: check if throw is needed
-        return pieces.get(position);
+    private PiecesState updatePiecesState(Position from, Position to, Piece piece) {
+        pieces.put(to, piece);
+        pieces.remove(from);
+        return new PiecesState(pieces);
+    }
+
+    private File getFile(int column) {
+        List<Piece> pieces = new ArrayList<>();
+        for (int row = BoardConfig.LINE_START; row <= BoardConfig.LINE_END; row++) {
+            Position position = Position.of(column, row);
+            addPiece(pieces, position);
+        }
+        return new File(pieces);
+    }
+
+    private void addPiece(List<Piece> pieces, Position position) {
+        if (isNotBlank(position)) {
+            Piece piece = getPiece(position)
+                    .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", position)));
+            pieces.add(piece);
+        }
+    }
+
+    private Optional<Piece> getPiece(Position position) {
+        Piece piece = pieces.get(position);
+        if (Objects.isNull(piece)) {
+            return Optional.empty();
+        }
+
+        return Optional.of(piece);
     }
 
     private boolean isNotBlank(Position position) {
-        Piece piece = getPiece(position);
-        return Objects.nonNull(piece);
+        return getPiece(position).isPresent();
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
@@ -190,7 +190,7 @@ public class Pieces {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Pieces that = (Pieces) o;
+        PiecesState that = (PiecesState) o;
         return Objects.equals(pieces, that.pieces);
     }
 
@@ -198,4 +198,17 @@ public class Pieces {
     public int hashCode() {
         return Objects.hash(pieces);
     }
+
+    //    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
+//        int collumn = position.getX();
+//        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
+//                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
+//                .anyMatch(hasPeerOnSameCollumn());
+//    }
+//
+//    private Predicate<Piece> hasPeerOnSameCollumn() {
+//        return piece -> (piece instanceof InitializedPawn || piece instanceof MovedPawn)
+//                && !this.equals(piece)
+//                && this.isSameTeam(piece);
+//    }
 }

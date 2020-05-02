@@ -10,30 +10,30 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class TestPieces extends Pieces {
+public class TestPiecesState extends PiecesState {
     private static final int BLACK_PAWN_ROW = 7;
     private static final int WHITE_PAWN_ROW = 2;
 
     private final Map<Position, Piece> pieces;
 
-    private TestPieces(Map<Position, Piece> pieces) {
+    private TestPiecesState(Map<Position, Piece> pieces) {
         super(pieces);
         this.pieces = pieces;
     }
 
-    public static Pieces initialize() {
+    public static PiecesState initialize() {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
-        return new TestPieces(pieces);
+        return new TestPiecesState(pieces);
     }
 
     @Override
-    public Pieces movePiece(Position from, Position to) {
+    public PiecesState movePiece(Position from, Position to) {
         Piece piece = pieces.get(from);
         pieces.put(to, piece);
         pieces.remove(from);
-        return new Pieces(pieces);
+        return new PiecesState(pieces);
     }
 
 
@@ -69,7 +69,7 @@ public class TestPieces extends Pieces {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
-        TestPieces that = (TestPieces) o;
+        TestPiecesState that = (TestPiecesState) o;
         return Objects.equals(pieces, that.pieces);
     }
 

@@ -21,11 +21,11 @@ public class Result {
         this.blackScore = blackScore;
     }
 
-    static Result conclude(Pieces pieces) {
-        Team winner = concludeWinner(pieces);
+    static Result conclude(PiecesState piecesState) {
+        Team winner = concludeWinner(piecesState);
         Team loser = winner.getOpposite();
-        Score whiteScore = calculateScore(Team.WHITE, pieces);
-        Score blackScore = calculateScore(Team.BLACK, pieces);
+        Score whiteScore = calculateScore(Team.WHITE, piecesState);
+        Score blackScore = calculateScore(Team.BLACK, piecesState);
         return new Result(winner, loser, whiteScore, blackScore);
     }
 
@@ -41,14 +41,14 @@ public class Result {
         return blackScore.toString();
     }
 
-    private static Team concludeWinner(Pieces pieces) {
+    private static Team concludeWinner(PiecesState piecesState) {
         //todo: 여기에도 isNotFinished일 때를 고려해야하나...?
         //todo: check instanceOf
-        if (pieces.isNotFinished()) {
+        if (piecesState.isNotFinished()) {
             return Team.NOT_ASSIGNED;
         }
 
-        return pieces.getPieces()
+        return piecesState.getPieces()
                 .values()
                 .stream()
                 .filter(piece -> piece instanceof King)
@@ -57,16 +57,8 @@ public class Result {
                 .orElseThrow(() -> new IllegalStateException("어떤 팀도 King을 가지고 있지 않습니다."));
     }
 
-    private static Score calculateScore(Team team, Pieces pieces) {
-        //todo: refac
-//        double sum = pieces.getPieces()
-//                .values()
-//                .stream()
-//                .filter(piece -> piece.isSameTeam(team))
-//                .map(piece -> piece.calculateScore(pieces))
-//                .mapToDouble(Score::getValue)
-//                .sum();
-        return Score.zero();
+    private static Score calculateScore(Team team, PiecesState piecesState) {
+        return piecesState.calculateScoreOf(team);
     }
 
     @Override

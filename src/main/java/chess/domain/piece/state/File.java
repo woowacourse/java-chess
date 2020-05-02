@@ -17,15 +17,19 @@ public class File {
 
     Score calculateScoreOf(Team team) {
         Score sum = Score.zero();
-        CalculateScoreStrategy calculateScoreStrategy = createCalculateStrategy(team);
         for (Piece piece : pieces) {
-            //todo: refac
-            if (piece.isSameTeam(team)) {
-                Score score = piece.calculateScore(calculateScoreStrategy);
-                sum = sum.add(score);
-            }
+            sum = addScoreOfSameTeam(team, sum, piece);
         }
 
+        return sum;
+    }
+
+    private Score addScoreOfSameTeam(Team team, Score sum, Piece piece) {
+        CalculateScoreStrategy calculateScoreStrategy = createCalculateStrategy(team);
+        if (piece.isSameTeam(team)) {
+            Score score = piece.calculateScore(calculateScoreStrategy);
+            sum = sum.add(score);
+        }
         return sum;
     }
 
