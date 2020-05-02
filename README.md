@@ -262,3 +262,10 @@ abcdefgh
   - [X] King이 하나라도 죽으면 게임 종료
   
   - [x] 종료되면 결과 출력해주기
+  
+  
+### 리펙토링 전략
+- WebController -> 로직 빼기
+- notification 빼기
+- 컨트롤러 레이어 정리
+- Derection 각 객체로 이동
