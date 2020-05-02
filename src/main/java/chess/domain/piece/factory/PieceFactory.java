@@ -1,35 +1,29 @@
 package chess.domain.piece.factory;
 
-import chess.domain.piece.*;
-import chess.domain.position.InitialColumn;
+import chess.config.piece.PieceConfig;
+import chess.domain.piece.policy.move.CanNotMoveStrategy;
+import chess.domain.piece.Piece;
+import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.piece.team.Team;
-
-import java.util.HashMap;
-import java.util.Map;
+import chess.domain.position.InitialColumn;
 
 public class PieceFactory {
-    private static Map<InitialColumn, PieceCreator> pieceCreators = new HashMap<>();
-
-    static {
-        pieceCreators.put(InitialColumn.PAWN, Pawn::new);
-        pieceCreators.put(InitialColumn.ROOK, Rook::new);
-        pieceCreators.put(InitialColumn.KNIGHT, Knight::new);
-        pieceCreators.put(InitialColumn.BISHOP, Bishop::new);
-        pieceCreators.put(InitialColumn.QUEEN, Queen::new);
-        pieceCreators.put(InitialColumn.KING, King::new);
+    public static Piece createPieceWithInitialColumn(int initialColumn, Team team) {
+        return createPieceWithInitialColumn(InitialColumn.valueOf(initialColumn), team);
     }
 
-    public static Piece createPieceWithInitialColumn(int initialColumn, Team team) {
-        PieceCreator pieceCreator = pieceCreators.get(InitialColumn.valueOf(initialColumn));
-        return pieceCreator.create(team);
+    public static Piece createPieceWithInitialColumn(InitialColumn initialColumn, Team team) {
+        String name = PieceConfig.getName(initialColumn, team);
+        CanNotMoveStrategy canNotMoveStrategy = PieceConfig.getCanNotMoveStrategy(initialColumn, team);
+        CalculateScoreStrategy calculateScoreStrategy = PieceConfig.getCalculateScoreStrategy(initialColumn);
+        return new Piece(team, name, canNotMoveStrategy, calculateScoreStrategy);
+
     }
 
     public static Piece createInitializedPawn(Team team) {
-        PieceCreator pieceCreator = pieceCreators.get(InitialColumn.PAWN);
-        return pieceCreator.create(team);
-    }
-
-    private interface PieceCreator {
-        Piece create(Team team);
+        String name = PieceConfig.getName(InitialColumn.PAWN, team);
+        CanNotMoveStrategy pawnCanNotMoveStrategy = PieceConfig.getPawnCanNotMoveStrategy(team);
+        CalculateScoreStrategy pawnScoreCalculator = PieceConfig.getPawnScoreCalculator();
+        return new Piece(team, name, pawnCanNotMoveStrategy, pawnScoreCalculator);
     }
 }

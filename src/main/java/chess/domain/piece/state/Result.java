@@ -1,6 +1,5 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -51,7 +50,7 @@ public class Result {
         return piecesState.getPieces()
                 .values()
                 .stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .findAny()
                 .map(Piece::getTeam)
                 .orElseThrow(() -> new IllegalStateException("어떤 팀도 King을 가지고 있지 않습니다."));

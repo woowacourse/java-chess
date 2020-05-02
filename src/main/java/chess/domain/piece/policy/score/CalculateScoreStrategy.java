@@ -1,5 +1,7 @@
 package chess.domain.piece.policy.score;
 
+import chess.domain.piece.score.Score;
+
 public interface CalculateScoreStrategy {
-    boolean hasMultiplePawnAtFile();
+    Score calculate(HasMultiplePeerAtFile hasMultiplePeerAtFile);
 }

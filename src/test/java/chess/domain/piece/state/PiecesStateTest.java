@@ -1,12 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import chess.domain.piece.score.Score;
+import chess.domain.position.InitialColumn;
 import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
-import javafx.geometry.Pos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -161,8 +161,9 @@ class PiecesStateTest {
 
     @Test
     void serialize() {
+        Piece rook = PieceFactory.createPieceWithInitialColumn(InitialColumn.ROOK, Team.WHITE);
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
-            put(Position.of(1,1), new Rook(Team.WHITE));
+            put(Position.of(1,1), rook);
         }};
         PiecesState piecesState = new PiecesState(pieces);
         Map<String, String> serialized = piecesState.serialize();

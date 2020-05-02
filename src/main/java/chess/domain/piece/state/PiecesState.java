@@ -1,7 +1,6 @@
 package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
@@ -88,7 +87,7 @@ public class PiecesState {
     public boolean isNotFinished() {
         long kingSize = pieces.values()
                 .stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .count();
         return INITIAL_KING_SIZE <= kingSize;
     }
@@ -198,17 +197,4 @@ public class PiecesState {
     public int hashCode() {
         return Objects.hash(pieces);
     }
-
-    //    private boolean hasPeerOnSameCollumn(PiecesState piecesState) {
-//        int collumn = position.getX();
-//        return IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
-//                .mapToObj(row -> piecesState.getPiece(Position.of(collumn, row)))
-//                .anyMatch(hasPeerOnSameCollumn());
-//    }
-//
-//    private Predicate<Piece> hasPeerOnSameCollumn() {
-//        return piece -> (piece instanceof InitializedPawn || piece instanceof MovedPawn)
-//                && !this.equals(piece)
-//                && this.isSameTeam(piece);
-//    }
 }

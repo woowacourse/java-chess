@@ -1,36 +1,41 @@
 package chess.domain.piece;
 
+import chess.config.piece.PieceConfig;
+import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
-import chess.domain.position.Position;
+import chess.domain.piece.policy.score.HasMultiplePeerAtFile;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.team.Team;
+import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Objects;
 
-public abstract class Piece {
-    protected final Team team;
+public class Piece {
+    private final Team team;
     private final String name;
+    private final CanNotMoveStrategy canNotMoveStrategy;
+    private final CalculateScoreStrategy calculateScoreStrategy;
 
-    protected Piece(Team team, String name) {
+    public Piece(Team team, String name, CanNotMoveStrategy canNotMoveStrategy, CalculateScoreStrategy calculateScoreStrategy) {
         this.team = team;
         this.name = name;
+        this.canNotMoveStrategy = canNotMoveStrategy;
+        this.calculateScoreStrategy = calculateScoreStrategy;
     }
 
     public Team getTeam() {
         return team;
     }
 
+    //todo: refac from, to -> MovingFlow
     public boolean canNotMove(Position from, Position to, PiecesState piecesState) {
-        List<CanNotMoveStrategy> canNotMoveStrategies = constituteStrategies(from);
-        return canNotMoveStrategies.stream()
-                .anyMatch(canNotMoveStrategy -> canNotMoveStrategy.canNotMove(from, to, piecesState));
+        return canNotMoveStrategy.canNotMove(from, to, piecesState);
     }
 
-    public abstract Score calculateScore(CalculateScoreStrategy calculateScoreStrategy);
-
-    protected abstract List<CanNotMoveStrategy> constituteStrategies(Position from);
+    public Score calculateScore(HasMultiplePeerAtFile hasMultiplePeerAtFile) {
+        return calculateScoreStrategy.calculate(hasMultiplePeerAtFile);
+    }
 
 
     public boolean isSameTeam(Piece toPiece) {
@@ -44,6 +49,14 @@ public abstract class Piece {
 
     public boolean isOppositeTeam(Piece toPiece) {
         return team.isOpposite(toPiece.team);
+    }
+
+    public boolean isPawn() {
+        return name.equals(PieceConfig.getPawnName(team));
+    }
+
+    public boolean isKing() {
+        return name.equals(PieceConfig.getKingName(team));
     }
 
     @Override
