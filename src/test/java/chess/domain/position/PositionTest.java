@@ -29,23 +29,6 @@ class PositionTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @ParameterizedTest()
-    @DisplayName("#calculateDistance() : should return Distance between Positions")
-    @MethodSource({"getCasesForCalculateDistance"})
-    void calculateDistance(Position from, Position to, Distance expected) {
-        //when
-        Distance distance = from.calculateDistance(to);
-        //then
-        assertThat(distance).isEqualTo(expected);
-    }
-
-    private static Stream<Arguments> getCasesForCalculateDistance() {
-        return Stream.of(
-                Arguments.of(Position.of(1,1), Position.of(2,2), Distance.of(Math.sqrt(2))),
-                Arguments.of(Position.of(4,4), Position.of(5,7), Distance.of(Math.sqrt(10)))
-        );
-    }
-
 
     private static Stream<Arguments> getValidCasesForOf() {
         return Stream.of(

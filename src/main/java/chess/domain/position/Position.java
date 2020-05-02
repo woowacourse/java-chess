@@ -32,10 +32,6 @@ public class Position {
         return new Position(x, y);
     }
 
-    Distance calculateDistance(Position to) {
-        return Distance.calculate(this, to);
-    }
-
     public Distance calculateStraightDistance(Position to) {
         return Distance.calculateStraight(this, to);
     }

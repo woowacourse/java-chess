@@ -8,7 +8,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class QueenCanNotMoveStrategy extends MultipleAnyMatchCanNotMoveStrategies {
-
     private static final List<CanNotMoveStrategy> DEFAULT_CAN_NOT_MOVE_STRATEGIES = Collections.unmodifiableList(Arrays.asList(
             new IsStayed(),
             new HasHindranceStraightInBetween(),

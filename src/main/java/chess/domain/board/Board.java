@@ -9,7 +9,6 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {
-
     private final PiecesState piecesState;
 
     private Board(PiecesState piecesState) {

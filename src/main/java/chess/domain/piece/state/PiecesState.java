@@ -10,6 +10,7 @@ import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
 
 import java.util.*;
+import java.util.stream.IntStream;
 
 public class PiecesState {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
@@ -48,15 +49,7 @@ public class PiecesState {
         }
         Distance amount = from.calculateStraightDistance(to);
         Direction direction = from.calculateDirection(to);
-        Position targetPosition = from;
-        for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
-            targetPosition = targetPosition.go(direction);
-            if (isNotBlank(targetPosition)) {
-                return true;
-            }
-        }
-
-        return false;
+        return hasHindrance(amount, direction, from);
     }
 
     public boolean isSameTeam(Position from, Position to) {
@@ -64,8 +57,7 @@ public class PiecesState {
             return false;
         }
         Piece fromPiece = findPiece(from);
-        Piece toPiece = getPiece(to)
-                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece toPiece = findPiece(to);
         return fromPiece.isSameTeam(toPiece);
     }
 
@@ -80,8 +72,7 @@ public class PiecesState {
         }
 
         Piece fromPiece = findPiece(from);
-        Piece toPiece = getPiece(to)
-                .orElseThrow(() -> new IllegalStateException(String.format("해당 위치 %s에서 체스 말을 찾을 수 없습니다.", from)));
+        Piece toPiece = findPiece(to);
 
         return fromPiece.isOppositeTeam(toPiece);
     }
@@ -122,6 +113,16 @@ public class PiecesState {
 
     Map<Position, Piece> getPieces() {
         return pieces;
+    }
+
+    private boolean hasHindrance(Distance amount, Direction direction, Position position) {
+        for (int i = Position.FORWARD_AMOUNT; i < amount.getValue(); i++) {
+            position = position.go(direction);
+            if (isNotBlank(position)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private PiecesState updatePiecesState(Position from, Position to, Piece piece) {
