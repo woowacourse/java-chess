@@ -1,5 +1,8 @@
 package chess.service;
 
+import chess.domain.ChessBoard;
+import chess.domain.Turn;
+
 import java.sql.SQLException;
 
 public class ChessGameService {
@@ -8,7 +11,7 @@ public class ChessGameService {
     private ChessBoardService chessBoardService;
     private TurnService turnService;
 
-    private ChessGameService () {
+    private ChessGameService() {
         turnService = TurnService.getInstance();
         chessBoardService = ChessBoardService.getInstance(turnService);
     }
@@ -23,5 +26,13 @@ public class ChessGameService {
     public void initialize() throws SQLException {
         chessBoardService.initialize();
         turnService.initialize();
+    }
+
+
+    public void save() throws SQLException {
+        ChessBoard chessBoard = chessBoardService.loadBoard();
+        Turn turn = turnService.loadTurn();
+        chessBoardService.saveBoard(chessBoard);
+        turnService.saveTurn(turn);
     }
 }

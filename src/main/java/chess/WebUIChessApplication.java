@@ -13,7 +13,7 @@ public class WebUIChessApplication {
         ChessGameService chessGameService = ChessGameService.getInstance();
         ChessBoardService chessBoardService = ChessBoardService.getInstance(turnService);
 
-        WebChessController webChessController = new WebChessController(chessBoardService, turnService, chessGameService);
+        WebChessController webChessController = new WebChessController(chessBoardService, chessGameService);
         webChessController.run();
     }
 }

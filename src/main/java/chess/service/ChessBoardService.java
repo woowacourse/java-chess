@@ -17,10 +17,12 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoardService {
+    private static String EMPTY = "";
     private static ChessBoardService instance;
     private static ChessBoardDao chessBoardDao = ChessBoardDao.getInstance();
 
     private TurnService turnService;
+    private String notification;
 
     public static ChessBoardService getInstance(TurnService turnService) {
         if (instance == null) {
@@ -31,9 +33,11 @@ public class ChessBoardService {
 
     private ChessBoardService(TurnService turnService) {
         this.turnService = turnService;
+        this.notification = EMPTY;
     }
 
     public void initialize() throws SQLException {
+        notification = EMPTY;
         saveBoard(new ChessBoard());
     }
 
@@ -49,6 +53,7 @@ public class ChessBoardService {
         try {
             return chessBoardDao.load();
         } catch (SQLException e) {
+            notification = "저장된 게임이 없습니다.";
             return new ChessBoard();
         }
     }
@@ -74,20 +79,19 @@ public class ChessBoardService {
     }
 
 
-    public String movePiece(MovingRequest movingRequest) throws SQLException {
-        String result = "";
+    public void movePiece(MovingRequest movingRequest) throws SQLException {
         List<Square> sourceDestination = Arrays.asList(movingRequest.getSource(), movingRequest.getDestination());
         ChessBoard chessBoard = loadBoard();
         Turn turn = turnService.loadTurn();
         if (chessBoard.canMove(sourceDestination, turn)) {
             chessBoard.movePiece(sourceDestination);
             turn = turn.getOppositeTurn();
+            notification = EMPTY;
         } else {
-            result = "움직일 수 없는 위치입니다.";
+            notification = "움직일 수 없는 위치입니다.";
         }
         saveBoard(chessBoard);
-        turnService.save(turn);
-        return result;
+        turnService.saveTurn(turn);
     }
 
     public String getWinners() {
@@ -99,4 +103,17 @@ public class ChessBoardService {
                 .map(Enum::toString)
                 .collect(Collectors.joining(","));
     }
+
+    public String getNextPage() {
+        ChessBoard chessBoard = loadBoard();
+        if (chessBoard.isKingCaptured()) {
+            return "/endGame";
+        }
+        return "/onGame";
+    }
+
+    public String getNotification() {
+        return notification;
+    }
+
 }

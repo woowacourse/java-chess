@@ -24,7 +24,7 @@ public class TurnService {
         turnDao.save(Turn.WHITE);
     }
 
-    public void save(Turn turn) throws SQLException {
+    public void saveTurn(Turn turn) throws SQLException {
         turnDao.delete();
         turnDao.save(turn);
     }
