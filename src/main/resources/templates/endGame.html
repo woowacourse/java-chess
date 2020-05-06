@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chess</title>
+
+    <link href="/css/board.css" rel="stylesheet" type="text/css">
+
+    <script type="text/javascript" src="/js/game.js"></script>
+</head>
+
+<body onload="setBoard()">
+<div class="chessWrapper">
+<div class="chessboard">
+    <!-- 1st -->
+    <div class="tile white">{{chessBoard.a8}}</div>
+    <div class="tile black">{{chessBoard.b8}}</div>
+    <div class="tile white">{{chessBoard.c8}}</div>
+    <div class="tile black">{{chessBoard.d8}}</div>
+    <div class="tile white">{{chessBoard.e8}}</div>
+    <div class="tile black">{{chessBoard.f8}}</div>
+    <div class="tile white">{{chessBoard.g8}}</div>
+    <div class="tile black">{{chessBoard.h8}}</div>
+    <!-- 2nd -->
+    <div class="tile black">{{chessBoard.a7}}</div>
+    <div class="tile white">{{chessBoard.b7}}</div>
+    <div class="tile black">{{chessBoard.c7}}</div>
+    <div class="tile white">{{chessBoard.d7}}</div>
+    <div class="tile black">{{chessBoard.e7}}</div>
+    <div class="tile white">{{chessBoard.f7}}</div>
+    <div class="tile black">{{chessBoard.g7}}</div>
+    <div class="tile white">{{chessBoard.h7}}</div>
+    <!-- 3th -->
+    <div class="tile white">{{chessBoard.a6}}</div>
+    <div class="tile black">{{chessBoard.b6}}</div>
+    <div class="tile white">{{chessBoard.c6}}</div>
+    <div class="tile black">{{chessBoard.d6}}</div>
+    <div class="tile white">{{chessBoard.e6}}</div>
+    <div class="tile black">{{chessBoard.f6}}</div>
+    <div class="tile white">{{chessBoard.g6}}</div>
+    <div class="tile black">{{chessBoard.h6}}</div>
+    <!-- 4st -->
+    <div class="tile black">{{chessBoard.a5}}</div>
+    <div class="tile white">{{chessBoard.b5}}</div>
+    <div class="tile black">{{chessBoard.c5}}</div>
+    <div class="tile white">{{chessBoard.d5}}</div>
+    <div class="tile black">{{chessBoard.e5}}</div>
+    <div class="tile white">{{chessBoard.f5}}</div>
+    <div class="tile black">{{chessBoard.g5}}</div>
+    <div class="tile white">{{chessBoard.h5}}</div>
+    <!-- 5th -->
+    <div class="tile white">{{chessBoard.a4}}</div>
+    <div class="tile black">{{chessBoard.b4}}</div>
+    <div class="tile white">{{chessBoard.c4}}</div>
+    <div class="tile black">{{chessBoard.d4}}</div>
+    <div class="tile white">{{chessBoard.e4}}</div>
+    <div class="tile black">{{chessBoard.f4}}</div>
+    <div class="tile white">{{chessBoard.g4}}</div>
+    <div class="tile black">{{chessBoard.h4}}</div>
+    <!-- 6th -->
+    <div class="tile black">{{chessBoard.a3}}</div>
+    <div class="tile white">{{chessBoard.b3}}</div>
+    <div class="tile black">{{chessBoard.c3}}</div>
+    <div class="tile white">{{chessBoard.d3}}</div>
+    <div class="tile black">{{chessBoard.e3}}</div>
+    <div class="tile white">{{chessBoard.f3}}</div>
+    <div class="tile black">{{chessBoard.g3}}</div>
+    <div class="tile white">{{chessBoard.h3}}</div>
+    <!-- 7th -->
+    <div class="tile white">{{chessBoard.a2}}</div>
+    <div class="tile black">{{chessBoard.b2}}</div>
+    <div class="tile white">{{chessBoard.c2}}</div>
+    <div class="tile black">{{chessBoard.d2}}</div>
+    <div class="tile white">{{chessBoard.e2}}</div>
+    <div class="tile black">{{chessBoard.f2}}</div>
+    <div class="tile white">{{chessBoard.g2}}</div>
+    <div class="tile black">{{chessBoard.h2}}</div>
+    <!-- 8th -->
+    <div class="tile black">{{chessBoard.a1}}</div>
+    <div class="tile white">{{chessBoard.b1}}</div>
+    <div class="tile black">{{chessBoard.c1}}</div>
+    <div class="tile white">{{chessBoard.d1}}</div>
+    <div class="tile black">{{chessBoard.e1}}</div>
+    <div class="tile white">{{chessBoard.f1}}</div>
+    <div class="tile black">{{chessBoard.g1}}</div>
+    <div class="tile white">{{chessBoard.h1}}</div>
+</div>
+
+<div>
+    <form action="/move" method="post">
+        <input type="text" name="source" size="10">
+        <input type="text" name="destination" size="10">
+    <input type="submit" value="confirm">
+    </form>
+    <div>
+        게임이 종료되었습니다. <br>
+        우승자는 {{winners}} 입니다.
+    </div>
+</div>
+</div>
+</body>
+</html>

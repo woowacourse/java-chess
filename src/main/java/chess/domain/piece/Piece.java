@@ -32,6 +32,11 @@ public abstract class Piece {
         return movedSquare != square;
     }
 
+    public boolean movableToDestination(Square before, Map<Square, Piece> chessBoard, Square after) {
+        Set<Square> movableSquares = calculateMovableSquares(before, chessBoard);
+        return movableSquares.contains(after);
+    }
+
     public abstract Set<Square> calculateMovableSquares(Square currentSquare, Map<Square, Piece> board);
 
     public Set<Square> findSquaresToRemove(Square s, int fileAddAmount, int rankAddAmount) {

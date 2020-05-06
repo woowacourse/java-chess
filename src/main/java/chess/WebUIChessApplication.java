@@ -1,22 +1,19 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import chess.controller.WebChessController;
+import chess.service.ChessBoardService;
+import chess.service.ChessGameService;
+import chess.service.TurnService;
+import spark.Spark;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        Spark.staticFiles.location("/public");
+        TurnService turnService = TurnService.getInstance();
+        ChessGameService chessGameService = ChessGameService.getInstance();
+        ChessBoardService chessBoardService = ChessBoardService.getInstance(turnService);
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        WebChessController webChessController = new WebChessController(chessBoardService, chessGameService);
+        webChessController.run();
     }
 }

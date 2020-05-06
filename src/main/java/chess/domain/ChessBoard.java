@@ -3,9 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.square.Square;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ChessBoard {
 
@@ -36,17 +34,22 @@ public class ChessBoard {
         chessBoard.put(Square.of("h8"), Rook.of(Color.BLACK));
     }
 
+    public void updateChessBoard(Map<Square, Piece> updatedChessBoard) {
+        chessBoard = updatedChessBoard;
+    }
+
     public Map<Square, Piece> getChessBoard() {
         return chessBoard;
     }
 
-    public boolean canMove(List<Square> squares, boolean blackTurn) {
+    public boolean canMove(List<Square> squares, Turn turn) {
         Square before = squares.get(0);
         Square after = squares.get(1);
-        if (!chessBoard.containsKey(before) || chessBoard.get(before).isBlack() != blackTurn) {
+        Piece formerPiece = chessBoard.get(before);
+        if (!chessBoard.containsKey(before) || formerPiece.isBlack() != turn.getTurn()) {
             return false;
         }
-        return chessBoard.get(before).calculateMovableSquares(before, chessBoard).contains(after);
+        return formerPiece.movableToDestination(before, chessBoard, after);
     }
 
     public void movePiece(List<Square> squares) {
@@ -59,5 +62,18 @@ public class ChessBoard {
     public boolean isKingCaptured() {
         return !(chessBoard.containsValue(King.of(Color.WHITE))
                 && chessBoard.containsValue(King.of(Color.BLACK)));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ChessBoard that = (ChessBoard) o;
+        return Objects.equals(chessBoard, that.chessBoard);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(chessBoard);
     }
 }

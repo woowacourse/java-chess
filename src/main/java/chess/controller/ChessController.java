@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.ChessBoard;
 import chess.domain.GameState;
 import chess.domain.TeamScore;
+import chess.domain.Turn;
 import chess.domain.piece.Color;
 import chess.domain.square.Square;
 import chess.utils.InputParser;
@@ -31,7 +32,7 @@ public class ChessController {
     private static void proceedGame(ChessBoard chessBoard) {
         GameState gameState;
         TeamScore teamScore = new TeamScore();
-        boolean blackTurn = false;
+        Turn turn = Turn.WHITE;
         List<Square> moveSourceDestination;
         String input;
         while (true) {
@@ -50,12 +51,12 @@ public class ChessController {
             }
             if (gameState == GameState.MOVE) {
                 moveSourceDestination = InputParser.parseMoveSourceDestination(input);
-                if (isMoved(chessBoard, moveSourceDestination, blackTurn)) {
-                    blackTurn = !blackTurn;
+                if (isMoved(chessBoard, moveSourceDestination, turn)) {
+                    turn = turn.getOppositeTurn();
                 }
             }
             if (chessBoard.isKingCaptured()) {
-                if (blackTurn) {
+                if (turn == Turn.BLACK) {
                     OutputView.printWinner(Color.WHITE);
                     break;
                 }
@@ -70,8 +71,8 @@ public class ChessController {
         OutputView.printWinners(teamScore.getWinners());
     }
 
-    private static boolean isMoved(ChessBoard chessBoard, List<Square> squares, boolean blackTurn) {
-        if (chessBoard.canMove(squares, blackTurn)) {
+    private static boolean isMoved(ChessBoard chessBoard, List<Square> squares, Turn turn) {
+        if (chessBoard.canMove(squares, turn)) {
             chessBoard.movePiece(squares);
             OutputView.printChessBoard(chessBoard);
             return true;
