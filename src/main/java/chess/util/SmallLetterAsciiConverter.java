@@ -1,8 +1,8 @@
 package chess.util;
 
 public class SmallLetterAsciiConverter {
+    public static final int CONVERTING_NUMBER = 96;
     private static final int TARGET_INDEX = 0;
-    private static final int CONVERTING_NUMBER = 96;
     private static final int SMALL_A_ASCII_NUMBER = 97;
     private static final int SMALL_Z_ASCII_NUMBER = 122;
 

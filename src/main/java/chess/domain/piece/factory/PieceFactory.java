@@ -1,8 +1,8 @@
 package chess.domain.piece.factory;
 
 import chess.config.piece.PieceConfig;
-import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.Piece;
+import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.piece.team.Team;
 import chess.domain.position.InitialColumn;

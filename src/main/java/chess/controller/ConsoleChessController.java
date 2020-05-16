@@ -7,10 +7,10 @@ import chess.ui.Command;
 import chess.ui.Console;
 import chess.view.OutputView;
 
-public class Game {
+public class ConsoleChessController {
     private final Console console;
 
-    public Game(Console console) {
+    public ConsoleChessController(Console console) {
         this.console = console;
     }
 

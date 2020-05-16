@@ -1,13 +1,12 @@
 package chess.config.piece;
 
-import chess.domain.policy.score.DefaultScoreCalculator;
-import chess.domain.policy.score.PawnScoreCalculator;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
+import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
-import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.policy.move.*;
-import chess.domain.policy.move.PawnCanNotMoveStrategy;
+import chess.domain.policy.score.DefaultScoreCalculator;
+import chess.domain.policy.score.PawnScoreCalculator;
 import chess.domain.position.InitialColumn;
 
 import java.util.Arrays;

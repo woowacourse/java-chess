@@ -1,8 +1,8 @@
 package chess.domain.policy.score;
 
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
-import chess.domain.piece.score.Score;
 import chess.domain.piece.policy.score.HasMultiplePeerAtFile;
+import chess.domain.piece.score.Score;
 
 public class PawnScoreCalculator implements CalculateScoreStrategy {
     private static final Score SCORE_WHEN_HAS_NOT_PEER = Score.of(1);

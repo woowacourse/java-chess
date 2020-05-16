@@ -30,6 +30,18 @@ class PositionTest {
     }
 
 
+    @Test
+    void serialize() {
+        Position position = Position.of(1, 1);
+        String serialized = position.serialize();
+        assertThat(serialized).isEqualTo("a1");
+    }
+
+    @Test
+    void toStringTest() {
+        assertThat(Position.of(1,1).toString()).isEqualTo("11");
+    }
+
     private static Stream<Arguments> getValidCasesForOf() {
         return Stream.of(
                 Arguments.of(1,1),
@@ -49,10 +61,5 @@ class PositionTest {
                 Arguments.of(Position.of(1,1), Direction.NORTH, false),
                 Arguments.of(Position.of(1,3), Direction.NORTH, true)
         );
-    }
-
-    @Test
-    void toStringTest() {
-        assertThat(Position.of(1,1).toString()).isEqualTo("11");
     }
 }

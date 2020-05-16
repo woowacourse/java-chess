@@ -4,13 +4,12 @@ import chess.config.BoardConfig;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.position.Position;
-import chess.domain.piece.team.Team;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class PiecesState {
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";

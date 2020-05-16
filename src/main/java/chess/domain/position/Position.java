@@ -73,6 +73,11 @@ public class Position {
         return Position.of(newX, newY);
     }
 
+    public String serialize() {
+        char pattern = (char) (x + SmallLetterAsciiConverter.CONVERTING_NUMBER);
+        return String.valueOf(pattern) + String.valueOf(y);
+    }
+
     int getX() {
         return x;
     }
