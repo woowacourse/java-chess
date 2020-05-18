@@ -7,13 +7,12 @@ import org.junit.jupiter.api.Test;
 import java.sql.SQLException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PieceDaoTest {
-
     @Test
     void add() throws SQLException, ClassNotFoundException {
-        PieceDao pieceDao = new PieceJdbcDao();
+        ConnectionGetter connectionGetter = new JdbcConnectionGetter();
+        PieceDao pieceDao = new PieceDao(connectionGetter);
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
         String id = "1";
         pieceToAdd.setId(id);

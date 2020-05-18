@@ -5,9 +5,17 @@ import chess.domain.piece.team.Team;
 
 import java.sql.*;
 
-public abstract class PieceDao {
+public class PieceDao {
+
+    private final ConnectionGetter connectionGetter;
+
+    public PieceDao(ConnectionGetter connectionGetter) {
+        this.connectionGetter = connectionGetter;
+    }
+
+
     public void add(Piece piece) throws ClassNotFoundException, SQLException {
-        Connection connection = getConnection();
+        Connection connection = connectionGetter.get();
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into pieces(id, team, name) values(?,?,?)");
         preparedStatement.setString(1, piece.getId());
@@ -22,7 +30,7 @@ public abstract class PieceDao {
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = getConnection();
+        Connection c = connectionGetter.get();
 
         PreparedStatement ps = c.prepareStatement(
                 "select * from pieces where id = ?");
@@ -39,8 +47,6 @@ public abstract class PieceDao {
 
         return piece;
     }
-
-    protected abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
 
 }
