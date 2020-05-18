@@ -11,8 +11,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PieceDaoTest {
     @Test
     void add() throws SQLException, ClassNotFoundException {
-        ConnectionGetter connectionGetter = new JdbcConnectionGetter();
-        PieceDao pieceDao = new PieceDao(connectionGetter);
+        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
+        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
         String id = "1";
         pieceToAdd.setId(id);
