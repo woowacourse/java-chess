@@ -13,15 +13,12 @@ public class PieceDao {
         this.dataSource = dataSource;
     }
 
-
-    public void add(Piece piece) throws ClassNotFoundException, SQLException {
+    public void jdbcContextWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
         Connection c = null;
         PreparedStatement ps = null;
         try {
             c = dataSource.getConnection();
-            StatementStrategy statement = new AddStatement(piece);
             ps = statement.makePreparedStatement(c);
-
             ps.executeUpdate();
         } catch (SQLException e) {
             throw e;
@@ -32,7 +29,6 @@ public class PieceDao {
                 } catch (SQLException e) {
                 }
             }
-
             if (c != null) {
                 try {
                     c.close();
@@ -40,8 +36,12 @@ public class PieceDao {
 
                 }
             }
-
         }
+    }
+
+    public void add(Piece piece) throws ClassNotFoundException, SQLException {
+        StatementStrategy statement = new AddStatement(piece);
+        jdbcContextWithStatementStrategy(statement);
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
