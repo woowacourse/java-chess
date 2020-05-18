@@ -1,8 +1,8 @@
 package chess.domain.piece.team;
 
 public enum Team {
-    WHITE(Team::isBlack, "White"),
-    BLACK(Team::isWhite, "Black"),
+    WHITE(Team::isBlack, "WHITE"),
+    BLACK(Team::isWhite, "BLACk"),
     NOT_ASSIGNED((ignored) -> {
         throw new IllegalStateException("팀이 정해져있지 않아 적을 식별할 수 없습니다.");
     }, "Not Assigned");
