@@ -19,12 +19,7 @@ public class PieceDao {
         PreparedStatement ps = null;
         try {
             c = connectionGetter.get();
-            ps = c.prepareStatement(
-                    "insert into pieces(id, team, name) values(?,?,?)");
-            ps.setString(1, piece.getId());
-            Team team = piece.getTeam();
-            ps.setString(2, team.toString());
-            ps.setString(3, piece.getName());
+            ps = makeStatement(c, piece);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -46,6 +41,18 @@ public class PieceDao {
             }
 
         }
+    }
+
+    private PreparedStatement makeStatement(Connection c, Piece piece) throws SQLException {
+        PreparedStatement ps;
+
+        ps = c.prepareStatement(
+                "insert into pieces(id, team, name) values(?,?,?)");
+        ps.setString(1, piece.getId());
+        Team team = piece.getTeam();
+        ps.setString(2, team.toString());
+        ps.setString(3, piece.getName());
+        return ps;
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
