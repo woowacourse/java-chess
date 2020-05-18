@@ -13,10 +13,11 @@ class PieceDaoTest {
 
     @Test
     void add() throws SQLException, ClassNotFoundException {
-        PieceDao pieceDao = new PieceDao();
+        PieceDao pieceDao = new PieceJdbcDao();
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
         String id = "1";
         pieceToAdd.setId(id);
+
         pieceDao.add(pieceToAdd);
         Piece retrievedPiece = pieceDao.get(id);
         assertThat(retrievedPiece).isEqualTo(pieceToAdd);

@@ -5,7 +5,7 @@ import chess.domain.piece.team.Team;
 
 import java.sql.*;
 
-public class PieceDao {
+public abstract class PieceDao {
     public void add(Piece piece) throws ClassNotFoundException, SQLException {
         Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(
@@ -40,10 +40,7 @@ public class PieceDao {
         return piece;
     }
 
-    private Connection getConnection() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        return DriverManager.getConnection("jdbc:mysql://localhost/java-chess", "root", "p-vibe");
-    }
+    protected abstract Connection getConnection() throws ClassNotFoundException, SQLException;
 
 
 }
