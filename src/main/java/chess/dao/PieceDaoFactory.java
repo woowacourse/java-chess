@@ -1,8 +1,15 @@
 package chess.dao;
 
+import chess.domain.piece.Piece;
+
 public class PieceDaoFactory {
-    public PieceDao createPieceDao() {
+    public PieceDao createPieceDaoAdd(Piece piece) {
         ConnectionGetter connectionGetter = new JdbcConnectionGetter();
-        return new PieceDao(connectionGetter);
+        return new PieceDaoAdd(connectionGetter, piece);
+    }
+
+    public PieceDao createPieceDaoGet(String id) {
+        ConnectionGetter connectionGetter = new JdbcConnectionGetter();
+        return new PieceDaoGet(connectionGetter, id);
     }
 }

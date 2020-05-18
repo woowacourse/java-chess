@@ -12,12 +12,12 @@ class PieceDaoTest {
     @Test
     void add() throws SQLException, ClassNotFoundException {
         PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
+        PieceDao pieceDao = pieceDaoFactory.createPieceDaoAdd(pieceToAdd);
         String id = "1";
         pieceToAdd.setId(id);
-
         pieceDao.add(pieceToAdd);
+        pieceDao = pieceDaoFactory.createPieceDaoGet(id);
         Piece retrievedPiece = pieceDao.get(id);
         assertThat(retrievedPiece).isEqualTo(pieceToAdd);
     }
