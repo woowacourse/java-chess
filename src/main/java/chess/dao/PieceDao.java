@@ -4,9 +4,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public class PieceDao {
 
+    //check branch chess-2-applying-generic
     private final JdbcContext jdbcContext;
 
     public PieceDao(JdbcContext jdbcContext) {
@@ -14,36 +18,49 @@ public class PieceDao {
     }
 
     public void add(final Piece piece) throws ClassNotFoundException, SQLException {
+        List<String> valuesForSql = new ArrayList<>();
+        valuesForSql.add(piece.getId());
+        Team team = piece.getTeam();
+        valuesForSql.add(team.toString());
+        valuesForSql.add(piece.getName());
+        updateSql("insert into pieces(id, team, name) values(?,?,?)", valuesForSql);
+
+    }
+
+    private void updateSql(String sql, List<String> valuesForSql) throws SQLException, ClassNotFoundException {
         jdbcContext.updateWithStatementStrategy(
                 new StatementStrategy() {
                     @Override
                     public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                         PreparedStatement ps;
-                        ps = c.prepareStatement(
-                                "insert into pieces(id, team, name) values(?,?,?)");
-                        ps.setString(1, piece.getId());
-                        Team team = piece.getTeam();
-                        ps.setString(2, team.toString());
-                        ps.setString(3, piece.getName());
+                        ps = c.prepareStatement(sql);
+                        for (int i = 1; i <= valuesForSql.size(); i++) {
+                            ps.setString(i, valuesForSql.get(i-1));
+                        }
                         return ps;
                     }
                 });
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
-        Piece piece = jdbcContext.queryWithStatementStrategy(new StatementStrategy() {
+        Piece piece = querySql("select * from pieces where id = ?", Collections.singletonList(id));
+        piece.setId(id);
+
+        return piece;
+    }
+
+    private Piece querySql(String sql, List<String> values) throws SQLException, ClassNotFoundException {
+        return jdbcContext.queryWithStatementStrategy(new StatementStrategy() {
             @Override
             public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
                 PreparedStatement ps;
 
-                ps = c.prepareStatement(
-                        "select * from pieces where id = ?");
-                ps.setString(1, id);
+                ps = c.prepareStatement(sql);
+                for (int i = 1; i <= values.size(); i++) {
+                    ps.setString(i,  values.get(i-1));
+                }
                 return ps;
             }
         });
-        piece.setId(id);
-
-        return piece;
     }
 }
