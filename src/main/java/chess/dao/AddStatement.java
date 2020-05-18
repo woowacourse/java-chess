@@ -7,15 +7,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-public class PieceDaoAdd extends PieceDao {
+public class AddStatement implements StatementStrategy {
     private final Piece piece;
-    public PieceDaoAdd(ConnectionGetter connectionGetter, Piece piece) {
-        super(connectionGetter);
+    public AddStatement(Piece piece) {
         this.piece = piece;
     }
 
     @Override
-    protected PreparedStatement makeStatement(Connection c) throws SQLException {
+    public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
         PreparedStatement ps;
         ps = c.prepareStatement(
                 "insert into pieces(id, team, name) values(?,?,?)");

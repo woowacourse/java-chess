@@ -2,21 +2,18 @@ package chess.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class PieceDaoGet extends PieceDao {
+public class GetStatement implements StatementStrategy {
     private final String id;
 
-    public PieceDaoGet(ConnectionGetter connectionGetter, String id) {
-        super(connectionGetter);
+    public GetStatement(String id) {
         this.id = id;
     }
 
     @Override
-    protected PreparedStatement makeStatement(Connection c) throws SQLException {
+    public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
         PreparedStatement ps;
-        ResultSet rs;
 
         ps = c.prepareStatement(
                 "select * from pieces where id = ?");

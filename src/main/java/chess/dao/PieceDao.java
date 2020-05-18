@@ -5,12 +5,12 @@ import chess.domain.piece.team.Team;
 
 import java.sql.*;
 
-public abstract class PieceDao {
+public class PieceDao {
 
-    private final ConnectionGetter connectionGetter;
+    private final DataSource dataSource;
 
-    public PieceDao(ConnectionGetter connectionGetter) {
-        this.connectionGetter = connectionGetter;
+    public PieceDao(DataSource dataSource) {
+        this.dataSource = dataSource;
     }
 
 
@@ -18,8 +18,9 @@ public abstract class PieceDao {
         Connection c = null;
         PreparedStatement ps = null;
         try {
-            c = connectionGetter.get();
-            ps = makeStatement(c);
+            c = dataSource.getConnection();
+            StatementStrategy statement = new AddStatement(piece);
+            ps = statement.makePreparedStatement(c);
 
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -48,8 +49,9 @@ public abstract class PieceDao {
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
-            c = connectionGetter.get();
-            ps = makeStatement(c);
+            c = dataSource.getConnection();
+            StatementStrategy statement = new GetStatement(id);
+            ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
             Piece piece = new Piece(Team.valueOf(rs.getString("team")), rs.getString("name"), null, null);
@@ -83,6 +85,4 @@ public abstract class PieceDao {
 
         }
     }
-
-    protected abstract PreparedStatement makeStatement(Connection c) throws SQLException;
 }
