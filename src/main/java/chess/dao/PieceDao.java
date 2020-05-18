@@ -13,72 +13,40 @@ public class PieceDao {
         this.dataSource = dataSource;
     }
 
-    public void jdbcContextWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
-        Connection c = null;
-        PreparedStatement ps = null;
-        try {
-            c = dataSource.getConnection();
-            ps = statement.makePreparedStatement(c);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
-        }
-    }
-
     public void add(final Piece piece) throws ClassNotFoundException, SQLException {
-        class AddStatement implements StatementStrategy {
-
-            @Override
-            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                PreparedStatement ps;
-                ps = c.prepareStatement(
-                        "insert into pieces(id, team, name) values(?,?,?)");
-                ps.setString(1, piece.getId());
-                Team team = piece.getTeam();
-                ps.setString(2, team.toString());
-                ps.setString(3, piece.getName());
-                return ps;
-            }
-        }
-
-        StatementStrategy statement = new AddStatement();
-        jdbcContextWithStatementStrategy(statement);
+        jdbcContextWithStatementStrategy(
+                new StatementStrategy() {
+                    @Override
+                    public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                        PreparedStatement ps;
+                        ps = c.prepareStatement(
+                                "insert into pieces(id, team, name) values(?,?,?)");
+                        ps.setString(1, piece.getId());
+                        Team team = piece.getTeam();
+                        ps.setString(2, team.toString());
+                        ps.setString(3, piece.getName());
+                        return ps;
+                    }
+                });
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
-        class GetStatement implements StatementStrategy {
-
-            @Override
-            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                PreparedStatement ps;
-
-                ps = c.prepareStatement(
-                        "select * from pieces where id = ?");
-                ps.setString(1, id);
-                return ps;
-            }
-        }
-
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             c = dataSource.getConnection();
-            StatementStrategy statement = new GetStatement();
+            StatementStrategy statement = new StatementStrategy() {
+                @Override
+                public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                    PreparedStatement ps;
+
+                    ps = c.prepareStatement(
+                            "select * from pieces where id = ?");
+                    ps.setString(1, id);
+                    return ps;
+                }
+            };
             ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
@@ -111,6 +79,32 @@ public class PieceDao {
             }
 
 
+        }
+    }
+
+    private void jdbcContextWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
+        Connection c = null;
+        PreparedStatement ps = null;
+        try {
+            c = dataSource.getConnection();
+            ps = statement.makePreparedStatement(c);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw e;
+        } finally {
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                }
+            }
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+
+                }
+            }
         }
     }
 }
