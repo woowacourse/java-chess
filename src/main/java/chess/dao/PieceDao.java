@@ -7,14 +7,14 @@ import java.sql.*;
 
 public class PieceDao {
 
-    private final DataSource dataSource;
+    private final JdbcContext jdbcContext;
 
-    public PieceDao(DataSource dataSource) {
-        this.dataSource = dataSource;
+    public PieceDao(JdbcContext jdbcContext) {
+        this.jdbcContext = jdbcContext;
     }
 
     public void add(final Piece piece) throws ClassNotFoundException, SQLException {
-        jdbcContextWithStatementStrategy(
+        jdbcContext.updateWithStatementStrategy(
                 new StatementStrategy() {
                     @Override
                     public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
@@ -31,80 +31,19 @@ public class PieceDao {
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
-        Connection c = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            c = dataSource.getConnection();
-            StatementStrategy statement = new StatementStrategy() {
-                @Override
-                public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                    PreparedStatement ps;
+        Piece piece = jdbcContext.queryWithStatementStrategy(new StatementStrategy() {
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps;
 
-                    ps = c.prepareStatement(
-                            "select * from pieces where id = ?");
-                    ps.setString(1, id);
-                    return ps;
-                }
-            };
-            ps = statement.makePreparedStatement(c);
-            rs = ps.executeQuery();
-            rs.next();
-            Piece piece = new Piece(Team.valueOf(rs.getString("team")), rs.getString("name"), null, null);
-            piece.setId(id);
-            return piece;
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                }
+                ps = c.prepareStatement(
+                        "select * from pieces where id = ?");
+                ps.setString(1, id);
+                return ps;
             }
+        });
+        piece.setId(id);
 
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
-
-
-        }
-    }
-
-    private void jdbcContextWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
-        Connection c = null;
-        PreparedStatement ps = null;
-        try {
-            c = dataSource.getConnection();
-            ps = statement.makePreparedStatement(c);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw e;
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
-        }
+        return piece;
     }
 }
