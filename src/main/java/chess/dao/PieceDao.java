@@ -7,8 +7,7 @@ import java.sql.*;
 
 public class PieceDao {
     public void add(Piece piece) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection connection = DriverManager.getConnection("jdbc:mysql://localhost/java-chess", "root", "p-vibe");
+        Connection connection = getConnection();
         PreparedStatement preparedStatement = connection.prepareStatement(
                 "insert into pieces(id, team, name) values(?,?,?)");
         preparedStatement.setString(1, piece.getId());
@@ -23,8 +22,7 @@ public class PieceDao {
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection c = DriverManager.getConnection("jdbc:mysql://localhost/java-chess", "root", "p-vibe");
+        Connection c = getConnection();
 
         PreparedStatement ps = c.prepareStatement(
                 "select * from pieces where id = ?");
@@ -40,6 +38,11 @@ public class PieceDao {
         c.close();
 
         return piece;
+    }
+
+    private Connection getConnection() throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+        return DriverManager.getConnection("jdbc:mysql://localhost/java-chess", "root", "p-vibe");
     }
 
 
