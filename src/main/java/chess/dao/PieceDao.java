@@ -39,18 +39,46 @@ public class PieceDao {
         }
     }
 
-    public void add(Piece piece) throws ClassNotFoundException, SQLException {
-        StatementStrategy statement = new AddStatement(piece);
+    public void add(final Piece piece) throws ClassNotFoundException, SQLException {
+        class AddStatement implements StatementStrategy {
+
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps;
+                ps = c.prepareStatement(
+                        "insert into pieces(id, team, name) values(?,?,?)");
+                ps.setString(1, piece.getId());
+                Team team = piece.getTeam();
+                ps.setString(2, team.toString());
+                ps.setString(3, piece.getName());
+                return ps;
+            }
+        }
+
+        StatementStrategy statement = new AddStatement();
         jdbcContextWithStatementStrategy(statement);
     }
 
     public Piece get(String id) throws ClassNotFoundException, SQLException {
+        class GetStatement implements StatementStrategy {
+
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                PreparedStatement ps;
+
+                ps = c.prepareStatement(
+                        "select * from pieces where id = ?");
+                ps.setString(1, id);
+                return ps;
+            }
+        }
+
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
         try {
             c = dataSource.getConnection();
-            StatementStrategy statement = new GetStatement(id);
+            StatementStrategy statement = new GetStatement();
             ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
