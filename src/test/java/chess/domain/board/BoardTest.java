@@ -27,11 +27,10 @@ class BoardTest {
         Board movedBoard = board.movePiece(movingFlow);
         Piece piece = movedBoard.getPiece(movingFlow.getTo());
         assertThat(piece).isEqualTo(expected);
-
     }
 
     @Test
-    @DisplayName("#getPiece() : should return Piece as to Position")
+    @DisplayName("#getName() : should return Piece as to Position")
     void getPiece() {
         Board board = Board.initialize();
         Piece piece = board.getPiece(Position.of(1, 1));

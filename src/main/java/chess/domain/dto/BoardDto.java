@@ -13,7 +13,7 @@ public class BoardDto {
         List<PieceDto> pieces = new ArrayList<>();
         Map<String, String> serializedBoard = board.serialize();
         for (Map.Entry<String, String> element : serializedBoard.entrySet()) {
-            PieceDto pieceDto = new PieceDto(element.getKey(), element.getValue());
+            PieceDto pieceDto = new PieceDto(element.getValue(), element.getKey());
             pieces.add(pieceDto);
         }
 

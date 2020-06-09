@@ -1,21 +1,20 @@
 package chess.dao;
 
-import chess.domain.piece.Piece;
-import chess.domain.piece.team.Team;
+import chess.domain.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class JdbcContext {
+class JdbcContext {
     private final DataSource dataSource;
 
-    public JdbcContext(DataSource dataSource) {
+    JdbcContext(DataSource dataSource) {
         this.dataSource = dataSource;
     }
 
-    public void updateWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
+    void updateWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
         Connection c = null;
         PreparedStatement ps = null;
         try {
@@ -41,7 +40,7 @@ public class JdbcContext {
         }
     }
 
-    public Piece queryWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
+    PieceDto queryWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -50,8 +49,10 @@ public class JdbcContext {
             ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
-            Piece piece = new Piece(Team.valueOf(rs.getString("team")), rs.getString("name"), null, null);
-            return piece;
+            return new PieceDto(rs.getString("id"),
+                    rs.getString("team"),
+                    rs.getString("name"),
+                    rs.getString("position"));
         } catch (SQLException e) {
             throw e;
         } finally {
