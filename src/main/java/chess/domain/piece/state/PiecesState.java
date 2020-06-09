@@ -110,7 +110,7 @@ public class PiecesState {
         return sum;
     }
 
-    Map<Position, Piece> getPieces() {
+    public Map<Position, Piece> getPieces() {
         return pieces;
     }
 

@@ -35,11 +35,7 @@ public class PieceDao {
         return querySql("select * from pieces where id = ?", Collections.singletonList(id));
     }
 
-    public void deleteAll() {
-        updateSql("delete from pieces", new ArrayList<>());
-    }
-
-    void add(final Piece piece, final Position position) {
+    public void add(final Piece piece, final Position position) {
         List<String> valuesForSql = new ArrayList<>();
         valuesForSql.add(piece.getId());
         Team team = piece.getTeam();
@@ -48,6 +44,10 @@ public class PieceDao {
         valuesForSql.add(position.toString());
         updateSql("insert into pieces(id, team, name, position) values(?,?,?,?)", valuesForSql);
 
+    }
+
+    void deleteAll() {
+        updateSql("delete from pieces", new ArrayList<>());
     }
 
     private void updateSql(String sql, List<String> valuesForSql) {

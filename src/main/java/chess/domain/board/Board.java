@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.service.PieceService;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
@@ -9,22 +10,23 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {
+    private final PieceService pieceService;
     private final PiecesState piecesState;
 
-    private Board(PiecesState piecesState) {
+    private Board(PieceService pieceService, PiecesState piecesState) {
+        this.pieceService = pieceService;
         this.piecesState = piecesState;
     }
 
-    public static Board initialize() {
-        PiecesState piecesState = PiecesState.initialize();
-        return new Board(piecesState);
+
+    public static Board initialize(PieceService pieceService) {
+        PiecesState piecesState = pieceService.initialize();
+        return new Board(pieceService, piecesState);
     }
 
     public Board movePiece(MovingFlow movingFlow) {
-        Position from = movingFlow.getFrom();
-        Position to = movingFlow.getTo();
-        PiecesState piecesState = this.piecesState.movePiece(from, to);
-        return new Board(piecesState);
+        PiecesState piecesState = pieceService.movePiece(this.piecesState, movingFlow);
+        return new Board(pieceService, piecesState);
     }
 
     public boolean isNotFinished() {
