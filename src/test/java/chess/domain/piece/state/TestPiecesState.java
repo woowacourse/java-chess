@@ -3,8 +3,8 @@ package chess.domain.piece.state;
 import chess.config.BoardConfig;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
-import chess.domain.position.Position;
 import chess.domain.piece.team.Team;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;

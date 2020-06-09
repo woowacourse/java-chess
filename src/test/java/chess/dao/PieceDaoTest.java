@@ -4,6 +4,8 @@ import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
@@ -11,8 +13,21 @@ import java.sql.SQLException;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceDaoTest {
+    private static final PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
+    private static final PieceDao pieceDao = pieceDaoFactory.createPieceDao();
+
+    @BeforeEach
+    void setUp() {
+        pieceDao.deleteAll();
+    }
+
+    @AfterEach
+    void clean() {
+        pieceDao.deleteAll();
+    }
+
     @Test
-    void add() throws SQLException, ClassNotFoundException {
+    void add() {
         PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
         PieceDao pieceDao = pieceDaoFactory.createPieceDao();
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);

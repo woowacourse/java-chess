@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.error.DatabaseException;
 import chess.domain.dto.PieceDto;
 
 import java.sql.Connection;
@@ -14,7 +15,7 @@ class JdbcContext {
         this.dataSource = dataSource;
     }
 
-    void updateWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
+    void updateWithStatementStrategy(StatementStrategy statement) {
         Connection c = null;
         PreparedStatement ps = null;
         try {
@@ -22,7 +23,7 @@ class JdbcContext {
             ps = statement.makePreparedStatement(c);
             ps.executeUpdate();
         } catch (SQLException e) {
-            throw e;
+            throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
         } finally {
             if (ps != null) {
                 try {
@@ -40,7 +41,7 @@ class JdbcContext {
         }
     }
 
-    PieceDto queryWithStatementStrategy(StatementStrategy statement) throws SQLException, ClassNotFoundException {
+    PieceDto queryWithStatementStrategy(StatementStrategy statement) {
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -54,7 +55,7 @@ class JdbcContext {
                     rs.getString("name"),
                     rs.getString("position"));
         } catch (SQLException e) {
-            throw e;
+            throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
         } finally {
             if (rs != null) {
                 try {

@@ -1,12 +1,12 @@
 package chess.domain.piece.state;
 
 import chess.config.BoardConfig;
-import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.team.Team;
 import chess.domain.position.InitialColumn;
 import chess.domain.position.Position;
-import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
