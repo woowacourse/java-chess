@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.config.BoardConfig;
+import chess.domain.board.Board;
 
 import java.util.Objects;
 
@@ -8,8 +8,8 @@ class Column {
     private final int value;
 
     Column(int value) {
-        if (value < BoardConfig.LINE_START || BoardConfig.LINE_END < value) {
-            throw new IllegalArgumentException(String.format("%d는 %d ~ %d 내에 있지 않습니다.", value, BoardConfig.LINE_START, BoardConfig.LINE_END));
+        if (value < Board.LINE_START || Board.LINE_END < value) {
+            throw new IllegalArgumentException(String.format("%d는 %d ~ %d 내에 있지 않습니다.", value, Board.LINE_START, Board.LINE_END));
         }
         this.value = value;
     }

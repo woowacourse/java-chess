@@ -10,6 +10,8 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class Board {
+    public static final int LINE_START = 1;
+    public static final int LINE_END = 8;
     private final PieceService pieceService;
     private final PiecesState piecesState;
 

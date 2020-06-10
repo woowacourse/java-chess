@@ -1,6 +1,6 @@
 package chess.domain.piece.state;
 
-import chess.config.BoardConfig;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
@@ -28,10 +28,10 @@ class PiecesStateTest {
         PiecesState piecesState = PiecesState.initialize();
         Map<String, String> serialized = piecesState.serialize();
         assertThat(serialized.size()).isEqualTo(32);
-        assertPawn(serialized, BoardConfig.LINE_START + 1, "p");
-        assertPawn(serialized, BoardConfig.LINE_END - 1, "P");
-        assertEdge(serialized, BoardConfig.LINE_START);
-        assertEdge(serialized, BoardConfig.LINE_END);
+        assertPawn(serialized, Board.LINE_START + 1, "p");
+        assertPawn(serialized, Board.LINE_END - 1, "P");
+        assertEdge(serialized, Board.LINE_START);
+        assertEdge(serialized, Board.LINE_END);
     }
 
     @ParameterizedTest
@@ -199,7 +199,7 @@ class PiecesStateTest {
     }
 
     private void assertPawn(Map<String, String> serialized, int row, String p) {
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+        for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));
             String name = serialized.get(position);
@@ -208,7 +208,7 @@ class PiecesStateTest {
     }
 
     private void assertEdge(Map<String, String> serialized, int row) {
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+        for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));
         }
