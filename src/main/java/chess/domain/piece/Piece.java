@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.config.piece.PieceConfig;
 import chess.domain.piece.policy.move.CanNotMoveStrategy;
 import chess.domain.piece.policy.score.CalculateScoreStrategy;
 import chess.domain.piece.policy.score.HasMultiplePeerAtFile;
@@ -51,11 +50,11 @@ public class Piece {
     }
 
     public boolean isPawn() {
-        return name.equals(PieceConfig.getPawnName(team));
+        return name.equals(Team.convertName("p", team));
     }
 
     public boolean isKing() {
-        return name.equals(PieceConfig.getKingName(team));
+        return name.equals(Team.convertName("k", team));
     }
 
     public void setId(String id) {
