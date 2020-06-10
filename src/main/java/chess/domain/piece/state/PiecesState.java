@@ -84,10 +84,6 @@ public class PiecesState {
         return INITIAL_KING_SIZE <= kingSize;
     }
 
-    public Result concludeResult() {
-        return Result.conclude(this);
-    }
-
     public boolean isBlank(Position position) {
         return !getPiece(position).isPresent();
     }

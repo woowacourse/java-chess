@@ -136,29 +136,6 @@ class PiecesStateTest {
         return piecesState;
     }
 
-
-    @Test
-    void concludeResultWithInitializedPieces() {
-        String initialScore = "38.0";
-        PiecesState piecesState = PiecesState.initialize();
-        Result result = piecesState.concludeResult();
-        assertThat(result.getWinner()).isEqualTo(Team.NOT_ASSIGNED.toString());
-        assertThat(result.getWhiteScore()).isEqualTo(initialScore);
-        assertThat(result.getBlackScore()).isEqualTo(initialScore);
-    }
-
-    @Test
-    void concludeResultWithWhiteWinPieces() {
-        String whiteScore = "38.0";
-        String blackScore = "37.0";
-        PiecesState piecesState = PiecesState.initialize();
-        killBlackKingOnPurpose(piecesState);
-        Result result = piecesState.concludeResult();
-        assertThat(result.getWinner()).isEqualTo(Team.WHITE.toString());
-        assertThat(result.getWhiteScore()).isEqualTo(whiteScore);
-        assertThat(result.getBlackScore()).isEqualTo(blackScore);
-    }
-
     @Test
     void serialize() {
         Piece rook = PieceFactory.createPieceWithInitialColumn(InitialColumn.ROOK, Team.WHITE);

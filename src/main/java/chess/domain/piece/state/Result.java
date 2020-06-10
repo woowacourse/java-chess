@@ -19,7 +19,7 @@ public class Result {
         this.blackScore = blackScore;
     }
 
-    static Result conclude(PiecesState piecesState) {
+    public static Result conclude(PiecesState piecesState) {
         Team winner = concludeWinner(piecesState);
         Team loser = winner.getOpposite();
         Score whiteScore = calculateScore(Team.WHITE, piecesState);

@@ -34,7 +34,7 @@ public class Board {
     }
 
     public Result concludeResult() {
-        return piecesState.concludeResult();
+        return Result.conclude(piecesState);
     }
 
     public Map<String, String> serialize() {
