@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.dao.PieceDao;
-import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
 import chess.domain.board.service.BoardService;
 import chess.domain.dto.BoardDto;
@@ -18,14 +17,16 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController {
-    private static final BoardService boardService = new BoardService();
+    private final BoardService boardService;
 
-    public void route() {
+    public WebChessController(BoardService boardService) {
+        this.boardService = boardService;
+    }
+
+    public void route(PieceDao pieceDao) {
         get("/", (request, response) -> "Hello World");
 
         get("/start", (request, response) -> {
-            PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-            PieceDao pieceDao = pieceDaoFactory.createPieceDao();
             Board board = boardService.initialize(new PieceService(pieceDao));
             Map<String, Object> model = new HashMap<>();
             BoardDto boardDto = new BoardDto(board);
@@ -35,8 +36,6 @@ public class WebChessController {
 
         get("/resume", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-            PieceDao pieceDao = pieceDaoFactory.createPieceDao();
             Board board = boardService.resume(new PieceService(pieceDao));
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());

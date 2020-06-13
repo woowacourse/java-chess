@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.dao.PieceDao;
-import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
 import chess.domain.piece.service.PieceService;
 import chess.domain.piece.state.Result;
@@ -12,9 +11,11 @@ import chess.view.OutputView;
 
 public class ConsoleChessController {
     private final Console console;
+    private final PieceDao pieceDao;
 
-    public ConsoleChessController(Console console) {
+    public ConsoleChessController(Console console, PieceDao pieceDao) {
         this.console = console;
+        this.pieceDao = pieceDao;
     }
 
     public Board start() {
@@ -23,8 +24,6 @@ public class ConsoleChessController {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
 
-        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
         Board board = Board.initialize(new PieceService(pieceDao));
         OutputView.printBoard(board.serialize());
         return board;

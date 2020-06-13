@@ -2,13 +2,17 @@
 package chess;
 
 import chess.controller.ConsoleChessController;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
 import chess.ui.Console;
 
 public class ConsoleUIChessApplication {
     public static void main(String[] args) {
         Console console = new Console();
-        ConsoleChessController consoleChessController = new ConsoleChessController(console);
+        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
+        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
+        ConsoleChessController consoleChessController = new ConsoleChessController(console, pieceDao);
         try {
             Board board = consoleChessController.start();
             board = consoleChessController.play(board);
