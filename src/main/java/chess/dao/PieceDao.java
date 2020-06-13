@@ -1,5 +1,6 @@
 package chess.dao;
 
+import chess.dao.jdbc.JdbcContext;
 import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
@@ -14,20 +15,20 @@ import java.util.List;
 
 public class PieceDao {
     //check branch chess-2-applying-generic
-    private final JdbcContext jdbcContext;
+    private final JdbcContext<PieceDto> jdbcContext;
 
-    PieceDao(JdbcContext jdbcContext) {
+    PieceDao(JdbcContext<PieceDto> jdbcContext) {
         this.jdbcContext = jdbcContext;
     }
 
-    public void update(Piece piece, Position to) {
+    public void update(Piece piece, Position from, Position to) {
         List<String> valuesForSql = new ArrayList<>();
         Team team = piece.getTeam();
         valuesForSql.add(team.toString());
         valuesForSql.add(piece.getName());
         valuesForSql.add(to.toString());
-        valuesForSql.add(piece.getId());
-        updateSql("update pieces set team = ?, name = ?, position = ? where id = ?", valuesForSql);
+        valuesForSql.add(from.toString());
+        updateSql("update pieces set team = ?, name = ?, position = ? where position = ?", valuesForSql);
 
     }
 
@@ -66,16 +67,24 @@ public class PieceDao {
     }
 
     private PieceDto querySql(String sql, List<String> values) {
-        return jdbcContext.queryWithStatementStrategy(new StatementStrategy() {
+        return jdbcContext.queryObject(new StatementStrategy() {
             @Override
             public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
-                PreparedStatement ps;
-
-                ps = c.prepareStatement(sql);
+                PreparedStatement ps = c.prepareStatement(sql);
                 for (int i = 1; i <= values.size(); i++) {
                     ps.setString(i, values.get(i - 1));
                 }
                 return ps;
+            }
+        });
+    }
+
+    public List<PieceDto> getAll() {
+        return jdbcContext.queryObjects(new StatementStrategy() {
+            String sql = "select * from pieces";
+            @Override
+            public PreparedStatement makePreparedStatement(Connection c) throws SQLException {
+                return c.prepareStatement(sql);
             }
         });
     }

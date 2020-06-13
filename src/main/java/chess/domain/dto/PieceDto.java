@@ -13,10 +13,6 @@ public class PieceDto {
         this.position = position;
     }
 
-    public PieceDto(String position, String name) {
-        this(null, null, position, name);
-    }
-
     public String getId() {
         return id;
     }

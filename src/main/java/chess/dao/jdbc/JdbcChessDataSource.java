@@ -1,4 +1,4 @@
-package chess.dao;
+package chess.dao.jdbc;
 
 import chess.dao.error.DatabaseException;
 

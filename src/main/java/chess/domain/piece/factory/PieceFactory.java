@@ -1,5 +1,6 @@
 package chess.domain.piece.factory;
 
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -13,34 +14,78 @@ import java.util.Map;
 
 public class PieceFactory {
 
-    private static Map<InitialColumn, PieceCreator> pieceCreators = new HashMap<>();
+    private static Map<InitialColumn, PieceCreator> pieceCreatorsWithInitialColumn = new HashMap<>();
+    private static Map<String, PieceCreator> pieceCreatorsWithName = new HashMap<>();
+
 
     static {
-        pieceCreators.put(InitialColumn.ROOK,
+        pieceCreatorsWithName.put("r",
                 (Team team) -> new Piece(team,
                         Team.convertName("r", team),
                         new RookCanNotMoveStrategy(),
                         new DefaultScoreCalculator(Score.of(5))));
-        pieceCreators.put(InitialColumn.KNIGHT,
+
+        pieceCreatorsWithName.put("n",
                 (Team team) -> new Piece(team,
                         Team.convertName("n", team),
                         new KnightCanNotMoveStrategy(),
                         new DefaultScoreCalculator(Score.of(2.5))));
-        pieceCreators.put(InitialColumn.BISHOP,
+
+        pieceCreatorsWithName.put("b",
                 (Team team) -> new Piece(team,
                         Team.convertName("b", team),
                         new BishopCanNotMoveStrategy(),
                         new DefaultScoreCalculator(Score.of(3))));
-        pieceCreators.put(InitialColumn.QUEEN,
+
+        pieceCreatorsWithName.put("q",
                 (Team team) -> new Piece(team,
                         Team.convertName("q", team),
                         new QueenCanNotMoveStrategy(),
                         new DefaultScoreCalculator(Score.of(9))));
-        pieceCreators.put(InitialColumn.KING,
+
+        pieceCreatorsWithName.put("k",
                 (Team team) -> new Piece(team,
                         Team.convertName("k", team),
                         new KingCanNotMoveStrategy(),
                         new DefaultScoreCalculator(Score.zero())));
+
+        pieceCreatorsWithName.put("p",
+                (Team team) -> new Piece(team,
+                        Team.convertName("p", team),
+                        new PawnCanNotMoveStrategy(team),
+                        new PawnScoreCalculator()));
+        pieceCreatorsWithInitialColumn.put(InitialColumn.ROOK,
+                (Team team) -> new Piece(team,
+                        Team.convertName("r", team),
+                        new RookCanNotMoveStrategy(),
+                        new DefaultScoreCalculator(Score.of(5))));
+        pieceCreatorsWithInitialColumn.put(InitialColumn.KNIGHT,
+                (Team team) -> new Piece(team,
+                        Team.convertName("n", team),
+                        new KnightCanNotMoveStrategy(),
+                        new DefaultScoreCalculator(Score.of(2.5))));
+        pieceCreatorsWithInitialColumn.put(InitialColumn.BISHOP,
+                (Team team) -> new Piece(team,
+                        Team.convertName("b", team),
+                        new BishopCanNotMoveStrategy(),
+                        new DefaultScoreCalculator(Score.of(3))));
+        pieceCreatorsWithInitialColumn.put(InitialColumn.QUEEN,
+                (Team team) -> new Piece(team,
+                        Team.convertName("q", team),
+                        new QueenCanNotMoveStrategy(),
+                        new DefaultScoreCalculator(Score.of(9))));
+        pieceCreatorsWithInitialColumn.put(InitialColumn.KING,
+                (Team team) -> new Piece(team,
+                        Team.convertName("k", team),
+                        new KingCanNotMoveStrategy(),
+                        new DefaultScoreCalculator(Score.zero())));
+    }
+
+    public static Piece createPieceWithDto(PieceDto pieceDto) {
+        String name = pieceDto.getName();
+        Team team = Team.valueOf(pieceDto.getTeam());
+        PieceCreator pieceCreator = pieceCreatorsWithName.get(name.toLowerCase());
+        return pieceCreator.create(team);
     }
 
     private interface PieceCreator {
@@ -52,7 +97,7 @@ public class PieceFactory {
     }
 
     public static Piece createPieceWithInitialColumn(InitialColumn initialColumn, Team team) {
-        PieceCreator pieceCreator = pieceCreators.get(initialColumn);
+        PieceCreator pieceCreator = pieceCreatorsWithInitialColumn.get(initialColumn);
         return pieceCreator.create(team);
 
     }

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -28,8 +29,6 @@ class PieceDaoTest {
 
     @Test
     void add() {
-        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
         Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
         String id = "1";
         pieceToAdd.setId(id);
@@ -44,17 +43,25 @@ class PieceDaoTest {
     }
 
     @Test
-    void update() throws SQLException, ClassNotFoundException {
-        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
-        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
+    void update() {
         Piece piece = new Piece(Team.WHITE, "p", null, null);
         String id = "1";
         piece.setId(id);
         Position position = Position.of(1, 2);
         pieceDao.add(piece, position);
-        Position to = Position.of(1,4);
-        pieceDao.update(piece, to);
+        Position to = Position.of(1, 4);
+        pieceDao.update(piece, position, to);
         PieceDto retrievedPieceDto = pieceDao.get(id);
         assertThat(retrievedPieceDto.getPosition()).isEqualTo(to.toString());
+    }
+
+    @Test
+    void getAll() {
+        Piece pawn = new Piece(Team.WHITE, "p", null, null);
+        Piece rook = new Piece(Team.WHITE, "r", null, null);
+        pieceDao.add(pawn, Position.of(1, 2));
+        pieceDao.add(rook, Position.of(1, 1));
+        List<PieceDto> pieceDtos = pieceDao.getAll();
+        assertThat(pieceDtos).hasSize(2);
     }
 }

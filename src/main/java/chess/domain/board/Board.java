@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.service.PieceService;
 import chess.domain.piece.state.PiecesState;
@@ -20,9 +21,13 @@ public class Board {
         this.piecesState = piecesState;
     }
 
-
     public static Board initialize(PieceService pieceService) {
         PiecesState piecesState = pieceService.initialize();
+        return new Board(pieceService, piecesState);
+    }
+
+    public static Board resume(PieceService pieceService) {
+        PiecesState piecesState = pieceService.getAll();
         return new Board(pieceService, piecesState);
     }
 
@@ -39,7 +44,7 @@ public class Board {
         return Result.conclude(piecesState);
     }
 
-    public Map<String, String> serialize() {
+    public Map<String, PieceDto> serialize() {
         return piecesState.serialize();
     }
 

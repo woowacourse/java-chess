@@ -1,12 +1,14 @@
 package chess.domain.piece.service;
 
 import chess.dao.PieceDao;
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Map;
 
 //todo: test
@@ -22,7 +24,7 @@ public class PieceService {
         Position to = movingFlow.getTo();
         PiecesState updatedPiecesState = piecesState.movePiece(from, to);
         Piece movedPiece = updatedPiecesState.findPiece(to);
-        pieceDao.update(movedPiece, to);
+        pieceDao.update(movedPiece, from, to);
         return updatedPiecesState;
     }
 
@@ -35,5 +37,10 @@ public class PieceService {
         }
 
         return piecesState;
+    }
+
+    public PiecesState getAll() {
+        List<PieceDto> pieceDtos = pieceDao.getAll();
+        return PiecesState.of(pieceDtos);
     }
 }

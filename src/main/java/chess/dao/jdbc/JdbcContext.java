@@ -1,5 +1,6 @@
-package chess.dao;
+package chess.dao.jdbc;
 
+import chess.dao.StatementStrategy;
 import chess.dao.error.DatabaseException;
 import chess.domain.dto.PieceDto;
 
@@ -7,15 +8,19 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-class JdbcContext {
+public class JdbcContext<T> {
     private final DataSource dataSource;
+    private final RowMapper<T> rowMapper;
 
-    JdbcContext(DataSource dataSource) {
+    public JdbcContext(DataSource dataSource, RowMapper<T> rowMapper) {
         this.dataSource = dataSource;
+        this.rowMapper = rowMapper;
     }
 
-    void updateWithStatementStrategy(StatementStrategy statement) {
+    public void updateWithStatementStrategy(StatementStrategy statement) {
         Connection c = null;
         PreparedStatement ps = null;
         try {
@@ -41,7 +46,7 @@ class JdbcContext {
         }
     }
 
-    PieceDto queryWithStatementStrategy(StatementStrategy statement) {
+    public T queryObject(StatementStrategy statement) {
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
@@ -50,10 +55,7 @@ class JdbcContext {
             ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
             rs.next();
-            return new PieceDto(rs.getString("id"),
-                    rs.getString("team"),
-                    rs.getString("name"),
-                    rs.getString("position"));
+            return rowMapper.mapRow(rs);
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
         } finally {
@@ -78,8 +80,47 @@ class JdbcContext {
 
                 }
             }
-
-
         }
+    }
+
+    public List<T> queryObjects(StatementStrategy statementStrategy) {
+        Connection c = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        List<T> results = new ArrayList<>();
+        try {
+            c = dataSource.getConnection();
+            ps = statementStrategy.makePreparedStatement(c);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                results.add(rowMapper.mapRow(rs));
+            }
+            return results;
+        } catch (SQLException e) {
+            throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
+        } finally {
+            if (rs != null) {
+                try {
+                    rs.close();
+                } catch (SQLException e) {
+                }
+            }
+
+            if (ps != null) {
+                try {
+                    ps.close();
+                } catch (SQLException e) {
+                }
+            }
+
+            if (c != null) {
+                try {
+                    c.close();
+                } catch (SQLException e) {
+
+                }
+            }
+        }
+
     }
 }

@@ -47,11 +47,11 @@ public enum Team {
         return NOT_ASSIGNED;
     }
 
-    private boolean isBlack() {
+    public boolean isBlack() {
         return this == BLACK;
     }
 
-    private boolean isWhite() {
+    public boolean isWhite() {
         return this == WHITE;
     }
 

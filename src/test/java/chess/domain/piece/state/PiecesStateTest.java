@@ -1,6 +1,7 @@
 package chess.domain.piece.state;
 
 import chess.domain.board.Board;
+import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
@@ -26,7 +27,7 @@ class PiecesStateTest {
     @DisplayName("#initialize() : should return initialized Board")
     void initiaize() {
         PiecesState piecesState = PiecesState.initialize();
-        Map<String, String> serialized = piecesState.serialize();
+        Map<String, PieceDto> serialized = piecesState.serialize();
         assertThat(serialized.size()).isEqualTo(32);
         assertPawn(serialized, Board.LINE_START + 1, "p");
         assertPawn(serialized, Board.LINE_END - 1, "P");
@@ -143,7 +144,7 @@ class PiecesStateTest {
             put(Position.of(1,1), rook);
         }};
         PiecesState piecesState = new PiecesState(pieces);
-        Map<String, String> serialized = piecesState.serialize();
+        Map<String, PieceDto> serialized = piecesState.serialize();
         assertThat(serialized.toString()).isEqualTo("{11=r}");
     }
 
@@ -198,16 +199,16 @@ class PiecesStateTest {
         );
     }
 
-    private void assertPawn(Map<String, String> serialized, int row, String p) {
+    private void assertPawn(Map<String, PieceDto> serialized, int row, String p) {
         for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));
-            String name = serialized.get(position);
-            assertThat(name).isEqualTo(p);
+            PieceDto pieceDto = serialized.get(position);
+            assertThat(pieceDto.getName()).isEqualTo(p);
         }
     }
 
-    private void assertEdge(Map<String, String> serialized, int row) {
+    private void assertEdge(Map<String, PieceDto> serialized, int row) {
         for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));

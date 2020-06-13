@@ -3,6 +3,7 @@ package chess.controller;
 import chess.dao.PieceDao;
 import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
+import chess.domain.board.service.BoardService;
 import chess.domain.dto.BoardDto;
 import chess.domain.piece.service.PieceService;
 import chess.domain.piece.state.Result;
@@ -17,7 +18,7 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController {
-    private Board board;
+    private static final BoardService boardService = new BoardService();
 
     public void route() {
         get("/", (request, response) -> "Hello World");
@@ -25,8 +26,18 @@ public class WebChessController {
         get("/start", (request, response) -> {
             PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
             PieceDao pieceDao = pieceDaoFactory.createPieceDao();
-            board = Board.initialize(new PieceService(pieceDao));
+            Board board = boardService.initialize(new PieceService(pieceDao));
             Map<String, Object> model = new HashMap<>();
+            BoardDto boardDto = new BoardDto(board);
+            model.put("piecesDto", boardDto.getPieces());
+            return render(model, "board.html");
+        });
+
+        get("/resume", (request, response) -> {
+            Map<String, Object> model = new HashMap<>();
+            PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
+            PieceDao pieceDao = pieceDaoFactory.createPieceDao();
+            Board board = boardService.resume(new PieceService(pieceDao));
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());
             return render(model, "board.html");
@@ -36,8 +47,9 @@ public class WebChessController {
             String from = request.queryParams("from");
             String to = request.queryParams("to");
             MovingFlow movingFlow = MovingFlow.of(from, to);
+            Board board;
             try {
-                board = board.movePiece(movingFlow);
+                board = boardService.movePiece(movingFlow);
             } catch (RuntimeException e) {
                 Map<String, Object> model = new HashMap<>();
                 model.put("error", e.getMessage());
