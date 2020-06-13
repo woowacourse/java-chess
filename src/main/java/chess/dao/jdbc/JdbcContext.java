@@ -2,13 +2,11 @@ package chess.dao.jdbc;
 
 import chess.dao.StatementStrategy;
 import chess.dao.error.DatabaseException;
-import chess.domain.dto.PieceDto;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcContext<T> {
@@ -54,7 +52,6 @@ public class JdbcContext<T> {
             c = dataSource.getConnection();
             ps = statement.makePreparedStatement(c);
             rs = ps.executeQuery();
-            rs.next();
             return rowMapper.mapRow(rs);
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
@@ -87,15 +84,11 @@ public class JdbcContext<T> {
         Connection c = null;
         PreparedStatement ps = null;
         ResultSet rs = null;
-        List<T> results = new ArrayList<>();
         try {
             c = dataSource.getConnection();
             ps = statementStrategy.makePreparedStatement(c);
             rs = ps.executeQuery();
-            while (rs.next()) {
-                results.add(rowMapper.mapRow(rs));
-            }
-            return results;
+            return rowMapper.mapRows(rs);
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
         } finally {

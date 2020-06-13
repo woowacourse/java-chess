@@ -4,14 +4,12 @@ import chess.dao.PieceDao;
 import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.PiecesState;
-import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
 import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Map;
 
-//todo: test
 public class PieceService {
     private final PieceDao pieceDao;
 

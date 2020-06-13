@@ -2,7 +2,6 @@ package chess.domain.board.service;
 
 import chess.domain.board.Board;
 import chess.domain.piece.service.PieceService;
-import chess.domain.piece.state.PiecesState;
 import chess.domain.position.MovingFlow;
 
 public class BoardService {

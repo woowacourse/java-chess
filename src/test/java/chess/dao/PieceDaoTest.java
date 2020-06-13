@@ -4,7 +4,7 @@ import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
-import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,10 +21,10 @@ class PieceDaoTest {
         pieceDao.deleteAll();
     }
 
-//    @AfterEach
-//    void clean() {
-//        pieceDao.deleteAll();
-//    }
+    @AfterAll
+    static void clean() {
+        pieceDao.deleteAll();
+    }
 
     @Test
     void add() {

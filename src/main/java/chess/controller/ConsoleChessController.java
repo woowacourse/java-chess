@@ -3,7 +3,6 @@ package chess.controller;
 import chess.dao.PieceDao;
 import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
-import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.service.PieceService;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
