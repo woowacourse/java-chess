@@ -8,7 +8,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,20 +21,18 @@ class PieceDaoTest {
         pieceDao.deleteAll();
     }
 
-    @AfterEach
-    void clean() {
-        pieceDao.deleteAll();
-    }
+//    @AfterEach
+//    void clean() {
+//        pieceDao.deleteAll();
+//    }
 
     @Test
     void add() {
-        Piece pieceToAdd = new Piece(Team.WHITE, "p", null, null);
-        String id = "1";
-        pieceToAdd.setId(id);
+        String name = "p";
+        Piece pieceToAdd = new Piece(Team.WHITE, name, null, null);
         Position position = Position.of(1, 2);
         pieceDao.add(pieceToAdd, position);
-        PieceDto retrievedPieceDto = pieceDao.get(id);
-        assertThat(retrievedPieceDto.getId()).isEqualTo(id);
+        PieceDto retrievedPieceDto = pieceDao.getByName(name);
         assertThat(retrievedPieceDto.getName()).isEqualTo(pieceToAdd.getName());
         assertThat(retrievedPieceDto.getTeam()).isEqualTo(pieceToAdd.getTeam().toString());
         assertThat(retrievedPieceDto.getPosition()).isEqualTo(position.toString());
@@ -44,14 +41,13 @@ class PieceDaoTest {
 
     @Test
     void update() {
-        Piece piece = new Piece(Team.WHITE, "p", null, null);
-        String id = "1";
-        piece.setId(id);
+        String name = "p";
+        Piece piece = new Piece(Team.WHITE, name, null, null);
         Position position = Position.of(1, 2);
         pieceDao.add(piece, position);
         Position to = Position.of(1, 4);
         pieceDao.update(piece, position, to);
-        PieceDto retrievedPieceDto = pieceDao.get(id);
+        PieceDto retrievedPieceDto = pieceDao.getByName(name);
         assertThat(retrievedPieceDto.getPosition()).isEqualTo(to.toString());
     }
 

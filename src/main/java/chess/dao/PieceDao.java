@@ -32,18 +32,17 @@ public class PieceDao {
 
     }
 
-    public PieceDto get(String id) {
-        return querySql("select * from pieces where id = ?", Collections.singletonList(id));
+    public PieceDto getByName(String name) {
+        return querySql("select * from pieces where name = ?", Collections.singletonList(name));
     }
 
     public void add(final Piece piece, final Position position) {
         List<String> valuesForSql = new ArrayList<>();
-        valuesForSql.add(piece.getId());
         Team team = piece.getTeam();
         valuesForSql.add(team.toString());
         valuesForSql.add(piece.getName());
         valuesForSql.add(position.toString());
-        updateSql("insert into pieces(id, team, name, position) values(?,?,?,?)", valuesForSql);
+        updateSql("insert into pieces(team, name, position) values(?,?,?)", valuesForSql);
 
     }
 

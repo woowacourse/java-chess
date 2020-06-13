@@ -104,7 +104,7 @@ public class PiecesState {
         for (Map.Entry<Position, Piece> element : pieces.entrySet()) {
             Position position = element.getKey();
             Piece piece = element.getValue();
-            serialized.put(position.toString(), new PieceDto(piece.getId(), piece.getTeam().toString(), piece.getName(), position.toString()));
+            serialized.put(position.toString(), new PieceDto(piece.getTeam().toString(), piece.getName(), position.toString()));
         }
         return serialized;
     }

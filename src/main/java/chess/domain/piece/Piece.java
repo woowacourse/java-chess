@@ -11,10 +11,8 @@ import chess.domain.position.Position;
 import java.util.Objects;
 
 public class Piece {
-    private String id;
 
     private final Team team;
-
     private final String name;
     private final CanNotMoveStrategy canNotMoveStrategy;
     private final CalculateScoreStrategy calculateScoreStrategy;
@@ -55,14 +53,6 @@ public class Piece {
 
     public boolean isKing() {
         return name.equals(Team.convertName("k", team));
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return id;
     }
 
     public String getName() {

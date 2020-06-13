@@ -140,12 +140,17 @@ class PiecesStateTest {
     @Test
     void serialize() {
         Piece rook = PieceFactory.createPieceWithInitialColumn(InitialColumn.ROOK, Team.WHITE);
+
+        Position position = Position.of(1, 1);
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
-            put(Position.of(1,1), rook);
+            put(position, rook);
         }};
         PiecesState piecesState = new PiecesState(pieces);
         Map<String, PieceDto> serialized = piecesState.serialize();
-        assertThat(serialized.toString()).isEqualTo("{11=r}");
+        PieceDto pieceDto = serialized.get(position.toString());
+        assertThat(pieceDto.getName()).isEqualTo(rook.getName());
+        assertThat(pieceDto.getPosition()).isEqualTo(position.toString());
+        assertThat(pieceDto.getTeam()).isEqualTo(rook.getTeam().toString());
     }
 
     private void killBlackKingOnPurpose(PiecesState piecesState) {

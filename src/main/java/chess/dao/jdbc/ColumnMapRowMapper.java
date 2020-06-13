@@ -13,7 +13,6 @@ public class ColumnMapRowMapper implements RowMapper<List<Object>> {
         List<Object> results = new ArrayList<>();
         while (rs.next()) {
             PieceDto pieceDto = new PieceDto(
-                    rs.getString("id"),
                     rs.getString("team"),
                     rs.getString("name"),
                     rs.getString("position")
