@@ -9,7 +9,6 @@ public class RequestDto {
     private List<String> parameter;
     private long id;
 
-
     public RequestDto(Command command) {
         this.command = command;
     }
