@@ -7,13 +7,13 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.Map;
 
-public class JdbcContext<T> {
+public class JdbcContext<K, T> {
     private final DataSource dataSource;
-    private final RowMapper<T> rowMapper;
+    private final RowMapper<K, T> rowMapper;
 
-    public JdbcContext(DataSource dataSource, RowMapper<T> rowMapper) {
+    public JdbcContext(DataSource dataSource, RowMapper<K, T> rowMapper) {
         this.dataSource = dataSource;
         this.rowMapper = rowMapper;
     }
@@ -41,7 +41,7 @@ public class JdbcContext<T> {
         }
     }
 
-    public List<T> queryObjects(StatementStrategy statementStrategy) {
+    public Map<K, T> queryObjects(StatementStrategy statementStrategy) {
         try (
                 Connection c = dataSource.getConnection();
                 PreparedStatement ps = statementStrategy.makePreparedStatement(c);

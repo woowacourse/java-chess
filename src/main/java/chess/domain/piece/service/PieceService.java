@@ -1,13 +1,11 @@
 package chess.domain.piece.service;
 
 import chess.dao.PieceDao;
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.position.MovingFlow;
 import chess.domain.position.Position;
 
-import java.util.List;
 import java.util.Map;
 
 public class PieceService {
@@ -38,7 +36,7 @@ public class PieceService {
     }
 
     public PiecesState getAll() {
-        List<PieceDto> pieceDtos = pieceDao.getAll();
-        return PiecesState.of(pieceDtos);
+        Map<Position, Piece> pieces = pieceDao.getAll();
+        return PiecesState.of(pieces);
     }
 }

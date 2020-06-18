@@ -1,6 +1,5 @@
 package chess.domain.piece.factory;
 
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
@@ -81,9 +80,7 @@ public class PieceFactory {
                         new DefaultScoreCalculator(Score.zero())));
     }
 
-    public static Piece createPieceWithDto(PieceDto pieceDto) {
-        String name = pieceDto.getName();
-        Team team = Team.valueOf(pieceDto.getTeam());
+    public static Piece createPiece(String name, Team team) {
         PieceCreator pieceCreator = pieceCreatorsWithName.get(name.toLowerCase());
         return pieceCreator.create(team);
     }

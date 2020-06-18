@@ -1,7 +1,6 @@
 package chess.dao;
 
 import chess.dao.jdbc.JdbcContext;
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.team.Team;
 import chess.domain.position.Position;
@@ -9,11 +8,12 @@ import chess.domain.position.Position;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class PieceDao {
-    private final JdbcContext<PieceDto> jdbcContext;
+    private final JdbcContext<Position, Piece> jdbcContext;
 
-    PieceDao(JdbcContext<PieceDto> jdbcContext) {
+    PieceDao(JdbcContext<Position, Piece> jdbcContext) {
         this.jdbcContext = jdbcContext;
     }
 
@@ -38,11 +38,11 @@ public class PieceDao {
 
     }
 
-    public List<PieceDto> getAll() {
+    public Map<Position, Piece> getAll() {
         return jdbcContext.queryObjects(c -> c.prepareStatement("select * from pieces"));
     }
 
-    PieceDto getByName(String name) {
+    Piece getByName(String name) {
         return jdbcContext.queryObject(c -> {
             PreparedStatement ps = c.prepareStatement("select * from pieces where name = ?");
             ps.setString(1, name);

@@ -1,7 +1,6 @@
 package chess.domain.piece.state;
 
 import chess.domain.board.Board;
-import chess.domain.dto.PieceDto;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
@@ -32,13 +31,7 @@ public class PiecesState {
         return new PiecesState(pieces);
     }
 
-    public static PiecesState of(List<PieceDto> pieceDtos) {
-        Map<Position, Piece> pieces = new HashMap<>();
-        for (PieceDto pieceDto : pieceDtos) {
-            Position position = Position.of(pieceDto.getPosition());
-            Piece piece = PieceFactory.createPieceWithDto(pieceDto);
-            pieces.put(position, piece);
-        }
+    public static PiecesState of(Map<Position, Piece> pieces) {
         return new PiecesState(pieces);
     }
 
@@ -99,12 +92,12 @@ public class PiecesState {
         return !getPiece(position).isPresent();
     }
 
-    public Map<String, PieceDto> serialize() {
-        Map<String, PieceDto> serialized = new HashMap<>();
+    public Map<String, String> serialize() {
+        Map<String, String> serialized = new HashMap<>();
         for (Map.Entry<Position, Piece> element : pieces.entrySet()) {
             Position position = element.getKey();
             Piece piece = element.getValue();
-            serialized.put(position.toString(), new PieceDto(piece.getTeam().toString(), piece.getName(), position.toString()));
+            serialized.put(position.toString(), piece.getName());
         }
         return serialized;
     }
