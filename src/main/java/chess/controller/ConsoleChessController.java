@@ -24,7 +24,7 @@ public class ConsoleChessController {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
         PiecesState piecesState = pieceService.initialize();
-        Board board = Board.initialize(piecesState);
+        Board board = Board.of(piecesState);
         OutputView.printBoard(board.serialize());
         return board;
     }
@@ -33,7 +33,7 @@ public class ConsoleChessController {
         while (board.isNotFinished()) {
             MovingFlow movingFlow = console.inputMovingFlow();
             PiecesState piecesState = pieceService.movePiece(movingFlow);
-            board = Board.resume(piecesState);
+            board = Board.of(piecesState);
             OutputView.printBoard(board.serialize());
         }
         return board;

@@ -16,11 +16,7 @@ public class Board {
         this.piecesState = piecesState;
     }
 
-    public static Board initialize(PiecesState piecesState) {
-        return new Board(piecesState);
-    }
-
-    public static Board resume(PiecesState piecesState) {
+    public static Board of(PiecesState piecesState) {
         return new Board(piecesState);
     }
 

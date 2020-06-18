@@ -31,7 +31,7 @@ class BoardTest {
     @DisplayName("#getName() : should return Piece as to Position")
     void getPiece() {
         PiecesState piecesState = pieceService.initialize();
-        Board board = Board.initialize(piecesState);
+        Board board = Board.of(piecesState);
         Piece piece = board.getPiece(Position.of(1, 1));
         assertThat(piece).isNotNull();
     }
@@ -41,7 +41,7 @@ class BoardTest {
     void concludeResult() {
         Score initialScore = Score.of(38);
         PiecesState piecesState = pieceService.initialize();
-        Board board = Board.initialize(piecesState);
+        Board board = Board.of(piecesState);
         Result result = board.concludeResult();
         assertThat(result.getWinner()).isEqualTo(Team.NOT_ASSIGNED.toString());
         assertThat(result.getBlackScore()).isEqualTo(initialScore.toString());

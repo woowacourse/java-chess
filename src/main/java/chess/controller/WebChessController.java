@@ -27,7 +27,7 @@ public class WebChessController {
 
         get("/start", (request, response) -> {
             PiecesState piecesState = pieceService.initialize();
-            Board board = Board.initialize(piecesState);
+            Board board = Board.of(piecesState);
             Map<String, Object> model = new HashMap<>();
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());
@@ -37,7 +37,7 @@ public class WebChessController {
         get("/resume", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
             PiecesState piecesState = pieceService.getAll();
-            Board board = Board.resume(piecesState);
+            Board board = Board.of(piecesState);
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());
             return render(model, "board.html");
@@ -51,7 +51,7 @@ public class WebChessController {
             Board board;
             try {
                 PiecesState piecesState = pieceService.movePiece(movingFlow);
-                board = Board.resume(piecesState);
+                board = Board.of(piecesState);
             } catch (RuntimeException e) {
                 return renderError(e);
             }
