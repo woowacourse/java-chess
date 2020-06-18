@@ -19,100 +19,37 @@ public class JdbcContext<T> {
     }
 
     public void updateWithStatementStrategy(StatementStrategy statement) {
-        Connection c = null;
-        PreparedStatement ps = null;
-        try {
-            c = dataSource.getConnection();
-            ps = statement.makePreparedStatement(c);
+        try (
+                Connection c = dataSource.getConnection();
+                PreparedStatement ps = statement.makePreparedStatement(c);
+        ) {
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
-        } finally {
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
         }
     }
 
     public T queryObject(StatementStrategy statement) {
-        Connection c = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            c = dataSource.getConnection();
-            ps = statement.makePreparedStatement(c);
-            rs = ps.executeQuery();
+        try (
+                Connection c = dataSource.getConnection();
+                PreparedStatement ps = statement.makePreparedStatement(c);
+                ResultSet rs = ps.executeQuery();
+        ) {
             return rowMapper.mapRow(rs);
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                }
-            }
-
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
         }
     }
 
     public List<T> queryObjects(StatementStrategy statementStrategy) {
-        Connection c = null;
-        PreparedStatement ps = null;
-        ResultSet rs = null;
-        try {
-            c = dataSource.getConnection();
-            ps = statementStrategy.makePreparedStatement(c);
-            rs = ps.executeQuery();
+        try (
+                Connection c = dataSource.getConnection();
+                PreparedStatement ps = statementStrategy.makePreparedStatement(c);
+                ResultSet rs = ps.executeQuery();
+        ) {
             return rowMapper.mapRows(rs);
         } catch (SQLException e) {
             throw new DatabaseException(DatabaseException.QUERY_FAILED_MESSAGE);
-        } finally {
-            if (rs != null) {
-                try {
-                    rs.close();
-                } catch (SQLException e) {
-                }
-            }
-
-            if (ps != null) {
-                try {
-                    ps.close();
-                } catch (SQLException e) {
-                }
-            }
-
-            if (c != null) {
-                try {
-                    c.close();
-                } catch (SQLException e) {
-
-                }
-            }
         }
 
     }
