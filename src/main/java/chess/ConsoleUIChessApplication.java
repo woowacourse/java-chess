@@ -5,6 +5,7 @@ import chess.controller.ConsoleChessController;
 import chess.dao.PieceDao;
 import chess.dao.PieceDaoFactory;
 import chess.domain.board.Board;
+import chess.domain.piece.service.PieceService;
 import chess.ui.Console;
 
 public class ConsoleUIChessApplication {
@@ -12,7 +13,8 @@ public class ConsoleUIChessApplication {
         Console console = new Console();
         PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
         PieceDao pieceDao = pieceDaoFactory.createPieceDao();
-        ConsoleChessController consoleChessController = new ConsoleChessController(console, pieceDao);
+        PieceService pieceService = new PieceService(pieceDao);
+        ConsoleChessController consoleChessController = new ConsoleChessController(console, pieceService);
         try {
             Board board = consoleChessController.start();
             board = consoleChessController.play(board);

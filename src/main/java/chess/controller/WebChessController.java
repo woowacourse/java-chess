@@ -1,10 +1,9 @@
 package chess.controller;
 
-import chess.dao.PieceDao;
 import chess.domain.board.Board;
-import chess.domain.board.service.BoardService;
 import chess.domain.dto.BoardDto;
 import chess.domain.piece.service.PieceService;
+import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
 import spark.ModelAndView;
@@ -17,17 +16,18 @@ import static spark.Spark.get;
 import static spark.Spark.post;
 
 public class WebChessController {
-    private final BoardService boardService;
+    private final PieceService pieceService;
 
-    public WebChessController(BoardService boardService) {
-        this.boardService = boardService;
+    public WebChessController(PieceService pieceService) {
+        this.pieceService = pieceService;
     }
 
-    public void route(PieceDao pieceDao) {
+    public void route() {
         get("/", (request, response) -> "Hello World");
 
         get("/start", (request, response) -> {
-            Board board = boardService.initialize(new PieceService(pieceDao));
+            PiecesState piecesState = pieceService.initialize();
+            Board board = Board.initialize(piecesState);
             Map<String, Object> model = new HashMap<>();
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());
@@ -36,7 +36,8 @@ public class WebChessController {
 
         get("/resume", (request, response) -> {
             Map<String, Object> model = new HashMap<>();
-            Board board = boardService.resume(new PieceService(pieceDao));
+            PiecesState piecesState = pieceService.getAll();
+            Board board = Board.resume(piecesState);
             BoardDto boardDto = new BoardDto(board);
             model.put("piecesDto", boardDto.getPieces());
             return render(model, "board.html");
@@ -46,9 +47,11 @@ public class WebChessController {
             String from = request.queryParams("from");
             String to = request.queryParams("to");
             MovingFlow movingFlow = MovingFlow.of(from, to);
+
             Board board;
             try {
-                board = boardService.movePiece(movingFlow);
+                PiecesState piecesState = pieceService.movePiece(movingFlow);
+                board = Board.resume(piecesState);
             } catch (RuntimeException e) {
                 return renderError(e);
             }

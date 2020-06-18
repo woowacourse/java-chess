@@ -15,9 +15,11 @@ public class PieceService {
         this.pieceDao = pieceDao;
     }
 
-    public PiecesState movePiece(PiecesState piecesState, MovingFlow movingFlow) {
+    public PiecesState movePiece(MovingFlow movingFlow) {
         Position from = movingFlow.getFrom();
         Position to = movingFlow.getTo();
+        Map<Position, Piece> pieces = pieceDao.getAll();
+        PiecesState piecesState = PiecesState.of(pieces);
         PiecesState updatedPiecesState = piecesState.movePiece(from, to);
         Piece movedPiece = updatedPiecesState.findPiece(to);
         pieceDao.update(movedPiece, from, to);

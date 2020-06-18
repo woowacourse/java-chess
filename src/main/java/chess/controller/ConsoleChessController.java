@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.dao.PieceDao;
 import chess.domain.board.Board;
 import chess.domain.piece.service.PieceService;
+import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
 import chess.domain.position.MovingFlow;
 import chess.ui.Command;
@@ -11,11 +11,11 @@ import chess.view.OutputView;
 
 public class ConsoleChessController {
     private final Console console;
-    private final PieceDao pieceDao;
+    private final PieceService pieceService;
 
-    public ConsoleChessController(Console console, PieceDao pieceDao) {
+    public ConsoleChessController(Console console, PieceService pieceService) {
         this.console = console;
-        this.pieceDao = pieceDao;
+        this.pieceService = pieceService;
     }
 
     public Board start() {
@@ -23,8 +23,8 @@ public class ConsoleChessController {
         if (command.isNotStart() && command.isNotEnd()) {
             throw new IllegalArgumentException("입력이 잘못되었습니다.");
         }
-
-        Board board = Board.initialize(new PieceService(pieceDao));
+        PiecesState piecesState = pieceService.initialize();
+        Board board = Board.initialize(piecesState);
         OutputView.printBoard(board.serialize());
         return board;
     }
@@ -32,7 +32,8 @@ public class ConsoleChessController {
     public Board play(Board board) {
         while (board.isNotFinished()) {
             MovingFlow movingFlow = console.inputMovingFlow();
-            board = board.movePiece(movingFlow);
+            PiecesState piecesState = pieceService.movePiece(movingFlow);
+            board = Board.resume(piecesState);
             OutputView.printBoard(board.serialize());
         }
         return board;
