@@ -50,23 +50,35 @@ public class WebChessController {
             try {
                 board = boardService.movePiece(movingFlow);
             } catch (RuntimeException e) {
-                Map<String, Object> model = new HashMap<>();
-                model.put("error", e.getMessage());
-                return render(model, "error.html");
+                return renderError(e);
             }
 
             if (board.isNotFinished()) {
-                BoardDto boardDto = new BoardDto(board);
-                Map<String, Object> model = new HashMap<>();
-                model.put("piecesDto", boardDto.getPieces());
-                return render(model, "board.html");
+                return renderBoard(board);
             }
 
-            Result result = board.concludeResult();
-            Map<String, Object> model = new HashMap<>();
-            model.put("winner", result.getWinner());
-            return render(model, "end.html");
+            return renderResult(board);
         });
+    }
+
+    private Object renderError(RuntimeException e) {
+        Map<String, Object> model = new HashMap<>();
+        model.put("error", e.getMessage());
+        return render(model, "error.html");
+    }
+
+    private Object renderResult(Board board) {
+        Result result = board.concludeResult();
+        Map<String, Object> model = new HashMap<>();
+        model.put("winner", result.getWinner());
+        return render(model, "end.html");
+    }
+
+    private Object renderBoard(Board board) {
+        BoardDto boardDto = new BoardDto(board);
+        Map<String, Object> model = new HashMap<>();
+        model.put("piecesDto", boardDto.getPieces());
+        return render(model, "board.html");
     }
 
     private static String render(Map<String, Object> model, String templatePath) {
