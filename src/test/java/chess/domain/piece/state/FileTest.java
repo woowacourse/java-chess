@@ -1,7 +1,7 @@
 package chess.domain.piece.state;
 
-import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
 import chess.domain.piece.team.Team;
 import chess.domain.position.InitialColumn;

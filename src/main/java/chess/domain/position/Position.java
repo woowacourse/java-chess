@@ -1,6 +1,8 @@
 package chess.domain.position;
 
-import chess.util.SmallLetterAsciiConverter;
+import chess.domain.piece.state.PiecesState;
+import chess.domain.piece.team.Team;
+import chess.util.AsciiConverter;
 
 import java.util.Objects;
 
@@ -19,7 +21,7 @@ public class Position {
     }
 
     private static Position of(String x, String y) {
-        int convertedX = SmallLetterAsciiConverter.convert(x);
+        int convertedX = AsciiConverter.convert(x);
         int convertedY = Integer.parseInt(y);
         return of(convertedX, convertedY);
     }
@@ -71,6 +73,18 @@ public class Position {
         int newX = x + (FORWARD_AMOUNT * direction.getHorizontal());
         int newY = y + (FORWARD_AMOUNT * direction.getVertical());
         return Position.of(newX, newY);
+    }
+
+    public boolean ofIntializedPawn(Team team) {
+        if (team.isWhite()) {
+            return y == PiecesState.WHITE_PAWN_ROW;
+        }
+        return y == PiecesState.BLACK_PAWN_ROW;
+    }
+
+    public String serialize() {
+        char pattern = (char) (x + AsciiConverter.SMALL_LETTER_CONVERTING_NUMBER);
+        return String.valueOf(pattern) + String.valueOf(y);
     }
 
     int getX() {

@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>체스</title>
+</head>
+<style>
+    body {
+        margin: 0;
+    }
+    .position {
+        z-index: 100;
+        width: 12.5%;
+        height: 80px;
+    }
+    .board {
+        padding: 70px;
+        box-sizing: border-box;
+        width: 800px;
+        height: 800px;
+        background-size: cover;
+        display: flex;
+        flex-wrap: wrap;
+    }
+</style>
+<body id="body">
+<div class="board" id="board" style="background-image: url('/img/board.jpg'); width: 800px; height: 800px; background-size: cover;">
+    <div class="position" id="_18"></div>
+    <div class="position" id="_28"></div>
+    <div class="position" id="_38"></div>
+    <div class="position" id="_48"></div>
+    <div class="position" id="_58"></div>
+    <div class="position" id="_68"></div>
+    <div class="position" id="_78"></div>
+    <div class="position" id="_88"></div>
+    <div class="position" id="_17"></div>
+    <div class="position" id="_27"></div>
+    <div class="position" id="_37"></div>
+    <div class="position" id="_47"></div>
+    <div class="position" id="_57"></div>
+    <div class="position" id="_67"></div>
+    <div class="position" id="_77"></div>
+    <div class="position" id="_87"></div>
+    <div class="position" id="_16"></div>
+    <div class="position" id="_26"></div>
+    <div class="position" id="_36"></div>
+    <div class="position" id="_46"></div>
+    <div class="position" id="_56"></div>
+    <div class="position" id="_66"></div>
+    <div class="position" id="_76"></div>
+    <div class="position" id="_86"></div>
+    <div class="position" id="_15"></div>
+    <div class="position" id="_25"></div>
+    <div class="position" id="_35"></div>
+    <div class="position" id="_45"></div>
+    <div class="position" id="_55"></div>
+    <div class="position" id="_65"></div>
+    <div class="position" id="_75"></div>
+    <div class="position" id="_85"></div>
+    <div class="position" id="_14"></div>
+    <div class="position" id="_24"></div>
+    <div class="position" id="_34"></div>
+    <div class="position" id="_44"></div>
+    <div class="position" id="_54"></div>
+    <div class="position" id="_64"></div>
+    <div class="position" id="_74"></div>
+    <div class="position" id="_84"></div>
+    <div class="position" id="_13"></div>
+    <div class="position" id="_23"></div>
+    <div class="position" id="_33"></div>
+    <div class="position" id="_43"></div>
+    <div class="position" id="_53"></div>
+    <div class="position" id="_63"></div>
+    <div class="position" id="_73"></div>
+    <div class="position" id="_83"></div>
+    <div class="position" id="_12"></div>
+    <div class="position" id="_22"></div>
+    <div class="position" id="_32"></div>
+    <div class="position" id="_42"></div>
+    <div class="position" id="_52"></div>
+    <div class="position" id="_62"></div>
+    <div class="position" id="_72"></div>
+    <div class="position" id="_82"></div>
+    <div class="position" id="_11"></div>
+    <div class="position" id="_21"></div>
+    <div class="position" id="_31"></div>
+    <div class="position" id="_41"></div>
+    <div class="position" id="_51"></div>
+    <div class="position" id="_61"></div>
+    <div class="position" id="_71"></div>
+    <div class="position" id="_81"></div>
+</div>
+
+<form action="/move" id="move-form" method="post">
+    <label for="from">출발지 좌표</label>
+    <input id="from" name="from" type="text">
+    <label for="to">도착지 좌표</label>
+    <input id="to" name="to" type="text">
+    <input id="move-button" type="submit" value="이동">
+</form>
+
+<form action="/status" id="status-form" method="get">
+    <input id="status-button" type="submit" value="결과">
+</form>
+<form action="/end" id="end-form" method="get">
+    <input id="end-button" type="submit" value="종료">
+</form>
+<div id="result"></div>
+
+<script>
+    const images = new Map();
+    images.set("B", '/img/bishop_black.png');
+    images.set("b", '/img/bishop_white.png');
+    images.set("K", '/img/king_black.png');
+    images.set("k", '/img/king_white.png');
+    images.set("N", '/img/knight_black.png');
+    images.set("n", '/img/knight_white.png');
+    images.set("P", '/img/pawn_black.png');
+    images.set("p", '/img/pawn_white.png');
+    images.set("Q", '/img/queen_black.png');
+    images.set("q", '/img/queen_white.png');
+    images.set("R", '/img/rook_black.png');
+    images.set("r", '/img/rook_white.png');
+    images.set("BLACK", '/img/black.cur');
+    images.set("WHITE", '/img/white.cur');
+
+    const pieces = new Map();
+    {{#piecesDto}}
+    pieces.set("{{position}}","{{name}}");
+    {{/piecesDto}}
+
+    pieces.forEach((piece, position) => {
+        let positionDiv = document.querySelector("#" + "_" + position);
+        positionDiv.style.backgroundImage = 'url(' + images.get(piece) + ')';
+        positionDiv.style.backgroundSize = "contain";
+    });
+
+    // const moveButton = document.querySelector("#move-button");
+
+    // const onMoveClicked = event => {
+    //     console.log("하하하");
+    // };
+    //
+    // moveButton.addEventListener("click", onMoveClicked);
+
+
+
+    // document.querySelector(".board").addEventListener("click", (arg) => {
+    //     let fromText = document.querySelector("#from");
+    //     let toText = document.querySelector("#to");
+    //     if(fromText.value === arg.from.id) {
+    //         fromText.value = "";
+    //         arg.from.className = "position";
+    //         return;
+    //     }
+    //     if(fromText.value === "") {
+    //         fromText.value = arg.from.id;
+    //         arg.from.className = "clickedPosition";
+    //         return;
+    //     }
+    //     if(toText.value === "") {
+    //         toText.value = arg.from.id;
+    //         arg.from.className = "clickedPosition";
+    //         document.querySelector("#move-form").submit();
+    //     }
+    // }, true);
+
+
+
+
+
+        // if("{{scores}}" !== "") {
+        //     {{#scores}}
+        //     document.querySelector("#result").innerHTML += "{{color}} 의 점수 {{score}} <br>";
+        //     {{/scores}}
+        //
+        //         if("{{winner}}" !== "") {
+        //             alert("승자 : {{winner}}");
+        //         }
+
+                // let nowTurn = "{{turn}}";
+                // console.log(nowTurn);
+                //
+                // document.querySelector("body")
+                //     .style
+                //     .cursor = "url('" + allImages.getConnection(nowTurn) + "'), auto"
+
+</script>
+</body>
+
+</html>

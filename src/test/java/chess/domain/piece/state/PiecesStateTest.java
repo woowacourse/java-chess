@@ -1,12 +1,12 @@
 package chess.domain.piece.state;
 
-import chess.config.BoardConfig;
-import chess.domain.piece.factory.PieceFactory;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.team.Team;
 import chess.domain.position.InitialColumn;
 import chess.domain.position.Position;
-import chess.domain.piece.team.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,16 +22,17 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PiecesStateTest {
+
     @Test
     @DisplayName("#initialize() : should return initialized Board")
     void initiaize() {
         PiecesState piecesState = PiecesState.initialize();
         Map<String, String> serialized = piecesState.serialize();
         assertThat(serialized.size()).isEqualTo(32);
-        assertPawn(serialized, BoardConfig.LINE_START + 1, "p");
-        assertPawn(serialized, BoardConfig.LINE_END - 1, "P");
-        assertEdge(serialized, BoardConfig.LINE_START);
-        assertEdge(serialized, BoardConfig.LINE_END);
+        assertPawn(serialized, Board.LINE_START + 1, "p");
+        assertPawn(serialized, Board.LINE_END - 1, "P");
+        assertEdge(serialized, Board.LINE_START);
+        assertEdge(serialized, Board.LINE_END);
     }
 
     @ParameterizedTest
@@ -136,38 +137,18 @@ class PiecesStateTest {
         return piecesState;
     }
 
-
-    @Test
-    void concludeResultWithInitializedPieces() {
-        String initialScore = "38.0";
-        PiecesState piecesState = PiecesState.initialize();
-        Result result = piecesState.concludeResult();
-        assertThat(result.getWinner()).isEqualTo(Team.NOT_ASSIGNED.toString());
-        assertThat(result.getWhiteScore()).isEqualTo(initialScore);
-        assertThat(result.getBlackScore()).isEqualTo(initialScore);
-    }
-
-    @Test
-    void concludeResultWithWhiteWinPieces() {
-        String whiteScore = "38.0";
-        String blackScore = "37.0";
-        PiecesState piecesState = PiecesState.initialize();
-        killBlackKingOnPurpose(piecesState);
-        Result result = piecesState.concludeResult();
-        assertThat(result.getWinner()).isEqualTo(Team.WHITE.toString());
-        assertThat(result.getWhiteScore()).isEqualTo(whiteScore);
-        assertThat(result.getBlackScore()).isEqualTo(blackScore);
-    }
-
     @Test
     void serialize() {
         Piece rook = PieceFactory.createPieceWithInitialColumn(InitialColumn.ROOK, Team.WHITE);
+
+        Position position = Position.of(1, 1);
         Map<Position, Piece> pieces = new HashMap<Position, Piece>() {{
-            put(Position.of(1,1), rook);
+            put(position, rook);
         }};
         PiecesState piecesState = new PiecesState(pieces);
         Map<String, String> serialized = piecesState.serialize();
-        assertThat(serialized.toString()).isEqualTo("{11=r}");
+        String pieceName = serialized.get(position.toString());
+        assertThat(pieceName).isEqualTo(rook.getName());
     }
 
     private void killBlackKingOnPurpose(PiecesState piecesState) {
@@ -221,17 +202,17 @@ class PiecesStateTest {
         );
     }
 
-    private void assertPawn(Map<String, String> serialized, int row, String p) {
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+    private void assertPawn(Map<String, String> serialized, int row, String name) {
+        for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));
-            String name = serialized.get(position);
-            assertThat(name).isEqualTo(p);
+            String pieceName = serialized.get(position);
+            assertThat(pieceName).isEqualTo(name);
         }
     }
 
     private void assertEdge(Map<String, String> serialized, int row) {
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+        for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             String position = String.valueOf(column) + String.valueOf(row);
             assertTrue(serialized.containsKey(position));
         }

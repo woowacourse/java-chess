@@ -1,22 +1,21 @@
 package chess.domain.piece.state;
 
-import chess.config.BoardConfig;
+import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.factory.PieceFactory;
 import chess.domain.piece.score.Score;
+import chess.domain.piece.team.Team;
 import chess.domain.position.Direction;
 import chess.domain.position.Distance;
 import chess.domain.position.Position;
-import chess.domain.piece.team.Team;
 
 import java.util.*;
-import java.util.stream.IntStream;
 
 public class PiecesState {
+    public static final int BLACK_PAWN_ROW = 7;
+    public static final int WHITE_PAWN_ROW = 2;
     static final String CAN_NOT_MOVE_ERROR = "%s 위치의 말을 %s 위치로 옮길 수 없습니다.";
     static final String NOT_STRAIGHT_ERROR = "%s와 %s의 방향을 측정할 수 없어, 장애물이 있는 지 없는 지 확인할 수 없습니다.";
-    private static final int BLACK_PAWN_ROW = 7;
-    private static final int WHITE_PAWN_ROW = 2;
     private static final long INITIAL_KING_SIZE = 2L;
 
     private final Map<Position, Piece> pieces;
@@ -29,6 +28,10 @@ public class PiecesState {
         Map<Position, Piece> pieces = new HashMap<>();
         initializeBlackTeam(pieces);
         initializeWhiteTeam(pieces);
+        return new PiecesState(pieces);
+    }
+
+    public static PiecesState of(Map<Position, Piece> pieces) {
         return new PiecesState(pieces);
     }
 
@@ -85,10 +88,6 @@ public class PiecesState {
         return INITIAL_KING_SIZE <= kingSize;
     }
 
-    public Result concludeResult() {
-        return Result.conclude(this);
-    }
-
     public boolean isBlank(Position position) {
         return !getPiece(position).isPresent();
     }
@@ -96,14 +95,16 @@ public class PiecesState {
     public Map<String, String> serialize() {
         Map<String, String> serialized = new HashMap<>();
         for (Map.Entry<Position, Piece> element : pieces.entrySet()) {
-            serialized.put(element.getKey().toString(), element.getValue().toString());
+            Position position = element.getKey();
+            Piece piece = element.getValue();
+            serialized.put(position.toString(), piece.getName());
         }
         return serialized;
     }
 
     Score calculateScoreOf(Team team) {
         Score sum = Score.zero();
-        for (int column = BoardConfig.LINE_START; column <= BoardConfig.LINE_END; column++) {
+        for (int column = Board.LINE_START; column <= Board.LINE_END; column++) {
             File file = getFile(column);
             Score fileScore = file.calculateScoreOf(team);
             sum = sum.add(fileScore);
@@ -111,7 +112,7 @@ public class PiecesState {
         return sum;
     }
 
-    Map<Position, Piece> getPieces() {
+    public Map<Position, Piece> getPieces() {
         return pieces;
     }
 
@@ -133,7 +134,7 @@ public class PiecesState {
 
     private File getFile(int column) {
         List<Piece> pieces = new ArrayList<>();
-        for (int row = BoardConfig.LINE_START; row <= BoardConfig.LINE_END; row++) {
+        for (int row = Board.LINE_START; row <= Board.LINE_END; row++) {
             Position position = Position.of(column, row);
             addPiece(pieces, position);
         }
@@ -161,18 +162,18 @@ public class PiecesState {
     }
 
     private static void initializeBlackTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.BLACK, BoardConfig.LINE_END);
+        initializeEdge(pieces, Team.BLACK, Board.LINE_END);
         initializePawns(BLACK_PAWN_ROW, Team.BLACK, pieces);
 
     }
 
     private static void initializeWhiteTeam(Map<Position, Piece> pieces) {
-        initializeEdge(pieces, Team.WHITE, BoardConfig.LINE_START);
+        initializeEdge(pieces, Team.WHITE, Board.LINE_START);
         initializePawns(WHITE_PAWN_ROW, Team.WHITE, pieces);
     }
 
     private static void initializeEdge(Map<Position, Piece> pieces, Team team, int edgeRow) {
-        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
+        for (int x = Board.LINE_START; x <= Board.LINE_END; x++) {
             Position position = Position.of(x, edgeRow);
             Piece piece = PieceFactory.createPieceWithInitialColumn(x, team);
             pieces.put(position, piece);
@@ -180,7 +181,7 @@ public class PiecesState {
     }
 
     private static void initializePawns(int row, Team team, Map<Position, Piece> pieces) {
-        for (int x = BoardConfig.LINE_START; x <= BoardConfig.LINE_END; x++) {
+        for (int x = Board.LINE_START; x <= Board.LINE_END; x++) {
             Position position = Position.of(x, row);
             Piece initializedPawn = PieceFactory.createInitializedPawn(team);
             pieces.put(position, initializedPawn);

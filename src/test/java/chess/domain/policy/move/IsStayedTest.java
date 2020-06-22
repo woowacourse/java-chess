@@ -2,7 +2,6 @@ package chess.domain.policy.move;
 
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.TestPiecesState;
-import chess.domain.policy.move.IsStayed;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

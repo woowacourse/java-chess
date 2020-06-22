@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.config.BoardConfig;
+import chess.domain.board.Board;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -35,11 +35,11 @@ class InitialColumnTest {
 
     @Test
     void valueOfFail() {
-        int inSufficientColumn = BoardConfig.LINE_START - 1;
+        int inSufficientColumn = Board.LINE_START - 1;
         assertThatThrownBy(() -> InitialColumn.valueOf(inSufficientColumn))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        int exceedColumn = BoardConfig.LINE_END + 1;
+        int exceedColumn = Board.LINE_END + 1;
         assertThatThrownBy(() -> InitialColumn.valueOf(exceedColumn))
                 .isInstanceOf(IllegalArgumentException.class);
     }

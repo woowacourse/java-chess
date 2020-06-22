@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Constructor;
 import java.math.BigInteger;
-import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

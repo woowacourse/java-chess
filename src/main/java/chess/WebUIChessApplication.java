@@ -1,22 +1,22 @@
 package chess;
 
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+import chess.controller.WebChessController;
+import chess.dao.PieceDao;
+import chess.dao.PieceDaoFactory;
+import chess.domain.piece.service.PieceService;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import static spark.Spark.get;
+import static spark.Spark.port;
+import static spark.Spark.staticFileLocation;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
-        get("/", (req, res) -> {
-            Map<String, Object> model = new HashMap<>();
-            return render(model, "index.html");
-        });
-    }
+        port(8080);
+        staticFileLocation("/static");
 
-    private static String render(Map<String, Object> model, String templatePath) {
-        return new HandlebarsTemplateEngine().render(new ModelAndView(model, templatePath));
+        PieceDaoFactory pieceDaoFactory = new PieceDaoFactory();
+        PieceDao pieceDao = pieceDaoFactory.createPieceDao();
+        PieceService pieceService = new PieceService(pieceDao);
+        WebChessController webChessController = new WebChessController(pieceService);
+        webChessController.route();
     }
 }

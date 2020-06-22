@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.config.BoardConfig;
+import chess.domain.board.Board;
 
 import java.util.Collections;
 import java.util.Map;
@@ -11,7 +11,7 @@ public class OutputView {
     private static final String BLANK = ".";
 
     public static void printBoard(Map<String, String> board) {
-        IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
+        IntStream.rangeClosed(Board.LINE_START, Board.LINE_END)
                 .boxed()
                 .sorted(Collections.reverseOrder())
                 .forEach(y -> printRow(y, board));
@@ -28,23 +28,23 @@ public class OutputView {
     }
 
     private static void printRow(int y, Map<String, String> board) {
-        IntStream.rangeClosed(BoardConfig.LINE_START, BoardConfig.LINE_END)
+        IntStream.rangeClosed(Board.LINE_START, Board.LINE_END)
                 .forEach(x -> printPosition(x, y, board));
         System.out.println();
     }
 
     private static void printPosition(int x, int y, Map<String, String> board) {
         String position = String.valueOf(x) + String.valueOf(y);
-        String piece = board.get(position);
-        if (isBlank(piece)) {
+        String pieceName = board.get(position);
+        if (isBlank(pieceName)) {
             System.out.print(BLANK);
         } else {
-            System.out.print(piece);
+            System.out.print(pieceName);
         }
 
     }
 
-    private static boolean isBlank(String piece) {
-        return Objects.isNull(piece);
+    private static boolean isBlank(String pieceName) {
+        return Objects.isNull(pieceName);
     }
 }

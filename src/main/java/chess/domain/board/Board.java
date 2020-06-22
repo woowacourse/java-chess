@@ -3,27 +3,20 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.state.PiecesState;
 import chess.domain.piece.state.Result;
-import chess.domain.position.MovingFlow;
 import chess.domain.position.Position;
 
 import java.util.Map;
 
 public class Board {
+    public static final int LINE_START = 1;
+    public static final int LINE_END = 8;
     private final PiecesState piecesState;
 
     private Board(PiecesState piecesState) {
         this.piecesState = piecesState;
     }
 
-    public static Board initialize() {
-        PiecesState piecesState = PiecesState.initialize();
-        return new Board(piecesState);
-    }
-
-    public Board movePiece(MovingFlow movingFlow) {
-        Position from = movingFlow.getFrom();
-        Position to = movingFlow.getTo();
-        PiecesState piecesState = this.piecesState.movePiece(from, to);
+    public static Board of(PiecesState piecesState) {
         return new Board(piecesState);
     }
 
@@ -32,7 +25,7 @@ public class Board {
     }
 
     public Result concludeResult() {
-        return piecesState.concludeResult();
+        return Result.conclude(piecesState);
     }
 
     public Map<String, String> serialize() {
