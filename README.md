@@ -3,7 +3,11 @@
 - 체스판 초기화
     - 초기 기물 위치 배정
 
-- 기물 이동
+- 기물 위치(Point)
+    - 예외:  a~h, 1~8 사이가 아닌 입력인 경우
+    
+
+- 기물 이동(Board, Piece)
     - 입력: source 위치, target 위치
         - 예외: 옳지 않은 형식 ex) mov b2 b3
         - 예외: source와 target이 같은 경우
