@@ -23,4 +23,8 @@ public enum Column {
         }
         return columns[(this.ordinal() + value)];
     }
+
+    public String value() {
+        return value;
+    }
 }

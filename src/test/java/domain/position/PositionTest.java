@@ -1,8 +1,5 @@
 package domain.position;
 
-import domain.position.Column;
-import domain.position.Position;
-import domain.position.Row;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -35,5 +32,12 @@ public class PositionTest {
     void moveBy(int column, int row, Position expected) {
         Position position = Position.of(Column.D, Row.SIX);
         assertThat(position.moveBy(column, row)).isEqualTo(expected);
+    }
+
+    @Test
+    void cache() {
+        Position position1 = Position.from("a1");
+        Position position2 = Position.of(Column.A, Row.ONE);
+        assertThat(position1).isSameAs(position2);
     }
 }

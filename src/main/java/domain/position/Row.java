@@ -23,4 +23,8 @@ public enum Row {
         }
         return rows[(this.ordinal() + value)];
     }
+
+    public String value() {
+        return value;
+    }
 }
