@@ -4,9 +4,9 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.NullSource;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class PositionTest {
     @Test
@@ -14,7 +14,6 @@ public class PositionTest {
     public void init() {
         assertThatCode(() -> {
             new Position('a', '1');
-            new Position("a1");
         }).doesNotThrowAnyException();
     }
 
@@ -34,13 +33,5 @@ public class PositionTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             new Position(horizontal, vertical);
         }).withMessage("체스 말의 위치가 Grid 범위를 벗어났습니다.");
-    }
-
-    @ParameterizedTest(name = "{displayName}")
-    @DisplayName("Null 값 입력시 예외 출력")
-    @NullSource
-    public void validateNullThrowsException(char horizontal, char vertical) {
-        assertThatThrownBy(() -> new Position(horizontal, vertical)).isInstanceOf(NullPointerException.class)
-                .hasMessage("Null값은 허용하지 않습니다.");
     }
 }

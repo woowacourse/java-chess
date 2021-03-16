@@ -2,12 +2,15 @@ package chess.domain.piece;
 
 public abstract class Piece {
     private final Position position;
+    private boolean isBlack;
 
-    public Piece(Position position) {
-        this.position = position;
+    public Piece(boolean isBlack, char horizontal, char vertical) {
+        this.position = new Position(horizontal, vertical);
     }
 
-    public abstract void move();
+    abstract void move();
 
-    public abstract boolean isMovable();
+    abstract boolean isMovable();
+
+    abstract char getName();
 }
