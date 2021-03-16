@@ -35,10 +35,13 @@ public class Board {
 
     private void putBoard(PieceKind pieceKind, Position position) {
         if (pieceKind == PieceKind.VOID) {
-            setVoidPiece(pieceKind, position);
+            putVoidPieces(pieceKind, position);
             return;
         }
+        putColorPieces(pieceKind, position);
+    }
 
+    private void putColorPieces(PieceKind pieceKind, Position position) {
         Piece pieceW = new Piece(pieceKind, PieceColor.WHITE);
         board.put(position, pieceW);
 
@@ -46,12 +49,10 @@ public class Board {
         board.put(position.getSymmetricPosition(), pieceB);
     }
 
-    private void setVoidPiece(PieceKind pieceKind, Position position) {
-        Piece pieceW = new Piece(pieceKind, PieceColor.VOID);
-        board.put(position, pieceW);
-
-        Piece pieceB = new Piece(pieceKind, PieceColor.VOID);
-        board.put(position.getSymmetricPosition(), pieceB);
+    private void putVoidPieces(PieceKind pieceKind, Position position) {
+        Piece pieceVoid = new Piece(pieceKind, PieceColor.VOID);
+        board.put(position, pieceVoid);
+        board.put(position.getSymmetricPosition(), pieceVoid);
     }
 
     public Piece checkPieceAtPosition(Position position) {
