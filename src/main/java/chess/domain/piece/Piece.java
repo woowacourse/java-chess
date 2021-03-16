@@ -13,6 +13,9 @@ public abstract class Piece {
     abstract void move();
 
     public String getName() {
+        if(pieceColor.equals(PieceColor.BLACK)){
+            return pieceType.toBlack();
+        }
         return pieceType.getType();
     }
 }
