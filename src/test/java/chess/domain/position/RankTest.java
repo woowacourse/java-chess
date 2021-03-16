@@ -1,18 +1,19 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.position.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class FileTest {
-    @DisplayName("File 범위 검증 테스트")
+class RankTest {
+    @DisplayName("Rank 범위 검증 테스트")
     @ParameterizedTest
-    @ValueSource(strings = {"i", "z", "0"})
+    @ValueSource(strings = {"0", "9", "a"})
     void whenFileOutOfBound(String testString) {
-        assertThatThrownBy(() -> File.from(testString))
+        assertThatThrownBy(() -> Rank.from(testString))
                 .isInstanceOf(NullPointerException.class)
-                .hasMessage("해당하는 문자의 File이 없습니다.");
+                .hasMessage("해당하는 문자의 Rank가 없습니다.");
     }
 }
