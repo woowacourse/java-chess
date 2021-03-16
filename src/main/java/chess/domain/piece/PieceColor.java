@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 public enum PieceColor {
-    BLACK("B"), WHITE("W");
+    BLACK("B"),
+    WHITE("W"),
+    VOID(".");
 
     private final String flag;
 
