@@ -6,8 +6,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Bishop extends Piece{
-
-    protected Bishop(Side side) {
+    public Bishop(Side side) {
         super(side);
     }
 

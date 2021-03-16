@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Knight extends Piece{
-    protected Knight(Side side) {
+    public Knight(Side side) {
         super(side);
     }
 

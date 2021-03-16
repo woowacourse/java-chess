@@ -9,10 +9,6 @@ public class Position {
         this.column = column;
     }
 
-//    public static Position of(String positionInput) {
-//        return new Position()
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

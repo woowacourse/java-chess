@@ -5,13 +5,13 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class King extends Piece{
-    public King(Side side) {
-        super(side);
+public class Blank extends Piece {
+    public Blank() {
+        super(Side.NONE);
     }
 
     @Override
     protected List<Position> movable(Position from, Position to) {
-        return null;
+        throw new UnsupportedOperationException();
     }
 }

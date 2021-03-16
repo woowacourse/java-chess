@@ -6,7 +6,7 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Queen extends Piece{
-    protected Queen(Side side) {
+    public Queen(Side side) {
         super(side);
     }
 
