@@ -1,7 +1,6 @@
 package chess.view;
 
 import java.util.Scanner;
-import jdk.internal.util.xml.impl.Input;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
