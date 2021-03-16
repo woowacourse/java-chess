@@ -3,15 +3,16 @@
 
 ## 1 단계 - 체스판 초기화 
 - [x] 말 색깔 정보 Enum 객체
-    - [x] Enum 값 : B or W
+    - [x] Enum 값 : B, W, void
+    - [ ] Enum 값 : 초기 말 y 좌표
 - [x] 체스 말 정보 Enum 객체
-     - [x] Enum 값 : 이름
+    - [x] Enum 값 : 이름
+    - [ ] Enum 값 : 초기 말 x 좌표 
 - [x] 체스 말 객체 
     - [x] 체스 말 정보 Enum + 색깔 Enum 조합
-- [ ] 보드판 위치 객체
-    - [ ] x (a - h)
-    - [ ] y (1 - 8)
-    - [ ] 초기 말 종류
+- [x] 보드판 위치 객체
+    - [x] x (a - h)
+    - [x] y (1 - 8)
 - [ ] 보드판 객체 
     - [ ] LinkedHashMap 자료 구조 사용
         - [ ] Key : Position 객체 
