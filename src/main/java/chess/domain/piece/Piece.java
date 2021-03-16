@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 public abstract class Piece {
-    private final Position position;
+    private Position position;
     private final boolean isBlack;
 
-    public Piece(boolean isBlack, char horizontal, char vertical) {
-        this.position = new Position(horizontal, vertical);
+    public Piece(boolean isBlack, char x, char y) {
+        this.position = new Position(x, y);
         this.isBlack = isBlack;
     }
 
@@ -17,7 +17,12 @@ public abstract class Piece {
         return position;
     }
 
-    abstract void move(char nextHorizontal, char nextVertical);
+    public void move(char nextX, char nextY) {
+        movable(nextX, nextY);
+        this.position = new Position(nextX, nextY);
+    }
+
+    abstract void movable(char nextX, char nextY);
 
     abstract char getName();
 }

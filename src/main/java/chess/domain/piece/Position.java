@@ -1,27 +1,43 @@
 package chess.domain.piece;
 
+import java.util.Objects;
+
 public class Position {
-    private static final int VALID_LENGTH = 2;
-    private static final int HORIZONTAL_INDEX = 0;
-    private static final int VERTICAL_INDEX = 1;
-    private static final char MIN_HORIZONTAL_RANGE = 'a';
-    private static final char MAX_HORIZONTAL_RANGE = 'h';
-    private static final char MIN_VERTICAL_RANGE = '1';
-    private static final char MAX_VERTICAL_RANGE = '8';
+    private static final char MIN_X_RANGE = 'a';
+    private static final char MAX_X_RANGE = 'h';
+    private static final char MIN_Y_RANGE = '1';
+    private static final char MAX_Y_RANGE = '8';
 
-    private final char horizontal;
-    private final char vertical;
+    private final char x;
+    private final char y;
 
-    public Position(char horizontal, char vertical) {
-        validate(horizontal, vertical);
-        this.horizontal = horizontal;
-        this.vertical = vertical;
+    public Position(char x, char y) {
+        validate(x, y);
+        this.x = x;
+        this.y = y;
     }
 
-    private void validate(char horizontal, char vertical) {
-        if (horizontal < MIN_HORIZONTAL_RANGE || horizontal > MAX_HORIZONTAL_RANGE
-                || vertical < MIN_VERTICAL_RANGE || vertical > MAX_VERTICAL_RANGE) {
+    public Position next(int xTravel, int yTravel) {
+        return new Position((char) (x + xTravel), (char) (y + yTravel));
+    }
+
+    private void validate(char x, char y) {
+        if (x < MIN_X_RANGE || x > MAX_X_RANGE
+                || y < MIN_Y_RANGE || y > MAX_Y_RANGE) {
             throw new IllegalArgumentException("체스 말의 위치가 Grid 범위를 벗어났습니다.");
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x && y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

@@ -20,18 +20,18 @@ public class PositionTest {
     @ParameterizedTest
     @DisplayName("체스 말의 위치가 Grid 범위 내에 있을 때에는 정상적으로 생성하는 지 테스트")
     @CsvSource(value = {"a:1", "a:2", "g:3", "h:7", "h:8"}, delimiter = ':')
-    public void validatePosition(char horizontal, char vertical) {
+    public void validatePosition(char x, char y) {
         assertThatCode(() -> {
-            new Position(horizontal, vertical);
+            new Position(x, y);
         }).doesNotThrowAnyException();
     }
 
     @ParameterizedTest
     @DisplayName("체스 말의 위치가 Grid 범위를 벗어나면 예외 출력")
     @CsvSource(value = {"a:9", "i:2"}, delimiter = ':')
-    public void validatePosition_ThrowsException(char horizontal, char vertical) {
+    public void validatePosition_ThrowsException(char x, char y) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Position(horizontal, vertical);
+            new Position(x, y);
         }).withMessage("체스 말의 위치가 Grid 범위를 벗어났습니다.");
     }
 }
