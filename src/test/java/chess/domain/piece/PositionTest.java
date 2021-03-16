@@ -14,6 +14,7 @@ public class PositionTest {
     public void init() {
         assertThatCode(() -> {
             new Position('a', '1');
+            new Position("a1");
         }).doesNotThrowAnyException();
     }
 
