@@ -1,0 +1,19 @@
+package chess.piece;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
+
+class PositionTest {
+
+    @DisplayName("Position이 정상적으로 생성되는 경우")
+    @Test
+    void position_generate() {
+        Position position = new Position(0, 0);
+        assertThat(position.getRow()).isEqualTo(0);
+        assertThat(position.getColumn()).isEqualTo(0);
+
+    }
+}
