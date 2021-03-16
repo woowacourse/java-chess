@@ -6,7 +6,8 @@
 
 - [ ] Piece (체스말)
     - [ ] Name : "Q", "q", ....
-    - [ ] Position : N, M 의 위치
+    - [x] Position : N, M 의 위치
+        - [x] 체스 말의 위치가 Grid 범위를 벗어나면 예외 출력
     - [ ] alive : 죽었는지 살았는지 true/false
     - [ ] move()
     - [ ] isMovable()
