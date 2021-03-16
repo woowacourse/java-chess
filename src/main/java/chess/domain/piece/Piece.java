@@ -25,4 +25,9 @@ public abstract class Piece {
     abstract void movable(char nextX, char nextY);
 
     abstract char getName();
+
+    @Override
+    public String toString() {
+        return position + "";
+    }
 }

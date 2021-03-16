@@ -39,7 +39,7 @@ public class KingTest {
     @ParameterizedTest
     @DisplayName("상하좌우, 대각선 방향으로 1칸만 이동하도록 값을 제대로 입력할 경우 예외 발생 - Grid의 범위를 안 벗어난다고 가정")
     @CsvSource(value = {"f:3", "d:6", "e:7"}, delimiter = ':')
-    public void move_ThrowException(char nextX, char nextY) {
+    public void move_ThrowsException(char nextX, char nextY) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             char x = 'd';
             char y = '3';
