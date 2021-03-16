@@ -1,30 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.board.Path;
-import chess.domain.piece.strategy.Direction;
-import chess.domain.position.Position;
-import chess.domain.result.Score;
-import java.util.List;
+public abstract class Piece {
 
-public interface Piece {
+    protected PieceType pieceType;
 
-    List<Direction> directions();
+    protected Piece(PieceType pieceType) {
+        this.pieceType = pieceType;
+    }
 
-    Path pathFrom(final Direction direction, final Position position);
+    abstract void move();
 
-    boolean isDifferentColor(final Piece piece);
-
-    boolean isSameColor(final Piece piece);
-
-    boolean isColor(final Color color);
-
-    boolean isPawn();
-
-    boolean isKing();
-
-    boolean isEmpty();
-
-    String getName();
-
-    Score score();
+    public String getName() {
+        return pieceType.getType();
+    }
 }
