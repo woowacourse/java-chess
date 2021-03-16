@@ -1,25 +1,28 @@
 package chess.domain.piece;
 
-public class King extends Piece{
+public class King extends Piece {
+
+    private static final char NAME_WHEN_BLACK = 'K';
+    private static final char NAME_WHEN_WHITE = 'k';
+
     public King(Boolean isBlack, char horizontal, char vertical) {
         super(isBlack, horizontal, vertical);
     }
 
     @Override
-    void move() {
+    public void move(char nextHorizontal, char nextVertical) {
 
     }
 
-    @Override
-    boolean isMovable() {
+    private boolean isMovable() {
         return false;
     }
 
     @Override
     char getName() {
         if(isBlack()){
-            return 'K';
+            return NAME_WHEN_BLACK;
         }
-        return 'k';
+        return NAME_WHEN_WHITE;
     }
 }
