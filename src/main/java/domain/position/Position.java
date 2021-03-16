@@ -42,4 +42,8 @@ public class Position {
     public Position moveBy(int columnValue, int rowValue) {
         return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
     }
+
+    public boolean hasRow(Row row) {
+        return this.row.equals(row);
+    }
 }
