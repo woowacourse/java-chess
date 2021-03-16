@@ -3,7 +3,7 @@ package domain.chess.piece;
 import java.util.Objects;
 
 public abstract class Piece {
-    private Position position;
+    protected Position position;
     private final String name;
     private final double score;
     private final boolean isBlack;
@@ -19,15 +19,7 @@ public abstract class Piece {
         return this.position;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Piece piece = (Piece) o;
-        return Double.compare(piece.score, score) == 0 && isBlack == piece.isBlack && Objects.equals(position, piece.position) && Objects.equals(name, piece.name);
-    }
-
-    public boolean isBlack(){
+    public boolean isBlack() {
         return isBlack;
     }
 
@@ -37,6 +29,16 @@ public abstract class Piece {
 
     public void movePosition(Position position) {
         this.position = position;
+    }
+
+    public abstract boolean canMove(Piece[][] board, Position end);
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Double.compare(piece.score, score) == 0 && isBlack == piece.isBlack && Objects.equals(position, piece.position) && Objects.equals(name, piece.name);
     }
 
     @Override
