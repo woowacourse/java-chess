@@ -4,10 +4,12 @@ public class Piece {
 
     private final Color color;
     private final Shape shape;
+    private final Position position;
 
-    public Piece(Color color, Shape shape) {
+    public Piece(Color color, Shape shape, Position position) {
         this.color = color;
         this.shape = shape;
+        this.position = position;
     }
 
     public boolean isSameColor(Color color) {

@@ -17,38 +17,40 @@ class PieceFactoryTest {
     }
 
     private List<Piece> createPiecesForTest() {
-
-        List<Piece> oncePieces = Arrays.asList(
-                new Piece(Color.BLACK, Shape.QUEEN),
-                new Piece(Color.WHITE, Shape.QUEEN),
-                new Piece(Color.BLACK, Shape.KING),
-                new Piece(Color.WHITE, Shape.KING)
+        return Arrays.asList(
+                new Piece(Color.BLACK, Shape.QUEEN, new Position(0,3)),
+                new Piece(Color.WHITE, Shape.QUEEN, new Position(7,3)),
+                new Piece(Color.BLACK, Shape.KING, new Position(0,4)),
+                new Piece(Color.WHITE, Shape.KING, new Position(7,4)),
+                new Piece(Color.BLACK, Shape.ROOK, new Position(0,0)),
+                new Piece(Color.WHITE, Shape.ROOK, new Position(7,0)),
+                new Piece(Color.BLACK, Shape.NIGHT, new Position(0,1)),
+                new Piece(Color.WHITE, Shape.NIGHT, new Position(7,1)),
+                new Piece(Color.BLACK, Shape.BISHOP, new Position(0,2)),
+                new Piece(Color.WHITE, Shape.BISHOP, new Position(7,2)),
+                new Piece(Color.BLACK, Shape.ROOK, new Position(0,7)),
+                new Piece(Color.WHITE, Shape.ROOK, new Position(7,7)),
+                new Piece(Color.BLACK, Shape.NIGHT, new Position(0,6)),
+                new Piece(Color.WHITE, Shape.NIGHT, new Position(7,6)),
+                new Piece(Color.BLACK, Shape.BISHOP, new Position(0,5)),
+                new Piece(Color.WHITE, Shape.BISHOP, new Position(7,5)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,0)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,0)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,1)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,1)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,2)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,2)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,3)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,3)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,4)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,4)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,5)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,5)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,6)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,6)),
+                new Piece(Color.BLACK, Shape.PAWN, new Position(1,7)),
+                new Piece(Color.WHITE, Shape.PAWN, new Position(6,7))
         );
-
-        List<Piece> twicePieces = Arrays.asList(
-                new Piece(Color.BLACK, Shape.ROOK),
-                new Piece(Color.WHITE, Shape.ROOK),
-                new Piece(Color.BLACK, Shape.NIGHT),
-                new Piece(Color.WHITE, Shape.NIGHT),
-                new Piece(Color.BLACK, Shape.BISHOP),
-                new Piece(Color.WHITE, Shape.BISHOP)
-        );
-
-        List<Piece> octoPieces = Arrays.asList(
-                new Piece(Color.BLACK, Shape.PAWN),
-                new Piece(Color.WHITE, Shape.PAWN)
-        );
-
-        List<Piece> result = new ArrayList<>(oncePieces);
-
-        for(int i=0; i<2; i++) {
-            result.addAll(twicePieces);
-        }
-        for(int i=0; i<8; i++) {
-            result.addAll(octoPieces);
-        }
-
-        return result;
     }
 
 }
