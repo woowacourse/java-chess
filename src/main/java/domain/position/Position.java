@@ -1,6 +1,7 @@
 package domain.position;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
     private final Column column;
@@ -37,6 +38,12 @@ public class Position {
 
     private static String toKey(final Column column, final Row row) {
         return column.value() + row.value();
+    }
+
+    public static List<Position> all() {
+        return cache.values()
+                    .stream()
+                    .collect(Collectors.toList());
     }
 
     public Position moveBy(int columnValue, int rowValue) {
