@@ -23,10 +23,10 @@ public class Location {
         this.vertical = vertical;
     }
 
-    public static Location of(String horizontal, String vertical) {
+    public static Location of(Horizontal horizontal, Vertical vertical) {
         return CACHE.stream()
-                .filter(location -> Horizontal.find(horizontal).equals(location.horizontal)
-                        && Vertical.find(vertical).equals(location.vertical))
+                .filter(location -> horizontal.equals(location.horizontal)
+                        && vertical.equals(location.vertical))
                 .findAny()
                 .orElseThrow(RuntimeException::new);
     }

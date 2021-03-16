@@ -11,12 +11,13 @@ class BoardTest {
     @Test
     void nullLocationTest() {
         Board board = new Board();
-        assertThat(board.findPieceFromLocation(Location.of("c", "6"))).isNull();
+        assertThat(board.findPieceFromLocation(Location.of(Horizontal.C, Vertical.SIX))).isNull();
     }
 
     @DisplayName("보드가 생성되고 체스말의 위치가 올바른지 확인한다.")
     @Test
     void boardCreateTest() {
-
+        Board board = new Board();
+        assertThat(board.findPieceFromLocation(Location.of(Horizontal.C, Vertical.EIGHT))).isInstanceOf(Bishop.class);
     }
 }

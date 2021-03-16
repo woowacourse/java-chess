@@ -15,4 +15,8 @@ public abstract class Piece implements MoveStrategy {
         }
         return name.toLowerCase();
     }
+
+    public String getName() {
+        return name;
+    }
 }

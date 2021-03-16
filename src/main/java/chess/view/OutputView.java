@@ -25,4 +25,21 @@ public class OutputView {
         }
         System.out.println();
     }
+
+    private static StringBuilder printLineWhenLineIsFull(int cnt, StringBuilder builder) {
+        if (cnt % LINE_COUNT == 0) {
+            System.out.println(builder.toString());
+            return new StringBuilder();
+        }
+        return builder;
+    }
+
+    private static StringBuilder combinePieceNameToLine(Piece piece, int cnt, StringBuilder builder) {
+        if (Objects.isNull(piece)) {
+            builder.append(EMPTY_FIELD);
+            return printLineWhenLineIsFull(cnt, builder);
+        }
+        builder.append(piece.getName());
+        return printLineWhenLineIsFull(cnt, builder);
+    }
 }
