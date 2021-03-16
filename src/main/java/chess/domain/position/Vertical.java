@@ -26,4 +26,8 @@ public enum Vertical {
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치를 찾을 수 없습니다."));
     }
+
+    public String getSymbol() {
+        return symbol;
+    }
 }

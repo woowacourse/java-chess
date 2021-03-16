@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ class BoardTest {
     @Test
     @DisplayName("폰 초기화 기능")
     void initiatePawn() {
-        board.initializePawn();
+        board.initializeBoard();
         assertThat(board.unwrap().get(new Position("a", "7")))
                 .isInstanceOf(Pawn.class);
     }
@@ -31,8 +32,8 @@ class BoardTest {
     @ValueSource(strings = {"a,1", "h,1", "a,8", "h,8"})
     void initiateRook(final String input) {
         final String[] inputs = input.split(",");
-        board.initializeRook();
+        board.initializeBoard();
         assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(Pawn.class);
+                .isInstanceOf(Rook.class);
     }
 }
