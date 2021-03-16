@@ -4,47 +4,55 @@ import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import java.util.Arrays;
+import java.util.List;
 
 public class BoardFactory {
 
+    private static final int MIN_ROW = 1;
+    private static final int MAX_ROW = 8;
+    private static final int BLACK_PAWN_ROW = 7;
+    private static final int WHITE_PAWN_ROW = 2;
+
     public static Board initializeBoard() {
-        Board board = new Board();
-        initializePieces(board);
+        return initializePieces(new Board());
+    }
+
+    private static Board initializePieces(Board board) {
+        initializeSpecialPiecesByRow(board, MIN_ROW, PieceColor.WHITE);
+        initializeSpecialPiecesByRow(board, MAX_ROW, PieceColor.BLACK);
+
+        for (int column = MIN_ROW; column <= MAX_ROW; column++) {
+            board.putPiece(new Position(WHITE_PAWN_ROW, column), new Pawn(PieceColor.WHITE));
+            board.putPiece(new Position(BLACK_PAWN_ROW, column), new Pawn(PieceColor.BLACK));
+        }
+
         return board;
     }
 
-    private static void initializePieces(Board board) {
-        // special pieces
-        // white black
-        board.putPiece(new Position(1,1), new Rook(PieceColor.WHITE));
-        board.putPiece(new Position(1,2), new Knight(PieceColor.WHITE));
-        board.putPiece(new Position(1,3), new Bishop(PieceColor.WHITE));
-        board.putPiece(new Position(1,4), new Queen(PieceColor.WHITE));
-        board.putPiece(new Position(1,5), new King(PieceColor.WHITE));
-        board.putPiece(new Position(1,6), new Bishop(PieceColor.WHITE));
-        board.putPiece(new Position(1,7), new Knight(PieceColor.WHITE));
-        board.putPiece(new Position(1,8), new Rook(PieceColor.WHITE));
-
-        board.putPiece(new Position(8,1), new Rook(PieceColor.BLACK));
-        board.putPiece(new Position(8,2), new Knight(PieceColor.BLACK));
-        board.putPiece(new Position(8,3), new Bishop(PieceColor.BLACK));
-        board.putPiece(new Position(8,4), new Queen(PieceColor.BLACK));
-        board.putPiece(new Position(8,5), new King(PieceColor.BLACK));
-        board.putPiece(new Position(8,6), new Bishop(PieceColor.BLACK));
-        board.putPiece(new Position(8,7), new Knight(PieceColor.BLACK));
-        board.putPiece(new Position(8,8), new Rook(PieceColor.BLACK));
-        // pawn
-        // white black
-        for (int column = 1; column <= 8; column++) {
-            board.putPiece(new Position(2, column), new Pawn(PieceColor.WHITE));
-        }
-        for (int column = 1; column <= 8; column++) {
-            board.putPiece(new Position(7, column), new Pawn(PieceColor.BLACK));
+    private static void initializeSpecialPiecesByRow(Board board, int row, PieceColor color) {
+        List<Piece> pieces = createPieces(color);
+        for (int column = MIN_ROW; column <= MAX_ROW; column++) {
+            board.putPiece(new Position(row, column), pieces.get(column - 1));
         }
     }
 
+    private static List<Piece> createPieces(PieceColor color) {
+        return Arrays.asList(
+            new Rook(color),
+            new Knight(color),
+            new Bishop(color),
+            new Queen(color),
+            new King(color),
+            new Bishop(color),
+            new Knight(color),
+            new Rook(color)
+        );
+    }
 
 }
