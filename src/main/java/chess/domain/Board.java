@@ -20,6 +20,10 @@ public class Board {
     }
 
     public void initializeRook() {
+        chessBoard.put(new Position("a", "1"), new Pawn(false));
+        chessBoard.put(new Position("a", "8"), new Pawn(false));
+        chessBoard.put(new Position("h", "1"), new Pawn(true));
+        chessBoard.put(new Position("h", "8"), new Pawn(true));
     }
 
     public Map<Position, Piece> unwrap() {
