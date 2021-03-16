@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 public class Pawn extends Piece {
 
-    public Pawn() {
-        super(PieceType.PAWN);
+    public Pawn(PieceColor pieceColor) {
+        super(PieceType.PAWN, pieceColor);
     }
 
     @Override
