@@ -4,10 +4,9 @@
 ## 1 단계 - 체스판 초기화 
 - [x] 말 색깔 정보 Enum 객체
     - [x] Enum 값 : B, W, void
-    - [ ] Enum 값 : 초기 말 y 좌표
 - [x] 체스 말 정보 Enum 객체
     - [x] Enum 값 : 이름
-    - [ ] Enum 값 : 초기 말 x 좌표 
+    - [x] Enum 값 : 초기 말 x, y 좌표 
 - [x] 체스 말 객체 
     - [x] 체스 말 정보 Enum + 색깔 Enum 조합
 - [x] 보드판 위치 객체
