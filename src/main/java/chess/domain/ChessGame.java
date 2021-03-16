@@ -1,6 +1,7 @@
 package chess.domain;
 
 public class ChessGame {
+    private Map<String, Piece>
     private boolean isRunning;
 
     public ChessGame() {
