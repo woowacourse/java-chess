@@ -1,14 +1,14 @@
 package chess.board;
 
 public enum YPosition {
-    One(1),
-    Two(2),
-    Three(3),
-    Four(4),
-    Five(5),
-    Six(6),
+    Eight(8),
     Seven(7),
-    Eight(8);
+    Six(6),
+    Five(5),
+    Four(4),
+    Three(3),
+    Two(2),
+    One(1);
 
     private final int yPosition;
 

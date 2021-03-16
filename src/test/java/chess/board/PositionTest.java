@@ -6,19 +6,14 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class PositionTest {
-    XPosition xPosition;
-    YPosition yPosition;
+
     Position position;
 
     @BeforeEach
     void setUp() {
-        xPosition = XPosition.A;
-        yPosition = YPosition.One;
-
-        position = new Position(xPosition, yPosition);
+        position = Position.of('a', 1);
     }
 
     @DisplayName("좌표 조회")
@@ -27,14 +22,14 @@ class PositionTest {
         XPosition xPositionResult = position.getXPosition();
         YPosition yPositionResult = position.getYPosition();
 
-        assertThat(xPositionResult).isEqualTo(xPosition);
-        assertThat(yPositionResult).isEqualTo(yPosition);
+        assertThat(xPositionResult).isEqualTo(XPosition.A);
+        assertThat(yPositionResult).isEqualTo(YPosition.One);
     }
 
     @DisplayName("좌표 동일성 비교")
     @Test
     void isEqualPosition_boolean() {
-        Position anotherPosition = new Position(xPosition, yPosition);
+        Position anotherPosition = Position.of('a', 1);
 
         assertEquals(position, anotherPosition);
     }

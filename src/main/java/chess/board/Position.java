@@ -1,15 +1,46 @@
 package chess.board;
 
+import javafx.geometry.Pos;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
+    private static final Map<String, Position> CACHE = new HashMap<>();
+
+    static {
+        for (XPosition xposition : XPosition.values()) {
+            putPositionWithY(xposition);
+        }
+    }
+
+    private static void putPositionWithY(XPosition xposition) {
+        for (YPosition yPosition : YPosition.values()) {
+            String positionKey = String.format("%c%d", xposition.getXPosition(),
+                yPosition.getYPosition());
+            CACHE.put(positionKey, new Position(xposition, yPosition));
+        }
+    }
+
     private XPosition xPosition;
     private YPosition yPosition;
 
-    public Position(XPosition xPosition, YPosition yPosition) {
+    private Position(XPosition xPosition, YPosition yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
+    }
+
+    public static Position from(String positionKey) {
+        Position position = CACHE.get(positionKey);
+        return CACHE.get(positionKey);
+    }
+
+    public static Position of(char xRawPosition, int yRawPosition) {
+        String positionKey = String.format("%c%d", xRawPosition,
+            yRawPosition);
+        return from(positionKey);
     }
 
     public XPosition getXPosition() {

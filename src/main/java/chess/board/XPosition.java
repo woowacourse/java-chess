@@ -16,7 +16,7 @@ public enum XPosition {
         this.name = name;
     }
 
-    public char getName() {
+    public char getXPosition() {
         return name;
     }
 }
