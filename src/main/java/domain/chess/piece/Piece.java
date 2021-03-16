@@ -15,6 +15,10 @@ public abstract class Piece {
         this.isBlack = color;
     }
 
+    public Position getPosition() {
+        return this.position;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -23,8 +27,18 @@ public abstract class Piece {
         return Double.compare(piece.score, score) == 0 && isBlack == piece.isBlack && Objects.equals(position, piece.position) && Objects.equals(name, piece.name);
     }
 
+    public boolean isBlack(){
+        return isBlack;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(position, name, score, isBlack);
     }
+
+    public String getName() {
+
+        return name;
+    }
+
 }

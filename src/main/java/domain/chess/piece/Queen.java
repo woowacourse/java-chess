@@ -6,16 +6,16 @@ import java.util.List;
 public class Queen extends Piece {
     private static final double SCORE = 9;
 
-    public Queen(int x, int y, boolean color) {
-        super("q", SCORE, Position.Of(x, y), color);
+    public Queen(String name, int x, int y, boolean isBlack) {
+        super(name, SCORE, Position.Of(x, y), isBlack);
     }
 
-    public static Queen Of(Position position, boolean color) {
-        return new Queen(position.getRow(), position.getColumn(), color);
+    public static Queen Of(String name, Position position, boolean color) {
+        return new Queen(name, position.getRow(), position.getColumn(), color);
     }
 
     public static List<Queen> initialQueenPieces() {
-        return Arrays.asList(Queen.Of(Position.Of(0, 3), true),
-                Queen.Of(Position.Of(7, 3), false));
+        return Arrays.asList(Queen.Of("Q", Position.Of(0, 3), true),
+                Queen.Of("q", Position.Of(7, 3), false));
     }
 }
