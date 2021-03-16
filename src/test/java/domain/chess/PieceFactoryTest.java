@@ -1,6 +1,6 @@
-package chess;
+package domain.chess;
 
-import chess.piece.*;
+import domain.chess.piece.*;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,8 +9,7 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceFactoryTest {
-
-    @Test
+   @Test
     void name() {
         List<Piece> pieces = PieceFactory.createPieces();
         List<Piece> expected = Arrays.asList(

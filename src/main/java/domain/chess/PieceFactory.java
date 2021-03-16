@@ -1,12 +1,11 @@
-package chess;
+package domain.chess;
 
-import chess.piece.*;
+import domain.chess.piece.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class PieceFactory {
-
     public static List<Piece> createPieces() {
         List<Piece> pieces = new ArrayList<>();
         pieces.addAll(Bishop.initialBishopPieces());

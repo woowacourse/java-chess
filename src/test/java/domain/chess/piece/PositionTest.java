@@ -1,4 +1,4 @@
-package chess.piece;
+package domain.chess.piece;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,6 +13,5 @@ class PositionTest {
         Position position = new Position(0, 0);
         assertThat(position.getRow()).isEqualTo(0);
         assertThat(position.getColumn()).isEqualTo(0);
-
     }
 }

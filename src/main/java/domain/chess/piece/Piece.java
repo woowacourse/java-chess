@@ -1,4 +1,4 @@
-package chess.piece;
+package domain.chess.piece;
 
 import java.util.Objects;
 
@@ -14,7 +14,6 @@ public abstract class Piece {
         this.position = position;
         this.isBlack = color;
     }
-
 
     @Override
     public boolean equals(Object o) {
