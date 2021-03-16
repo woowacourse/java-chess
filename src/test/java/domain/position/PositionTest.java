@@ -1,5 +1,8 @@
-package domain;
+package domain.position;
 
+import domain.position.Column;
+import domain.position.Position;
+import domain.position.Row;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -10,7 +13,7 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class positionTest {
+public class PositionTest {
 
     private static Stream<Arguments> positions() {
         return Stream.of(

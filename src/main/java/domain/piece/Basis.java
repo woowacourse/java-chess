@@ -1,8 +1,10 @@
-package domain;
+package domain.piece;
+
+import domain.piece.Piece;
 
 import java.util.List;
 
-public abstract class Basis implements Piece{
+public abstract class Basis implements Piece {
     private final String color;
 
     public Basis(String color) {

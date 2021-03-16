@@ -1,4 +1,4 @@
-package domain;
+package domain.position;
 
 public enum Row {
     ONE("1"),

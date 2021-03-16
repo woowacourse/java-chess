@@ -1,5 +1,7 @@
-package domain;
+package domain.piece;
 
+import domain.piece.Pawn;
+import domain.piece.Piece;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -7,7 +9,7 @@ import java.util.Arrays;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class pawnTest {
+public class PawnTest {
     @Test
     void createPawn() {
         Piece pawn = new Pawn("black");

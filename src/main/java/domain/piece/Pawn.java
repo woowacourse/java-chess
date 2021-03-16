@@ -1,4 +1,6 @@
-package domain;
+package domain.piece;
+
+import domain.piece.Basis;
 
 import java.util.List;
 
