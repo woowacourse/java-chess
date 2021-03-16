@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.player;
 
-import chess.domain.type.PlayerType;
+import chess.domain.player.PlayerType;
 
 public class Player {
     public Player(PlayerType type) {

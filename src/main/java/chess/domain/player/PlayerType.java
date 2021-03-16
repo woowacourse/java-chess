@@ -1,4 +1,4 @@
-package chess.domain.type;
+package chess.domain.player;
 
 public enum PlayerType {
     WHITE,
