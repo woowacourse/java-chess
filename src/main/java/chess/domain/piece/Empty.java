@@ -9,12 +9,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    void move() {
-        throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");
-    }
-
-    @Override
-    boolean isMovable() {
+    void move(char horizontal, char vertical) {
         throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");
     }
 

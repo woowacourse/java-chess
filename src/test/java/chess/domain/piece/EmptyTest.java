@@ -19,17 +19,7 @@ public class EmptyTest {
     @DisplayName("move 메서드를 사용하면 예외 발생")
     public void move() {
         Empty empty = new Empty('a', '1');
-        assertThatThrownBy(empty::move)
-                .isInstanceOf(UnsupportedOperationException.class)
-                .hasMessage("해당 메서드를 사용하면 안 됩니다.");
-    }
-
-
-    @Test
-    @DisplayName("movable 메서드를 사용하면 예외 발생")
-    public void isMovable() {
-        Empty empty = new Empty('a', '1');
-        assertThatThrownBy(empty::isMovable)
+        assertThatThrownBy(() -> empty.move('a', 'b'))
                 .isInstanceOf(UnsupportedOperationException.class)
                 .hasMessage("해당 메서드를 사용하면 안 됩니다.");
     }

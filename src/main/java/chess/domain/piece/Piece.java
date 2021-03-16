@@ -13,9 +13,11 @@ public abstract class Piece {
         return isBlack;
     }
 
-    abstract void move();
+    public Position getPosition() {
+        return position;
+    }
 
-    abstract boolean isMovable();
+    abstract void move(char nextHorizontal, char nextVertical);
 
     abstract char getName();
 }
