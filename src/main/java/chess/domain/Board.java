@@ -19,7 +19,11 @@ public class Board {
         }
     }
 
+    public void initializeRook() {
+    }
+
     public Map<Position, Piece> unwrap() {
         return chessBoard;
     }
+
 }
