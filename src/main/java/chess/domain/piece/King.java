@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 public class King extends Piece {
 
-    public King() {
-        super(PieceType.KING);
+    public King(PieceColor pieceColor) {
+        super(PieceType.KING, pieceColor);
     }
 
     @Override
