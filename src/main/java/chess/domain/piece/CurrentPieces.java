@@ -11,9 +11,18 @@ public class CurrentPieces {
         this.currentPieces = currentPieces;
     }
 
-//    public static CurrentPieces generate() {
-//        List<Piece> pieces = new ArrayList<>();
-//
-//        return new CurrentPieces();
-//    }
+    public static CurrentPieces generate() {
+        List<Piece> pieces = new ArrayList<>();
+        pieces.addAll(King.generate());
+        pieces.addAll(Knight.generate());
+        pieces.addAll(Queen.generate());
+        pieces.addAll(Rook.generate());
+        pieces.addAll(Bishop.generate());
+        pieces.addAll(Pawn.generate());
+        return new CurrentPieces(pieces);
+    }
+
+    public List<Piece> getCurrentPieces() {
+        return currentPieces;
+    }
 }
