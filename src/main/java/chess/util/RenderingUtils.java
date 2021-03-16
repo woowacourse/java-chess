@@ -11,7 +11,7 @@ public class RenderingUtils {
     public static String renderBoard(Board board) {
         return IntStream.rangeClosed(1,8)
             .mapToObj(index -> renderColumn(board, 8 - index + 1))
-            .collect(Collectors.joining("/n"));
+            .collect(Collectors.joining("\n"));
     }
 
     private static String renderColumn(Board board, int column) {
