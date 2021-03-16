@@ -14,4 +14,12 @@ public abstract class Piece {
     public String getNotation() {
         return color.changeNotation(notation);
     }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "color=" + color +
+                ", notation='" + notation + '\'' +
+                '}';
+    }
 }

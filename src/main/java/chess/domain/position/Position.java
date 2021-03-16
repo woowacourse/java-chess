@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Position {
@@ -13,6 +15,21 @@ public class Position {
 
     public static Position of(File file, Rank rank) {
         return new Position(file, rank);
+    }
+
+    public static Position of(String position) {
+        List<String> splitPosition = Arrays.asList(position.split(""));
+
+        // TODO 검증 로직 및 상수화 리팩토링
+        File file = File.from(splitPosition.get(0));
+        Rank rank = Rank.from(splitPosition.get(1));
+
+        return new Position(file, rank);
+    }
+
+    @Override
+    public String toString() {
+        return file.getLetter() + rank.getLetter();
     }
 
     @Override

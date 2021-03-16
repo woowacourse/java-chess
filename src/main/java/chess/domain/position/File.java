@@ -33,4 +33,8 @@ public enum File {
     public static File from(String letter) {
         return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 File이 없습니다.");
     }
+
+    public String getLetter() {
+        return this.letter;
+    }
 }
