@@ -1,0 +1,20 @@
+package chess.domain.piece;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class Queen extends Piece {
+    private static final Position INITIAL_BLACK_POSITION = Position.of(0, 3);
+    private static final Position INITIAL_WHITE_POSITION = Position.of(7, 3);
+
+    public Queen(Position position, String name) {
+        super(position, name);
+    }
+
+    public static List<Queen> generate() {
+        List<Queen> queens = new ArrayList();
+        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q"));
+        queens.add(new Queen(INITIAL_WHITE_POSITION, "q"));
+        return queens;
+    }
+}
