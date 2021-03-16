@@ -16,7 +16,7 @@ public enum Row {
         this.row = row;
     }
 
-    public String getRow() {
-        return row;
+    public static Row getRow(int value) {
+        return valueOf(String.valueOf(value));
     }
 }
