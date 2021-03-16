@@ -60,4 +60,8 @@ public class Board {
             result.put(new Position(row, column), new Blank());
         }
     }
+
+    public String getInitial(Position position) {
+        return board.get(position).getInitial();
+    }
 }

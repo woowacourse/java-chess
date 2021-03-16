@@ -6,12 +6,14 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Blank extends Piece {
+    private static final String BLANK_INITIAL = ".";
+
     public Blank() {
-        super(Side.NONE);
+        super(Side.NONE, BLANK_INITIAL);
     }
 
     @Override
-    protected List<Position> movable(Position from, Position to) {
+    public List<Position> movable(Position from, Position to) {
         throw new UnsupportedOperationException();
     }
 }
