@@ -1,5 +1,7 @@
 package chess.domain;
 
+import java.util.Arrays;
+
 public enum Row {
     EIGHT("8"),
     SEVEN("7"),
@@ -10,13 +12,16 @@ public enum Row {
     TWO("2"),
     ONE("1");
 
-    private String row;
+    private String number;
 
-    Row(String row){
-        this.row = row;
+    Row(String number){
+        this.number = number;
     }
 
     public static Row getRow(int value) {
-        return valueOf(String.valueOf(value));
+        return Arrays.stream(values())
+            .filter(row -> row.number.equals(String.valueOf(value)))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 }

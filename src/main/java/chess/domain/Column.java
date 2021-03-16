@@ -1,6 +1,7 @@
 package chess.domain;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 public enum Column {
     A(1, "a"),
@@ -16,6 +17,7 @@ public enum Column {
     private String column;
 
     Column(int columnNumber, String column){
+        this.columnNumber = columnNumber;
         this.column = column;
     }
 
@@ -23,6 +25,6 @@ public enum Column {
         return Arrays.stream(values())
             .filter(column -> column.columnNumber == value)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다"));
     }
 }

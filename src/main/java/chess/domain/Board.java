@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -10,6 +11,10 @@ public class Board {
 
     public Board(Map<Position, Piece> coordinates) {
         this.coordinates = coordinates;
+    }
+
+    public Board() {
+        this.coordinates = new HashMap<>();
     }
 
 
