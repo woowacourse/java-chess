@@ -10,13 +10,13 @@ public class RenderingUtils {
 
     public static String renderBoard(Board board) {
         return IntStream.rangeClosed(1,8)
-            .mapToObj(index -> renderColumn(board, 8 - index + 1))
+            .mapToObj(index -> renderRow(board, 8 - index + 1))
             .collect(Collectors.joining("\n"));
     }
 
-    private static String renderColumn(Board board, int column) {
+    private static String renderRow(Board board, int row) {
         return IntStream.rangeClosed(1,8)
-            .mapToObj(row -> Position.of(row, column))
+            .mapToObj(column -> Position.of(row, column))
             .map(position -> renderPosition(board, position))
             .collect(Collectors.joining());
     }

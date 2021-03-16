@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -14,9 +14,12 @@ public class Board {
     }
 
     public Board() {
-        this.coordinates = new HashMap<>();
+        this.coordinates = new LinkedHashMap<>();
     }
 
+    public void putPiece(Position position, Piece piece) {
+        coordinates.put(position, piece);
+    }
 
     public Map<Position, Piece> getCoordinates() {
         return coordinates;
