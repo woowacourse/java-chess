@@ -18,4 +18,7 @@ public class Piece {
         return this.shape == Shape.KING;
     }
 
+    public String getNotation() {
+        return shape.getNotation(color);
+    }
 }

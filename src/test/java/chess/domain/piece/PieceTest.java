@@ -19,4 +19,14 @@ class PieceTest {
         assertThat(kingPiece.isKing()).isTrue();
     }
 
+    @DisplayName("색상에 따라 노테이션을 반환하는 테스트")
+    @Test
+    void getNotation() {
+        Piece whitePiece = new Piece(Color.WHITE, Shape.ROOK);
+        Piece blackPiece = new Piece(Color.BLACK, Shape.ROOK);
+
+        assertThat(whitePiece.getNotation()).isEqualTo("r");
+        assertThat(blackPiece.getNotation()).isEqualTo("R");
+    }
+
 }
