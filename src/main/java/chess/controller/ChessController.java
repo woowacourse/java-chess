@@ -1,7 +1,10 @@
 package chess.controller;
 
+import chess.domain.Board;
+import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
 import chess.domain.Command;
+import chess.domain.piece.Bishop;
 import chess.view.InputView;
 
 public class ChessController {
@@ -15,6 +18,8 @@ public class ChessController {
     }
 
     public static void start(ChessGame chessGame, String command) {
+        Board init = BoardInitializer.init();
+        init.printBoard();
     }
 
     public static void end(ChessGame chessGame, String command){

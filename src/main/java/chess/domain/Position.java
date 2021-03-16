@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Position {
-
     private static final Map<String, Position> POSITIONS = new HashMap<>();
 
     static {
@@ -27,7 +26,7 @@ public class Position {
         }
     }
 
-    public Position of(String position) {
+    public static Position of(String position) {
         return POSITIONS.get(position);
     }
 }
