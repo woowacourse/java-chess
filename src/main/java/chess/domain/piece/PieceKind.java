@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-public enum PieceCandidates {
+public enum PieceKind {
     KING("K"),
     QUEEN("Q"),
     KNIGHT("N"),
@@ -11,7 +11,7 @@ public enum PieceCandidates {
 
     private final String symbol;
 
-    PieceCandidates(String symbol) {
+    PieceKind(String symbol) {
         this.symbol = symbol;
     }
 

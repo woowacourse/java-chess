@@ -2,11 +2,11 @@ package chess.domain.piece;
 
 public class Piece {
 
-    private PieceCandidates pieceCandidate;
+    private PieceKind pieceKind;
     private PieceColor pieceColor;
 
-    public Piece(PieceCandidates pieceCandidates, PieceColor pieceColor) {
-        this.pieceCandidate = pieceCandidates;
+    public Piece(PieceKind pieceKind, PieceColor pieceColor) {
+        this.pieceKind = pieceKind;
         this.pieceColor = pieceColor;
     }
 
@@ -15,7 +15,7 @@ public class Piece {
     }
 
     public String getSymbol() {
-        return pieceCandidate.getName(pieceColor);
+        return pieceKind.getName(pieceColor);
     }
 
     public PieceColor getPieceColor() {

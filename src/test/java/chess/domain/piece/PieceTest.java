@@ -13,14 +13,14 @@ class PieceTest {
 
     @BeforeEach
     void setUp() {
-        PieceCandidates pieceCandidates1 = PieceCandidates.QUEEN;
-        PieceCandidates pieceCandidates2 = PieceCandidates.ROOK;
+        PieceKind pieceKind1 = PieceKind.QUEEN;
+        PieceKind pieceKind2 = PieceKind.ROOK;
 
         PieceColor blackPieceColor = PieceColor.BLACK;
         PieceColor whitePieceColor = PieceColor.WHITE;
 
-        piece1 = new Piece(pieceCandidates1, blackPieceColor);
-        piece2 = new Piece(pieceCandidates2, whitePieceColor);
+        piece1 = new Piece(pieceKind1, blackPieceColor);
+        piece2 = new Piece(pieceKind2, whitePieceColor);
     }
 
     @DisplayName("말 이름 가져오는 기능 테스트")
@@ -36,10 +36,10 @@ class PieceTest {
     @DisplayName("말 색깔이 같은지 확인하는 기능 테스트")
     @Test
     void isSameColor_boolean() {
-        PieceCandidates pieceCandidates2 = PieceCandidates.ROOK;
+        PieceKind pieceKind2 = PieceKind.ROOK;
         PieceColor blackPieceColor = PieceColor.BLACK;
 
-        Piece piece3 = new Piece(pieceCandidates2, blackPieceColor);
+        Piece piece3 = new Piece(pieceKind2, blackPieceColor);
 
         assertTrue(piece1.isSameColor(piece3));
         assertFalse(piece1.isSameColor(piece2));
