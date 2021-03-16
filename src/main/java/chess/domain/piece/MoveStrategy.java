@@ -1,5 +1,5 @@
 package chess.domain.piece;
 
-public interface Piece {
-    
+public interface MoveStrategy {
+    void move();
 }
