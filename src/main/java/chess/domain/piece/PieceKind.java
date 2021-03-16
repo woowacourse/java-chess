@@ -9,8 +9,8 @@ public enum PieceKind {
     KNIGHT("N", Arrays.asList('b', 'g'), Arrays.asList(1)),
     BISHOP("B", Arrays.asList('c', 'f'), Arrays.asList(1)),
     ROOK("R", Arrays.asList('a', 'h'), Arrays.asList(1)),
-    PAWN("P", Arrays.asList('a','b','c','d','e','f','g','h'), Arrays.asList(2)),
-    VOID(".", Arrays.asList('a','b','c','d','e','f','g','h'), Arrays.asList(3, 4));
+    PAWN("P", Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'), Arrays.asList(2)),
+    VOID(".", Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'), Arrays.asList(3, 4));
 
     private final String symbol;
     private final List<Character> initialXPositions;

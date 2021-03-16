@@ -1,14 +1,12 @@
 package chess.board;
 
-import javafx.geometry.Pos;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
 
 public class Position {
 
-    private static final Map<String, Position> CACHE = new HashMap<>();
+    private static final Map<String, Position> CACHE = new LinkedHashMap<>();
 
     static {
         for (XPosition xposition : XPosition.values()) {
@@ -33,7 +31,6 @@ public class Position {
     }
 
     public static Position from(String positionKey) {
-        Position position = CACHE.get(positionKey);
         return CACHE.get(positionKey);
     }
 
@@ -41,6 +38,10 @@ public class Position {
         String positionKey = String.format("%c%d", xRawPosition,
             yRawPosition);
         return from(positionKey);
+    }
+
+    public Position getSymmetricPosition() {
+        return Position.of(xPosition.getXPosition(), 9 - yPosition.getYPosition());
     }
 
     public XPosition getXPosition() {

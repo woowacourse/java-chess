@@ -12,10 +12,10 @@
 - [x] 보드판 위치 객체
     - [x] x (a - h)
     - [x] y (1 - 8)
-- [ ] 보드판 객체 
-    - [ ] LinkedHashMap 자료 구조 사용
-        - [ ] Key : Position 객체 
-        - [ ] Value : 체스 말 객체
+- [x] 보드판 객체 
+    - [x] LinkedHashMap 자료 구조 사용
+        - [x] Key : Position 객체 
+        - [x] Value : 체스 말 객체
 - [ ] 사용자 입력 
     - [ ] start : 체스판 초기화 하여 출력
     - [ ] end : 게임 종료 
