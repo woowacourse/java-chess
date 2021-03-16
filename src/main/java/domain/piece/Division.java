@@ -1,13 +1,13 @@
 package domain.piece;
 
-import domain.piece.Piece;
+import domain.position.Position;
 
 import java.util.List;
 
-public abstract class Basis implements Piece {
+public abstract class Division implements Piece {
     private final String color;
 
-    public Basis(String color) {
+    public Division(String color) {
         this.color = color;
     }
 
@@ -19,5 +19,6 @@ public abstract class Basis implements Piece {
         return "white".equals(color);
     }
 
-    public abstract boolean canMove(List<String> from, List<String> to);
+
+    public abstract boolean canMove(Position from, Position to);
 }
