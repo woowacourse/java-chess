@@ -1,15 +1,18 @@
 package chess.domain.position;
 
-import java.util.Locale;
 import java.util.Objects;
 
 public class Position {
     private final Horizontal horizontal;
     private final Vertical vertical;
 
+    public Position(final Horizontal horizontal, final Vertical vertical) {
+        this.horizontal = horizontal;
+        this.vertical = vertical;
+    }
+
     public Position(final String horizontal, final String vertical) {
-        this.horizontal = Horizontal.of(horizontal);
-        this.vertical = Vertical.of(vertical);
+        this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
 
     @Override
