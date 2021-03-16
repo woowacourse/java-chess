@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
-    
+
     @Test
     @DisplayName("board 초기화 테스트")
     void testBoardInit() {

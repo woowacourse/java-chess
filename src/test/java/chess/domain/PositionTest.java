@@ -22,16 +22,16 @@ public class PositionTest {
 
     @Test
     @DisplayName("Postion 생성 테스트")
-    void testOf(){
+    void testOf() {
         //given
         int x = 0;
         int y = 0;
 
         //when
-        Position position = Position.of(x,y);
+        Position position = Position.of(x, y);
 
         //then
-        assertThat(position).isEqualTo(Position.of(0,0));
-        assertThat(position).isSameAs(Position.of(0,0));
+        assertThat(position).isEqualTo(Position.of(0, 0));
+        assertThat(position).isSameAs(Position.of(0, 0));
     }
 }
