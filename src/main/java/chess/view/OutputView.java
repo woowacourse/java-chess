@@ -3,7 +3,11 @@ package chess.view;
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 
+import java.util.Objects;
+
 public class OutputView {
+    private static final String EMPTY_FIELD = ".";
+    private static final int LINE_COUNT = 8;
 
     public static void printManual() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -14,23 +18,10 @@ public class OutputView {
 
     public static void printBoard(Board board) {
         int cnt = 0;
-        StringBuilder builder = new StringBuilder("");
+        StringBuilder builder = new StringBuilder();
 
         for (Piece piece : board.getBoard().values()) {
-            cnt++;
-            if (piece == null) {
-                builder.append(".");
-                if (cnt % 8 == 0) {
-                    System.out.println(builder.toString());
-                    builder = new StringBuilder("");
-                }
-                continue;
-            }
-            builder.append(piece.getName());
-            if (cnt % 8 == 0) {
-                System.out.println(builder.toString());
-                builder = new StringBuilder("");
-            }
+            builder = combinePieceNameToLine(piece, ++cnt, builder);
         }
         System.out.println();
     }
