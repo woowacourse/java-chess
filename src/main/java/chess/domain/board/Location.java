@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,9 +9,9 @@ public class Location {
     private static final List<Location> CACHE;
 
     static {
-        CACHE = Arrays.stream(Horizontal.values())
-                .flatMap(horizontal -> Arrays.stream(Vertical.values())
-                        .map(vertical -> new Location(horizontal, vertical)))
+        CACHE = Arrays.stream(Vertical.values())
+                .flatMap(vertical -> Arrays.stream(Horizontal.values())
+                        .map(horizontal -> new Location(horizontal, vertical)))
                 .collect(Collectors.toList());
     }
 
@@ -30,5 +31,7 @@ public class Location {
                 .orElseThrow(RuntimeException::new);
     }
 
-
+    public static List<Location> getLocations() {
+        return Collections.unmodifiableList(CACHE);
+    }
 }
