@@ -30,4 +30,12 @@ public enum Vertical {
     public String getSymbol() {
         return symbol;
     }
+
+    public int getValue() {
+        return value;
+    }
+
+    public boolean isSameValue(final Vertical vertical) {
+        return value == vertical.getValue();
+    }
 }

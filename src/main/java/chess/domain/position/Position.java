@@ -2,7 +2,7 @@ package chess.domain.position;
 
 import java.util.Objects;
 
-public class Position {
+public class Position implements Comparable<Position> {
     private final Horizontal horizontal;
     private final Vertical vertical;
 
@@ -26,5 +26,21 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(horizontal, vertical);
+    }
+
+    public Horizontal getHorizontal() {
+        return horizontal;
+    }
+
+    public Vertical getVertical() {
+        return vertical;
+    }
+
+    @Override
+    public int compareTo(Position position) {
+        if (vertical.isSameValue(position.vertical)) {
+            return position.horizontal.getValue() - horizontal.getValue();
+        }
+        return position.vertical.getValue() - vertical.getValue();
     }
 }

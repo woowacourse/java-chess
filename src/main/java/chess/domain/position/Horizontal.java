@@ -30,4 +30,8 @@ public enum Horizontal {
     public String getSymbol() {
         return symbol;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
