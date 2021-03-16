@@ -3,25 +3,25 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A(1),
+    B(2),
+    C(3),
+    D(4),
+    E(5),
+    F(6),
+    G(7),
+    H(8);
 
-    private final String file;
+    private final int value;
 
-    File(final String file) {
-        this.file = file;
+    File(final int value) {
+        this.value = value;
     }
 
-    public static File findByFile(final String file) {
+    public static File findByFile(final int file) {
         return Arrays.stream(values())
-                .filter(value -> value.file.equals(file))
+                .filter(value -> value.value == file)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %s", file)));
+                .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %d", file)));
     }
 }
