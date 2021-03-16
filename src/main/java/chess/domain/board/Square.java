@@ -1,13 +1,24 @@
 package chess.domain.board;
 
+import chess.domain.board.piece.Empty;
 import chess.domain.board.piece.Piece;
 
 public class Square {
-    private final Position position;
-    private final Piece piece;
+    private final Vertical vertical;
+    private final Horizontal horizontal;
+    private Piece piece;
 
-    public Square(Position position, Piece piece) {
-        this.position = position;
+    public Square(Vertical vertical, Horizontal horizontal, Piece piece) {
+        this.vertical = vertical;
+        this.horizontal = horizontal;
         this.piece = piece;
+    }
+
+    public Square(Vertical vertical, Horizontal horizontal) {
+        this(vertical, horizontal, new Empty());
+    }
+
+    public void setPiece(Piece piece){
+        this.piece= piece;
     }
 }
