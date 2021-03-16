@@ -1,7 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Rook;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -35,5 +34,45 @@ class BoardTest {
         board.initializeBoard();
         assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
                 .isInstanceOf(Rook.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("킹 초기화 기능")
+    @ValueSource(strings = {"e,1", "e,8"})
+    void initiateKing(final String input) {
+        final String[] inputs = input.split(",");
+        board.initializeBoard();
+        assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
+                .isInstanceOf(King.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("퀸 초기화 기능")
+    @ValueSource(strings = {"d,1", "d,8"})
+    void initiateQueen(final String input) {
+        final String[] inputs = input.split(",");
+        board.initializeBoard();
+        assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
+                .isInstanceOf(Queen.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("비숍 초기화 기능")
+    @ValueSource(strings = {"c,1", "c,8", "f,1", "f,8"})
+    void initiateBishop(final String input) {
+        final String[] inputs = input.split(",");
+        board.initializeBoard();
+        assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
+                .isInstanceOf(Bishop.class);
+    }
+
+    @ParameterizedTest
+    @DisplayName("나이트 초기화 기능")
+    @ValueSource(strings = {"b,1", "b,8", "g,1", "g,8"})
+    void initiateKnight(final String input) {
+        final String[] inputs = input.split(",");
+        board.initializeBoard();
+        assertThat(board.unwrap().get(new Position(inputs[0], inputs[1])))
+                .isInstanceOf(Knight.class);
     }
 }
