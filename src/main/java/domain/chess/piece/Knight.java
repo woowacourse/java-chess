@@ -6,7 +6,7 @@ import java.util.List;
 public class Knight extends Piece {
     private static final double SCORE = 2.5;
 
-    public Knight(String name, int x, int y, boolean isBlack) {
+    private Knight(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);
     }
 
@@ -19,5 +19,10 @@ public class Knight extends Piece {
                 Knight.Of("N", Position.Of(0, 6), true),
                 Knight.Of("n", Position.Of(7, 1), false),
                 Knight.Of("n", Position.Of(7, 6), false));
+    }
+
+    @Override
+    public boolean canMove(Piece[][] board, Position end) {
+        return false;
     }
 }

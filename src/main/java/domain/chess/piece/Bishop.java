@@ -6,7 +6,7 @@ import java.util.List;
 public class Bishop extends Piece {
     private static final double SCORE = 3;
 
-    public Bishop(String name, int x, int y, boolean isBlack) {
+    private Bishop(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);
     }
 
@@ -20,5 +20,10 @@ public class Bishop extends Piece {
                 Bishop.Of("b", Position.Of(7, 2), false),
                 Bishop.Of("b", Position.Of(7, 5), false)
         );
+    }
+
+    @Override
+    public boolean canMove(Piece[][] board, Position end) {
+        return false;
     }
 }

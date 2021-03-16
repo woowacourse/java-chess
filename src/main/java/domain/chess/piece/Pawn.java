@@ -6,7 +6,7 @@ import java.util.List;
 public class Pawn extends Piece {
     private static final double SCORE = 3;
 
-    public Pawn(String name, int x, int y, boolean isBlack) {
+    private Pawn(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);
     }
 

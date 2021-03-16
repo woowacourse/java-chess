@@ -6,7 +6,7 @@ import java.util.List;
 public class Queen extends Piece {
     private static final double SCORE = 9;
 
-    public Queen(String name, int x, int y, boolean isBlack) {
+    private Queen(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);
     }
 
@@ -17,5 +17,10 @@ public class Queen extends Piece {
     public static List<Queen> initialQueenPieces() {
         return Arrays.asList(Queen.Of("Q", Position.Of(0, 3), true),
                 Queen.Of("q", Position.Of(7, 3), false));
+    }
+
+    @Override
+    public boolean canMove(Piece[][] board, Position end) {
+        return false;
     }
 }

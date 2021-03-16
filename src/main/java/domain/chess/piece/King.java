@@ -6,7 +6,7 @@ import java.util.List;
 public class King extends Piece {
     private static final double SCORE = 0;
 
-    public King(String name, int x, int y, boolean isBlack) {
+    private King(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);
     }
 
@@ -17,5 +17,10 @@ public class King extends Piece {
     public static List<King> initialKingPieces() {
         return Arrays.asList(King.Of("K", Position.Of(0, 4), true),
                 King.Of("k", Position.Of(7, 4), false));
+    }
+
+    @Override
+    public boolean canMove(Piece[][] board, Position end) {
+        return false;
     }
 }

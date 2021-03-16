@@ -15,16 +15,19 @@ public class Board {
 
     public void move(Position start, Position end) {
         Piece piece = board[start.getRow()][start.getColumn()];
-        board[start.getRow()][start.getColumn()] = null;
+        if (!piece.canMove(board, end)) {
+            throw new IllegalArgumentException("말을 움직일 수 없습니다!");
+        }
         piece.movePosition(end);
         put(piece, end);
+        board[start.getRow()][start.getColumn()] = null;
     }
 
     public void put(Piece piece, Position movePosition) {
         board[movePosition.getRow()][movePosition.getColumn()] = piece;
     }
 
-    public Piece[][] getBoard(){
+    public Piece[][] getBoard() {
         return board;
     }
 
