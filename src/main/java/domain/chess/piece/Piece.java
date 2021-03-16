@@ -31,14 +31,16 @@ public abstract class Piece {
         return isBlack;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void movePosition(Position position) {
+        this.position = position;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(position, name, score, isBlack);
     }
-
-    public String getName() {
-
-        return name;
-    }
-
 }

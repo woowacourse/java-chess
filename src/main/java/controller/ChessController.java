@@ -10,5 +10,4 @@ public class ChessController {
         Board board = new Board(PieceFactory.createPieces());
         OutputView.showBoard(board);
     }
-
 }

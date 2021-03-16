@@ -13,11 +13,22 @@ public class Board {
         pieces.stream().forEach(piece -> put(piece, piece.getPosition()));
     }
 
+    public void move(Position start, Position end) {
+        Piece piece = board[start.getRow()][start.getColumn()];
+        board[start.getRow()][start.getColumn()] = null;
+        piece.movePosition(end);
+        put(piece, end);
+    }
+
     public void put(Piece piece, Position movePosition) {
         board[movePosition.getRow()][movePosition.getColumn()] = piece;
     }
 
     public Piece[][] getBoard(){
         return board;
+    }
+
+    public Piece getPiece(Position position) {
+        return board[position.getRow()][position.getColumn()];
     }
 }
