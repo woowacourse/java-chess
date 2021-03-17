@@ -1,8 +1,11 @@
 package chess.domain.position;
 
+import chess.domain.piece.Direction;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
     private final Horizontal horizontal;
@@ -15,6 +18,64 @@ public class Position implements Comparable<Position> {
 
     public Position(final String horizontal, final String vertical) {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
+    }
+
+    public List<Integer> subtract(final Position source) {
+        return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
+                this.vertical.getValue() - source.vertical.getValue());
+    }
+
+    public boolean hasMiddlePath(final Position target) {
+        return isLinear(target) || isDiagonal(target);
+    }
+
+    private boolean isLinear(final Position target) {
+        final List<Integer> result = target.subtract(this);
+        return result.stream()
+                .filter(difference -> difference == 0)
+                .count() == 1;
+    }
+
+    private boolean isDiagonal(final Position target) {
+        final List<Integer> result = target.subtract(this);
+        return Math.abs(result.get(0)) == Math.abs(result.get(1)) && !result.contains(0);
+    }
+
+    public Direction decideDirection(Position target) {
+        if (hasMiddlePath(target)) {
+            return Direction.getMatchingDirection(getDirectionMatcher(target));
+        }
+        return Direction.NOTHING;
+    }
+
+    private List<Integer> getDirectionMatcher(Position target) {
+        final List<Integer> result = target.subtract(this);
+        final int abs = result.stream()
+                .filter(difference -> difference != 0)
+                .map(Math::abs)
+                .findFirst()
+                .orElse(0);
+
+        return result.stream()
+                .map(difference -> difference / abs)
+                .collect(Collectors.toList());
+    }
+
+    public Position next(final Direction direction) {
+        String str = this.horizontal.getSymbol();
+        char c = (char) (str.charAt(0) + direction.getHorizontalDegree());
+
+        String str2 = this.vertical.getSymbol();
+        char c2 = (char) (str2.charAt(0) + direction.getVerticalDegree());
+        return new Position(String.valueOf(c), String.valueOf(c2));
+    }
+
+    public Horizontal getHorizontal() {
+        return horizontal;
+    }
+
+    public Vertical getVertical() {
+        return vertical;
     }
 
     @Override
@@ -30,24 +91,11 @@ public class Position implements Comparable<Position> {
         return Objects.hash(horizontal, vertical);
     }
 
-    public Horizontal getHorizontal() {
-        return horizontal;
-    }
-
-    public Vertical getVertical() {
-        return vertical;
-    }
-
     @Override
     public int compareTo(Position position) {
         if (vertical.isSameValue(position.vertical)) {
             return horizontal.getValue() - position.horizontal.getValue();
         }
         return position.vertical.getValue() - vertical.getValue();
-    }
-
-    public List<Integer> subtract(final Position source) {
-        return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
-                this.vertical.getValue() - source.vertical.getValue());
     }
 }

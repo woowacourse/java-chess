@@ -9,6 +9,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
@@ -26,5 +28,12 @@ class BoardTest {
         assertThat(board.unwrap().get(new Position("a", "2"))).isEqualTo(new Blank());
         assertThat(board.unwrap().get(new Position("a", "3"))).isEqualTo(new Pawn(false));
         OutputView.printCurrentBoard(board.unwrap());
+    }
+
+    @Test
+    @DisplayName("중간경로 구하는 기능")
+    void name() {
+        final List<Position> paths = board.updatePosition(new Position("f", "6"), new Position("a", "1"));
+        paths.forEach(position -> System.out.println(position.getHorizontal().getSymbol() + ", " + position.getVertical().getValue()));
     }
 }
