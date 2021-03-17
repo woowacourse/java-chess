@@ -1,12 +1,5 @@
-package chess;
+package chess.domain;
 
-import chess.domain.Board;
-import chess.domain.Direction;
-import chess.domain.File;
-import chess.domain.MoveVO;
-import chess.domain.Position;
-import chess.domain.Rank;
-import chess.domain.Team;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +10,13 @@ public class ChessGame {
 
     private Board board;
     private boolean isRunning;
+    private boolean isKingDead;
+    private Team winner;
     private Team team;
 
     public ChessGame() {
         isRunning = true;
+        isKingDead = false;
         team = Team.WHITE;
     }
 
@@ -78,7 +74,7 @@ public class ChessGame {
                 if (board.containsPosition(target)) {
                     throw new IllegalArgumentException("[ERROR] 목적지에 말이 존재합니다.");
                 }
-                board.movePiece(source, target);
+                movePiece(source, target);
                 return;
             }
 
@@ -91,12 +87,11 @@ public class ChessGame {
             }
         }
 
-        // 대각선인 경우
         if (distance >= 2 || !board.containsPosition(target)
             || board.pieceAt(target).isSameTeam(piece.getTeam())) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대팀의 말이 있는 경우 한 칸 이동할 수 있습니다.");
         }
-        board.movePiece(source, target);
+        movePiece(source, target);
     }
 
     private void movable(Position source, Position target, Direction currentDirection,
@@ -106,7 +101,7 @@ public class ChessGame {
 
             if (movePosition.equals(target)) {
                 board.isSameTeam(movePosition, team);
-                board.movePiece(source, target);
+                movePiece(source, target);
                 return;
             }
 
@@ -116,9 +111,19 @@ public class ChessGame {
         }
     }
 
+    private void movePiece(Position source, Position target) {
+        if (board.containsPosition(target)) {
+            Piece piece = board.pieceAt(target);
+            if(piece.isKing()) {
+                winner = Team.turnOver(piece.getTeam());
+                isKingDead = true;
+            }
+        }
+        board.movePiece(source, target);
+    }
 
     private void turnOver() {
-        team = team.turnOver(team);
+        team = Team.turnOver(team);
     }
 
     private List<Position> splitSourceAndTarget(String command) {
@@ -137,5 +142,13 @@ public class ChessGame {
 
     private File convertFileToCoordinate(String coordinate) {
         return File.of(String.valueOf(coordinate.charAt(0)));
+    }
+
+    public boolean isKingDead() {
+        return isKingDead;
+    }
+
+    public Team getWinTeam() {
+        return winner;
     }
 }

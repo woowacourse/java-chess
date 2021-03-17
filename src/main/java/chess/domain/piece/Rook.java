@@ -51,4 +51,9 @@ public class Rook implements Piece {
     public boolean isSameTeam(Team team) {
         return this.team == team;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

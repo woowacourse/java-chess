@@ -1,13 +1,23 @@
 package chess.domain;
 
 public enum Team {
-    BLACK,
-    WHITE;
+    BLACK("흑"),
+    WHITE("백");
 
-    public Team turnOver(Team team) {
+    private final String name;
+
+    Team(String name) {
+        this.name = name;
+    }
+
+    public static Team turnOver(Team team) {
         if (team == BLACK) {
             return WHITE;
         }
         return BLACK;
+    }
+
+    public String getName() {
+        return name;
     }
 }

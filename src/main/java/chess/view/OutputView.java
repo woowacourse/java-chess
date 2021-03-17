@@ -4,6 +4,7 @@ import chess.domain.Board;
 import chess.domain.File;
 import chess.domain.Position;
 import chess.domain.Rank;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 
 public class OutputView {
@@ -15,6 +16,10 @@ public class OutputView {
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
+    }
+
+    public static void printTeamWin(Team team) {
+        System.out.printf("%s팀이 승리하였습니다.\n", team.getName());
     }
 
     public static void printBoard(Board board) {

@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.ChessGame;
+import chess.domain.ChessGame;
 import chess.domain.BoardInitializer;
 import chess.domain.Command;
 import chess.view.InputView;
@@ -11,23 +11,6 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
 
-    public static void start(ChessGame chessGame, String command) {
-        chessGame.initBoard(BoardInitializer.init());
-        OutputView.printBoard(chessGame.getBoard());
-    }
-
-    public static void move(ChessGame chessGame, String command) {
-        chessGame.move(command);
-        OutputView.printBoard(chessGame.getBoard());
-    }
-
-    public static void end(ChessGame chessGame, String command) {
-        chessGame.endGame();
-    }
-
-    public static void status(ChessGame chessGame, String command) {
-    }
-
     public void run() {
         ChessGame chessGame = new ChessGame();
         OutputView.printCommandInfo();
@@ -36,6 +19,27 @@ public class ChessController {
             Command command = Command.of(splitCommand(inputCmd));
             command.apply(chessGame, inputCmd);
         }
+    }
+
+    public static void start(ChessGame chessGame, String command) {
+        chessGame.initBoard(BoardInitializer.init());
+        OutputView.printBoard(chessGame.getBoard());
+    }
+
+    public static void move(ChessGame chessGame, String command) {
+        chessGame.move(command);
+        OutputView.printBoard(chessGame.getBoard());
+
+        if (chessGame.isKingDead()) {
+            OutputView.printTeamWin(chessGame.getWinTeam());
+        }
+    }
+
+    public static void end(ChessGame chessGame, String command) {
+        chessGame.endGame();
+    }
+
+    public static void status(ChessGame chessGame, String command) {
     }
 
     private String splitCommand(String inputCmd) {

@@ -18,4 +18,6 @@ public interface Piece {
     boolean isSameTeam(Team team);
 
     boolean isPawn();
+
+    boolean isKing();
 }
