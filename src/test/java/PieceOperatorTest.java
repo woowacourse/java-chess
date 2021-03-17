@@ -90,4 +90,21 @@ public class PieceOperatorTest {
             pieceOperator.move(Point.of("c1"), Point.of("c4"))
             ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
     }
+
+    @Test
+    @DisplayName("룩을 유효한 위치로 이동 테스트")
+    void rookWithValidMove() {
+        board.move(Point.of("a2"), Point.of("a6"));
+        pieceOperator.move(Point.of("a1"), Point.of("a5"));
+        assertThat(board.getState(Point.of("a5"))).isEqualTo(State.of(Piece.ROOK, Team.WHITE));
+    }
+
+    @Test
+    @DisplayName("룩 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
+    void rookMoveToInvalidPoint() {
+        board.move(Point.of("b2"), Point.of("b3"));
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("a1"), Point.of("f6"))
+        ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
 }

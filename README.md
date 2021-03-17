@@ -12,7 +12,7 @@
     - [x] queen
     - [x] bishop
     - knight
-    - rook
+    - [x] rook
     - pawn 
 - 체스 말 이동 기능 구현
     - 체스 말의 이동 전략에 만족하지 않는 이동인 경우 예외 처리
@@ -20,7 +20,7 @@
       - [x] queen
       - [x] bishop
       - knight
-      - rook
+      - [x] rook
       - pawn
     - [x] 체스 판의 범위를 넘어간 경우 예외 처리
     - 다른 팀의 말을 이동하려고 한 경우 예외 처리
