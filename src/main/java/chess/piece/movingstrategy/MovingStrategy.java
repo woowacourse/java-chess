@@ -1,4 +1,6 @@
-package chess;
+package chess.piece.movingstrategy;
+
+import chess.board.Point;
 
 public interface MovingStrategy {
 

@@ -1,4 +1,4 @@
-package chess;
+package chess.piece.movingstrategy;
 
 public class QueenMovingStrategy implements MovingStrategy {
 

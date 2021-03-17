@@ -1,5 +1,7 @@
-package chess;
+package chess.piece.movingstrategy;
 
+import chess.board.Point;
+import chess.piece.Direction;
 import java.util.List;
 
 public class KingMovingStrategy implements MovingStrategy {

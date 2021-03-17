@@ -1,5 +1,9 @@
 package chess;
 
+import chess.board.Board;
+import chess.board.Point;
+import chess.board.Row;
+import chess.piece.Piece;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;

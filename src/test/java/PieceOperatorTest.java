@@ -1,8 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.Board;
+import chess.board.Board;
 import chess.PieceOperator;
-import chess.Point;
+import chess.board.Point;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,14 @@
-package chess;
+package chess.piece;
+
+import chess.board.Point;
+import chess.piece.movingstrategy.BishopMovingStrategy;
+import chess.piece.movingstrategy.EmptyMovingStrategy;
+import chess.piece.movingstrategy.KingMovingStrategy;
+import chess.piece.movingstrategy.KnightMovingStrategy;
+import chess.piece.movingstrategy.MovingStrategy;
+import chess.piece.movingstrategy.PawnMovingStrategy;
+import chess.piece.movingstrategy.QueenMovingStrategy;
+import chess.piece.movingstrategy.RookMovingStrategy;
 
 public enum Piece {
     KING(new KingMovingStrategy()),

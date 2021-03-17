@@ -1,6 +1,7 @@
-package chess;
+package chess.board;
 
 
+import chess.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
 
