@@ -19,11 +19,11 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("없는 명령어입니다."));
     }
 
-    public static boolean isStart(String receiveInput) {
-        return of(receiveInput).equals(START);
+    public static boolean isStart(String input) {
+        return of(input).equals(START);
     }
 
-    public boolean isEnd() {
-        return this.equals(END);
+    public static boolean isEnd(String input) {
+        return of(input).equals(END);
     }
 }
