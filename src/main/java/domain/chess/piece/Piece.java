@@ -45,4 +45,9 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(position, name, score, isBlack);
     }
+
+    public boolean isOurTeam(Piece piece){
+        return isBlack == piece.isBlack;
+    }
+
 }
