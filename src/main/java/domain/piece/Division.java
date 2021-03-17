@@ -2,12 +2,11 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.List;
-
-public abstract class Division implements Piece {
+public abstract class Division extends Basis {
     private final String color;
 
-    public Division(String color) {
+    public Division(String color, String displayName) {
+        super(displayName);
         this.color = color;
     }
 
