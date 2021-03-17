@@ -12,7 +12,7 @@ public abstract class Piece {
         this.team = team;
     }
 
-    abstract boolean isMovable(final Position current, final Position destination, final ChessBoard chessBoard);
+    public abstract boolean isMovable(final Position current, final Position destination, final ChessBoard chessBoard);
 
     abstract boolean checkPositionRule(final Position current, final Position destination);
 
@@ -36,17 +36,12 @@ public abstract class Piece {
     }
 
     public final boolean checkEmptyPath(final List<Position> path, final ChessBoard chessBoard) {
-        System.out.println("여기로 와야해");
-        System.out.println("path = " + path);
         for (Position position : path) {
             if (chessBoard.havePiece(position)) {
                 return false;
             }
         }
         return true;
-//
-//        return path.stream()
-//                .noneMatch(chessBoard::havePiece);
     }
 
     public final String getTeam() {
