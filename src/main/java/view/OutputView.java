@@ -3,8 +3,6 @@ package view;
 import domain.chess.Board;
 import domain.chess.piece.Piece;
 
-import java.util.Locale;
-
 public class OutputView {
     public static void showBoard(Board board) {
         Piece pieces[][] = board.getBoard();
@@ -16,7 +14,7 @@ public class OutputView {
                     System.out.print(". ");
                     continue;
                 }
-                if(piece.isBlack())
+                if (piece.isBlack())
                     System.out.print(piece.getName().toUpperCase() + " ");
                 else
                     System.out.print(piece.getName() + " ");
