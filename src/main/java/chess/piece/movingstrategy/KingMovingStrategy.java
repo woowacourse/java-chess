@@ -5,8 +5,8 @@ import chess.piece.Direction;
 import java.util.List;
 
 public class KingMovingStrategy implements MovingStrategy {
+    private static final int LENGTH = 1;
 
-    public static final int LENGTH = 1;
     private final List<Direction> kingsDirection = Direction.everyDirection();
 
     @Override
@@ -15,7 +15,7 @@ public class KingMovingStrategy implements MovingStrategy {
         int y = destination.minusY(source);
 
         return kingsDirection.stream()
-            .filter(direction -> direction.isRightDirection(x, y))
+            .filter(direction -> direction.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }

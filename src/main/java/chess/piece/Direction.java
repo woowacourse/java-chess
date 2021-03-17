@@ -33,8 +33,15 @@ public enum Direction {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
     }
 
-    public boolean isRightDirection(int horizon, int vertical) {
-        return (this.horizon == horizon) && (this.vertical == vertical);
+    public boolean isSameDirection(int horizon, int vertical) {
+        if (isOppositeDirection(horizon, vertical)) {
+            return false;
+        }
+        return this.horizon * vertical == this.vertical * horizon;
+    }
+
+    private boolean isOppositeDirection(int horizon, int vertical) {
+        return (this.horizon * horizon < 0) || (this.vertical * vertical < 0);
     }
 
     public int getHorizon() {

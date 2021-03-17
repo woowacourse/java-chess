@@ -5,8 +5,7 @@ import chess.piece.Direction;
 import java.util.List;
 
 public class QueenMovingStrategy implements MovingStrategy {
-
-    public static final int LENGTH = 7;
+    private static final int LENGTH = 7;
 
     private final List<Direction> queensDirection = Direction.everyDirection();
 
@@ -16,7 +15,7 @@ public class QueenMovingStrategy implements MovingStrategy {
         int y = destination.minusY(source);
 
         return queensDirection.stream()
-            .filter(direction -> direction.isRightDirection(x, y))
+            .filter(direction -> direction.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }

@@ -68,12 +68,26 @@ public class PieceOperatorTest {
     }
 
     @Test
-    @DisplayName("퀸 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
+    @DisplayName("퀸 이동 테스트(해당 위치로 가는 길이 막힌 경우 예외처리)")
     void queensMoveToInvalidPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("d1"), Point.of("d3"))
         ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
     }
 
+    @Test
+    @DisplayName("비숍을 유효한 위치로 이동 테스트")
+    void bishopWithValidMove() {
+        board.move(Point.of("d2"), Point.of("d3"));
+        pieceOperator.move(Point.of("c1"), Point.of("h6"));
+        assertThat(board.getState(Point.of("h6"))).isEqualTo(State.of(Piece.BISHOP, Team.WHITE));
+    }
 
+    @Test
+    @DisplayName("비숍 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
+    void bishopMoveToInvalidPoint() {
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("c1"), Point.of("c4"))
+            ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
 }
