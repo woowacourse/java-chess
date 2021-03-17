@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
+
+import java.util.Map;
 
 public class Knight extends Piece {
     public Knight(final String team) {
@@ -9,12 +10,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, ChessBoard chessBoard) {
+    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
         return false;
     }
 
     @Override
-    boolean checkPositionRule(Position current, Position destination) {
+    public boolean checkPositionRule(Position current, Position destination) {
         return false;
     }
 }

@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public class Queen extends Piece {
     public Queen(final String team) {
@@ -11,7 +11,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position current, final Position destination, final ChessBoard chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
@@ -28,7 +28,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    boolean checkPositionRule(Position current, Position destination) {
+    public boolean checkPositionRule(Position current, Position destination) {
         return checkDiagonalRule(current, destination) || checkStraightRule(current, destination);
     }
 }

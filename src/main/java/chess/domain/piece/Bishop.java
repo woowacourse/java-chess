@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public class Bishop extends Piece {
     public Bishop(final String team) {
@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, ChessBoard chessBoard) {
+    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
