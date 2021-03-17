@@ -10,11 +10,11 @@ public class Bishop extends Division{
     }
 
     @Override
-    public void move(Position to, List<Position> pieces) {
+    public void move(Position to, List<Piece> pieces) {
     }
 
     @Override
-    public void kill(Position to, List<Position> pieces) {
+    public void kill(Position to, List<Piece> pieces) {
 
     }
 }

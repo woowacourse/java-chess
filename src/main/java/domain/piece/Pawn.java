@@ -12,14 +12,14 @@ public class Pawn extends Division {
     }
 
     @Override
-    public void move(Position to, List<Position> pieces) {
+    public void move(Position to, List<Piece> pieces) {
         if (possiblePositions().contains(to)) {
             this.position = to;
         }
     }
 
     @Override
-    public void kill(Position to, List<Position> pieces) {
+    public void kill(Position to, List<Piece> pieces) {
 
     }
 

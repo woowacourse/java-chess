@@ -22,9 +22,14 @@ public abstract class Division extends Basis {
         return Color.WHITE.equals(color);
     }
 
-    public abstract void move(Position to, List<Position> pieces);
+    public abstract void move(Position to, List<Piece> pieces);
 
-    public abstract void kill(Position to, List<Position> pieces);
+    public abstract void kill(Position to, List<Piece> pieces);
+
+    @Override
+    public Position getPosition() {
+        return position;
+    }
 
     @Override
     public String display() {

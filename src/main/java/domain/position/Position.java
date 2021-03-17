@@ -50,7 +50,33 @@ public class Position {
         return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
     }
 
+    public boolean isOrthogonal(Position to) {
+        return hasRow(to.row) || hasColumn(to.column);
+    }
+
     public boolean hasRow(Row row) {
         return this.row.equals(row);
+    }
+
+    private boolean hasColumn(Column column) {
+        return this.column.equals(column);
+    }
+
+    public List<Position> getBetween(Position to) {
+        List<Position> betweenPosition = new ArrayList<>();
+        if (hasColumn(to.column)) {
+            betweenPosition.addAll(row.getBetween(to.row)
+                                      .stream()
+                                      .map(row -> Position.of(column, row))
+                                      .collect(Collectors.toList()));
+        }
+
+        if (hasRow(to.row)) {
+            betweenPosition.addAll(column.getBetween(to.column)
+                                         .stream()
+                                         .map(column -> Position.of(column, row))
+                                         .collect(Collectors.toList()));
+        }
+        return betweenPosition;
     }
 }

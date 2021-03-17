@@ -11,9 +11,11 @@ public abstract class Basis implements Piece{
         this.displayName = displayName;
     }
 
-    public abstract void move(Position to, List<Position> pieces);
+    public abstract void move(Position to, List<Piece> pieces);
 
-    public abstract void kill(Position to, List<Position> pieces);
+    public abstract void kill(Position to, List<Piece> pieces);
+
+    public abstract Position getPosition();
 
     @Override
     public String display() {

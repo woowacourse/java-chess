@@ -1,5 +1,10 @@
 package domain.position;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.IntStream;
+
 public enum Row {
     ONE("1"),
     TWO("2"),
@@ -26,5 +31,14 @@ public enum Row {
 
     public String value() {
         return value;
+    }
+
+    public List<Row> getBetween(Row to) {
+        int start = Math.min(this.ordinal(), to.ordinal());
+        int end = Math.max(this.ordinal(), to.ordinal());
+        List<Row> betweenRows = new ArrayList<>();
+        IntStream.range(start + 1, end)
+                 .forEach(x -> betweenRows.add(rows[x]));
+        return betweenRows;
     }
 }
