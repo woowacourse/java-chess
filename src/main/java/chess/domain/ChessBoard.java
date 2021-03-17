@@ -132,6 +132,6 @@ public class ChessBoard {
     }
 
     public boolean isAttackMove(Piece piece, Position position) {
-        return !findPiece(position).isSameColor(piece);
+        return !isBlank(position) && !findPiece(position).isSameColor(piece);
     }
 }

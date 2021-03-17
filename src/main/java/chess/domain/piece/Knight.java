@@ -16,7 +16,7 @@ public class Knight extends Piece {
     @Override
     public List<Position> getMovablePositions(ChessBoard chessBoard) {
         List<Position> movablePositions = new ArrayList<>();
-        List<Direction> directions = Direction.everyDirection();
+        List<Direction> directions = Direction.knightDirection();
         for (Direction direction : directions) {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();

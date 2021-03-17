@@ -31,14 +31,17 @@ public class Pawn extends Piece{
         List<Position> movablePositions = new ArrayList<>();
         Position nextPosition = new Position(position.getRow() + yDegree, position.getCol() + xDegree);
         if (xDegree == 0) {
-            if (isInBound(nextPosition)) {
+            if (isInBound(nextPosition) && chessBoard.isBlank(nextPosition)) {
                 movablePositions.add(nextPosition);
             }
             if (isStartingPosition()) {
                 nextPosition = new Position(nextPosition.getRow() + yDegree,
                     nextPosition.getCol() + xDegree);
-                movablePositions.add(nextPosition);
+                if (chessBoard.isBlank(nextPosition)) {
+                    movablePositions.add(nextPosition);
+                }
             }
+            return Collections.unmodifiableList(movablePositions);
         }
         if (isInBound(nextPosition)) {
             if (chessBoard.isAttackMove(this, nextPosition)) {
