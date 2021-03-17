@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.player.TeamType;
 import java.util.Objects;
 
 public class Coordinate {
@@ -36,5 +37,13 @@ public class Coordinate {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
+    }
+
+
+    public Coordinate moveForward(TeamType teamType) {
+        if (teamType == TeamType.BLACK) {
+            return new Coordinate(this.file, this.rank.decrease());
+       }
+        return null;
     }
 }

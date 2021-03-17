@@ -19,10 +19,19 @@ public enum Rank {
     }
 
     public static Rank findValueOf(String rankInput) {
+        return findRank(Integer.parseInt(rankInput));
+    }
+
+    private static Rank findRank(int value) {
         return Arrays.stream(Rank.values())
-            .filter(rank -> rank.getValue() == Integer.parseInt(rankInput))
+            .filter(rank -> rank.value == value)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값 입니다."));
+    }
+
+    public Rank decrease() {
+        int decreasedValue = this.value - 1;
+        return findRank(decreasedValue);
     }
 
     public int getValue() {
