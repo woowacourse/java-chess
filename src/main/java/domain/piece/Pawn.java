@@ -1,6 +1,5 @@
 package domain.piece;
 
-import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
 
@@ -9,7 +8,7 @@ import java.util.List;
 
 public class Pawn extends Division {
     public Pawn(String color) {
-        super(color);
+        super(color, "p");
     }
 
     @Override
