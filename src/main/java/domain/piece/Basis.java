@@ -2,6 +2,8 @@ package domain.piece;
 
 import domain.position.Position;
 
+import java.util.List;
+
 public abstract class Basis implements Piece{
     private final String displayName;
 
@@ -9,7 +11,7 @@ public abstract class Basis implements Piece{
         this.displayName = displayName;
     }
 
-    public abstract boolean canMove(Position from, Position to);
+    public abstract void move(Position to, List<Position> pieces);
 
     @Override
     public String display() {

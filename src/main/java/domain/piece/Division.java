@@ -2,14 +2,16 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.Locale;
+import java.util.List;
 
 public abstract class Division extends Basis {
     private final Color color;
+    protected Position position;
 
-    public Division(Color color, String displayName) {
+    public Division(Color color, String displayName, Position position) {
         super(displayName);
         this.color = color;
+        this.position = position;
     }
 
     public boolean isBlack() {
@@ -20,7 +22,7 @@ public abstract class Division extends Basis {
         return Color.WHITE.equals(color);
     }
 
-    public abstract boolean canMove(Position from, Position to);
+    public abstract void move(Position to, List<Position> pieces);
 
     @Override
     public String display() {
@@ -28,5 +30,10 @@ public abstract class Division extends Basis {
             return super.display().toUpperCase();
         }
         return super.display();
+    }
+
+    @Override
+    public boolean hasPosition(Position position) {
+        return this.position.equals(position);
     }
 }

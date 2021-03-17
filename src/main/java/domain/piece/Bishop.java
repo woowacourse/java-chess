@@ -2,13 +2,14 @@ package domain.piece;
 
 import domain.position.Position;
 
+import java.util.List;
+
 public class Bishop extends Division{
-    public Bishop(Color color) {
-        super(color, "b");
+    public Bishop(Color color, Position position) {
+        super(color, "b", position);
     }
 
     @Override
-    public boolean canMove(Position from, Position to) {
-        return false;
+    public void move(Position to, List<Position> pieces) {
     }
 }

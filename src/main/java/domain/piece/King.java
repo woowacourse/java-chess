@@ -2,13 +2,14 @@ package domain.piece;
 
 import domain.position.Position;
 
-public class King extends Division{
-    public King(Color color) {
-        super(color, "k");
+import java.util.List;
+
+public class King extends Division {
+    public King(Color color, Position position) {
+        super(color, "k", position);
     }
 
     @Override
-    public boolean canMove(Position from, Position to) {
-        return false;
+    public void move(Position to, List<Position> pieces) {
     }
 }
