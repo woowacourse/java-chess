@@ -18,9 +18,9 @@
 - [x] Position 객체 생성
   - [x] rank가 1~8이 아닌 경우에 예외를 발생한다.
   - [x] file이 a~h이 아닌 경우에 예외를 발생한다.
-- [ ] ChessBoard 객체 생성
+- [x] ChessBoard 객체 생성
   - [x] ChessBoardFactory를 생성한다. 
-    - [x] 유효한(1~8, a~h)의 범위가 아니면 에러가 발생한다.
+    - [x] 유효한(1-8, a-h)의 범위가 아니면 에러가 발생한다.
   - [x] PieceFactory를 생성한다.
 - [ ] start를 입력하면 체스판이 출력된다. 
 - [ ] 체스판을 출력한다.
