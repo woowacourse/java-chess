@@ -8,15 +8,15 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.Arrays;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BoardFactory {
 
-    private static final int MIN_ROW = 1;
-    private static final int MAX_ROW = 8;
-    private static final int BLACK_PAWN_ROW = 7;
-    private static final int WHITE_PAWN_ROW = 2;
+    private static final Row MIN_ROW = Row.ONE;
+    private static final Row MAX_ROW = Row.EIGHT;
+    private static final Row BLACK_PAWN_ROW = Row.SEVEN;
+    private static final Row WHITE_PAWN_ROW = Row.TWO;
 
     public static Board initializeBoard() {
         return initializePieces(new Board());
@@ -26,31 +26,34 @@ public class BoardFactory {
         initializeSpecialPiecesByRow(board, MIN_ROW, PieceColor.WHITE);
         initializeSpecialPiecesByRow(board, MAX_ROW, PieceColor.BLACK);
 
-        for (int column = MIN_ROW; column <= MAX_ROW; column++) {
-            board.putPiece(new Pawn(PieceColor.WHITE), new Position(WHITE_PAWN_ROW, column));
-            board.putPiece(new Pawn(PieceColor.BLACK), new Position(BLACK_PAWN_ROW, column));
-        }
-
+        initializePawnPieces(board);
         return board;
     }
 
-    private static void initializeSpecialPiecesByRow(Board board, int row, PieceColor color) {
-        List<Piece> pieces = createPieces(color);
-        for (int column = MIN_ROW; column <= MAX_ROW; column++) {
-            board.putPiece(pieces.get(column - 1), new Position(row, column));
+    private static void initializePawnPieces(Board board) {
+        for (Column column : Column.values()) {
+            board.putPiece(new Pawn(PieceColor.WHITE), Position.of(WHITE_PAWN_ROW, column));
+            board.putPiece(new Pawn(PieceColor.BLACK), Position.of(BLACK_PAWN_ROW, column));
         }
     }
 
-    private static List<Piece> createPieces(PieceColor color) {
-        return Arrays.asList(
-            new Rook(color),
-            new Knight(color),
-            new Bishop(color),
-            new Queen(color),
-            new King(color),
-            new Bishop(color),
-            new Knight(color),
-            new Rook(color)
-        );
+    private static void initializeSpecialPiecesByRow(Board board, Row row, PieceColor color) {
+        Map<Column, Piece> pieces = createSpecialPieces(color);
+        for (Column column : Column.values()) {
+            board.putPiece(pieces.get(column), Position.of(row, column));
+        }
+    }
+
+    private static Map<Column, Piece> createSpecialPieces(PieceColor color) {
+        Map<Column, Piece> pieces = new LinkedHashMap<>();
+        pieces.put(Column.A, new Rook(color));
+        pieces.put(Column.B, new Knight(color));
+        pieces.put(Column.C, new Bishop(color));
+        pieces.put(Column.D, new Queen(color));
+        pieces.put(Column.E, new King(color));
+        pieces.put(Column.F, new Bishop(color));
+        pieces.put(Column.G, new Knight(color));
+        pieces.put(Column.H, new Rook(color));
+        return pieces;
     }
 }

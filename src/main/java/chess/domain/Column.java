@@ -1,30 +1,27 @@
 package chess.domain;
 
 import java.util.Arrays;
-import java.util.Optional;
 
 public enum Column {
-    A(1, "a"),
-    B(2, "b"),
-    C(3, "c"),
-    D(4, "d"),
-    E(5, "e"),
-    F(6, "f"),
-    G(7, "g"),
-    H(8, "h");
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h");
 
-    private int columnNumber;
-    private String column;
+    private final String name;
 
-    Column(int columnNumber, String column){
-        this.columnNumber = columnNumber;
-        this.column = column;
+    Column(String name){
+        this.name = name;
     }
 
-    public static Column getColumn(int value) {
+    public static Column getColumn(String value) {
         return Arrays.stream(values())
-            .filter(column -> column.columnNumber == value)
+            .filter(column -> column.name.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다"));
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
 }

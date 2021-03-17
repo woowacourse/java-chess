@@ -1,6 +1,9 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import java.util.Arrays;
+import java.util.List;
 
 public class Game {
 
@@ -23,6 +26,7 @@ public class Game {
     public void command(String input) {
         if (Command.isEnd(input)) {
             isPlaying = false;
+            return;
         }
     }
 

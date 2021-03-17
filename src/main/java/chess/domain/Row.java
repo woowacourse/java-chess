@@ -12,15 +12,15 @@ public enum Row {
     TWO("2"),
     ONE("1");
 
-    private String number;
+    private final String number;
 
     Row(String number){
         this.number = number;
     }
 
-    public static Row getRow(int value) {
+    public static Row getRow(String value) {
         return Arrays.stream(values())
-            .filter(row -> row.number.equals(String.valueOf(value)))
+            .filter(row -> row.number.equals(value))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }

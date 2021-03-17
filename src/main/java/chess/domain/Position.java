@@ -7,16 +7,20 @@ public class Position {
     private Row row;
     private Column column;
 
-    public Position(int row, int column){
-        this(Row.getRow(row), Column.getColumn(column));
-    }
-
-    public Position(Row row, Column column){
+    private Position(Row row, Column column) {
         this.row = row;
         this.column = column;
     }
 
-    public static Position of(int row, int column) {
+    private Position(String row, String column) {
+        this(Row.getRow(row), Column.getColumn(column));
+    }
+
+    public static Position of(String value) {
+        return new Position(value.substring(0, 1), value.substring(1, 2));
+    }
+
+    public static Position of(Row row, Column column) {
         return new Position(row, column);
     }
 
@@ -30,7 +34,7 @@ public class Position {
         }
         Position position = (Position) o;
         return row == position.row &&
-            column == position.column;
+                column == position.column;
     }
 
     @Override
