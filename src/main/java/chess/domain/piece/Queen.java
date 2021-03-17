@@ -13,7 +13,12 @@ public class Queen extends Piece{
     }
 
     @Override
-    public List<Position> movable(Position from, Position to) {
+    protected List<Position> getRoute() {
         return null;
+    }
+
+    @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        return false;
     }
 }

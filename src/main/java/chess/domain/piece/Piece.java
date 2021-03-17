@@ -5,6 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public abstract class Piece {
     private final Side side;
@@ -15,9 +16,26 @@ public abstract class Piece {
         this.initial = initial;
     }
 
-    public abstract List<Position> movable(Position from, Position to);
+    public List<Position> route(Position from, Position to) {
+        if (Objects.equals(from, to)) {
+            throw new IllegalArgumentException();
+        }
 
-    public boolean isSideEqual(Side side) {
+        int rowDifference = Position.differenceOfRow(from, to);
+        int columnDifference = Position.differenceOfColumn(from, to);
+
+        if (movable(rowDifference, columnDifference)) {
+            return getRoute();
+        }
+
+        throw new IllegalArgumentException();
+    }
+
+    protected abstract List<Position> getRoute();
+
+    protected abstract boolean movable(int rowDifference, int columnDifference);
+
+    public boolean isSideEqualTo(Side side) {
         return this.side == side;
     }
 

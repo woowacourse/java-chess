@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
     private static final String KNIGHT_INITIAL = "N";
 
     public Knight(Side side) {
@@ -13,7 +13,12 @@ public class Knight extends Piece{
     }
 
     @Override
-    public List<Position> movable(Position from, Position to) {
+    protected List<Position> getRoute() {
         return null;
+    }
+
+    @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        return false;
     }
 }

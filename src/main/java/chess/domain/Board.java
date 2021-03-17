@@ -45,19 +45,19 @@ public class Board {
 
     private void setBase(Map<Position, Piece> result, Side side, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(row, column), BASE_MAP.get(column).apply(side));
+            result.put(new Position(column, row), BASE_MAP.get(column).apply(side));
         }
     }
 
     private void setPawn(Map<Position, Piece> result, Side side, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(row, column), new Pawn(side));
+            result.put(new Position(column, row), new Pawn(side));
         }
     }
 
     private void setBlank(Map<Position, Piece> result, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(row, column), new Blank());
+            result.put(new Position(column, row), new Blank());
         }
     }
 
