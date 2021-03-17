@@ -24,10 +24,16 @@ public class Game {
     }
 
     public void command(String input) {
-        if (Command.isEnd(input)) {
+        List<String> values = Arrays.asList(input.split(" "));
+        if (Command.isEnd(values.get(0))) {
             isPlaying = false;
             return;
         }
+        Position source = Position.of(values.get(1));
+        Piece piece = board.findPieceBy(source)
+                .orElseThrow(()->new IllegalArgumentException("source 위치에 말이 없습니다."));
+        Position target = Position.of(values.get(2));
+        board.putPiece(piece, target);
     }
 
     public Board getBoard() {

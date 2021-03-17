@@ -4,24 +4,24 @@ import java.util.Objects;
 
 public class Position {
 
-    private Row row;
     private Column column;
+    private Row row;
 
-    private Position(Row row, Column column) {
-        this.row = row;
+    private Position(Column column, Row row) {
         this.column = column;
+        this.row = row;
     }
 
-    private Position(String row, String column) {
-        this(Row.getRow(row), Column.getColumn(column));
+    private Position(String column, String row) {
+        this(Column.getColumn(column), Row.getRow(row));
     }
 
     public static Position of(String value) {
         return new Position(value.substring(0, 1), value.substring(1, 2));
     }
 
-    public static Position of(Row row, Column column) {
-        return new Position(row, column);
+    public static Position of(Column column, Row row) {
+        return new Position(column, row);
     }
 
     @Override

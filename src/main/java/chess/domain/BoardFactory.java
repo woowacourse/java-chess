@@ -32,15 +32,15 @@ public class BoardFactory {
 
     private static void initializePawnPieces(Board board) {
         for (Column column : Column.values()) {
-            board.putPiece(new Pawn(PieceColor.WHITE), Position.of(WHITE_PAWN_ROW, column));
-            board.putPiece(new Pawn(PieceColor.BLACK), Position.of(BLACK_PAWN_ROW, column));
+            board.putPiece(new Pawn(PieceColor.WHITE), Position.of(column, WHITE_PAWN_ROW));
+            board.putPiece(new Pawn(PieceColor.BLACK), Position.of(column, BLACK_PAWN_ROW));
         }
     }
 
     private static void initializeSpecialPiecesByRow(Board board, Row row, PieceColor color) {
         Map<Column, Piece> pieces = createSpecialPieces(color);
         for (Column column : Column.values()) {
-            board.putPiece(pieces.get(column), Position.of(row, column));
+            board.putPiece(pieces.get(column), Position.of(column, row));
         }
     }
 

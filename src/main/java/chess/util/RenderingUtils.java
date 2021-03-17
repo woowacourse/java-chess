@@ -12,20 +12,21 @@ public class RenderingUtils {
 
     public static String renderBoard(Board board) {
         return Stream.of(Row.values())
-            .map(index -> renderRow(board, index))
-            .collect(Collectors.joining("\n"));
+                .map(index -> renderRow(board, index))
+                .collect(Collectors.joining("\n"));
     }
 
     private static String renderRow(Board board, Row row) {
         return Stream.of(Column.values())
-            .map(column -> Position.of(row, column))
-            .map(position -> renderPosition(board, position))
-            .collect(Collectors.joining());
+                .map(column -> Position.of(column, row))
+                .map(position -> renderPosition(board, position))
+                .collect(Collectors.joining());
     }
 
     private static String renderPosition(Board board, Position position) {
         return board.findPieceBy(position)
-            .map(Piece::getName)
-            .orElse(".");
+                .map(Piece::getName)
+                .orElse(".")
+                ;
     }
 }
