@@ -24,18 +24,18 @@ class KingTest {
 
     @ParameterizedTest
     @CsvSource({"b2,a1", "b2,b3", "b2,a2"})
-    void movableSuccess(String from, String to) {
+    void routeSuccess(String from, String to) {
         assertThat(king.route(Position.of(from), Position.of(to))).isEmpty();
     }
 
     @ParameterizedTest
-    @MethodSource("movableFailTestcase")
-    void movableFail(Position from, Position to) {
+    @MethodSource("routeFailTestcase")
+    void routeFail(Position from, Position to) {
         assertThatThrownBy(() -> king.route(from, to))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private static Stream<Arguments> movableFailTestcase() {
+    private static Stream<Arguments> routeFailTestcase() {
         return Stream.of(
                 Arguments.of(Position.of("a1"), Position.of("a1")),
                 Arguments.of(Position.of("a1"), Position.of("a3"))

@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
@@ -14,11 +15,14 @@ public class Knight extends Piece {
 
     @Override
     protected List<Position> getRoute() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        return false;
+        if (Math.abs(rowDifference) == 2 && Math.abs(columnDifference) == 1) {
+            return true;
+        }
+        return Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 2;
     }
 }
