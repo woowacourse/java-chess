@@ -61,7 +61,19 @@ public class Position {
         return Objects.hash(x, y);
     }
 
-    public int subtract(Position anotherPosition) {
+    public int subtractY(Position anotherPosition) {
         return this.y - anotherPosition.y;
+    }
+
+    public int subtractX(Position anotherPosition) {
+        return this.x - anotherPosition.x;
+    }
+
+    public boolean isSubtractYPositive(Position anotherPosition) {
+        return this.y > anotherPosition.y;
+    }
+
+    public boolean isSubtractXPositive(Position anotherPosition) {
+        return this.x > anotherPosition.x;
     }
 }

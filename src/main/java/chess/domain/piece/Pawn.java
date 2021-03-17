@@ -19,27 +19,27 @@ public class Pawn extends Piece {
     }
 
     @Override
-    void move(Position position) {
+    void move(Position position, CurrentPieces currentPieces) {
         if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙
-            if (this.position.subtract(position) > 0 && this.position.subtract(position) <= 2) {
+            if (this.position.subtractY(position) > 0 && this.position.subtractY(position) <= 2) {
                 this.position = position;
                 return;
             }
         }
 
         if (this.position.getY() == '2' && this.name.equals("p")) { // 화이트
-            if (position.subtract(this.position) > 0 && position.subtract(this.position) <= 2) {
+            if (position.subtractY(this.position) > 0 && position.subtractY(this.position) <= 2) {
                 this.position = position;
                 return;
             }
         }
 
-        if (this.position.subtract(position) == 1 && this.name.equals("P")) { // 블랙
+        if (this.position.subtractY(position) == 1 && this.name.equals("P")) { // 블랙
             this.position = position;
             return;
         }
 
-        if (position.subtract(this.position) == 1 && this.name.equals("p")) { // 화이트
+        if (position.subtractY(this.position) == 1 && this.name.equals("p")) { // 화이트
             this.position = position;
             return;
         }

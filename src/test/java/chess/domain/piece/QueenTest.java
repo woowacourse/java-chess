@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -8,6 +9,13 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class QueenTest {
+    private CurrentPieces currentPieces;
+
+    @BeforeEach
+    void setUp() {
+        currentPieces = CurrentPieces.generate();
+    }
+
     @DisplayName("Queen 객체 생성 확인")
     @Test
     void 퀸_객체_생성() {

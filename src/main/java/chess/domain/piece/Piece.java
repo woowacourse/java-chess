@@ -17,5 +17,5 @@ public abstract class Piece {
         return name;
     }
 
-    abstract void move(Position position);
+    abstract void move(Position position, CurrentPieces currentPieces);
 }

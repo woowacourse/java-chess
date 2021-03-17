@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,6 +10,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PawnTest {
+    private CurrentPieces currentPieces;
+    @BeforeEach
+    void setUp() {
+        currentPieces = CurrentPieces.generate();
+    }
+
     @DisplayName("Pawn 객체 생성 확인")
     @Test
     void 폰_객체_생성() {
@@ -31,7 +38,7 @@ public class PawnTest {
     void pawn_처음으로_이동_2칸() {
         Pawn pawn = new Pawn(Position.of('a', '7'), "P");
 
-        pawn.move(Position.of('a', '5'));
+        pawn.move(Position.of('a', '5'), currentPieces);
 
         assertThat(pawn.getPosition()).isEqualTo(Position.of('a', '5'));
     }
@@ -41,7 +48,7 @@ public class PawnTest {
     void pawn_처음으로_이동_3칸_예외() {
         Pawn pawn = new Pawn(Position.of('a', '7'), "P");
 
-        assertThatThrownBy(() -> pawn.move(Position.of('a', '4')))
+        assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -50,7 +57,7 @@ public class PawnTest {
     void pawn_이미_이동_2칸_예외() {
         Pawn pawn = new Pawn(Position.of('a', '6'), "P");
 
-        assertThatThrownBy(() -> pawn.move(Position.of('a', '4')))
+        assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

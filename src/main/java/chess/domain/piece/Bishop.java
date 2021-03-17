@@ -15,8 +15,16 @@ public class Bishop extends Piece {
     }
 
     @Override
-    void move(Position position) {
+    void move(Position position, CurrentPieces currentPieces) {
+        int xDifference = this.position.subtractX(position);
+        int yDifference = this.position.subtractY(position);
+        if (Math.abs(xDifference) == Math.abs(yDifference)) {
+            for (int i = 0; i < Math.abs(xDifference); i++) {
 
+            }
+
+            this.position = position;
+        }
     }
 
     public static List<Bishop> generate() {

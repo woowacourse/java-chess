@@ -12,7 +12,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    void move(Position position) {
+    void move(Position position, CurrentPieces currentPieces) {
 
     }
 
