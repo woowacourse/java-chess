@@ -22,5 +22,9 @@ class PawnTest {
     @DisplayName("Pawn의 대각선은 상대의 말이 있을 경우만 가능하다.")
     @Test
     void catch_enemy() {
+        Board board = new Board(PieceFactory.createPieces());
+        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
+        board.put(King.Of("k", Position.Of(2, 1), false), Position.Of(2, 1));
+        assertThat(pawn.canMove(board.getBoard(), Position.Of(2, 1))).isEqualTo(true);
     }
 }

@@ -12,6 +12,7 @@ public class Position {
     }
 
     public static Position Of(int x, int y) {
+        // TODO : 잘못된 인덱스가 생성되는 경우 예외 처리
         return new Position(x, y);
     }
 
