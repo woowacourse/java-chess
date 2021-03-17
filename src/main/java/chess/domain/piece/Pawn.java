@@ -17,9 +17,8 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(final Position source, final Position target, final Piece piece) {
-        List<Integer> result = subtractByTeam(source, target);
         final Direction direction = POSSIBLE_DIRECTIONS.stream()
-                .filter(possibleDirection -> possibleDirection.isSameDirection(result))
+                .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("위치를 잘못 입력하셨습니다."));
         return checkPossible(direction, piece, source.getVertical());
