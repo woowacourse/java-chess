@@ -21,7 +21,7 @@ class PositionTest {
     @ValueSource(ints = {0, -1, 9,  10})
     void rankException(final int rank) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Position(Rank.findByRank(rank), File.A);
+            new Position(Rank.findByValue(rank), File.A);
         }).withMessage("없는 랭크임! 입력 값: %d", rank);
     }
 
@@ -30,7 +30,7 @@ class PositionTest {
     @ValueSource(ints = {0, -1, 9,  10})
     void fileException(final int file) {
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            new Position(Rank.EIGHT, File.findByFile(file));
+            new Position(Rank.EIGHT, File.findByValue(file));
         }).withMessage("없는 파일임! 입력 값: %d", file);
     }
 }

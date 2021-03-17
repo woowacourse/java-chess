@@ -1,8 +1,21 @@
 package chess.domain.position;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
+    private static final Map<String, Position> POSITIONS = new LinkedHashMap<>();
+
+    static {
+        Arrays.stream(Rank.values())
+                .forEach(rankValue ->
+                        Arrays.stream(File.values())
+                                .forEach(fileValue ->
+                                        POSITIONS.put(rankValue.getRank() + fileValue.getFile(),
+                                                new Position(rankValue, fileValue))
+                                )
+                );
+    }
+
     private final Rank rank;
     private final File file;
 
@@ -11,8 +24,8 @@ public class Position {
         this.file = file;
     }
 
-    public Position(final int rank, final int file) {
-       this(Rank.findByRank(rank), File.findByFile(file));
+    public static Position valueOf(final String rank, final String file) {
+        return POSITIONS.get(rank + file);
     }
 
     @Override
