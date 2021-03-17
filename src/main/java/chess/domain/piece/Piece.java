@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.Position;
 import java.util.List;
 
@@ -30,9 +31,13 @@ public abstract class Piece {
         return color.toString();
     }
 
-    public abstract List<Position> getMovablePositions(List<Position> existingPositions);
+    public boolean isBlank() {
+        return type == Type.BLANK;
+    }
 
-    protected boolean hasNext(Position currentPosition) {
+    public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
+
+    protected boolean isInBound(Position currentPosition) {
         return currentPosition.getRow() < 8
             && currentPosition.getRow() >= 0
             && currentPosition.getCol() < 8

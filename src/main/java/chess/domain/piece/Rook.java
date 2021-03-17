@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.Direction;
 import chess.domain.Position;
 import java.util.ArrayList;
@@ -14,29 +15,33 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(List<Position> existingPositions) {
+    public List<Position> getMovablePositions(ChessBoard chessBoard) {
         List<Position> movablePositions = new ArrayList<>();
         List<Direction> directions = Direction.linearDirection();
         for (Direction direction : directions) {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();
 
-            movablePositions.addAll(getMovablePosition(existingPositions, xDegree, yDegree));
+            movablePositions.addAll(getMovablePosition(chessBoard, xDegree, yDegree));
         }
-        return Collections.unmodifiableList(movablePositions);
+        return movablePositions;
     }
 
-    private List<Position> getMovablePosition(List<Position> existingPositions, int xDegree, int yDegree) {
+    private List<Position> getMovablePosition(ChessBoard chessBoard, int xDegree, int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
         Position currentPosition = position;
-        while (hasNext(currentPosition)) {
-            Position nextPosition = new Position(currentPosition.getRow() + yDegree, currentPosition.getCol() + xDegree);
-            if (existingPositions.contains(nextPosition)) {
-                movablePositions.add(nextPosition);
+        Position nextPosition = new Position(currentPosition.getRow() + yDegree,
+            currentPosition.getCol() + xDegree);
+        while (isInBound(nextPosition)) {
+            if (!chessBoard.isBlank(nextPosition)) {
+                if (chessBoard.isAttackMove(this, nextPosition)) {
+                    movablePositions.add(nextPosition);
+                }
                 break;
             }
             movablePositions.add(nextPosition);
-            currentPosition = nextPosition;
+            nextPosition = new Position(nextPosition.getRow() + yDegree,
+                nextPosition.getCol() + xDegree);
         }
         return Collections.unmodifiableList(movablePositions);
     }

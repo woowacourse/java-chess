@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.Direction;
 import chess.domain.Position;
 import java.util.ArrayList;
@@ -14,16 +15,37 @@ public class Pawn extends Piece{
     }
 
     @Override
-    public List<Position> getMovablePositions(List<Position> existingPositions) {
+    public List<Position> getMovablePositions(ChessBoard chessBoard) {
         List<Position> movablePositions = new ArrayList<>();
         List<Direction> directions = getDirections();
         for (Direction direction : directions) {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();
 
-            movablePositions.add(new Position(position.getRow() + yDegree, position.getCol() + xDegree));
+            movablePositions.addAll(getMovablePosition(chessBoard, xDegree, yDegree));
         }
         return movablePositions;
+    }
+
+    private List<Position> getMovablePosition(ChessBoard chessBoard, int xDegree, int yDegree) {
+        List<Position> movablePositions = new ArrayList<>();
+        Position nextPosition = new Position(position.getRow() + yDegree, position.getCol() + xDegree);
+        if (xDegree == 0) {
+            if (isInBound(nextPosition)) {
+                movablePositions.add(nextPosition);
+            }
+            if (isStartingPosition()) {
+                nextPosition = new Position(nextPosition.getRow() + yDegree,
+                    nextPosition.getCol() + xDegree);
+                movablePositions.add(nextPosition);
+            }
+        }
+        if (isInBound(nextPosition)) {
+            if (chessBoard.isAttackMove(this, nextPosition)) {
+                movablePositions.add(nextPosition);
+            }
+        }
+        return Collections.unmodifiableList(movablePositions);
     }
 
     private List<Direction> getDirections() {
@@ -31,5 +53,12 @@ public class Pawn extends Piece{
             return Direction.blackPawnDirection();
         }
         return Direction.whitePawnDirection();
+    }
+
+    private boolean isStartingPosition() {
+        if (this.color.equals(Color.BLACK)) {
+            return this.position.getRow() == 1;
+        }
+        return this.position.getRow() == 6;
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.ChessBoard;
 import chess.domain.Position;
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class Blank extends Piece{
     }
 
     @Override
-    public List<Position> getMovablePositions(List<Position> existingPositions) {
-        return null;
+    public List<Position> getMovablePositions(ChessBoard chessBoard) {
+        throw new UnsupportedOperationException();
     }
 }
