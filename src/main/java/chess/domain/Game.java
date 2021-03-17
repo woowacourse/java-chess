@@ -9,7 +9,6 @@ public class Game {
     private final Player blackPlayer;
     private boolean isPlaying;
 
-
     public Game() {
         board = BoardFactory.initializeBoard();
         whitePlayer = new Player(PieceColor.WHITE);
@@ -22,7 +21,7 @@ public class Game {
     }
 
     public void command(String input) {
-        if ("end".equals(input)) {
+        if (Command.isEnd(input)) {
             isPlaying = false;
         }
     }
