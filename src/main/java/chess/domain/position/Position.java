@@ -19,13 +19,24 @@ public class Position {
     private final Rank rank;
     private final File file;
 
-    public Position(final Rank rank, final File file) {
+    private Position(final Rank rank, final File file) {
         this.rank = rank;
         this.file = file;
     }
 
+    public static Map<String, Position> getPositions() {
+        return Collections.unmodifiableMap(POSITIONS);
+    }
+
+    public static Position emptyPosition(){
+        return new Position(Rank.EMPTY, File.EMPTY);
+    }
+
     public static Position valueOf(final String rank, final String file) {
-        return POSITIONS.get(rank + file);
+        Rank findRank = Rank.findByRank(rank);
+        File findFile = File.findByFile(file);
+
+        return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
     @Override

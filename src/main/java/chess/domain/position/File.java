@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum File {
+    EMPTY(0, ""),
     A(1, "a"),
     B(2, "b"),
     C(3, "c"),
@@ -25,6 +26,13 @@ public enum File {
                 .filter(value -> value.value == target)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %d", target)));
+    }
+
+    public static File findByFile(final String file) {
+        return Arrays.stream(values())
+                .filter(value -> value.file.equals(file))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %s", file)));
     }
 
     public String getFile() {

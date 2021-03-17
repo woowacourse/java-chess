@@ -3,6 +3,7 @@ package chess.domain.position;
 import java.util.Arrays;
 
 public enum Rank {
+    EMPTY(0, ""),
     ONE(1, "1"),
     TWO(2, "2"),
     THREE(3, "3"),
@@ -25,6 +26,13 @@ public enum Rank {
                 .filter(value -> value.value == target)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("없는 랭크임! 입력 값: %d", target)));
+    }
+
+    public static Rank findByRank(final String rank) {
+        return Arrays.stream(values())
+                .filter(value -> value.rank.equals(rank))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(String.format("없는 랭크임! 입력 값: %s", rank)));
     }
 
     public String getRank() {
