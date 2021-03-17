@@ -1,12 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.position.Position;
-
 public class RealPiece extends Piece{
     private final Color color;
 
-    public RealPiece(Position position, String notation, Color color) {
-        super(position, notation);
+    public RealPiece(Color color, String notation) {
+        super(notation);
         this.color = color;
+    }
+
+    @Override
+    public String getNotation() {
+        return color.changeNotation(super.getNotation());
     }
 }

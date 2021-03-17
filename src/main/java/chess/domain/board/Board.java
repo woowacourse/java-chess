@@ -3,19 +3,17 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
-import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final List<Piece> board;
+    private final Map<Position, Square> board;
 
-    protected Board(List<Piece> board) {
+    protected Board(Map<Position, Square> board) {
         this.board = board;
     }
 
     public Piece findByPosition(Position position) {
-       return board.stream()
-                .filter(piece -> piece.isSamePosition(position))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+       return this.board.get(position).getPiece();
     }
+
 }

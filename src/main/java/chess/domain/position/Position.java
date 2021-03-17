@@ -5,6 +5,10 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
+    public static final int POSITION_FORMAT_LENGTH = 2;
+    public static final int FILE_INDEX = 0;
+    public static final int RANK_INDEX = 1;
+
     private final File file;
     private final Rank rank;
 
@@ -21,8 +25,11 @@ public class Position {
         List<String> splitPosition = Arrays.asList(position.split(""));
 
         // TODO 검증 로직 및 상수화 리팩토링
-        File file = File.from(splitPosition.get(0));
-        Rank rank = Rank.from(splitPosition.get(1));
+        if (splitPosition.size() != POSITION_FORMAT_LENGTH) {
+            throw new IllegalArgumentException("위치 형식에 맞는 입력이 아닙니다.");
+        }
+        File file = File.from(splitPosition.get(FILE_INDEX));
+        Rank rank = Rank.from(splitPosition.get(RANK_INDEX));
 
         return new Position(file, rank);
     }
