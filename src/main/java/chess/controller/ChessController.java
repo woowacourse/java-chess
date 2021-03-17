@@ -1,26 +1,36 @@
 package chess.controller;
 
-import chess.domain.Board;
 import chess.domain.BoardInitializer;
 import chess.domain.ChessGame;
 import chess.domain.Command;
-import chess.domain.piece.Bishop;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
+    public static final int COMMAND_INDEX = 0;
+    public static final String SPACE = " ";
+
     public void run() {
         ChessGame chessGame = new ChessGame();
         while(chessGame.isRunning()) {
-            Command command = InputView.inputCommand();
-            command.apply(chessGame, command.name());
+            String inputCmd = InputView.inputCommand();
+            Command command = Command.of(splitCommand(inputCmd));
+            command.apply(chessGame, inputCmd);
         }
     }
 
+    private String splitCommand(String inputCmd) {
+        return inputCmd.split(SPACE)[COMMAND_INDEX];
+    }
+
     public static void start(ChessGame chessGame, String command) {
-        Board board = BoardInitializer.init();
-        OutputView.printBoard(board);
+        chessGame.initBoard(BoardInitializer.init());
+        OutputView.printBoard(chessGame.getBoard());
+    }
+
+    public static void move(ChessGame chessGame, String command) {
+        chessGame.move(command);
     }
 
     public static void end(ChessGame chessGame, String command){
@@ -28,8 +38,5 @@ public class ChessController {
     }
 
     public static void status(ChessGame chessGame, String command) {
-    }
-
-    public static void move(ChessGame chessGame, String command) {
     }
 }

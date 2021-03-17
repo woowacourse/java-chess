@@ -4,17 +4,17 @@ import chess.domain.piece.Piece;
 import java.util.Map;
 
 public class Board {
-    private final Map<Position, Piece> board;
+    private final Map<Position, Piece> positionMap;
 
-    public Board(Map<Position, Piece> board) {
-        this.board = board;
+    public Board(Map<Position, Piece> positionMap) {
+        this.positionMap = positionMap;
     }
 
     public boolean containsPosition(Position position) {
-        return board.containsKey(position);
+        return positionMap.containsKey(position);
     }
 
     public Piece pieceAt(Position position) {
-        return board.get(position);
+        return positionMap.get(position);
     }
 }
