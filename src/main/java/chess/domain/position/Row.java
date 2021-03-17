@@ -30,7 +30,12 @@ public enum Row {
     public static int differance(Row row1, Row row2) {
         return row1.value - row2.value;
     }
+
+    public Row nextRow(int moveValue) {
+        int targetValue = this.value + moveValue;
+        return Arrays.stream(Row.values())
+                .filter(row -> row.value == targetValue)
+                .findAny()
+                .orElseThrow(InvalidRowException::new);
+    }
 }
-
-
-//

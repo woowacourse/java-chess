@@ -26,4 +26,12 @@ public enum Column {
     public static int differance(Column column1, Column column2) {
         return column1.value - column2.value;
     }
+
+    public Column nextColumn(int moveValue) {
+        int targetValue = this.value + moveValue;
+        return Arrays.stream(Column.values())
+                .filter(column -> column.value == targetValue)
+                .findAny()
+                .orElseThrow(InvalidColumnException::new);
+    }
 }
