@@ -54,11 +54,20 @@ public enum Direction {
         return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
-    public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+    public static List<Direction> whitePawnLinearDirection() {
+        return Arrays.asList(NORTH);
     }
 
-    public static List<Direction> blackPawnDirection() {
-        return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    public static List<Direction> whitePawnDiagonalDirection() {
+        return Arrays.asList(NORTHEAST, NORTHWEST);
+
+    }
+
+    public static List<Direction> blackPawnLinearDirection() {
+        return Arrays.asList(SOUTH);
+    }
+
+    public static List<Direction> blackPawnDiagonalDirection() {
+        return Arrays.asList(SOUTHEAST, SOUTHWEST);
     }
 }
