@@ -23,7 +23,7 @@ class KingMoveStrategyTest {
     @BeforeEach
     void setUp() {
         board = new Board();
-        position = Position.of('c', 2);
+        position = Position.of('c', 3);
         piece = new Piece(PieceKind.KING, PieceColor.WHITE);
         kingMoveStrategy = new KingMoveStrategy();
         board.putPieceAtPosition(position, piece);

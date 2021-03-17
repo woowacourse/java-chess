@@ -1,5 +1,11 @@
 package chess.domain.board;
 
+import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.piece.strategy.MoveDirection;
+
+import java.util.Arrays;
+import java.util.List;
+
 public enum YPosition {
     Eight(8),
     Seven(7),
@@ -14,6 +20,17 @@ public enum YPosition {
 
     YPosition(int yPosition) {
         this.yPosition = yPosition;
+    }
+
+    public YPosition moveUnit(int unit) {
+        return YPosition.matchYPosition(yPosition + unit);
+    }
+
+    private static YPosition matchYPosition(int newYPosition) {
+        return Arrays.stream(values())
+            .filter(element -> element.getValue() == newYPosition)
+            .findAny()
+            .orElseThrow(InvalidMoveException::new);
     }
 
     public int getValue() {

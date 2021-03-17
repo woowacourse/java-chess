@@ -7,6 +7,7 @@ public class Piece {
     public static final String OVER_DISTANCE_MESSAGE = "해당 말의 이동 가능한 거리를 초과했습니다.";
     public static final String OUT_OF_BOUND_MESSAGE = "움직일려는 목표 좌표가 보드판을 넘어갑니다.";
     public static final String UNABLE_CROSS_MESSAGE = "해당 말은 뛰어넘기가 불가합니다.";
+    public static final String UNABLE_MOVE_TYPE_MESSAGE = "해당 말이 이동할 수 있는 위치가 아닙니다.";
     public static final String SAME_TEAM_MESSAGE = "같은 팀의 말입니다.";
 
     private PieceKind pieceKind;

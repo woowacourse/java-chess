@@ -32,7 +32,7 @@
     - [x] 보드판 영역 바깥으로 이동하지 못하도록 예외처리
     - [ ] 전략 필요한 말 리스트
       - [x] King
-      - [ ] Queen
+      - [x] Queen
       - [ ] Knight
       - [ ] Rook
       - [ ] Bishop
