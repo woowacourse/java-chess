@@ -47,4 +47,16 @@ public class KingTest {
             king.move(nextX, nextY);
         }).withMessage("이동할 수 있는 범위를 벗어났습니다.");
     }
+
+    @ParameterizedTest
+    @DisplayName("체스 말이 Move 한 후 제자리에 있으면 예외 발생")
+    @CsvSource(value = {"d:3"}, delimiter = ':')
+    public void mustMove_ThrowsException(char nextX, char nextY) {
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            char x = 'd';
+            char y = '3';
+            Piece king = new King(true, x, y);
+            king.move(nextX, nextY);
+        }).withMessage("체스 말은 무조건 움직여야 합니다.");
+    }
 }

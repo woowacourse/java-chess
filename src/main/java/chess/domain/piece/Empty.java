@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
 public class Empty extends Piece {
-
-    public static final char NAME = '.';
+    private static final char NAME = '.';
 
     public Empty(char x, char y) {
         super(false, x, y);

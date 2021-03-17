@@ -4,9 +4,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class Line {
     private List<Piece> pieces;
@@ -17,10 +17,11 @@ public class Line {
     }
 
     private void validateDuplicatedPieces(List<Piece> pieces) {
-        Set<Position> expectedPositions = new HashSet<>();
-        for (Piece piece : pieces) {
-            expectedPositions.add(piece.getPosition());
-        }
+        Set<Position> expectedPositions = pieces
+                .stream()
+                .map(Piece::getPosition)
+                .collect(Collectors.toSet());
+
         if (pieces.size() != expectedPositions.size()) {
             throw new IllegalArgumentException("같은 포지션을 가진 체스 말이 존재할 수 없습니다.");
         }

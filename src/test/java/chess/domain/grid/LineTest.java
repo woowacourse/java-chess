@@ -19,7 +19,7 @@ public class LineTest {
         assertThatCode(() -> {
             List<Piece> pieces = new ArrayList<>();
             for (int i = 0; i < 8; i++) {
-                char x = (char)('a' + i);
+                char x = (char) ('a' + i);
                 pieces.add(new Empty(x, '1'));
             }
             new Line(pieces);
@@ -32,7 +32,7 @@ public class LineTest {
         assertThatIllegalArgumentException().isThrownBy(() -> {
             List<Piece> pieces = new ArrayList<>();
             for (int i = 0; i < 7; i++) {
-                char x = (char)('a' + i);
+                char x = (char) ('a' + i);
                 pieces.add(new Empty(x, '1'));
             }
             pieces.add(new Empty('a', '1'));

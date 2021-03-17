@@ -17,8 +17,8 @@ public class Position {
         this.y = y;
     }
 
-    public Position next(int xTravel, int yTravel) {
-        return new Position((char) (x + xTravel), (char) (y + yTravel));
+    public PositionDistance calculateDistance(Position other) {
+        return new PositionDistance(this.x - other.x, this.y - other.y);
     }
 
     private void validate(char x, char y) {
@@ -39,13 +39,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }
