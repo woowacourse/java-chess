@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Position implements Comparable<Position> {
@@ -42,5 +44,10 @@ public class Position implements Comparable<Position> {
             return horizontal.getValue() - position.horizontal.getValue();
         }
         return position.vertical.getValue() - vertical.getValue();
+    }
+
+    public List<Integer> subtract(final Position source) {
+        return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
+                this.vertical.getValue() - source.vertical.getValue());
     }
 }

@@ -5,12 +5,10 @@ import java.util.Objects;
 
 public abstract class Piece {
     private final String name;
-
-    public Piece(final String initialName) {
-        name = initialName;
-    }
+    protected final boolean isBlack;
 
     public Piece(final boolean isBlack, final String initialName) {
+        this.isBlack = isBlack;
         if (isBlack) {
             name = initialName.toUpperCase();
             return;
@@ -33,5 +31,9 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    protected boolean isOpponent(final Piece piece) {
+        return isBlack != piece.isBlack;
     }
 }

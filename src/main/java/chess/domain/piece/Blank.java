@@ -4,6 +4,6 @@ public class Blank extends Piece {
     private static final String INITIAL_NAME = ".";
 
     public Blank() {
-        super(INITIAL_NAME);
+        super(false, INITIAL_NAME);
     }
 }
