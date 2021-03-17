@@ -1,11 +1,11 @@
 package chess.domain.location;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LocationTest {
 
@@ -26,11 +26,11 @@ class LocationTest {
     @Test
     void create_validation() {
         assertThatThrownBy(() -> Location.of(1, 0))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Location.of(9, 0))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Location.of(1, 9))
-                .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("수평, 수직 테스트")

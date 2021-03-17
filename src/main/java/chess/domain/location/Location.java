@@ -31,8 +31,12 @@ public class Location {
 
     @Override
     public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         final Location location = (Location) o;
         return x == location.x && y == location.y;
     }
@@ -68,5 +72,9 @@ public class Location {
 
     public int subtractY(final Location target) {
         return Math.abs(target.y - this.y);
+    }
+
+    public boolean isSameY(final int y) {
+        return this.y == y;
     }
 }
