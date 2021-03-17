@@ -1,15 +1,16 @@
 package chess.domain.piece;
 
 import chess.domain.location.Location;
+import chess.domain.team.Team;
 
 public class King extends Piece {
 
-    public King(final Location location) {
-        super(location);
+    private King(final Location location, final Team team) {
+        super(location, team);
     }
 
-    public static King of(final Location location) {
-        return new King(location);
+    public static King of(final Location location, final Team team) {
+        return new King(location, team);
     }
 
     @Override

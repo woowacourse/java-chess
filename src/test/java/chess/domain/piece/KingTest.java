@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.location.Location;
+import chess.domain.team.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class KingTest {
 
     @BeforeEach
     void setUp() {
-        king = King.of(Location.of(5, 1));
+        king = King.of(Location.of(5, 1), Team.WHITE);
     }
 
     @DisplayName("킹은 인접한 위치로 이동할 수 있다.")

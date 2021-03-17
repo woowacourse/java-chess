@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.location.Location;
+import chess.domain.team.Team;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ class QueenTest {
 
     @BeforeEach
     void setUp() {
-        queen = Queen.of(Location.of(4, 1));
+        queen = Queen.of(Location.of(4, 1), Team.WHITE);
     }
 
     @DisplayName("퀸이 수평, 수직, 대각선으로 이동 가능하다.")
