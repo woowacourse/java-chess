@@ -1,6 +1,10 @@
 package chess.domain.piece;
 
-public abstract class Piece implements MoveStrategy {
+import chess.domain.board.Location;
+
+import java.util.List;
+
+public abstract class Piece {
     private final String name;
     private final Team team;
 
@@ -19,4 +23,6 @@ public abstract class Piece implements MoveStrategy {
     public String getName() {
         return name;
     }
+
+    public abstract List<Location> movableLocations(Location target);
 }

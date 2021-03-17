@@ -5,6 +5,7 @@ import chess.domain.piece.*;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -25,7 +26,6 @@ public class Board {
         board.put(Location.of(Horizontal.F, Vertical.EIGHT), new Bishop(Team.BLACK));
         board.put(Location.of(Horizontal.G, Vertical.EIGHT), new Knight(Team.BLACK));
         board.put(Location.of(Horizontal.H, Vertical.EIGHT), new Rook(Team.BLACK));
-        setPawn(board, Vertical.SEVEN, Team.BLACK);
 
         board.put(Location.of(Horizontal.A, Vertical.ONE), new Rook(Team.WHITE));
         board.put(Location.of(Horizontal.B, Vertical.ONE), new Knight(Team.WHITE));
@@ -35,7 +35,7 @@ public class Board {
         board.put(Location.of(Horizontal.F, Vertical.ONE), new Bishop(Team.WHITE));
         board.put(Location.of(Horizontal.G, Vertical.ONE), new Knight(Team.WHITE));
         board.put(Location.of(Horizontal.H, Vertical.ONE), new Rook(Team.WHITE));
-        setPawn(board, Vertical.TWO, Team.WHITE);
+        setPawn(board);
 
         return board;
     }
@@ -58,9 +58,10 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    private void setPawn(Map<Location, Piece> board, Vertical vertical, Team team) {
+    private void setPawn(Map<Location, Piece> board) {
         for (Horizontal horizontal : Horizontal.values()) {
-            board.put(Location.of(horizontal, vertical), new Pawn(team));
+            board.put(Location.of(horizontal, Vertical.SEVEN), new Pawn(Team.BLACK));
+            board.put(Location.of(horizontal, Vertical.TWO), new Pawn(Team.WHITE));
         }
     }
 }

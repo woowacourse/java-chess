@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.board.Location;
+
+import java.util.List;
+
 public class King extends Piece {
     private static final String KING_NAME = "K";
 
@@ -7,5 +11,8 @@ public class King extends Piece {
         super(KING_NAME, team);
     }
 
-    public void move(){}
+    @Override
+    public List<Location> movableLocations(Location target) {
+        return null;
+    }
 }
