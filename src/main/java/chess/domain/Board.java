@@ -10,23 +10,11 @@ public class Board {
         this.board = board;
     }
 
-    public void printBoard() {
-        for (Rank rank : Rank.values()) {
-            for (File file : File.values()) {
-                Position position = Position.of(file.getFile() + rank.getRank());
-                if(!board.containsKey(position)) {
-                    System.out.printf(".");
-                    continue;
-                }
+    public boolean containsPosition(Position position) {
+        return board.containsKey(position);
+    }
 
-                Piece piece = board.get(position);
-                if (piece.getName() == null) {
-                    System.out.printf("?");
-                } else {
-                    System.out.printf(piece.getName());
-                }
-            }
-            System.out.println();
-        }
+    public Piece pieceAt(Position position) {
+        return board.get(position);
     }
 }

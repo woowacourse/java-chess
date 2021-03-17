@@ -6,6 +6,7 @@ import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.domain.piece.Bishop;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessController {
 
@@ -18,8 +19,8 @@ public class ChessController {
     }
 
     public static void start(ChessGame chessGame, String command) {
-        Board init = BoardInitializer.init();
-        init.printBoard();
+        Board board = BoardInitializer.init();
+        OutputView.printBoard(board);
     }
 
     public static void end(ChessGame chessGame, String command){
