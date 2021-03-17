@@ -22,24 +22,28 @@ public class ChessBoard {
         initPawnByTeam(1, "White");
     }
 
-    private void initPieceByTeam(final int row, final String team) {
-        chessBoard.put(new Position(row, 0), new Rook(team));
-        chessBoard.put(new Position(row, 1), new Knight(team));
-        chessBoard.put(new Position(row, 2), new Bishop(team));
-        chessBoard.put(new Position(row, 3), new Queen(team));
-        chessBoard.put(new Position(row, 4), new King(team));
-        chessBoard.put(new Position(row, 5), new Bishop(team));
-        chessBoard.put(new Position(row, 6), new Knight(team));
-        chessBoard.put(new Position(row, 7), new Rook(team));
+    private void initPieceByTeam(final int column, final String team) {
+        chessBoard.put(new Position( 0, column), new Rook(team));
+        chessBoard.put(new Position( 1, column), new Knight(team));
+        chessBoard.put(new Position( 2, column), new Bishop(team));
+        chessBoard.put(new Position( 3, column), new Queen(team));
+        chessBoard.put(new Position( 4, column), new King(team));
+        chessBoard.put(new Position( 5, column), new Bishop(team));
+        chessBoard.put(new Position( 6, column), new Knight(team));
+        chessBoard.put(new Position( 7, column), new Rook(team));
     }
 
-    private void initPawnByTeam(final int row, final String team) {
+    private void initPawnByTeam(final int column, final String team) {
         for (int i = 0; i < SIZE; i++) {
-            chessBoard.put(new Position(row, i), new Pawn(team));
+            chessBoard.put(new Position(i, column), new Pawn(team));
         }
     }
 
     public Map<Position, Piece> getChessBoard() {
         return chessBoard;
+    }
+
+    public boolean havePiece(final Position position) {
+        return chessBoard.containsKey(position);
     }
 }
