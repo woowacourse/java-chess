@@ -10,16 +10,7 @@ public class KingMoveStrategy extends BasicMoveStrategy {
     private static final int KING_DISTANCE_LIMIT = 1;
 
     @Override
-    public void move(Position source, Position target, Board board) {
-        checkValidMove(source, target, board);
-
-        Piece originalPiece = board.checkPieceAtPosition(source);
-        board.putPieceAtPosition(target, originalPiece);
-
-        board.putPieceAtPosition(source, VOID_PIECE);
-    }
-
-    private void checkValidMove(Position source, Position target, Board board) {
+    void checkValidMove(Position source, Position target, Board board) {
         checkPositionsOnBoard(source, target);
         checkValidDistance(source, target);
         checkIsNotSameTeam(source, target, board);

@@ -33,9 +33,9 @@
     - [ ] 전략 필요한 말 리스트
       - [x] King
       - [x] Queen
-      - [ ] Knight
       - [x] Rook
-      - [ ] Bishop
+      - [x] Bishop
+      - [ ] Knight
       - [ ] Pawn        
         - [ ] Pawn 만 움직이는 것과 먹는 행위 다름 주의    
         - [ ] Pawn 이동 시에 뒤로 이동 불가능 및 초기 상태에 두 칸 이동 가능

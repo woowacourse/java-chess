@@ -7,9 +7,19 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 
-public abstract class BasicMoveStrategy implements MoveStrategy { //TODO abstract method 빼기
+public abstract class BasicMoveStrategy implements MoveStrategy {
 
     protected static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
+
+    @Override
+    public void move(Position source, Position target, Board board) {
+        checkValidMove(source, target, board);
+
+        Piece originalPiece = board.checkPieceAtPosition(source);
+        board.putPieceAtPosition(target, originalPiece);
+
+        board.putPieceAtPosition(source, VOID_PIECE);
+    }
 
     protected void checkPositionsOnBoard(Position source, Position target) {
         checkWithinBoardPosition(source);
@@ -25,7 +35,7 @@ public abstract class BasicMoveStrategy implements MoveStrategy { //TODO abstrac
         }
     }
 
-    protected void checkWithinBoardPosition(Position target) {
+    private void checkWithinBoardPosition(Position target) {
         if (target == null) {
             throw new InvalidMoveException(Piece.OUT_OF_BOUND_MESSAGE);
         }
@@ -37,13 +47,13 @@ public abstract class BasicMoveStrategy implements MoveStrategy { //TODO abstrac
     }
 
     protected boolean isLineMove(Position source, Position target) {
-        return source.computeHorizontalDistance(target) != 0 &&
-            source.computeVerticalDistance(target) != 0;
+        return (source.computeHorizontalDistance(target) == 0 ||
+            source.computeVerticalDistance(target) == 0);
     }
 
     protected boolean isDiagonalMove(Position source, Position target) {
-        return Math.abs(source.computeHorizontalDistance(target)) ==
-            Math.abs(source.computeVerticalDistance(target));
+        return (Math.abs(source.computeHorizontalDistance(target))
+            == Math.abs(source.computeVerticalDistance(target)));
     }
 
     protected void checkClearPath(Position source, Position target, MoveDirection moveDirection, Board board) {
@@ -72,4 +82,6 @@ public abstract class BasicMoveStrategy implements MoveStrategy { //TODO abstrac
         }
         return Math.abs(source.computeHorizontalDistance(target));
     }
+
+    abstract void checkValidMove(Position source, Position target, Board board);
 }
