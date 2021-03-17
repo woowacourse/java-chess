@@ -32,16 +32,13 @@ public class Queen extends Piece {
         Position currentPosition = position;
         Position nextPosition = new Position(currentPosition.getRow() + yDegree,
             currentPosition.getCol() + xDegree);
-        while (isInBound(nextPosition)) {
-            if (!chessBoard.isBlank(nextPosition)) {
-                if (chessBoard.isAttackMove(this, nextPosition)) {
-                    movablePositions.add(nextPosition);
-                }
-                break;
-            }
+        while (isMovable(chessBoard, nextPosition)) {
             movablePositions.add(nextPosition);
             nextPosition = new Position(nextPosition.getRow() + yDegree,
                 nextPosition.getCol() + xDegree);
+        }
+        if (isAttackMove(chessBoard, nextPosition)) {
+            movablePositions.add(nextPosition);
         }
         return Collections.unmodifiableList(movablePositions);
     }

@@ -23,10 +23,8 @@ public class King extends Piece {
 
             Position nextPosition = new Position(position.getRow() + yDegree, position.getCol() + xDegree);
 
-            if (isInBound(nextPosition)) {
-                if (chessBoard.isBlank(nextPosition) || chessBoard.isAttackMove(this, nextPosition)) {
-                    movablePositions.add(nextPosition);
-                }
+            if (isMovable(chessBoard, nextPosition) || isAttackMove(chessBoard, nextPosition)) {
+                movablePositions.add(nextPosition);
             }
         }
         return movablePositions;

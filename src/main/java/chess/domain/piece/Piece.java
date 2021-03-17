@@ -37,6 +37,22 @@ public abstract class Piece {
 
     public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
 
+    protected boolean isMovable(ChessBoard chessBoard, Position nextPosition) {
+        return isInBound(nextPosition) && chessBoard.isBlank(nextPosition);
+    }
+
+    protected boolean isAttackMove(ChessBoard chessBoard, Position nextPosition) {
+        return isInBound(nextPosition) && chessBoard.isAttackMove(this, nextPosition);
+    }
+
+    protected boolean isBlack() {
+        return this.color.equals(Color.BLACK);
+    }
+
+    protected boolean isWhite() {
+        return this.color.equals(Color.WHITE);
+    }
+
     protected boolean isInBound(Position currentPosition) {
         return currentPosition.getRow() < 8
             && currentPosition.getRow() >= 0
