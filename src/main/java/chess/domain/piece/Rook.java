@@ -5,6 +5,8 @@ import chess.domain.board.Position;
 import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Rook extends Piece {
@@ -26,6 +28,8 @@ public class Rook extends Piece {
         for (Vertical vertical : Vertical.values()) {
             movablePositions.add(Position.of(targetHorizontal, vertical));
         }
+
+        movablePositions.removeAll(Collections.singletonList(target));
 
         return movablePositions;
     }
