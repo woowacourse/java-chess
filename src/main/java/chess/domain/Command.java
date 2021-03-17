@@ -30,5 +30,7 @@ public enum Command {
         function.accept(chessGame, command);
     }
 
-    public String getCommand() { return command; }
+    public String getCommand() {
+        return command;
+    }
 }

@@ -76,7 +76,8 @@ public class Position {
     }
 
     public int calculateDistance(Position source) {
-        return (int) Math.sqrt((Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
+        return (int) Math.sqrt(
+            (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
     }
 
     public boolean isStraight(Position position) {
@@ -92,7 +93,8 @@ public class Position {
     }
 
     public boolean isLocatedAtStartLine() {
-        return this.getY() == Pawn.WHITE_PAWN_START_LINE || this.getY() == Pawn.BLACK_PAWN_START_LINE;
+        return this.getY() == Pawn.WHITE_PAWN_START_LINE
+            || this.getY() == Pawn.BLACK_PAWN_START_LINE;
     }
 
     @Override

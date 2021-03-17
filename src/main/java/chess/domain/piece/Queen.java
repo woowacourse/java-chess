@@ -4,7 +4,7 @@ import chess.domain.Direction;
 import chess.domain.MoveVO;
 import chess.domain.Team;
 
-public class Queen implements Piece{
+public class Queen implements Piece {
     private static final int MOVE_RANGE = 8;
     private final Team team;
 

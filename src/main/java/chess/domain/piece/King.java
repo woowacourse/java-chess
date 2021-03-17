@@ -4,7 +4,7 @@ import chess.domain.Direction;
 import chess.domain.MoveVO;
 import chess.domain.Team;
 
-public class King implements Piece{
+public class King implements Piece {
     private static final int MOVE_RANGE = 1;
     private final Team team;
 

@@ -28,7 +28,7 @@ public class OutputView {
     private static void printPiece(Board board, Rank rank) {
         for (File file : File.values()) {
             Position position = Position.of(makePositionFormat(rank, file));
-            if(!board.containsPosition(position)) {
+            if (!board.containsPosition(position)) {
                 System.out.print(EMPTY);
                 continue;
             }

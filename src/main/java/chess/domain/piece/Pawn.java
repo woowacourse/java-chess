@@ -4,7 +4,7 @@ import chess.domain.Direction;
 import chess.domain.MoveVO;
 import chess.domain.Team;
 
-public class Pawn implements Piece{
+public class Pawn implements Piece {
     public static final int BLACK_PAWN_START_LINE = 7;
     public static final int WHITE_PAWN_START_LINE = 2;
     public static final int MOVE_FIRST_RANGE = 2;
@@ -17,7 +17,7 @@ public class Pawn implements Piece{
 
     @Override
     public MoveVO strategy() {
-        if(team == Team.BLACK) {
+        if (team == Team.BLACK) {
             return new MoveVO(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
         }
         return new MoveVO(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);

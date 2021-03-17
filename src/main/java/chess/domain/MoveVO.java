@@ -15,12 +15,12 @@ public class MoveVO {
         return directions;
     }
 
-    public int getMoveRange() {
-        return moveRange;
-    }
-
     public void setDirections(List<Direction> directions) {
         this.directions = directions;
+    }
+
+    public int getMoveRange() {
+        return moveRange;
     }
 
     public void setMoveRange(int moveRange) {

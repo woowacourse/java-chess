@@ -37,14 +37,6 @@ public enum Direction {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 방향은 존재하지 않습니다."));
     }
 
-    public int getXDegree() {
-        return xDegree;
-    }
-
-    public int getYDegree() {
-        return yDegree;
-    }
-
     public static List<Direction> linearDirection() {
         return Arrays.asList(NORTH, EAST, SOUTH, WEST);
     }
@@ -67,5 +59,13 @@ public enum Direction {
 
     public static List<Direction> blackPawnDirection() {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    }
+
+    public int getXDegree() {
+        return xDegree;
+    }
+
+    public int getYDegree() {
+        return yDegree;
     }
 }
