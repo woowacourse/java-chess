@@ -86,4 +86,18 @@ public class Board {
             new Rook(teamType)
         );
     }
+
+    public Piece find(String currentCoordinateInput, TeamType teamType) {
+        Coordinate currentCoordinate = Coordinate.from(currentCoordinateInput);
+        Cell cell = cells.get(currentCoordinate);
+        if (cell.isEmpty()) {
+            throw new IllegalArgumentException("말이 존재하지 않습니다.");
+        }
+        Piece piece = cell.getPiece();
+        if (!piece.isTeamOf(teamType)) {
+            throw new IllegalArgumentException("자신의 말이 아닙니다.");
+        }
+        return piece;
+    }
 }
+

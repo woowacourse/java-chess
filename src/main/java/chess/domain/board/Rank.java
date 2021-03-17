@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+
 public enum Rank {
     ONE(1),
     TWO(2),
@@ -14,6 +16,13 @@ public enum Rank {
 
     Rank(int value) {
         this.value = value;
+    }
+
+    public static Rank findValueOf(String rankInput) {
+        return Arrays.stream(Rank.values())
+            .filter(rank -> rank.getValue() == Integer.parseInt(rankInput))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값 입니다."));
     }
 
     public int getValue() {

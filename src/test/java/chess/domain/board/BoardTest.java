@@ -1,8 +1,10 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Piece;
+import chess.domain.player.TeamType;
 import java.util.Arrays;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
@@ -96,5 +98,73 @@ class BoardTest {
     @ParameterizedTest
     void boardInitialization_WhitePieces(Piece piece, String pieceName) {
         assertThat(piece.getName()).isEqualTo(pieceName);
+    }
+
+    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 백팀")
+    @Test
+    void findPieceOnBoard_WhiteTeam() {
+        String currentCoordinate = "b2";
+        TeamType teamType = TeamType.WHITE;
+
+        Piece piece = BOARD.find(currentCoordinate, teamType);
+
+        assertThat(piece.getName()).isEqualTo("p");
+        assertThat(piece.isTeamOf(teamType)).isTrue();
+    }
+
+    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 흑팀")
+    @Test
+    void findPieceOnBoard_BlackTeam() {
+        String currentCoordinate = "c8";
+        TeamType teamType = TeamType.BLACK;
+
+        Piece piece = BOARD.find(currentCoordinate, teamType);
+
+        assertThat(piece.getName()).isEqualTo("B");
+        assertThat(piece.isTeamOf(teamType)).isTrue();
+    }
+
+    @DisplayName("move 명령 - 보드 현재 위치의 기물이 존재하지 않으면, 예외가 발생한다. - 백팀")
+    @Test
+    void findPieceOnBoard_WhiteTeam_EmptyCell() {
+        String currentCoordinate = "b3";
+        TeamType teamType = TeamType.WHITE;
+
+        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("말이 존재하지 않습니다.");
+    }
+
+    @DisplayName("move 명령 - 보드 현재 위치에 자신의 기물이 존재하지 않으면, 예외가 발생한다. - 백팀")
+    @Test
+    void findPieceOnBoard_WhiteTeam_NotMyPiece() {
+        String currentCoordinate = "e7";
+        TeamType teamType = TeamType.WHITE;
+
+        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("자신의 말이 아닙니다.");
+    }
+
+    @DisplayName("move 명령 - 보드 현재 위치의 기물이 존재하지 않으면, 예외가 발생한다. - 흑팀")
+    @Test
+    void findPieceOnBoard_BlackTeam_EmptyCell() {
+        String currentCoordinate = "e5";
+        TeamType teamType = TeamType.BLACK;
+
+        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("말이 존재하지 않습니다.");
+    }
+
+    @DisplayName("move 명령 - 보드 현재 위치에 자신의 기물이 존재하지 않으면, 예외가 발생한다. - 흑팀")
+    @Test
+    void findPieceOnBoard_BlackTeam_NotMyPiece() {
+        String currentCoordinate = "a1";
+        TeamType teamType = TeamType.BLACK;
+
+        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("자신의 말이 아닙니다.");
     }
 }

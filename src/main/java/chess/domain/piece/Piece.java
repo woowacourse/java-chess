@@ -18,4 +18,8 @@ public abstract class Piece {
         }
         return name;
     }
+
+    public boolean isTeamOf(TeamType teamType) {
+        return this.teamType == teamType;
+    }
 }

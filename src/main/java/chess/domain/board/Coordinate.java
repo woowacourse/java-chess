@@ -12,6 +12,15 @@ public class Coordinate {
         this.rank = rank;
     }
 
+    public static Coordinate from(String currentCoordinateInput) {
+        String[] currentSplit = currentCoordinateInput.split("");
+        String fileInput = currentSplit[0];
+        String rankInput = currentSplit[1];
+        File file = File.findValueOf(fileInput);
+        Rank rank = Rank.findValueOf(rankInput);
+        return new Coordinate(file, rank);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

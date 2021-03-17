@@ -39,6 +39,8 @@ public class Application {
             String targetCoordinate = playerCommand.get(2);
             System.out.println("current : " + currentCoordinate);
             System.out.println("target : " + targetCoordinate);
+
+
         }
     }
 }
