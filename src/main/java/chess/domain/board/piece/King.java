@@ -17,4 +17,9 @@ public class King extends Piece{
     public Score score() {
         return new Score(0);
     }
+
+    @Override
+    public String getSymbol() {
+        return "K";
+    }
 }

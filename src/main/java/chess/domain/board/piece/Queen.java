@@ -17,4 +17,9 @@ public class Queen extends Piece{
     public Score score() {
         return null;
     }
+
+    @Override
+    public String getSymbol() {
+        return "Q";
+    }
 }

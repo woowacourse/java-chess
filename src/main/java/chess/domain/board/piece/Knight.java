@@ -16,4 +16,9 @@ public class Knight extends Piece{
     public Score score() {
         return null;
     }
+
+    @Override
+    public String getSymbol() {
+        return "N";
+    }
 }

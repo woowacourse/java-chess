@@ -17,4 +17,9 @@ public class Rook extends Piece{
     public Score score() {
         return null;
     }
+
+    @Override
+    public String getSymbol() {
+        return "R";
+    }
 }

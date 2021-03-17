@@ -18,7 +18,12 @@ public class Line {
         squares.add(square);
     }
 
-    public Square get(){
-        return squares.get(0);
+    public Square getIndex(int index){
+        return squares.get(index);
+    }
+
+    @Override
+    public String toString() {
+        return squares+"";
     }
 }

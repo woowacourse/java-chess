@@ -11,7 +11,7 @@ class SquareTest {
 
     @Test
     void create(){
-        Square square = new Square(new Position(Vertical.A, Horizontal.FIVE), new King(Owner.BLACK));
+        Square square = new Square(Vertical.A, Horizontal.FIVE, new King(Owner.BLACK));
         assertThat(square).isInstanceOf(Square.class);
     }
 }

@@ -15,10 +15,11 @@ public class Square {
     }
 
     public Square(Vertical vertical, Horizontal horizontal) {
-        this(vertical, horizontal, new Empty());
+        this(vertical, horizontal, Empty.getInstance());
     }
 
-    public void setPiece(Piece piece){
-        this.piece= piece;
+    @Override
+    public String toString() {
+        return piece.makeSymbol();
     }
 }

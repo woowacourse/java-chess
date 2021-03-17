@@ -9,7 +9,7 @@ public class Board {
         this.lines = lines;
     }
 
-    public Square of(){
-        return lines.get(0).get();
+    public Line getLine(int index){
+        return lines.get(index);
     }
 }

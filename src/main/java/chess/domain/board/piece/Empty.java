@@ -3,8 +3,14 @@ package chess.domain.board.piece;
 import chess.domain.board.Position;
 
 public class Empty extends Piece{
-    public Empty() {
+    private static final Empty EMPTY = new Empty();
+
+    private Empty() {
         super(Owner.NONE);
+    }
+
+    public static Empty getInstance() {
+        return EMPTY;
     }
 
     @Override
@@ -15,5 +21,10 @@ public class Empty extends Piece{
     @Override
     public Score score() {
         return null;
+    }
+
+    @Override
+    public String getSymbol() {
+        return ".";
     }
 }
