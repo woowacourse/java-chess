@@ -23,25 +23,25 @@ public class BoardInitializer {
 
     static {
         INITIAL_PIECES.addAll(Arrays.asList(
-            new Rook(true),
-            new Knight(true),
-            new Bishop(true),
-            new Queen(true),
-            new King(true),
-            new Bishop(true),
-            new Knight(true),
-            new Rook(true))
+            new Rook(Team.BLACK),
+            new Knight(Team.BLACK),
+            new Bishop(Team.BLACK),
+            new Queen(Team.BLACK),
+            new King(Team.BLACK),
+            new Bishop(Team.BLACK),
+            new Knight(Team.BLACK),
+            new Rook(Team.BLACK))
         );
 
         INITIAL_PIECES.addAll(Arrays.asList(
-            new Rook(false),
-            new Knight(false),
-            new Bishop(false),
-            new Queen(false),
-            new King(false),
-            new Bishop(false),
-            new Knight(false),
-            new Rook(false))
+            new Rook(Team.WHITE),
+            new Knight(Team.WHITE),
+            new Bishop(Team.WHITE),
+            new Queen(Team.WHITE),
+            new King(Team.WHITE),
+            new Bishop(Team.WHITE),
+            new Knight(Team.WHITE),
+            new Rook(Team.WHITE))
         );
     }
 
@@ -49,8 +49,8 @@ public class BoardInitializer {
         Map<Position, Piece> board = new HashMap<>();
 
         for (File file : File.values()) {
-            board.put(Position.of(file.getFile()+BLACK_PAWN_START_LINE), new Pawn(true));
-            board.put(Position.of(file.getFile()+WHITE_PAWN_START_LINE), new Pawn(false));
+            board.put(Position.of(file.getFile()+BLACK_PAWN_START_LINE), new Pawn(Team.BLACK));
+            board.put(Position.of(file.getFile()+WHITE_PAWN_START_LINE), new Pawn(Team.WHITE));
         }
 
         File[] values = File.values();

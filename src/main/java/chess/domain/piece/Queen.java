@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
-public class Queen implements Piece{
-    private final boolean isBlack;
+import chess.domain.Team;
 
-    public Queen(boolean isBlack) {
-        this.isBlack = isBlack;
+public class Queen implements Piece{
+    private final Team team;
+
+    public Queen(Team team) {
+        this.team = team;
     }
 
     @Override
@@ -19,7 +21,7 @@ public class Queen implements Piece{
 
     @Override
     public String getName() {
-        if (isBlack) {
+        if (team == Team.BLACK) {
             return "Q";
         }
         return "q";
