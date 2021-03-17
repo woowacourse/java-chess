@@ -5,6 +5,8 @@ import chess.view.InputView;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class Point {
     private static final int ASCII_CODE_GAP = 97;
@@ -14,14 +16,17 @@ public class Point {
     private static final int MINIMUM_RANK = 1;
     private static final int MAXIMUM_RANK = 8;
 
-    private static final List<Point> points = new ArrayList<>();
+    private static final List<Point> points;
 
     static {
-        for (int i = MINIMUM_LETTER; i <= MAXIMUM_LETTER; i++) {
-            for (int j = MAXIMUM_RANK; MINIMUM_RANK <= j; j--) {
-                points.add(new Point((char) i, j));
-            }
-        }
+        points = IntStream.rangeClosed(MINIMUM_LETTER, MAXIMUM_LETTER)
+                .mapToObj(i -> (char) i)
+                .flatMap(row ->
+                        IntStream.rangeClosed(MINIMUM_RANK, MAXIMUM_RANK)
+                                .mapToObj(column -> new Point(row, column))
+                )
+                .collect(Collectors.toList());
+        ;
     }
 
     private final int x;

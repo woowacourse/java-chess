@@ -3,6 +3,8 @@ package chess.domain;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 
+import java.util.stream.IntStream;
+
 public class Board {
     private static final int BOARD_SIZE = 8;
 
@@ -14,9 +16,13 @@ public class Board {
 
     private void initialize() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = Pieces.findPiece(i, j);
-            }
+            initializeRow(i);
+        }
+    }
+
+    private void initializeRow(int i) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            board[i][j] = Pieces.findPiece(i, j);
         }
     }
 
