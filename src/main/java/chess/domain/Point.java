@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.view.InputView;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -11,7 +13,6 @@ public class Point {
     private static final char MAXIMUM_LETTER = 'h';
     private static final int MINIMUM_RANK = 1;
     private static final int MAXIMUM_RANK = 8;
-    private static final String INVALID_INPUT_ERROR_MESSAGE = "옳지 않은 입력입니다.";
 
     private static final List<Point> points = new ArrayList<>();
 
@@ -35,14 +36,14 @@ public class Point {
         return points.stream()
                 .filter(p -> p.x == p.convertLetterToIndex(letter) && p.y == p.convertRankToIndex(rank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
     }
 
     public static Point valueOf(int row, int column) {
         return points.stream()
                 .filter(p -> p.x == column && p.y == row)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
     }
 
     private int convertLetterToIndex(char letter) {

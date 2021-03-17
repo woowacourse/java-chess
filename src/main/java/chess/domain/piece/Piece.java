@@ -17,6 +17,10 @@ public abstract class Piece {
 
     protected abstract boolean isMovable(Point target);
 
+    public String getName() {
+        return name;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
