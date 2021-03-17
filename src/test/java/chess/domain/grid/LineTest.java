@@ -1,10 +1,8 @@
 package chess.domain.grid;
 
+import chess.domain.Line;
 import chess.domain.piece.Empty;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -24,6 +22,7 @@ public class LineTest {
                 char x = (char)('a' + i);
                 pieces.add(new Empty(x, '1'));
             }
+            new Line(pieces);
         }).doesNotThrowAnyException();
     }
 
@@ -37,13 +36,7 @@ public class LineTest {
                 pieces.add(new Empty(x, '1'));
             }
             pieces.add(new Empty('a', '1'));
+            new Line(pieces);
         }).withMessage("같은 포지션을 가진 체스 말이 존재할 수 없습니다.");
     }
-//    @Test
-//    @DisplayName("같은 포지션을 가진 Piece가 있을 수 없다.")
-//    public void init_
-//
-//    set<Position> ~~~~~
-//    List<Piece> ~~ for loopp ~~~~
-
 }
