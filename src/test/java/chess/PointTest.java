@@ -26,4 +26,24 @@ class PointTest {
         assertThatThrownBy(() -> Point.of('h', 0)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Point.of('h', 9)).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("인덱스로 좌표 생성")
+    @Test
+    void createWithIndex() {
+        assertDoesNotThrow(
+                () -> Point.valueOf(0, 7)
+        );
+        assertDoesNotThrow(
+                () -> Point.valueOf(7, 0)
+        );
+    }
+
+    @DisplayName("인덱스로 범위 밖 좌표 생성 시 예외 처리")
+    @Test
+    void checkValueOfRange() {
+        assertThatThrownBy(() -> Point.valueOf(-1, -1)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.valueOf(0, 8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.valueOf(8, 0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.valueOf(8, 8)).isInstanceOf(IllegalArgumentException.class);
+    }
 }
