@@ -20,11 +20,9 @@ class BishopTest {
 
         assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 4))).isTrue();
         assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 2))).isTrue();
-        // 왼쪽 대각선
 
         assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 4))).isTrue();
         assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 2))).isTrue();
-        // 오른쪽 대각선
     }
 
     @DisplayName("비숍이 이동하려는 위치가 대각선이 아니면 실패를 반환한다.")

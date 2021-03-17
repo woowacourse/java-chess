@@ -40,5 +40,4 @@ public class King extends Piece {
                 .findAny()
                 .isPresent();
     }
-
 }
