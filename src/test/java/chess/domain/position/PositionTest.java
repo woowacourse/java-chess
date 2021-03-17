@@ -22,4 +22,10 @@ public class PositionTest {
     void wrongPositionExceptionTest() {
         assertThatThrownBy(() -> Position.valueOf("z1")).isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    @DisplayName("좌표 묶음 생성하기")
+    void generateTest() {
+        assertThat(Position.generate()).hasSize(8);
+    }
 }

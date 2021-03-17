@@ -1,19 +1,19 @@
 package chess.domain.position;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
     private final Xpoint xpoint;
     private final Ypoint ypoint;
-    private static final Map<String, Position> CACHE = new HashMap<>();
+    private static final List<Map<String, Position>> CACHE = new ArrayList<>();
 
     static {
-        for (Xpoint xpoint : Xpoint.values()) {
-            for (Ypoint ypoint : Ypoint.values()) {
-                CACHE.put(xpoint.getName() + ypoint.getValue(), new Position(xpoint, ypoint));
+        for (Ypoint ypoint : Ypoint.values()) {
+            Map<String, Position> positions = new LinkedHashMap<>();
+            for (Xpoint xpoint : Xpoint.values()) {
+                positions.put(xpoint.getName() + ypoint.getValue(), new Position(xpoint, ypoint));
             }
+            CACHE.add(positions);
         }
     }
 
@@ -23,10 +23,14 @@ public class Position {
     }
 
     public static Position valueOf(String value) {
-        Position position = CACHE.get(value);
-        if (Objects.isNull(position)) {
-            throw new IllegalArgumentException("잘못된 좌표입니다.");
-        }
-        return position;
+        return CACHE.stream()
+                .filter(map -> map.containsKey(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 좌표입니다."))
+                .get(value);
+    }
+
+    public static List<Map<String, Position>> generate() {
+        return new ArrayList<>(CACHE);
     }
 }
