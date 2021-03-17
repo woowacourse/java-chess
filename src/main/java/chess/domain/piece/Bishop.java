@@ -2,11 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.player.PlayerType;
 
-public class Bishop {
-
-    private final PlayerType playerType;
+public class Bishop extends Piece {
+    private static final String NAME = "B";
 
     public Bishop(PlayerType playerType) {
-        this.playerType = playerType;
+        super(playerType, NAME);
     }
 }

@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.player.PlayerType;
 
-public class Rook {
-    private final PlayerType playerType;
+public class Rook extends Piece {
+    private static final String NAME = "R";
 
     public Rook(PlayerType playerType) {
-        this.playerType = playerType;
+        super(playerType, NAME);
     }
 }

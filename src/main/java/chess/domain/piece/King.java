@@ -2,11 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.player.PlayerType;
 
-public class King {
-
-    private final PlayerType playerType;
+public class King extends Piece {
+    private static final String NAME = "K";
 
     public King(PlayerType playerType) {
-        this.playerType = playerType;
+        super(playerType, NAME);
     }
 }
