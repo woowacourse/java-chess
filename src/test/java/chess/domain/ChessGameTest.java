@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.CurrentPieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChessGameTest {
 
-    @DisplayName("게임 진행 여부 확인")
+    @DisplayName("현재 기물 확인하기")
     @Test
-    void 게임_진행_확인_테스트() {
+    void 현재_기물_확인_테스트() {
         ChessGame chessGame = new ChessGame();
 
-        assertThat(chessGame.isRunning("start")).isTrue();
+        assertThat(chessGame.getCurrentPieces()).isInstanceOf(CurrentPieces.class);
     }
 }

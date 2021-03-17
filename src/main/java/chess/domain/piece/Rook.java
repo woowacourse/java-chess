@@ -16,10 +16,10 @@ public class Rook extends Piece {
 
     public static List<Rook> generate() {
         List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Rook(position, "N"))
+                .map(position -> new Rook(position, "R"))
                 .collect(Collectors.toList());
         List<Rook> whiteRooks = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Rook(position, "n"))
+                .map(position -> new Rook(position, "r"))
                 .collect(Collectors.toList());
         blackRooks.addAll(whiteRooks);
         return blackRooks;

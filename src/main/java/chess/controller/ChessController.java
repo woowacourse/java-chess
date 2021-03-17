@@ -9,8 +9,8 @@ public class ChessController {
     public void run() {
         ChessGame chessGame = new ChessGame();
         OutputView.printStartMessage();
-        if (chessGame.isRunning(InputView.inputStartOrEnd())) {
-//            OutputView.printChessBoard();
+        if (InputView.inputIfWantToStart()) {
+           OutputView.printChessBoard(chessGame.getCurrentPieces());
         }
     }
 
