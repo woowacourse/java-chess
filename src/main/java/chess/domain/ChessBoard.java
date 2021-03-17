@@ -39,11 +39,23 @@ public class ChessBoard {
         }
     }
 
-    public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+    public void move(final Position current, final Position destination) {
+        if (!havePiece(current)) {
+            throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+        }
+        final Piece chosenPiece = chessBoard.get(current);
+        if(!chosenPiece.isMovable(current, destination, this)) {
+            throw new IllegalArgumentException("움직일 수 없는 좌표입니다.");
+        }
+        chessBoard.remove(current);
+        chessBoard.put(destination, chosenPiece);
     }
 
     public boolean havePiece(final Position position) {
         return chessBoard.containsKey(position);
+    }
+
+    public Map<Position, Piece> getChessBoard() {
+        return chessBoard;
     }
 }

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.*;
+import javafx.geometry.Pos;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,5 +28,15 @@ public class ChessBoardTest {
         assertThat(chessBoardMap.get(new Position(0, 1))).isInstanceOf(Knight.class);
         assertThat(chessBoardMap.get(new Position(0, 2))).isInstanceOf(Bishop.class);
         assertThat(chessBoardMap.get(new Position(0, 3))).isInstanceOf(Queen.class);
+    }
+
+    @Test
+    @DisplayName("정상적으로 움직일 수 있는 좌표가 주어지면, 이동한다.")
+    void move_chess_piece_when_valid_destination_is_given() {
+        final ChessBoard chessBoard = new ChessBoard();
+        chessBoard.move(Position.of("e7"), Position.of("e5"));
+
+        final Map<Position, Piece> piecePosition = chessBoard.getChessBoard();
+        assertThat(piecePosition.get(Position.of("e5"))).isInstanceOf(Pawn.class);
     }
 }
