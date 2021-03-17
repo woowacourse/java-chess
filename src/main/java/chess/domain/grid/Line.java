@@ -8,42 +8,50 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Line {
-    private List<Piece> pieces;
+    private static final int LINE_COUNT = 8;
+    private static final int DECIMAL = 10;
+    private static final String COLUMN_REFERENCE = "abcdefgh";
+    private static final char FIRST_COLUMN = 'a';
 
-    private Line(List<Piece> pieces){
+    private final List<Piece> pieces;
+
+    private Line(final List<Piece> pieces){
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public static Line createGeneralLine(int rowNumber, boolean isBlack){
+    public static Line createGeneralLine(final int rowNumber, final boolean isBlack){
         List<Piece> generalLine = new ArrayList<>();
 //        Rook rookLeft = new Rook(isBlack, (char)('a'), Character.forDigit(rowNumber, 10));
 //        Knight knightLeft = new Knight((isBlack, (char)('b'), Character.forDigit(rowNumber, 10));
 //        Bishop bishopLeft = new Bishop((isBlack, (char)('c'), Character.forDigit(rowNumber, 10));
 //        Queen queen = new Queen((isBlack, (char)('d'), Character.forDigit(rowNumber, 10));
 //        King king = new King((isBlack, (char)('e'), Character.forDigit(rowNumber, 10));
-//        Bishop bishopRight = new Bishop((isBl
-//        ack, (char)('f'), Character.forDigit(rowNumber, 10));
+//        Bishop bishopRight = new Bishop((isBlack, (char)('f'), Character.forDigit(rowNumber, 10));
 //        Knight knightRight = new Knight((isBlack, (char)('g'), Character.forDigit(rowNumber, 10));
 //        Rook rookRight = new Rook(isBlack, (char)('h'), Character.forDigit(rowNumber, 10));
         return new Line(generalLine);
     }
 
-    public static Line createPawnLine(int rowNumber, boolean isBlack){
+    public static Line createPawnLine(final int rowNumber, final boolean isBlack){
         List<Piece> pawnLine = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            Pawn pawn = new Pawn(isBlack, (char)('a' + i), Character.forDigit(rowNumber, 10));
+        for (int i = 0; i < LINE_COUNT; i++) {
+            Pawn pawn = new Pawn(isBlack, (char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
             pawnLine.add(pawn);
         }
         return new Line(pawnLine);
     }
 
-    public static Line createEmptyLine(int rowNumber){
+    public static Line createEmptyLine(final int rowNumber){
         List<Piece> emptyLine = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            Empty empty = new Empty((char)('a' + i), Character.forDigit(rowNumber, 10));
+        for (int i = 0; i < LINE_COUNT; i++) {
+            Empty empty = new Empty((char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
             emptyLine.add(empty);
         }
         return new Line(emptyLine);
     }
 
+    public Piece findPiece(final char xPosition) {
+        int index = COLUMN_REFERENCE.indexOf(Character.toString(xPosition));
+        return pieces.get(index);
+    }
 }

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import java.util.Objects;
 
@@ -11,21 +11,17 @@ public class Position {
     private final char x;
     private final char y;
 
-    public Position(char x, char y) {
-        validate(x, y);
+    public Position(final char x, final char y) {
         this.x = x;
         this.y = y;
     }
 
-    public PositionDistance calculateDistance(Position other) {
-        return new PositionDistance(this.x - other.x, this.y - other.y);
+    public char getX() {
+        return x;
     }
 
-    private void validate(char x, char y) {
-        if (x < MIN_X_RANGE || x > MAX_X_RANGE
-                || y < MIN_Y_RANGE || y > MAX_Y_RANGE) {
-            throw new IllegalArgumentException("체스 말의 위치가 Grid 범위를 벗어났습니다.");
-        }
+    public char getY() {
+        return y;
     }
 
     @Override
@@ -39,5 +35,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    public Position moved(int xDegree, int yDegree) {
+        return new Position((char)(x + xDegree), (char)(y + yDegree));
     }
 }

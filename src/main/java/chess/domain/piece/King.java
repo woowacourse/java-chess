@@ -1,22 +1,28 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Grid;
+import chess.domain.position.Direction;
+import chess.domain.position.Position;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class King extends Piece {
     private static final char NAME_WHEN_BLACK = 'K';
     private static final char NAME_WHEN_WHITE = 'k';
-    private static final int VALID_KING_MOVEMENT = 1;
 
-    public King(Boolean isBlack, char x, char y) {
+    public King(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
     }
 
     @Override
-    void movable(char nextX, char nextY) {
-        Position currentPosition = getPosition();
-        Position nextPosition = new Position(nextX, nextY);
-        PositionDistance difference = currentPosition.calculateDistance(nextPosition);
-        if (Math.abs(difference.getXDistance()) > VALID_KING_MOVEMENT || Math.abs(difference.getYDistance()) > VALID_KING_MOVEMENT) {
-            throw new IllegalArgumentException("이동할 수 있는 범위를 벗어났습니다.");
-        }
+    List<Position> extractMovablePositions() {
+        List<Position> collect = Direction.everyDirection()
+                .stream()
+                .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
+                .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position))
+                .collect(Collectors.toList());
+        return collect;
     }
 
     @Override
