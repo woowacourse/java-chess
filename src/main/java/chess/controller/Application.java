@@ -1,7 +1,6 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -14,6 +13,9 @@ public class Application {
 
         Board board = Board.getInstance();
         board.initialize();
+        if (command != Command.START && command != Command.END) {
+            throw new IllegalArgumentException();
+        }
         if (command == Command.START) {
             startChessGame(board);
         }
@@ -33,8 +35,10 @@ public class Application {
 
     private static void executeCommand(Command command, Board board, List<String> playerCommand) {
         if (command == Command.MOVE) {
-            System.out.println("current : " + playerCommand.get(1));
-            System.out.println("target : " + playerCommand.get(2));
+            String currentCoordinate = playerCommand.get(1);
+            String targetCoordinate = playerCommand.get(2);
+            System.out.println("current : " + currentCoordinate);
+            System.out.println("target : " + targetCoordinate);
         }
     }
 }
