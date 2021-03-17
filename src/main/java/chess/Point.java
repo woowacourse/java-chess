@@ -26,16 +26,16 @@ public class Point {
     private final int x;
     private final int y;
 
+    private Point(char letter, int rank) {
+        x = convertLetterToIndex(letter);
+        y = convertRankToIndex(rank);
+    }
+
     public static Point of(char letter, int rank) {
         return points.stream()
                 .filter(p -> p.x == p.convertLetterToIndex(letter) && p.y == p.convertRankToIndex(rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
-    }
-
-    private Point(char letter, int rank) {
-        x = convertLetterToIndex(letter);
-        y = convertRankToIndex(rank);
     }
 
     private int convertLetterToIndex(char letter) {

@@ -1,14 +1,12 @@
-package chess;
+package chess.piece;
 
-import chess.piece.Piece;
+import chess.Point;
 import chess.piece.Pieces;
 import chess.piece.Queen;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class QueenTest {
     @DisplayName("Queen 생성")

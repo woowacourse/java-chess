@@ -1,5 +1,6 @@
-package chess;
+package chess.piece;
 
+import chess.Point;
 import chess.piece.Knight;
 import chess.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;

@@ -43,7 +43,7 @@ public enum Pieces {
             return null;
         }
     },
-    BISHOP(Arrays.asList('c', 'f')){
+    BISHOP(Arrays.asList('c', 'f')) {
         @Override
         public Piece create(char letter, int rank) {
             if (rank == 8) {
@@ -79,7 +79,7 @@ public enum Pieces {
             return null;
         }
     },
-    KING(Collections.singletonList('e')){
+    KING(Collections.singletonList('e')) {
         @Override
         public Piece create(char letter, int rank) {
             if (rank == 8) {

@@ -21,9 +21,9 @@ class PointTest {
     @DisplayName("범위 밖 좌표 생성 시 예외 처리")
     @Test
     void checkIndexOutOfRange() {
-        assertThatThrownBy(()-> Point.of('i', 0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(()-> Point.of('i', 8)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(()-> Point.of('h', 0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(()-> Point.of('h', 9)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of('i', 0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of('i', 8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of('h', 0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of('h', 9)).isInstanceOf(IllegalArgumentException.class);
     }
 }
