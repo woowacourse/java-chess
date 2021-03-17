@@ -24,4 +24,8 @@ public enum Vertical {
     public int getIndex(){
         return index;
     }
+
+    public int getDistance(Vertical other){
+        return Math.abs(this.index - other.getIndex());
+    }
 }

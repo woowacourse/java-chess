@@ -1,6 +1,7 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.Position;
+import chess.domain.board.Square;
 
 public class Rook extends Piece{
 
@@ -9,8 +10,10 @@ public class Rook extends Piece{
     }
 
     @Override
-    public boolean isValidMove(Position source, Position target) {
-        return false;
+    public void validateMove(Square source, Square target) {
+        if (!source.isStraight(target)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

@@ -1,17 +1,14 @@
 package chess.domain.board.piece;
-
-import chess.domain.board.Position;
-
-import java.util.Locale;
+import chess.domain.board.Square;
 
 public abstract class Piece {
-    private Owner owner;
+    protected Owner owner;
 
     public Piece(Owner owner) {
         this.owner = owner;
     }
 
-    public abstract boolean isValidMove(Position source, Position target);
+    public abstract void validateMove(Square source, Square target);
 
     public abstract Score score();
 
@@ -32,4 +29,16 @@ public abstract class Piece {
     }
 
     public abstract String getSymbol();
+
+    public boolean isEnemy(Piece other){
+        if(owner.equals(Owner.BLACK)){
+            return other.owner == Owner.WHITE;
+        }
+
+        if(owner.equals(Owner.WHITE)){
+            return other.owner == Owner.BLACK;
+        }
+
+        throw new IllegalArgumentException();
+    }
 }

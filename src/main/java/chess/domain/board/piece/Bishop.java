@@ -1,6 +1,7 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.Position;
+import chess.domain.board.Square;
 
 public class Bishop extends Piece {
     public Bishop(Owner owner) {
@@ -8,8 +9,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isValidMove(Position source, Position target) {
-        return false;
+    public void validateMove(Square source, Square target) {
+        if(!source.isDiagonal(target)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

@@ -1,10 +1,24 @@
 package chess.domain.board.piece;
 
-import chess.domain.board.Position;
+import chess.domain.board.Horizontal;
+import chess.domain.board.Square;
 
-public class Pawn extends Piece{
-    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK);
-    private static final Pawn WHITE_PAWN = new Pawn(Owner.WHITE);
+public abstract class Pawn extends Piece{
+    private static final int FIRST_MOVE_DISTANCE = 2;
+
+    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK){
+        @Override
+        public boolean isFirstLine(Horizontal horizontal) {
+            return Horizontal.SEVEN.equals(horizontal);
+        }
+    };
+
+    private static final Pawn WHITE_PAWN = new Pawn(Owner.WHITE) {
+        @Override
+        public boolean isFirstLine(Horizontal horizontal) {
+            return Horizontal.TWO.equals(horizontal);
+        }
+    };
 
     private Pawn(Owner owner) {
         super(owner);
@@ -22,9 +36,38 @@ public class Pawn extends Piece{
         throw new IllegalArgumentException("Invalid pawn");
     }
 
+    public abstract boolean isFirstLine(Horizontal horizontal);
+
     @Override
-    public boolean isValidMove(Position source, Position target) {
-        return false;
+    public void validateMove(Square source, Square target) {
+        if (!(source.isForward(owner, target))){
+            throw new IllegalArgumentException();
+        }
+
+        if(!source.isStraight(target)){
+            throw new IllegalArgumentException();
+        }
+
+        // 그냥 한칸 이동의 경우
+        if (!(source.getDistance(target) == 1)) {
+            throw new IllegalArgumentException();
+        }
+
+        // 첫번째 라인인 경우
+        if (!(isFirstLine(source.getHorizontal())
+                && source.getDistance(target) == FIRST_MOVE_DISTANCE)) {
+            throw new IllegalArgumentException();
+        }
+
+        // 적이 있는 경우
+        if(!source.isEnemy(target)){
+            throw new IllegalArgumentException();
+        }
+
+        if(!(source.isDiagonal(target))
+                && source.getDistance(target) == 1){
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override

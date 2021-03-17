@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.board.piece.Owner;
+
 import java.util.Arrays;
 
 public enum Horizontal {
@@ -30,5 +32,21 @@ public enum Horizontal {
 
     public int getIndex(){
         return index;
+    }
+
+    public int getDistance(Horizontal other){
+        return Math.abs(this.index - other.getIndex());
+    }
+
+    public boolean isForward(Owner owner, Horizontal other){
+        if (owner.equals(Owner.BLACK)) {
+            return this.getIndex() < other.getIndex();
+        }
+
+        if (owner.equals(Owner.WHITE)) {
+            return this.getIndex() > other.getIndex();
+        }
+
+        throw new IllegalArgumentException();
     }
 }
