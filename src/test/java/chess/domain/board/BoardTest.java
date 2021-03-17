@@ -19,28 +19,28 @@ class BoardTest {
     private static Stream<Arguments> getDefaultBlackPieces() {
         BOARD.initialize();
         return Stream.of(
-            Arguments.of(BOARD.of(new Coordinate(File.A, Rank.EIGHT)), "R"),
-            Arguments.of(BOARD.of(new Coordinate(File.B, Rank.EIGHT)), "N"),
-            Arguments.of(BOARD.of(new Coordinate(File.C, Rank.EIGHT)), "B"),
-            Arguments.of(BOARD.of(new Coordinate(File.D, Rank.EIGHT)), "Q"),
-            Arguments.of(BOARD.of(new Coordinate(File.E, Rank.EIGHT)), "K"),
-            Arguments.of(BOARD.of(new Coordinate(File.F, Rank.EIGHT)), "B"),
-            Arguments.of(BOARD.of(new Coordinate(File.G, Rank.EIGHT)), "N"),
-            Arguments.of(BOARD.of(new Coordinate(File.H, Rank.EIGHT)), "R")
+            Arguments.of(BOARD.find(new Coordinate(File.A, Rank.EIGHT)), "R"),
+            Arguments.of(BOARD.find(new Coordinate(File.B, Rank.EIGHT)), "N"),
+            Arguments.of(BOARD.find(new Coordinate(File.C, Rank.EIGHT)), "B"),
+            Arguments.of(BOARD.find(new Coordinate(File.D, Rank.EIGHT)), "Q"),
+            Arguments.of(BOARD.find(new Coordinate(File.E, Rank.EIGHT)), "K"),
+            Arguments.of(BOARD.find(new Coordinate(File.F, Rank.EIGHT)), "B"),
+            Arguments.of(BOARD.find(new Coordinate(File.G, Rank.EIGHT)), "N"),
+            Arguments.of(BOARD.find(new Coordinate(File.H, Rank.EIGHT)), "R")
             );
     }
 
     private static Stream<Arguments> getDefaultWhitePieces() {
         BOARD.initialize();
         return Stream.of(
-            Arguments.of(BOARD.of(new Coordinate(File.A, Rank.ONE)), "r"),
-            Arguments.of(BOARD.of(new Coordinate(File.B, Rank.ONE)), "n"),
-            Arguments.of(BOARD.of(new Coordinate(File.C, Rank.ONE)), "b"),
-            Arguments.of(BOARD.of(new Coordinate(File.D, Rank.ONE)), "q"),
-            Arguments.of(BOARD.of(new Coordinate(File.E, Rank.ONE)), "k"),
-            Arguments.of(BOARD.of(new Coordinate(File.F, Rank.ONE)), "b"),
-            Arguments.of(BOARD.of(new Coordinate(File.G, Rank.ONE)), "n"),
-            Arguments.of(BOARD.of(new Coordinate(File.H, Rank.ONE)), "r")
+            Arguments.of(BOARD.find(new Coordinate(File.A, Rank.ONE)), "r"),
+            Arguments.of(BOARD.find(new Coordinate(File.B, Rank.ONE)), "n"),
+            Arguments.of(BOARD.find(new Coordinate(File.C, Rank.ONE)), "b"),
+            Arguments.of(BOARD.find(new Coordinate(File.D, Rank.ONE)), "q"),
+            Arguments.of(BOARD.find(new Coordinate(File.E, Rank.ONE)), "k"),
+            Arguments.of(BOARD.find(new Coordinate(File.F, Rank.ONE)), "b"),
+            Arguments.of(BOARD.find(new Coordinate(File.G, Rank.ONE)), "n"),
+            Arguments.of(BOARD.find(new Coordinate(File.H, Rank.ONE)), "r")
         );
     }
 
@@ -60,7 +60,7 @@ class BoardTest {
     class Context_initialize {
 
         private Piece getPiece(File file, Rank rank) {
-            return BOARD.of(new Coordinate(file, rank));
+            return BOARD.find(new Coordinate(file, rank));
         }
 
         @DisplayName("7Rank를 모두 흑의 폰으로 초기화한다")

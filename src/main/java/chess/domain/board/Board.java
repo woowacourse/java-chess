@@ -42,7 +42,7 @@ public class Board {
         }
     }
 
-    public Piece of(Coordinate coordinate) {
+    public Piece find(Coordinate coordinate) {
         Cell cell = cells.get(coordinate);
         return cell.getPiece();
     }
