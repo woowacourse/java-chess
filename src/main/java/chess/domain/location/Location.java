@@ -62,5 +62,11 @@ public class Location {
         return Math.abs(this.x - target.x) <= 1 && Math.abs(this.y - target.y) <= 1;
     }
 
+    public int subtractX(final Location target) {
+        return Math.abs(target.x - this.x);
+    }
 
+    public int subtractY(final Location target) {
+        return Math.abs(target.y - this.y);
+    }
 }
