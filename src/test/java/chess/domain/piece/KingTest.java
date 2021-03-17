@@ -11,9 +11,9 @@ public class KingTest {
     @DisplayName("King 객체 생성 확인")
     @Test
     void 킹_객체_생성() {
-        King king = new King(Position.of(0, 0), "K");
+        King king = new King(Position.of('e', '8'), "K");
 
-        assertThat(king.getPosition()).isEqualTo(Position.of(0, 0));
+        assertThat(king.getPosition()).isEqualTo(Position.of('e', '8'));
         assertThat(king.getName()).isEqualTo("K");
     }
 

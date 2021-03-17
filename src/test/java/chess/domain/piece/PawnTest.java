@@ -11,9 +11,9 @@ public class PawnTest {
     @DisplayName("Pawn 객체 생성 확인")
     @Test
     void 폰_객체_생성() {
-        Pawn pawn = new Pawn(Position.of(0, 0), "P");
+        Pawn pawn = new Pawn(Position.of('a', '7'), "P");
 
-        assertThat(pawn.getPosition()).isEqualTo(Position.of(0, 0));
+        assertThat(pawn.getPosition()).isEqualTo(Position.of('a', '7'));
         assertThat(pawn.getName()).isEqualTo("P");
     }
 

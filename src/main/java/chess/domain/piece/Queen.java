@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final Position INITIAL_BLACK_POSITION = Position.of(0, 3);
-    private static final Position INITIAL_WHITE_POSITION = Position.of(7, 3);
+    private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
+    private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
 
     public Queen(Position position, String name) {
         super(position, name);

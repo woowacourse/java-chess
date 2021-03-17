@@ -11,9 +11,9 @@ public class KnightTest {
     @DisplayName("Knight 객체 생성 확인")
     @Test
     void 나이트_객체_생성() {
-        Knight knight = new Knight(Position.of(0, 0), "N");
+        Knight knight = new Knight(Position.of('b', '8'), "N");
 
-        assertThat(knight.getPosition()).isEqualTo(Position.of(0, 0));
+        assertThat(knight.getPosition()).isEqualTo(Position.of('b', '8'));
         assertThat(knight.getName()).isEqualTo("N");
     }
 

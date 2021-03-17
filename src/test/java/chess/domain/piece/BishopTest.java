@@ -12,9 +12,9 @@ public class BishopTest {
     @DisplayName("Bishop 객체 생성 확인")
     @Test
     void 비숍_객체_생성() {
-        Bishop bishop = new Bishop(Position.of(0, 0), "B");
+        Bishop bishop = new Bishop(Position.of('c', '8'), "B");
 
-        assertThat(bishop.getPosition()).isEqualTo(Position.of(0,0));
+        assertThat(bishop.getPosition()).isEqualTo(Position.of('c', '8'));
         assertThat(bishop.getName()).isEqualTo("B");
     }
 

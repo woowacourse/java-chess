@@ -3,23 +3,23 @@ package chess.domain.piece;
 import java.util.Objects;
 
 public class Position {
-    private int x;
-    private int y;
+    private char x;
+    private char y;
 
-    private Position(int x, int y) {
+    private Position(char x, char y) {
         this.x = x;
         this.y = y;
     }
 
-    public static Position of(int x, int y) {
+    public static Position of(char x, char y) {
         return new Position(x, y);
     }
 
-    public int getX() {
+    public char getX() {
         return x;
     }
 
-    public int getY() {
+    public char getY() {
         return y;
     }
 

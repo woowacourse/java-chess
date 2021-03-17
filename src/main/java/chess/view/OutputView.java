@@ -5,7 +5,6 @@ import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import javafx.geometry.Pos;
 
 import java.util.List;
 

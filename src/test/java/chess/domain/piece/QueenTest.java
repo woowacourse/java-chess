@@ -11,9 +11,9 @@ public class QueenTest {
     @DisplayName("Queen 객체 생성 확인")
     @Test
     void 퀸_객체_생성() {
-        Queen queen = new Queen(Position.of(0, 0), "Q");
+        Queen queen = new Queen(Position.of('d', '8'), "Q");
 
-        assertThat(queen.getPosition()).isEqualTo(Position.of(0, 0));
+        assertThat(queen.getPosition()).isEqualTo(Position.of('d', '8'));
         assertThat(queen.getName()).isEqualTo("Q");
     }
 

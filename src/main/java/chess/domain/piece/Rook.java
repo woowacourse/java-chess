@@ -5,10 +5,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rook extends Piece {
-    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of(0, 0),
-            Position.of(0, 7));
-    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of(7, 0),
-            Position.of(7, 7));
+    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '8'),
+            Position.of('h', '8'));
+    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('a', '1'),
+            Position.of('h', '1'));
 
     public Rook(Position position, String name) {
         super(position, name);

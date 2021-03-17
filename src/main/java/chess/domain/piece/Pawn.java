@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
-    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of(1, 0),
-            Position.of(1, 1), Position.of(1, 2), Position.of(1, 3),
-            Position.of(1, 4), Position.of(1, 5), Position.of(1, 6),
-            Position.of(1, 7));
-    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of(6, 0),
-            Position.of(6, 1), Position.of(6, 2), Position.of(6, 3),
-            Position.of(6, 4), Position.of(6, 5), Position.of(6, 6),
-            Position.of(6, 7));
+    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '7'),
+            Position.of('b', '7'), Position.of('c', '7'), Position.of('d', '7'),
+            Position.of('e', '7'), Position.of('f', '7'), Position.of('g', '7'),
+            Position.of('h', '7'));
+    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('a', '2'),
+            Position.of('b', '2'), Position.of('c', '2'), Position.of('d', '2'),
+            Position.of('e', '2'), Position.of('f', '2'), Position.of('g', '2'),
+            Position.of('h', '2'));
 
     public Pawn(Position position, String name) {
         super(position, name);
