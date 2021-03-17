@@ -17,12 +17,11 @@ public class Knight extends Piece {
 
     @Override
     List<Position> extractMovablePositions() {
-        List<Position> collect = Direction.knightDirection()
+        return Direction.knightDirection()
                 .stream()
                 .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
                 .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position))
                 .collect(Collectors.toList());
-        return collect;
     }
 
     @Override

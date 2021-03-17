@@ -17,12 +17,11 @@ public class King extends Piece {
 
     @Override
     List<Position> extractMovablePositions() {
-        List<Position> collect = Direction.everyDirection()
+        return Direction.everyDirection()
                 .stream()
                 .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
                 .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position))
                 .collect(Collectors.toList());
-        return collect;
     }
 
     @Override
