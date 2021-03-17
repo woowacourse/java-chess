@@ -16,15 +16,16 @@
     - [x] LinkedHashMap 자료 구조 사용
         - [x] Key : Position 객체 
         - [x] Value : 체스 말 객체
-- [ ] 사용자 입력 
-    - [ ] start : 체스판 초기화 하여 출력
-    - [ ] end : 게임 종료 
-    - [ ] 예외사항 : 
-        - [ ] Start/end 가 아닌 다른 입력 시 예외 처리
+- [x] 사용자 입력 
+    - [x] start : 체스판 초기화 하여 출력
+    - [x] end : 게임 종료 
+    - [x] 예외사항 : 
+        - [x] Start/end 가 아닌 다른 입력 시 예외 처리
     
 
 ## 고려 사항
 - [ ] PieceInfo + PieceColor 포장 객체 
+- [x] Position of 다른 인자 메소드 만들기 
 
 ## 구성요소
 ### 말
