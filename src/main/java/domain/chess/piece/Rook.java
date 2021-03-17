@@ -27,8 +27,8 @@ public class Rook extends Piece {
             return false;
         }
 
-        int dx[] = {-1,1,0,0}; // 상 하 좌 우
-        int dy[] = {0,0,-1,1};
+        int dx[] = {-1, 1, 0, 0}; // 상 하 좌 우
+        int dy[] = {0, 0, -1, 1};
 
         int index = findDirection(endPosition);
         int nextRow = position.getRow() + dx[index];
@@ -63,7 +63,7 @@ public class Rook extends Piece {
     }
 
     private boolean checkPositionRange(Position endPosition) {
-       return position.getRow() != endPosition.getRow()
-               && position.getColumn() != endPosition.getColumn();
+        return position.getRow() != endPosition.getRow()
+                && position.getColumn() != endPosition.getColumn();
     }
 }
