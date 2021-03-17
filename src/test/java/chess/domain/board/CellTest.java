@@ -5,7 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.player.PlayerType;
+import chess.domain.player.TeamType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -27,7 +27,7 @@ class CellTest {
 
         assertThat(cell.isEmpty()).isTrue();
 
-        Piece king = new King(PlayerType.WHITE);
+        Piece king = new King(TeamType.WHITE);
         cell.put(king);
         assertThat(cell.getPiece().getName()).isEqualTo("K");
     }

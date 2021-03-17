@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.player.PlayerType;
+import chess.domain.player.TeamType;
 
 public class Rook extends Piece {
     private static final String NAME = "R";
 
-    public Rook(PlayerType playerType) {
-        super(playerType, NAME);
+    public Rook(TeamType teamType) {
+        super(teamType, NAME);
     }
 }

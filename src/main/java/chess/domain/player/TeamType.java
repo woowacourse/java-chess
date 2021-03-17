@@ -1,6 +1,6 @@
 package chess.domain.player;
 
-public enum PlayerType {
+public enum TeamType {
     WHITE,
     BLACK
 }

@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.player.PlayerType;
+import chess.domain.player.TeamType;
 
 public class King extends Piece {
     private static final String NAME = "K";
 
-    public King(PlayerType playerType) {
-        super(playerType, NAME);
+    public King(TeamType teamType) {
+        super(teamType, NAME);
     }
 }

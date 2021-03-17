@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.player.PlayerType;
+import chess.domain.player.TeamType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,13 +44,13 @@ public class Board {
         for (File file : File.values()) {
             Coordinate coordinate = new Coordinate(file, Rank.SEVEN);
             Cell cell = cells.get(coordinate);
-            cell.put(new Pawn(PlayerType.BLACK));
+            cell.put(new Pawn(TeamType.BLACK));
         }
 
         for (File file : File.values()) {
             Coordinate coordinate = new Coordinate(file, Rank.TWO);
             Cell cell = cells.get(coordinate);
-            cell.put(new Pawn(PlayerType.WHITE));
+            cell.put(new Pawn(TeamType.WHITE));
         }
     }
 }

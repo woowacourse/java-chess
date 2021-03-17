@@ -1,19 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.player.PlayerType;
+import chess.domain.player.TeamType;
 
 public abstract class Piece {
 
-    private final PlayerType playerType;
+    private final TeamType teamType;
     private final String name;
 
-    public Piece(PlayerType playerType, String name) {
-        this.playerType = playerType;
+    public Piece(TeamType teamType, String name) {
+        this.teamType = teamType;
         this.name = name;
     }
 
     public String getName() {
-        if (playerType == PlayerType.WHITE) {
+        if (teamType == TeamType.WHITE) {
             return name.toLowerCase();
         }
         return name;
