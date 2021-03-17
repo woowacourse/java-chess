@@ -3,7 +3,7 @@ package domain.piece;
 import domain.position.Position;
 
 public class King extends Division{
-    public King(String color) {
+    public King(Color color) {
         super(color, "k");
     }
 

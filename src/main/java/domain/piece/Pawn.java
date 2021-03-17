@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Pawn extends Division {
-    public Pawn(String color) {
+    public Pawn(Color color) {
         super(color, "p");
     }
 

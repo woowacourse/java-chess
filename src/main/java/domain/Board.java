@@ -21,11 +21,11 @@ public class Board {
     }
 
     private void setUpGeneral() {
-        setUpGeneralByColor("black", Row.EIGHT);
-        setUpGeneralByColor("white", Row.ONE);
+        setUpGeneralByColor(Color.BLACK, Row.EIGHT);
+        setUpGeneralByColor(Color.WHITE, Row.ONE);
     }
 
-    private void setUpGeneralByColor(String color, Row row) {
+    private void setUpGeneralByColor(Color color, Row row) {
         board.put(Position.of(Column.A, row), new Rook(color));
         board.put(Position.of(Column.B, row), new Knight(color));
         board.put(Position.of(Column.C, row), new Bishop(color));
@@ -44,8 +44,8 @@ public class Board {
     }
 
     public void setUpPawn() {
-        setUpRow(Row.SEVEN, () -> new Pawn("black"));
-        setUpRow(Row.TWO, () -> new Pawn("white"));
+        setUpRow(Row.SEVEN, () -> new Pawn(Color.BLACK));
+        setUpRow(Row.TWO, () -> new Pawn(Color.WHITE));
     }
 
     private void setUpRow(Row row, Supplier<Piece> function) {

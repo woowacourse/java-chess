@@ -3,7 +3,7 @@ package domain.piece;
 import domain.position.Position;
 
 public class Rook extends Division{
-    public Rook(String color) {
+    public Rook(Color color) {
         super(color, "r");
     }
 
