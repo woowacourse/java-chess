@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-public class KnightMoveCondition implements MoveCondition {
+public class KnightMoveCondition extends MoveCondition {
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         int[] row = {3, 3, -3, -3, 1, -1, 1, -1};
@@ -20,7 +20,8 @@ public class KnightMoveCondition implements MoveCondition {
             }
         }
 
-        return !piece.isSamePosition(target) && flag && isExistSameColorPieceOnPath(board, piece, target);
+        return !piece.isSamePosition(target) && flag && isExistSameColorPieceOnPath(board, piece, target) &&
+                validateChessPieceOutOfBoard(board, target);
     }
 
     public boolean isExistSameColorPieceOnPath(Board board, Piece piece, Position target) {

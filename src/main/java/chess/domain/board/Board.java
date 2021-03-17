@@ -19,7 +19,7 @@ public class Board {
 
     public void movePiece(Player player, Position source, Position target) {
         validateControllablePiece(player, source);
-        
+
         Piece sourcePiece = pieces.stream()
                 .filter(piece -> piece.isSamePosition(source))
                 .findAny()
@@ -36,6 +36,14 @@ public class Board {
         if (!(sourcePiece.isPresent() && sourcePiece.get().getColor() == player.getColor())) {
             throw new NoSuchPermittedChessPieceException();
         }
+    }
+
+    public int getRow() {
+        return ROW;
+    }
+
+    public int getColumn() {
+        return COLUMN;
     }
 
     @Override

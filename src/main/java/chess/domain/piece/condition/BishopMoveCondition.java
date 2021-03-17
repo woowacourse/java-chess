@@ -6,12 +6,13 @@ import chess.domain.piece.Position;
 
 import java.util.List;
 
-public class BishopMoveCondition implements MoveCondition{
+public class BishopMoveCondition extends MoveCondition{
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.equals(target) &&
                 validateMovableTarget(piece, target) &&
-                validateObstacleOnPath(board, piece, target);
+                validateObstacleOnPath(board, piece, target) &&
+                validateChessPieceOutOfBoard(board, target);
     }
 
     private boolean validateMovableTarget(final Piece piece, final Position target) {

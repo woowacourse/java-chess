@@ -4,13 +4,14 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-public class RookMoveCondition implements MoveCondition{
+public class RookMoveCondition extends MoveCondition{
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 (piece.getRow() == target.getRow() ||
                         piece.getColumn() == target.getColumn()
-                ) && validateObstacleOnCrossPath(board, piece, target);
+                ) && validateObstacleOnCrossPath(board, piece, target)&&
+                validateChessPieceOutOfBoard(board, target);
     }
 
     private boolean validateObstacleOnCrossPath(Board board, Piece piece, Position target) {

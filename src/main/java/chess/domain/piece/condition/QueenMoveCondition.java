@@ -7,12 +7,13 @@ import chess.domain.piece.Position;
 import java.io.PipedInputStream;
 import java.util.List;
 
-public class QueenMoveCondition implements MoveCondition{
+public class QueenMoveCondition extends MoveCondition{
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) && (
                 isRightXCondition(piece, target) || isCrossMovable(piece,target)
-        ) && validateObstacleOnCrossPath(board, piece, target) && validateObstacleOnXPath(board, piece, target);
+        ) && validateObstacleOnCrossPath(board, piece, target) && validateObstacleOnXPath(board, piece, target) &&
+                validateChessPieceOutOfBoard(board, target);
     }
 
     private boolean isCrossMovable(final Piece piece, final Position target) {

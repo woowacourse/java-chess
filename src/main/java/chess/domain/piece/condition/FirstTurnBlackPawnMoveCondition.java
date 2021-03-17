@@ -6,10 +6,13 @@ import chess.domain.piece.Position;
 
 import java.util.List;
 
-public class FirstTurnBlackPawnMoveCondition implements MoveCondition {
+public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
-        return !piece.isSamePosition(target) && target.equals(new Position(piece.getRow() + 2, piece.getColumn())) && isPieceExistOnPath(board, piece, target);
+        return !piece.isSamePosition(target) &&
+                target.equals(new Position(piece.getRow() + 2, piece.getColumn())) &&
+                isPieceExistOnPath(board, piece, target) &&
+                validateChessPieceOutOfBoard(board, target);
     }
 
     private boolean isPieceExistOnPath(Board board, Piece piece, Position target) {
