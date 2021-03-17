@@ -22,7 +22,48 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position end) {
-        return false;
+    public boolean canMove(Piece[][] board, Position endPosition) {
+        if (checkPositionRange(endPosition)) {
+            return false;
+        }
+
+        int dx[] = {-1,1,0,0}; // 상 하 좌 우
+        int dy[] = {0,0,-1,1};
+
+        int index = findDirection(endPosition);
+        int nextRow = position.getRow() + dx[index];
+        int nextColumn = position.getColumn() + dy[index];
+
+        while (!(nextRow == endPosition.getRow() && nextColumn == endPosition.getColumn())
+                && board[nextRow][nextColumn] == null) {
+            nextRow += dx[index];
+            nextColumn += dy[index];
+        }
+
+        return Position.Of(nextRow, nextColumn).equals(endPosition);
+    }
+
+    private int findDirection(Position end) {
+        int rowDiff = end.getRow() - position.getRow();
+        int colDiff = end.getColumn() - position.getColumn();
+
+        if (rowDiff < 0) {
+            return 0;
+        }
+
+        if (rowDiff > 0) {
+            return 1;
+        }
+
+        if (colDiff < 0) {
+            return 2;
+        }
+
+        return 3;
+    }
+
+    private boolean checkPositionRange(Position endPosition) {
+       return position.getRow() != endPosition.getRow()
+               && position.getColumn() != endPosition.getColumn();
     }
 }
