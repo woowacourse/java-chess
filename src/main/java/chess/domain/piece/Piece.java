@@ -1,15 +1,21 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
+
 public abstract class Piece {
     private final Color color;
     private final String notation;
+    private Position position;
 
-    public Piece(Color color, String notation) {
+    public Piece(Color color, Position position, String notation) {
         this.color = color;
+        this.position = position;
         this.notation = notation;
     }
 
-    public abstract boolean canMove();
+    public void move(Position position) {
+        this.position = position;
+    }
 
     public String getNotation() {
         return color.changeNotation(notation);
