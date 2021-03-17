@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.position.Position;
+
 import java.util.Locale;
 import java.util.Objects;
 
@@ -16,6 +18,12 @@ public abstract class Piece {
         name = initialName.toLowerCase(Locale.ROOT);
     }
 
+    protected boolean isOpponent(final Piece piece) {
+        return isBlack != piece.isBlack;
+    }
+
+    abstract boolean canMove(final Position source, final Position target, final Piece piece);
+
     public String getName() {
         return name;
     }
@@ -31,9 +39,5 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(name);
-    }
-
-    protected boolean isOpponent(final Piece piece) {
-        return isBlack != piece.isBlack;
     }
 }

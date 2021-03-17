@@ -15,6 +15,7 @@ public class Pawn extends Piece {
         super(isBlack, INITIAL_NAME);
     }
 
+    @Override
     public boolean canMove(final Position source, final Position target, final Piece piece) {
         List<Integer> result = subtractByTeam(source, target);
         final Direction direction = POSSIBLE_DIRECTIONS.stream()
