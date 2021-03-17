@@ -1,11 +1,11 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.board.Board;
-import chess.piece.Piece;
 import chess.PieceOperator;
+import chess.board.Board;
 import chess.board.Point;
 import chess.board.State;
 import chess.board.Team;
+import chess.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

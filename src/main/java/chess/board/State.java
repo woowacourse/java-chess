@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.piece.Direction;
 import chess.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,12 +37,24 @@ public class State {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean canMove(Point source, Point destination) {
-        return piece.canMove(source, destination);
+    public Direction findMovableDirection(Point source, Point destination) {
+        return piece.findMovableDirection(source, destination);
     }
 
-    public boolean isSameTeam(State state) {
-        return this.team == state.team;
+    public int getDirectionLength() {
+        return piece.getDirectionLength();
+    }
+
+    public boolean isNotSameTeam(State state) {
+        return this.team != state.team;
+    }
+
+    public boolean isNotEmpty() {
+        return team != Team.NONE;
+    }
+
+    public boolean isEmpty() {
+        return team == Team.NONE;
     }
 
     @Override
@@ -59,5 +72,13 @@ public class State {
     @Override
     public int hashCode() {
         return Objects.hash(piece, team);
+    }
+
+    @Override
+    public String toString() {
+        return "State{" +
+            "piece=" + piece +
+            ", team=" + team +
+            '}';
     }
 }

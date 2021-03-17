@@ -6,14 +6,22 @@ import java.util.List;
 
 public class KingMovingStrategy implements MovingStrategy {
 
+    public static final int LENGTH = 1;
     private final List<Direction> kingsDirection = Direction.everyDirection();
 
     @Override
-    public boolean canMove(Point source, Point destination) {
+    public Direction findMovableDirection(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
         return kingsDirection.stream()
-            .anyMatch(direction -> direction.isRightDirection(x, y));
+            .filter(direction -> direction.isRightDirection(x, y))
+            .findFirst()
+            .orElse(null);
+    }
+
+    @Override
+    public int getDirectionLength() {
+        return LENGTH;
     }
 }

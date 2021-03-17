@@ -1,5 +1,7 @@
 package chess.board;
 
+import java.util.Arrays;
+
 public enum Column {
     A("a", 0),
     B("b", 1),
@@ -16,6 +18,13 @@ public enum Column {
     Column(String xCoordinate, int index) {
         this.xCoordinate = xCoordinate;
         this.index = index;
+    }
+
+    public static Column getByIndex(int index) {
+        return Arrays.stream(Column.values())
+            .filter(column -> column.index == index)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public String getXCoordinate() {

@@ -1,6 +1,7 @@
 package chess.board;
 
 
+import chess.piece.Direction;
 import chess.piece.Piece;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,15 +26,43 @@ public class Board {
     }
 
     public boolean canMove(Point source, Point destination) {
-        if (!squares.get(source).canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 위치로는 이동할 수 없는 말입니다.");
+        State sourceState = squares.get(source);
+        State destinationState = squares.get(destination);
+        Direction direction = sourceState.findMovableDirection(source, destination);
+        if (direction == null) {
+            return false;
         }
 
-        if (squares.get(destination).isSameTeam(squares.get(source))) {
-            throw new IllegalArgumentException("아군 말이 있는 곳에는 이동할 수 없습니다");
-        }
+        return sourceState.isNotEmpty()
+            && isNotSameTeam(sourceState, destinationState)
+            && isNotBlockedToGo(source, destination, direction);
+    }
 
-        return true;
+    private boolean isNotSameTeam(State sourceState, State destinationState) {
+        return destinationState.isNotSameTeam(sourceState);
+    }
+
+    private boolean isNotBlockedToGo(Point source, Point destination, Direction direction) {
+        State sourceState = squares.get(source);
+
+        int moveCount = 1;
+        boolean unblocked = true;
+        for (Point now = source.move(direction); isOnGoing(destination, now) && unblocked;
+            now = now.move(direction)) {
+            unblocked =
+                underDirectionLength(sourceState, moveCount) && squares.get(now).isEmpty();
+
+            moveCount++;
+        }
+        return unblocked;
+    }
+
+    private boolean isOnGoing(Point destination, Point now) {
+        return !now.equals(destination);
+    }
+
+    private boolean underDirectionLength(State sourceState, int moveCount) {
+        return moveCount <= sourceState.getDirectionLength();
     }
 
     public void move(Point source, Point destination) {

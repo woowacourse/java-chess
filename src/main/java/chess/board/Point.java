@@ -1,5 +1,6 @@
 package chess.board;
 
+import chess.piece.Direction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,4 +61,23 @@ public class Point {
     public int minusY(Point source) {
         return this.y.getYIndex() - source.y.getYIndex();
     }
+
+    public Point move(Direction direction) {
+        return Point.of(newerName(direction));
+    }
+
+    private String newerName(Direction direction) {
+        return Column.getByIndex(newerXIndex(direction)).getXCoordinate() +
+            Row.getByIndex(newerYIndex(direction)).getYCoordinate();
+    }
+
+    private int newerYIndex(Direction direction) {
+        return y.getYIndex() + direction.getVertical();
+    }
+
+    private int newerXIndex(Direction direction) {
+        return x.getXIndex() + direction.getHorizon();
+    }
+
+
 }

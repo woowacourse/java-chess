@@ -36,4 +36,12 @@ public enum Direction {
     public boolean isRightDirection(int horizon, int vertical) {
         return (this.horizon == horizon) && (this.vertical == vertical);
     }
+
+    public int getHorizon() {
+        return horizon;
+    }
+
+    public int getVertical() {
+        return vertical;
+    }
 }

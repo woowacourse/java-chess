@@ -25,7 +25,11 @@ public enum Piece {
         this.movingStrategy = movingStrategy;
     }
 
-    public boolean canMove(Point source, Point destination) {
-        return movingStrategy.canMove(source, destination);
+    public Direction findMovableDirection(Point source, Point destination) {
+        return movingStrategy.findMovableDirection(source, destination);
+    }
+
+    public int getDirectionLength() {
+        return movingStrategy.getDirectionLength();
     }
 }

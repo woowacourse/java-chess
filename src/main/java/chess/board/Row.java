@@ -12,10 +12,7 @@ public enum Row {
     SEVEN("7", 6),
     EIGHT("8", 7);
 
-    private static final int ROW_MAX = Arrays.stream(Row.values())
-        .mapToInt(row -> row.index)
-        .max()
-        .orElseThrow(IllegalArgumentException::new);
+    private static final int ROW_MAX = 7;
 
     private final String yCoordinate;
     private final int index;
@@ -23,6 +20,13 @@ public enum Row {
     Row(String yCoordinate, int index) {
         this.yCoordinate = yCoordinate;
         this.index = index;
+    }
+
+    public static Row getByIndex(int index) {
+        return Arrays.stream(Row.values())
+            .filter(row -> row.index == index)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public String getYCoordinate() {
@@ -35,12 +39,5 @@ public enum Row {
 
     public Row opposite() {
         return getByIndex(ROW_MAX - index);
-    }
-
-    public Row getByIndex(int index) {
-        return Arrays.stream(Row.values())
-            .filter(row -> row.index == index)
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
     }
 }

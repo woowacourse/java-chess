@@ -46,8 +46,9 @@ public class PieceOperator {
     }
 
     public void move(Point source, Point destination) {
-        if (board.canMove(source, destination)) {
-            board.move(source, destination);
+        if (!board.canMove(source, destination)) {
+            throw new IllegalArgumentException("해당 위치로는 이동할 수 없는 말입니다.");
         }
+        board.move(source, destination);
     }
 }
