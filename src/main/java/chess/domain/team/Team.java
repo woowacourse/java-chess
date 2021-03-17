@@ -32,7 +32,20 @@ public abstract class Team {
         }
     }
 
+    public Piece choosePiece(final Position position) {
+        if (havePiece(position)) {
+            return piecePosition.get(position);
+        }
+        throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+    }
+
+    public abstract void move(final Position current, final Position destination);
+
+    public boolean havePiece(final Position position) {
+        return piecePosition.containsKey(position);
+    }
+
     public Map<Position, Piece> getPiecePosition() {
-        return Collections.unmodifiableMap(piecePosition);
+        return new HashMap<>(piecePosition);
     }
 }
