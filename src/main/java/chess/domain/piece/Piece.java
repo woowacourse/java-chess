@@ -22,7 +22,7 @@ public abstract class Piece {
         return isBlack != piece.isBlack;
     }
 
-    abstract boolean canMove(final Position source, final Position target, final Piece piece);
+    public abstract boolean canMove(final Position source, final Position target, final Piece piece);
 
     public String getName() {
         return name;

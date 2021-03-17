@@ -15,7 +15,7 @@ public class King extends Piece {
     }
 
     @Override
-    boolean canMove(final Position source, final Position target, final Piece piece) {
+    public boolean canMove(final Position source, final Position target, final Piece piece) {
         if (!isPossibleDirection(source, target)) {
             throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
         }
