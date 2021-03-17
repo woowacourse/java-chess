@@ -29,6 +29,10 @@ public enum Row {
         return yCoordinate;
     }
 
+    public int getYIndex() {
+        return index;
+    }
+
     public Row opposite() {
         return getByIndex(ROW_MAX - index);
     }

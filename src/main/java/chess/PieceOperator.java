@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class PieceOperator {
+
     private static final Map<Piece, List<Point>> WHITE_INITIAL_POINTS = new HashMap<>();
 
     static {
@@ -38,5 +39,11 @@ public class PieceOperator {
     private void initializePiece(Piece piece) {
         WHITE_INITIAL_POINTS.get(piece)
             .forEach(point -> board.putSymmetrically(piece, point));
+    }
+
+    public void move(Point source, Point destination) {
+        if (board.canMove(source, destination)) {
+            board.move(source, destination);
+        }
     }
 }

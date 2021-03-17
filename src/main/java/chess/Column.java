@@ -21,4 +21,8 @@ public enum Column {
     public String getXCoordinate() {
         return xCoordinate;
     }
+
+    public int getXIndex() {
+        return index;
+    }
 }

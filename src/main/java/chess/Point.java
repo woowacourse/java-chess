@@ -52,4 +52,12 @@ public class Point {
     public boolean isRow(Row row) {
         return y == row;
     }
+
+    public int minusX(Point source) {
+        return this.x.getXIndex() - source.x.getXIndex();
+    }
+
+    public int minusY(Point source) {
+        return this.y.getYIndex() - source.y.getYIndex();
+    }
 }
