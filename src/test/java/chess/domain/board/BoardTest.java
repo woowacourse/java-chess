@@ -42,4 +42,27 @@ class BoardTest {
 
         assertThat(isAllWhitePawn).isTrue();
     }
+
+    @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
+    @Test
+    void boardInitialization_BlackPieces() {
+        board.initialize();
+
+        assertThat(board.of(new Coordinate(File.A, Rank.EIGHT)).getName())
+            .isEqualTo("R");
+        assertThat(board.of(new Coordinate(File.B, Rank.EIGHT)).getName())
+            .isEqualTo("N");
+        assertThat(board.of(new Coordinate(File.C, Rank.EIGHT)).getName())
+            .isEqualTo("B");
+        assertThat(board.of(new Coordinate(File.D, Rank.EIGHT)).getName())
+            .isEqualTo("Q");
+        assertThat(board.of(new Coordinate(File.E, Rank.EIGHT)).getName())
+            .isEqualTo("K");
+        assertThat(board.of(new Coordinate(File.F, Rank.EIGHT)).getName())
+            .isEqualTo("B");
+        assertThat(board.of(new Coordinate(File.G, Rank.EIGHT)).getName())
+            .isEqualTo("N");
+        assertThat(board.of(new Coordinate(File.H, Rank.EIGHT)).getName())
+            .isEqualTo("R");
+    }
 }

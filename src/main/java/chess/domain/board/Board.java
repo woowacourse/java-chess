@@ -1,9 +1,16 @@
 package chess.domain.board;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.player.TeamType;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -51,6 +58,25 @@ public class Board {
             Coordinate coordinate = new Coordinate(file, Rank.TWO);
             Cell cell = cells.get(coordinate);
             cell.put(new Pawn(TeamType.WHITE));
+        }
+
+        List<File> files = Arrays.asList(File.values());
+        List<Piece> pieces = Arrays.asList(
+            new Rook(TeamType.BLACK),
+            new Knight(TeamType.BLACK),
+            new Bishop(TeamType.BLACK),
+            new Queen(TeamType.BLACK),
+            new King(TeamType.BLACK),
+            new Bishop(TeamType.BLACK),
+            new Knight(TeamType.BLACK),
+            new Rook(TeamType.BLACK)
+        );
+
+        for (int i = 0; i < files.size(); i++) {
+            Coordinate coordinate
+                = new Coordinate(files.get(i), Rank.EIGHT);
+            Cell cell = cells.get(coordinate);
+            cell.put(pieces.get(i));
         }
     }
 }
