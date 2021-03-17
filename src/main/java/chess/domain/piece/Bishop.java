@@ -21,24 +21,22 @@ public class Bishop extends Piece {
     public List<Position> movablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 
-        movablePositions.addAll(diagonal(target, POSITIVE, POSITIVE));
-        movablePositions.addAll(diagonal(target, NEGATIVE, POSITIVE));
-        movablePositions.addAll(diagonal(target, NEGATIVE, NEGATIVE));
-        movablePositions.addAll(diagonal(target, POSITIVE, NEGATIVE));
+        movablePositions.addAll(calculateBishopMovablePositions(target, POSITIVE, POSITIVE));
+        movablePositions.addAll(calculateBishopMovablePositions(target, NEGATIVE, POSITIVE));
+        movablePositions.addAll(calculateBishopMovablePositions(target, NEGATIVE, NEGATIVE));
+        movablePositions.addAll(calculateBishopMovablePositions(target, POSITIVE, NEGATIVE));
 
         return movablePositions;
     }
 
-    private List<Position> diagonal(Position target, int horizontalDirection, int verticalDirection) {
+    private List<Position> calculateBishopMovablePositions(Position target, int horizontalDirection, int verticalDirection) {
         List<Position> result = new ArrayList<>();
-        int horizontalWeight = target.getHorizontal().getWeight();
-        int verticalWeight = target.getVertical().getWeight();
-
-        while (horizontalWeight > Board.MIN_BORDER && horizontalWeight < Board.MAX_BORDER
-                && verticalWeight > Board.MIN_BORDER && verticalWeight < Board.MAX_BORDER) {
+        int horizontalWeight = target.getHorizontalWeight();
+        int verticalWeight = target.getVerticalWeight();
+        while (horizontalWeight + horizontalDirection >= Board.MIN_BORDER && horizontalWeight + horizontalDirection <= Board.MAX_BORDER
+                && verticalWeight + verticalDirection >= Board.MIN_BORDER && verticalWeight + verticalDirection <= Board.MAX_BORDER) {
             horizontalWeight += horizontalDirection;
             verticalWeight += verticalDirection;
-
             result.add(
                     Position.of(Horizontal.findFromWeight(horizontalWeight), Vertical.findFromWeight(verticalWeight))
             );

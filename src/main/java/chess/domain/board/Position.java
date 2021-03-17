@@ -35,6 +35,14 @@ public class Position {
         return Collections.unmodifiableList(CACHE);
     }
 
+    public int getHorizontalWeight() {
+        return horizontal.getWeight();
+    }
+
+    public int getVerticalWeight() {
+        return vertical.getWeight();
+    }
+
     public Horizontal getHorizontal() {
         return horizontal;
     }
