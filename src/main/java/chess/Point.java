@@ -1,6 +1,8 @@
 package chess;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Point {
@@ -39,5 +41,15 @@ public class Point {
         }
     }
 
+    public static List<Point> getAllPoints() {
+        return new ArrayList<>(POINT_POOL.values());
+    }
 
+    public Point opposite() {
+        return Point.of(this.x.getXCoordinate() + this.y.opposite().getYCoordinate());
+    }
+
+    public boolean isRow(Row row) {
+        return y == row;
+    }
 }

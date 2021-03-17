@@ -21,6 +21,7 @@ public class PointTest {
         assertThatIllegalArgumentException().isThrownBy(() -> Point.of("i1"));
     }
 
+
     @Test
     @DisplayName("캐싱한 값을 가져오는지 테스트")
     void getCachePoint() {
