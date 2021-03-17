@@ -18,4 +18,8 @@ public class OutputView {
     public static void printBoard(Board board) {
         System.out.println(RenderingUtils.renderBoard(board));
     }
+
+    public static void printError(IllegalArgumentException e) {
+        System.out.println(e.getMessage());
+    }
 }

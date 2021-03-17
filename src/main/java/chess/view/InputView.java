@@ -6,12 +6,12 @@ public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    private String receiveInputWithMessage(String message) {
+    public static String receiveInputWithMessage(String message) {
         System.out.println(message);
         return SCANNER.nextLine().trim();
     }
 
-    private String receiveInput() {
+    public static String receiveInput() {
         return SCANNER.nextLine().trim();
     }
 }
