@@ -31,7 +31,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Position> movablePositions(Position target) {
+    public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 
         int horizontalWeight = target.getHorizontalWeight();

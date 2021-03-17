@@ -24,5 +24,5 @@ public abstract class Piece {
         return name;
     }
 
-    public abstract List<Position> movablePositions(Position target);
+    public abstract List<Position> searchMovablePositions(Position target);
 }

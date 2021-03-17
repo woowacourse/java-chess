@@ -5,7 +5,6 @@ import chess.domain.board.Position;
 import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -17,7 +16,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> movablePositions(Position target) {
+    public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
         Vertical targetVertical = target.getVertical();
         Horizontal targetHorizontal = target.getHorizontal();

@@ -15,7 +15,7 @@ class KnightTest {
     @DisplayName("나이트 움직일 수 있는 좌표 확인")
     void movablePositionTest() {
         Knight knight = new Knight(Team.BLACK);
-        List<Position> positions = knight.movablePositions(Position.of(Horizontal.B, Vertical.ONE));
+        List<Position> positions = knight.searchMovablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
         assertThat(positions).containsExactly(
                 Position.of(Horizontal.D, Vertical.TWO),

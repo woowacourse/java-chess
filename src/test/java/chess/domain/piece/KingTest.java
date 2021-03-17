@@ -9,14 +9,13 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KingTest {
     @Test
     @DisplayName("킹 움직일 수 있는 좌표 확인")
     void movablePositionTest() {
         King king = new King(Team.BLACK);
-        List<Position> positions = king.movablePositions(Position.of(Horizontal.B, Vertical.ONE));
+        List<Position> positions = king.searchMovablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
         assertThat(positions).containsExactly(
                 Position.of(Horizontal.B, Vertical.TWO),

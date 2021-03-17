@@ -8,7 +8,8 @@ import chess.domain.board.Vertical;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.board.Board.*;
+import static chess.domain.board.Board.NEGATIVE;
+import static chess.domain.board.Board.POSITIVE;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "N";
@@ -18,7 +19,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public List<Position> movablePositions(Position target) {
+    public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 
         movablePositions.addAll(calculateKnightMovablePositions(target, POSITIVE, POSITIVE));

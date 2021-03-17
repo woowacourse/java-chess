@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> movablePositions(Position target) {
+    public List<Position> searchMovablePositions(Position target) {
         return null;
     }
 }

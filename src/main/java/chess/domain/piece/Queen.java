@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
@@ -19,7 +18,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Position> movablePositions(Position target) {
+    public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 
         movablePositions.addAll(rookPosition(target));

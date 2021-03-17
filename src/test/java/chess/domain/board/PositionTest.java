@@ -11,6 +11,6 @@ class PositionTest {
     @Test
     void create() {
         Position expectedPosition = Position.of(Horizontal.C, Vertical.FIVE);
-        assertThat(expectedPosition).isEqualTo(Position.of(Horizontal.C,Vertical.FIVE));
+        assertThat(expectedPosition).isEqualTo(Position.of(Horizontal.C, Vertical.FIVE));
     }
 }
