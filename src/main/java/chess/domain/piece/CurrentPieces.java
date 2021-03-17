@@ -25,4 +25,11 @@ public class CurrentPieces {
     public List<Piece> getCurrentPieces() {
         return currentPieces;
     }
+
+    public Piece findByPosition(Position position) {
+        return currentPieces.stream()
+                .filter(piece -> position.equals(piece.getPosition()))
+                .findFirst()
+                .orElse(Empty.EMPTY);
+    }
 }

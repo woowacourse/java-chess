@@ -13,4 +13,22 @@ public class CurrentPiecesTest {
         CurrentPieces currentPieces = CurrentPieces.generate();
         assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(32);
     }
+
+    @DisplayName("해당 위치에 있는 기물을 찾는다.")
+    @Test
+    void 해당_위치에_있는_기물_찾기() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Piece sourcePiece = currentPieces.findByPosition(Position.of('e', '8'));
+
+        assertThat(sourcePiece).isInstanceOf(King.class);
+    }
+
+    @DisplayName("해당 위치에 있는 기물을 찾는다. - 없을 경우 Empty")
+    @Test
+    void 해당_위치에_있는_기물_찾기_EMPTY() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Piece sourcePiece = currentPieces.findByPosition(Position.of('e', '4'));
+
+        assertThat(sourcePiece).isInstanceOf(Empty.class);
+    }
 }
