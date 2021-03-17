@@ -14,7 +14,6 @@ public class Pawn extends Piece {
         this.type = Type.PAWN;
     }
 
-
     @Override
     public List<Position> getMovablePositions(ChessBoard chessBoard) {
         List<Position> movablePositions = new ArrayList<>();
@@ -62,7 +61,8 @@ public class Pawn extends Piece {
         return Collections.unmodifiableList(movablePositions);
     }
 
-    private List<Position> getDiagonalMovablePositions(ChessBoard chessBoard, int xDegree, int yDegree) {
+    private List<Position> getDiagonalMovablePositions(ChessBoard chessBoard, int xDegree,
+        int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
         Position nextPosition = new Position(position.getRow() + yDegree,
             position.getCol() + xDegree);

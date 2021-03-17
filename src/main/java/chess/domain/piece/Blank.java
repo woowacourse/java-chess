@@ -4,7 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import java.util.List;
 
-public class Blank extends Piece{
+public class Blank extends Piece {
 
     public Blank(Color color, Position position) {
         super(color, position);

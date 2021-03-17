@@ -21,7 +21,8 @@ public class Knight extends Piece {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();
 
-            Position nextPosition = new Position(position.getRow() + yDegree, position.getCol() + xDegree);
+            Position nextPosition = new Position(position.getRow() + yDegree,
+                position.getCol() + xDegree);
 
             if (isMovable(chessBoard, nextPosition) || isAttackMove(chessBoard, nextPosition)) {
                 movablePositions.add(nextPosition);
