@@ -39,7 +39,7 @@ public class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (vertical.isSameValue(position.vertical)) {
-            return position.horizontal.getValue() - horizontal.getValue();
+            return horizontal.getValue() - position.horizontal.getValue();
         }
         return position.vertical.getValue() - vertical.getValue();
     }
