@@ -10,4 +10,9 @@ public abstract class Basis implements Piece{
     }
 
     public abstract boolean canMove(Position from, Position to);
+
+    @Override
+    public String display() {
+        return displayName;
+    }
 }

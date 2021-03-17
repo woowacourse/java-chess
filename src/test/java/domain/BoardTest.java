@@ -49,4 +49,9 @@ public class BoardTest {
         Piece pawn2 = board.pieceOf(Column.B, Row.SEVEN);
         assertThat(pawn1).isNotSameAs(pawn2);
     }
+
+    @Test
+    void display() {
+        board.display();
+    }
 }

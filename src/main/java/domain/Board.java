@@ -1,14 +1,12 @@
 package domain;
 
+import com.google.common.collect.Lists;
 import domain.piece.*;
 import domain.position.Column;
 import domain.position.Position;
 import domain.position.Row;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Supplier;
 
 public class Board {
@@ -56,5 +54,16 @@ public class Board {
 
     public Piece pieceOf(Column column, Row row){
         return board.get(Position.of(column, row));
+    }
+
+    public void display() {
+        List<Row> rows = Arrays.asList(Row.values());
+        Collections.reverse(rows);
+        for (Row row : rows) {
+            for (Column column : Column.values()) {
+                System.out.print(board.get(Position.of(column, row)).display());
+            }
+            System.out.println();
+        }
     }
 }
