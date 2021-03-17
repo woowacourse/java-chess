@@ -58,7 +58,17 @@ public enum Direction {
         return Arrays.asList(N, NE, NW);
     }
 
+    public static List<Direction> whitePawnLinearDirection() {
+        return Arrays.asList(N);
+    }
+
     public static List<Direction> blackPawnDirection() {
         return Arrays.asList(S, SE, SW);
     }
+
+    public static List<Direction> blackPawnLinearDirection() {
+        return Arrays.asList(S);
+    }
+
+
 }
