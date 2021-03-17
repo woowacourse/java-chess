@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
@@ -9,7 +10,12 @@ public class Board {
         this.lines = lines;
     }
 
-    public Line getLine(int index){
-        return lines.get(index);
+    public List<Line> getLines(){
+        return new ArrayList<>(lines);
+    }
+
+    public Square of(Vertical vertical, Horizontal horizontal){
+        final Line horizontalLine = lines.get(vertical.getIndex());
+        return horizontalLine.getIndex(horizontal.getIndex());
     }
 }

@@ -11,14 +11,14 @@ public class BoardInitializer {
 
     public static Board initiateBoard() {
         List<Line> lines = Arrays.asList(
-                new Line(getPiecesOfFirstLine(Horizontal.EIGHT, Owner.BLACK)),
-                new Line(getPiecesOfSecondLine(Horizontal.SEVEN, Owner.BLACK)),
-                new Line(getEmptySquares(Horizontal.SIX)),
-                new Line(getEmptySquares(Horizontal.FIVE)),
-                new Line(getEmptySquares(Horizontal.FOUR)),
-                new Line(getEmptySquares(Horizontal.THREE)),
-                new Line(getPiecesOfSecondLine(Horizontal.TWO, Owner.WHITE)),
-                new Line(getPiecesOfFirstLine(Horizontal.ONE, Owner.WHITE))
+            new Line(getPiecesOfFirstLine(Horizontal.ONE, Owner.WHITE)),
+            new Line(getPiecesOfSecondLine(Horizontal.TWO, Owner.WHITE)),
+            new Line(getEmptySquares(Horizontal.THREE)),
+            new Line(getEmptySquares(Horizontal.FOUR)),
+            new Line(getEmptySquares(Horizontal.FIVE)),
+            new Line(getEmptySquares(Horizontal.SIX)),
+            new Line(getPiecesOfSecondLine(Horizontal.SEVEN, Owner.BLACK)),
+            new Line(getPiecesOfFirstLine(Horizontal.EIGHT, Owner.BLACK))
         );
         return new Board(lines);
     }

@@ -27,4 +27,8 @@ public enum Horizontal {
 
         return value.index;
     }
+
+    public int getIndex(){
+        return index;
+    }
 }
