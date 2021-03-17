@@ -12,4 +12,9 @@ public class Knight extends Piece {
     public boolean isMovable(Position current, Position destination, ChessBoard chessBoard) {
         return false;
     }
+
+    @Override
+    boolean checkPositionRule(Position current, Position destination) {
+        return false;
+    }
 }
