@@ -1,9 +1,13 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String DELIMITER = " ";
 
     private InputView() {
     }
@@ -13,7 +17,8 @@ public class InputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static String inputPlayerCommand() {
-        return SCANNER.nextLine();
+    public static List<String> inputPlayerCommand() {
+        String[] splitCommand = SCANNER.nextLine().split(DELIMITER);
+        return Arrays.asList(splitCommand);
     }
 }
