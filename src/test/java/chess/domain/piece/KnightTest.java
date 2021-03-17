@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMovementException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -43,7 +44,7 @@ class KnightTest {
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
         assertThatThrownBy(() -> knight.route(Position.of("a1"), to))
-                .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(InvalidMovementException.class);
     }
 
     private static Stream<Arguments> routeFailTestcase() {

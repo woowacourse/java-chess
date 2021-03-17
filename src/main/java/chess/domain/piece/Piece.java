@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMovementException;
 
 import java.util.List;
 import java.util.Locale;
@@ -18,7 +19,7 @@ public abstract class Piece {
 
     public List<Position> route(Position from, Position to) {
         if (Objects.equals(from, to)) {
-            throw new IllegalArgumentException();
+            throw new InvalidMovementException("자기 자신의 위치로는 이동할 수 없습니다.");
         }
 
         int rowDifference = Position.differenceOfRow(from, to);
@@ -28,7 +29,7 @@ public abstract class Piece {
             return getRoute();
         }
 
-        throw new IllegalArgumentException();
+        throw new InvalidMovementException("해당 기물의 이동 룰에 어긋납니다.");
     }
 
     protected abstract List<Position> getRoute();
