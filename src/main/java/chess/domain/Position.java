@@ -1,7 +1,5 @@
 package chess.domain;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -39,8 +37,57 @@ public class Position {
         return positions.get(key);
     }
 
-    public static List<Position> positions() {
-        return new ArrayList<>(positions.values());
+    public boolean isDiagonal(Position targetPosition) {
+        if (this.equals(targetPosition)) {
+            return false;
+        }
+        int xDif = Math.abs(x - targetPosition.x);
+        int yDif = Math.abs(y - targetPosition.y);
+        return xDif == yDif;
+    }
+
+    public boolean isStraight(Position targetPosition) {
+        if (this.equals(targetPosition)) {
+            return false;
+        }
+        return targetPosition.x == x || targetPosition.y == y;
+    }
+
+    public boolean isKnightMove(Position targetPosition) {
+        int xDif = Math.abs(x - targetPosition.x);
+        int yDif = Math.abs(y - targetPosition.y);
+        if (xDif == 1) {
+            return yDif == 2;
+        }
+        if (xDif == 2) {
+            return yDif == 1;
+        }
+        return false;
+    }
+
+    public boolean isAroundPosition(Position targetPosition) {
+        if (this.equals(targetPosition)) {
+            return false;
+        }
+        int xDif = Math.abs(x - targetPosition.x);
+        int yDif = Math.abs(y - targetPosition.y);
+        return xDif <= 1 && yDif <= 1;
+    }
+
+    public boolean upperThan(Position targetPosition) {
+        return y > targetPosition.y;
+    }
+
+    public boolean lowerThan(Position targetPosition) {
+        return y < targetPosition.y;
+    }
+
+    public int xDifference(Position targetPosition) {
+        return Math.abs(x - targetPosition.x);
+    }
+
+    public int yDifference(Position targetPosition) {
+        return Math.abs(y - targetPosition.y);
     }
 
     @Override

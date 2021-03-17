@@ -5,7 +5,19 @@ import chess.domain.TeamColor;
 
 public class King extends Piece {
 
-    public King(TeamColor teamColor, Position position) {
-        super(teamColor, position);
+    private static final String NAME = "k";
+
+    public King(TeamColor teamColor) {
+        super(teamColor);
+    }
+
+    @Override
+    public String name() {
+        return NAME;
+    }
+
+    @Override
+    public boolean movable(Position currentPosition, Position targetPosition) {
+        return currentPosition.isAroundPosition(targetPosition);
     }
 }

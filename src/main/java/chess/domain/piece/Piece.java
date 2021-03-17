@@ -5,15 +5,33 @@ import chess.domain.TeamColor;
 
 public abstract class Piece {
 
-    private Position position;
     private TeamColor teamColor;
+    private boolean moved;
 
-    public Piece(TeamColor teamColor, Position position) {
+    public Piece(TeamColor teamColor) {
         this.teamColor = teamColor;
-        this.position = position;
     }
 
-    public boolean isSamePosition(Position position) {
-        return this.position.equals(position);
+    public String nameByTeamColor() {
+        if (teamColor == TeamColor.BLACK) {
+            return name().toUpperCase();
+        }
+        return name();
     }
+
+    public void changeMoveState() {
+        moved = true;
+    }
+
+    protected TeamColor teamColor() {
+        return teamColor;
+    }
+
+    protected boolean notMoved() {
+        return !moved;
+    }
+
+    protected abstract String name();
+
+    public abstract boolean movable(Position currentPosition, Position targetPosition);
 }

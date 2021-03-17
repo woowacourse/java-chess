@@ -5,7 +5,20 @@ import chess.domain.TeamColor;
 
 public class Queen extends Piece {
 
-    public Queen(TeamColor teamColor, Position position) {
-        super(teamColor, position);
+    private static final String NAME = "q";
+
+    public Queen(TeamColor teamColor) {
+        super(teamColor);
+    }
+
+    @Override
+    public String name() {
+        return NAME;
+    }
+
+    @Override
+    public boolean movable(Position currentPosition, Position targetPosition) {
+        return currentPosition.isDiagonal(targetPosition)
+                || currentPosition.isStraight(targetPosition);
     }
 }
