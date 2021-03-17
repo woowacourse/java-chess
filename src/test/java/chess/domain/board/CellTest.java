@@ -29,6 +29,6 @@ class CellTest {
 
         Piece king = new King(TeamType.WHITE);
         cell.put(king);
-        assertThat(cell.getPiece().getName()).isEqualTo("K");
+        assertThat(cell.getPiece().getName()).isEqualTo("k");
     }
 }
