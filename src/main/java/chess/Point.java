@@ -2,6 +2,7 @@ package chess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Point {
     private static final int ASCII_CODE_GAP = 49;
@@ -43,5 +44,19 @@ public class Point {
 
     private int convertRankToIndex(int rank) {
         return RANK_GAP - rank;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point point = (Point) o;
+        return x == point.x &&
+                y == point.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }
