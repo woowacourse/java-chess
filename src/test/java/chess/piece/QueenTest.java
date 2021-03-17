@@ -12,9 +12,9 @@ public class QueenTest {
     @DisplayName("Queen 생성")
     @Test
     public void create() {
-        Queen queen1 = new Queen("Q", "BLACK", Point.valueOf(3, 0));
-        assertThat(Pieces.findPiece(3, 0)).isEqualTo(queen1);
-        Queen queen2 = new Queen("q", "WHITE", Point.valueOf(3, 7));
-        assertThat(Pieces.findPiece(3, 7)).isEqualTo(queen2);
+        Queen queen1 = new Queen("Q", "BLACK", Point.valueOf(0, 3));
+        assertThat(Pieces.findPiece(0, 3)).isEqualTo(queen1);
+        Queen queen2 = new Queen("q", "WHITE", Point.valueOf(7, 3));
+        assertThat(Pieces.findPiece(7, 3)).isEqualTo(queen2);
     }
 }

@@ -12,9 +12,9 @@ public class PawnTest {
     @ParameterizedTest
     @ValueSource(ints = {0, 1, 2, 3, 4, 5, 6, 7})
     public void create(int column) {
-        Pawn blackPawn = new Pawn("P", "BLACK", Point.valueOf(column, 1));
-        assertThat(Pieces.findPiece(column, 1)).isEqualTo(blackPawn);
-        Pawn whitePawn = new Pawn("p", "WHITE", Point.valueOf(column, 6));
-        assertThat(Pieces.findPiece(column, 6)).isEqualTo(whitePawn);
+        Pawn blackPawn = new Pawn("P", "BLACK", Point.valueOf(1, column));
+        assertThat(Pieces.findPiece(1, column)).isEqualTo(blackPawn);
+        Pawn whitePawn = new Pawn("p", "WHITE", Point.valueOf(6, column));
+        assertThat(Pieces.findPiece(6, column)).isEqualTo(whitePawn);
     }
 }

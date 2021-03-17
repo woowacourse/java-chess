@@ -9,90 +9,90 @@ import java.util.List;
 public enum Pieces {
     ROOK(Arrays.asList(0, 7)) {
         @Override
-        public Piece create(int column, int row) {
+        public Piece create(int row, int column) {
             if (row == 0) {
-                return new Rook("R", "BLACK", Point.valueOf(column, row));
+                return new Rook("R", "BLACK", Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Rook("r", "WHITE", Point.valueOf(column, row));
+                return new Rook("r", "WHITE", Point.valueOf(row, column));
             }
             if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(column, row));
+                return new Pawn("P", "BLACK", Point.valueOf(row, column));
             }
             if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(column, row));
+                return new Pawn("p", "WHITE", Point.valueOf(row, column));
             }
             return null;
         }
     },
     KNIGHT(Arrays.asList(1, 6)) {
         @Override
-        public Piece create(int column, int row) {
+        public Piece create(int row, int column) {
             if (row == 0) {
-                return new Knight("N", "BLACK", Point.valueOf(column, row));
+                return new Knight("N", "BLACK", Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Knight("n", "WHITE", Point.valueOf(column, row));
+                return new Knight("n", "WHITE", Point.valueOf(row, column));
             }
             if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(column, row));
+                return new Pawn("P", "BLACK", Point.valueOf(row, column));
             }
             if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(column, row));
+                return new Pawn("p", "WHITE", Point.valueOf(row, column));
             }
             return null;
         }
     },
     BISHOP(Arrays.asList(2, 5)) {
         @Override
-        public Piece create(int column, int row) {
+        public Piece create(int row, int column) {
             if (row == 0) {
-                return new Bishop("B", "BLACK", Point.valueOf(column, row));
+                return new Bishop("B", "BLACK", Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Bishop("b", "WHITE", Point.valueOf(column, row));
+                return new Bishop("b", "WHITE", Point.valueOf(row, column));
             }
             if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(column, row));
+                return new Pawn("P", "BLACK", Point.valueOf(row, column));
             }
             if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(column, row));
+                return new Pawn("p", "WHITE", Point.valueOf(row, column));
             }
             return null;
         }
     },
     QUEEN(Collections.singletonList(3)) {
         @Override
-        public Piece create(int column, int row) {
+        public Piece create(int row, int column) {
             if (row == 0) {
-                return new Queen("Q", "BLACK", Point.valueOf(column, row));
+                return new Queen("Q", "BLACK", Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Queen("q", "WHITE", Point.valueOf(column, row));
+                return new Queen("q", "WHITE", Point.valueOf(row, column));
             }
             if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(column, row));
+                return new Pawn("P", "BLACK", Point.valueOf(row, column));
             }
             if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(column, row));
+                return new Pawn("p", "WHITE", Point.valueOf(row, column));
             }
             return null;
         }
     },
     KING(Collections.singletonList(4)) {
         @Override
-        public Piece create(int column, int row) {
+        public Piece create(int row, int column) {
             if (row == 0) {
-                return new King("K", "BLACK", Point.valueOf(column, row));
+                return new King("K", "BLACK", Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new King("k", "WHITE", Point.valueOf(column, row));
+                return new King("k", "WHITE", Point.valueOf(row, column));
             }
             if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(column, row));
+                return new Pawn("P", "BLACK", Point.valueOf(row, column));
             }
             if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(column, row));
+                return new Pawn("p", "WHITE", Point.valueOf(row, column));
             }
             return null;
         }
@@ -104,8 +104,8 @@ public enum Pieces {
         this.column = column;
     }
 
-    public static Piece findPiece(int column, int row) {
-        return matchColumn(column).create(column, row);
+    public static Piece findPiece(int row, int column) {
+        return matchColumn(column).create(row, column);
     }
 
     private static Pieces matchColumn(int column) {
@@ -115,5 +115,5 @@ public enum Pieces {
                 .get();
     }
 
-    public abstract Piece create(int column, int row);
+    public abstract Piece create(int row, int column);
 }

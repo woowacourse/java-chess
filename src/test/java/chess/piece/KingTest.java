@@ -12,9 +12,9 @@ public class KingTest {
     @DisplayName("King 생성")
     @Test
     public void create() {
-        King king1 = new King("K", "BLACK", Point.valueOf(4, 0));
-        assertThat(Pieces.findPiece(4, 0)).isEqualTo(king1);
-        King king2 = new King("k", "WHITE", Point.valueOf(4, 7));
-        assertThat(Pieces.findPiece(4, 7)).isEqualTo(king2);
+        King king1 = new King("K", "BLACK", Point.valueOf(0, 4));
+        assertThat(Pieces.findPiece(0, 4)).isEqualTo(king1);
+        King king2 = new King("k", "WHITE", Point.valueOf(7, 4));
+        assertThat(Pieces.findPiece(7, 4)).isEqualTo(king2);
     }
 }

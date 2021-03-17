@@ -38,7 +38,7 @@ public class Point {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
     }
 
-    public static Point valueOf(int column, int row) {
+    public static Point valueOf(int row, int column) {
         return points.stream()
                 .filter(p -> p.x == column && p.y == row)
                 .findFirst()
@@ -46,7 +46,7 @@ public class Point {
     }
 
     private int convertLetterToIndex(char letter) {
-        return (int) (letter - ASCII_CODE_GAP);
+        return letter - ASCII_CODE_GAP;
     }
 
     private int convertRankToIndex(int rank) {
