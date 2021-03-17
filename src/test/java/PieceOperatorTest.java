@@ -107,4 +107,19 @@ public class PieceOperatorTest {
             pieceOperator.move(Point.of("a1"), Point.of("f6"))
         ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
     }
+
+    @Test
+    @DisplayName("나이트을 유효한 위치로 이동 테스트")
+    void knightWithValidMove() {
+        pieceOperator.move(Point.of("b1"), Point.of("c3"));
+        assertThat(board.getState(Point.of("c3"))).isEqualTo(State.of(Piece.KNIGHT, Team.WHITE));
+    }
+
+    @Test
+    @DisplayName("나이트 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
+    void knightMoveToInvalidPoint() {
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("b1"), Point.of("b3"))
+        ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
 }

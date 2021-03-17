@@ -11,7 +11,16 @@ public enum Direction {
     NORTHEAST(1, 1),
     NORTHWEST(-1, 1),
     SOUTHEAST(1, -1),
-    SOUTHWEST(-1, -1);
+    SOUTHWEST(-1, -1),
+
+    NNE(1,2),
+    NEE(2,1),
+    SEE(2,-1),
+    SSE(1,-2),
+    SSW(-1,-2),
+    SWW(-2,-1),
+    NWW(-2, 1),
+    NNW(-1,2);
 
     private final int horizon;
     private final int vertical;
@@ -31,6 +40,10 @@ public enum Direction {
 
     public static List<Direction> axisDirection() {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
+    }
+
+    public static List<Direction> knightDirection() {
+        return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
     public boolean isSameDirection(int horizon, int vertical) {

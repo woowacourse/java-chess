@@ -11,7 +11,7 @@
     - [x] king
     - [x] queen
     - [x] bishop
-    - knight
+    - [x] knight
     - [x] rook
     - pawn 
 - 체스 말 이동 기능 구현
@@ -19,7 +19,7 @@
       - [x] king
       - [x] queen
       - [x] bishop
-      - knight
+      - [x] knight
       - [x] rook
       - pawn
     - [x] 체스 판의 범위를 넘어간 경우 예외 처리
