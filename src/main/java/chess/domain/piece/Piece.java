@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
 public abstract class Piece {
-    private Position position;
-    private String name;
+    protected Position position;
+    protected String name;
 
     public Piece(Position position, String name) {
         this.position = position;
@@ -16,4 +16,6 @@ public abstract class Piece {
     public String getName() {
         return name;
     }
+
+    abstract void move(Position position);
 }

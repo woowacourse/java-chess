@@ -14,6 +14,11 @@ public class Knight extends Piece {
         super(position, name);
     }
 
+    @Override
+    void move(Position position) {
+
+    }
+
     public static List<Knight> generate() {
         List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
                 .map(position -> new Knight(position, "N"))

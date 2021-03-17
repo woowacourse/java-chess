@@ -6,4 +6,9 @@ public class Empty extends Piece {
     public Empty(Position position, String name) {
         super(position, name);
     }
+
+    @Override
+    void move(Position position) {
+
+    }
 }

@@ -22,4 +22,15 @@ public class PositionTest {
         assertThatThrownBy(() -> Position.of('z', '9'))
                 .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("두 위치의 Y 값의 차이를 구한다.")
+    @Test
+    void Y_값_차이_구하기() {
+        Position position1 = Position.of('a', '1');
+        Position position2 = Position.of('a', '5');
+
+        int difference = position1.subtract(position2);
+
+        assertThat(difference).isEqualTo(-4);
+    }
 }

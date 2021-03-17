@@ -15,4 +15,9 @@ public class ChessGameTest {
 
         assertThat(chessGame.getCurrentPieces()).isInstanceOf(CurrentPieces.class);
     }
+
+//    @DisplayName("source 위치 ")
+//    @Test
+//    void name() {
+//    }
 }

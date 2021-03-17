@@ -14,6 +14,11 @@ public class Rook extends Piece {
         super(position, name);
     }
 
+    @Override
+    void move(Position position) {
+
+    }
+
     public static List<Rook> generate() {
         List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
                 .map(position -> new Rook(position, "R"))

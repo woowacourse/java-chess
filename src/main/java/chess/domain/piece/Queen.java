@@ -11,6 +11,11 @@ public class Queen extends Piece {
         super(position, name);
     }
 
+    @Override
+    void move(Position position) {
+
+    }
+
     public static List<Queen> generate() {
         List<Queen> queens = new ArrayList();
         queens.add(new Queen(INITIAL_BLACK_POSITION, "Q"));

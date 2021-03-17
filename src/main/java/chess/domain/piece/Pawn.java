@@ -18,6 +18,34 @@ public class Pawn extends Piece {
         super(position, name);
     }
 
+    @Override
+    void move(Position position) {
+        if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙
+            if (this.position.subtract(position) > 0 && this.position.subtract(position) <= 2) {
+                this.position = position;
+                return;
+            }
+        }
+
+        if (this.position.getY() == '2' && this.name.equals("p")) { // 화이트
+            if (position.subtract(this.position) > 0 && position.subtract(this.position) <= 2) {
+                this.position = position;
+                return;
+            }
+        }
+
+        if (this.position.subtract(position) == 1 && this.name.equals("P")) { // 블랙
+            this.position = position;
+            return;
+        }
+
+        if (position.subtract(this.position) == 1 && this.name.equals("p")) { // 화이트
+            this.position = position;
+            return;
+        }
+        throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
+    }
+
     public static List<Pawn> generate() {
         List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
                 .map(position -> new Pawn(position, "P"))

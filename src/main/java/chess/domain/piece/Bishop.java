@@ -14,6 +14,11 @@ public class Bishop extends Piece {
         super(position, name);
     }
 
+    @Override
+    void move(Position position) {
+
+    }
+
     public static List<Bishop> generate() {
         List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
                 .map(position -> new Bishop(position, "B"))
