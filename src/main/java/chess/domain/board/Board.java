@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.player.Player;
 import chess.exception.NoSuchPermittedChessPieceException;
 
 import java.util.*;
@@ -16,13 +17,25 @@ public class Board {
         this.pieces = pieces;
     }
 
-    public void movePiece(Position source, Position target) {
+    public void movePiece(Player player, Position source, Position target) {
+        validateControllablePiece(player, source);
+        
         Piece sourcePiece = pieces.stream()
                 .filter(piece -> piece.isSamePosition(source))
                 .findAny()
                 .orElseThrow(NoSuchPermittedChessPieceException::new);
 
         sourcePiece.move(target, this);
+    }
+
+    private void validateControllablePiece(final Player player, final Position source) {
+        Optional<Piece> sourcePiece = pieces.stream()
+                .filter(piece -> piece.isSamePosition(source))
+                .findAny();
+
+        if (!(sourcePiece.isPresent() && sourcePiece.get().getColor() == player.getColor())) {
+            throw new NoSuchPermittedChessPieceException();
+        }
     }
 
     @Override
