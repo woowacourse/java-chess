@@ -57,4 +57,10 @@ public class Location {
     public boolean isDiagonal(final Location target) {
         return Math.abs(this.x - target.x) == Math.abs(this.y - target.y);
     }
+
+    public boolean isAdjacent(final Location target) {
+        return Math.abs(this.x - target.x) <= 1 && Math.abs(this.y - target.y) <= 1;
+    }
+
+
 }

@@ -5,7 +5,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class LocationTest {
@@ -56,5 +55,33 @@ class LocationTest {
         // then
         assertThat(location.isDiagonal(diagonalTarget)).isTrue();
         assertThat(location.isDiagonal(nonDiaGonamTarget)).isFalse();
+    }
+
+    @DisplayName("인접한 위치면 true를 반환한다")
+    @Test
+    void isAdjacent_true() {
+        // given, when
+        Location diagonalTargetLocation = Location.of(2, 2);
+        Location horizontalTargetLocation = Location.of(2, 1);
+        Location verticalTargetLocation = Location.of(1, 2);
+
+        // then
+        assertThat(location.isAdjacent(diagonalTargetLocation)).isTrue();
+        assertThat(location.isAdjacent(horizontalTargetLocation)).isTrue();
+        assertThat(location.isAdjacent(verticalTargetLocation)).isTrue();
+    }
+
+    @DisplayName("인접하지 않은 위치면 false를 반환한다")
+    @Test
+    void isAdjacent_false() {
+        // given, when
+        Location diagonalTargetLocation = Location.of(3, 2);
+        Location horizontalTargetLocation = Location.of(3, 1);
+        Location verticalTargetLocation = Location.of(1, 3);
+
+        // then
+        assertThat(location.isAdjacent(diagonalTargetLocation)).isFalse();
+        assertThat(location.isAdjacent(horizontalTargetLocation)).isFalse();
+        assertThat(location.isAdjacent(verticalTargetLocation)).isFalse();
     }
 }
