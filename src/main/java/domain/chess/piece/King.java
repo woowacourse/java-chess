@@ -21,6 +21,24 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Piece[][] board, Position end) {
-        return false;
+        List<Position> movePositions = Arrays.asList(
+                Position.Of(-1, 0),
+                Position.Of(1, 0),
+                Position.Of(0, -1),
+                Position.Of(0, 1),
+                Position.Of(-1, 1),
+                Position.Of(1, 1),
+                Position.Of(-1, -1),
+                Position.Of(1, -1)
+        );
+
+        int x = position.getRow();
+        int y = position.getColumn();
+        return movePositions.stream()
+                .filter(movePosition ->
+                        x + movePosition.getRow() == end.getRow() && y + movePosition.getColumn() == end.getColumn())
+                .findAny()
+                .isPresent();
     }
+
 }
