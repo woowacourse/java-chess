@@ -78,5 +78,22 @@ public class Board {
             Cell cell = cells.get(coordinate);
             cell.put(pieces.get(i));
         }
+
+        List<Piece> whitePieces = Arrays.asList(
+            new Rook(TeamType.WHITE),
+            new Knight(TeamType.WHITE),
+            new Bishop(TeamType.WHITE),
+            new Queen(TeamType.WHITE),
+            new King(TeamType.WHITE),
+            new Bishop(TeamType.WHITE),
+            new Knight(TeamType.WHITE),
+            new Rook(TeamType.WHITE)
+        );
+
+        for (int i = 0; i < files.size(); i++) {
+            Coordinate coordinate = new Coordinate(files.get(i), Rank.ONE);
+            Cell cell = cells.get(coordinate);
+            cell.put(whitePieces.get(i));
+        }
     }
 }

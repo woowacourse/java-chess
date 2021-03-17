@@ -65,4 +65,28 @@ class BoardTest {
         assertThat(board.of(new Coordinate(File.H, Rank.EIGHT)).getName())
             .isEqualTo("R");
     }
+
+
+    @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
+    @Test
+    void boardInitialization_WhitePieces() {
+        board.initialize();
+
+        assertThat(board.of(new Coordinate(File.A, Rank.ONE)).getName())
+            .isEqualTo("r");
+        assertThat(board.of(new Coordinate(File.B, Rank.ONE)).getName())
+            .isEqualTo("n");
+        assertThat(board.of(new Coordinate(File.C, Rank.ONE)).getName())
+            .isEqualTo("b");
+        assertThat(board.of(new Coordinate(File.D, Rank.ONE)).getName())
+            .isEqualTo("q");
+        assertThat(board.of(new Coordinate(File.E, Rank.ONE)).getName())
+            .isEqualTo("k");
+        assertThat(board.of(new Coordinate(File.F, Rank.ONE)).getName())
+            .isEqualTo("b");
+        assertThat(board.of(new Coordinate(File.G, Rank.ONE)).getName())
+            .isEqualTo("n");
+        assertThat(board.of(new Coordinate(File.H, Rank.ONE)).getName())
+            .isEqualTo("r");
+    }
 }
