@@ -7,6 +7,7 @@ import chess.view.OutputView;
 public class ChessController {
 
     public void run() {
+        OutputView.printGuideMessage();
         Board board = BoardFactory.initializeBoard();
         OutputView.printBoard(board);
     }
