@@ -47,4 +47,8 @@ public class Point {
     public int hashCode() {
         return Objects.hash(point);
     }
+    
+    public int getPoint() {
+        return point;
+    }
 }
