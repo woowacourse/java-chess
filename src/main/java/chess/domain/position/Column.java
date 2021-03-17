@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.position.exception.InvalidColumnException;
+
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -18,7 +20,7 @@ public enum Column {
         return Arrays.stream(Column.values())
                 .filter(column -> column.name().equals(upperAlpha))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(InvalidColumnException::new);
     }
 
     public static int differance(Column column1, Column column2) {

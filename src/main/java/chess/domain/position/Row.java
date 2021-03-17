@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.position.exception.InvalidRowException;
+
 import java.util.Arrays;
 
 public enum Row {
@@ -14,11 +16,11 @@ public enum Row {
         this.value = value;
     }
 
-    public static Row from(Character value) {
+    public static Row from(Character lineName) {
         return Arrays.stream(Row.values())
-                .filter(Row -> Row.lineName.equals(value.toString()))
+                .filter(Row -> Row.lineName.equals(lineName.toString()))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(InvalidRowException::new);
     }
 
     public String getLineName() {
@@ -29,3 +31,6 @@ public enum Row {
         return row1.value - row2.value;
     }
 }
+
+
+//
