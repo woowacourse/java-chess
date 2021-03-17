@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+
+import java.util.function.BiPredicate;
+
 public enum Shape {
     ROOK("R"),
-    NIGHT("N"),
+    KNIGHT("N"),
     BISHOP("B"),
     QUEEN("Q"),
     KING("K"),
@@ -21,5 +25,4 @@ public enum Shape {
 
         return notation.toLowerCase();
     }
-
 }

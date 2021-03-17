@@ -1,44 +1,44 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class PieceFactory {
     public static List<Piece> createPieces() {
         return Arrays.asList(
-                new Piece(Color.BLACK, Shape.QUEEN, new Position(0,3)),
-                new Piece(Color.WHITE, Shape.QUEEN, new Position(7,3)),
-                new Piece(Color.BLACK, Shape.KING, new Position(0,4)),
-                new Piece(Color.WHITE, Shape.KING, new Position(7,4)),
-                new Piece(Color.BLACK, Shape.ROOK, new Position(0,0)),
-                new Piece(Color.WHITE, Shape.ROOK, new Position(7,0)),
-                new Piece(Color.BLACK, Shape.NIGHT, new Position(0,1)),
-                new Piece(Color.WHITE, Shape.NIGHT, new Position(7,1)),
-                new Piece(Color.BLACK, Shape.BISHOP, new Position(0,2)),
-                new Piece(Color.WHITE, Shape.BISHOP, new Position(7,2)),
-                new Piece(Color.BLACK, Shape.ROOK, new Position(0,7)),
-                new Piece(Color.WHITE, Shape.ROOK, new Position(7,7)),
-                new Piece(Color.BLACK, Shape.NIGHT, new Position(0,6)),
-                new Piece(Color.WHITE, Shape.NIGHT, new Position(7,6)),
-                new Piece(Color.BLACK, Shape.BISHOP, new Position(0,5)),
-                new Piece(Color.WHITE, Shape.BISHOP, new Position(7,5)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,0)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,0)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,1)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,1)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,2)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,2)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,3)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,3)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,4)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,4)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,5)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,5)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,6)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,6)),
-                new Piece(Color.BLACK, Shape.PAWN, new Position(1,7)),
-                new Piece(Color.WHITE, Shape.PAWN, new Position(6,7))
+                Piece.createRook(Color.BLACK, 0, 0),
+                Piece.createKnight(Color.BLACK, 0, 1),
+                Piece.createBishop(Color.BLACK, 0, 2),
+                Piece.createQueen(Color.BLACK, 0, 3),
+                Piece.createKing(Color.BLACK, 0, 4),
+                Piece.createBishop(Color.BLACK, 0, 5),
+                Piece.createKnight(Color.BLACK, 0, 6),
+                Piece.createRook(Color.BLACK, 0, 7),
+                Piece.createPawn(Color.BLACK, 1, 0),
+                Piece.createPawn(Color.BLACK, 1, 1),
+                Piece.createPawn(Color.BLACK, 1, 2),
+                Piece.createPawn(Color.BLACK, 1, 3),
+                Piece.createPawn(Color.BLACK, 1, 4),
+                Piece.createPawn(Color.BLACK, 1, 5),
+                Piece.createPawn(Color.BLACK, 1, 6),
+                Piece.createPawn(Color.BLACK, 1, 7),
+
+                Piece.createRook(Color.WHITE, 7, 0),
+                Piece.createKnight(Color.WHITE, 7, 1),
+                Piece.createBishop(Color.WHITE, 7, 2),
+                Piece.createQueen(Color.WHITE, 7, 3),
+                Piece.createKing(Color.WHITE, 7, 4),
+                Piece.createBishop(Color.WHITE, 7, 5),
+                Piece.createKnight(Color.WHITE, 7, 6),
+                Piece.createRook(Color.WHITE, 7, 7),
+                Piece.createPawn(Color.WHITE, 6, 0),
+                Piece.createPawn(Color.WHITE, 6, 1),
+                Piece.createPawn(Color.WHITE, 6, 2),
+                Piece.createPawn(Color.WHITE, 6, 3),
+                Piece.createPawn(Color.WHITE, 6, 4),
+                Piece.createPawn(Color.WHITE, 6, 5),
+                Piece.createPawn(Color.WHITE, 6, 6),
+                Piece.createPawn(Color.WHITE, 6, 7)
         );
     }
 }
