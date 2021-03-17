@@ -1,12 +1,11 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-import java.util.List;
+import static chess.domain.piece.Position.POSITIONS;
 
 public class OutputView {
     private OutputView() {
@@ -18,12 +17,11 @@ public class OutputView {
     }
 
     public static void printChessBoard(CurrentPieces currentPieces) {
-        List<Position> positions = ChessBoard.getChessBoard();
-        for (int i = 0; i < positions.size(); i++) {
+        for (int i = 0; i < POSITIONS.size(); i++) {
             if (i % 8 == 0) {
                 System.out.println();
             }
-            Piece piece = findByPosition(positions.get(i), currentPieces);
+            Piece piece = findByPosition(POSITIONS.get(i), currentPieces);
             System.out.print(piece.getName());
         }
     }
