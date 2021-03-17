@@ -1,17 +1,60 @@
 package domain;
 
-import domain.piece.Piece;
+import domain.piece.*;
+import domain.position.Column;
 import domain.position.Position;
+import domain.position.Row;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public class Board {
     private final Map<Position, Piece> board = new HashMap<>();
 
     public Board() {
-        Position.all()
-                .stream()
-                .forEach(a -> board.put(a, null));
+        setUpEmpty();
+        setUpPawn();
+        setUpGeneral();
+    }
+
+    private void setUpGeneral() {
+        setUpGeneralByColor("black", Row.EIGHT);
+        setUpGeneralByColor("white", Row.ONE);
+    }
+
+    private void setUpGeneralByColor(String color, Row row) {
+        board.put(Position.of(Column.A, row), new Rook(color));
+        board.put(Position.of(Column.B, row), new Knight(color));
+        board.put(Position.of(Column.C, row), new Bishop(color));
+        board.put(Position.of(Column.D, row), new Queen(color));
+        board.put(Position.of(Column.E, row), new King(color));
+        board.put(Position.of(Column.F, row), new Bishop(color));
+        board.put(Position.of(Column.G, row), new Knight(color));
+        board.put(Position.of(Column.H, row), new Rook(color));
+    }
+
+    public void setUpEmpty() {
+        List<Row> emptyRows = Arrays.asList(Row.THREE, Row.FOUR, Row.FIVE, Row.SIX);
+        for (Row row : emptyRows){
+            setUpRow(row, Empty::new);
+        }
+    }
+
+    public void setUpPawn() {
+        setUpRow(Row.SEVEN, () -> new Pawn("black"));
+        setUpRow(Row.TWO, () -> new Pawn("white"));
+    }
+
+    private void setUpRow(Row row, Supplier<Piece> function) {
+        for (Column column:Column.values()){
+            board.put(Position.of(column, row), function.get());
+        }
+    }
+
+    public Piece pieceOf(Column column, Row row){
+        return board.get(Position.of(column, row));
     }
 }
