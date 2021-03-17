@@ -7,6 +7,8 @@ import java.util.Objects;
 public class Position {
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
+    private XPosition xPosition;
+    private YPosition yPosition;
 
     static {
         for (XPosition xposition : XPosition.values()) {
@@ -16,14 +18,11 @@ public class Position {
 
     private static void putPositionWithY(XPosition xposition) {
         for (YPosition yPosition : YPosition.values()) {
-            String positionKey = String.format("%c%d", xposition.getXPosition(),
-                yPosition.getYPosition());
+            String positionKey = String.format("%c%d", xposition.getValue(),
+                yPosition.getValue());
             CACHE.put(positionKey, new Position(xposition, yPosition));
         }
     }
-
-    private XPosition xPosition;
-    private YPosition yPosition;
 
     private Position(XPosition xPosition, YPosition yPosition) {
         this.xPosition = xPosition;
@@ -41,13 +40,21 @@ public class Position {
     }
 
     public static Position of(XPosition xPosition, YPosition yPosition) {
-        char xRawPosition = xPosition.getXPosition();
-        int yRawPosition = yPosition.getYPosition();
+        char xRawPosition = xPosition.getValue();
+        int yRawPosition = yPosition.getValue();
         return of(xRawPosition, yRawPosition);
     }
 
-    public Position getSymmetricPosition() {
-        return Position.of(xPosition.getXPosition(), 9 - yPosition.getYPosition());
+    public int computeHorizontalDistance(Position anotherPosition) {
+        return anotherPosition.getXPosition().getValue() - this.xPosition.getValue(); //TODO getter 줄이기
+    }
+
+    public int computeVerticalDistance(Position anotherPosition) {
+        return anotherPosition.getYPosition().getValue() - this.yPosition.getValue();
+    }
+
+    public Position computeSymmetricPosition() {
+        return Position.of(xPosition.getValue(), 9 - yPosition.getValue());
     }
 
     public XPosition getXPosition() {

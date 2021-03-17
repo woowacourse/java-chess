@@ -16,7 +16,7 @@ public enum YPosition {
         this.yPosition = yPosition;
     }
 
-    public int getYPosition() {
+    public int getValue() {
         return this.yPosition;
     }
 }

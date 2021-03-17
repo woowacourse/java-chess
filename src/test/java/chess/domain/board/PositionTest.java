@@ -33,4 +33,36 @@ class PositionTest {
 
         assertEquals(position, anotherPosition);
     }
+
+    @DisplayName("대칭 위치 계산")
+    @Test
+    void computeSymmetricPosition() {
+        Position targetPosition = Position.of('a', 8);
+
+        Position computedPosition = position.computeSymmetricPosition();
+
+        assertEquals(computedPosition, targetPosition);
+    }
+
+    @DisplayName("두 위치 사이의 가로 거리 비교")
+    @Test
+    void computeHorizontalPosition() {
+        Position anotherPosition = Position.of('d', 7);
+        int predictedHorizontalDistance = 3;
+
+        int distance = position.computeHorizontalDistance(anotherPosition);
+
+        assertEquals(distance, predictedHorizontalDistance);
+    }
+
+    @DisplayName("두 위치 사이의 세로 거리 비교")
+    @Test
+    void name() {
+        Position anotherPosition = Position.of('d', 7);
+        int predictedVerticalDistance = 6;
+
+        int distance = position.computeVerticalDistance(anotherPosition);
+
+        assertEquals(distance, predictedVerticalDistance);
+    }
 }

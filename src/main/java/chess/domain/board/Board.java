@@ -43,19 +43,23 @@ public class Board {
 
     private void putColorPieces(PieceKind pieceKind, Position position) {
         Piece pieceW = new Piece(pieceKind, PieceColor.WHITE);
-        board.put(position, pieceW);
+        putPieceAtPosition(position, pieceW);
 
         Piece pieceB = new Piece(pieceKind, PieceColor.BLACK);
-        board.put(position.getSymmetricPosition(), pieceB);
+        putPieceAtPosition(position.computeSymmetricPosition(), pieceB);
     }
 
     private void putVoidPieces(PieceKind pieceKind, Position position) {
         Piece pieceVoid = new Piece(pieceKind, PieceColor.VOID);
-        board.put(position, pieceVoid);
-        board.put(position.getSymmetricPosition(), pieceVoid);
+        putPieceAtPosition(position, pieceVoid);
+        putPieceAtPosition(position.computeSymmetricPosition(), pieceVoid);
     }
 
     public Piece checkPieceAtPosition(Position position) {
         return board.get(position);
+    }
+
+    public void putPieceAtPosition(Position position, Piece piece) {
+        board.put(position, piece);
     }
 }
