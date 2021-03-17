@@ -30,6 +30,14 @@ public class Position {
         return positionMap.get(input);
     }
 
+    public Position moveX(final int distance) {
+        return new Position(x + distance, y);
+    }
+
+    public Position moveY(final int distance) {
+        return new Position(x, y + distance);
+    }
+
     public Position moveUp() {
         return new Position(x, y + 1);
     }
