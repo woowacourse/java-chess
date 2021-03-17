@@ -4,7 +4,8 @@ import java.util.stream.Stream;
 
 public enum Command {
     START("start"),
-    END("end");
+    END("end"),
+    MOVE("move");
 
     private final String message;
 

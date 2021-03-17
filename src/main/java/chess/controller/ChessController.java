@@ -24,8 +24,8 @@ public class ChessController {
 
     private void playGame() {
         Game game = new Game();
-        OutputView.printBoard(game.getBoard());
         while(game.isPlaying()) {
+            OutputView.printBoard(game.getBoard());
             game.command(InputView.receiveInput());
         }
     }
