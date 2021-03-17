@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Pawn extends Piece{
+public class Pawn extends Piece {
     private static final String PAWN_INITIAL = "P";
 
     public Pawn(Side side) {

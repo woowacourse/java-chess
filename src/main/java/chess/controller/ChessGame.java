@@ -8,11 +8,9 @@ public class ChessGame {
     public void start() {
         OutputView.startGame();
         String command = InputView.command();
-        if(command.equals("start")){
+        if (command.equals("start")) {
             Board board = new Board();
             OutputView.printBoard(board);
         }
-
-
     }
 }

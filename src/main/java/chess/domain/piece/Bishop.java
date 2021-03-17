@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.List;
 
-public class Bishop extends Piece{
+public class Bishop extends Piece {
     private static final String BISHOP_INITIAL = "B";
 
     public Bishop(Side side) {
