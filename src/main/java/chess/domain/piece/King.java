@@ -20,7 +20,7 @@ public class King extends Piece {
         return Direction.everyDirection()
                 .stream()
                 .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
-                .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position))
+                .filter(position -> !isOutOfRange(position) && !Grid.isOccupied(position))
                 .collect(Collectors.toList());
     }
 

@@ -20,7 +20,7 @@ public class Knight extends Piece {
         return Direction.knightDirection()
                 .stream()
                 .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
-                .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position))
+                .filter(position -> !isOutOfRange(position) && !Grid.isOccupied(position))
                 .collect(Collectors.toList());
     }
 

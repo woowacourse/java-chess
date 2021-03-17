@@ -27,7 +27,7 @@ public class Queen extends Piece {
                                 direction.getXDegree() * index,
                                 direction.getYDegree() * index
                         ))
-                        .filter(position -> !isOutOfRange(position) && Grid.isOccupied(position)))
+                        .takeWhile(position -> !isOutOfRange(position) && !Grid.isOccupied(position)))
                 .collect(Collectors.toList());
     }
 
