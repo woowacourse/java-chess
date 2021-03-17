@@ -8,6 +8,11 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
+    @Test
+    void pawn_test() {
+        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
+        assertThat(pawn).isEqualTo(Pawn.Of("P", Position.Of(1, 0), true));
+    }
 
     @DisplayName("Pawn은 전진 1칸 또는 2칸 이동만 가능하다.")
     @Test
