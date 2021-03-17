@@ -1,7 +1,7 @@
 package chess.controller;
 
 import chess.domain.BoardInitializer;
-import chess.domain.ChessGame;
+import chess.ChessGame;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -31,6 +31,7 @@ public class ChessController {
 
     public static void move(ChessGame chessGame, String command) {
         chessGame.move(command);
+        OutputView.printBoard(chessGame.getBoard());
     }
 
     public static void end(ChessGame chessGame, String command){

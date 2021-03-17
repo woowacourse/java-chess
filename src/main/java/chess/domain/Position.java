@@ -1,8 +1,9 @@
 package chess.domain;
 
-import java.util.Arrays;
+import java.math.BigInteger;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
     private static final Map<String, Position> POSITIONS = new HashMap<>();
@@ -40,15 +41,25 @@ public class Position {
     }
 
     public Direction calculateDirection(Position target) {
-        return Direction.of(calculateFilePoint(target.getX()), calculateRankPoint(target.getY()));
+        int x = calculateFilePoint(target.getX());
+        int y = calculateRankPoint(target.getY());
+        int divide = Math.abs(gcd(x, y));
+        return Direction.of(x / divide, y / divide);
     }
 
     private int calculateFilePoint(int x) {
-        return x - this.getX() / Math.abs(x - this.getX());
+        return x - this.getX();
     }
 
     private int calculateRankPoint(int y) {
-        return y - this.getY() / Math.abs(y - this.getY());
+        return y - this.getY();
+    }
+
+    private int gcd(int a, int b) {
+        if (b == 0) {
+            return a;
+        }
+        return gcd(b, a % b);
     }
 
     public int getX() {
@@ -57,5 +68,27 @@ public class Position {
 
     public int getY() {
         return rank.getRank();
+    }
+
+    public Position move(Direction dir, int step) {
+        return Position.of(File.of(this.file.getIndex() + dir.getXDegree() * step),
+            Rank.of(this.rank.getRank() + dir.getYDegree() * step));
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position)) {
+            return false;
+        }
+        Position position = (Position) o;
+        return file == position.file && rank == position.rank;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(file, rank);
     }
 }

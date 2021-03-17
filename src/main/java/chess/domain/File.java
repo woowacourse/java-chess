@@ -27,6 +27,13 @@ public enum File {
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
     }
 
+    public static File of(int file) {
+        return Arrays.stream(values())
+            .filter(value -> file == value.index)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
+    }
+
     public String getFile() {
         return file;
     }

@@ -1,5 +1,12 @@
-package chess.domain;
+package chess;
 
+import chess.domain.Board;
+import chess.domain.Direction;
+import chess.domain.File;
+import chess.domain.MoveVO;
+import chess.domain.Position;
+import chess.domain.Rank;
+import chess.domain.Team;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.List;
@@ -34,16 +41,45 @@ public class ChessGame {
     }
 
     public void move(String command) {
-        // 출발 / 도착 좌표
         List<Position> coordinates = splitSourceAndTarget(command);
 
-        Position sourceCoordinates = coordinates.get(0);
-        Piece piece = board.pieceAt(sourceCoordinates);
+        Position source = coordinates.get(0);
+        Position target = coordinates.get(1);
+
+        Piece piece = board.pieceAt(source);
+        board.isSameTeam(target, team);
         piece.checkTurn(team);
 
-        // 팀 변경
+        Direction currentDirection = source.calculateDirection(target);
+        MoveVO strategy = piece.strategy();
+
+        movable(source, target, currentDirection, strategy);
+
         turnOver();
     }
+
+    private void movable(Position source, Position target, Direction currentDirection,
+        MoveVO strategy) {
+
+        if (!strategy.containsDirection(currentDirection)) {
+            throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
+        }
+
+        for (int i = 1; i <= strategy.getMoveRange(); i++) {
+            Position movePosition = source.move(currentDirection, i);
+
+            if (movePosition.equals(target)) {
+                board.isSameTeam(movePosition, team);
+                board.movePiece(source, target);
+                return;
+            }
+
+            if (board.containsPosition(movePosition)) {
+                throw new IllegalArgumentException("[ERROR] 경로에 말이 존재합니다.");
+            }
+        }
+    }
+
 
     private void turnOver() {
         team = team.turnOver(team);
