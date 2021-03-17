@@ -6,7 +6,6 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.Arrays;
@@ -28,8 +27,8 @@ public class BoardFactory {
         initializeSpecialPiecesByRow(board, MAX_ROW, PieceColor.BLACK);
 
         for (int column = MIN_ROW; column <= MAX_ROW; column++) {
-            board.putPiece(new Position(WHITE_PAWN_ROW, column), new Pawn(PieceColor.WHITE));
-            board.putPiece(new Position(BLACK_PAWN_ROW, column), new Pawn(PieceColor.BLACK));
+            board.putPiece(new Pawn(PieceColor.WHITE), new Position(WHITE_PAWN_ROW, column));
+            board.putPiece(new Pawn(PieceColor.BLACK), new Position(BLACK_PAWN_ROW, column));
         }
 
         return board;
@@ -38,7 +37,7 @@ public class BoardFactory {
     private static void initializeSpecialPiecesByRow(Board board, int row, PieceColor color) {
         List<Piece> pieces = createPieces(color);
         for (int column = MIN_ROW; column <= MAX_ROW; column++) {
-            board.putPiece(new Position(row, column), pieces.get(column - 1));
+            board.putPiece(pieces.get(column - 1), new Position(row, column));
         }
     }
 
@@ -54,5 +53,4 @@ public class BoardFactory {
             new Rook(color)
         );
     }
-
 }
