@@ -3,19 +3,21 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Horizontal {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
     private final String value;
+    private final int weight;
 
-    Horizontal(final String horizontalValue) {
+    Horizontal(final String horizontalValue, final int weight) {
         this.value = horizontalValue;
+        this.weight = weight;
     }
 
     public static Horizontal find(final String value) {
@@ -23,5 +25,16 @@ public enum Horizontal {
                 .filter(horizontal -> horizontal.value.equals(value))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static Horizontal findFromWeight(int weight) {
+        return Arrays.stream(Horizontal.values())
+                .filter(horizontal -> horizontal.weight == weight)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public int getWeight() {
+        return weight;
     }
 }

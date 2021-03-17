@@ -34,4 +34,12 @@ public class Location {
     public static List<Location> getLocations() {
         return Collections.unmodifiableList(CACHE);
     }
+
+    public Horizontal getHorizontal() {
+        return horizontal;
+    }
+
+    public Vertical getVertical() {
+        return vertical;
+    }
 }
