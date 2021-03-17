@@ -32,4 +32,16 @@ public class PositionTest {
 
         assertEquals(expectedPath, resultPath);
     }
+
+    @Test
+    @DisplayName("직선으로 움직일 시작점과 종점을 입력하면, 그 사이 경로의 Position 객체를 반환한다.")
+    void position_straight_path_test() {
+        final Position start = new Position(0, 0);
+        final Position destination = new Position(3, 0);
+
+        List<Position> expectedPath = Arrays.asList(new Position(1, 0), new Position(2, 0));
+        List<Position> resultPath = start.generateStraightPath(destination);
+
+        assertEquals(expectedPath, resultPath);
+    }
 }
