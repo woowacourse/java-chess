@@ -15,6 +15,9 @@ public class Board {
     }
 
     public Piece pieceAt(Position position) {
+        if(!positionMap.containsKey(position)) {
+            throw new IllegalArgumentException("[ERROR] 해당 좌표에 말이 존재하지 않습니다.");
+        }
         return positionMap.get(position);
     }
 }

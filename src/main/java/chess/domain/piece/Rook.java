@@ -26,4 +26,16 @@ public class Rook implements Piece{
         }
         return "r";
     }
+
+    @Override
+    public Team getTeam() {
+        return team;
+    }
+
+    @Override
+    public void checkTurn(Team team) {
+        if (this.team != team) {
+            throw new IllegalArgumentException("[ERROR] 상대 팀의 차례입니다.");
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.List;
 
@@ -9,9 +10,11 @@ public class ChessGame {
 
     private Board board;
     private boolean isRunning;
+    private Team team;
 
     public ChessGame() {
         isRunning = true;
+        team = Team.WHITE;
     }
 
     public void endGame() {
@@ -31,24 +34,36 @@ public class ChessGame {
     }
 
     public void move(String command) {
-        List<Coordinate> coordinates = splitSourceAndTarget(command);
+        // 출발 / 도착 좌표
+        List<Position> coordinates = splitSourceAndTarget(command);
+
+        Position sourceCoordinates = coordinates.get(0);
+        Piece piece = board.pieceAt(sourceCoordinates);
+        piece.checkTurn(team);
+
+        // 팀 변경
+        turnOver();
     }
 
-    private List<Coordinate> splitSourceAndTarget(String command) {
+    private void turnOver() {
+        team = team.turnOver(team);
+    }
+
+    private List<Position> splitSourceAndTarget(String command) {
         String[] commandParameters = command.split(" ");
         String source = commandParameters[SOURCE_INDEX];
         String target = commandParameters[TARGET_INDEX];
 
         return Arrays
-            .asList(new Coordinate(convertFileToCoordinate(source), convertRankToCoordinate(source))
-                , new Coordinate(convertFileToCoordinate(target), convertRankToCoordinate(target)));
+            .asList(Position.of(convertFileToCoordinate(source), convertRankToCoordinate(source))
+                , Position.of(convertFileToCoordinate(target), convertRankToCoordinate(target)));
     }
 
-    private int convertRankToCoordinate(String coordinate) {
-        return Rank.of(Integer.parseInt(String.valueOf(coordinate.charAt(1)))).getRank();
+    private Rank convertRankToCoordinate(String coordinate) {
+        return Rank.of(Integer.parseInt(String.valueOf(coordinate.charAt(1))));
     }
 
-    private int convertFileToCoordinate(String coordinate) {
-        return File.of(String.valueOf(coordinate.charAt(0))).getIndex();
+    private File convertFileToCoordinate(String coordinate) {
+        return File.of(String.valueOf(coordinate.charAt(0)));
     }
 }
