@@ -41,4 +41,20 @@ public class Location {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public boolean isHorizontalOrVertical(final Location target) {
+        return isHorizontal(target) || isVertical(target);
+    }
+
+    private boolean isHorizontal(final Location target) {
+        return this.y == target.y;
+    }
+
+    private boolean isVertical(final Location target) {
+        return this.x == target.x;
+    }
+
+    public boolean isDiagonal(final Location target) {
+        return Math.abs(this.x - target.x) == Math.abs(this.y - target.y);
+    }
 }
