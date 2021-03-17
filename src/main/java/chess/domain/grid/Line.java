@@ -1,7 +1,6 @@
 package chess.domain.grid;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
