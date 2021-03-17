@@ -50,7 +50,7 @@ public class Location {
             throw new IllegalArgumentException("좌표가 잘못 입력되었습니다.");
         }
         int x = location.charAt(0) - 'a' + 1;
-        int y = Character.getNumericValue(location.charAt(1));
+        int y = Character.digit(location.charAt(1), 10);
         return Location.of(x, y);
     }
 
