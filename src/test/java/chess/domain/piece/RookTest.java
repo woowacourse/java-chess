@@ -18,7 +18,7 @@ class RookTest {
         Rook rook = new Rook(Team.BLACK);
         List<Position> positions = rook.movablePositions(Position.of(Horizontal.B, Vertical.ONE));
 
-        assertThat(positions).contains(
+        assertThat(positions).containsExactly(
                 Position.of(Horizontal.A, Vertical.ONE),
                 Position.of(Horizontal.C, Vertical.ONE),
                 Position.of(Horizontal.D, Vertical.ONE),

@@ -8,9 +8,9 @@ import chess.domain.board.Vertical;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.domain.board.Board.*;
+
 public class Knight extends Piece {
-    private static final int POSITIVE = 1;
-    private static final int NEGATIVE = -1;
     private static final String KNIGHT_NAME = "N";
 
     public Knight(Team team) {

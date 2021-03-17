@@ -8,10 +8,10 @@ import chess.domain.board.Vertical;
 import java.util.ArrayList;
 import java.util.List;
 
+import static chess.domain.board.Board.*;
+
 public class Bishop extends Piece {
     private static final String BISHOP_NAME = "B";
-    private static final int POSITIVE = 1;
-    private static final int NEGATIVE = -1;
 
     public Bishop(Team team) {
         super(BISHOP_NAME, team);

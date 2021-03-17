@@ -10,6 +10,8 @@ import java.util.Map;
 public class Board {
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
+    public static final int POSITIVE = 1;
+    public static final int NEGATIVE = -1;
     private final Map<Position, Piece> board;
 
     public Board() {
