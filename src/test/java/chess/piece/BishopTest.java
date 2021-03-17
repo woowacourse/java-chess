@@ -12,13 +12,13 @@ public class BishopTest {
     @DisplayName("Bishop 생성")
     @Test
     public void create() {
-        Bishop bishop1 = new Bishop("B", "BLACK", Point.of('c', 8));
-        assertThat(Pieces.findPiece('c', 8)).isEqualTo(bishop1);
-        Bishop bishop2 = new Bishop("B", "BLACK", Point.of('f', 8));
-        assertThat(Pieces.findPiece('f', 8)).isEqualTo(bishop2);
-        Bishop bishop3 = new Bishop("b", "WHITE", Point.of('c', 1));
-        assertThat(Pieces.findPiece('c', 1)).isEqualTo(bishop3);
-        Bishop bishop4 = new Bishop("b", "WHITE", Point.of('f', 1));
-        assertThat(Pieces.findPiece('f', 1)).isEqualTo(bishop4);
+        Bishop bishop1 = new Bishop("B", "BLACK", Point.valueOf(2, 0));
+        assertThat(Pieces.findPiece(2, 0)).isEqualTo(bishop1);
+        Bishop bishop2 = new Bishop("B", "BLACK", Point.valueOf(5, 0));
+        assertThat(Pieces.findPiece(5, 0)).isEqualTo(bishop2);
+        Bishop bishop3 = new Bishop("b", "WHITE", Point.valueOf(2, 7));
+        assertThat(Pieces.findPiece(2, 7)).isEqualTo(bishop3);
+        Bishop bishop4 = new Bishop("b", "WHITE", Point.valueOf(5, 7));
+        assertThat(Pieces.findPiece(5, 7)).isEqualTo(bishop4);
     }
 }

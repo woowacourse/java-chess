@@ -7,112 +7,113 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Pieces {
-    ROOK(Arrays.asList('a', 'h')) {
+    ROOK(Arrays.asList(0, 7)) {
         @Override
-        public Piece create(char letter, int rank) {
-            if (rank == 8) {
-                return new Rook("R", "BLACK", Point.of(letter, rank));
+        public Piece create(int column, int row) {
+            if (row == 0) {
+                return new Rook("R", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 1) {
-                return new Rook("r", "WHITE", Point.of(letter, rank));
+            if (row == 7) {
+                return new Rook("r", "WHITE", Point.valueOf(column, row));
             }
-            if (rank == 7) {
-                return new Pawn("P", "BLACK", Point.of(letter, rank));
+            if (row == 1) {
+                return new Pawn("P", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 2) {
-                return new Pawn("p", "WHITE", Point.of(letter, rank));
+            if (row == 6) {
+                return new Pawn("p", "WHITE", Point.valueOf(column, row));
             }
             return null;
         }
     },
-    KNIGHT(Arrays.asList('b', 'g')) {
+    KNIGHT(Arrays.asList(1, 6)) {
         @Override
-        public Piece create(char letter, int rank) {
-            if (rank == 8) {
-                return new Knight("N", "BLACK", Point.of(letter, rank));
+        public Piece create(int column, int row) {
+            if (row == 0) {
+                return new Knight("N", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 1) {
-                return new Knight("n", "WHITE", Point.of(letter, rank));
+            if (row == 7) {
+                return new Knight("n", "WHITE", Point.valueOf(column, row));
             }
-            if (rank == 7) {
-                return new Pawn("P", "BLACK", Point.of(letter, rank));
+            if (row == 1) {
+                return new Pawn("P", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 2) {
-                return new Pawn("p", "WHITE", Point.of(letter, rank));
+            if (row == 6) {
+                return new Pawn("p", "WHITE", Point.valueOf(column, row));
             }
             return null;
         }
     },
-    BISHOP(Arrays.asList('c', 'f')) {
+    BISHOP(Arrays.asList(2, 5)) {
         @Override
-        public Piece create(char letter, int rank) {
-            if (rank == 8) {
-                return new Bishop("B", "BLACK", Point.of(letter, rank));
+        public Piece create(int column, int row) {
+            if (row == 0) {
+                return new Bishop("B", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 1) {
-                return new Bishop("b", "WHITE", Point.of(letter, rank));
+            if (row == 7) {
+                return new Bishop("b", "WHITE", Point.valueOf(column, row));
             }
-            if (rank == 7) {
-                return new Pawn("P", "BLACK", Point.of(letter, rank));
+            if (row == 1) {
+                return new Pawn("P", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 2) {
-                return new Pawn("p", "WHITE", Point.of(letter, rank));
+            if (row == 6) {
+                return new Pawn("p", "WHITE", Point.valueOf(column, row));
             }
             return null;
         }
     },
-    QUEEN(Collections.singletonList('d')) {
+    QUEEN(Collections.singletonList(3)) {
         @Override
-        public Piece create(char letter, int rank) {
-            if (rank == 8) {
-                return new Queen("Q", "BLACK", Point.of(letter, rank));
+        public Piece create(int column, int row) {
+            if (row == 0) {
+                return new Queen("Q", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 1) {
-                return new Queen("q", "WHITE", Point.of(letter, rank));
+            if (row == 7) {
+                return new Queen("q", "WHITE", Point.valueOf(column, row));
             }
-            if (rank == 7) {
-                return new Pawn("P", "BLACK", Point.of(letter, rank));
+            if (row == 1) {
+                return new Pawn("P", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 2) {
-                return new Pawn("p", "WHITE", Point.of(letter, rank));
+            if (row == 6) {
+                return new Pawn("p", "WHITE", Point.valueOf(column, row));
             }
             return null;
         }
     },
-    KING(Collections.singletonList('e')) {
+    KING(Collections.singletonList(4)) {
         @Override
-        public Piece create(char letter, int rank) {
-            if (rank == 8) {
-                return new King("K", "BLACK", Point.of(letter, rank));
+        public Piece create(int column, int row) {
+            if (row == 0) {
+                return new King("K", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 1) {
-                return new King("k", "WHITE", Point.of(letter, rank));
+            if (row == 7) {
+                return new King("k", "WHITE", Point.valueOf(column, row));
             }
-            if (rank == 7) {
-                return new Pawn("P", "BLACK", Point.of(letter, rank));
+            if (row == 1) {
+                return new Pawn("P", "BLACK", Point.valueOf(column, row));
             }
-            if (rank == 2) {
-                return new Pawn("p", "WHITE", Point.of(letter, rank));
+            if (row == 6) {
+                return new Pawn("p", "WHITE", Point.valueOf(column, row));
             }
             return null;
         }
     };
 
-    private final List<Character> column;
+    private final List<Integer> column;
 
-    Pieces(List<Character> column) {
+    Pieces(List<Integer> column) {
         this.column = column;
     }
 
-    public static Piece findPiece(char letter, int rank) {
-        return matchLetter(letter).create(letter, rank);
+    public static Piece findPiece(int column, int row) {
+        return matchColumn(column).create(column, row);
     }
 
-    private static Pieces matchLetter(char letter) {
+    private static Pieces matchColumn(int column) {
         return Arrays.stream(Pieces.values())
-                .filter(piece -> piece.column.contains(letter))
-                .findFirst().get();
+                .filter(piece -> piece.column.contains(column))
+                .findFirst()
+                .get();
     }
 
-    public abstract Piece create(char letter, int rank);
+    public abstract Piece create(int column, int row);
 }

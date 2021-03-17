@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Point {
-    private static final int ASCII_CODE_GAP = 49;
+    private static final int ASCII_CODE_GAP = 97;
     private static final int RANK_GAP = 8;
     private static final char MINIMUM_LETTER = 'a';
     private static final char MAXIMUM_LETTER = 'h';
@@ -17,7 +17,7 @@ public class Point {
 
     static {
         for (int i = MINIMUM_LETTER; i <= MAXIMUM_LETTER; i++) {
-            for (int j = MINIMUM_RANK; j <= MAXIMUM_RANK; j++) {
+            for (int j = MAXIMUM_RANK; MINIMUM_RANK <= j; j--) {
                 points.add(new Point((char) i, j));
             }
         }
@@ -38,8 +38,15 @@ public class Point {
                 .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
     }
 
+    public static Point valueOf(int column, int row) {
+        return points.stream()
+                .filter(p -> p.x == column && p.y == row)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE));
+    }
+
     private int convertLetterToIndex(char letter) {
-        return (int) letter - ASCII_CODE_GAP;
+        return (int) (letter - ASCII_CODE_GAP);
     }
 
     private int convertRankToIndex(int rank) {

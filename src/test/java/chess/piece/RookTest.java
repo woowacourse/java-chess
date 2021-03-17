@@ -12,13 +12,13 @@ public class RookTest {
     @DisplayName("Rook 생성")
     @Test
     public void create() {
-        Rook rook1 = new Rook("R", "BLACK", Point.of('a', 8));
-        assertThat(Pieces.findPiece('a', 8)).isEqualTo(rook1);
-        Rook rook2 = new Rook("R", "BLACK", Point.of('h', 8));
-        assertThat(Pieces.findPiece('h', 8)).isEqualTo(rook2);
-        Rook rook3 = new Rook("r", "WHITE", Point.of('a', 1));
-        assertThat(Pieces.findPiece('a', 1)).isEqualTo(rook3);
-        Rook rook4 = new Rook("r", "WHITE", Point.of('h', 1));
-        assertThat(Pieces.findPiece('h', 1)).isEqualTo(rook4);
+        Rook rook1 = new Rook("R", "BLACK", Point.valueOf(0, 0));
+        assertThat(Pieces.findPiece(0, 0)).isEqualTo(rook1);
+        Rook rook2 = new Rook("R", "BLACK", Point.valueOf(7, 0));
+        assertThat(Pieces.findPiece(7, 0)).isEqualTo(rook2);
+        Rook rook3 = new Rook("r", "WHITE", Point.valueOf(0, 7));
+        assertThat(Pieces.findPiece(0, 7)).isEqualTo(rook3);
+        Rook rook4 = new Rook("r", "WHITE", Point.valueOf(7, 7));
+        assertThat(Pieces.findPiece(7, 7)).isEqualTo(rook4);
     }
 }
