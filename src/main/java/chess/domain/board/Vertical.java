@@ -20,4 +20,8 @@ public enum Vertical {
         Vertical value = Vertical.valueOf(symbol.toUpperCase());
         return value.index;
     }
+
+    public int getIndex(){
+        return index;
+    }
 }
