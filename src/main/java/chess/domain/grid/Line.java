@@ -1,9 +1,9 @@
 package chess.domain.grid;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Line {
@@ -19,23 +19,32 @@ public class Line {
     }
 
     public static Line createGeneralLine(final int rowNumber, final boolean isBlack){
-        List<Piece> generalLine = new ArrayList<>();
-//        Rook rookLeft = new Rook(isBlack, (char)('a'), Character.forDigit(rowNumber, 10));
-//        Knight knightLeft = new Knight((isBlack, (char)('b'), Character.forDigit(rowNumber, 10));
-//        Bishop bishopLeft = new Bishop((isBlack, (char)('c'), Character.forDigit(rowNumber, 10));
-//        Queen queen = new Queen((isBlack, (char)('d'), Character.forDigit(rowNumber, 10));
-//        King king = new King((isBlack, (char)('e'), Character.forDigit(rowNumber, 10));
-//        Bishop bishopRight = new Bishop((isBlack, (char)('f'), Character.forDigit(rowNumber, 10));
-//        Knight knightRight = new Knight((isBlack, (char)('g'), Character.forDigit(rowNumber, 10));
-//        Rook rookRight = new Rook(isBlack, (char)('h'), Character.forDigit(rowNumber, 10));
+        Rook rookLeft = new Rook(isBlack, 'a', Character.forDigit(rowNumber, DECIMAL));
+        Knight knightLeft = new Knight(isBlack, 'b', Character.forDigit(rowNumber, DECIMAL));
+        Bishop bishopLeft = new Bishop(isBlack, 'c', Character.forDigit(rowNumber, DECIMAL));
+        Queen queen = new Queen(isBlack, 'd', Character.forDigit(rowNumber, DECIMAL));
+        King king = new King(isBlack, 'e', Character.forDigit(rowNumber, DECIMAL));
+        Bishop bishopRight = new Bishop(isBlack, 'f', Character.forDigit(rowNumber, DECIMAL));
+        Knight knightRight = new Knight(isBlack, 'g', Character.forDigit(rowNumber, DECIMAL));
+        Rook rookRight = new Rook(isBlack, 'h', Character.forDigit(rowNumber, DECIMAL));
+        List<Piece> generalLine = Arrays.asList(
+            rookLeft,
+            knightLeft,
+            bishopLeft,
+            queen,
+            king,
+            bishopRight,
+            knightRight,
+            rookRight
+        );
         return new Line(generalLine);
     }
 
     public static Line createPawnLine(final int rowNumber, final boolean isBlack){
         List<Piece> pawnLine = new ArrayList<>();
         for (int i = 0; i < LINE_COUNT; i++) {
-            Pawn pawn = new Pawn(isBlack, (char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
-            pawnLine.add(pawn);
+//            Pawn pawn = new Pawn(isBlack, (char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
+//            pawnLine.add(pawn);
         }
         return new Line(pawnLine);
     }
