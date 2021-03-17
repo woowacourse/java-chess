@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Direction;
 import chess.domain.MoveVO;
 import chess.domain.Team;
-import java.util.List;
 
 public class Rook implements Piece{
     private static final int MOVE_RANGE = 8;
@@ -16,6 +15,11 @@ public class Rook implements Piece{
     @Override
     public MoveVO strategy() {
         return new MoveVO(Direction.linearDirection(), MOVE_RANGE);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 
     @Override

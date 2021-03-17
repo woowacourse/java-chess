@@ -23,6 +23,11 @@ public class Bishop implements Piece{
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public void canMove() {
 
     }

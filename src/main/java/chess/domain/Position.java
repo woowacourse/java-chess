@@ -1,6 +1,6 @@
 package chess.domain;
 
-import java.math.BigInteger;
+import chess.domain.piece.Pawn;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -73,6 +73,26 @@ public class Position {
     public Position move(Direction dir, int step) {
         return Position.of(File.of(this.file.getIndex() + dir.getXDegree() * step),
             Rank.of(this.rank.getRank() + dir.getYDegree() * step));
+    }
+
+    public int calculateDistance(Position source) {
+        return (int) Math.sqrt((Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
+    }
+
+    public boolean isStraight(Position position) {
+        return calculateFileGap(position) == 0 && calculateRankGap(position) != 0;
+    }
+
+    private int calculateRankGap(Position position) {
+        return this.getY() - position.getY();
+    }
+
+    private int calculateFileGap(Position position) {
+        return this.getX() - position.getX();
+    }
+
+    public boolean isLocatedAtStartLine() {
+        return this.getY() == Pawn.WHITE_PAWN_START_LINE || this.getY() == Pawn.BLACK_PAWN_START_LINE;
     }
 
     @Override

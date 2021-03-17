@@ -5,8 +5,10 @@ import chess.domain.MoveVO;
 import chess.domain.Team;
 
 public class Pawn implements Piece{
-    private static final int MOVE_FIRST_RANGE = 2;
-    private static final int MOVE_SECOND_RANGE = 1;
+    public static final int BLACK_PAWN_START_LINE = 7;
+    public static final int WHITE_PAWN_START_LINE = 2;
+    public static final int MOVE_FIRST_RANGE = 2;
+
     private final Team team;
 
     public Pawn(Team team) {
@@ -19,6 +21,11 @@ public class Pawn implements Piece{
             return new MoveVO(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
         }
         return new MoveVO(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

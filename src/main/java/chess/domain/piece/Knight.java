@@ -18,6 +18,11 @@ public class Knight implements Piece{
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public void canMove() {
 
     }

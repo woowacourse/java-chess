@@ -18,6 +18,11 @@ public class Queen implements Piece{
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public void canMove() {
 
     }

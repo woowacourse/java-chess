@@ -16,4 +16,6 @@ public interface Piece {
     void checkTurn(Team team);
 
     boolean isSameTeam(Team team);
+
+    boolean isPawn();
 }

@@ -53,18 +53,54 @@ public class ChessGame {
         Direction currentDirection = source.calculateDirection(target);
         MoveVO strategy = piece.strategy();
 
-        movable(source, target, currentDirection, strategy);
-
-        turnOver();
-    }
-
-    private void movable(Position source, Position target, Direction currentDirection,
-        MoveVO strategy) {
-
         if (!strategy.containsDirection(currentDirection)) {
             throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
         }
 
+        if (piece.isPawn()) {
+            pawnMovable(piece, source, target, currentDirection, strategy);
+            turnOver();
+            return;
+        }
+
+        movable(source, target, currentDirection, strategy);
+        turnOver();
+    }
+
+    private void pawnMovable(Piece piece, Position source, Position target,
+        Direction currentDirection,
+        MoveVO strategy) {
+
+        int distance = target.calculateDistance(source);
+
+        if (source.isStraight(target)) {
+            if (distance == 1) {
+                if (board.containsPosition(target)) {
+                    throw new IllegalArgumentException("[ERROR] 목적지에 말이 존재합니다.");
+                }
+                board.movePiece(source, target);
+                return;
+            }
+
+            if (distance == 2) {
+                if (!source.isLocatedAtStartLine()) {
+                    throw new IllegalArgumentException("[ERROR] 폰은 처음에만 두 칸 이동할 수 있습니다.");
+                }
+                movable(source, target, currentDirection, strategy);
+                return;
+            }
+        }
+
+        // 대각선인 경우
+        if (distance >= 2 || !board.containsPosition(target)
+            || board.pieceAt(target).isSameTeam(piece.getTeam())) {
+            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대팀의 말이 있는 경우 한 칸 이동할 수 있습니다.");
+        }
+        board.movePiece(source, target);
+    }
+
+    private void movable(Position source, Position target, Direction currentDirection,
+        MoveVO strategy) {
         for (int i = 1; i <= strategy.getMoveRange(); i++) {
             Position movePosition = source.move(currentDirection, i);
 

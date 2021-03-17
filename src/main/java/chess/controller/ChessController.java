@@ -13,6 +13,7 @@ public class ChessController {
 
     public void run() {
         ChessGame chessGame = new ChessGame();
+        OutputView.printCommandInfo();
         while(chessGame.isRunning()) {
             String inputCmd = InputView.inputCommand();
             Command command = Command.of(splitCommand(inputCmd));
