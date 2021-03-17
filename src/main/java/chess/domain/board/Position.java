@@ -1,4 +1,4 @@
-package chess.board;
+package chess.domain.board;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,6 +38,12 @@ public class Position {
         String positionKey = String.format("%c%d", xRawPosition,
             yRawPosition);
         return from(positionKey);
+    }
+
+    public static Position of(XPosition xPosition, YPosition yPosition) {
+        char xRawPosition = xPosition.getXPosition();
+        int yRawPosition = yPosition.getYPosition();
+        return of(xRawPosition, yRawPosition);
     }
 
     public Position getSymmetricPosition() {

@@ -1,4 +1,4 @@
-package chess.board;
+package chess.domain.board;
 
 public enum XPosition {
     A('a'),

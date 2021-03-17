@@ -1,4 +1,4 @@
-package chess.board;
+package chess.domain.board;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
