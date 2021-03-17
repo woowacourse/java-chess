@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.stream.IntStream;
 
 import static chess.domain.piece.PositionTexture.*;
 import static org.assertj.core.api.Assertions.assertThat;

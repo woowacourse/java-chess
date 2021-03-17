@@ -31,7 +31,9 @@ public class Position {
     public static Position emptyPosition(){
         return new Position(Rank.EMPTY, File.EMPTY);
     }
-
+    public static Position valueOf(final Rank rank, final File file) {
+        return POSITIONS.get(rank.getRank() + file.getFile());
+    }
     public static Position valueOf(final String rank, final String file) {
         Rank findRank = Rank.findByRank(rank);
         File findFile = File.findByFile(file);

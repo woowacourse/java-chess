@@ -27,6 +27,10 @@ public abstract class Piece {
         return position;
     }
 
+    public final String getPiece() {
+        return piece;
+    }
+
     public final boolean isSamePosition(final Position position) {
         return this.position.equals(position);
     }
