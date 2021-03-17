@@ -1,0 +1,69 @@
+package chess;
+
+import chess.piece.*;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+
+
+public class BoardTest {
+    @DisplayName("보드 생성")
+    @Test
+    void create() {
+        assertDoesNotThrow(Board::new);
+    }
+
+    @DisplayName("초기화된 보드 확인")
+    @ParameterizedTest
+    @ValueSource(ints = {0, 7})
+    void initialize(int value) {
+        Board board = new Board();
+        Piece[][] pieces = board.getBoard();
+        assertThat(pieces[value][0]).isInstanceOf(Rook.class);
+        assertThat(pieces[value][1]).isInstanceOf(Knight.class);
+        assertThat(pieces[value][2]).isInstanceOf(Bishop.class);
+        assertThat(pieces[value][3]).isInstanceOf(Queen.class);
+        assertThat(pieces[value][4]).isInstanceOf(King.class);
+        assertThat(pieces[value][5]).isInstanceOf(Bishop.class);
+        assertThat(pieces[value][6]).isInstanceOf(Knight.class);
+        assertThat(pieces[value][7]).isInstanceOf(Rook.class);
+    }
+
+    @DisplayName("초기화된 폰 위치 확인")
+    @ParameterizedTest
+    @ValueSource(ints = {1, 6})
+    void initializePawn(int value) {
+        Board board = new Board();
+        Piece[][] pieces = board.getBoard();
+
+        assertThat(pieces[value][0]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][1]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][2]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][3]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][4]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][5]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][6]).isInstanceOf(Pawn.class);
+        assertThat(pieces[value][7]).isInstanceOf(Pawn.class);
+    }
+
+    @DisplayName("초기화된 빈 위치 확인")
+    @ParameterizedTest
+    @ValueSource(ints = {2, 3, 4, 5})
+    void initializeNull(int value) {
+        Board board = new Board();
+        Piece[][] pieces = board.getBoard();
+
+        assertThat(pieces[value][0]).isNull();
+        assertThat(pieces[value][1]).isNull();
+        assertThat(pieces[value][2]).isNull();
+        assertThat(pieces[value][3]).isNull();
+        assertThat(pieces[value][4]).isNull();
+        assertThat(pieces[value][5]).isNull();
+        assertThat(pieces[value][6]).isNull();
+        assertThat(pieces[value][7]).isNull();
+    }
+}
