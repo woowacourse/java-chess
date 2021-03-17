@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
-public class Bishop extends Piece{
+import chess.domain.position.Position;
+
+public class Bishop extends Piece {
     private static final String SYMBOL = "Bb";
 
-    private Bishop(final String piece, final boolean isBlack) {
-        super(piece, isBlack);
+    private Bishop(final String piece, final boolean isBlack, final Position position) {
+        super(piece, isBlack, position);
     }
 
-    public static Bishop from(final String piece){
+    public static Bishop from(final String piece, final Position position) {
         validate(piece);
-        return new Bishop(piece, isBlack(piece));
+        return new Bishop(piece, isBlack(piece), position);
     }
 
     private static void validate(final String piece) {

@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
-public class Queen extends Piece{
+import chess.domain.position.Position;
+
+public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
 
-    private Queen(final String piece, final boolean isBlack) {
-        super(piece, isBlack);
+    private Queen(final String piece, final boolean isBlack, final Position position) {
+        super(piece, isBlack, position);
     }
 
-    public static Queen from(final String piece){
+    public static Queen from(final String piece, final Position position) {
         validate(piece);
-        return new Queen(piece, isBlack(piece));
+        return new Queen(piece, isBlack(piece), position);
     }
 
     private static void validate(final String piece) {

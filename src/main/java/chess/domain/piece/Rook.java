@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
-public class Rook extends Piece{
+import chess.domain.position.Position;
+
+public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
 
-    private Rook(final String piece, final boolean isBlack) {
-        super(piece, isBlack);
+    private Rook(final String piece, final boolean isBlack, final Position position) {
+        super(piece, isBlack, position);
     }
 
-    public static Rook from(final String piece){
+    public static Rook from(final String piece, final Position position) {
         validate(piece);
-        return new Rook(piece, isBlack(piece));
+        return new Rook(piece, isBlack(piece), position);
     }
 
     private static void validate(final String piece) {

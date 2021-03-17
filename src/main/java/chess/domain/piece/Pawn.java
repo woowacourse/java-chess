@@ -1,15 +1,17 @@
 package chess.domain.piece;
 
-public class Pawn extends Piece{
+import chess.domain.position.Position;
+
+public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
 
-    private Pawn(final String piece, final boolean isBlack) {
-        super(piece, isBlack);
+    private Pawn(final String piece, final boolean isBlack, final Position position) {
+        super(piece, isBlack, position);
     }
 
-    public static Pawn from(final String piece){
+    public static Pawn from(final String piece, final Position position) {
         validate(piece);
-        return new Pawn(piece, isBlack(piece));
+        return new Pawn(piece, isBlack(piece), position);
     }
 
     private static void validate(final String piece) {
