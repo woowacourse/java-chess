@@ -37,6 +37,7 @@ public class King extends Piece {
         return movePositions.stream()
                 .filter(movePosition ->
                         x + movePosition.getRow() == end.getRow() && y + movePosition.getColumn() == end.getColumn())
+                .filter(movePosition -> !isOurTeam(board[x + movePosition.getRow()][y + movePosition.getColumn()]))
                 .findAny()
                 .isPresent();
     }
