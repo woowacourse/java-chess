@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.position.Vertical;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,10 +16,14 @@ public class Knight extends Piece {
 
     @Override
     boolean canMove(final Position source, final Position target, final Piece piece) {
-        final Direction direction = POSSIBLE_DIRECTIONS.stream()
-                .filter(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("위치를 잘못 입력하셨습니다."));
+        if (!isPossibleDirection(source, target)) {
+            throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
+        }
         return isOpponent(piece) || piece.equals(new Blank());
+    }
+
+    private boolean isPossibleDirection(final Position source, final  Position target) {
+        return POSSIBLE_DIRECTIONS.stream()
+                .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
     }
 }
