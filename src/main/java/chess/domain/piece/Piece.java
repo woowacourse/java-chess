@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
 
 import java.util.List;
+import java.util.Map;
 
 public abstract class Piece {
     private final String team;
@@ -12,9 +12,9 @@ public abstract class Piece {
         this.team = team;
     }
 
-    public abstract boolean isMovable(final Position current, final Position destination, final ChessBoard chessBoard);
+    public abstract boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard);
 
-    abstract boolean checkPositionRule(final Position current, final Position destination);
+    public abstract boolean checkPositionRule(final Position current, final Position destination);
 
     public final boolean checkDiagonalRule(final Position current, final Position destination) {
         final int xDiff = Math.abs(current.getX() - destination.getX());
@@ -35,9 +35,9 @@ public abstract class Piece {
         return false;
     }
 
-    public final boolean checkEmptyPath(final List<Position> path, final ChessBoard chessBoard) {
+    public final boolean checkEmptyPath(final List<Position> path, final Map<Position, Piece> chessBoard) {
         for (Position position : path) {
-            if (chessBoard.havePiece(position)) {
+            if (chessBoard.containsKey(position)) {
                 return false;
             }
         }
