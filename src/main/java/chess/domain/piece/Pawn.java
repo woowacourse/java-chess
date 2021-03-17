@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Location;
+import chess.domain.board.Position;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Location> movableLocations(Location target) {
+    public List<Position> movablePositions(Position target) {
         return null;
     }
 }

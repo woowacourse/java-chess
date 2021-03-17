@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
-import chess.domain.board.Location;
+import chess.domain.board.Position;
 import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
@@ -17,28 +18,29 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Location> movableLocations(Location target) {
-        List<Location> movableLocations = new ArrayList<>();
+    public List<Position> movablePositions(Position target) {
+        List<Position> movablePositions = new ArrayList<>();
 
-        movableLocations.addAll(diagonal(target, POSITIVE, POSITIVE));
-        movableLocations.addAll(diagonal(target, NEGATIVE, POSITIVE));
-        movableLocations.addAll(diagonal(target, NEGATIVE, NEGATIVE));
-        movableLocations.addAll(diagonal(target, POSITIVE, NEGATIVE));
+        movablePositions.addAll(diagonal(target, POSITIVE, POSITIVE));
+        movablePositions.addAll(diagonal(target, NEGATIVE, POSITIVE));
+        movablePositions.addAll(diagonal(target, NEGATIVE, NEGATIVE));
+        movablePositions.addAll(diagonal(target, POSITIVE, NEGATIVE));
 
-        return movableLocations;
+        return movablePositions;
     }
 
-    private List<Location> diagonal(Location target, int horizontalDirection, int verticalDirection) {
-        List<Location> result = new ArrayList<>();
+    private List<Position> diagonal(Position target, int horizontalDirection, int verticalDirection) {
+        List<Position> result = new ArrayList<>();
         int horizontalWeight = target.getHorizontal().getWeight();
         int verticalWeight = target.getVertical().getWeight();
 
-        while (horizontalWeight > 1 && horizontalWeight < 8 && verticalWeight > 1 && verticalWeight < 8) {
+        while (horizontalWeight > Board.MIN_BORDER && horizontalWeight < Board.MAX_BORDER
+                && verticalWeight > Board.MIN_BORDER && verticalWeight < Board.MAX_BORDER) {
             horizontalWeight += horizontalDirection;
             verticalWeight += verticalDirection;
 
             result.add(
-                    Location.of(Horizontal.findFromWeight(horizontalWeight), Vertical.findFromWeight(verticalWeight))
+                    Position.of(Horizontal.findFromWeight(horizontalWeight), Vertical.findFromWeight(verticalWeight))
             );
         }
         return result;

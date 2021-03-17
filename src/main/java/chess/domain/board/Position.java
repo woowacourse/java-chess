@@ -5,33 +5,33 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Location {
-    private static final List<Location> CACHE;
+public class Position {
+    private static final List<Position> CACHE;
 
     static {
         CACHE = Arrays.stream(Vertical.values())
                 .flatMap(vertical -> Arrays.stream(Horizontal.values())
-                        .map(horizontal -> new Location(horizontal, vertical)))
+                        .map(horizontal -> new Position(horizontal, vertical)))
                 .collect(Collectors.toList());
     }
 
     private final Horizontal horizontal;
     private final Vertical vertical;
 
-    private Location(Horizontal horizontal, Vertical vertical) {
+    private Position(Horizontal horizontal, Vertical vertical) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
 
-    public static Location of(Horizontal horizontal, Vertical vertical) {
+    public static Position of(Horizontal horizontal, Vertical vertical) {
         return CACHE.stream()
-                .filter(location -> horizontal.equals(location.horizontal)
-                        && vertical.equals(location.vertical))
+                .filter(position -> horizontal.equals(position.horizontal)
+                        && vertical.equals(position.vertical))
                 .findAny()
                 .orElseThrow(RuntimeException::new);
     }
 
-    public static List<Location> getLocations() {
+    public static List<Position> getPositions() {
         return Collections.unmodifiableList(CACHE);
     }
 

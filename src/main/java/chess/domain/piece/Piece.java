@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Location;
+import chess.domain.board.Position;
 
 import java.util.List;
 
@@ -24,5 +24,5 @@ public abstract class Piece {
         return name;
     }
 
-    public abstract List<Location> movableLocations(Location target);
+    public abstract List<Position> movablePositions(Position target);
 }

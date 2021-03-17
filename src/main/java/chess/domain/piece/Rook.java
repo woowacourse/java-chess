@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Horizontal;
-import chess.domain.board.Location;
+import chess.domain.board.Position;
 import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
@@ -15,18 +15,18 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Location> movableLocations(Location target) {
-        List<Location> movableLocations = new ArrayList<>();
+    public List<Position> movablePositions(Position target) {
+        List<Position> movablePositions = new ArrayList<>();
         Vertical targetVertical = target.getVertical();
         Horizontal targetHorizontal = target.getHorizontal();
 
         for (Horizontal horizontal : Horizontal.values()) {
-            movableLocations.add(Location.of(horizontal, targetVertical));
+            movablePositions.add(Position.of(horizontal, targetVertical));
         }
         for (Vertical vertical : Vertical.values()) {
-            movableLocations.add(Location.of(targetHorizontal, vertical));
+            movablePositions.add(Position.of(targetHorizontal, vertical));
         }
 
-        return movableLocations;
+        return movablePositions;
     }
 }
