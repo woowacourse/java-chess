@@ -2,91 +2,99 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.piece.Piece;
 import java.util.Arrays;
+import java.util.stream.Stream;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
+    private static final Board BOARD = Board.getInstance();
 
-    private final Board board = Board.getInstance();
+    private static Stream<Arguments> getDefaultBlackPieces() {
+        BOARD.initialize();
+        return Stream.of(
+            Arguments.of(BOARD.of(new Coordinate(File.A, Rank.EIGHT)), "R"),
+            Arguments.of(BOARD.of(new Coordinate(File.B, Rank.EIGHT)), "N"),
+            Arguments.of(BOARD.of(new Coordinate(File.C, Rank.EIGHT)), "B"),
+            Arguments.of(BOARD.of(new Coordinate(File.D, Rank.EIGHT)), "Q"),
+            Arguments.of(BOARD.of(new Coordinate(File.E, Rank.EIGHT)), "K"),
+            Arguments.of(BOARD.of(new Coordinate(File.F, Rank.EIGHT)), "B"),
+            Arguments.of(BOARD.of(new Coordinate(File.G, Rank.EIGHT)), "N"),
+            Arguments.of(BOARD.of(new Coordinate(File.H, Rank.EIGHT)), "R")
+            );
+    }
+
+    private static Stream<Arguments> getDefaultWhitePieces() {
+        BOARD.initialize();
+        return Stream.of(
+            Arguments.of(BOARD.of(new Coordinate(File.A, Rank.ONE)), "r"),
+            Arguments.of(BOARD.of(new Coordinate(File.B, Rank.ONE)), "n"),
+            Arguments.of(BOARD.of(new Coordinate(File.C, Rank.ONE)), "b"),
+            Arguments.of(BOARD.of(new Coordinate(File.D, Rank.ONE)), "q"),
+            Arguments.of(BOARD.of(new Coordinate(File.E, Rank.ONE)), "k"),
+            Arguments.of(BOARD.of(new Coordinate(File.F, Rank.ONE)), "b"),
+            Arguments.of(BOARD.of(new Coordinate(File.G, Rank.ONE)), "n"),
+            Arguments.of(BOARD.of(new Coordinate(File.H, Rank.ONE)), "r")
+        );
+    }
+
+    @BeforeEach
+    void setup() {
+        BOARD.initialize();
+    }
 
     @DisplayName("8 * 8 의 빈 체스 판 싱글톤 테스트")
     @Test
     void singleton() {
-        Board board1 = Board.getInstance();
-        Board board2 = Board.getInstance();
-
-        assertThat(board1).isSameAs(board2);
+        assertThat(BOARD).isSameAs(Board.getInstance());
     }
 
-    @DisplayName("초기 기물 배치 - 7Rank는 모두 흑의 폰이다.")
-    @Test
-    void boardInitialization_BlackPawn() {
-        board.initialize();
+    @DisplayName("initialize 메서드는")
+    @Nested
+    class Context_initialize {
 
-        boolean isAllBlackPawn = Arrays.stream(File.values())
-            .map(file -> board.of(new Coordinate(file, Rank.SEVEN)).getName())
-            .allMatch(name -> name.equals("P"));
+        private Piece getPiece(File file, Rank rank) {
+            return BOARD.of(new Coordinate(file, rank));
+        }
 
-        assertThat(isAllBlackPawn).isTrue();
-    }
+        @DisplayName("7Rank를 모두 흑의 폰으로 초기화한다")
+        @Test
+        void boardInitialization_BlackPawn() {
+            boolean isAllBlackPawn = Arrays.stream(File.values())
+                .map(file -> getPiece(file, Rank.SEVEN).getName())
+                .allMatch(name -> name.equals("P"));
 
-    @DisplayName("초기 기물 배치 - 2Rank는 모두 백의 폰이다.")
-    @Test
-    void boardInitialization_WhitePawn() {
-        board.initialize();
+            assertThat(isAllBlackPawn).isTrue();
+        }
 
-        boolean isAllWhitePawn = Arrays.stream(File.values())
-            .map(file -> board.of(new Coordinate(file, Rank.TWO)).getName())
-            .allMatch(name -> name.equals("p"));
+        @DisplayName("2Rank는 모두 백의 폰으로 초기화한다.")
+        @Test
+        void boardInitialization_WhitePawn() {
+            boolean isAllWhitePawn = Arrays.stream(File.values())
+                .map(file -> getPiece(file, Rank.TWO).getName())
+                .allMatch(name -> name.equals("p"));
 
-        assertThat(isAllWhitePawn).isTrue();
+            assertThat(isAllWhitePawn).isTrue();
+        }
     }
 
     @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
-    @Test
-    void boardInitialization_BlackPieces() {
-        board.initialize();
-
-        assertThat(board.of(new Coordinate(File.A, Rank.EIGHT)).getName())
-            .isEqualTo("R");
-        assertThat(board.of(new Coordinate(File.B, Rank.EIGHT)).getName())
-            .isEqualTo("N");
-        assertThat(board.of(new Coordinate(File.C, Rank.EIGHT)).getName())
-            .isEqualTo("B");
-        assertThat(board.of(new Coordinate(File.D, Rank.EIGHT)).getName())
-            .isEqualTo("Q");
-        assertThat(board.of(new Coordinate(File.E, Rank.EIGHT)).getName())
-            .isEqualTo("K");
-        assertThat(board.of(new Coordinate(File.F, Rank.EIGHT)).getName())
-            .isEqualTo("B");
-        assertThat(board.of(new Coordinate(File.G, Rank.EIGHT)).getName())
-            .isEqualTo("N");
-        assertThat(board.of(new Coordinate(File.H, Rank.EIGHT)).getName())
-            .isEqualTo("R");
+    @MethodSource("getDefaultBlackPieces")
+    @ParameterizedTest
+    void boardInitialization_BlackPieces(Piece piece, String pieceName) {
+        assertThat(piece.getName()).isEqualTo(pieceName);
     }
 
-
     @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
-    @Test
-    void boardInitialization_WhitePieces() {
-        board.initialize();
-
-        assertThat(board.of(new Coordinate(File.A, Rank.ONE)).getName())
-            .isEqualTo("r");
-        assertThat(board.of(new Coordinate(File.B, Rank.ONE)).getName())
-            .isEqualTo("n");
-        assertThat(board.of(new Coordinate(File.C, Rank.ONE)).getName())
-            .isEqualTo("b");
-        assertThat(board.of(new Coordinate(File.D, Rank.ONE)).getName())
-            .isEqualTo("q");
-        assertThat(board.of(new Coordinate(File.E, Rank.ONE)).getName())
-            .isEqualTo("k");
-        assertThat(board.of(new Coordinate(File.F, Rank.ONE)).getName())
-            .isEqualTo("b");
-        assertThat(board.of(new Coordinate(File.G, Rank.ONE)).getName())
-            .isEqualTo("n");
-        assertThat(board.of(new Coordinate(File.H, Rank.ONE)).getName())
-            .isEqualTo("r");
+    @MethodSource("getDefaultWhitePieces")
+    @ParameterizedTest
+    void boardInitialization_WhitePieces(Piece piece, String pieceName) {
+        assertThat(piece.getName()).isEqualTo(pieceName);
     }
 }
