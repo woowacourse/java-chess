@@ -18,6 +18,9 @@ public class ChessBoard {
     private final List<List<Piece>> chessBoard = new ArrayList<>(8);
 
     public ChessBoard() {
+    }
+
+    public void initBoard() {
         initBlack();
         initBlank();
         initWhite();

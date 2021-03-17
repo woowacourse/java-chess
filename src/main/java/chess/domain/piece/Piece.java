@@ -46,11 +46,11 @@ public abstract class Piece {
     }
 
     protected boolean isBlack() {
-        return this.color.equals(Color.BLACK);
+        return this.color.isBlack();
     }
 
     protected boolean isWhite() {
-        return this.color.equals(Color.WHITE);
+        return this.color.isWhite();
     }
 
     protected boolean isInBound(Position currentPosition) {
