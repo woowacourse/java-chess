@@ -10,6 +10,6 @@ public class EmptyTest {
     @Test
     @DisplayName("빈말 테스트")
     void createTest(){
-        assertThat(new Empty()).isInstanceOf(Empty.class);
+        assertThat(new Empty(Team.EMPTY)).isInstanceOf(Empty.class);
     }
 }

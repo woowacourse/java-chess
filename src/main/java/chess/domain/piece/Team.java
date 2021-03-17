@@ -1,5 +1,5 @@
 package chess.domain.piece;
 
 public enum Team {
-    WHITE, BLACK
+    WHITE, BLACK, EMPTY
 }

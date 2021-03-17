@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-public class Rook implements Piece {
-
-    private final Team team;
+public class Rook extends Piece {
 
     public Rook(final Team team) {
-        this.team = team;
+        super(team, "r");
     }
 }
