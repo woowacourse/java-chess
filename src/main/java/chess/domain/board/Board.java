@@ -48,52 +48,42 @@ public class Board {
     }
 
     public void initialize() {
-        for (File file : File.values()) {
-            Coordinate coordinate = new Coordinate(file, Rank.SEVEN);
-            Cell cell = cells.get(coordinate);
-            cell.put(new Pawn(TeamType.BLACK));
-        }
+        putPawns(TeamType.BLACK, Rank.SEVEN);
+        putPiecesNotPawn(TeamType.BLACK, Rank.EIGHT);
 
-        for (File file : File.values()) {
-            Coordinate coordinate = new Coordinate(file, Rank.TWO);
-            Cell cell = cells.get(coordinate);
-            cell.put(new Pawn(TeamType.WHITE));
-        }
+        putPawns(TeamType.WHITE, Rank.TWO);
+        putPiecesNotPawn(TeamType.WHITE, Rank.ONE);
+    }
 
+    private void putPawns(TeamType teamType, Rank rank) {
+        for (File file : File.values()) {
+            Coordinate coordinate = new Coordinate(file, rank);
+            Cell cell = cells.get(coordinate);
+            cell.put(new Pawn(teamType));
+        }
+    }
+
+    private void putPiecesNotPawn(TeamType teamType, Rank rank) {
         List<File> files = Arrays.asList(File.values());
-        List<Piece> pieces = Arrays.asList(
-            new Rook(TeamType.BLACK),
-            new Knight(TeamType.BLACK),
-            new Bishop(TeamType.BLACK),
-            new Queen(TeamType.BLACK),
-            new King(TeamType.BLACK),
-            new Bishop(TeamType.BLACK),
-            new Knight(TeamType.BLACK),
-            new Rook(TeamType.BLACK)
-        );
+        List<Piece> pieces = createPiecesNotPawn(teamType);
 
         for (int i = 0; i < files.size(); i++) {
-            Coordinate coordinate
-                = new Coordinate(files.get(i), Rank.EIGHT);
+            Coordinate coordinate = new Coordinate(files.get(i), rank);
             Cell cell = cells.get(coordinate);
             cell.put(pieces.get(i));
         }
+    }
 
-        List<Piece> whitePieces = Arrays.asList(
-            new Rook(TeamType.WHITE),
-            new Knight(TeamType.WHITE),
-            new Bishop(TeamType.WHITE),
-            new Queen(TeamType.WHITE),
-            new King(TeamType.WHITE),
-            new Bishop(TeamType.WHITE),
-            new Knight(TeamType.WHITE),
-            new Rook(TeamType.WHITE)
+    private List<Piece> createPiecesNotPawn(TeamType teamType) {
+        return Arrays.asList(
+            new Rook(teamType),
+            new Knight(teamType),
+            new Bishop(teamType),
+            new Queen(teamType),
+            new King(teamType),
+            new Bishop(teamType),
+            new Knight(teamType),
+            new Rook(teamType)
         );
-
-        for (int i = 0; i < files.size(); i++) {
-            Coordinate coordinate = new Coordinate(files.get(i), Rank.ONE);
-            Cell cell = cells.get(coordinate);
-            cell.put(whitePieces.get(i));
-        }
     }
 }
