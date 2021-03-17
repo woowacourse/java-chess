@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Point;
+import chess.domain.Point;
 
 public class Queen extends Piece {
     public Queen(String name, String color, Point point) {

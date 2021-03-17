@@ -1,8 +1,8 @@
 package chess.piece;
 
-import chess.Point;
-import chess.piece.Pieces;
-import chess.piece.Rook;
+import chess.domain.Point;
+import chess.domain.piece.Pieces;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

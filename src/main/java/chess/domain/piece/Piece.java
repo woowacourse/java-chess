@@ -1,6 +1,6 @@
-package chess.piece;
+package chess.domain.piece;
 
-import chess.Point;
+import chess.domain.Point;
 
 import java.util.Objects;
 

@@ -1,7 +1,7 @@
-package chess;
+package chess.domain;
 
-import chess.piece.Piece;
-import chess.piece.Pieces;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 
 public class Board {
     private static final int BOARD_SIZE = 8;
