@@ -10,7 +10,7 @@ public abstract class Piece {
     private final String piece;
     private final boolean isBlack;
 
-    private final Position position;
+    private Position position;
 
     protected Piece(final String piece, final boolean isBlack, final Position position) {
         this.piece = piece;

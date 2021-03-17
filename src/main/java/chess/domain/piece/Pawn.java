@@ -22,4 +22,14 @@ public class Pawn extends Piece {
             throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
         }
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
 }
