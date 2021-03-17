@@ -13,12 +13,35 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<Position> getRoute() {
-        return null;
+    protected List<Position> getRoute(Position from, Position to) {
+        return Position.getRoute(from, to);
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
+
+        if (isSideEqualTo(Side.BLACK)) {
+            if (rowDifference == 1) {
+                if (Math.abs(columnDifference) < 2) {
+                    return true;
+                }
+            }
+            if (rowDifference == 2) {
+                return isInitPosition();
+            }
+        }
+
+        if (isSideEqualTo(Side.WHITE)) {
+            if (rowDifference == -1) {
+                if (Math.abs(columnDifference) < 2) {
+                    return true;
+                }
+            }
+            if (rowDifference == -2) {
+                return isInitPosition();
+            }
+        }
+
         return false;
     }
 }

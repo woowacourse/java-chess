@@ -16,7 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KingTest {
 
-    King king;
+    private Piece king;
 
     @BeforeEach
     void setUp() {

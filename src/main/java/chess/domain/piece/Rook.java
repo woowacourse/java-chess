@@ -13,7 +13,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    protected List<Position> getRoute() {
+    protected List<Position> getRoute(Position from, Position to) {
         return null;
     }
 

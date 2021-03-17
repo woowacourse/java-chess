@@ -14,7 +14,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected List<Position> getRoute() {
+    protected List<Position> getRoute(Position from, Position to) {
         return Collections.emptyList();
     }
 

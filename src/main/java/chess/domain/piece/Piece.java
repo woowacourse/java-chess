@@ -11,6 +11,7 @@ import java.util.Objects;
 public abstract class Piece {
     private final Side side;
     private final String initial;
+    private boolean initPosition = true;
 
     public Piece(Side side, String initial) {
         this.side = side;
@@ -26,13 +27,21 @@ public abstract class Piece {
         int columnDifference = Position.differenceOfColumn(from, to);
 
         if (movable(rowDifference, columnDifference)) {
-            return getRoute();
+            return getRoute(from, to);
         }
 
         throw new InvalidMovementException("해당 기물의 이동 룰에 어긋납니다.");
     }
 
-    protected abstract List<Position> getRoute();
+    public void moved() {
+        initPosition = false;
+    }
+
+    protected boolean isInitPosition() {
+        return initPosition;
+    }
+
+    protected abstract List<Position> getRoute(Position from, Position to);
 
     protected abstract boolean movable(int rowDifference, int columnDifference);
 
