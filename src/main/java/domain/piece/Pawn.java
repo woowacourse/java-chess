@@ -18,6 +18,11 @@ public class Pawn extends Division {
         }
     }
 
+    @Override
+    public void kill(Position to, List<Position> pieces) {
+
+    }
+
     public List<Position> possiblePositions() {
         List<Position> positions = new ArrayList<>();
         if (isBlack()) {

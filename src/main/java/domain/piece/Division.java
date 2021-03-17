@@ -24,6 +24,8 @@ public abstract class Division extends Basis {
 
     public abstract void move(Position to, List<Position> pieces);
 
+    public abstract void kill(Position to, List<Position> pieces);
+
     @Override
     public String display() {
         if(isBlack()) {

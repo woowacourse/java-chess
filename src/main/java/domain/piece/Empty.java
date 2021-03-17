@@ -15,6 +15,11 @@ public class Empty extends Basis{
     }
 
     @Override
+    public void kill(Position to, List<Position> pieces) {
+
+    }
+
+    @Override
     public boolean hasPosition(Position position) {
         throw new UnsupportedOperationException();
     }

@@ -12,4 +12,9 @@ public class Queen extends Division{
     @Override
     public void move(Position to, List<Position> pieces) {
     }
+
+    @Override
+    public void kill(Position to, List<Position> pieces) {
+
+    }
 }
