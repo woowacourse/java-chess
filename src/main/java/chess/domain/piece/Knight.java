@@ -12,16 +12,7 @@ public class Knight extends Piece {
     private static final char NAME_WHEN_WHITE = 'n';
 
     public Knight(final Boolean isBlack, final char x, final char y) {
-        super(isBlack, x, y);
-    }
-
-    @Override
-    List<Position> extractMovablePositions() {
-        return Direction.knightDirection()
-                .stream()
-                .map(direction -> getPosition().moved(direction.getXDegree(), direction.getYDegree()))
-                .filter(position -> !isOutOfRange(position) && !Grid.isOccupied(position))
-                .collect(Collectors.toList());
+        super(isBlack, x, y, Direction.knightDirection(), 1);
     }
 
     @Override

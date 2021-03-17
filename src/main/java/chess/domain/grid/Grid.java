@@ -2,10 +2,12 @@ package chess.domain.grid;
 
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
+import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.IntStream;
 
 public class Grid {
     private static final int FIRST_ROW = 1;
@@ -33,18 +35,75 @@ public class Grid {
     }
 
     public static boolean isOccupied(final Position position) {
-        boolean b = findPiece(position) instanceof Empty;
-        return b;
+        return findPiece(position) instanceof Empty;
     }
 
-//    public void move(Position source, Position target) {
-//        // 해당 위치의 체스말 가져오기
-//        lines.get(source).move(target);
-//
-//        // 움직이고자 하는 곳의 체스말 바꾸기
-////        lines[source].set(target);
-////        lines[taget].set(source);
-//    }
+    public static void move(Position source, Position target) {
+        validateMovablePosition(source, target);
+
+        Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
+        if (targetPiece.isEmpty()) {
+            changePiece(source, new Empty(source));
+            return;
+        }
+        changePiece(target, sourcePiece);
+    }
+
+    private static void validateMovablePosition(Position source, Position target) {
+        validatePositionInGrid(source, target);
+        validateSourcePieceEmpty(source);
+        validateMoveDirectionAndStep(source, target);
+    }
+
+    private static void validatePositionInGrid(Position source, Position target) {
+        if (!source.validatePositionInGrid() || !target.validatePositionInGrid()) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private static void validateSourcePieceEmpty(Position source) {
+        Piece sourcePiece = findPiece(source);
+        if (sourcePiece.isEmpty()) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    // 이 부분을 전략으로 빼야돼!
+    private static void validateMoveDirectionAndStep(Position source, Position target) {
+        Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
+
+        List<Position> movablePositions = new ArrayList<>();
+        for (Direction direction : sourcePiece.getDirections()) {
+            movablePositions.addAll(extractMovablePositionsInOneDirection(source, direction));
+        }
+        if (!movablePositions.contains(target)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private static List<Position> extractMovablePositionsInOneDirection(Position source, Direction direction) {
+        List<Position> positions = new ArrayList<>();
+
+        Piece sourcePiece = findPiece(source);
+        for (int i = 1; i <= sourcePiece.getStepRange(); i++) {
+            int xDegree = direction.getXDegree() * i;
+            int yDegree = direction.getYDegree() * i;
+            Position movedPosition = source.moveBy(xDegree, yDegree);
+            if (!movedPosition.validatePositionInGrid()) {
+                break;
+            }
+            positions.add(movedPosition);
+            if (!findPiece(movedPosition).isEmpty()) {
+                break;
+            }
+        }
+        return positions;
+    }
 
     private static Piece findPiece(final Position position) {
         char x = position.getX();
@@ -52,5 +111,13 @@ public class Grid {
         int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
         Line line = lines.get(yIndex);
         return line.findPiece(x);
+    }
+
+    private static void changePiece(Position position, Piece piece) {
+        char x = position.getX();
+        char y = position.getY();
+        int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
+        Line line = lines.get(yIndex);
+        line.changePiece(x, piece);
     }
 }

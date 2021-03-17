@@ -14,21 +14,7 @@ public class Rook extends Piece {
     private static final int LINE_COUNT = 8;
 
     public Rook(final Boolean isBlack, final char x, final char y) {
-        super(isBlack, x, y);
-    }
-
-    @Override
-    List<Position> extractMovablePositions() {
-        return Direction.linearDirection()
-                .stream()
-                .flatMap(direction -> IntStream
-                        .rangeClosed(1, LINE_COUNT)
-                        .mapToObj(index -> getPosition().moved(
-                                direction.getXDegree() * index,
-                                direction.getYDegree() * index
-                        ))
-                        .takeWhile(position -> !isOutOfRange(position) && !Grid.isOccupied(position)))
-                .collect(Collectors.toList());
+        super(isBlack, x, y, Direction.linearDirection(), LINE_COUNT);
     }
 
     @Override
