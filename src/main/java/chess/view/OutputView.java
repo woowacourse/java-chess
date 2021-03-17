@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private OutputView() {
+    }
+
     public static void printBoard(Board board) {
         List<Rank> ranks = Arrays.asList(Rank.values());
         List<Rank> reversedRanks = ranks.stream()
