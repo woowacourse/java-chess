@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.player.PlayerType;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +32,25 @@ public class Board {
         for (Rank rank : Rank.values()) {
             Coordinate coordinate = new Coordinate(file, rank);
             cells.put(coordinate, new Cell(coordinate));
+        }
+    }
+
+    public Piece of(Coordinate coordinate) {
+        Cell cell = cells.get(coordinate);
+        return cell.getPiece();
+    }
+
+    public void initialize() {
+        for (File file : File.values()) {
+            Coordinate coordinate = new Coordinate(file, Rank.SEVEN);
+            Cell cell = cells.get(coordinate);
+            cell.put(new Pawn(PlayerType.BLACK));
+        }
+
+        for (File file : File.values()) {
+            Coordinate coordinate = new Coordinate(file, Rank.TWO);
+            Cell cell = cells.get(coordinate);
+            cell.put(new Pawn(PlayerType.WHITE));
         }
     }
 }
