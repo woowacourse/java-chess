@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public class Knight extends Piece {
+public class Knight extends RealPiece {
     private static final String KNIGHT_WORD = "N";
 
-    public Knight(Color color, Position position) {
-        super(color, position, KNIGHT_WORD);
+    public Knight(Position position,Color color) {
+        super(position, KNIGHT_WORD, color);
     }
 }

@@ -3,12 +3,10 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public abstract class Piece {
-    private final Color color;
     private final String notation;
     private Position position;
 
-    public Piece(Color color, Position position, String notation) {
-        this.color = color;
+    public Piece(Position position, String notation) {
         this.position = position;
         this.notation = notation;
     }
@@ -18,14 +16,14 @@ public abstract class Piece {
     }
 
     public String getNotation() {
-        return color.changeNotation(notation);
+        return notation;
     }
 
     @Override
     public String toString() {
         return "Piece{" +
-                "color=" + color +
-                ", notation='" + notation + '\'' +
+                "notation='" + notation + '\'' +
+                ", position=" + position +
                 '}';
     }
 

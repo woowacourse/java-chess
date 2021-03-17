@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public class Bishop extends Piece {
+public class Bishop extends RealPiece {
     private static final String BISHOP_WORD = "B";
 
-    public Bishop(Color color, Position position) {
-        super(color, position, BISHOP_WORD);
+    public Bishop(Position position, Color color) {
+        super(position, BISHOP_WORD, color);
     }
 }

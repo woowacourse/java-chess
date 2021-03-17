@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public class Rook extends Piece {
+public class Rook extends RealPiece {
     private static final String ROOK_WORD = "R";
 
-    public Rook(Color color, Position position) {
-        super(color, position, ROOK_WORD);
+    public Rook(Position position, Color color) {
+        super(position, ROOK_WORD, color);
     }
 }
