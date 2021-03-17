@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 
-public abstract class BasicMoveStrategy implements MoveStrategy {
+public abstract class BasicMoveStrategy implements MoveStrategy { //TODO abstract method 빼기
 
     protected static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
 
@@ -37,8 +37,8 @@ public abstract class BasicMoveStrategy implements MoveStrategy {
     }
 
     protected boolean isLineMove(Position source, Position target) {
-        return source.computeHorizontalDistance(target) == 0 ||
-            source.computeVerticalDistance(target) == 0;
+        return source.computeHorizontalDistance(target) != 0 &&
+            source.computeVerticalDistance(target) != 0;
     }
 
     protected boolean isDiagonalMove(Position source, Position target) {
@@ -52,7 +52,7 @@ public abstract class BasicMoveStrategy implements MoveStrategy {
         int xVector = moveDirection.getXVector();
         int yVector = moveDirection.getYVector();
 
-        for (int i = 0; i < moveNumber; i++) {
+        for (int i = 0; i < moveNumber - 1; i++) {
             pathPosition = Position.of(pathPosition.getXPosition().moveUnit(xVector),
                 pathPosition.getYPosition().moveUnit(yVector));
             checkIfClear(board, pathPosition);

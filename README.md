@@ -34,7 +34,7 @@
       - [x] King
       - [x] Queen
       - [ ] Knight
-      - [ ] Rook
+      - [x] Rook
       - [ ] Bishop
       - [ ] Pawn        
         - [ ] Pawn 만 움직이는 것과 먹는 행위 다름 주의    

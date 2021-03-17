@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 
-public class QueenMoveStrategy extends BasicMoveStrategy {
+public class RookMoveStrategy extends BasicMoveStrategy {
 
     @Override
     public void move(Position source, Position target, Board board) {
@@ -26,8 +26,7 @@ public class QueenMoveStrategy extends BasicMoveStrategy {
     }
 
     private void checkMoveType(Position source, Position target) {
-        if (isLineMove(source, target) &&
-            !isDiagonalMove(source, target)) {
+        if (isLineMove(source, target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
     }
