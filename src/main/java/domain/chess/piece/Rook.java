@@ -23,6 +23,8 @@ public class Rook extends Piece {
 
     @Override
     public boolean canMove(Piece[][] board, Position endPosition) {
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
+
         if (checkPositionRange(endPosition)) {
             return false;
         }
