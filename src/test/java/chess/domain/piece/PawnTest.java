@@ -77,4 +77,64 @@ public class PawnTest {
         assertThatThrownBy(() -> pawn.move(target, currentPieces))
         .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @Test
+    void 검은말이_상대편_말을_공격한다() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '7'), "P"),
+                new Pawn(Position.of('b', '6'), "p"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('a', '7'); // 비숍 위치
+        Position target = Position.of('b', '6'); // 옮기고자 하는 위치
+        Piece pawn = currentPieces.findByPosition(source);
+
+        pawn.move(target, currentPieces);
+
+        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 검은말이_상대편_말을_공격한다_예외() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '7'), "P"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('a', '7'); // 비숍 위치
+        Position target = Position.of('b', '6'); // 옮기고자 하는 위치
+        Piece pawn = currentPieces.findByPosition(source);
+
+        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 하얀말이_상대편_말을_공격한다() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '2'), "p"),
+                new Pawn(Position.of('b', '3'), "P"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('a', '2'); // 비숍 위치
+        Position target = Position.of('b', '3'); // 옮기고자 하는 위치
+        Piece pawn = currentPieces.findByPosition(source);
+
+        pawn.move(target, currentPieces);
+
+        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+    }
+
+    @Test
+    void 하얀말이_상대편_말을_공격한다_예외() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '2'), "p"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('a', '2'); // 비숍 위치
+        Position target = Position.of('b', '3'); // 옮기고자 하는 위치
+        Piece pawn = currentPieces.findByPosition(source);
+
+        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
 }
