@@ -1,5 +1,6 @@
 ## 할일
 * enum에서 함수형 인터페이스로 방향 구하는 거 하고있었음
+* currentPieces에서 기물 삭제 기능 구현해야함 
 * move()
 
 * position 이름 어쩔거냐

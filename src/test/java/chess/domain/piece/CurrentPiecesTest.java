@@ -4,6 +4,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CurrentPiecesTest {
 
@@ -30,5 +31,26 @@ public class CurrentPiecesTest {
         Piece sourcePiece = currentPieces.findByPosition(Position.of('e', '4'));
 
         assertThat(sourcePiece).isInstanceOf(Empty.class);
+    }
+
+    @DisplayName("현재 기물들 중 해당 위치 기물 제거 확인")
+    @Test
+    void 해당_위치_기물_제거_확인() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Position target = Position.of('g', '7');
+
+        currentPieces.removePieceByPosition(target);
+
+        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(31);
+    }
+
+    @DisplayName("현재 기물들 중 해당 위치 기물 제거 확인 - 기물이 없을 경우 예외")
+    @Test
+    void 해당_위치_기물_제거_확인_예외() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Position target = Position.of('e', '4');
+
+        assertThatThrownBy(() -> currentPieces.removePieceByPosition(target))
+        .isInstanceOf(IllegalArgumentException.class);
     }
 }
