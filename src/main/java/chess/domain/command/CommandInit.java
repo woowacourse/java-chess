@@ -9,4 +9,8 @@ public abstract class CommandInit implements Command {
         this.chessGame = chessGame;
     }
 
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
 }

@@ -7,7 +7,8 @@ import java.util.Arrays;
 
 public class OutputView {
 
-    public static final int BOARD_COLUMN_SIZE = 8;
+    private static final int BOARD_COLUMN_SIZE = 8;
+    private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
 
     public static void drawBoard(final BoardDto boardDto) {
         String[] boardStatus = createBoardStatus(boardDto);
@@ -21,7 +22,7 @@ public class OutputView {
     }
 
     private static void lineSeparatorIfSatisfyCondition(final int i) {
-        if(i % BOARD_COLUMN_SIZE == 0) {
+        if (i % BOARD_COLUMN_SIZE == 0) {
             System.out.println();
         }
     }
@@ -39,5 +40,9 @@ public class OutputView {
 
     public static void printExceptionMessage(final String message) {
         System.out.println(message);
+    }
+
+    public static void printScore(final double whiteScore, final double blackScore) {
+        System.out.printf(SCORE_FORMAT, whiteScore, blackScore);
     }
 }

@@ -7,8 +7,8 @@ import chess.domain.piece.Position;
 public class KnightMoveCondition extends MoveCondition {
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
-        int[] row = {3, 3, -3, -3, 1, -1, 1, -1};
-        int[] col = {1, -1, 1, -1, 3, 3, -3, -3};
+        int[] row = {2, 2, -2, -2, 1, -1, 1, -1};
+        int[] col = {1, -1, 1, -1, 2, 2, -2, -2};
 
         boolean flag = false;
         for (int i = 0; i < row.length; i++) {

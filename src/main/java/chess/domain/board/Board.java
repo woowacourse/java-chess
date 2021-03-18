@@ -67,4 +67,16 @@ public class Board {
     public void catchPiece(final Color color) {
         pieces.catchPiece(color);
     }
+
+    public double getWhiteScore() {
+        return pieces.getWhiteScore();
+    }
+
+    public double getBlackScore() {
+        return pieces.getBlackScore();
+    }
+
+    public boolean isKingsExist() {
+        return pieces.isKingsExist();
+    }
 }

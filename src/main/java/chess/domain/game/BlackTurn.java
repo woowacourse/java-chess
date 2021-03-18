@@ -15,6 +15,10 @@ public class BlackTurn extends Running {
         chessGame.getBoard().movePiece(COLOR, source, target);
         chessGame.getBoard().catchPiece(COLOR);
         chessGame.changeState(new WhiteTurn(chessGame));
+
+        if(!chessGame.isKingsExist()) {
+            chessGame.changeState(new End(chessGame));
+        }
     }
 
     @Override

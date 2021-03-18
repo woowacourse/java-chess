@@ -2,10 +2,7 @@ package chess;
 
 import chess.controller.ChessController;
 import chess.domain.board.Board;
-import chess.domain.command.Commands;
-import chess.domain.command.EndCommand;
-import chess.domain.command.MoveCommand;
-import chess.domain.command.StartCommand;
+import chess.domain.command.*;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.PieceFactory;
 
@@ -21,10 +18,12 @@ public class Application {
                 Arrays.asList(
                         new StartCommand(chessGame),
                         new MoveCommand(chessGame),
-                        new EndCommand(chessGame))
+                        new EndCommand(chessGame),
+                        new StatusCommand(chessGame))
         );
 
         ChessController chessController = new ChessController(board, chessGame, commands);
         chessController.run();
     }
+    
 }

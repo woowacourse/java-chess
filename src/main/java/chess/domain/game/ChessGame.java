@@ -37,4 +37,15 @@ public class ChessGame {
         return board;
     }
 
+    public double getWhiteScore() {
+        return board.getWhiteScore();
+    }
+
+    public double getBlackScore() {
+        return board.getBlackScore();
+    }
+
+    public boolean isKingsExist() {
+        return board.isKingsExist();
+    }
 }

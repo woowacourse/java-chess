@@ -22,8 +22,8 @@ class KnightMoveConditionTest {
                 Piece.createPawn(Color.BLACK, 4, 4)
         ));
 
-        int[] row = {3, 3, -3, -3, 1, -1, 1, -1};
-        int[] col = {1, -1, 1, -1, 3, 3, -3, -3};
+        int[] row = {2, 2, -2, -2, 1, -1, 1, -1};
+        int[] col = {1, -1, 1, -1, 2, 2, -2, -2};
 
         for (int i = 0; i < row.length; i++) {
             int dr = 4 + row[i];
@@ -32,7 +32,7 @@ class KnightMoveConditionTest {
             assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(dr, dc))).isTrue();
         }
 
-        assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(2, 3))).isFalse();
+        assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(2, 4))).isFalse();
     }
 
     @DisplayName("나이트의 도착지에 아군 말이 있으면 안된다.")

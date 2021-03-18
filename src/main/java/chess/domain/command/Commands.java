@@ -10,12 +10,10 @@ public class Commands {
         this.commands = commands;
     }
 
-    public void executeIf(String input) {
-        Command selectedCommand = commands.stream()
+    public Command getIfPresent(String input) {
+        return commands.stream()
                 .filter(command -> command.isUsable(input))
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("알 수 없는 커맨드입니다."));
-
-        selectedCommand.handle(input);
     }
 }

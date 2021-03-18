@@ -7,12 +7,13 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.*;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
 
+    public static final int COUNT_OF_KING = 2;
     private final List<Piece> pieces;
 
     public Pieces(final List<Piece> pieces) {
@@ -43,8 +44,6 @@ public class Pieces {
 
     public void catchPiece(final Color color) {
         Set<Map.Entry<Position, Long>> duplicatePosition = findDuplicatePosition();
-
-
         removeIfExistDuplicatePositionByColor(color, duplicatePosition);
     }
 
@@ -98,5 +97,13 @@ public class Pieces {
                         .filter(piece -> piece.isSameColor(color))
                 ).flatMap(Function.identity())
                 .count();
+    }
+
+    public boolean isKingsExist() {
+        long countOfKingOnBoard = pieces.stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return countOfKingOnBoard == COUNT_OF_KING;
     }
 }
