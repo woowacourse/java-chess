@@ -38,4 +38,8 @@ public enum Column {
     public Column move(Direction direction) {
         return getColumn(value + direction.getCoordinates().get(0));
     }
+
+    public int getValue(){
+        return value;
+    }
 }

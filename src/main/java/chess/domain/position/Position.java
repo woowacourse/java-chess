@@ -25,6 +25,29 @@ public class Position {
         return new Position(column, row);
     }
 
+/*    public int columnGap(Position that){
+        return column() - that.column();
+    }
+
+    public int rowGap(Position that){
+        return row() - that.row();
+    }
+
+    public int row(){
+        return row.getValue();
+    }
+
+    public int column(){
+        return column.getValue();
+    }
+
+    public double calculateSlopeWith(Position that) {
+        if(columnGap(that) == 0) {
+            return
+        }
+        return rowGap(that) / columnGap(that);
+    }*/
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -48,4 +71,5 @@ public class Position {
         Row newRow = row.move(direction);
         return Position.of(newColumn, newRow);
     }
+
 }
