@@ -1,19 +1,34 @@
 package chess.domain.piece;
 
+import chess.controller.direction.Direction;
 import chess.domain.board.position.Position;
 
-public class King extends Piece{
-    private static final King BLACK_KING = new King(Owner.WHITE);
-    private static final King WHITE_KING = new King(Owner.BLACK);
+import java.util.Arrays;
+import java.util.List;
+
+public class King extends Piece {
+    private static final List<Direction> DIRECTIONS = Arrays.asList(
+            Direction.LEFT,
+            Direction.DOWN,
+            Direction.UP,
+            Direction.RIGHT,
+            Direction.DOWN_LEFT,
+            Direction.DOWN_RIGHT,
+            Direction.UP_LEFT,
+            Direction.UP_RIGHT
+    );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
 
-    public static King getInstanceOf(Owner owner){
-        if (owner.equals(Owner.BLACK)){
+    private static final King BLACK_KING = new King(Owner.WHITE);
+    private static final King WHITE_KING = new King(Owner.BLACK);
+
+    public static King getInstanceOf(Owner owner) {
+        if (owner.equals(Owner.BLACK)) {
             return BLACK_KING;
         }
 
-        if (owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             return WHITE_KING;
         }
 
@@ -26,11 +41,11 @@ public class King extends Piece{
 
     @Override
     public void validateMove(Position source, Position target, Piece targetPiece) {
-        if(source.getDistance(target) != ABLE_DISTANCE_TO_MOVE){
+        if (source.getDistance(target) != ABLE_DISTANCE_TO_MOVE) {
             throw new IllegalArgumentException();
         }
 
-        if(!(source.isStraight(target) || source.isDiagonal(target))){
+        if (!(source.isStraight(target) || source.isDiagonal(target))) {
             throw new IllegalArgumentException();
         }
     }

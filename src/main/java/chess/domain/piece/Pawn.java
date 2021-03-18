@@ -1,10 +1,20 @@
 package chess.domain.piece;
 
+import chess.controller.direction.Direction;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 
+import java.util.Arrays;
+import java.util.List;
+
 public abstract class Pawn extends Piece{
-    private static final int FIRST_MOVE_DISTANCE = 2;
+    private static final List<Direction> DIRECTIONS = Arrays.asList(
+            Direction.UP,
+            Direction.UP_LEFT,
+            Direction.UP_RIGHT
+    );
+
+    private static final int ABLE_DISTANCE_TO_MOVE = 2;
 
     private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK){
         @Override
@@ -61,7 +71,7 @@ public abstract class Pawn extends Piece{
 
     private boolean isValidSpecialMove(Position source, Position target){
         return isFirstLine(source.getHorizontal(target))
-                && source.getDistance(target) == FIRST_MOVE_DISTANCE;
+                && source.getDistance(target) == ABLE_DISTANCE_TO_MOVE;
     }
 
     private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){

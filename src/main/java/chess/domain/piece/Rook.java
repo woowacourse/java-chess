@@ -1,8 +1,20 @@
 package chess.domain.piece;
 
+import chess.controller.direction.Direction;
 import chess.domain.board.position.Position;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Rook extends Piece{
+    private static final List<Direction> DIRECTIONS = Arrays.asList(
+            Direction.LEFT,
+            Direction.DOWN,
+            Direction.UP,
+            Direction.RIGHT
+    );
+
+    private static final int ABLE_DISTANCE_TO_MOVE = 7;
 
     public Rook(Owner owner) {
         super(owner);
