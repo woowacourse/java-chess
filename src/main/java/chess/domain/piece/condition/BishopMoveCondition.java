@@ -6,7 +6,7 @@ import chess.domain.piece.Position;
 
 import java.util.List;
 
-public class BishopMoveCondition extends MoveCondition{
+public class BishopMoveCondition extends MoveCondition {
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.equals(target) &&
@@ -30,8 +30,8 @@ public class BishopMoveCondition extends MoveCondition{
 
         return pieces.stream()
                 .filter(p ->
-                    minCol <= p.getColumn() && p.getColumn() <= maxCol &&
-                            minRow <= p.getRow() && p.getRow() <= maxRow
+                        minCol <= p.getColumn() && p.getColumn() <= maxCol &&
+                                minRow <= p.getRow() && p.getRow() <= maxRow
                 ).noneMatch(p -> new Position(piece.getRow(), piece.getColumn()).calculateGradient(target) ==
                         new Position(piece.getRow(), piece.getColumn()).calculateGradient(new Position(p.getRow(), p.getColumn())));
     }

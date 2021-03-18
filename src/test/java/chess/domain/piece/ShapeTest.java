@@ -3,8 +3,6 @@ package chess.domain.piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ShapeTest {
 
     @DisplayName("룩이 이동할 수 있는 위치인지 학인하는 기능")

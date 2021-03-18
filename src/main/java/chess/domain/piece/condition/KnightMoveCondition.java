@@ -11,11 +11,11 @@ public class KnightMoveCondition extends MoveCondition {
         int[] col = {1, -1, 1, -1, 3, 3, -3, -3};
 
         boolean flag = false;
-        for(int i=0; i<row.length; i++) {
+        for (int i = 0; i < row.length; i++) {
             int dr = piece.getRow() + row[i];
             int dc = piece.getColumn() + col[i];
 
-            if(target.equals(new Position(dr, dc))) {
+            if (target.equals(new Position(dr, dc))) {
                 flag = true;
             }
         }

@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
-import com.sun.corba.se.internal.Interceptors.PIORB;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

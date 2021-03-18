@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-public class NormalBlackPawnMoveCondition extends MoveCondition{
+public class NormalBlackPawnMoveCondition extends MoveCondition {
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) &&

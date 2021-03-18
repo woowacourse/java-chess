@@ -22,6 +22,6 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
                 .filter(p -> !p.equals(piece))
                 .noneMatch(p -> p.getColumn() == piece.getColumn() &&
                         piece.getRow() <= p.getRow() && p.getRow() <= target.getRow()
-        );
+                );
     }
 }

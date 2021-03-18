@@ -5,7 +5,9 @@ import chess.domain.piece.Position;
 import chess.domain.player.Player;
 import chess.exception.NoSuchPermittedChessPieceException;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class Board {
     private static final int ROW = 8;

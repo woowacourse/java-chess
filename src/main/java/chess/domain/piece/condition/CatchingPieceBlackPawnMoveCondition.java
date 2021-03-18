@@ -11,7 +11,7 @@ public class CatchingPieceBlackPawnMoveCondition extends MoveCondition {
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) && (
                 target.equals(new Position(piece.getRow() + 1, piece.getColumn() - 1)) ||
-                target.equals(new Position(piece.getRow() + 1, piece.getColumn() + 1))) &&
+                        target.equals(new Position(piece.getRow() + 1, piece.getColumn() + 1))) &&
                 isEnemyExist(board, target) &&
                 validateChessPieceOutOfBoard(board, target);
     }

@@ -10,9 +10,9 @@ class PositionTest {
     @DisplayName("포지션 생성 테스트")
     @Test
     void createPosition() {
-        Position position = new Position(0,0);
+        Position position = new Position(0, 0);
 
-        assertThat(position).isEqualTo(new Position(0,0));
+        assertThat(position).isEqualTo(new Position(0, 0));
     }
 
 }

@@ -45,7 +45,7 @@ class KingMoveConditionTest {
                 Piece.createPawn(Color.BLACK, 4, 3)
         ));
 
-        boolean actual = condition.isSatisfyBy(board,  Piece.createKing(Color.BLACK, 4, 4), new Position(4, 3));
+        boolean actual = condition.isSatisfyBy(board, Piece.createKing(Color.BLACK, 4, 4), new Position(4, 3));
 
         assertThat(actual).isFalse();
     }
