@@ -1,6 +1,5 @@
 package chess.domain.command;
 
-import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Position;
 

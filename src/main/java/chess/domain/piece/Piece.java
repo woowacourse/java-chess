@@ -78,7 +78,7 @@ public class Piece {
                 .filter(moveCondition -> moveCondition.isSatisfyBy(board, this, target))
                 .findAny();
 
-        if(!selectedCondition.isPresent()) {
+        if (!selectedCondition.isPresent()) {
             throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
         }
     }
