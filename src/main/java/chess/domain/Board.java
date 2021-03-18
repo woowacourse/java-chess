@@ -103,7 +103,9 @@ public class Board {
                 .count() != 2;
     }
 
-    public boolean isRightTurn(final Position source, final boolean isBlack) {
-        return false;
+    public void validateRightTurn(final Position source, final boolean isBlack) {
+        if (!chessBoard.get(source).isSameTeam(isBlack)) {
+            throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
+        }
     }
 }
