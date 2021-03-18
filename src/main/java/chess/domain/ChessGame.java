@@ -22,14 +22,6 @@ public class ChessGame {
         turn = Team.WHITE;
     }
 
-    public void endGame() {
-        state = state.exit();
-    }
-
-    public boolean isRunning() {
-        return !state.isExit();
-    }
-
     public void initBoard(Board board) {
         this.board = board;
         state = state.init();
@@ -166,6 +158,14 @@ public class ChessGame {
 
     public boolean isEnd() {
         return state.isEnd();
+    }
+
+    public void endGame() {
+        state = state.exit();
+    }
+
+    public boolean isRunning() {
+        return !state.isExit();
     }
 
     public Team getWinTeam() {
