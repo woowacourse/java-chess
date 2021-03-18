@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -22,5 +23,13 @@ public class OutputView {
             }
             System.out.println();
         }
+    }
+    
+    public static void printStatus(double blackScore, double whiteScore, Color winner) {
+        System.out.println("### 진행 사항");
+        System.out.println("BLACK - 점수 : " + blackScore);
+        System.out.println("WHITE - 점수 : " + whiteScore);
+        System.out.println("WINNER : " + winner.color());
+        
     }
 }

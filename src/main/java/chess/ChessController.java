@@ -1,6 +1,7 @@
 package chess;
 
 import chess.board.Board;
+import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -27,6 +28,8 @@ public class ChessController {
                 OutputView.printBoard(board);
                 
             }
+            OutputView.printStatus(board.score(Color.BLACK), board.score(Color.WHITE), board.getWinner());
         }
+        
     }
 }
