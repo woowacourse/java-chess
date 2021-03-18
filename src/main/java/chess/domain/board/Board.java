@@ -8,8 +8,8 @@ import chess.domain.piece.Position;
 import java.util.List;
 
 public class Board {
-    private static final int ROW = 8;
-    private static final int COLUMN = 8;
+    public static final int ROW = 8;
+    public static final int COLUMN = 8;
 
     private final Pieces pieces;
 

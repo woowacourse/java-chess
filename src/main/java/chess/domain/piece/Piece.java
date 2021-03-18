@@ -80,9 +80,11 @@ public class Piece {
         for (final MoveCondition moveCondition : moveConditions) {
             if (moveCondition.isSatisfyBy(board, this, target)) {
                 position = target;
-                break;
+                return;
             }
         }
+
+        throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
     }
 
     public Color getColor() {

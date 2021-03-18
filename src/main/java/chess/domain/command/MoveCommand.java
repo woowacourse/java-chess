@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Position;
 
@@ -30,8 +31,8 @@ public class MoveCommand extends CommandInit {
     private Position getPositionFromInput(String input) {
         String[] split = input.split("");
 
-        int row = split[0].charAt(0) - 'a';
-        int column = Integer.parseInt(split[1]) - 1;
+        int column = split[0].charAt(0) - 'a';
+        int row = Board.ROW - Integer.parseInt(split[1]);
 
         return new Position(row, column);
     }

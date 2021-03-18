@@ -4,6 +4,8 @@ import chess.domain.board.Board;
 import chess.domain.command.Commands;
 import chess.domain.game.ChessGame;
 import chess.view.InputView;
+import chess.view.OutputView;
+import chess.view.dto.BoardDto;
 
 public class ChessController {
 
@@ -18,8 +20,13 @@ public class ChessController {
     }
 
     public void run() {
-        while (game.isFinished()) {
-            commands.executeIf(InputView.inputCommandFromUser());
+        while (!game.isFinished()) {
+            try {
+                commands.executeIf(InputView.inputCommandFromUser());
+            } catch (RuntimeException e) {
+                OutputView.printExceptionMessage(e.getMessage());
+            }
+            OutputView.drawBoard(new BoardDto(board));
         }
     }
 }
