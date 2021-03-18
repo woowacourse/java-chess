@@ -47,3 +47,6 @@
 
 ### Rook 테스트 케이스 예시
 ![rook](https://user-images.githubusercontent.com/50176238/111596208-40073300-8810-11eb-904e-feb0c43117fa.jpg)
+
+### King 테스트 케이스 예시
+![king](https://user-images.githubusercontent.com/50176238/111624064-8c616b80-882e-11eb-919f-e7c162aa22a1.jpg)

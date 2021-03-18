@@ -43,9 +43,9 @@ class RookTest {
         assertThat(rook.isSamePosition(B1)).isEqualTo(true);
     }
 
-    @DisplayName("위쪽으로 이동할 수 없는 경우 예외가 발생한다.")
+    @DisplayName("이동할 수 없는 위치인 경우 예외가 발생한다.")
     @Test
-    void moveTargetUpPositionException() {
+    void cannotMoveException() {
         Source rook = Source.valueOf(B3, chessBoard);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
@@ -54,7 +54,18 @@ class RookTest {
         assertThat(rook.isSamePosition(B3)).isEqualTo(true);
     }
 
-    @DisplayName("장애물이 없는경우 맵의 아래쪽 끝으로 갈 수 있다. ")
+    @DisplayName("같은 색깔의 기물 위치인 경우 예외가 발생한다.")
+    @Test
+    void sameColorException() {
+        Source rook = Source.valueOf(B3, chessBoard);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            rook.move(Target.valueOf(rook, E3, chessBoard), chessBoard);
+        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", E3);
+        assertThat(rook.isSamePosition(B3)).isEqualTo(true);
+    }
+
+    @DisplayName("장애물이 없는 경우 맵의 아래쪽 끝으로 갈 수 있다.")
     @Test
     void moveTargetDownPositionException() {
         Source rook = Source.valueOf(B3, chessBoard);
