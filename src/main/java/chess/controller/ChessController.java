@@ -1,20 +1,25 @@
 package chess.controller;
 
 import chess.domain.board.Board;
-import chess.domain.piece.PieceFactory;
+import chess.domain.command.Commands;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 
 public class ChessController {
 
-    public static void run() {
+    private final Board board;
+    private final ChessGame game;
+    private final Commands commands;
 
-        String input = InputView.inputCommandFromUser();
-        Board board = null;
+    public ChessController(final Board board, final ChessGame game, final Commands commands) {
+        this.board = board;
+        this.game = game;
+        this.commands = commands;
+    }
 
-        if (input.startsWith("start") && board == null) {
-            board = new Board(PieceFactory.createPieces());
+    public void run() {
+        while (game.isFinished()) {
+            commands.executeIf(InputView.inputCommandFromUser());
         }
-
-
     }
 }

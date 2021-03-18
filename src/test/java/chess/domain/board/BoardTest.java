@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import chess.domain.piece.Position;
 import chess.exception.NoSuchPermittedChessPieceException;
 import org.junit.jupiter.api.DisplayName;

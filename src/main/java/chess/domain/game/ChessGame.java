@@ -29,6 +29,10 @@ public class ChessGame {
         state.start();
     }
 
+    public boolean isFinished() {
+        return state.isFinished();
+    }
+
     public Board getBoard() {
         return board;
     }

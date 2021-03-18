@@ -4,11 +4,8 @@ import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Position;
-import chess.exception.NoSuchPermittedChessPieceException;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 public class Board {
     private static final int ROW = 8;
