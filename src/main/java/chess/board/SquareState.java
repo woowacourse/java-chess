@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class State {
+public class SquareState {
 
-    private static final List<State> STATE_POOL = new ArrayList<>();
+    private static final List<SquareState> SQUARE_STATE_POOL = new ArrayList<>();
 
     static {
         for (Piece piece : Piece.values()) {
@@ -19,20 +19,20 @@ public class State {
     private final Piece piece;
     private final Team team;
 
-    private State(Piece piece, Team team) {
+    private SquareState(Piece piece, Team team) {
         this.piece = piece;
         this.team = team;
     }
 
     private static void iterateTeam(Piece piece) {
         for (Team team : Team.values()) {
-            STATE_POOL.add(new State(piece, team));
+            SQUARE_STATE_POOL.add(new SquareState(piece, team));
         }
     }
 
-    public static State of(Piece piece, Team team) {
-        return STATE_POOL.stream()
-            .filter(state -> state.piece == piece && state.team == team)
+    public static SquareState of(Piece piece, Team team) {
+        return SQUARE_STATE_POOL.stream()
+            .filter(squareState -> squareState.piece == piece && squareState.team == team)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
@@ -52,8 +52,8 @@ public class State {
         return this.team == team;
     }
 
-    public boolean isNotSameTeam(State state) {
-        return this.team != state.team;
+    public boolean isNotSameTeam(SquareState squareState) {
+        return this.team != squareState.team;
     }
 
     public boolean isNotEmpty() {
@@ -72,8 +72,8 @@ public class State {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        State state = (State) o;
-        return Objects.equals(piece, state.piece) && team == state.team;
+        SquareState squareState = (SquareState) o;
+        return Objects.equals(piece, squareState.piece) && team == squareState.team;
     }
 
     @Override

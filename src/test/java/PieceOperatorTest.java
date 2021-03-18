@@ -4,7 +4,7 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 import chess.PieceOperator;
 import chess.board.Board;
 import chess.board.Point;
-import chess.board.State;
+import chess.board.SquareState;
 import chess.board.Team;
 import chess.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
@@ -47,7 +47,7 @@ public class PieceOperatorTest {
         board.move(Point.of("e2"), Point.of("e3")); // 폰 이동
         board.move(Point.of("e1"), Point.of("e2"));
 
-        assertThat(board.getState(Point.of("e2"))).isEqualTo(State.of(Piece.KING, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("e2"))).isEqualTo(SquareState.of(Piece.KING, Team.WHITE));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class PieceOperatorTest {
         board.move(Point.of("d2"), Point.of("d3"));
         pieceOperator.move(Point.of("d1"), Point.of("d2"), Team.WHITE);
 
-        assertThat(board.getState(Point.of("d2"))).isEqualTo(State.of(Piece.QUEEN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("d2"))).isEqualTo(SquareState.of(Piece.QUEEN, Team.WHITE));
     }
 
     @Test
@@ -80,7 +80,7 @@ public class PieceOperatorTest {
     void bishopWithValidMove() {
         board.move(Point.of("d2"), Point.of("d3"));
         pieceOperator.move(Point.of("c1"), Point.of("h6"), Team.WHITE);
-        assertThat(board.getState(Point.of("h6"))).isEqualTo(State.of(Piece.BISHOP, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("h6"))).isEqualTo(SquareState.of(Piece.BISHOP, Team.WHITE));
     }
 
     @Test
@@ -96,7 +96,7 @@ public class PieceOperatorTest {
     void rookWithValidMove() {
         board.move(Point.of("a2"), Point.of("a6"));
         pieceOperator.move(Point.of("a1"), Point.of("a5"), Team.WHITE);
-        assertThat(board.getState(Point.of("a5"))).isEqualTo(State.of(Piece.ROOK, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("a5"))).isEqualTo(SquareState.of(Piece.ROOK, Team.WHITE));
     }
 
     @Test
@@ -112,7 +112,7 @@ public class PieceOperatorTest {
     @DisplayName("나이트을 유효한 위치로 이동 테스트")
     void knightWithValidMove() {
         pieceOperator.move(Point.of("b1"), Point.of("c3"), Team.WHITE);
-        assertThat(board.getState(Point.of("c3"))).isEqualTo(State.of(Piece.KNIGHT, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("c3"))).isEqualTo(SquareState.of(Piece.KNIGHT, Team.WHITE));
     }
 
     @Test
@@ -127,14 +127,14 @@ public class PieceOperatorTest {
     @DisplayName("폰을 유효한 위치로 이동 테스트")
     void pawnWithValidMove() {
         pieceOperator.move(Point.of("b2"), Point.of("b3"), Team.WHITE);
-        assertThat(board.getState(Point.of("b3"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("b3"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
     @DisplayName("폰을 유효한 위치로 이동 테스트(첫 이동인 경우 2칸 허용)")
     void pawnWithValidMoveWhenFirstMove() {
         pieceOperator.move(Point.of("b2"), Point.of("b4"), Team.WHITE);
-        assertThat(board.getState(Point.of("b4"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("b4"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
@@ -143,8 +143,8 @@ public class PieceOperatorTest {
         board.move(Point.of("e7"), Point.of("e5"));
         board.move(Point.of("d2"), Point.of("d4"));
         pieceOperator.move(Point.of("d4"), Point.of("e5"), Team.WHITE);
-        assertThat(board.getState(Point.of("e5"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
-        assertThat(board.getState(Point.of("d4"))).isEqualTo(State.of(Piece.EMPTY, Team.NONE));
+        assertThat(board.getSquareState(Point.of("e5"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("d4"))).isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
     }
 
     @Test
