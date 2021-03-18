@@ -7,6 +7,9 @@ import java.util.Arrays;
 
 public class OutputView {
 
+    private OutputView() {
+    }
+
     private static final int BOARD_COLUMN_SIZE = 8;
     private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
 
