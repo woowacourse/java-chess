@@ -1,12 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
 import chess.domain.piece.PieceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

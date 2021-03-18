@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.exception.NoSuchPermittedChessPieceException;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -11,6 +13,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PiecesTest {
 
+    @DisplayName("포지션에 있는 체스 말을 가져온다. 만일 자신의 말이 아니거나 말이 없다면 예외")
     @Test
     void findPieceByPosition() {
         Pieces pieces = new Pieces(Arrays.asList(
@@ -27,6 +30,7 @@ class PiecesTest {
                 .isExactlyInstanceOf(NoSuchPermittedChessPieceException.class);
     }
 
+    @DisplayName("포지션의 상대편의 말이 있다면 상대 말을 없앤다")
     @Test
     void catchPiece() {
         Pieces pieces = new Pieces(Arrays.asList(
@@ -38,6 +42,7 @@ class PiecesTest {
         assertThat(pieces.getPieces()).containsExactly(Piece.createPawn(Color.WHITE, 0, 0));
     }
 
+    @DisplayName("블랙팀의 점수를 반환한다.")
     @Test
     void getBlackScore() {
         Pieces pieces = new Pieces(Arrays.asList(
@@ -51,9 +56,10 @@ class PiecesTest {
                 Piece.createBishop(Color.BLACK, 6, 1)
         ));
 
-        assertThat(pieces.getBlackScore()).isEqualTo(21.0);
+        assertThat(pieces.getBlackScore(new Board(Collections.emptyList()))).isEqualTo(21.0);
     }
 
+    @DisplayName("하얀팀의 점수를 반환한다.")
     @Test
     void getWhiteScore() {
         Pieces pieces = new Pieces(Arrays.asList(
@@ -67,11 +73,12 @@ class PiecesTest {
                 Piece.createBishop(Color.WHITE, 6, 1)
         ));
 
-        assertThat(pieces.getWhiteScore()).isEqualTo(21.0);
+        assertThat(pieces.getWhiteScore(new Board(Collections.emptyList()))).isEqualTo(21.0);
     }
 
+    @DisplayName("체스판에 블랙, 화이트 킹이 둘 다 존재하는지 확인한다.")
     @Test
-    void isKingExist() {
+    void isKingsExist() {
         Pieces pieces = new Pieces(Arrays.asList(
                 Piece.createKing(Color.WHITE, 0, 0),
                 Piece.createKing(Color.BLACK, 0, 0)

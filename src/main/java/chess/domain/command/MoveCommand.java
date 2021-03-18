@@ -28,11 +28,17 @@ public class MoveCommand extends CommandInit {
         chessGame.move(source, target);
     }
 
+    private boolean isRightInputs(final String[] inputs) {
+        return isContainsThreeElements(inputs) &&
+                isRightCommand(inputs) &&
+                isRightPositionFormat(inputs);
+    }
+
     private Position getPositionFromInput(String input) {
         String[] inputs = input.split("");
 
         int column = inputs[0].charAt(0) - 'a';
-        int row = Board.ROW - Integer.parseInt(inputs[1]);
+        int row = chessGame.getBoardRow() - Integer.parseInt(inputs[1]);
 
         return new Position(row, column);
     }
@@ -42,12 +48,6 @@ public class MoveCommand extends CommandInit {
         String[] inputs = input.split(" ");
 
         return isRightInputs(inputs);
-    }
-
-    private boolean isRightInputs(final String[] inputs) {
-        return isContainsThreeElements(inputs) &&
-                isRightCommand(inputs) &&
-                isRightPositionFormat(inputs);
     }
 
     private boolean isContainsThreeElements(String[] inputs) {

@@ -27,11 +27,11 @@ public abstract class Started implements State {
     }
 
     private Optional<Color> calculateWinner(double blackScore, double whiteScore) {
-        if(blackScore > whiteScore) {
+        if (blackScore > whiteScore) {
             return Optional.of(Color.BLACK);
         }
 
-        if(whiteScore > blackScore) {
+        if (whiteScore > blackScore) {
             return Optional.of(Color.WHITE);
         }
 

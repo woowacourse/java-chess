@@ -8,8 +8,8 @@ import chess.domain.piece.Position;
 import java.util.List;
 
 public class Board {
-    public static final int ROW = 8;
-    public static final int COLUMN = 8;
+    private static final int ROW = 8;
+    private static final int COLUMN = 8;
 
     private final Pieces pieces;
 
@@ -45,11 +45,11 @@ public class Board {
 
 
     public double getWhiteScore() {
-        return pieces.getWhiteScore();
+        return pieces.getWhiteScore(this);
     }
 
     public double getBlackScore() {
-        return pieces.getBlackScore();
+        return pieces.getBlackScore(this);
     }
 
     public boolean isKingsExist() {

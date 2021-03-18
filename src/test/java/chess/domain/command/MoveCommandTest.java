@@ -5,6 +5,7 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.End;
 import chess.domain.game.Ready;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
@@ -23,22 +24,25 @@ class MoveCommandTest {
         moveCommand = new MoveCommand(game);
     }
 
+    @DisplayName("execute 상태일 때 execute 하면 예외")
     @Test
-    void handle_whenChessGameStatusAreEnd() {
+    void execute_whenChessGameStatusAreEnd() {
         game.changeState(new End(game));
 
         assertThatThrownBy(() -> moveCommand.execute("move a1 b2"))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
+    @DisplayName("Ready 상태일 때 execute 하면 예외")
     @Test
-    void handle_whenChessGameStatusAreReady() {
+    void execute_whenChessGameStatusAreReady() {
         game.changeState(new Ready(game));
 
         assertThatThrownBy(() -> moveCommand.execute("move a1 b2"))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
+    @DisplayName("올바른 입력인지 확인한다.")
     @Test
     void isUsable() {
         assertThat(moveCommand.isUsable("move a1 a2")).isTrue();
@@ -47,5 +51,11 @@ class MoveCommandTest {
         assertThat(moveCommand.isUsable("move a123 a2")).isFalse();
         assertThat(moveCommand.isUsable("move2 a1 a2")).isFalse();
         assertThat(moveCommand.isUsable("move a1 a1 a2")).isFalse();
+    }
+
+    @DisplayName("Status 인지 확인한다.")
+    @Test
+    void isStatus() {
+        assertThat(moveCommand.isStatus()).isFalse();
     }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
@@ -9,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceFactoryTest {
 
+    @DisplayName("체스 말들은 게임 룰대로 있어야 한다.")
     @Test
     void createPieces() {
         List<Piece> pieces = PieceFactory.createPieces();

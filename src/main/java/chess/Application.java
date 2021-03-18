@@ -25,5 +25,5 @@ public class Application {
         ChessController chessController = new ChessController(board, chessGame, commands);
         chessController.run();
     }
-    
+
 }

@@ -76,9 +76,17 @@ public class Pieces {
         return Collections.unmodifiableList(pieces);
     }
 
-    public double getBlackScore() {
-        double totalScore = getTotalScore(Color.BLACK);
-        long countOfExpectedPawn = getCountOfExpectedPawn(Color.BLACK);
+    public double getBlackScore(Board board) {
+        return getScoreByColor(Color.BLACK, board);
+    }
+
+    public double getWhiteScore(Board board) {
+        return getScoreByColor(Color.WHITE, board);
+    }
+
+    private double getScoreByColor(Color color, Board board) {
+        double totalScore = getTotalScore(color);
+        long countOfExpectedPawn = getCountOfExpectedPawn(color, board);
 
         return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
     }
@@ -90,21 +98,14 @@ public class Pieces {
                 .sum();
     }
 
-    private long getCountOfExpectedPawn(final Color color) {
-        return IntStream.range(0, Board.COLUMN)
+    private long getCountOfExpectedPawn(final Color color, final Board board) {
+        return IntStream.range(0, board.getColumn())
                 .mapToObj(column -> pieces.stream()
                         .filter(piece -> piece.getColumn() == column)
                         .filter(Piece::isPawn)
                         .filter(piece -> piece.isSameColor(color))
                 ).flatMap(Function.identity())
                 .count();
-    }
-
-    public double getWhiteScore() {
-        double totalScore = getTotalScore(Color.WHITE);
-        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
-
-        return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
     }
 
 }

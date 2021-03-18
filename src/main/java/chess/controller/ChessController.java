@@ -47,7 +47,7 @@ public class ChessController {
     }
 
     private void printWinner(Command command) {
-        if(!game.isFinished() || !command.isStatus()) {
+        if (!game.isFinished() || !command.isStatus()) {
             return;
         }
 

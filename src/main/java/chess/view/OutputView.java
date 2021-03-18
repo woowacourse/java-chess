@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.piece.Color;
 import chess.view.dto.BoardDto;
 import chess.view.dto.PieceDto;
 

@@ -55,4 +55,16 @@ public class ChessGame {
     public Optional<Color> getWinnerColor() {
         return state.getWinnerColor();
     }
+
+    public void movePiece(Color color, Position source, Position target) {
+        board.movePiece(color, source, target);
+    }
+
+    public void catchPiece(Color color) {
+        board.catchPiece(color);
+    }
+
+    public int getBoardRow() {
+        return board.getRow();
+    }
 }
