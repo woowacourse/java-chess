@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.strategy.Direction;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -40,6 +42,10 @@ public class Position {
 
     public int calculateYDegree(Position that) {
         return this.rank.calculateGapAsInt(that.rank);
+    }
+
+    public Position getNextPosition(Direction direction) {
+        return Position.of(this.file.add(direction.getXDegree()), this.rank.add(direction.getYDegree()));
     }
 
     @Override

@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
+import chess.domain.board.Square;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -20,7 +20,7 @@ public class OutputView {
             String line = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
                     .map(board::findByPosition)
-                    .map(Piece::getNotation)
+                    .map(Square::getNotation)
                     .collect(Collectors.joining());
             System.out.println(line);
         }

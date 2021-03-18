@@ -1,10 +1,15 @@
 package chess.domain.position;
 
+import chess.domain.piece.strategy.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.EnumSource;
+import org.junit.jupiter.params.provider.MethodSource;
+
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -43,4 +48,32 @@ class PositionTest {
         assertThat(Position.of(from).calculateYDegree(Position.of(to))).isEqualTo(expected);
     }
 
+    @DisplayName("Direction을 기준으로 다음 Position을 구한다")
+    @ParameterizedTest
+    @MethodSource
+    void getNextPositionTest(Position source, Direction direction, Position target) {
+        assertThat(source.getNextPosition(direction)).isEqualTo(target);
+    }
+
+    static Stream<Arguments> getNextPositionTest() {
+        return Stream.of(
+                Arguments.of(Position.of("a1"), Direction.NORTH, Position.of("a2")),
+                Arguments.of(Position.of("a2"), Direction.SOUTH, Position.of("a1")),
+                Arguments.of(Position.of("a1"), Direction.EAST, Position.of("b1")),
+                Arguments.of(Position.of("b1"), Direction.WEST, Position.of("a1")),
+                Arguments.of(Position.of("a1"), Direction.NORTHEAST, Position.of("b2")),
+                Arguments.of(Position.of("b1"), Direction.NORTHWEST, Position.of("a2")),
+                Arguments.of(Position.of("a2"), Direction.SOUTHEAST, Position.of("b1")),
+                Arguments.of(Position.of("b2"), Direction.SOUTHWEST, Position.of("a1")),
+
+                Arguments.of(Position.of("a1"), Direction.EEN, Position.of("c2")),
+                Arguments.of(Position.of("a2"), Direction.EES, Position.of("c1")),
+                Arguments.of(Position.of("c1"), Direction.WWN, Position.of("a2")),
+                Arguments.of(Position.of("c2"), Direction.WWS, Position.of("a1")),
+                Arguments.of(Position.of("a1"), Direction.NNE, Position.of("b3")),
+                Arguments.of(Position.of("b1"), Direction.NNW, Position.of("a3")),
+                Arguments.of(Position.of("a3"), Direction.SSE, Position.of("b1")),
+                Arguments.of(Position.of("b3"), Direction.SSW, Position.of("a1"))
+        );
+    }
 }

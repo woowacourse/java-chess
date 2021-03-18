@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.dto.BoardDto;
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.position.Position;
 
 public abstract class Piece {
     private final String notation;
@@ -13,5 +15,13 @@ public abstract class Piece {
 
     public String getNotation() {
         return notation;
+    }
+
+    public boolean canMove(BoardDto boardDto, Position from, Position to) {
+        return this.moveStrategy.canMove(boardDto, from, to);
+    }
+
+    public boolean isNotBlank(){
+        return !this.equals(new Blank());
     }
 }

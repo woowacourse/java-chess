@@ -14,4 +14,8 @@ public class RealPiece extends Piece{
     public String getNotation() {
         return color.changeNotation(super.getNotation());
     }
+
+    public Color getColor() {
+        return color;
+    }
 }

@@ -8,4 +8,17 @@ public class Blank extends Piece {
     public Blank() {
         super(BLANK_NOTATION, new CannotMoveStrategy());
     }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Blank) {
+            return true;
+        }
+        return false;
+    }
 }

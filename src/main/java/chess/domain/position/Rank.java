@@ -37,6 +37,13 @@ public enum Rank {
         return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 Rank가 없습니다.");
     }
 
+    public static Rank from(int coordinate) {
+        return Arrays.stream(values())
+                .filter(rank -> rank.coordinate == coordinate)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 좌표의 Rank가 없습니다."));
+    }
+
     public static List<Rank> getBlankRanks() {
         return Arrays.stream(values())
                 .skip(BLANK_LINE_ROW_PIVOT)
@@ -60,5 +67,9 @@ public enum Rank {
 
     public int calculateGapAsInt(Rank thatRank) {
         return thatRank.coordinate - this.coordinate;
+    }
+
+    public Rank add(int yDegree) {
+        return Rank.from(this.coordinate + yDegree);
     }
 }

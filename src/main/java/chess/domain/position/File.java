@@ -36,11 +36,22 @@ public enum File {
         return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 File이 없습니다.");
     }
 
+    public static File from(int coordinate){
+        return Arrays.stream(values())
+                .filter(file -> file.coordinate == coordinate)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당하는 좌표의 File이 없습니다."));
+    }
+
     public String getLetter() {
         return this.letter;
     }
 
     public int calculateGapAsInt(File thatFile) {
         return thatFile.coordinate - this.coordinate;
+    }
+
+    public File add(int xDegree) {
+        return File.from(this.coordinate + xDegree);
     }
 }

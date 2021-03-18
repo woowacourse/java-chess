@@ -31,6 +31,31 @@ public enum Direction {
     }
 
     public static Direction from(int xDegree, int yDegree) {
+        int divisor = calculateDivisor(Math.abs(xDegree), Math.abs(yDegree));
+
+        return findDirection(xDegree / divisor, yDegree / divisor);
+    }
+
+    private static int calculateDivisor(int xDegree, int yDegree) {
+        if (xDegree == 0) {
+            return yDegree;
+        }
+        if (yDegree == 0 ) {
+            return xDegree;
+        }
+        return calculateGreatestCommonDivisor(Math.max(xDegree, yDegree), Math.min(xDegree, yDegree));
+    }
+
+    private static int calculateGreatestCommonDivisor(int bigger, int smaller) {
+        while(smaller > 0) {
+            int temporalNumber = bigger;
+            bigger = smaller;
+            smaller = temporalNumber % smaller;
+        }
+        return bigger;
+    }
+
+    private static Direction findDirection(int xDegree, int yDegree) {
         return Arrays.stream(values())
                 .filter(direction -> direction.xDegree == xDegree && direction.yDegree == yDegree)
                 .findAny()
