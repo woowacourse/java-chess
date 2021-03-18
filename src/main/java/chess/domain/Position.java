@@ -17,7 +17,7 @@ public class Position {
     }
 
     public static Position of(String value) {
-        return new Position(value.substring(0, 1), value.substring(1, 2));
+        return new Position(value.substring(0, 1), value.substring(1));
     }
 
     public static Position of(Column column, Row row) {
