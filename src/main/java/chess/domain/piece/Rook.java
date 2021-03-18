@@ -19,12 +19,11 @@ public class Rook extends Piece {
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
-// 대각선인지 확인
+        // 대각선인지 확인
         if (!this.position.isCross(target)) {
             throw new IllegalArgumentException("[ERROR] 룩 이동 규칙에 어긋납니다.");
         }
         Cross rookCross = Cross.findCrossByTwoPosition(this.position, target);
-        System.out.println(rookCross);
         // 경로에 장애물이 있는지 확인
         rookCross.hasPieceInPath(this.position, target, currentPieces);
 
