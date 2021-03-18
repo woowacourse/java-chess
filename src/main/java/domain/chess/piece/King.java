@@ -25,7 +25,9 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position end) {
+    public boolean canMove(Piece[][] board, Position endPosition) {
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
+
         List<Position> movePositions = Arrays.asList(
                 Position.Of(-1, 0),
                 Position.Of(1, 0),
@@ -41,10 +43,8 @@ public class King extends Piece {
         int y = position.getColumn();
         return movePositions.stream()
                 .filter(movePosition ->
-                        x + movePosition.getRow() == end.getRow() && y + movePosition.getColumn() == end.getColumn())
+                        x + movePosition.getRow() == endPosition.getRow() && y + movePosition.getColumn() == endPosition.getColumn())
                 // King의 이동 가능 범위들 중 endPostiion과 일치하는 곳이 있다.
-                .filter(movePosition -> positionIsEmpty(board[x + movePosition.getRow()][y + movePosition.getColumn()]) // 빈칸이거나
-                        || !isOurTeam(board[x + movePosition.getRow()][y + movePosition.getColumn()]))  // 적의 기물을 잡을 수 있다면
                 .findAny()
                 .isPresent();
     }

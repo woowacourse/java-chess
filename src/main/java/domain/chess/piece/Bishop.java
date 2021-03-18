@@ -22,33 +22,6 @@ public class Bishop extends Piece {
         );
     }
 
-    @Override
-    public Bishop movePosition(Position position) {
-        return new Bishop(getName(), position.getRow(), position.getColumn(), isBlack());
-    }
-
-    @Override
-    public boolean canMove(Piece[][] board, Position endPosition) {
-        int dx[] = {-1, 1, -1, 1};
-        int dy[] = {1, 1, -1, -1};
-
-        if (!checkDiagonal(endPosition)) {
-            return false;
-        }
-
-        int index = findDirection(endPosition);
-        int nextRow = position.getRow() + dx[index];
-        int nextColumn = position.getColumn() + dy[index];
-
-        while (!(nextRow == endPosition.getRow() && nextColumn == endPosition.getColumn())
-                && isEmpty(board[nextRow][nextColumn])) {
-            nextRow += dx[index];
-            nextColumn += dy[index];
-        }
-
-        return Position.Of(nextRow, nextColumn).equals(endPosition);
-    }
-
     private boolean isEmpty(Piece piece) {
         return piece == null;
     }
@@ -76,5 +49,34 @@ public class Bishop extends Piece {
         int colDiff = Math.abs(position.getColumn() - endPosition.getColumn());
 
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
+    }
+
+    @Override
+    public Bishop movePosition(Position position) {
+        return new Bishop(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
+    @Override
+    public boolean canMove(Piece[][] board, Position endPosition) {
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
+
+        int dx[] = {-1, 1, -1, 1};
+        int dy[] = {1, 1, -1, -1};
+
+        if (!checkDiagonal(endPosition)) {
+            return false;
+        }
+
+        int index = findDirection(endPosition);
+        int nextRow = position.getRow() + dx[index];
+        int nextColumn = position.getColumn() + dy[index];
+
+        while (!(nextRow == endPosition.getRow() && nextColumn == endPosition.getColumn())
+                && isEmpty(board[nextRow][nextColumn])) {
+            nextRow += dx[index];
+            nextColumn += dy[index];
+        }
+
+        return Position.Of(nextRow, nextColumn).equals(endPosition);
     }
 }
