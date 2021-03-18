@@ -36,7 +36,7 @@
     - [x] Rook
     - [x] knight
     - [x] bishop
-    - [ ] queen
+    - [x] queen
     - [ ] king
   - [ ] 목적지로 이동할수 있는지 확인하고 움직인다.
     - [ ] 목적지로 이동할 수 있는지 확인한다.
