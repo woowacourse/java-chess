@@ -17,7 +17,6 @@ public class Grid {
     private static final int SIXTH_ROW = 6;
     private static final int SEVENTH_ROW = 7;
     private static final int EIGHTH_ROW = 8;
-    private static final int GAP_BETWEEN_INDEX_ACTUAL = 1;
     private static final String ROW_REFERENCE = "87654321";
     private static List<Line> lines;
 
@@ -37,12 +36,16 @@ public class Grid {
     }
 
     public void move(Position source, Position target) {
-        validatePositionInGrid(source, target);
-        validateSourcePiece(source);
         Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
+
+        validatePositionInGrid(source, target);
+        validateSourcePiece(sourcePiece);
+        validateTargetPiece(sourcePiece, targetPiece);
 
         if (sourcePiece instanceof Pawn) {
             validatePawnSteps(source, target);
+            ((Pawn) sourcePiece).moved();
         }
         if (!(sourcePiece instanceof Pawn)) {
             validateGeneralSteps(source, target);
@@ -52,34 +55,33 @@ public class Grid {
         assignPiece(target, sourcePiece);
     }
 
+    private void validateTargetPiece(Piece sourcePiece, Piece targetPiece) {
+        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
     private void validatePositionInGrid(Position source, Position target) {
         if (!source.isInGridRange() || !target.isInGridRange()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validateSourcePiece(Position source) {
-        Piece sourcePiece = findPiece(source);
-        if (sourcePiece.isEmpty()) {   // + 자신의 말 색깔일때
+    private void validateSourcePiece(Piece sourcePiece) {
+        if (sourcePiece.isEmpty()) {   // TODO: + 자신의 말 색깔일때
             throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
         }
     }
 
-    // 이 부분을 전략으로 빼야돼!
     private void validateGeneralSteps(Position source, Position target) {
         Piece sourcePiece = findPiece(source);
-        Piece targetPiece = findPiece(target);
 
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
             movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
         }
-        if (!movablePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
+
+        validateTargetInMovablePositions(movablePositions, target);
     }
 
     private void validatePawnSteps(Position source, Position target) {
@@ -95,18 +97,29 @@ public class Grid {
         for (Direction direction : sourcePiece.getDirectionsOnTwoStep()) {
             movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
         }
+        movablePositions = movablePositions.stream()
+                .distinct()
+                .collect(Collectors.toList());
 
-        // 중복 없애기
-        movablePositions = movablePositions.stream().distinct().collect(Collectors.toList());
-
-        // TODO : 세로로 2칸을 움직였는 데 처음 움직인 건지 체크
-
-
-        // 동일한 부분
-        if (!movablePositions.contains(target)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        if (sourcePiece.hasMoved() && Math.abs(target.getY() - source.getY()) == 2) {
+            throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
         }
-        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
+
+        if (Math.abs(target.getY() - source.getY()) == 1 &&
+                Math.abs(target.getX() - source.getX()) == 1 && targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
+        }
+
+        if (Math.abs(target.getY() - source.getY()) == 1 && Math.abs(target.getX() - source.getX()) == 0 && !targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("폰은 한칸 앞 말이 있으면 가지 못합니다.");
+        }
+
+
+        validateTargetInMovablePositions(movablePositions, target);
+    }
+
+    private void validateTargetInMovablePositions(List<Position> movablePositions, Position target) {
+        if (!movablePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }

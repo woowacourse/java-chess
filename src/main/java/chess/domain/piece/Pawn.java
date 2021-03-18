@@ -9,6 +9,8 @@ public class Pawn extends Piece {
     private static final char NAME_WHEN_WHITE = 'p';
     private static final int STEP_RANGE = 1;
 
+    private boolean moved = false;
+
     public Pawn(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
     }
@@ -18,6 +20,14 @@ public class Pawn extends Piece {
             return Direction.blackPawnLinearDirection();
         }
         return Direction.whitePawnLinearDirection();
+    }
+
+    public boolean hasMoved(){
+        return moved;
+    }
+
+    public void moved(){
+        moved = true;
     }
 
     @Override

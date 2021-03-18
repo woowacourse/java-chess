@@ -19,9 +19,11 @@ public class OutputView {
                 .map(line -> line.getPieces()
                         .stream()
                         .map(piece -> Character.toString(piece.getName()))
-                        .collect(Collectors.joining()))
+                        .collect(Collectors.joining("", "", "  "+ (8 - grid.getLines().indexOf(line)))))
                 .collect(Collectors.joining("\n"));
         System.out.println(gridStatus);
+        System.out.println();
+        System.out.println("abcdefgh");
 //        System.out.println(grid.getLines().get(2).getPieces().get(2).getName());
         System.out.println();
     }
