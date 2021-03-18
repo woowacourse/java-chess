@@ -22,6 +22,11 @@ public class Knight extends Piece {
     }
 
     @Override
+    public Knight movePosition(Position position) {
+        return new Knight(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
+    @Override
     public boolean canMove(Piece[][] board, Position end) {
         List<Position> movePositions = Arrays.asList(
                 Position.Of(-2, -1),

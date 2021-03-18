@@ -30,6 +30,11 @@ public class Queen extends Piece {
         return result;
     }
 
+    @Override
+    public Queen movePosition(Position end) {
+        return new Queen(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
     private boolean canMoveToStraight(Piece[][] board, Position endPosition) {
         if (checkPositionRange(endPosition)) {
             return false;

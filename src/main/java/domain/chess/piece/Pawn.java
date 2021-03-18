@@ -35,6 +35,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public Pawn movePosition(Position position) {
+        return new Pawn(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
+    @Override
     public boolean canMove(Piece[][] board, Position endPosition) {
         if (canForward(endPosition, 1)) return true;
         if (canForward(endPosition, 2)) return true;

@@ -43,6 +43,11 @@ public class Rook extends Piece {
         return Position.Of(nextRow, nextColumn).equals(endPosition);
     }
 
+    @Override
+    public Rook movePosition(Position end) {
+        return new Rook(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
     private int findDirection(Position end) {
         int rowDiff = end.getRow() - position.getRow();
         int colDiff = end.getColumn() - position.getColumn();

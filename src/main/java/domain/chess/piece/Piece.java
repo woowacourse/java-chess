@@ -27,8 +27,12 @@ public abstract class Piece {
         return name;
     }
 
-    public void movePosition(Position position) {
-        this.position = position;
+    public boolean isOurTeam(Piece piece){
+        return isBlack == piece.isBlack;
+    }
+
+    public boolean positionIsEmpty(Piece piece) {
+        return piece == null;
     }
 
     public abstract boolean canMove(Piece[][] board, Position end);
@@ -46,8 +50,5 @@ public abstract class Piece {
         return Objects.hash(position, name, score, isBlack);
     }
 
-    public boolean isOurTeam(Piece piece){
-        return isBlack == piece.isBlack;
-    }
-
+    public abstract Piece movePosition(Position end);
 }

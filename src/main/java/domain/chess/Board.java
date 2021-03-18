@@ -18,7 +18,7 @@ public class Board {
         if (!piece.canMove(board, end)) {
             throw new IllegalArgumentException("말을 움직일 수 없습니다!");
         }
-        piece.movePosition(end);
+        piece = piece.movePosition(end);
         put(piece, end);
         board[start.getRow()][start.getColumn()] = null;
     }

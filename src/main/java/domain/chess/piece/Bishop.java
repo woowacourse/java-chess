@@ -23,6 +23,11 @@ public class Bishop extends Piece {
     }
 
     @Override
+    public Bishop movePosition(Position position) {
+        return new Bishop(getName(), position.getRow(), position.getColumn(), isBlack());
+    }
+
+    @Override
     public boolean canMove(Piece[][] board, Position endPosition) {
         int dx[] = {-1, 1, -1, 1};
         int dy[] = {1, 1, -1, -1};
@@ -36,12 +41,16 @@ public class Bishop extends Piece {
         int nextColumn = position.getColumn() + dy[index];
 
         while (!(nextRow == endPosition.getRow() && nextColumn == endPosition.getColumn())
-                && board[nextRow][nextColumn] == null) {
+                && isEmpty(board[nextRow][nextColumn])) {
             nextRow += dx[index];
             nextColumn += dy[index];
         }
 
         return Position.Of(nextRow, nextColumn).equals(endPosition);
+    }
+
+    private boolean isEmpty(Piece piece) {
+        return piece == null;
     }
 
     private int findDirection(Position end) {

@@ -40,5 +40,4 @@ class RookTest {
         board.put(pawn, Position.Of(3, 4));
         assertThat(rook.canMove(board.getBoard(), Position.Of(3, 5))).isFalse();
     }
-
 }
