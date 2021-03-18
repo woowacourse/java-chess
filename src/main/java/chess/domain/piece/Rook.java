@@ -2,7 +2,12 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class Rook extends Piece {
+    private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.EAST, Direction.WEST, Direction.SOUTH,
+            Direction.NORTH);
     private static final String INITIAL_NAME = "R";
 
     public Rook(final boolean isBlack) {
@@ -10,7 +15,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Piece piece) {
-        return false;
+    public boolean canMove(final Position source, final Position target, final Piece piece) {
+        return isPossibleDirection(source, target) && (isOpponent(piece) || piece.equals(new Blank()));
+    }
+
+    private boolean isPossibleDirection(final Position source, final  Position target) {
+        return POSSIBLE_DIRECTIONS.stream()
+                .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
     }
 }
