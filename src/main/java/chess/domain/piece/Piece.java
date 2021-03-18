@@ -30,6 +30,10 @@ public abstract class Piece {
         return name;
     }
 
+    public boolean isBlack() {
+        return this.isBlack;
+    }
+
     public abstract boolean canMove(final Position source, final Position target, final Piece piece);
 
     public abstract double getScore();

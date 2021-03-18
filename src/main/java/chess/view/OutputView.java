@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Board;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -39,5 +40,17 @@ public class OutputView {
 
     public static void printErrorMessage(final String message) {
         System.out.println(ERROR_PREFIX + message);
+    }
+
+    public static void printGameOverMessage() {
+        System.out.println("게임이 종료되었습니다. 결과를 보려면 \"status\"를 입력해 주세요.");
+    }
+
+    public static void printResult(boolean isBlack, Board board) {
+        String winner = isBlack ? "BLACK" : "WHITE";
+        String loser = !isBlack ? "BLACK" : "WHITE";
+        System.out.println(winner + "이 승리하였습니다.");
+        System.out.println(winner + "점수 : "+ board.calculateScore(isBlack));
+        System.out.println(loser+ "점수 : "+ board.calculateScore(!isBlack));
     }
 }

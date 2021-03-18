@@ -109,4 +109,15 @@ public class Board {
             throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
         }
     }
+
+    public boolean getWinner() {
+        if (isKingDead()) {
+            return chessBoard.values().stream()
+                    .filter(piece -> piece instanceof King)
+                    .map(piece -> piece.isBlack())
+                    .findFirst()
+                    .orElseThrow(IllegalArgumentException::new);
+        }
+        return calculateScore(true) > calculateScore(false);
+    }
 }

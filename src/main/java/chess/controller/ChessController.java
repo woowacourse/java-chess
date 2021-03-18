@@ -34,6 +34,7 @@ public class ChessController {
         final List<String> runtimeCommands = InputView.inputRuntimeCommand();
 
         if (InputView.END_COMMAND.equals(runtimeCommands.get(0))) {
+            showResult(board);
             return;
         }
 
@@ -42,6 +43,7 @@ public class ChessController {
         board.move(start, end, isBlack);
 
         if (board.isKingDead()) {
+            showResult(board);
             return;
         }
         isBlack = !isBlack;
@@ -50,5 +52,12 @@ public class ChessController {
 
     private Position getPositionByCommands(final String[] commands) {
         return new Position(commands[0], commands[1]);
+    }
+
+    private void showResult(final Board board) {
+        OutputView.printGameOverMessage();
+        if (InputView.isStatusInput()) {
+            OutputView.printResult(board.getWinner(), board);
+        }
     }
 }

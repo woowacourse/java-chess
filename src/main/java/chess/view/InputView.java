@@ -11,6 +11,7 @@ public class InputView {
     private static final String MOVE_COMMAND = "move";
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int POSITION_LENGTH = 2;
+    public static final String STATUS_COMMAND = "status";
 
     public static boolean inputInitialCommand() {
         try {
@@ -55,5 +56,9 @@ public class InputView {
     private static boolean isValidMoveCommand(final List<String> commands) {
         return MOVE_COMMAND.equals(commands.get(0)) && commands.size() == MOVE_COMMAND_SIZE &&
                 commands.get(1).length() == POSITION_LENGTH && commands.get(2).length() == POSITION_LENGTH;
+    }
+
+    public static boolean isStatusInput() {
+        return STATUS_COMMAND.equals(SCANNER.nextLine());
     }
 }
