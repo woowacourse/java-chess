@@ -8,14 +8,14 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.player.TeamType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
-    private static Board board = null;
-
     private final Map<Coordinate, Piece> cells = new HashMap<>();
 
     private Board() {
@@ -78,16 +78,86 @@ public class Board {
         return piece;
     }
 
+    public void move(Coordinate currentCoordinate, Coordinate targetCoordinate, TeamType teamType) {
+        if (currentCoordinate.equals(targetCoordinate)) { //direction 예외 이동
+            throw new IllegalArgumentException();
+        }
+        Piece piece = find(currentCoordinate);
+        if (piece == null || !piece.isTeamOf(teamType)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        if (!piece.isMovableTo(this, currentCoordinate, targetCoordinate)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        cells.put(targetCoordinate, piece);
+        cells.remove(currentCoordinate);
+    }
+
     public Map<Coordinate, Piece> getCells() {
         return cells;
     }
 
-    public void remove(Coordinate coordinate) {
-        cells.remove(coordinate);
-    }
-
     public void put(Piece piece, Coordinate coordinate) {
         cells.put(coordinate, piece);
+    }
+
+    public List<Coordinate> findCheckCoordinatesNew(Coordinate myKingCoordinate, List<Coordinate> possibleCoordinates, TeamType teamType) {
+        Piece myKing = cells.get(myKingCoordinate);
+        cells.remove(myKingCoordinate);
+        List<Coordinate> checkCoordinates = new ArrayList<>();
+        Map<Coordinate, Piece> enemyPieces = getEnemyPieces(teamType);
+        for (File file : File.values()) {
+            for (Rank rank : Rank.values()) {
+                Coordinate checkCoordinate = new Coordinate(file, rank);
+                for (Coordinate enemyCoordinate : enemyPieces.keySet()) {
+                    Piece enemyPiece = enemyPieces.get(enemyCoordinate);
+                    if (enemyPiece.isMovableTo(this, enemyCoordinate, checkCoordinate)) {
+                        checkCoordinates.add(checkCoordinate);
+                    }
+                }
+            }
+        }
+        cells.put(myKingCoordinate, myKing);
+        return checkCoordinates;
+    }
+
+    public List<Coordinate> findCheckCoordinates(List<Coordinate> myKingNextCoordinates, TeamType myTeamType) {
+        List<Coordinate> checkCoordinates = new ArrayList<>();
+        Map<Coordinate, Piece> enemyPieces = getEnemyPieces(myTeamType);
+        enemyPieces.remove(getEnemyKingCoordinate(myTeamType));
+
+        for (Coordinate myKingNextCoordinate : myKingNextCoordinates) { //킹 주위 8개 좌표
+            for (Coordinate coordinate : enemyPieces.keySet()) { //coordinate : c5
+                Piece piece = find(coordinate); //rook
+                System.out.println("======");
+                System.out.println("적 기물 이름 : " + piece.getName());
+                System.out.println("적 기물 위치 : " + coordinate.getFile().getValue() + coordinate.getRank().getY());
+                System.out.println("킹의 다음 위치 : " + myKingNextCoordinate.getFile().getValue() + myKingNextCoordinate.getRank().getY());
+                try {
+                    if (myKingNextCoordinate.equals(coordinate) || piece.isMovableTo(this, coordinate, myKingNextCoordinate)) {
+                        System.out.println("적이 위 킹의 다음 위치로 이동할 수 있어, 체크 자리이다.");
+                        checkCoordinates.add(coordinate);
+                    }
+                } catch (Exception ignored) {
+                    System.out.println("적 이동 불가 방향 에러");
+                }
+            }
+        }
+        return checkCoordinates;
+    }
+
+    public Coordinate getEnemyKingCoordinate(TeamType myTeamType) {
+        Map<Coordinate, Piece> enemyPieces = getEnemyPieces(myTeamType);
+        return enemyPieces.keySet().stream()
+            .filter(coordinate -> enemyPieces.get(coordinate) instanceof King)
+            .findAny()
+            .orElse(null);
+    }
+
+    private Map<Coordinate, Piece> getEnemyPieces(TeamType myTeamType) {
+        return cells.keySet().stream()
+        .filter(coordinate -> !cells.get(coordinate).isTeamOf(myTeamType))
+        .collect(Collectors.toMap(coordinate -> coordinate, cells::get));
     }
 }
 

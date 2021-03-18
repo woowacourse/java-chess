@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -38,13 +39,9 @@ class QueenTest {
     @ValueSource(strings = {"c6", "e6", "c4", "e4", "d4", "d6", "c5", "e5"})
     void moveDiagonal(String targetCoordinateInput) {
         Coordinate destination = Coordinate.from(targetCoordinateInput);
-        queen.move(board, currentCoordinate, destination);
+        boolean isMovable = queen.isMovableTo(board, currentCoordinate, destination);
 
-        Piece pieceOnStartCoordinate = cells.get(currentCoordinate);
-        Piece pieceOnDestination = cells.get(destination);
-
-        assertThat(pieceOnStartCoordinate).isNull();
-        assertThat(pieceOnDestination).isSameAs(queen);
+        assertThat(isMovable).isTrue();
     }
 
     @DisplayName("Queen의 도착위치까지 이동하는 경로 중간에 기물이 있으면 이동 불가")
@@ -55,9 +52,9 @@ class QueenTest {
         Piece dummy = new Rook(TeamType.BLACK);
         board.put(dummy, Coordinate.from("c4"));
 
-        assertThatCode(() -> queen.move(board, currentCoordinate, destination))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 도착 위치 입니다.");
+        boolean isMovable = queen.isMovableTo(board, currentCoordinate, destination);
+
+        assertThat(isMovable).isFalse();
     }
 
     @DisplayName("Queen의 도착위치에 같은 팀 기물이 있으면 이동 불가")
@@ -67,10 +64,9 @@ class QueenTest {
 
         Piece dummy = new Rook(TeamType.BLACK);
         board.put(dummy, destination);
+        boolean isMovable = queen.isMovableTo(board, currentCoordinate, destination);
 
-        assertThatCode(() -> queen.move(board, currentCoordinate, destination))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 도착 위치 입니다.");
+        assertThat(isMovable).isFalse();
     }
 
     @DisplayName("Queen의 도착위치에 적 팀 기물이 있으면 이동 가능")
@@ -79,12 +75,8 @@ class QueenTest {
         Coordinate destination = Coordinate.from("b3");
         Piece dummy = new Rook(TeamType.WHITE);
         board.put(dummy, destination);
-        queen.move(board, currentCoordinate, destination);
+        boolean isMovable = queen.isMovableTo(board, currentCoordinate, destination);
 
-        Piece pieceOnStartCoordinate = cells.get(currentCoordinate);
-        Piece pieceOnDestination = cells.get(destination);
-
-        assertThat(pieceOnStartCoordinate).isNull();
-        assertThat(pieceOnDestination).isSameAs(queen);
+        assertThat(isMovable).isTrue();
     }
 }

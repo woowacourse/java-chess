@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
+import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -39,13 +40,10 @@ class BishopTest {
     @ValueSource(strings = {"c6", "e6", "c4", "e4"})
     void moveDiagonal(String targetCoordinateInput) {
         Coordinate destination = Coordinate.from(targetCoordinateInput);
-        bishop.move(board, currentCoordinate, destination);
 
-        Piece pieceOnStartCoordinate = cells.get(currentCoordinate);
-        Piece pieceOnDestination = cells.get(destination);
+        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
-        assertThat(pieceOnStartCoordinate).isNull();
-        assertThat(pieceOnDestination).isSameAs(bishop);
+        assertThat(isMovable).isTrue();
     }
 
     @DisplayName("Bishop은 상하좌우 방향으로 이동할 수 없다")
@@ -54,9 +52,9 @@ class BishopTest {
     void cannotMoveDirectionNotDiagonal(String targetCoordinateInput) {
         Coordinate destination = Coordinate.from(targetCoordinateInput);
 
-        assertThatCode(() -> bishop.move(board, currentCoordinate, destination))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 방향입니다.");
+        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+
+        assertThat(isMovable).isFalse();
     }
 
     @DisplayName("Bishop이 도착위치까지 이동하는 경로 중간에 기물이 있으면 이동 불가")
@@ -66,23 +64,21 @@ class BishopTest {
 
         Piece dummy = new Rook(TeamType.BLACK);
         board.put(dummy, Coordinate.from("c4"));
+        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
-        assertThatCode(() -> bishop.move(board, currentCoordinate, destination))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 도착 위치 입니다.");
+        assertThat(isMovable).isFalse();
     }
 
     @DisplayName("Bishop의 도착위치에 같은 팀 기물이 있으면 이동 불가")
     @Test
     void cannotMoveWhenSameTeamPieceExistsOnDestination() {
         Coordinate destination = Coordinate.from("b3");
-
         Piece dummy = new Rook(TeamType.BLACK);
         board.put(dummy, destination);
 
-        assertThatCode(() -> bishop.move(board, currentCoordinate, destination))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("이동할 수 없는 도착 위치 입니다.");
+        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+
+        assertThat(isMovable).isFalse();
     }
 
     @DisplayName("Bishop의 도착위치에 적 팀 기물이 있으면 이동 가능")
@@ -91,12 +87,9 @@ class BishopTest {
         Coordinate destination = Coordinate.from("b3");
         Piece dummy = new Rook(TeamType.WHITE);
         board.put(dummy, destination);
-        bishop.move(board, currentCoordinate, destination);
 
-        Piece pieceOnStartCoordinate = cells.get(currentCoordinate);
-        Piece pieceOnDestination = cells.get(destination);
+        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
-        assertThat(pieceOnStartCoordinate).isNull();
-        assertThat(pieceOnDestination).isSameAs(bishop);
+        assertThat(isMovable).isTrue();
     }
 }

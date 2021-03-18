@@ -8,7 +8,8 @@ public enum Direction {
     LEFT_UP(-1, 1),
     LEFT_DOWN(-1, -1),
     RIGHT_UP(1, 1),
-    RIGHT_DOWN(1, -1);
+    RIGHT_DOWN(1, -1),
+    OTHERS(0, 0);
 
     private final int x;
     private final int y;
@@ -20,7 +21,7 @@ public enum Direction {
 
     public static Direction findDirection(int fileDiff, int rankDiff) {
         if (fileDiff == 0 && rankDiff == 0) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            return OTHERS;
         }
         if (fileDiff == 0) {
             return verticalDirection(rankDiff);
@@ -28,13 +29,13 @@ public enum Direction {
         if (rankDiff == 0) {
             return horizontalDirection(fileDiff);
         }
-        return diagonalDirection(fileDiff, rankDiff);
+        if (Math.abs(fileDiff) == Math.abs(rankDiff)) {
+            return diagonalDirection(fileDiff, rankDiff);
+        }
+        return OTHERS;
     }
 
     private static Direction diagonalDirection(int fileDiff, int rankDiff) {
-        if (Math.abs(fileDiff) != Math.abs(rankDiff)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
         if (fileDiff > 0 && rankDiff > 0) {
             return RIGHT_UP;
         }
