@@ -34,14 +34,27 @@ public class ChessController {
             Command command = commands.getIfPresent(input);
             command.execute(input);
 
-            printScoreIfStatusCommand(command);
-            printByCommand(command);
+            print(command);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
         }
     }
 
-    private void printByCommand(final Command command) {
+    private void print(Command command) {
+        printScoreIfStatusCommand(command);
+        printBoard();
+        printWinner(command);
+    }
+
+    private void printWinner(Command command) {
+        if(!game.isFinished() || !command.isStatus()) {
+            return;
+        }
+
+        game.getWinnerColor().ifPresent(color -> OutputView.printWinner(color.getName()));
+    }
+
+    private void printBoard() {
         if (game.isFinished()) {
             return;
         }

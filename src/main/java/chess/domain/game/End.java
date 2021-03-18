@@ -12,11 +12,6 @@ public class End extends Finished {
     }
 
     @Override
-    public Optional<Color> getWinnerColor() {
-        return Optional.empty();
-    }
-
-    @Override
     public void move(final Position source, final Position target) {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
     }

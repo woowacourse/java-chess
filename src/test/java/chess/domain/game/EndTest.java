@@ -1,6 +1,8 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +18,7 @@ class EndTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(null);
+        chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         end = new End(chessGame);
     }
 

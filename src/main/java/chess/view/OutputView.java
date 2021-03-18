@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.piece.Color;
 import chess.view.dto.BoardDto;
 import chess.view.dto.PieceDto;
 
@@ -9,6 +10,7 @@ public class OutputView {
 
     private static final int BOARD_COLUMN_SIZE = 8;
     private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
+    private static final String WINNER_FORMAT = "%s가 승리했습니다!%n";
 
     public static void drawBoard(final BoardDto boardDto) {
         String[] boardStatus = createBoardStatus(boardDto);
@@ -46,4 +48,7 @@ public class OutputView {
         System.out.printf(SCORE_FORMAT, whiteScore, blackScore);
     }
 
+    public static void printWinner(String color) {
+        System.out.printf(WINNER_FORMAT, color);
+    }
 }

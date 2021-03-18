@@ -1,7 +1,10 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
+
+import java.util.Optional;
 
 public class ChessGame {
 
@@ -47,5 +50,9 @@ public class ChessGame {
 
     public double getBlackScore() {
         return board.getBlackScore();
+    }
+
+    public Optional<Color> getWinnerColor() {
+        return state.getWinnerColor();
     }
 }
