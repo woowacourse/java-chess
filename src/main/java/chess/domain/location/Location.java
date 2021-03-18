@@ -21,12 +21,14 @@ public class Location {
     }
 
     private static void validateRange(final int x, final int y) {
-        if (x < MIN_LOCATION || MAX_LOCATION < x) {
-            throw new IllegalArgumentException("x값이 범위에서 벗어났습니다.");
+        if (!isRange(x, y)) {
+            throw new IllegalArgumentException("범위에서 벗어났습니다.");
         }
-        if (y < MIN_LOCATION || MAX_LOCATION < y) {
-            throw new IllegalArgumentException("y값이 범위에서 벗어났습니다.");
-        }
+    }
+
+    private static boolean isRange(int x, int y) {
+        return (MIN_LOCATION <= x && x <= MAX_LOCATION)
+            && (MIN_LOCATION <= y && y <= MAX_LOCATION);
     }
 
     @Override
@@ -76,5 +78,13 @@ public class Location {
 
     public boolean isSameY(final int y) {
         return this.y == y;
+    }
+
+    public Location moveByStep(int dx, int dy) {
+        return Location.of(x + dx, y + dy);
+    }
+
+    public boolean isRangeByStep(int dx, int dy) {
+        return isRange(x + dx, y + dy);
     }
 }
