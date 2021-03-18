@@ -7,6 +7,7 @@ import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "N";
@@ -18,7 +19,13 @@ public class Knight extends Piece {
 
     @Override
     public boolean canMove(Position target, Position destination, Board board) {
-        return false;
+        Piece destinationPiece = board.getBoard().get(destination);
+        Piece targetPiece = board.getBoard().get(target);
+
+        if (Objects.isNull(destinationPiece)) {
+            return true;
+        }
+        return !targetPiece.isSameTeam(destinationPiece);
     }
 
     @Override

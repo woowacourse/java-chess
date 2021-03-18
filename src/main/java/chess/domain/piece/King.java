@@ -45,8 +45,9 @@ public class King extends Piece {
                 }
             }
             if (movedPosition == destination) {
+                Piece targetPiece = board.getBoard().get(target);
                 Piece destinationPiece = board.getBoard().get(movedPosition);
-                if (destinationPiece != null&& destinationPiece.isSameTeam(destinationPiece)) {
+                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
                     return false;
                 }
                 return true;

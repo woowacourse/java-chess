@@ -24,6 +24,7 @@ class RookTest {
         for (Position position : Position.getPositions()) {
             testBoard.put(position, null);
         }
+        testBoard.put(Position.of(Horizontal.A, Vertical.ONE), new Rook(Team.WHITE));
         testBoard.put(Position.of(Horizontal.A, Vertical.SEVEN), new Rook(Team.BLACK));
         testBoard.put(Position.of(Horizontal.C, Vertical.ONE), new Rook(Team.WHITE));
 
@@ -74,7 +75,7 @@ class RookTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.A, Vertical.ONE),
+        assertTrue(rook.canMove(Position.of(Horizontal.A, Vertical.ONE),
                 Position.of(Horizontal.A, Vertical.SEVEN), board));
     }
 

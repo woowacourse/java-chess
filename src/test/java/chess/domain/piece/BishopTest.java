@@ -24,6 +24,7 @@ class BishopTest {
         for (Position position : Position.getPositions()) {
             testBoard.put(position, null);
         }
+        testBoard.put(Position.of(Horizontal.D, Vertical.FOUR), new Bishop(Team.WHITE));
         testBoard.put(Position.of(Horizontal.A, Vertical.ONE), new Pawn(Team.WHITE));
         testBoard.put(Position.of(Horizontal.F, Vertical.SIX), new Rook(Team.BLACK));
 
@@ -73,32 +74,32 @@ class BishopTest {
     @Test
     @DisplayName("비어있는 좌표로 비숍을 이동하는 경우")
     void canMove() {
-        Rook rook = new Rook(Team.WHITE);
-        assertTrue(rook.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        Bishop bishop = new Bishop(Team.WHITE);
+        assertTrue(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.B, Vertical.TWO), board));
     }
 
     @Test
     @DisplayName("길목에 다른 기물이 있는 경우")
     void canMoveImpossible() {
-        Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        Bishop bishop = new Bishop(Team.WHITE);
+        assertFalse(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.G, Vertical.SEVEN), board));
     }
 
     @Test
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
-        Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        Bishop bishop = new Bishop(Team.WHITE);
+        assertTrue(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.F, Vertical.SIX), board));
     }
 
     @Test
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
-        Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        Bishop bishop = new Bishop(Team.WHITE);
+        assertFalse(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.A, Vertical.ONE), board));
     }
 }

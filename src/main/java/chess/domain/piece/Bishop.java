@@ -51,13 +51,14 @@ public class Bishop extends Piece {
             movedPosition = movedPosition.moveTowardDirection(direction);
 
             if (movedPosition != destination) {
-                if (board.getBoard().get(movedPosition) != null) {
+                if (board.findPieceFromPosition(movedPosition) != null) {
                     return false;
                 }
             }
             if (movedPosition == destination) {
-                Piece destinationPiece = board.getBoard().get(movedPosition);
-                if (destinationPiece != null&& destinationPiece.isSameTeam(destinationPiece)) {
+                Piece targetPiece = board.findPieceFromPosition(target);
+                Piece destinationPiece = board.findPieceFromPosition(movedPosition);
+                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
                     return false;
                 }
                 return true;
