@@ -13,9 +13,29 @@ public class Pawn extends Division {
 
     @Override
     public void move(Position to, List<Piece> pieces) {
-        if (possiblePositions().contains(to)) {
-            this.position = to;
+        if (position.diffRow(to, 2 * color.moveUnit()) && position.diffColumn(to, 0)) {
+            if (isBlack()) {
+                if (position.hasRow(Row.SEVEN)) {
+                    if (!isContaining(position.moveBy(0, color.moveUnit()), pieces)) {
+                        position = to;
+                        return;
+                    }
+                }
+            }
+
+            if (position.hasRow(Row.TWO)) {
+                if (!isContaining(position.moveBy(0, color.moveUnit()), pieces)) {
+                    position = to;
+                    return;
+                }
+            }
+
         }
+        if (position.diffRow(to, color.moveUnit()) && position.diffColumn(to, 0)) {
+            position = to;
+            return;
+        }
+        throw new IllegalArgumentException();
     }
 
     @Override
@@ -23,20 +43,12 @@ public class Pawn extends Division {
 
     }
 
-    public List<Position> possiblePositions() {
-        List<Position> positions = new ArrayList<>();
-        if (isBlack()) {
-            if (this.position.hasRow(Row.SEVEN)) {
-                positions.add(this.position.moveBy(0, -2));
-            }
-            positions.add(this.position.moveBy(0,-1));
+
+    private boolean isContaining(Position position, List<Piece> pieces) {
+        for (Piece piece : pieces) {
+            if (piece.hasPosition(position))
+                return true;
         }
-        if (isWhite()) {
-            if (this.position.hasRow(Row.TWO)) {
-                positions.add(this.position.moveBy(0, 2));
-            }
-            positions.add(this.position.moveBy(0,1));
-        }
-        return positions;
+        return false;
     }
 }

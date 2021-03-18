@@ -5,7 +5,7 @@ import domain.position.Position;
 import java.util.List;
 
 public abstract class Division extends Basis {
-    private final Color color;
+    protected final Color color;
     protected Position position;
 
     public Division(Color color, String displayName, Position position) {

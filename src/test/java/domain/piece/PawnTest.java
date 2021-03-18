@@ -5,7 +5,10 @@ import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class PawnTest {
@@ -54,5 +57,23 @@ public class PawnTest {
         Piece pawn = new Pawn(Color.BLACK, from);
         pawn.move(to, Lists.emptyList());
         assertTrue(pawn.hasPosition(to));
+    }
+
+    @Test
+    @DisplayName("하얀 말 처음 위치에서 이동 방해")
+    void whiteInterruptedInitialMove() {
+        Position from = Position.from("a2");
+        Position to = Position.from("a4");
+        Piece pawn = new Pawn(Color.WHITE, from);
+        assertThatThrownBy(() -> pawn.move(to, Arrays.asList(new Pawn(Color.WHITE, Position.from("a3"))))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("검정 말 처음 위치에서 이동 방해")
+    void blackInterruptedInitialMove() {
+        Position from = Position.from("a7");
+        Position to = Position.from("a5");
+        Piece pawn = new Pawn(Color.BLACK, from);
+        assertThatThrownBy(() -> pawn.move(to, Arrays.asList(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
     }
 }
