@@ -36,11 +36,24 @@ public class Board {
                 ;
     }
 
-    public void move(List<String> values) {
+    public void move(Player player, List<String> values) {
         Position source = Position.of(values.get(1));
         Piece piece = findPieceBy(source)
                 .orElseThrow(()->new IllegalArgumentException("source 위치에 말이 없습니다."));
-        Position target = Position.of(values.get(2));
-        putPiece(piece, target);
+        moveCurrentPiece(player, values, piece);
+    }
+
+    private void moveCurrentPiece(Player player, List<String> values, Piece piece) {
+        if(player.isOwnerOf(piece)){
+            Position target = Position.of(values.get(2));
+            if(canMove(player, target)){
+                putPiece(piece, target);
+            }
+        }
+    }
+
+    private boolean canMove(Player player, Position target) {
+        return !findPieceBy(target).isPresent() ||
+        !player.isOwnerOf(findPieceBy(target).get());
     }
 }

@@ -26,6 +26,7 @@ public class ChessController {
         Game game = new Game();
         while(game.isPlaying()) {
             OutputView.printBoard(game.getBoard());
+            OutputView.printPlayerTurn(game.getCurrentColor());
             game.command(InputView.receiveInput());
         }
     }

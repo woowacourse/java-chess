@@ -2,17 +2,17 @@ package chess.domain.piece;
 
 public enum PieceColor {
 
-    WHITE("w"),
-    BLACK("b");
+    WHITE("백"),
+    BLACK("흑");
 
-    private final String value;
+    private final String color;
 
-    PieceColor(String value) {
-        this.value = value;
+    PieceColor(String color) {
+        this.color = color;
     }
 
-    private void validate(String value) {
-
+    public String getColor() {
+        return color;
     }
 
     public PieceColor reversed() {

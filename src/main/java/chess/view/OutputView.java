@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.piece.PieceColor;
 import chess.util.RenderingUtils;
 
 public class OutputView {
@@ -21,5 +22,9 @@ public class OutputView {
 
     public static void printError(IllegalArgumentException e) {
         System.out.println(e.getMessage());
+    }
+
+    public static void printPlayerTurn(PieceColor currentColor) {
+        System.out.println(currentColor.getColor() + "의 차례입니다.");
     }
 }
