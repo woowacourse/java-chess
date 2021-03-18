@@ -1,5 +1,8 @@
 package chess.domain.pieces;
 
+import chess.domain.position.Position;
+import chess.domain.position.Row;
+
 public class Pawn extends Piece {
     private static final String BLACK_TEAM_ROW = "7";
     private static final String WHITE_TEAM_ROW = "2";

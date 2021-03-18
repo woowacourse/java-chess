@@ -1,5 +1,7 @@
 package chess.domain.pieces;
 
+import chess.domain.position.Position;
+
 import java.util.Locale;
 
 public abstract class Piece {

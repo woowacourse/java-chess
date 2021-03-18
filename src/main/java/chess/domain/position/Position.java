@@ -1,4 +1,4 @@
-package chess.domain.pieces;
+package chess.domain.position;
 
 public class Position {
     public static final int RANGE_MIN_PIVOT = 0;

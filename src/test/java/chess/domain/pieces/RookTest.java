@@ -1,5 +1,7 @@
 package chess.domain.pieces;
 
+import chess.domain.position.Col;
+import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
