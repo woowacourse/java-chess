@@ -6,25 +6,10 @@ import chess.domain.board.Position;
 import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class King extends Piece {
     private static final String KING_NAME = "K";
-    private static final List<List<Integer>> KING_MOVABLE_POSITIONS;
-
-    static {
-        KING_MOVABLE_POSITIONS = Arrays.asList(
-                Arrays.asList(0, 1),
-                Arrays.asList(1, 1),
-                Arrays.asList(1, 0),
-                Arrays.asList(1, -1),
-                Arrays.asList(0, -1),
-                Arrays.asList(-1, -1),
-                Arrays.asList(-1, 0),
-                Arrays.asList(-1, 1)
-        );
-    }
 
     public King(Team team) {
         super(KING_NAME, team);
@@ -37,9 +22,9 @@ public class King extends Piece {
         int horizontalWeight = target.getHorizontalWeight();
         int verticalWeight = target.getVerticalWeight();
 
-        for (List<Integer> list : KING_MOVABLE_POSITIONS) {
-            int changedHorizontalWeight = horizontalWeight + list.get(0);
-            int changedVerticalWeight = verticalWeight + list.get(1);
+        for (Direction direction : Direction.values()) {
+            int changedHorizontalWeight = horizontalWeight + direction.getX();
+            int changedVerticalWeight = verticalWeight + direction.getY();
             movablePositions.addAll(calculateBoardPosition(changedHorizontalWeight, changedVerticalWeight));
         }
 

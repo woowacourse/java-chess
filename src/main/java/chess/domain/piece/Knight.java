@@ -8,9 +8,6 @@ import chess.domain.board.Vertical;
 import java.util.ArrayList;
 import java.util.List;
 
-import static chess.domain.board.Board.NEGATIVE;
-import static chess.domain.board.Board.POSITIVE;
-
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "N";
 
@@ -22,24 +19,23 @@ public class Knight extends Piece {
     public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 
-        movablePositions.addAll(calculateKnightMovablePositions(target, POSITIVE, POSITIVE));
-        movablePositions.addAll(calculateKnightMovablePositions(target, NEGATIVE, POSITIVE));
-        movablePositions.addAll(calculateKnightMovablePositions(target, NEGATIVE, NEGATIVE));
-        movablePositions.addAll(calculateKnightMovablePositions(target, POSITIVE, NEGATIVE));
+        movablePositions.addAll(calculateKnightMovablePositions(target, Direction.RIGHT_TOP));
+        movablePositions.addAll(calculateKnightMovablePositions(target, Direction.LEFT_TOP));
+        movablePositions.addAll(calculateKnightMovablePositions(target, Direction.LEFT_BOTTOM));
+        movablePositions.addAll(calculateKnightMovablePositions(target, Direction.RIGHT_BOTTOM));
 
         return movablePositions;
     }
 
-    private List<Position> calculateKnightMovablePositions(Position target,
-                                                           int horizontalDirection, int verticalDirection) {
+    private List<Position> calculateKnightMovablePositions(Position target, Direction direction) {
         List<Position> result = new ArrayList<>();
         int horizontalWeight = target.getHorizontalWeight();
         int verticalWeight = target.getVerticalWeight();
 
-        result.addAll(findKnightDestination(horizontalWeight + horizontalDirection * 2,
-                verticalWeight + verticalDirection));
-        result.addAll(findKnightDestination(horizontalWeight + horizontalDirection,
-                verticalWeight + verticalDirection * 2));
+        result.addAll(findKnightDestination(horizontalWeight + direction.getX() * 2,
+                verticalWeight + direction.getY()));
+        result.addAll(findKnightDestination(horizontalWeight + direction.getX(),
+                verticalWeight + direction.getY() * 2));
 
         return result;
     }
