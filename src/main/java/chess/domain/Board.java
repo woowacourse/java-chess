@@ -102,4 +102,8 @@ public class Board {
                 .filter(piece -> piece instanceof King)
                 .count() != 2;
     }
+
+    public boolean isRightTurn(final Position source, final boolean isBlack) {
+        return false;
+    }
 }

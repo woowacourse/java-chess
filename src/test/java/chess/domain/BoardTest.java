@@ -69,6 +69,15 @@ class BoardTest {
         assertThat(board.isKingDead()).isTrue();
     }
 
+    @Test
+    @DisplayName("턴에 맞는 위치를 선택했는지 검증하는 기능")
+    void isRightTurn() {
+        final boolean isBlack = true;
+        assertThat(board.isRightTurn(new Position("a", "2"), !isBlack)).isTrue();
+        assertThatThrownBy(() -> board.isRightTurn(new Position("a", "2"), isBlack))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+
     //TODO : blank 오류 확인
 //    @Test
 //    void name() {
