@@ -29,7 +29,7 @@ public class Position {
     }
 
     public static Position of(int x, int y) {
-        if (y < 0 || BOARD_SIZE - 1 < y || x < 0 || BOARD_SIZE - 1 < x) {
+        if (isNotValid(x, y)) {
             throw new IllegalArgumentException("체스판을 넘어서는 범위입니다.");
         }
 
@@ -37,57 +37,16 @@ public class Position {
         return positions.get(key);
     }
 
-    public boolean isDiagonal(Position targetPosition) {
-        if (this.equals(targetPosition)) {
-            return false;
-        }
-        int xDif = Math.abs(x - targetPosition.x);
-        int yDif = Math.abs(y - targetPosition.y);
-        return xDif == yDif;
+    private static boolean isNotValid(int x, int y) {
+        return y < 0 || BOARD_SIZE - 1 < y || x < 0 || BOARD_SIZE - 1 < x;
     }
 
-    public boolean isStraight(Position targetPosition) {
-        if (this.equals(targetPosition)) {
-            return false;
-        }
-        return targetPosition.x == x || targetPosition.y == y;
+    public Position go(Direction direction) {
+        return Position.of(x + direction.getX(), y + direction.getY());
     }
 
-    public boolean isKnightMove(Position targetPosition) {
-        int xDif = Math.abs(x - targetPosition.x);
-        int yDif = Math.abs(y - targetPosition.y);
-        if (xDif == 1) {
-            return yDif == 2;
-        }
-        if (xDif == 2) {
-            return yDif == 1;
-        }
-        return false;
-    }
-
-    public boolean isAroundPosition(Position targetPosition) {
-        if (this.equals(targetPosition)) {
-            return false;
-        }
-        int xDif = Math.abs(x - targetPosition.x);
-        int yDif = Math.abs(y - targetPosition.y);
-        return xDif <= 1 && yDif <= 1;
-    }
-
-    public boolean upperThan(Position targetPosition) {
-        return y > targetPosition.y;
-    }
-
-    public boolean lowerThan(Position targetPosition) {
-        return y < targetPosition.y;
-    }
-
-    public int xDifference(Position targetPosition) {
-        return Math.abs(x - targetPosition.x);
-    }
-
-    public int yDifference(Position targetPosition) {
-        return Math.abs(y - targetPosition.y);
+    public boolean invalidGo(Direction direction) {
+        return isNotValid(x + direction.getX(), y + direction.getY());
     }
 
     @Override
@@ -106,9 +65,9 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
+        return "Position.of(" +
+                x +
+                ", " + y +
+                ')';
     }
 }

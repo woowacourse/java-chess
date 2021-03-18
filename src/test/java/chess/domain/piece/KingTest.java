@@ -3,26 +3,39 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"0:0:false", "1:2:false", "1:0:true", "0:1:true", "1:1:true"}, delimiter = ':')
+    @Test
     @DisplayName("킹의 이동 조건 테스트")
-    void testMovable(int x, int y, boolean expectedMovable) {
+    void testAddMovable() {
         //given
-        Position currentPosition = Position.of(0, 0);
-        Position targetPosition = Position.of(x, y);
-        King king = new King(TeamColor.WHITE);
+        King king = new King(TeamColor.WHITE, Position.of(1, 1));
+        List<Position> existPiecePositions = Arrays.asList(
+                Position.of(0, 0), Position.of(0, 1),
+                Position.of(0, 2), Position.of(1, 2),
+                Position.of(2, 2), Position.of(2, 1),
+                Position.of(2, 0)
+        );
+        List<Position> enemiesPositions = Arrays.asList(
+                Position.of(2, 1), Position.of(2, 0)
+        );
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(1, 0));
+        expectedPosition.addAll(enemiesPositions);
 
         //when
-        boolean movable = king.movable(currentPosition, targetPosition);
+        king.addMovablePositions(existPiecePositions, enemiesPositions);
+        List<Position> movablePosition = king.movablePositions();
 
         //then
-        assertThat(movable).isEqualTo(expectedMovable);
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
 }

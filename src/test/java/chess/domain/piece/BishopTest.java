@@ -3,26 +3,42 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BishopTest {
 
-    @ParameterizedTest
-    @CsvSource(value = {"0:0:false", "3:2:false", "3:3:true"}, delimiter = ':')
+    @Test
     @DisplayName("비숍의 이동 조건 테스트")
-    void testMovable(int x, int y, boolean expectedMovable) {
+    void testAddMovable() {
         //given
-        Position currentPosition = Position.of(0, 0);
-        Position targetPosition = Position.of(x, y);
-        Bishop bishop = new Bishop(TeamColor.WHITE);
+        Bishop bishop = new Bishop(TeamColor.WHITE, Position.of(4, 2));
+        List<Position> existPiecePositions = Arrays.asList(
+                Position.of(2, 0), Position.of(2, 4),
+                Position.of(6, 0), Position.of(6, 4)
+        );
+        List<Position> enemiesPositions = Arrays.asList(
+                Position.of(6, 0), Position.of(6, 4)
+        );
+        List<Position> expectedPosition = new ArrayList<>(
+                Arrays.asList(
+                        Position.of(5, 3),
+                        Position.of(5, 1),
+                        Position.of(3, 3),
+                        Position.of(3, 1)
+                ));
+        expectedPosition.addAll(enemiesPositions);
 
         //when
-        boolean movable = bishop.movable(currentPosition, targetPosition);
+        bishop.addMovablePositions(existPiecePositions, enemiesPositions);
+        List<Position> movablePosition = bishop.movablePositions();
 
         //then
-        assertThat(movable).isEqualTo(expectedMovable);
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
 }

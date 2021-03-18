@@ -2,61 +2,86 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.TeamColor;
+import chess.exception.ImpossibleMoveException;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PawnTest {
 
-
-    @ParameterizedTest
-    @CsvSource(value = {"1:1:false", "2:2:false", "2:1:false", "1:2:true", "1:3:true"}, delimiter = ':')
-    @DisplayName("흰색 진영 폰의 이동 조건 테스트")
-    void testMovable_white(int x, int y, boolean expectedMovable) {
+    @Test
+    @DisplayName("흰색 폰의 초기 이동 조건 테스트")
+    void testAddMovable_white() {
         //given
-        Position currentPosition = Position.of(1, 1);
-        Position targetPosition = Position.of(x, y);
-        Pawn pawn = new Pawn(TeamColor.WHITE);
+        Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 1));
+        List<Position> existPiecePositions = Collections.singletonList(
+                Position.of(4, 2)
+        );
+        List<Position> enemiesPositions = Collections.singletonList(
+                Position.of(4, 2)
+        );
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(3, 3));
+        expectedPosition.add(Position.of(3, 2));
+        expectedPosition.add(Position.of(4, 2));
+        expectedPosition.addAll(enemiesPositions);
 
         //when
-        boolean movable = pawn.movable(currentPosition, targetPosition);
+        pawn.addMovablePositions(existPiecePositions, enemiesPositions);
+        List<Position> movablePosition = pawn.movablePositions();
 
         //then
-        assertThat(movable).isEqualTo(expectedMovable);
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"6:6:false", "5:5:false", "5:6:false", "6:5:true", "6:4:true"}, delimiter = ':')
-    @DisplayName("검은색 진영 폰의 이동 조건 테스트")
-    void testMovable_black(int x, int y, boolean expectedMovable) {
+    @Test
+    @DisplayName("검은색 폰의 초기 이동 조건 테스트")
+    void testAddMovable_black() {
         //given
-        Position currentPosition = Position.of(6, 6);
-        Position targetPosition = Position.of(x, y);
-        Pawn pawn = new Pawn(TeamColor.BLACK);
+        Pawn pawn = new Pawn(TeamColor.BLACK, Position.of(3, 6));
+        List<Position> existPiecePositions = Collections.singletonList(
+                Position.of(4, 5)
+        );
+        List<Position> enemiesPositions = Collections.singletonList(
+                Position.of(4, 5)
+        );
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(3, 5));
+        expectedPosition.add(Position.of(3, 4));
+        expectedPosition.add(Position.of(4, 5));
+        expectedPosition.addAll(enemiesPositions);
 
         //when
-        boolean movable = pawn.movable(currentPosition, targetPosition);
+        pawn.addMovablePositions(existPiecePositions, enemiesPositions);
+        List<Position> movablePosition = pawn.movablePositions();
 
         //then
-        assertThat(movable).isEqualTo(expectedMovable);
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
 
-    @ParameterizedTest
-    @CsvSource(value = {"1:2:true", "1:3:false"}, delimiter = ':')
-    @DisplayName("moved에 따른 폰의 이동 조건 테스트")
-    void testMovable_moved(int x, int y, boolean expectedMovable) {
+    @Test
+    @DisplayName("흰색 폰이 한번 움직인 뒤 조건 테스트")
+    void testAddMovable_moved() throws ImpossibleMoveException {
         //given
-        Position currentPosition = Position.of(1, 1);
-        Position targetPosition = Position.of(x, y);
-        Pawn pawn = new Pawn(TeamColor.WHITE);
-        pawn.changeMoveState();
+        Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 2));
+        ArrayList<Position> positions = new ArrayList<>();
+        pawn.addMovablePositions(positions, positions);
+        pawn.changePosition(Position.of(3, 3));
+
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(3, 4));
 
         //when
-        boolean movable = pawn.movable(currentPosition, targetPosition);
+        pawn.addMovablePositions(positions, positions);
+        List<Position> movablePosition = pawn.movablePositions();
 
         //then
-        assertThat(movable).isEqualTo(expectedMovable);
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
     }
 }
