@@ -41,4 +41,8 @@ public enum Column {
                  .forEach(x -> betweenColumns.add(columns[x]));
         return betweenColumns;
     }
+
+    public int diff(Column column) {
+        return column.ordinal() - ordinal();
+    }
 }

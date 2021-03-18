@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.IntStream;
 
+
 public enum Row {
     ONE("1"),
     TWO("2"),
@@ -40,5 +41,9 @@ public enum Row {
         IntStream.range(start + 1, end)
                  .forEach(x -> betweenRows.add(rows[x]));
         return betweenRows;
+    }
+
+    public int diff(Row row) {
+        return row.ordinal() - ordinal();
     }
 }

@@ -11,10 +11,19 @@ public class Bishop extends Division{
 
     @Override
     public void move(Position to, List<Piece> pieces) {
+        if (position.isDiagonal(to)) {
+            List<Position> positions = position.getBetween(to);
+            for (Piece piece : pieces) {
+                if (positions.contains(piece.getPosition())) {
+                    throw new IllegalArgumentException();
+                }
+            }
+            position = to;
+        }
     }
 
     @Override
     public void kill(Position to, List<Piece> pieces) {
-
+        move(to, pieces);
     }
 }

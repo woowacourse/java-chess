@@ -54,6 +54,10 @@ public class Position {
         return hasRow(to.row) || hasColumn(to.column);
     }
 
+    public boolean isDiagonal(Position to) {
+        return Math.abs(row.diff(to.row)) == Math.abs(column.diff(to.column));
+    }
+
     public boolean hasRow(Row row) {
         return this.row.equals(row);
     }
@@ -77,6 +81,20 @@ public class Position {
                                          .map(column -> Position.of(column, row))
                                          .collect(Collectors.toList()));
         }
+
+        if (isDiagonal(to)) {
+            int rowDirection = row.diff(to.row) / Math.abs(row.diff(to.row));
+            int columnDirection = column.diff(to.column) / Math.abs(column.diff(to.column));
+
+            Row temp = row;
+            Column temp2 = column;
+            while (temp != to.row && temp2 != to.column) {
+                temp = temp.moveBy(rowDirection);
+                temp2 = temp2.moveBy(columnDirection);
+                betweenPosition.add(Position.of(temp2, temp));
+            }
+        }
+
         return betweenPosition;
     }
 }
