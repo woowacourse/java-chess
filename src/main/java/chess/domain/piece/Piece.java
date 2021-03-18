@@ -22,7 +22,7 @@ public abstract class Piece {
         return position;
     }
 
-    public void moveTo(Position position) {
+    public void moveTo(final Position position) {
         this.position = position;
     }
 
@@ -30,31 +30,23 @@ public abstract class Piece {
         return this instanceof Empty;
     }
 
-    public boolean isSameColor(Piece other) {
+    public boolean isSameColor(final Piece other) {
         return this.isBlack == other.isBlack;
     }
 
-    public abstract List<Direction> getDirections();
-
-    public abstract int getStepRange();
-
-    public abstract char getName();
-
-    public abstract double getScore();
-
-    public void validateSourceAndTargetBeforeMove(Piece targetPiece){
+    public void validateSourceAndTargetBeforeMove(final Piece targetPiece) {
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
         validateSourcePiece();
     }
 
-    public void validateTargetInMovablePositions(List<Position> movablePositions) {
+    public void validateTargetInMovablePositions(final List<Position> movablePositions) {
         if (!movablePositions.contains(this.getPosition())) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
-    private void validatePositionInGrid(Piece targetPiece){
+    private void validatePositionInGrid(final Piece targetPiece) {
         Position source = this.getPosition();
         Position target = targetPiece.getPosition();
         if (!source.isInGridRange() || !target.isInGridRange()) {
@@ -62,7 +54,7 @@ public abstract class Piece {
         }
     }
 
-    private void validateTargetPiece(Piece targetPiece) {
+    private void validateTargetPiece(final Piece targetPiece) {
         if (!targetPiece.isEmpty() && isSameColor(targetPiece)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
@@ -74,11 +66,11 @@ public abstract class Piece {
         }
     }
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "position=" + position +
-                ", isBlack=" + isBlack +
-                '}';
-    }
+    public abstract List<Direction> getDirections();
+
+    public abstract int getStepRange();
+
+    public abstract char getName();
+
+    public abstract double getScore();
 }

@@ -24,34 +24,38 @@ public class Pawn extends Piece {
         return Direction.whitePawnLinearDirection();
     }
 
-    public boolean hasMoved(){
-        return moved;
+    public int getTwoStepRange() {
+        return TWO_STEP_RANGE;
     }
 
-    public void moved(){
+    public void moved() {
         moved = true;
     }
 
-    public void validatePawnMove(Piece targetPiece){
+    public boolean hasMoved() {
+        return moved;
+    }
+
+    public void validatePawnMove(final Piece targetPiece) {
         validateTwoSteps(targetPiece);
         validateDiagonalMove(targetPiece);
         validateObstacleAhead(targetPiece);
     }
 
-    private void validateTwoSteps(Piece targetPiece){
+    private void validateTwoSteps(final Piece targetPiece) {
         if (hasMoved() && Math.abs(targetPiece.getPosition().getY() - getPosition().getY()) == 2) {
             throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
         }
     }
 
-    private void validateDiagonalMove(Piece targetPiece){
+    private void validateDiagonalMove(final Piece targetPiece) {
         if (Math.abs(targetPiece.getPosition().getY() - getPosition().getY()) == 1 &&
                 Math.abs(targetPiece.getPosition().getX() - getPosition().getX()) == 1 && targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
         }
     }
 
-    private void validateObstacleAhead(Piece targetPiece) {
+    private void validateObstacleAhead(final Piece targetPiece) {
         if (Math.abs(targetPiece.getPosition().getY() - getPosition().getY()) == 1 && Math.abs(targetPiece.getPosition().getX() - getPosition().getX()) == 0 && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 한칸 앞 말이 있으면 가지 못합니다.");
         }
@@ -65,17 +69,9 @@ public class Pawn extends Piece {
         return Direction.whitePawnDirection();
     }
 
-    public int getTwoStepRange() {
-        return TWO_STEP_RANGE;
-    }
-
     @Override
     public double getScore() {
         return SCORE;
-    }
-
-    public double getHalfScore() {
-        return SCORE / 2;
     }
 
     @Override

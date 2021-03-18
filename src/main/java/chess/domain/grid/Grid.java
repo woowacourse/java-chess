@@ -17,29 +17,18 @@ public class Grid {
     private static final int SIXTH_ROW = 6;
     private static final int SEVENTH_ROW = 7;
     private static final int EIGHTH_ROW = 8;
-    private static final String ROW_REFERENCE = "87654321";
-    private static final int LINE_COUNT = 8;
-    private static final char MIN_X_POSITION = 'a';
     private static final int SAME_COLUMN_BOUND = 2;
     private static final int DIVIDER_FOR_PAWN_SCORE = 2;
+    private static final int LINE_COUNT = 8;
+    private static final String ROW_REFERENCE = "87654321";
+    private static final char MIN_X_POSITION = 'a';
     private static List<Line> lines;
 
     public Grid() {
         initialize();
     }
 
-    public void initialize() {
-        lines = new ArrayList<>();
-        lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
-        lines.add(Line.createPawnLine(SEVENTH_ROW, true));
-        for (int i = SIXTH_ROW; i >= THIRD_ROW; i--) {
-            lines.add(Line.createEmptyLine(i));
-        }
-        lines.add(Line.createPawnLine(SECOND_ROW, false));
-        lines.add(Line.createGeneralLine(FIRST_ROW, false));
-    }
-
-    public void move(Piece sourcePiece, Piece targetPiece) {
+    public void move(final Piece sourcePiece, final Piece targetPiece) {
         sourcePiece.validateSourceAndTargetBeforeMove(targetPiece);
 
         if (sourcePiece instanceof Pawn) {
@@ -64,16 +53,27 @@ public class Grid {
         return lines;
     }
 
-    public Line findLineByYPosition(char y) {
+    public double calculateScore(final boolean isBlack) {
+        return calculateTotalScore(isBlack) - deductPawnScoreInSameColumn(isBlack);
+    }
+
+    private void initialize() {
+        lines = new ArrayList<>();
+        lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
+        lines.add(Line.createPawnLine(SEVENTH_ROW, true));
+        for (int i = SIXTH_ROW; i >= THIRD_ROW; i--) {
+            lines.add(Line.createEmptyLine(i));
+        }
+        lines.add(Line.createPawnLine(SECOND_ROW, false));
+        lines.add(Line.createGeneralLine(FIRST_ROW, false));
+    }
+
+    private Line findLineByYPosition(final char y) {
         int index = ROW_REFERENCE.indexOf(y);
         return lines.get(index);
     }
 
-    public double calculateScore(boolean isBlack) {
-        return calculateTotalScore(isBlack) - deductPawnScoreInSameColumn(isBlack);
-    }
-
-    private double deductPawnScoreInSameColumn(boolean isBlack) {
+    private double deductPawnScoreInSameColumn(final boolean isBlack) {
         double pawnScoreToDeduct = 0;
         for (int i = 0; i < LINE_COUNT; i++) {
             pawnScoreToDeduct += calculatePawnCountInSameColumn(isBlack, i);
@@ -81,10 +81,10 @@ public class Grid {
         return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;
     }
 
-    private double calculatePawnCountInSameColumn(boolean isBlack, int i) {
+    private double calculatePawnCountInSameColumn(final boolean isBlack, final int i) {
         double result = 0;
-        char x = (char)(MIN_X_POSITION + i);
-        int pawnCountInSameColumn = (int)lines.stream().map(line -> line.findPiece(x))
+        char x = (char) (MIN_X_POSITION + i);
+        int pawnCountInSameColumn = (int) lines.stream().map(line -> line.findPiece(x))
                 .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
                 .count();
         if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
@@ -93,7 +93,7 @@ public class Grid {
         return result;
     }
 
-    private double calculateTotalScore(boolean isBlack) {
+    private double calculateTotalScore(final boolean isBlack) {
         return lines.stream()
                 .flatMap(line -> line.getPieces()
                         .stream()
@@ -104,7 +104,7 @@ public class Grid {
                 .sum();
     }
 
-    private void assignPiece(Position position, Piece piece) {
+    private void assignPiece(final Position position, final Piece piece) {
         char x = position.getX();
         char y = position.getY();
         Line line = findLineByYPosition(y);
@@ -112,7 +112,7 @@ public class Grid {
         findPiece(position).moveTo(position);
     }
 
-    private void validateGeneralSteps(Piece sourcePiece, Piece targetPiece) {
+    private void validateGeneralSteps(final Piece sourcePiece, final Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
             movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
@@ -120,7 +120,7 @@ public class Grid {
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
-    private void validatePawnSteps(Pawn sourcePiece, Piece targetPiece) {
+    private void validatePawnSteps(final Pawn sourcePiece, final Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
             movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
@@ -136,7 +136,7 @@ public class Grid {
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
-    private List<Position> extractRoute(Piece sourcePiece, Direction direction, int stepRange) {
+    private List<Position> extractRoute(final Piece sourcePiece, final Direction direction, final int stepRange) {
         List<Position> positions = new ArrayList<>();
         Position sourcePosition = sourcePiece.getPosition();
 
@@ -153,11 +153,11 @@ public class Grid {
         return positions;
     }
 
-    private void updatePiecePosition(Piece sourcePiece, Piece targetPiece) {
+    private void updatePiecePosition(final Piece sourcePiece, final Piece targetPiece) {
         Position sourcePosition = sourcePiece.getPosition();
         Position targetPosition = targetPiece.getPosition();
 
-        assignPiece(sourcePosition, new Empty(sourcePosition));
+        assignPiece(sourcePosition, new Empty(sourcePosition.getX(), sourcePosition.getY()));
         assignPiece(targetPosition, sourcePiece);
     }
 }

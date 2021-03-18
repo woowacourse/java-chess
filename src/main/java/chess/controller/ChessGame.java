@@ -19,14 +19,14 @@ public class ChessGame {
         playRounds();
     }
 
-    public void playRounds(){
+    public void playRounds() {
         Grid grid = new Grid();
         while (!gameOver) {
             playRound(grid);
         }
     }
 
-    public void playRound(Grid grid){
+    public void playRound(Grid grid) {
         String command = InputView.inputCommand();
         if (command.equals("start")) {
             OutputView.printGridStatus(grid);
@@ -40,7 +40,7 @@ public class ChessGame {
             gameOver = true;
         }
 
-        if(command.equals("status")){
+        if (command.equals("status")) {
             gameOver = true;
             OutputView.printScores(true, grid.calculateScore(true));
             OutputView.printScores(false, grid.calculateScore(false));
@@ -56,7 +56,7 @@ public class ChessGame {
         Piece sourcePiece = grid.findPiece(source);
         Piece targetPiece = grid.findPiece(target);
         grid.move(sourcePiece, targetPiece);
-        if(targetPiece instanceof King){
+        if (targetPiece instanceof King) {
             gameOver = true;
         }
     }

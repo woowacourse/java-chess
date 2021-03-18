@@ -12,14 +12,14 @@ public class OutputView {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printGridStatus(Grid grid) {
+    public static void printGridStatus(final Grid grid) {
         System.out.println();
         String gridStatus = grid.getLines()
                 .stream()
                 .map(line -> line.getPieces()
                         .stream()
                         .map(piece -> Character.toString(piece.getName()))
-                        .collect(Collectors.joining("", "", "  "+ (8 - grid.getLines().indexOf(line)))))
+                        .collect(Collectors.joining("", "", "  " + (8 - grid.getLines().indexOf(line)))))
                 .collect(Collectors.joining("\n"));
         System.out.println(gridStatus);
         System.out.println();
@@ -27,8 +27,8 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printScores(boolean isBlack, double calculateScore) {
-        if(isBlack){
+    public static void printScores(final boolean isBlack, final double calculateScore) {
+        if (isBlack) {
             System.out.println("Black Score: " + calculateScore);
             return;
         }

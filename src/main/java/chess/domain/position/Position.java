@@ -28,6 +28,10 @@ public class Position {
         return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
     }
 
+    public Position stepOn(final int xDegree, final int yDegree) {
+        return new Position((char) (x + xDegree), (char) (y + yDegree));
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -39,17 +43,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    public Position stepOn(int xDegree, int yDegree) {
-        return new Position((char) (x + xDegree), (char) (y + yDegree));
-    }
-
-    @Override
-    public String toString() {
-        return "Position{" +
-                "x=" + x +
-                ", y=" + y +
-                '}';
     }
 }

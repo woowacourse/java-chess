@@ -15,7 +15,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public int getStepRange(){
+    public int getStepRange() {
         return STEP_RANGE;
     }
 
@@ -25,7 +25,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public List<Direction> getDirections(){
+    public List<Direction> getDirections() {
         return Direction.everyDirection();
     }
 
