@@ -76,4 +76,8 @@ public class Position {
     public boolean isSubtractXPositive(Position anotherPosition) {
         return this.x > anotherPosition.x;
     }
+
+    public boolean isDiagonal(Position target) {
+        return Math.abs(subtractX(target)) == Math.abs(subtractY(target));
+    }
 }

@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Diagonal;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,16 +17,13 @@ public class Bishop extends Piece {
     }
 
     @Override
-    void move(Position position, CurrentPieces currentPieces) {
-        int xDifference = this.position.subtractX(position);
-        int yDifference = this.position.subtractY(position);
-        if (Math.abs(xDifference) == Math.abs(yDifference)) {
-            for (int i = 0; i < Math.abs(xDifference); i++) {
-
-            }
-
-            this.position = position;
+    void move(Position target, CurrentPieces currentPieces) {
+        if (!this.position.isDiagonal(target)) {
+            throw new IllegalArgumentException("[ERROR] 비숍 이동 규칙에 어긋납니다.");
         }
+        Diagonal bishopDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
+        bishopDiagonal.hasPieceInPath(this.position, target, currentPieces);
+        this.position = target;
     }
 
     public static List<Bishop> generate() {

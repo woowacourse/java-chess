@@ -55,17 +55,29 @@ public class BishopTest {
         assertThatThrownBy((() ->bishopD.hasPieceInPath(bishop.getPosition(), target, currentPieces)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-//
-//    @Test
-//    void 비숍_이동() {
-//        CurrentPieces currentPieces = CurrentPieces.generate();
-//        Position source = Position.of('h', '6'); // 비숍 위치
-//        Position target = Position.of('g', '5'); // 옮기고자 하는 위치
-//        Piece bishop = currentPieces.findByPosition(source);
-//        System.out.println(bishop);
-//        Diagonal bishopD = Diagonal.findDiagonalByTwoPosition(source, target);
-//        System.out.println(bishopD);
-//        bishopD.hasPieceInPath(bishop.getPosition(), target, currentPieces);
-//
-//    }
+
+    @Test
+    void 비숍_이동() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Position source = Position.of('f', '8'); // 비숍 위치
+        Position target = Position.of('h', '6'); // 옮기고자 하는 위치
+        Piece bishop = currentPieces.findByPosition(source);
+        currentPieces.removePieceByPosition(Position.of('g', '7'));
+
+        bishop.move(target, currentPieces);
+
+        assertThat(bishop.getPosition()).isEqualTo(target);
+    }
+
+    @Test
+    void 비숍_이동_규칙에_어긋나는_경우_예() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Position source = Position.of('f', '8'); // 비숍 위치
+        Position target = Position.of('g', '6'); // 옮기고자 하는 위치
+        Piece bishop = currentPieces.findByPosition(source);
+        currentPieces.removePieceByPosition(Position.of('g', '7'));
+
+        assertThatThrownBy(() ->  bishop.move(target, currentPieces))
+        .isInstanceOf(IllegalArgumentException.class);
+    }
 }

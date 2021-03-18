@@ -63,4 +63,15 @@ public class PositionTest {
 
         assertThat(result).isFalse();
     }
+
+    @DisplayName("두 x, y의 차가 같은지 확인한다.")
+    @Test
+    void X_값과_Y_값의_차이가_같다() {
+        Position position1 = Position.of('a', '1');
+        Position position2 = Position.of('h', '8');
+
+        boolean result = position1.isDiagonal(position2);
+
+        assertThat(result).isTrue();
+    }
 }

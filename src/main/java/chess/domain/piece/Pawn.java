@@ -19,28 +19,28 @@ public class Pawn extends Piece {
     }
 
     @Override
-    void move(Position position, CurrentPieces currentPieces) {
+    void move(Position target, CurrentPieces currentPieces) {
         if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙
-            if (this.position.subtractY(position) > 0 && this.position.subtractY(position) <= 2) {
-                this.position = position;
+            if (this.position.subtractY(target) > 0 && this.position.subtractY(target) <= 2) {
+                this.position = target;
                 return;
             }
         }
 
         if (this.position.getY() == '2' && this.name.equals("p")) { // 화이트
-            if (position.subtractY(this.position) > 0 && position.subtractY(this.position) <= 2) {
-                this.position = position;
+            if (target.subtractY(this.position) > 0 && target.subtractY(this.position) <= 2) {
+                this.position = target;
                 return;
             }
         }
 
-        if (this.position.subtractY(position) == 1 && this.name.equals("P")) { // 블랙
-            this.position = position;
+        if (this.position.subtractY(target) == 1 && this.name.equals("P")) { // 블랙
+            this.position = target;
             return;
         }
 
-        if (position.subtractY(this.position) == 1 && this.name.equals("p")) { // 화이트
-            this.position = position;
+        if (target.subtractY(this.position) == 1 && this.name.equals("p")) { // 화이트
+            this.position = target;
             return;
         }
         throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
