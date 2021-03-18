@@ -19,11 +19,11 @@ public class Grid {
     private static final int GAP_BETWEEN_INDEX_ACTUAL = 1;
     private static List<Line> lines;
 
-    static {
+    public Grid() {
         initialize();
     }
 
-    public static void initialize() {
+    public void initialize() {
         lines = new ArrayList<>();
         lines.add(Line.createGeneralLine(FIRST_ROW, false));
         lines.add(Line.createPawnLine(SECOND_ROW, false));
@@ -34,11 +34,7 @@ public class Grid {
         lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
     }
 
-    public static boolean isOccupied(final Position position) {
-        return findPiece(position) instanceof Empty;
-    }
-
-    public static void move(Position source, Position target) {
+    public void move(Position source, Position target) {
         validateMovablePosition(source, target);
 
         Piece sourcePiece = findPiece(source);
@@ -50,19 +46,19 @@ public class Grid {
         changePiece(target, sourcePiece);
     }
 
-    private static void validateMovablePosition(Position source, Position target) {
+    private void validateMovablePosition(Position source, Position target) {
         validatePositionInGrid(source, target);
         validateSourcePieceEmpty(source);
         validateMoveDirectionAndStep(source, target);
     }
 
-    private static void validatePositionInGrid(Position source, Position target) {
+    private void validatePositionInGrid(Position source, Position target) {
         if (!source.validatePositionInGrid() || !target.validatePositionInGrid()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
-    private static void validateSourcePieceEmpty(Position source) {
+    private void validateSourcePieceEmpty(Position source) {
         Piece sourcePiece = findPiece(source);
         if (sourcePiece.isEmpty()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
@@ -70,7 +66,7 @@ public class Grid {
     }
 
     // 이 부분을 전략으로 빼야돼!
-    private static void validateMoveDirectionAndStep(Position source, Position target) {
+    private void validateMoveDirectionAndStep(Position source, Position target) {
         Piece sourcePiece = findPiece(source);
         Piece targetPiece = findPiece(target);
 
@@ -86,7 +82,7 @@ public class Grid {
         }
     }
 
-    private static List<Position> extractMovablePositionsInOneDirection(Position source, Direction direction) {
+    private List<Position> extractMovablePositionsInOneDirection(Position source, Direction direction) {
         List<Position> positions = new ArrayList<>();
 
         Piece sourcePiece = findPiece(source);
@@ -105,7 +101,7 @@ public class Grid {
         return positions;
     }
 
-    private static Piece findPiece(final Position position) {
+    private Piece findPiece(final Position position) {
         char x = position.getX();
         char y = position.getY();
         int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
@@ -113,7 +109,7 @@ public class Grid {
         return line.findPiece(x);
     }
 
-    private static void changePiece(Position position, Piece piece) {
+    private void changePiece(Position position, Piece piece) {
         char x = position.getX();
         char y = position.getY();
         int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
