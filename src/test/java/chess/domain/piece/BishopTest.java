@@ -17,6 +17,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class BishopTest {
 
     private Piece bishop;
+
     @BeforeEach
     void setUp() {
         bishop = new Bishop(Side.BLACK);

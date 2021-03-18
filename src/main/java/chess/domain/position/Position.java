@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.position.exception.PositionException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Position {
 
     public static Position of(String position) {
         if (position.length() != 2) {
-            throw new IllegalArgumentException();
+            throw new PositionException("유효하지 않은 좌표입니다.");
         }
 
         return new Position(
