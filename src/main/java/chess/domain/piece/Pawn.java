@@ -7,9 +7,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
+    public static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2, 7);
     private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST,
             Direction.INITIAL_PAWN_NORTH);
-    public static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2,7);
     private static final String INITIAL_NAME = "P";
 
     public Pawn(final boolean isBlack) {

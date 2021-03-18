@@ -6,8 +6,8 @@ import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final String name;
     protected final boolean isBlack;
+    private final String name;
 
     public Piece(final boolean isBlack, final String initialName) {
         this.isBlack = isBlack;

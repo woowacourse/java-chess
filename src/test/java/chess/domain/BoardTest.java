@@ -56,7 +56,7 @@ class BoardTest {
     @Test
     void name() {
         board.move(new Position("a", "2"), new Position("a", "4"));
-        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "5")))
+        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "4    ")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("비어 있는 칸입니다.");
     }
