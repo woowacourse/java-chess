@@ -10,14 +10,14 @@ class ColTest {
     @Test
     @DisplayName("입력받은 좌표값을 넣으면 실제 좌표값을 가져온다")
     void getLocationTest() {
-        assertThat(Col.getLocation("1")).isEqualTo(7);
-        assertThat(Col.getLocation("2")).isEqualTo(6);
-        assertThat(Col.getLocation("3")).isEqualTo(5);
-        assertThat(Col.getLocation("4")).isEqualTo(4);
-        assertThat(Col.getLocation("5")).isEqualTo(3);
-        assertThat(Col.getLocation("6")).isEqualTo(2);
-        assertThat(Col.getLocation("7")).isEqualTo(1);
-        assertThat(Col.getLocation("8")).isEqualTo(0);
-        assertThat(Col.getLocation("8")).isNotEqualTo(1);
+        assertThat(Col.getLocation("a")).isEqualTo(0);
+        assertThat(Col.getLocation("b")).isEqualTo(1);
+        assertThat(Col.getLocation("c")).isEqualTo(2);
+        assertThat(Col.getLocation("d")).isEqualTo(3);
+        assertThat(Col.getLocation("e")).isEqualTo(4);
+        assertThat(Col.getLocation("f")).isEqualTo(5);
+        assertThat(Col.getLocation("g")).isEqualTo(6);
+        assertThat(Col.getLocation("h")).isEqualTo(7);
+        assertThat(Col.getLocation("h")).isNotEqualTo(1);
     }
 }
