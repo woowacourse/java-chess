@@ -20,8 +20,9 @@ public class Pawn extends Piece {
         final Direction direction = POSSIBLE_DIRECTIONS.stream()
                 .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치로 이동할 수 없습니다."));
-        return checkPossible(direction, piece, source.getVertical());
+                .orElse(Direction.NOTHING);
+
+        return direction != Direction.NOTHING && checkPossible(direction, piece, source.getVertical());
     }
 
     private List<Integer> subtractByTeam(Position source, Position target) {

@@ -26,8 +26,9 @@ public class Board {
         if (checkPath(source,target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
+            return;
         }
-
+        throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
     }
 
     private boolean checkPath(Position source, Position target) {
@@ -35,18 +36,25 @@ public class Board {
         if (source.hasMiddlePath(target)) {
             paths = updatePosition(source, target);
         }
-
         if (paths.isEmpty()) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
         }
-
-        if (paths.stream().allMatch(path -> chessBoard.get(path).equals(new Blank()))) {
-            if (chessBoard.get(source) instanceof Pawn) {
-                return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
-            }
-            return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
+        if (hasNoPiecesInPath(paths)) {
+            return canPieceMoveToTarget(source, target, paths);
         }
         return false;
+    }
+
+    private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
+        if (chessBoard.get(source) instanceof Pawn) {
+            return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+        }
+        return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
+    }
+
+    private boolean hasNoPiecesInPath(final List<Position> paths) {
+        return paths.stream()
+                .allMatch(path -> chessBoard.get(path).equals(new Blank()));
     }
 
     public List<Position> updatePosition(final Position source, final Position target) {

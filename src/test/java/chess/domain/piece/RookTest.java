@@ -14,7 +14,7 @@ class RookTest {
 
     @ParameterizedTest
     @DisplayName("이동 가능한지 판단하는 기능")
-    @ValueSource(strings = {"d,4", "e,5", "f,4", "e,3", "b,4", "e,7", "e,1", "h,4"})
+    @ValueSource(strings = {"d,4", "e,5", "f,4", "e,3"})
     void canMove(final String input) {
         final String[] inputs = input.split(",");
         assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), new Queen(true))).isTrue();
