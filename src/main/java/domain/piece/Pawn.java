@@ -12,7 +12,7 @@ public class Pawn extends Division {
 
     @Override
     public void move(Position to, List<Piece> pieces) {
-        if (position.diffRow2(to, 2 * color.moveUnit()) && position.diffColumn2(to, 0)) {
+        if (position.diffRow(to) == 2 * color.moveUnit() && position.diffColumn(to) == 0) {
             if (isBlack()) {
                 if (position.hasRow(Row.SEVEN)) {
                     if (!isContaining(position.moveBy(0, color.moveUnit()), pieces)) {
@@ -30,7 +30,7 @@ public class Pawn extends Division {
             }
 
         }
-        if (position.diffRow2(to, color.moveUnit()) && position.diffColumn2(to, 0)) {
+        if (position.diffRow(to) == color.moveUnit() && position.diffColumn(to) == 0) {
             position = to;
             return;
         }
@@ -39,7 +39,7 @@ public class Pawn extends Division {
 
     @Override
     public void kill(Position to, List<Piece> pieces) {
-        if ((position.diffColumn2(to, 1) || position.diffColumn2(to, -1)) && position.diffRow2(to, color.moveUnit())) {
+        if ((position.diffColumn(to) == 1 || position.diffColumn(to) == -1) && position.diffRow(to) == color.moveUnit()) {
             position = to;
             return;
         }

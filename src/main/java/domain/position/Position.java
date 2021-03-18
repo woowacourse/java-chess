@@ -98,14 +98,6 @@ public class Position {
         return betweenPosition;
     }
 
-    public boolean diffRow2(Position to, int difference) {
-        return row.diff(to.row) == difference;
-    }
-
-    public boolean diffColumn2(Position to, int difference) {
-        return column.diff(to.column) == difference;
-    }
-
     public int diffRow(Position to){
         return row.diff(to.row);
     }
