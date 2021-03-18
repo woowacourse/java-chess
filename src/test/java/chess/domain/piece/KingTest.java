@@ -23,13 +23,13 @@ class KingTest {
         king = new King(Side.BLACK);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "King 빈 이동경로 반환")
     @CsvSource({"b2,a1", "b2,b3", "b2,a2"})
     void routeSuccess(String from, String to) {
         assertThat(king.route(Position.of(from), Position.of(to))).isEmpty();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "King 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position from, Position to) {
         assertThatThrownBy(() -> king.route(from, to))

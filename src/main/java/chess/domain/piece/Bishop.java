@@ -14,11 +14,11 @@ public class Bishop extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return null;
+        return Position.getRoute(from, to);
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        return false;
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 }

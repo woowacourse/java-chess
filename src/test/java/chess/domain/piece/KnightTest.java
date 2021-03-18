@@ -22,7 +22,7 @@ class KnightTest {
         knight = new Knight(Side.BLACK);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Knight 빈 이동경로 반환")
     @MethodSource("routeSuccessTestcase")
     void routeSuccess(Position to) {
         assertThat(knight.route(Position.of("c3"), to)).isEmpty();
@@ -40,7 +40,7 @@ class KnightTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "Knight 이동 실패")
     @MethodSource("routeFailTestcase")
     void routeFail(Position to) {
         assertThatThrownBy(() -> knight.route(Position.of("a1"), to))
