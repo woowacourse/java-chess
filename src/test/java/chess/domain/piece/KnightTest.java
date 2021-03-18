@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.location.Location;
 import chess.domain.team.Team;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -37,5 +38,18 @@ class KnightTest {
 
         // then
         assertThat(knight.isMovable(nonMovableTarget)).isFalse();
+    }
+
+    @DisplayName("나이트는 경로가 없습니다.")
+    @Test
+    void findPath() {
+        // given
+        Location target = Location.of(3, 3);
+
+        // when
+        List<Location> pathToTarget = knight.findPath(target);
+
+        // then
+        assertThat(pathToTarget).isEmpty();
     }
 }

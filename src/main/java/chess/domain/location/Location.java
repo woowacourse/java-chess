@@ -69,11 +69,11 @@ public class Location {
     }
 
     public int subtractX(final Location target) {
-        return Math.abs(target.x - this.x);
+        return target.x - this.x;
     }
 
     public int subtractY(final Location target) {
-        return Math.abs(target.y - this.y);
+        return target.y - this.y;
     }
 
     public boolean isSameY(final int y) {
