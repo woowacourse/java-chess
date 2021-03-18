@@ -21,8 +21,9 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Piece[][] board, Position endPosition) {
-        boolean result = canMoveToDiagonal(board, endPosition);
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
 
+        boolean result = canMoveToDiagonal(board, endPosition);
         if (!result) {
             result = canMoveToStraight(board, endPosition);
         }

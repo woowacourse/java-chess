@@ -6,24 +6,39 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class QueenTest {
 
-    @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.")
+    @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.(빈칸일 경우)")
     @Test
-    void queen_move_test() {
+    void queen_move_if_empty() {
         Board board = new Board(PieceFactory.createPieces());
         Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
 
         assertThat(queen.canMove(board.getBoard(), Position.Of(3, 3))).isTrue();
         assertThat(queen.canMove(board.getBoard(), Position.Of(2, 4))).isTrue();
         assertThat(queen.canMove(board.getBoard(), Position.Of(5, 5))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 4))).isTrue();
+
         assertThat(queen.canMove(board.getBoard(), Position.Of(3, 5))).isTrue();
         assertThat(queen.canMove(board.getBoard(), Position.Of(4, 2))).isTrue();
         assertThat(queen.canMove(board.getBoard(), Position.Of(5, 3))).isTrue();
         assertThat(queen.canMove(board.getBoard(), Position.Of(4, 6))).isTrue();
+    }
+
+    @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.(적 기물이 있는 경우)")
+    @Test
+    void queen_move_if_enemy_exist() {
+        Board board = new Board(PieceFactory.createPieces());
+        Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
+        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 4))).isTrue();
+    }
+
+    @DisplayName("Queen은 전후좌우, 대각선으로 움직일 수 없다.(같은 기물이 있는 경우)")
+    @Test
+    void queen_cant_move_if_same_piece_exist() {
+        Board board = new Board(PieceFactory.createPieces());
+        Queen queen = Queen.Of("Q", Position.Of(3, 4), true);
+        assertThat(queen.canMove(board.getBoard(), Position.Of(1, 6))).isFalse();
     }
 
     @DisplayName("Queen은 전후좌우, 대각선 이외의 위치로 움직일 수 없다.")
@@ -51,7 +66,7 @@ class QueenTest {
         board.put(pawn, Position.Of(3, 4));
         assertThat(queen.canMove(board.getBoard(), Position.Of(2, 4))).isFalse();
 
-        Pawn pawn2 = Pawn.Of("P", Position.Of(5, 5), true);
+        Pawn pawn2 = Pawn.Of("P", Position.Of(5, 5), false);
         board.put(pawn2, Position.Of(5, 5));
         assertThat(queen.canMove(board.getBoard(), Position.Of(6, 6))).isFalse();
     }
