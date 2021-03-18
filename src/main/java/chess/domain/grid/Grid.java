@@ -18,6 +18,7 @@ public class Grid {
     private static final int SEVENTH_ROW = 7;
     private static final int EIGHTH_ROW = 8;
     private static final int GAP_BETWEEN_INDEX_ACTUAL = 1;
+    private static final String ROW_REFERENCE = "87654321";
     private static List<Line> lines;
 
     public Grid() {
@@ -28,7 +29,7 @@ public class Grid {
         lines = new ArrayList<>();
         lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
         lines.add(Line.createPawnLine(SEVENTH_ROW, true));
-        for (int i = THIRD_ROW; i <= SIXTH_ROW; i++) {
+        for (int i = SIXTH_ROW; i >= THIRD_ROW; i--) {
             lines.add(Line.createEmptyLine(i));
         }
         lines.add(Line.createPawnLine(SECOND_ROW, false));
@@ -128,24 +129,27 @@ public class Grid {
         return positions;
     }
 
-    private Piece findPiece(final Position position) {
+    Piece findPiece(final Position position) {
         char x = position.getX();
         char y = position.getY();
-        int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
-        Line line = lines.get(yIndex);
+        Line line = findLineByYPosition(y);
         return line.findPiece(x);
     }
 
     private void assignPiece(Position position, Piece piece) {
         char x = position.getX();
         char y = position.getY();
-        int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
-        Line line = lines.get(yIndex);
+        Line line = findLineByYPosition(y);
         line.assignPiece(x, piece);
         findPiece(position).moveTo(position);
     }
 
     public List<Line> getLines() {
         return lines;
+    }
+
+    public Line findLineByYPosition(char y) {
+        int index = ROW_REFERENCE.indexOf(y);
+        return lines.get(index);
     }
 }

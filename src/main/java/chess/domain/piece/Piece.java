@@ -39,4 +39,12 @@ public abstract class Piece {
     public abstract int getStepRange();
 
     public abstract char getName();
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "position=" + position +
+                ", isBlack=" + isBlack +
+                '}';
+    }
 }

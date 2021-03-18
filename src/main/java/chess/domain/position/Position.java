@@ -44,4 +44,12 @@ public class Position {
     public Position stepOn(int xDegree, int yDegree) {
         return new Position((char) (x + xDegree), (char) (y + yDegree));
     }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "x=" + x +
+                ", y=" + y +
+                '}';
+    }
 }
