@@ -49,7 +49,7 @@ public class Position implements Comparable<Position> {
         if (hasMiddlePath(target)) {
             return Direction.getMatchingDirection(getDirectionMatcher(target));
         }
-        return Direction.NOTHING;
+        throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
 
     private List<Integer> getDirectionMatcher(Position target) {

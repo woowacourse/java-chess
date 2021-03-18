@@ -27,13 +27,14 @@ public class Board {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
         }
+
     }
 
     private boolean checkPath(Position source, Position target) {
         List<Position> paths = new ArrayList<>();
         if (source.hasMiddlePath(target)) {
             paths = updatePosition(source, target);
-        } // 여기서 NOTHING 일 때 false 반환하도록 수정해야 함.
+        }
 
         if (paths.isEmpty()) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
@@ -48,11 +49,11 @@ public class Board {
         return false;
     }
 
-    public List<Position> updatePosition(Position source, Position target) {
-        List<Position> paths = new ArrayList<>();
+    public List<Position> updatePosition(final Position source, final Position target) {
+        final List<Position> paths = new ArrayList<>();
         final Direction direction = source.decideDirection(target);
         Position nextPosition = source.next(direction);
-        while (!nextPosition.equals(target) && direction != Direction.NOTHING) {
+        while (!nextPosition.equals(target)) {
             paths.add(nextPosition);
             nextPosition = nextPosition.next(direction);
         }
