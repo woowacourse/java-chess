@@ -9,6 +9,7 @@ import java.util.List;
 public class Pawn extends Piece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST,
             Direction.INITIAL_PAWN_NORTH);
+    public static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2,7);
     private static final String INITIAL_NAME = "P";
 
     public Pawn(final boolean isBlack) {
@@ -40,7 +41,7 @@ public class Pawn extends Piece {
             return piece.isOpponent(this);
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return (vertical.getValue() == 2 || vertical.getValue() == 7) && piece.equals(new Blank());
+            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece.equals(new Blank());
         }
         return false;
     }

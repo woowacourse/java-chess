@@ -53,4 +53,11 @@ class BoardTest {
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
 
+    @Test
+    void name() {
+        board.move(new Position("a", "2"), new Position("a", "4"));
+        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "5")))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("비어 있는 칸입니다.");
+    }
 }
