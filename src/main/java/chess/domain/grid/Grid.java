@@ -1,6 +1,7 @@
 package chess.domain.grid;
 
 import chess.domain.piece.Empty;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
@@ -34,7 +35,16 @@ public class Grid {
     }
 
     public void move(Position source, Position target) {
-        validateMovablePosition(source, target);
+        validatePositionInGrid(source, target);
+        validateSourcePiece(source);
+
+        if (findPiece(source) instanceof Pawn) {
+            validatePawnSteps(source, target);
+        }
+//        else {
+        if (!(findPiece(source) instanceof Pawn)){
+            validateGeneralSteps(source, target);
+        }
 
         Piece sourcePiece = findPiece(source);
 
@@ -42,10 +52,8 @@ public class Grid {
         assignPiece(target, sourcePiece);
     }
 
-    private void validateMovablePosition(Position source, Position target) {
-        validatePositionInGrid(source, target);
-        validateSourcePiece(source);
-        validateMoveDirectionAndStep(source, target);
+    private void validatePawnSteps(Position source, Position target) {
+
     }
 
     private void validatePositionInGrid(Position source, Position target) {
@@ -62,7 +70,7 @@ public class Grid {
     }
 
     // 이 부분을 전략으로 빼야돼!
-    private void validateMoveDirectionAndStep(Position source, Position target) {
+    private void validateGeneralSteps(Position source, Position target) {
         Piece sourcePiece = findPiece(source);
         Piece targetPiece = findPiece(target);
 
