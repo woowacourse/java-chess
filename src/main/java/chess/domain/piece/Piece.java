@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
+import chess.domain.Column;
 import chess.domain.Position;
+import chess.domain.Row;
 import java.util.List;
 
 public abstract class Piece {
@@ -37,14 +39,6 @@ public abstract class Piece {
 
     public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
 
-    public boolean isMovable(ChessBoard chessBoard, Position nextPosition) {
-        return isInBound(nextPosition) && chessBoard.isBlank(nextPosition);
-    }
-
-    public boolean isAttackMove(ChessBoard chessBoard, Position nextPosition) {
-        return isInBound(nextPosition) && chessBoard.isAttackMove(this, nextPosition);
-    }
-
     public boolean isBlack() {
         return color.isBlack();
     }
@@ -53,10 +47,15 @@ public abstract class Piece {
         return color.isWhite();
     }
 
-    public boolean isInBound(Position currentPosition) {
-        return currentPosition.getRow() < 8
-            && currentPosition.getRow() >= 0
-            && currentPosition.getColumn() < 8
-            && currentPosition.getColumn() >= 0;
+    public boolean isInBound(int number) {
+        return number < 8 && number >= 0;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public boolean isKing() {
+        return type.equals(Type.KING);
     }
 }

@@ -35,16 +35,16 @@ public class Pawn extends Piece {
     private List<Position> getLinearMovablePositions(ChessBoard chessBoard, int xDegree,
         int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
-        Position nextPosition = new Position(position.getRow() + yDegree,
-            position.getColumn() + xDegree);
-
-        if (isMovable(chessBoard, nextPosition)) {
-            movablePositions.add(nextPosition);
-        }
-        nextPosition = new Position(nextPosition.getRow() + yDegree,
-            nextPosition.getColumn() + xDegree);
-        if (isStartingPosition() && isMovable(chessBoard, nextPosition)) {
-            movablePositions.add(nextPosition);
+        if (chessBoard.hasNextBlankSquare(position, xDegree, yDegree)) {
+            Position nextPosition = new Position(position.getRow() + yDegree,
+                position.getColumn() + xDegree);
+                movablePositions.add(nextPosition);
+            if (isStartingPosition()
+                && chessBoard.hasNextBlankSquare(nextPosition, xDegree, yDegree)) {
+                nextPosition = new Position(nextPosition.getRow() + yDegree,
+                    nextPosition.getColumn() + xDegree);
+                movablePositions.add(nextPosition);
+            }
         }
         return Collections.unmodifiableList(movablePositions);
     }
@@ -64,11 +64,12 @@ public class Pawn extends Piece {
     private List<Position> getDiagonalMovablePositions(ChessBoard chessBoard, int xDegree,
         int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
-        Position nextPosition = new Position(position.getRow() + yDegree,
-            position.getColumn() + xDegree);
-
-        if (isAttackMove(chessBoard, nextPosition)) {
-            movablePositions.add(nextPosition);
+        if (chessBoard.hasNextPossibleSquare(position, xDegree, yDegree)) {
+            Position nextPosition = new Position(position.getRow() + yDegree,
+                position.getColumn() + xDegree);
+            if (chessBoard.isAttackMove(this, nextPosition)) {
+                movablePositions.add(nextPosition);
+            }
         }
         return Collections.unmodifiableList(movablePositions);
     }

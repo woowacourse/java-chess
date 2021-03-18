@@ -9,7 +9,6 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -136,5 +135,27 @@ public class ChessBoard {
 
     public boolean isAttackMove(Piece piece, Position position) {
         return !isBlank(position) && !findPiece(position).isSameColor(piece);
+    }
+
+    public boolean hasNextPossibleSquare(Position position, int xDegree, int yDegree) {
+        return Row.isInBound(position.getRow() + yDegree)
+            && Column.isInBound(position.getColumn() + xDegree);
+    }
+
+    public boolean hasNextBlankSquare(Position position, int xDegree, int yDegree) {
+        return hasNextPossibleSquare(position, xDegree, yDegree)
+            && isBlank(new Position(position.getRow() + yDegree, position.getColumn() + xDegree));
+    }
+
+    public boolean hasNextAttackMove(Piece piece, Position position, int xDegree, int yDegree) {
+        return hasNextPossibleSquare(position, xDegree, yDegree) && isAttackMove(piece, position);
+    }
+
+    public boolean isOver() {
+        long kingCount = chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(Piece::isKing)
+            .count();
+        return kingCount < 2;
     }
 }

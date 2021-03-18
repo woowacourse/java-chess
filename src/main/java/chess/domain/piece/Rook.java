@@ -30,15 +30,17 @@ public class Rook extends Piece {
     private List<Position> getMovablePosition(ChessBoard chessBoard, int xDegree, int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
         Position currentPosition = position;
-        Position nextPosition = new Position(currentPosition.getRow() + yDegree,
-            currentPosition.getColumn() + xDegree);
-        while (isMovable(chessBoard, nextPosition)) {
-            movablePositions.add(nextPosition);
-            nextPosition = new Position(nextPosition.getRow() + yDegree,
-                nextPosition.getColumn() + xDegree);
-        }
-        if (isAttackMove(chessBoard, nextPosition)) {
-            movablePositions.add(nextPosition);
+        while (chessBoard.hasNextPossibleSquare(currentPosition, xDegree, yDegree)) {
+            Position nextPosition = new Position(currentPosition.getRow() + yDegree,
+                currentPosition.getColumn() + xDegree);
+            if (chessBoard.isBlank(nextPosition)) {
+                movablePositions.add(nextPosition);
+            }
+            if (chessBoard.isAttackMove(this, nextPosition)) {
+                movablePositions.add(nextPosition);
+                break;
+            }
+            currentPosition = nextPosition;
         }
         return Collections.unmodifiableList(movablePositions);
     }

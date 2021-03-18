@@ -13,8 +13,8 @@ public enum Row {
     SEVEN(1, '7'),
     EIGHT(0, '8');
 
-    private int index;
-    private char row;
+    private final int index;
+    private final char row;
 
     Row(int index, char row) {
         this.index = index;
@@ -33,6 +33,10 @@ public enum Row {
             .filter(value -> value.index == input)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static boolean isInBound(int index) {
+        return index >= EIGHT.index && index < ONE.index;
     }
 
     public int getIndex() {

@@ -13,8 +13,8 @@ public enum Column {
     G(6, 'g'),
     H(7, 'h');
 
-    private int index;
-    private char column;
+    private final int index;
+    private final char column;
 
     Column(int index, char column) {
         this.index = index;
@@ -33,6 +33,15 @@ public enum Column {
             .filter(value -> value.index == input)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static boolean isInBound(int index) {
+        try {
+            findColumnByIndex(index);
+            return true;
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
     }
 
     public int getIndex() {

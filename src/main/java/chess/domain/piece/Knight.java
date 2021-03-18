@@ -21,13 +21,19 @@ public class Knight extends Piece {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();
 
-            Position nextPosition = new Position(position.getRow() + yDegree,
-                position.getColumn() + xDegree);
-
-            if (isMovable(chessBoard, nextPosition) || isAttackMove(chessBoard, nextPosition)) {
-                movablePositions.add(nextPosition);
-            }
+            movablePositions.add(getMovablePosition(chessBoard, xDegree, yDegree));
         }
         return movablePositions;
+    }
+
+    private Position getMovablePosition(ChessBoard chessBoard, int xDegree, int yDegree) {
+        if (chessBoard.hasNextPossibleSquare(position, xDegree, yDegree)) {
+            Position nextPosition = new Position(position.getRow() + yDegree,
+                position.getColumn() + xDegree);
+            if (chessBoard.isBlank(nextPosition) || chessBoard.isAttackMove(this, nextPosition)) {
+                return nextPosition;
+            }
+        }
+        return null;
     }
 }
