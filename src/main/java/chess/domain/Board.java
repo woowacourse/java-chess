@@ -37,6 +37,7 @@ public class Board {
 
     private void validatePawnCase(Position from, Position to, Piece piece) {
         if (piece.isPawn()) {
+            // TODO 폰에 관한 로직은 폰에게 옮기기
             checkMoveDiagonal(from, to);
             checkMoveVertical(from, to);
         }
@@ -79,6 +80,7 @@ public class Board {
     }
 
     private void checkRoute(List<Position> route) {
+        // TODO 가독성 좋게 개선(이동경로 장애물 체크)
         route.stream()
                 .map(board::get)
                 .map(Piece::isBlank)
