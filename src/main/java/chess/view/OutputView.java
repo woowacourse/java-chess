@@ -34,4 +34,12 @@ public class OutputView {
         }
         System.out.println("White Score: " + calculateScore);
     }
+
+    public static void printWinner(boolean isBlackWinner) {
+        if(isBlackWinner){
+            System.out.println("Black 플레이어가 승리하였습니다.");
+            return;
+        }
+        System.out.println("White 플레이어가 승리하였습니다.");
+    }
 }

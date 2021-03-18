@@ -45,8 +45,11 @@ public class ChessGame {
         }
         if (command.equals("status")) {
             gameOver = true;
-            OutputView.printScores(true, grid.calculateScore(true));
-            OutputView.printScores(false, grid.calculateScore(false));
+            double blackScore = grid.calculateScore(true);
+            double whiteScore = grid.calculateScore(false);
+            OutputView.printScores(true, blackScore);
+            OutputView.printScores(false, whiteScore);
+            OutputView.printWinner(blackScore > whiteScore);
         }
     }
 
@@ -58,6 +61,7 @@ public class ChessGame {
         isBlackTurn = !isBlackTurn;
         if (targetPiece instanceof King) {
             gameOver = true;
+            OutputView.printWinner(!targetPiece.isBlack());
         }
     }
 }
