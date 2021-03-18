@@ -76,15 +76,21 @@ public class Grid {
     private double deductPawnScoreInSameColumn(boolean isBlack) {
         double pawnScoreToDeduct = 0;
         for (int i = 0; i < LINE_COUNT; i++) {
-            char x = (char)(MIN_X_POSITION + i);
-            int pawnCountInSameColumn = (int)lines.stream().map(line -> line.findPiece(x))
-                    .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
-                    .count();
-            if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
-                pawnScoreToDeduct += pawnCountInSameColumn;
-            }
+            pawnScoreToDeduct += calculatePawnCountInSameColumn(isBlack, i);
         }
         return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;
+    }
+
+    private double calculatePawnCountInSameColumn(boolean isBlack, int i) {
+        double result = 0;
+        char x = (char)(MIN_X_POSITION + i);
+        int pawnCountInSameColumn = (int)lines.stream().map(line -> line.findPiece(x))
+                .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
+                .count();
+        if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
+            result += pawnCountInSameColumn;
+        }
+        return result;
     }
 
     private double calculateTotalScore(boolean isBlack) {
