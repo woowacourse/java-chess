@@ -36,7 +36,8 @@ class BoardTest {
         board.movePiece(Position.of("a1"), Position.of("a3"));
 
         assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Rook.class);
-        assertThatThrownBy(() -> board.pieceAt(Position.of("a1"))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> board.pieceAt(Position.of("a1")))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("팀의 포인트 합산")

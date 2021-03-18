@@ -52,16 +52,16 @@ public class ChessGame {
 
     private void applyMoveStrategy(Position source, Position target, Piece piece,
         Direction currentDirection, Strategy strategy) {
+        int distance = target.calculateDistance(source);
         if (piece.isPawn()) {
-            movePawnAfterValidate(piece, source, target, currentDirection, strategy);
+            movePawnAfterValidate(piece, source, target, currentDirection, strategy, distance);
             return;
         }
-        moveOthersAfterValidate(source, target, currentDirection, strategy);
+        moveOthersAfterValidate(source, target, currentDirection, strategy, distance);
     }
 
     private void movePawnAfterValidate(Piece piece, Position source, Position target,
-        Direction currentDirection, Strategy strategy) {
-        int distance = target.calculateDistance(source);
+        Direction currentDirection, Strategy strategy, int distance) {
         if (source.isDiagonal(target)) {
             MoveValidator.validateDiagonalMove(board, piece, target, distance);
             movePiece(source, target);
@@ -83,13 +83,15 @@ public class ChessGame {
         Strategy strategy, int distance) {
         if (distance == Pawn.MOVE_FIRST_RANGE) {
             MoveValidator.validatePawnLocation(source);
-            moveOthersAfterValidate(source, target, currentDirection, strategy);
+            moveOthersAfterValidate(source, target, currentDirection, strategy, distance);
         }
     }
 
     private void moveOthersAfterValidate(Position source, Position target,
         Direction currentDirection,
-        Strategy strategy) {
+        Strategy strategy,
+        int distance) {
+        MoveValidator.validateMoveRange(distance, strategy.getMoveRange());
         for (int i = 1; i <= strategy.getMoveRange(); i++) {
             Position movePosition = source.move(currentDirection, i);
             if (movePosition.equals(target)) {

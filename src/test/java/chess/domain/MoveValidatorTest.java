@@ -53,4 +53,11 @@ class MoveValidatorTest {
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("폰은 두 칸 이상");
     }
+
+    @Test
+    void validateMoveRange() {
+        assertThatThrownBy(() -> MoveValidator.validateMoveRange(3,1))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessageContaining("이동할 수 있는 거리");
+    }
 }

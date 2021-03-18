@@ -34,4 +34,10 @@ public class MoveValidator {
             throw new IllegalArgumentException("[ERROR] 폰은 두 칸 이상 움직일 수 없습니다.");
         }
     }
+
+    public static void validateMoveRange(int distance, int moveRange) {
+        if (distance > moveRange) {
+            throw new IllegalArgumentException("[ERROR] 이동할 수 있는 거리를 벗어났습니다.");
+        }
+    }
 }
