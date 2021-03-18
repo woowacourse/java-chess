@@ -7,6 +7,8 @@ import chess.domain.game.Ready;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 
@@ -17,7 +19,7 @@ class MoveCommandTest {
 
     @BeforeEach
     void setUp() {
-        game = new ChessGame(new Board(null));
+        game = new ChessGame(new Board(Collections.emptyList()));
         moveCommand = new MoveCommand(game);
     }
 
