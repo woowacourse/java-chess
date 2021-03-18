@@ -54,6 +54,12 @@ public abstract class Piece {
         validateSourcePiece();
     }
 
+    public void validateTargetInMovablePositions(List<Position> movablePositions) {
+        if (!movablePositions.contains(this.getPosition())) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
     private void validatePositionInGrid(Piece targetPiece){
         Position source = this.getPosition();
         Position target = targetPiece.getPosition();
