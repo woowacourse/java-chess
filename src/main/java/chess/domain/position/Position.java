@@ -28,7 +28,7 @@ public class Position {
         return Collections.unmodifiableMap(POSITIONS);
     }
 
-    public static Position emptyPosition(){
+    public static Position emptyPosition() {
         return new Position(Rank.EMPTY, File.EMPTY);
     }
 

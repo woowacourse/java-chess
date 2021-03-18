@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
+import chess.domain.position.Target;
 
 public class Knight extends Piece {
     private static final String SYMBOL = "Nn";
@@ -19,7 +20,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(final Position position, final ChessBoard chessBoard) {
+    public void move(final Target target, final ChessBoard chessBoard) {
 
     }
 

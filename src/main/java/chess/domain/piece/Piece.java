@@ -40,6 +40,10 @@ public abstract class Piece implements Movable {
         this.position = position;
     }
 
+    public final boolean isSameColor(final Piece piece) {
+        return color.equals(piece.color);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -51,9 +55,5 @@ public abstract class Piece implements Movable {
     @Override
     public int hashCode() {
         return Objects.hash(piece, color, position);
-    }
-
-    protected boolean isSameColor(final Piece piece) {
-        return color.equals(piece.color);
     }
 }

@@ -1,12 +1,10 @@
 package chess.view;
 
-import chess.domain.board.ChessBoard;
 import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.IntStream;

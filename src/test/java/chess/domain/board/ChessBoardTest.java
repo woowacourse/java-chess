@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static chess.domain.piece.PositionTexture.*;
+import static chess.domain.piece.PositionTexture.A1;
+import static chess.domain.piece.PositionTexture.A2;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 

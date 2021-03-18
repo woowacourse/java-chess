@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
+import chess.domain.position.Target;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
@@ -19,16 +20,10 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move(final Position target, final ChessBoard chessBoard) {
-        validateTarget(target, chessBoard);
-        changePosition(target);
-    }
-
-    private void validateTarget(final Position target, final ChessBoard chessBoard) {
-        Piece targetPiece = chessBoard.findPiece(target);
-        if (this.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException(String.format("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", target));
-        }
+    public void move(final Target target, final ChessBoard chessBoard) {
+        //todo : 위치를 움직일 수 있는지 체크한다.
+        changePosition(target.getPosition());
+        chessBoard.changePiecePosition(this, target.getPosition());
     }
 
     @Override

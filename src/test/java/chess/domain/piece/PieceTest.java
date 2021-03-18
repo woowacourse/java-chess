@@ -1,5 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardFactory;
+import chess.domain.position.Source;
+import chess.domain.position.Target;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -10,6 +15,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class PieceTest {
+    private static ChessBoard chessBoard;
+
+    @BeforeEach
+    void init() {
+        chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
+    }
+
     @DisplayName("Piece 정상 생성 테스트.")
     @Test
     void createPiece() {
@@ -76,5 +88,34 @@ class PieceTest {
         assertThat(Pawn.from("p", A2).isSamePosition(A2)).isEqualTo(true);
         assertThat(Queen.from("q", A2).isSamePosition(A2)).isEqualTo(true);
         assertThat(Rook.from("r", A2).isSamePosition(A2)).isEqualTo(true);
+    }
+
+    @DisplayName("target 위치로 이동한다.")
+    @Test
+    void moveTargetPosition() {
+        Source source = Source.valueOf(A2, chessBoard);
+        source.move(Target.valueOf(source, A3, chessBoard), chessBoard);
+
+        assertThat(source.isSamePosition(A3)).isEqualTo(true);
+    }
+
+    @DisplayName("source에서 선택한 말과 target의 말이 같은 색깔이면 예외가 발생한다.")
+    @Test
+    void samePieceChoiceException() {
+        Source source = Source.valueOf(A2, chessBoard);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            source.move(Target.valueOf(source, B2, chessBoard), chessBoard);
+        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", B2);
+    }
+
+    @DisplayName("source에서 선택한 위치와 target의 위치가 같으면 에러가 발생한다.")
+    @Test
+    void samePositionException() {
+        Source source = Source.valueOf(A2, chessBoard);
+
+        assertThatIllegalArgumentException().isThrownBy(() -> {
+            source.move(Target.valueOf(source, A2, chessBoard), chessBoard);
+        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", A2);
     }
 }

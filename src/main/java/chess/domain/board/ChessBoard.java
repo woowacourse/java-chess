@@ -6,7 +6,6 @@ import chess.domain.position.Position;
 
 import java.util.Collections;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChessBoard {
     private final Map<Position, Piece> board;
@@ -33,5 +32,10 @@ public class ChessBoard {
 
     public Map<Position, Piece> getBoard() {
         return Collections.unmodifiableMap(board);
+    }
+
+    public void changePiecePosition(Piece source, Position target) {
+        board.put(source.getPosition(), null);
+        board.put(target, source);
     }
 }
