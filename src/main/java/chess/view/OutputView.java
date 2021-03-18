@@ -8,7 +8,7 @@ public class OutputView {
     public static void printInitialBoard(final Board board) {
         int i =0;
         for(Piece piece : board.getBoard().values()) {
-            System.out.print(piece);
+            System.out.print(piece.getSymbol());
             if(i++ >6){
                 i =0;
                 System.out.println();

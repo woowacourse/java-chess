@@ -45,4 +45,14 @@ public class Knight extends Piece{
     public String getSymbol() {
         return "N";
     }
+
+    @Override
+    public List<Direction> getDirections() {
+        return DIRECTIONS;
+    }
+
+    @Override
+    public int getMaxDistance() {
+        return ABLE_DISTANCE_TO_MOVE;
+    }
 }

@@ -1,7 +1,10 @@
 package chess.domain.board.position;
 
+import chess.controller.direction.Direction;
 import chess.domain.piece.Owner;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 
 public class Position {
@@ -62,5 +65,9 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
+    }
+
+    public Position next(Direction direction, int distance) {
+        return new Position(vertical.add(direction.getY()+distance), horizontal.add(direction.getX()+distance));
     }
 }

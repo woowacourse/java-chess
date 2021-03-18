@@ -1,8 +1,11 @@
 package chess.domain.piece;
+import chess.controller.direction.Direction;
 import chess.domain.board.position.Position;
 
+import java.util.List;
+
 public abstract class Piece {
-    protected Owner owner;
+    protected final Owner owner;
 
     public Piece(Owner owner) {
         this.owner = owner;
@@ -11,10 +14,6 @@ public abstract class Piece {
     public abstract void validateMove(Position source, Position target, Piece targetPiece);
 
     public abstract Score score();
-
-    public final String makeSymbol(){
-        return decideUpperOrLower(getSymbol());
-    }
 
     private final String decideUpperOrLower(String symbol){
         if(owner.equals(Owner.BLACK)){
@@ -41,4 +40,8 @@ public abstract class Piece {
 
         throw new IllegalArgumentException();
     }
+
+    public abstract List<Direction> getDirections();
+
+    public abstract int getMaxDistance();
 }

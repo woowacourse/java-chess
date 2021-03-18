@@ -36,4 +36,14 @@ public class Rook extends Piece{
     public String getSymbol() {
         return "R";
     }
+
+    @Override
+    public List<Direction> getDirections() {
+        return DIRECTIONS;
+    }
+
+    @Override
+    public int getMaxDistance() {
+        return ABLE_DISTANCE_TO_MOVE;
+    }
 }

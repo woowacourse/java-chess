@@ -1,10 +1,12 @@
 package chess.domain.board;
 
+import chess.controller.direction.Direction;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Piece;
 
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -27,10 +29,22 @@ public class Board {
     }
 
     public void move(Position source, Position target){
-        // 중간에 아무것도 없다는거 확인
+        List<Position> ablePositions = ableToMove(source, target);
+    }
+
+    private List<Position> ableToMove(Position source, Position target) {
         Piece sourcePiece = of(source);
         Piece targetPiece = of(target);
 
-        sourcePiece.validateMove(source, target, targetPiece);
+        for(Direction direction : sourcePiece.getDirections()){
+            for(int i=0; i<sourcePiece.getMaxDistance(); i++){
+                Position nextPosition = source.next(direction, i);
+
+                // nextPosition에 Empty인지 확인
+                sourcePiece.validateMove(source, nextPosition, targetPiece);
+            }
+        }
+
+        return null;
     }
 }

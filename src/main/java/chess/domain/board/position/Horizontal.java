@@ -30,6 +30,13 @@ public enum Horizontal {
         return value.index;
     }
 
+    static Horizontal of(int index){
+        return Arrays.stream(Horizontal.values())
+                .filter(h -> h.index == index)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public int getIndex(){
         return index;
     }
@@ -48,5 +55,9 @@ public enum Horizontal {
         }
 
         throw new IllegalArgumentException();
+    }
+
+    public Horizontal add(int h){
+        return of(index +h);
     }
 }

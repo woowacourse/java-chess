@@ -34,4 +34,15 @@ public class Empty extends Piece{
     public String getSymbol() {
         return ".";
     }
+
+
+    @Override
+    public List<Direction> getDirections() {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public int getMaxDistance() {
+        return ABLE_DISTANCE_TO_MOVE;
+    }
 }

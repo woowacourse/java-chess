@@ -1,5 +1,7 @@
 package chess.domain.board.position;
 
+import java.util.Arrays;
+
 public enum Vertical {
     A(0),
     B(1),
@@ -21,11 +23,22 @@ public enum Vertical {
         return value.index;
     }
 
+    static Vertical of(int index){
+        return Arrays.stream(Vertical.values())
+                .filter(v -> v.index == index)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
     public int getIndex(){
         return index;
     }
 
     public int getDistance(Vertical other){
         return Math.abs(this.index - other.getIndex());
+    }
+
+    public Vertical add(int v){
+        return of(index +v);
     }
 }
