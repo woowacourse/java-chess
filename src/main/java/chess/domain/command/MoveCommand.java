@@ -15,7 +15,7 @@ public class MoveCommand extends CommandInit {
     }
 
     @Override
-    public void handle(String input) {
+    public void execute(String input) {
         String[] inputs = input.split(" ");
 
         if (!isRightInputs(inputs)) {

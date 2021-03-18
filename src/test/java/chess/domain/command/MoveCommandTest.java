@@ -9,8 +9,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.assertj.core.api.Java6Assertions.assertThat;
 
 class MoveCommandTest {
 
@@ -27,7 +27,7 @@ class MoveCommandTest {
     void handle_whenChessGameStatusAreEnd() {
         game.changeState(new End(game));
 
-        assertThatThrownBy(() -> moveCommand.handle("move a1 b2"))
+        assertThatThrownBy(() -> moveCommand.execute("move a1 b2"))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -35,7 +35,7 @@ class MoveCommandTest {
     void handle_whenChessGameStatusAreReady() {
         game.changeState(new Ready(game));
 
-        assertThatThrownBy(() -> moveCommand.handle("move a1 b2"))
+        assertThatThrownBy(() -> moveCommand.execute("move a1 b2"))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 

@@ -14,17 +14,17 @@ public class StatusCommand extends CommandInit {
     }
 
     public double getWhiteScore() {
-        handle(EMPTY_STRING);
+        execute(EMPTY_STRING);
         return whiteScore;
     }
 
     public double getBlackScore() {
-        handle(EMPTY_STRING);
+        execute(EMPTY_STRING);
         return blackScore;
     }
 
     @Override
-    public void handle(final String input) {
+    public void execute(final String input) {
         whiteScore = chessGame.getWhiteScore();
         blackScore = chessGame.getBlackScore();
     }

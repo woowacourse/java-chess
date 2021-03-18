@@ -1,7 +1,7 @@
 package chess.domain.command;
 
 public interface Command {
-    void handle(String input);
+    void execute(String input);
 
     boolean isUsable(String input);
 

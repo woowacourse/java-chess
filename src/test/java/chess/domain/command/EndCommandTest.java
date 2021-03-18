@@ -23,7 +23,7 @@ class EndCommandTest {
     void handle_whenChessGameStatusAreEnd() {
         game.changeState(new End(game));
 
-        assertThatThrownBy(() -> endCommand.handle(null))
+        assertThatThrownBy(() -> endCommand.execute(null))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 

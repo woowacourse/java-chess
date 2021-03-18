@@ -10,7 +10,7 @@ public class StartCommand extends CommandInit {
     }
 
     @Override
-    public void handle(final String input) {
+    public void execute(final String input) {
         chessGame.start();
     }
 

@@ -30,12 +30,14 @@ public class ChessController {
     private void turn() {
         try {
             String input = InputView.inputCommandFromUser();
+
             Command command = commands.getIfPresent(input);
-            command.handle(input);
+            command.execute(input);
+
+            printScoreIfStatusCommand(command);
             printByCommand(command);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
-            turn();
         }
     }
 
@@ -44,12 +46,16 @@ public class ChessController {
             return;
         }
 
-        if (command.isStatus()) {
-            StatusCommand statusCommand = (StatusCommand) command;
-            OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
+        OutputView.drawBoard(new BoardDto(board));
+    }
+
+    private void printScoreIfStatusCommand(Command command) {
+        if (!command.isStatus()) {
+            return;
         }
 
-        OutputView.drawBoard(new BoardDto(board));
+        StatusCommand statusCommand = (StatusCommand) command;
+        OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
     }
 
 }

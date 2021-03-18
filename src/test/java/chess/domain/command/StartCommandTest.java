@@ -24,7 +24,7 @@ class StartCommandTest {
     void handle_whenChessGameStatusAreEnd() {
         game.changeState(new End(game));
 
-        assertThatThrownBy(() -> startCommand.handle(null))
+        assertThatThrownBy(() -> startCommand.execute(null))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -32,7 +32,7 @@ class StartCommandTest {
     void handle_whenChessGameStatusAreBlackTurn() {
         game.changeState(new BlackTurn(game));
 
-        assertThatThrownBy(() -> startCommand.handle(null))
+        assertThatThrownBy(() -> startCommand.execute(null))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -40,7 +40,7 @@ class StartCommandTest {
     void handle_whenChessGameStatusAreWhiteTurn() {
         game.changeState(new WhiteTurn(game));
 
-        assertThatThrownBy(() -> startCommand.handle(null))
+        assertThatThrownBy(() -> startCommand.execute(null))
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
