@@ -18,3 +18,5 @@
 - [x] position 빼는 방향 고정
 - [x] 보드 테스트 추가
 - [x] NoThing exception 처리
+- [ ] Blank 캐싱
+- [ ] Blank exception 처리
