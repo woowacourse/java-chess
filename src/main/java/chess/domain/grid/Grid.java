@@ -82,33 +82,24 @@ public class Grid {
     }
 
     private void validatePawnSteps(Position source, Position target) {
-        Piece sourcePiece = findPiece(source);
+        Pawn sourcePiece = (Pawn) findPiece(source);
         Piece targetPiece = findPiece(target);
 
         List<Position> movablePositions = new ArrayList<>();
-        if (sourcePiece.isBlack()) {
-            // 검정 말일 때 - 1칸 이동하는 경우
-            for (Direction direction : Direction.blackPawnDirection()) {
-                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
-            }
-            // 검정 말일 때 - 2칸 이동하는 경우
-            for (Direction direction : Direction.blackPawnLinearDirection()) {
-                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
-            }
+        // 1칸 이동하는 경우
+        for (Direction direction : sourcePiece.getDirections()) {
+            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
         }
-        if (!sourcePiece.isBlack()) {
-            // 하얀 말일 때 - 1칸 이동하는 경우
-            for (Direction direction : Direction.whitePawnDirection()) {
-                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
-            }
-            // 하얀 말일 때 - 2칸 이동하는 경우
-            for (Direction direction : Direction.whitePawnLinearDirection()) {
-                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
-            }
+        // 2칸 이동하는 경우
+        for (Direction direction : sourcePiece.getDirectionsOnTwoStep()) {
+            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
         }
 
         // 중복 없애기
         movablePositions = movablePositions.stream().distinct().collect(Collectors.toList());
+
+        // TODO : 세로로 2칸을 움직였는 데 처음 움직인 건지 체크
+
 
         // 동일한 부분
         if (!movablePositions.contains(target)) {
@@ -151,5 +142,6 @@ public class Grid {
         int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
         Line line = lines.get(yIndex);
         line.assignPiece(x, piece);
+        findPiece(position).moveTo(position);
     }
 }
