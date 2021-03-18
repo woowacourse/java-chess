@@ -24,6 +24,6 @@ public class Rook extends Division{
 
     @Override
     public void kill(Position to, List<Piece> pieces) {
-        //validate(to);
+        move(to, pieces);
     }
 }
