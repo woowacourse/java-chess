@@ -12,4 +12,5 @@ public class InputView {
     public static String inputCommandFromUser() {
         return SCANNER.nextLine();
     }
+
 }

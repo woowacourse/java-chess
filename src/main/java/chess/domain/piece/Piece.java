@@ -95,6 +95,10 @@ public class Piece {
         return shape.getScore();
     }
 
+    public Position getPosition() {
+        return new Position(position.getRow(), position.getColumn());
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;

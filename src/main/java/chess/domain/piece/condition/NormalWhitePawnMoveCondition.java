@@ -5,16 +5,22 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
 public class NormalWhitePawnMoveCondition extends MoveCondition {
+
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) &&
-                target.equals(new Position(piece.getRow() - 1, piece.getColumn())) &&
+                isMovablePath(piece, target) &&
                 isNotExistPieceOnPath(board, target) &&
-                validateChessPieceOutOfBoard(board, target);
+                isNotChessPieceOutOfBoard(board, target);
+    }
+
+    private boolean isMovablePath(final Piece piece, final Position target) {
+        return target.equals(new Position(piece.getRow() - 1, piece.getColumn()));
     }
 
     private boolean isNotExistPieceOnPath(Board board, Position target) {
         return board.getPieces().stream()
-                .noneMatch(p -> p.isSamePosition(target));
+                .noneMatch(piece -> piece.isSamePosition(target));
     }
+
 }

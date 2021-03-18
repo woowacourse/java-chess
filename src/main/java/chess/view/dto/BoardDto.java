@@ -31,4 +31,5 @@ public class BoardDto {
     public List<PieceDto> getPieceDtos() {
         return pieceDtos;
     }
+
 }

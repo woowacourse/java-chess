@@ -23,15 +23,19 @@ public class ChessController {
 
     public void run() {
         while (!game.isFinished()) {
-            try {
-                String input = InputView.inputCommandFromUser();
-                Command command = commands.getIfPresent(input);
-                command.handle(input);
-                printByCommand(command);
-            } catch (RuntimeException e) {
-                OutputView.printExceptionMessage(e.getMessage());
-                continue;
-            }
+            turn();
+        }
+    }
+
+    private void turn() {
+        try {
+            String input = InputView.inputCommandFromUser();
+            Command command = commands.getIfPresent(input);
+            command.handle(input);
+            printByCommand(command);
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            turn();
         }
     }
 
@@ -48,10 +52,4 @@ public class ChessController {
         OutputView.drawBoard(new BoardDto(board));
     }
 
-    private void printByStatus() {
-        if (game.isFinished()) {
-            return;
-        }
-        OutputView.drawBoard(new BoardDto(board));
-    }
 }

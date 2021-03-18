@@ -3,6 +3,7 @@ package chess.view.dto;
 import chess.domain.piece.Piece;
 
 public class PieceDto {
+
     private final String notation;
     private final int row;
     private final int column;
@@ -24,4 +25,5 @@ public class PieceDto {
     public int getColumn() {
         return column;
     }
+
 }

@@ -33,6 +33,10 @@ public class ChessGame {
         return state.isFinished();
     }
 
+    public boolean isKingsExist() {
+        return board.isKingsExist();
+    }
+
     public Board getBoard() {
         return board;
     }
@@ -43,9 +47,5 @@ public class ChessGame {
 
     public double getBlackScore() {
         return board.getBlackScore();
-    }
-
-    public boolean isKingsExist() {
-        return board.isKingsExist();
     }
 }

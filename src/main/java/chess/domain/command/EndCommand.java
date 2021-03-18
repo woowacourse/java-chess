@@ -18,4 +18,5 @@ public class EndCommand extends CommandInit {
     public boolean isUsable(final String input) {
         return COMMAND.equals(input);
     }
+
 }

@@ -3,7 +3,6 @@ package chess.domain.command;
 import chess.domain.game.ChessGame;
 
 public class StartCommand extends CommandInit {
-
     private static final String COMMAND = "start";
 
     public StartCommand(final ChessGame chessGame) {
@@ -19,4 +18,5 @@ public class StartCommand extends CommandInit {
     public boolean isUsable(final String input) {
         return COMMAND.equals(input);
     }
+
 }

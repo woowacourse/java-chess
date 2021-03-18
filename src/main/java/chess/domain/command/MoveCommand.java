@@ -8,7 +8,7 @@ public class MoveCommand extends CommandInit {
 
     private static final int COUNT_OF_ELEMENTS = 3;
     private static final String COMMAND = "move";
-    public static final String POSITION_FORMAT = "[a-h][1-8]";
+    private static final String POSITION_FORMAT = "[a-h][1-8]";
 
     public MoveCommand(final ChessGame chessGame) {
         super(chessGame);
@@ -29,10 +29,10 @@ public class MoveCommand extends CommandInit {
     }
 
     private Position getPositionFromInput(String input) {
-        String[] split = input.split("");
+        String[] inputs = input.split("");
 
-        int column = split[0].charAt(0) - 'a';
-        int row = Board.ROW - Integer.parseInt(split[1]);
+        int column = inputs[0].charAt(0) - 'a';
+        int row = Board.ROW - Integer.parseInt(inputs[1]);
 
         return new Position(row, column);
     }
@@ -40,6 +40,7 @@ public class MoveCommand extends CommandInit {
     @Override
     public boolean isUsable(final String input) {
         String[] inputs = input.split(" ");
+
         return isRightInputs(inputs);
     }
 
@@ -61,6 +62,8 @@ public class MoveCommand extends CommandInit {
         String source = inputs[1];
         String target = inputs[2];
 
-        return source.matches(POSITION_FORMAT) && target.matches(POSITION_FORMAT);
+        return source.matches(POSITION_FORMAT) &&
+                target.matches(POSITION_FORMAT);
     }
+
 }

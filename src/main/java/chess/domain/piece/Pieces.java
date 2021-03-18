@@ -13,7 +13,8 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
 
-    public static final int COUNT_OF_KING = 2;
+    private static final int COUNT_OF_KING = 2;
+    private static final double PAWN_EXCEPTED_CONDITION_RATIO = 0.5;
     private final List<Piece> pieces;
 
     public Pieces(final List<Piece> pieces) {
@@ -38,13 +39,15 @@ public class Pieces {
         }
     }
 
-    public List<Piece> getPieces() {
-        return Collections.unmodifiableList(pieces);
-    }
-
     public void catchPiece(final Color color) {
         Set<Map.Entry<Position, Long>> duplicatePosition = findDuplicatePosition();
         removeIfExistDuplicatePositionByColor(color, duplicatePosition);
+    }
+
+    private Set<Map.Entry<Position, Long>> findDuplicatePosition() {
+        return pieces.stream()
+                .collect(groupingBy(piece -> new Position(piece.getRow(), piece.getColumn()), counting()))
+                .entrySet();
     }
 
     private void removeIfExistDuplicatePositionByColor(final Color color,
@@ -61,26 +64,24 @@ public class Pieces {
                 !piece.isSameColor(color);
     }
 
-    private Set<Map.Entry<Position, Long>> findDuplicatePosition() {
-        return pieces.stream()
-                .collect(groupingBy(piece -> new Position(piece.getRow(), piece.getColumn()), counting()))
-                .entrySet();
+    public boolean isKingsExist() {
+        long countOfKingOnBoard = pieces.stream()
+                .filter(Piece::isKing)
+                .count();
+
+        return countOfKingOnBoard == COUNT_OF_KING;
     }
 
-    public double getWhiteScore() {
-        double totalScore = getTotalScore(Color.WHITE);
-        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
-
-        return totalScore - 0.5 * countOfExpectedPawn;
+    public List<Piece> getPieces() {
+        return Collections.unmodifiableList(pieces);
     }
 
     public double getBlackScore() {
         double totalScore = getTotalScore(Color.BLACK);
         long countOfExpectedPawn = getCountOfExpectedPawn(Color.BLACK);
 
-        return totalScore - 0.5 * countOfExpectedPawn;
+        return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
     }
-
 
     private double getTotalScore(Color color) {
         return pieces.stream()
@@ -99,11 +100,11 @@ public class Pieces {
                 .count();
     }
 
-    public boolean isKingsExist() {
-        long countOfKingOnBoard = pieces.stream()
-                .filter(Piece::isKing)
-                .count();
+    public double getWhiteScore() {
+        double totalScore = getTotalScore(Color.WHITE);
+        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
 
-        return countOfKingOnBoard == COUNT_OF_KING;
+        return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
     }
+
 }

@@ -7,21 +7,30 @@ import chess.domain.piece.Position;
 import java.util.List;
 
 public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
+
     @Override
     public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
         return !piece.isSamePosition(target) &&
-                target.equals(new Position(piece.getRow() - 2, piece.getColumn())) &&
-                isPieceExistOnPath(board, piece, target) &&
-                validateChessPieceOutOfBoard(board, target);
+                isRightMovePath(piece, target) &&
+                isNotPieceExistOnPath(board, piece, target) &&
+                isNotChessPieceOutOfBoard(board, target);
     }
 
-    private boolean isPieceExistOnPath(Board board, Piece piece, Position target) {
+    private boolean isRightMovePath(final Piece piece, final Position target) {
+        return target.equals(new Position(piece.getRow() - 2, piece.getColumn()));
+    }
+
+    private boolean isNotPieceExistOnPath(Board board, Piece piece, Position target) {
         List<Piece> pieces = board.getPieces();
 
         return pieces.stream()
-                .filter(p -> !p.equals(piece))
+                .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
                 .noneMatch(
-                        p -> p.getColumn() == piece.getColumn() && target.getRow() <= p.getRow() && p.getRow() <= piece.getRow()
+                        pieceOnBoard ->
+                                pieceOnBoard.getColumn() == piece.getColumn() &&
+                                target.getRow() <= pieceOnBoard.getRow() &&
+                                pieceOnBoard.getRow() <= piece.getRow()
                 );
     }
+
 }

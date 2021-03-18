@@ -14,6 +14,14 @@ public class Position {
         return (position.row - row) / (double) (position.column - column);
     }
 
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -30,13 +38,5 @@ public class Position {
         int result = row;
         result = 31 * result + column;
         return result;
-    }
-
-    public int getRow() {
-        return row;
-    }
-
-    public int getColumn() {
-        return column;
     }
 }

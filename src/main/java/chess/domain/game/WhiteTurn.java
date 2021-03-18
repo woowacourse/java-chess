@@ -30,4 +30,5 @@ public class WhiteTurn extends Running {
     public void end() {
         chessGame.changeState(new End(chessGame));
     }
+
 }

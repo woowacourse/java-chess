@@ -30,4 +30,5 @@ public class BlackTurn extends Running {
     public void end() {
         chessGame.changeState(new End(chessGame));
     }
+
 }
