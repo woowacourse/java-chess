@@ -51,12 +51,6 @@ class BoardTest {
         BOARD.initialize();
     }
 
-    @DisplayName("8 * 8 의 빈 체스 판 싱글톤 테스트")
-    @Test
-    void singleton() {
-        assertThat(BOARD).isSameAs(Board.getInstance());
-    }
-
     @DisplayName("initialize 메서드는")
     @Nested
     class Context_initialize {

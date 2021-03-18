@@ -28,12 +28,12 @@ public class Rook extends Piece {
         }
         Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
         while(true) {
+            if (movingCoordinate.equals(targetCoordinate)) {
+                break;
+            }
             Piece piece = board.find(movingCoordinate);
             if (piece != null) {
                 throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
-            }
-            if (movingCoordinate.equals(targetCoordinate)) {
-                break;
             }
             movingCoordinate = movingCoordinate.move(moveCommandDirection);
         }

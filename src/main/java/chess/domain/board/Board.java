@@ -22,10 +22,7 @@ public class Board {
     }
 
     public static Board getInstance() {
-        if (board == null) {
-            board = new Board();
-        }
-        return board;
+        return new Board();
     }
 
     public Piece find(Coordinate coordinate) {

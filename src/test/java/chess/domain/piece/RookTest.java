@@ -35,7 +35,7 @@ class RookTest {
         assertThat(cells.get(targetCoordinate)).isSameAs(rook);
     }
 
-    @DisplayName("빈 체스판 - 룩 이동 - 이동 가능")
+    @DisplayName("목적지에 적 기물 - 룩 이동 - 이동 가능")
     @Test
     void rookMoveEnemyPieceOnTargetCoordinate() {
         Board board = Board.getInstance();
@@ -47,7 +47,7 @@ class RookTest {
         Coordinate targetCoordinate = Coordinate.from("d7");
 
         cells.put(currentCoordinate, rook);
-        Piece enemyPiece = new Queen(TeamType.BLACK);
+        Piece enemyPiece = new Queen(TeamType.WHITE);
         cells.put(routeCoordinate, enemyPiece);
         rook.move(board, currentCoordinate, targetCoordinate);
 
