@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.Team;
@@ -17,10 +16,10 @@ public class ChessGame {
     public ChessGame(BlackTeam blackTeam, WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
-        this.currentTurn = this.blackTeam;
+        this.currentTurn = this.whiteTeam;
     }
 
-    public void move(Position current, Position destination) {
+    public boolean move(Position current, Position destination) {
         final Piece chosenPiece = currentTurn.choosePiece(current);
         if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
@@ -34,6 +33,7 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         chosenPiece.isMoved();
+        return true;
     }
 
     private Team getEnemy() {
@@ -55,5 +55,9 @@ public class ChessGame {
 
     public WhiteTeam getWhiteTeam() {
         return whiteTeam;
+    }
+
+    public void changeTurn() {
+        currentTurn = getEnemy();
     }
 }
