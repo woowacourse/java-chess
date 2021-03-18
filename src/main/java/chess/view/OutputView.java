@@ -24,7 +24,14 @@ public class OutputView {
         System.out.println(gridStatus);
         System.out.println();
         System.out.println("abcdefgh");
-//        System.out.println(grid.getLines().get(2).getPieces().get(2).getName());
         System.out.println();
+    }
+
+    public static void printScores(boolean isBlack, double calculateScore) {
+        if(isBlack){
+            System.out.println("Black Score: " + calculateScore);
+            return;
+        }
+        System.out.println("White Score: " + calculateScore);
     }
 }

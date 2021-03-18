@@ -18,6 +18,10 @@ public class Grid {
     private static final int SEVENTH_ROW = 7;
     private static final int EIGHTH_ROW = 8;
     private static final String ROW_REFERENCE = "87654321";
+    private static final int LINE_COUNT = 8;
+    private static final char MIN_X_POSITION = 'a';
+    private static final int SAME_COLUMN_BOUND = 2;
+    private static final int DIVIDER_FOR_PAWN_SCORE = 2;
     private static List<Line> lines;
 
     public Grid() {
@@ -39,7 +43,7 @@ public class Grid {
         sourcePiece.validateSourceAndTargetBeforeMove(targetPiece);
 
         if (sourcePiece instanceof Pawn) {
-            validatePawnSteps((Pawn)sourcePiece, targetPiece);
+            validatePawnSteps((Pawn) sourcePiece, targetPiece);
             ((Pawn) sourcePiece).moved();
         }
         if (!(sourcePiece instanceof Pawn)) {
@@ -63,6 +67,35 @@ public class Grid {
     public Line findLineByYPosition(char y) {
         int index = ROW_REFERENCE.indexOf(y);
         return lines.get(index);
+    }
+
+    public double calculateScore(boolean isBlack) {
+        return calculateTotalScore(isBlack) - deductPawnScoreInSameColumn(isBlack);
+    }
+
+    private double deductPawnScoreInSameColumn(boolean isBlack) {
+        double pawnScoreToDeduct = 0;
+        for (int i = 0; i < LINE_COUNT; i++) {
+            char x = (char)(MIN_X_POSITION + i);
+            int pawnCountInSameColumn = (int)lines.stream().map(line -> line.findPiece(x))
+                    .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
+                    .count();
+            if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
+                pawnScoreToDeduct += pawnCountInSameColumn;
+            }
+        }
+        return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;
+    }
+
+    private double calculateTotalScore(boolean isBlack) {
+        return lines.stream()
+                .flatMap(line -> line.getPieces()
+                        .stream()
+                        .filter(piece -> !piece.isEmpty())
+                        .filter(piece -> piece.isBlack() == isBlack)
+                        .map(Piece::getScore))
+                .mapToDouble(Double::doubleValue)
+                .sum();
     }
 
     private void assignPiece(Position position, Piece piece) {
@@ -114,7 +147,7 @@ public class Grid {
         return positions;
     }
 
-    private void updatePiecePosition(Piece sourcePiece, Piece targetPiece){
+    private void updatePiecePosition(Piece sourcePiece, Piece targetPiece) {
         Position sourcePosition = sourcePiece.getPosition();
         Position targetPosition = targetPiece.getPosition();
 
