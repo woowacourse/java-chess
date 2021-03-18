@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
+    private static final int UNICODE_DECIMAL = 9814;
+
     public Rook() {
     }
 
@@ -21,5 +23,18 @@ public class Rook extends Piece {
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
         return current.checkStraightRule(destination);
+    }
+
+    @Override
+    public int hashCode() {
+        return UNICODE_DECIMAL;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (this == obj) return true;
+        if (getClass() == obj.getClass()) return true;
+        return false;
     }
 }
