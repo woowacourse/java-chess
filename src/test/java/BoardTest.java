@@ -24,6 +24,7 @@ public class BoardTest {
     }
 
     @Test
+    @DisplayName("빈 보드 생성")
     void createBoard() {
         Board board = new Board();
         assertThat(board.getState(Point.of("a1"))).isEqualTo(State.of(Piece.EMPTY, Team.NONE));
