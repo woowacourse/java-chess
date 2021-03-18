@@ -11,6 +11,10 @@ public class Players {
         this.players = players;
     }
 
+    public static Players of(List<Player> players) {
+        return new Players(players);
+    }
+
     public Player currentPlayer(PieceColor currentColor) {
         return players.stream()
                 .filter(player -> player.isColor(currentColor))

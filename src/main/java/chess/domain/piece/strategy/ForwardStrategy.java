@@ -18,6 +18,6 @@ public class ForwardStrategy implements MoveStrategy {
 
     @Override
     public List<Direction> getDirections() {
-
+        return null;
     }
 }

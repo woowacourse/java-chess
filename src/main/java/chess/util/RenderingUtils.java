@@ -10,6 +10,9 @@ import java.util.stream.Stream;
 
 public class RenderingUtils {
 
+    private RenderingUtils() {
+    }
+
     public static String renderBoard(Board board) {
         return Stream.of(Row.values())
                 .map(index -> renderRow(board, index))
