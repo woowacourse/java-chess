@@ -14,8 +14,8 @@
   
 - [ ] BoardFactory
   - [ ] Board 를 생성해준다.
-    - [ ] `Map<Team, List<Piece>>`를 생성한다.
-      - [ ] 타입별로 초기 ROW 좌표를 정해주며  Piece 를 생성한다.
+    - [x] `Map<Team, List<Piece>>`를 생성한다.
+      - [x] 타입별로 초기 ROW 좌표를 정해주며 Piece 를 생성한다.
 
 - [ ] Board
   - [ ] 각 팀별 `piece` 리스트를 가진다. `Map<Team, List<Piece>>`  (상태)
