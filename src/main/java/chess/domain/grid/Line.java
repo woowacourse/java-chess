@@ -67,4 +67,8 @@ public class Line {
         int index = COLUMN_REFERENCE.indexOf(Character.toString(xPosition));
         pieces.set(index, piece);
     }
+
+    public List<Piece> getPieces() {
+        return pieces;
+    }
 }

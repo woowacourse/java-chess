@@ -144,4 +144,8 @@ public class Grid {
         line.assignPiece(x, piece);
         findPiece(position).moveTo(position);
     }
+
+    public List<Line> getLines() {
+        return lines;
+    }
 }
