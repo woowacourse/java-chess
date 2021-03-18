@@ -1,11 +1,16 @@
 package chess.domain;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
@@ -19,7 +24,7 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        if (checkPath(source,target)) {
+        if (checkPath(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
             return;
@@ -64,7 +69,34 @@ public class Board {
         return paths;
     }
 
-    public double calculateScore(boolean b) {
+    public double calculateScore(final boolean isBlack) {
+        double total = 0;
+        for (final Horizontal column : Horizontal.values()) {
+            total += getColumnTotalScore(isBlack, column.getValue());
+        }
+        return total;
+    }
+
+    private double getColumnTotalScore(final boolean isBlack, final int column) {
+        final List<Piece> pieces = chessBoard.keySet().stream()
+                .filter(position -> position.getHorizontal().getValue() == column)
+                .map(chessBoard::get)
+                .filter(piece -> piece.isSameTeam(isBlack))
+                .collect(Collectors.toList());
+
+        return pieces.stream()
+                .mapToDouble(Piece::getScore)
+                .reduce(0, Double::sum) - getPawnDiscountScore(pieces);
+    }
+
+    private double getPawnDiscountScore(final List<Piece> pieces) {
+        long count = pieces.stream()
+                .filter(piece -> piece instanceof Pawn)
+                .count();
+
+        if (count >= 2) {
+            return count * Pawn.EXTRA_SCORE;
+        }
         return 0;
     }
 }

@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Rook extends GeneralPiece {
     private static final String INITIAL_NAME = "R";
+    private static final double SCORE = 5;
 
     public Rook(final boolean isBlack) {
         super(isBlack, INITIAL_NAME);
@@ -13,5 +14,10 @@ public class Rook extends GeneralPiece {
     @Override
     protected List<Direction> createPossibleDirections() {
         return Arrays.asList(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

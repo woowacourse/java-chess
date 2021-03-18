@@ -11,6 +11,8 @@ public class Pawn extends Piece {
     private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST,
             Direction.INITIAL_PAWN_NORTH);
     private static final String INITIAL_NAME = "P";
+    private static final double SCORE = 1;
+    public static final double EXTRA_SCORE = 0.5;
 
     public Pawn(final boolean isBlack) {
         super(isBlack, INITIAL_NAME);
@@ -24,6 +26,11 @@ public class Pawn extends Piece {
                 .orElse(Direction.NOTHING);
 
         return direction != Direction.NOTHING && checkPossible(direction, piece, source.getVertical());
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     private List<Integer> subtractByTeam(Position source, Position target) {

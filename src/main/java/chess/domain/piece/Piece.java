@@ -22,11 +22,17 @@ public abstract class Piece {
         return isBlack != piece.isBlack;
     }
 
-    public abstract boolean canMove(final Position source, final Position target, final Piece piece);
+    public boolean isSameTeam(final boolean isBlack) {
+        return this.isBlack == isBlack;
+    }
 
     public String getName() {
         return name;
     }
+
+    public abstract boolean canMove(final Position source, final Position target, final Piece piece);
+
+    public abstract double getScore();
 
     @Override
     public boolean equals(Object o) {

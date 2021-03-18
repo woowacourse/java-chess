@@ -59,6 +59,10 @@ class BoardTest {
     void checkScore() {
         boolean isBlack = true;
         assertThat(board.calculateScore(!isBlack)).isEqualTo(38);
+
+        board.unwrap().put(new Position("a", "3"), new Pawn(false));
+        assertThat(board.calculateScore(!isBlack)).isEqualTo(38);
+        OutputView.printCurrentBoard(board.unwrap());
     }
 
     //TODO : blank 오류 확인
@@ -68,5 +72,5 @@ class BoardTest {
 //        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "4")))
 //                .isInstanceOf(IllegalStateException.class)
 //                .hasMessage("비어 있는 칸입니다.");
-//    }
+//    }3
 }
