@@ -5,6 +5,7 @@ import chess.domain.piece.*;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -53,6 +54,22 @@ public class Board {
         }
 
         return board;
+    }
+
+    public void movePiece(Position target, Position destination) {
+        Piece targetPiece = findPieceFromPosition(target);
+        List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
+        
+        checkMovable(targetMovablePositions, destination);
+        board.put(destination, targetPiece);
+        board.put(target, null);
+    }
+
+    private void checkMovable(List<Position> targetMovablePositions, Position destination) {
+        if (targetMovablePositions.contains(destination)) {
+            return;
+        }
+        throw new UnsupportedOperationException("이동 불가능한 좌표입니다.");
     }
 
     public Map<Position, Piece> getBoard() {
