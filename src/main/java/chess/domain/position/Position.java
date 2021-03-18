@@ -20,6 +20,10 @@ public class Position implements Comparable<Position> {
         this(Horizontal.of(horizontal), Vertical.of(vertical));
     }
 
+    public Position(final int horizontal, final int vertical) {
+        this(Horizontal.of(horizontal), Vertical.of(vertical));
+    }
+
     public List<Integer> subtract(final Position source) {
         return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
                 this.vertical.getValue() - source.vertical.getValue());
@@ -62,12 +66,8 @@ public class Position implements Comparable<Position> {
     }
 
     public Position next(final Direction direction) {
-        String str = this.horizontal.getSymbol();
-        char c = (char) (str.charAt(0) + direction.getHorizontalDegree());
-
-        String str2 = this.vertical.getSymbol();
-        char c2 = (char) (str2.charAt(0) + direction.getVerticalDegree());
-        return new Position(String.valueOf(c), String.valueOf(c2));
+        return new Position(horizontal.getValue() + direction.getHorizontalDegree(),
+                vertical.getValue() + direction.getVerticalDegree());
     }
 
     public Horizontal getHorizontal() {
