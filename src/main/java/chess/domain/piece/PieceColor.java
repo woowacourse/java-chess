@@ -14,4 +14,11 @@ public enum PieceColor {
     private void validate(String value) {
 
     }
+
+    public PieceColor reversed() {
+        if(this.equals(WHITE)){
+            return BLACK;
+        }
+        return WHITE;
+    }
 }
