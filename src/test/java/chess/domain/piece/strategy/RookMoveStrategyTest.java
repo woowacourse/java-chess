@@ -31,7 +31,7 @@ class RookMoveStrategyTest {
 
     @DisplayName("Rook 움직임 테스트 - 유효한 직선 위치로 이동")
     @Test
-    void queenValidMove_void() {
+    void rookValidMove_void() {
         Position target = Position.of('c', 7);
         rookMoveStrategy.move(position, target, board);
 
@@ -42,7 +42,7 @@ class RookMoveStrategyTest {
 
     @DisplayName("Rook 움직임 테스트 - 유효하지 않는 위치로 이동")
     @Test
-    void queenInvalidMove_ExceptionThrown() {
+    void rookInvalidMove_ExceptionThrown() {
         Position target = Position.of('f', 5);
 
         assertThatThrownBy(() -> rookMoveStrategy.move(position, target, board))

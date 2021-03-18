@@ -31,7 +31,7 @@ class BishopMoveStrategyTest {
 
     @DisplayName("Bishop 움직임 테스트 - 유효한 대각선 위치로 이동")
     @Test
-    void queenValidMove_void() {
+    void bishopValidMove_void() {
         Position target = Position.of('c', 5);
         bishopMoveStrategy.move(position, target, board);
 
@@ -42,7 +42,7 @@ class BishopMoveStrategyTest {
 
     @DisplayName("Bishop 움직임 테스트 - 유효하지 않는 위치로 이동")
     @Test
-    void queenInvalidMove_ExceptionThrown() {
+    void bishopInvalidMove_ExceptionThrown() {
         Position target = Position.of('c', 3);
 
         assertThatThrownBy(() -> bishopMoveStrategy.move(position, target, board))

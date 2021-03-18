@@ -32,13 +32,14 @@ class QueenMoveStrategyTest {
     @DisplayName("Queen 움직임 테스트 - 유효한 대각선 위치로 이동")
     @Test
     void queenValidMove_diagonalMove() {
-        Position target = Position.of('f', 6);
+        Position target = Position.of('d', 4);
         queenMoveStrategy.move(position, target, board);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
+
 
     @DisplayName("Queen 움직임 테스트 - 유효한 직선 위치로 이동")
     @Test
@@ -51,7 +52,7 @@ class QueenMoveStrategyTest {
         assertEquals(pieceOnTarget, piece);
     }
 
-    @DisplayName("Queen 움직임 테스트 - 유효하 위치로 동")
+    @DisplayName("Queen 움직임 테스트 - 유효한 위치로 이동")
     @Test
     void queenInvalidMove_ExceptionThrown() {
         Position target = Position.of('f', 5);

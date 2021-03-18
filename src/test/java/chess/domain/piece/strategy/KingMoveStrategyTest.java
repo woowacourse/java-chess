@@ -36,7 +36,6 @@ class KingMoveStrategyTest {
         kingMoveStrategy.move(position, target, board);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
-
         assertEquals(pieceOnTarget, piece);
     }
 

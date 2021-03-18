@@ -22,17 +22,12 @@ public abstract class BasicMoveStrategy implements MoveStrategy {
     }
 
     protected void checkPositionsOnBoard(Position source, Position target) {
-        checkWithinBoardPosition(source);
-        checkWithinBoardPosition(target);
-    }
-
-    private void checkWithinBoardPosition(Position target) {
-        if (target == null) {
+        if (source == null || target == null) {
             throw new InvalidMoveException(Piece.OUT_OF_BOUND_MESSAGE);
         }
     }
 
-    protected void checkIsNotSameTeam(Position source, Position target, Board board) {
+    protected void checkIsNotSameTeam(Position source, Position target, Board board) { //TODO board 책임 전가
         Piece sourcePiece = board.checkPieceAtPosition(source);
         Piece targetPiece = board.checkPieceAtPosition(target);
 

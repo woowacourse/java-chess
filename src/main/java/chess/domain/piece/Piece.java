@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Position;
+import chess.domain.piece.strategy.MoveDirection;
+
 import java.util.Objects;
 
 public class Piece {
@@ -41,5 +44,14 @@ public class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(pieceKind, pieceColor);
+    }
+
+    public boolean isMovingForward(Position source, Position target) {
+        MoveDirection moveDirection = MoveDirection.getDirection(source, target);
+        if (pieceColor == PieceColor.WHITE) {
+            return MoveDirection.isWhiteForward(moveDirection);
+        }
+
+        return MoveDirection.isBlackForward(moveDirection);
     }
 }

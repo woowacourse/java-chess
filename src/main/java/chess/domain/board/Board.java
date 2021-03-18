@@ -16,7 +16,7 @@ public class Board {
         initBoard();
     }
 
-    private void initBoard() {
+    private void initBoard() { //TODO class 분리
         Arrays.stream(PieceKind.values())
             .forEach(this::traverseXPositions);
     }

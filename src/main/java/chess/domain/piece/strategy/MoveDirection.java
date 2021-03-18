@@ -8,21 +8,19 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum MoveDirection {
-    UP(Arrays.asList(0, 1), "line"),
-    DOWN(Arrays.asList(0, -1) ,"line"),
-    LEFT(Arrays.asList(-1, 0), "line"),
-    RIGHT(Arrays.asList(1, 0), "line"),
-    LEFT_UP(Arrays.asList(-1, 1), "diagonal"),
-    RIGHT_UP(Arrays.asList(1, 1), "diagonal"),
-    LEFT_DOWN(Arrays.asList(-1, -1), "diagonal"),
-    RIGHT_DOWN(Arrays.asList(1, -1), "diagonal");
+    UP(Arrays.asList(0, 1)),
+    DOWN(Arrays.asList(0, -1)),
+    LEFT(Arrays.asList(-1, 0)),
+    RIGHT(Arrays.asList(1, 0)),
+    LEFT_UP(Arrays.asList(-1, 1)),
+    RIGHT_UP(Arrays.asList(1, 1)),
+    LEFT_DOWN(Arrays.asList(-1, -1)),
+    RIGHT_DOWN(Arrays.asList(1, -1));
 
     private List<Integer> vector;
-    private String moveType;
 
-    MoveDirection(List<Integer> vector, String moveType) {
+    MoveDirection(List<Integer> vector) {
         this.vector = vector;
-        this.moveType = moveType;
     }
 
     public static MoveDirection getDirection(Position source, Position target) {
@@ -55,6 +53,14 @@ public enum MoveDirection {
             (horizontalDistance != 0 && verticalDistance != 0)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
+    }
+
+    public static Boolean isWhiteForward(MoveDirection moveDirection) {
+        return Arrays.asList(UP, LEFT_UP, RIGHT_UP).contains(moveDirection);
+    }
+
+    public static Boolean isBlackForward(MoveDirection moveDirection) {
+        return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN).contains(moveDirection);
     }
 
     public int getXVector() {

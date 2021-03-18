@@ -7,7 +7,7 @@ import chess.domain.piece.Piece;
 
 public abstract class NoJumpMoveStrategy extends BasicMoveStrategy {
 
-    protected void checkClearPath(Position source, Position target, MoveDirection moveDirection, Board board) {
+    protected void checkClearPath(Position source, Position target, MoveDirection moveDirection, Board board) { //TODO 인자 줄이기
         int moveNumber = calculateMoveNumber(source, target);
         Position pathPosition = source;
         int xVector = moveDirection.getXVector();
@@ -15,8 +15,8 @@ public abstract class NoJumpMoveStrategy extends BasicMoveStrategy {
 
         for (int i = 0; i < moveNumber - 1; i++) {
             pathPosition = Position.of(pathPosition.getXPosition().moveUnit(xVector),
-                pathPosition.getYPosition().moveUnit(yVector));
-            checkIfClear(board, pathPosition);
+                pathPosition.getYPosition().moveUnit(yVector)); //TODO getter 줄이기
+            checkIfClear(board, pathPosition); //TODO board에게 메세지 보내기
         }
     }
 
