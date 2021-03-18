@@ -3,10 +3,7 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.piece.condition.*;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Piece {
 
@@ -77,14 +74,13 @@ public class Piece {
     }
 
     public void move(final Position target, final Board board) {
-        for (final MoveCondition moveCondition : moveConditions) {
-            if (moveCondition.isSatisfyBy(board, this, target)) {
-                position = target;
-                return;
-            }
-        }
+        Optional<MoveCondition> selectedCondition = moveConditions.stream()
+                .filter(moveCondition -> moveCondition.isSatisfyBy(board, this, target))
+                .findAny();
 
-        throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
+        if(!selectedCondition.isPresent()) {
+            throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
+        }
     }
 
     public Color getColor() {
