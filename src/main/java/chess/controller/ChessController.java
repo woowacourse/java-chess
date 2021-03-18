@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.command.Commands;
 import chess.domain.game.ChessGame;
+import chess.domain.game.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.dto.BoardDto;
@@ -25,8 +26,17 @@ public class ChessController {
                 commands.executeIf(InputView.inputCommandFromUser());
             } catch (RuntimeException e) {
                 OutputView.printExceptionMessage(e.getMessage());
+                continue;
             }
-            OutputView.drawBoard(new BoardDto(board));
+
+            printByStatus();
         }
+    }
+
+    private void printByStatus() {
+        if (game.isFinished()) {
+            return;
+        }
+        OutputView.drawBoard(new BoardDto(board));
     }
 }
