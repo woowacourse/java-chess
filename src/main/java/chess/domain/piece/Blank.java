@@ -2,6 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMovementException;
+import chess.exception.PieceDoesNotExistException;
 
 import java.util.List;
 
@@ -14,11 +16,11 @@ public class Blank extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return null;
+        throw new PieceDoesNotExistException("해당 칸에는 기물이 존재하지 않습니다.");
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        return false;
+        throw new PieceDoesNotExistException("해당 칸에는 기물이 존재하지 않습니다.");
     }
 }

@@ -1,6 +1,8 @@
 package chess.domain.position.exception;
 
-public class PositionException extends RuntimeException {
+import chess.exception.ChessException;
+
+public class PositionException extends ChessException {
 
     public PositionException(String message) {
         super(message);
