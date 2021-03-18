@@ -1,8 +1,7 @@
-package chess.domain.board.piece;
+package chess.domain.piece;
 
-import chess.domain.board.Horizontal;
-import chess.domain.board.Position;
-import chess.domain.board.Square;
+import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Position;
 
 public abstract class Pawn extends Piece{
     private static final int FIRST_MOVE_DISTANCE = 2;

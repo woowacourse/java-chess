@@ -1,6 +1,6 @@
-package chess.domain.board;
+package chess.domain.board.position;
 
-import chess.domain.board.piece.Owner;
+import chess.domain.piece.Owner;
 
 import java.util.Arrays;
 

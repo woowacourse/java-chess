@@ -1,8 +1,10 @@
 package chess.domain.board;
 
-import chess.domain.board.piece.King;
-import chess.domain.board.piece.Owner;
-import chess.domain.board.piece.Piece;
+import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Vertical;
+import chess.domain.piece.King;
+import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

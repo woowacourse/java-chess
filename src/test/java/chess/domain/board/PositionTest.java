@@ -1,5 +1,8 @@
 package chess.domain.board;
 
+import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

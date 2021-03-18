@@ -1,6 +1,5 @@
-package chess.domain.board.piece;
-import chess.domain.board.Position;
-import chess.domain.board.Square;
+package chess.domain.piece;
+import chess.domain.board.position.Position;
 
 public abstract class Piece {
     protected Owner owner;

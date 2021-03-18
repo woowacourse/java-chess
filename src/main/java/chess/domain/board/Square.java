@@ -1,7 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.board.piece.Empty;
-import chess.domain.board.piece.Piece;
+import chess.domain.board.position.Position;
+import chess.domain.piece.Empty;
+import chess.domain.piece.Piece;
 
 public class Square {
     private final Position position;

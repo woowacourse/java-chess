@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.manager;
 
 import java.util.Arrays;
 

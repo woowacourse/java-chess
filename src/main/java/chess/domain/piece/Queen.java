@@ -1,17 +1,16 @@
-package chess.domain.board.piece;
+package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.board.Square;
+import chess.domain.board.position.Position;
 
-public class Rook extends Piece{
+public class Queen extends Piece{
 
-    public Rook(Owner owner) {
+    public Queen(Owner owner) {
         super(owner);
     }
 
     @Override
     public void validateMove(Position source, Position target, boolean hasEnemy) {
-        if (!source.isStraight(target)) {
+        if(!(source.isStraight(target) || source.isDiagonal(target))){
             throw new IllegalArgumentException();
         }
     }
@@ -23,6 +22,6 @@ public class Rook extends Piece{
 
     @Override
     public String getSymbol() {
-        return "R";
+        return "Q";
     }
 }

@@ -1,7 +1,6 @@
-package chess.domain.board.piece;
+package chess.domain.piece;
 
-import chess.domain.board.Position;
-import chess.domain.board.Square;
+import chess.domain.board.position.Position;
 
 public class Knight extends Piece{
     public Knight(Owner owner) {

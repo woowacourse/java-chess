@@ -1,6 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.board.piece.*;
+import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Position;
+import chess.domain.board.position.Vertical;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
 import java.util.List;
