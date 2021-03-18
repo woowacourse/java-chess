@@ -42,6 +42,6 @@ public class Position {
     }
 
     public Position stepOn(int xDegree, int yDegree) {
-        return new Position((char)(x + xDegree), (char)(y + yDegree));
+        return new Position((char) (x + xDegree), (char) (y + yDegree));
     }
 }

@@ -1,11 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.grid.Grid;
 import chess.domain.position.Direction;
-import chess.domain.position.Position;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class Knight extends Piece {
     private static final char NAME_WHEN_BLACK = 'N';

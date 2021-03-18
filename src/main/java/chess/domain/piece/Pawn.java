@@ -1,13 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.grid.Grid;
 import chess.domain.position.Direction;
-import chess.domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Pawn extends Piece {
     public Pawn(boolean isBlack, char x, char y, List<Direction> directions, int stepRange) {

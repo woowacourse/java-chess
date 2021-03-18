@@ -1,12 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.grid.Grid;
 import chess.domain.position.Direction;
-import chess.domain.position.Position;
-
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class Queen extends Piece {
     private static final char NAME_WHEN_BLACK = 'Q';
