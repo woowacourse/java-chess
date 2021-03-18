@@ -7,6 +7,7 @@ import chess.domain.board.Vertical;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class King extends Piece {
     private static final String KING_NAME = "K";
@@ -34,25 +35,13 @@ public class King extends Piece {
 
     @Override
     public boolean canMove(Position target, Position destination, Board board) {
-        Direction direction = target.directionToDestination(destination);
-        Position movedPosition = target;
-        while (true) {
-            movedPosition = movedPosition.moveTowardDirection(direction);
+        Piece destinationPiece = board.getBoard().get(destination);
+        Piece targetPiece = board.getBoard().get(target);
 
-            if (movedPosition != destination) {
-                if (board.getBoard().get(movedPosition) != null) {
-                    return false;
-                }
-            }
-            if (movedPosition == destination) {
-                Piece targetPiece = board.getBoard().get(target);
-                Piece destinationPiece = board.getBoard().get(movedPosition);
-                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
-                    return false;
-                }
-                return true;
-            }
+        if (Objects.isNull(destinationPiece)) {
+            return true;
         }
+        return !targetPiece.isSameTeam(destinationPiece);
     }
 
     private List<Position> calculateBoardPosition(int changedHorizontalWeight, int changedVerticalWeight) {

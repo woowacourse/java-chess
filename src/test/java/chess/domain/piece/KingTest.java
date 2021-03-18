@@ -58,7 +58,7 @@ class KingTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         King king = new King(Team.WHITE);
-        assertFalse(king.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(king.canMove(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.C, Vertical.THREE), board));
     }
 
