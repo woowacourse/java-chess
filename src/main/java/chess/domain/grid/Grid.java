@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Grid {
     private static final int FIRST_ROW = 1;
@@ -37,23 +38,17 @@ public class Grid {
     public void move(Position source, Position target) {
         validatePositionInGrid(source, target);
         validateSourcePiece(source);
+        Piece sourcePiece = findPiece(source);
 
-        if (findPiece(source) instanceof Pawn) {
+        if (sourcePiece instanceof Pawn) {
             validatePawnSteps(source, target);
         }
-//        else {
-        if (!(findPiece(source) instanceof Pawn)){
+        if (!(sourcePiece instanceof Pawn)){
             validateGeneralSteps(source, target);
         }
 
-        Piece sourcePiece = findPiece(source);
-
         assignPiece(source, new Empty(source));
         assignPiece(target, sourcePiece);
-    }
-
-    private void validatePawnSteps(Position source, Position target) {
-
     }
 
     private void validatePositionInGrid(Position source, Position target) {
@@ -76,7 +71,7 @@ public class Grid {
 
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(source, direction));
+            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
         }
         if (!movablePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
@@ -86,11 +81,48 @@ public class Grid {
         }
     }
 
-    private List<Position> extractMovablePositionsByDirection(Position source, Direction direction) {
+    private void validatePawnSteps(Position source, Position target) {
+        Piece sourcePiece = findPiece(source);
+        Piece targetPiece = findPiece(target);
+
+        List<Position> movablePositions = new ArrayList<>();
+        if (sourcePiece.isBlack()) {
+            // 검정 말일 때 - 1칸 이동하는 경우
+            for (Direction direction : Direction.blackPawnDirection()) {
+                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
+            }
+            // 검정 말일 때 - 2칸 이동하는 경우
+            for (Direction direction : Direction.blackPawnLinearDirection()) {
+                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
+            }
+        }
+        if (!sourcePiece.isBlack()) {
+            // 하얀 말일 때 - 1칸 이동하는 경우
+            for (Direction direction : Direction.whitePawnDirection()) {
+                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
+            }
+            // 하얀 말일 때 - 2칸 이동하는 경우
+            for (Direction direction : Direction.whitePawnLinearDirection()) {
+                movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
+            }
+        }
+
+        // 중복 없애기
+        movablePositions = movablePositions.stream().distinct().collect(Collectors.toList());
+
+        // 동일한 부분
+        if (!movablePositions.contains(target)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private List<Position> extractMovablePositionsByDirection(Position source, Direction direction, int stepRange) {
         List<Position> positions = new ArrayList<>();
 
-        Piece sourcePiece = findPiece(source);
-        for (int i = 1; i <= sourcePiece.getStepRange(); i++) {
+        for (int i = 1; i <= stepRange; i++) {
             int xDegree = direction.getXDegree() * i;
             int yDegree = direction.getYDegree() * i;
             Position movedPosition = source.stepOn(xDegree, yDegree);
