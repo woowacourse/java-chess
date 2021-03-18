@@ -4,7 +4,6 @@ import chess.domain.game.ChessGame;
 
 public class StatusCommand extends CommandInit {
     private static final String COMMAND = "status";
-    private static final String EMPTY_STRING = "";
 
     private double whiteScore;
     private double blackScore;
@@ -14,12 +13,10 @@ public class StatusCommand extends CommandInit {
     }
 
     public double getWhiteScore() {
-        handle(EMPTY_STRING);
         return whiteScore;
     }
 
     public double getBlackScore() {
-        handle(EMPTY_STRING);
         return blackScore;
     }
 
