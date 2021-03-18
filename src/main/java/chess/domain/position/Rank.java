@@ -7,28 +7,30 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.toMap;
 
 public enum Rank {
-    ONE("1"),
-    TWO("2"),
-    THREE("3"),
-    FOUR("4"),
-    FIVE("5"),
-    SIX("6"),
-    SEVEN("7"),
-    EIGHT("8");
+    ONE("1", 1),
+    TWO("2", 2),
+    THREE("3", 3),
+    FOUR("4", 4),
+    FIVE("5", 5),
+    SIX("6", 6),
+    SEVEN("7", 7),
+    EIGHT("8", 8);
 
     private static final Map<String, Rank> searchMap;
     private static int BLANK_LINE_ROW_PIVOT = 2;
     private static int NUMBER_OF_BLANK_RANKS = 4;
 
     private final String letter;
+    private final int coordinate;
 
     static {
         searchMap = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
 
-    Rank(String letter) {
+    Rank(String letter, int coordinate) {
         this.letter = letter;
+        this.coordinate = coordinate;
     }
 
     public static Rank from(String letter) {
@@ -54,5 +56,9 @@ public enum Rank {
 
     public String getLetter() {
         return this.letter;
+    }
+
+    public int calculateGapAsInt(Rank thatRank) {
+        return thatRank.coordinate - this.coordinate;
     }
 }

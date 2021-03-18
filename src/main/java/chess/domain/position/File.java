@@ -8,26 +8,28 @@ import java.util.function.Function;
 import static java.util.stream.Collectors.*;
 
 public enum File {
-    A("a"),
-    B("b"),
-    C("c"),
-    D("d"),
-    E("e"),
-    F("f"),
-    G("g"),
-    H("h");
+    A("a", 1),
+    B("b", 2),
+    C("c", 3),
+    D("d", 4),
+    E("e", 5),
+    F("f", 6),
+    G("g", 7),
+    H("h", 8);
 
     private static final Map<String, File> searchMap;
 
     private final String letter;
+    private final int coordinate;
 
     static {
         searchMap = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
 
-    File(String letter) {
+    File(String letter, int coordinate) {
         this.letter = letter;
+        this.coordinate = coordinate;
     }
 
     public static File from(String letter) {
@@ -36,5 +38,9 @@ public enum File {
 
     public String getLetter() {
         return this.letter;
+    }
+
+    public int calculateGapAsInt(File thatFile) {
+        return thatFile.coordinate - this.coordinate;
     }
 }

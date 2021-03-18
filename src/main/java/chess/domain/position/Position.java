@@ -34,6 +34,14 @@ public class Position {
         return new Position(file, rank);
     }
 
+    public int calculateXDegree(Position that) {
+        return this.file.calculateGapAsInt(that.file);
+    }
+
+    public int calculateYDegree(Position that) {
+        return this.rank.calculateGapAsInt(that.rank);
+    }
+
     @Override
     public String toString() {
         return file.getLetter() + rank.getLetter();
