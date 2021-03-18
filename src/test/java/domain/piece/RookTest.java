@@ -29,7 +29,7 @@ class RookTest {
     @MethodSource("destinations")
     void move(Position position) {
         Rook rook = new Rook(Color.BLACK, Position.from("c5"));
-        rook.move(position, Lists.emptyList());
+        rook.move(position, new Pieces());
         assertTrue(rook.hasPosition(position));
     }
 
@@ -43,9 +43,11 @@ class RookTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private List<Piece> blackPieces(List<Position> positions) {
-        return positions.stream()
-                        .map(position -> new Pawn(Color.BLACK, position))
-                        .collect(Collectors.toList());
+    private Pieces blackPieces(List<Position> positions) {
+        Piece[] pieces = new Piece[positions.size()];
+        for (int i = 0; i < positions.size(); i++) {
+            pieces[i] = new Pawn(Color.BLACK, positions.get(i));
+        }
+        return new Pieces(pieces);
     }
 }

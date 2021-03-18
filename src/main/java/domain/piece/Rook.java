@@ -10,12 +10,12 @@ public class Rook extends Division{
     }
 
     @Override
-    public void move(Position to, List<Piece> pieces) {
+    public void move(Position to, Pieces pieces) {
         if (position.isOrthogonal(to)) {
             List<Position> positions = position.getBetween(to);
-            for (Piece piece : pieces) {
-                if (positions.contains(piece.getPosition())) {
-                    throw new IllegalArgumentException();
+            for (Position position1 : positions) {
+                if (pieces.hasPieceOf(position1)) {
+                    throw  new IllegalArgumentException();
                 }
             }
             position = to;
@@ -23,7 +23,7 @@ public class Rook extends Division{
     }
 
     @Override
-    public void kill(Position to, List<Piece> pieces) {
+    public void kill(Position to, Pieces pieces) {
         move(to, pieces);
     }
 }

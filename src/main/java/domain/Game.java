@@ -12,6 +12,7 @@ public class Game {
 
     public Game() {
         pieces = new Pieces();
+        pieces.init();
     }
 
     public void display() {
@@ -19,7 +20,7 @@ public class Game {
         Collections.reverse(rows);
         for (Row row : rows) {
             for (Column column : Column.values()) {
-                System.out.print(pieces.getPieceOf(row, column).display());
+                System.out.print(pieces.getPieceOf(Position.of(column, row)).display());
             }
             System.out.println();
         }

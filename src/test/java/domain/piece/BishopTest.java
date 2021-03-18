@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.setMaxElementsForPrinting;
 import static org.junit.jupiter.api.Assertions.*;
 
 class BishopTest {
@@ -28,7 +29,7 @@ class BishopTest {
     @MethodSource("destinations")
     void move(Position position) {
         Bishop bishop = new Bishop(Color.BLACK, Position.from("c5"));
-        bishop.move(position, Lists.emptyList());
+        bishop.move(position, new Pieces());
         assertTrue(bishop.hasPosition(position));
     }
 
@@ -42,9 +43,11 @@ class BishopTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private List<Piece> blackPieces(List<Position> positions) {
-        return positions.stream()
-                        .map(position -> new Pawn(Color.BLACK, position))
-                        .collect(Collectors.toList());
+    private Pieces blackPieces(List<Position> positions) {
+        Piece[] pieces = new Piece[positions.size()];
+        for (int i = 0; i < positions.size(); i++) {
+            pieces[i] = new Pawn(Color.BLACK, positions.get(i));
+        }
+        return new Pieces(pieces);
     }
 }

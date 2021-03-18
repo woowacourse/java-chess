@@ -5,16 +5,23 @@ import domain.position.Position;
 import domain.position.Row;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Pieces {
     private final List<Piece> pieces = new ArrayList<>();
 
+    public Pieces(Piece... pieces) {
+        this.pieces.addAll(Arrays.asList(pieces));
+    }
+
     public Pieces() {
+    }
+
+    public void init() {
         setUpGeneral();
         setUpPawn();
     }
-
 
     private void setUpGeneral() {
         setUpGeneralByColor(Color.BLACK, Row.EIGHT);
@@ -43,10 +50,19 @@ public class Pieces {
         }
     }
 
-    public Piece getPieceOf(Row row, Column column) {
+    public Piece getPieceOf(Position position) {
         return pieces.stream()
-                     .filter(piece -> piece.hasPosition(Position.of(column, row)))
+                     .filter(piece -> piece.hasPosition(position))
                      .findFirst()
                      .orElse(new Empty());
+    }
+
+    public boolean hasPieceOf(Position position) {
+        return pieces.stream()
+                     .anyMatch(piece -> piece.hasPosition(position));
+    }
+
+    public List<Piece> toList() {
+        return pieces;
     }
 }

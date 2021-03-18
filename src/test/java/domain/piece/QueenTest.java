@@ -32,7 +32,7 @@ class QueenTest {
     @MethodSource("destinations")
     void move(Position position) {
         Queen queen = new Queen(Color.BLACK, Position.from("c5"));
-        queen.move(position, Lists.emptyList());
+        queen.move(position, new Pieces());
         assertTrue(queen.hasPosition(position));
     }
 
@@ -47,9 +47,11 @@ class QueenTest {
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
-    private List<Piece> blackPieces(List<Position> positions) {
-        return positions.stream()
-                        .map(position -> new Pawn(Color.BLACK, position))
-                        .collect(Collectors.toList());
+    private Pieces blackPieces(List<Position> positions) {
+        Piece[] pieces = new Piece[positions.size()];
+        for (int i = 0; i < positions.size(); i++) {
+            pieces[i] = new Pawn(Color.BLACK, positions.get(i));
+        }
+        return new Pieces(pieces);
     }
 }

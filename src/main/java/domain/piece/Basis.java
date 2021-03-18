@@ -11,9 +11,9 @@ public abstract class Basis implements Piece{
         this.displayName = displayName;
     }
 
-    public abstract void move(Position to, List<Piece> pieces);
+    public abstract void move(Position to, Pieces pieces);
 
-    public abstract void kill(Position to, List<Piece> pieces);
+    public abstract void kill(Position to, Pieces pieces);
 
     public abstract Position getPosition();
 

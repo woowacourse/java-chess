@@ -5,9 +5,9 @@ import domain.position.Position;
 import java.util.List;
 
 public interface Piece {
-    void move(Position to, List<Piece> pieces);
+    void move(Position to, Pieces pieces);
 
-    void kill(Position to, List<Piece> pieces);
+    void kill(Position to, Pieces pieces);
 
     String display();
 

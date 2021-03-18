@@ -10,10 +10,10 @@ public class Queen extends Division{
     }
 
     @Override
-    public void move(Position to, List<Piece> pieces) {
+    public void move(Position to, Pieces pieces) {
         if (position.isOrthogonal(to)) {
             List<Position> positions = position.getBetween(to);
-            for (Piece piece : pieces) {
+            for (Piece piece : pieces.toList()) {
                 if (positions.contains(piece.getPosition())) {
                     throw new IllegalArgumentException();
                 }
@@ -24,7 +24,7 @@ public class Queen extends Division{
 
         if (position.isDiagonal(to)) {
             List<Position> positions = position.getBetween(to);
-            for (Piece piece : pieces) {
+            for (Piece piece : pieces.toList()) {
                 if (positions.contains(piece.getPosition())) {
                     throw new IllegalArgumentException();
                 }
@@ -36,7 +36,7 @@ public class Queen extends Division{
     }
 
     @Override
-    public void kill(Position to, List<Piece> pieces) {
+    public void kill(Position to, Pieces pieces) {
         move(to, pieces);
     }
 }

@@ -10,12 +10,12 @@ public class Empty extends Basis{
     }
 
     @Override
-    public void move(Position to, List<Piece> pieces) {
+    public void move(Position to, Pieces pieces) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void kill(Position to, List<Piece> pieces) {
+    public void kill(Position to, Pieces pieces) {
 
     }
 
