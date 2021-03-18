@@ -1,46 +1,46 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class QueenTest {
-
+class RookTest {
     @Test
     void create() {
-        assertThatCode(() -> new Queen(Team.BLACK)).doesNotThrowAnyException();
+        assertThatCode(() -> new Rook(Team.BLACK)).doesNotThrowAnyException();
     }
 
     @DisplayName("팀 확인하기")
     @Test
     void isSameTeam() {
-        Queen queen = new Queen(Team.BLACK);
-        assertThat(queen.isSameTeam(Team.BLACK)).isTrue();
+        Rook rook = new Rook(Team.BLACK);
+        assertThat(rook.isSameTeam(Team.BLACK)).isTrue();
     }
 
     @DisplayName("차례가 아닐 때 움직일 수 없다.")
     @Test
     void team() {
-        Queen queen = new Queen(Team.BLACK);
-        assertThatThrownBy(() -> queen.checkTurn(Team.WHITE))
+        Rook rook = new Rook(Team.BLACK);
+        assertThatThrownBy(() -> rook.checkTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("킹인지 확인하기")
     @Test
     void isKing() {
-        Queen queen = new Queen(Team.BLACK);
-        assertThat(queen.isKing()).isFalse();
+        Rook rook = new Rook(Team.BLACK);
+        assertThat(rook.isKing()).isFalse();
     }
 
     @DisplayName("폰인지 확인하기")
     @Test
-    void isPawn() {
-        Queen queen = new Queen(Team.BLACK);
-        assertThat(queen.isPawn()).isFalse();
+    void isRook() {
+        Rook rook = new Rook(Team.BLACK);
+        assertThat(rook.isPawn()).isFalse();
     }
 }
