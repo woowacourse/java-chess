@@ -9,8 +9,10 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Type;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.List;
 
 public class ChessBoard {
@@ -105,29 +107,27 @@ public class ChessBoard {
     public void move(String source, String target) {
         Position sourcePosition = new Position(source);
         Position targetPosition = new Position(target);
-
         if (sourcePosition.equals(targetPosition)) {
             throw new IllegalArgumentException();
         }
+
         Piece sourcePiece = findPiece(sourcePosition);
 
         List<Position> movablePositions = sourcePiece.getMovablePositions(this);
-
         if (!movablePositions.contains(targetPosition)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
 
         sourcePiece.move(targetPosition);
-
-        chessBoard.get(sourcePosition.getRow()).remove(sourcePosition.getCol());
+        chessBoard.get(sourcePosition.getRow()).remove(sourcePosition.getColumn());
         chessBoard.get(sourcePosition.getRow())
-            .add(sourcePosition.getCol(), new Blank(Color.NO_COLOR, sourcePosition));
-        chessBoard.get(targetPosition.getRow()).remove(targetPosition.getCol());
-        chessBoard.get(targetPosition.getRow()).add(targetPosition.getCol(), sourcePiece);
+            .add(sourcePosition.getColumn(), new Blank(Color.NO_COLOR, sourcePosition));
+        chessBoard.get(targetPosition.getRow()).remove(targetPosition.getColumn());
+        chessBoard.get(targetPosition.getRow()).add(targetPosition.getColumn(), sourcePiece);
     }
 
     public Piece findPiece(Position position) {
-        return chessBoard.get(position.getRow()).get(position.getCol());
+        return chessBoard.get(position.getRow()).get(position.getColumn());
     }
 
     public boolean isBlank(Position position) {
