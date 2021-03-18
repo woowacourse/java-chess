@@ -23,11 +23,23 @@ public class Knight extends AbstractPiece {
         return SCORE;
     }
     
+//    @Override
+//    public Piece move(Position position) {
+//        final List<Direction> directions = Direction.knightDirection();
+//        if (!isMovable(position, directions, ABLE_LENGTH)) {
+//            throw new IllegalArgumentException("나이트가 이동할 수 없는 위치입니다.");
+//        }
+//        return new Knight(color, position);
+//    }
+    
     @Override
-    public Piece move(Position position) {
+    public Piece move(Position position, List<List<Piece>> board) {
         final List<Direction> directions = Direction.knightDirection();
-        if (!isMovable(position, directions, ABLE_LENGTH)) {
-            throw new IllegalArgumentException("나이트가 이동할 수 없는 위치입니다.");
+        Direction direction = findDirection(position, directions, ABLE_LENGTH);
+        
+        // TODO 장애물 체크
+        if (isObstacleAtDirection(position, direction, board)) {
+            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
         }
         return new Knight(color, position);
     }

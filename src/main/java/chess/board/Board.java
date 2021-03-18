@@ -36,13 +36,13 @@ public class Board {
         
         final Piece targetPiece = board.get(targetX).get(targetY);
         if (targetPiece.isSameColor(turn)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("이동하려는 위치에 자신의 말이 있습니다.");
         }
         // TODO - 피스에게 이동여부 보내기
         // 기물이 타겟 위치로 이동할 수 있는가? - 중간에 기물이 있다던가
-
+        
         board.get(sourceX).set(sourceY, new Blank(Color.BLANK, sourcePosition));
-        board.get(targetX).set(targetY, sourcePiece.move(targetPosition));
+        board.get(targetX).set(targetY, sourcePiece.move(targetPosition, board));
         
         turn = turn.next();
     }
@@ -94,6 +94,23 @@ public class Board {
                      .add(new Blank(Color.BLANK, Position.of(x, y)));
             }
         }
+    }
+    
+    public double score(Color color) {
+        int score = 0;
+        for (List<Piece> rank : board) {
+            for (Piece piece : rank) {
+                if (piece.isSameColor(color)) {
+                    score += piece.getScore();
+                }
+            }
+        }
+        return score;
+    }
+    
+    public Color getWinner() {
+        // todo - 안끝났을때 요청하면 에러 출력
+        return Color.BLACK;
     }
     
     public List<List<Piece>> getBoard() {

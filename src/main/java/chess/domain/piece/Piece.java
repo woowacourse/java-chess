@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.List;
+
 public interface Piece {
     String getSymbol();
     
@@ -7,5 +9,5 @@ public interface Piece {
     
     boolean isSameColor(Color color);
     
-    Piece move(Position position);
+    Piece move(Position position, List<List<Piece>> board);
 }

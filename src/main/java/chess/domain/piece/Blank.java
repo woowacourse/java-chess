@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.List;
+
 public class Blank extends AbstractPiece {
     
     private static final String SYMBOL = ".";
@@ -21,7 +23,7 @@ public class Blank extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position position) {
+    public Piece move(Position position, List<List<Piece>> board) {
         throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다");
     }
 }

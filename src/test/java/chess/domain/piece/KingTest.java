@@ -1,20 +1,31 @@
 package chess.domain.piece;
 
+import chess.board.Board;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static org.assertj.core.api.Assertions.*;
 
 class KingTest {
+    
     private King king;
+    
+    private List<List<Piece>> pieces;
     
     @BeforeEach
     void setUp() {
         Position position = Position.of(0, 4);
-        
+    
         king = new King(Color.BLACK, position);
+        
+        Board board = new Board();
+        board.init();
+        
+        pieces = board.getBoard();
     }
     
     @Test
@@ -22,7 +33,7 @@ class KingTest {
     void move() {
         Position position = Position.of(1, 4);
         
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(position);
+        ThrowableAssert.ThrowingCallable callable = () -> king.move(position, pieces);
         
         assertThatCode(callable).doesNotThrowAnyException();
     }
@@ -32,7 +43,7 @@ class KingTest {
     void validate() {
         Position position = Position.of(2, 4);
         
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(position);
+        ThrowableAssert.ThrowingCallable callable = () -> king.move(position, pieces);
         
         assertThatIllegalArgumentException().isThrownBy(callable);
     }
