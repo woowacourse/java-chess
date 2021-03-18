@@ -1,10 +1,10 @@
 package chess.domain.game;
 
+import chess.domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class ReadyTest {
 
@@ -27,6 +27,12 @@ class ReadyTest {
     void end() {
         assertThatThrownBy(() -> ready.end())
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void start() {
+        assertThatCode(() -> ready.start())
+                .doesNotThrowAnyException();
     }
 
     @Test

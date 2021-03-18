@@ -5,19 +5,15 @@ import chess.domain.piece.Position;
 
 import java.util.Optional;
 
-public class End extends Finished {
-
-    public End(final ChessGame chessGame) {
+public abstract class Finished extends Started {
+    public Finished(ChessGame chessGame) {
         super(chessGame);
     }
 
-    @Override
-    public Optional<Color> getWinnerColor() {
-        return Optional.empty();
-    }
+    abstract public Optional<Color> getWinnerColor();
 
     @Override
-    public void move(final Position source, final Position target) {
+    public void move(Position source, Position target) {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
     }
 
@@ -35,5 +31,4 @@ public class End extends Finished {
     public boolean isFinished() {
         return true;
     }
-
 }

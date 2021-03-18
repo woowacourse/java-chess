@@ -1,51 +1,52 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class EndTest {
+class WhiteWinTest {
 
     private ChessGame chessGame;
-    private End end;
+    private WhiteWin whiteWin;
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(null);
-        end = new End(chessGame);
+        chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
+        whiteWin = new WhiteWin(chessGame);
     }
 
     @Test
     void getWinnerColor() {
-        assertThat(end.getWinnerColor().isPresent()).isFalse();
-    }
-
-    @Test
-    void move() {
-        assertThatThrownBy(() -> end.move(null, null))
-                .isExactlyInstanceOf(UnsupportedOperationException.class);
+        assertThat(whiteWin.getWinnerColor().isPresent()).isTrue();
+        assertThat(whiteWin.getWinnerColor().get()).isSameAs(Color.WHITE);
     }
 
     @Test
     void start() {
-        assertThatThrownBy(() -> end.start())
+        assertThatThrownBy(() -> whiteWin.start())
+                .isExactlyInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void move() {
+        assertThatThrownBy(() -> whiteWin.start())
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     void end() {
-        assertThatThrownBy(() -> end.end())
+        assertThatThrownBy(() -> whiteWin.start())
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
     @Test
     void isFinished() {
-        boolean actual = end.isFinished();
+        boolean actual = whiteWin.isFinished();
         assertThat(actual).isTrue();
     }
 

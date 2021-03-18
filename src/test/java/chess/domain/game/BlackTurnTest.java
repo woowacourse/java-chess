@@ -1,10 +1,13 @@
 package chess.domain.game;
 
+import chess.domain.board.Board;
+import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 class BlackTurnTest {
 
@@ -13,7 +16,7 @@ class BlackTurnTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(null);
+        chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
         blackTurn = new BlackTurn(chessGame);
     }
 
@@ -21,6 +24,18 @@ class BlackTurnTest {
     void start() {
         assertThatThrownBy(() -> blackTurn.start())
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @Test
+    void move() {
+        assertThatCode(() -> blackTurn.move(new Position(1, 0), new Position(2, 0)))
+                .doesNotThrowAnyException();
+    }
+
+    @Test
+    void end() {
+        assertThatCode(() -> blackTurn.end())
+                .doesNotThrowAnyException();
     }
 
     @Test
