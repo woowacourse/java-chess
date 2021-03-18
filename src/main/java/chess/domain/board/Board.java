@@ -16,10 +16,9 @@ import java.util.Map;
 public class Board {
     private static Board board = null;
 
-    private final Map<Coordinate, Cell> cells = new HashMap<>();
+    private final Map<Coordinate, Piece> cells = new HashMap<>();
 
     private Board() {
-        createBoard();
     }
 
     public static Board getInstance() {
@@ -29,22 +28,8 @@ public class Board {
         return board;
     }
 
-    private void createBoard() {
-        for (File file : File.values()) {
-            createCells(file);
-        }
-    }
-
-    private void createCells(File file) {
-        for (Rank rank : Rank.values()) {
-            Coordinate coordinate = new Coordinate(file, rank);
-            cells.put(coordinate, new Cell(coordinate));
-        }
-    }
-
     public Piece find(Coordinate coordinate) {
-        Cell cell = cells.get(coordinate);
-        return cell.getPiece();
+        return cells.get(coordinate);
     }
 
     public void initialize() {
@@ -57,9 +42,7 @@ public class Board {
 
     private void putPawns(TeamType teamType, Rank rank) {
         for (File file : File.values()) {
-            Coordinate coordinate = new Coordinate(file, rank);
-            Cell cell = cells.get(coordinate);
-            cell.put(new Pawn(teamType));
+            cells.put(new Coordinate(file, rank), new Pawn(teamType));
         }
     }
 
@@ -69,8 +52,7 @@ public class Board {
 
         for (int i = 0; i < files.size(); i++) {
             Coordinate coordinate = new Coordinate(files.get(i), rank);
-            Cell cell = cells.get(coordinate);
-            cell.put(pieces.get(i));
+            cells.put(coordinate, pieces.get(i));
         }
     }
 
@@ -89,15 +71,26 @@ public class Board {
 
     public Piece find(String currentCoordinateInput, TeamType teamType) {
         Coordinate currentCoordinate = Coordinate.from(currentCoordinateInput);
-        Cell cell = cells.get(currentCoordinate);
-        if (cell.isEmpty()) {
+        Piece piece = cells.get(currentCoordinate);
+        if (piece == null) {
             throw new IllegalArgumentException("말이 존재하지 않습니다.");
         }
-        Piece piece = cell.getPiece();
         if (!piece.isTeamOf(teamType)) {
             throw new IllegalArgumentException("자신의 말이 아닙니다.");
         }
         return piece;
+    }
+
+    public Map<Coordinate, Piece> getCells() {
+        return cells;
+    }
+
+    public void remove(Coordinate coordinate) {
+        cells.remove(coordinate);
+    }
+
+    public void put(Piece piece, Coordinate coordinate) {
+        cells.put(coordinate, piece);
     }
 }
 

@@ -46,4 +46,26 @@ public class Coordinate {
        }
         return null;
     }
+
+    public Direction calculateDirection(Coordinate targetCoordinate) {
+        File targetFile = targetCoordinate.getFile();
+        Rank targetRank = targetCoordinate.getRank();
+
+        int fileDiff = targetFile.getX() - file.getX();
+        int rankDiff = targetRank.getY() - rank.getY();
+
+        return Direction.findDirection(fileDiff, rankDiff);
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public Coordinate move(Direction direction) {
+        return new Coordinate(file.move(direction), rank.move(direction));
+    }
 }

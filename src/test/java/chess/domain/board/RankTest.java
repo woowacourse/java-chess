@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +13,7 @@ class RankTest {
     void compareRankValue() {
         Rank rank = Rank.FIVE;
 
-        assertThat(rank.getValue()).isEqualTo(5);
+        assertThat(rank.getY()).isEqualTo(5);
     }
 
     @DisplayName("Rank가 1인 경우 값을 차감할 수 없다")
@@ -22,7 +21,7 @@ class RankTest {
     void cannotDecreaseRank() {
         Rank rank = Rank.ONE;
 
-        assertThatCode(() -> rank.decrease())
+        assertThatCode(rank::decrease)
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("잘못된 rank값 입니다.");
     }
