@@ -4,6 +4,9 @@ import domain.position.Position;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Arrays;
 
@@ -75,5 +78,37 @@ public class PawnTest {
         Position to = Position.from("a5");
         Piece pawn = new Pawn(Color.BLACK, from);
         assertThatThrownBy(() -> pawn.move(to, Arrays.asList(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"b1", "d1"})
+    @DisplayName("검정 말 잡기")
+    void blackKill(String destination) {
+        Position from = Position.from("c2");
+        Position to = Position.from(destination);
+        Piece pawn = new Pawn(Color.BLACK, from);
+        pawn.kill(to, Lists.emptyList());
+        assertTrue(pawn.hasPosition(to));
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"g6"})
+    @DisplayName("하얀 말 잡기")
+    void whiteKill(String destination) {
+        Position from = Position.from("h5");
+        Position to = Position.from(destination);
+        Piece pawn = new Pawn(Color.WHITE, from);
+        pawn.kill(to, Lists.emptyList());
+        assertTrue(pawn.hasPosition(to));
+    }
+
+    @Test
+    @DisplayName("하얀 말 잡기 방해")
+    void interruptedWhiteKill() {
+        Position from = Position.from("h5");
+        Position to = Position.from("h6");
+        Piece pawn = new Pawn(Color.WHITE, from);
+
+        assertThatThrownBy(() -> pawn.kill(to, Lists.emptyList())).isInstanceOf(IllegalArgumentException.class);
     }
 }

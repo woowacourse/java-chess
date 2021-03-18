@@ -40,7 +40,11 @@ public class Pawn extends Division {
 
     @Override
     public void kill(Position to, List<Piece> pieces) {
-
+        if ((position.diffColumn(to, 1) || position.diffColumn(to, -1)) && position.diffRow(to, color.moveUnit())) {
+            position = to;
+            return;
+        }
+        throw new IllegalArgumentException();
     }
 
 
