@@ -35,7 +35,7 @@
     - [x] Pawn
     - [x] Rook
     - [x] knight
-    - [ ] bishop
+    - [x] bishop
     - [ ] queen
     - [ ] king
   - [ ] 목적지로 이동할수 있는지 확인하고 움직인다.
