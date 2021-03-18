@@ -26,6 +26,12 @@ public abstract class BasicMoveStrategy implements MoveStrategy {
         checkWithinBoardPosition(target);
     }
 
+    private void checkWithinBoardPosition(Position target) {
+        if (target == null) {
+            throw new InvalidMoveException(Piece.OUT_OF_BOUND_MESSAGE);
+        }
+    }
+
     protected void checkIsNotSameTeam(Position source, Position target, Board board) {
         Piece sourcePiece = board.checkPieceAtPosition(source);
         Piece targetPiece = board.checkPieceAtPosition(target);
@@ -35,53 +41,10 @@ public abstract class BasicMoveStrategy implements MoveStrategy {
         }
     }
 
-    private void checkWithinBoardPosition(Position target) {
-        if (target == null) {
-            throw new InvalidMoveException(Piece.OUT_OF_BOUND_MESSAGE);
-        }
-    }
-
     protected boolean isStay(Position source, Position target) {
         return source.computeHorizontalDistance(target) == 0 &&
             source.computeVerticalDistance(target) == 0;
-    }
-
-    protected boolean isLineMove(Position source, Position target) {
-        return (source.computeHorizontalDistance(target) == 0 ||
-            source.computeVerticalDistance(target) == 0);
-    }
-
-    protected boolean isDiagonalMove(Position source, Position target) {
-        return (Math.abs(source.computeHorizontalDistance(target))
-            == Math.abs(source.computeVerticalDistance(target)));
-    }
-
-    protected void checkClearPath(Position source, Position target, MoveDirection moveDirection, Board board) {
-        int moveNumber = calculateMoveNumber(source, target);
-        Position pathPosition = source;
-        int xVector = moveDirection.getXVector();
-        int yVector = moveDirection.getYVector();
-
-        for (int i = 0; i < moveNumber - 1; i++) {
-            pathPosition = Position.of(pathPosition.getXPosition().moveUnit(xVector),
-                pathPosition.getYPosition().moveUnit(yVector));
-            checkIfClear(board, pathPosition);
-        }
-    }
-
-    private void checkIfClear(Board board, Position pathPosition) {
-        if (!board.checkPieceAtPosition(pathPosition).equals(VOID_PIECE)) {
-            throw new InvalidMoveException(Piece.UNABLE_CROSS_MESSAGE);
-        }
-    }
-
-    private int calculateMoveNumber(Position source, Position target) {
-        int verticalMoveNumber = source.computeVerticalDistance(target);
-        if (verticalMoveNumber != 0) {
-            return Math.abs(verticalMoveNumber);
-        }
-        return Math.abs(source.computeHorizontalDistance(target));
-    }
+    } //TODO 나중에 안움직이는지 확인
 
     abstract void checkValidMove(Position source, Position target, Board board);
 }
