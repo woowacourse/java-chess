@@ -63,4 +63,8 @@ public class Board {
         }
         return paths;
     }
+
+    public double calculateScore(boolean b) {
+        return 0;
+    }
 }
