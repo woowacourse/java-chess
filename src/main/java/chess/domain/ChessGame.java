@@ -15,14 +15,14 @@ public class ChessGame {
 
     public void playTurn(Point source, Point target) {
         board.movePiece(source, target, currentColor);
-        switchTurn();
+        this.currentColor = switchTurn();
     }
 
-    private void switchTurn() {
+    private String switchTurn() {
         if (this.currentColor.equals(WHITE)) {
-            this.currentColor = BLACK;
+            return BLACK;
         }
-        this.currentColor = WHITE;
+        return WHITE;
     }
 
     public boolean isNotEnd() {

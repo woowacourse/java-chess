@@ -8,12 +8,12 @@ public class Queen extends Piece {
     }
 
     @Override
-    protected boolean isMovableRoute(Piece target) {
+    public boolean isMovableRoute(Piece target) {
         return false;
     }
 
     @Override
-    protected Point moveOneStep(Point target) {
+    public Point moveOneStep(Point target) {
         return null;
     }
 }

@@ -16,9 +16,9 @@ public abstract class Piece {
         this.point = point;
     }
 
-    protected abstract boolean isMovableRoute(Piece target);
+    public abstract boolean isMovableRoute(Piece target);
 
-    protected abstract Point moveOneStep(Point target);
+    public abstract Point moveOneStep(Point target);
 
     public boolean isSameColor(String currentColor) {
         return currentColor.equals(this.color);

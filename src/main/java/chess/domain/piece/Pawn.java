@@ -8,7 +8,9 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isMovableRoute(Piece target) {
+    public boolean isMovableRoute(Piece target) {
+        //TODO: 폰은 직진만 가능
+        //TODO: 폰은 시작 때만 두 칸 이동 가능
         int distance = this.point.calculateDistance(target.point);
         if (distance == 1 && target instanceof Empty) {
             return true;
@@ -20,7 +22,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected Point moveOneStep(Point target) {
+    public Point moveOneStep(Point target) {
         return target;
     }
 }
