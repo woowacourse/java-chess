@@ -28,6 +28,10 @@ public abstract class Piece {
         return position;
     }
 
+    public void moveTo(Position position) {
+        this.position = position;
+    }
+
     public List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
     }

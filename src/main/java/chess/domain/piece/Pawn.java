@@ -2,65 +2,37 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 
+import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
-    public Pawn(boolean isBlack, char x, char y, List<Direction> directions, int stepRange) {
-        super(isBlack, x, y, directions, stepRange);
+    private static final char NAME_WHEN_BLACK = 'P';
+    private static final char NAME_WHEN_WHITE = 'p';
+
+    public Pawn(final Boolean isBlack, final char x, final char y) {
+        super(isBlack, x, y, Direction.blackPawnDirection(), 1);
+    }
+
+    @Override
+    public List<Direction> getDirections() {
+        if (isBlack()) {
+            return Direction.blackPawnDirection();
+        }
+        return Direction.whitePawnDirection();
+    }
+
+    public List<Direction> getDirectionsOnTwoStep() {
+        if (isBlack()) {
+            return Direction.blackPawnLinearDirection();
+        }
+        return Direction.whitePawnLinearDirection();
     }
 
     @Override
     char getName() {
-        return 0;
+        if (isBlack()) {
+            return NAME_WHEN_BLACK;
+        }
+        return NAME_WHEN_WHITE;
     }
-//    private static final char NAME_WHEN_BLACK = 'K';
-//    private static final char NAME_WHEN_WHITE = 'k';
-//
-//    public Pawn(final Boolean isBlack, final char x, final char y) {
-//        int a = 1;
-//        super(isBlack, x, y, Direction.paw);
-//    }
-//
-//    @Override
-//    public List<Position> extractMovablePositions() {
-//        if (isBlack()) {
-//            List<Position> mergedPosition = new ArrayList<>();
-//            mergedPosition.addAll(extractMovablePositionsByOneStep(Direction.blackPawnDirection()));
-//            mergedPosition.addAll(extractMovablePositionsByTwoStep(Direction.blackPawnLinearDirection()));
-//            return mergedPosition.stream().distinct().collect(Collectors.toList());
-//        }
-//        List<Position> mergedPosition = new ArrayList<>();
-//        mergedPosition.addAll(extractMovablePositionsByOneStep(Direction.whitePawnDirection()));
-//        mergedPosition.addAll(extractMovablePositionsByTwoStep(Direction.whitePawnLinearDirection()));
-//        return mergedPosition.stream().distinct().collect(Collectors.toList());
-//    }
-//
-//    private List<Position> extractMovablePositionsByOneStep(List<Direction> directions) {
-//        return directions
-//                .stream()
-//                .map(direction -> getPosition().moveBy(direction.getXDegree(), direction.getYDegree()))
-//                .filter(position -> !isOutOfRange(position) && !Grid.isOccupied(position))
-//                .collect(Collectors.toList());
-//    }
-//
-//    private List<Position> extractMovablePositionsByTwoStep(List<Direction> directions) {
-//        return directions
-//                .stream()
-//                .flatMap(direction -> IntStream
-//                        .rangeClosed(1, 2)
-//                        .mapToObj(index -> getPosition().moveBy(
-//                                direction.getXDegree() * index,
-//                                direction.getYDegree() * index
-//                        ))
-//                        .takeWhile(position -> !isOutOfRange(position) && !Grid.isOccupied(position)))
-//                .collect(Collectors.toList());
-//    }
-//
-//    @Override
-//    char getName() {
-//        if (isBlack()) {
-//            return NAME_WHEN_BLACK;
-//        }
-//        return NAME_WHEN_WHITE;
-//    }
 }
