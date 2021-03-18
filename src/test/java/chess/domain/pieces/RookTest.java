@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class RookTest {
     @ParameterizedTest
@@ -30,17 +31,24 @@ class RookTest {
         assertThat(rookPosition.getRow()).isNotEqualTo(8);
     }
 
+    @ParameterizedTest
+    @DisplayName("Rook 초기 col 위치가 a혹은 h가 아니면, 예외가 발생한다.")
+    @ValueSource(strings = {"b", "c", "d", "e", "f", "g"})
+    void wrongInitColCheck(String col) {
+        assertThatThrownBy(() -> Rook.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+    }
+
     @Test
     @DisplayName("Rook이 Black 팀으로 생성되면, initial은 대문자 R이다.")
     void blackTeamInitialCheck() {
-        Rook rook = Rook.of(Team.BLACK, 1);
+        Rook rook = Rook.of(Team.BLACK, 0);
         assertThat(rook.getInitial()).isEqualTo("R");
     }
 
     @Test
     @DisplayName("Rook이 White 팀으로 생성되면, initial은 소문자 r이다.")
     void whiteTeamInitialCheck() {
-        Rook rook = Rook.of(Team.WHITE, 1);
+        Rook rook = Rook.of(Team.WHITE, 0);
         assertThat(rook.getInitial()).isEqualTo("r");
     }
 }

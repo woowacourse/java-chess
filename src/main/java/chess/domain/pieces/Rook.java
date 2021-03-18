@@ -12,6 +12,9 @@ public class Rook extends Piece {
     }
 
     public static Rook of(final Team team, final int col) {
+        if (col != 0 && col != 7) {
+            throw new IllegalArgumentException("잘못된 초기 위치입니다.");
+        }
         return new Rook(team, getInitPosition(team, col));
     }
 
