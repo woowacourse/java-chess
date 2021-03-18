@@ -24,8 +24,8 @@ public class Position {
         return y;
     }
 
-    public boolean validatePositionInGrid() {
-        return (x < MIN_X_RANGE || x > MAX_X_RANGE || y < MIN_Y_RANGE || y > MAX_Y_RANGE);
+    public boolean isInGridRange() {
+        return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
     }
 
     @Override

@@ -13,6 +13,7 @@ public class OutputView {
     }
 
     public static void printGridStatus(Grid grid) {
+        System.out.println();
         String gridStatus = grid.getLines()
                 .stream()
                 .map(line -> line.getPieces()
@@ -21,5 +22,7 @@ public class OutputView {
                         .collect(Collectors.joining()))
                 .collect(Collectors.joining("\n"));
         System.out.println(gridStatus);
+//        System.out.println(grid.getLines().get(2).getPieces().get(2).getName());
+        System.out.println();
     }
 }

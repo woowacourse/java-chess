@@ -43,7 +43,7 @@ public class Grid {
         if (sourcePiece instanceof Pawn) {
             validatePawnSteps(source, target);
         }
-        if (!(sourcePiece instanceof Pawn)){
+        if (!(sourcePiece instanceof Pawn)) {
             validateGeneralSteps(source, target);
         }
 
@@ -52,7 +52,7 @@ public class Grid {
     }
 
     private void validatePositionInGrid(Position source, Position target) {
-        if (!source.validatePositionInGrid() || !target.validatePositionInGrid()) {
+        if (!source.isInGridRange() || !target.isInGridRange()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
@@ -117,7 +117,7 @@ public class Grid {
             int xDegree = direction.getXDegree() * i;
             int yDegree = direction.getYDegree() * i;
             Position movedPosition = source.stepOn(xDegree, yDegree);
-            if (!movedPosition.validatePositionInGrid()) {
+            if (!movedPosition.isInGridRange()) {
                 break;
             }
             positions.add(movedPosition);

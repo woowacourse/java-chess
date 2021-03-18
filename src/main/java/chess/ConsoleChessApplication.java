@@ -11,14 +11,14 @@ import java.util.List;
 public class ConsoleChessApplication {
     public static void main(String[] args) {
         OutputView.printStartChess();
+        Grid grid = new Grid();
         while (true) {
             String command = InputView.inputCommand();
             if (command.equals("end")) {
                 return;
             }
-            Grid grid = new Grid();
+
             OutputView.printGridStatus(grid);
-            System.out.println();
 
             if (command.startsWith("move")) {
                 List<String> strGroup = Arrays.asList(command.split(" "));
