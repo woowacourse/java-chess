@@ -10,6 +10,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,7 +57,7 @@ class BoardTest {
     @Test
     void name() {
         board.move(new Position("a", "2"), new Position("a", "4"));
-        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "4    ")))
+        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "4")))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("비어 있는 칸입니다.");
     }
