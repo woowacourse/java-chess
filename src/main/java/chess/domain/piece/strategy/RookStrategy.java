@@ -1,41 +1,12 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Path;
-import chess.domain.position.Position;
-import java.util.List;
+import chess.domain.Board;
+import chess.domain.piece.Piece;
 
-public final class RookStrategy implements PieceStrategy {
-
-    private static final String NAME = "r";
-    private static final double VALUE = 5;
+public class RookStrategy implements MoveStrategy {
 
     @Override
-    public List<Direction> directions() {
-        return Direction.straightDirection();
-    }
-
-    @Override
-    public Path pathFrom(Direction direction, Position position) {
-        return position.longPath(direction);
-    }
-
-    @Override
-    public boolean isPawn() {
+    public boolean isMovable(Piece piece, Board board) {
         return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public String name() {
-        return NAME;
-    }
-
-    @Override
-    public double value() {
-        return VALUE;
     }
 }

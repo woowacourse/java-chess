@@ -1,41 +1,12 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Path;
-import chess.domain.position.Position;
-import java.util.List;
+import chess.domain.Board;
+import chess.domain.piece.Piece;
 
-public final class QueenStrategy implements PieceStrategy {
-
-    private static final String NAME = "q";
-    private static final double VALUE = 9;
+public class QueenStrategy implements MoveStrategy {
 
     @Override
-    public List<Direction> directions() {
-        return Direction.everyDirection();
-    }
-
-    @Override
-    public Path pathFrom(Direction direction, Position position) {
-        return position.longPath(direction);
-    }
-
-    @Override
-    public boolean isPawn() {
+    public boolean isMovable(Piece piece, Board board) {
         return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public String name() {
-        return NAME;
-    }
-
-    @Override
-    public double value() {
-        return VALUE;
     }
 }

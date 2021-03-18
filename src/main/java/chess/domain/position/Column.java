@@ -4,48 +4,38 @@ import chess.domain.piece.strategy.Direction;
 import java.util.Arrays;
 
 public enum Column {
+    A(1,"a"),
+    B(2,"b"),
+    C(3,"c"),
+    D(4,"d"),
+    E(5,"e"),
+    F(6,"f"),
+    G(7,"g"),
+    H(8,"h");
 
-    A('a'),
-    B('b'),
-    C('c'),
-    D('d'),
-    E('e'),
-    F('f'),
-    G('g'),
-    H('h');
+    private final int value;
+    private final String name;
 
-    private final char value;
-
-    Column(final char value) {
+    Column(int value, String name){
         this.value = value;
+        this.name = name;
     }
 
-    public Column move(final Direction direction) {
-        char newValue = (char) (this.value + direction.columnValue());
-        return of(newValue);
-    }
-
-    private Column of(final char value) {
+    public static Column getColumn(String value) {
         return Arrays.stream(values())
-                .filter(column -> column.value == value)
+            .filter(column -> column.name.equals(value))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+    }
+
+    public static Column getColumn(int intValue) {
+        return Arrays.stream(values())
+                .filter(column -> column.value == intValue)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("열 값이 범위를 벗어났습니다."))
-                ;
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
 
-    public boolean canMove(final Direction direction) {
-        return !goesLower(direction.columnValue()) && !goesHigher(direction.columnValue());
-    }
-
-    private boolean goesLower(final int columnValue) {
-        return value + columnValue < A.value;
-    }
-
-    private boolean goesHigher(final int columnValue) {
-        return value + columnValue > H.value;
-    }
-
-    public String value() {
-        return String.valueOf(value);
+    public Column move(Direction direction) {
+        return getColumn(value + direction.getCoordinates().get(0));
     }
 }

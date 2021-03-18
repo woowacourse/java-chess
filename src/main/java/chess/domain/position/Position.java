@@ -1,87 +1,28 @@
 package chess.domain.position;
 
-import chess.domain.board.Path;
 import chess.domain.piece.strategy.Direction;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
-public final class Position {
-
-    private static final Map<String, Position> CACHE = new HashMap<>();
-
-    static {
-        cache();
-    }
+public class Position {
 
     private final Column column;
     private final Row row;
 
-    private Position(final Column column, final Row row) {
+    private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
 
-    public static Position ofName(final String positionName) {
-        return CACHE.get(positionName);
+    private Position(String column, String row) {
+        this(Column.getColumn(column), Row.getRow(row));
     }
 
-    public static Position of(final Column column, final Row row) {
-        return CACHE.get(column.value() + row.value());
+    public static Position of(String value) {
+        return new Position(value.substring(0, 1), value.substring(1));
     }
 
-    public Position move(final Direction direction) {
-        final Column newColumn = column.move(direction);
-        final Row newRow = row.move(direction);
-        return CACHE.get(newColumn.value() + newRow.value());
-    }
-
-    public Path shortPath(final Direction direction) {
-        if (canMove(direction)) {
-            return new Path(Collections.singletonList(move(direction)));
-        }
-        return new Path(Collections.emptyList());
-    }
-
-    public Path longPath(final Direction direction) {
-        final List<Position> visitedPositions = new ArrayList<>();
-        Position currentPosition = this;
-        while(currentPosition.canMove(direction)) {
-            currentPosition = currentPosition.move(direction);
-            visitedPositions.add(currentPosition);
-        }
-        return new Path(visitedPositions);
-    }
-
-    private boolean canMove(Direction direction) {
-        return column.canMove(direction) && row.canMove(direction);
-    }
-
-    public boolean isOfColumn(Column column) {
-        return this.column.equals(column);
-    }
-
-    public String name() {
-        return column.value() + row.value();
-    }
-
-    public Column column() {
-        return column;
-    }
-
-    private static void cache() {
-        for (Column column : Column.values()) {
-            cacheRowsWithColumn(column);
-        }
-    }
-
-    private static void cacheRowsWithColumn(final Column column) {
-        for (Row row : Row.values()) {
-            CACHE.put(column.value() + row.value(), new Position(column, row));
-        }
+    public static Position of(Column column, Row row) {
+        return new Position(column, row);
     }
 
     @Override
@@ -92,12 +33,19 @@ public final class Position {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Position that = (Position) o;
-        return column == that.column && row == that.row;
+        Position position = (Position) o;
+        return row == position.row &&
+                column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(column, row);
+        return Objects.hash(row, column);
+    }
+
+    public Position moveTo(Direction direction) {
+        Column newColumn = column.move(direction);
+        Row newRow = row.move(direction);
+        return Position.of(newColumn, newRow);
     }
 }

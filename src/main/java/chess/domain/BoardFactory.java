@@ -8,6 +8,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
