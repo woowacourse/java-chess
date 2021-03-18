@@ -48,6 +48,20 @@ public class Position {
         return false;
     }
 
+    public boolean checkAdjacentFourWay(final Position destination) {
+        final int xDiff = Math.abs(this.x - destination.x);
+        final int yDiff = Math.abs(this.y - destination.y);
+        if ((xDiff == 1 && yDiff == 0) || (xDiff == 0 && yDiff == 1)) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean checkAdjacentEightWay(final Position destination) {
+        return checkAdjacentFourWay(destination) || checkDiagonalToDirection(destination, 1)
+                || checkDiagonalToDirection(destination, -1);
+    }
+
     public boolean checkDiagonalRule(final Position destination) {
         final int xDiff = Math.abs(this.x - destination.x);
         final int yDiff = Math.abs(this.y - destination.y);

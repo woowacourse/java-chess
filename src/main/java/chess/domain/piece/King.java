@@ -10,11 +10,11 @@ public class King extends Piece {
 
     @Override
     public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
-        return false;
+        return checkPositionRule(current, destination);
     }
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return false;
+        return current.checkAdjacentEightWay(destination);
     }
 }
