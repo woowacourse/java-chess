@@ -11,6 +11,7 @@ import java.util.List;
 
 public class Queen extends Piece {
     private static final String QUEEN_NAME = "Q";
+    private final int score = 9;
 
     public Queen(Team team) {
         super(QUEEN_NAME, team);
@@ -67,5 +68,9 @@ public class Queen extends Piece {
             );
         }
         return result;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

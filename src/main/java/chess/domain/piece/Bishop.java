@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private static final String BISHOP_NAME = "B";
+    private final int score = 3;
 
     public Bishop(Team team) {
         super(BISHOP_NAME, team);
@@ -40,5 +41,9 @@ public class Bishop extends Piece {
             );
         }
         return result;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

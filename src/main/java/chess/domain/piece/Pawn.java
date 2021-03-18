@@ -9,6 +9,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final String PAWN_NAME = "P";
+    private final int score = 1;
 
     public Pawn(Team team) {
         super(PAWN_NAME, team);
@@ -41,6 +42,10 @@ public class Pawn extends Piece {
             return true;
         }
         return isWhite() && position.isSameVertical(Vertical.TWO);
+    }
+
+    public int getScore() {
+        return score;
     }
 }
 

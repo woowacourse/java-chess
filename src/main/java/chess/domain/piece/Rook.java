@@ -10,6 +10,7 @@ import java.util.List;
 
 public class Rook extends Piece {
     private static final String ROOK_NAME = "R";
+    private final int score = 5;
 
     public Rook(Team team) {
         super(ROOK_NAME, team);
@@ -31,5 +32,9 @@ public class Rook extends Piece {
         movablePositions.removeAll(Collections.singletonList(target));
 
         return movablePositions;
+    }
+
+    public int getScore() {
+        return score;
     }
 }

@@ -10,6 +10,7 @@ import java.util.List;
 
 public class King extends Piece {
     private static final String KING_NAME = "K";
+    private final int score = 0;
 
     public King(Team team) {
         super(KING_NAME, team);
@@ -45,5 +46,9 @@ public class King extends Piece {
     private boolean isInBorder(int horizontalWeight, int verticalWeight) {
         return horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
                 && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER;
+    }
+
+    public int getScore() {
+        return score;
     }
 }
