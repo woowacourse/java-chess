@@ -4,19 +4,21 @@ import chess.view.dto.BoardDto;
 import chess.view.dto.PieceDto;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class OutputView {
+    private static final int BOARD_COLUMN_SIZE = 8;
+    private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
+    private static final String EMPTY_BOARD_UNIT = ".";
 
     private OutputView() {
     }
 
-    private static final int BOARD_COLUMN_SIZE = 8;
-    private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
-
     public static void drawBoard(final BoardDto boardDto) {
         String[] boardStatus = createBoardStatus(boardDto);
 
-        for (int i = 0; i < boardStatus.length; i++) {
+        int boardLength = boardStatus.length;
+        for (int i = 0; i < boardLength; i++) {
             lineSeparatorIfSatisfyCondition(i);
             System.out.print(boardStatus[i]);
         }
@@ -26,9 +28,10 @@ public class OutputView {
 
     private static String[] createBoardStatus(BoardDto boardDto) {
         String[] board = new String[boardDto.getColumn() * boardDto.getRow()];
-        Arrays.fill(board, ".");
+        Arrays.fill(board, EMPTY_BOARD_UNIT);
 
-        for (final PieceDto pieceDto : boardDto.getPieceDtos()) {
+        List<PieceDto> pieceDtos = boardDto.getPieceDtos();
+        for (final PieceDto pieceDto : pieceDtos) {
             board[pieceDto.getRow() * BOARD_COLUMN_SIZE + pieceDto.getColumn()] = pieceDto.getNotation();
         }
 
