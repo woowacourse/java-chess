@@ -7,8 +7,7 @@ import java.util.Map;
 public class Pawn extends Piece {
     private boolean started;
 
-    public Pawn(final String team) {
-        super(team);
+    public Pawn() {
         started = false;
     }
 

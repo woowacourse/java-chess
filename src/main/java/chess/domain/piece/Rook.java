@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
-    public Rook(final String team) {
-        super(team);
+    public Rook() {
     }
 
     @Override

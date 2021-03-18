@@ -6,10 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
-    private final String team;
-
-    public Piece(final String team) {
-        this.team = team;
+    public Piece() {
     }
 
     public abstract boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard);
@@ -42,9 +39,5 @@ public abstract class Piece {
             }
         }
         return true;
-    }
-
-    public final String getTeam() {
-        return team;
     }
 }

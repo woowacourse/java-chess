@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Bishop extends Piece {
-    public Bishop(final String team) {
-        super(team);
+    public Bishop() {
+        super();
     }
 
     @Override

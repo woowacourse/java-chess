@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Queen extends Piece {
-    public Queen(final String team) {
-        super(team);
+    public Queen() {
     }
 
     @Override

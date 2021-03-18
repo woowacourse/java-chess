@@ -5,8 +5,7 @@ import chess.domain.Position;
 import java.util.Map;
 
 public class Knight extends Piece {
-    public Knight(final String team) {
-        super(team);
+    public Knight() {
     }
 
     @Override
