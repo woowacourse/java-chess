@@ -12,6 +12,11 @@ import java.util.Map;
 public class BoardFactory {
     private final Map<Team, List<Piece>> board = new HashMap<>();
 
+    public Board getBoard() {
+        initSetting();
+        return new Board(board);
+    }
+
     private void initSetting() {
         List<Piece> black = new ArrayList<>();
         List<Piece> white = new ArrayList<>();

@@ -12,13 +12,13 @@
 - [x] COL (열) `->` ENUM
   - [x] 1 -> 8 를 7 -> 0 으로 치환
   
-- [ ] BoardFactory
-  - [ ] Board 를 생성해준다.
+- [x] BoardFactory
+  - [x] Board 를 생성해준다.
     - [x] `Map<Team, List<Piece>>`를 생성한다.
       - [x] 타입별로 초기 ROW 좌표를 정해주며 Piece 를 생성한다.
 
 - [ ] Board
-  - [ ] 각 팀별 `piece` 리스트를 가진다. `Map<Team, List<Piece>>`  (상태)
+  - [x] 각 팀별 `piece` 리스트를 가진다. `Map<Team, List<Piece>>`  (상태)
   - [ ] `말(piece)`을 움직이는것을 요청한다.
     - [ ] `이동하려는 말의 좌표`와 `목적지 좌표`와 `목적지 좌표로 움직이는 유저의 팀`을 전해받는다. `(startPoint, endPoint, team)`
       - [ ] 유저가 자기의 말을 움직이려고 하는게 맞는지 확인한다.
