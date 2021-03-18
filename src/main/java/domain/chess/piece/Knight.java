@@ -27,7 +27,9 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position end) {
+    public boolean canMove(Piece[][] board, Position endPosition) {
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
+
         List<Position> movePositions = Arrays.asList(
                 Position.Of(-2, -1),
                 Position.Of(-1, -2),
@@ -43,7 +45,7 @@ public class Knight extends Piece {
 
         return movePositions.stream()
                 .filter(movePosition ->
-                        x + movePosition.getRow() == end.getRow() && y + movePosition.getColumn() == end.getColumn())
+                        x + movePosition.getRow() == endPosition.getRow() && y + movePosition.getColumn() == endPosition.getColumn())
                 .findAny()
                 .isPresent();
     }
