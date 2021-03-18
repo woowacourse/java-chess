@@ -68,4 +68,9 @@ public class Position {
         return Position.of(Horizontal.findFromWeight(getHorizontalWeight() + direction.getX()),
                 Vertical.findFromWeight(getVerticalWeight() + direction.getY()));
     }
+
+    public boolean isDeadLine() {
+        Vertical vertical = getVertical();
+        return vertical == Vertical.ONE || vertical == Vertical.EIGHT;
+    }
 }

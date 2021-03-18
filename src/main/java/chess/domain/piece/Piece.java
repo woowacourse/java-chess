@@ -37,7 +37,7 @@ public abstract class Piece {
 
     public abstract List<Position> searchMovablePositions(Position target);
 
-    public boolean isSameTeam(Piece piece){
+    public boolean isSameTeam(Piece piece) {
         return team.equals(piece.getTeam());
     }
 

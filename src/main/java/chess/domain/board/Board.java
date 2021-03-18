@@ -26,14 +26,17 @@ public class Board {
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
         checkMovable(targetMovablePositions, destination);
         if (targetPiece.canMove(target, destination, this)) {
-            movePieceToPosition(destination, targetPiece);
+            movePieceToPosition(targetPiece, destination);
             clearPosition(target);
             return true;
         }
         return false;
     }
 
-    private void movePieceToPosition(Position destination, Piece targetPiece) {
+    private void movePieceToPosition(Piece targetPiece, Position destination) {
+        if (targetPiece instanceof Pawn && destination.isDeadLine()) {
+            targetPiece = new Queen(targetPiece.getTeam());
+        }
         board.put(destination, targetPiece);
     }
 
