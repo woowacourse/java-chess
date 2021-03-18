@@ -48,7 +48,7 @@ public class Board {
 
     private void moveCurrentPiece(Player player, Position target, Piece piece) {
         if (player.isOwnerOf(piece)) {
-            Path path = Path.of(piece, coordinates);
+            Path path = Path.of(piece, this);
             if (piece.canMove(this) && path.isAble(target)) {
                 putPiece(piece, target);
             }
@@ -57,5 +57,9 @@ public class Board {
 
     public Path calculatePath(Piece piece) {
         return Path.of(piece, coordinates);
+    }
+
+    public boolean isEmpty(Position position) {
+        return coordinates.containsValue(position);
     }
 }

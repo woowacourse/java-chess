@@ -29,4 +29,8 @@ public enum Row {
     public Row move(Direction direction) {
         return getRow(String.valueOf(Integer.parseInt(number) + direction.getCoordinates().get(1)));
     }
+
+    public int getValue(){
+        return Integer.parseInt(number);
+    }
 }
