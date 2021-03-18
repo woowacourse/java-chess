@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class BoardTest {
@@ -67,4 +68,21 @@ public class BoardTest {
         assertThat(pieces[value][6]).isNull();
         assertThat(pieces[value][7]).isNull();
     }
+
+    @DisplayName("두 왕이 모두 살아있는 지 확인")
+    @Test
+    void checkBothKingsAlive() {
+        Board board = new Board();
+        assertTrue(board.hasBothKings());
+    }
+
+    //TODO: 왕이 사망하셨을 때도 확인할 것
+
+//    @DisplayName("유저로부터 입력받은 대로 기물 이동 확인")
+//    @Test
+//    void movePiece() {
+//        Board board = new Board();
+//        board.movePiece(Point.of("a1"), Point.of("b2"), "BLACK");
+//
+//    }
 }

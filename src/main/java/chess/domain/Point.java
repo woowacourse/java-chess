@@ -2,7 +2,6 @@ package chess.domain;
 
 import chess.view.InputView;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -26,7 +25,6 @@ public class Point {
                                 .mapToObj(column -> new Point(row, column))
                 )
                 .collect(Collectors.toList());
-        ;
     }
 
     private final int x;
@@ -37,7 +35,11 @@ public class Point {
         y = convertRankToIndex(rank);
     }
 
-    public static Point of(char letter, int rank) {
+    public static Point of(String point) {
+        return of(point.charAt(0), Character.getNumericValue(point.charAt(1)));
+    }
+
+    private static Point of(char letter, int rank) {
         return points.stream()
                 .filter(p -> p.x == p.convertLetterToIndex(letter) && p.y == p.convertRankToIndex(rank))
                 .findFirst()
@@ -57,6 +59,14 @@ public class Point {
 
     private int convertRankToIndex(int rank) {
         return RANK_GAP - rank;
+    }
+
+    public int getX() {
+        return this.x;
+    }
+
+    public int getY() {
+        return this.y;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 
 public class OutputView {
@@ -17,13 +18,14 @@ public class OutputView {
         System.out.println(START_INPUT_GUIDE_MESSAGE);
     }
 
-    public static void printBoard(Board board) {
-        Piece[][] pieces = board.getBoard();
+    public static void printBoard(ChessGame chessGame) {
+        Piece[][] pieces = chessGame.getBoard();
         for (int i = 0; i < 8; i++) {
             StringBuilder oneLine = new StringBuilder();
             makeOneLine(pieces, i, oneLine);
             System.out.println(oneLine.toString());
         }
+        System.out.println();
     }
 
     private static void makeOneLine(Piece[][] pieces, int i, StringBuilder oneLine) {

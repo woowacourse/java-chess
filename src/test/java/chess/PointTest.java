@@ -3,6 +3,8 @@ package chess;
 import chess.domain.Point;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -12,20 +14,18 @@ class PointTest {
     @Test
     void create() {
         assertDoesNotThrow(
-                () -> Point.of('a', 8)
+                () -> Point.of("a8")
         );
         assertDoesNotThrow(
-                () -> Point.of('h', 1)
+                () -> Point.of("h1")
         );
     }
 
     @DisplayName("범위 밖 좌표 생성 시 예외 처리")
-    @Test
-    void checkIndexOutOfRange() {
-        assertThatThrownBy(() -> Point.of('i', 0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.of('i', 8)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.of('h', 0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.of('h', 9)).isInstanceOf(IllegalArgumentException.class);
+    @ParameterizedTest
+    @ValueSource(strings = {"i0", "i8", "h0", "h9"})
+    void checkIndexOutOfRange(String value) {
+        assertThatThrownBy(() -> Point.of(value)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("인덱스로 좌표 생성")
