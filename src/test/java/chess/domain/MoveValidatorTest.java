@@ -56,7 +56,7 @@ class MoveValidatorTest {
 
     @Test
     void validateMoveRange() {
-        assertThatThrownBy(() -> MoveValidator.validateMoveRange(3,1))
+        assertThatThrownBy(() -> MoveValidator.validateMoveRange(3, 1))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("이동할 수 있는 거리");
     }
