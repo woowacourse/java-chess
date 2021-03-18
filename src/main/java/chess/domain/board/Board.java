@@ -1,8 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
+import java.util.Collections;
 import java.util.Map;
 
 public class Board {
@@ -12,8 +12,11 @@ public class Board {
         this.board = board;
     }
 
-    public Piece findByPosition(Position position) {
-       return this.board.get(position).getPiece();
+    public Square findByPosition(Position position) {
+       return this.board.get(position);
     }
 
+    public Map<Position, Square> board() {
+        return Collections.unmodifiableMap(board);
+    }
 }
