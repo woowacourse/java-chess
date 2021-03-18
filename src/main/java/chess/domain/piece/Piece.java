@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
-import chess.domain.Column;
 import chess.domain.Position;
-import chess.domain.Row;
 import java.util.List;
 
 public abstract class Piece {
@@ -17,14 +15,6 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public boolean isSameColor(Piece piece) {
-        return this.getColor().equals(piece.getColor());
-    }
-
-    public void move(Position position) {
-        this.position = position;
-    }
-
     public String getName() {
         return type.nameByColor(color);
     }
@@ -33,29 +23,41 @@ public abstract class Piece {
         return color;
     }
 
-    public boolean isBlank() {
-        return type == Type.BLANK;
-    }
-
-    public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
-
-    public boolean isBlack() {
-        return color.isBlack();
-    }
-
-    public boolean isWhite() {
-        return color.isWhite();
-    }
-
-    public boolean isInBound(int number) {
-        return number < 8 && number >= 0;
+    public Type getType() {
+        return type;
     }
 
     public Position getPosition() {
         return position;
     }
 
+    public void move(Position position) {
+        this.position = position;
+    }
+
+    public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
+
+    public boolean isSameColor(Piece piece) {
+        return this.getColor().equals(piece.getColor());
+    }
+
+    public boolean isSameColor(Color color) {
+        return this.getColor().equals(color);
+    }
+
+    public boolean isBlank() {
+        return type == Type.BLANK;
+    }
+
+    public boolean isBlack() {
+        return color.isBlack();
+    }
+
     public boolean isKing() {
         return type.equals(Type.KING);
+    }
+
+    public boolean isPawn() {
+        return type.equals(Type.PAWN);
     }
 }
