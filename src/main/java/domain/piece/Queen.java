@@ -4,7 +4,7 @@ import domain.position.Position;
 
 import java.util.List;
 
-public class Queen extends Division{
+public class Queen extends Division {
     public Queen(Color color, Position position) {
         super(color, "q", position);
     }
@@ -12,27 +12,22 @@ public class Queen extends Division{
     @Override
     public void move(Position to, Pieces pieces) {
         if (position.isOrthogonal(to)) {
-            List<Position> positions = position.getBetween(to);
-            for (Piece piece : pieces.toList()) {
-                if (positions.contains(piece.getPosition())) {
-                    throw new IllegalArgumentException();
-                }
-            }
+            validateNoneBetween(to, pieces);
             position = to;
             return;
         }
-
         if (position.isDiagonal(to)) {
-            List<Position> positions = position.getBetween(to);
-            for (Piece piece : pieces.toList()) {
-                if (positions.contains(piece.getPosition())) {
-                    throw new IllegalArgumentException();
-                }
-            }
+            validateNoneBetween(to, pieces);
             position = to;
         }
+    }
 
-
+    private void validateNoneBetween(Position to, Pieces pieces) {
+        List<Position> positions = position.getBetween(to);
+        if (positions.stream()
+                     .anyMatch(pieces::hasPieceOf)) {
+            throw new IllegalArgumentException();
+        }
     }
 
     @Override
