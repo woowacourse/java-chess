@@ -16,6 +16,8 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
+        System.out.println();
+
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {
                 Position position = new Position(column, row);
@@ -27,5 +29,7 @@ public class OutputView {
         Arrays.stream(Column.values())
                 .map(column -> column.name().toLowerCase(Locale.ROOT))
                 .forEach(System.out::print);
+
+        System.out.println();
     }
 }

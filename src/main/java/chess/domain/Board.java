@@ -21,7 +21,15 @@ public class Board {
 
     public void move(Position from, Position to, Side playerSide) {
         Piece piece = board.get(from);
+
+        // 내 기물인지
+        if (!piece.isSideEqualTo(playerSide)) {
+            throw new InvalidMovementException("자신의 기물만 움직일 수 있습니다.");
+        }
+
+        // 이동 경로 구하기
         checkRoute(piece.route(from, to));
+
         // to에 내 기물 있는지
         if (board.get(to).isSideEqualTo(playerSide)) {
             throw new InvalidMovementException("이동하려는 위치에 자신의 기물이 존재합니다.");
