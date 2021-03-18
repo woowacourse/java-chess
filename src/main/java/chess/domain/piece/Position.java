@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 public class Position {
-
     private final int row;
     private final int column;
 
@@ -11,6 +10,10 @@ public class Position {
     }
 
     public double calculateGradient(Position position) {
+        if (column == position.column) {
+            throw new ArithmeticException("컬럼이 동일하면 기울기를 구할 수 없습니다.");
+        }
+
         return (position.row - row) / (double) (position.column - column);
     }
 
