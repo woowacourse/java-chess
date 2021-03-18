@@ -8,6 +8,7 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
+    private static boolean isBlack = false;
 
     public void runChess() {
         OutputView.printStartGameMessage();
@@ -21,7 +22,6 @@ public class ChessController {
 
     private void proceedMain(final Board board) {
         try {
-            OutputView.printCurrentBoard(board.unwrap());
             proceed(board);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
@@ -30,6 +30,7 @@ public class ChessController {
     }
 
     private void proceed(final Board board) {
+        OutputView.printCurrentBoard(board.unwrap());
         final List<String> runtimeCommands = InputView.inputRuntimeCommand();
 
         if (InputView.END_COMMAND.equals(runtimeCommands.get(0))) {
@@ -38,7 +39,12 @@ public class ChessController {
 
         final Position start = getPositionByCommands(runtimeCommands.get(1).split(""));
         final Position end = getPositionByCommands(runtimeCommands.get(2).split(""));
-        board.move(start, end);
+        board.move(start, end, isBlack);
+
+        if (board.isKingDead()) {
+            return;
+        }
+        isBlack = !isBlack;
         proceed(board);
     }
 

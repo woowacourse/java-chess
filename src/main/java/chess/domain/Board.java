@@ -20,7 +20,8 @@ public class Board {
         return chessBoard;
     }
 
-    public void move(final Position source, final Position target) {
+    public void move(final Position source, final Position target, final boolean isBlack) {
+        validateRightTurn(source, isBlack);
         if (checkPath(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
