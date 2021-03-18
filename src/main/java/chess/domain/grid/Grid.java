@@ -84,9 +84,11 @@ public class Grid {
     private double calculatePawnCountInSameColumn(final boolean isBlack, final int i) {
         double result = 0;
         char x = (char) (MIN_X_POSITION + i);
-        int pawnCountInSameColumn = (int) lines.stream().map(line -> line.findPiece(x))
-                .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
-                .count();
+        int pawnCountInSameColumn =
+                (int) lines.stream()
+                        .map(line -> line.findPiece(x))
+                        .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
+                        .count();
         if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
             result += pawnCountInSameColumn;
         }

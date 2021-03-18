@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.controller.ChessGame;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -61,7 +62,7 @@ public abstract class Piece {
     }
 
     private void validateSourcePiece() {
-        if (isEmpty()) {   // TODO: + 자신의 말 색깔일때
+        if (isEmpty() || ChessGame.isBlackTurn() != isBlack()) {   // TODO: + 자신의 말 색깔일때
             throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
         }
     }
