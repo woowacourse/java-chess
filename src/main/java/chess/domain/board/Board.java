@@ -10,11 +10,11 @@ import java.util.Map;
 public class Board {
     private final Map<Team, List<Piece>> board;
 
-    public Board(Map<Team, List<Piece>> board) {
+    public Board(final Map<Team, List<Piece>> board) {
         this.board = new HashMap<>(board);
     }
 
-    public Map<Team, List<Piece>> getBoard() {
+    public Map<Team, List<Piece>> toMap() {
         return new HashMap<>(board);
     }
 }

@@ -68,3 +68,12 @@
     - [ ] bishop
     - [ ] queen
     - [ ] king
+  
+---
+
+- [ ] View
+  - [ ] InputView
+  - [ ] OutputView
+  
+- [ ] ChessGameController
+- [ ] ChessGame
