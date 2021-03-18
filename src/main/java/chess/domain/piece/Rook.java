@@ -13,12 +13,22 @@ public class Rook extends Piece {
     }
 
     @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        return rowDifference == 0 || columnDifference == 0;
+    }
+
+    @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Position.getRoute(from, to);
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        return rowDifference == 0 || columnDifference == 0;
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

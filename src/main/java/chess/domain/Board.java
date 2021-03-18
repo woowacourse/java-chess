@@ -1,64 +1,60 @@
 package chess.domain;
 
-import chess.domain.piece.*;
-import chess.domain.position.Column;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
+import chess.exception.InvalidMovementException;
 
-import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 public class Board {
-    private static final Map<Column, Function<Side, Piece>> BASE_MAP = new HashMap<>();
-
     private final Map<Position, Piece> board;
 
-    public Board() {
-        this.board = initializeBoard();
+    public Board(Map<Position, Piece> board) {
+        this.board = board;
     }
 
-    static {
-        BASE_MAP.put(Column.A, Rook::new);
-        BASE_MAP.put(Column.B, Knight::new);
-        BASE_MAP.put(Column.C, Bishop::new);
-        BASE_MAP.put(Column.D, Queen::new);
-        BASE_MAP.put(Column.E, King::new);
-        BASE_MAP.put(Column.F, Bishop::new);
-        BASE_MAP.put(Column.G, Knight::new);
-        BASE_MAP.put(Column.H, Rook::new);
+    public static Board getGamingBoard() {
+        return new Board(BoardInitializer.init());
     }
 
-    private Map<Position, Piece> initializeBoard() {
-        Map<Position, Piece> result = new HashMap<>();
-
-        setBase(result, Side.WHITE, Row.FIRST);
-        setPawn(result, Side.WHITE, Row.SECOND);
-        setBlank(result, Row.THIRD);
-        setBlank(result, Row.FOURTH);
-        setBlank(result, Row.FIFTH);
-        setBlank(result, Row.SIXTH);
-        setPawn(result, Side.BLACK, Row.SEVENTH);
-        setBase(result, Side.BLACK, Row.EIGHTH);
-        return result;
-    }
-
-    private void setBase(Map<Position, Piece> result, Side side, Row row) {
-        for (Column column : Column.values()) {
-            result.put(new Position(column, row), BASE_MAP.get(column).apply(side));
+    public void move(Position from, Position to, Side playerSide) {
+        Piece piece = board.get(from);
+        checkRoute(piece.route(from, to));
+        // to에 내 기물 있는지
+        if (board.get(to).isSideEqualTo(playerSide)) {
+            throw new InvalidMovementException("이동하려는 위치에 자신의 기물이 존재합니다.");
         }
+
+        // 폰: 대각선이면 상대 기물있어야 함, 직선이면 블랭크여야 함
+        if (piece.isPawn()) {
+            if (Math.abs(Position.differenceOfRow(from, to)) == Math.abs(Position.differenceOfColumn(from, to))) {
+                if (board.get(to).isBlank()) {
+                    throw new InvalidMovementException("이동하려는 위치에 상대 기물이 존재하지 않습니.");
+                }
+            }
+            if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
+                if (!board.get(to).isBlank()) {
+                    throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
+                }
+            }
+        }
+
+        board.put(to, piece);
+        board.put(from, new Blank()); // todo Blank 캐싱
+        piece.moved();
     }
 
-    private void setPawn(Map<Position, Piece> result, Side side, Row row) {
-        for (Column column : Column.values()) {
-            result.put(new Position(column, row), new Pawn(side));
-        }
-    }
-
-    private void setBlank(Map<Position, Piece> result, Row row) {
-        for (Column column : Column.values()) {
-            result.put(new Position(column, row), new Blank());
-        }
+    private void checkRoute(List<Position> route) {
+        route.stream()
+                .map(board::get)
+                .map(Piece::isBlank)
+                .filter(isBlank -> !isBlank)
+                .findAny()
+                .ifPresent(isBlank -> {
+                    throw new InvalidMovementException("이동경로에 다른 기물이 존재합니다.");
+                });
     }
 
     public String getInitial(Position position) {

@@ -33,6 +33,14 @@ public abstract class Piece {
         throw new InvalidMovementException("해당 기물의 이동 룰에 어긋납니다.");
     }
 
+    protected abstract boolean movable(int rowDifference, int columnDifference);
+
+    protected abstract List<Position> getRoute(Position from, Position to);
+
+    public abstract boolean isBlank();
+
+    public abstract boolean isPawn();
+
     public void moved() {
         initPosition = false;
     }
@@ -40,10 +48,6 @@ public abstract class Piece {
     protected boolean isInitPosition() {
         return initPosition;
     }
-
-    protected abstract List<Position> getRoute(Position from, Position to);
-
-    protected abstract boolean movable(int rowDifference, int columnDifference);
 
     public boolean isSideEqualTo(Side side) {
         return this.side == side;

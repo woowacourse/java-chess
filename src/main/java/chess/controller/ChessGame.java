@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.BoardInitializer;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -9,7 +10,7 @@ public class ChessGame {
         OutputView.startGame();
         String command = InputView.command();
         if (command.equals("start")) {
-            Board board = new Board();
+            Board board = Board.getGamingBoard();
             OutputView.printBoard(board);
         }
     }

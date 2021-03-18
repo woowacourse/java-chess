@@ -14,12 +14,22 @@ public class King extends Piece {
     }
 
     @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == 1 || Math.abs(columnDifference) == 1;
+    }
+
+    @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Collections.emptyList();
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == 1 || Math.abs(columnDifference) == 1;
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

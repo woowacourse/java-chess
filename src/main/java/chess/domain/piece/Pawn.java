@@ -13,13 +13,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected List<Position> getRoute(Position from, Position to) {
-        return Position.getRoute(from, to);
-    }
-
-    @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-
+        // TODO 리팩터링
         if (isSideEqualTo(Side.BLACK)) {
             if (rowDifference == 1) {
                 if (Math.abs(columnDifference) < 2) {
@@ -43,5 +38,20 @@ public class Pawn extends Piece {
         }
 
         return false;
+    }
+
+    @Override
+    protected List<Position> getRoute(Position from, Position to) {
+        return Position.getRoute(from, to);
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

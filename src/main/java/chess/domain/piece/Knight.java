@@ -14,15 +14,25 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected List<Position> getRoute(Position from, Position to) {
-        return Collections.emptyList();
-    }
-
-    @Override
     protected boolean movable(int rowDifference, int columnDifference) {
         if (Math.abs(rowDifference) == 2 && Math.abs(columnDifference) == 1) {
             return true;
         }
         return Math.abs(rowDifference) == 1 && Math.abs(columnDifference) == 2;
+    }
+
+    @Override
+    protected List<Position> getRoute(Position from, Position to) {
+        return Collections.emptyList();
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

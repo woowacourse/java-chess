@@ -14,12 +14,22 @@ public class Blank extends Piece {
     }
 
     @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        throw new PieceDoesNotExistException();
+    }
+
+    @Override
     protected List<Position> getRoute(Position from, Position to) {
         throw new PieceDoesNotExistException();
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        throw new PieceDoesNotExistException();
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

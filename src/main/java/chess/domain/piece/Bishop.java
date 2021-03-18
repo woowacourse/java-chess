@@ -13,12 +13,22 @@ public class Bishop extends Piece {
     }
 
     @Override
+    protected boolean movable(int rowDifference, int columnDifference) {
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
+    }
+
+    @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Position.getRoute(from, to);
     }
 
     @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        return Math.abs(rowDifference) == Math.abs(columnDifference);
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }
