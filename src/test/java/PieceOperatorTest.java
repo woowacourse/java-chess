@@ -122,4 +122,45 @@ public class PieceOperatorTest {
             pieceOperator.move(Point.of("b1"), Point.of("b3"))
         ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
     }
+
+    @Test
+    @DisplayName("폰을 유효한 위치로 이동 테스트")
+    void pawnWithValidMove() {
+        pieceOperator.move(Point.of("b2"), Point.of("b3"));
+        assertThat(board.getState(Point.of("b3"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
+    }
+
+    @Test
+    @DisplayName("폰을 유효한 위치로 이동 테스트(첫 이동인 경우 2칸 허용)")
+    void pawnWithValidMoveWhenFirstMove() {
+        pieceOperator.move(Point.of("b2"), Point.of("b4"));
+        assertThat(board.getState(Point.of("b4"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
+    }
+
+    @Test
+    @DisplayName("폰을 유효한 위치로 이동 테스트(대각선에 적이 있는 경우에만 대각선 이동 허용)")
+    void pawnWithValidMoveWhenFindEnemy() {
+        board.move(Point.of("e7"), Point.of("e5"));
+        board.move(Point.of("d2"), Point.of("d4"));
+        pieceOperator.move(Point.of("d4"), Point.of("e5"));
+        assertThat(board.getState(Point.of("e5"))).isEqualTo(State.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getState(Point.of("d4"))).isEqualTo(State.of(Piece.EMPTY, Team.NONE));
+    }
+
+    @Test
+    @DisplayName("폰 이동 테스트(첫 이동 외에 2칸 이동을 시도한 경우 예외처리)")
+    void pawnMoveToInvalidPointWhenSecondMove() {
+        pieceOperator.move(Point.of("b2"), Point.of("b3"));
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("b3"), Point.of("b5"))
+        ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
+
+    @Test
+    @DisplayName("폰 이동 테스트(적이 없을 때 대각선으로 이동하려는 경우 예외처리)")
+    void pawnMoveToInvalidPoint() {
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("b2"), Point.of("c3"))
+        ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
 }

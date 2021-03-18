@@ -1,6 +1,6 @@
 package chess.board;
 
-import chess.piece.Direction;
+import chess.piece.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,8 +46,12 @@ public class Point {
         return new ArrayList<>(POINT_POOL.values());
     }
 
-    public Point opposite() {
+    public Point yAxisOpposite() {
         return Point.of(this.x.getXCoordinate() + this.y.opposite().getYCoordinate());
+    }
+
+    public Point opposite() {
+        return Point.of(this.x.opposite().getXCoordinate() + this.y.opposite().getYCoordinate());
     }
 
     public boolean isRow(Row row) {
@@ -62,21 +66,21 @@ public class Point {
         return this.y.getYIndex() - source.y.getYIndex();
     }
 
-    public Point move(Direction direction) {
-        return Point.of(newerName(direction));
+    public Point move(Vector vector) {
+        return Point.of(newerName(vector));
     }
 
-    private String newerName(Direction direction) {
-        return Column.getByIndex(newerXIndex(direction)).getXCoordinate() +
-            Row.getByIndex(newerYIndex(direction)).getYCoordinate();
+    private String newerName(Vector vector) {
+        return Column.getByIndex(newerXIndex(vector)).getXCoordinate() +
+            Row.getByIndex(newerYIndex(vector)).getYCoordinate();
     }
 
-    private int newerYIndex(Direction direction) {
-        return y.getYIndex() + direction.getVertical();
+    private int newerYIndex(Vector vector) {
+        return y.getYIndex() + vector.getVertical();
     }
 
-    private int newerXIndex(Direction direction) {
-        return x.getXIndex() + direction.getHorizon();
+    private int newerXIndex(Vector vector) {
+        return x.getXIndex() + vector.getHorizon();
     }
 
 

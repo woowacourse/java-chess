@@ -3,5 +3,9 @@ package chess.board;
 public enum Team {
     WHITE,
     BLACK,
-    NONE
+    NONE;
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
 }

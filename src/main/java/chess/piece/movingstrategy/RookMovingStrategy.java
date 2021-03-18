@@ -1,27 +1,27 @@
 package chess.piece.movingstrategy;
 
 import chess.board.Point;
-import chess.piece.Direction;
+import chess.piece.Vector;
 import java.util.List;
 
 public class RookMovingStrategy implements MovingStrategy {
     static final int LENGTH = 7;
 
-    private final List<Direction> rooksDirection = Direction.axisDirection();
+    private final List<Vector> rooksVector = Vector.axisVectors();
 
     @Override
-    public Direction findMovableDirection(Point source, Point destination) {
+    public Vector findMovableVector(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
-        return rooksDirection.stream()
-            .filter(direction -> direction.isSameDirection(x, y))
+        return rooksVector.stream()
+            .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }
 
     @Override
-    public int getDirectionLength() {
+    public int getMoveLength() {
         return LENGTH;
     }
 }

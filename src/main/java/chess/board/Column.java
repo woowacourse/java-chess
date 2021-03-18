@@ -12,6 +12,8 @@ public enum Column {
     G("g", 6),
     H("h", 7);
 
+    private static final int MAX_COLUMN = 7;
+
     private final String xCoordinate;
     private final int index;
 
@@ -29,6 +31,10 @@ public enum Column {
 
     public String getXCoordinate() {
         return xCoordinate;
+    }
+
+    public Column opposite() {
+        return getByIndex(MAX_COLUMN - index);
     }
 
     public int getXIndex() {

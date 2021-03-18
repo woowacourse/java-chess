@@ -1,15 +1,11 @@
 package chess.piece.movingstrategy;
 
 import chess.board.Point;
-import chess.piece.Direction;
+import chess.piece.Vector;
 
 public interface MovingStrategy {
 
-    default Direction findMovableDirection(Point source, Point destination) {
-        return null;
-    }
+    Vector findMovableVector(Point source, Point destination);
 
-    default int getDirectionLength() {
-        return 0;
-    }
+    int getMoveLength();
 }

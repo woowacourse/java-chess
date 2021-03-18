@@ -1,28 +1,27 @@
 package chess.piece.movingstrategy;
 
 import chess.board.Point;
-import chess.piece.Direction;
+import chess.piece.Vector;
 import java.util.List;
 
 public class BishopMovingStrategy implements MovingStrategy {
     private static final int LENGTH = 7;
 
-    private final List<Direction> bishopDirection = Direction.diagonalDirection();
+    private final List<Vector> bishopVector = Vector.diagonalVectors();
 
     @Override
-    public Direction findMovableDirection(Point source, Point destination) {
+    public Vector findMovableVector(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
-
-        return bishopDirection.stream()
-            .filter(direction -> direction.isSameDirection(x, y))
+        return bishopVector.stream()
+            .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }
 
     @Override
-    public int getDirectionLength() {
+    public int getMoveLength() {
         return LENGTH;
     }
 }

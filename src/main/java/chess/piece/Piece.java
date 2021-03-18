@@ -25,11 +25,11 @@ public enum Piece {
         this.movingStrategy = movingStrategy;
     }
 
-    public Direction findMovableDirection(Point source, Point destination) {
-        return movingStrategy.findMovableDirection(source, destination);
+    public Vector findMovableVector(Point source, Point destination) {
+        return movingStrategy.findMovableVector(source, destination);
     }
 
-    public int getDirectionLength() {
-        return movingStrategy.getDirectionLength();
+    public int getMoveLength() {
+        return movingStrategy.getMoveLength();
     }
 }
