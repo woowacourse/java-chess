@@ -1,9 +1,13 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class PieceTest {
 
@@ -28,4 +32,37 @@ class PieceTest {
         assertThat(whitePiece.getNotation()).isEqualTo("r");
         assertThat(blackPiece.getNotation()).isEqualTo("R");
     }
+
+    @DisplayName("체스말이 움직이는 기능을 테스트한다")
+    @Test
+    void testMove() {
+        //given
+        Piece piece = Piece.createPawn(Color.BLACK, 1, 0);
+        Board board = new Board(Arrays.asList(
+                piece,
+                Piece.createPawn(Color.WHITE, 2, 1)));
+        Position target = new Position(2, 1);
+
+        //when
+        piece.move(target, board);
+
+        //then
+        assertThat(piece.getPosition()).isEqualTo(new Position(2, 1));
+    }
+
+    @DisplayName("체스말이 움직이는 기능을 테스트한다")
+    @Test
+    void testMoveIfNotMove() {
+        //given
+        Piece piece = Piece.createPawn(Color.BLACK, 1, 0);
+        Board board = new Board(Arrays.asList(
+                piece,
+                Piece.createPawn(Color.WHITE, 2, 2)));
+        Position target = new Position(2, 2);
+
+        //when //then
+        assertThatThrownBy(() -> piece.move(target, board))
+                .isExactlyInstanceOf(IllegalArgumentException.class);
+    }
+
 }
