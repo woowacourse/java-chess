@@ -59,14 +59,14 @@ public class BoardTest {
         Board board = new Board();
         Piece[][] pieces = board.getBoard();
 
-        assertThat(pieces[value][0]).isNull();
-        assertThat(pieces[value][1]).isNull();
-        assertThat(pieces[value][2]).isNull();
-        assertThat(pieces[value][3]).isNull();
-        assertThat(pieces[value][4]).isNull();
-        assertThat(pieces[value][5]).isNull();
-        assertThat(pieces[value][6]).isNull();
-        assertThat(pieces[value][7]).isNull();
+        assertThat(pieces[value][0]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][1]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][2]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][3]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][4]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][5]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][6]).isInstanceOf(Empty.class);
+        assertThat(pieces[value][7]).isInstanceOf(Empty.class);
     }
 
     @DisplayName("두 왕이 모두 살아있는 지 확인")

@@ -5,9 +5,10 @@ import chess.domain.Point;
 import java.util.Objects;
 
 public abstract class Piece {
+    public static final String IMPOSSIBLE_ROUTE_ERROR_MESSAGE = "기물이 이동할 수 없는 경로입니다.";
     protected final String name;
     protected final String color;
-    protected final Point point;
+    protected Point point;
 
     public Piece(String name, String color, Point point) {
         this.name = name;
@@ -15,12 +16,20 @@ public abstract class Piece {
         this.point = point;
     }
 
-//    protected abstract Point moveTo(Point target);
-//
-    protected abstract boolean isMovableRoute(Point target);
+    protected abstract boolean isMovableRoute(Piece target);
+
+    protected abstract Point moveOneStep(Point target);
 
     public boolean isSameColor(String currentColor) {
         return currentColor.equals(this.color);
+    }
+
+    public boolean isNotSameColor(String currentColor) {
+        return !currentColor.equals(this.color);
+    }
+
+    public void movePoint(Point target) {
+        this.point = target;
     }
 
     public String getName() {

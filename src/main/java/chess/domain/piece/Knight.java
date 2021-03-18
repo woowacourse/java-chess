@@ -8,7 +8,12 @@ public class Knight extends Piece {
     }
 
     @Override
-    protected boolean isMovableRoute(Point target) {
+    protected boolean isMovableRoute(Piece target) {
         return false;
+    }
+
+    @Override
+    protected Point moveOneStep(Point target) {
+        return null;
     }
 }

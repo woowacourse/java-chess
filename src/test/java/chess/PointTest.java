@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
@@ -46,5 +47,13 @@ class PointTest {
         assertThatThrownBy(() -> Point.valueOf(0, 8)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Point.valueOf(8, 0)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> Point.valueOf(8, 8)).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("위치 간 거리 계산 확인")
+    @Test
+    void calculateDistance() {
+        assertThat(Point.of("a1").calculateDistance(Point.of("a2"))).isEqualTo(1);
+        assertThat(Point.of("a1").calculateDistance(Point.of("b2"))).isEqualTo(2);
+        assertThat(Point.of("a1").calculateDistance(Point.of("h8"))).isEqualTo(98);
     }
 }

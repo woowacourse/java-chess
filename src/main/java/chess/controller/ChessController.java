@@ -20,6 +20,7 @@ public class ChessController {
                 Point source = Point.of(points.get(0));
                 Point target = Point.of(points.get(1));
                 chessGame.playTurn(source, target);
+                OutputView.printBoard(chessGame);
             }
         }
     }

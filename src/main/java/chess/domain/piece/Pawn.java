@@ -8,7 +8,19 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isMovableRoute(Point target) {
-        return false;
+    protected boolean isMovableRoute(Piece target) {
+        int distance = this.point.calculateDistance(target.point);
+        if (distance == 1 && target instanceof Empty) {
+            return true;
+        }
+        if (distance == 2 && !(target instanceof Empty)) {
+            return true;
+        }
+        throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+    }
+
+    @Override
+    protected Point moveOneStep(Point target) {
+        return target;
     }
 }

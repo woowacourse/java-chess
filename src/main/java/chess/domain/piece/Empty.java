@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
-public class Queen extends Piece {
-    public Queen(String name, String color, Point point) {
+public class Empty extends Piece{
+    public Empty(String name, String color, Point point) {
         super(name, color, point);
     }
 

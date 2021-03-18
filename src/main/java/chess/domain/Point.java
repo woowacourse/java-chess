@@ -82,4 +82,8 @@ public class Point {
     public int hashCode() {
         return Objects.hash(x, y);
     }
+
+    public int calculateDistance(Point point) {
+        return ((int) Math.pow(this.x - point.getX(),2) + (int) Math.pow(this.y - point.getY(), 2));
+    }
 }

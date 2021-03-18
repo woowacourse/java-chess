@@ -16,13 +16,7 @@ public enum Pieces {
             if (row == 7) {
                 return new Rook("r", "WHITE", Point.valueOf(row, column));
             }
-            if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(row, column));
-            }
-            if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(row, column));
-            }
-            return null;
+            return createDefaultPieces(row, column);
         }
     },
     KNIGHT(Arrays.asList(1, 6)) {
@@ -34,13 +28,7 @@ public enum Pieces {
             if (row == 7) {
                 return new Knight("n", "WHITE", Point.valueOf(row, column));
             }
-            if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(row, column));
-            }
-            if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(row, column));
-            }
-            return null;
+            return createDefaultPieces(row, column);
         }
     },
     BISHOP(Arrays.asList(2, 5)) {
@@ -52,13 +40,7 @@ public enum Pieces {
             if (row == 7) {
                 return new Bishop("b", "WHITE", Point.valueOf(row, column));
             }
-            if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(row, column));
-            }
-            if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(row, column));
-            }
-            return null;
+            return createDefaultPieces(row, column);
         }
     },
     QUEEN(Collections.singletonList(3)) {
@@ -70,13 +52,7 @@ public enum Pieces {
             if (row == 7) {
                 return new Queen("q", "WHITE", Point.valueOf(row, column));
             }
-            if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(row, column));
-            }
-            if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(row, column));
-            }
-            return null;
+            return createDefaultPieces(row, column);
         }
     },
     KING(Collections.singletonList(4)) {
@@ -88,15 +64,19 @@ public enum Pieces {
             if (row == 7) {
                 return new King("k", "WHITE", Point.valueOf(row, column));
             }
-            if (row == 1) {
-                return new Pawn("P", "BLACK", Point.valueOf(row, column));
-            }
-            if (row == 6) {
-                return new Pawn("p", "WHITE", Point.valueOf(row, column));
-            }
-            return null;
+            return createDefaultPieces(row, column);
         }
     };
+
+    private static Piece createDefaultPieces(int row, int column) {
+        if (row == 1) {
+            return new Pawn("P", "BLACK", Point.valueOf(row, column));
+        }
+        if (row == 6) {
+            return new Pawn("p", "WHITE", Point.valueOf(row, column));
+        }
+        return new Empty(".", null, Point.valueOf(row, column));
+    }
 
     private final List<Integer> column;
 
@@ -112,7 +92,7 @@ public enum Pieces {
         return Arrays.stream(Pieces.values())
                 .filter(piece -> piece.column.contains(column))
                 .findFirst()
-                .get();
+                .orElseThrow(RuntimeException::new);
     }
 
     public abstract Piece create(int row, int column);
