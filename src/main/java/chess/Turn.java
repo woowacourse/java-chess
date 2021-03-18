@@ -3,6 +3,7 @@ package chess;
 import chess.board.Team;
 
 public class Turn {
+
     private boolean white;
 
     public Turn() {

@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class TurnTest {
+
     @Test
     @DisplayName("현재 팀을 반환하는지 테스트")
     void nextTurn() {

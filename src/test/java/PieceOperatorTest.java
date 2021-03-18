@@ -1,8 +1,8 @@
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.board.Board;
 import chess.PieceOperator;
+import chess.board.Board;
 import chess.board.Point;
 import chess.board.State;
 import chess.board.Team;
@@ -86,9 +86,9 @@ public class PieceOperatorTest {
     @Test
     @DisplayName("비숍 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void bishopMoveToInvalidPoint() {
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("c1"), Point.of("c4"), Team.WHITE)
-            ).withMessage("불가능한 이동입니다.");
+        ).withMessage("불가능한 이동입니다.");
     }
 
     @Test
@@ -103,7 +103,7 @@ public class PieceOperatorTest {
     @DisplayName("룩 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void rookMoveToInvalidPoint() {
         board.move(Point.of("b2"), Point.of("b3"));
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("a1"), Point.of("f6"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
     }
@@ -118,7 +118,7 @@ public class PieceOperatorTest {
     @Test
     @DisplayName("나이트 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void knightMoveToInvalidPoint() {
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("b1"), Point.of("b3"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
     }
@@ -151,7 +151,7 @@ public class PieceOperatorTest {
     @DisplayName("폰 이동 테스트(첫 이동 외에 2칸 이동을 시도한 경우 예외처리)")
     void pawnMoveToInvalidPointWhenSecondMove() {
         pieceOperator.move(Point.of("b2"), Point.of("b3"), Team.WHITE);
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("b3"), Point.of("b5"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
     }
@@ -159,7 +159,7 @@ public class PieceOperatorTest {
     @Test
     @DisplayName("폰 이동 테스트(적이 없을 때 대각선으로 이동하려는 경우 예외처리)")
     void pawnMoveToInvalidPoint() {
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("b2"), Point.of("c3"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
     }
@@ -167,7 +167,7 @@ public class PieceOperatorTest {
     @Test
     @DisplayName("빈 공간을 이동하려는 경우 예외 처리")
     void moveEmptyPoint() {
-        assertThatIllegalArgumentException().isThrownBy(()->
+        assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("c3"), Point.of("c4"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
     }

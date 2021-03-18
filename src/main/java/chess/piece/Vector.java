@@ -13,16 +13,16 @@ public enum Vector {
     SOUTHEAST(1, -1),
     SOUTHWEST(-1, -1),
 
-    FIRST_PAWN_MOVE(0,2),
+    FIRST_PAWN_MOVE(0, 2),
 
-    NNE(1,2),
-    NEE(2,1),
-    SEE(2,-1),
-    SSE(1,-2),
-    SSW(-1,-2),
-    SWW(-2,-1),
+    NNE(1, 2),
+    NEE(2, 1),
+    SEE(2, -1),
+    SSE(1, -2),
+    SSW(-1, -2),
+    SWW(-2, -1),
     NWW(-2, 1),
-    NNW(-1,2);
+    NNW(-1, 2);
 
     private final int horizon;
     private final int vertical;
@@ -48,16 +48,24 @@ public enum Vector {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
     }
 
+    public static List<Vector> knightVectors() {
+        return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+    }
+
+    public static Vector get(int horizon, int vertical) {
+        return Arrays.stream(Vector.values())
+            .filter(vector -> (vector.horizon == horizon)
+                && (vector.vertical == vertical))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
     public boolean isWhiteDiagonalVector() {
         return this == NORTHEAST || this == NORTHWEST;
     }
 
     public boolean isBlackDiagonalVector() {
         return this == SOUTHEAST || this == SOUTHWEST;
-    }
-
-    public static List<Vector> knightVectors() {
-        return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
     public boolean isSameDirection(int horizon, int vertical) {
@@ -73,14 +81,6 @@ public enum Vector {
 
     public Vector opposite() {
         return get((-1) * horizon, (-1) * vertical);
-    }
-
-    public static Vector get(int horizon, int vertical) {
-        return Arrays.stream(Vector.values())
-            .filter(vector -> (vector.horizon == horizon)
-                && (vector.vertical == vertical))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
     }
 
     public int getHorizon() {

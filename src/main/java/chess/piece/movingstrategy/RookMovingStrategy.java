@@ -5,6 +5,7 @@ import chess.piece.Vector;
 import java.util.List;
 
 public class RookMovingStrategy implements MovingStrategy {
+
     static final int LENGTH = 7;
 
     private final List<Vector> rooksVector = Vector.axisVectors();

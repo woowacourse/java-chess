@@ -5,6 +5,7 @@ import chess.piece.Vector;
 import java.util.List;
 
 public class KnightMovingStrategy implements MovingStrategy {
+
     private static final int LENGTH = 1;
 
     private final List<Vector> kingsVector = Vector.knightVectors();

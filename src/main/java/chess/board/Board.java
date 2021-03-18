@@ -34,7 +34,7 @@ public class Board {
             || (sourceState.hasMovableVector(source, destination)
             && isValidSourceAndDestination(sourceState, destinationState)
             && isNotBlockedToGo(source, destination, sourceState)
-            );
+        );
     }
 
     private boolean isValidSourceAndDestination(State sourceState, State destinationState) {

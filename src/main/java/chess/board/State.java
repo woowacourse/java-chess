@@ -1,7 +1,7 @@
 package chess.board;
 
-import chess.piece.Vector;
 import chess.piece.Piece;
+import chess.piece.Vector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
