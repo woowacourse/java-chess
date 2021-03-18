@@ -25,13 +25,14 @@ public class InputView {
 
     public static List<String> moveOrStatus() {
         String input = SCANNER.nextLine();
-        if ("status".equals(input)) {
-            return Arrays.asList(input);
-        }
         List<String> splitInput = Arrays.asList(input.split(" "));
-        if ("move".equals(splitInput.get(0))) {
-            return splitInput;
+        validateStatusOrMove(splitInput.get(0));
+        return splitInput;
+    }
+
+    public static void validateStatusOrMove(String input) {
+        if (!"status".equals(input) && !"move".equals(input)) {
+            throw new IllegalArgumentException();
         }
-        throw new IllegalArgumentException();
     }
 }
