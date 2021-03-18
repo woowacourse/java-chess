@@ -48,6 +48,14 @@ public enum Vector {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
     }
 
+    public boolean isWhiteDiagonalVector() {
+        return this == NORTHEAST || this == NORTHWEST;
+    }
+
+    public boolean isBlackDiagonalVector() {
+        return this == SOUTHEAST || this == SOUTHWEST;
+    }
+
     public static List<Vector> knightVectors() {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
@@ -72,7 +80,7 @@ public enum Vector {
             .filter(vector -> (vector.horizon == horizon)
                 && (vector.vertical == vertical))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public int getHorizon() {

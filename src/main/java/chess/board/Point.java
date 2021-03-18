@@ -82,6 +82,4 @@ public class Point {
     private int newerXIndex(Vector vector) {
         return x.getXIndex() + vector.getHorizon();
     }
-
-
 }

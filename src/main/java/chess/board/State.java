@@ -84,4 +84,10 @@ public class State {
     public boolean isPawn() {
         return this.piece == Piece.PAWN;
     }
+
+    public boolean hasMovableVector(Point source, Point destination) {
+        Vector vector = this.findMovableVector(source, destination);
+
+        return vector != null;
+    }
 }
