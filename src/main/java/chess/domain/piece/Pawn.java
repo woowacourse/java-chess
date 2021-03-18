@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 
+import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
@@ -13,36 +14,38 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard){
-        if (!isMoved && (current.moveY(-1).equals(destination) || current.moveY(-2).equals(destination))) {
-            isMoved = true;
-            return true;
+        if (!checkPositionRule(current, destination)) {
+            return false;
         }
-        if (isMoved && current.moveY(-1).equals(destination)) {
-            return true;
+        if (current.checkDiagonalRule(destination)) {
+            return chessBoard.containsKey(destination);
         }
-        // 설마 대각선에 상대 기물이 있나?
-//        if (current.moveLeftDown().equals(destination) || current.moveRightDown().equals(destination)) {
-//            if (chessBoard.getChessBoard().get(destination).getTeam() == "White") {
-//                return true;
-//            }
-//        }
+        if (current.checkStraightRule(destination)) {
+            final List<Position> straightPath = current.generateStraightPath(destination);
+            return checkEmptyPath(straightPath, chessBoard) && !chessBoard.containsKey(destination);
+        }
         return false;
     }
 
     @Override
-    public boolean checkPositionRule(Position current, Position destination){
-
-        if (!isMoved && current.moveY(direction).equals(destination) || current.moveY(direction * 2).equals(destination)) {
-            return true;
+    public boolean checkPositionRule(final Position current, final Position destination){
+        if (isMoved) {
+            return checkPositionRuleAfterMove(current, destination);
         }
-
-        if (isMoved && current.moveY(direction).equals(destination)) {
-            return true;
-        }
-        if(current.checkDiagonalToDirection(destination, direction)) {
-            return true;
-        }
-        return false;
+        return checkPositionRuleFirstMove(current, destination);
     }
 
+    private boolean checkPositionRuleAfterMove(final Position current, final Position destination) {
+        if (current.moveY(direction).equals(destination)) {
+            return true;
+        }
+        return current.checkDiagonalToDirection(destination, direction);
+    }
+
+    private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
+        if (current.moveY(direction).equals(destination) || current.moveY(direction * 2).equals(destination)) {
+            return true;
+        }
+        return current.checkDiagonalToDirection(destination, direction);
+    }
 }
