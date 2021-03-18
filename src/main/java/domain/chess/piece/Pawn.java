@@ -41,12 +41,31 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Piece[][] board, Position endPosition) {
-        if (canForward(endPosition, 1)) return true;
-        if (canForward(endPosition, 2)) return true;
+        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
+
+        if (canForward(board, endPosition, 1)) return true;
+        if (canForward(board, endPosition, 2)) return true;
 
         if (catchDiagonal(board, endPosition, true)) return true;
         if (catchDiagonal(board, endPosition, false)) return true;
 
+        return false;
+    }
+
+    private boolean canForward(Piece[][] board, Position endPosition, int step) {
+        if (step == 2 && !PAWNS.contains(this)) {
+            return false;
+        }
+
+        if (!isBlack()) {
+            step = -step;
+        }
+
+
+        if (board[endPosition.getRow()][endPosition.getColumn()] == null
+                && isEqualsPosition(endPosition, step, 0)) {
+            return true;
+        }
         return false;
     }
 
@@ -61,22 +80,9 @@ public class Pawn extends Piece {
             colStep = -colStep;
         }
 
-        if (isEqualsPosition(endPosition, rowStep, colStep) && board[endPosition.getRow()][endPosition.getColumn()].isBlack() != isBlack()) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean canForward(Position endPosition, int step) {
-        if (step == 2 && !PAWNS.contains(this)) {
-            return false;
-        }
-
-        if (!isBlack()) {
-            step = -step;
-        }
-
-        if (isEqualsPosition(endPosition, step, 0)) {
+        if (isEqualsPosition(endPosition, rowStep, colStep)
+                && (board[endPosition.getRow()][endPosition.getColumn()] != null
+                && board[endPosition.getRow()][endPosition.getColumn()].isBlack() != isBlack())) {
             return true;
         }
         return false;
