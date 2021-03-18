@@ -19,7 +19,6 @@ public class Queen extends Piece {
             return checkEmptyPath(diagonalPath, chessBoard);
         }
         if (current.checkStraightRule(destination)) {
-            System.out.println("여기로 와야해");
             final List<Position> straightPath = current.generateStraightPath(destination);
             return checkEmptyPath(straightPath, chessBoard);
         }
