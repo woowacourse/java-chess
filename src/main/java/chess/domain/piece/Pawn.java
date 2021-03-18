@@ -20,11 +20,8 @@ public class Pawn extends Piece {
         if (current.checkDiagonalRule(destination)) {
             return chessBoard.containsKey(destination);
         }
-        if (current.checkStraightRule(destination)) {
-            final List<Position> straightPath = current.generateStraightPath(destination);
-            return checkEmptyPath(straightPath, chessBoard) && !chessBoard.containsKey(destination);
-        }
-        return false;
+        final List<Position> straightPath = current.generateStraightPath(destination);
+        return checkEmptyPath(straightPath, chessBoard) && !chessBoard.containsKey(destination);
     }
 
     @Override
