@@ -43,8 +43,8 @@ public class Line {
     public static Line createPawnLine(final int rowNumber, final boolean isBlack) {
         List<Piece> pawnLine = new ArrayList<>();
         for (int i = 0; i < LINE_COUNT; i++) {
-//            Pawn pawn = new Pawn(isBlack, (char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
-//            pawnLine.add(pawn);
+            Pawn pawn = new Pawn(isBlack, (char)(FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
+            pawnLine.add(pawn);
         }
         return new Line(pawnLine);
     }

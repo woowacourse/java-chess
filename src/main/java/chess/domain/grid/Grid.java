@@ -26,13 +26,13 @@ public class Grid {
 
     public void initialize() {
         lines = new ArrayList<>();
-        lines.add(Line.createGeneralLine(FIRST_ROW, false));
-        lines.add(Line.createPawnLine(SECOND_ROW, false));
+        lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
+        lines.add(Line.createPawnLine(SEVENTH_ROW, true));
         for (int i = THIRD_ROW; i <= SIXTH_ROW; i++) {
             lines.add(Line.createEmptyLine(i));
         }
-        lines.add(Line.createPawnLine(SEVENTH_ROW, true));
-        lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
+        lines.add(Line.createPawnLine(SECOND_ROW, false));
+        lines.add(Line.createGeneralLine(FIRST_ROW, false));
     }
 
     public void move(Position source, Position target) {

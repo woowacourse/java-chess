@@ -1,8 +1,6 @@
 package chess.view;
 
 import chess.domain.grid.Grid;
-import chess.domain.grid.Line;
-import chess.domain.piece.Piece;
 
 import java.util.stream.Collectors;
 
@@ -15,11 +13,13 @@ public class OutputView {
     }
 
     public static void printGridStatus(Grid grid) {
-        for (Line line : grid.getLines()) {
-            for (Piece piece : line.getPieces()) {
-                System.out.print(piece.getName());
-            }
-            System.out.println();
-        }
+        String gridStatus = grid.getLines()
+                .stream()
+                .map(line -> line.getPieces()
+                        .stream()
+                        .map(piece -> Character.toString(piece.getName()))
+                        .collect(Collectors.joining()))
+                .collect(Collectors.joining("\n"));
+        System.out.println(gridStatus);
     }
 }
