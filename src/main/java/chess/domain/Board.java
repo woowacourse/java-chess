@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Blank;
-import chess.domain.piece.Direction;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 
@@ -100,7 +97,9 @@ public class Board {
         return 0;
     }
 
-    public boolean checkDieKing() {
-        return false;
+    public boolean isKingDead() {
+        return chessBoard.values().stream()
+                .filter(piece -> piece instanceof King)
+                .count() != 2;
     }
 }
