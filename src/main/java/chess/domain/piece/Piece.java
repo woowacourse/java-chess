@@ -27,8 +27,8 @@ public abstract class Piece {
         return type.nameByColor(color);
     }
 
-    public String getColor() {
-        return color.toString();
+    public Color getColor() {
+        return color;
     }
 
     public boolean isBlank() {
@@ -37,26 +37,26 @@ public abstract class Piece {
 
     public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
 
-    protected boolean isMovable(ChessBoard chessBoard, Position nextPosition) {
+    public boolean isMovable(ChessBoard chessBoard, Position nextPosition) {
         return isInBound(nextPosition) && chessBoard.isBlank(nextPosition);
     }
 
-    protected boolean isAttackMove(ChessBoard chessBoard, Position nextPosition) {
+    public boolean isAttackMove(ChessBoard chessBoard, Position nextPosition) {
         return isInBound(nextPosition) && chessBoard.isAttackMove(this, nextPosition);
     }
 
-    protected boolean isBlack() {
-        return this.color.isBlack();
+    public boolean isBlack() {
+        return color.isBlack();
     }
 
-    protected boolean isWhite() {
-        return this.color.isWhite();
+    public boolean isWhite() {
+        return color.isWhite();
     }
 
-    protected boolean isInBound(Position currentPosition) {
+    public boolean isInBound(Position currentPosition) {
         return currentPosition.getRow() < 8
             && currentPosition.getRow() >= 0
-            && currentPosition.getCol() < 8
-            && currentPosition.getCol() >= 0;
+            && currentPosition.getColumn() < 8
+            && currentPosition.getColumn() >= 0;
     }
 }
