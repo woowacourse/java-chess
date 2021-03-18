@@ -22,7 +22,6 @@ public class Board {
     }
 
     public void move(final Position source, final Position target) {
-        // 위치가 가능한지 물어보는 기능
         if (checkPath(source,target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
@@ -57,7 +56,7 @@ public class Board {
                 .allMatch(path -> chessBoard.get(path).equals(new Blank()));
     }
 
-    public List<Position> updatePosition(final Position source, final Position target) {
+    private List<Position> updatePosition(final Position source, final Position target) {
         final List<Position> paths = new ArrayList<>();
         final Direction direction = source.decideDirection(target);
         Position nextPosition = source.next(direction);

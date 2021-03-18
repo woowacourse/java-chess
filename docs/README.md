@@ -16,5 +16,5 @@
 ## To-Do List
 - [ ] canMove 메소드 추상화
 - [x] position 빼는 방향 고정
-- [ ] 보드 테스트 정리
+- [x] 보드 테스트 추가
 - [x] NoThing exception 처리
