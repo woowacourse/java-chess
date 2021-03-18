@@ -46,11 +46,7 @@ public class Grid {
             validateGeneralSteps(sourcePiece, targetPiece);
         }
 
-        Position sourcePosition = sourcePiece.getPosition();
-        Position targetPosition = targetPiece.getPosition();
-
-        assignPiece(sourcePosition, new Empty(sourcePosition));
-        assignPiece(targetPosition, sourcePiece);
+        updatePiecePosition(sourcePiece, targetPiece);
     }
 
     public Piece findPiece(final Position position) {
@@ -80,7 +76,7 @@ public class Grid {
     private void validateGeneralSteps(Piece sourcePiece, Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(sourcePiece, direction, sourcePiece.getStepRange()));
+            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
         }
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
@@ -88,10 +84,10 @@ public class Grid {
     private void validatePawnSteps(Pawn sourcePiece, Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(sourcePiece, direction, sourcePiece.getStepRange()));
+            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
         }
         for (Direction direction : sourcePiece.getDirectionsOnTwoStep()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(sourcePiece, direction, sourcePiece.getTwoStepRange()));
+            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getTwoStepRange()));
         }
         movablePositions = movablePositions.stream()
                 .distinct()
@@ -101,14 +97,12 @@ public class Grid {
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
-    private List<Position> extractMovablePositionsByDirection(Piece sourcePiece, Direction direction, int stepRange) {
+    private List<Position> extractRoute(Piece sourcePiece, Direction direction, int stepRange) {
         List<Position> positions = new ArrayList<>();
         Position sourcePosition = sourcePiece.getPosition();
 
         for (int i = 1; i <= stepRange; i++) {
-            int xDegree = direction.getXDegree() * i;
-            int yDegree = direction.getYDegree() * i;
-            Position movedPosition = sourcePosition.stepOn(xDegree, yDegree);
+            Position movedPosition = sourcePosition.stepOn(direction.getXDegree() * i, direction.getYDegree() * i);
             if (!movedPosition.isInGridRange()) {
                 break;
             }
@@ -118,5 +112,13 @@ public class Grid {
             }
         }
         return positions;
+    }
+
+    private void updatePiecePosition(Piece sourcePiece, Piece targetPiece){
+        Position sourcePosition = sourcePiece.getPosition();
+        Position targetPosition = targetPiece.getPosition();
+
+        assignPiece(sourcePosition, new Empty(sourcePosition));
+        assignPiece(targetPosition, sourcePiece);
     }
 }

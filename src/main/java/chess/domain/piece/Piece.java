@@ -40,14 +40,6 @@ public abstract class Piece {
 
     public abstract char getName();
 
-    @Override
-    public String toString() {
-        return "Piece{" +
-                "position=" + position +
-                ", isBlack=" + isBlack +
-                '}';
-    }
-
     public void validateSourceAndTargetBeforeMove(Piece targetPiece){
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
@@ -78,5 +70,13 @@ public abstract class Piece {
         if (isEmpty()) {   // TODO: + 자신의 말 색깔일때
             throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Piece{" +
+                "position=" + position +
+                ", isBlack=" + isBlack +
+                '}';
     }
 }
