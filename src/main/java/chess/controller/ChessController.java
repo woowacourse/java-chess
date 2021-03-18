@@ -11,16 +11,6 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
 
-    public void run() {
-        ChessGame chessGame = new ChessGame();
-        OutputView.printCommandInfo();
-        while (chessGame.isRunning()) {
-            String inputCmd = InputView.inputCommand();
-            Command command = Command.of(splitCommand(inputCmd));
-            command.apply(chessGame, inputCmd);
-        }
-    }
-
     public static void start(ChessGame chessGame, String command) {
         chessGame.initBoard(BoardInitializer.init());
         OutputView.printBoard(chessGame.getBoard());
@@ -46,6 +36,16 @@ public class ChessController {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
         OutputView.printStatus(chessGame.calculatePoint());
+    }
+
+    public void run() {
+        ChessGame chessGame = new ChessGame();
+        OutputView.printCommandInfo();
+        while (chessGame.isRunning()) {
+            String inputCmd = InputView.inputCommand();
+            Command command = Command.of(splitCommand(inputCmd));
+            command.apply(chessGame, inputCmd);
+        }
     }
 
     private String splitCommand(String inputCmd) {

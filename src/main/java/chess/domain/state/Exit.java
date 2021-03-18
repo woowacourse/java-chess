@@ -1,6 +1,6 @@
 package chess.domain.state;
 
-public class Exit implements State{
+public class Exit implements State {
     @Override
     public State exit() {
         throw new IllegalArgumentException("[ERROR] 이미 종료된 상태입니다.");

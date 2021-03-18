@@ -67,7 +67,8 @@ public class ChessGame {
         moveOthersAfterValidate(source, target, currentDirection, strategy);
     }
 
-    private void movePawnAfterValidate(Piece piece, Position source, Position target, Direction currentDirection, Strategy strategy) {
+    private void movePawnAfterValidate(Piece piece, Position source, Position target,
+        Direction currentDirection, Strategy strategy) {
         int distance = target.calculateDistance(source);
         if (source.isDiagonal(target)) {
             MoveValidator.validateDiagonalMove(board, piece, target, distance);
@@ -85,7 +86,8 @@ public class ChessGame {
         }
     }
 
-    private void straightMoveDistanceTwo(Position source, Position target, Direction currentDirection,
+    private void straightMoveDistanceTwo(Position source, Position target,
+        Direction currentDirection,
         Strategy strategy, int distance) {
         if (distance == Pawn.MOVE_FIRST_RANGE) {
             MoveValidator.validatePawnLocation(source);
@@ -93,7 +95,8 @@ public class ChessGame {
         }
     }
 
-    private void moveOthersAfterValidate(Position source, Position target, Direction currentDirection,
+    private void moveOthersAfterValidate(Position source, Position target,
+        Direction currentDirection,
         Strategy strategy) {
         for (int i = 1; i <= strategy.getMoveRange(); i++) {
             Position movePosition = source.move(currentDirection, i);
@@ -116,7 +119,7 @@ public class ChessGame {
 
     private void confirmKingCaptured(Position target) {
         Piece piece = board.pieceAt(target);
-        if(piece.isKing()) {
+        if (piece.isKing()) {
             winner = Team.turnOver(piece.getTeam());
             state = state.next();
         }
@@ -154,7 +157,7 @@ public class ChessGame {
     private void calculateEachTeamPoint(EnumMap<Team, Double> result, Team team) {
         double totalPoint = board.calculateTotalPoint(team);
         totalPoint -= board.updatePawnPoint(team);
-        result.put(team,totalPoint);
+        result.put(team, totalPoint);
     }
 
     public boolean isReady() {

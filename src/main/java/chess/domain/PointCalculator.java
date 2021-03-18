@@ -28,7 +28,8 @@ public class PointCalculator {
             .sum();
     }
 
-    private static Map<Integer, Long> groupFileAndPawnCount(Map<Position, Piece> chessBoard, Team team) {
+    private static Map<Integer, Long> groupFileAndPawnCount(Map<Position, Piece> chessBoard,
+        Team team) {
         return chessBoard.entrySet().stream()
             .filter(entry -> entry.getValue().getTeam() == team)
             .filter(entry -> entry.getValue().isPawn())
