@@ -91,6 +91,10 @@ public class Piece {
         return color;
     }
 
+    public double getScore() {
+        return shape.getScore();
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -101,6 +105,10 @@ public class Piece {
         if (color != piece.color) return false;
         if (shape != piece.shape) return false;
         return Objects.equals(position, piece.position);
+    }
+
+    public boolean isPawn() {
+        return shape == Shape.PAWN;
     }
 
     @Override

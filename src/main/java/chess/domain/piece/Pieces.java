@@ -1,12 +1,15 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.exception.NoSuchPermittedChessPieceException;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.*;
 
 public class Pieces {
 
@@ -63,6 +66,37 @@ public class Pieces {
         return pieces.stream()
                 .collect(groupingBy(piece -> new Position(piece.getRow(), piece.getColumn()), counting()))
                 .entrySet();
+    }
 
+    public double getWhiteScore() {
+        double totalScore = getTotalScore(Color.WHITE);
+        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
+
+        return totalScore - 0.5 * countOfExpectedPawn;
+    }
+
+    public double getBlackScore() {
+        double totalScore = getTotalScore(Color.BLACK);
+        long countOfExpectedPawn = getCountOfExpectedPawn(Color.BLACK);
+
+        return totalScore - 0.5 * countOfExpectedPawn;
+    }
+
+
+    private double getTotalScore(Color color) {
+        return pieces.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .mapToDouble(Piece::getScore)
+                .sum();
+    }
+
+    private long getCountOfExpectedPawn(final Color color) {
+        return IntStream.range(0, Board.COLUMN)
+                .mapToObj(column -> pieces.stream()
+                        .filter(piece -> piece.getColumn() == column)
+                        .filter(Piece::isPawn)
+                        .filter(piece -> piece.isSameColor(color))
+                ).flatMap(Function.identity())
+                .count();
     }
 }
