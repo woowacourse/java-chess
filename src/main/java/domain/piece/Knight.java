@@ -2,7 +2,6 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Knight extends Division {
@@ -12,30 +11,14 @@ public class Knight extends Division {
 
     @Override
     public void move(Position to, List<Piece> pieces) {
-        List<Position> possiblePositions = getKnightPositions();
-        if (possiblePositions.contains(to)) {
+        int diffRow = Math.abs(position.diffRow(to));
+        int diffColumn = Math.abs(position.diffColumn(to));
+
+        if ((diffRow == 2 && diffColumn == 1) || (diffRow == 1 && diffColumn == 2)) {
             position = to;
+            return;
         }
-    }
-
-    private List<Position> getKnightPositions() {
-        List<Position> possiblePositions = new ArrayList<>();
-        add(possiblePositions, 1, 2);
-        add(possiblePositions, 1, -2);
-        add(possiblePositions, -1, 2);
-        add(possiblePositions, -1, -2);
-        add(possiblePositions, 2, 1);
-        add(possiblePositions, 2, -1);
-        add(possiblePositions, -2, 1);
-        add(possiblePositions, -2, -1);
-        return possiblePositions;
-    }
-
-    private void add(List<Position> possiblePositions, int columnValue, int rowValue) {
-        try {
-            possiblePositions.add(position.moveBy(columnValue, rowValue));
-        } catch (IllegalArgumentException ignored) {
-        }
+        throw new IllegalArgumentException();
     }
 
     @Override
