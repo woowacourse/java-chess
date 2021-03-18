@@ -4,30 +4,28 @@ import java.util.Objects;
 
 public class Position {
 
-    private static final int FIRST_COLUMN = 'a';
-    private static final int REVERSE_ROW_INDEX = 7;
+    private final Row row;
+    private final Column column;
 
-    private final int row;
-    private final int col;
-
-    public Position(int row, int col) {
+    public Position(Row row, Column col) {
         this.row = row;
-        this.col = col;
+        this.column = col;
     }
 
     public Position(String input) {
-        this(
-            REVERSE_ROW_INDEX - (Integer.parseInt(String.valueOf(input.charAt(1))) - 1),
-            input.charAt(0) - FIRST_COLUMN
-        );
+        this(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
+    }
+
+    public Position(int row, int column) {
+        this(Row.findRowByIndex(row), Column.findColumnByIndex(column));
     }
 
     public int getRow() {
-        return row;
+        return row.getIndex();
     }
 
-    public int getCol() {
-        return col;
+    public int getColumn() {
+        return column.getIndex();
     }
 
     @Override
@@ -39,11 +37,11 @@ public class Position {
             return false;
         }
         Position position = (Position) o;
-        return row == position.row && col == position.col;
+        return row == position.row && column == position.column;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(row, col);
+        return Objects.hash(row, column);
     }
 }
