@@ -1,6 +1,8 @@
 package chess.domain;
 
+import chess.domain.piece.Path;
 import chess.domain.piece.Piece;
+import chess.domain.position.Position;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,22 +40,22 @@ public class Board {
 
     public void move(Player player, List<String> values) {
         Position source = Position.of(values.get(1));
+        Position target = Position.of(values.get(2));
         Piece piece = findPieceBy(source)
-                .orElseThrow(()->new IllegalArgumentException("source 위치에 말이 없습니다."));
-        moveCurrentPiece(player, values, piece);
+                .orElseThrow(() -> new IllegalArgumentException("source 위치에 말이 없습니다."));
+        moveCurrentPiece(player, target, piece);
     }
 
-    private void moveCurrentPiece(Player player, List<String> values, Piece piece) {
-        if(player.isOwnerOf(piece)){
-            Position target = Position.of(values.get(2));
-            if(canMove(player, target)){
+    private void moveCurrentPiece(Player player, Position target, Piece piece) {
+        if (player.isOwnerOf(piece)) {
+            Path path = Path.of(piece, coordinates);
+            if (piece.canMove(this) && path.isAble(target)) {
                 putPiece(piece, target);
             }
         }
     }
 
-    private boolean canMove(Player player, Position target) {
-        return !findPieceBy(target).isPresent() ||
-        !player.isOwnerOf(findPieceBy(target).get());
+    public Path calculatePath(Piece piece) {
+        return Path.of(piece, coordinates);
     }
 }

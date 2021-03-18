@@ -1,11 +1,12 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.piece.strategy.Direction;
 import java.util.Objects;
 
 public class Position {
 
-    private Column column;
-    private Row row;
+    private final Column column;
+    private final Row row;
 
     private Position(Column column, Row row) {
         this.column = column;
@@ -40,5 +41,11 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
+    }
+
+    public Position moveTo(Direction direction) {
+        Column newColumn = column.move(direction);
+        Row newRow = row.move(direction);
+        return Position.of(newColumn, newRow);
     }
 }
