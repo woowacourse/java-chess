@@ -19,7 +19,7 @@ public class BoardTest {
         Piece[] pieces = getPiecesOfFirstLine(Owner.WHITE);
 
         for (Horizontal horizontal : Horizontal.values()) {
-            assertThat(board.of(Vertical.A, horizontal)).isEqualTo(pieces[horizontal.getIndex()]);
+            assertThat(board.of(Vertical.A, horizontal).getSymbol()).isEqualTo(pieces[horizontal.getIndex()].getSymbol());
         }
     }
 
