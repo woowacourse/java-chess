@@ -13,7 +13,7 @@ class BlackTurnTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(null);
         blackTurn = new BlackTurn(chessGame);
     }
 

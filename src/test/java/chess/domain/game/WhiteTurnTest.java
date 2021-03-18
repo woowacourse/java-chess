@@ -13,7 +13,7 @@ class WhiteTurnTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(null);
         whiteTurn = new WhiteTurn(chessGame);
     }
 

@@ -13,7 +13,7 @@ class EndTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(null);
         end = new End(chessGame);
     }
 

@@ -13,7 +13,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame();
+        chessGame = new ChessGame(null);
         ready = new Ready(chessGame);
     }
 
