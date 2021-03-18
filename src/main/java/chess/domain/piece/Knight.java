@@ -22,7 +22,7 @@ public class Knight extends Piece {
             int yDegree = direction.getYDegree();
 
             Position nextPosition = new Position(position.getRow() + yDegree,
-                position.getCol() + xDegree);
+                position.getColumn() + xDegree);
 
             if (isMovable(chessBoard, nextPosition) || isAttackMove(chessBoard, nextPosition)) {
                 movablePositions.add(nextPosition);

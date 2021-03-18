@@ -36,13 +36,13 @@ public class Pawn extends Piece {
         int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
         Position nextPosition = new Position(position.getRow() + yDegree,
-            position.getCol() + xDegree);
+            position.getColumn() + xDegree);
 
         if (isMovable(chessBoard, nextPosition)) {
             movablePositions.add(nextPosition);
         }
         nextPosition = new Position(nextPosition.getRow() + yDegree,
-            nextPosition.getCol() + xDegree);
+            nextPosition.getColumn() + xDegree);
         if (isStartingPosition() && isMovable(chessBoard, nextPosition)) {
             movablePositions.add(nextPosition);
         }
@@ -65,7 +65,7 @@ public class Pawn extends Piece {
         int yDegree) {
         List<Position> movablePositions = new ArrayList<>();
         Position nextPosition = new Position(position.getRow() + yDegree,
-            position.getCol() + xDegree);
+            position.getColumn() + xDegree);
 
         if (isAttackMove(chessBoard, nextPosition)) {
             movablePositions.add(nextPosition);

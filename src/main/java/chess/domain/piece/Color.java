@@ -4,10 +4,24 @@ public enum Color {
     BLACK, WHITE, NO_COLOR;
 
     public boolean isWhite() {
-        return this == WHITE;
+        return this.equals(WHITE);
     }
 
     public boolean isBlack() {
-        return this == BLACK;
+        return this.equals(BLACK);
+    }
+
+    public boolean isNotTurn(Color color) {
+        return !this.equals(color);
+    }
+
+    public Color getOppositeColor() {
+        if (this.isBlack()) {
+            return Color.WHITE;
+        }
+        if (this.isWhite()) {
+            return Color.BLACK;
+        }
+        throw new IllegalArgumentException();
     }
 }
