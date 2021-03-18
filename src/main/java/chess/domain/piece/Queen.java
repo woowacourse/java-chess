@@ -44,7 +44,7 @@ public class Queen extends Piece {
             // 우리편 말이 있으면 예외
             Piece targetPiece = currentPieces.findByPosition(target);
             if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                    (Character.isLowerCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0)))) {
+                    (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
                 throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
             }
             if (!(targetPiece instanceof Empty)) {
