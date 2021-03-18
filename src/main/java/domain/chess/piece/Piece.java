@@ -27,8 +27,8 @@ public abstract class Piece {
         return name;
     }
 
-    public boolean isOurTeam(Piece piece){
-        return isBlack == piece.isBlack;
+    public boolean isOurTeam(Piece[][] board, Position endPosition){
+        return board[endPosition.getRow()][endPosition.getColumn()].isBlack == isBlack;
     }
 
     public boolean positionIsEmpty(Piece piece) {
