@@ -32,7 +32,7 @@
   - [ ] 팀에 맞춰 자신의 시작 위치에서 생성된다.
     - [ ] 팀(B or W) 별로 Row(행)이 결정된다.
     - [x] Pawn
-    - [ ] Rook
+    - [x] Rook
     - [ ] knight
     - [ ] bishop
     - [ ] queen
