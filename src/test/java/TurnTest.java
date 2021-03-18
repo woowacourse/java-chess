@@ -1,5 +1,4 @@
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.Turn;
 import chess.board.Team;
@@ -30,4 +29,6 @@ public class TurnTest {
         List<Team> expectedTeams = Arrays.asList(Team.BLACK, Team.WHITE, Team.BLACK, Team.WHITE);
         assertThat(teams).isEqualTo(expectedTeams);
     }
+
+
 }

@@ -31,7 +31,8 @@ public class Board {
         return isPawnAndCanMoveDiagonalDirection(source, destination, sourceState)
             || (sourceState.hasMovableVector(source, destination)
             && isValidSourceAndDestination(sourceState, destinationState)
-            && isNotBlockedToGo(source, destination, sourceState));
+            && isNotBlockedToGo(source, destination, sourceState)
+            );
     }
 
     private boolean isValidSourceAndDestination(State sourceState, State destinationState) {
@@ -94,5 +95,10 @@ public class Board {
     public void move(Point source, Point destination) {
         squares.put(destination, squares.get(source));
         squares.put(source, State.of(Piece.EMPTY, Team.NONE));
+    }
+
+    public boolean isTeam(Point source, Team currentTeam) {
+        State state = squares.get(source);
+        return state.isTeam(currentTeam);
     }
 }

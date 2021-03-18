@@ -3,6 +3,7 @@ package chess;
 import chess.board.Board;
 import chess.board.Point;
 import chess.board.Row;
+import chess.board.Team;
 import chess.piece.Piece;
 import java.util.Arrays;
 import java.util.Collections;
@@ -45,10 +46,11 @@ public class PieceOperator {
             .forEach(point -> board.putSymmetrically(piece, point));
     }
 
-    public void move(Point source, Point destination) {
-        if (!board.canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 위치로는 이동할 수 없는 말입니다.");
+    public void move(Point source, Point destination, Team currentTeam) {
+        if (board.isTeam(source, currentTeam) && board.canMove(source, destination)) {
+            board.move(source, destination);
+            return;
         }
-        board.move(source, destination);
+        throw new IllegalArgumentException("불가능한 이동입니다.");
     }
 }
