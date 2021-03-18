@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import chess.domain.BoardInitializer;
+import chess.domain.ChessGame;
 import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -27,10 +27,14 @@ public class ChessController {
     }
 
     public static void move(ChessGame chessGame, String command) {
+        if (chessGame.isReady() || chessGame.isEnd()) {
+            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+        }
+
         chessGame.move(command);
         OutputView.printBoard(chessGame.getBoard());
 
-        if (chessGame.isKingDead()) {
+        if (chessGame.isEnd()) {
             OutputView.printTeamWin(chessGame.getWinTeam());
         }
     }
@@ -40,6 +44,10 @@ public class ChessController {
     }
 
     public static void status(ChessGame chessGame, String command) {
+        if (chessGame.isReady()) {
+            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+        }
+        OutputView.printStatus(chessGame.calculatePoint()); // <WHITE, 10>
     }
 
     private String splitCommand(String inputCmd) {

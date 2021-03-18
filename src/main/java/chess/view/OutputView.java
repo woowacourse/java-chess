@@ -6,6 +6,8 @@ import chess.domain.Position;
 import chess.domain.Rank;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
+import java.util.EnumMap;
+import java.util.Map;
 
 public class OutputView {
 
@@ -45,5 +47,12 @@ public class OutputView {
 
     private static String makePositionFormat(Rank rank, File file) {
         return file.getFile() + rank.getRank();
+    }
+
+    public static void printStatus(EnumMap<Team, Double> result) {
+        for (Map.Entry<Team, Double> entry : result.entrySet()) {
+            System.out.println(entry.getKey().getName() + "팀의 점수는 " + entry.getValue() + " 입니다.");
+        }
+        System.out.println();
     }
 }
