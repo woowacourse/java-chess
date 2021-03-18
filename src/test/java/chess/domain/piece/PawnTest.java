@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -16,13 +18,13 @@ public class PawnTest {
     }
 
 
-    @Test
+    @ParameterizedTest
+    @CsvSource(value = {"a7,a6", "a7,a5", "a7,b6","h7,h6","h7,h5","h7,g6"})
     @DisplayName("이동할 수 있는 좌표가 주어졌을 때, 폰이 움직일 수 있는 칸인지 체크한다.")
-    void when_give_position_check_pawn_movable() {
-//        ChessBoard chessBoard = new ChessBoard();
-//        Pawn pawn = new Pawn("Black");
-        Position current = Position.of("a7");
-        Position destination = Position.of("a6");
-//        assertThat(pawn.isMovable(current, destination, chessBoard)).isTrue();
+    void when_give_position_check_pawn_movable(String start, String dest) {
+        Pawn blackPawn = new Pawn(-1);
+        Position current = Position.of(start);
+        Position destination = Position.of(dest);
+        assertThat(blackPawn.checkPositionRule(current, destination)).isTrue();
     }
 }

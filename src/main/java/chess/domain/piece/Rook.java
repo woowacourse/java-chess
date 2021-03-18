@@ -20,6 +20,6 @@ public class Rook extends Piece {
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return checkStraightRule(current, destination);
+        return current.checkStraightRule(destination);
     }
 }

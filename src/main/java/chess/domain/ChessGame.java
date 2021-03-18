@@ -23,6 +23,7 @@ public class ChessGame {
         final Piece chosenPiece = currentTurn.choosePiece(current);
         if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
             currentTurn.move(current, destination);
+            chosenPiece.isMoved();
             return;
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");

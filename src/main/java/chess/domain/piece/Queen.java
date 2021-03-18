@@ -14,11 +14,11 @@ public class Queen extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
-        if (checkDiagonalRule(current, destination)) {
+        if (current.checkDiagonalRule(destination)) {
             final List<Position> diagonalPath = current.generateDiagonalPath(destination);
             return checkEmptyPath(diagonalPath, chessBoard);
         }
-        if (checkStraightRule(current, destination)) {
+        if (current.checkStraightRule(destination)) {
             System.out.println("여기로 와야해");
             final List<Position> straightPath = current.generateStraightPath(destination);
             return checkEmptyPath(straightPath, chessBoard);
@@ -28,6 +28,6 @@ public class Queen extends Piece {
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return checkDiagonalRule(current, destination) || checkStraightRule(current, destination);
+        return current.checkDiagonalRule(destination) || current.checkStraightRule(destination);
     }
 }

@@ -21,6 +21,6 @@ public class Bishop extends Piece {
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return checkDiagonalRule(current, destination);
+        return current.checkDiagonalRule(destination);
     }
 }

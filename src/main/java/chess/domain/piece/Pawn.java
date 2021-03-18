@@ -6,20 +6,18 @@ import java.util.Map;
 
 public class Pawn extends Piece {
     private final int direction;
-    private boolean started;
 
     public Pawn(final int direction) {
         this.direction = direction;
-        started = false;
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
-        if (!started && (current.moveY(-1).equals(destination) || current.moveY(-2).equals(destination))) {
-            started = true;
+    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard){
+        if (!isMoved && (current.moveY(-1).equals(destination) || current.moveY(-2).equals(destination))) {
+            isMoved = true;
             return true;
         }
-        if (started && current.moveY(-1).equals(destination)) {
+        if (isMoved && current.moveY(-1).equals(destination)) {
             return true;
         }
         // 설마 대각선에 상대 기물이 있나?
@@ -32,14 +30,19 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean checkPositionRule(Position current, Position destination) {
-        if (!started && (current.moveDown().equals(destination) || current.moveDown().moveDown().equals(destination))) {
-            started = true;
+    public boolean checkPositionRule(Position current, Position destination){
+
+        if (!isMoved && current.moveY(direction).equals(destination) || current.moveY(direction * 2).equals(destination)) {
             return true;
         }
-        if (started && current.moveDown().equals(destination)) {
+
+        if (isMoved && current.moveY(direction).equals(destination)) {
+            return true;
+        }
+        if(current.checkDiagonalToDirection(destination, direction)) {
             return true;
         }
         return false;
     }
+
 }

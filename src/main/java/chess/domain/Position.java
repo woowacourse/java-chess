@@ -19,9 +19,6 @@ public class Position {
     private final int y;
 
     public Position(final int x, final int y) {
-        if (x < 0 || x > 7 || y < 0 || y > 7) {
-            throw new IllegalArgumentException("판에서 벗어난 좌표입니다.");
-        }
         this.x = x;
         this.y = y;
     }
@@ -30,44 +27,44 @@ public class Position {
         return positionMap.get(input);
     }
 
-    public Position moveX(final int distance) {
-        return new Position(x + distance, y);
+    public Position moveX(final int xDistance) {
+        return new Position(x + xDistance, y);
     }
 
-    public Position moveY(final int distance) {
-        return new Position(x, y + distance);
+    public Position moveY(final int yDistance) {
+        return new Position(x, y + yDistance);
     }
 
-    public Position moveUp() {
-        return new Position(x, y + 1);
+    public Position moveXandY(final int xDistance, final int yDistance) {
+        return new Position(x + xDistance, y + yDistance);
     }
 
-    public Position moveDown() {
-        return new Position(x, y - 1);
+    public boolean checkDiagonalToDirection(final Position destination, final int direction) {
+        int xDiff = Math.abs(destination.x - this.x);
+        int yDiff = destination.y - this.y;
+        if (xDiff == 1 && yDiff == direction) {
+            return true;
+        }
+        return false;
     }
 
-    public Position moveLeft() {
-        return new Position(x - 1, y);
+    public boolean checkDiagonalRule(final Position destination) {
+        final int xDiff = Math.abs(this.x - destination.x);
+        final int yDiff = Math.abs(this.y - destination.y);
+        if (xDiff == yDiff) {
+            return true;
+        }
+        return false;
     }
 
-    public Position moveRight() {
-        return new Position(x + 1, y);
-    }
-
-    public Position moveLeftUp() {
-        return new Position(x - 1, y + 1);
-    }
-
-    public Position moveLeftDown() {
-        return new Position(x - 1, y - 1);
-    }
-
-    public Position moveRightUp() {
-        return new Position(x + 1, y + 1);
-    }
-
-    public Position moveRightDown() {
-        return new Position(x + 1, y - 1);
+    public boolean checkStraightRule(final Position destination) {
+        if (this.x == destination.x && this.y != destination.y) {
+            return true;
+        }
+        if (this.y == destination.y && this.x != destination.x) {
+            return true;
+        }
+        return false;
     }
 
     public List<Position> generateDiagonalPath(final Position destination) {
@@ -104,20 +101,20 @@ public class Position {
 
     private List<Position> generateLeftPath(Position destination) {
         final List<Position> leftPath = new ArrayList<>();
-        Position path = this.moveLeft();
+        Position path = this.moveX(-1);
         while (!path.equals(destination)) {
             leftPath.add(path);
-            path = path.moveLeft();
+            path = path.moveX(-1);
         }
         return leftPath;
     }
 
     private List<Position> generateRightPath(Position destination) {
         final List<Position> rightPath = new ArrayList<>();
-        Position path = this.moveRight();
+        Position path = this.moveX(1);
         while (!path.equals(destination)) {
             rightPath.add(path);
-            path = path.moveRight();
+            path = path.moveX(1);
         }
         return rightPath;
     }
@@ -135,20 +132,20 @@ public class Position {
 
     private List<Position> generateDownPath(Position destination) {
         final List<Position> downPath = new ArrayList<>();
-        Position path = this.moveDown();
+        Position path = this.moveY(-1);
         while (!path.equals(destination)) {
             downPath.add(path);
-            path = path.moveDown();
+            path = path.moveY(-1);
         }
         return downPath;
     }
 
     private List<Position> generateUpPath(final Position destination) {
         final List<Position> upPath = new ArrayList<>();
-        Position path = this.moveUp();
+        Position path = this.moveY(1);
         while (!path.equals(destination)) {
             upPath.add(path);
-            path = path.moveUp();
+            path = path.moveY(1);
         }
         return upPath;
     }
@@ -156,40 +153,40 @@ public class Position {
 
     private List<Position> generateRightUpPath(final Position destination) {
         final List<Position> rightUpPath = new ArrayList<>();
-        Position path = this.moveRightUp();
+        Position path = this.moveXandY(1, 1);
         while (!path.equals(destination)) {
             rightUpPath.add(path);
-            path = path.moveRightUp();
+            path = path.moveXandY(1, 1);
         }
         return rightUpPath;
     }
 
     private List<Position> generateRightDownPath(final Position destination) {
         final List<Position> rightDownPath = new ArrayList<>();
-        Position path = this.moveRightDown();
+        Position path = this.moveXandY(1, -1);
         while (!path.equals(destination)) {
             rightDownPath.add(path);
-            path = path.moveRightDown();
+            path = path.moveXandY(1, -1);
         }
         return rightDownPath;
     }
 
     private List<Position> generateLeftUpPath(final Position destination) {
         final List<Position> leftUpPath = new ArrayList<>();
-        Position path = this.moveLeftUp();
+        Position path = this.moveXandY(-1, 1);
         while (!path.equals(destination)) {
             leftUpPath.add(path);
-            path = path.moveLeftUp();
+            path = path.moveXandY(-1, 1);
         }
         return leftUpPath;
     }
 
     private List<Position> generateLeftDownPath(final Position destination) {
         final List<Position> leftDownPath = new ArrayList<>();
-        Position path = this.moveLeftDown();
+        Position path = this.moveXandY(-1, -1);
         while (!path.equals(destination)) {
             leftDownPath.add(path);
-            path = path.moveLeftDown();
+            path = path.moveXandY(-1, -1);
         }
         return leftDownPath;
     }
