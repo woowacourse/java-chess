@@ -23,6 +23,7 @@ public class OutputView {
             }
             System.out.println();
         }
+        System.out.println();
     }
     
     public static void printStatus(double blackScore, double whiteScore, Color winner) {
@@ -30,6 +31,6 @@ public class OutputView {
         System.out.println("BLACK - 점수 : " + blackScore);
         System.out.println("WHITE - 점수 : " + whiteScore);
         System.out.println("WINNER : " + winner.color());
-        
+        System.out.println();
     }
 }
