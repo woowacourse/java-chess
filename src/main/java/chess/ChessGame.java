@@ -1,15 +1,18 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.Turn;
+import chess.domain.Position;
+import chess.domain.Result;
+import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 import java.util.List;
 
 public class ChessGame {
 
     private final ChessBoard chessBoard;
-    private Turn turn;
+    private Color turn;
 
-    public ChessGame(ChessBoard chessBoard, Turn turn) {
+    public ChessGame(ChessBoard chessBoard, Color turn) {
         this.chessBoard = chessBoard;
         this.turn = turn;
     }
@@ -18,15 +21,32 @@ public class ChessGame {
         chessBoard.initBoard();
     }
 
-    public void run(List<String> movement) {
-        chessBoard.move(movement.get(1), movement.get(2));
-        turn.changeTurn();
-        // 턴 검사
-        // 유효한 위치인지 확인 (a~h, 1~8)
+    public void run(List<String> input) {
+        String source = input.get(1);
+        String target = input.get(2);
+
+        Piece sourcePiece = chessBoard.findPiece(new Position(source));
+
+        validateTurn(sourcePiece);
+
+        chessBoard.move(source, target);
+        turn = turn.getOppositeColor();
     }
 
-    public void end() {
+    private void validateTurn(Piece sourcePiece) {
+        if (turn.isNotTurn(sourcePiece.getColor())) {
+            throw new IllegalArgumentException();
+        }
+    }
 
+    public boolean isOver() {
+        return chessBoard.isOver();
+    }
+
+    public Result result() {
+        double blackScore = chessBoard.getScore(Color.WHITE);
+        double whiteScore = chessBoard.getScore(Color.BLACK);
+        return new Result(blackScore, whiteScore);
     }
 
     public ChessBoard getChessBoard() {

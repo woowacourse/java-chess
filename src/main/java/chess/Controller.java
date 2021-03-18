@@ -1,7 +1,7 @@
 package chess;
 
 import chess.domain.ChessBoard;
-import chess.domain.Turn;
+import chess.domain.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -10,7 +10,7 @@ import java.util.List;
 public class Controller {
 
     public void run() {
-        ChessGame chessGame = new ChessGame(new ChessBoard(), new Turn(Color.WHITE));
+        ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
         OutputView.gameStart();
         if (InputView.isStart()) {
             startGame(chessGame);
@@ -25,14 +25,19 @@ public class Controller {
 
     public void playGame(ChessGame chessGame) {
         List<String> input = InputView.moveOrStatus();
+
         if ("move".equals(input.get(0))) {
             chessGame.run(input);
             OutputView.printChessBoard(chessGame.getChessBoard());
             playGame(chessGame);
         }
+        if ("status".equals(input.get(0)) || chessGame.isOver()) {
+            endGame(chessGame);
+        }
     }
 
-    public void endGame() {
-
+    public void endGame(ChessGame chessGame) {
+        Result result = chessGame.result();
+        OutputView.printResult(result);
     }
 }
