@@ -94,4 +94,21 @@ class RookTest {
         assertThat(cells.get(currentCoordinate)).isSameAs(rook);
         assertThat(cells.get(targetCoordinate)).isSameAs(ownPiece);
     }
+
+    @DisplayName("빈 체스판 - 룩 이동 - 이동 불가 - 이동할 수 없는 도착 위치")
+    @Test
+    void rookCannotInvalidTargetCoordinate() {
+        Board board = Board.getInstance();
+        Map<Coordinate, Piece> cells = board.getCells();
+        Rook rook = new Rook(TeamType.BLACK);
+
+        Coordinate currentCoordinate = Coordinate.from("d4");
+        Coordinate targetCoordinate = Coordinate.from("c5");
+
+        cells.put(currentCoordinate, rook);
+        assertThatThrownBy(() -> rook.move(board, currentCoordinate, targetCoordinate))
+            .isInstanceOf(IllegalArgumentException.class);
+
+        assertThat(cells.get(currentCoordinate)).isSameAs(rook);
+    }
 }
