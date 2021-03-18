@@ -13,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
 
@@ -147,15 +149,32 @@ public class ChessBoard {
             && isBlank(new Position(position.getRow() + yDegree, position.getColumn() + xDegree));
     }
 
-    public boolean hasNextAttackMove(Piece piece, Position position, int xDegree, int yDegree) {
-        return hasNextPossibleSquare(position, xDegree, yDegree) && isAttackMove(piece, position);
-    }
-
     public boolean isOver() {
         long kingCount = chessBoard.stream()
             .flatMap(Collection::stream)
             .filter(Piece::isKing)
             .count();
         return kingCount < 2;
+    }
+
+    public double getScore(Color color) {
+        double score = chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(piece -> piece.isSameColor(color))
+            .mapToDouble(piece -> piece.getType().getScore())
+            .sum();
+
+        Map<Integer, Long> pawnCount = chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(Piece::isPawn)
+            .filter(piece -> piece.isSameColor(color))
+            .collect(Collectors.groupingBy(piece -> piece.getPosition().getColumn(), Collectors.counting()));
+
+        for (long count : pawnCount.values()) {
+            if (count >= 2) {
+                score -= (double) count / 2;
+            }
+        }
+        return score;
     }
 }

@@ -2,18 +2,20 @@ package chess.domain.piece;
 
 public enum Type {
 
-    PAWN("P"),
-    QUEEN("Q"),
-    KING("K"),
-    BISHOP("B"),
-    KNIGHT("N"),
-    ROOK("R"),
-    BLANK(".");
+    PAWN("P", 1),
+    QUEEN("Q", 9),
+    KING("K", 0),
+    BISHOP("B", 3),
+    KNIGHT("N", 2.5),
+    ROOK("R", 5),
+    BLANK(".", 0);
 
-    String name;
+    private final String name;
+    private final double score;
 
-    Type(String name) {
+    Type(String name, double score) {
         this.name = name;
+        this.score = score;
     }
 
     public String nameByColor(Color color) {
@@ -21,5 +23,9 @@ public enum Type {
             return name.toLowerCase();
         }
         return name;
+    }
+
+    public double getScore() {
+        return score;
     }
 }
