@@ -3,24 +3,28 @@ package chess.domain.board;
 import chess.domain.piece.*;
 import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
+import chess.domain.piece.team.Black;
+import chess.domain.piece.team.Symbol;
+import chess.domain.piece.team.Neutral;
+import chess.domain.piece.team.White;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum InitPieces {
-    BLACK_ROOK(Xpoint.getRookPoints(), Ypoint.getBlackPoint(), new Rook(Team.BLACK)),
-    WHITE_ROOK(Xpoint.getRookPoints(), Ypoint.getWhitePoint(), new Rook(Team.WHITE)),
-    BLACK_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getBlackPoint(), new Knight(Team.BLACK)),
-    WHITE_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getWhitePoint(), new Knight(Team.WHITE)),
-    BLACK_BISHOP(Xpoint.getBishopPoints(), Ypoint.getBlackPoint(), new Bishop(Team.BLACK)),
-    WHITE_BISHOP(Xpoint.getBishopPoints(), Ypoint.getWhitePoint(), new Bishop(Team.WHITE)),
-    BLACK_QUEEN(Xpoint.getQueenPoint(), Ypoint.getBlackPoint(), new Queen(Team.BLACK)),
-    WHITE_QUEEN(Xpoint.getQueenPoint(), Ypoint.getWhitePoint(), new Queen(Team.WHITE)),
-    BLACK_KING(Xpoint.getKingPoint(), Ypoint.getBlackPoint(), new King(Team.BLACK)),
-    WHITE_KING(Xpoint.getKingPoint(), Ypoint.getWhitePoint(), new King(Team.WHITE)),
-    BLACK_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getBlackPawnPoint(), new Pawn(Team.BLACK)),
-    WHITE_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getWhitePawnPoint(), new Pawn(Team.WHITE)),
-    EMPTY_PIECE(Xpoint.getPawnOrEmptyPoints(), Ypoint.getEmptyPoints(), new Empty(Team.EMPTY));
+    BLACK_ROOK(Xpoint.getRookPoints(), Ypoint.getBlackPoint(), new Rook(new Black(Symbol.ROOK))),
+    WHITE_ROOK(Xpoint.getRookPoints(), Ypoint.getWhitePoint(), new Rook(new White(Symbol.ROOK))),
+    BLACK_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getBlackPoint(), new Knight(new Black(Symbol.KNIGHT))),
+    WHITE_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getWhitePoint(), new Knight(new White(Symbol.KNIGHT))),
+    BLACK_BISHOP(Xpoint.getBishopPoints(), Ypoint.getBlackPoint(), new Bishop(new Black(Symbol.BISHOP))),
+    WHITE_BISHOP(Xpoint.getBishopPoints(), Ypoint.getWhitePoint(), new Bishop(new White(Symbol.BISHOP))),
+    BLACK_QUEEN(Xpoint.getQueenPoint(), Ypoint.getBlackPoint(), new Queen(new Black(Symbol.QUEEN))),
+    WHITE_QUEEN(Xpoint.getQueenPoint(), Ypoint.getWhitePoint(), new Queen(new White(Symbol.QUEEN))),
+    BLACK_KING(Xpoint.getKingPoint(), Ypoint.getBlackPoint(), new King(new Black(Symbol.KING))),
+    WHITE_KING(Xpoint.getKingPoint(), Ypoint.getWhitePoint(), new King(new White(Symbol.KING))),
+    BLACK_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getBlackPawnPoint(), new Pawn(new Black(Symbol.PAWN))),
+    WHITE_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getWhitePawnPoint(), new Pawn(new White(Symbol.PAWN))),
+    EMPTY_PIECE(Xpoint.getPawnOrEmptyPoints(), Ypoint.getEmptyPoints(), new Empty(new Neutral(Symbol.EMPTY)));
 
     private final List<Xpoint> xpoints;
     private final List<Ypoint> ypoints;

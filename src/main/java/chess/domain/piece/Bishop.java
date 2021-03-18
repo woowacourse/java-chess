@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.piece.team.Symbol;
+import chess.domain.piece.team.Team;
+
 public class Bishop extends Piece {
 
     public Bishop(final Team team) {
-        super(team, "b");
+        super(team);
     }
 }

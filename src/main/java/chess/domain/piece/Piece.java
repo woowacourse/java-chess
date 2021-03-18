@@ -1,22 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.piece.team.Symbol;
+import chess.domain.piece.team.Team;
+
 import java.util.Objects;
 
 public abstract class Piece {
     protected final Team team;
-    protected final String symbol;
 
     protected Piece(Team team) {
-        this(team, ".");
-    }
-
-    protected Piece(Team team, String symbol) {
         this.team = team;
-        this.symbol = symbol;
     }
 
     public String getSymbol() {
-        return symbol;
+        return team.getSymbol();
     }
 
     @Override
@@ -24,11 +21,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return team == piece.team && Objects.equals(symbol, piece.symbol);
+        return Objects.equals(team, piece.team);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team, symbol);
+        return Objects.hash(team);
     }
 }
