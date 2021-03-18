@@ -13,12 +13,13 @@ import org.junit.jupiter.api.Test;
 public class BoardTest {
 
     private Board board;
+    private PieceOperator pieceOperator;
 
     @BeforeEach
     @DisplayName("보드의 초기 설정")
     void setUp() {
         board = new Board();
-        PieceOperator pieceOperator = new PieceOperator(board);
+        pieceOperator = new PieceOperator(board);
 
         pieceOperator.initialize();
     }
@@ -53,5 +54,20 @@ public class BoardTest {
         assertThat(board.getState(Point.of("d8"))).isEqualTo(State.of(Piece.QUEEN, Team.BLACK));
         assertThat(board.getState(Point.of("e8"))).isEqualTo(State.of(Piece.KING, Team.BLACK));
         assertThat(board.getState(Point.of("f7"))).isEqualTo(State.of(Piece.PAWN, Team.BLACK));
+    }
+
+    @Test
+    @DisplayName("킹이 잡히지 않았을 경우 게임 진행")
+    void gameIsPlayingWhenKingNotDead() {
+        assertThat(board.isOnGoing()).isTrue();
+    }
+
+    @Test
+    @DisplayName("킹이 잡히면 게임종료 테스트")
+    void gameIsOverWhenKingIsDead() {
+        board.move(Point.of("e8"), Point.of("e3"));
+        pieceOperator.move(Point.of("d2"), Point.of("e3"), Team.WHITE);
+
+        assertThat(board.isOnGoing()).isFalse();
     }
 }

@@ -9,10 +9,12 @@ import java.util.Map;
 public class Board {
 
     private final Map<Point, State> squares = new HashMap<>();
+    private boolean onGoing;
 
     public Board() {
         Point.getAllPoints()
             .forEach(point -> squares.put(point, State.of(Piece.EMPTY, Team.NONE)));
+        onGoing = true;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
@@ -93,6 +95,9 @@ public class Board {
     }
 
     public void move(Point source, Point destination) {
+        if (squares.get(destination).isKing()) {
+            onGoing = false;
+        }
         squares.put(destination, squares.get(source));
         squares.put(source, State.of(Piece.EMPTY, Team.NONE));
     }
@@ -100,5 +105,9 @@ public class Board {
     public boolean isTeam(Point source, Team currentTeam) {
         State state = squares.get(source);
         return state.isTeam(currentTeam);
+    }
+
+    public boolean isOnGoing() {
+        return onGoing;
     }
 }

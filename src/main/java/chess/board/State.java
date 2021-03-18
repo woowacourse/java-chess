@@ -90,4 +90,8 @@ public class State {
 
         return vector != null;
     }
+
+    public boolean isKing() {
+        return piece == Piece.KING;
+    }
 }
