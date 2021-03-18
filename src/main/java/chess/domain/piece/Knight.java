@@ -10,11 +10,13 @@ public class Knight extends Piece {
 
     @Override
     public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
-        return false;
+        return checkPositionRule(current, destination);
     }
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return false;
+        int xDiff = Math.abs(current.getX() - destination.getX());
+        int yDiff = Math.abs(current.getY() - destination.getY());
+        return ((xDiff == 1 && yDiff == 2) || (xDiff == 2 && yDiff == 1));
     }
 }
