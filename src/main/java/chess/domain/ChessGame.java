@@ -4,6 +4,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.view.OutputView;
+
 import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
@@ -31,16 +33,25 @@ public class ChessGame {
         return board;
     }
 
-    public void move(String command) {
-        List<Position> coordinates = splitSourceAndTarget(command);
-        Position source = coordinates.get(SOURCE_INDEX - 1);
-        Position target = coordinates.get(TARGET_INDEX - 1);
+    //
+    public String getTurn() {
+        return turn.getName();
+    }
 
-        Piece piece = getPieceAfterCheckTurnAndTeam(source, target);
-        Direction currentDirection = source.calculateDirection(target);
-        Strategy strategy = piece.strategy();
-        MoveValidator.validateDirection(currentDirection, strategy);
-        applyMoveStrategy(source, target, piece, currentDirection, strategy);
+    public void move(String command) {
+        try {
+            List<Position> coordinates = splitSourceAndTarget(command);
+            Position source = coordinates.get(SOURCE_INDEX - 1);
+            Position target = coordinates.get(TARGET_INDEX - 1);
+
+            Piece piece = getPieceAfterCheckTurnAndTeam(source, target);
+            Direction currentDirection = source.calculateDirection(target);
+            Strategy strategy = piece.strategy();
+            MoveValidator.validateDirection(currentDirection, strategy);
+            applyMoveStrategy(source, target, piece, currentDirection, strategy);
+        } catch (IllegalArgumentException e) {
+            OutputView.printErrorMessage(e.getMessage());
+        }
     }
 
     private Piece getPieceAfterCheckTurnAndTeam(Position source, Position target) {

@@ -24,7 +24,8 @@ public class OutputView {
         System.out.printf("%s팀이 승리하였습니다.\n", team.getName());
     }
 
-    public static void printBoard(Board board) {
+    public static void printBoard(Board board, String turn) {
+        System.out.println( turn+ "팀의 차례입니다.");
         for (Rank rank : Rank.values()) {
             printPiece(board, rank);
             System.out.println();
@@ -53,6 +54,11 @@ public class OutputView {
         for (Map.Entry<Team, Double> entry : result.entrySet()) {
             System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().getName(), entry.getValue());
         }
+        System.out.println();
+    }
+
+    public static void printErrorMessage(String message) {
+        System.out.println(message);
         System.out.println();
     }
 }
