@@ -81,6 +81,8 @@ public class Piece {
         if (!selectedCondition.isPresent()) {
             throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
         }
+
+        position = target;
     }
 
     public Color getColor() {
