@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.MoveVO;
+import chess.domain.Strategy;
 import chess.domain.Team;
 
 public class Pawn implements Piece {
+
+    public static final double POINT = 1;
     public static final int BLACK_PAWN_START_LINE = 7;
     public static final int WHITE_PAWN_START_LINE = 2;
     public static final int MOVE_FIRST_RANGE = 2;
@@ -16,11 +18,11 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public MoveVO strategy() {
+    public Strategy strategy() {
         if (team == Team.BLACK) {
-            return new MoveVO(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
+            return new Strategy(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
         }
-        return new MoveVO(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
+        return new Strategy(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
     }
 
     @Override
@@ -61,5 +63,10 @@ public class Pawn implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

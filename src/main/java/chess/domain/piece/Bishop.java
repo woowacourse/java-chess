@@ -1,11 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.MoveVO;
+import chess.domain.Strategy;
 import chess.domain.Team;
 
 public class Bishop implements Piece {
+
+    public static final double POINT = 3;
     private static final int MOVE_RANGE = 8;
+
     private final Team team;
 
     public Bishop(Team team) {
@@ -18,8 +21,8 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public MoveVO strategy() {
-        return new MoveVO(Direction.diagonalDirection(), MOVE_RANGE);
+    public Strategy strategy() {
+        return new Strategy(Direction.diagonalDirection(), MOVE_RANGE);
     }
 
     @Override
@@ -55,5 +58,10 @@ public class Bishop implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }

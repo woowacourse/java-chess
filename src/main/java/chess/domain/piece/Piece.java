@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.MoveVO;
+import chess.domain.Strategy;
 import chess.domain.Team;
 
 public interface Piece {
 
-    MoveVO strategy();
+    Strategy strategy();
 
     void canMove();
 
@@ -20,4 +20,6 @@ public interface Piece {
     boolean isPawn();
 
     boolean isKing();
+
+    double getPoint();
 }

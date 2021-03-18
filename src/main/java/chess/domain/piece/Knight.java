@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.Direction;
-import chess.domain.MoveVO;
+import chess.domain.Strategy;
 import chess.domain.Team;
 
 public class Knight implements Piece {
+    public static final double POINT = 2.5;
     private static final int MOVE_RANGE = 1;
     private final Team team;
 
@@ -13,8 +14,8 @@ public class Knight implements Piece {
     }
 
     @Override
-    public MoveVO strategy() {
-        return new MoveVO(Direction.knightDirection(), MOVE_RANGE);
+    public Strategy strategy() {
+        return new Strategy(Direction.knightDirection(), MOVE_RANGE);
     }
 
     @Override
@@ -55,5 +56,10 @@ public class Knight implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public double getPoint() {
+        return POINT;
     }
 }
