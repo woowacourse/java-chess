@@ -22,6 +22,12 @@ public class Pawn extends Piece {
     void move(Position target, CurrentPieces currentPieces) {
         if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙
             if (this.position.subtractY(target) > 0 && this.position.subtractY(target) <= 2) {
+                for (int i = 1; i <= position.subtractY(target); i++) {
+                    Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
+                    if (!(piece instanceof Empty)) {
+                        throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
+                    }
+                }
                 this.position = target;
                 return;
             }
@@ -29,17 +35,31 @@ public class Pawn extends Piece {
 
         if (this.position.getY() == '2' && this.name.equals("p")) { // 화이트
             if (target.subtractY(this.position) > 0 && target.subtractY(this.position) <= 2) {
+                for (int i = 1; i <= target.subtractY(this.position); i++) {
+                    Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));
+                    if (!(piece instanceof Empty)) {
+                        throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
+                    }
+                }
                 this.position = target;
                 return;
             }
         }
 
         if (this.position.subtractY(target) == 1 && this.name.equals("P")) { // 블랙
+            Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - 1)));
+            if (!(piece instanceof Empty)) {
+                throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
+            }
             this.position = target;
             return;
         }
 
         if (target.subtractY(this.position) == 1 && this.name.equals("p")) { // 화이트
+            Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + 1)));
+            if (!(piece instanceof Empty)) {
+                throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
+            }
             this.position = target;
             return;
         }

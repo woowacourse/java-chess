@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -11,6 +12,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PawnTest {
     private CurrentPieces currentPieces;
+
     @BeforeEach
     void setUp() {
         currentPieces = CurrentPieces.generate();
@@ -59,5 +61,20 @@ public class PawnTest {
 
         assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 이동하는데_앞에_장애물이_있는_경우() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '7'), "P"),
+                new Pawn(Position.of('a', '6'), "P"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('a', '7'); // 비숍 위치
+        Position target = Position.of('a', '5'); // 옮기고자 하는 위치
+        Piece pawn = currentPieces.findByPosition(source);
+
+        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+        .isInstanceOf(IllegalArgumentException.class);
     }
 }
