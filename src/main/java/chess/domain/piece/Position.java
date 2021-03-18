@@ -80,4 +80,8 @@ public class Position {
     public boolean isDiagonal(Position target) {
         return Math.abs(subtractX(target)) == Math.abs(subtractY(target));
     }
+
+    public boolean isCross(Position target) {
+        return (this.getX() == target.getX()) || (this.getY() == target.getY());
+    }
 }

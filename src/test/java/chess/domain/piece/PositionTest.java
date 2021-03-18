@@ -74,4 +74,15 @@ public class PositionTest {
 
         assertThat(result).isTrue();
     }
+
+    @DisplayName("두 위치가 x 또는 y값이 같은지 확인한다.")
+    @Test
+    void X_값_또는_Y_값이_같다() {
+        Position position1 = Position.of('a', '1');
+        Position position2 = Position.of('a', '8');
+
+        boolean result = position1.isCross(position2);
+
+        assertThat(result).isTrue();
+    }
 }
