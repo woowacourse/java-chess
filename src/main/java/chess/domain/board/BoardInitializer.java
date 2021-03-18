@@ -6,54 +6,34 @@ import chess.domain.board.position.Vertical;
 import chess.domain.piece.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 public class BoardInitializer {
+    private static final int BOARD_LENGTH = 8;
 
     public static Board initiateBoard() {
-        List<List<Square>> lines = Arrays.asList(
-                getPiecesOfFirstLine(Horizontal.EIGHT, Owner.BLACK),
-                getPiecesOfSecondLine(Horizontal.SEVEN, Owner.BLACK),
-                getEmptySquares(Horizontal.SIX),
-                getEmptySquares(Horizontal.FIVE),
-                getEmptySquares(Horizontal.FOUR),
-                getEmptySquares(Horizontal.THREE),
-                getPiecesOfSecondLine(Horizontal.TWO, Owner.WHITE),
-                getPiecesOfFirstLine(Horizontal.ONE, Owner.WHITE)
-        );
+        Map<Position, Piece> map = new LinkedHashMap<>();
 
-        Map<Position, Square> map = new LinkedHashMap<>();
-        lines.stream()
-                .flatMap(squares -> squares.stream())
-                .forEach(square -> map.put(square.getPosition(), square));
+        putLineInMap(map, Vertical.A, getPiecesOfFirstLine(Owner.WHITE));
+        putLineInMap(map, Vertical.B, getPiecesOfSecondLine(Owner.WHITE));
+        putLineInMap(map, Vertical.C, getEmptyLine());
+        putLineInMap(map, Vertical.D, getEmptyLine());
+        putLineInMap(map, Vertical.E, getEmptyLine());
+        putLineInMap(map, Vertical.F, getEmptyLine());
+        putLineInMap(map, Vertical.G, getPiecesOfSecondLine(Owner.BLACK));
+        putLineInMap(map, Vertical.H, getPiecesOfFirstLine(Owner.BLACK));
 
         return new Board(map);
     }
 
-    public static List<Square> getPiecesOfFirstLine(Horizontal horizontal, Owner owner){
-        List<Piece> pieces = getPieceOrder(owner);
-        Vertical[] verticals = Vertical.values();
-
-        return IntStream.range(0, verticals.length)
-                .mapToObj(i -> new Square(new Position(verticals[i], horizontal), pieces.get(i)))
-                .collect(Collectors.toList());
+    private static void putLineInMap(Map<Position, Piece> map, Vertical vertical, Piece[] pieces){
+        Horizontal[] horizontals = Horizontal.values();
+        for(int i =0; i<BOARD_LENGTH; i++){
+            map.put(new Position(vertical, horizontals[i]), pieces[i]);
+        }
     }
 
-    public static List<Square> getPiecesOfSecondLine(Horizontal horizontal, Owner owner){
-        return Arrays.stream(Vertical.values())
-                .map(vertical -> new Square(new Position(vertical, horizontal), Pawn.getInstanceOf(owner)))
-                .collect(Collectors.toList());
-    }
-
-    public static List<Square> getEmptySquares(Horizontal horizontal){
-        return Arrays.stream(Vertical.values())
-                .map(vertical -> new Square(new Position(vertical, horizontal)))
-                .collect(Collectors.toList());
-    }
-
-    private static List<Piece> getPieceOrder(Owner owner) {
-        return Arrays.asList(
+    private static Piece[] getPiecesOfFirstLine(Owner owner){
+        return new Piece[]{
                 new Rook(owner),
                 new Knight(owner),
                 new Bishop(owner),
@@ -62,6 +42,18 @@ public class BoardInitializer {
                 new Bishop(owner),
                 new Knight(owner),
                 new Rook(owner)
-        );
+        };
+    }
+
+    private static Piece[] getPiecesOfSecondLine(Owner owner){
+        Piece[] pieces = new Pawn[BOARD_LENGTH];
+        Arrays.fill(pieces, Pawn.getInstanceOf(owner));
+        return pieces;
+    }
+
+    private static Piece[] getEmptyLine(){
+        Piece[] pieces = new Empty[BOARD_LENGTH];
+        Arrays.fill(pieces, Empty.getInstance());
+        return pieces;
     }
 }
