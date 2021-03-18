@@ -1,4 +1,4 @@
-package chess.domain.position;
+package chess.domain.board.position;
 
 import java.util.*;
 
@@ -27,6 +27,11 @@ public class Position {
         }
         return position;
     }
+
+    public static Position valueOf(Xpoint xpoint, Ypoint ypoint) {
+        return valueOf(xpoint.getName() + ypoint.getValue());
+    }
+
     public static List<Position> generate() {
         return new ArrayList<>(CACHE.values());
     }

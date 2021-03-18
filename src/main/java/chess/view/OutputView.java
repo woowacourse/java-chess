@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.LineDto;
+import chess.domain.board.LineDto;
 
 import java.util.List;
 
