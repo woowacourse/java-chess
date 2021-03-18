@@ -63,7 +63,7 @@ public class Line {
         return pieces.get(index);
     }
 
-    public void changePiece(final char xPosition, final Piece piece) {
+    public void assignPiece(final char xPosition, final Piece piece) {
         int index = COLUMN_REFERENCE.indexOf(Character.toString(xPosition));
         pieces.set(index, piece);
     }

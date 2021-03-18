@@ -41,7 +41,7 @@ public class Position {
         return Objects.hash(x, y);
     }
 
-    public Position moveBy(int xDegree, int yDegree) {
+    public Position stepOn(int xDegree, int yDegree) {
         return new Position((char)(x + xDegree), (char)(y + yDegree));
     }
 }

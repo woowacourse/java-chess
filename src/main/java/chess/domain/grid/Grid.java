@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Grid {
     private static final int FIRST_ROW = 1;
@@ -38,17 +37,14 @@ public class Grid {
         validateMovablePosition(source, target);
 
         Piece sourcePiece = findPiece(source);
-        Piece targetPiece = findPiece(target);
-        if (targetPiece.isEmpty()) {
-            changePiece(source, new Empty(source));
-            return;
-        }
-        changePiece(target, sourcePiece);
+
+        assignPiece(source, new Empty(source));
+        assignPiece(target, sourcePiece);
     }
 
     private void validateMovablePosition(Position source, Position target) {
         validatePositionInGrid(source, target);
-        validateSourcePieceEmpty(source);
+        validateSourcePiece(source);
         validateMoveDirectionAndStep(source, target);
     }
 
@@ -58,10 +54,10 @@ public class Grid {
         }
     }
 
-    private void validateSourcePieceEmpty(Position source) {
+    private void validateSourcePiece(Position source) {
         Piece sourcePiece = findPiece(source);
-        if (sourcePiece.isEmpty()) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        if (sourcePiece.isEmpty()) {   // + 자신의 말 색깔일때
+            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
         }
     }
 
@@ -72,7 +68,7 @@ public class Grid {
 
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsInOneDirection(source, direction));
+            movablePositions.addAll(extractMovablePositionsByDirection(source, direction));
         }
         if (!movablePositions.contains(target)) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
@@ -82,14 +78,14 @@ public class Grid {
         }
     }
 
-    private List<Position> extractMovablePositionsInOneDirection(Position source, Direction direction) {
+    private List<Position> extractMovablePositionsByDirection(Position source, Direction direction) {
         List<Position> positions = new ArrayList<>();
 
         Piece sourcePiece = findPiece(source);
         for (int i = 1; i <= sourcePiece.getStepRange(); i++) {
             int xDegree = direction.getXDegree() * i;
             int yDegree = direction.getYDegree() * i;
-            Position movedPosition = source.moveBy(xDegree, yDegree);
+            Position movedPosition = source.stepOn(xDegree, yDegree);
             if (!movedPosition.validatePositionInGrid()) {
                 break;
             }
@@ -109,11 +105,11 @@ public class Grid {
         return line.findPiece(x);
     }
 
-    private void changePiece(Position position, Piece piece) {
+    private void assignPiece(Position position, Piece piece) {
         char x = position.getX();
         char y = position.getY();
         int yIndex = Character.getNumericValue(y) - GAP_BETWEEN_INDEX_ACTUAL;
         Line line = lines.get(yIndex);
-        line.changePiece(x, piece);
+        line.assignPiece(x, piece);
     }
 }
