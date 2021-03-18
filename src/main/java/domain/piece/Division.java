@@ -2,8 +2,6 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.List;
-
 public abstract class Division extends Basis {
     protected final Color color;
     protected Position position;
@@ -33,8 +31,9 @@ public abstract class Division extends Basis {
 
     @Override
     public String display() {
-        if(isBlack()) {
-            return super.display().toUpperCase();
+        if (isBlack()) {
+            return super.display()
+                        .toUpperCase();
         }
         return super.display();
     }

@@ -2,8 +2,6 @@ package domain.piece;
 
 import domain.position.Position;
 
-import java.util.List;
-
 public class Knight extends Division {
     public Knight(Color color, Position position) {
         super(color, "n", position);

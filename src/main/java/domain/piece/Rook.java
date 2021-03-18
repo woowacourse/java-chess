@@ -4,7 +4,7 @@ import domain.position.Position;
 
 import java.util.List;
 
-public class Rook extends Division{
+public class Rook extends Division {
     public Rook(Color color, Position position) {
         super(color, "r", position);
     }
@@ -19,7 +19,8 @@ public class Rook extends Division{
 
     private void validateNoneBetween(Position to, Pieces pieces) {
         List<Position> positions = position.getBetween(to);
-        if (positions.stream().anyMatch(pieces::hasPieceOf)) {
+        if (positions.stream()
+                     .anyMatch(pieces::hasPieceOf)) {
             throw new IllegalArgumentException();
         }
     }

@@ -1,18 +1,16 @@
 package domain.piece;
 
 import domain.position.Position;
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class QueenTest {
     private static Stream<Arguments> destinations() {
@@ -41,7 +39,7 @@ class QueenTest {
     void interruptedMove(Position position) {
         Queen queen = new Queen(Color.BLACK, Position.from("c5"));
         List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"),
-                                                 Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));
+                Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));
 
         assertThatThrownBy(() -> queen.move(position, blackPieces(positions)))
                 .isInstanceOf(IllegalArgumentException.class);

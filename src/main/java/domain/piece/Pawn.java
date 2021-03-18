@@ -3,8 +3,6 @@ package domain.piece;
 import domain.position.Position;
 import domain.position.Row;
 
-import java.util.List;
-
 public class Pawn extends Division {
     public Pawn(Color color, Position position) {
         super(color, "p", position);
