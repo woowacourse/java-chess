@@ -84,4 +84,25 @@ class LocationTest {
         assertThat(location.isAdjacent(horizontalTargetLocation)).isFalse();
         assertThat(location.isAdjacent(verticalTargetLocation)).isFalse();
     }
+
+    @DisplayName("주어진 이동 거리만큼 이동 테스트")
+    @Test
+    void moveByStep() {
+        // given, when
+        Location movedLocation = location.moveByStep(2, 2);
+
+        // then
+        assertThat(movedLocation).isEqualTo(Location.of(3, 3));
+    }
+
+    @DisplayName("현재위치에서 이동한 목적지가 보드 안에 위치해야 한다.")
+    @Test
+    void isRangeByStep() {
+        // given, when
+        boolean inRange = location.isRangeByStep(1, 0);
+        boolean notInRange = location.isRangeByStep(-1, 0);
+
+        assertThat(inRange).isTrue();
+        assertThat(notInRange).isFalse();
+    }
 }
