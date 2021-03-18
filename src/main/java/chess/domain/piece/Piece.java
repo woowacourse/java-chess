@@ -123,11 +123,4 @@ public class Piece {
         return result;
     }
 
-    @Override
-    public String toString() {
-        return String.join(":",
-                shape.getNotation(color),
-                String.valueOf(position.getRow()),
-                String.valueOf(position.getColumn()));
-    }
 }

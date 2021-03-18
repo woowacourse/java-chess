@@ -28,8 +28,8 @@ public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
                 .noneMatch(
                         pieceOnBoard ->
                                 pieceOnBoard.getColumn() == piece.getColumn() &&
-                                target.getRow() <= pieceOnBoard.getRow() &&
-                                pieceOnBoard.getRow() <= piece.getRow()
+                                        target.getRow() <= pieceOnBoard.getRow() &&
+                                        pieceOnBoard.getRow() <= piece.getRow()
                 );
     }
 

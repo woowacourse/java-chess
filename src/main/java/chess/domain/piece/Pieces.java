@@ -1,12 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.exception.NoSuchPermittedChessPieceException;
 
 import java.util.*;
-import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
@@ -83,6 +80,13 @@ public class Pieces {
         return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
     }
 
+    public double getWhiteScore() {
+        double totalScore = getTotalScore(Color.WHITE);
+        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
+
+        return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
+    }
+
     private double getTotalScore(Color color) {
         return pieces.stream()
                 .filter(piece -> piece.isSameColor(color))
@@ -91,20 +95,15 @@ public class Pieces {
     }
 
     private long getCountOfExpectedPawn(final Color color) {
-        return IntStream.range(0, Board.COLUMN)
-                .mapToObj(column -> pieces.stream()
-                        .filter(piece -> piece.getColumn() == column)
-                        .filter(Piece::isPawn)
-                        .filter(piece -> piece.isSameColor(color))
-                ).flatMap(Function.identity())
-                .count();
-    }
-
-    public double getWhiteScore() {
-        double totalScore = getTotalScore(Color.WHITE);
-        long countOfExpectedPawn = getCountOfExpectedPawn(Color.WHITE);
-
-        return totalScore - PAWN_EXCEPTED_CONDITION_RATIO * countOfExpectedPawn;
+        return pieces.stream()
+                .filter(piece -> piece.isSameColor(color))
+                .filter(Piece::isPawn)
+                .collect(groupingBy(Piece::getColumn, counting()))
+                .entrySet().stream()
+                .map(Map.Entry::getValue)
+                .filter(countOfExpectedPawn -> countOfExpectedPawn >= 2)
+                .mapToInt(Long::intValue)
+                .sum();
     }
 
 }
