@@ -12,13 +12,15 @@ public class Rook extends Division{
     @Override
     public void move(Position to, Pieces pieces) {
         if (position.isOrthogonal(to)) {
-            List<Position> positions = position.getBetween(to);
-            for (Position position1 : positions) {
-                if (pieces.hasPieceOf(position1)) {
-                    throw  new IllegalArgumentException();
-                }
-            }
+            validateNoneBetween(to, pieces);
             position = to;
+        }
+    }
+
+    private void validateNoneBetween(Position to, Pieces pieces) {
+        List<Position> positions = position.getBetween(to);
+        if (positions.stream().anyMatch(pieces::hasPieceOf)) {
+            throw new IllegalArgumentException();
         }
     }
 
