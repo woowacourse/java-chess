@@ -30,16 +30,4 @@ class PositionTest {
         assertThat(gradient).isEqualTo(1.0);
     }
 
-    @DisplayName("두 포지션의 기울기를 반환하는 기능 테스트")
-    @Test
-    void calculateGradientIfBothPositionColumnIsSame() {
-        //given
-        Position firstPosition = new Position(0, 2);
-        Position secondPosition = new Position(2, 2);
-
-        //when //then
-        assertThatThrownBy(() -> firstPosition.calculateGradient(secondPosition))
-                .isExactlyInstanceOf(ArithmeticException.class);
-    }
-
 }
