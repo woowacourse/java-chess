@@ -21,12 +21,25 @@ public class ChessGame {
 
     public void move(Position current, Position destination) {
         final Piece chosenPiece = currentTurn.choosePiece(current);
-        if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
-            currentTurn.move(current, destination);
-            chosenPiece.isMoved();
-            return;
+        if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
+            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
         }
-        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+
+        Team enemy = getEnemy();
+        if (enemy.havePiece(destination)) {
+            Piece piece = enemy.killPiece(destination);
+            currentTurn.catchPiece(piece);
+        }
+
+        currentTurn.move(current, destination);
+        chosenPiece.isMoved();
+    }
+
+    private Team getEnemy() {
+        if (currentTurn == blackTeam) {
+            return whiteTeam;
+        }
+        return blackTeam;
     }
 
     public Map<Position, Piece> generateChessBoard() {
