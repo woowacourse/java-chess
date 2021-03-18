@@ -8,6 +8,7 @@ public class King implements Piece {
 
     public static final double POINT = 0;
     private static final int MOVE_RANGE = 1;
+
     private final Team team;
 
     public King(Team team) {
@@ -17,16 +18,6 @@ public class King implements Piece {
     @Override
     public Strategy strategy() {
         return new Strategy(Direction.everyDirection(), MOVE_RANGE);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public void canMove() {
-
     }
 
     @Override
@@ -62,5 +53,10 @@ public class King implements Piece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

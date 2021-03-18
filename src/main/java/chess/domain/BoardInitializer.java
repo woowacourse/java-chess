@@ -45,14 +45,12 @@ public class BoardInitializer {
 
     public static Board init() {
         Map<Position, Piece> board = new HashMap<>();
+        initPawn(board);
+        initPieceExceptPawn(board);
+        return new Board(board);
+    }
 
-        for (File file : File.values()) {
-            board.put(Position.of(file.getFile() + Pawn.BLACK_PAWN_START_LINE),
-                new Pawn(Team.BLACK));
-            board.put(Position.of(file.getFile() + Pawn.WHITE_PAWN_START_LINE),
-                new Pawn(Team.WHITE));
-        }
-
+    private static void initPieceExceptPawn(Map<Position, Piece> board) {
         File[] values = File.values();
         for (int i = 0; i < values.length; i++) {
             board.put(Position.of(values[i].getFile() + BLACK_OTHER_PIECE_START_LINE),
@@ -62,7 +60,14 @@ public class BoardInitializer {
             board.put(Position.of(values[i].getFile() + WHITE_OTHER_PIECE_START_LINE),
                 INITIAL_PIECES.get(i + values.length));
         }
+    }
 
-        return new Board(board);
+    private static void initPawn(Map<Position, Piece> board) {
+        for (File file : File.values()) {
+            board.put(Position.of(file.getFile() + Pawn.BLACK_PAWN_START_LINE),
+                new Pawn(Team.BLACK));
+            board.put(Position.of(file.getFile() + Pawn.WHITE_PAWN_START_LINE),
+                new Pawn(Team.WHITE));
+        }
     }
 }

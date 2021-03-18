@@ -7,6 +7,7 @@ import chess.domain.Team;
 public class Knight implements Piece {
     public static final double POINT = 2.5;
     private static final int MOVE_RANGE = 1;
+
     private final Team team;
 
     public Knight(Team team) {
@@ -16,16 +17,6 @@ public class Knight implements Piece {
     @Override
     public Strategy strategy() {
         return new Strategy(Direction.knightDirection(), MOVE_RANGE);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public void canMove() {
-
     }
 
     @Override
@@ -55,6 +46,11 @@ public class Knight implements Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
         return false;
     }
 

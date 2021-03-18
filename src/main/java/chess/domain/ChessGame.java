@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
@@ -13,7 +14,6 @@ public class ChessGame {
 
     private Board board;
     private State state;
-
     private Team winner;
     private Team turn;
 
@@ -32,7 +32,7 @@ public class ChessGame {
 
     public void initBoard(Board board) {
         this.board = board;
-        state = state.next();
+        state = state.init();
     }
 
     public Board getBoard() {
@@ -41,88 +41,85 @@ public class ChessGame {
 
     public void move(String command) {
         List<Position> coordinates = splitSourceAndTarget(command);
+        Position source = coordinates.get(SOURCE_INDEX - 1);
+        Position target = coordinates.get(TARGET_INDEX - 1);
 
-        Position source = coordinates.get(0);
-        Position target = coordinates.get(1);
-
-        Piece piece = board.pieceAt(source);
-        board.isSameTeam(target, turn);
-        piece.checkTurn(turn);
-
+        Piece piece = getPieceAfterCheckTurnAndTeam(source, target);
         Direction currentDirection = source.calculateDirection(target);
         Strategy strategy = piece.strategy();
+        MoveValidator.validateDirection(currentDirection, strategy);
+        applyMoveStrategy(source, target, piece, currentDirection, strategy);
+    }
 
-        if (!strategy.containsDirection(currentDirection)) {
-            throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
-        }
+    private Piece getPieceAfterCheckTurnAndTeam(Position source, Position target) {
+        board.isSameTeam(target, turn);
+        Piece piece = board.pieceAt(source);
+        piece.checkTurn(turn);
+        return piece;
+    }
 
+    private void applyMoveStrategy(Position source, Position target, Piece piece,
+        Direction currentDirection, Strategy strategy) {
         if (piece.isPawn()) {
-            pawnMovable(piece, source, target, currentDirection, strategy);
-            turnOver();
+            movePawnAfterValidate(piece, source, target, currentDirection, strategy);
             return;
         }
-
-        movable(source, target, currentDirection, strategy);
-        turnOver();
+        moveOthersAfterValidate(source, target, currentDirection, strategy);
     }
 
-    private void pawnMovable(Piece piece, Position source, Position target,
-        Direction currentDirection,
-        Strategy strategy) {
-
+    private void movePawnAfterValidate(Piece piece, Position source, Position target, Direction currentDirection, Strategy strategy) {
         int distance = target.calculateDistance(source);
-
-        if (source.isStraight(target)) {
-            if (distance == 1) {
-                if (board.containsPosition(target)) {
-                    throw new IllegalArgumentException("[ERROR] 목적지에 말이 존재합니다.");
-                }
-                movePiece(source, target);
-                return;
-            }
-
-            if (distance == 2) {
-                if (!source.isLocatedAtStartLine()) {
-                    throw new IllegalArgumentException("[ERROR] 폰은 처음에만 두 칸 이동할 수 있습니다.");
-                }
-                movable(source, target, currentDirection, strategy);
-                return;
-            }
+        if (source.isDiagonal(target)) {
+            MoveValidator.validateDiagonalMove(board, piece, target, distance);
+            movePiece(source, target);
         }
-
-        if (distance >= 2 || !board.containsPosition(target)
-            || board.pieceAt(target).isSameTeam(piece.getTeam())) {
-            throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대팀의 말이 있는 경우 한 칸 이동할 수 있습니다.");
-        }
-        movePiece(source, target);
+        MoveValidator.validateStraightMove(distance);
+        straightMoveDistanceOne(source, target, distance);
+        straightMoveDistanceTwo(source, target, currentDirection, strategy, distance);
     }
 
-    private void movable(Position source, Position target, Direction currentDirection,
+    private void straightMoveDistanceOne(Position source, Position target, int distance) {
+        if (distance == Pawn.MOVE_DEFAULT_RANGE) {
+            MoveValidator.isPieceExist(board, target);
+            movePiece(source, target);
+        }
+    }
+
+    private void straightMoveDistanceTwo(Position source, Position target, Direction currentDirection,
+        Strategy strategy, int distance) {
+        if (distance == Pawn.MOVE_FIRST_RANGE) {
+            MoveValidator.validatePawnLocation(source);
+            moveOthersAfterValidate(source, target, currentDirection, strategy);
+        }
+    }
+
+    private void moveOthersAfterValidate(Position source, Position target, Direction currentDirection,
         Strategy strategy) {
         for (int i = 1; i <= strategy.getMoveRange(); i++) {
             Position movePosition = source.move(currentDirection, i);
-
             if (movePosition.equals(target)) {
                 board.isSameTeam(movePosition, turn);
                 movePiece(source, target);
-                return;
+                break;
             }
-
-            if (board.containsPosition(movePosition)) {
-                throw new IllegalArgumentException("[ERROR] 경로에 말이 존재합니다.");
-            }
+            MoveValidator.isPieceExist(board, movePosition);
         }
     }
 
     private void movePiece(Position source, Position target) {
         if (board.containsPosition(target)) {
-            Piece piece = board.pieceAt(target);
-            if(piece.isKing()) {
-                winner = Team.turnOver(piece.getTeam());
-                state = state.next();
-            }
+            confirmKingCaptured(target);
         }
         board.movePiece(source, target);
+        turnOver();
+    }
+
+    private void confirmKingCaptured(Position target) {
+        Piece piece = board.pieceAt(target);
+        if(piece.isKing()) {
+            winner = Team.turnOver(piece.getTeam());
+            state = state.next();
+        }
     }
 
     private void turnOver() {
@@ -147,31 +144,28 @@ public class ChessGame {
         return File.of(String.valueOf(coordinate.charAt(0)));
     }
 
+    public EnumMap<Team, Double> calculatePoint() {
+        EnumMap<Team, Double> result = new EnumMap<>(Team.class);
+        calculateEachTeamPoint(result, Team.BLACK);
+        calculateEachTeamPoint(result, Team.WHITE);
+        return result;
+    }
+
+    private void calculateEachTeamPoint(EnumMap<Team, Double> result, Team team) {
+        double totalPoint = board.calculateTotalPoint(team);
+        totalPoint -= board.updatePawnPoint(team);
+        result.put(team,totalPoint);
+    }
+
+    public boolean isReady() {
+        return state.isReady();
+    }
+
     public boolean isEnd() {
         return state.isEnd();
     }
 
     public Team getWinTeam() {
         return winner;
-    }
-
-    public EnumMap<Team, Double> calculatePoint() {
-        EnumMap<Team, Double> result = new EnumMap<>(Team.class);
-
-        calculateEachTeamPoint(result, Team.BLACK);
-        calculateEachTeamPoint(result, Team.WHITE);
-
-        return result;
-    }
-
-    private void calculateEachTeamPoint(EnumMap<Team, Double> result, Team team) {
-        double totalPoint = board.calculateTotalPoint(team); // 전체 합산한 포인트
-        totalPoint -= board.updatePawnPoint(team); // 폰꺼까지해서
-
-        result.put(team,totalPoint);
-    }
-
-    public boolean isReady() {
-        return state.isReady();
     }
 }

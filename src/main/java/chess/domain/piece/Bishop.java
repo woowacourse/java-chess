@@ -26,16 +26,6 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public void canMove() {
-
-    }
-
-    @Override
     public String getName() {
         if (team == Team.BLACK) {
             return "B";
@@ -57,6 +47,11 @@ public class Bishop implements Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
         return false;
     }
 

@@ -1,66 +1,46 @@
 package chess.domain;
 
-import static java.util.stream.Collectors.collectingAndThen;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
-
 import chess.domain.piece.Piece;
 import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Stream;
 
 public class Board {
-    private final Map<Position, Piece> positionMap;
+    private final Map<Position, Piece> chessBoard;
 
-    public Board(Map<Position, Piece> positionMap) {
-        this.positionMap = positionMap;
+    public Board(Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
     }
 
     public boolean containsPosition(Position position) {
-        return positionMap.containsKey(position);
+        return chessBoard.containsKey(position);
     }
 
     public Piece pieceAt(Position position) {
-        if (!positionMap.containsKey(position)) {
+        if (!chessBoard.containsKey(position)) {
             throw new IllegalArgumentException("[ERROR] 해당 좌표에 말이 존재하지 않습니다.");
         }
-        return positionMap.get(position);
+        return chessBoard.get(position);
     }
 
     public void isSameTeam(Position position, Team team) {
-        if (!positionMap.containsKey(position)) {
+        if (!chessBoard.containsKey(position)) {
             return;
         }
 
-        if (positionMap.get(position).isSameTeam(team)) {
+        if (chessBoard.get(position).isSameTeam(team)) {
             throw new IllegalArgumentException("[ERROR] 해당 좌표에 같은 팀의 말이 존재합니다.");
         }
     }
 
     public void movePiece(Position source, Position target) {
-        positionMap.put(target, positionMap.get(source));
-        positionMap.remove(source);
+        chessBoard.put(target, chessBoard.get(source));
+        chessBoard.remove(source);
     }
 
     public double calculateTotalPoint(Team team) {
-        return positionMap.values().stream()
-            .filter(piece -> piece.getTeam() == team)
-            .mapToDouble(Piece::getPoint)
-            .sum();
+        return PointCalculator.calculate(chessBoard, team);
     }
 
     public double updatePawnPoint(Team team) {
-        Map<Integer, Long> collect = positionMap.entrySet().stream()
-            .filter(entry -> entry.getValue().getTeam() == team)
-            .filter(entry -> entry.getValue().isPawn())
-            .map(entry -> entry.getKey().getX())
-            .collect(groupingBy(Function.identity(), counting()));
-
-        long pawnSameFileCount = collect.values().stream()
-            .filter(value -> value > 1)
-            .mapToLong(value -> value)
-            .sum();
-
-        return pawnSameFileCount * 0.5;
+        return PointCalculator.calculatePawn(chessBoard, team);
     }
 }

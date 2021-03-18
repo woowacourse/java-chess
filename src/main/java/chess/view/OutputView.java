@@ -51,7 +51,7 @@ public class OutputView {
 
     public static void printStatus(EnumMap<Team, Double> result) {
         for (Map.Entry<Team, Double> entry : result.entrySet()) {
-            System.out.println(entry.getKey().getName() + "팀의 점수는 " + entry.getValue() + " 입니다.");
+            System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().getName(), entry.getValue());
         }
         System.out.println();
     }

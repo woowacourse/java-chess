@@ -7,8 +7,6 @@ public interface Piece {
 
     Strategy strategy();
 
-    void canMove();
-
     String getName();
 
     Team getTeam();

@@ -30,10 +30,8 @@ public class ChessController {
         if (chessGame.isReady() || chessGame.isEnd()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
-
         chessGame.move(command);
         OutputView.printBoard(chessGame.getBoard());
-
         if (chessGame.isEnd()) {
             OutputView.printTeamWin(chessGame.getWinTeam());
         }
@@ -47,7 +45,7 @@ public class ChessController {
         if (chessGame.isReady()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
-        OutputView.printStatus(chessGame.calculatePoint()); // <WHITE, 10>
+        OutputView.printStatus(chessGame.calculatePoint());
     }
 
     private String splitCommand(String inputCmd) {

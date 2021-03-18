@@ -10,6 +10,7 @@ public class Pawn implements Piece {
     public static final int BLACK_PAWN_START_LINE = 7;
     public static final int WHITE_PAWN_START_LINE = 2;
     public static final int MOVE_FIRST_RANGE = 2;
+    public static final int MOVE_DEFAULT_RANGE = 1;
 
     private final Team team;
 
@@ -23,16 +24,6 @@ public class Pawn implements Piece {
             return new Strategy(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
         }
         return new Strategy(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return true;
-    }
-
-    @Override
-    public void canMove() {
-
     }
 
     @Override
@@ -63,6 +54,11 @@ public class Pawn implements Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     @Override

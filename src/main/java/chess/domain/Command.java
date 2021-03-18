@@ -28,8 +28,4 @@ public enum Command {
     public void apply(ChessGame chessGame, String command) {
         function.accept(chessGame, command);
     }
-
-    public String getCommand() {
-        return command;
-    }
 }

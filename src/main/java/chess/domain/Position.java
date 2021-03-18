@@ -80,8 +80,8 @@ public class Position {
             (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
     }
 
-    public boolean isStraight(Position position) {
-        return calculateFileGap(position) == 0 && calculateRankGap(position) != 0;
+    public boolean isDiagonal(Position position) {
+        return Math.abs(calculateFileGap(position)) == Math.abs(calculateRankGap(position));
     }
 
     private int calculateRankGap(Position position) {

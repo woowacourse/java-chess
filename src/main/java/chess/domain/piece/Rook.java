@@ -8,6 +8,7 @@ public class Rook implements Piece {
 
     public static final double POINT = 5;
     private static final int MOVE_RANGE = 8;
+
     private final Team team;
 
     public Rook(Team team) {
@@ -17,16 +18,6 @@ public class Rook implements Piece {
     @Override
     public Strategy strategy() {
         return new Strategy(Direction.linearDirection(), MOVE_RANGE);
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public void canMove() {
-
     }
 
     @Override
@@ -56,6 +47,11 @@ public class Rook implements Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
         return false;
     }
 
