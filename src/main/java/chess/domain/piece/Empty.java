@@ -40,4 +40,9 @@ public class Empty extends Piece {
     public char getName() {
         return NAME;
     }
+
+    @Override
+    public double getScore() {
+        throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");
+    }
 }

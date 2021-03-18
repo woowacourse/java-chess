@@ -8,6 +8,7 @@ public class Rook extends Piece {
     private static final char NAME_WHEN_BLACK = 'R';
     private static final char NAME_WHEN_WHITE = 'r';
     private static final int STEP_RANGE = 8;
+    private static final int SCORE = 5;
 
     public Rook(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
@@ -21,6 +22,11 @@ public class Rook extends Piece {
     @Override
     public int getStepRange() {
         return STEP_RANGE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override

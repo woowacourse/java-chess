@@ -9,6 +9,7 @@ public class Pawn extends Piece {
     private static final char NAME_WHEN_WHITE = 'p';
     private static final int STEP_RANGE = 1;
     private static final int TWO_STEP_RANGE = 2;
+    private static final int SCORE = 1;
 
     private boolean moved = false;
 
@@ -66,6 +67,15 @@ public class Pawn extends Piece {
 
     public int getTwoStepRange() {
         return TWO_STEP_RANGE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
+    }
+
+    public double getHalfScore() {
+        return SCORE / 2;
     }
 
     @Override

@@ -8,6 +8,7 @@ public class Bishop extends Piece {
     private static final char NAME_WHEN_BLACK = 'B';
     private static final char NAME_WHEN_WHITE = 'b';
     private static final int STEP_RANGE = 8;
+    private static final int SCORE = 3;
 
     public Bishop(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
@@ -29,5 +30,10 @@ public class Bishop extends Piece {
             return NAME_WHEN_BLACK;
         }
         return NAME_WHEN_WHITE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

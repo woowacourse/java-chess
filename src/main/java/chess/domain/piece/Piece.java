@@ -40,6 +40,8 @@ public abstract class Piece {
 
     public abstract char getName();
 
+    public abstract double getScore();
+
     public void validateSourceAndTargetBeforeMove(Piece targetPiece){
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);

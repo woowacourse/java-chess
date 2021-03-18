@@ -8,6 +8,7 @@ public class King extends Piece {
     private static final char NAME_WHEN_BLACK = 'K';
     private static final char NAME_WHEN_WHITE = 'k';
     private static final int  STEP_RANGE= 1;
+    private static final int SCORE = 0;
 
     public King(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
@@ -29,5 +30,10 @@ public class King extends Piece {
             return NAME_WHEN_BLACK;
         }
         return NAME_WHEN_WHITE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }

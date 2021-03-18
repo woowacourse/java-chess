@@ -8,6 +8,7 @@ public class Queen extends Piece {
     private static final char NAME_WHEN_BLACK = 'Q';
     private static final char NAME_WHEN_WHITE = 'q';
     private static final int STEP_RANGE = 8;
+    private static final int SCORE = 9;
 
     public Queen(final Boolean isBlack, final char x, final char y) {
         super(isBlack, x, y);
@@ -16,6 +17,11 @@ public class Queen extends Piece {
     @Override
     public int getStepRange(){
         return STEP_RANGE;
+    }
+
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 
     @Override
