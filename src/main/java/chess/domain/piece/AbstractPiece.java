@@ -5,6 +5,7 @@ import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
     
+    protected static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
     protected final Color color;
     protected final Position position;
     
@@ -13,15 +14,10 @@ public abstract class AbstractPiece implements Piece {
         this.position = position;
     }
     
-//    protected boolean isMovable(Position position, List<Direction> directions, int ableLength) {
-//        return directions.stream()
-//                         .anyMatch(direction -> this.position.canMove(position, direction, ableLength));
-//    }
-    
     protected Direction findDirection(Position position, List<Direction> directions, int ableLength) {
         return directions.stream()
                          .filter(direction -> this.position.canMove(position, direction, ableLength))
-                         .findAny().orElseThrow(() -> new IllegalArgumentException("기물이 이동할 수 없는 위치입니다."));
+                         .findAny().orElseThrow(() -> new IllegalArgumentException(ERROR_CAN_NOT_MOVE));
     }
     
     protected String changeColorSymbol(String symbol) {
@@ -53,7 +49,9 @@ public abstract class AbstractPiece implements Piece {
         return color == this.color;
     }
     
+    // todo - 함수명 변경 후 즉시 에러 출력
     protected boolean isObstacleAtDirection(Position position, Direction direction, List<List<Piece>> board) {
+        // todo - 인덴트 줄이기
         int dx = this.position.getX().getPoint();
         int dy = this.position.getY().getPoint();
         for (int i = 1; i < 7; i++) {
