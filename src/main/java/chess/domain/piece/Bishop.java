@@ -18,11 +18,23 @@ public class Bishop extends Piece {
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
+        // 대각선인지 확인
         if (!this.position.isDiagonal(target)) {
             throw new IllegalArgumentException("[ERROR] 비숍 이동 규칙에 어긋납니다.");
         }
         Diagonal bishopDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
+        // 경로에 장애물이 있는지 확인
         bishopDiagonal.hasPieceInPath(this.position, target, currentPieces);
+
+        // 우리편 말이 있으면 예외
+        Piece targetPiece = currentPieces.findByPosition(target);
+        if((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
+                (Character.isLowerCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0)))) {
+            throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
+        }
+        if (!(targetPiece instanceof Empty)) {
+            currentPieces.removePieceByPosition(target);
+        }
         this.position = target;
     }
 

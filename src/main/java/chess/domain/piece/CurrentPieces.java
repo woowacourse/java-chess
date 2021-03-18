@@ -7,8 +7,8 @@ public class CurrentPieces {
 
     private List<Piece> currentPieces;
 
-    private CurrentPieces(List<Piece> currentPieces) {
-        this.currentPieces = currentPieces;
+    public CurrentPieces(List<Piece> currentPieces) {
+        this.currentPieces = new ArrayList<>(currentPieces);
     }
 
     public static CurrentPieces generate() {

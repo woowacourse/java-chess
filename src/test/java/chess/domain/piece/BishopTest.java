@@ -5,6 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -79,5 +80,21 @@ public class BishopTest {
 
         assertThatThrownBy(() ->  bishop.move(target, currentPieces))
         .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void 상대편_말을_공격한다() {
+        List<Piece> current = Arrays.asList(
+                new Bishop(Position.of('c', '8'), "B"),
+                new Pawn(Position.of('f','5'),"p"));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        Position source = Position.of('c', '8'); // 비숍 위치
+        Position target = Position.of('f','5'); // 옮기고자 하는 위치
+        Piece bishop = currentPieces.findByPosition(source);
+
+        bishop.move(target, currentPieces);
+
+        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
     }
 }
