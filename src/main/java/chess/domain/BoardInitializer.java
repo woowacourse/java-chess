@@ -52,7 +52,7 @@ public class BoardInitializer {
 
     private static void setBlank(Map<Position, Piece> result, Row row) {
         for (Column column : Column.values()) {
-            result.put(new Position(column, row), new Blank());
+            result.put(new Position(column, row), Blank.getBlank());
         }
     }
 }

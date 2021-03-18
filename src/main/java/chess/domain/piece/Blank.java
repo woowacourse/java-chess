@@ -8,9 +8,14 @@ import java.util.List;
 
 public class Blank extends Piece {
     private static final String BLANK_INITIAL = ".";
+    private static final Blank CACHED_BLANK = new Blank();
 
     public Blank() {
         super(Side.NONE, BLANK_INITIAL);
+    }
+
+    public static Blank getBlank() {
+        return CACHED_BLANK;
     }
 
     @Override

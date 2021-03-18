@@ -14,27 +14,11 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        // TODO 리팩터링
         if (isSideEqualTo(Side.BLACK)) {
-            if (rowDifference == 1) {
-                if (Math.abs(columnDifference) < 2) {
-                    return true;
-                }
-            }
-            if (rowDifference == 2) {
-                return isInitPosition();
-            }
+            return movableOneOrTwoSquare(rowDifference, columnDifference, 1);
         }
-
         if (isSideEqualTo(Side.WHITE)) {
-            if (rowDifference == -1) {
-                if (Math.abs(columnDifference) < 2) {
-                    return true;
-                }
-            }
-            if (rowDifference == -2) {
-                return isInitPosition();
-            }
+            return movableOneOrTwoSquare(rowDifference, columnDifference, -1);
         }
 
         return false;
@@ -53,5 +37,20 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    private boolean movableOneOrTwoSquare(int rowDifference, int columnDifference, int direction) {
+        if (oneSquareForward(rowDifference, columnDifference, direction)) {
+            return true;
+        }
+        return twoSquareForward(rowDifference, direction);
+    }
+
+    private boolean twoSquareForward(int rowDifference, int direction) {
+        return rowDifference == direction * 2 && isInitPosition();
+    }
+
+    private boolean oneSquareForward(int rowDifference, int columnDifference, int direction) {
+        return rowDifference == direction && Math.abs(columnDifference) < 2;
     }
 }

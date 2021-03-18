@@ -11,7 +11,7 @@ class BlankTest {
     @Test
     @DisplayName("기물이 없는 빈칸 선택시 예외발생")
     void getRoute() {
-        Piece blank = new Blank();
+        Piece blank = Blank.getBlank();
         assertThatThrownBy(() -> blank.route(Position.of("a1"), Position.of("a2")))
                 .isInstanceOf(PieceDoesNotExistException.class);
     }

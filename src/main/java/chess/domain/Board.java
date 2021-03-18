@@ -37,21 +37,37 @@ public class Board {
 
         // 폰: 대각선이면 상대 기물있어야 함, 직선이면 블랭크여야 함
         if (piece.isPawn()) {
-            if (Math.abs(Position.differenceOfRow(from, to)) == Math.abs(Position.differenceOfColumn(from, to))) {
-                if (board.get(to).isBlank()) {
-                    throw new InvalidMovementException("이동하려는 위치에 상대 기물이 존재하지 않습니.");
-                }
-            }
-            if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
-                if (!board.get(to).isBlank()) {
-                    throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
-                }
-            }
+            checkMoveDiagonal(from, to);
+            checkMoveVertical(from, to);
         }
 
         board.put(to, piece);
-        board.put(from, new Blank()); // todo Blank 캐싱
+        board.put(from, Blank.getBlank());
         piece.moved();
+    }
+
+    private void checkMoveVertical(Position from, Position to) {
+        if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
+            checkPieceExistInToPosition(to);
+        }
+    }
+
+    private void checkPieceExistInToPosition(Position to) {
+        if (!board.get(to).isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
+        }
+    }
+
+    private void checkMoveDiagonal(Position from, Position to) {
+        if (Math.abs(Position.differenceOfRow(from, to)) == Math.abs(Position.differenceOfColumn(from, to))) {
+            checkOpponentPieceNotExistInToPosition(to);
+        }
+    }
+
+    private void checkOpponentPieceNotExistInToPosition(Position to) {
+        if (board.get(to).isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 상대 기물이 존재하지 않습니다.");
+        }
     }
 
     private void checkRoute(List<Position> route) {
