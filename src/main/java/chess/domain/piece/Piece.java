@@ -24,5 +24,13 @@ public abstract class Piece {
         return name;
     }
 
+    public boolean isBlack() {
+        return team.isBlack();
+    }
+
+    public boolean isWhite() {
+        return team.isWhite();
+    }
+
     public abstract List<Position> searchMovablePositions(Position target);
 }

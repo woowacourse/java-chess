@@ -31,6 +31,10 @@ public class Position {
                 .orElseThrow(RuntimeException::new);
     }
 
+    public boolean isSameVertical(Vertical vertical) {
+        return this.vertical == vertical;
+    }
+
     public static List<Position> getPositions() {
         return Collections.unmodifiableList(CACHE);
     }
