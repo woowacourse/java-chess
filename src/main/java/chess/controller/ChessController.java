@@ -22,14 +22,19 @@ public class ChessController {
             if (command.equals("end")) {
                 return;
             }
-
             if (command.startsWith("move")) {
-                List<String> strGroup = Arrays.asList(command.split(" "));
-                Position source = new Position(strGroup.get(1).charAt(0), strGroup.get(1).charAt(1));
-                Position target = new Position(strGroup.get(2).charAt(0), strGroup.get(2).charAt(1));
-                grid.move(source, target);
+                move(grid, command);
             }
             OutputView.printGridStatus(grid);
         }
+    }
+
+    private void move(Grid grid, String command) {
+        List<String> strGroup = Arrays.asList(command.split(" "));
+        String sourceString = strGroup.get(1);
+        String targetString = strGroup.get(2);
+        Position source = new Position(sourceString.charAt(0), sourceString.charAt(1));
+        Position target = new Position(targetString.charAt(0), targetString.charAt(1));
+        grid.move(source, target);
     }
 }
