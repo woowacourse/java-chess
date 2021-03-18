@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -43,6 +42,24 @@ class KingTest {
         assertThat(isMovable).isTrue();
     }
 
+    @DisplayName("갈 수 없는 방향 이동")
+    @Test
+    void cannotMoveInvalidDirection1() {
+        Coordinate destination = Coordinate.from("e7");
+
+        boolean isMovable = king.isMovableTo(board, currentCoordinate, destination);
+        assertThat(isMovable).isFalse();
+    }
+
+    @DisplayName("갈 수 없는 방향 이동")
+    @Test
+    void cannotMoveInvalidDirection2() {
+        Coordinate destination = Coordinate.from("e8");
+
+        boolean isMovable = king.isMovableTo(board, currentCoordinate, destination);
+        assertThat(isMovable).isFalse();
+    }
+
     @DisplayName("King은 두 칸 이상 이동할 수 없다.")
     @Test
     void cannotMoveOverTwoCells() {
@@ -77,7 +94,7 @@ class KingTest {
     void cannotMoveToCheckCoordinate2() {
         board.put(new Rook(TeamType.WHITE), Coordinate.from("c5"));
 
-        boolean isMovable  = king.isMovableTo(board, currentCoordinate, Coordinate.from("e5"));
+        boolean isMovable = king.isMovableTo(board, currentCoordinate, Coordinate.from("e5"));
         assertThat(isMovable).isFalse();
     }
 
