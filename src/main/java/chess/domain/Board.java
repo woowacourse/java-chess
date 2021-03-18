@@ -99,4 +99,8 @@ public class Board {
         }
         return 0;
     }
+
+    public boolean checkDieKing() {
+        return false;
+    }
 }

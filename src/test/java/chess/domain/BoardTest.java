@@ -65,6 +65,12 @@ class BoardTest {
         OutputView.printCurrentBoard(board.unwrap());
     }
 
+    @Test
+    @DisplayName("킹이 잡혔는지 확인하는 기능")
+    void checkDieKing() {
+        assertThat(board.checkDieKing()).isTrue();
+    }
+
     //TODO : blank 오류 확인
 //    @Test
 //    void name() {
