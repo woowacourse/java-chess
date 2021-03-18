@@ -4,6 +4,7 @@ import chess.domain.location.Location;
 import chess.domain.team.Team;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece implements Movable {
 
@@ -21,6 +22,10 @@ public abstract class Piece implements Movable {
         }
     }
 
+    public final boolean areYouHere(Location location) {
+        return this.location.equals(location);
+    }
+
     public List<Location> findPath(Location target) {
         List<Location> path = new ArrayList<>();
         int subX = location.subtractX(target);
@@ -34,5 +39,39 @@ public abstract class Piece implements Movable {
             next = next.moveByStep(dx, dy);
         }
         return path;
+    }
+
+    public boolean isSameTeam(Piece other) {
+        return (isBlackTeam() && other.isBlackTeam())
+            || (isWhiteTeam() && other.isWhiteTeam());
+    }
+
+    private boolean isBlackTeam() {
+        return team.isBlack();
+    }
+
+    private boolean isWhiteTeam() {
+        return team.isWhite();
+    }
+
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return team == piece.team && Objects.equals(location, piece.location);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(team, location);
     }
 }

@@ -47,4 +47,9 @@ public class Pawn extends Piece {
         return (team.isBlack() && location.isSameY(BLACK_PAWN_INITIAL_Y))
             || (team.isWhite() && location.isSameY(WHITE_PAWN_INITIAL_Y));
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }
