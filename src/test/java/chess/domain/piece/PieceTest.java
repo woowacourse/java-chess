@@ -20,6 +20,7 @@ class PieceTest {
     @BeforeEach
     void init() {
         chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
+        chessBoard.initializeBoard();
     }
 
     @DisplayName("Piece 정상 생성 테스트.")
@@ -88,15 +89,6 @@ class PieceTest {
         assertThat(Pawn.from("p", A2).isSamePosition(A2)).isEqualTo(true);
         assertThat(Queen.from("q", A2).isSamePosition(A2)).isEqualTo(true);
         assertThat(Rook.from("r", A2).isSamePosition(A2)).isEqualTo(true);
-    }
-
-    @DisplayName("target 위치로 이동한다.")
-    @Test
-    void moveTargetPosition() {
-        Source source = Source.valueOf(A2, chessBoard);
-        source.move(Target.valueOf(source, A3, chessBoard), chessBoard);
-
-        assertThat(source.isSamePosition(A3)).isEqualTo(true);
     }
 
     @DisplayName("source에서 선택한 말과 target의 말이 같은 색깔이면 예외가 발생한다.")

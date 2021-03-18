@@ -7,7 +7,7 @@ import java.util.Objects;
 import java.util.regex.Pattern;
 
 public abstract class Piece implements Movable {
-    private static final Pattern PATTERN = Pattern.compile("A-Z");
+    private static final Pattern PATTERN = Pattern.compile("[A-Z]");
 
     private final String piece;
     private final Color color;

@@ -7,6 +7,8 @@ import chess.domain.position.Target;
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
 
+    private boolean isFirst = true;
+
     private Pawn(final String piece, final Position position, final Color color) {
         super(piece, position, color);
     }
@@ -22,8 +24,17 @@ public class Pawn extends Piece {
     @Override
     public void move(final Target target, final ChessBoard chessBoard) {
         //todo : 위치를 움직일 수 있는지 체크한다.
-        changePosition(target.getPosition());
+        checkMove(target);
         chessBoard.changePiecePosition(this, target.getPosition());
+        changePosition(target.getPosition());
+    }
+
+    private void checkMove(final Target target) {
+        if (isFirst) {
+            // 1칸 또는 2칸 또는 못감 또는 대각선
+            isFirst = false;
+        }
+        // 1칸만
     }
 
     @Override

@@ -21,6 +21,7 @@ class ChessBoardTest {
     @BeforeEach
     void setUp() {
         chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
+        chessBoard.initializeBoard();
     }
 
     @DisplayName("ChessBoard 객체를 생성한다.")

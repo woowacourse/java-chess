@@ -44,4 +44,6 @@
     - [x] source에서 선택한 말과 target의 말이 같은 색깔이면 예외가 발생한다.
     - [ ] source에서 선택한 말이 움직임 수 없는 위치를 target에서 선택하면 예외가 발생한다. 
       - ex. 원래는 지나갈 수 있어도, 이동 경로에 다른 말이 있는경우 지나갈 수 없다.
-  
+
+### Rook 테스트 케이스 예시
+![rook](https://user-images.githubusercontent.com/50176238/111596208-40073300-8810-11eb-904e-feb0c43117fa.jpg)

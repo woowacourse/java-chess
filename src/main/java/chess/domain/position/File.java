@@ -38,4 +38,8 @@ public enum File {
     public String getFile() {
         return file;
     }
+
+    public int getValue() {
+        return value;
+    }
 }

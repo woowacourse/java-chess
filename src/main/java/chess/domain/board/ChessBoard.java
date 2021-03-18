@@ -12,14 +12,9 @@ public class ChessBoard {
 
     public ChessBoard(Map<Position, Piece> board) {
         this.board = board;
-        initializeBoard();
     }
 
     public void initializeBoard() {
-        reRangePiece();
-    }
-
-    private void reRangePiece() {
         PieceFactory.initializeWhitePiece()
                 .forEach(piece -> board.putIfAbsent(piece.getPosition(), piece));
         PieceFactory.initializeBlackPiece()
@@ -37,5 +32,9 @@ public class ChessBoard {
     public void changePiecePosition(Piece source, Position target) {
         board.put(source.getPosition(), null);
         board.put(target, source);
+    }
+
+    public void put(Piece piece) {
+        board.put(piece.getPosition(), piece);
     }
 }

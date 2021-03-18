@@ -43,6 +43,21 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
+    public static Position valueOf(final int rank, final int file) {
+        Rank findRank = Rank.findByValue(rank);
+        File findFile = File.findByValue(file);
+
+        return POSITIONS.get(findRank.getRank() + findFile.getFile());
+    }
+
+    public Rank getRank() {
+        return rank;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

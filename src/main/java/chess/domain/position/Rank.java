@@ -38,4 +38,8 @@ public enum Rank {
     public String getRank() {
         return rank;
     }
+
+    public int getValue() {
+        return value;
+    }
 }
