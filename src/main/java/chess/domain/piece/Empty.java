@@ -9,7 +9,7 @@ public class Empty extends Piece {
     private static final char NAME = '.';
 
     public Empty(final char x, final char y) {
-        super(false, x, y, null, 0);
+        super(false, x, y);
     }
 
     public Empty(Position position) {
@@ -47,7 +47,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    char getName() {
+    public char getName() {
         return NAME;
     }
 }

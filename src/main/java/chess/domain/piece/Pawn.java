@@ -2,15 +2,15 @@ package chess.domain.piece;
 
 import chess.domain.position.Direction;
 
-import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
     private static final char NAME_WHEN_BLACK = 'P';
     private static final char NAME_WHEN_WHITE = 'p';
+    private static final int STEP_RANGE = 1;
 
     public Pawn(final Boolean isBlack, final char x, final char y) {
-        super(isBlack, x, y, Direction.blackPawnDirection(), 1);
+        super(isBlack, x, y);
     }
 
     public List<Direction> getDirectionsOnTwoStep() {
@@ -29,7 +29,12 @@ public class Pawn extends Piece {
     }
 
     @Override
-    char getName() {
+    public int getStepRange() {
+        return STEP_RANGE;
+    }
+
+    @Override
+    public char getName() {
         if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
