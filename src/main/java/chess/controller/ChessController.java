@@ -48,6 +48,7 @@ public class ChessController {
         if (command.isStatus()) {
             StatusCommand statusCommand = (StatusCommand) command;
             OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
+            return;
         }
 
         OutputView.drawBoard(new BoardDto(board));
