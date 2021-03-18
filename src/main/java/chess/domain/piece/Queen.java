@@ -19,7 +19,24 @@ public class Queen extends Piece {
 
     @Override
     public boolean canMove(Position target, Position destination, Board board) {
-        return false;
+        Direction direction = target.directionToDestination(destination);
+        Position movedPosition = target;
+        while (true) {
+            movedPosition = movedPosition.moveTowardDirection(direction);
+
+            if (movedPosition != destination) {
+                if (board.getBoard().get(movedPosition) != null) {
+                    return false;
+                }
+            }
+            if (movedPosition == destination) {
+                Piece destinationPiece = board.getBoard().get(movedPosition);
+                if (destinationPiece != null&& destinationPiece.isSameTeam(destinationPiece)) {
+                    return false;
+                }
+                return true;
+            }
+        }
     }
 
     @Override
