@@ -20,13 +20,10 @@ class PiecesTest {
                 Piece.createPawn(Color.BLACK, 0, 0)
         ));
 
-        assertThat(pieces.findPieceByPosition(Color.BLACK, new Position(0, 0)))
-                .isEqualTo(Piece.createPawn(Color.BLACK, 0, 0));
-
-        assertThatThrownBy(() -> pieces.findPieceByPosition(Color.WHITE, new Position(0, 0)))
+        assertThatThrownBy(() -> pieces.movePiece(Color.WHITE, new Position(0, 0), new Position(0, 1), null))
                 .isExactlyInstanceOf(NoSuchPermittedChessPieceException.class);
 
-        assertThatThrownBy(() -> pieces.findPieceByPosition(Color.BLACK, new Position(0, 1)))
+        assertThatThrownBy(() -> pieces.movePiece(Color.BLACK, new Position(0, 1), new Position(0, 1), null))
                 .isExactlyInstanceOf(NoSuchPermittedChessPieceException.class);
     }
 

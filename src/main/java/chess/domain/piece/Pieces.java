@@ -21,7 +21,11 @@ public class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public Piece findPieceByPosition(final Color color, final Position source) {
+    public void movePiece(Color color, Position source, Position target, Board board) {
+        findPieceByPosition(color, source).move(target, board);
+    }
+
+    private Piece findPieceByPosition(final Color color, final Position source) {
         validateControllablePiece(color, source);
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(source))
@@ -107,5 +111,4 @@ public class Pieces {
                 ).flatMap(Function.identity())
                 .count();
     }
-
 }
