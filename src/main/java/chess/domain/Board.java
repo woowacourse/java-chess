@@ -54,10 +54,10 @@ public class Board {
             }
         }
     }
-
-    public Path calculatePath(Piece piece) {
-        return Path.of(piece, coordinates);
-    }
+//
+//    public Path calculatePath(Piece piece) {
+//        return Path.of(piece, coordinates);
+//    }
 
     public boolean isEmpty(Position position) {
         return coordinates.containsValue(position);

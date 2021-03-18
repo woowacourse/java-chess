@@ -14,8 +14,8 @@ public class Game {
     public Game() {
         board = BoardFactory.initializeBoard();
         players = new Players(Arrays.asList(
-                new Player(PieceColor.WHITE),
-                new Player(PieceColor.BLACK)
+                Player.of(PieceColor.WHITE),
+                Player.of(PieceColor.BLACK)
                 ));
         currentColor = PieceColor.WHITE;
         isPlaying = true;

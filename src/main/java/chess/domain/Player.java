@@ -12,6 +12,10 @@ public class Player {
         this.color = color;
     }
 
+    public static Player of(PieceColor color) {
+        return new Player(color);
+    }
+
     public boolean isOwnerOf(Piece piece) {
         return piece.isColor(color);
     }

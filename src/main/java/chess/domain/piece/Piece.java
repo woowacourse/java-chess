@@ -45,9 +45,9 @@ public abstract class Piece {
     public List<Direction> allowedDirection() {
         return moveStrategy.getDirections();
     }
-
-    public Path calculatePath(Board board) {
-        final List<Position> allowedPosition = new ArrayList<>();
-        return Path.of(allowedPosition, board);
-    }
+//
+//    public Path calculatePath(Board board) {
+//        final List<Position> allowedPosition = new ArrayList<>();
+//        return Path.of(allowedPosition, board);
+//    }
 }
