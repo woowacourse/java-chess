@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -17,7 +18,7 @@ public class ChessController {
                 break;
             }
             if (command.equals("start")) {
-                board = new Board();
+                board = BoardFactory.create();
             }
             if (command.equals("move")) {
 

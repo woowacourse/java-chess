@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
+
 public enum Direction {
     TOP(0, 1),
     RIGHT_TOP(1, 1),
@@ -16,6 +18,26 @@ public enum Direction {
     Direction(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public static Direction getDirectionFromWeight(int horizontalWeight, int verticalWeight) {
+        final int x = distinctDirection(horizontalWeight);
+        final int y = distinctDirection(verticalWeight);
+
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.x == x && direction.y == y)
+                .findAny()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static int distinctDirection(int weight) {
+        if (weight > 0) {
+            return 1;
+        }
+        if (weight < 0) {
+            return -1;
+        }
+        return 0;
     }
 
     public int getX() {
