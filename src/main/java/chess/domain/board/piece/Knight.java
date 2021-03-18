@@ -9,9 +9,9 @@ public class Knight extends Piece{
     }
 
     @Override
-    public void validateMove(Square source, Square target) {
-        int horizontalDifferent = source.getHorizontal().getDistance(target.getHorizontal());
-        int verticalDifferent = source.getVertical().getDistance(target.getVertical());
+    public void validateMove(Position source, Position target, boolean hasEnemy) {
+        int horizontalDifferent = source.getHorizontalDistance(target);
+        int verticalDifferent = source.getVerticalDistance(target);
 
         if(!((horizontalDifferent == 2 && verticalDifferent == 1) || (horizontalDifferent ==1 && verticalDifferent ==2))){
             throw new IllegalArgumentException();

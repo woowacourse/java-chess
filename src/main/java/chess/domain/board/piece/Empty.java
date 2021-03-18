@@ -1,7 +1,6 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.Position;
-import chess.domain.board.Square;
 
 public class Empty extends Piece{
     private static final Empty EMPTY = new Empty();
@@ -15,7 +14,7 @@ public class Empty extends Piece{
     }
 
     @Override
-    public void validateMove(Square source, Square target) {
+    public void validateMove(Position source, Position target, boolean hasEnemy) {
         throw new IllegalArgumentException();
     }
 

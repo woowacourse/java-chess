@@ -1,6 +1,7 @@
 package chess.domain.board.piece;
 
 import chess.domain.board.Horizontal;
+import chess.domain.board.Position;
 import chess.domain.board.Square;
 
 public abstract class Pawn extends Piece{
@@ -38,36 +39,34 @@ public abstract class Pawn extends Piece{
 
     public abstract boolean isFirstLine(Horizontal horizontal);
 
-    @Override
-    public void validateMove(Square source, Square target) {
+    public void validateMove(Position source, Position target, boolean isEnemy) {
         if (!(source.isForward(owner, target))){
             throw new IllegalArgumentException();
         }
 
-        if(!source.isStraight(target)){
-            throw new IllegalArgumentException();
+        // 첫번째 라인으로 두칸을 움직이고 싶은 경우
+        if (isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy)) {
+            return;
         }
 
-        // 그냥 한칸 이동의 경우
-        if (!(source.getDistance(target) == 1)) {
-            throw new IllegalArgumentException();
-        }
+        throw new IllegalArgumentException();
+    }
 
-        // 첫번째 라인인 경우
-        if (!(isFirstLine(source.getHorizontal())
-                && source.getDistance(target) == FIRST_MOVE_DISTANCE)) {
-            throw new IllegalArgumentException();
-        }
+    private boolean isValidStraightMove(Position source, Position target) {
+        return source.isStraight(target) && (isValidBasicMove(source, target) || isValidSpecialMove(source, target));
+    }
 
-        // 적이 있는 경우
-        if(!source.isEnemy(target)){
-            throw new IllegalArgumentException();
-        }
+    private boolean isValidBasicMove(Position source, Position target) {
+        return source.getDistance(target) == 1;
+    }
 
-        if(!(source.isDiagonal(target))
-                && source.getDistance(target) == 1){
-            throw new IllegalArgumentException();
-        }
+    private boolean isValidSpecialMove(Position source, Position target){
+        return isFirstLine(source.getHorizontal(target))
+                && source.getDistance(target) == FIRST_MOVE_DISTANCE;
+    }
+
+    private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){
+        return source.getDistance(target) == 1 && isEnemy;
     }
 
     @Override

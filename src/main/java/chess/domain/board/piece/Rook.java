@@ -10,7 +10,7 @@ public class Rook extends Piece{
     }
 
     @Override
-    public void validateMove(Square source, Square target) {
+    public void validateMove(Position source, Position target, boolean hasEnemy) {
         if (!source.isStraight(target)) {
             throw new IllegalArgumentException();
         }

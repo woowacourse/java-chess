@@ -14,7 +14,7 @@ public class BoardTest {
         Board board = BoardInitializer.initiateBoard();
 
         Square square = board.of(Vertical.B, Horizontal.TWO);
-
-        assertThat(square).isEqualTo(new Square(Vertical.B, Horizontal.TWO, Pawn.getInstanceOf(Owner.WHITE)));
+        Position position = new Position(Vertical.B, Horizontal.TWO);
+        assertThat(square).isEqualTo(new Square(position, Pawn.getInstanceOf(Owner.WHITE)));
     }
 }

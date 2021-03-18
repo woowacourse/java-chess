@@ -28,19 +28,19 @@ public class BoardInitializer {
         Vertical[] verticals = Vertical.values();
 
         return IntStream.range(0, verticals.length)
-                .mapToObj(i -> new Square(verticals[i], horizontal, pieces.get(i)))
+                .mapToObj(i -> new Square(new Position(verticals[i], horizontal), pieces.get(i)))
                 .collect(Collectors.toList());
     }
 
     public static List<Square> getPiecesOfSecondLine(Horizontal horizontal, Owner owner){
         return Arrays.stream(Vertical.values())
-                .map(vertical -> new Square(vertical, horizontal, Pawn.getInstanceOf(owner)))
+                .map(vertical -> new Square(new Position(vertical, horizontal), Pawn.getInstanceOf(owner)))
                 .collect(Collectors.toList());
     }
 
     public static List<Square> getEmptySquares(Horizontal horizontal){
         return Arrays.stream(Vertical.values())
-                .map(vertical -> new Square(vertical, horizontal))
+                .map(vertical -> new Square(new Position(vertical, horizontal)))
                 .collect(Collectors.toList());
     }
 

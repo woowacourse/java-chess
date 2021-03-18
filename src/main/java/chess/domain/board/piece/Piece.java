@@ -1,4 +1,5 @@
 package chess.domain.board.piece;
+import chess.domain.board.Position;
 import chess.domain.board.Square;
 
 public abstract class Piece {
@@ -8,7 +9,7 @@ public abstract class Piece {
         this.owner = owner;
     }
 
-    public abstract void validateMove(Square source, Square target);
+    public abstract void validateMove(Position source, Position target, boolean hasEnemy);
 
     public abstract Score score();
 
