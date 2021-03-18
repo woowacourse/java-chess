@@ -163,4 +163,12 @@ public class PieceOperatorTest {
             pieceOperator.move(Point.of("b2"), Point.of("c3"))
         ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
     }
+
+    @Test
+    @DisplayName("빈 공간을 이동하려는 경우 예외 처리")
+    void moveEmptyPoint() {
+        assertThatIllegalArgumentException().isThrownBy(()->
+            pieceOperator.move(Point.of("c3"), Point.of("c4"))
+        ).withMessage("해당 위치로는 이동할 수 없는 말입니다.");
+    }
 }
