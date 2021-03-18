@@ -1,7 +1,13 @@
 package chess.domain;
 
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.counting;
+import static java.util.stream.Collectors.groupingBy;
+
 import chess.domain.piece.Piece;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 public class Board {
     private final Map<Position, Piece> positionMap;
@@ -34,5 +40,27 @@ public class Board {
     public void movePiece(Position source, Position target) {
         positionMap.put(target, positionMap.get(source));
         positionMap.remove(source);
+    }
+
+    public double calculateTotalPoint(Team team) {
+        return positionMap.values().stream()
+            .filter(piece -> piece.getTeam() == team)
+            .mapToDouble(Piece::getPoint)
+            .sum();
+    }
+
+    public double updatePawnPoint(Team team) {
+        Map<Integer, Long> collect = positionMap.entrySet().stream()
+            .filter(entry -> entry.getValue().getTeam() == team)
+            .filter(entry -> entry.getValue().isPawn())
+            .map(entry -> entry.getKey().getX())
+            .collect(groupingBy(Function.identity(), counting()));
+
+        long pawnSameFileCount = collect.values().stream()
+            .filter(value -> value > 1)
+            .mapToLong(value -> value)
+            .sum();
+
+        return pawnSameFileCount * 0.5;
     }
 }
