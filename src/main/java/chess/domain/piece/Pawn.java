@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
@@ -13,6 +14,11 @@ public class Pawn extends Piece {
 
     public Pawn(Team team) {
         super(PAWN_NAME, team);
+    }
+
+    @Override
+    public boolean canMove(Position target, Position destination, Board board) {
+        return false;
     }
 
     @Override

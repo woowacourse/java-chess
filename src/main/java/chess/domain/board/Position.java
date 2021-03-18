@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.Direction;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -53,5 +55,17 @@ public class Position {
 
     public Vertical getVertical() {
         return vertical;
+    }
+
+    public Direction directionToDestination(Position destination) {
+        int horizontalWeight = destination.getHorizontalWeight() - getHorizontalWeight();
+        int verticalWeight = destination.getVerticalWeight() - getVerticalWeight();
+
+        return Direction.getDirectionFromWeight(horizontalWeight, verticalWeight);
+    }
+
+    public Position moveTowardDirection(Direction direction) {
+        return Position.of(Horizontal.findFromWeight(getHorizontalWeight() + direction.getX()),
+                Vertical.findFromWeight(getVerticalWeight() + direction.getY()));
     }
 }

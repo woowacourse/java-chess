@@ -43,6 +43,11 @@ public class Bishop extends Piece {
         return result;
     }
 
+    @Override
+    public boolean canMove(Position target, Position destination, Board board) {
+        return false;
+    }
+
     public int getScore() {
         return score;
     }

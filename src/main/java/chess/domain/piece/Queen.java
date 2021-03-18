@@ -18,6 +18,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public boolean canMove(Position target, Position destination, Board board) {
+        return false;
+    }
+
+    @Override
     public List<Position> searchMovablePositions(Position target) {
         List<Position> movablePositions = new ArrayList<>();
 

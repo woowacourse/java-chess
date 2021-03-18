@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
@@ -34,7 +35,35 @@ public class Rook extends Piece {
         return movablePositions;
     }
 
+    @Override
+    public boolean canMove(Position target, Position destination, Board board) {
+        Direction direction = target.directionToDestination(destination);
+        Position movedPosition = target;
+        while (true) {
+            movedPosition = movedPosition.moveTowardDirection(direction);
+
+            if (movedPosition != destination) {
+                if (board.getBoard().get(movedPosition) != null) {
+                    return false;
+                }
+            }
+            if (movedPosition == destination) {
+                Piece destinationPiece = board.getBoard().get(movedPosition);
+                if (destinationPiece != null&& destinationPiece.isSameTeam(destinationPiece)) {
+                    return false;
+                }
+                return true;
+            }
+        }
+    }
+
     public int getScore() {
         return score;
     }
 }
+
+/*
+1. destination이 아닌데 길목에 무언가 있으면 false
+2. destination인데 우리 팀 Piece면 false
+3. true
+ */

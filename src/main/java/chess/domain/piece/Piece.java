@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 import java.util.List;
@@ -32,5 +33,15 @@ public abstract class Piece {
         return team.isWhite();
     }
 
+    public abstract boolean canMove(Position target, Position destination, Board board);
+
     public abstract List<Position> searchMovablePositions(Position target);
+
+    public boolean isSameTeam(Piece piece){
+        return team.equals(piece.getTeam());
+    }
+
+    public Team getTeam() {
+        return team;
+    }
 }

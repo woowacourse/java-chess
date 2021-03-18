@@ -31,6 +31,10 @@ public class King extends Piece {
 
         return movablePositions;
     }
+    @Override
+    public boolean canMove(Position target, Position destination, Board board) {
+        return false;
+    }
 
     private List<Position> calculateBoardPosition(int changedHorizontalWeight, int changedVerticalWeight) {
         List<Position> result = new ArrayList<>();
