@@ -11,7 +11,7 @@ public enum Color {
         public Color next() {
             return BLACK;
         }
-    }, BLANK("BLANK") {
+    }, BLANK("우승자가 존재하지 않습니다.") {
         @Override
         public Color next() {
             throw new IllegalStateException("잘못된 상태입니다.");
@@ -32,5 +32,10 @@ public enum Color {
         return this == BLACK;
     }
     
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+    
     public abstract Color next();
+    
 }
