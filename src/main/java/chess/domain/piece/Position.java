@@ -1,5 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.board.Board;
+import chess.domain.piece.condition.MoveCondition;
+
+import java.util.List;
+import java.util.Optional;
+
 public class Position {
 
     private final int row;
@@ -38,5 +44,17 @@ public class Position {
         int result = row;
         result = 31 * result + column;
         return result;
+    }
+
+    public Position move(Position target, Board board, Piece piece, List<MoveCondition> moveConditions) {
+        Optional<MoveCondition> selectedCondition = moveConditions.stream()
+                .filter(moveCondition -> moveCondition.isSatisfyBy(board, piece, target))
+                .findAny();
+
+        if (!selectedCondition.isPresent()) {
+            throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
+        }
+
+        return target;
     }
 }

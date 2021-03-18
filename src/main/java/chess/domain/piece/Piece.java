@@ -74,15 +74,7 @@ public class Piece {
     }
 
     public void move(final Position target, final Board board) {
-        Optional<MoveCondition> selectedCondition = moveConditions.stream()
-                .filter(moveCondition -> moveCondition.isSatisfyBy(board, this, target))
-                .findAny();
-
-        if (!selectedCondition.isPresent()) {
-            throw new IllegalArgumentException("해당 위치로는 이동할 수 없습니다.");
-        }
-
-        position = target;
+       position.move(target, board, this, moveConditions);
     }
 
     public Color getColor() {
