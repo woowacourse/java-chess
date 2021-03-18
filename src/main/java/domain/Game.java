@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Piece;
 import domain.piece.Pieces;
 import domain.position.Column;
 import domain.position.Position;
@@ -27,5 +28,27 @@ public class Game {
             }
             System.out.println();
         }
+    }
+
+    public Piece pickStartPiece(Player player, Position position) {
+        Piece piece = pieces.getPieceOf(position);
+        if (piece.isSameColor(player.getColor())) {
+            return piece;
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public void action(Player player, Position from, Position to) {
+        Piece start = pickStartPiece(player, from);
+        Piece piece = pieces.getPieceOf(to);
+        if (piece.isEmpty()) {
+            start.move(to, pieces);
+            return;
+        }
+        if (piece.isSameColor(player.getColor())) {
+            throw new IllegalArgumentException();
+        }
+        start.kill(to, pieces);
+        pieces.delete(piece);
     }
 }

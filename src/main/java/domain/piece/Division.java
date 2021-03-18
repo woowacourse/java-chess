@@ -42,4 +42,14 @@ public abstract class Division extends Basis {
     public boolean hasPosition(Position position) {
         return this.position.equals(position);
     }
+
+    @Override
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
 }

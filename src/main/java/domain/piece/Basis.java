@@ -15,6 +15,10 @@ public abstract class Basis implements Piece {
 
     public abstract Position getPosition();
 
+    public abstract boolean isSameColor(Color color);
+
+    public abstract boolean isEmpty();
+
     @Override
     public String display() {
         return displayName;

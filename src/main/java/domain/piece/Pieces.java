@@ -65,4 +65,8 @@ public class Pieces {
     public List<Piece> toList() {
         return pieces;
     }
+
+    public void delete(Piece piece) {
+        pieces.remove(piece);
+    }
 }

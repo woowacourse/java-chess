@@ -26,4 +26,14 @@ public class Empty extends Basis {
     public Position getPosition() {
         throw new UnsupportedOperationException();
     }
+
+    @Override
+    public boolean isSameColor(Color color) {
+        throw new UnsupportedOperationException();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return true;
+    }
 }

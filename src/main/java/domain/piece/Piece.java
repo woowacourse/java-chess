@@ -12,4 +12,8 @@ public interface Piece {
     boolean hasPosition(Position position);
 
     Position getPosition();
+
+    boolean isSameColor(Color color);
+
+    boolean isEmpty();
 }
