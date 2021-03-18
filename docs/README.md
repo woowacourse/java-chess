@@ -20,10 +20,4 @@
 - [ ] end를 입력하면, 체스 게임을 종료한다
 
 ## To Do List
-- ChessGame에서 isMovable을 통해, 규칙 상 이동할 수 있음을 검증했음
-    - 이제 chosenPiece의 destination에 기물이 있다면, 이것이 상대 기물임을 체크한다
-        - 만약 자신 팀의 기물이라면, throw new Illegal
-        - 만약 상태 팀의 기물이라면, 잡은 후 Team의 잡은 기물에 추가하기 + Map 업데이트
-- Knight 이동 로직
-- King 이동 로직
 - 출력

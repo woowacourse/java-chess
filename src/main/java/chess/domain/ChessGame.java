@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Bishop;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.Team;
@@ -46,5 +47,13 @@ public class ChessGame {
         final Map<Position, Piece> chessBoard = blackTeam.getPiecePosition();
         chessBoard.putAll(whiteTeam.getPiecePosition());
         return Collections.unmodifiableMap(chessBoard);
+    }
+
+    public BlackTeam getBlackTeam() {
+        return blackTeam;
+    }
+
+    public WhiteTeam getWhiteTeam() {
+        return whiteTeam;
     }
 }
