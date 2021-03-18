@@ -1,5 +1,6 @@
 package chess.domain.pieces;
 
+import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
