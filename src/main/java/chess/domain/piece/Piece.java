@@ -74,7 +74,7 @@ public class Piece {
     }
 
     public void move(final Position target, final Board board) {
-       position.move(target, board, this, moveConditions);
+       this.position = position.changePosition(target, board, this, moveConditions);
     }
 
     public Color getColor() {
