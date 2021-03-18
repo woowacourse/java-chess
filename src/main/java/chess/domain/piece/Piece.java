@@ -1,22 +1,23 @@
 package chess.domain.piece;
 
+import chess.domain.move.Movable;
 import chess.domain.position.Position;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public abstract class Piece {
+public abstract class Piece implements Movable {
     private static final Pattern PATTERN = Pattern.compile("A-Z");
 
     private final String piece;
-    private final boolean isBlack;
+    private final Color color;
 
     private Position position;
 
-    protected Piece(final String piece, final boolean isBlack, final Position position) {
+    protected Piece(final String piece, final Position position, final Color color) {
         this.piece = piece;
-        this.isBlack = isBlack;
         this.position = position;
+        this.color = color;
     }
 
     public static boolean isBlack(final String piece) {
@@ -44,11 +45,15 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece1 = (Piece) o;
-        return isBlack == piece1.isBlack && Objects.equals(piece, piece1.piece) && Objects.equals(position, piece1.position);
+        return Objects.equals(piece, piece1.piece) && color == piece1.color && Objects.equals(position, piece1.position);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(piece, isBlack, position);
+        return Objects.hash(piece, color, position);
+    }
+
+    protected boolean isSameColor(final Piece piece) {
+        return color.equals(piece.color);
     }
 }
