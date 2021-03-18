@@ -9,7 +9,7 @@ public class King extends Piece{
     }
 
     @Override
-    public void validateMove(Position source, Position target, boolean hasEnemy) {
+    public void validateMove(Position source, Position target, Piece targetPiece) {
         if(source.getDistance(target) != ABLE_DISTANCE_TO_MOVE){
             throw new IllegalArgumentException();
         }

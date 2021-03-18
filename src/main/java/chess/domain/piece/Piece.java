@@ -8,7 +8,7 @@ public abstract class Piece {
         this.owner = owner;
     }
 
-    public abstract void validateMove(Position source, Position target, boolean hasEnemy);
+    public abstract void validateMove(Position source, Position target, Piece targetPiece);
 
     public abstract Score score();
 

@@ -38,13 +38,13 @@ public abstract class Pawn extends Piece{
 
     public abstract boolean isFirstLine(Horizontal horizontal);
 
-    public void validateMove(Position source, Position target, boolean isEnemy) {
+    public void validateMove(Position source, Position target, Piece targetPiece) {
         if (!(source.isForward(owner, target))){
             throw new IllegalArgumentException();
         }
 
         // 첫번째 라인으로 두칸을 움직이고 싶은 경우
-        if (isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy)) {
+        if (isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy(targetPiece))) {
             return;
         }
 

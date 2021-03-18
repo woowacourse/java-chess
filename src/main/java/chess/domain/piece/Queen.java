@@ -9,7 +9,7 @@ public class Queen extends Piece{
     }
 
     @Override
-    public void validateMove(Position source, Position target, boolean hasEnemy) {
+    public void validateMove(Position source, Position target, Piece targetPiece) {
         if(!(source.isStraight(target) || source.isDiagonal(target))){
             throw new IllegalArgumentException();
         }

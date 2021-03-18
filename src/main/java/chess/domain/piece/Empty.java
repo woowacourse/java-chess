@@ -14,7 +14,7 @@ public class Empty extends Piece{
     }
 
     @Override
-    public void validateMove(Position source, Position target, boolean hasEnemy) {
+    public void validateMove(Position source, Position target, Piece targetPiece) {
         throw new IllegalArgumentException();
     }
 

@@ -5,25 +5,30 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.*;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class BoardInitializer {
 
     public static Board initiateBoard() {
-        List<Line> lines = Arrays.asList(
-            new Line(getPiecesOfFirstLine(Horizontal.ONE, Owner.WHITE)),
-            new Line(getPiecesOfSecondLine(Horizontal.TWO, Owner.WHITE)),
-            new Line(getEmptySquares(Horizontal.THREE)),
-            new Line(getEmptySquares(Horizontal.FOUR)),
-            new Line(getEmptySquares(Horizontal.FIVE)),
-            new Line(getEmptySquares(Horizontal.SIX)),
-            new Line(getPiecesOfSecondLine(Horizontal.SEVEN, Owner.BLACK)),
-            new Line(getPiecesOfFirstLine(Horizontal.EIGHT, Owner.BLACK))
+        List<List<Square>> lines = Arrays.asList(
+                getPiecesOfFirstLine(Horizontal.EIGHT, Owner.BLACK),
+                getPiecesOfSecondLine(Horizontal.SEVEN, Owner.BLACK),
+                getEmptySquares(Horizontal.SIX),
+                getEmptySquares(Horizontal.FIVE),
+                getEmptySquares(Horizontal.FOUR),
+                getEmptySquares(Horizontal.THREE),
+                getPiecesOfSecondLine(Horizontal.TWO, Owner.WHITE),
+                getPiecesOfFirstLine(Horizontal.ONE, Owner.WHITE)
         );
-        return new Board(lines);
+
+        Map<Position, Square> map = new LinkedHashMap<>();
+        lines.stream()
+                .flatMap(squares -> squares.stream())
+                .forEach(square -> map.put(square.getPosition(), square));
+
+        return new Board(map);
     }
 
     public static List<Square> getPiecesOfFirstLine(Horizontal horizontal, Owner owner){

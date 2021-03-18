@@ -22,7 +22,7 @@ public class Square {
             throw new IllegalArgumentException();
         }
 
-        piece.validateMove(this.position, target.position, isEnemy(target));
+        piece.validateMove(this.position, target.position, target.piece);
         target.piece = this.piece;
 
         this.piece = Empty.getInstance();
@@ -37,11 +37,11 @@ public class Square {
         return piece;
     }
 
-    public boolean hasEmpty(Square target) {
-        return !(target.piece instanceof Empty);
-    }
-
     public boolean isEnemy(Square target) {
         return this.piece.isEnemy(target.piece);
+    }
+
+    public Position getPosition() {
+        return position;
     }
 }

@@ -1,24 +1,28 @@
 package chess.domain.board;
 
 import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Map;
 
 public class Board {
-    private final List<Line> lines;
+    private final Map<Position, Square> squares;
 
-    public Board(List<Line> lines){
-        this.lines = lines;
+    public Board(Map<Position, Square> squares){
+        this.squares = squares;
     }
 
-    public List<Line> getLines(){
-        return new ArrayList<>(lines);
+    public Square of(Vertical vertical, Horizontal horizontal) {
+        return squares.get(new Position(vertical, horizontal));
     }
 
-    public Square of(Vertical vertical, Horizontal horizontal){
-        final Line horizontalLine = lines.get(vertical.getIndex());
-        return horizontalLine.getIndex(horizontal.getIndex());
+    public Map<Position, Square> getSquares() {
+        return squares;
+    }
+
+    public void move(Square source, Square target){
+        // 중간에 아무것도 없다는거 확인
+        source.move(target);
     }
 }
