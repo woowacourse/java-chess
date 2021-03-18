@@ -6,10 +6,12 @@ import chess.domain.piece.Piece;
 public class WhiteTeam extends Team {
     private static final int WHITE_PAWN_COLUMN = 1;
     private static final int WHITE_PIECE_COLUMN = 0;
+    private static final int WHITE_PAWN_DIRECTION = 1;
 
     public WhiteTeam() {
         super();
-        initializePiece(WHITE_PAWN_COLUMN, WHITE_PIECE_COLUMN);
+        initializePawn(WHITE_PAWN_COLUMN, WHITE_PAWN_DIRECTION);
+        initializePiece(WHITE_PIECE_COLUMN);
     }
 
     @Override

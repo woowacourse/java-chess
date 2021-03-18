@@ -5,9 +5,11 @@ import chess.domain.Position;
 import java.util.Map;
 
 public class Pawn extends Piece {
+    private final int direction;
     private boolean started;
 
-    public Pawn() {
+    public Pawn(final int direction) {
+        this.direction = direction;
         started = false;
     }
 

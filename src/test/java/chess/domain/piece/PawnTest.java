@@ -4,9 +4,18 @@ import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 public class PawnTest {
+    @Test
+    @DisplayName("방향을 지정한 폰을 정상 생성한다.")
+    void init_direction_fixed_pawn() {
+        assertThatCode(() -> new Pawn(1))
+                .doesNotThrowAnyException();
+    }
+
+
     @Test
     @DisplayName("이동할 수 있는 좌표가 주어졌을 때, 폰이 움직일 수 있는 칸인지 체크한다.")
     void when_give_position_check_pawn_movable() {
