@@ -47,4 +47,30 @@ public abstract class Piece {
                 ", isBlack=" + isBlack +
                 '}';
     }
+
+    public void validateSourceAndTargetBeforeMove(Piece targetPiece){
+        validatePositionInGrid(targetPiece);
+        validateTargetPiece(targetPiece);
+        validateSourcePiece();
+    }
+
+    private void validatePositionInGrid(Piece targetPiece){
+        Position source = this.getPosition();
+        Position target = targetPiece.getPosition();
+        if (!source.isInGridRange() || !target.isInGridRange()) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private void validateTargetPiece(Piece targetPiece) {
+        if (!targetPiece.isEmpty() && isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+        }
+    }
+
+    private void validateSourcePiece() {
+        if (isEmpty()) {   // TODO: + 자신의 말 색깔일때
+            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
+        }
+    }
 }

@@ -15,8 +15,9 @@ public class GridTest {
         Position source = new Position('b', '1');
         Position target = new Position('c', '3');
         Piece sourcePiece = grid.findPiece(source);
-        grid.move(source, target);
         Piece targetPiece = grid.findPiece(target);
-        assertThat(sourcePiece).isEqualTo(targetPiece);
+
+        grid.move(sourcePiece, targetPiece);
+        assertThat(sourcePiece.getPosition()).isEqualTo(target);
     }
 }

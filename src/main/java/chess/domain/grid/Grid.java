@@ -35,87 +35,66 @@ public class Grid {
         lines.add(Line.createGeneralLine(FIRST_ROW, false));
     }
 
-    public void move(Position source, Position target) {
-        Piece sourcePiece = findPiece(source);
-        Piece targetPiece = findPiece(target);
-
-        validatePositionInGrid(source, target);
-        validateSourcePiece(sourcePiece);
-        validateTargetPiece(sourcePiece, targetPiece);
+    public void move(Piece sourcePiece, Piece targetPiece) {
+        sourcePiece.validateSourceAndTargetBeforeMove(targetPiece);
 
         if (sourcePiece instanceof Pawn) {
-            validatePawnSteps(source, target);
+            validatePawnSteps((Pawn)sourcePiece, targetPiece);
             ((Pawn) sourcePiece).moved();
         }
         if (!(sourcePiece instanceof Pawn)) {
-            validateGeneralSteps(source, target);
+            validateGeneralSteps(sourcePiece, targetPiece);
         }
 
-        assignPiece(source, new Empty(source));
-        assignPiece(target, sourcePiece);
+        Position sourcePosition = sourcePiece.getPosition();
+        Position targetPosition = targetPiece.getPosition();
+        assignPiece(sourcePosition, new Empty(sourcePosition));
+        assignPiece(targetPosition, sourcePiece);
     }
 
-    private void validateTargetPiece(Piece sourcePiece, Piece targetPiece) {
-        if (!targetPiece.isEmpty() && sourcePiece.isSameColor(targetPiece)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-    }
-
-    private void validatePositionInGrid(Position source, Position target) {
-        if (!source.isInGridRange() || !target.isInGridRange()) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-    }
-
-    private void validateSourcePiece(Piece sourcePiece) {
-        if (sourcePiece.isEmpty()) {   // TODO: + 자신의 말 색깔일때
-            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
-        }
-    }
-
-    private void validateGeneralSteps(Position source, Position target) {
-        Piece sourcePiece = findPiece(source);
+    private void validateGeneralSteps(Piece sourcePiece, Piece targetPiece) {
+        Position sourcePosition = sourcePiece.getPosition();
+        Position targetPosition = targetPiece.getPosition();
 
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
+            movablePositions.addAll(extractMovablePositionsByDirection(sourcePosition, direction, sourcePiece.getStepRange()));
         }
 
-        validateTargetInMovablePositions(movablePositions, target);
+        validateTargetInMovablePositions(movablePositions, targetPosition);
     }
 
-    private void validatePawnSteps(Position source, Position target) {
-        Pawn sourcePiece = (Pawn) findPiece(source);
-        Piece targetPiece = findPiece(target);
+    private void validatePawnSteps(Pawn sourcePiece, Piece targetPiece) {
+        Position sourcePosition = sourcePiece.getPosition();
+        Position targetPosition = targetPiece.getPosition();
 
         List<Position> movablePositions = new ArrayList<>();
         // 1칸 이동하는 경우
         for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, sourcePiece.getStepRange()));
+            movablePositions.addAll(extractMovablePositionsByDirection(sourcePosition, direction, sourcePiece.getStepRange()));
         }
         // 2칸 이동하는 경우
         for (Direction direction : sourcePiece.getDirectionsOnTwoStep()) {
-            movablePositions.addAll(extractMovablePositionsByDirection(source, direction, 2));
+            movablePositions.addAll(extractMovablePositionsByDirection(sourcePosition, direction, 2));
         }
         movablePositions = movablePositions.stream()
                 .distinct()
                 .collect(Collectors.toList());
 
-        if (sourcePiece.hasMoved() && Math.abs(target.getY() - source.getY()) == 2) {
+        if (sourcePiece.hasMoved() && Math.abs(targetPosition.getY() - sourcePosition.getY()) == 2) {
             throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
         }
 
-        if (Math.abs(target.getY() - source.getY()) == 1 &&
-                Math.abs(target.getX() - source.getX()) == 1 && targetPiece.isEmpty()) {
+        if (Math.abs(targetPosition.getY() - sourcePosition.getY()) == 1 &&
+                Math.abs(targetPosition.getX() - sourcePosition.getX()) == 1 && targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 상대 말을 먹을 때만 대각선으로 이동이 가능합니다.");
         }
 
-        if (Math.abs(target.getY() - source.getY()) == 1 && Math.abs(target.getX() - source.getX()) == 0 && !targetPiece.isEmpty()) {
+        if (Math.abs(targetPosition.getY() - sourcePosition.getY()) == 1 && Math.abs(targetPosition.getX() - sourcePosition.getX()) == 0 && !targetPiece.isEmpty()) {
             throw new IllegalArgumentException("폰은 한칸 앞 말이 있으면 가지 못합니다.");
         }
 
-
-        validateTargetInMovablePositions(movablePositions, target);
+        validateTargetInMovablePositions(movablePositions, targetPosition);
     }
 
     private void validateTargetInMovablePositions(List<Position> movablePositions, Position target) {
@@ -142,7 +121,7 @@ public class Grid {
         return positions;
     }
 
-    Piece findPiece(final Position position) {
+    public Piece findPiece(final Position position) {
         char x = position.getX();
         char y = position.getY();
         Line line = findLineByYPosition(y);

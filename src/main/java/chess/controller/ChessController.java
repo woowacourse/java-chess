@@ -35,6 +35,7 @@ public class ChessController {
         String targetString = strGroup.get(2);
         Position source = new Position(sourceString.charAt(0), sourceString.charAt(1));
         Position target = new Position(targetString.charAt(0), targetString.charAt(1));
-        grid.move(source, target);
+
+        grid.move(grid.findPiece(source), grid.findPiece(target));
     }
 }

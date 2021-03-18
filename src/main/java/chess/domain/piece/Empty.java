@@ -22,11 +22,6 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Position getPosition() {
-        throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");
-    }
-
-    @Override
     public List<Direction> getDirections() {
         throw new UnsupportedOperationException("해당 메서드를 사용하면 안 됩니다.");
     }
