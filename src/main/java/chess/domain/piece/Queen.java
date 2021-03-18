@@ -14,11 +14,14 @@ public class Queen extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return null;
+        return Position.getRoute(from, to);
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        return false;
+        if (rowDifference == 0 || columnDifference == 0) {
+            return true;
+        }
+        return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 }
