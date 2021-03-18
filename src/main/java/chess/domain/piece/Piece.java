@@ -18,4 +18,8 @@ public abstract class Piece {
         }
         return pieceType.getType();
     }
+
+    public boolean isColor(PieceColor color) {
+        return pieceColor.equals(color);
+    }
 }
