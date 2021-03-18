@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Diagonal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BishopTest {
     private CurrentPieces currentPieces;
@@ -41,6 +43,29 @@ public class BishopTest {
         bishop.move(Position.of('e', '6'), currentPieces);
 
         assertThat(bishop.getPosition()).isEqualTo(Position.of('e', '6'));
-
     }
+
+    @Test
+    void 비숍_이동에_장애물() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+        Position source = Position.of('f', '8'); // 비숍 위치
+        Position target = Position.of('h', '6'); // 옮기고자 하는 위치
+        Piece bishop = currentPieces.findByPosition(source);
+        Diagonal bishopD = Diagonal.findDiagonalByTwoPosition(source, target);
+        assertThatThrownBy((() ->bishopD.hasPieceInPath(bishop.getPosition(), target, currentPieces)))
+                .isInstanceOf(IllegalArgumentException.class);
+    }
+//
+//    @Test
+//    void 비숍_이동() {
+//        CurrentPieces currentPieces = CurrentPieces.generate();
+//        Position source = Position.of('h', '6'); // 비숍 위치
+//        Position target = Position.of('g', '5'); // 옮기고자 하는 위치
+//        Piece bishop = currentPieces.findByPosition(source);
+//        System.out.println(bishop);
+//        Diagonal bishopD = Diagonal.findDiagonalByTwoPosition(source, target);
+//        System.out.println(bishopD);
+//        bishopD.hasPieceInPath(bishop.getPosition(), target, currentPieces);
+//
+//    }
 }
