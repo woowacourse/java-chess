@@ -6,13 +6,14 @@ public class Position {
     private static final Map<String, Position> positionMap = new HashMap<>();
 
     static {
-        String[] alphabets = {"a", "b", "c", "d", "e", "f", "g", "h"};
-        String[] numbers = {"1", "2", "3", "4", "5", "6", "7", "8"};
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                positionMap.put(alphabets[i] + numbers[j], new Position(i, j));
-            }
-        }
+        final List<String> alphabets = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
+        final List<String> numbers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
+
+        alphabets.stream().flatMap(alphabet -> numbers.stream().map(number -> alphabet + number))
+                .forEach(positionStr -> positionMap.put(
+                        positionStr,
+                        new Position(alphabets.indexOf(positionStr.substring(0, 1)),
+                                numbers.indexOf(positionStr.substring(1, 2)))));
     }
 
     private final int x;
