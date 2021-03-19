@@ -2,6 +2,7 @@ package chess.view;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InputView {
@@ -34,7 +35,7 @@ public class InputView {
 
     public static List<String> inputRuntimeCommand() {
         try {
-            final List<String> commands = Arrays.asList(SCANNER.nextLine().split(" "));
+            final List<String> commands = Arrays.asList(SCANNER.nextLine().toLowerCase().split(" "));
             validateRuntimeCommand(commands);
             return commands;
         } catch (IllegalStateException e) {
@@ -59,6 +60,6 @@ public class InputView {
     }
 
     public static boolean isStatusInput() {
-        return STATUS_COMMAND.equals(SCANNER.nextLine());
+        return STATUS_COMMAND.equals(SCANNER.nextLine().toUpperCase());
     }
 }
