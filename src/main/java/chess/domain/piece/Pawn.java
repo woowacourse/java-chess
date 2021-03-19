@@ -45,14 +45,15 @@ public class Pawn extends Piece {
     }
 
     private boolean checkPositionRuleAfterMove(final Position current, final Position destination) {
-        if (current.moveY(direction).equals(destination)) {
+        if (current.moveXandY(0, direction).equals(destination)) {
             return true;
         }
         return current.checkDiagonalToDirection(destination, direction);
     }
 
     private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
-        if (current.moveY(direction).equals(destination) || current.moveY(direction * 2).equals(destination)) {
+        if (current.moveXandY(0, direction).equals(destination) ||
+                current.moveXandY(0,direction * 2).equals(destination)) {
             return true;
         }
         return current.checkDiagonalToDirection(destination, direction);
