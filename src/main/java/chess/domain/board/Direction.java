@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import java.util.Arrays;
+
 public enum Direction {
     LEFT(-1, 0),
     RIGHT(1, 0),
@@ -9,6 +11,14 @@ public enum Direction {
     LEFT_DOWN(-1, -1),
     RIGHT_UP(1, 1),
     RIGHT_DOWN(1, -1),
+    LEFT_LEFT_UP(-2, 1),
+    LEFT_LEFT_DOWN(-2, -1),
+    LEFT_UP_UP(-1, 2),
+    LEFT_DOWN_DOWN(-1, -2),
+    RIGHT_RIGHT_UP(2, 1),
+    RIGHT_RIGHT_DOWN(2, -1),
+    RIGHT_UP_UP(1, 2),
+    RIGHT_DOWN_DOWN(1, -2),
     OTHERS(0, 0);
 
     private final int x;
@@ -32,7 +42,24 @@ public enum Direction {
         if (Math.abs(fileDiff) == Math.abs(rankDiff)) {
             return diagonalDirection(fileDiff, rankDiff);
         }
+        if (Math.abs(fileDiff) + Math.abs(rankDiff) == 3) {
+            return knightDirection(fileDiff, rankDiff);
+        }
         return OTHERS;
+    }
+
+    private static Direction knightDirection(int fileDiff, int rankDiff) {
+        return Arrays.stream(Direction.values())
+            .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static Direction knightDirection(int fileDiff, int rankDiff) {
+        return Arrays.stream(Direction.values())
+            .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
+            .findAny()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     private static Direction diagonalDirection(int fileDiff, int rankDiff) {
