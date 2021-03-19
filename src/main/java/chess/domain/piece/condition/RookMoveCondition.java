@@ -24,8 +24,7 @@ public class RookMoveCondition extends MoveCondition {
     private boolean isNotExistObstacleOnCrossPath(Board board, Piece piece, Position target) {
         return board.getPieces().stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistObstacleOnCrossPath(piece, target)
-                );
+                .noneMatch(isExistObstacleOnCrossPath(piece, target));
     }
 
     private Predicate<Piece> isExistObstacleOnCrossPath(final Piece piece, final Position target) {
