@@ -1,11 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.view.OutputView;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -16,12 +13,12 @@ class PawnTest {
     @Test
     @DisplayName("앞으로 한칸 이동 가능한 지 판단하는 기능")
     void canMoveOneBlock() {
-        assertThat(white.canMove(new Position("a", "2"), new Position("a", "3"), new Blank()))
+        assertThat(white.canMove(new Position("a", "2"), new Position("a", "3"), Blank.getInstance()))
                 .isTrue();
         assertThat(white.canMove(new Position("a", "2"), new Position("a", "3"), new King(Team.WHITE)))
                 .isFalse();
 
-        assertThat(black.canMove(new Position("a", "7"), new Position("a", "6"), new Blank()))
+        assertThat(black.canMove(new Position("a", "7"), new Position("a", "6"), Blank.getInstance()))
                 .isTrue();
         assertThat(black.canMove(new Position("a", "7"), new Position("a", "6"), new King(Team.WHITE)))
                 .isFalse();
@@ -44,9 +41,9 @@ class PawnTest {
     @Test
     @DisplayName("처음 움직이는 경우 두칸 이동 가능 판단 기능")
     void checkInitialMove() {
-        assertThat(white.canMove(new Position("a", "2"), new Position("a", "4"), new Blank()))
+        assertThat(white.canMove(new Position("a", "2"), new Position("a", "4"), Blank.getInstance()))
                 .isTrue();
-        assertThat(black.canMove(new Position("a", "7"), new Position("a", "5"), new Blank()))
+        assertThat(black.canMove(new Position("a", "7"), new Position("a", "5"), Blank.getInstance()))
                 .isTrue();
     }
 }

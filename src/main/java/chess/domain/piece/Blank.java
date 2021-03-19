@@ -3,10 +3,15 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Blank extends Piece {
+    private static final Piece blank = new Blank();
     private static final String INITIAL_NAME = ".";
 
-    public Blank() {
+    private Blank() {
         super(Team.NOTHING, INITIAL_NAME);
+    }
+
+    public static Piece getInstance() {
+        return blank;
     }
 
     @Override

@@ -22,14 +22,14 @@ public class Board {
         validateRightTurn(source, team);
         if (checkPath(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
-            chessBoard.put(source, new Blank());
+            chessBoard.put(source, Blank.getInstance());
             return;
         }
         throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
     }
 
     public void validateRightTurn(final Position source, final Team team) {
-        if (chessBoard.get(source).equals(new Blank())) {
+        if (chessBoard.get(source) instanceof Blank) {
             return;
         }
         if (!chessBoard.get(source).isSameTeam(team)) {
@@ -60,7 +60,7 @@ public class Board {
 
     private boolean hasNoPiecesInPath(final List<Position> paths) {
         return paths.stream()
-                .allMatch(path -> chessBoard.get(path).equals(new Blank()));
+                .allMatch(path -> chessBoard.get(path) instanceof Blank);
     }
 
     private List<Position> updatePosition(final Position source, final Position target) {

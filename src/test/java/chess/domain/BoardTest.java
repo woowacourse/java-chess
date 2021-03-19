@@ -25,7 +25,7 @@ class BoardTest {
     @DisplayName("피스 이동 기능")
     void move() {
         board.move(new Position("a", "2"), new Position("a", "3"), Team.WHITE);
-        assertThat(board.unwrap().get(new Position("a", "2"))).isEqualTo(new Blank());
+        assertThat(board.unwrap().get(new Position("a", "2"))).isInstanceOf(Blank.class);
         assertThat(board.unwrap().get(new Position("a", "3"))).isEqualTo(new Pawn(Team.WHITE));
     }
 
@@ -55,7 +55,7 @@ class BoardTest {
     @DisplayName("킹이 잡혔는지 확인하는 기능")
     void checkDieKing() {
         assertThat(board.isKingDead()).isFalse();
-        board.unwrap().put(new Position("e", "1"), new Blank());
+        board.unwrap().put(new Position("e", "1"), Blank.getInstance());
         assertThat(board.isKingDead()).isTrue();
     }
 

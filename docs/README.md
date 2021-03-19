@@ -25,7 +25,7 @@
 - [x] position 빼는 방향 고정
 - [x] 보드 테스트 추가
 - [x] NoThing exception 처리
-- [ ] Blank 캐싱
+- [x] Blank 캐싱
 - [x] Blank exception 처리
 - [x] 팀을 enum 에서 관리
 - [x] input 값 다 소문자 처리

@@ -14,7 +14,7 @@ public abstract class GeneralPiece extends Piece {
 
     @Override
     public boolean canMove(final Position source, final Position target, final Piece piece) {
-        return isPossibleDirection(source, target) && (isOpponent(piece) || piece.equals(new Blank()));
+        return isPossibleDirection(source, target) && (isOpponent(piece) || piece instanceof Blank);
     }
 
     private boolean isPossibleDirection(final Position source, final Position target) {

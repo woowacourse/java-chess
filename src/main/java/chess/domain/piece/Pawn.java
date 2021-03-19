@@ -42,13 +42,13 @@ public class Pawn extends Piece {
 
     private boolean checkPossible(final Direction direction, final Piece piece, final Vertical vertical) {
         if (direction == Direction.NORTH) {
-            return piece.equals(new Blank());
+            return piece instanceof Blank;
         }
         if (direction == Direction.NORTHEAST || direction == Direction.NORTHWEST) {
             return piece.isOpponent(this);
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece.equals(new Blank());
+            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece instanceof Blank;
         }
         return false;
     }
