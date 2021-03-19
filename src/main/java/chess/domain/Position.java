@@ -87,7 +87,7 @@ public class Position {
     }
 
     public Position moveUp() {
-        String next = this.alpha + String.valueOf(this.number + 1);
+        String next = (char) this.alpha + String.valueOf(this.number + 1);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -95,7 +95,7 @@ public class Position {
     }
 
     public Position moveDown() {
-        String next = "" + this.alpha + (this.number - 1);
+        String next = (char) this.alpha + String.valueOf(this.number - 1);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -103,7 +103,7 @@ public class Position {
     }
 
     public Position moveLeft() {
-        String next = "" + (this.alpha - 1) + this.number;
+        String next = (char) (this.alpha - 1) + String.valueOf(this.number);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -111,7 +111,39 @@ public class Position {
     }
 
     public Position moveRight() {
-        String next = "" + (this.alpha + 1) + this.number;
+        String next = (char) (this.alpha + 1) + String.valueOf(this.number);
+        if (positions.containsKey(next)) {
+            return Position.valueOf(next);
+        }
+        return ERROR;
+    }
+
+    public Position moveRightUp() {
+        String next = (char) (this.alpha + 1) + String.valueOf(this.number + 1);
+        if (positions.containsKey(next)) {
+            return Position.valueOf(next);
+        }
+        return ERROR;
+    }
+
+    public Position moveRightDown() {
+        String next = (char) (this.alpha + 1) + String.valueOf(this.number - 1);
+        if (positions.containsKey(next)) {
+            return Position.valueOf(next);
+        }
+        return ERROR;
+    }
+
+    public Position moveLeftUp() {
+        String next = (char) (this.alpha - 1) + String.valueOf(this.number + 1);
+        if (positions.containsKey(next)) {
+            return Position.valueOf(next);
+        }
+        return ERROR;
+    }
+
+    public Position moveLeftDown() {
+        String next = (char) (this.alpha - 1) + String.valueOf(this.number - 1);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }

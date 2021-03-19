@@ -139,4 +139,98 @@ public class PositionTest {
         assertThat(c3.isFront(Position.valueOf("c2"), TeamColor.WHITE)).isFalse();
     }
 
+    @Test
+    @DisplayName("위")
+    void moveUp() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveUp();
+
+        assertThat(after).isEqualTo(Position.valueOf("c4"));
+    }
+
+    @Test
+    @DisplayName("아래")
+    void moveDown() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveDown();
+
+        assertThat(after).isEqualTo(Position.valueOf("c2"));
+    }
+
+    @Test
+    @DisplayName("오른쪽")
+    void moveRight() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveRight();
+
+        assertThat(after).isEqualTo(Position.valueOf("d3"));
+    }
+
+    @Test
+    @DisplayName("왼쪽")
+    void moveLeft() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveLeft();
+
+        assertThat(after).isEqualTo(Position.valueOf("b3"));
+    }
+
+    @Test
+    @DisplayName("오른쪽 대각선 위")
+    void moveRightUp() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveRightUp();
+
+        assertThat(after).isEqualTo(Position.valueOf("d4"));
+    }
+
+    @Test
+    @DisplayName("오른쪽 대각선 아래")
+    void moveRightDown() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveRightDown();
+
+        assertThat(after).isEqualTo(Position.valueOf("d2"));
+    }
+
+    @Test
+    @DisplayName("왼쪽 대각선 위")
+    void moveLeftUp() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveLeftUp();
+
+        assertThat(after).isEqualTo(Position.valueOf("b4"));
+    }
+
+    @Test
+    @DisplayName("왼쪽 대각선 아래")
+    void moveLeftDown() {
+        Position before = Position.valueOf("c3");
+
+        Position after = before.moveLeftDown();
+
+        assertThat(after).isEqualTo(Position.valueOf("b2"));
+    }
+
+    @Test
+    @DisplayName("이동시 범위를 벗어나는 경우")
+    void moveDown_fail() {
+        Position before = Position.valueOf("a1");
+
+        Position afterDown = before.moveDown();
+
+        Position afterLeft = before.moveLeft();
+
+        assertThat(afterDown).isEqualTo(Position.ERROR);
+        assertThat(afterLeft).isEqualTo(Position.ERROR);
+    }
+
+
 }
