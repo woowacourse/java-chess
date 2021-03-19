@@ -36,7 +36,7 @@ public class Knight implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return null;
+        return teamColor;
     }
 
     @Override

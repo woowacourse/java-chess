@@ -35,7 +35,7 @@ public class King implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return null;
+        return teamColor;
     }
 
     @Override

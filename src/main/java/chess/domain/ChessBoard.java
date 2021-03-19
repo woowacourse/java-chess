@@ -69,6 +69,7 @@ public class ChessBoard {
     }
 
     public void move(String source, String target) {
+        validatePosition(source, target);
         Position start = Position.valueOf(source);
         Position end = Position.valueOf(target);
         Piece startPiece = chessBoard.get(start);
@@ -93,7 +94,8 @@ public class ChessBoard {
         if (source.equals(target)) {
             throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
         }
-        if (chessBoard.containsKey(source) && chessBoard.containsKey(target)) {
+        if (chessBoard.containsKey(Position.valueOf(source)) && chessBoard
+            .containsKey(Position.valueOf(target))) {
             return;
         }
         throw new IllegalArgumentException("잘못된 좌표입니다.");
@@ -104,6 +106,7 @@ public class ChessBoard {
         boolean ret = piece == Blank.INSTANCE;
         return ret;
     }
+
 
     public Piece getPiece(Position position) {
         return chessBoard.get(position);

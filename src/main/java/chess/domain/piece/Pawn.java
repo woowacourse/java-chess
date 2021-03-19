@@ -37,7 +37,7 @@ public class Pawn implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return null;
+        return teamColor;
     }
 
     @Override

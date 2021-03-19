@@ -36,7 +36,7 @@ public class Queen implements Piece {
 
     @Override
     public TeamColor getColor() {
-        return null;
+        return teamColor;
     }
 
     @Override

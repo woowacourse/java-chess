@@ -72,6 +72,7 @@ public class Rook implements Piece {
 
     @Override
     public boolean isEnemyTeam(Piece comparePiece) {
+        TeamColor compareColor = comparePiece.getColor();
         return teamColor != comparePiece.getColor();
     }
 
