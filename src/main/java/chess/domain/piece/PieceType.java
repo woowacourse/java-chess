@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
 public enum PieceType {
+
+    EMPTY("."),
     PAWN("p"),
     ROOK("r"),
     KNIGHT("n"),
@@ -15,6 +17,9 @@ public enum PieceType {
     }
 
     public String toBlack() {
+        if (this.equals(EMPTY)) {
+            throw new IllegalArgumentException("빈 칸은 변환할 수 없습니다.");
+        }
         return type.toUpperCase();
     }
 

@@ -18,15 +18,6 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public boolean canMove(Board board) {
-        return moveStrategy.isMovable(this, board);
-    }
-
-/*    public Position move(Board board) {
-        return moveStrategy.move(this, board);
-        Path path = board.calculatePath(this);
-    }*/
-
     public String getName() {
         if (pieceColor.equals(PieceColor.BLACK)) {
             return pieceType.toBlack();
@@ -41,13 +32,4 @@ public abstract class Piece {
     public boolean isEnemy(Piece that) {
         return !isColor(that.pieceColor);
     }
-
-    public List<Direction> allowedDirection() {
-        return moveStrategy.getDirections();
-    }
-//
-//    public Path calculatePath(Board board) {
-//        final List<Position> allowedPosition = new ArrayList<>();
-//        return Path.of(allowedPosition, board);
-//    }
 }
