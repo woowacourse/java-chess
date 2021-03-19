@@ -32,7 +32,7 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_withoutJump() {
         Position target = Position.of('e', 4);
-        board.move(position, target);
+        board.move(position, target, PieceColor.WHITE);
 
         Piece pieceOnTarget = board.pieceAtPosition(target);
 
@@ -44,7 +44,7 @@ class KnightMoveStrategyTest {
     void queenValidMove_diagonalMove() {
         Position source = Position.of('g', 1);
         Position target = Position.of('f', 3);
-        board.move(source, target);
+        board.move(source, target, PieceColor.WHITE);
 
         Piece pieceOnTarget = board.pieceAtPosition(target);
 
@@ -55,7 +55,7 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_lineMove() {
         Position target = Position.of('e', 4);
-        board.move(position, target);
+        board.move(position, target, PieceColor.WHITE);
 
         Piece pieceOnTarget = board.pieceAtPosition(target);
 
@@ -67,7 +67,7 @@ class KnightMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('d', 1);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }

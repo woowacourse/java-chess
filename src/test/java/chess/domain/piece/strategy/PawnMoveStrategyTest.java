@@ -109,7 +109,7 @@ class PawnMoveStrategyTest {
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );
@@ -126,7 +126,7 @@ class PawnMoveStrategyTest {
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
         );
@@ -169,7 +169,7 @@ class PawnMoveStrategyTest {
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );

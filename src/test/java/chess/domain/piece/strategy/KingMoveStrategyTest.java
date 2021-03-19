@@ -32,7 +32,7 @@ class KingMoveStrategyTest {
     @Test
     void kingValidMove_void() {
         Position target = Position.of('d', 3);
-        board.move(position, target);
+        board.move(position, target, PieceColor.WHITE);
 
         Piece pieceOnTarget = board.pieceAtPosition(target);
         assertEquals(pieceOnTarget, piece);
@@ -43,7 +43,7 @@ class KingMoveStrategyTest {
     void kingExcessMove_InvalidMoveException() {
         Position target = Position.of('d', 7);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE);
     }
@@ -53,7 +53,7 @@ class KingMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('b', 2);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
