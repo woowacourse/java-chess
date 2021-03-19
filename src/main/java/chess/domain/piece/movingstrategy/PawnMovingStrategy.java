@@ -12,9 +12,9 @@ public class PawnMovingStrategy implements MovingStrategy {
     private final List<MoveVector> pawnsMoveVector = MoveVector.pawnVectors();
 
     @Override
-    public MoveVector findMovableVector(Point source, Point destination) {
-        int x = destination.minusX(source);
-        int y = destination.minusY(source);
+    public MoveVector movableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
 
         MoveVector possibleMoveVector = findPawnsVectorByDifference(x, y);
 
@@ -25,7 +25,7 @@ public class PawnMovingStrategy implements MovingStrategy {
     }
 
     private MoveVector findPawnsVectorByDifference(int x, int y) {
-        MoveVector moveVector = MoveVector.get(x, y);
+        MoveVector moveVector = MoveVector.foundMoveVector(x, y);
 
         return pawnsMoveVector.stream()
             .filter(vector -> vector.equals(moveVector))
@@ -34,7 +34,7 @@ public class PawnMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public int getMoveLength() {
+    public int movingLength() {
         return LENGTH;
     }
 }

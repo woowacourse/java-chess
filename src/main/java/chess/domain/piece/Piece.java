@@ -29,12 +29,12 @@ public enum Piece {
         this.pieceName = pieceName;
     }
 
-    public MoveVector findMovableVector(Point source, Point destination) {
-        return movingStrategy.findMovableVector(source, destination);
+    public MoveVector movableVector(Point source, Point destination) {
+        return movingStrategy.movableVector(source, destination);
     }
 
-    public int getMoveLength() {
-        return movingStrategy.getMoveLength();
+    public int movingLength() {
+        return movingStrategy.movingLength();
     }
 
     public double score() {

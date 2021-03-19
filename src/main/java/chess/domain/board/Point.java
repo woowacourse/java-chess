@@ -12,7 +12,7 @@ public class Point {
 
     static {
         for (Row row : Row.values()) {
-            iterateXCoordinate(row);
+            generatePointPoolRow(row);
         }
     }
 
@@ -24,7 +24,7 @@ public class Point {
         this.y = y;
     }
 
-    private static void iterateXCoordinate(Row row) {
+    private static void generatePointPoolRow(Row row) {
         for (Column column : Column.values()) {
             POINT_POOL.put(
                 column.coordinate() + row.coordinate(), new Point(column, row));
@@ -42,16 +42,16 @@ public class Point {
         }
     }
 
-    public static List<Point> getAllPoints() {
+    public static List<Point> AllPoints() {
         return new ArrayList<>(POINT_POOL.values());
     }
 
-    public Point yAxisOpposite() {
-        return Point.of(this.x.coordinate() + this.y.opposite().coordinate());
+    public Point yAxisOppositePoint() {
+        return Point.of(this.x.coordinate() + this.y.oppositeRow().coordinate());
     }
 
-    public Point opposite() {
-        return Point.of(this.x.opposite().coordinate() + this.y.opposite().coordinate());
+    public Point oppositePoint() {
+        return Point.of(this.x.oppositeColumn().coordinate() + this.y.oppositeRow().coordinate());
     }
 
     public boolean isRow(Row row) {
@@ -62,28 +62,28 @@ public class Point {
         return x == column;
     }
 
-    public int minusX(Point source) {
+    public int XDifference(Point source) {
         return this.x.index() - source.x.index();
     }
 
-    public int minusY(Point source) {
+    public int YDifference(Point source) {
         return this.y.index() - source.y.index();
     }
 
-    public Point move(MoveVector moveVector) {
-        return Point.of(newerName(moveVector));
+    public Point movedPoint(MoveVector moveVector) {
+        return Point.of(movedPointName(moveVector));
     }
 
-    private String newerName(MoveVector moveVector) {
-        return Column.getByIndex(newerXIndex(moveVector)).coordinate() +
-            Row.getByIndex(newerYIndex(moveVector)).coordinate();
+    private String movedPointName(MoveVector moveVector) {
+        return Column.foundColumnByIndex(movedXIndex(moveVector)).coordinate() +
+            Row.foundRowByIndex(movedYIndex(moveVector)).coordinate();
     }
 
-    private int newerYIndex(MoveVector moveVector) {
+    private int movedYIndex(MoveVector moveVector) {
         return y.index() + moveVector.getVertical();
     }
 
-    private int newerXIndex(MoveVector moveVector) {
+    private int movedXIndex(MoveVector moveVector) {
         return x.index() + moveVector.getHorizon();
     }
 }

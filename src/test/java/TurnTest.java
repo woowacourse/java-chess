@@ -24,7 +24,7 @@ public class TurnTest {
 
         List<Team> teams = new ArrayList<>();
         for (int i = 0; i < 4; i++) {
-            turn.next();
+            turn.moveToNext();
             teams.add(turn.now());
         }
         List<Team> expectedTeams = Arrays.asList(Team.BLACK, Team.WHITE, Team.BLACK, Team.WHITE);

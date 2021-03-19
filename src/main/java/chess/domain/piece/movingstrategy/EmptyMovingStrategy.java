@@ -6,12 +6,12 @@ import chess.domain.piece.MoveVector;
 public class EmptyMovingStrategy implements MovingStrategy {
 
     @Override
-    public MoveVector findMovableVector(Point source, Point destination) {
+    public MoveVector movableVector(Point source, Point destination) {
         return null;
     }
 
     @Override
-    public int getMoveLength() {
+    public int movingLength() {
         return 0;
     }
 }

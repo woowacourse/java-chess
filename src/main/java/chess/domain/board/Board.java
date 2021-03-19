@@ -17,14 +17,14 @@ public class Board {
     private boolean deadKing;
 
     public Board() {
-        Point.getAllPoints()
+        Point.AllPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
         deadKing = false;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
         squares.put(point, SquareState.of(piece, Team.WHITE));
-        squares.put(point.yAxisOpposite(), SquareState.of(piece, Team.BLACK));
+        squares.put(point.yAxisOppositePoint(), SquareState.of(piece, Team.BLACK));
     }
 
     public SquareState squareState(Point point) {
@@ -50,11 +50,11 @@ public class Board {
     private boolean canMovePawnToStraight(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        if (MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
+        if (MoveVector.hasNotMoveVector(destination.XDifference(source), destination.YDifference(source))) {
             return false;
         }
         MoveVector moveVector = MoveVector
-            .get(destination.minusX(source), destination.minusY(source));
+            .foundMoveVector(destination.XDifference(source), destination.YDifference(source));
 
         return canMoveWhitePawnToStraight(sourceSquareState, destinationSquareState, moveVector)
             || canMoveBlackPawnToStraight(sourceSquareState, destinationSquareState, moveVector);
@@ -84,11 +84,11 @@ public class Board {
     private boolean canMovePawnToDiagonalDirection(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        if (MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
+        if (MoveVector.hasNotMoveVector(destination.XDifference(source), destination.YDifference(source))) {
             return false;
         }
         MoveVector moveVector = MoveVector
-            .get(destination.minusX(source), destination.minusY(source));
+            .foundMoveVector(destination.XDifference(source), destination.YDifference(source));
 
         return canWhitePawnKillEnemy(sourceSquareState, destinationSquareState, moveVector)
             || canBlackPawnKillEnemy(sourceSquareState, destinationSquareState, moveVector);
@@ -121,8 +121,8 @@ public class Board {
         int moveCount = 1;
         boolean unblocked = true;
 
-        for (Point now = source.move(moveVector); isContinued(destination, now) && unblocked;
-            now = now.move(moveVector)) {
+        for (Point now = source.movedPoint(moveVector); isContinued(destination, now) && unblocked;
+            now = now.movedPoint(moveVector)) {
             unblocked = underMoveLength(sourceSquareState, moveCount) && squares.get(now).isEmpty();
             moveCount++;
         }
@@ -177,7 +177,7 @@ public class Board {
 
     public BoardDto boardDto() {
         List<List<String>> result = new ArrayList<>();
-        for (Row row : Row.reverseRows()) {
+        for (Row row : Row.reversedRows()) {
             result.add(rowDto(row));
         }
 

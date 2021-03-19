@@ -26,7 +26,7 @@ public class Running implements GameState {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
         board.move(source, destination);
-        turn.next();
+        turn.moveToNext();
         if (board.isKingDead()) {
             return new Finished();
         }

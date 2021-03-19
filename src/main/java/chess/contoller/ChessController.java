@@ -20,15 +20,15 @@ public class ChessController {
     private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
         String input = InputView.InputString();
-        Command.getByInput(input).execute(chessGame, Command.getArguments(input));
+        Command.foundCommandByIndex(input).execute(chessGame, Command.arguments(input));
     }
 
     private void start(ChessGame chessGame) {
-        while (chessGame.isOnGoing()) {
-            OutputView.printChessBoard(chessGame.generateBoardDto());
+        while (chessGame.isContinue()) {
+            OutputView.printChessBoard(chessGame.boardDto());
             String input = InputView.InputString();
-            Command command = Command.getByInput(input);
-            command.execute(chessGame, Command.getArguments(input));
+            Command command = Command.foundCommandByIndex(input);
+            command.execute(chessGame, Command.arguments(input));
             printScoreIfStatus(chessGame, command);
         }
     }

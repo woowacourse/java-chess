@@ -11,9 +11,9 @@ public class BishopMovingStrategy implements MovingStrategy {
     private final List<MoveVector> bishopMoveVector = MoveVector.diagonalVectors();
 
     @Override
-    public MoveVector findMovableVector(Point source, Point destination) {
-        int x = destination.minusX(source);
-        int y = destination.minusY(source);
+    public MoveVector movableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
 
         return bishopMoveVector.stream()
             .filter(moveVector -> moveVector.isSameDirection(x, y))
@@ -22,7 +22,7 @@ public class BishopMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public int getMoveLength() {
+    public int movingLength() {
         return LENGTH;
     }
 }

@@ -29,14 +29,14 @@ public enum Row {
         this.index = index;
     }
 
-    public static Row getByIndex(int index) {
+    public static Row foundRowByIndex(int index) {
         return Arrays.stream(Row.values())
             .filter(row -> row.index == index)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static List<Row> reverseRows() {
+    public static List<Row> reversedRows() {
         return Collections.unmodifiableList(REVERSE_ROWS);
     }
 
@@ -48,7 +48,7 @@ public enum Row {
         return index;
     }
 
-    public Row opposite() {
-        return getByIndex(ROW_MAX - index);
+    public Row oppositeRow() {
+        return foundRowByIndex(ROW_MAX - index);
     }
 }

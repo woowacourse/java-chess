@@ -40,13 +40,13 @@ public class SquareState {
 
     public MoveVector findMovableVector(Point source, Point destination) {
         if (team.isBlack()) {
-            return piece.findMovableVector(source.opposite(), destination.opposite()).opposite();
+            return piece.movableVector(source.oppositePoint(), destination.oppositePoint()).oppositeVector();
         }
-        return piece.findMovableVector(source, destination);
+        return piece.movableVector(source, destination);
     }
 
     public int getMoveLength() {
-        return piece.getMoveLength();
+        return piece.movingLength();
     }
 
     public String pieceName() {

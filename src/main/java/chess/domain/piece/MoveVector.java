@@ -59,7 +59,7 @@ public enum MoveVector {
                 && (vector.vertical == vertical));
     }
 
-    public static MoveVector get(int horizon, int vertical) {
+    public static MoveVector foundMoveVector(int horizon, int vertical) {
         return Arrays.stream(MoveVector.values())
             .filter(vector -> (vector.horizon == horizon)
                 && (vector.vertical == vertical))
@@ -94,8 +94,8 @@ public enum MoveVector {
         return (this.horizon * horizon < 0) || (this.vertical * vertical < 0);
     }
 
-    public MoveVector opposite() {
-        return get((-1) * horizon, (-1) * vertical);
+    public MoveVector oppositeVector() {
+        return foundMoveVector((-1) * horizon, (-1) * vertical);
     }
 
     public int getHorizon() {

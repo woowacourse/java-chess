@@ -27,7 +27,7 @@ public enum Command {
         this.operator = operator;
     }
 
-    public static Command getByInput(String input) {
+    public static Command foundCommandByIndex(String input) {
         List<String> splitInputs = Arrays.asList(input.split(DELIMITER));
         String firstInput = splitInputs.get(OPERATION_INDEX);
         int inputArgumentsCount = splitInputs.size() - 1;
@@ -39,7 +39,7 @@ public enum Command {
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
     }
 
-    public static List<String> getArguments(String input) {
+    public static List<String> arguments(String input) {
         List<String> splitInputs = Arrays.asList(input.split(DELIMITER));
         return splitInputs.subList(ARGUMENT_START_INDEX, splitInputs.size());
     }

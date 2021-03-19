@@ -37,7 +37,7 @@ public class ChessGame {
         gameState = gameState.status();
     }
 
-    public boolean isOnGoing() {
+    public boolean isContinue() {
         return !(gameState instanceof Finished);
     }
 
@@ -45,7 +45,7 @@ public class ChessGame {
         return board.score(team);
     }
 
-    public BoardDto generateBoardDto() {
+    public BoardDto boardDto() {
         return board.boardDto();
     }
 }

@@ -5,7 +5,7 @@ import chess.domain.piece.MoveVector;
 
 public interface MovingStrategy {
 
-    MoveVector findMovableVector(Point source, Point destination);
+    MoveVector movableVector(Point source, Point destination);
 
-    int getMoveLength();
+    int movingLength();
 }

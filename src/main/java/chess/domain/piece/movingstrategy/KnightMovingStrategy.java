@@ -11,9 +11,9 @@ public class KnightMovingStrategy implements MovingStrategy {
     private final List<MoveVector> kingsMoveVector = MoveVector.knightVectors();
 
     @Override
-    public MoveVector findMovableVector(Point source, Point destination) {
-        int x = destination.minusX(source);
-        int y = destination.minusY(source);
+    public MoveVector movableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
 
         return kingsMoveVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
@@ -22,7 +22,7 @@ public class KnightMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public int getMoveLength() {
+    public int movingLength() {
         return LENGTH;
     }
 }

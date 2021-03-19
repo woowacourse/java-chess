@@ -11,9 +11,9 @@ public class RookMovingStrategy implements MovingStrategy {
     private final List<MoveVector> rooksMoveVector = MoveVector.axisVectors();
 
     @Override
-    public MoveVector findMovableVector(Point source, Point destination) {
-        int x = destination.minusX(source);
-        int y = destination.minusY(source);
+    public MoveVector movableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
 
         return rooksMoveVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
@@ -22,7 +22,7 @@ public class RookMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public int getMoveLength() {
+    public int movingLength() {
         return LENGTH;
     }
 }

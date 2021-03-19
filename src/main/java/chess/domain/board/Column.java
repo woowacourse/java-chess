@@ -30,7 +30,7 @@ public enum Column {
         this.index = index;
     }
 
-    public static Column getByIndex(int index) {
+    public static Column foundColumnByIndex(int index) {
         return Arrays.stream(Column.values())
             .filter(column -> column.index == index)
             .findFirst()
@@ -45,8 +45,8 @@ public enum Column {
         return coordinate;
     }
 
-    public Column opposite() {
-        return getByIndex(MAX_COLUMN - index);
+    public Column oppositeColumn() {
+        return foundColumnByIndex(MAX_COLUMN - index);
     }
 
     public int index() {
