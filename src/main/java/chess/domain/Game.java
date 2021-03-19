@@ -8,10 +8,6 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 public class Game {
     private final Pieces pieces;
@@ -69,42 +65,8 @@ public class Game {
 
     public Map<Color, Double> score() {
         Map<Color, Double> scores = new HashMap<>();
-        scores.put(Color.BLACK, calculateScore(Color.BLACK));
-        scores.put(Color.WHITE, calculateScore(Color.WHITE));
+        scores.put(Color.BLACK, pieces.score(Color.BLACK));
+        scores.put(Color.WHITE, pieces.score(Color.WHITE));
         return scores;
-    }
-
-    private double calculateScore(Color color) {
-        return calculateGeneralScore(color) + calculatePawnScore(color);
-    }
-
-    private double calculatePawnScore(Color color) {
-        List<Piece> pawns = pieces.toList()
-                                  .stream()
-                                  .filter(piece -> piece.isSameColor(color))
-                                  .filter(Piece::isPawn)
-                                  .collect(Collectors.toList());
-
-        Map<Column, Long> pawnCountingByColumn = pawns.stream()
-                                                         .collect(groupingBy(Piece::getColumn, counting()));
-
-        return pawnCountingByColumn.values()
-                                   .stream()
-                                   .mapToDouble(count -> {
-                                       if (count >= 2) {
-                                           return count * 0.5;
-                                       }
-                                       return count;
-                                   })
-                                   .sum();
-    }
-
-    private double calculateGeneralScore(Color color) {
-        return pieces.toList()
-                     .stream()
-                     .filter(piece -> piece.isSameColor(color))
-                     .filter(piece -> !piece.isPawn())
-                     .mapToDouble(Piece::score)
-                     .sum();
     }
 }
