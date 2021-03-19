@@ -17,7 +17,7 @@ class BoardTest {
         Position position = Position.of('c', 1);
         Board board = new Board();
 
-        Piece extractedPiece = board.checkPieceAtPosition(position);
+        Piece extractedPiece = board.pieceAtPosition(position);
 
         assertEquals(piece, extractedPiece);
     }
@@ -31,8 +31,8 @@ class BoardTest {
 
         Board board = new Board();
 
-        Piece extractedPieceL = board.checkPieceAtPosition(positionL);
-        Piece extractedPieceR = board.checkPieceAtPosition(positionR);
+        Piece extractedPieceL = board.pieceAtPosition(positionL);
+        Piece extractedPieceR = board.pieceAtPosition(positionR);
 
         assertEquals(piece, extractedPieceL);
         assertEquals(piece, extractedPieceR);
@@ -45,7 +45,7 @@ class BoardTest {
         Position position = Position.of('f', 3);
         Board board = new Board();
 
-        Piece extractedPiece = board.checkPieceAtPosition(position);
+        Piece extractedPiece = board.pieceAtPosition(position);
 
         assertEquals(piece, extractedPiece);
     }

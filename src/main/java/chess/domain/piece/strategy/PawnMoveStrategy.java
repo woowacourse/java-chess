@@ -4,7 +4,7 @@ import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 
-public class PawnMoveStrategy extends LimitedMoveStrategy {
+public class PawnMoveStrategy extends BasicMoveStrategy {
 
     private static final int PAWN_INITIAL_DISTANCE_LIMIT = 2;
     private static final int PAWN_GENERAL_DISTANCE_LIMIT = 1;
@@ -13,7 +13,6 @@ public class PawnMoveStrategy extends LimitedMoveStrategy {
 
     @Override
     void checkValidMove(Position source, Position target) {
-        checkPositionsOnBoard(source, target);
         checkValidDistance(source, target);
     }
 

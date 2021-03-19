@@ -19,7 +19,7 @@ public class OutputView {
     private static void printXAxis(Board board, YPosition yPosition) {
         for (XPosition xPosition : XPosition.values()) {
             Position position = Position.of(xPosition, yPosition);
-            Piece piece = board.checkPieceAtPosition(position);
+            Piece piece = board.pieceAtPosition(position);
             System.out.print(piece.getSymbol());
         }
         System.out.println();

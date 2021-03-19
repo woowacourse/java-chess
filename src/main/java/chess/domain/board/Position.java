@@ -1,10 +1,15 @@
 package chess.domain.board;
 
+import chess.domain.exceptions.InvalidMoveException;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Position {
+
+    public static final String OUT_OF_BOUND_MESSAGE = "움직일려는 좌표가 보드판을 넘어갑니다.";
 
     private static final Map<String, Position> CACHE = new LinkedHashMap<>();
     private XPosition xPosition;
@@ -35,7 +40,10 @@ public class Position {
     }
 
     public static Position from(String positionKey) {
-        return CACHE.get(positionKey);
+        return Optional.ofNullable(CACHE.get(positionKey))
+            .orElseGet(() -> {
+                throw new InvalidMoveException(Position.OUT_OF_BOUND_MESSAGE);
+            });
     }
 
     public static Position of(char xRawPosition, int yRawPosition) {

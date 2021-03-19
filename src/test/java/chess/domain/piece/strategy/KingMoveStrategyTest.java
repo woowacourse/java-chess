@@ -18,14 +18,12 @@ class KingMoveStrategyTest {
     Board board;
     Position position;
     Piece piece;
-    KingMoveStrategy kingMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = new Board();
         position = Position.of('c', 3);
         piece = new Piece(PieceKind.KING, PieceColor.WHITE);
-        kingMoveStrategy = new KingMoveStrategy();
         board.putPieceAtPosition(position, piece);
     }
 
@@ -33,9 +31,9 @@ class KingMoveStrategyTest {
     @Test
     void kingValidMove_void() {
         Position target = Position.of('d', 3);
-        kingMoveStrategy.move(position, target);
+        board.move(position, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
         assertEquals(pieceOnTarget, piece);
     }
 
@@ -44,7 +42,7 @@ class KingMoveStrategyTest {
     void kingExcessMove_InvalidMoveException() {
         Position target = Position.of('d', 7);
 
-        assertThatThrownBy(() -> kingMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE);
     }
@@ -54,19 +52,8 @@ class KingMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('b', 2);
 
-        assertThatThrownBy(() -> kingMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
-    }
-
-    @DisplayName("보드 밖 이동시 Exception 발생")
-    @Test
-    void checkUnableOutOfBoard_ExceptionThrown() {
-        Position source = Position.of('e', 8);
-        Position target = Position.of('e', 9);
-
-        assertThatThrownBy(() -> kingMoveStrategy.move(source, target))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
 }

@@ -18,14 +18,12 @@ class KnightMoveStrategyTest {
     Board board;
     Position position;
     Piece piece;
-    KnightMoveStrategy knightMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = new Board();
         position = Position.of('c', 3);
         piece = new Piece(PieceKind.KNIGHT, PieceColor.WHITE);
-        knightMoveStrategy = new KnightMoveStrategy();
         board.putPieceAtPosition(position, piece);
     }
 
@@ -33,9 +31,9 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_withoutJump() {
         Position target = Position.of('e', 4);
-        knightMoveStrategy.move(position, target);
+        board.move(position, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
@@ -45,9 +43,9 @@ class KnightMoveStrategyTest {
     void queenValidMove_diagonalMove() {
         Position source =Position.of('g', 1);
         Position target = Position.of('f', 3);
-        knightMoveStrategy.move(source, target);
+        board.move(source, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
@@ -56,9 +54,9 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_lineMove() {
         Position target = Position.of('e', 4);
-        knightMoveStrategy.move(position, target);
+        board.move(position, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
@@ -68,20 +66,8 @@ class KnightMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('d', 1);
 
-        assertThatThrownBy(() -> knightMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
-
-    @DisplayName("보드 밖 이동시 Exception 발생")
-    @Test
-    void checkUnableOutOfBoard_ExceptionThrown() {
-        Position source = Position.of('b', 8);
-        Position target = Position.of('c', 10);
-
-        assertThatThrownBy(() -> knightMoveStrategy.move(source, target))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
-    }
-
 }

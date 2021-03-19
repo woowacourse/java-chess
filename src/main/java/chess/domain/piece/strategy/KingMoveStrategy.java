@@ -10,7 +10,6 @@ public class KingMoveStrategy extends BasicMoveStrategy {
 
     @Override
     void checkValidMove(Position source, Position target) {
-        checkPositionsOnBoard(source, target);
         checkValidDistance(source, target);
     }
 

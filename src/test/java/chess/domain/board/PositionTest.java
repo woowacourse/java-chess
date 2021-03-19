@@ -1,10 +1,13 @@
 package chess.domain.board;
 
+import chess.domain.exceptions.InvalidMoveException;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class PositionTest {
@@ -54,5 +57,13 @@ class PositionTest {
         int distance = position.computeVerticalDistance(anotherPosition);
 
         assertEquals(distance, predictedVerticalDistance);
+    }
+
+    @DisplayName("좌표 밖 선택시에 예외 처리")
+    @Test
+    void position_ExceptionThrown() {
+        assertThatThrownBy(() -> Position.of('d', 9))
+            .isInstanceOf(InvalidMoveException.class)
+            .hasMessageContaining(Position.OUT_OF_BOUND_MESSAGE);
     }
 }

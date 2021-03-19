@@ -18,14 +18,13 @@ class RookMoveStrategyTest {
     Board board;
     Position position;
     Piece piece;
-    RookMoveStrategy rookMoveStrategy;
+    //RookMoveStrategy rookMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = new Board();
         position = Position.of('c', 3);
         piece = new Piece(PieceKind.ROOK, PieceColor.WHITE);
-        rookMoveStrategy = new RookMoveStrategy();
         board.putPieceAtPosition(position, piece);
     }
 
@@ -33,9 +32,9 @@ class RookMoveStrategyTest {
     @Test
     void rookValidMove_void() {
         Position target = Position.of('c', 7);
-        rookMoveStrategy.move(position, target);
+        board.move(position, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
@@ -45,7 +44,7 @@ class RookMoveStrategyTest {
     void rookInvalidMove_ExceptionThrown() {
         Position target = Position.of('f', 5);
 
-        assertThatThrownBy(() -> rookMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
     }
@@ -55,20 +54,9 @@ class RookMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('c', 2);
 
-        assertThatThrownBy(() -> rookMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
-    }
-
-    @DisplayName("보드 밖 이동시 Exception 발생")
-    @Test
-    void checkUnableOutOfBoard_ExceptionThrown() {
-        Position source = Position.of('d', 8);
-        Position target = Position.of('d', 9);
-
-        assertThatThrownBy(() -> rookMoveStrategy.move(source, target))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
 
     @DisplayName("경로상 CLEAR 상태가 아닐 시에 Exception 발생")
@@ -76,7 +64,7 @@ class RookMoveStrategyTest {
     void checkUnableCROSSPIECE_ExceptionThrown() {
         Position target = Position.of('c', 8);
 
-        assertThatThrownBy(() -> rookMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
     }

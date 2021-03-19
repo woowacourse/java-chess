@@ -4,10 +4,10 @@ import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 
-public class RookMoveStrategy extends NoLimitedDistanceMoveStrategy {
+public class RookMoveStrategy extends BasicMoveStrategy {
 
     @Override
-    public void checkMoveType(Position source, Position target) {
+    public void checkValidMove(Position source, Position target) {
         if (!source.isLineMove(target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }

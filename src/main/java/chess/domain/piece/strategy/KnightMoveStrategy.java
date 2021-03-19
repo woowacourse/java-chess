@@ -4,13 +4,13 @@ import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
 
-public class KnightMoveStrategy extends JumpMoveStrategy {
+public class KnightMoveStrategy extends BasicMoveStrategy {
 
     private static final int FORWARD_JUMP_RANGE = 2;
     private static final int SIDE_JUMP_RANGE = 1;
 
     @Override
-    protected void checkValidTargetPosition(Position source, Position target) {
+    protected void checkValidMove(Position source, Position target) {
         int xDistanceAbs = Math.abs(source.computeHorizontalDistance(target));
         int yDistanceAbs = Math.abs(source.computeVerticalDistance(target));
 

@@ -18,14 +18,12 @@ class BishopMoveStrategyTest {
     Board board;
     Position position;
     Piece piece;
-    BishopMoveStrategy bishopMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = new Board();
         position = Position.of('a', 3);
         piece = new Piece(PieceKind.BISHOP, PieceColor.WHITE);
-        bishopMoveStrategy = new BishopMoveStrategy();
         board.putPieceAtPosition(position, piece);
     }
 
@@ -33,9 +31,9 @@ class BishopMoveStrategyTest {
     @Test
     void bishopValidMove_void() {
         Position target = Position.of('c', 5);
-        bishopMoveStrategy.move(position, target);
+        board.move(position, target);
 
-        Piece pieceOnTarget = board.checkPieceAtPosition(target);
+        Piece pieceOnTarget = board.pieceAtPosition(target);
 
         assertEquals(pieceOnTarget, piece);
     }
@@ -45,7 +43,7 @@ class BishopMoveStrategyTest {
     void bishopInvalidMove_ExceptionThrown() {
         Position target = Position.of('c', 3);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
     }
@@ -55,19 +53,9 @@ class BishopMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('b', 2);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
-    }
-
-    @DisplayName("보드 밖 이동시 Exception 발생")
-    @Test
-    void checkUnableOutOfBoard_ExceptionThrown() {
-        Position target = Position.of('g', 9);
-
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
 
     @DisplayName("경로상 CLEAR 상태가 아닐 시에 Exception 발생")
@@ -75,7 +63,7 @@ class BishopMoveStrategyTest {
     void checkUnableCROSSPIECE_ExceptionThrown() {
         Position target = Position.of('f', 8);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
     }

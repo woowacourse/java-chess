@@ -10,6 +10,7 @@ import java.util.Map;
 
 public class Board {
 
+    private static final String STAY_ERROR_MESSAGE = "지금 위치와 이동하려는 위치가 같습니다.";
     private static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
 
     private final Map<Position, Piece> board;
@@ -19,25 +20,45 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
+        checkMoving(source, target);
+        checkNoJumpPiece(source, target);
+
+        Piece originalPiece = pieceAtPosition(source);
+        originalPiece.movable(source, target);
+
+        checkPawnCase(source, target, originalPiece);
         checkIsNotSameTeam(source, target);
-        if (source.isLineMove(target) || source.isDiagonalMove(target)) {
-            checkClearPath(source, target);
-        }
 
-        Piece originalPiece = checkPieceAtPosition(source);
+        movePiece(source, target, originalPiece);
+    }
 
-        if (originalPiece.isPawn()) {
-            checkDirection(source, target);
-            checkMoveType(source, target);
-        }
-
+    private void movePiece(Position source, Position target, Piece originalPiece) {
         putPieceAtPosition(target, originalPiece);
         putPieceAtPosition(source, VOID_PIECE);
     }
 
+    private void checkPawnCase(Position source, Position target, Piece originalPiece) {
+        if (originalPiece.isPawn()) {
+            checkDirection(source, target);
+            checkMoveType(source, target);
+        }
+    }
+
+    private void checkNoJumpPiece(Position source, Position target) {
+        if (source.isLineMove(target) || source.isDiagonalMove(target)) {
+            checkClearPath(source, target);
+        }
+    }
+
+    private void checkMoving(Position source, Position target) {
+        if (source.computeHorizontalDistance(target) == 0 && source.computeVerticalDistance(target) == 0) {
+            throw new InvalidMoveException(STAY_ERROR_MESSAGE);
+        }
+    }
+
     private void checkIsNotSameTeam(Position source, Position target) {
-        Piece sourcePiece = checkPieceAtPosition(source);
-        Piece targetPiece = checkPieceAtPosition(target);
+        Piece sourcePiece = pieceAtPosition(source);
+        Piece targetPiece = pieceAtPosition(target);
 
         if (sourcePiece.isSameColor(targetPiece)) {
             throw new InvalidMoveException(Piece.SAME_TEAM_MESSAGE);
@@ -46,25 +67,26 @@ public class Board {
 
     private void checkClearPath(Position source, Position target) {
         MoveDirection moveDirection = MoveDirection.getDirection(source, target);
-        Position pathPosition = new Position(source);
-
         int xVector = moveDirection.getXVector();
         int yVector = moveDirection.getYVector();
 
+        Position pathPosition = new Position(source);
+        pathPosition.moveUnit(xVector, yVector);
+
         while (!pathPosition.equals(target)) {
-            pathPosition.moveUnit(xVector, yVector);
             checkIfClear(pathPosition);
+            pathPosition.moveUnit(xVector, yVector);
         }
     }
 
     private void checkIfClear(Position pathPosition) {
-        if (!checkPieceAtPosition(pathPosition).equals(VOID_PIECE)) {
+        if (!pieceAtPosition(pathPosition).equals(VOID_PIECE)) {
             throw new InvalidMoveException(Piece.UNABLE_CROSS_MESSAGE);
         }
     }
 
     private void checkDirection(Position source, Position target) {
-        Piece piece = checkPieceAtPosition(source);
+        Piece piece = pieceAtPosition(source);
         if (!piece.isMovingForward(source, target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
@@ -81,11 +103,11 @@ public class Board {
     }
 
     private boolean isVoid(Position target) {
-        Piece targetPiece = checkPieceAtPosition(target);
+        Piece targetPiece = pieceAtPosition(target);
         return targetPiece.equals(VOID_PIECE);
     }
 
-    public Piece checkPieceAtPosition(Position position) {
+    public Piece pieceAtPosition(Position position) {
         return board.get(position);
     }
 

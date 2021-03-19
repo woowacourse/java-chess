@@ -21,16 +21,14 @@ class PawnMoveStrategyTest {
     Position sourceB;
     Piece pieceW;
     Piece pieceB;
-    PawnMoveStrategy pawnMoveStrategy;
 
     @BeforeEach
     void setUp() {
         board = new Board();
         sourceW = Position.of('c', 2);
         sourceB = Position.of('d', 7);
-        pieceW = board.checkPieceAtPosition(sourceW);
-        pieceB = board.checkPieceAtPosition(sourceB);
-        pawnMoveStrategy = new PawnMoveStrategy();
+        pieceW = board.pieceAtPosition(sourceW);
+        pieceB = board.pieceAtPosition(sourceB);
     }
 
     @DisplayName("Pawn 초기 움직임 : 두칸 이동")
@@ -39,11 +37,11 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('c', 4);
         Position targetB = Position.of('d', 5);
 
-        pawnMoveStrategy.move(sourceW, targetW);
-        pawnMoveStrategy.move(sourceB, targetB);
+        board.move(sourceW, targetW);
+        board.move(sourceB, targetB);
 
-        Piece movedPieceW = board.checkPieceAtPosition(targetW);
-        Piece movedPieceB = board.checkPieceAtPosition(targetB);
+        Piece movedPieceW = board.pieceAtPosition(targetW);
+        Piece movedPieceB = board.pieceAtPosition(targetB);
 
         assertAll(
             () -> assertEquals(pieceW, movedPieceW),
@@ -56,18 +54,18 @@ class PawnMoveStrategyTest {
     void initialMove_invalid_ExceptionThrown() {
         Position newSourceW = Position.of('c', 3);
         Position newSourceB = Position.of('d', 6);
-        pawnMoveStrategy.move(sourceW, newSourceW);
-        pawnMoveStrategy.move(sourceB, newSourceB);
+        board.move(sourceW, newSourceW);
+        board.move(sourceB, newSourceB);
 
         Position targetW = Position.of('c', 5);
         Position targetB = Position.of('d', 4);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(newSourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(newSourceW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(newSourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(newSourceB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
         );
@@ -79,11 +77,11 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('c', 3);
         Position targetB = Position.of('d', 6);
 
-        pawnMoveStrategy.move(sourceW, targetW);
-        pawnMoveStrategy.move(sourceB, targetB);
+        board.move(sourceW, targetW);
+        board.move(sourceB, targetB);
 
-        Piece movedPieceW = board.checkPieceAtPosition(targetW);
-        Piece movedPieceB = board.checkPieceAtPosition(targetB);
+        Piece movedPieceW = board.pieceAtPosition(targetW);
+        Piece movedPieceB = board.pieceAtPosition(targetB);
 
         assertAll(
             () -> assertEquals(pieceW, movedPieceW),
@@ -106,11 +104,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );
@@ -123,11 +121,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 4);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
         );
@@ -147,11 +145,11 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('d', 3);
         Position targetB = Position.of('c', 6);
 
-        pawnMoveStrategy.move(sourceW, targetW);
-        pawnMoveStrategy.move(sourceB, targetB);
+        board.move(sourceW, targetW);
+        board.move(sourceB, targetB);
 
-        Piece movedPieceW = board.checkPieceAtPosition(targetW);
-        Piece movedPieceB = board.checkPieceAtPosition(targetB);
+        Piece movedPieceW = board.pieceAtPosition(targetW);
+        Piece movedPieceB = board.pieceAtPosition(targetB);
 
         assertAll(
             () -> assertEquals(pieceW, movedPieceW),
@@ -166,11 +164,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('c', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );
@@ -191,11 +189,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(newPositionW, targetW))
+            () -> assertThatThrownBy(() -> board.move(newPositionW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(newPositionB, targetB))
+            () -> assertThatThrownBy(() -> board.move(newPositionB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );
@@ -217,24 +215,13 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('c', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.SAME_TEAM_MESSAGE),
 
-            () -> assertThatThrownBy(() -> pawnMoveStrategy.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.SAME_TEAM_MESSAGE)
         );
-    }
-
-    @DisplayName("보드 밖 이동시 Exception 발생")
-    @Test
-    void checkUnableOutOfBoard_ExceptionThrown() {
-        Position source = Position.of('d', 8);
-        Position target = Position.of('d', 9);
-
-        assertThatThrownBy(() -> pawnMoveStrategy.move(source, target))
-            .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
 }
