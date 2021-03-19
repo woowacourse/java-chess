@@ -16,6 +16,8 @@ public class ChessManager {
     }
 
     public void readCommand(MoveCommand moveCommand) {
+        System.out.println(board.of(moveCommand.source()));
+        System.out.println(board.of(moveCommand.target()));
         board.move(moveCommand.source(), moveCommand.target());
     }
 }
