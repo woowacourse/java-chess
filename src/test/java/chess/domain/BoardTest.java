@@ -23,10 +23,9 @@ class BoardTest {
     @Test
     @DisplayName("피스 이동 기능")
     void move() {
-        board.move(new Position("a", "2"), new Position("a", "3"), Team.WHITE); // map의 요소가 바뀜
+        board.move(new Position("a", "2"), new Position("a", "3"), Team.WHITE);
         assertThat(board.unwrap().get(new Position("a", "2"))).isEqualTo(new Blank());
         assertThat(board.unwrap().get(new Position("a", "3"))).isEqualTo(new Pawn(Team.WHITE));
-        OutputView.printCurrentBoard(board.unwrap());
     }
 
     @ParameterizedTest
@@ -49,17 +48,6 @@ class BoardTest {
         assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
-    }
-
-    @Test
-    @DisplayName("현재 점수 확인하는 기능")
-    void checkScore() {
-        final Team team = Team.WHITE;
-        assertThat(board.calculateScore(team)).isEqualTo(38);
-
-        board.unwrap().put(new Position("a", "3"), new Pawn(Team.WHITE));
-        assertThat(board.calculateScore(team)).isEqualTo(38);
-        OutputView.printCurrentBoard(board.unwrap());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.ChessResult;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -50,9 +51,19 @@ public class OutputView {
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
-    public static void printResult(final Team team, final Board board) {
-        System.out.println(team.teamName() + "이 승리하였습니다.");
-        System.out.println(team.teamName() + "점수 : " + board.calculateScore(team));
-        System.out.println(team.oppositeTeamName() + "점수 : " + board.calculateScore(team.oppositeTeam()));
+    public static void printResult(final ChessResult result) {
+        final Team winner = result.getWinner();
+        if (winner == Team.NOTHING) {
+            System.out.println("무승부입니다.");
+            printResultScores(winner, result);
+            return;
+        }
+        System.out.println(winner.teamName() + "이 승리하였습니다.");
+        printResultScores(winner, result);
+    }
+
+    private static void printResultScores(final Team team, final ChessResult result) {
+        System.out.println(team.teamName() + "점수 : " + result.calculateScore(team));
+        System.out.println(team.oppositeTeamName() + "점수 : " + result.calculateScore(team.oppositeTeam()));
     }
 }

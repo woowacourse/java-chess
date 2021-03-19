@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.ChessResult;
 import chess.domain.Turn;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -65,7 +66,7 @@ public class ChessController {
         OutputView.printMessage(message);
         OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
-            OutputView.printResult(board.getWinner(), board);
+            OutputView.printResult(new ChessResult(board));
         }
     }
 }

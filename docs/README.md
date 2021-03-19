@@ -29,5 +29,5 @@
 - [ ] Blank exception 처리
 - [x] 팀을 enum 에서 관리
 - [x] input 값 다 소문자 처리
-- [ ] end 일 때 무승부 처리
+- [x] end 일 때 무승부 처리
 - [x] 처음부터 board treemap 으로 초기화
