@@ -1,20 +1,24 @@
 package chess.domain.piece;
 
+import chess.domain.ChessGame;
 import chess.domain.Point;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static chess.domain.ChessGame.BLACK;
+import static chess.domain.ChessGame.WHITE;
+
 public enum Pieces {
     ROOK(Arrays.asList(0, 7)) {
         @Override
         public Piece create(int row, int column) {
             if (row == 0) {
-                return new Rook("R", "BLACK", Point.valueOf(row, column));
+                return new Rook("R", BLACK, Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Rook("r", "WHITE", Point.valueOf(row, column));
+                return new Rook("r", WHITE, Point.valueOf(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -23,10 +27,10 @@ public enum Pieces {
         @Override
         public Piece create(int row, int column) {
             if (row == 0) {
-                return new Knight("N", "BLACK", Point.valueOf(row, column));
+                return new Knight("N", BLACK, Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Knight("n", "WHITE", Point.valueOf(row, column));
+                return new Knight("n", WHITE, Point.valueOf(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -35,10 +39,10 @@ public enum Pieces {
         @Override
         public Piece create(int row, int column) {
             if (row == 0) {
-                return new Bishop("B", "BLACK", Point.valueOf(row, column));
+                return new Bishop("B", BLACK, Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Bishop("b", "WHITE", Point.valueOf(row, column));
+                return new Bishop("b", WHITE, Point.valueOf(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -47,10 +51,10 @@ public enum Pieces {
         @Override
         public Piece create(int row, int column) {
             if (row == 0) {
-                return new Queen("Q", "BLACK", Point.valueOf(row, column));
+                return new Queen("Q", BLACK, Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new Queen("q", "WHITE", Point.valueOf(row, column));
+                return new Queen("q", WHITE, Point.valueOf(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -59,10 +63,10 @@ public enum Pieces {
         @Override
         public Piece create(int row, int column) {
             if (row == 0) {
-                return new King("K", "BLACK", Point.valueOf(row, column));
+                return new King("K", BLACK, Point.valueOf(row, column));
             }
             if (row == 7) {
-                return new King("k", "WHITE", Point.valueOf(row, column));
+                return new King("k", WHITE, Point.valueOf(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -70,10 +74,10 @@ public enum Pieces {
 
     private static Piece createDefaultPieces(int row, int column) {
         if (row == 1) {
-            return new Pawn("P", "BLACK", Point.valueOf(row, column));
+            return new Pawn("P", BLACK, Point.valueOf(row, column));
         }
         if (row == 6) {
-            return new Pawn("p", "WHITE", Point.valueOf(row, column));
+            return new Pawn("p", WHITE, Point.valueOf(row, column));
         }
         return new Empty(".", null, Point.valueOf(row, column));
     }

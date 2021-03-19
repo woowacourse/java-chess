@@ -46,10 +46,14 @@ public class Board {
         while (!currentPoint.equals(target)) {
             validatePossibleRoute(sourcePiece, targetPiece);
             currentPoint = sourcePiece.moveOneStep(target);
+            // TODO: depth 해결
+            if (currentPoint.equals(target)) {
+                replacePiece(sourcePiece, new Empty(".", null, source));
+                sourcePiece.movePoint(target);
+                replacePiece(targetPiece, sourcePiece);
+                break;
+            }
             validateNextPoint(currentPoint);
-            replacePiece(sourcePiece, new Empty(".", null, source));
-            sourcePiece.movePoint(target);
-            replacePiece(targetPiece, sourcePiece);
         }
     }
 
@@ -86,8 +90,8 @@ public class Board {
         }
     }
 
-    private void validateNextPoint(Point currentPoint) {
-        if (!(pickPiece(currentPoint) instanceof Empty)) {
+    private void validateNextPoint(Point point) {
+        if (!(pickPiece(point) instanceof Empty)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }

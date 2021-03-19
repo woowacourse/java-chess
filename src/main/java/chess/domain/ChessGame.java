@@ -3,8 +3,8 @@ package chess.domain;
 import chess.domain.piece.Piece;
 
 public class ChessGame {
-    private static final String WHITE = "WHITE";
-    private static final String BLACK = "BLACK";
+    public static final String WHITE = "WHITE";
+    public static final String BLACK = "BLACK";
 
     private final Board board;
     private String currentColor = WHITE;
