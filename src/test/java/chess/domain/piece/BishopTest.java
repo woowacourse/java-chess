@@ -4,6 +4,9 @@ import chess.domain.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 
@@ -31,5 +34,19 @@ public class BishopTest {
         final Position start = Position.of("c1");
         final Position invalidDestination = Position.of("d3");
         assertThat(bishop.checkPositionRule(start, invalidDestination)).isFalse();
+    }
+
+    @Test
+    @DisplayName("비숍이 가려는 경로에 기물이 끼어있다면, 거짓을 반환한다.")
+    void check_is_movable_invalid_test() {
+        final Bishop bishop = new Bishop();
+        final Position start = Position.of("g6");
+        final Position dest = Position.of("e4");
+
+        final Pawn pawn = new Pawn(1);
+        final Map<Position, Piece> chessBoard = new HashMap<>();
+        chessBoard.put(Position.of("f5"), pawn);
+
+        assertThat(bishop.isMovable(start, dest, chessBoard)).isFalse();
     }
 }
