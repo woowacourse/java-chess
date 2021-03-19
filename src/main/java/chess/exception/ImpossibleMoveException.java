@@ -2,6 +2,10 @@ package chess.exception;
 
 public class ImpossibleMoveException extends ChessException {
     public ImpossibleMoveException() {
-        super("이동할 수 없는 위치입니다.");
+        this("이동할 수 없는 위치입니다.");
+    }
+
+    public ImpossibleMoveException(String message) {
+        super(message);
     }
 }

@@ -5,7 +5,7 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import static chess.domain.Board.BOARD_SIZE;
+import static chess.domain.ChessGame.BOARD_SIZE;
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
@@ -47,6 +47,10 @@ public class Position {
 
     public boolean invalidGo(Direction direction) {
         return isNotValid(x + direction.getX(), y + direction.getY());
+    }
+
+    public int row() {
+        return x;
     }
 
     @Override

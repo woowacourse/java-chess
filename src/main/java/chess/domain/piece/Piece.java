@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Direction;
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.exception.ImpossibleMoveException;
 
@@ -14,6 +15,7 @@ public abstract class Piece {
 
     private final String name;
     private final TeamColor teamColor;
+    private final Score score;
     private final List<Direction> moveDirections;
     private final List<Direction> killDirections;
     private final boolean iterable;
@@ -22,10 +24,11 @@ public abstract class Piece {
     private boolean moved;
 
 
-    public Piece(String name, TeamColor teamColor, List<Direction> moveDirections, List<Direction> killDirections,
-                 boolean iterable, Position position) {
+    public Piece(String name, TeamColor teamColor, Score score, List<Direction> moveDirections,
+                 List<Direction> killDirections, boolean iterable, Position position) {
         this.name = name;
         this.teamColor = teamColor;
+        this.score = score;
         this.moveDirections = moveDirections;
         this.killDirections = killDirections;
         this.iterable = iterable;
@@ -85,6 +88,8 @@ public abstract class Piece {
         return currentPosition.equals(position);
     }
 
+    public abstract boolean isPawn();
+
     public TeamColor teamColor() {
         return teamColor;
     }
@@ -100,6 +105,14 @@ public abstract class Piece {
         return name.toUpperCase();
     }
 
+    public Score score() {
+        return score;
+    }
+
+    public int row() {
+        return currentPosition.row();
+    }
+
     public void changePosition(Position targetPosition) throws ImpossibleMoveException {
         if (movablePositions.contains(targetPosition)) {
             currentPosition = targetPosition;
@@ -109,7 +122,13 @@ public abstract class Piece {
         throw new ImpossibleMoveException();
     }
 
-    public TeamColor enemyColor(){
+    public TeamColor enemyColor() {
         return teamColor.reverse();
     }
+
+    public boolean isNotSameColor(TeamColor currentColor) {
+        return teamColor != currentColor;
+    }
+
+    public abstract boolean isKing();
 }

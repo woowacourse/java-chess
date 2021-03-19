@@ -8,20 +8,20 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class BoardTest {
+public class ChessGameTest {
 
     @Test
     @DisplayName("board 초기화 테스트")
     void testBoardInit() throws PieceNotFoundException {
         //given
-        Board board = new Board();
+        ChessGame chessGame = new ChessGame();
 
         //when
-        Piece rook = board.piece(Position.of(0, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece knight = board.piece(Position.of(1, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece bishop = board.piece(Position.of(2, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece queen = board.piece(Position.of(3, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece king = board.piece(Position.of(4, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece rook = chessGame.piece(Position.of(0, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece knight = chessGame.piece(Position.of(1, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece bishop = chessGame.piece(Position.of(2, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece queen = chessGame.piece(Position.of(3, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece king = chessGame.piece(Position.of(4, 0)).orElseThrow(PieceNotFoundException::new);
 
         //then
         assertThat(rook).isInstanceOf(Rook.class);
