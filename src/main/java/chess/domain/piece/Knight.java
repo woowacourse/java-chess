@@ -11,10 +11,10 @@ import java.util.Objects;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "N";
-    private final double score = 2.5;
+    private static final double SCORE = 2.5;
 
     public Knight(Team team) {
-        super(KNIGHT_NAME, team);
+        super(KNIGHT_NAME, team, SCORE);
     }
 
     @Override
@@ -62,9 +62,5 @@ public class Knight extends Piece {
             );
         }
         return result;
-    }
-
-    public double getScore() {
-        return score;
     }
 }

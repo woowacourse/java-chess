@@ -11,10 +11,10 @@ import java.util.Objects;
 
 public class King extends Piece {
     private static final String KING_NAME = "K";
-    private final int score = 0;
+    private static final double SCORE = 0;
 
     public King(Team team) {
-        super(KING_NAME, team);
+        super(KING_NAME, team, SCORE);
     }
 
     @Override
@@ -58,9 +58,5 @@ public class King extends Piece {
     private boolean isInBorder(int horizontalWeight, int verticalWeight) {
         return horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
                 && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER;
-    }
-
-    public int getScore() {
-        return score;
     }
 }

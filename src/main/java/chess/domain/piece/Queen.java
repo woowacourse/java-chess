@@ -11,10 +11,10 @@ import java.util.List;
 
 public class Queen extends Piece {
     private static final String QUEEN_NAME = "Q";
-    private final int score = 9;
+    private static final double SCORE = 9;
 
     public Queen(Team team) {
-        super(QUEEN_NAME, team);
+        super(QUEEN_NAME, team, SCORE);
     }
 
     @Override
@@ -32,10 +32,7 @@ public class Queen extends Piece {
             if (movedPosition == destination) {
                 Piece targetPiece = board.getBoard().get(target);
                 Piece destinationPiece = board.getBoard().get(movedPosition);
-                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
-                    return false;
-                }
-                return true;
+                return destinationPiece == null || !destinationPiece.isSameTeam(targetPiece);
             }
         }
     }
@@ -91,9 +88,5 @@ public class Queen extends Piece {
             );
         }
         return result;
-    }
-
-    public int getScore() {
-        return score;
     }
 }

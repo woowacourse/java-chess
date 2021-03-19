@@ -11,10 +11,10 @@ import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final String PAWN_NAME = "P";
-    private final int score = 1;
+    private static final double SCORE = 1;
 
     public Pawn(Team team) {
-        super(PAWN_NAME, team);
+        super(PAWN_NAME, team, SCORE);
     }
 
     @Override
@@ -39,9 +39,7 @@ public class Pawn extends Piece {
         }
 
         if (isDiagonal(direction)) {
-            if (Objects.isNull(movedPositionPiece) || movedPositionPiece.isSameTeam(targetPiece)) {
-                return false;
-            }
+            return !Objects.isNull(movedPositionPiece) && !movedPositionPiece.isSameTeam(targetPiece);
         }
         return true;
     }
@@ -96,13 +94,4 @@ public class Pawn extends Piece {
         }
         return isWhite() && position.isSameVertical(Vertical.TWO);
     }
-
-    public int getScore() {
-        return score;
-    }
 }
-
-/*
-1. 팀
-2. 첫 무빙이냐
- */

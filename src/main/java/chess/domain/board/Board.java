@@ -3,12 +3,11 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
-import java.util.Collections;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
+    private static final double TOTAL_SCORE = 38;
+    private static final double PAWN_SAME_HORIZONTAL_SCORE = 0.5;
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
     private final Map<Position, Piece> board;
@@ -49,6 +48,29 @@ public class Board {
             return;
         }
         throw new UnsupportedOperationException("이동 불가능한 좌표입니다.");
+    }
+
+    public double calculateScore(Team team) {
+        double defaultScore = TOTAL_SCORE - deadPieceByTeam.get(team);
+        return defaultScore - countOfSameLinePawn(team) * PAWN_SAME_HORIZONTAL_SCORE;
+    }
+
+    private int countOfSameLinePawn(Team team) {
+        int result = 0;
+        for (Horizontal horizontal : Horizontal.values()) {
+            int cnt = 0;
+            for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+                Position position = entry.getKey();
+                Piece piece = entry.getValue();
+                if (horizontal.isSameHorizontal(position) && piece instanceof Pawn && piece.isSameTeam(team)) {
+                    cnt++;
+                }
+            }
+            if (cnt >= 2) {
+                result += cnt;
+            }
+        }
+        return result;
     }
 
     public Map<Position, Piece> getBoard() {

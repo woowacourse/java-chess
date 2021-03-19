@@ -8,10 +8,12 @@ import java.util.List;
 public abstract class Piece {
     private final String name;
     private final Team team;
+    private final double score;
 
-    public Piece(String name, Team team) {
+    public Piece(String name, Team team, double score) {
         this.team = team;
         this.name = convertName(name, team);
+        this.score = score;
     }
 
     private String convertName(String name, Team team) {
@@ -41,7 +43,15 @@ public abstract class Piece {
         return team.equals(piece.getTeam());
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team.equals(team);
+    }
+
     public Team getTeam() {
         return team;
+    }
+
+    public double getScore() {
+        return score;
     }
 }

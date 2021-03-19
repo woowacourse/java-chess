@@ -1,14 +1,12 @@
 package chess.controller;
 
-import chess.domain.Command;
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.ChessGame;
+import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-
-    public void run() {
+    public void run(ChessGame chessGame, Commands commands) {
         OutputView.printManual();
         Board board = null;
 
@@ -18,15 +16,16 @@ public class ChessController {
         }
     }
 
-    public void start() {
-
-    }
-
-    public void end() {
-
-    }
-
-    public void move(String s1, String s2) {
-
+    public void playGame(ChessGame chessGame, Commands commands) {
+        while (true) {
+            try {
+                String commandMessage = commands.execute(InputView.inputCommand());
+                OutputView.printMessage(commandMessage);
+                OutputView.printBoard(chessGame.getBoard());
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                playGame(chessGame, commands);
+            }
+        }
     }
 }

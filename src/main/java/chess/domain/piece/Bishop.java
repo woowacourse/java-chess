@@ -10,10 +10,10 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private static final String BISHOP_NAME = "B";
-    private final int score = 3;
+    private static final double SCORE = 3;
 
     public Bishop(Team team) {
-        super(BISHOP_NAME, team);
+        super(BISHOP_NAME, team, SCORE);
     }
 
     @Override
@@ -58,15 +58,8 @@ public class Bishop extends Piece {
             if (movedPosition == destination) {
                 Piece targetPiece = board.findPieceFromPosition(target);
                 Piece destinationPiece = board.findPieceFromPosition(movedPosition);
-                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
-                    return false;
-                }
-                return true;
+                return destinationPiece == null || !destinationPiece.isSameTeam(targetPiece);
             }
         }
-    }
-
-    public int getScore() {
-        return score;
     }
 }

@@ -11,10 +11,10 @@ import java.util.List;
 
 public class Rook extends Piece {
     private static final String ROOK_NAME = "R";
-    private final int score = 5;
+    private static final double SCORE = 5;
 
     public Rook(Team team) {
-        super(ROOK_NAME, team);
+        super(ROOK_NAME, team, SCORE);
     }
 
     @Override
@@ -50,21 +50,8 @@ public class Rook extends Piece {
             if (movedPosition == destination) {
                 Piece targetPiece = board.getBoard().get(target);
                 Piece destinationPiece = board.getBoard().get(movedPosition);
-                if (destinationPiece != null && destinationPiece.isSameTeam(targetPiece)) {
-                    return false;
-                }
-                return true;
+                return destinationPiece == null || !destinationPiece.isSameTeam(targetPiece);
             }
         }
     }
-
-    public int getScore() {
-        return score;
-    }
 }
-
-/*
-1. destination이 아닌데 길목에 무언가 있으면 false
-2. destination인데 우리 팀 Piece면 false
-3. true
- */
