@@ -7,15 +7,16 @@ import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RookTest {
+class KnightTest {
 
-    @DisplayName("룩이 이동할 수 있는 모든 위치를 구한다.")
+
+    @DisplayName("나이트가 이동할 수 있는 모든 위치를 구한다.")
     @Test
     void generatePath() {
         Position current = new Position(Column.E, Row.FOUR);
-        Piece rook = new Rook(PieceColor.WHITE);
+        Piece knight = new Knight(PieceColor.WHITE);
 
-        List<Position> positions = rook.findAllPath(current);
+        List<Position> positions = knight.findAllPath(current);
 
         for (Position position : positions) {
             System.out.println(position.name());

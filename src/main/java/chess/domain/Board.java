@@ -1,14 +1,12 @@
 package chess.domain;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.Path;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Board {
 

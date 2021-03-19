@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.piece.strategy.Direction;
-import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.piece.strategy.PawnStrategy;
 import java.util.List;
 

@@ -12,6 +12,6 @@ public class Queen extends Piece {
 
     @Override
     public List<Direction> directions() {
-        return null;
+        return Direction.everyDirection();
     }
 }
