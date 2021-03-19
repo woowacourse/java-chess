@@ -45,7 +45,6 @@ public class Bishop extends Piece {
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (this == obj) return true;
-        if (getClass() == obj.getClass()) return true;
-        return false;
+        return getClass() == obj.getClass();
     }
 }

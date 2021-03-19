@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import java.util.Map;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForInterfaceTypes.*;
+import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThatCode;
 
 public class ChessGameTest {
     @Test

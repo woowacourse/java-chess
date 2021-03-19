@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PieceNameConverter {
-    private static Map<Piece, String> converter = new HashMap<>();
+    private static final Map<Piece, String> converter = new HashMap<>();
 
     static {
         converter.put(new Pawn(1), "p");

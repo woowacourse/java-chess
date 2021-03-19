@@ -47,7 +47,7 @@ public class QueenTest {
 
 
     @Test
-    @DisplayName("퀸이이 가려는 직선 경로에 기물이 끼어있다면, 거짓을 반환한다.")
+    @DisplayName("퀸이 가려는 직선 경로에 기물이 끼어있다면, 거짓을 반환한다.")
     void check_is_movable_invalid_straight_test() {
         final Queen queen = new Queen();
         final Position start = Position.of("d1");

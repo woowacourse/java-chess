@@ -12,9 +12,6 @@ import java.util.stream.Collectors;
 public abstract class Team {
     private static final Map<Piece, Double> scoreByPiece = new HashMap<>();
 
-    protected final Map<Position, Piece> piecePosition;
-    protected final List<Piece> capturedPieces;
-
     static {
         scoreByPiece.put(new King(), 0.0);
         scoreByPiece.put(new Queen(), 9.0);
@@ -24,6 +21,9 @@ public abstract class Team {
         scoreByPiece.put(new Pawn(1), 1.0);
         scoreByPiece.put(new Pawn(-1), 1.0);
     }
+
+    protected final Map<Position, Piece> piecePosition;
+    protected final List<Piece> capturedPieces;
 
     public Team() {
         piecePosition = new HashMap<>();
@@ -37,14 +37,14 @@ public abstract class Team {
     }
 
     protected void initializePiece(final int pieceColumn) {
-        piecePosition.put(new Position( 0, pieceColumn), new Rook());
-        piecePosition.put(new Position( 1, pieceColumn), new Knight());
-        piecePosition.put(new Position( 2, pieceColumn), new Bishop());
-        piecePosition.put(new Position( 3, pieceColumn), new Queen());
-        piecePosition.put(new Position( 4, pieceColumn), new King());
-        piecePosition.put(new Position( 5, pieceColumn), new Bishop());
-        piecePosition.put(new Position( 6, pieceColumn), new Knight());
-        piecePosition.put(new Position( 7, pieceColumn), new Rook());
+        piecePosition.put(new Position(0, pieceColumn), new Rook());
+        piecePosition.put(new Position(1, pieceColumn), new Knight());
+        piecePosition.put(new Position(2, pieceColumn), new Bishop());
+        piecePosition.put(new Position(3, pieceColumn), new Queen());
+        piecePosition.put(new Position(4, pieceColumn), new King());
+        piecePosition.put(new Position(5, pieceColumn), new Bishop());
+        piecePosition.put(new Position(6, pieceColumn), new Knight());
+        piecePosition.put(new Position(7, pieceColumn), new Rook());
     }
 
     public Piece choosePiece(final Position position) {
@@ -57,7 +57,7 @@ public abstract class Team {
     public abstract void move(final Position current, final Position destination);
 
     public Piece killPiece(Position destination) {
-       return piecePosition.remove(destination);
+        return piecePosition.remove(destination);
     }
 
     public void catchPiece(Piece piece) {

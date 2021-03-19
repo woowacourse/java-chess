@@ -15,7 +15,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard){
+    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
@@ -27,7 +27,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean checkPositionRule(final Position current, final Position destination){
+    public boolean checkPositionRule(final Position current, final Position destination) {
         if (isMoved) {
             return checkPositionRuleAfterMove(current, destination);
         }
@@ -53,7 +53,7 @@ public class Pawn extends Piece {
 
     private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
         if (current.moveXandY(0, direction).equals(destination) ||
-                current.moveXandY(0,direction * 2).equals(destination)) {
+                current.moveXandY(0, direction * 2).equals(destination)) {
             return true;
         }
         return current.checkDiagonalToDirection(destination, direction);
@@ -68,7 +68,6 @@ public class Pawn extends Piece {
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (this == obj) return true;
-        if (getClass() == obj.getClass()) return true;
-        return false;
+        return getClass() == obj.getClass();
     }
 }
