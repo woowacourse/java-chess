@@ -50,3 +50,6 @@
 
 ### King 테스트 케이스 예시
 ![king](https://user-images.githubusercontent.com/50176238/111624064-8c616b80-882e-11eb-919f-e7c162aa22a1.jpg)
+
+### Bishop 테스트 케이스 예시
+![bishop](https://user-images.githubusercontent.com/48986787/111715251-c8c8b200-8896-11eb-801d-1c08328b3353.png)
