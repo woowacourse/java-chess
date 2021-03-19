@@ -4,17 +4,13 @@ import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import chess.service.ChessService;
+import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class Move extends Playing {
-    private String command;
-
-    public Move(String command) {
-        this.command = command;
-    }
+public class WhiteTurn extends Playing {
 
     @Override
     public GameState run(ChessService chessService) {
@@ -24,6 +20,7 @@ public class Move extends Playing {
     }
 
     private GameState move(ChessService chessService) {
+        String command = InputView.command();
         List<String> moveInput = Arrays.asList(command.split(" "));
 
         Piece sourcePiece = chessService.piece(new Position(moveInput.get(1).charAt(0), moveInput.get(1).charAt(1)));
@@ -33,8 +30,8 @@ public class Move extends Playing {
         chessService.changeTurn();
         if (targetPiece instanceof King) {
             OutputView.printWinner(!targetPiece.isBlack());
-            return new Finished();
+            return new End();
         }
-        return new Playing();
+        return new BlackTurn();
     }
 }

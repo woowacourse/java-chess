@@ -11,6 +11,6 @@ public class Status extends Finished {
         OutputView.printScores(true, blackScore);
         OutputView.printScores(false, whiteScore);
         OutputView.printWinner(blackScore > whiteScore);
-        return new Finished();
+        return new End();
     }
 }

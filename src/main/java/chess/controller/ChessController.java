@@ -1,10 +1,8 @@
 package chess.controller;
 
 import chess.service.ChessService;
-import chess.service.Command;
 import chess.service.state.GameState;
 import chess.service.state.Ready;
-import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
@@ -19,13 +17,13 @@ public class ChessController {
     public void run() {
         OutputView.printChessInstruction();
         while (!gameState.isFinished()) {
-            changeStateByCommand();
+//            changeStateByCommand();
             this.gameState = gameState.run(chessService);
         }
     }
 
     private void changeStateByCommand() {
-        String command = InputView.command();
-        gameState = Command.gameState(command);
+//        String command = InputView.command();
+//        gameState = Command.gameState(command);
     }
 }
