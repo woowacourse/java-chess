@@ -11,6 +11,7 @@ import chess.domain.piece.Rook;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -22,28 +23,29 @@ public class BoardFactory {
     private static final Row WHITE_PAWN_ROW = Row.TWO;
 
     public static Board initializeBoard() {
-        return initializePieces(new Board());
+        return initializePieces();
     }
 
-    private static Board initializePieces(Board board) {
-        initializeSpecialPiecesByRow(board, MIN_ROW, PieceColor.WHITE);
-        initializeSpecialPiecesByRow(board, MAX_ROW, PieceColor.BLACK);
+    private static Board initializePieces() {
+        Map<Piece, Position> coordinates = new HashMap<>();
+        initializeSpecialPiecesByRow(coordinates, MIN_ROW, PieceColor.WHITE);
+        initializeSpecialPiecesByRow(coordinates, MAX_ROW, PieceColor.BLACK);
 
-        initializePawnPieces(board);
-        return board;
+        initializePawnPieces(coordinates);
+        return new Board(coordinates);
     }
 
-    private static void initializePawnPieces(Board board) {
+    private static void initializePawnPieces(Map<Piece, Position> coordinates) {
         for (Column column : Column.values()) {
-            board.putPiece(new Pawn(PieceColor.WHITE), Position.of(column, WHITE_PAWN_ROW));
-            board.putPiece(new Pawn(PieceColor.BLACK), Position.of(column, BLACK_PAWN_ROW));
+            coordinates.put(new Pawn(PieceColor.WHITE), Position.of(column, WHITE_PAWN_ROW));
+            coordinates.put(new Pawn(PieceColor.BLACK), Position.of(column, BLACK_PAWN_ROW));
         }
     }
 
-    private static void initializeSpecialPiecesByRow(Board board, Row row, PieceColor color) {
+    private static void initializeSpecialPiecesByRow(Map<Piece, Position> coordinates, Row row, PieceColor color) {
         Map<Column, Piece> pieces = createSpecialPieces(color);
         for (Column column : Column.values()) {
-            board.putPiece(pieces.get(column), Position.of(column, row));
+            coordinates.put(pieces.get(column), Position.of(column, row));
         }
     }
 

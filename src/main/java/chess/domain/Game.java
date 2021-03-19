@@ -1,6 +1,8 @@
 package chess.domain;
 
+import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +15,7 @@ public class Game {
 
     public Game() {
         board = BoardFactory.initializeBoard();
-        players = new Players(Arrays.asList(
+        players = Players.of(Arrays.asList(
                 Player.of(PieceColor.WHITE),
                 Player.of(PieceColor.BLACK)
                 ));
@@ -27,8 +29,23 @@ public class Game {
             isPlaying = false;
             return;
         }
-        board.move(players.currentPlayer(currentColor), values);
+        Position source = Position.of(values.get(1));
+        Piece chosenPiece = board.findPieceBy(source);
+        if (!players.currentPlayer(currentColor).isOwnerOf(chosenPiece)) {
+            throw new IllegalArgumentException("말을 움직일 수 없습니다.");
+        }
+        Position target = Position.of(values.get(2));
+//        board.move(players.currentPlayer(currentColor), values);
+//        board.move2(source, target);
+        board.move3(chosenPiece, target);
         currentColor = currentColor.reversed();
+    }
+
+    public void execute(Command command) {
+        // input 이 end 일 경우
+
+        // input 이 move position position 일 경우
+
     }
 
     public boolean isPlaying() {

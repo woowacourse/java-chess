@@ -3,7 +3,8 @@ package chess.domain.piece;
 public enum PieceColor {
 
     WHITE("백"),
-    BLACK("흑");
+    BLACK("흑"),
+    NOTHING("무");
 
     private final String color;
 
@@ -16,6 +17,9 @@ public enum PieceColor {
     }
 
     public PieceColor reversed() {
+        if(this.equals(NOTHING)) {
+            throw new IllegalArgumentException("빈 칸은 색을 바꿀 수 없습니다.");
+        }
         if(this.equals(WHITE)){
             return BLACK;
         }

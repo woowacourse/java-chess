@@ -5,7 +5,9 @@ import java.util.stream.Stream;
 public enum Command {
     START("start"),
     END("end"),
-    MOVE("move");
+    MOVE("move"),
+    SHOW("show"),
+    HIDE("hide");
 
     private final String message;
 

@@ -23,15 +23,12 @@ public class RenderingUtils {
     private static String renderRow(Board board, Row row) {
         return Stream.of(Column.values())
                 .map(column -> Position.of(column, row))
-                .map(position -> renderPosition(board, position))
+                .map(position -> renderPosition(board.findPieceBy(position)))
                 .collect(Collectors.joining())
                 ;
     }
 
-    private static String renderPosition(Board board, Position position) {
-        return board.findPieceBy(position)
-                .map(Piece::getName)
-                .orElse(".")
-                ;
+    private static String renderPosition(Piece piece) {
+        return piece.getName();
     }
 }

@@ -17,14 +17,14 @@ public class OutputView {
     }
 
     public static void printBoard(Board board) {
-        System.out.println(RenderingUtils.renderBoard(board));
+        System.out.println(NEWLINE + RenderingUtils.renderBoard(board));
     }
 
     public static void printError(IllegalArgumentException e) {
-        System.out.println(e.getMessage());
+        System.out.println(NEWLINE + e.getMessage());
     }
 
-    public static void printPlayerTurn(PieceColor currentColor) {
-        System.out.println(currentColor.getColor() + "의 차례입니다.");
+    public static void printTurn(PieceColor currentColor) {
+        System.out.println(NEWLINE + currentColor.getColor() + "의 차례입니다.");
     }
 }
