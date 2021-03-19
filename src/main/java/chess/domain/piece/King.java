@@ -23,6 +23,10 @@ public class King extends Piece {
     private static final King BLACK_KING = new King(Owner.WHITE);
     private static final King WHITE_KING = new King(Owner.BLACK);
 
+    public King(Owner owner) {
+        super(owner);
+    }
+
     public static King getInstanceOf(Owner owner) {
         if (owner.equals(Owner.BLACK)) {
             return BLACK_KING;
@@ -32,11 +36,7 @@ public class King extends Piece {
             return WHITE_KING;
         }
 
-        throw new IllegalArgumentException("Invalid pawn");
-    }
-
-    public King(Owner owner) {
-        super(owner);
+        throw new IllegalArgumentException("Invalid King");
     }
 
     @Override

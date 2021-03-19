@@ -16,8 +16,8 @@ public class Bishop extends Piece {
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
 
-    private static final Bishop BLACK_BISHOP = new Bishop(Owner.WHITE);
-    private static final Bishop WHITE_BISHOP = new Bishop(Owner.BLACK);
+    private static final Bishop BLACK_BISHOP = new Bishop(Owner.BLACK);
+    private static final Bishop WHITE_BISHOP = new Bishop(Owner.WHITE);
 
     public static Bishop getInstanceOf(Owner owner){
         if (owner.equals(Owner.BLACK)){
@@ -28,7 +28,7 @@ public class Bishop extends Piece {
             return WHITE_BISHOP;
         }
 
-        throw new IllegalArgumentException("Invalid pawn");
+        throw new IllegalArgumentException("Invalid Bishop");
     }
 
     public Bishop(Owner owner) {

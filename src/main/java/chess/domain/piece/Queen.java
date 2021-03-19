@@ -19,9 +19,23 @@ public class Queen extends Piece{
     );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
+    private static final Queen BLACK_QUEEN = new Queen(Owner.BLACK);
+    private static final Queen WHITE_QUEEN = new Queen(Owner.WHITE);
 
     public Queen(Owner owner) {
         super(owner);
+    }
+
+    public static Queen getInstanceOf(Owner owner) {
+        if (owner.equals(Owner.BLACK)) {
+            return BLACK_QUEEN;
+        }
+
+        if (owner.equals(Owner.WHITE)) {
+            return WHITE_QUEEN;
+        }
+
+        throw new IllegalArgumentException("Invalid Queen");
     }
 
     @Override

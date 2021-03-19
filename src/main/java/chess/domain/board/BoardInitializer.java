@@ -34,14 +34,14 @@ public class BoardInitializer {
 
     private static Piece[] getPiecesOfFirstLine(Owner owner){
         return new Piece[]{
-                new Rook(owner),
-                new Knight(owner),
-                new Bishop(owner),
-                new Queen(owner),
-                new King(owner),
-                new Bishop(owner),
-                new Knight(owner),
-                new Rook(owner)
+                Rook.getInstanceOf(owner),
+                Knight.getInstanceOf(owner),
+                Bishop.getInstanceOf(owner),
+                Queen.getInstanceOf(owner),
+                Knight.getInstanceOf(owner),
+                Bishop.getInstanceOf(owner),
+                Knight.getInstanceOf(owner),
+                Rook.getInstanceOf(owner)
         };
     }
 

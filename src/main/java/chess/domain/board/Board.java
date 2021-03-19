@@ -57,7 +57,12 @@ public class Board {
 
         for (Direction direction : sourcePiece.getDirections()) {
             for (int i = 0; i < sourcePiece.getMaxDistance(); i++) {
-                Position nextPosition = source.next(direction, i);
+                Position nextPosition;
+                try {
+                    nextPosition = source.next(direction, i);
+                } catch (IllegalArgumentException e) {
+                    break;
+                }
                 Piece nextPiece = of(nextPosition);
 
                 if (sourcePiece.isSameTeam(nextPiece)) {
