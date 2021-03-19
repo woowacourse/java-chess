@@ -47,7 +47,7 @@ class RookMoveStrategyTest {
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
 
-    @DisplayName("목적지에 같은 팀의 말이 있다먄 예외")
+    @DisplayName("목적지에 같은 팀의 말이 있다면 예외")
     @ParameterizedTest
     @CsvSource({"a1, b1", "a1, a2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {

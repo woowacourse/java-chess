@@ -1,10 +1,9 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.order.MoveOrder;
+import chess.domain.position.Direction;
 
-public class QueenMoveStrategy implements MoveStrategy {
-    @Override
-    public boolean canMove(MoveOrder moveOrder) {
-        return false;
+public class QueenMoveStrategy extends DefaultMoveStrategy {
+    public QueenMoveStrategy() {
+        super(Direction.everyDirection());
     }
 }
