@@ -27,12 +27,12 @@ public class Point {
                 .collect(Collectors.toList());
     }
 
-    private final int x;
-    private final int y;
+    private final int row;
+    private final int column;
 
     private Point(char letter, int rank) {
-        x = convertLetterToIndex(letter);
-        y = convertRankToIndex(rank);
+        column = convertLetterToIndex(letter);
+        row = convertRankToIndex(rank);
     }
 
     public static Point of(String point) {
@@ -41,14 +41,14 @@ public class Point {
 
     private static Point of(char letter, int rank) {
         return points.stream()
-                .filter(p -> p.x == p.convertLetterToIndex(letter) && p.y == p.convertRankToIndex(rank))
+                .filter(p -> p.column == p.convertLetterToIndex(letter) && p.row == p.convertRankToIndex(rank))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
     }
 
     public static Point valueOf(int row, int column) {
         return points.stream()
-                .filter(p -> p.x == column && p.y == row)
+                .filter(p -> p.column == column && p.row == row)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
     }
@@ -61,12 +61,12 @@ public class Point {
         return RANK_GAP - rank;
     }
 
-    public int getX() {
-        return this.x;
+    public int getColumn() {
+        return this.column;
     }
 
-    public int getY() {
-        return this.y;
+    public int getRow() {
+        return this.row;
     }
 
     @Override
@@ -74,16 +74,16 @@ public class Point {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Point point = (Point) o;
-        return x == point.x &&
-                y == point.y;
+        return column == point.column &&
+                row == point.row;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(x, y);
+        return Objects.hash(column, row);
     }
 
     public int calculateDistance(Point point) {
-        return ((int) Math.pow(this.x - point.getX(),2) + (int) Math.pow(this.y - point.getY(), 2));
+        return ((int) Math.pow(this.column - point.getColumn(),2) + (int) Math.pow(this.row - point.getRow(), 2));
     }
 }
