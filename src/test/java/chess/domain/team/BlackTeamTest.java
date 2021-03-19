@@ -34,4 +34,21 @@ public class BlackTeamTest {
         assertThat(blackTeamPiecePosition.get(Position.of("g8"))).isInstanceOf(Knight.class);
         assertThat(blackTeamPiecePosition.get(Position.of("h8"))).isInstanceOf(Rook.class);
     }
+
+    @Test
+    @DisplayName("블랙팀의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
+    void calculate_score() {
+        final BlackTeam blackTeam = new BlackTeam();
+        double blackTeamScore = blackTeam.calculateTotalScore();
+        assertThat(blackTeamScore).isEqualTo(38.0);
+    }
+
+    @Test
+    @DisplayName("블랙팀의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
+    void calculate_score_pawn_same_y_axis() {
+        final BlackTeam blackTeam = new BlackTeam();
+        blackTeam.move(Position.of("b7"), Position.of("a6"));
+        double blackTeamScore = blackTeam.calculateTotalScore();
+        assertThat(blackTeamScore).isEqualTo(37.0);
+    }
 }
