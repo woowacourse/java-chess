@@ -28,8 +28,12 @@ public class ChessController {
     }
 
     private void playRound() {
+        changeStateByCommand();
+        this.gameState = gameState.playRound(chessService);
+    }
+
+    private void changeStateByCommand() {
         String command = InputView.command();
         gameState = Command.gameState(command);
-        gameState.playRound(chessService);
     }
 }

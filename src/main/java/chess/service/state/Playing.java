@@ -5,7 +5,8 @@ import chess.view.OutputView;
 
 public class Playing implements GameState {
     @Override
-    public void playRound(ChessService chessService) {
+    public GameState playRound(ChessService chessService) {
         OutputView.printGridStatus(chessService.grid());
+        return new Playing();
     }
 }

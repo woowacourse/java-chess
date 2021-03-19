@@ -17,12 +17,13 @@ public class Move extends Playing {
     }
 
     @Override
-    public void playRound(ChessService chessService) {
-        move(chessService);
+    public GameState playRound(ChessService chessService) {
+        GameState gameState = move(chessService);
         OutputView.printGridStatus(chessService.grid());
+        return gameState;
     }
 
-    private void move(ChessService chessService) {
+    private GameState move(ChessService chessService) {
         List<String> moveInput = Arrays.asList(command.split(" "));
 
         Piece sourcePiece = chessService.piece(new Position(moveInput.get(1).charAt(0), moveInput.get(1).charAt(1)));
@@ -33,6 +34,8 @@ public class Move extends Playing {
         if (targetPiece instanceof King) {
             chessService.setGameOver(true);
             OutputView.printWinner(!targetPiece.isBlack());
+            return new Finished();
         }
+        return new Playing();
     }
 }
