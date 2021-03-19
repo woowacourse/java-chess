@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.Board;
 import chess.domain.File;
 import chess.domain.Position;
+import chess.domain.PrintBoardDto;
 import chess.domain.Rank;
 import chess.domain.Team;
 import chess.domain.piece.Piece;
@@ -24,18 +25,18 @@ public class OutputView {
         System.out.printf("%s팀이 승리하였습니다.\n", team.getName());
     }
 
-    public static void printBoard(Board board) {
+    public static void printBoard(PrintBoardDto dto) {
         for (Rank rank : Rank.values()) {
-            printPiece(board, rank);
+            printPiece(dto.getBoard(), rank);
             System.out.println();
         }
-        System.out.println();
+        System.out.printf("%s팀의 턴입니다. \n", dto.getTurn().getName());
     }
 
     private static void printPiece(Board board, Rank rank) {
         for (File file : File.values()) {
             Position position = Position.of(makePositionFormat(rank, file));
-            if (!board.containsPosition(position)) {
+            if (!board.hasPieceAt(position)) {
                 System.out.print(EMPTY);
                 continue;
             }

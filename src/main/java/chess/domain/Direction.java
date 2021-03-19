@@ -25,7 +25,7 @@ public enum Direction {
     private final int xDegree;
     private final int yDegree;
 
-    private Direction(int xDegree, int yDegree) {
+    Direction(int xDegree, int yDegree) {
         this.xDegree = xDegree;
         this.yDegree = yDegree;
     }
@@ -67,5 +67,13 @@ public enum Direction {
 
     public int getYDegree() {
         return yDegree;
+    }
+
+    public static boolean isDiagonalDirection(Direction direction) {
+        return diagonalDirection().contains(direction);
+    }
+
+    public static boolean isLinearDirection(Direction direction) {
+        return linearDirection().contains(direction);
     }
 }

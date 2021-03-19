@@ -25,7 +25,7 @@ class PawnTest {
     @Test
     void team() {
         Pawn pawn = new Pawn(Team.BLACK);
-        assertThatThrownBy(() -> pawn.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> pawn.validateCurrentTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

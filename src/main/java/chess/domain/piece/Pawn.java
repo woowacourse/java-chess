@@ -40,7 +40,7 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public void checkTurn(Team team) {
+    public void validateCurrentTurn(Team team) {
         if (this.team != team) {
             throw new IllegalArgumentException("[ERROR] 상대 팀의 차례입니다.");
         }

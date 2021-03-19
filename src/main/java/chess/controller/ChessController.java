@@ -13,17 +13,22 @@ public class ChessController {
 
     public static void start(ChessGame chessGame, String command) {
         chessGame.initBoard(BoardInitializer.init());
-        OutputView.printBoard(chessGame.getBoard());
+        OutputView.printBoard(chessGame.getPrintBoardDto());
     }
 
     public static void move(ChessGame chessGame, String command) {
-        if (chessGame.isReady() || chessGame.isEnd()) {
-            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
-        }
-        chessGame.move(command);
-        OutputView.printBoard(chessGame.getBoard());
-        if (chessGame.isEnd()) {
-            OutputView.printTeamWin(chessGame.getWinTeam());
+        try {
+            if (chessGame.isReady() || chessGame.isEnd()) {
+                throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+            }
+            chessGame.move(command);
+            OutputView.printBoard(chessGame.getPrintBoardDto());
+            if (chessGame.isEnd()) {
+                OutputView.printTeamWin(chessGame.getWinTeam());
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            OutputView.printBoard(chessGame.getPrintBoardDto());
         }
     }
 
@@ -42,9 +47,13 @@ public class ChessController {
         ChessGame chessGame = new ChessGame();
         OutputView.printCommandInfo();
         while (chessGame.isRunning()) {
-            String inputCmd = InputView.inputCommand();
-            Command command = Command.of(splitCommand(inputCmd));
-            command.apply(chessGame, inputCmd);
+            try {
+                String inputCmd = InputView.inputCommand();
+                Command command = Command.of(splitCommand(inputCmd));
+                command.apply(chessGame, inputCmd);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
         }
     }
 

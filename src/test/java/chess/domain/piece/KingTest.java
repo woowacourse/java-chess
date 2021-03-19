@@ -26,7 +26,7 @@ class KingTest {
     @Test
     void team() {
         King king = new King(Team.BLACK);
-        assertThatThrownBy(() -> king.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> king.validateCurrentTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

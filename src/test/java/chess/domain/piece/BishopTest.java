@@ -25,7 +25,7 @@ class BishopTest {
     @Test
     void team() {
         Bishop bishop = new Bishop(Team.BLACK);
-        assertThatThrownBy(() -> bishop.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> bishop.validateCurrentTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

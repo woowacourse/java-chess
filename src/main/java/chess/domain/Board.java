@@ -10,7 +10,7 @@ public class Board {
         this.chessBoard = chessBoard;
     }
 
-    public boolean containsPosition(Position position) {
+    public boolean hasPieceAt(Position position) {
         return chessBoard.containsKey(position);
     }
 
@@ -21,13 +21,19 @@ public class Board {
         return chessBoard.get(position);
     }
 
-    public void isSameTeam(Position position, Team team) {
+    public void validateTargetPieceIsSameTeam(Position position, Team team) {
         if (!chessBoard.containsKey(position)) {
             return;
         }
 
         if (chessBoard.get(position).isSameTeam(team)) {
             throw new IllegalArgumentException("[ERROR] 해당 좌표에 같은 팀의 말이 존재합니다.");
+        }
+    }
+
+    public void validateHasPieceInPath(Position position) {
+        if (hasPieceAt(position)) {
+            throw new IllegalArgumentException("[ERROR] 경로에 말이 존재합니다.");
         }
     }
 

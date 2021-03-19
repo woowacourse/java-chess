@@ -26,7 +26,7 @@ class QueenTest {
     @Test
     void team() {
         Queen queen = new Queen(Team.BLACK);
-        assertThatThrownBy(() -> queen.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> queen.validateCurrentTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

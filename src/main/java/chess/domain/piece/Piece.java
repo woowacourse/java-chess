@@ -11,7 +11,7 @@ public interface Piece {
 
     Team getTeam();
 
-    void checkTurn(Team team);
+    void validateCurrentTurn(Team team);
 
     boolean isSameTeam(Team team);
 
