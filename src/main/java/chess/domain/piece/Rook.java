@@ -9,11 +9,16 @@ public class Rook extends Piece {
 
     @Override
     public Direction direction(Piece target) {
-        return null;
+        Direction direction = Direction.findDirection(this.point, target.point);
+        if (!direction.equals(Direction.NORTH) && !direction.equals(Direction.WEST)
+                && !direction.equals(Direction.EAST) && !direction.equals(Direction.SOUTH)) {
+            throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+        }
+        return direction;
     }
 
     @Override
     public Point moveOneStep(Point target, Direction direction) {
-        return null;
+        return this.point.createNextPoint(direction);
     }
 }

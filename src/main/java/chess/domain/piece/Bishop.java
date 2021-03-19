@@ -10,7 +10,6 @@ public class Bishop extends Piece {
     @Override
     public Direction direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        System.out.println(direction);
         if (!direction.equals(Direction.NORTH_WEST) && !direction.equals(Direction.NORTH_EAST)
                 && !direction.equals(Direction.SOUTH_EAST) && !direction.equals(Direction.SOUTH_WEST)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");

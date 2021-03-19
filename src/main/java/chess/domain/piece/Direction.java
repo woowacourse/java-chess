@@ -38,7 +38,6 @@ public enum Direction {
         return Arrays.stream(Direction.values())
                 .filter(direction -> direction.rowDirection == normalizeDifference(initialRowDifference)
                         && direction.columnDirection == normalizeDifference(initialColumnDifference))
-                .peek(System.out::println)
                 .findAny().orElseThrow(RuntimeException::new);
     }
 
