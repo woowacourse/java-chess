@@ -15,6 +15,10 @@ public class InputView {
         return command;
     }
 
+    public static String getPoint() {
+        return SCANNER.next().toLowerCase(Locale.ROOT);
+    }
+
 
     private static void validateCommand(final String command) {
         if (!Command.isValidateCommand(command)) {

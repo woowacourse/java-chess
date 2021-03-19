@@ -42,9 +42,9 @@ public abstract class Piece {
     }
 
     public final void move(final Map<Team, Pieces> board, final Position endPoint) {
-//        List<Position> movablePositions = getMovablePositions(board);
-//        validateEndPoint(endPoint, movablePositions);
-//        erasePiece(board, endPoint);
+        List<Position> movablePositions = getMovablePositions(board);
+        validateEndPoint(endPoint, movablePositions);
+        erasePiece(board, endPoint);
         this.position = endPoint;
     }
 

@@ -16,7 +16,7 @@ class BoardTest {
         Board board = boardFactory.getBoard();
 
         Position startPoint = new Position(6, 0);
-        Position endPoint = new Position(6, 1);
+        Position endPoint = new Position(4, 0);
 
         assertThatThrownBy(
                 () -> board.move(startPoint, endPoint, Team.BLACK)

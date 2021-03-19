@@ -30,19 +30,57 @@ public class Pawn extends Piece {
     @Override
     public List<Position> getMovablePositions(final Map<Team, Pieces> board) {
         List<Position> movablePositions = new ArrayList<>();
-        movablePositions.addAll(getAttackablePositions(board));
-        return null;
+        addAttackablePositions(movablePositions, board);
+        addMovablePositionsWhenInit(movablePositions, board);
+        addMovablePositions(movablePositions, board);
+        return movablePositions;
     }
 
-    private List<Position> getAttackablePositions(final Map<Team, Pieces> board) {
-        List<Position> attackablePositions = new ArrayList<>();
+    private void addMovablePositions(List<Position> movablePositions, Map<Team, Pieces> board) {
+        Team myTeam = super.getTeam();
+
+        if (myTeam.equals(Team.WHITE)) {
+            Position curPosition = super.getPosition();
+
+            int nx = curPosition.getRow() - 1;
+            int ny = curPosition.getCol();
+            Position position = new Position(nx, ny);
+            Pieces blackTeamPieces = board.get(Team.BLACK);
+            Pieces whiteTeamPieces = board.get(Team.WHITE);
+
+            if (!blackTeamPieces.containByPosition(position) && !whiteTeamPieces.containByPosition(position)) {
+                movablePositions.add(position);
+            }
+
+        }
+    }
+
+    private void addMovablePositionsWhenInit(final List<Position> movablePositions, final Map<Team, Pieces> board) {
+        Team myTeam = super.getTeam();
+
+        if (myTeam.equals(Team.WHITE)) {
+            Position curPosition = super.getPosition();
+            if (curPosition.getRow() == Row.getLocation(WHITE_TEAM_ROW)) {
+                int nx = curPosition.getRow() - 2;
+                int ny = curPosition.getCol();
+                Position position = new Position(nx, ny);
+                Pieces blackTeamPieces = board.get(Team.BLACK);
+                Pieces whiteTeamPieces = board.get(Team.WHITE);
+
+                if (!blackTeamPieces.containByPosition(position) && !whiteTeamPieces.containByPosition(position)) {
+                    movablePositions.add(position);
+                }
+            }
+        }
+    }
+
+    private void addAttackablePositions(final List<Position> movablePositions, final Map<Team, Pieces> board) {
         Team myTeam = super.getTeam();
 
         int dx[] = {-1, -1};
         int dy[] = {-1, 1};
         if (myTeam.equals(Team.WHITE)) {
             Position curPosition = super.getPosition();
-
             for (int dir = 0; dir < dx.length; ++dir) {
                 int nx = curPosition.getRow() + dx[dir];
                 int ny = curPosition.getCol() + dy[dir];
@@ -50,17 +88,12 @@ public class Pawn extends Piece {
 
                 Position attackPosition = new Position(nx, ny);
 
-                //List<Piece> otherTeamPieces = board.get(Team.BLACK);
+                Pieces otherTeamPieces = board.get(Team.BLACK);
 
-//                for (Piece piece : otherTeamPieces) {
-//                    if (piece.samePosition(attackPosition)) {
-//                        attackablePositions.add(attackPosition);
-//                    }
-//                }
+                if (otherTeamPieces.containByPosition(attackPosition)) {
+                    movablePositions.add(attackPosition);
+                }
             }
         }
-        return attackablePositions;
     }
-
-
 }
