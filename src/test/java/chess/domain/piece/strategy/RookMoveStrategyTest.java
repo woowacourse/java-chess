@@ -32,7 +32,7 @@ class RookMoveStrategyTest {
     @Test
     void rookValidMove_void() {
         Position target = Position.of('c', 7);
-        board.move(position, target);
+        board.move(position, target, PieceColor.WHITE);
 
         Piece pieceOnTarget = board.pieceAtPosition(target);
 
@@ -44,7 +44,7 @@ class RookMoveStrategyTest {
     void rookInvalidMove_ExceptionThrown() {
         Position target = Position.of('f', 5);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
     }
@@ -54,7 +54,7 @@ class RookMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('c', 2);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
@@ -64,7 +64,7 @@ class RookMoveStrategyTest {
     void checkUnableCROSSPIECE_ExceptionThrown() {
         Position target = Position.of('c', 8);
 
-        assertThatThrownBy(() -> board.move(position, target))
+        assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
     }

@@ -21,7 +21,7 @@ public enum Command {
     public static void playCommand(Game game, String input) {
         String processedInput = input.split(" ")[0];
         Command command = Arrays.stream(values())
-            .filter(element -> element.command.equals(processedInput)) 
+            .filter(element -> element.command.equals(processedInput))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 메세지입니다."));
         command.play(game, input);

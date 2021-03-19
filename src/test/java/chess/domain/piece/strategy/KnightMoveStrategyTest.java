@@ -42,7 +42,7 @@ class KnightMoveStrategyTest {
     @DisplayName("Knight 움직임 테스트 - 이동 가능한 위치로 Jump해서 이동")
     @Test
     void queenValidMove_diagonalMove() {
-        Position source =Position.of('g', 1);
+        Position source = Position.of('g', 1);
         Position target = Position.of('f', 3);
         board.move(source, target);
 

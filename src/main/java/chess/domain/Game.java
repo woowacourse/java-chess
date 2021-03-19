@@ -3,15 +3,18 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
+import chess.domain.piece.PieceColor;
 
 public class Game {
 
     private Board board;
     private GameState gameState;
+    private PieceColor turnColor;
 
     public Game(Board board, GameState gameState) {
         this.board = board;
         this.gameState = gameState;
+        this.turnColor = PieceColor.WHITE;
     }
 
     public static Game set() {
@@ -42,9 +45,11 @@ public class Game {
     public void move(String source, String target) {
         Position sourcePosition = Position.from(source);
         Position targetPosition = Position.from(target);
-        board.move(sourcePosition, targetPosition);
+        board.move(sourcePosition, targetPosition, turnColor);
         if (board.kingIsDead()) {
             gameState = GameState.END;
         }
+
+        this.turnColor = turnColor.oppositeColor();
     }
 }

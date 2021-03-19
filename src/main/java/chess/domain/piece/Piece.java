@@ -21,7 +21,11 @@ public class Piece {
     }
 
     public boolean isSameColor(Piece piece) {
-        return this.pieceColor == piece.getPieceColor();
+        return this.pieceColor == piece.pieceColor;
+    }
+
+    public boolean isSameColor(PieceColor pieceColor) {
+        return this.pieceColor == pieceColor;
     }
 
     public boolean isMovingForward(Position source, Position target) {

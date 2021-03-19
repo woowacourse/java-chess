@@ -38,8 +38,8 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('c', 4);
         Position targetB = Position.of('d', 5);
 
-        board.move(sourceW, targetW);
-        board.move(sourceB, targetB);
+        board.move(sourceW, targetW, PieceColor.WHITE);
+        board.move(sourceB, targetB, PieceColor.BLACK);
 
         Piece movedPieceW = board.pieceAtPosition(targetW);
         Piece movedPieceB = board.pieceAtPosition(targetB);
@@ -55,18 +55,18 @@ class PawnMoveStrategyTest {
     void initialMove_invalid_ExceptionThrown() {
         Position newSourceW = Position.of('c', 3);
         Position newSourceB = Position.of('d', 6);
-        board.move(sourceW, newSourceW);
-        board.move(sourceB, newSourceB);
+        board.move(sourceW, newSourceW, PieceColor.WHITE);
+        board.move(sourceB, newSourceB, PieceColor.BLACK);
 
         Position targetW = Position.of('c', 5);
         Position targetB = Position.of('d', 4);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(newSourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(newSourceW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(newSourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(newSourceB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE)
         );
@@ -78,8 +78,8 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('c', 3);
         Position targetB = Position.of('d', 6);
 
-        board.move(sourceW, targetW);
-        board.move(sourceB, targetB);
+        board.move(sourceW, targetW, PieceColor.WHITE);
+        board.move(sourceB, targetB, PieceColor.BLACK);
 
         Piece movedPieceW = board.pieceAtPosition(targetW);
         Piece movedPieceB = board.pieceAtPosition(targetB);
@@ -93,7 +93,7 @@ class PawnMoveStrategyTest {
     @DisplayName("Pawn 한 칸 움직임 : 앞으로 한칸 움직임 실패 Block")
     @Test
     void moveOne_blockByEnemy_ExceptionThrown() {
-        Position blockPositionW = Position.of('c',3);
+        Position blockPositionW = Position.of('c', 3);
         Position blockPositionB = Position.of('d', 6);
         Piece blockPieceW = new Piece(PieceKind.PAWN, PieceColor.WHITE);
         Piece blockPieceB = new Piece(PieceKind.PAWN, PieceColor.BLACK);
@@ -105,7 +105,7 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
@@ -122,7 +122,7 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 4);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.OVER_DISTANCE_MESSAGE),
 
@@ -135,7 +135,7 @@ class PawnMoveStrategyTest {
     @DisplayName("Pawn 공격 : 대각선 움직임")
     @Test
     void move_attackEnemy_diagonal() {
-        Position attackPositionW = Position.of('c',6);
+        Position attackPositionW = Position.of('c', 6);
         Position attackPositionB = Position.of('d', 3);
         Piece blockPieceW = new Piece(PieceKind.PAWN, PieceColor.WHITE);
         Piece blockPieceB = new Piece(PieceKind.PAWN, PieceColor.BLACK);
@@ -146,8 +146,8 @@ class PawnMoveStrategyTest {
         Position targetW = Position.of('d', 3);
         Position targetB = Position.of('c', 6);
 
-        board.move(sourceW, targetW);
-        board.move(sourceB, targetB);
+        board.move(sourceW, targetW, PieceColor.WHITE);
+        board.move(sourceB, targetB, PieceColor.BLACK);
 
         Piece movedPieceW = board.pieceAtPosition(targetW);
         Piece movedPieceB = board.pieceAtPosition(targetB);
@@ -165,7 +165,7 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('c', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
@@ -178,7 +178,7 @@ class PawnMoveStrategyTest {
     @DisplayName("Pawn 후진 이동 실패")
     @Test
     void moveBackWard_ExceptionThrown() {
-        Position newPositionW = Position.of('c',4);
+        Position newPositionW = Position.of('c', 4);
         Position newPositionB = Position.of('d', 5);
         Piece pieceW = new Piece(PieceKind.PAWN, PieceColor.WHITE);
         Piece pieceB = new Piece(PieceKind.PAWN, PieceColor.BLACK);
@@ -190,11 +190,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('d', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(newPositionW, targetW))
+            () -> assertThatThrownBy(() -> board.move(newPositionW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(newPositionB, targetB))
+            () -> assertThatThrownBy(() -> board.move(newPositionB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE)
         );
@@ -204,7 +204,7 @@ class PawnMoveStrategyTest {
     @DisplayName("Pawn 같은 색깔 공격 실패")
     @Test
     void move_sameColor_ExceptionThrown() {
-        Position attackPositionW = Position.of('c',6);
+        Position attackPositionW = Position.of('c', 6);
         Position attackPositionB = Position.of('d', 3);
         Piece blockPieceW = new Piece(PieceKind.PAWN, PieceColor.WHITE);
         Piece blockPieceB = new Piece(PieceKind.PAWN, PieceColor.BLACK);
@@ -216,11 +216,11 @@ class PawnMoveStrategyTest {
         Position targetB = Position.of('c', 6);
 
         assertAll(
-            () -> assertThatThrownBy(() -> board.move(sourceW, targetW))
+            () -> assertThatThrownBy(() -> board.move(sourceW, targetW, PieceColor.WHITE))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.SAME_TEAM_MESSAGE),
 
-            () -> assertThatThrownBy(() -> board.move(sourceB, targetB))
+            () -> assertThatThrownBy(() -> board.move(sourceB, targetB, PieceColor.BLACK))
                 .isInstanceOf(InvalidMoveException.class)
                 .hasMessageContaining(Piece.SAME_TEAM_MESSAGE)
         );

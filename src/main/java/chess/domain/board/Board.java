@@ -21,12 +21,13 @@ public class Board {
         this.deadKingColor = PieceColor.VOID;
     }
 
-    public void move(Position source, Position target) {
+    public void move(Position source, Position target, PieceColor turnColor) {
         checkMoving(source, target);
         checkNoJumpPiece(source, target);
 
         Piece originalPiece = pieceAtPosition(source);
         originalPiece.movable(source, target);
+        checkTurn(originalPiece, turnColor);
 
         checkPawnCase(source, target, originalPiece);
         checkIsNotSameTeam(source, target);
@@ -118,6 +119,12 @@ public class Board {
 
     public boolean kingIsDead() {
         return deadKingColor != PieceColor.VOID;
+    }
+
+    public void checkTurn(Piece piece, PieceColor turnColor) {
+        if (!piece.isSameColor(turnColor)) {
+            throw new RuntimeException("해당 턴이 아닙니다.");
+        }
     }
 
     public Piece pieceAtPosition(Position position) {
