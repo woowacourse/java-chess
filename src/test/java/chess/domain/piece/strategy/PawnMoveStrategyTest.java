@@ -1,6 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
@@ -24,7 +25,7 @@ class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(InitializedBoard.board());
         sourceW = Position.of('c', 2);
         sourceB = Position.of('d', 7);
         pieceW = board.pieceAtPosition(sourceW);

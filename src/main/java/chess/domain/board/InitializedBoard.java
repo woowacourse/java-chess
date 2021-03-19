@@ -15,6 +15,10 @@ public class InitializedBoard {
     private InitializedBoard() {
     }
 
+    public static Map<Position, Piece> emptyBoard() {
+        return new HashMap<>();
+    }
+
     public static Map<Position, Piece> board() {
         Arrays.stream(PieceKind.values())
             .forEach(InitializedBoard::traverseXPositions);

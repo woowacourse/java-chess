@@ -15,7 +15,7 @@ class BoardTest {
     void checkPieceAtPosition_BishopWhite() {
         Piece piece = new Piece(PieceKind.BISHOP, PieceColor.WHITE);
         Position position = Position.of('c', 1);
-        Board board = new Board();
+        Board board = new Board(InitializedBoard.board());
 
         Piece extractedPiece = board.pieceAtPosition(position);
 
@@ -29,7 +29,7 @@ class BoardTest {
         Position positionL = Position.of('b', 8);
         Position positionR = Position.of('g', 8);
 
-        Board board = new Board();
+        Board board = new Board(InitializedBoard.board());
 
         Piece extractedPieceL = board.pieceAtPosition(positionL);
         Piece extractedPieceR = board.pieceAtPosition(positionR);
@@ -43,7 +43,7 @@ class BoardTest {
     void checkPieceAtPosition_void() {
         Piece piece = new Piece(PieceKind.VOID, PieceColor.VOID);
         Position position = Position.of('f', 3);
-        Board board = new Board();
+        Board board = new Board(InitializedBoard.board());
 
         Piece extractedPiece = board.pieceAtPosition(position);
 

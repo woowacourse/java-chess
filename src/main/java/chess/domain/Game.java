@@ -1,20 +1,50 @@
 package chess.domain;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitializedBoard;
+import chess.domain.board.Position;
 
 public class Game {
 
-    private final Board board;
+    private Board board;
+    private GameState gameState;
 
-    private Game() {
-        this.board = new Board();
+    public Game(Board board, GameState gameState) {
+        this.board = board;
+        this.gameState = gameState;
     }
 
-    public static Game init() {
-        return new Game();
+    public static Game set() {
+        return new Game(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
+    }
+
+    public void init() {
+        this.board = new Board(InitializedBoard.board());
+        this.gameState = GameState.START;
     }
 
     public Board getBoard() {
         return board;
+    }
+
+    public void end() {
+        gameState = GameState.END;
+    }
+
+    public boolean isEnd() {
+        return gameState.isEnd();
+    }
+
+    public boolean isStart() {
+        return gameState.isStart();
+    }
+
+    public void move(String source, String target) {
+        Position sourcePosition = Position.from(source);
+        Position targetPosition = Position.from(target);
+        board.move(sourcePosition, targetPosition);
+        if (board.kingIsDead()) {
+            gameState = GameState.END;
+        }
     }
 }

@@ -26,7 +26,7 @@ public enum XPosition {
 
     private XPosition findXPosition(char newXPosition) {
         return Arrays.stream(values())
-            .filter(element -> element.getValue() == newXPosition)
+            .filter(element -> element.name == newXPosition)
             .findAny()
             .orElseThrow(InvalidMoveException::new);
     }

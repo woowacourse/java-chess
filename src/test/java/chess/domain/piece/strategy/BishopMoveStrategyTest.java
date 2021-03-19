@@ -1,6 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
@@ -21,7 +22,7 @@ class BishopMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(InitializedBoard.board());
         position = Position.of('a', 3);
         piece = new Piece(PieceKind.BISHOP, PieceColor.WHITE);
         board.putPieceAtPosition(position, piece);

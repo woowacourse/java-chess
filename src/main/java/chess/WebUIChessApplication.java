@@ -8,6 +8,7 @@ public class WebUIChessApplication {
             ChessController chessController = new ChessController();
             chessController.run();
         } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
         }
     }
 }

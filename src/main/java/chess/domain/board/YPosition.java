@@ -26,7 +26,7 @@ public enum YPosition {
 
     private static YPosition matchYPosition(int newYPosition) {
         return Arrays.stream(values())
-            .filter(element -> element.getValue() == newYPosition)
+            .filter(element -> element.yPosition == newYPosition)
             .findAny()
             .orElseThrow(InvalidMoveException::new);
     }

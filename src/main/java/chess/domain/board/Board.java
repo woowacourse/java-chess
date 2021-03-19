@@ -14,9 +14,11 @@ public class Board {
     private static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
 
     private final Map<Position, Piece> board;
+    private PieceColor deadKingColor;
 
-    public Board() {
-        this.board = InitializedBoard.board();
+    public Board(Map<Position, Piece> existedBoard) {
+        this.board = existedBoard;
+        this.deadKingColor = PieceColor.VOID;
     }
 
     public void move(Position source, Position target) {
@@ -29,6 +31,7 @@ public class Board {
         checkPawnCase(source, target, originalPiece);
         checkIsNotSameTeam(source, target);
 
+        judgeKingsState(target);
         movePiece(source, target, originalPiece);
     }
 
@@ -105,6 +108,16 @@ public class Board {
     private boolean isVoid(Position target) {
         Piece targetPiece = pieceAtPosition(target);
         return targetPiece.equals(VOID_PIECE);
+    }
+
+    private void judgeKingsState(Position target) {
+        if (pieceAtPosition(target).isKing()) {
+            deadKingColor = pieceAtPosition(target).getPieceColor();
+        }
+    }
+
+    public boolean kingIsDead() {
+        return deadKingColor != PieceColor.VOID;
     }
 
     public Piece pieceAtPosition(Position position) {

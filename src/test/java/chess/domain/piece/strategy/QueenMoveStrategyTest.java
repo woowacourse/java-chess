@@ -1,6 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
+import chess.domain.board.InitializedBoard;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
@@ -18,11 +19,10 @@ class QueenMoveStrategyTest {
     Board board;
     Position position;
     Piece piece;
-    //QueenMoveStrategy queenMoveStrategy;
 
     @BeforeEach
     void setUp() {
-        board = new Board();
+        board = new Board(InitializedBoard.board());
         position = Position.of('c', 3);
         piece = new Piece(PieceKind.QUEEN, PieceColor.WHITE);
         board.putPieceAtPosition(position, piece);

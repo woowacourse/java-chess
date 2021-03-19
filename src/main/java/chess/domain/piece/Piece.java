@@ -37,6 +37,10 @@ public class Piece {
         return pieceKind == PieceKind.PAWN;
     }
 
+    public boolean isKing() {
+        return pieceKind == PieceKind.KING;
+    }
+
     public void movable(Position source, Position target) {
         pieceKind.movable(source, target);
     }
