@@ -2,6 +2,10 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.Team;
+import chess.domain.utils.BoardInitializer;
 import chess.domain.piece.Pawn;
 import java.util.EnumMap;
 import org.junit.jupiter.api.BeforeEach;

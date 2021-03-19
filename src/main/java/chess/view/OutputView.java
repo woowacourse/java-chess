@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.domain.Board;
-import chess.domain.File;
-import chess.domain.Position;
-import chess.domain.Rank;
-import chess.domain.Team;
+import chess.domain.board.Board;
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
+import chess.domain.board.Team;
 import chess.domain.piece.Piece;
 import java.util.EnumMap;
 import java.util.Map;

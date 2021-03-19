@@ -1,8 +1,10 @@
-package chess.domain;
+package chess.domain.utils;
 
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import chess.domain.board.Position;
+import chess.domain.board.Team;
 import chess.domain.piece.Piece;
 import java.util.Map;
 import java.util.function.Function;

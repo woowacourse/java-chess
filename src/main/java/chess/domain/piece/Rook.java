@@ -1,18 +1,16 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Strategy;
-import chess.domain.Team;
+import chess.domain.board.Direction;
+import chess.domain.dto.Strategy;
+import chess.domain.board.Team;
 
-public class Rook implements Piece {
+public class Rook extends AbstractPiece {
 
     public static final double POINT = 5;
     private static final int MOVE_RANGE = 8;
 
-    private final Team team;
-
     public Rook(Team team) {
-        this.team = team;
+        super(team);
     }
 
     @Override
@@ -22,27 +20,10 @@ public class Rook implements Piece {
 
     @Override
     public String getName() {
-        if (team == Team.BLACK) {
+        if (isBlackTeam()) {
             return "R";
         }
         return "r";
-    }
-
-    @Override
-    public Team getTeam() {
-        return team;
-    }
-
-    @Override
-    public void checkTurn(Team team) {
-        if (this.team != team) {
-            throw new IllegalArgumentException("[ERROR] 상대 팀의 차례입니다.");
-        }
-    }
-
-    @Override
-    public boolean isSameTeam(Team team) {
-        return this.team == team;
     }
 
     @Override

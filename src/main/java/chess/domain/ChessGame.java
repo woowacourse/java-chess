@@ -1,9 +1,12 @@
 package chess.domain;
 
+import chess.domain.board.*;
+import chess.domain.dto.Strategy;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.domain.utils.MoveValidator;
 import chess.view.OutputView;
 
 import java.util.Arrays;
@@ -33,7 +36,6 @@ public class ChessGame {
         return board;
     }
 
-    //
     public String getTurn() {
         return turn.getName();
     }

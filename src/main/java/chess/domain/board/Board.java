@@ -1,6 +1,8 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Piece;
+import chess.domain.utils.PointCalculator;
+
 import java.util.Map;
 
 public class Board {

@@ -3,8 +3,12 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.*;
+import chess.domain.dto.Strategy;
+import chess.domain.utils.BoardInitializer;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.utils.MoveValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

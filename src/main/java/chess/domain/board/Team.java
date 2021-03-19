@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 public enum Team {
     BLACK("흑"),
@@ -19,5 +19,9 @@ public enum Team {
 
     public String getName() {
         return name;
+    }
+
+    public boolean isBlack(Team team) {
+        return team == BLACK;
     }
 }

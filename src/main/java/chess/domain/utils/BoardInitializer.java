@@ -1,5 +1,9 @@
-package chess.domain;
+package chess.domain.utils;
 
+import chess.domain.board.Position;
+import chess.domain.board.Team;
+import chess.domain.board.Board;
+import chess.domain.board.File;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;

@@ -1,17 +1,15 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Strategy;
-import chess.domain.Team;
+import chess.domain.board.Direction;
+import chess.domain.dto.Strategy;
+import chess.domain.board.Team;
 
-public class Knight implements Piece {
+public class Knight extends AbstractPiece {
     public static final double POINT = 2.5;
     private static final int MOVE_RANGE = 1;
 
-    private final Team team;
-
     public Knight(Team team) {
-        this.team = team;
+        super(team);
     }
 
     @Override
@@ -21,27 +19,10 @@ public class Knight implements Piece {
 
     @Override
     public String getName() {
-        if (team == Team.BLACK) {
+        if (isBlackTeam()) {
             return "N";
         }
         return "n";
-    }
-
-    @Override
-    public Team getTeam() {
-        return team;
-    }
-
-    @Override
-    public void checkTurn(Team team) {
-        if (this.team != team) {
-            throw new IllegalArgumentException("[ERROR] 상대 팀의 차례입니다.");
-        }
-    }
-
-    @Override
-    public boolean isSameTeam(Team team) {
-        return this.team == team;
     }
 
     @Override

@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.dto;
+
+import chess.domain.board.Direction;
 
 import java.util.List;
 

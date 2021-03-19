@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Pawn;
 import java.util.HashMap;
@@ -14,18 +14,18 @@ public class Position {
         }
     }
 
+    private static void makePositionWith(File file) {
+        for (final Rank rank : Rank.values()) {
+            POSITIONS.put(makeKey(file, rank), new Position(file, rank));
+        }
+    }
+
     private final File file;
     private final Rank rank;
 
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
-    }
-
-    private static void makePositionWith(File file) {
-        for (final Rank rank : Rank.values()) {
-            POSITIONS.put(makeKey(file, rank), new Position(file, rank));
-        }
     }
 
     public static Position of(String position) {
