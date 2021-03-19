@@ -59,3 +59,6 @@
 
 ### Knight 테스트 케이스 예시
 ![knight](https://user-images.githubusercontent.com/50176238/111741570-0692fe00-88ca-11eb-8e6c-e9ff71db6e84.jpg)
+
+### Pawn 테스트 케이스 예시
+![pawn](https://user-images.githubusercontent.com/48986787/111746634-a6a05580-88d1-11eb-8f12-bdcfc8b166ba.png)

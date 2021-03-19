@@ -4,6 +4,11 @@ import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
+
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
 
@@ -21,20 +26,102 @@ public class Pawn extends Piece {
         return new Pawn(piece, position, Color.WHITE);
     }
 
+    private static void validate(final String piece) {
+        if (!SYMBOL.contains(piece)) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+        if (piece.length() > 1) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+    }
+
     @Override
     public void move(final Target target, final ChessBoard chessBoard) {
-        //todo : 위치를 움직일 수 있는지 체크한다.
-        checkMove(target);
+        List<Position> positions = makeRoutes(chessBoard);
+        checkTarget(target, positions);
         chessBoard.changePiecePosition(this, target.getPosition());
         changePosition(target.getPosition());
     }
 
-    private void checkMove(final Target target) {
-        if (isFirst) {
-            // 1칸 또는 2칸 또는 못감 또는 대각선
-            isFirst = false;
+    private void checkTarget(Target target, List<Position> positions) {
+        if (!positions.contains(target.getPosition())) {
+            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
-        // 1칸만
+    }
+
+    private List<Position> makeRoutes(ChessBoard chessBoard) {
+        List<Position> positions = new ArrayList<>();
+        if (isFirst) {
+            positions.addAll(makeFirstUpRoutes(chessBoard));
+            positions.addAll(makeUpRightRoutes(chessBoard));
+            positions.addAll(makeUpLeftRoutes(chessBoard));
+            this.isFirst = false;
+            return positions;
+        }
+        positions.addAll(makeAfterFirstUpRoutes(chessBoard));
+        positions.addAll(makeUpRightRoutes(chessBoard));
+        positions.addAll(makeUpLeftRoutes(chessBoard));
+        return positions;
+    }
+
+    private List<Position> makeFirstUpRoutes(final ChessBoard chessBoard) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue() + 1;
+        int file = position.getFile().getValue();
+        for (int index = 0; index < 2; index++) {
+            Position nextPosition = Position.valueOf(rank + index, file);
+            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        Position nextPosition = Position.valueOf(rank + 1, file + 1);
+        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            return Collections.singletonList(nextPosition);
+        }
+        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            return Collections.singletonList(nextPosition);
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        Position nextPosition = Position.valueOf(rank + 1, file - 1);
+        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            return Collections.singletonList(nextPosition);
+        }
+        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            return Collections.singletonList(nextPosition);
+        }
+        return Collections.emptyList();
+    }
+
+    private List<Position> makeAfterFirstUpRoutes(final ChessBoard chessBoard) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue() + 1;
+        int file = position.getFile().getValue();
+        for (int index = 0; index < 1; index++) {
+            Position nextPosition = Position.valueOf(rank + index, file);
+            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
     }
 
     @Override
@@ -45,14 +132,5 @@ public class Pawn extends Piece {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
-    }
-
-    private static void validate(final String piece) {
-        if (!SYMBOL.contains(piece)) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
-        if (piece.length() > 1) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
     }
 }
