@@ -72,6 +72,9 @@ public abstract class Pawn extends Piece{
     }
 
     private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){
+        if(source.isDiagonal(target)){
+            return false;
+        }
         return source.getDistance(target) == 1 && isEnemy;
     }
 
