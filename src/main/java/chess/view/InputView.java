@@ -26,7 +26,7 @@ public class InputView {
 
     public static List<String> inputMovePosition() {
         final String inputMoveCommand = scanner.nextLine();
-        List<String> splitMoveCommand = Arrays.asList(inputMoveCommand.split(" "));
+        final List<String> splitMoveCommand = Arrays.asList(inputMoveCommand.split(" "));
         if (MOVE_COMMAND.equals(splitMoveCommand.get(0)) || STATUS_COMMAND.equals(splitMoveCommand.get(0))) {
             return splitMoveCommand;
         }

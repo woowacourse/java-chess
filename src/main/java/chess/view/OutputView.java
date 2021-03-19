@@ -11,6 +11,8 @@ public class OutputView {
     private static final String CHESS_MOVE_GUIDE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String BLACK_TEAM_SCORE = "블랙팀 점수: ";
     private static final String WHITE_TEAM_SCORE = "화이트팀 점수: ";
+    public static final int BOARD_START = 0;
+    public static final int BOARD_END = 7;
 
     private OutputView() {
     }
@@ -23,11 +25,15 @@ public class OutputView {
     }
 
     public static void printChessBoard(final Map<Position, String> chessBoard) {
-        for (int i = 7; i >= 0; i--) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(chessBoard.getOrDefault(new Position(j, i), "."));
-            }
+        for (int row = BOARD_END; row >= BOARD_START; row--) {
+            printChessBoardSingleLine(chessBoard, row);
             System.out.println();
+        }
+    }
+
+    private static void printChessBoardSingleLine(final Map<Position, String> chessBoard, final int row) {
+        for (int column = BOARD_START; column <= BOARD_END; column++) {
+            System.out.print(chessBoard.getOrDefault(new Position(column, row), "."));
         }
     }
 
