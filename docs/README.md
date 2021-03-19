@@ -56,3 +56,6 @@
 
 ### Queen 테스트 케이스 예시
 ![queen](https://user-images.githubusercontent.com/50176238/111739494-7b643900-88c6-11eb-9f0b-b981f2ce3730.jpg)
+
+### Knight 테스트 케이스 예시
+![knight](https://user-images.githubusercontent.com/50176238/111741570-0692fe00-88ca-11eb-8e6c-e9ff71db6e84.jpg)
