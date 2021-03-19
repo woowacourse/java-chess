@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.Board;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Map;
@@ -46,11 +47,9 @@ public class OutputView {
         System.out.println("게임이 종료되었습니다. 결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
-    public static void printResult(boolean isBlack, Board board) {
-        String winner = isBlack ? "BLACK" : "WHITE";
-        String loser = !isBlack ? "BLACK" : "WHITE";
-        System.out.println(winner + "이 승리하였습니다.");
-        System.out.println(winner + "점수 : "+ board.calculateScore(isBlack));
-        System.out.println(loser+ "점수 : "+ board.calculateScore(!isBlack));
+    public static void printResult(final Team team, final Board board) {
+        System.out.println(team.teamName() + "이 승리하였습니다.");
+        System.out.println(team.teamName() + "점수 : "+ board.calculateScore(team));
+        System.out.println(team.oppositeTeamName()+ "점수 : "+ board.calculateScore(team.oppositeTeam()));
     }
 }

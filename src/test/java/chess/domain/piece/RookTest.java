@@ -8,8 +8,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class RookTest {
-    private final Piece white = new Rook(false);
-    private final Piece black = new Rook(true);
+    private final Piece white = new Rook(Team.WHITE);
+    private final Piece black = new Rook(Team.BLACK);
     private final Position source = new Position("e", "4");
 
     @ParameterizedTest
@@ -17,8 +17,8 @@ class RookTest {
     @ValueSource(strings = {"d,4", "e,5", "f,4", "e,3"})
     void canMove(final String input) {
         final String[] inputs = input.split(",");
-        assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), new Queen(true))).isTrue();
+        assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), new Queen(Team.BLACK))).isTrue();
         assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), new Blank())).isTrue();
-        assertThat(black.canMove(source, new Position(inputs[0], inputs[1]), new Queen(false))).isTrue();
+        assertThat(black.canMove(source, new Position(inputs[0], inputs[1]), new Queen(Team.WHITE))).isTrue();
     }
 }

@@ -6,12 +6,12 @@ import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final boolean isBlack;
+    private final Team team;
     private final String name;
 
-    public Piece(final boolean isBlack, final String initialName) {
-        this.isBlack = isBlack;
-        if (isBlack) {
+    public Piece(final Team team, final String initialName) {
+        this.team = team;
+        if (team == Team.BLACK) {
             name = initialName.toUpperCase();
             return;
         }
@@ -19,19 +19,19 @@ public abstract class Piece {
     }
 
     protected boolean isOpponent(final Piece piece) {
-        return isBlack != piece.isBlack;
+        return this.team != piece.team;
     }
 
-    public boolean isSameTeam(final boolean isBlack) {
-        return this.isBlack == isBlack;
+    public boolean isSameTeam(final Team team) {
+        return this.team == team;
     }
 
     public String getName() {
         return name;
     }
 
-    public boolean isBlack() {
-        return this.isBlack;
+    public Team team() {
+        return this.team;
     }
 
     public abstract boolean canMove(final Position source, final Position target, final Piece piece);

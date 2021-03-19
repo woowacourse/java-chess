@@ -2,6 +2,7 @@ package chess.domain.strategy.initializestategy;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 
@@ -19,8 +20,8 @@ public class PawnInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Pawn(true)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Pawn(false)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Pawn(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Pawn(Team.WHITE)));
         }
         return chessBoard;
     }

@@ -2,6 +2,7 @@ package chess.domain.strategy.initializestategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.*;
@@ -15,8 +16,8 @@ public class RookInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Rook(true)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Rook(false)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Rook(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Rook(Team.WHITE)));
         }
         return chessBoard;
     }

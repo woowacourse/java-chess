@@ -7,8 +7,8 @@ public class Queen extends GeneralPiece {
     private static final String INITIAL_NAME = "Q";
     private static final double SCORE = 9;
 
-    public Queen(final boolean isBlack) {
-        super(isBlack, INITIAL_NAME);
+    public Queen(final Team team) {
+        super(team, INITIAL_NAME);
     }
 
     @Override

@@ -20,8 +20,8 @@ public class Board {
         return chessBoard;
     }
 
-    public void move(final Position source, final Position target, final boolean isBlack) {
-        validateRightTurn(source, isBlack);
+    public void move(final Position source, final Position target, final Team team) {
+        validateRightTurn(source, team);
         if (checkPath(source, target)) {
             chessBoard.put(target, chessBoard.get(source));
             chessBoard.put(source, new Blank());
@@ -67,19 +67,19 @@ public class Board {
         return paths;
     }
 
-    public double calculateScore(final boolean isBlack) {
+    public double calculateScore(final Team team) {
         double total = 0;
         for (final Horizontal column : Horizontal.values()) {
-            total += getColumnTotalScore(isBlack, column.getValue());
+            total += getColumnTotalScore(team, column.getValue());
         }
         return total;
     }
 
-    private double getColumnTotalScore(final boolean isBlack, final int column) {
+    private double getColumnTotalScore(final Team team, final int column) {
         final List<Piece> pieces = chessBoard.keySet().stream()
                 .filter(position -> position.getHorizontal().getValue() == column)
                 .map(chessBoard::get)
-                .filter(piece -> piece.isSameTeam(isBlack))
+                .filter(piece -> piece.isSameTeam(team))
                 .collect(Collectors.toList());
 
         return pieces.stream()
@@ -104,20 +104,24 @@ public class Board {
                 .count() != 2;
     }
 
-    public void validateRightTurn(final Position source, final boolean isBlack) {
-        if (!chessBoard.get(source).isSameTeam(isBlack)) {
+    public void validateRightTurn(final Position source, final Team team) {
+        if (!chessBoard.get(source).isSameTeam(team)) {
             throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
         }
     }
 
-    public boolean getWinner() {
+    public Team getWinner() {
         if (isKingDead()) {
             return chessBoard.values().stream()
                     .filter(piece -> piece instanceof King)
-                    .map(piece -> piece.isBlack())
+                    .map(Piece::team)
                     .findFirst()
                     .orElseThrow(IllegalArgumentException::new);
         }
-        return calculateScore(true) > calculateScore(false);
+
+        if (calculateScore(Team.BLACK) > calculateScore(Team.WHITE)) {
+            return Team.BLACK;
+        }
+        return Team.WHITE;
     }
 }

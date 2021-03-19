@@ -14,8 +14,8 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
     public static final double EXTRA_SCORE = 0.5;
 
-    public Pawn(final boolean isBlack) {
-        super(isBlack, INITIAL_NAME);
+    public Pawn(final Team team) {
+        super(team, INITIAL_NAME);
     }
 
     @Override
@@ -33,8 +33,8 @@ public class Pawn extends Piece {
         return SCORE;
     }
 
-    private List<Integer> subtractByTeam(Position source, Position target) {
-        if (isBlack) {
+    private List<Integer> subtractByTeam(final Position source, final Position target) {
+        if (team() == Team.BLACK) {
             return source.subtract(target);
         }
         return target.subtract(source);

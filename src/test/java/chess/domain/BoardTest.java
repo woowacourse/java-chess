@@ -23,9 +23,9 @@ class BoardTest {
     @Test
     @DisplayName("피스 이동 기능")
     void move() {
-        board.move(new Position("a", "2"), new Position("a", "3"), false); // map의 요소가 바뀜
+        board.move(new Position("a", "2"), new Position("a", "3"), Team.WHITE); // map의 요소가 바뀜
         assertThat(board.unwrap().get(new Position("a", "2"))).isEqualTo(new Blank());
-        assertThat(board.unwrap().get(new Position("a", "3"))).isEqualTo(new Pawn(false));
+        assertThat(board.unwrap().get(new Position("a", "3"))).isEqualTo(new Pawn(Team.WHITE));
         OutputView.printCurrentBoard(board.unwrap());
     }
 
@@ -34,7 +34,7 @@ class BoardTest {
     @ValueSource(strings = {"a,1,a,7", "c,1,h,7", "d,1,d,8", "d,1,a,4", "b,1,c,2", "e,1,d,1"})
     void checkPath(final String input) {
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), false))
+        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -43,9 +43,10 @@ class BoardTest {
     @DisplayName("폰 이동이 불가능한 경우")
     @ValueSource(strings = {"a,2,a,3", "a,2,a,4"})
     void checkPawnPath(final String input) {
-        board.unwrap().put(new Position("a", "3"), new Queen(false));
+        final Team team = Team.WHITE;
+        board.unwrap().put(new Position("a", "3"), new Queen(team));
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), false))
+        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -53,11 +54,11 @@ class BoardTest {
     @Test
     @DisplayName("현재 점수 확인하는 기능")
     void checkScore() {
-        boolean isBlack = true;
-        assertThat(board.calculateScore(!isBlack)).isEqualTo(38);
+        final Team team = Team.WHITE;
+        assertThat(board.calculateScore(team)).isEqualTo(38);
 
-        board.unwrap().put(new Position("a", "3"), new Pawn(false));
-        assertThat(board.calculateScore(!isBlack)).isEqualTo(38);
+        board.unwrap().put(new Position("a", "3"), new Pawn(Team.WHITE));
+        assertThat(board.calculateScore(team)).isEqualTo(38);
         OutputView.printCurrentBoard(board.unwrap());
     }
 
@@ -72,8 +73,8 @@ class BoardTest {
     @Test
     @DisplayName("턴에 맞는 위치를 선택했는지 검증하는 기능")
     void isRightTurn() {
-        final boolean isBlack = true;
-        assertThatThrownBy(() -> board.validateRightTurn(new Position("a", "2"), isBlack))
+        final Team team = Team.BLACK;
+        assertThatThrownBy(() -> board.validateRightTurn(new Position("a", "2"), team))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("본인의 턴에 맞는 말을 움직이세요.");
     }

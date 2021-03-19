@@ -7,8 +7,8 @@ public class Rook extends GeneralPiece {
     private static final String INITIAL_NAME = "R";
     private static final double SCORE = 5;
 
-    public Rook(final boolean isBlack) {
-        super(isBlack, INITIAL_NAME);
+    public Rook(final Team team) {
+        super(team, INITIAL_NAME);
     }
 
     @Override

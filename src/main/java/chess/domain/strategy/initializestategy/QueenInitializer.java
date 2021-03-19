@@ -2,6 +2,7 @@ package chess.domain.strategy.initializestategy;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Collections;
@@ -18,8 +19,8 @@ public class QueenInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Queen(true)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Queen(false)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Queen(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Queen(Team.WHITE)));
         }
         return chessBoard;
     }

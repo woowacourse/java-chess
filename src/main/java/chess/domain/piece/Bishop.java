@@ -7,8 +7,8 @@ public class Bishop extends GeneralPiece {
     private static final String INITIAL_NAME = "B";
     private static final double SCORE = 3;
 
-    public Bishop(final boolean isBlack) {
-        super(isBlack, INITIAL_NAME);
+    public Bishop(final Team team) {
+        super(team, INITIAL_NAME);
     }
 
     @Override

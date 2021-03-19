@@ -13,7 +13,7 @@ public class BlankTest {
     void canMove() {
         final Piece blank = new Blank();
         assertThatThrownBy(() -> blank.canMove(new Position("e", "3"), new Position("e", "4"),
-                new Queen(false)))
+                new Queen(Team.WHITE)))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("비어 있는 칸입니다.");
     }

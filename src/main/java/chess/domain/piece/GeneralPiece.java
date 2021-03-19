@@ -7,8 +7,8 @@ import java.util.List;
 public abstract class GeneralPiece extends Piece {
     private final List<Direction> possibleDirections;
 
-    public GeneralPiece(final boolean isBlack, final String initialName) {
-        super(isBlack, initialName);
+    public GeneralPiece(final Team team, final String initialName) {
+        super(team, initialName);
         this.possibleDirections = createPossibleDirections();
     }
 

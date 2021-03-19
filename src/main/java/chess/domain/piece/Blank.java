@@ -6,11 +6,11 @@ public class Blank extends Piece {
     private static final String INITIAL_NAME = ".";
 
     public Blank() {
-        super(false, INITIAL_NAME);
+        super(Team.NOTHING, INITIAL_NAME);
     }
 
     @Override
-    public boolean canMove(Position source, Position target, Piece piece) {
+    public boolean canMove(final Position source, final Position target, final Piece piece) {
         throw new IllegalStateException("비어 있는 칸입니다.");
     }
 
