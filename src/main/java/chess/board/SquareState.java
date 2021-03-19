@@ -10,14 +10,14 @@ public class SquareState {
 
     private static final List<SquareState> SQUARE_STATE_POOL = new ArrayList<>();
 
+    private final Piece piece;
+    private final Team team;
+
     static {
         for (Piece piece : Piece.values()) {
             iterateTeam(piece);
         }
     }
-
-    private final Piece piece;
-    private final Team team;
 
     private SquareState(Piece piece, Team team) {
         this.piece = piece;

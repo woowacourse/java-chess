@@ -2,6 +2,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.command.Command;
+import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -51,5 +52,11 @@ public class CommandTest {
         assertThatIllegalArgumentException().isThrownBy(() ->
             Command.getByInput("move a1 a2 a3")
         ).withMessage("유효하지 않은 입력입니다.");
+    }
+
+    @Test
+    @DisplayName("인자 리스트를 구하는 테스트")
+    void testGetArguments() {
+        assertThat(Command.getArguments("start")).isEqualTo(Collections.emptyList());
     }
 }

@@ -11,6 +11,7 @@ public enum Command {
 
     private static final String DELIMITER = " ";
     private static final int OPERATION_INDEX = 0;
+    public static final int ARGUMENT_START_INDEX = 1;
 
     private final String operation;
     private final int argumentCount;
@@ -30,5 +31,10 @@ public enum Command {
                 && command.argumentCount == inputArgumentsCount)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
+    }
+
+    public static List<String> getArguments(String input) {
+        List<String> splitInputs = Arrays.asList(input.split(DELIMITER));
+        return splitInputs.subList(ARGUMENT_START_INDEX, splitInputs.size());
     }
 }

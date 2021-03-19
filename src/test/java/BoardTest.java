@@ -59,7 +59,7 @@ public class BoardTest {
     @Test
     @DisplayName("킹이 잡히지 않았을 경우 게임 진행")
     void gameIsPlayingWhenKingNotDead() {
-        assertThat(board.isOnGoing()).isTrue();
+        assertThat(board.isContinued()).isTrue();
     }
 
     @Test
@@ -68,6 +68,6 @@ public class BoardTest {
         board.move(Point.of("e8"), Point.of("e3"));
         pieceOperator.move(Point.of("d2"), Point.of("e3"), Team.WHITE);
 
-        assertThat(board.isOnGoing()).isFalse();
+        assertThat(board.isContinued()).isFalse();
     }
 }

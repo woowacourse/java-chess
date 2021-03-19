@@ -82,7 +82,7 @@ public class Board {
         int moveCount = 1;
         boolean unblocked = true;
 
-        for (Point now = source.move(vector); isOnGoing(destination, now) && unblocked;
+        for (Point now = source.move(vector); isContinued(destination, now) && unblocked;
             now = now.move(vector)) {
             unblocked = underMoveLength(sourceSquareState, moveCount) && squares.get(now).isEmpty();
             moveCount++;
@@ -90,7 +90,7 @@ public class Board {
         return unblocked;
     }
 
-    private boolean isOnGoing(Point destination, Point now) {
+    private boolean isContinued(Point destination, Point now) {
         return !now.equals(destination);
     }
 
@@ -111,7 +111,7 @@ public class Board {
         return squareState.isTeam(currentTeam);
     }
 
-    public boolean isOnGoing() {
+    public boolean isContinued() {
         return onGoing;
     }
 }

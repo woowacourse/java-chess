@@ -53,4 +53,8 @@ public class PieceOperator {
         }
         throw new IllegalArgumentException("불가능한 이동입니다.");
     }
+
+    public boolean isOnGoing() {
+        return board.isContinued();
+    }
 }

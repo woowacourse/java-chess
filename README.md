@@ -29,11 +29,11 @@
 - [x] TURN 관리 기능
 - [x] KING 이 잡혔을 때 게임 종료
 - 명령어 입력 기능
-    - start
-    - end
-    - move `source` `destination`
+    - [x] start
+    - [x] end
+    - [x] move `source` `destination`
     - status
-    - 이 외의 입력은 예외 처리
+    - [x] 이 외의 입력은 예외 처리
 - 현재 상태의 점수 계산 기능
     - 자신 턴의 점수를 출력
     - 각 말에 대한 점수를 관리
