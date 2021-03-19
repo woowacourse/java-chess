@@ -33,4 +33,9 @@ public class King extends Division {
     public double score() {
         return 0;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

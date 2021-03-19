@@ -44,4 +44,9 @@ public class Queen extends Division {
     public double score() {
         return 9;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

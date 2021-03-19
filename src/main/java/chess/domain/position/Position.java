@@ -108,4 +108,8 @@ public class Position {
     public int diffColumn(Position to) {
         return column.diff(to.column);
     }
+
+    public Column column() {
+        return column;
+    }
 }

@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public abstract class Division extends Basis {
@@ -57,4 +58,12 @@ public abstract class Division extends Basis {
 
 
     public abstract double score();
+
+
+    public abstract boolean isPawn();
+
+    @Override
+    public Column getColumn() {
+        return position.column();
+    }
 }

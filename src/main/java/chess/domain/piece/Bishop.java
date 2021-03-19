@@ -39,4 +39,9 @@ public class Bishop extends Division {
     public double score() {
         return 3;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

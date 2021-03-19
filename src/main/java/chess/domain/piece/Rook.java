@@ -39,4 +39,9 @@ public class Rook extends Division {
     public double score() {
         return 5;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

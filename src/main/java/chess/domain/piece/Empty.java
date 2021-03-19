@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class Empty extends Basis {
@@ -45,5 +46,15 @@ public class Empty extends Basis {
     @Override
     public double score() {
         return 0;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public Column getColumn() {
+        throw new UnsupportedOperationException();
     }
 }

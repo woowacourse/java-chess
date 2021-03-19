@@ -73,6 +73,11 @@ public class Pawn extends Division {
         return 1;
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
     private boolean canKill(Position to) {
         return Math.abs(position.diffColumn(to)) == 1 && position.diffRow(to) == color.moveUnit();
     }

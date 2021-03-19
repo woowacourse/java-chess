@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public abstract class Basis implements Piece {
@@ -24,6 +25,12 @@ public abstract class Basis implements Piece {
 
 
     public abstract double score();
+
+
+    public abstract boolean isPawn();
+
+    public abstract Column getColumn();
+
 
     @Override
     public String display() {

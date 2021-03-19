@@ -33,4 +33,9 @@ public class Knight extends Division {
     public double score() {
         return 2.5;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

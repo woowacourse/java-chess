@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public interface Piece {
@@ -21,4 +22,7 @@ public interface Piece {
 
     double score();
 
+    boolean isPawn();
+
+    Column getColumn();
 }
