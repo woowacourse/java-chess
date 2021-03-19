@@ -8,11 +8,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Piece {
+    private static final Score SCORE = new Score(0);
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');
 
     public King(Position position, String name, Color color) {
         super(position, name, color);
+    }
+
+    public King(Position position, String name, Color color, Score score) {
+        super(position, name, color, score);
     }
 
 
@@ -56,8 +61,8 @@ public class King extends Piece {
 
     public static List<King> generate() {
         List<King> kings = new ArrayList();
-        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK));
-        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE));
+        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK, SCORE));
+        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE, SCORE));
         return kings;
     }
 }

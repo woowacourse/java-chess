@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.Color;
 import chess.domain.Command;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -41,6 +42,9 @@ public class ChessController {
                 if (command.isMove()) {
                     chessGame.play(command);
                     OutputView.printChessBoard(chessGame.getCurrentPieces());
+                }
+                if(command.isStatus()) {
+                    OutputView.printStatus(chessGame.getCurrentPieces());
                 }
             }
         } catch (Exception e) {

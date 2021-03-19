@@ -1,7 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,5 +56,30 @@ public class CurrentPiecesTest {
 
         assertThatThrownBy(() -> currentPieces.removePieceByPosition(target))
         .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("현재 기물들의 팀별 점수를 계산한다.")
+    @Test
+    void 팀별_점수_계산() {
+        CurrentPieces currentPieces = CurrentPieces.generate();
+
+        assertThat(currentPieces.sumScoreByColor(Color.WHITE)).isEqualTo(38);
+        assertThat(currentPieces.sumScoreByColor(Color.BLACK)).isEqualTo(38);
+    }
+
+    @DisplayName("현재 기물들의 팀별 점수를 계산한다. - 세로줄에 같은 색 폰이 있는 경우")
+    @Test
+    void 팀별_점수_계산_세로줄_같은색_폰() {
+        List<Piece> current = Arrays.asList(
+                new Pawn(Position.of('a', '8'), "P", Color.BLACK, new Score(1)),
+                new Pawn(Position.of('a', '7'), "P", Color.BLACK, new Score(1)),
+                new Pawn(Position.of('d', '8'), "P", Color.BLACK, new Score(1)),
+                new Pawn(Position.of('d', '7'), "P", Color.BLACK, new Score(1)),
+                new Pawn(Position.of('c', '1'), "p", Color.WHITE, new Score(1)),
+                new Pawn(Position.of('c', '2'), "p", Color.WHITE, new Score(1)));
+        CurrentPieces currentPieces = new CurrentPieces(current);
+
+        assertThat(currentPieces.sumScoreByColor(Color.BLACK)).isEqualTo(2);
+        assertThat(currentPieces.sumScoreByColor(Color.WHITE)).isEqualTo(1);
     }
 }

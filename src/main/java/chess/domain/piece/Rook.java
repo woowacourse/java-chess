@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rook extends Piece {
+    private static final Score SCORE = new Score(5);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '8'),
             Position.of('h', '8'));
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('a', '1'),
@@ -17,6 +18,9 @@ public class Rook extends Piece {
         super(position, name, color);
     }
 
+    public Rook(Position position, String name, Color color, Score score) {
+        super(position, name, color, score);
+    }
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
@@ -30,8 +34,8 @@ public class Rook extends Piece {
 
         // 우리편 말이 있으면 예외
         Piece targetPiece = currentPieces.findByPosition(target);
-        if((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                (Character.isLowerCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0)))) {
+        if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
+                (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
             throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
         }
         if (!(targetPiece instanceof Empty)) {
@@ -42,10 +46,10 @@ public class Rook extends Piece {
 
     public static List<Rook> generate() {
         List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Rook(position, "R", Color.BLACK))
+                .map(position -> new Rook(position, "R", Color.BLACK, SCORE))
                 .collect(Collectors.toList());
         List<Rook> whiteRooks = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Rook(position, "r", Color.WHITE))
+                .map(position -> new Rook(position, "r", Color.WHITE, SCORE))
                 .collect(Collectors.toList());
         blackRooks.addAll(whiteRooks);
         return blackRooks;

@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Color;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
@@ -21,17 +22,14 @@ public class OutputView {
             if (i % 8 == 0) {
                 System.out.println();
             }
-            Piece piece = findByPosition(POSITIONS.get(i), currentPieces);
+            Piece piece = currentPieces.findByPosition(POSITIONS.get(i));
             System.out.print(piece.getName());
         }
         System.out.println();
     }
 
-    private static Piece findByPosition(Position position, CurrentPieces currentPieces) {
-        return currentPieces.getCurrentPieces()
-                .stream()
-                .filter(piece -> position.equals(piece.getPosition()))
-                .findFirst()
-                .orElse(Empty.EMPTY);
+    public static void printStatus(CurrentPieces currentPieces) {
+        System.out.println("black: " + currentPieces.sumScoreByColor(Color.BLACK));
+        System.out.println("white: " + currentPieces.sumScoreByColor(Color.WHITE));
     }
 }

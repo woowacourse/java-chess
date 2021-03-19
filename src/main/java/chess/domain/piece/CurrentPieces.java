@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
+import chess.domain.Color;
+
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CurrentPieces {
 
@@ -43,5 +45,27 @@ public class CurrentPieces {
 
     public boolean isAliveAllKings() {
         return 2 == (int) currentPieces.stream().filter(piece -> piece instanceof King).count();
+    }
+
+
+    public double sumScoreByColor(Color color) {
+        int count = 0;
+        for (int i = 0; i < Position.ROW.length(); i++) {
+            int index = i;
+            int temp = (int) currentPieces.stream()
+                    .filter(piece -> piece instanceof Pawn)
+                    .filter(piece -> piece.getColor().isSame(color))
+                    .filter(piece -> piece.getPosition().getX() == Position.ROW.charAt(index))
+                    .count();
+            if (temp >= 2) {
+                count += temp;
+            }
+        }
+        double subtractCount = 0.5;
+
+        return currentPieces.stream()
+                .filter(piece -> piece.getColor().isSame(color))
+                .mapToDouble(piece -> piece.getScore().getValue())
+                .sum() - (count * subtractCount);
     }
 }

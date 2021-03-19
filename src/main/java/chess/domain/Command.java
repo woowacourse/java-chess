@@ -7,6 +7,7 @@ public class Command {
     private static final String START = "start";
     private static final String END = "end";
     private static final String MOVE = "move";
+    private static final String STATUS = "status";
 
     private final String[] values;
 
@@ -17,7 +18,7 @@ public class Command {
 
     private void validateCommand(String[] values) {
         String command = values[0];
-        if (!(START.equals(command) || END.equals(command) || MOVE.equals(command))) {
+        if (!(START.equals(command) || END.equals(command) || MOVE.equals(command) || STATUS.equals(command))) {
             throw new IllegalArgumentException("[ERROR]");
         }
     }
@@ -49,8 +50,12 @@ public class Command {
     }
 
     public void validateRunningCommand() {
-        if (!(values[0].equals(END) || values[0].equals(MOVE))) {
-            throw new IllegalArgumentException("[ERROR] 올바른 첫 명령어가 아닙니다.");
+        if (!(values[0].equals(END) || values[0].equals(MOVE) || values[0].equals(STATUS))) {
+            throw new IllegalArgumentException("[ERROR] 올바른 진행 명령어가 아닙니다.");
         }
+    }
+
+    public boolean isStatus() {
+        return values[0].equals(STATUS);
     }
 }

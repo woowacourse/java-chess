@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
-    private final static String ROW = "abcdefgh";
+    public final static String ROW = "abcdefgh";
     private final static String COL = "87654321";
     public static final Position EMPTY = new Position('0', '0');
     public final static List<Position> POSITIONS;
