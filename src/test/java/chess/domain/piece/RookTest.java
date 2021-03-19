@@ -26,7 +26,7 @@ class RookTest {
     @MethodSource("destinations")
     void move(Position position) {
         Rook rook = new Rook(Color.BLACK, Position.from("c5"));
-        rook.move(position, new Pieces());
+        rook.moveToEmpty(position, new Pieces());
         assertTrue(rook.hasPosition(position));
     }
 
@@ -36,7 +36,7 @@ class RookTest {
         Rook rook = new Rook(Color.BLACK, Position.from("c5"));
         List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"));
 
-        assertThatThrownBy(() -> rook.move(position, blackPieces(positions)))
+        assertThatThrownBy(() -> rook.moveToEmpty(position, blackPieces(positions)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

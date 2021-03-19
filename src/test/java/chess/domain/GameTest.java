@@ -38,7 +38,7 @@ class GameTest {
 
     @Test
     void pickEndPiece() {
-        assertThatCode(() -> game.action(Position.from("a7"), Position.from("a6")))
+        assertThatCode(() -> game.move(Position.from("a7"), Position.from("a6")))
                 .doesNotThrowAnyException();
     }
 }

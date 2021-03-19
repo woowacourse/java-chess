@@ -8,7 +8,7 @@ public class King extends Division {
     }
 
     @Override
-    public void move(Position to, Pieces pieces) {
+    public void moveToEmpty(Position to, Pieces pieces) {
         int diffRow = Math.abs(position.diffRow(to));
         int diffColumn = Math.abs(position.diffColumn(to));
 
@@ -20,8 +20,8 @@ public class King extends Division {
     }
 
     @Override
-    public void kill(Position to, Pieces pieces) {
-        move(to, pieces);
+    public void moveForKill(Position to, Pieces pieces) {
+        this.moveToEmpty(to, pieces);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class PawnTest {
         Position from = Position.from("a3");
         Position to = Position.from("a4");
         Piece pawn = new Pawn(Color.WHITE, from);
-        pawn.move(to, new Pieces());
+        pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -34,7 +34,7 @@ public class PawnTest {
         Position from = Position.from("a3");
         Position to = Position.from("a2");
         Piece pawn = new Pawn(Color.BLACK, from);
-        pawn.move(to, new Pieces());
+        pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -44,7 +44,7 @@ public class PawnTest {
         Position from = Position.from("a2");
         Position to = Position.from("a4");
         Piece pawn = new Pawn(Color.WHITE, from);
-        pawn.move(to, new Pieces());
+        pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -54,7 +54,7 @@ public class PawnTest {
         Position from = Position.from("a7");
         Position to = Position.from("a5");
         Piece pawn = new Pawn(Color.BLACK, from);
-        pawn.move(to, new Pieces());
+        pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -64,7 +64,7 @@ public class PawnTest {
         Position from = Position.from("a2");
         Position to = Position.from("a4");
         Piece pawn = new Pawn(Color.WHITE, from);
-        assertThatThrownBy(() -> pawn.move(to, new Pieces(new Pawn(Color.WHITE, Position.from("a3"))))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a3"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
@@ -73,7 +73,7 @@ public class PawnTest {
         Position from = Position.from("a7");
         Position to = Position.from("a5");
         Piece pawn = new Pawn(Color.BLACK, from);
-        assertThatThrownBy(() -> pawn.move(to, new Pieces(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
@@ -83,7 +83,7 @@ public class PawnTest {
         Position from = Position.from("c2");
         Position to = Position.from(destination);
         Piece pawn = new Pawn(Color.BLACK, from);
-        pawn.kill(to, new Pieces());
+        pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -94,7 +94,7 @@ public class PawnTest {
         Position from = Position.from("h5");
         Position to = Position.from(destination);
         Piece pawn = new Pawn(Color.WHITE, from);
-        pawn.kill(to, new Pieces());
+        pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
 
@@ -105,6 +105,6 @@ public class PawnTest {
         Position to = Position.from("h6");
         Piece pawn = new Pawn(Color.WHITE, from);
 
-        assertThatThrownBy(() -> pawn.kill(to, new Pieces())).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> pawn.moveForKill(to, new Pieces())).isInstanceOf(IllegalArgumentException.class);
     }
 }

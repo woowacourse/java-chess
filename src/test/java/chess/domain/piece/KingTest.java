@@ -29,14 +29,14 @@ class KingTest {
     @MethodSource("destinations")
     void move(Position position) {
         King king = new King(Color.BLACK, Position.from("c5"));
-        king.move(position, new Pieces());
+        king.moveToEmpty(position, new Pieces());
         assertTrue(king.hasPosition(position));
     }
 
     @Test
     void cornerMove() {
         King king = new King(Color.BLACK, Position.from("a5"));
-        assertThatCode(() -> king.move(Position.from("a4"), new Pieces()))
+        assertThatCode(() -> king.moveToEmpty(Position.from("a4"), new Pieces()))
                 .doesNotThrowAnyException();
     }
 

@@ -3,9 +3,9 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public interface Piece {
-    void move(Position to, Pieces pieces);
+    void moveToEmpty(Position to, Pieces pieces);
 
-    void kill(Position to, Pieces pieces);
+    void moveForKill(Position to, Pieces pieces);
 
     String display();
 

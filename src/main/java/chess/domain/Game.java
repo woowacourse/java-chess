@@ -40,19 +40,19 @@ public class Game {
         throw new IllegalArgumentException();
     }
 
-    public void action(Position from, Position to) {
+    public void move(Position from, Position to) {
         Player player = turn.player();
         Piece start = pickStartPiece(player, from);
         Piece piece = pieces.getPieceOf(to);
         if (piece.isEmpty()) {
-            start.move(to, pieces);
+            start.moveToEmpty(to, pieces);
             turn.next();
             return;
         }
         if (piece.isSameColor(player.getColor())) {
             throw new IllegalArgumentException();
         }
-        start.kill(to, pieces);
+        start.moveForKill(to, pieces);
         pieces.delete(piece);
         turn.next();
     }

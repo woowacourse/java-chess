@@ -8,12 +8,12 @@ public class Empty extends Basis {
     }
 
     @Override
-    public void move(Position to, Pieces pieces) {
+    public void moveToEmpty(Position to, Pieces pieces) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void kill(Position to, Pieces pieces) {
+    public void moveForKill(Position to, Pieces pieces) {
 
     }
 

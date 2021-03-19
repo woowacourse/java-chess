@@ -26,7 +26,7 @@ class BishopTest {
     @MethodSource("destinations")
     void move(Position position) {
         Bishop bishop = new Bishop(Color.BLACK, Position.from("c5"));
-        bishop.move(position, new Pieces());
+        bishop.moveToEmpty(position, new Pieces());
         assertTrue(bishop.hasPosition(position));
     }
 
@@ -36,7 +36,7 @@ class BishopTest {
         Bishop bishop = new Bishop(Color.BLACK, Position.from("c5"));
         List<Position> positions = Arrays.asList(Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));
 
-        assertThatThrownBy(() -> bishop.move(position, blackPieces(positions)))
+        assertThatThrownBy(() -> bishop.moveToEmpty(position, blackPieces(positions)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

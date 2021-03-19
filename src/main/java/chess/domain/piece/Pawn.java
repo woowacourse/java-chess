@@ -11,7 +11,7 @@ public class Pawn extends Division {
     }
 
     @Override
-    public void move(Position to, Pieces pieces) {
+    public void moveToEmpty(Position to, Pieces pieces) {
         if (canMoveDouble(to)) {
             validateNoneBetween(to, pieces);
             position = to;
@@ -55,7 +55,7 @@ public class Pawn extends Division {
     }
 
     @Override
-    public void kill(Position to, Pieces pieces) {
+    public void moveForKill(Position to, Pieces pieces) {
         if (canKill(to)) {
             position = to;
             return;

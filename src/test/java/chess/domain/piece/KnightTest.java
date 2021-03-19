@@ -29,14 +29,14 @@ class KnightTest {
     @MethodSource("destinations")
     void move(Position position) {
         Knight knight = new Knight(Color.BLACK, Position.from("c5"));
-        knight.move(position, new Pieces());
+        knight.moveToEmpty(position, new Pieces());
         assertTrue(knight.hasPosition(position));
     }
 
     @Test
     void cornerMove() {
         Knight knight = new Knight(Color.BLACK, Position.from("a5"));
-        assertThatCode(() -> knight.move(Position.from("c4"), new Pieces()))
+        assertThatCode(() -> knight.moveToEmpty(Position.from("c4"), new Pieces()))
                 .doesNotThrowAnyException();
     }
 }

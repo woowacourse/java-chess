@@ -16,7 +16,7 @@ public class Application {
             if ("move".equals(inputString[0])) {
                 String from = inputString[1];
                 String to = inputString[2];
-                game.action(Position.from(from), Position.from(to));
+                game.move(Position.from(from), Position.from(to));
             }
             game.display();
         }

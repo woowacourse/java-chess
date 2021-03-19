@@ -30,7 +30,7 @@ class QueenTest {
     @MethodSource("destinations")
     void move(Position position) {
         Queen queen = new Queen(Color.BLACK, Position.from("c5"));
-        queen.move(position, new Pieces());
+        queen.moveToEmpty(position, new Pieces());
         assertTrue(queen.hasPosition(position));
     }
 
@@ -41,7 +41,7 @@ class QueenTest {
         List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"),
                 Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));
 
-        assertThatThrownBy(() -> queen.move(position, blackPieces(positions)))
+        assertThatThrownBy(() -> queen.moveToEmpty(position, blackPieces(positions)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 

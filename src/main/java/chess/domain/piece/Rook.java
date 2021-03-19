@@ -10,7 +10,7 @@ public class Rook extends Division {
     }
 
     @Override
-    public void move(Position to, Pieces pieces) {
+    public void moveToEmpty(Position to, Pieces pieces) {
         if (position.isOrthogonal(to)) {
             validateNoneBetween(to, pieces);
             position = to;
@@ -26,8 +26,8 @@ public class Rook extends Division {
     }
 
     @Override
-    public void kill(Position to, Pieces pieces) {
-        move(to, pieces);
+    public void moveForKill(Position to, Pieces pieces) {
+        this.moveToEmpty(to, pieces);
     }
 
     @Override
