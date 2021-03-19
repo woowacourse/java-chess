@@ -6,13 +6,11 @@ import chess.domain.position.Position;
 
 public class ChessService {
     private boolean isBlackTurn;
-    private boolean gameOver;
     private Grid grid;
 
     public ChessService() {
         grid = new Grid();
         isBlackTurn = false;
-        gameOver = false;
     }
 
     public Grid grid() {
@@ -21,14 +19,6 @@ public class ChessService {
 
     public boolean isBlackTurn() {
         return isBlackTurn;
-    }
-
-    public boolean isGameOver() {
-        return gameOver;
-    }
-
-    public void setGameOver(boolean gameOver) {
-        this.gameOver = gameOver;
     }
 
     public void changeTurn() {

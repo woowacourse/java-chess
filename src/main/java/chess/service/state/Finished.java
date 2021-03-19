@@ -7,4 +7,9 @@ public class Finished implements GameState {
     public GameState playRound(ChessService chessService) {
         return new Finished();
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

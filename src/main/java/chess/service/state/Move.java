@@ -32,7 +32,6 @@ public class Move extends Playing {
         chessService.move(sourcePiece, targetPiece);
         chessService.changeTurn();
         if (targetPiece instanceof King) {
-            chessService.setGameOver(true);
             OutputView.printWinner(!targetPiece.isBlack());
             return new Finished();
         }

@@ -4,4 +4,6 @@ import chess.service.ChessService;
 
 public interface GameState {
     public GameState playRound(ChessService chessService);
+
+    public boolean isFinished();
 }

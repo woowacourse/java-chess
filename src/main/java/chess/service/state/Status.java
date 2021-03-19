@@ -6,7 +6,6 @@ import chess.view.OutputView;
 public class Status extends Finished {
     @Override
     public GameState playRound(ChessService chessService) {
-        chessService.setGameOver(true);
         double blackScore = chessService.score(true);
         double whiteScore = chessService.score(false);
         OutputView.printScores(true, blackScore);

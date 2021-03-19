@@ -22,7 +22,7 @@ public class ChessController {
     }
 
     private void playRounds() {
-        while (!chessService.isGameOver()) {
+        while (!gameState.isFinished()) {
             playRound();
         }
     }

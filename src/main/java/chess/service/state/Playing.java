@@ -9,4 +9,9 @@ public class Playing implements GameState {
         OutputView.printGridStatus(chessService.grid());
         return new Playing();
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }
