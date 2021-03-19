@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.dto.BoardDto;
+import chess.domain.order.MoveOrder;
 import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.position.Position;
 
 public abstract class Piece {
     private final String notation;
@@ -17,8 +16,8 @@ public abstract class Piece {
         return notation;
     }
 
-    public boolean canMove(BoardDto boardDto, Position from, Position to) {
-        return this.moveStrategy.canMove(boardDto, from, to);
+    public boolean canMove(MoveOrder moveOrder) {
+        return this.moveStrategy.canMove(moveOrder);
     }
 
     public boolean isNotBlank(){

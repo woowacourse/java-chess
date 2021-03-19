@@ -1,11 +1,10 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.dto.BoardDto;
-import chess.domain.position.Position;
+import chess.domain.order.MoveOrder;
 
 public class QueenMoveStrategy implements MoveStrategy {
     @Override
-    public boolean canMove(BoardDto boardDto, Position from, Position to) {
+    public boolean canMove(MoveOrder moveOrder) {
         return false;
     }
 }

@@ -1,36 +1,32 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Square;
-import chess.domain.dto.BoardDto;
+import chess.domain.order.MoveOrder;
 import chess.domain.piece.Color;
-import chess.domain.position.Position;
+import chess.domain.position.Direction;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class RookMoveStrategy implements MoveStrategy {
     private static List<Direction> movableDirections = Direction.linearDirection();
 
     @Override
-    public boolean canMove(BoardDto boardDto, Position from, Position to) {
-        Direction direction = Direction.from(from.calculateXDegree(to), from.calculateYDegree(to));
-
-        if (!isProperDirection(direction)) {
+    public boolean canMove(MoveOrder moveOrder) {
+        if (!isProperDirection(moveOrder.getDirection())) {
             throw new IllegalArgumentException("움직일 수 없는 방향입니다.");
         }
 
-        validateBlockedRoute(boardDto, getRoute(direction, from, to));
+        validateBlockedRoute(moveOrder.getRoute());
 
-        if (boardDto.findByPosition(to).hasPiece()) {
-            validateSameColorPiece(boardDto, from, to);
+        if (moveOrder.getTo().hasPiece()) {
+            validateSameColorPiece(moveOrder);
         }
 
         return true;
     }
 
-    private void validateBlockedRoute(BoardDto boardDto, List<Position> route) {
+    private void validateBlockedRoute(List<Square> route) {
         boolean blocked = route.stream()
-                .map(boardDto::findByPosition)
                 .anyMatch(Square::hasPiece);
 
         if (blocked) {
@@ -38,24 +34,13 @@ public class RookMoveStrategy implements MoveStrategy {
         }
     }
 
-    private void validateSameColorPiece(BoardDto boardDto, Position from, Position to) {
-        Color fromColor = boardDto.findByPosition(from).getPiece().getColor();
-        Color toColor = boardDto.findByPosition(to).getPiece().getColor();
+    private void validateSameColorPiece(MoveOrder moveOrder) {
+        Color fromColor = moveOrder.getFrom().getPiece().getColor();
+        Color toColor = moveOrder.getTo().getPiece().getColor();
 
         if (fromColor == toColor) {
             throw new IllegalArgumentException("동일한 진영의 말이 있어서 행마할 수 없습니.");
         }
-    }
-
-    private List<Position> getRoute(Direction direction, Position from, Position to) {
-        List<Position> route = new ArrayList<>();
-        Position currentPosition = from.getNextPosition(direction);
-
-        while (!currentPosition.equals(to)) {
-            route.add(currentPosition);
-            currentPosition = currentPosition.getNextPosition(direction);
-        }
-        return route;
     }
 
     private boolean isProperDirection(Direction direction) {

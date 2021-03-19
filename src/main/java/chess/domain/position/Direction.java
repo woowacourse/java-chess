@@ -1,4 +1,4 @@
-package chess.domain.piece.strategy;
+package chess.domain.position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,10 +30,14 @@ public enum Direction {
         this.yDegree = yDegree;
     }
 
-    public static Direction from(int xDegree, int yDegree) {
+    public static Direction of(int xDegree, int yDegree) {
         int divisor = calculateDivisor(Math.abs(xDegree), Math.abs(yDegree));
 
         return findDirection(xDegree / divisor, yDegree / divisor);
+    }
+
+    public static Direction of(Position from, Position to) {
+        return of(from.calculateXDegree(to), from.calculateYDegree(to));
     }
 
     private static int calculateDivisor(int xDegree, int yDegree) {
