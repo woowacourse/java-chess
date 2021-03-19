@@ -26,14 +26,15 @@ public class Knight extends Piece{
     }
 
     @Override
-    public void validateMove(Position source, Position target, Piece targetPiece) {
+    public boolean validateMove(Position source, Position target, Piece targetPiece) {
         int horizontalDifferent = source.getHorizontalDistance(target);
         int verticalDifferent = source.getVerticalDistance(target);
 
-        if(!((horizontalDifferent == 2 && verticalDifferent == 1)
-                || (horizontalDifferent ==1 && verticalDifferent ==2))){
-            throw new IllegalArgumentException();
+        if((horizontalDifferent == 2 && verticalDifferent == 1)
+                || (horizontalDifferent ==1 && verticalDifferent ==2)){
+            return true;
         }
+        return false;
     }
 
     @Override

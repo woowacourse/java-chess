@@ -13,14 +13,14 @@ public class BoardInitializer {
     public static Board initiateBoard() {
         Map<Position, Piece> map = new LinkedHashMap<>();
 
-        putLineInMap(map, Vertical.A, getPiecesOfFirstLine(Owner.WHITE));
-        putLineInMap(map, Vertical.B, getPiecesOfSecondLine(Owner.WHITE));
-        putLineInMap(map, Vertical.C, getEmptyLine());
-        putLineInMap(map, Vertical.D, getEmptyLine());
-        putLineInMap(map, Vertical.E, getEmptyLine());
-        putLineInMap(map, Vertical.F, getEmptyLine());
-        putLineInMap(map, Vertical.G, getPiecesOfSecondLine(Owner.BLACK));
         putLineInMap(map, Vertical.H, getPiecesOfFirstLine(Owner.BLACK));
+        putLineInMap(map, Vertical.G, getPiecesOfSecondLine(Owner.BLACK));
+        putLineInMap(map, Vertical.F, getEmptyLine());
+        putLineInMap(map, Vertical.E, getEmptyLine());
+        putLineInMap(map, Vertical.D, getEmptyLine());
+        putLineInMap(map, Vertical.C, getEmptyLine());
+        putLineInMap(map, Vertical.B, getPiecesOfSecondLine(Owner.WHITE));
+        putLineInMap(map, Vertical.A, getPiecesOfFirstLine(Owner.WHITE));
 
         return new Board(map);
     }

@@ -11,11 +11,11 @@ public abstract class Piece {
         this.owner = owner;
     }
 
-    public abstract void validateMove(Position source, Position target, Piece targetPiece);
+    public abstract boolean validateMove(Position source, Position target, Piece targetPiece);
 
     public abstract Score score();
 
-    private final String decideUpperOrLower(String symbol){
+    public final String decideUpperOrLower(String symbol){
         if(owner.equals(Owner.BLACK)){
             return symbol.toUpperCase();
         }
@@ -41,7 +41,15 @@ public abstract class Piece {
         throw new IllegalArgumentException();
     }
 
+    public boolean isSameTeam(Piece other){
+        return owner.equals(other);
+    }
+
     public abstract List<Direction> getDirections();
 
     public abstract int getMaxDistance();
+
+    public boolean isEmpty(){
+        return this instanceof Empty;
+    }
 }

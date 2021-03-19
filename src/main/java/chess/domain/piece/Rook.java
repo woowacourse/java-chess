@@ -21,10 +21,11 @@ public class Rook extends Piece{
     }
 
     @Override
-    public void validateMove(Position source, Position target, Piece targetPiece) {
-        if (!source.isStraight(target)) {
-            throw new IllegalArgumentException();
+    public boolean validateMove(Position source, Position target, Piece targetPiece) {
+        if (source.isStraight(target)) {
+            return true;
         }
+        return false;
     }
 
     @Override

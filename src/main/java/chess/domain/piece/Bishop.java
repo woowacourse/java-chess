@@ -36,10 +36,11 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void validateMove(Position source, Position target, Piece targetPiece) {
-        if(!source.isDiagonal(target)) {
-            throw new IllegalArgumentException();
+    public boolean validateMove(Position source, Position target, Piece targetPiece) {
+        if(source.isDiagonal(target)) {
+            return true;
         }
+        return false;
     }
 
     @Override
