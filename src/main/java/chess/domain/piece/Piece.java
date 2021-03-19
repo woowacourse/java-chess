@@ -29,7 +29,7 @@ public enum Piece {
         this.pieceName = pieceName;
     }
 
-    public Vector findMovableVector(Point source, Point destination) {
+    public MoveVector findMovableVector(Point source, Point destination) {
         return movingStrategy.findMovableVector(source, destination);
     }
 

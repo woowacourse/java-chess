@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.Arrays;
 import java.util.List;
 
-public enum Vector {
+public enum MoveVector {
     EAST(1, 0),
     WEST(-1, 0),
     SOUTH(0, -1),
@@ -28,39 +28,39 @@ public enum Vector {
     private final int horizon;
     private final int vertical;
 
-    Vector(int horizon, int vertical) {
+    MoveVector(int horizon, int vertical) {
         this.horizon = horizon;
         this.vertical = vertical;
     }
 
-    public static List<Vector> pawnVectors() {
+    public static List<MoveVector> pawnVectors() {
         return Arrays.asList(NORTH, FIRST_PAWN_UP);
     }
 
-    public static List<Vector> everyVectors() {
+    public static List<MoveVector> everyVectors() {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
 
-    public static List<Vector> diagonalVectors() {
+    public static List<MoveVector> diagonalVectors() {
         return Arrays.asList(NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
 
-    public static List<Vector> axisVectors() {
+    public static List<MoveVector> axisVectors() {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
     }
 
-    public static List<Vector> knightVectors() {
+    public static List<MoveVector> knightVectors() {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public static boolean hasNotVector(int horizon, int vertical) {
-        return Arrays.stream(Vector.values())
+    public static boolean hasNotMoveVector(int horizon, int vertical) {
+        return Arrays.stream(MoveVector.values())
             .noneMatch(vector -> (vector.horizon == horizon)
                 && (vector.vertical == vertical));
     }
 
-    public static Vector get(int horizon, int vertical) {
-        return Arrays.stream(Vector.values())
+    public static MoveVector get(int horizon, int vertical) {
+        return Arrays.stream(MoveVector.values())
             .filter(vector -> (vector.horizon == horizon)
                 && (vector.vertical == vertical))
             .findFirst()
@@ -94,7 +94,7 @@ public enum Vector {
         return (this.horizon * horizon < 0) || (this.vertical * vertical < 0);
     }
 
-    public Vector opposite() {
+    public MoveVector opposite() {
         return get((-1) * horizon, (-1) * vertical);
     }
 

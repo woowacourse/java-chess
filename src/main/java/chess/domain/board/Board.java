@@ -2,7 +2,7 @@ package chess.domain.board;
 
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Vector;
+import chess.domain.piece.MoveVector;
 import chess.dto.BoardDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,26 +53,26 @@ public class Board {
     private boolean canMovePawnToStraight(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        if (Vector.hasNotVector(destination.minusX(source), destination.minusY(source))) {
+        if (MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
             return false;
         }
-        Vector vector = Vector.get(destination.minusX(source), destination.minusY(source));
+        MoveVector moveVector = MoveVector.get(destination.minusX(source), destination.minusY(source));
 
-        return canMoveWhitePawnToStraight(sourceSquareState, destinationSquareState, vector)
-            || canMoveBlackPawnToStraight(sourceSquareState, destinationSquareState, vector);
+        return canMoveWhitePawnToStraight(sourceSquareState, destinationSquareState, moveVector)
+            || canMoveBlackPawnToStraight(sourceSquareState, destinationSquareState, moveVector);
     }
 
     private boolean canMoveBlackPawnToStraight(SquareState sourceSquareState,
-        SquareState destinationSquareState, Vector vector) {
+        SquareState destinationSquareState, MoveVector moveVector) {
         return sourceSquareState.isTeam(Team.BLACK)
-            && vector.isBlackPawnsStraight()
+            && moveVector.isBlackPawnsStraight()
             && destinationSquareState.isEmpty();
     }
 
     private boolean canMoveWhitePawnToStraight(SquareState sourceSquareState,
-        SquareState destinationSquareState, Vector vector) {
+        SquareState destinationSquareState, MoveVector moveVector) {
         return sourceSquareState.isTeam(Team.WHITE)
-            && vector.isWhitePawnsStraight()
+            && moveVector.isWhitePawnsStraight()
             && destinationSquareState.isEmpty();
     }
 
@@ -86,29 +86,29 @@ public class Board {
     private boolean canMovePawnToDiagonalDirection(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        if (!Vector.hasNotVector(destination.minusX(source), destination.minusY(source))) {
+        if (!MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
             return false;
         }
-        Vector vector = Vector.get(destination.minusX(source), destination.minusY(source));
+        MoveVector moveVector = MoveVector.get(destination.minusX(source), destination.minusY(source));
 
-        return canWhitePawnKillEnemy(sourceSquareState, destinationSquareState, vector)
-            || canBlackPawnKillEnemy(sourceSquareState, destinationSquareState, vector);
+        return canWhitePawnKillEnemy(sourceSquareState, destinationSquareState, moveVector)
+            || canBlackPawnKillEnemy(sourceSquareState, destinationSquareState, moveVector);
     }
 
     private boolean canWhitePawnKillEnemy(
         SquareState sourceSquareState, SquareState destinationSquareState,
-        Vector vector) {
+        MoveVector moveVector) {
         return sourceSquareState.isTeam(Team.WHITE)
             && destinationSquareState.isTeam(Team.BLACK)
-            && vector.isWhiteDiagonalVector();
+            && moveVector.isWhiteDiagonalVector();
     }
 
     private boolean canBlackPawnKillEnemy(
         SquareState sourceSquareState, SquareState destinationSquareState,
-        Vector vector) {
+        MoveVector moveVector) {
         return sourceSquareState.isTeam(Team.BLACK)
             && destinationSquareState.isTeam(Team.WHITE)
-            && vector.isBlackDiagonalVector();
+            && moveVector.isBlackDiagonalVector();
     }
 
     private boolean isNotSameTeam(SquareState sourceSquareState,
@@ -118,12 +118,12 @@ public class Board {
 
     private boolean isNotBlockedToGo(Point source, Point destination,
         SquareState sourceSquareState) {
-        Vector vector = sourceSquareState.findMovableVector(source, destination);
+        MoveVector moveVector = sourceSquareState.findMovableVector(source, destination);
         int moveCount = 1;
         boolean unblocked = true;
 
-        for (Point now = source.move(vector); isContinued(destination, now) && unblocked;
-            now = now.move(vector)) {
+        for (Point now = source.move(moveVector); isContinued(destination, now) && unblocked;
+            now = now.move(moveVector)) {
             unblocked = underMoveLength(sourceSquareState, moveCount) && squares.get(now).isEmpty();
             moveCount++;
         }

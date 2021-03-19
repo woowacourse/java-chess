@@ -2,32 +2,32 @@ package chess.domain.piece.movingstrategy;
 
 import chess.domain.board.Point;
 import chess.domain.board.Row;
-import chess.domain.piece.Vector;
+import chess.domain.piece.MoveVector;
 import java.util.List;
 
 public class PawnMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 1;
 
-    private final List<Vector> pawnsVector = Vector.pawnVectors();
+    private final List<MoveVector> pawnsMoveVector = MoveVector.pawnVectors();
 
     @Override
-    public Vector findMovableVector(Point source, Point destination) {
+    public MoveVector findMovableVector(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
-        Vector possibleVector = findPawnsVectorByDifference(x, y);
+        MoveVector possibleMoveVector = findPawnsVectorByDifference(x, y);
 
-        if (Vector.FIRST_PAWN_UP == possibleVector && !source.isRow(Row.TWO)) {
+        if (MoveVector.FIRST_PAWN_UP == possibleMoveVector && !source.isRow(Row.TWO)) {
             return null;
         }
-        return possibleVector;
+        return possibleMoveVector;
     }
 
-    private Vector findPawnsVectorByDifference(int x, int y) {
-        Vector moveVector = Vector.get(x, y);
+    private MoveVector findPawnsVectorByDifference(int x, int y) {
+        MoveVector moveVector = MoveVector.get(x, y);
 
-        return pawnsVector.stream()
+        return pawnsMoveVector.stream()
             .filter(vector -> vector.equals(moveVector))
             .findFirst()
             .orElse(null);

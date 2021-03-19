@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.Vector;
+import chess.domain.piece.MoveVector;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -38,7 +38,7 @@ public class SquareState {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public Vector findMovableVector(Point source, Point destination) {
+    public MoveVector findMovableVector(Point source, Point destination) {
         if (team.isBlack()) {
             return piece.findMovableVector(source.opposite(), destination.opposite()).opposite();
         }
@@ -78,9 +78,9 @@ public class SquareState {
     }
 
     public boolean hasMovableVector(Point source, Point destination) {
-        Vector vector = this.findMovableVector(source, destination);
+        MoveVector moveVector = this.findMovableVector(source, destination);
 
-        return vector != null;
+        return moveVector != null;
     }
 
     public boolean isKing() {

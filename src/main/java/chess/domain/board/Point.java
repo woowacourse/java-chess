@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.piece.Vector;
+import chess.domain.piece.MoveVector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -70,20 +70,20 @@ public class Point {
         return this.y.getYIndex() - source.y.getYIndex();
     }
 
-    public Point move(Vector vector) {
-        return Point.of(newerName(vector));
+    public Point move(MoveVector moveVector) {
+        return Point.of(newerName(moveVector));
     }
 
-    private String newerName(Vector vector) {
-        return Column.getByIndex(newerXIndex(vector)).getXCoordinate() +
-            Row.getByIndex(newerYIndex(vector)).getYCoordinate();
+    private String newerName(MoveVector moveVector) {
+        return Column.getByIndex(newerXIndex(moveVector)).getXCoordinate() +
+            Row.getByIndex(newerYIndex(moveVector)).getYCoordinate();
     }
 
-    private int newerYIndex(Vector vector) {
-        return y.getYIndex() + vector.getVertical();
+    private int newerYIndex(MoveVector moveVector) {
+        return y.getYIndex() + moveVector.getVertical();
     }
 
-    private int newerXIndex(Vector vector) {
-        return x.getXIndex() + vector.getHorizon();
+    private int newerXIndex(MoveVector moveVector) {
+        return x.getXIndex() + moveVector.getHorizon();
     }
 }

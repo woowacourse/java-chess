@@ -1,22 +1,22 @@
 package chess.domain.piece.movingstrategy;
 
 import chess.domain.board.Point;
-import chess.domain.piece.Vector;
+import chess.domain.piece.MoveVector;
 import java.util.List;
 
 public class QueenMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 7;
 
-    private final List<Vector> queensVector = Vector.everyVectors();
+    private final List<MoveVector> queensMoveVector = MoveVector.everyVectors();
 
     @Override
-    public Vector findMovableVector(Point source, Point destination) {
+    public MoveVector findMovableVector(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
-        return queensVector.stream()
-            .filter(vector -> vector.isSameDirection(x, y))
+        return queensMoveVector.stream()
+            .filter(moveVector -> moveVector.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }
