@@ -12,9 +12,6 @@ public class Pawn extends Piece {
 
     @Override
     public Direction direction(Piece target) {
-        //TODO: 폰은 직진만 가능
-        //TODO: 폰은 시작 때만 두 칸 이동 가능
-
         Direction direction = Direction.findDirection(this.point, target.point);
         if (this.color.equals(WHITE) && !direction.equals(Direction.NORTH) && !direction.equals(Direction.NORTH_EAST) && !direction.equals(Direction.NORTH_WEST)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
