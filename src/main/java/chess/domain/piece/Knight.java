@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,9 +12,10 @@ public class Knight extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('b', '1'),
             Position.of('g', '1'));
 
-    public Knight(Position position, String name) {
-        super(position, name);
+    public Knight(Position position, String name, Color color) {
+        super(position, name, color);
     }
+
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
@@ -33,10 +36,10 @@ public class Knight extends Piece {
 
     public static List<Knight> generate() {
         List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Knight(position, "N"))
+                .map(position -> new Knight(position, "N", Color.BLACK))
                 .collect(Collectors.toList());
         List<Knight> whiteKnights = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Knight(position, "n"))
+                .map(position -> new Knight(position, "n", Color.WHITE))
                 .collect(Collectors.toList());
         blackKnights.addAll(whiteKnights);
         return blackKnights;

@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Cross;
-import chess.domain.Diagonal;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +13,10 @@ public class Rook extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('a', '1'),
             Position.of('h', '1'));
 
-    public Rook(Position position, String name) {
-        super(position, name);
+    public Rook(Position position, String name, Color color) {
+        super(position, name, color);
     }
+
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
@@ -41,10 +42,10 @@ public class Rook extends Piece {
 
     public static List<Rook> generate() {
         List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Rook(position, "R"))
+                .map(position -> new Rook(position, "R", Color.BLACK))
                 .collect(Collectors.toList());
         List<Rook> whiteRooks = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Rook(position, "r"))
+                .map(position -> new Rook(position, "r", Color.WHITE))
                 .collect(Collectors.toList());
         blackRooks.addAll(whiteRooks);
         return blackRooks;

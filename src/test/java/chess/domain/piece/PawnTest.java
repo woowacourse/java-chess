@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class PawnTest {
     @DisplayName("Pawn 객체 생성 확인")
     @Test
     void 폰_객체_생성() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P");
+        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
 
         assertThat(pawn.getPosition()).isEqualTo(Position.of('a', '7'));
         assertThat(pawn.getName()).isEqualTo("P");
@@ -38,7 +39,7 @@ public class PawnTest {
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 - 2칸 이동")
     @Test
     void pawn_처음으로_이동_2칸() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P");
+        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
 
         pawn.move(Position.of('a', '5'), currentPieces);
 
@@ -48,7 +49,7 @@ public class PawnTest {
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 예외 - 3칸 이동 ")
     @Test
     void pawn_처음으로_이동_3칸_예외() {
-        Pawn pawn = new Pawn(Position.of('a', '7'), "P");
+        Pawn pawn = new Pawn(Position.of('a', '7'), "P", Color.BLACK);
 
         assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -57,7 +58,7 @@ public class PawnTest {
     @DisplayName("Pawn 규칙에 따라 이미 움직인 Pawn을 움직이는 경우 예외 - 2칸 이동 ")
     @Test
     void pawn_이미_이동_2칸_예외() {
-        Pawn pawn = new Pawn(Position.of('a', '6'), "P");
+        Pawn pawn = new Pawn(Position.of('a', '6'), "P", Color.BLACK);
 
         assertThatThrownBy(() -> pawn.move(Position.of('a', '4'), currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
@@ -66,8 +67,8 @@ public class PawnTest {
     @Test
     void 이동하는데_앞에_장애물이_있는_경우() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P"),
-                new Pawn(Position.of('a', '6'), "P"));
+                new Pawn(Position.of('a', '7'), "P", Color.BLACK),
+                new Pawn(Position.of('a', '6'), "P", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '7'); // 비숍 위치
@@ -81,8 +82,8 @@ public class PawnTest {
     @Test
     void 검은말이_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P"),
-                new Pawn(Position.of('b', '6'), "p"));
+                new Pawn(Position.of('a', '7'), "P", Color.BLACK),
+                new Pawn(Position.of('b', '6'), "p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '7'); // 비숍 위치
@@ -97,7 +98,7 @@ public class PawnTest {
     @Test
     void 검은말이_상대편_말을_공격한다_예외() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), "P"));
+                new Pawn(Position.of('a', '7'), "P", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '7'); // 비숍 위치
@@ -111,8 +112,8 @@ public class PawnTest {
     @Test
     void 하얀말이_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '2'), "p"),
-                new Pawn(Position.of('b', '3'), "P"));
+                new Pawn(Position.of('a', '2'), "p", Color.WHITE),
+                new Pawn(Position.of('b', '3'), "P", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '2'); // 비숍 위치
@@ -127,7 +128,7 @@ public class PawnTest {
     @Test
     void 하얀말이_상대편_말을_공격한다_예외() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '2'), "p"));
+                new Pawn(Position.of('a', '2'), "p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '2'); // 비숍 위치

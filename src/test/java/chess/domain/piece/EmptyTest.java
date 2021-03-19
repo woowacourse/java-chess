@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +11,9 @@ public class EmptyTest {
     @DisplayName("Empty 객체 생성 확인")
     @Test
     void 빈_기물_객체_생성_테스트() {
-        Empty empty = new Empty(Position.of('0', '0'), ".");
+        Empty empty = new Empty(Position.EMPTY, ".", Color.NONE);
 
-        assertThat(empty.getPosition()).isEqualTo(Position.of('0', '0'));
+        assertThat(empty.getPosition()).isEqualTo(Position.EMPTY);
         assertThat(empty.getName()).isEqualTo(".");
     }
 }

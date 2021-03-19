@@ -1,10 +1,12 @@
 package chess.domain.piece;
 
-public class Empty extends Piece {
-    public static final Empty EMPTY = new Empty(Position.EMPTY, ".");
+import chess.domain.Color;
 
-    public Empty(Position position, String name) {
-        super(position, name);
+public class Empty extends Piece {
+    public static final Empty EMPTY = new Empty(Position.EMPTY, ".", Color.NONE);
+
+    public Empty(Position position, String name, Color color) {
+        super(position, name, color);
     }
 
     @Override

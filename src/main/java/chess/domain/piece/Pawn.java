@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -14,9 +16,10 @@ public class Pawn extends Piece {
             Position.of('e', '2'), Position.of('f', '2'), Position.of('g', '2'),
             Position.of('h', '2'));
 
-    public Pawn(Position position, String name) {
-        super(position, name);
+    public Pawn(Position position, String name, Color color) {
+        super(position, name, color);
     }
+
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
@@ -76,10 +79,10 @@ public class Pawn extends Piece {
 
     public static List<Pawn> generate() {
         List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Pawn(position, "P"))
+                .map(position -> new Pawn(position, "P", Color.BLACK))
                 .collect(Collectors.toList());
         List<Pawn> whitePawns = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Pawn(position, "p"))
+                .map(position -> new Pawn(position, "p", Color.WHITE))
                 .collect(Collectors.toList());
         blackPawns.addAll(whitePawns);
         return blackPawns;

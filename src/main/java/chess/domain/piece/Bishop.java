@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Diagonal;
 
 import java.util.Arrays;
@@ -12,9 +13,10 @@ public class Bishop extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('c', '1'),
             Position.of('f', '1'));
 
-    public Bishop(Position position, String name) {
-        super(position, name);
+    public Bishop(Position position, String name, Color color) {
+        super(position, name, color);
     }
+
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
@@ -40,10 +42,10 @@ public class Bishop extends Piece {
 
     public static List<Bishop> generate() {
         List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Bishop(position, "B"))
+                .map(position -> new Bishop(position, "B", Color.BLACK))
                 .collect(Collectors.toList());
         List<Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Bishop(position, "b"))
+                .map(position -> new Bishop(position, "b", Color.WHITE))
                 .collect(Collectors.toList());
         blackBishops.addAll(whiteBishops);
         return blackBishops;

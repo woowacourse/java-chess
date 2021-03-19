@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Cross;
 import chess.domain.Diagonal;
 
@@ -10,9 +11,10 @@ public class Queen extends Piece {
     private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
 
-    public Queen(Position position, String name) {
-        super(position, name);
+    public Queen(Position position, String name, Color color) {
+        super(position, name, color);
     }
+
 
     @Override
     void move(Position target, CurrentPieces currentPieces) {
@@ -34,7 +36,6 @@ public class Queen extends Piece {
             if (!(targetPiece instanceof Empty)) {
                 currentPieces.removePieceByPosition(target);
             }
-            this.position = target;
         }
         if (this.position.isDiagonal(target)) {
             Diagonal queenDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
@@ -50,14 +51,14 @@ public class Queen extends Piece {
             if (!(targetPiece instanceof Empty)) {
                 currentPieces.removePieceByPosition(target);
             }
-            this.position = target;
         }
+        this.position = target;
     }
 
     public static List<Queen> generate() {
         List<Queen> queens = new ArrayList();
-        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q"));
-        queens.add(new Queen(INITIAL_WHITE_POSITION, "q"));
+        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q", Color.BLACK));
+        queens.add(new Queen(INITIAL_WHITE_POSITION, "q", Color.WHITE));
         return queens;
     }
 }

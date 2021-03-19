@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import chess.domain.Diagonal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +23,7 @@ public class BishopTest {
     @DisplayName("Bishop 객체 생성 확인")
     @Test
     void 비숍_객체_생성() {
-        Bishop bishop = new Bishop(Position.of('c', '8'), "B");
+        Bishop bishop = new Bishop(Position.of('c', '8'), "B", Color.BLACK);
 
         assertThat(bishop.getPosition()).isEqualTo(Position.of('c', '8'));
         assertThat(bishop.getName()).isEqualTo("B");
@@ -39,11 +40,16 @@ public class BishopTest {
     @DisplayName("Bishop 규칙에 따른 이동")
     @Test
     void 비숍_이동_확인() {
-        Bishop bishop = new Bishop(Position.of('c', '8'), "B");
+        List<Piece> current = Arrays.asList(
+                new Bishop(Position.of('c', '8'), "B", Color.BLACK));
+        CurrentPieces pieces = new CurrentPieces(current);
+        Position source = Position.of('c', '8'); // 비숍 위치
+        Position target = Position.of('e', '6'); // 옮기고자 하는 위치
+        Piece bishop = pieces.findByPosition(source);
 
-        bishop.move(Position.of('e', '6'), currentPieces);
+        bishop.move(target, pieces);
 
-        assertThat(bishop.getPosition()).isEqualTo(Position.of('e', '6'));
+        assertThat(bishop.getPosition()).isEqualTo(target);
     }
 
     @Test
@@ -85,8 +91,8 @@ public class BishopTest {
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Bishop(Position.of('c', '8'), "B"),
-                new Pawn(Position.of('f','5'),"p"));
+                new Bishop(Position.of('c', '8'), "B", Color.BLACK),
+                new Pawn(Position.of('f','5'),"p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('c', '8'); // 비숍 위치

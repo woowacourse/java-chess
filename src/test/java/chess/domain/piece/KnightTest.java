@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,7 +22,7 @@ public class KnightTest {
     @DisplayName("Knight 객체 생성 확인")
     @Test
     void 나이트_객체_생성() {
-        Knight knight = new Knight(Position.of('b', '8'), "N");
+        Knight knight = new Knight(Position.of('b', '8'), "N", Color.BLACK);
 
         assertThat(knight.getPosition()).isEqualTo(Position.of('b', '8'));
         assertThat(knight.getName()).isEqualTo("N");
@@ -38,7 +39,7 @@ public class KnightTest {
     @Test
     void 나이트_이동() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of('b', '8'), "N"));
+                new Knight(Position.of('b', '8'), "N", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
         Position source = Position.of('b', '8'); // 비숍 위치
         Position target = Position.of('c', '6'); // 옮기고자 하는 위치
@@ -52,7 +53,7 @@ public class KnightTest {
     @Test
     void 룩_이동_규칙에_어긋나는_경우_예() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of('b', '8'), "N"));
+                new Knight(Position.of('b', '8'), "N", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
         Position source = Position.of('b', '8'); // 비숍 위치
         Position target = Position.of('b', '1'); // 옮기고자 하는 위치
@@ -66,8 +67,8 @@ public class KnightTest {
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of('b', '8'), "N"),
-                new Pawn(Position.of('d','7'),"p"));
+                new Knight(Position.of('b', '8'), "N", Color.BLACK),
+                new Pawn(Position.of('d','7'),"p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('b', '8'); // 비숍 위치
