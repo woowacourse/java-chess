@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,12 +32,19 @@ class ChessResultTest {
     }
 
     @Test
-    @DisplayName("우승팀 확인 기능")
-    void checkWinner() {
+    @DisplayName("점수 높은 팀 확인 기능")
+    void checkScoreWinner() {
         assertThat(result.getWinner()).isEqualTo(Team.NOTHING);
         board.unwrap().put(new Position("a", "3"), new Rook(Team.WHITE));
         assertThat(result.getWinner()).isEqualTo(Team.WHITE);
         board.unwrap().put(new Position("a", "4"), new Queen(Team.BLACK));
         assertThat(result.getWinner()).isEqualTo(Team.BLACK);
+    }
+
+    @Test
+    @DisplayName("왕 잡은 팀 확인 기능")
+    void checkKingSlayer() {
+        board.unwrap().put(new Position("e", "8"), Blank.getInstance());
+        assertThat(result.getWinner()).isEqualTo(Team.WHITE);
     }
 }
