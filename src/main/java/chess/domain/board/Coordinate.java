@@ -68,4 +68,16 @@ public class Coordinate {
     public Coordinate move(Direction direction) {
         return new Coordinate(file.move(direction), rank.move(direction));
     }
+
+    public boolean isTwoRankForward(Coordinate targetCoordinate) {
+        return Math.abs(targetCoordinate.getRank().getY()
+            - this.rank.getY()) == 2 && file.getX() == targetCoordinate.getFile().getX();
+    }
+
+    public boolean isFirstPawnRank(TeamType teamType) {
+        if (teamType == TeamType.BLACK) {
+            return rank == Rank.SEVEN;
+        }
+        return rank == Rank.TWO;
+    }
 }

@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.List;
 
 public enum Direction {
     LEFT(-1, 0),
@@ -55,13 +56,6 @@ public enum Direction {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    private static Direction knightDirection(int fileDiff, int rankDiff) {
-        return Arrays.stream(Direction.values())
-            .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
-    }
-
     private static Direction diagonalDirection(int fileDiff, int rankDiff) {
         if (fileDiff > 0 && rankDiff > 0) {
             return RIGHT_UP;
@@ -95,5 +89,11 @@ public enum Direction {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isDiagonal() {
+        List<Direction> diagonalDirections
+            = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+        return diagonalDirections.contains(this);
     }
 }
