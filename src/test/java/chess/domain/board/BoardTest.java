@@ -15,13 +15,13 @@ public class BoardTest {
     @DisplayName("포지션을 받아 해당 위치의 Square를 리턴한다.")
     @Test
     void findByPositionTest() {
-        assertThat(board.findByPosition(Position.of("a1"))).isInstanceOf(Square.class);
+        assertThat(mockBoard.findByPosition(Position.of("a1"))).isInstanceOf(Square.class);
     }
 
     @DisplayName("이동할 때 해당 위치에 말이 없으면 예외")
     @Test
     void throwExceptionWhenSquareHasNotPiece() {
-        assertThatThrownBy(() -> board.move(Position.of("a3"), Position.of("b3")))
+        assertThatThrownBy(() -> mockBoard.move(Position.of("a3"), Position.of("b3")))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치엔 말이 없습니다.");
     }
@@ -29,9 +29,9 @@ public class BoardTest {
     @DisplayName("말을 움직인다.")
     @Test
     void movePiece() {
-        RealPiece realPiece = board.findByPosition(Position.of("b2")).getPiece();
-        board.move(Position.of("b2"), Position.of("b3"));
+        RealPiece realPiece = mockBoard.findByPosition(Position.of("b2")).getPiece();
+        mockBoard.move(Position.of("b2"), Position.of("b3"));
 
-        assertThat(board.findByPosition(Position.of("b3")).getPiece()).isEqualTo(realPiece);
+        assertThat(mockBoard.findByPosition(Position.of("b3")).getPiece()).isEqualTo(realPiece);
     }
 }

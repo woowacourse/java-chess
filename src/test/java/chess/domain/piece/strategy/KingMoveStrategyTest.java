@@ -1,6 +1,9 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,6 +19,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.*;
 
 class KingMoveStrategyTest {
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = BoardFactory.createBoard();
+    }
+
     private static Stream<Arguments> kingCanMoveTest() {
         return Stream.of(
                 Arguments.of(Position.of("a3"), Position.of("b4"), true),   // 한 대각선 이동

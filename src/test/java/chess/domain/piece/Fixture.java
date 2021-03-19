@@ -10,5 +10,5 @@ public class Fixture {
     public static final Queen whiteQueen = new Queen(Color.WHITE);
     public static final Knight whiteKnight = new Knight(Color.WHITE);
     public static final King whiteKing = new King(Color.WHITE);
-    public static Board board = BoardFactory.createBoard();
+    public static Board mockBoard = BoardFactory.createBoard();
 }

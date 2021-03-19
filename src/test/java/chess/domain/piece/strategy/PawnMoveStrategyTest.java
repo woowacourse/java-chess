@@ -1,19 +1,30 @@
-package chess.domain.piece;
+package chess.domain.piece.strategy;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.order.MoveOrder;
+import chess.domain.piece.Color;
+import chess.domain.piece.Pawn;
 import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.piece.Fixture.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-class PawnTest {
+class PawnMoveStrategyTest {
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = BoardFactory.createBoard();
+    }
+
     @DisplayName("행마에 대한 검증 - 직선")
     @ParameterizedTest
-    @CsvSource({"a2, a3, WHITE, true", "b7, b6, BLACK, true", "c2, c5, WHITE, false", "g7, g4, BLACK, false"})
+    @CsvSource({"a2, a3, WHITE", "b7, b6, BLACK"})
     void canMove_StraightDirection(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
         MoveOrder moveOrder = board.createMoveOrder(Position.of(from), Position.of(to));

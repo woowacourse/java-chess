@@ -1,6 +1,9 @@
 package chess.domain.piece.strategy;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -9,12 +12,18 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.stream.Stream;
 
-import static chess.domain.piece.Fixture.board;
 import static chess.domain.piece.Fixture.whiteKnight;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class KnightMoveStrategyTest {
+    private Board board;
+
+    @BeforeEach
+    void setUp() {
+        board = BoardFactory.createBoard();
+    }
+
     private static Stream<Arguments> knightCanMoveTest() {
         return Stream.of(
                 Arguments.of(Position.of("b1"), Position.of("c3"), true),
