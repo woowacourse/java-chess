@@ -9,6 +9,9 @@ import java.util.Collections;
 import java.util.Map;
 
 public class ChessGame {
+    public static final int BLACK_TEAM = 0;
+    public static final int WHITE_TEAM = 1;
+
     private Team currentTurn;
     private BlackTeam blackTeam;
     private WhiteTeam whiteTeam;
@@ -39,8 +42,12 @@ public class ChessGame {
 
     private void checkMate(Piece piece) {
         if (piece.isKing()) {
-            isEnd = true;
+            finish();
         }
+    }
+
+    public void finish() {
+        isEnd = true;
     }
 
     public boolean isEnd() {
@@ -64,6 +71,17 @@ public class ChessGame {
         return Collections.unmodifiableMap(chessBoard);
     }
 
+    public double calculateScoreByTeam(final int team) {
+        if (team == BLACK_TEAM) {
+            return blackTeam.calculateTotalScore();
+        }
+
+        if (team == WHITE_TEAM) {
+            return whiteTeam.calculateTotalScore();
+        }
+
+        return 0;
+    }
     public BlackTeam getBlackTeam() {
         return blackTeam;
     }

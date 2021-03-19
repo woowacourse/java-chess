@@ -14,33 +14,46 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessController {
+    private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
 
     public void run() {
         OutputView.printChessStartMessage();
         final boolean start = InputView.inputChessStartOrEnd();
-        if (!start) {
-            return;
+        if (start) {
+            final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
+            playChessGame(chessGame);
         }
-        final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
-        printChessBoard(chessGame);
-        startGame(chessGame);
     }
 
-    private void startGame(ChessGame chessGame) {
-        while (chessGame.isEnd()) {
+    private void playChessGame(ChessGame chessGame) {
+        while (!chessGame.isEnd()) {
+            printChessBoard(chessGame);
             singleTurn(chessGame);
             chessGame.changeTurn();
-            printChessBoard(chessGame);
         }
+        final double blackTeamScore = chessGame.calculateScoreByTeam(ChessGame.BLACK_TEAM);
+        final double whiteTeamScore = chessGame.calculateScoreByTeam(ChessGame.WHITE_TEAM);
+        OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);
     }
 
     private void singleTurn(ChessGame chessGame) {
         try {
             List<String> movePositions = InputView.inputMovePosition();
-            chessGame.move(Position.of(movePositions.get(0)), Position.of(movePositions.get(1)));
+            controlUserCommand(chessGame, movePositions);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             singleTurn(chessGame);
+        }
+    }
+
+    private void controlUserCommand(ChessGame chessGame, List<String> movePositions) {
+        if (MOVE_COMMAND.equals(movePositions.get(0))) {
+            chessGame.move(Position.of(movePositions.get(1)), Position.of(movePositions.get(2)));
+        }
+
+        if (STATUS_COMMAND.equals(movePositions.get(0))) {
+            chessGame.finish();
         }
     }
 
@@ -59,7 +72,6 @@ public class ChessController {
         }
         return blackPrintFormat;
     }
-
 
     private Map<Position, String> convertToWhitePrintName(final ChessGame chessGame) {
         final Map<Position, Piece> whitePosition = chessGame.getWhiteTeam().getPiecePosition();

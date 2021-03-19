@@ -6,6 +6,10 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
 
     private InputView() {
     }
@@ -23,17 +27,17 @@ public class InputView {
     public static List<String> inputMovePosition() {
         final String inputMoveCommand = scanner.nextLine();
         List<String> splitMoveCommand = Arrays.asList(inputMoveCommand.split(" "));
-        if (!"move".equals(splitMoveCommand.get(0))) {
-            throw new IllegalArgumentException("허용되지 않은 명령입니다.");
+        if (MOVE_COMMAND.equals(splitMoveCommand.get(0)) || STATUS_COMMAND.equals(splitMoveCommand.get(0))) {
+            return splitMoveCommand;
         }
-        return splitMoveCommand.subList(1,3);
+        throw new IllegalArgumentException("허용되지 않은 명령입니다.");
     }
 
     private static boolean validateStartOrEnd(final String userInput) {
-        if ("start".equals(userInput)) {
+        if (START_COMMAND.equals(userInput)) {
             return true;
         }
-        if ("end".equals(userInput)) {
+        if (END_COMMAND.equals(userInput)) {
             return false;
         }
         throw new IllegalArgumentException("허용되지 않은 명령입니다.");
