@@ -2,7 +2,6 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Position;
-import chess.domain.piece.Bishop;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.WhiteTeam;
@@ -24,25 +23,24 @@ public class ChessController {
         }
         final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
         printChessBoard(chessGame);
-        try {
-            startGame(chessGame);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            startGame(chessGame);
-        }
-
+        startGame(chessGame);
     }
 
     private void startGame(ChessGame chessGame) {
         while (true) {
-            List<String> movePositions = InputView.inputMovePosition();
-            boolean b = chessGame.move(Position.of(movePositions.get(0)), Position.of(movePositions.get(1)));
-            if (!b) {
-                System.out.println("이동이 안되었습니다.");
-                continue;
-            }
+            singleTurn(chessGame);
             chessGame.changeTurn();
             printChessBoard(chessGame);
+        }
+    }
+
+    private void singleTurn(ChessGame chessGame) {
+        try {
+            List<String> movePositions = InputView.inputMovePosition();
+            chessGame.move(Position.of(movePositions.get(0)), Position.of(movePositions.get(1)));
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            singleTurn(chessGame);
         }
     }
 

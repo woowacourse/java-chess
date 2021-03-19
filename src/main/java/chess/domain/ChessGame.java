@@ -19,7 +19,7 @@ public class ChessGame {
         this.currentTurn = this.whiteTeam;
     }
 
-    public boolean move(Position current, Position destination) {
+    public void move(Position current, Position destination) {
         final Piece chosenPiece = currentTurn.choosePiece(current);
         if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
             throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
@@ -33,7 +33,7 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         chosenPiece.isMoved();
-        return true;
+//        return true;
     }
 
     private Team getEnemy() {
