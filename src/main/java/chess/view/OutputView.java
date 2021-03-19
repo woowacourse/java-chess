@@ -52,9 +52,9 @@ public class OutputView {
 
     public static void printResult(final ChessResult result) {
         final Team winner = result.getWinner();
-        if (winner == Team.NOTHING) {
+        if (winner.undefined()) {
             System.out.println("무승부입니다.");
-            printResultScores(winner, result);
+            printResultScores(winner.anyTeamExcludingThis(), result);
             return;
         }
         System.out.println(winner.teamName() + "이 승리하였습니다.");
