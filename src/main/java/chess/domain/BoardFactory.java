@@ -6,6 +6,8 @@ import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.piece.PieceType;
+import chess.domain.piece.Positions;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.position.Column;

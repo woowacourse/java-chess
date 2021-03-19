@@ -21,25 +21,21 @@ public abstract class Piece {
 
     public abstract List<Direction> directions();
 
-    public List<Position> findAllPath(Position currentPosition) {
+    public List<Path> findAllPath(Position currentPosition) {
         return directions().stream()
                 .map(direction -> findPathInDirection(direction, currentPosition))
-                .flatMap(List::stream)
-//                .distinct()
+//                .flatMap(List::stream)
                 .collect(Collectors.toList())
                 ;
     }
 
-    private List<Position> findPathInDirection(Direction direction, Position currentPosition) {
+    private Path findPathInDirection(Direction direction, Position currentPosition) {
         List<Position> positions = new ArrayList<>();
-        while(!currentPosition.isBlockedWhenGoToThis(direction)){
+        while(!currentPosition.isBlockedWhenGoTo(direction)){
             positions.add(currentPosition.moveTo(direction));
             currentPosition = currentPosition.moveTo(direction);
         }
-        return positions;
-        // if current is boundary stop
-        // if not, add current position and move one direction
-        // but do not add initial position
+        return new Path(positions);
     }
 
     public boolean isColor(PieceColor color) {
