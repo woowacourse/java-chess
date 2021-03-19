@@ -8,6 +8,7 @@ import java.util.function.BiConsumer;
 public enum Command {
     START("start", ChessController::start),
     MOVE("move", ChessController::move),
+    STATUS("status", ChessController::status),
     END("end", ChessController::end);
 
     private final String command;

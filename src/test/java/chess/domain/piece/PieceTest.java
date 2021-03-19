@@ -26,8 +26,8 @@ class PieceTest {
     @DisplayName("말 이름 가져오는 기능 테스트")
     @Test
     void getName_PieceName() {
-        String pieceSymbol1 = piece1.getSymbol();
-        String pieceSymbol2 = piece2.getSymbol();
+        String pieceSymbol1 = piece1.symbol();
+        String pieceSymbol2 = piece2.symbol();
 
         assertEquals(pieceSymbol1, "Q");
         assertEquals(pieceSymbol2, "r");

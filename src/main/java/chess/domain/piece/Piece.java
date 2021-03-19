@@ -49,11 +49,15 @@ public class Piece {
         pieceKind.movable(source, target);
     }
 
-    public String getSymbol() {
+    public PieceKind kind() {
+        return pieceKind;
+    }
+
+    public String symbol() {
         return pieceKind.getName(pieceColor);
     }
 
-    public PieceColor getPieceColor() {
+    public PieceColor color() {
         return this.pieceColor;
     }
 

@@ -11,7 +11,7 @@ public class OutputView {
 
     private static final String GAME_INIT = "체스 게임을 시작합니다.";
     private static final String GAME_INIT_COMMAND = "게임 시작은 start, 종료는 end 명령을 입력하세요.";
-    private static final String INIT_END = "END";
+    private static final String END = "END";
 
     public static void printInitMessage() {
         System.out.println(GAME_INIT);
@@ -30,8 +30,18 @@ public class OutputView {
         for (XPosition xPosition : XPosition.values()) {
             Position position = Position.of(xPosition, yPosition);
             Piece piece = board.pieceAtPosition(position);
-            System.out.print(piece.getSymbol());
+            System.out.print(piece.symbol());
         }
         System.out.println();
+    }
+
+    public static void printScore(Game game) {
+        System.out.printf("백팀 점수 : %f\n", game.computeWhitePoint());
+        System.out.printf("흑팀 점수 : %f\n", game.computeBlackPoint());
+    }
+
+    public static void printGameWinner(Game game) {
+        System.out.printf("%s이 승리했습니다\n", game.winnerColor().getName());
+        System.out.println(END);
     }
 }

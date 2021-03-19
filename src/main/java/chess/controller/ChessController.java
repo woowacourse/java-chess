@@ -5,11 +5,14 @@ import chess.domain.Game;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ChessController {
 
     public void run() {
         OutputView.printInitMessage();
-        Game game = Game.set();
+        Game game = new Game();
         while (!game.isEnd()) {
             String input = InputView.receiveInitialResponse();
             Command.playCommand(game, input);
@@ -26,14 +29,14 @@ public class ChessController {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
 
-        String[] processedCommand = command.split(" ");
-        game.move(processedCommand[1], processedCommand[2]);
+        List<String> processedInput = Arrays.asList(command.split(" "));
 
+        game.move(processedInput.get(1),processedInput.get(2));
         OutputView.printBoard(game);
 
         if (game.isEnd()) {
             end(game, command);
-            //OutputView.printGameWinner(game);
+            OutputView.printGameWinner(game);
         }
     }
 
@@ -43,6 +46,6 @@ public class ChessController {
     }
 
     public static void status(Game game, String command) {
-        //OutputView.printScore(game);
+        OutputView.printScore(game);
     }
 }

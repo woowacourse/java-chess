@@ -6,6 +6,7 @@ import chess.domain.piece.PieceColor;
 import chess.domain.piece.PieceKind;
 import chess.domain.piece.strategy.MoveDirection;
 
+import java.util.EnumMap;
 import java.util.Map;
 
 public class Board {
@@ -113,7 +114,7 @@ public class Board {
 
     private void judgeKingsState(Position target) {
         if (pieceAtPosition(target).isKing()) {
-            deadKingColor = pieceAtPosition(target).getPieceColor();
+            deadKingColor = pieceAtPosition(target).color();
         }
     }
 
@@ -127,11 +128,58 @@ public class Board {
         }
     }
 
+    public double computePoint(PieceColor pieceColor) {
+        double pointSum = 0.0;
+        for (XPosition xPosition : XPosition.values()) {
+            Map<PieceKind, Integer> existingPiece = countPieceKindAtColumn(pieceColor, xPosition);
+            pointSum += columnPoint(existingPiece);
+        }
+        return pointSum;
+    }
+
+    private Map<PieceKind, Integer> countPieceKindAtColumn(PieceColor pieceColor,
+                                             XPosition xPosition) {
+        Map<PieceKind, Integer> existingPiece = new EnumMap<>(PieceKind.class);
+        for (YPosition yPosition : YPosition.values()) {
+            Position currentPosition = Position.of(xPosition, yPosition);
+            Piece piece = pieceAtPosition(currentPosition);
+            checkSameColor(pieceColor, existingPiece, piece);
+        }
+
+        return existingPiece;
+    }
+
+    private void checkSameColor(PieceColor pieceColor, Map<PieceKind, Integer> existingPiece, Piece piece) {
+        if (piece.isSameColor(pieceColor)) {
+            existingPiece.put(piece.kind(), existingPiece.getOrDefault(piece.kind(), 0) + 1);
+        }
+    }
+
+    private double columnPoint(Map<PieceKind, Integer> column) {
+        double points = 0.0;
+        for (Map.Entry<PieceKind, Integer> entry : column.entrySet()) {
+            points += eachPiecePoint(entry);
+        }
+        return points;
+    }
+
+    private double eachPiecePoint(Map.Entry<PieceKind, Integer> entry) {
+        double point = entry.getValue() * entry.getKey().point();
+        if (entry.getKey() == PieceKind.PAWN && entry.getValue() > 1) {
+            point /= 2;
+        }
+        return point;
+    }
+
     public Piece pieceAtPosition(Position position) {
         return board.get(position);
     }
 
     public void putPieceAtPosition(Position position, Piece piece) {
         board.put(position, piece);
+    }
+
+    public PieceColor winnerColor() {
+        return this.deadKingColor.oppositeColor();
     }
 }

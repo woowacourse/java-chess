@@ -11,23 +11,23 @@ public class Game {
     private GameState gameState;
     private PieceColor turnColor;
 
+    public Game() {
+        this(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
+    }
+
     public Game(Board board, GameState gameState) {
         this.board = board;
         this.gameState = gameState;
         this.turnColor = PieceColor.WHITE;
     }
 
-    public static Game set() {
-        return new Game(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
-    }
+//    public static Game set() {
+//        return new Game(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
+//    }
 
     public void init() {
         this.board = new Board(InitializedBoard.board());
         this.gameState = GameState.START;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public void end() {
@@ -51,5 +51,21 @@ public class Game {
         }
 
         this.turnColor = turnColor.oppositeColor();
+    }
+
+    public double computeWhitePoint() {
+        return board.computePoint(PieceColor.WHITE);
+    }
+
+    public double computeBlackPoint() {
+        return board.computePoint(PieceColor.BLACK);
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public PieceColor winnerColor() {
+        return board.winnerColor();
     }
 }
