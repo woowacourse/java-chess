@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.exceptions.InvalidMoveException;
 import chess.domain.piece.Piece;
@@ -10,10 +9,9 @@ public class KingMoveStrategy extends BasicMoveStrategy {
     private static final int KING_DISTANCE_LIMIT = 1;
 
     @Override
-    void checkValidMove(Position source, Position target, Board board) {
+    void checkValidMove(Position source, Position target) {
         checkPositionsOnBoard(source, target);
         checkValidDistance(source, target);
-        checkIsNotSameTeam(source, target, board);
     }
 
     private void checkValidDistance(Position source, Position target) {

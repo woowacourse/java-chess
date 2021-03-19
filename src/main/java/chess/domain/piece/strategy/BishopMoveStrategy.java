@@ -8,7 +8,7 @@ public class BishopMoveStrategy extends NoLimitedDistanceMoveStrategy {
 
     @Override
     public void checkMoveType(Position source, Position target) {
-        if (!isDiagonalMove(source, target)) {
+        if (!source.isDiagonalMove(target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
     }

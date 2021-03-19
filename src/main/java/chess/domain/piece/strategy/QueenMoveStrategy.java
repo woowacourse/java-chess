@@ -8,8 +8,8 @@ public class QueenMoveStrategy extends NoLimitedDistanceMoveStrategy {
 
     @Override
     public void checkMoveType(Position source, Position target) {
-        if (!isLineMove(source, target) &&
-            !isDiagonalMove(source, target)) {
+        if (!source.isLineMove(target) &&
+            !source.isDiagonalMove(target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
     }

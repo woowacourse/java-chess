@@ -16,16 +16,6 @@ class PositionTest {
         position = Position.of('a', 1);
     }
 
-    @DisplayName("좌표 조회")
-    @Test
-    void getPosition_StringInt() {
-        XPosition xPositionResult = position.getXPosition();
-        YPosition yPositionResult = position.getYPosition();
-
-        assertThat(xPositionResult).isEqualTo(XPosition.A);
-        assertThat(yPositionResult).isEqualTo(YPosition.One);
-    }
-
     @DisplayName("좌표 동일성 비교")
     @Test
     void isEqualPosition_boolean() {

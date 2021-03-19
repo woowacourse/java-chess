@@ -8,7 +8,7 @@ public class RookMoveStrategy extends NoLimitedDistanceMoveStrategy {
 
     @Override
     public void checkMoveType(Position source, Position target) {
-        if (!isLineMove(source, target)) {
+        if (!source.isLineMove(target)) {
             throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
         }
     }

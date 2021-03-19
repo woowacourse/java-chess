@@ -33,7 +33,7 @@ class QueenMoveStrategyTest {
     @Test
     void queenValidMove_diagonalMove() {
         Position target = Position.of('d', 4);
-        queenMoveStrategy.move(position, target, board);
+        queenMoveStrategy.move(position, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -45,7 +45,7 @@ class QueenMoveStrategyTest {
     @Test
     void queenValidMove_lineMove() {
         Position target = Position.of('h', 3);
-        queenMoveStrategy.move(position, target, board);
+        queenMoveStrategy.move(position, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -57,7 +57,7 @@ class QueenMoveStrategyTest {
     void queenInvalidMove_ExceptionThrown() {
         Position target = Position.of('f', 5);
 
-        assertThatThrownBy(() -> queenMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> queenMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
     }
@@ -67,7 +67,7 @@ class QueenMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('b', 2);
 
-        assertThatThrownBy(() -> queenMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> queenMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
@@ -78,7 +78,7 @@ class QueenMoveStrategyTest {
         Position source = Position.of('d', 8);
         Position target = Position.of('d', 9);
 
-        assertThatThrownBy(() -> queenMoveStrategy.move(source, target, board))
+        assertThatThrownBy(() -> queenMoveStrategy.move(source, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
@@ -88,7 +88,7 @@ class QueenMoveStrategyTest {
     void checkUnableCROSSPIECE_ExceptionThrown() {
         Position target = Position.of('c', 8);
 
-        assertThatThrownBy(() -> queenMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> queenMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
     }

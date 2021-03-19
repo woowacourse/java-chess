@@ -26,7 +26,7 @@ public enum MoveDirection {
     public static MoveDirection getDirection(Position source, Position target) {
         int horizontalDistance = source.computeHorizontalDistance(target);
         int verticalDistance = source.computeVerticalDistance(target);
-        isLineOrDiagonal(horizontalDistance, verticalDistance);
+
         int horizontalVector = getVectorValue(horizontalDistance);
         int verticalVector = getVectorValue(verticalDistance);
 
@@ -46,13 +46,6 @@ public enum MoveDirection {
             return 0;
         }
         return distance / Math.abs(distance);
-    }
-
-    private static void isLineOrDiagonal(int horizontalDistance, int verticalDistance) {
-        if (Math.abs(horizontalDistance) != Math.abs(verticalDistance) &&
-            (horizontalDistance != 0 && verticalDistance != 0)) {
-            throw new InvalidMoveException(Piece.UNABLE_MOVE_TYPE_MESSAGE);
-        }
     }
 
     public static Boolean isWhiteForward(MoveDirection moveDirection) {

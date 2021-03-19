@@ -24,6 +24,11 @@ public class Position {
         }
     }
 
+    public Position(Position position) {
+        this.xPosition = position.xPosition;
+        this.yPosition = position.yPosition;
+    }
+
     private Position(XPosition xPosition, YPosition yPosition) {
         this.xPosition = xPosition;
         this.yPosition = yPosition;
@@ -46,23 +51,35 @@ public class Position {
     }
 
     public int computeHorizontalDistance(Position anotherPosition) {
-        return anotherPosition.getXPosition().getValue() - this.xPosition.getValue(); //TODO getter 줄이기
+        return xPosition.difference(anotherPosition.xPosition);
     }
 
     public int computeVerticalDistance(Position anotherPosition) {
-        return anotherPosition.getYPosition().getValue() - this.yPosition.getValue();
+        return yPosition.difference(anotherPosition.yPosition);
     }
 
     public Position computeSymmetricPosition() {
         return Position.of(xPosition.getValue(), 9 - yPosition.getValue());
     }
 
-    public XPosition getXPosition() {
-        return this.xPosition;
+    public boolean sameYPosition(int rawYPosition) {
+        return yPosition.samePosition(rawYPosition);
     }
 
-    public YPosition getYPosition() {
-        return this.yPosition;
+    public void moveUnit(int xVector, int yVector) {
+        xPosition = xPosition.moveUnit(xVector);
+        yPosition = yPosition.moveUnit(yVector);
+    }
+
+
+    public boolean isLineMove(Position target) {
+        return (computeHorizontalDistance(target) == 0 ||
+            computeVerticalDistance(target) == 0);
+    }
+
+    public boolean isDiagonalMove(Position target) {
+        return (Math.abs(computeHorizontalDistance(target)) ==
+            Math.abs(computeVerticalDistance(target)));
     }
 
     @Override

@@ -31,6 +31,10 @@ public enum XPosition {
             .orElseThrow(InvalidMoveException::new);
     }
 
+    public int difference(XPosition anotherXPosition) {
+        return anotherXPosition.name - this.name;
+    }
+
     public char getValue() {
         return name;
     }

@@ -33,7 +33,7 @@ class BishopMoveStrategyTest {
     @Test
     void bishopValidMove_void() {
         Position target = Position.of('c', 5);
-        bishopMoveStrategy.move(position, target, board);
+        bishopMoveStrategy.move(position, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -45,7 +45,7 @@ class BishopMoveStrategyTest {
     void bishopInvalidMove_ExceptionThrown() {
         Position target = Position.of('c', 3);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_MOVE_TYPE_MESSAGE);
     }
@@ -55,7 +55,7 @@ class BishopMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('b', 2);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
@@ -65,7 +65,7 @@ class BishopMoveStrategyTest {
     void checkUnableOutOfBoard_ExceptionThrown() {
         Position target = Position.of('g', 9);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }
@@ -75,7 +75,7 @@ class BishopMoveStrategyTest {
     void checkUnableCROSSPIECE_ExceptionThrown() {
         Position target = Position.of('f', 8);
 
-        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> bishopMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.UNABLE_CROSS_MESSAGE);
     }

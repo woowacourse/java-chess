@@ -11,7 +11,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class KnightMoveStrategyTest {
 
@@ -33,7 +33,7 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_withoutJump() {
         Position target = Position.of('e', 4);
-        knightMoveStrategy.move(position, target, board);
+        knightMoveStrategy.move(position, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -45,7 +45,7 @@ class KnightMoveStrategyTest {
     void queenValidMove_diagonalMove() {
         Position source =Position.of('g', 1);
         Position target = Position.of('f', 3);
-        knightMoveStrategy.move(source, target, board);
+        knightMoveStrategy.move(source, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -56,7 +56,7 @@ class KnightMoveStrategyTest {
     @Test
     void knightValidMove_lineMove() {
         Position target = Position.of('e', 4);
-        knightMoveStrategy.move(position, target, board);
+        knightMoveStrategy.move(position, target);
 
         Piece pieceOnTarget = board.checkPieceAtPosition(target);
 
@@ -68,7 +68,7 @@ class KnightMoveStrategyTest {
     void checkIsNotSameTeam_ExceptionThrown() {
         Position target = Position.of('d', 1);
 
-        assertThatThrownBy(() -> knightMoveStrategy.move(position, target, board))
+        assertThatThrownBy(() -> knightMoveStrategy.move(position, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.SAME_TEAM_MESSAGE);
     }
@@ -79,7 +79,7 @@ class KnightMoveStrategyTest {
         Position source = Position.of('b', 8);
         Position target = Position.of('c', 10);
 
-        assertThatThrownBy(() -> knightMoveStrategy.move(source, target, board))
+        assertThatThrownBy(() -> knightMoveStrategy.move(source, target))
             .isInstanceOf(InvalidMoveException.class)
             .hasMessageContaining(Piece.OUT_OF_BOUND_MESSAGE);
     }

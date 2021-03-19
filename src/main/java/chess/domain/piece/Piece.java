@@ -25,6 +25,19 @@ public class Piece {
         return this.pieceColor == piece.getPieceColor();
     }
 
+    public boolean isMovingForward(Position source, Position target) {
+        MoveDirection moveDirection = MoveDirection.getDirection(source, target);
+        if (pieceColor == PieceColor.WHITE) {
+            return MoveDirection.isWhiteForward(moveDirection);
+        }
+
+        return MoveDirection.isBlackForward(moveDirection);
+    }
+
+    public boolean isPawn() {
+        return pieceKind == PieceKind.PAWN;
+    }
+
     public String getSymbol() {
         return pieceKind.getName(pieceColor);
     }
@@ -44,14 +57,5 @@ public class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(pieceKind, pieceColor);
-    }
-
-    public boolean isMovingForward(Position source, Position target) {
-        MoveDirection moveDirection = MoveDirection.getDirection(source, target);
-        if (pieceColor == PieceColor.WHITE) {
-            return MoveDirection.isWhiteForward(moveDirection);
-        }
-
-        return MoveDirection.isBlackForward(moveDirection);
     }
 }
