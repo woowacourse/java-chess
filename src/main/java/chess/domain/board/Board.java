@@ -101,7 +101,8 @@ public class Board {
         cells.put(coordinate, piece);
     }
 
-    public List<Coordinate> findCheckCoordinatesNew(Coordinate myKingCoordinate, List<Coordinate> possibleCoordinates, TeamType teamType) {
+    public List<Coordinate> findCheckCoordinatesNew(Coordinate myKingCoordinate,
+        List<Coordinate> possibleCoordinates, TeamType teamType) {
         Piece myKing = cells.get(myKingCoordinate);
         cells.remove(myKingCoordinate);
         List<Coordinate> checkCoordinates = new ArrayList<>();
@@ -121,7 +122,8 @@ public class Board {
         return checkCoordinates;
     }
 
-    public List<Coordinate> findCheckCoordinates(List<Coordinate> myKingNextCoordinates, TeamType myTeamType) {
+    public List<Coordinate> findCheckCoordinates(List<Coordinate> myKingNextCoordinates,
+        TeamType myTeamType) {
         List<Coordinate> checkCoordinates = new ArrayList<>();
         Map<Coordinate, Piece> enemyPieces = getEnemyPieces(myTeamType);
         enemyPieces.remove(getEnemyKingCoordinate(myTeamType));
@@ -131,10 +133,14 @@ public class Board {
                 Piece piece = find(coordinate); //rook
                 System.out.println("======");
                 System.out.println("적 기물 이름 : " + piece.getName());
-                System.out.println("적 기물 위치 : " + coordinate.getFile().getValue() + coordinate.getRank().getY());
-                System.out.println("킹의 다음 위치 : " + myKingNextCoordinate.getFile().getValue() + myKingNextCoordinate.getRank().getY());
+                System.out.println(
+                    "적 기물 위치 : " + coordinate.getFile().getValue() + coordinate.getRank().getY());
+                System.out.println(
+                    "킹의 다음 위치 : " + myKingNextCoordinate.getFile().getValue() + myKingNextCoordinate
+                        .getRank().getY());
                 try {
-                    if (myKingNextCoordinate.equals(coordinate) || piece.isMovableTo(this, coordinate, myKingNextCoordinate)) {
+                    if (myKingNextCoordinate.equals(coordinate) || piece
+                        .isMovableTo(this, coordinate, myKingNextCoordinate)) {
                         System.out.println("적이 위 킹의 다음 위치로 이동할 수 있어, 체크 자리이다.");
                         checkCoordinates.add(coordinate);
                     }
@@ -156,8 +162,8 @@ public class Board {
 
     private Map<Coordinate, Piece> getEnemyPieces(TeamType myTeamType) {
         return cells.keySet().stream()
-        .filter(coordinate -> !cells.get(coordinate).isTeamOf(myTeamType))
-        .collect(Collectors.toMap(coordinate -> coordinate, cells::get));
+            .filter(coordinate -> !cells.get(coordinate).isTeamOf(myTeamType))
+            .collect(Collectors.toMap(coordinate -> coordinate, cells::get));
     }
 
     public Result calculateScores() {
@@ -175,17 +181,17 @@ public class Board {
 
         double pawnScores = 0;
         for (File file : File.values()) {
-           int pawnCounts = 0;
-           for (Rank rank : Rank.values()) {
-               Coordinate coordinate = new Coordinate(file, rank);
-               Piece piece = cells.get(coordinate);
-               if (piece != null && piece.isTeamOf(teamType) && piece.isPawn()) {
-                   pawnCounts++;
-               }
-           }
-           if (pawnCounts == 0) {
-               continue;
-           }
+            int pawnCounts = 0;
+            for (Rank rank : Rank.values()) {
+                Coordinate coordinate = new Coordinate(file, rank);
+                Piece piece = cells.get(coordinate);
+                if (piece != null && piece.isTeamOf(teamType) && piece.isPawn()) {
+                    pawnCounts++;
+                }
+            }
+            if (pawnCounts == 0) {
+                continue;
+            }
             if (pawnCounts == 1) {
                 pawnScores += new Pawn(teamType).getScore();
             } else {
@@ -199,6 +205,14 @@ public class Board {
         return cells.values().stream()
             .filter(Piece::isKing)
             .count() == 1L;
+    }
+
+    public TeamType winner() {
+        return cells.values().stream()
+            .filter(Piece::isKing)
+            .findAny()
+            .map(Piece::getTeamType)
+            .orElseThrow(IllegalStateException::new);
     }
 }
 
