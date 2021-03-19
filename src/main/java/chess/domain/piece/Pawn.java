@@ -28,7 +28,7 @@ public class Pawn extends Piece {
         return TWO_STEP_RANGE;
     }
 
-    public void moved() {
+    public void setMoved() {
         moved = true;
     }
 

@@ -33,7 +33,7 @@ public class Grid {
 
         if (sourcePiece instanceof Pawn) {
             validatePawnSteps((Pawn) sourcePiece, targetPiece);
-            ((Pawn) sourcePiece).moved();
+            ((Pawn) sourcePiece).setMoved();
         }
         if (!(sourcePiece instanceof Pawn)) {
             validateGeneralSteps(sourcePiece, targetPiece);
