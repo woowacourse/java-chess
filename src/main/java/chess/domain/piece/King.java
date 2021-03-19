@@ -2,55 +2,72 @@ package chess.domain.piece;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
-import chess.domain.State;
 import chess.domain.TeamColor;
+import java.util.HashSet;
+import java.util.Set;
 
-public class King implements Piece {
+public class King extends PieceOnBoard {
 
-    private final TeamColor teamColor;
-
-    private String pieceType = "k";
+    private Position position;
 
     public King(TeamColor teamColor) {
-        this.teamColor = teamColor;
+        super(teamColor, "k");
+    }
+
+
+    public King(TeamColor teamColor, Position position) {
+        super(teamColor, "k");
+        this.position = position;
     }
 
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
-        return false;
-    }
-
-    @Override
-    public String getPieceName() {
-        if (teamColor == TeamColor.BLACK) {
-            return pieceType.toUpperCase();
+        Set<Position> candidates = new HashSet<>();
+        Position position = source.moveUp();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
         }
-        return pieceType.toLowerCase();
+        position = source.moveDown();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+        position = source.moveLeft();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+        position = source.moveRight();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+
+        }
+
+        position = source.moveLeftUp();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+        position = source.moveLeftDown();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+        position = source.moveRightUp();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+        position = source.moveRightDown();
+        if (position != Position.ERROR && chessBoard.isBlank(position) ||
+            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
+            candidates.add(position);
+        }
+
+        return candidates.contains(target);
     }
 
-    @Override
-    public boolean isEnemyTeam(Piece comparePiece) {
-        return false;
-    }
-
-    @Override
-    public TeamColor getColor() {
-        return teamColor;
-    }
-
-    @Override
-    public void dead() {
-
-    }
-
-    @Override
-    public State getState() {
-        return null;
-    }
-
-    @Override
-    public String toString() {
-        return teamColor.name() + " King\n";
-    }
 
 }
