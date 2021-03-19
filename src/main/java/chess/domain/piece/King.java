@@ -26,6 +26,11 @@ public class King extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
     public int hashCode() {
         return UNICODE_DECIMAL;
     }

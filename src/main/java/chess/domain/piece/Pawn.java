@@ -39,6 +39,11 @@ public class Pawn extends Piece {
         return false;
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
     private boolean checkPositionRuleAfterMove(final Position current, final Position destination) {
         if (current.moveY(direction).equals(destination)) {
             return true;

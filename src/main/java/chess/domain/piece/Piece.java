@@ -17,6 +17,8 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
+    public abstract boolean isPawn();
+
     public final boolean checkEmptyPath(final List<Position> path, final Map<Position, Piece> chessBoard) {
         for (Position position : path) {
             if (chessBoard.containsKey(position)) {
