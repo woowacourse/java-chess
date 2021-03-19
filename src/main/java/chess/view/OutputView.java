@@ -22,6 +22,6 @@ public class OutputView {
     }
 
     private static void printEachScore(Color color, Double score) {
-        System.out.printf("%s : %f점" + NEWLINE, color.name(), score);
+        System.out.printf("%s : %.1f점" + NEWLINE, color.name(), score);
     }
 }
