@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.piece.strategy.Direction;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class Position {
@@ -42,7 +43,7 @@ public class Position {
     }
 
     public boolean isKnightPath(Position that) {
-        return Math.pow(rowGap(that),2) + Math.pow(columnGap(that),2) == 5;
+        return Math.pow(rowGap(that), 2) + Math.pow(columnGap(that), 2) == 5;
     }
 
     public int columnGap(Position that) {
@@ -59,6 +60,10 @@ public class Position {
 
     public int column() {
         return column.getValue();
+    }
+
+    public boolean isBlockedWhenGoToThis(Direction direction) {
+        return column.isBoundary(direction) || row.isBoundary(direction);
     }
 
     public String name() {

@@ -27,14 +27,25 @@ public enum Row {
     }
 
     public Row move(Direction direction) {
+        if (isBoundary(direction)) {
+            return this;
+        }
         return getRow(String.valueOf(Integer.parseInt(number) + direction.getCoordinates().get(1)));
     }
 
-    public String getNumber(){
+    public String getNumber() {
         return number;
     }
 
-    public int getValue(){
+    public boolean isBoundary(Direction direction) {
+//        return this.equals(ONE) || this.equals(EIGHT);
+        if (Direction.DOWN.equals(direction) || Direction.DOWN_LEFT.equals(direction) || Direction.DOWN_RIGHT.equals(direction)) {
+            return this.equals(ONE);
+        }
+        return this.equals(EIGHT);
+    }
+
+    public int getValue() {
         return Integer.parseInt(number);
     }
 }
