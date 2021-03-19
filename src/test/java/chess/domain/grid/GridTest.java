@@ -14,10 +14,10 @@ public class GridTest {
         Grid grid = new Grid();
         Position source = new Position('b', '1');
         Position target = new Position('c', '3');
-        Piece sourcePiece = grid.findPiece(source);
-        Piece targetPiece = grid.findPiece(target);
+        Piece sourcePiece = grid.piece(source);
+        Piece targetPiece = grid.piece(target);
 
         grid.move(sourcePiece, targetPiece);
-        assertThat(sourcePiece.getPosition()).isEqualTo(target);
+        assertThat(sourcePiece.position()).isEqualTo(target);
     }
 }

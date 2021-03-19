@@ -33,55 +33,55 @@ public class Grid {
 
         if (sourcePiece instanceof Pawn) {
             validatePawnSteps((Pawn) sourcePiece, targetPiece);
-            ((Pawn) sourcePiece).moved();
+            ((Pawn) sourcePiece).setMoved();
         }
         if (!(sourcePiece instanceof Pawn)) {
             validateGeneralSteps(sourcePiece, targetPiece);
         }
 
-        updatePiecePosition(sourcePiece, targetPiece);
+        update(sourcePiece, targetPiece);
     }
 
-    public Piece findPiece(final Position position) {
-        char x = position.getX();
-        char y = position.getY();
-        Line line = findLineByYPosition(y);
+    public Piece piece(final Position position) {
+        char x = position.x();
+        char y = position.y();
+        Line line = line(y);
         return line.findPiece(x);
     }
 
-    public List<Line> getLines() {
+    public List<Line> lines() {
         return lines;
     }
 
-    public double calculateScore(final boolean isBlack) {
-        return calculateTotalScore(isBlack) - deductPawnScoreInSameColumn(isBlack);
+    public double score(final boolean isBlack) {
+        return totalScore(isBlack) - pawnScoreInSameColumn(isBlack);
     }
 
     private void initialize() {
         lines = new ArrayList<>();
-        lines.add(Line.createGeneralLine(EIGHTH_ROW, true));
-        lines.add(Line.createPawnLine(SEVENTH_ROW, true));
+        lines.add(Line.general(EIGHTH_ROW, true));
+        lines.add(Line.pawn(SEVENTH_ROW, true));
         for (int i = SIXTH_ROW; i >= THIRD_ROW; i--) {
-            lines.add(Line.createEmptyLine(i));
+            lines.add(Line.empty(i));
         }
-        lines.add(Line.createPawnLine(SECOND_ROW, false));
-        lines.add(Line.createGeneralLine(FIRST_ROW, false));
+        lines.add(Line.pawn(SECOND_ROW, false));
+        lines.add(Line.general(FIRST_ROW, false));
     }
 
-    private Line findLineByYPosition(final char y) {
+    private Line line(final char y) {
         int index = ROW_REFERENCE.indexOf(y);
         return lines.get(index);
     }
 
-    private double deductPawnScoreInSameColumn(final boolean isBlack) {
+    private double pawnScoreInSameColumn(final boolean isBlack) {
         double pawnScoreToDeduct = 0;
         for (int i = 0; i < LINE_COUNT; i++) {
-            pawnScoreToDeduct += calculatePawnCountInSameColumn(isBlack, i);
+            pawnScoreToDeduct += pawnCountInSameColumn(isBlack, i);
         }
         return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;
     }
 
-    private double calculatePawnCountInSameColumn(final boolean isBlack, final int i) {
+    private double pawnCountInSameColumn(final boolean isBlack, final int i) {
         double result = 0;
         char x = (char) (MIN_X_POSITION + i);
         int pawnCountInSameColumn =
@@ -95,40 +95,40 @@ public class Grid {
         return result;
     }
 
-    private double calculateTotalScore(final boolean isBlack) {
+    private double totalScore(final boolean isBlack) {
         return lines.stream()
                 .flatMap(line -> line.getPieces()
                         .stream()
                         .filter(piece -> !piece.isEmpty())
                         .filter(piece -> piece.isBlack() == isBlack)
-                        .map(Piece::getScore))
+                        .map(Piece::score))
                 .mapToDouble(Double::doubleValue)
                 .sum();
     }
 
-    private void assignPiece(final Position position, final Piece piece) {
-        char x = position.getX();
-        char y = position.getY();
-        Line line = findLineByYPosition(y);
+    private void assign(final Position position, final Piece piece) {
+        char x = position.x();
+        char y = position.y();
+        Line line = line(y);
         line.assignPiece(x, piece);
-        findPiece(position).moveTo(position);
+        piece(position).moveTo(position);
     }
 
     private void validateGeneralSteps(final Piece sourcePiece, final Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
-        for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
+        for (Direction direction : sourcePiece.directions()) {
+            movablePositions.addAll(route(sourcePiece, direction, sourcePiece.stepRange()));
         }
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
     private void validatePawnSteps(final Pawn sourcePiece, final Piece targetPiece) {
         List<Position> movablePositions = new ArrayList<>();
-        for (Direction direction : sourcePiece.getDirections()) {
-            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getStepRange()));
+        for (Direction direction : sourcePiece.directions()) {
+            movablePositions.addAll(route(sourcePiece, direction, sourcePiece.stepRange()));
         }
-        for (Direction direction : sourcePiece.getDirectionsOnTwoStep()) {
-            movablePositions.addAll(extractRoute(sourcePiece, direction, sourcePiece.getTwoStepRange()));
+        for (Direction direction : sourcePiece.twoStepDirections()) {
+            movablePositions.addAll(route(sourcePiece, direction, sourcePiece.twoStepRange()));
         }
         movablePositions = movablePositions.stream()
                 .distinct()
@@ -138,28 +138,28 @@ public class Grid {
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
-    private List<Position> extractRoute(final Piece sourcePiece, final Direction direction, final int stepRange) {
+    private List<Position> route(final Piece sourcePiece, final Direction direction, final int stepRange) {
         List<Position> positions = new ArrayList<>();
-        Position sourcePosition = sourcePiece.getPosition();
+        Position sourcePosition = sourcePiece.position();
 
         for (int i = 1; i <= stepRange; i++) {
-            Position movedPosition = sourcePosition.stepOn(direction.getXDegree() * i, direction.getYDegree() * i);
+            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
             if (!movedPosition.isInGridRange()) {
                 break;
             }
             positions.add(movedPosition);
-            if (!findPiece(movedPosition).isEmpty()) {
+            if (!piece(movedPosition).isEmpty()) {
                 break;
             }
         }
         return positions;
     }
 
-    private void updatePiecePosition(final Piece sourcePiece, final Piece targetPiece) {
-        Position sourcePosition = sourcePiece.getPosition();
-        Position targetPosition = targetPiece.getPosition();
+    private void update(final Piece sourcePiece, final Piece targetPiece) {
+        Position sourcePosition = sourcePiece.position();
+        Position targetPosition = targetPiece.position();
 
-        assignPiece(sourcePosition, new Empty(sourcePosition.getX(), sourcePosition.getY()));
-        assignPiece(targetPosition, sourcePiece);
+        assign(sourcePosition, new Empty(sourcePosition.x(), sourcePosition.y()));
+        assign(targetPosition, sourcePiece);
     }
 }

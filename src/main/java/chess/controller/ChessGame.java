@@ -20,7 +20,7 @@ public class ChessGame {
     }
 
     public void run() {
-        OutputView.printStartChess();
+        OutputView.printChessInstruction();
         playRounds();
     }
 
@@ -32,7 +32,7 @@ public class ChessGame {
     }
 
     public void playRound(Grid grid) {
-        String command = InputView.inputCommand();
+        String command = InputView.command();
         if (command.equals("start")) {
             OutputView.printGridStatus(grid);
         }
@@ -45,8 +45,8 @@ public class ChessGame {
         }
         if (command.equals("status")) {
             gameOver = true;
-            double blackScore = grid.calculateScore(true);
-            double whiteScore = grid.calculateScore(false);
+            double blackScore = grid.score(true);
+            double whiteScore = grid.score(false);
             OutputView.printScores(true, blackScore);
             OutputView.printScores(false, whiteScore);
             OutputView.printWinner(blackScore > whiteScore);
@@ -55,8 +55,8 @@ public class ChessGame {
 
     private void move(Grid grid, String command) {
         List<String> moveInput = Arrays.asList(command.split(" "));
-        Piece sourcePiece = grid.findPiece(new Position(moveInput.get(1).charAt(0), moveInput.get(1).charAt(1)));
-        Piece targetPiece = grid.findPiece(new Position(moveInput.get(2).charAt(0), moveInput.get(2).charAt(1)));
+        Piece sourcePiece = grid.piece(new Position(moveInput.get(1).charAt(0), moveInput.get(1).charAt(1)));
+        Piece targetPiece = grid.piece(new Position(moveInput.get(2).charAt(0), moveInput.get(2).charAt(1)));
         validateTurn(sourcePiece);
         grid.move(sourcePiece, targetPiece);
         changeTurn();

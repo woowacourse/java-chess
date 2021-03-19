@@ -16,11 +16,11 @@ public class Position {
         this.y = y;
     }
 
-    public char getX() {
+    public char x() {
         return x;
     }
 
-    public char getY() {
+    public char y() {
         return y;
     }
 
@@ -28,7 +28,7 @@ public class Position {
         return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
     }
 
-    public Position stepOn(final int xDegree, final int yDegree) {
+    public Position next(final int xDegree, final int yDegree) {
         return new Position((char) (x + xDegree), (char) (y + yDegree));
     }
 

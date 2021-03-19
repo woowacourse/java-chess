@@ -15,17 +15,17 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public List<Direction> getDirections() {
+    public List<Direction> directions() {
         return Direction.diagonalDirection();
     }
 
     @Override
-    public int getStepRange() {
+    public int stepRange() {
         return STEP_RANGE;
     }
 
     @Override
-    public char getName() {
+    public char name() {
         if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
@@ -33,7 +33,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 }
