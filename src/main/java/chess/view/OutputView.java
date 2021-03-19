@@ -6,7 +6,6 @@ import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 public class OutputView {
 
@@ -18,6 +17,10 @@ public class OutputView {
         System.out.println(MESSAGE_PREFIX + "게임 시작 : start");
         System.out.println(MESSAGE_PREFIX + "게임 종료 : end");
         System.out.println(MESSAGE_PREFIX + "게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
+    }
+
+    public static void printMessage(final String message) {
+        System.out.println(message);
     }
 
     public static void printCurrentBoard(final Map<Position, Piece> chessBoard) {
@@ -49,7 +52,7 @@ public class OutputView {
 
     public static void printResult(final Team team, final Board board) {
         System.out.println(team.teamName() + "이 승리하였습니다.");
-        System.out.println(team.teamName() + "점수 : "+ board.calculateScore(team));
-        System.out.println(team.oppositeTeamName()+ "점수 : "+ board.calculateScore(team.oppositeTeam()));
+        System.out.println(team.teamName() + "점수 : " + board.calculateScore(team));
+        System.out.println(team.oppositeTeamName() + "점수 : " + board.calculateScore(team.oppositeTeam()));
     }
 }

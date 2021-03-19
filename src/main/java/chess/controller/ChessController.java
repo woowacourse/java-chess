@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.Turn;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.exception.GameOverException;
@@ -17,30 +18,31 @@ public class ChessController {
         }
 
         final Board board = new Board();
-        final Team team = Team.WHITE;
-        proceedMain(board, team);
+        final Turn turn = new Turn();
+        proceedMain(board, turn);
     }
 
-    private void proceedMain(final Board board, final Team team) {
+    private void proceedMain(final Board board, final Turn turn) {
         try {
-            proceed(board, team);
+            proceed(board, turn);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            proceedMain(board, team);
+            proceedMain(board, turn);
         } catch (GameOverException e) {
             showResult(board, e.getMessage());
         }
     }
 
-    private void proceed(final Board board, final Team team) {
+    private void proceed(final Board board, final Turn turn) {
         OutputView.printCurrentBoard(board.unwrap());
         final List<String> runtimeCommands = InputView.inputRuntimeCommand();
 
         checkGameOver(InputView.END_COMMAND.equals(runtimeCommands.get(0)), "게임이 강제 종료되었습니다.");
-        move(board, team, runtimeCommands);
-        checkGameOver(board.isKingDead(), team.oppositeTeamName() + "의 king이 죽어서 게임이 종료되었습니다.");
+        move(board, turn.now(), runtimeCommands);
+        checkGameOver(board.isKingDead(), turn.now().oppositeTeamName() + "의 king이 죽어서 게임이 종료되었습니다.");
 
-        proceed(board, team.oppositeTeam());
+        turn.next();
+        proceed(board, turn);
     }
 
     private void checkGameOver(final boolean isGameOver, final String message) throws GameOverException {
@@ -60,7 +62,7 @@ public class ChessController {
     }
 
     private void showResult(final Board board, final String message) {
-        OutputView.printErrorMessage(message);
+        OutputView.printMessage(message);
         OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
             OutputView.printResult(board.getWinner(), board);
