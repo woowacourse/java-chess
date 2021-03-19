@@ -1,10 +1,12 @@
 package domain.chess.piece;
 
+import domain.chess.Score;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends Piece {
-    private static final double SCORE = 2.5;
+    private static final Score SCORE = new Score(2.5);
 
     private Knight(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);

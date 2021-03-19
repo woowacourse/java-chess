@@ -1,10 +1,12 @@
 package domain.chess.piece;
 
+import domain.chess.Score;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final double SCORE = 9;
+    private static final Score SCORE = new Score(9);
 
     private Queen(String name, int x, int y, boolean isBlack) {
         super(name, SCORE, Position.Of(x, y), isBlack);

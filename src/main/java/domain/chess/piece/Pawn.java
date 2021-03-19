@@ -1,10 +1,12 @@
 package domain.chess.piece;
 
+import domain.chess.Score;
+
 import java.util.Arrays;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private static final double SCORE = 3;
+    private static final Score SCORE = new Score(1);
     public static final List<Pawn> PAWNS = Arrays.asList(Pawn.Of("P", Position.Of(1, 0), true),
             Pawn.Of("P", Position.Of(1, 1), true),
             Pawn.Of("P", Position.Of(1, 2), true),
