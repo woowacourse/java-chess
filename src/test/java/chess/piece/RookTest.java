@@ -42,10 +42,22 @@ public class RookTest {
     @DisplayName("Rook의 불가능한 방향 확인")
     @Test
     void checkRookImpossibleMove() {
-        Rook rook = new Rook("R", BLACK, Point.valueOf(0, 2));
-        Empty empty = new Empty(".", null, Point.valueOf(1, 3));
+        Rook rook = new Rook("R", BLACK, Point.valueOf(4, 4));
+        Empty empty = new Empty(".", null, Point.valueOf(3, 3));
+        Empty empty2 = new Empty(".", null, Point.valueOf(5, 5));
+        Empty empty3 = new Empty(".", null, Point.valueOf(5, 3));
+        Empty empty4 = new Empty(".", null, Point.valueOf(3, 5));
 
         assertThatThrownBy(() -> rook.direction(empty))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.direction(empty2))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.direction(empty3))
+                .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.direction(empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
