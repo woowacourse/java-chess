@@ -53,9 +53,17 @@ public enum Vector {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public static boolean hasVector(int horizon, int vertical) {
+    public boolean isWhitePawnsStraight() {
+        return Arrays.asList(NORTH, FIRST_PAWN_UP).contains(this);
+    }
+
+    public boolean isBlackPawnsStraight() {
+        return Arrays.asList(SOUTH, FIRST_PAWN_DOWN).contains(this);
+    }
+
+    public static boolean hasNotVector(int horizon, int vertical) {
         return Arrays.stream(Vector.values())
-            .anyMatch(vector -> (vector.horizon == horizon)
+            .noneMatch(vector -> (vector.horizon == horizon)
                 && (vector.vertical == vertical));
     }
 
