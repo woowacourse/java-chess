@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.BoardInitializer;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -8,7 +9,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
-import java.util.TreeMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -66,19 +66,4 @@ class BoardInitializerTest {
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
                 .isInstanceOf(Knight.class);
     }
-
-    @Test
-    @DisplayName("보드 출력 기능")
-    void print() {
-        final Map<Position, Piece> board = new TreeMap<>(chessBoard);
-        int before = 8;
-        for (final Position position : board.keySet()) {
-            if (position.getVertical().getValue() != before) {
-                before = position.getVertical().getValue();
-                System.out.println();
-            }
-            System.out.print(board.get(position).getName());
-        }
-    }
-
 }

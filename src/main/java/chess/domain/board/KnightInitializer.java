@@ -1,4 +1,4 @@
-package chess.domain.strategy.initializestategy;
+package chess.domain.board;
 
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;

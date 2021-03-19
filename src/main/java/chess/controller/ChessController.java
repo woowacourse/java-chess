@@ -1,8 +1,8 @@
 package chess.controller;
 
-import chess.domain.Board;
 import chess.domain.ChessResult;
 import chess.domain.Turn;
+import chess.domain.board.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.exception.GameOverException;

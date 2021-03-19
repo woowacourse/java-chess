@@ -1,8 +1,8 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
-import chess.view.OutputView;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -27,7 +27,6 @@ class ChessResultTest {
 
         board.unwrap().put(new Position("a", "3"), new Pawn(Team.WHITE));
         assertThat(result.calculateScore(team)).isEqualTo(38);
-        OutputView.printCurrentBoard(board.unwrap());
     }
 
     @Test

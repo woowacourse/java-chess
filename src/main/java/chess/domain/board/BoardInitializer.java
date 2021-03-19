@@ -1,11 +1,10 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 import chess.domain.position.Vertical;
-import chess.domain.strategy.initializestategy.*;
 
 import java.util.Arrays;
 import java.util.List;

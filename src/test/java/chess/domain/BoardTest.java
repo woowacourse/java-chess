@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
@@ -71,7 +72,8 @@ class BoardTest {
 
 
     @Test
-    void name() {
+    @DisplayName("빈칸 이동 오류 확인")
+    void checkBlankError() {
         assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "5"), Team.WHITE))
                 .isInstanceOf(IllegalStateException.class)
                 .hasMessage("비어 있는 칸입니다.");
