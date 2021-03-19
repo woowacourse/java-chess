@@ -5,8 +5,9 @@ import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.*;
 
 
 class GameTest {
@@ -40,5 +41,12 @@ class GameTest {
     void pickEndPiece() {
         assertThatCode(() -> game.move(Position.from("a7"), Position.from("a6")))
                 .doesNotThrowAnyException();
+    }
+
+    @Test
+    void score() {
+        Map<Color, Double> scoreTable = game.score();
+        assertThat(scoreTable.get(Color.BLACK)).isEqualTo(38);
+        assertThat(scoreTable.get(Color.WHITE)).isEqualTo(38);
     }
 }

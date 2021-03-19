@@ -57,6 +57,7 @@ public class Game {
     }
 
     public boolean isNotEnd() {
+        System.out.println(turn.player().getColor().name());
         return pieces.toList()
                      .stream()
                      .filter(Piece::isKing)
