@@ -1,10 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.Board;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.piece.strategy.MoveStrategy;
-import java.util.ArrayList;
+import chess.domain.position.Position;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public abstract class Piece {
 
@@ -18,11 +19,23 @@ public abstract class Piece {
         this.moveStrategy = moveStrategy;
     }
 
-    public String getName() {
-        if (pieceColor.equals(PieceColor.BLACK)) {
-            return pieceType.toBlack();
-        }
-        return pieceType.getType();
+    public abstract List<Direction> directions();
+
+    public List<Position> findAllPath(Position currentPosition) {
+        return directions().stream()
+                .map(findPathInDirection(currentPosition))
+                .flatMap(List::stream)
+                .distinct()
+                .collect(Collectors.toList())
+                ;
+    }
+
+    private Function<Direction, List<Position>> findPathInDirection(Position currentPosition) {
+        return direction -> {
+            return Positions.POSITION_CACHE.stream()
+                    .filter(position -> moveStrategy.canGoFrom(position, currentPosition))
+                    .collect(Collectors.toList());
+        };
     }
 
     public boolean isColor(PieceColor color) {
@@ -31,5 +44,12 @@ public abstract class Piece {
 
     public boolean isEnemy(Piece that) {
         return !isColor(that.pieceColor);
+    }
+
+    public String getName() {
+        if (pieceColor.equals(PieceColor.BLACK)) {
+            return pieceType.toBlack();
+        }
+        return pieceType.getType();
     }
 }

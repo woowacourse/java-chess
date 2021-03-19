@@ -1,8 +1,8 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Board;
-import chess.domain.piece.Piece;
-import java.util.List;
+import chess.domain.position.Position;
 
+@FunctionalInterface
 public interface MoveStrategy {
+    boolean canGoFrom(Position from, Position to);
 }

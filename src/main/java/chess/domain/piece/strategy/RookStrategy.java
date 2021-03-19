@@ -1,8 +1,11 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.Board;
-import chess.domain.piece.Piece;
-import java.util.List;
+import chess.domain.position.Position;
 
 public class RookStrategy implements MoveStrategy {
+
+    @Override
+    public boolean canGoFrom(Position from, Position to) {
+        return from.isStraight(to);
+    }
 }
