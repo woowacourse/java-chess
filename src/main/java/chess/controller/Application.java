@@ -29,7 +29,7 @@ public class Application {
         Command command = Command.findCommand(playerCommand.get(0));
 
         TeamType teamType = TeamType.WHITE;
-        while (command != Command.END) {
+        while (command != Command.END && !board.isKingCheckmate()) {
             executeCommand(command, board, teamType, playerCommand);
             OutputView.printBoard(board);
             playerCommand = InputView.inputPlayerCommand();

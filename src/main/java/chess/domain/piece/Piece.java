@@ -49,4 +49,8 @@ public abstract class Piece {
     public List<Direction> getDirections() {
         return directions;
     }
+
+    public boolean isKing() {
+        return name.equalsIgnoreCase("k");
+    }
 }

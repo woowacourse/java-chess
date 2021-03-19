@@ -194,5 +194,11 @@ public class Board {
         }
         return scoreTotalExceptPawn + pawnScores;
     }
+
+    public boolean isKingCheckmate() {
+        return cells.values().stream()
+            .filter(Piece::isKing)
+            .count() == 1L;
+    }
 }
 

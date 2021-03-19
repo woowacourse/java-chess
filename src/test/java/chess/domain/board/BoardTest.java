@@ -199,4 +199,26 @@ class BoardTest {
         assertThat(result.getBlackTeamScore()).isEqualTo(20);
         assertThat(result.getWhiteTeamScore()).isEqualTo(19.5);
     }
+
+    @DisplayName("양 팀의 킹이 모두 살아있을 때")
+    @Test
+    void allKingsAlive() {
+        assertThat(BOARD.isKingCheckmate()).isFalse();
+    }
+
+    @DisplayName("흑 팀의 킹이 죽었을 때")
+    @Test
+    void blackKingDied() {
+        Map<Coordinate, Piece> cells = BOARD.getCells();
+        cells.remove(Coordinate.from("e8"));
+        assertThat(BOARD.isKingCheckmate()).isTrue();
+    }
+
+    @DisplayName("백 팀의 킹이 죽었을 때")
+    @Test
+    void whiteKingDied() {
+        Map<Coordinate, Piece> cells = BOARD.getCells();
+        cells.remove(Coordinate.from("e1"));
+        assertThat(BOARD.isKingCheckmate()).isTrue();
+    }
 }
