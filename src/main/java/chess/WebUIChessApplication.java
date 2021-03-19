@@ -1,6 +1,10 @@
 package chess;
 
 import chess.controller.ChessController;
+import chess.domain.ChessGame;
+import chess.domain.command.*;
+
+import java.util.Arrays;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {
@@ -8,7 +12,16 @@ public class WebUIChessApplication {
 //            Map<String, Object> model = new HashMap<>();
 //            return render(model, "index.html");
 //        });
-        new ChessController().run();
+        ChessGame chessGame = new ChessGame();
+        Commands commands = new Commands(
+                Arrays.asList(
+                        new EndOnCommand(chessGame),
+                        new StartOnCommand(chessGame),
+                        new MoveOnCommand(chessGame),
+                        new StatusOnCommand(chessGame)
+                )
+        );
+        new ChessController().run(chessGame, commands);
     }
 //
 //    private static String render(Map<String, Object> model, String templatePath) {

@@ -42,4 +42,8 @@ public class OutputView {
         builder.append(piece.getName());
         return printLineWhenLineIsFull(cnt, builder);
     }
+
+    public static void printMessage(String commandMessage) {
+        System.out.println(commandMessage);
+    }
 }

@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.Piece;
+
 import java.util.Arrays;
 
 public enum Horizontal {
@@ -32,6 +34,10 @@ public enum Horizontal {
                 .filter(horizontal -> horizontal.weight == weight)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public boolean isSameHorizontal(Position position) {
+        return this == position.getHorizontal();
     }
 
     public int getWeight() {

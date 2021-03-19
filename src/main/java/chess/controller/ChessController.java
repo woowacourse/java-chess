@@ -8,12 +8,7 @@ import chess.view.OutputView;
 public class ChessController {
     public void run(ChessGame chessGame, Commands commands) {
         OutputView.printManual();
-        Board board = null;
-
-        while (true) {
-            Command.execute(InputView.inputCommand(), this);
-            OutputView.printBoard(board);
-        }
+        playGame(chessGame, commands);
     }
 
     public void playGame(ChessGame chessGame, Commands commands) {
