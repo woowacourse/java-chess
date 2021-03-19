@@ -17,13 +17,7 @@ public class ChessController {
     public void run() {
         OutputView.printChessInstruction();
         while (!gameState.isFinished()) {
-//            changeStateByCommand();
             this.gameState = gameState.run(chessService);
         }
-    }
-
-    private void changeStateByCommand() {
-//        String command = InputView.command();
-//        gameState = Command.gameState(command);
     }
 }
