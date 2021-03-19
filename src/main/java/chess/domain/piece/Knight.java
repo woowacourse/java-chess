@@ -2,18 +2,25 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
+import java.util.Optional;
+
 public class Knight extends Piece {
     public Knight(String name, String color, Point point) {
         super(name, color, point);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        return null;
+    public Optional<Direction> direction(Piece target) {
+        int distance = this.point.calculateDistance(target.point);
+
+        if (distance != 5) {
+            throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+        }
+        return Optional.empty();
     }
 
     @Override
     public Point moveOneStep(Point target, Direction direction) {
-        return null;
+        return target;
     }
 }
