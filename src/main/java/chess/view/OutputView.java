@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.board.Team;
+
 public class OutputView {
     private static final String INFO_MESSAGE_FORMAT = "> %s\n";
     private static final String START_MESSAGE = "체스 게임을 시작합니다.";
@@ -17,5 +19,9 @@ public class OutputView {
 
     public static void printChessBoard() {
 
+    }
+
+    public static void printTeamScore(double score, Team team) {
+        System.out.printf(INFO_MESSAGE_FORMAT, team.teamName() + " : " + score);
     }
 }

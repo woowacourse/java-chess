@@ -28,16 +28,15 @@
     - [x] 다른 팀의 말을 이동하려고 한 경우 예외 처리
 - [x] TURN 관리 기능
 - [x] KING 이 잡혔을 때 게임 종료
-- 명령어 입력 기능
+- [x] 명령어 입력 기능
     - [x] start
     - [x] end
     - [x] move `source` `destination`
-    - status
+    - [x] status
     - [x] 이 외의 입력은 예외 처리
-- 현재 상태의 점수 계산 기능
-    - 자신 턴의 점수를 출력
-    - 각 말에 대한 점수를 관리
-    - 각 말의 점수 계산 규칙은 [링크](https://techcourse.woowahan.com/s/zmAj9jfu/ls/LM7qbRaj )를 확인 한다.
+- [x] 현재 상태의 점수 계산 기능
+    - [x] 각 말에 대한 점수를 관리
+    - [x] 각 말의 점수 계산 규칙은 [링크](https://techcourse.woowahan.com/s/zmAj9jfu/ls/LM7qbRaj )를 확인 한다.
 - 체스 게임 출력 기능
     - 검은색은 대문자, 흰색은 소문자로 표현한다.
     

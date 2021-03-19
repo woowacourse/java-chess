@@ -94,4 +94,8 @@ public class SquareState {
     public boolean isKing() {
         return piece == Piece.KING;
     }
+
+    public double score() {
+        return piece.score();
+    }
 }

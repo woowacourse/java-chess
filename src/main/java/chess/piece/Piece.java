@@ -11,18 +11,20 @@ import chess.piece.movingstrategy.QueenMovingStrategy;
 import chess.piece.movingstrategy.RookMovingStrategy;
 
 public enum Piece {
-    KING(new KingMovingStrategy()),
-    QUEEN(new QueenMovingStrategy()),
-    ROOK(new RookMovingStrategy()),
-    BISHOP(new BishopMovingStrategy()),
-    KNIGHT(new KnightMovingStrategy()),
-    PAWN(new PawnMovingStrategy()),
-    EMPTY(new EmptyMovingStrategy());
+    KING(new KingMovingStrategy(), 0),
+    QUEEN(new QueenMovingStrategy(), 9),
+    ROOK(new RookMovingStrategy(), 5),
+    BISHOP(new BishopMovingStrategy(), 3),
+    KNIGHT(new KnightMovingStrategy(), 2.5),
+    PAWN(new PawnMovingStrategy(), 1),
+    EMPTY(new EmptyMovingStrategy(), 0);
 
-    private MovingStrategy movingStrategy;
+    private final MovingStrategy movingStrategy;
+    private final double score;
 
-    Piece(MovingStrategy movingStrategy) {
+    Piece(MovingStrategy movingStrategy, double score) {
         this.movingStrategy = movingStrategy;
+        this.score = score;
     }
 
     public Vector findMovableVector(Point source, Point destination) {
@@ -31,5 +33,9 @@ public enum Piece {
 
     public int getMoveLength() {
         return movingStrategy.getMoveLength();
+    }
+
+    public double score() {
+        return score;
     }
 }

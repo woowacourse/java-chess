@@ -3,10 +3,13 @@ package chess.board;
 
 import chess.piece.Piece;
 import chess.piece.Vector;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Board {
+
+    private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
     private boolean onGoing;
@@ -113,5 +116,31 @@ public class Board {
 
     public boolean isContinued() {
         return onGoing;
+    }
+
+    public double score(Team team) {
+        return sumScore(team) - HALF_PAWN_SCORE * pawnCountInSameColumn(team);
+    }
+
+    private long pawnCountInSameColumn(Team team) {
+        return Arrays.stream(Column.values()).mapToLong(column ->
+            pawnCountInColumn(team, column))
+            .filter(count -> count >= 2)
+            .sum();
+    }
+
+    private long pawnCountInColumn(Team team, Column column) {
+        return squares.keySet().stream()
+            .filter(point -> point.isColumn(column))
+            .map(squares::get)
+            .filter(square -> square.isTeam(team) && square.isPawn())
+            .count();
+    }
+
+    private double sumScore(Team team) {
+        return squares.values().stream()
+            .filter(square -> square.isTeam(team))
+            .mapToDouble(SquareState::score)
+            .sum();
     }
 }

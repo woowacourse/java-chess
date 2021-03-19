@@ -7,6 +7,7 @@ import chess.board.Point;
 import chess.board.SquareState;
 import chess.board.Team;
 import chess.piece.Piece;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -178,5 +179,41 @@ public class PieceOperatorTest {
         assertThatIllegalArgumentException().isThrownBy(() ->
             pieceOperator.move(Point.of("a2"), Point.of("a3"), Team.BLACK)
         ).withMessage("불가능한 이동입니다.");
+    }
+
+    @Test
+    @DisplayName("현재 체스판 위의 말들의 점수를 계산하는 테스트")
+    void testScore() {
+        assertThat(pieceOperator.score(Team.WHITE)).isEqualTo(38);
+        assertThat(pieceOperator.score(Team.BLACK)).isEqualTo(38);
+    }
+
+    @Test
+    @DisplayName("세로 줄에 같은 팀의 폰이 있는 경우 0.5점으로 계산")
+    void testScoreWhenSameTeamPawnInSameColumn() {
+        Board board = new Board();
+
+        board.putSymmetrically(Piece.PAWN, Point.of("c4"));
+        board.putSymmetrically(Piece.PAWN, Point.of("c3"));
+
+        assertThat(board.score(Team.WHITE)).isCloseTo(1.0d, Assertions.offset(0.01d));
+    }
+
+    @Test
+    @DisplayName("진행중인 게임의 체스판 점수를 계산한다.")
+    void testScoreWhenSomePiecesNotExist() {
+        Board board = new Board();
+
+        // 체스 3단계 예시와 동일
+        board.putSymmetrically(Piece.KNIGHT, Point.of("f4"));
+        board.putSymmetrically(Piece.QUEEN, Point.of("g4"));
+        board.putSymmetrically(Piece.ROOK, Point.of("e1"));
+        board.putSymmetrically(Piece.KING, Point.of("f1"));
+        board.putSymmetrically(Piece.PAWN, Point.of("f2"));
+        board.putSymmetrically(Piece.PAWN, Point.of("g2"));
+        board.putSymmetrically(Piece.PAWN, Point.of("f3"));
+        board.putSymmetrically(Piece.PAWN, Point.of("h3"));
+
+        assertThat(board.score(Team.WHITE)).isCloseTo(19.5d, Assertions.offset(0.01d));
     }
 }

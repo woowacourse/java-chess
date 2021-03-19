@@ -2,6 +2,7 @@ package chess.contoller;
 
 import chess.PieceOperator;
 import chess.board.Board;
+import chess.board.Team;
 import chess.command.Command;
 import chess.gamestate.GameState;
 import chess.gamestate.Ready;
@@ -24,7 +25,8 @@ public class ChessController {
             input = InputView.InputString();
             Command command = Command.getByInput(input);
             if (command == Command.STATUS) {
-                //TODO 점수 계산 로직 구현
+                OutputView.printTeamScore(pieceOperator.score(Team.WHITE), Team.WHITE);
+                OutputView.printTeamScore(pieceOperator.score(Team.BLACK), Team.BLACK);
             }
             OutputView.printChessBoard();
             gameState = gameState.operateCommand(Command.getByInput(input), Command.getArguments(input));

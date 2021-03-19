@@ -58,6 +58,10 @@ public class Point {
         return y == row;
     }
 
+    public boolean isColumn(Column column) {
+        return x == column;
+    }
+
     public int minusX(Point source) {
         return this.x.getXIndex() - source.x.getXIndex();
     }

@@ -57,4 +57,8 @@ public class PieceOperator {
     public boolean isOnGoing() {
         return board.isContinued();
     }
+
+    public double score(Team team) {
+        return board.score(team);
+    }
 }
