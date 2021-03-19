@@ -20,7 +20,6 @@ public class Application {
             }
             game.display();
         }
-
-        game.score();
+        OutputView.printScore(game.score());
     }
 }
