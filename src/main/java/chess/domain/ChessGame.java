@@ -16,7 +16,7 @@ import static java.util.stream.Collectors.toMap;
 
 public class ChessGame {
 
-    public static final int BOARD_SIZE = 8;
+    private static final int BOARD_SIZE = 8;
 
     private final List<Piece> pieces = new ArrayList<>();
     private TeamColor currentColor = WHITE;
@@ -132,5 +132,9 @@ public class ChessGame {
 
     public TeamColor enemyColor() {
         return currentColor.reverse();
+    }
+
+    public int boardSize() {
+        return BOARD_SIZE;
     }
 }

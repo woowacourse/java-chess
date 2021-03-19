@@ -5,17 +5,19 @@ import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.IntStream;
 
-import static chess.domain.ChessGame.BOARD_SIZE;
 import static java.util.stream.Collectors.toMap;
 
 public class Position {
 
+    private static final int MAX_POSITION = 7;
+    private static final int MIN_POSITION = 0;
+
     private static final Map<String, Position> positions;
 
     static {
-        positions = IntStream.rangeClosed(0, BOARD_SIZE - 1)
+        positions = IntStream.rangeClosed(0, MAX_POSITION)
                 .boxed()
-                .flatMap(x -> IntStream.rangeClosed(0, BOARD_SIZE - 1)
+                .flatMap(x -> IntStream.rangeClosed(0, MAX_POSITION)
                         .mapToObj(y -> new Position(x, y)))
                 .collect(toMap(position -> "" + position.x + position.y, Function.identity()));
     }
@@ -38,7 +40,7 @@ public class Position {
     }
 
     private static boolean isNotValid(int x, int y) {
-        return y < 0 || BOARD_SIZE - 1 < y || x < 0 || BOARD_SIZE - 1 < x;
+        return y < MIN_POSITION || MAX_POSITION < y || x < MIN_POSITION || MAX_POSITION < x;
     }
 
     public Position go(Direction direction) {
