@@ -53,3 +53,6 @@
 
 ### Bishop 테스트 케이스 예시
 ![bishop](https://user-images.githubusercontent.com/48986787/111715251-c8c8b200-8896-11eb-801d-1c08328b3353.png)
+
+### Queen 테스트 케이스 예시
+![queen](https://user-images.githubusercontent.com/50176238/111739494-7b643900-88c6-11eb-9f0b-b981f2ce3730.jpg)

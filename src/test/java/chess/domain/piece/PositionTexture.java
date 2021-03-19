@@ -26,6 +26,7 @@ public class PositionTexture {
     public static Position D4 = Position.valueOf("4", "d");
     public static Position D5 = Position.valueOf("5", "d");
     public static Position D6 = Position.valueOf("6", "d");
+    public static Position D8 = Position.valueOf("8", "d");
     public static Position E3 = Position.valueOf("3", "e");
     public static Position E4 = Position.valueOf("4", "e");
     public static Position E5 = Position.valueOf("5", "e");
@@ -34,4 +35,6 @@ public class PositionTexture {
     public static Position F4 = Position.valueOf("4", "f");
     public static Position F5 = Position.valueOf("5", "f");
     public static Position F8 = Position.valueOf("8", "f");
+    public static Position G5 = Position.valueOf("5", "g");
+    public static Position H6 = Position.valueOf("6", "h");
 }
