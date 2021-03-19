@@ -23,9 +23,8 @@ public class Board {
     }
 
     public void move(Position from, Position to) {
-        if (!findByPosition(from).hasPiece()) {
-            throw new NoSuchElementException("해당 위치엔 말이 없습니다.");
-        }
+        Square fromSquare = this.findByPosition(from);
+        fromSquare.move(createMoveOrder(from, to));
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {

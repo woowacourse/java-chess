@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.order.MoveOrder;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.RealPiece;
 
@@ -13,7 +15,7 @@ public class Square {
     }
 
     public RealPiece getPiece() {
-        if(hasPiece()){
+        if (hasPiece()) {
             return (RealPiece) this.piece;
         }
         throw new NoSuchElementException("해당 칸에는 말이 없습니다.");
@@ -23,7 +25,18 @@ public class Square {
         return piece.isNotBlank();
     }
 
-    public String getNotation(){
+    public String getNotation() {
         return piece.getNotation();
+    }
+
+    public void move(MoveOrder moveOrder) {
+        if (!hasPiece()) {
+            throw new NoSuchElementException("해당 위치엔 말이 없습니다.");
+        }
+
+        if (piece.canMove(moveOrder)) {
+            moveOrder.getTo().piece = this.piece;
+            this.piece = new Blank();
+        }
     }
 }

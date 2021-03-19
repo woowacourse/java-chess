@@ -1,12 +1,13 @@
 package chess.domain.board;
 
+import chess.domain.piece.RealPiece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.NoSuchElementException;
 
-import static chess.domain.piece.Fixture.board;
+import static chess.domain.piece.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
@@ -14,8 +15,6 @@ public class BoardTest {
     @DisplayName("포지션을 받아 해당 위치의 Square를 리턴한다.")
     @Test
     void findByPositionTest() {
-        Board board = BoardFactory.createBoard();
-
         assertThat(board.findByPosition(Position.of("a1"))).isInstanceOf(Square.class);
     }
 
@@ -25,5 +24,14 @@ public class BoardTest {
         assertThatThrownBy(() -> board.move(Position.of("a3"), Position.of("b3")))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치엔 말이 없습니다.");
+    }
+
+    @DisplayName("말을 움직인다.")
+    @Test
+    void movePiece() {
+        RealPiece realPiece = board.findByPosition(Position.of("b2")).getPiece();
+        board.move(Position.of("b2"), Position.of("b3"));
+
+        assertThat(board.findByPosition(Position.of("b3")).getPiece()).isEqualTo(realPiece);
     }
 }
