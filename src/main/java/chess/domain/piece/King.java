@@ -23,4 +23,9 @@ public class King extends Division {
     public void kill(Position to, Pieces pieces) {
         move(to, pieces);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

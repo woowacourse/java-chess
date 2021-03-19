@@ -36,4 +36,9 @@ public class Empty extends Basis {
     public boolean isEmpty() {
         return true;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

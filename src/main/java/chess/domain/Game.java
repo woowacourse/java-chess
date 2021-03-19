@@ -58,6 +58,6 @@ public class Game {
     }
 
     public boolean isNotEnd() {
-        return true;
+        return pieces.toList().stream().filter(Piece::isKing).count() == 2;
     }
 }

@@ -63,6 +63,11 @@ public class Pawn extends Division {
         throw new IllegalArgumentException();
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     private boolean canKill(Position to) {
         return Math.abs(position.diffColumn(to)) == 1 && position.diffRow(to) == color.moveUnit();
     }

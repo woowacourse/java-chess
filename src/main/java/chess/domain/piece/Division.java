@@ -52,4 +52,6 @@ public abstract class Division extends Basis {
     public boolean isEmpty() {
         return false;
     }
+
+    public abstract boolean isKing();
 }

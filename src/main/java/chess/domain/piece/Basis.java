@@ -19,6 +19,9 @@ public abstract class Basis implements Piece {
 
     public abstract boolean isEmpty();
 
+
+    public abstract boolean isKing();
+
     @Override
     public String display() {
         return displayName;

@@ -29,4 +29,9 @@ public class Bishop extends Division {
     public void kill(Position to, Pieces pieces) {
         move(to, pieces);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

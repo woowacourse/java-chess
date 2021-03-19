@@ -16,4 +16,6 @@ public interface Piece {
     boolean isSameColor(Color color);
 
     boolean isEmpty();
+
+    boolean isKing();
 }
