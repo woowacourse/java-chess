@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Color;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,14 +46,14 @@ public enum Direction {
         if (xDegree == 0) {
             return yDegree;
         }
-        if (yDegree == 0 ) {
+        if (yDegree == 0) {
             return xDegree;
         }
         return calculateGreatestCommonDivisor(Math.max(xDegree, yDegree), Math.min(xDegree, yDegree));
     }
 
     private static int calculateGreatestCommonDivisor(int bigger, int smaller) {
-        while(smaller > 0) {
+        while (smaller > 0) {
             int temporalNumber = bigger;
             bigger = smaller;
             smaller = temporalNumber % smaller;
@@ -64,6 +66,10 @@ public enum Direction {
                 .filter(direction -> direction.xDegree == xDegree && direction.yDegree == yDegree)
                 .findAny()
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
+    }
+
+    public static boolean isDiagonal(Direction direction) {
+        return diagonalDirection().contains(direction);
     }
 
     public int getXDegree() {
@@ -90,11 +96,10 @@ public enum Direction {
         return Arrays.asList(NNE, NNW, SSE, SSW, EEN, EES, WWN, WWS);
     }
 
-    public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-    }
-
-    public static List<Direction> blackPawnDirection() {
+    public static List<Direction> pawnDirection(Color color) {
+        if (color == Color.WHITE) {
+            return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+        }
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 }

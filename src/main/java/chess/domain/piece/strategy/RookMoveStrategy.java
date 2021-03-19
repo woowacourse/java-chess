@@ -8,7 +8,7 @@ import chess.domain.position.Direction;
 import java.util.List;
 
 public class RookMoveStrategy implements MoveStrategy {
-    private static List<Direction> movableDirections = Direction.linearDirection();
+    private static final List<Direction> movableDirections = Direction.linearDirection();
 
     @Override
     public boolean canMove(MoveOrder moveOrder) {
@@ -39,7 +39,7 @@ public class RookMoveStrategy implements MoveStrategy {
         Color toColor = moveOrder.getTo().getPiece().getColor();
 
         if (fromColor == toColor) {
-            throw new IllegalArgumentException("동일한 진영의 말이 있어서 행마할 수 없습니.");
+            throw new IllegalArgumentException("동일한 진영의 말이 있어서 행마할 수 없습니다.");
         }
     }
 
