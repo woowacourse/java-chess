@@ -17,7 +17,7 @@ public class Queen extends Piece {
 
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
         // 십자인지 확인
         if (!this.position.isCross(target) && !this.position.isDiagonal(target)) {
             throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");

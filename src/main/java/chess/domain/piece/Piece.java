@@ -21,5 +21,9 @@ public abstract class Piece {
         return name;
     }
 
-    abstract void move(Position target, CurrentPieces currentPieces);
+    public abstract void move(Position target, CurrentPieces currentPieces);
+
+    public Color getColor() {
+        return color;
+    }
 }

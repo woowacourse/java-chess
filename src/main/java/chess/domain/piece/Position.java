@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public class Position {
     private final static String ROW = "abcdefgh";
-    private final static String COL = "12345678";
+    private final static String COL = "87654321";
     public static final Position EMPTY = new Position('0', '0');
     public final static List<Position> POSITIONS;
 
@@ -14,7 +14,7 @@ public class Position {
         POSITIONS = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                POSITIONS.add(Position.of(ROW.charAt(i), COL.charAt(j)));
+                POSITIONS.add(Position.of(ROW.charAt(j), COL.charAt(i)));
             }
         }
     }

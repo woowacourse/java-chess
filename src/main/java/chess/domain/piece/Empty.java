@@ -10,7 +10,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
 
     }
 }

@@ -17,7 +17,7 @@ public class King extends Piece {
 
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
 // 십자인지 확인
         if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
                 !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {

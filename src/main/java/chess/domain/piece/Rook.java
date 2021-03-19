@@ -19,7 +19,7 @@ public class Rook extends Piece {
 
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
         // 대각선인지 확인
         if (!this.position.isCross(target)) {
             throw new IllegalArgumentException("[ERROR] 룩 이동 규칙에 어긋납니다.");

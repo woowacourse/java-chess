@@ -40,4 +40,8 @@ public class CurrentPieces {
         }
         currentPieces.remove(piece);
     }
+
+    public boolean isAliveAllKings() {
+        return 2 == (int) currentPieces.stream().filter(piece -> piece instanceof King).count();
+    }
 }

@@ -22,13 +22,14 @@ public class Pawn extends Piece {
 
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
         if (this.position.isDiagonal(target) && (Math.abs(this.position.subtractX(target)) == 1 && Math.abs(this.position.subtractY(target)) == 1)) {
             Piece targetPiece = currentPieces.findByPosition(target);
             if (targetPiece instanceof Empty) {
                 throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
             }
             currentPieces.removePieceByPosition(target);
+            this.position = target;
             return;
         }
         if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙 초기화

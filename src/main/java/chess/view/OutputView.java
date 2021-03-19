@@ -24,6 +24,7 @@ public class OutputView {
             Piece piece = findByPosition(POSITIONS.get(i), currentPieces);
             System.out.print(piece.getName());
         }
+        System.out.println();
     }
 
     private static Piece findByPosition(Position position, CurrentPieces currentPieces) {

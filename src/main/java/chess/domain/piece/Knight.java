@@ -18,7 +18,7 @@ public class Knight extends Piece {
 
 
     @Override
-    void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, CurrentPieces currentPieces) {
         if (!((Math.abs(this.position.subtractX(target)) == 2 && Math.abs(this.position.subtractY(target)) == 1) ||
                 (Math.abs(this.position.subtractX(target)) == 1 && Math.abs(this.position.subtractY(target)) == 2))) {
             throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
