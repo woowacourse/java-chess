@@ -1,10 +1,10 @@
 package chess.util;
 
 import chess.domain.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import chess.domain.piece.Piece;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 

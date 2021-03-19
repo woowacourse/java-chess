@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Board;
-import chess.domain.piece.strategy.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;

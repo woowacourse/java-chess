@@ -25,45 +25,44 @@ public class Position {
         return new Position(column, row);
     }
 
-    public boolean isWhitePawnStartLine(){
+    public boolean isWhitePawnStartLine() {
         return row.equals(Row.TWO);
     }
 
-    public boolean isBlackPawnStartLine(){
+    public boolean isBlackPawnStartLine() {
         return row.equals(Row.SEVEN);
     }
 
-    public boolean isStraight(Position that){
+    public boolean isStraight(Position that) {
         return columnGap(that) == 0 || rowGap(that) == 0;
     }
 
-    public boolean isDiagonal(Position that){
-        double slope = calculateSlopeWith(that);
-        return slope == 1 || slope == -1;
+    public boolean isDiagonal(Position that) {
+        return Math.abs(rowGap(that)) == Math.abs(columnGap(that));
     }
 
-    public int columnGap(Position that){
+    public boolean isKnightPath(Position that) {
+        return Math.pow(rowGap(that),2) + Math.pow(columnGap(that),2) == 5;
+    }
+
+    public int columnGap(Position that) {
         return column() - that.column();
     }
 
-    public int rowGap(Position that){
+    public int rowGap(Position that) {
         return row() - that.row();
     }
 
-    public int row(){
+    public int row() {
         return row.getValue();
     }
 
-    public int column(){
+    public int column() {
         return column.getValue();
     }
 
-    public String name(){
+    public String name() {
         return this.row.getNumber() + this.column.getName();
-    }
-
-    public double calculateSlopeWith(Position that) {
-        return rowGap(that) / columnGap(that);
     }
 
     @Override
@@ -89,5 +88,4 @@ public class Position {
         Row newRow = row.move(direction);
         return Position.of(newColumn, newRow);
     }
-
 }
