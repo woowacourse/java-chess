@@ -22,6 +22,6 @@ public class KingTest {
     @CsvSource(value = {"true:K", "false:k"}, delimiter = ':')
     public void getName(boolean isBlack, char name) {
         Piece piece = new King(isBlack, 'a', '1');
-        assertThat(piece.getName()).isEqualTo(name);
+        assertThat(piece.name()).isEqualTo(name);
     }
 }

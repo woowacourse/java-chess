@@ -18,7 +18,7 @@ public class Line {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public static Line createGeneralLine(final int rowNumber, final boolean isBlack) {
+    public static Line general(final int rowNumber, final boolean isBlack) {
         Rook rookLeft = new Rook(isBlack, 'a', Character.forDigit(rowNumber, DECIMAL));
         Knight knightLeft = new Knight(isBlack, 'b', Character.forDigit(rowNumber, DECIMAL));
         Bishop bishopLeft = new Bishop(isBlack, 'c', Character.forDigit(rowNumber, DECIMAL));
@@ -40,7 +40,7 @@ public class Line {
         return new Line(generalLine);
     }
 
-    public static Line createPawnLine(final int rowNumber, final boolean isBlack) {
+    public static Line pawn(final int rowNumber, final boolean isBlack) {
         List<Piece> pawnLine = new ArrayList<>();
         for (int i = 0; i < LINE_COUNT; i++) {
             Pawn pawn = new Pawn(isBlack, (char) (FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));
@@ -49,7 +49,7 @@ public class Line {
         return new Line(pawnLine);
     }
 
-    public static Line createEmptyLine(final int rowNumber) {
+    public static Line empty(final int rowNumber) {
         List<Piece> emptyLine = new ArrayList<>();
         for (int i = 0; i < LINE_COUNT; i++) {
             Empty empty = new Empty((char) (FIRST_COLUMN + i), Character.forDigit(rowNumber, DECIMAL));

@@ -18,7 +18,7 @@ public abstract class Piece {
         return isBlack;
     }
 
-    public Position getPosition() {
+    public Position position() {
         return position;
     }
 
@@ -41,14 +41,14 @@ public abstract class Piece {
     }
 
     public void validateTargetInMovablePositions(final List<Position> movablePositions) {
-        if (!movablePositions.contains(this.getPosition())) {
+        if (!movablePositions.contains(this.position())) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
     private void validatePositionInGrid(final Piece targetPiece) {
-        Position source = this.getPosition();
-        Position target = targetPiece.getPosition();
+        Position source = this.position();
+        Position target = targetPiece.position();
         if (!source.isInGridRange() || !target.isInGridRange()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
@@ -66,11 +66,11 @@ public abstract class Piece {
         }
     }
 
-    public abstract List<Direction> getDirections();
+    public abstract List<Direction> directions();
 
-    public abstract int getStepRange();
+    public abstract int stepRange();
 
-    public abstract char getName();
+    public abstract char name();
 
-    public abstract double getScore();
+    public abstract double score();
 }

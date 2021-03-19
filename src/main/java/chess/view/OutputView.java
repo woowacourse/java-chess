@@ -5,7 +5,7 @@ import chess.domain.grid.Grid;
 import java.util.stream.Collectors;
 
 public class OutputView {
-    public static void printStartChess() {
+    public static void printChessInstruction() {
         System.out.println("체스 게임을 시작합니다");
         System.out.println("게임 시작 : start");
         System.out.println("게임 종료 : end");
@@ -14,12 +14,12 @@ public class OutputView {
 
     public static void printGridStatus(final Grid grid) {
         System.out.println();
-        String gridStatus = grid.getLines()
+        String gridStatus = grid.lines()
                 .stream()
                 .map(line -> line.getPieces()
                         .stream()
-                        .map(piece -> Character.toString(piece.getName()))
-                        .collect(Collectors.joining("", "", "  " + (8 - grid.getLines().indexOf(line)))))
+                        .map(piece -> Character.toString(piece.name()))
+                        .collect(Collectors.joining("", "", "  " + (8 - grid.lines().indexOf(line)))))
                 .collect(Collectors.joining("\n"));
         System.out.println(gridStatus);
         System.out.println();
