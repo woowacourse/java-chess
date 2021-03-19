@@ -1,17 +1,31 @@
 package chess.domain.gamestate;
 
-import chess.domain.command.Command;
-import java.util.List;
+import chess.domain.Turn;
+import chess.domain.board.Point;
+import chess.domain.board.Team;
 
 public class Finished implements GameState {
 
+    private static final IllegalArgumentException EXCEPTION
+        = new IllegalArgumentException("올바르지 않은 입력입니다.");
+
     @Override
-    public GameState operateCommand(Command command, List<String> arguments) {
-        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+    public GameState start() {
+        throw EXCEPTION;
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public GameState move(Point source, Point destination, Turn turn) {
+        throw EXCEPTION;
+    }
+
+    @Override
+    public GameState end() {
+        throw EXCEPTION;
+    }
+
+    @Override
+    public GameState status() {
+        throw EXCEPTION;
     }
 }

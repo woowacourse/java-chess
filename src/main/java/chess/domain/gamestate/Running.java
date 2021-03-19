@@ -1,50 +1,45 @@
 package chess.domain.gamestate;
 
-import chess.domain.ChessGame;
 import chess.domain.Turn;
+import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.command.Command;
-import java.util.List;
 
 public class Running implements GameState {
 
-    private final ChessGame chessGame;
-    private final Turn turn;
+    private static final IllegalArgumentException EXCEPTION
+        = new IllegalArgumentException("올바르지 않은 입력입니다.");
 
-    public Running(ChessGame chessGame, Turn turn) {
-        this.chessGame = chessGame;
-        this.turn = turn;
+    private final Board board;
+
+    public Running(Board board) {
+        this.board = board;
     }
 
     @Override
-    public GameState operateCommand(Command command, List<String> arguments) {
-        if (command == Command.MOVE) {
-            return updateStateWhenMove(arguments);
-        }
-        if (command == Command.STATUS) {
-            return this;
-        }
-        if (command == Command.END) {
-            return new Finished();
-        }
-        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+    public GameState start() {
+        throw EXCEPTION;
     }
 
-    private GameState updateStateWhenMove(List<String> arguments) {
-        Point source = Point.of(arguments.get(0));
-        Point destination = Point.of(arguments.get(1));
-
-        chessGame.move(source, destination, turn.now());
+    @Override
+    public GameState move(Point source, Point destination, Turn turn) {
+        if (!board.canMove(source, destination, turn.now())) {
+            throw new IllegalArgumentException("불가능한 이동입니다.");
+        }
+        board.move(source, destination);
         turn.next();
-
-        if (!chessGame.isOnGoing()) {
+        if (board.isKingDead()) {
             return new Finished();
         }
         return this;
     }
 
     @Override
-    public boolean isRunning() {
-        return true;
+    public GameState end() {
+        return new Finished();
+    }
+
+    @Override
+    public GameState status() {
+        return this;
     }
 }

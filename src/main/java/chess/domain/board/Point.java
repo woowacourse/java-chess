@@ -27,7 +27,7 @@ public class Point {
     private static void iterateXCoordinate(Row row) {
         for (Column column : Column.values()) {
             POINT_POOL.put(
-                column.getXCoordinate() + row.getYCoordinate(), new Point(column, row));
+                column.coordinate() + row.coordinate(), new Point(column, row));
         }
     }
 
@@ -47,11 +47,11 @@ public class Point {
     }
 
     public Point yAxisOpposite() {
-        return Point.of(this.x.getXCoordinate() + this.y.opposite().getYCoordinate());
+        return Point.of(this.x.coordinate() + this.y.opposite().coordinate());
     }
 
     public Point opposite() {
-        return Point.of(this.x.opposite().getXCoordinate() + this.y.opposite().getYCoordinate());
+        return Point.of(this.x.opposite().coordinate() + this.y.opposite().coordinate());
     }
 
     public boolean isRow(Row row) {
@@ -63,11 +63,11 @@ public class Point {
     }
 
     public int minusX(Point source) {
-        return this.x.getXIndex() - source.x.getXIndex();
+        return this.x.index() - source.x.index();
     }
 
     public int minusY(Point source) {
-        return this.y.getYIndex() - source.y.getYIndex();
+        return this.y.index() - source.y.index();
     }
 
     public Point move(MoveVector moveVector) {
@@ -75,15 +75,15 @@ public class Point {
     }
 
     private String newerName(MoveVector moveVector) {
-        return Column.getByIndex(newerXIndex(moveVector)).getXCoordinate() +
-            Row.getByIndex(newerYIndex(moveVector)).getYCoordinate();
+        return Column.getByIndex(newerXIndex(moveVector)).coordinate() +
+            Row.getByIndex(newerYIndex(moveVector)).coordinate();
     }
 
     private int newerYIndex(MoveVector moveVector) {
-        return y.getYIndex() + moveVector.getVertical();
+        return y.index() + moveVector.getVertical();
     }
 
     private int newerXIndex(MoveVector moveVector) {
-        return x.getXIndex() + moveVector.getHorizon();
+        return x.index() + moveVector.getHorizon();
     }
 }

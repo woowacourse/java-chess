@@ -18,14 +18,14 @@ public enum Row {
     private static final List<Row> REVERSE_ROWS = Arrays.asList(Row.values());
 
     static {
-        REVERSE_ROWS.sort((row1, row2) -> row2.getYIndex() - row1.getYIndex());
+        REVERSE_ROWS.sort((row1, row2) -> row2.index() - row1.index());
     }
 
-    private final String yCoordinate;
+    private final String coordinate;
     private final int index;
 
-    Row(String yCoordinate, int index) {
-        this.yCoordinate = yCoordinate;
+    Row(String coordinate, int index) {
+        this.coordinate = coordinate;
         this.index = index;
     }
 
@@ -40,11 +40,11 @@ public enum Row {
         return Collections.unmodifiableList(REVERSE_ROWS);
     }
 
-    public String getYCoordinate() {
-        return yCoordinate;
+    public String coordinate() {
+        return coordinate;
     }
 
-    public int getYIndex() {
+    public int index() {
         return index;
     }
 

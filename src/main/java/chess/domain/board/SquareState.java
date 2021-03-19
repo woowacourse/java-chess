@@ -65,10 +65,6 @@ public class SquareState {
         return this.team != squareState.team;
     }
 
-    public boolean isNotEmpty() {
-        return team != Team.NONE;
-    }
-
     public boolean isEmpty() {
         return team == Team.NONE;
     }

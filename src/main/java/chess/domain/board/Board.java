@@ -1,8 +1,7 @@
 package chess.domain.board;
 
-
-import chess.domain.piece.Piece;
 import chess.domain.piece.MoveVector;
+import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,12 +14,12 @@ public class Board {
     private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
-    private boolean onGoing;
+    private boolean deadKing;
 
     public Board() {
         Point.getAllPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
-        onGoing = true;
+        deadKing = false;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
@@ -28,21 +27,19 @@ public class Board {
         squares.put(point.yAxisOpposite(), SquareState.of(piece, Team.BLACK));
     }
 
-    public SquareState getSquareState(Point point) {
+    public SquareState squareState(Point point) {
         return squares.get(point);
     }
 
-    public boolean canMove(Point source, Point destination) {
+    public boolean canMove(Point source, Point destination, Team currentTeam) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
 
-        if (sourceSquareState.isPawn()) {
-            return canMovePawn(source, destination);
-        }
-
-        return (sourceSquareState.hasMovableVector(source, destination)
-            && isValidSourceAndDestination(sourceSquareState, destinationSquareState)
-            && isNotBlockedToGo(source, destination, sourceSquareState));
+        return isValidSourceAndDestination(sourceSquareState, destinationSquareState, currentTeam)
+            && ((sourceSquareState.isPawn() && canMovePawn(source, destination))
+            || (!sourceSquareState.isPawn()
+            && sourceSquareState.hasMovableVector(source, destination)
+            && isNotBlockedToGo(source, destination, sourceSquareState)));
     }
 
     private boolean canMovePawn(Point source, Point destination) {
@@ -56,7 +53,8 @@ public class Board {
         if (MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
             return false;
         }
-        MoveVector moveVector = MoveVector.get(destination.minusX(source), destination.minusY(source));
+        MoveVector moveVector = MoveVector
+            .get(destination.minusX(source), destination.minusY(source));
 
         return canMoveWhitePawnToStraight(sourceSquareState, destinationSquareState, moveVector)
             || canMoveBlackPawnToStraight(sourceSquareState, destinationSquareState, moveVector);
@@ -78,18 +76,19 @@ public class Board {
 
 
     private boolean isValidSourceAndDestination(
-        SquareState sourceSquareState, SquareState destinationSquareState) {
-        return sourceSquareState.isNotEmpty() && isNotSameTeam(sourceSquareState,
+        SquareState sourceSquareState, SquareState destinationSquareState, Team currentTeam) {
+        return sourceSquareState.isTeam(currentTeam) && isNotSameTeam(sourceSquareState,
             destinationSquareState);
     }
 
     private boolean canMovePawnToDiagonalDirection(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        if (!MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
+        if (MoveVector.hasNotMoveVector(destination.minusX(source), destination.minusY(source))) {
             return false;
         }
-        MoveVector moveVector = MoveVector.get(destination.minusX(source), destination.minusY(source));
+        MoveVector moveVector = MoveVector
+            .get(destination.minusX(source), destination.minusY(source));
 
         return canWhitePawnKillEnemy(sourceSquareState, destinationSquareState, moveVector)
             || canBlackPawnKillEnemy(sourceSquareState, destinationSquareState, moveVector);
@@ -138,21 +137,16 @@ public class Board {
         return moveCount <= sourceSquareState.getMoveLength();
     }
 
+    public boolean isKingDead() {
+        return deadKing;
+    }
+
     public void move(Point source, Point destination) {
         if (squares.get(destination).isKing()) {
-            onGoing = false;
+            deadKing = true;
         }
         squares.put(destination, squares.get(source));
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
-    }
-
-    public boolean isTeam(Point source, Team currentTeam) {
-        SquareState squareState = squares.get(source);
-        return squareState.isTeam(currentTeam);
-    }
-
-    public boolean isContinued() {
-        return onGoing;
     }
 
     public double score(Team team) {
@@ -181,20 +175,19 @@ public class Board {
             .sum();
     }
 
-    public BoardDto generateBoardDto() {
+    public BoardDto boardDto() {
         List<List<String>> result = new ArrayList<>();
         for (Row row : Row.reverseRows()) {
-            result.add(generateRow(row));
+            result.add(rowDto(row));
         }
 
         return new BoardDto(result);
     }
 
-    private List<String> generateRow(Row row) {
+    private List<String> rowDto(Row row) {
         List<String> rowResult = new ArrayList<>();
         for (Column column : Column.columns()) {
-            SquareState squareState = squares
-                .get(Point.of(column.getXCoordinate() + row.getYCoordinate()));
+            SquareState squareState = squares.get(Point.of(column.coordinate() + row.coordinate()));
             rowResult.add(squareState.pieceName());
         }
         return rowResult;

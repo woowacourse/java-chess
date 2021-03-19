@@ -1,11 +1,15 @@
 package chess.domain.gamestate;
 
-import chess.domain.command.Command;
-import java.util.List;
+import chess.domain.Turn;
+import chess.domain.board.Point;
 
 public interface GameState {
 
-    GameState operateCommand(Command command, List<String> arguments);
+    GameState start();
 
-    boolean isRunning();
+    GameState move(Point source, Point destination, Turn turn);
+
+    GameState end();
+
+    GameState status();
 }
