@@ -18,18 +18,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printChessInstruction();
-        playRounds();
-    }
-
-    private void playRounds() {
         while (!gameState.isFinished()) {
-            playRound();
+            changeStateByCommand();
+            this.gameState = gameState.run(chessService);
         }
-    }
-
-    private void playRound() {
-        changeStateByCommand();
-        this.gameState = gameState.playRound(chessService);
     }
 
     private void changeStateByCommand() {

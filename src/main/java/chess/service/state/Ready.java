@@ -4,7 +4,7 @@ import chess.service.ChessService;
 
 public class Ready implements GameState {
     @Override
-    public GameState playRound(ChessService chessService) {
+    public GameState run(ChessService chessService) {
         return new Playing();
     }
 

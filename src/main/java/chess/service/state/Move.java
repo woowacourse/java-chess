@@ -17,7 +17,7 @@ public class Move extends Playing {
     }
 
     @Override
-    public GameState playRound(ChessService chessService) {
+    public GameState run(ChessService chessService) {
         GameState gameState = move(chessService);
         OutputView.printGridStatus(chessService.grid());
         return gameState;
