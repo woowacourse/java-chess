@@ -18,4 +18,7 @@ public interface Piece {
     boolean isEmpty();
 
     boolean isKing();
+
+    double score();
+
 }

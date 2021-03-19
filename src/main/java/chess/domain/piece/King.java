@@ -28,4 +28,9 @@ public class King extends Division {
     public boolean isKing() {
         return true;
     }
+
+    @Override
+    public double score() {
+        return 0;
+    }
 }

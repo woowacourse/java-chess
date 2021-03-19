@@ -41,4 +41,9 @@ public class Empty extends Basis {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 0;
+    }
 }

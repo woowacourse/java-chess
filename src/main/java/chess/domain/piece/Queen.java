@@ -39,4 +39,9 @@ public class Queen extends Division {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 9;
+    }
 }

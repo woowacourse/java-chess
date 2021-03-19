@@ -22,6 +22,9 @@ public abstract class Basis implements Piece {
 
     public abstract boolean isKing();
 
+
+    public abstract double score();
+
     @Override
     public String display() {
         return displayName;

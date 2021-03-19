@@ -20,5 +20,7 @@ public class Application {
             }
             game.display();
         }
+
+        game.score();
     }
 }

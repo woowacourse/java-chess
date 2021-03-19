@@ -1,14 +1,13 @@
 package chess.domain;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Game {
     private final Pieces pieces;
@@ -58,6 +57,20 @@ public class Game {
     }
 
     public boolean isNotEnd() {
-        return pieces.toList().stream().filter(Piece::isKing).count() == 2;
+        return pieces.toList()
+                     .stream()
+                     .filter(Piece::isKing)
+                     .count() == 2;
+    }
+
+    public Map<Color, Double> score() {
+        Map<Color, Double> scores = new HashMap<>();
+        scores.put(Color.BLACK, calculateScore(Color.BLACK));
+        scores.put(Color.WHITE, calculateScore(Color.WHITE));
+        return scores;
+    }
+
+    private double calculateScore(Color color) {
+        return 0;
     }
 }

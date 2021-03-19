@@ -68,6 +68,11 @@ public class Pawn extends Division {
         return false;
     }
 
+    @Override
+    public double score() {
+        return 1;
+    }
+
     private boolean canKill(Position to) {
         return Math.abs(position.diffColumn(to)) == 1 && position.diffRow(to) == color.moveUnit();
     }

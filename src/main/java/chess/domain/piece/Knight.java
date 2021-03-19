@@ -28,4 +28,9 @@ public class Knight extends Division {
     public boolean isKing() {
         return false;
     }
+
+    @Override
+    public double score() {
+        return 2.5;
+    }
 }

@@ -54,4 +54,7 @@ public abstract class Division extends Basis {
     }
 
     public abstract boolean isKing();
+
+
+    public abstract double score();
 }
