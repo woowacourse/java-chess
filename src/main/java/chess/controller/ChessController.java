@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.Board;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import chess.exception.GameOverException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -16,46 +17,51 @@ public class ChessController {
         }
 
         final Board board = new Board();
-        Team team = Team.WHITE;
+        final Team team = Team.WHITE;
         proceedMain(board, team);
     }
 
-    private void proceedMain(final Board board, Team team) {
+    private void proceedMain(final Board board, final Team team) {
         try {
             proceed(board, team);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             proceedMain(board, team);
+        } catch (GameOverException e) {
+            showResult(board, e.getMessage());
         }
     }
 
-    private void proceed(final Board board, Team team) {
+    private void proceed(final Board board, final Team team) {
         OutputView.printCurrentBoard(board.unwrap());
         final List<String> runtimeCommands = InputView.inputRuntimeCommand();
 
-        if (InputView.END_COMMAND.equals(runtimeCommands.get(0))) {
-            showResult(board);
-            return;
-        }
+        checkGameOver(InputView.END_COMMAND.equals(runtimeCommands.get(0)), "게임이 강제 종료되었습니다.");
+        move(board, team, runtimeCommands);
+        checkGameOver(board.isKingDead(), team.oppositeTeamName() + "의 king이 죽어서 게임이 종료되었습니다.");
 
+        proceed(board, team.oppositeTeam());
+    }
+
+    private void checkGameOver(final boolean isGameOver, final String message) throws GameOverException {
+        if (isGameOver) {
+            throw new GameOverException(message);
+        }
+    }
+
+    private void move(final Board board, final Team team, final List<String> runtimeCommands) {
         final Position start = getPositionByCommands(runtimeCommands.get(1).split(""));
         final Position end = getPositionByCommands(runtimeCommands.get(2).split(""));
         board.move(start, end, team);
-
-        if (board.isKingDead()) {
-            showResult(board);
-            return;
-        }
-        team = team.oppositeTeam();
-        proceed(board, team);
     }
 
     private Position getPositionByCommands(final String[] commands) {
         return new Position(commands[0], commands[1]);
     }
 
-    private void showResult(final Board board) {
-        OutputView.printGameOverMessage();
+    private void showResult(final Board board, final String message) {
+        OutputView.printErrorMessage(message);
+        OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
             OutputView.printResult(board.getWinner(), board);
         }
