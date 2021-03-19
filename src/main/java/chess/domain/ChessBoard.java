@@ -15,6 +15,7 @@ import java.util.Set;
 
 public class ChessBoard {
 
+    //TODO : King 이 dead 상태가 될 경우 게임 종료
     private final Map<Position, Piece> chessBoard;
 
     public ChessBoard() {

@@ -30,7 +30,6 @@ public class Queen extends PieceOnBoard {
         while (movable(position, target, chessBoard)) {
             candidates.add(position);
             position = position.moveUp();
-
         }
         position = source.moveDown();
         while (movable(position, target, chessBoard)) {
@@ -47,12 +46,12 @@ public class Queen extends PieceOnBoard {
             candidates.add(position);
             position = position.moveRight();
         }
+
         position = source.moveLeftDown();
         while (movable(position, target, chessBoard)) {
             candidates.add(position);
             position = position.moveLeftDown();
         }
-
         position = source.moveLeftUp();
         while (movable(position, target, chessBoard)) {
             candidates.add(position);
