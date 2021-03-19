@@ -19,9 +19,10 @@ import java.util.List;
 
 public class Queen extends Piece {
     private static final String NAME = "Q";
+    private static final double SCORE = 9;
 
     public Queen(TeamType teamType) {
-        super(teamType, NAME, Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN));
+        super(teamType, NAME, SCORE, Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN));
     }
 
     @Override

@@ -3,9 +3,16 @@ package chess.domain.board;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.player.TeamType;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -160,5 +167,36 @@ class BoardTest {
         assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("자신의 말이 아닙니다.");
+    }
+
+    @DisplayName("점수 계산")
+    @Test
+    void calculateScores() {
+        Map<Coordinate, Piece> cells = BOARD.getCells();
+        cells.clear();
+
+        cells.put(Coordinate.from("b8"), new King(TeamType.BLACK));
+        cells.put(Coordinate.from("c8"), new Rook(TeamType.BLACK));
+        cells.put(Coordinate.from("a7"), new Pawn(TeamType.BLACK));
+        cells.put(Coordinate.from("c7"),  new Pawn(TeamType.BLACK));
+        cells.put(Coordinate.from("d7"), new Bishop(TeamType.BLACK));
+        cells.put(Coordinate.from("b6"), new Pawn(TeamType.BLACK));
+        cells.put(Coordinate.from("e6"), new Queen(TeamType.BLACK));
+
+        cells.put(Coordinate.from("f4"), new Knight(TeamType.WHITE));
+
+        cells.put(Coordinate.from("g4"), new Queen(TeamType.WHITE));
+
+        cells.put(Coordinate.from("f3"), new Pawn(TeamType.WHITE));
+        cells.put(Coordinate.from("h3"), new Pawn(TeamType.WHITE));
+        cells.put(Coordinate.from("f2"), new Pawn(TeamType.WHITE));
+        cells.put(Coordinate.from("g2"), new Pawn(TeamType.WHITE));
+        cells.put(Coordinate.from("e1"), new Rook(TeamType.WHITE));
+        cells.put(Coordinate.from("f1"), new King(TeamType.WHITE));
+
+        Result result = BOARD.calculateScores();
+
+        assertThat(result.getBlackTeamScore()).isEqualTo(20);
+        assertThat(result.getWhiteTeamScore()).isEqualTo(19.5);
     }
 }

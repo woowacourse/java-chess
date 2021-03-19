@@ -1,6 +1,8 @@
 package chess.controller;
 
 import chess.domain.board.Board;
+import chess.domain.board.Coordinate;
+import chess.domain.player.TeamType;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -25,21 +27,27 @@ public class Application {
         OutputView.printBoard(board);
         List<String> playerCommand = InputView.inputPlayerCommand();
         Command command = Command.findCommand(playerCommand.get(0));
+
+        TeamType teamType = TeamType.WHITE;
         while (command != Command.END) {
-            executeCommand(command, board, playerCommand);
+            executeCommand(command, board, teamType, playerCommand);
             OutputView.printBoard(board);
             playerCommand = InputView.inputPlayerCommand();
             command = Command.findCommand(playerCommand.get(0));
+            if (command == Command.MOVE) {
+                teamType = teamType.nextTurn();
+            }
         }
     }
 
-    private static void executeCommand(Command command, Board board, List<String> playerCommand) {
+    private static void executeCommand(Command command, Board board, TeamType teamType, List<String> playerCommand) {
         if (command == Command.MOVE) {
-            String currentCoordinate = playerCommand.get(1);
-            String targetCoordinate = playerCommand.get(2);
-            System.out.println("current : " + currentCoordinate);
-            System.out.println("target : " + targetCoordinate);
-
+            Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
+            Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
+            board.move(currentCoordinate, targetCoordinate, teamType);
+            return;
+        }
+        if (command == Command.STATUS) {
 
         }
     }

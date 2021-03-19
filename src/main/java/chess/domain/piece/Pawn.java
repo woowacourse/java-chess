@@ -17,9 +17,10 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final String NAME = "P";
+    private static final double SCORE = 1;
 
     public Pawn(TeamType teamType) {
-        super(teamType, NAME, filterDirections(teamType));
+        super(teamType, NAME, SCORE, filterDirections(teamType));
 
     }
 

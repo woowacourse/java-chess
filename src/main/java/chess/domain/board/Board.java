@@ -159,5 +159,40 @@ public class Board {
         .filter(coordinate -> !cells.get(coordinate).isTeamOf(myTeamType))
         .collect(Collectors.toMap(coordinate -> coordinate, cells::get));
     }
+
+    public Result calculateScores() {
+        double blackTeamScore = calculatePieceScores(TeamType.BLACK);
+        double whiteTeamScore = calculatePieceScores(TeamType.WHITE);
+        return Result.generateResult(blackTeamScore, whiteTeamScore);
+    }
+
+    private double calculatePieceScores(TeamType teamType) {
+        double scoreTotalExceptPawn = cells.values()
+            .stream()
+            .filter(piece -> piece.isTeamOf(teamType) && !piece.isPawn())
+            .mapToDouble(Piece::getScore)
+            .sum();
+
+        double pawnScores = 0;
+        for (File file : File.values()) {
+           int pawnCounts = 0;
+           for (Rank rank : Rank.values()) {
+               Coordinate coordinate = new Coordinate(file, rank);
+               Piece piece = cells.get(coordinate);
+               if (piece != null && piece.isTeamOf(teamType) && piece.isPawn()) {
+                   pawnCounts++;
+               }
+           }
+           if (pawnCounts == 0) {
+               continue;
+           }
+            if (pawnCounts == 1) {
+                pawnScores += new Pawn(teamType).getScore();
+            } else {
+                pawnScores += (new Pawn(teamType).getScore() / 2) * pawnCounts;
+            }
+        }
+        return scoreTotalExceptPawn + pawnScores;
+    }
 }
 

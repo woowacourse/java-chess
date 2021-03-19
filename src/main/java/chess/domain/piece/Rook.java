@@ -15,9 +15,10 @@ import java.util.List;
 
 public class Rook extends Piece {
     private static final String NAME = "R";
+    private static final double SCORE = 5;
 
     public Rook(TeamType teamType) {
-        super(teamType, NAME, Arrays.asList(LEFT, RIGHT, UP, DOWN));
+        super(teamType, NAME, SCORE, Arrays.asList(LEFT, RIGHT, UP, DOWN));
     }
 
     @Override
