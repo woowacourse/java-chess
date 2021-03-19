@@ -29,7 +29,7 @@ class BishopTest {
         Bishop bishop = Bishop.Of("B", Position.Of(3, 3), true);
         Pawn pawn = Pawn.Of("P", Position.Of(4, 4), true);
 
-        board.put(pawn, Position.Of(4,4));
+        board.put(pawn, Position.Of(4, 4));
         assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 4))).isFalse();
     }
 

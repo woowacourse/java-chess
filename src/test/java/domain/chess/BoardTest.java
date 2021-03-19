@@ -15,4 +15,11 @@ class BoardTest {
         board.move(Position.Of(1, 0), Position.Of(3, 0));
         assertThat(board.getPiece(Position.Of(3, 0))).isInstanceOf(Pawn.class);
     }
+
+    @DisplayName("빈 보드를 만든다.")
+    @Test
+    void make_empty_board_test() {
+        Board board = new Board();
+        assertThat(board.getBoard()[0][0] == null).isTrue();
+    }
 }

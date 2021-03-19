@@ -9,6 +9,9 @@ public class Board {
     public static final int SIZE = 8;
     private Piece[][] board = new Piece[SIZE][SIZE];
 
+    public Board() {
+    }
+
     public Board(List<Piece> pieces) {
         pieces.stream().forEach(piece -> put(piece, piece.getPosition()));
     }

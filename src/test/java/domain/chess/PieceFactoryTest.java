@@ -3,7 +3,6 @@ package domain.chess;
 import domain.chess.piece.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import sun.print.PeekGraphics;
 
 import java.util.Arrays;
 import java.util.List;

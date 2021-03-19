@@ -29,7 +29,7 @@ public class King extends Piece {
         if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
 
         List<Position> movePositions = Arrays.asList(
-                Position.Of(-1, 0),
+                Position.Of(1, 0),
                 Position.Of(1, 0),
                 Position.Of(0, -1),
                 Position.Of(0, 1),
