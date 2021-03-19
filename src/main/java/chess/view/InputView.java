@@ -2,17 +2,16 @@ package chess.view;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
 import java.util.Scanner;
 
 public class InputView {
-    private static final Scanner SCANNER = new Scanner(System.in);
     public static final String END_COMMAND = "end";
+    public static final String STATUS_COMMAND = "status";
+    private static final Scanner SCANNER = new Scanner(System.in);
     private static final String START_COMMAND = "start";
     private static final String MOVE_COMMAND = "move";
     private static final int MOVE_COMMAND_SIZE = 3;
     private static final int POSITION_LENGTH = 2;
-    public static final String STATUS_COMMAND = "status";
 
     public static boolean inputInitialCommand() {
         try {

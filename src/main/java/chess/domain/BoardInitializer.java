@@ -1,14 +1,16 @@
 package chess.domain;
 
 import chess.domain.piece.Blank;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 import chess.domain.position.Vertical;
 import chess.domain.strategy.initializestategy.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class BoardInitializer {

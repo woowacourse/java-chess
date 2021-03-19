@@ -1,9 +1,10 @@
 package chess.domain;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
-import chess.view.OutputView;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

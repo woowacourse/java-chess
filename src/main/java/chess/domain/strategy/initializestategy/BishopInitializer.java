@@ -2,7 +2,6 @@ package chess.domain.strategy.initializestategy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 

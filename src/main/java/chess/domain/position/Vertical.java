@@ -29,7 +29,7 @@ public enum Vertical {
 
     public static Vertical of(final int value) {
         return Arrays.stream(values())
-                .filter(vertical -> vertical.value==value)
+                .filter(vertical -> vertical.value == value)
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치를 찾을 수 없습니다."));
     }

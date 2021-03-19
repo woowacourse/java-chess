@@ -2,11 +2,13 @@ package chess.domain.strategy.initializestategy;
 
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Rook;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class KingInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Collections.singletonList("e");
