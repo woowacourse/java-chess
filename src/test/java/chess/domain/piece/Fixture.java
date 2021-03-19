@@ -6,5 +6,6 @@ import chess.domain.board.BoardFactory;
 public class Fixture {
     public static final Rook whiteRook = new Rook(Color.WHITE);
     public static final Rook blackRook = new Rook(Color.BLACK);
+    public static final Bishop whiteBishop = new Bishop(Color.WHITE);
     public static Board board = BoardFactory.createBoard();
 }
