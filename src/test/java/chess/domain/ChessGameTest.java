@@ -24,9 +24,9 @@ public class ChessGameTest {
     @DisplayName("정상적으로 움직일 수 있는 좌표가 주어지면, 이동한다.")
     void move_chess_piece_when_valid_destination_is_given() {
         final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
-        chessGame.move(Position.of("e7"), Position.of("e5"));
+        chessGame.move(Position.of("e2"), Position.of("e4"));
 
         final Map<Position, Piece> chessBoard = chessGame.generateChessBoard();
-        assertThat(chessBoard.get(Position.of("e5"))).isInstanceOf(Pawn.class);
+        assertThat(chessBoard.get(Position.of("e4"))).isInstanceOf(Pawn.class);
     }
 }
