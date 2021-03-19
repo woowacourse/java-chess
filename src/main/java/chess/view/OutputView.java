@@ -29,12 +29,13 @@ public class OutputView {
     }
 
     private static void putPieceToBoard(final Board board, final String[][] arr) {
-        board.toMap().values().forEach(v -> {
-            for (Piece piece : v) {
-                Position position = piece.getPosition();
-                arr[position.getRow()][position.getCol()] = piece.getInitial();
-            }
-        });
+        board.toMap().values()
+                .forEach(v -> {
+                    for (Piece piece : v) {
+                        Position position = piece.getPosition();
+                        arr[position.getRow()][position.getCol()] = piece.getInitial();
+                    }
+                });
     }
 
     private static String[][] getInitBoard() {

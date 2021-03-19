@@ -12,6 +12,10 @@
 - [x] COL (열) `->` ENUM
   - [x] 1 -> 8 를 7 -> 0 으로 치환
   
+- [x] Command
+  - [x] 명령어 목록을 가지고 있는 enum
+  - [x] 지원하는 명령어인지 확인하는 기능
+  
 - [x] BoardFactory
   - [x] Board 를 생성해준다.
     - [x] `Map<Team, List<Piece>>`를 생성한다.
