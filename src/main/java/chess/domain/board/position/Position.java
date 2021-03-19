@@ -68,6 +68,11 @@ public class Position {
     }
 
     public Position next(Direction direction, int distance) {
-        return new Position(vertical.add(direction.getY()+distance), horizontal.add(direction.getX()+distance));
+        return new Position(vertical.add(direction.getY()*distance), horizontal.add(direction.getX()*distance));
+    }
+
+    @Override
+    public String toString() {
+        return vertical.getIndex() + " " + horizontal.getIndex();
     }
 }

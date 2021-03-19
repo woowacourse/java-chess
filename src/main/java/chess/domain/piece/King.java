@@ -41,10 +41,7 @@ public class King extends Piece {
 
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
-        if (source.getDistance(target) <= ABLE_DISTANCE_TO_MOVE) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override

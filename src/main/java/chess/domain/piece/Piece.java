@@ -42,7 +42,7 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Piece other){
-        return owner.equals(other);
+        return owner.equals(other.owner);
     }
 
     public abstract List<Direction> getDirections();

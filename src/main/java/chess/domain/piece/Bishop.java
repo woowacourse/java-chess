@@ -37,10 +37,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
-        if(source.isDiagonal(target)) {
-            return true;
-        }
-        return false;
+        return true;
     }
 
     @Override

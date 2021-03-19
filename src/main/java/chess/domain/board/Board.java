@@ -50,7 +50,7 @@ public class Board {
         board.put(position, Empty.getInstance());
     }
 
-    private List<Position> ableToMove(Position source, Position target) {
+    public List<Position> ableToMove(Position source, Position target) {
         List<Position> ableToMove = new ArrayList<>();
         Piece sourcePiece = of(source);
 
@@ -63,6 +63,7 @@ public class Board {
                 } catch (IllegalArgumentException e) {
                     break;
                 }
+
                 Piece nextPiece = of(nextPosition);
 
                 if (sourcePiece.isSameTeam(nextPiece)) {
@@ -72,8 +73,6 @@ public class Board {
                 if (sourcePiece.validateMove(source, nextPosition, nextPiece)) {
                     ableToMove.add(nextPosition);
                 }
-
-                //
 
                 if (sourcePiece.isEnemy(nextPiece)) {
                     break;

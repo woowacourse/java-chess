@@ -49,9 +49,6 @@ public abstract class Pawn extends Piece{
     public abstract boolean isFirstLine(Horizontal horizontal);
 
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
-        if (source.isForward(owner, target)){
-            return true;
-        }
         if (isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy(targetPiece))) {
             return true;
         }
@@ -72,7 +69,7 @@ public abstract class Pawn extends Piece{
     }
 
     private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){
-        if(source.isDiagonal(target)){
+        if(!source.isDiagonal(target)){
             return false;
         }
         return source.getDistance(target) == 1 && isEnemy;
