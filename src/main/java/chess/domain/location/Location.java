@@ -87,4 +87,8 @@ public class Location {
     public boolean isRangeByStep(int dx, int dy) {
         return isRange(x + dx, y + dy);
     }
+
+    public int getX() {
+        return x;
+    }
 }

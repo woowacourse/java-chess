@@ -298,4 +298,24 @@ class BoardTest {
 
     }
 
+    @DisplayName("점수 계산 테스트")
+    @Test
+    void score() {
+        // given, when
+        char[][] viewBoard = {
+            {'.', 'K', 'R', '.', '.', '.', '.', '.'},
+            {'P', '.', 'P', 'B', '.', '.', '.', '.'},
+            {'.', 'P', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', 'p', '.', 'p'},
+            {'.', '.', '.', '.', '.', 'p', 'p', '.'},
+            {'.', '.', '.', '.', 'r', 'k', '.', '.'}
+        };
+        Board board = BoardUtil.generateBoard(viewBoard);
+
+        // then
+        assertThat(board.score(Team.WHITE)).isEqualTo(19.5);
+        assertThat(board.score(Team.BLACK)).isEqualTo(20.0);
+    }
 }

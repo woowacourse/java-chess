@@ -80,4 +80,8 @@ public abstract class Piece implements Movable {
     public int hashCode() {
         return Objects.hash(team, location);
     }
+
+    public int getX() {
+        return location.getX();
+    }
 }

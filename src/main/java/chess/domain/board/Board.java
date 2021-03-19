@@ -4,6 +4,8 @@ import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -94,6 +96,33 @@ public class Board {
             Piece targetPiece = find(target);
             pieces.remove(targetPiece);
         }
+    }
+
+    public double score(Team team) {
+        return scoreExceptionPawn(team) + scorePawn(team);
+    }
+
+    private double scoreExceptionPawn(Team team) {
+        return pieces
+            .stream()
+            .filter(piece -> piece.isSameTeam(team))
+            .filter(piece -> !piece.isPawn())
+            .mapToDouble(piece -> piece.getPieceType().getScore())
+            .sum();
+    }
+
+    private double scorePawn(Team team) {
+        final Map<Integer, Long> frequencyPerX = pieces
+            .stream()
+            .filter(piece -> piece.isSameTeam(team))
+            .filter(piece -> piece.isPawn())
+            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()));
+
+        return frequencyPerX
+            .values()
+            .stream()
+            .mapToDouble(count -> count <= 1 ? count : count * 0.5)
+            .sum();
     }
 
     public List<Piece> toList() {
