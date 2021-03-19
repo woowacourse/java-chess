@@ -6,9 +6,11 @@ import chess.domain.State;
 import chess.domain.TeamColor;
 
 public abstract class PieceOnBoard implements Piece {
+
     private TeamColor teamColor;
     private PieceInformation pieceType;
     private State state;
+    private Position position;
 
     public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType) {
         this.teamColor = teamColor;
@@ -16,6 +18,12 @@ public abstract class PieceOnBoard implements Piece {
         this.state = State.ALIVE;
     }
 
+    public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position position) {
+        this.teamColor = teamColor;
+        this.pieceType = pieceType;
+        this.state = State.ALIVE;
+        this.position = position;
+    }
 
     @Override
     public String getPieceName() {
@@ -60,6 +68,9 @@ public abstract class PieceOnBoard implements Piece {
         return state;
     }
 
+    public Position getPosition() {
+        return position;
+    }
 
     @Override
     public String toString() {

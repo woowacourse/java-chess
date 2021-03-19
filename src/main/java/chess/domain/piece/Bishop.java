@@ -7,15 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Bishop extends PieceOnBoard {
-    private Position position;
 
     public Bishop(TeamColor teamColor) {
         super(teamColor, PieceInformation.BISHOP);
     }
 
     public Bishop(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.BISHOP);
-        this.position = position;
+        super(teamColor, PieceInformation.BISHOP, position);
     }
 
     @Override

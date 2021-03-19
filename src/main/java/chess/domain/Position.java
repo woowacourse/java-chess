@@ -158,6 +158,10 @@ public class Position {
         return this.number == 2;
     }
 
+    public int getColumn() {
+        return number;
+    }
+
     @Override
     public String toString() {
         return "Position{" +

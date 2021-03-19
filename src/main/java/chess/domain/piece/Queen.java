@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Queen extends PieceOnBoard {
-    private Position position;
 
     public Queen(TeamColor teamColor) {
         super(teamColor, PieceInformation.QUEEN);
@@ -15,10 +14,8 @@ public class Queen extends PieceOnBoard {
 
 
     public Queen(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.QUEEN);
-        this.position = position;
+        super(teamColor, PieceInformation.QUEEN, position);
     }
-
 
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {

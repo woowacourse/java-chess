@@ -7,16 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Knight extends PieceOnBoard {
-    private Position position;
 
     public Knight(TeamColor teamColor) {
         super(teamColor, PieceInformation.KNIGHT);
     }
 
-
     public Knight(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.KNIGHT);
-        this.position = position;
+        super(teamColor, PieceInformation.KNIGHT, position);
     }
 
     @Override

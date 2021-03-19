@@ -7,16 +7,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Rook extends PieceOnBoard {
-    private Position position;
 
     public Rook(TeamColor teamColor) {
         super(teamColor, PieceInformation.ROOK);
     }
 
-
     public Rook(TeamColor teamColor, Position position) {
-        super(teamColor, PieceInformation.ROOK);
-        this.position = position;
+        super(teamColor, PieceInformation.ROOK, position);
     }
 
     @Override
@@ -46,7 +43,6 @@ public class Rook extends PieceOnBoard {
 
         return candidates.contains(target);
     }
-
 
 
 }
