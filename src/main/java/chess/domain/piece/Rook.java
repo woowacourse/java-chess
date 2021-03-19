@@ -8,12 +8,12 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovableRoute(Piece target) {
-        return false;
+    public Direction direction(Piece target) {
+        return null;
     }
 
     @Override
-    public Point moveOneStep(Point target) {
+    public Point moveOneStep(Point target, Direction direction) {
         return null;
     }
 }

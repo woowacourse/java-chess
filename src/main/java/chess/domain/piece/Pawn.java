@@ -11,7 +11,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovableRoute(Piece target) {
+    public Direction direction(Piece target) {
         //TODO: 폰은 직진만 가능
         //TODO: 폰은 시작 때만 두 칸 이동 가능
 
@@ -25,19 +25,19 @@ public class Pawn extends Piece {
 
         int distance = this.point.calculateDistance(target.point);
         if (distance == 1 && target instanceof Empty) {
-            return true;
+            return direction;
         }
         if (distance == 2 && !(target instanceof Empty)) {
-            return true;
+            return direction;
         }
         if (distance == 4 && target instanceof Empty && ((this.color.equals(BLACK) && this.point.getRow() == 1) || (this.color.equals(WHITE) && this.point.getRow() == 6))) {
-            return true;
+            return direction;
         }
         throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }
 
     @Override
-    public Point moveOneStep(Point target) {
+    public Point moveOneStep(Point target, Direction direction) {
         return target;
     }
 }

@@ -1,6 +1,7 @@
 package chess.piece;
 
 import chess.domain.Point;
+import chess.domain.piece.Direction;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Pieces;
@@ -12,6 +13,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import static chess.domain.ChessGame.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PawnTest {
     @DisplayName("Pawn 생성")
@@ -31,7 +33,7 @@ public class PawnTest {
         Empty empty = new Empty(".", null, Point.valueOf(0, 3));
 
         assertThatThrownBy(
-                () -> blackPawn.isMovableRoute(empty)
+                () -> blackPawn.direction(empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -42,7 +44,7 @@ public class PawnTest {
         Empty empty = new Empty(".", null, Point.valueOf(7, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.isMovableRoute(empty)
+                () -> whitePawn.direction(empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -53,7 +55,7 @@ public class PawnTest {
         Pawn blackPawn = new Pawn("P", BLACK, Point.valueOf(5, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.isMovableRoute(blackPawn)
+                () -> whitePawn.direction(blackPawn)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,14 +67,14 @@ public class PawnTest {
         Empty empty2 = new Empty(".", null, Point.valueOf(5, 2));
         Pawn blackPawn = new Pawn("P", BLACK, Point.valueOf(5, 4));
 
-        assertThat(whitePawn.isMovableRoute(blackPawn)).isTrue();
+        assertEquals(whitePawn.direction(blackPawn), Direction.NORTH_EAST);
 
         assertThatThrownBy(
-                () -> whitePawn.isMovableRoute(empty)
+                () -> whitePawn.direction(empty)
         ).isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(
-                () -> whitePawn.isMovableRoute(empty2)
+                () -> whitePawn.direction(empty2)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -83,7 +85,7 @@ public class PawnTest {
         Empty empty = new Empty(".", null, Point.valueOf(3, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.isMovableRoute(empty)
+                () -> whitePawn.direction(empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -93,6 +95,6 @@ public class PawnTest {
         Pawn whitePawn = new Pawn("p", "WHITE", Point.valueOf(6, 3));
         Empty empty = new Empty(".", null, Point.valueOf(4, 3));
 
-        assertThat(whitePawn.isMovableRoute(empty)).isTrue();
+        assertEquals(whitePawn.direction(empty), Direction.NORTH);
     }
 }

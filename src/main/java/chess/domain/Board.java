@@ -1,9 +1,6 @@
 package chess.domain;
 
-import chess.domain.piece.Empty;
-import chess.domain.piece.King;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
 
@@ -43,9 +40,10 @@ public class Board {
 
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
         Point currentPoint = source;
+        Direction direction = sourcePiece.direction(targetPiece);
         while (!currentPoint.equals(target)) {
-            validatePossibleRoute(sourcePiece, targetPiece);
-            currentPoint = sourcePiece.moveOneStep(target);
+            Piece temp = pickPiece(currentPoint);
+            currentPoint = temp.moveOneStep(target, direction);
             // TODO: depth 해결
             if (currentPoint.equals(target)) {
                 replacePiece(sourcePiece, new Empty(".", null, source));
@@ -81,12 +79,6 @@ public class Board {
     private void validateTargetPieceColor(String currentColor, Piece targetPiece) {
         if (targetPiece.isSameColor(currentColor)) {
             throw new IllegalArgumentException("도착지에 아군이 존재합니다.");
-        }
-    }
-
-    private void validatePossibleRoute(Piece sourcePiece, Piece targetPiece) {
-        if (!sourcePiece.isMovableRoute(targetPiece)) {
-            throw new IllegalArgumentException("이동할 수 없는 경로입니다.");
         }
     }
 

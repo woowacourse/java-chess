@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.piece.Piece;
 

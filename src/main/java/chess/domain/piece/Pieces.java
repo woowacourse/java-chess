@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.ChessGame;
 import chess.domain.Point;
 
 import java.util.Arrays;
@@ -72,6 +71,12 @@ public enum Pieces {
         }
     };
 
+    private final List<Integer> column;
+
+    Pieces(List<Integer> column) {
+        this.column = column;
+    }
+
     private static Piece createDefaultPieces(int row, int column) {
         if (row == 1) {
             return new Pawn("P", BLACK, Point.valueOf(row, column));
@@ -80,12 +85,6 @@ public enum Pieces {
             return new Pawn("p", WHITE, Point.valueOf(row, column));
         }
         return new Empty(".", null, Point.valueOf(row, column));
-    }
-
-    private final List<Integer> column;
-
-    Pieces(List<Integer> column) {
-        this.column = column;
     }
 
     public static Piece findPiece(int row, int column) {

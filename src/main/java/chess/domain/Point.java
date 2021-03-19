@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
 import chess.view.InputView;
 
 import java.util.List;
@@ -61,12 +62,20 @@ public class Point {
         return RANK_GAP - rank;
     }
 
-    public int getColumn() {
-        return this.column;
+    public int calculateDistance(Point point) {
+        return ((int) Math.pow(this.column - point.getColumn(), 2) + (int) Math.pow(this.row - point.getRow(), 2));
+    }
+
+    public Point createNextPoint(Direction direction) {
+        return valueOf(this.row + direction.getRowDirection(), this.column + direction.getColumnDirection());
     }
 
     public int getRow() {
         return this.row;
+    }
+
+    public int getColumn() {
+        return this.column;
     }
 
     @Override
@@ -81,9 +90,5 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
-    }
-
-    public int calculateDistance(Point point) {
-        return ((int) Math.pow(this.column - point.getColumn(),2) + (int) Math.pow(this.row - point.getRow(), 2));
     }
 }

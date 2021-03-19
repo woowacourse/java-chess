@@ -8,12 +8,18 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovableRoute(Piece target) {
-        return false;
+    public Direction direction(Piece target) {
+        Direction direction = Direction.findDirection(this.point, target.point);
+        System.out.println(direction);
+        if (!direction.equals(Direction.NORTH_WEST) && !direction.equals(Direction.NORTH_EAST)
+                && !direction.equals(Direction.SOUTH_EAST) && !direction.equals(Direction.SOUTH_WEST)) {
+            throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
+        }
+        return direction;
     }
 
     @Override
-    public Point moveOneStep(Point target) {
-        return null;
+    public Point moveOneStep(Point target, Direction direction) {
+        return this.point.createNextPoint(direction);
     }
 }
