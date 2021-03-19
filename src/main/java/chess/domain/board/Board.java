@@ -31,7 +31,7 @@ public class Board {
     }
 
     public void move(Position source, Position target) {
-        List<Position> ablePositions = ableToMove(source, target);
+        List<Position> ablePositions = ableToMove(source);
         if (ablePositions.contains(target)) {
             movePiece(source, target);
         }
@@ -50,13 +50,12 @@ public class Board {
         board.put(position, Empty.getInstance());
     }
 
-    public List<Position> ableToMove(Position source, Position target) {
+    public List<Position> ableToMove(Position source) {
         List<Position> ableToMove = new ArrayList<>();
         Piece sourcePiece = of(source);
 
-
         for (Direction direction : sourcePiece.getDirections()) {
-            for (int i = 0; i < sourcePiece.getMaxDistance(); i++) {
+            for (int i = 1; i <= sourcePiece.getMaxDistance(); i++) {
                 Position nextPosition;
                 try {
                     nextPosition = source.next(direction, i);

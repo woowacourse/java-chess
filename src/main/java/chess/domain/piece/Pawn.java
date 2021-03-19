@@ -8,12 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class Pawn extends Piece{
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.UP,
-            Direction.UP_LEFT,
-            Direction.UP_RIGHT
-    );
-
     private static final int ABLE_DISTANCE_TO_MOVE = 2;
 
     private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK){
@@ -21,12 +15,30 @@ public abstract class Pawn extends Piece{
         public boolean isFirstLine(Horizontal horizontal) {
             return Horizontal.SEVEN.equals(horizontal);
         }
+
+        @Override
+        public List<Direction> getDirections() {
+            return  Arrays.asList(
+                    Direction.DOWN,
+                    Direction.DOWN_LEFT,
+                    Direction.DOWN_RIGHT
+            );
+        }
     };
 
     private static final Pawn WHITE_PAWN = new Pawn(Owner.WHITE) {
         @Override
         public boolean isFirstLine(Horizontal horizontal) {
             return Horizontal.TWO.equals(horizontal);
+        }
+
+        @Override
+        public List<Direction> getDirections() {
+            return  Arrays.asList(
+                    Direction.UP,
+                    Direction.UP_LEFT,
+                    Direction.UP_RIGHT
+            );
         }
     };
 
@@ -87,7 +99,7 @@ public abstract class Pawn extends Piece{
 
     @Override
     public List<Direction> getDirections() {
-        return DIRECTIONS;
+        return null;
     }
 
     @Override

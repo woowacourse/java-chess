@@ -54,28 +54,11 @@ public class BoardTest {
     @Test
     void moveTest() {
         Position source = new Position(Vertical.B, Horizontal.TWO);
-        Position target = new Position(Vertical.C, Horizontal.THREE);
-
-        int i =0;
-        for(Piece piece : board.getBoard().values()) {
-            System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
-            if(i++ >6){
-                i =0;
-                System.out.println();
-            }
-        }
+        Position target = new Position(Vertical.C, Horizontal.ONE);
 
         board.move(source, target);
 
-        int k =0;
-        for(Piece piece : board.getBoard().values()) {
-            System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
-            if(k++ >6){
-                k =0;
-                System.out.println();
-            }
-        }
-
+        assertThat(board.of(source)).isInstanceOf(Empty.class);
         assertThat(board.of(target)).isInstanceOf(Pawn.class);
     }
 }
