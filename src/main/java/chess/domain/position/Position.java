@@ -25,6 +25,14 @@ public class Position {
         return new Position(column, row);
     }
 
+    public boolean isWhitePawnStartLine(){
+        return row.equals(Row.TWO);
+    }
+
+    public boolean isBlackPawnStartLine(){
+        return row.equals(Row.SEVEN);
+    }
+
     public boolean isStraight(Position that){
         return columnGap(that) == 0 || rowGap(that) == 0;
     }

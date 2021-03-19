@@ -6,4 +6,9 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class KnightStrategy implements MoveStrategy {
+
+    @Override
+    public boolean canGoFrom(Position from, Position to) {
+        return false;
+    }
 }

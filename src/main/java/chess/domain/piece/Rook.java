@@ -29,7 +29,7 @@ public class Rook extends Piece {
     private Function<Direction, List<Position>> findPathInDirection(Position currentPosition) {
         return direction -> {
             return Positions.POSITION_CACHE.stream()
-                    .filter(that -> currentPosition.isStraight(that))
+                    .filter(currentPosition::isStraight)
                     .collect(Collectors.toList());
         };
     }
