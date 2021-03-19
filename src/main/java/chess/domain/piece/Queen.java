@@ -2,14 +2,17 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
+import java.util.Optional;
+
 public class Queen extends Piece {
     public Queen(String name, String color, Point point) {
         super(name, color, point);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        return Direction.findDirection(this.point, target.point);
+    public Optional<Direction> direction(Piece target) {
+        Direction direction = Direction.findDirection(this.point, target.point);
+        return Optional.of(direction);
     }
 
     @Override

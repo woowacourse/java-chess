@@ -8,6 +8,8 @@ import chess.domain.piece.Pieces;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Optional;
+
 import static chess.domain.ChessGame.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -36,10 +38,10 @@ public class BishopTest {
         Empty empty3 = new Empty(".", null, Point.valueOf(3, 5));
         Empty empty4 = new Empty(".", null, Point.valueOf(5, 3));
 
-        assertEquals(Direction.SOUTH_EAST, bishop.direction(empty));
-        assertEquals(Direction.NORTH_WEST, bishop.direction(empty2));
-        assertEquals(Direction.NORTH_EAST, bishop.direction(empty3));
-        assertEquals(Direction.SOUTH_WEST, bishop.direction(empty4));
+        assertEquals(Optional.of(Direction.SOUTH_EAST), bishop.direction(empty));
+        assertEquals(Optional.of(Direction.NORTH_WEST), bishop.direction(empty2));
+        assertEquals(Optional.of(Direction.NORTH_EAST), bishop.direction(empty3));
+        assertEquals(Optional.of(Direction.SOUTH_WEST), bishop.direction(empty4));
     }
 
     @DisplayName("Bishop의 불가능한 방향 확인")

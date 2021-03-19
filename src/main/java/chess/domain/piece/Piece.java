@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Point;
 
 import java.util.Objects;
+import java.util.Optional;
 
 public abstract class Piece {
     public static final String IMPOSSIBLE_ROUTE_ERROR_MESSAGE = "기물이 이동할 수 없는 경로입니다.";
@@ -16,7 +17,7 @@ public abstract class Piece {
         this.point = point;
     }
 
-    public abstract Direction direction(Piece target);
+    public abstract Optional<Direction> direction(Piece target);
 
     public abstract Point moveOneStep(Point target, Direction direction);
 

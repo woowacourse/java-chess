@@ -10,6 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Optional;
+
 import static chess.domain.ChessGame.BLACK;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -67,7 +69,7 @@ public class PawnTest {
         Empty empty2 = new Empty(".", null, Point.valueOf(5, 2));
         Pawn blackPawn = new Pawn("P", BLACK, Point.valueOf(5, 4));
 
-        assertEquals(whitePawn.direction(blackPawn), Direction.NORTH_EAST);
+        assertEquals(Optional.of(Direction.NORTH_EAST), whitePawn.direction(blackPawn));
 
         assertThatThrownBy(
                 () -> whitePawn.direction(empty)
@@ -95,6 +97,6 @@ public class PawnTest {
         Pawn whitePawn = new Pawn("p", "WHITE", Point.valueOf(6, 3));
         Empty empty = new Empty(".", null, Point.valueOf(4, 3));
 
-        assertEquals(whitePawn.direction(empty), Direction.NORTH);
+        assertEquals( Optional.of(Direction.NORTH), whitePawn.direction(empty));
     }
 }

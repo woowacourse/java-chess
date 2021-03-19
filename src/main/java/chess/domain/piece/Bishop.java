@@ -2,19 +2,21 @@ package chess.domain.piece;
 
 import chess.domain.Point;
 
+import java.util.Optional;
+
 public class Bishop extends Piece {
     public Bishop(String name, String color, Point point) {
         super(name, color, point);
     }
 
     @Override
-    public Direction direction(Piece target) {
+    public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
         if (!direction.equals(Direction.NORTH_WEST) && !direction.equals(Direction.NORTH_EAST)
                 && !direction.equals(Direction.SOUTH_EAST) && !direction.equals(Direction.SOUTH_WEST)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return direction;
+        return Optional.of(direction);
     }
 
     @Override
