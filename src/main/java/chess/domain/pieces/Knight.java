@@ -4,6 +4,9 @@ import chess.domain.Team;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
+import java.util.List;
+import java.util.Map;
+
 public class Knight extends Piece {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
@@ -24,5 +27,10 @@ public class Knight extends Piece {
             return new Position(Row.getLocation(BLACK_TEAM_ROW), col);
         }
         return new Position(Row.getLocation(WHITE_TEAM_ROW), col);
+    }
+
+    @Override
+    public List<Position> getMovablePositions(Map<Team, Pieces> board) {
+        return null;
     }
 }

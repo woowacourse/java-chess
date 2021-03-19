@@ -41,19 +41,16 @@ public abstract class Piece {
         return this.position.equals(startPoint);
     }
 
-    public final void move(final Map<Team, List<Piece>> board, final Position endPoint) {
-        List<Position> movablePositions = getMovablePositions(board);
-        validateEndPoint(endPoint, movablePositions);
-        erasePiece(board, endPoint);
+    public final void move(final Map<Team, Pieces> board, final Position endPoint) {
+//        List<Position> movablePositions = getMovablePositions(board);
+//        validateEndPoint(endPoint, movablePositions);
+//        erasePiece(board, endPoint);
         this.position = endPoint;
     }
 
-    private void erasePiece(Map<Team, List<Piece>> board, Position endPoint) {
-        List<Piece> anotherTeamPieces = board.get(Team.getAnotherTeam(team));
-        anotherTeamPieces.stream()
-                .filter(piece -> piece.samePosition(endPoint))
-                .findFirst()
-                .ifPresent(anotherTeamPieces::remove);
+    private void erasePiece(Map<Team, Pieces> board, Position endPoint) {
+        Pieces anotherTeamPieces = board.get(Team.getAnotherTeam(team));
+        anotherTeamPieces.removePieceByPosition(endPoint);
     }
 
     private void validateEndPoint(final Position endPoint, final List<Position> movablePositions) {
@@ -62,5 +59,5 @@ public abstract class Piece {
         }
     }
 
-    public abstract List<Position> getMovablePositions(Map<Team, List<Piece>> board);
+    public abstract List<Position> getMovablePositions(Map<Team, Pieces> board);
 }

@@ -31,7 +31,7 @@ public class OutputView {
     private static void putPieceToBoard(final Board board, final String[][] arr) {
         board.toMap().values()
                 .forEach(v -> {
-                    for (Piece piece : v) {
+                    for (Piece piece : v.toList()) {
                         Position position = piece.getPosition();
                         arr[position.getRow()][position.getCol()] = piece.getInitial();
                     }

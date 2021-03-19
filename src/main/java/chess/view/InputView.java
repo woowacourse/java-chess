@@ -17,7 +17,7 @@ public class InputView {
 
 
     private static void validateCommand(final String command) {
-        if (Command.isValidateCommand(command)) {
+        if (!Command.isValidateCommand(command)) {
             throw new IllegalArgumentException("잘못된 커멘드 입력입니다.");
         }
     }

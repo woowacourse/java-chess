@@ -73,6 +73,8 @@
     - [ ] queen
     - [ ] king
   
+- [x] Pieces (Piece List 일급 컬렉션화)
+
 ---
 
 - [ ] View

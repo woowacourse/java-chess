@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardFactory {
-    private final Map<Team, List<Piece>> board = new HashMap<>();
+    private final Map<Team, Pieces> board = new HashMap<>();
 
     public Board getBoard() {
         initSetting();
@@ -85,8 +85,8 @@ public class BoardFactory {
     }
 
     private void makeBoard(final List<Piece> black, final List<Piece> white) {
-        board.put(Team.BLACK, black);
-        board.put(Team.WHITE, white);
+        board.put(Team.BLACK, new Pieces(black));
+        board.put(Team.WHITE, new Pieces(white));
     }
 }
 

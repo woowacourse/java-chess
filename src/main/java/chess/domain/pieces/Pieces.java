@@ -30,4 +30,8 @@ public class Pieces {
                 .findFirst()
                 .ifPresent(pieces::remove);
     }
+
+    public List<Piece> toList() {
+        return new ArrayList<>(pieces);
+    }
 }
