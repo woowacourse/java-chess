@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;

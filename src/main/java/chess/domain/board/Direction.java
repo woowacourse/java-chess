@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,10 +22,10 @@ public enum Direction {
     WWN(-2, -1),
     WWS(-2, 1);
 
-    private int xDegree;
-    private int yDegree;
+    private final int xDegree;
+    private final int yDegree;
 
-    private Direction(int xDegree, int yDegree) {
+    Direction(int xDegree, int yDegree) {
         this.xDegree = xDegree;
         this.yDegree = yDegree;
     }

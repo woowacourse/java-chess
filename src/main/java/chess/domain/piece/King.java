@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
-import chess.domain.Direction;
-import chess.domain.Position;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Direction;
+import chess.domain.board.Position;
 import java.util.ArrayList;
 import java.util.List;
 

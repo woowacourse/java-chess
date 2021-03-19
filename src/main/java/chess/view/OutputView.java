@@ -1,7 +1,7 @@
 package chess.view;
 
-import chess.domain.ChessBoard;
-import chess.domain.Result;
+import chess.domain.board.ChessBoard;
+import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import java.util.List;

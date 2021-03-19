@@ -1,7 +1,8 @@
-package chess;
+package chess.controller;
 
-import chess.domain.ChessBoard;
-import chess.domain.Result;
+import chess.domain.game.ChessGame;
+import chess.domain.board.ChessBoard;
+import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
