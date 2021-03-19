@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.controller.ChessGame;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -35,10 +34,10 @@ public abstract class Piece {
         return this.isBlack == other.isBlack;
     }
 
-    public void validateSourceAndTargetBeforeMove(final Piece targetPiece) {
+    public void validateSourceAndTargetBeforeMove(final Piece sourcePiece, final Piece targetPiece) {
+        validateSourcePieceEmpty(sourcePiece);
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
-        validateSourcePiece();
     }
 
     public void validateTargetInMovablePositions(final List<Position> movablePositions) {
@@ -61,9 +60,9 @@ public abstract class Piece {
         }
     }
 
-    private void validateSourcePiece() {
-        if (isEmpty() || ChessGame.isBlackTurn() != isBlack()) {   // TODO: + 자신의 말 색깔일때
-            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
+    private void validateSourcePieceEmpty(Piece sourcePiece) {
+        if (sourcePiece.isEmpty()) {
+            throw new IllegalArgumentException("빈 공간을 옮길 수 없습니다.");
         }
     }
 

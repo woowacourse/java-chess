@@ -57,11 +57,22 @@ public class ChessGame {
         List<String> moveInput = Arrays.asList(command.split(" "));
         Piece sourcePiece = grid.findPiece(new Position(moveInput.get(1).charAt(0), moveInput.get(1).charAt(1)));
         Piece targetPiece = grid.findPiece(new Position(moveInput.get(2).charAt(0), moveInput.get(2).charAt(1)));
+        validateTurn(sourcePiece);
         grid.move(sourcePiece, targetPiece);
-        isBlackTurn = !isBlackTurn;
+        changeTurn();
         if (targetPiece instanceof King) {
             gameOver = true;
             OutputView.printWinner(!targetPiece.isBlack());
         }
+    }
+
+    private void validateTurn(Piece sourcePiece) {
+        if (!sourcePiece.isEmpty() && isBlackTurn() != sourcePiece.isBlack()) {
+            throw new IllegalArgumentException("자신의 말만 옮길 수 있습니다.");
+        }
+    }
+
+    private void changeTurn() {
+        isBlackTurn = !isBlackTurn;
     }
 }

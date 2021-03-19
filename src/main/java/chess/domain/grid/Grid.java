@@ -29,7 +29,7 @@ public class Grid {
     }
 
     public void move(final Piece sourcePiece, final Piece targetPiece) {
-        sourcePiece.validateSourceAndTargetBeforeMove(targetPiece);
+        sourcePiece.validateSourceAndTargetBeforeMove(sourcePiece, targetPiece);
 
         if (sourcePiece instanceof Pawn) {
             validatePawnSteps((Pawn) sourcePiece, targetPiece);
