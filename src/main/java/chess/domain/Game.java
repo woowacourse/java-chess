@@ -51,4 +51,8 @@ public class Game {
         start.kill(to, pieces);
         pieces.delete(piece);
     }
+
+    public boolean isNotEnd() {
+        return true;
+    }
 }
