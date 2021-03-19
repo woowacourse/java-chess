@@ -59,6 +59,6 @@ public class InputView {
     }
 
     public static boolean isStatusInput() {
-        return STATUS_COMMAND.equals(SCANNER.nextLine().toUpperCase());
+        return STATUS_COMMAND.equalsIgnoreCase(SCANNER.nextLine());
     }
 }
