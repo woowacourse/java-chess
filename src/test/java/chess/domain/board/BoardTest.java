@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
+import chess.domain.team.Team;
 import chess.utils.BoardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,7 +41,7 @@ class BoardTest {
         Location target = Location.of(1, 1);
 
         // then
-        assertThatThrownBy(() -> initialBoard.move(source, target))
+        assertThatThrownBy(() -> initialBoard.move(source, target, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -52,7 +53,7 @@ class BoardTest {
         Location pawnLocation = Location.of(1, 2);
 
         // then
-        assertThatThrownBy(() -> initialBoard.move(rookLocation, pawnLocation))
+        assertThatThrownBy(() -> initialBoard.move(rookLocation, pawnLocation, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -65,7 +66,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -81,7 +82,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -97,7 +98,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -113,7 +114,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -129,7 +130,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -145,7 +146,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -161,7 +162,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -177,7 +178,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -193,7 +194,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -209,7 +210,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -225,7 +226,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(initialSource);
 
         // when
-        testBoard.move(initialSource, initialTarget);
+        testBoard.move(initialSource, initialTarget, Team.WHITE);
 
         // then
         assertThat(testBoard.find(initialTarget)).isEqualTo(sourcePiece);
@@ -241,11 +242,11 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(source);
 
         // when
-        testBoard.move(source, possibleTarget);
+        testBoard.move(source, possibleTarget, Team.WHITE);
 
         // then
         assertThat(testBoard.find(possibleTarget)).isEqualTo(sourcePiece);
-        assertThatThrownBy(() -> testBoard.move(possibleTarget, impossibleTarget))
+        assertThatThrownBy(() -> testBoard.move(possibleTarget, impossibleTarget, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -258,7 +259,7 @@ class BoardTest {
         Piece sourcePiece = testBoard.find(target);
 
         // then
-        assertThatThrownBy(() -> testBoard.move(source, target))
+        assertThatThrownBy(() -> testBoard.move(source, target, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -272,7 +273,7 @@ class BoardTest {
         Piece targetPiece = testBoard.find(target);
 
         // when
-        testBoard.move(source, target);
+        testBoard.move(source, target, Team.WHITE);
 
         // then
         assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
@@ -287,7 +288,14 @@ class BoardTest {
         Location target = Location.of(5, 4);
 
         // then
-        assertThatThrownBy(() -> testBoard.move(source, target))
+        assertThatThrownBy(() -> testBoard.move(source, target, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
+
+    @DisplayName("룩, 비숍, 퀸, 폰은 경로에 체스 말이 있는 경우 이동하지 못한다.")
+    @Test
+    void move_obstacle() {
+
+    }
+
 }

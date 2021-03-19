@@ -46,6 +46,10 @@ public abstract class Piece implements Movable {
             || (isWhiteTeam() && other.isWhiteTeam());
     }
 
+    public boolean isSameTeam(Team team) {
+        return this.team.equals(team);
+    }
+
     private boolean isBlackTeam() {
         return team.isBlack();
     }

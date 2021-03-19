@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
+import chess.domain.team.Team;
 import java.util.List;
 
 public class Board {
@@ -16,9 +17,10 @@ public class Board {
         return new Board(pieces);
     }
 
-    public void move(Location source, Location target) {
+    public void move(Location source, Location target, Team team) {
         validateSameLocation(source, target);
         Piece sourcePiece = find(source);
+        validateTeam(sourcePiece, team);
 
         validateMoveCapable(target, sourcePiece);
         validateIsNotSameTeam(target, sourcePiece);
@@ -27,6 +29,12 @@ public class Board {
 
         removeIfExistent(target);
         sourcePiece.move(target);
+    }
+
+    private void validateTeam(Piece piece, Team team) {
+        if (!piece.isSameTeam(team)) {
+            throw new IllegalArgumentException("상대의 말은 움직일 수 없습니다.");
+        }
     }
 
     private void validateIsNotSameTeam(Location target, Piece piece) {
