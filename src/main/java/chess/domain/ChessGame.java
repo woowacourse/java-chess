@@ -12,6 +12,7 @@ public class ChessGame {
     private Team currentTurn;
     private BlackTeam blackTeam;
     private WhiteTeam whiteTeam;
+    private boolean isEnd = false;
 
     public ChessGame(BlackTeam blackTeam, WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
@@ -29,11 +30,21 @@ public class ChessGame {
         if (enemy.havePiece(destination)) {
             Piece piece = enemy.killPiece(destination);
             currentTurn.catchPiece(piece);
+            checkMate(piece);
         }
 
         currentTurn.move(current, destination);
         chosenPiece.isMoved();
-//        return true;
+    }
+
+    private void checkMate(Piece piece) {
+        if (piece.isKing()) {
+            isEnd = true;
+        }
+    }
+
+    public boolean isEnd() {
+        return isEnd;
     }
 
     private Team getEnemy() {
@@ -41,6 +52,10 @@ public class ChessGame {
             return whiteTeam;
         }
         return blackTeam;
+    }
+
+    public void changeTurn() {
+        currentTurn = getEnemy();
     }
 
     public Map<Position, Piece> generateChessBoard() {
@@ -55,9 +70,5 @@ public class ChessGame {
 
     public WhiteTeam getWhiteTeam() {
         return whiteTeam;
-    }
-
-    public void changeTurn() {
-        currentTurn = getEnemy();
     }
 }

@@ -15,6 +15,8 @@ public abstract class Piece {
 
     public abstract boolean checkPositionRule(final Position current, final Position destination);
 
+    public abstract boolean isKing();
+
     public final boolean checkEmptyPath(final List<Position> path, final Map<Position, Piece> chessBoard) {
         for (Position position : path) {
             if (chessBoard.containsKey(position)) {

@@ -27,7 +27,7 @@ public class ChessController {
     }
 
     private void startGame(ChessGame chessGame) {
-        while (true) {
+        while (chessGame.isEnd()) {
             singleTurn(chessGame);
             chessGame.changeTurn();
             printChessBoard(chessGame);
