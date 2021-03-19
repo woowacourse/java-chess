@@ -27,8 +27,17 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     public boolean movable(Position position, Position target, ChessBoard chessBoard) {
-        return position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)));
+        return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
+    }
+
+    // isTargetOrEnemy
+    protected boolean isMeetEnemy(Position position, Position target,
+        ChessBoard chessBoard) {
+        return position == target && isEnemyTeam(chessBoard.getPiece(position));
+    }
+
+    protected boolean validBlank(Position position, ChessBoard chessBoard) {
+        return position != Position.ERROR && chessBoard.isBlank(position);
     }
 
     @Override

@@ -151,6 +151,13 @@ public class Position {
     }
 
 
+    public boolean startLine(TeamColor color) {
+        if (color == TeamColor.BLACK) {
+            return this.number == 7;
+        }
+        return this.number == 2;
+    }
+
     @Override
     public String toString() {
         return "Position{" +
