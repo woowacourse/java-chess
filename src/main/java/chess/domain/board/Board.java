@@ -52,7 +52,7 @@ public class Board {
         return pieces.getBlackScore();
     }
 
-    public boolean isKingsExist() {
-        return pieces.isKingsExist();
+    public boolean isKingCatch() {
+        return pieces.isKingCatch();
     }
 }

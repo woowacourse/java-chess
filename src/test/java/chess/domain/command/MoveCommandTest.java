@@ -41,11 +41,11 @@ class MoveCommandTest {
 
     @Test
     void isUsable() {
-        assertThat(moveCommand.isUsable("move a1 a2")).isTrue();
-        assertThat(moveCommand.isUsable("move a1a2")).isFalse();
-        assertThat(moveCommand.isUsable("move a1 a23")).isFalse();
-        assertThat(moveCommand.isUsable("move a123 a2")).isFalse();
-        assertThat(moveCommand.isUsable("move2 a1 a2")).isFalse();
-        assertThat(moveCommand.isUsable("move a1 a1 a2")).isFalse();
+        assertThat(moveCommand.isAppropriateCommand("move a1 a2")).isTrue();
+        assertThat(moveCommand.isAppropriateCommand("move a1a2")).isFalse();
+        assertThat(moveCommand.isAppropriateCommand("move a1 a23")).isFalse();
+        assertThat(moveCommand.isAppropriateCommand("move a123 a2")).isFalse();
+        assertThat(moveCommand.isAppropriateCommand("move2 a1 a2")).isFalse();
+        assertThat(moveCommand.isAppropriateCommand("move a1 a1 a2")).isFalse();
     }
 }

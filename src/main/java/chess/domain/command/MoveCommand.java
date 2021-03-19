@@ -38,7 +38,7 @@ public class MoveCommand extends CommandInit {
     }
 
     @Override
-    public boolean isUsable(final String input) {
+    public boolean isAppropriateCommand(final String input) {
         String[] inputs = input.split(" ");
 
         return isRightInputs(inputs);

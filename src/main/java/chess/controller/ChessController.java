@@ -30,7 +30,7 @@ public class ChessController {
     private void turn() {
         try {
             String input = InputView.inputCommandFromUser();
-            Command command = commands.getIfPresent(input);
+            Command command = commands.getAppropriateCommand(input);
             command.handle(input);
             printByCommand(command);
         } catch (RuntimeException e) {

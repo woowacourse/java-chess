@@ -46,8 +46,8 @@ class StartCommandTest {
 
     @Test
     void isUsable() {
-        boolean actualTrue = startCommand.isUsable("start");
-        boolean actualFalse = startCommand.isUsable("start2");
+        boolean actualTrue = startCommand.isAppropriateCommand("start");
+        boolean actualFalse = startCommand.isAppropriateCommand("start2");
 
         assertThat(actualTrue).isTrue();
         assertThat(actualFalse).isFalse();

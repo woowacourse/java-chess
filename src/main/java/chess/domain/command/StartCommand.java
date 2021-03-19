@@ -15,7 +15,7 @@ public class StartCommand extends CommandInit {
     }
 
     @Override
-    public boolean isUsable(final String input) {
+    public boolean isAppropriateCommand(final String input) {
         return COMMAND.equals(input);
     }
 

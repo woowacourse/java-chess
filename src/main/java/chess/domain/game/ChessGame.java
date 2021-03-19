@@ -33,8 +33,8 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public boolean isKingsExist() {
-        return board.isKingsExist();
+    public boolean isKingCatch() {
+        return board.isKingCatch();
     }
 
     public Board getBoard() {

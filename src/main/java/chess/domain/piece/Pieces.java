@@ -64,12 +64,12 @@ public class Pieces {
                 !piece.isSameColor(color);
     }
 
-    public boolean isKingsExist() {
+    public boolean isKingCatch() {
         long countOfKingOnBoard = pieces.stream()
                 .filter(Piece::isKing)
                 .count();
 
-        return countOfKingOnBoard == COUNT_OF_KING;
+        return !(countOfKingOnBoard == COUNT_OF_KING);
     }
 
     public List<Piece> getPieces() {

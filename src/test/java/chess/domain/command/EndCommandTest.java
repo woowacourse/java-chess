@@ -29,9 +29,9 @@ class EndCommandTest {
 
     @Test
     void isUsable() {
-        endCommand.isUsable(null);
-        boolean actualTrue = endCommand.isUsable("end");
-        boolean actualFalse = endCommand.isUsable("end2");
+        endCommand.isAppropriateCommand(null);
+        boolean actualTrue = endCommand.isAppropriateCommand("end");
+        boolean actualFalse = endCommand.isAppropriateCommand("end2");
 
         assertThat(actualTrue).isTrue();
         assertThat(actualFalse).isFalse();
