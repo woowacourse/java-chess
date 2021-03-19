@@ -20,11 +20,11 @@ public class OutputView {
     }
 
     public static void printCurrentBoard(final Map<Position, Piece> chessBoard) {
-        final Map<Position, Piece> board = new TreeMap<>(chessBoard);
+        System.out.println();
         int lastVerticalValue = 8;
-        for (final Position position : board.keySet()) {
+        for (final Position position : chessBoard.keySet()) {
             lastVerticalValue = updateLastVerticalValue(lastVerticalValue, position);
-            System.out.print(board.get(position).getName());
+            System.out.print(chessBoard.get(position).getName());
         }
         System.out.println();
     }
