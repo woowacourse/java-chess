@@ -108,4 +108,8 @@ public abstract class Piece {
         }
         throw new ImpossibleMoveException();
     }
+
+    public TeamColor enemyColor(){
+        return teamColor.reverse();
+    }
 }

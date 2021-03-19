@@ -7,3 +7,4 @@
 
  - [x] 체스판을 Position과 Piece를 가진 Map으로 구현
  - [x] 체스말을 초기 배치
+ 

@@ -53,7 +53,7 @@ public class Board {
     public void updateMovablePositions() {
         pieces.forEach(piece ->
                 piece.addMovablePositions(existPiecePositions(),
-                        positionsByTeamColor(piece.teamColor())
+                        positionsByTeamColor(piece.enemyColor())
                 )
         );
     }
