@@ -42,12 +42,12 @@ public class Board {
 
         return (sourceSquareState.hasMovableVector(source, destination)
             && isValidSourceAndDestination(sourceSquareState, destinationSquareState)
-            && isNotBlockedToGo(source, destination, sourceSquareState)
-        );
+            && isNotBlockedToGo(source, destination, sourceSquareState));
     }
 
     private boolean canMovePawn(Point source, Point destination) {
-        return canMovePawnToStraight(source, destination) || canMovePawnToDiagonalDirection(source, destination);
+        return canMovePawnToStraight(source, destination) || canMovePawnToDiagonalDirection(source,
+            destination);
     }
 
     private boolean canMovePawnToStraight(Point source, Point destination) {
@@ -58,8 +58,22 @@ public class Board {
         }
         Vector vector = Vector.get(destination.minusX(source), destination.minusY(source));
 
-        return (sourceSquareState.isTeam(Team.WHITE) && vector.isWhitePawnsStraight() && destinationSquareState.isEmpty())
-            || (sourceSquareState.isTeam(Team.BLACK) && vector.isBlackPawnsStraight() && destinationSquareState.isEmpty());
+        return canMoveWhitePawnToStraight(sourceSquareState, destinationSquareState, vector)
+            || canMoveBlackPawnToStraight(sourceSquareState, destinationSquareState, vector);
+    }
+
+    private boolean canMoveBlackPawnToStraight(SquareState sourceSquareState,
+        SquareState destinationSquareState, Vector vector) {
+        return sourceSquareState.isTeam(Team.BLACK)
+            && vector.isBlackPawnsStraight()
+            && destinationSquareState.isEmpty();
+    }
+
+    private boolean canMoveWhitePawnToStraight(SquareState sourceSquareState,
+        SquareState destinationSquareState, Vector vector) {
+        return sourceSquareState.isTeam(Team.WHITE)
+            && vector.isWhitePawnsStraight()
+            && destinationSquareState.isEmpty();
     }
 
 

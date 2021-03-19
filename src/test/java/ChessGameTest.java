@@ -48,7 +48,8 @@ public class ChessGameTest {
         board.move(Point.of("e2"), Point.of("e3")); // 폰 이동
         board.move(Point.of("e1"), Point.of("e2"));
 
-        assertThat(board.getSquareState(Point.of("e2"))).isEqualTo(SquareState.of(Piece.KING, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("e2")))
+            .isEqualTo(SquareState.of(Piece.KING, Team.WHITE));
     }
 
     @Test
@@ -57,7 +58,8 @@ public class ChessGameTest {
         board.move(Point.of("d2"), Point.of("d3"));
         chessGame.move(Point.of("d1"), Point.of("d2"), Team.WHITE);
 
-        assertThat(board.getSquareState(Point.of("d2"))).isEqualTo(SquareState.of(Piece.QUEEN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("d2")))
+            .isEqualTo(SquareState.of(Piece.QUEEN, Team.WHITE));
     }
 
     @Test
@@ -81,7 +83,8 @@ public class ChessGameTest {
     void bishopWithValidMove() {
         board.move(Point.of("d2"), Point.of("d3"));
         chessGame.move(Point.of("c1"), Point.of("h6"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("h6"))).isEqualTo(SquareState.of(Piece.BISHOP, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("h6")))
+            .isEqualTo(SquareState.of(Piece.BISHOP, Team.WHITE));
     }
 
     @Test
@@ -97,7 +100,8 @@ public class ChessGameTest {
     void rookWithValidMove() {
         board.move(Point.of("a2"), Point.of("a6"));
         chessGame.move(Point.of("a1"), Point.of("a5"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("a5"))).isEqualTo(SquareState.of(Piece.ROOK, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("a5")))
+            .isEqualTo(SquareState.of(Piece.ROOK, Team.WHITE));
     }
 
     @Test
@@ -113,7 +117,8 @@ public class ChessGameTest {
     @DisplayName("나이트을 유효한 위치로 이동 테스트")
     void knightWithValidMove() {
         chessGame.move(Point.of("b1"), Point.of("c3"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("c3"))).isEqualTo(SquareState.of(Piece.KNIGHT, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("c3")))
+            .isEqualTo(SquareState.of(Piece.KNIGHT, Team.WHITE));
     }
 
     @Test
@@ -128,14 +133,16 @@ public class ChessGameTest {
     @DisplayName("폰을 유효한 위치로 이동 테스트")
     void pawnWithValidMove() {
         chessGame.move(Point.of("b2"), Point.of("b3"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("b3"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("b3")))
+            .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
     @DisplayName("폰을 유효한 위치로 이동 테스트(첫 이동인 경우 2칸 허용)")
     void pawnWithValidMoveWhenFirstMove() {
         chessGame.move(Point.of("b2"), Point.of("b4"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("b4"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("b4")))
+            .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
@@ -144,8 +151,10 @@ public class ChessGameTest {
         board.move(Point.of("e7"), Point.of("e5"));
         board.move(Point.of("d2"), Point.of("d4"));
         chessGame.move(Point.of("d4"), Point.of("e5"), Team.WHITE);
-        assertThat(board.getSquareState(Point.of("e5"))).isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
-        assertThat(board.getSquareState(Point.of("d4"))).isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
+        assertThat(board.getSquareState(Point.of("e5")))
+            .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+        assertThat(board.getSquareState(Point.of("d4")))
+            .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
     }
 
     @Test

@@ -53,14 +53,6 @@ public enum Vector {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public boolean isWhitePawnsStraight() {
-        return Arrays.asList(NORTH, FIRST_PAWN_UP).contains(this);
-    }
-
-    public boolean isBlackPawnsStraight() {
-        return Arrays.asList(SOUTH, FIRST_PAWN_DOWN).contains(this);
-    }
-
     public static boolean hasNotVector(int horizon, int vertical) {
         return Arrays.stream(Vector.values())
             .noneMatch(vector -> (vector.horizon == horizon)
@@ -73,6 +65,14 @@ public enum Vector {
                 && (vector.vertical == vertical))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public boolean isWhitePawnsStraight() {
+        return Arrays.asList(NORTH, FIRST_PAWN_UP).contains(this);
+    }
+
+    public boolean isBlackPawnsStraight() {
+        return Arrays.asList(SOUTH, FIRST_PAWN_DOWN).contains(this);
     }
 
     public boolean isWhiteDiagonalVector() {

@@ -11,7 +11,6 @@ public class Ready implements GameState {
 
     public Ready(ChessGame chessGame) {
         this.chessGame = chessGame;
-
     }
 
     @Override

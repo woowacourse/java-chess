@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,12 +18,12 @@ public enum Column {
     private static final int MAX_COLUMN = 7;
     private static final List<Column> COLUMNS = Arrays.asList(Column.values());
 
-    private final String xCoordinate;
-    private final int index;
-
     static {
         COLUMNS.sort(Comparator.comparingInt(Column::getXIndex));
     }
+
+    private final String xCoordinate;
+    private final int index;
 
     Column(String xCoordinate, int index) {
         this.xCoordinate = xCoordinate;

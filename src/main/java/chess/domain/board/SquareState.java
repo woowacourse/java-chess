@@ -11,14 +11,14 @@ public class SquareState {
 
     private static final List<SquareState> SQUARE_STATE_POOL = new ArrayList<>();
 
-    private final Piece piece;
-    private final Team team;
-
     static {
         for (Piece piece : Piece.values()) {
             iterateTeam(piece);
         }
     }
+
+    private final Piece piece;
+    private final Team team;
 
     private SquareState(Piece piece, Team team) {
         this.piece = piece;
@@ -73,23 +73,6 @@ public class SquareState {
         return team == Team.NONE;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        SquareState squareState = (SquareState) o;
-        return Objects.equals(piece, squareState.piece) && team == squareState.team;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(piece, team);
-    }
-
     public boolean isPawn() {
         return this.piece == Piece.PAWN;
     }
@@ -106,5 +89,22 @@ public class SquareState {
 
     public double score() {
         return piece.score();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        SquareState squareState = (SquareState) o;
+        return Objects.equals(piece, squareState.piece) && team == squareState.team;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(piece, team);
     }
 }

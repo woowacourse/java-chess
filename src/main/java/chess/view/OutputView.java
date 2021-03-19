@@ -5,6 +5,7 @@ import chess.dto.BoardDto;
 import java.util.List;
 
 public class OutputView {
+
     private static final String INFO_MESSAGE_FORMAT = "> %s\n";
     private static final String START_MESSAGE = "체스 게임을 시작합니다.";
     private static final String START_COMMAND = "게임 시작 : start";
@@ -13,10 +14,10 @@ public class OutputView {
 
 
     public static void printStartInfo() {
-        System.out.printf(INFO_MESSAGE_FORMAT,START_MESSAGE);
-        System.out.printf(INFO_MESSAGE_FORMAT,START_COMMAND);
-        System.out.printf(INFO_MESSAGE_FORMAT,END_COMMAND);
-        System.out.printf(INFO_MESSAGE_FORMAT,MOVE_COMMAND);
+        System.out.printf(INFO_MESSAGE_FORMAT, START_MESSAGE);
+        System.out.printf(INFO_MESSAGE_FORMAT, START_COMMAND);
+        System.out.printf(INFO_MESSAGE_FORMAT, END_COMMAND);
+        System.out.printf(INFO_MESSAGE_FORMAT, MOVE_COMMAND);
     }
 
     public static void printChessBoard(BoardDto boardDto) {

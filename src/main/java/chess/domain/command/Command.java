@@ -9,10 +9,9 @@ public enum Command {
     MOVE("move", 2),
     STATUS("status", 0);
 
+    public static final int ARGUMENT_START_INDEX = 1;
     private static final String DELIMITER = " ";
     private static final int OPERATION_INDEX = 0;
-    public static final int ARGUMENT_START_INDEX = 1;
-
     private final String operation;
     private final int argumentCount;
 

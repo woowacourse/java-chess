@@ -16,6 +16,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class GameStateTest {
+
     private Board board;
     private ChessGame chessGame;
 
@@ -38,15 +39,18 @@ public class GameStateTest {
     @DisplayName("레디 상태에서 start 외의 입력이 들어오는 경우 예외처리 테스트")
     void invalidInputWhenRunningState() {
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> new Ready(chessGame).operateCommand(Command.END, Collections.emptyList()))
+            .isThrownBy(
+                () -> new Ready(chessGame).operateCommand(Command.END, Collections.emptyList()))
             .withMessage("start 이외의 명령은 입력할 수 없습니다.");
 
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> new Ready(chessGame).operateCommand(Command.STATUS, Collections.emptyList()))
+            .isThrownBy(
+                () -> new Ready(chessGame).operateCommand(Command.STATUS, Collections.emptyList()))
             .withMessage("start 이외의 명령은 입력할 수 없습니다.");
 
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> new Ready(chessGame).operateCommand(Command.MOVE, Arrays.asList("b2", "b3")))
+            .isThrownBy(
+                () -> new Ready(chessGame).operateCommand(Command.MOVE, Arrays.asList("b2", "b3")))
             .withMessage("start 이외의 명령은 입력할 수 없습니다.");
     }
 
@@ -55,16 +59,22 @@ public class GameStateTest {
     void createRunningState() {
         GameState running = new Running(chessGame, new Turn());
 
-        assertThat(running.operateCommand(Command.MOVE, Arrays.asList("b2", "b3")) instanceof Running).isTrue();
-        assertThat(running.operateCommand(Command.END, Collections.emptyList()) instanceof Finished).isTrue();
-        assertThat(running.operateCommand(Command.STATUS, Collections.emptyList()) instanceof Running).isTrue();
+        assertThat(
+            running.operateCommand(Command.MOVE, Arrays.asList("b2", "b3")) instanceof Running)
+            .isTrue();
+        assertThat(running.operateCommand(Command.END, Collections.emptyList()) instanceof Finished)
+            .isTrue();
+        assertThat(
+            running.operateCommand(Command.STATUS, Collections.emptyList()) instanceof Running)
+            .isTrue();
     }
 
     @Test
     @DisplayName("레디 상태에서 start 외의 입력이 들어오는 경우 예외처리 테스트")
     void invalidInputWhenReadyState() {
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> new Running(chessGame, new Turn()).operateCommand(Command.START, Collections.emptyList()))
+            .isThrownBy(() -> new Running(chessGame, new Turn())
+                .operateCommand(Command.START, Collections.emptyList()))
             .withMessage("올바르지 않은 입력입니다.");
     }
 

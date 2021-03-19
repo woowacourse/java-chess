@@ -17,12 +17,12 @@ public enum Row {
     private static final int ROW_MAX = 7;
     private static final List<Row> REVERSE_ROWS = Arrays.asList(Row.values());
 
-    private final String yCoordinate;
-    private final int index;
-
     static {
         REVERSE_ROWS.sort((row1, row2) -> row2.getYIndex() - row1.getYIndex());
     }
+
+    private final String yCoordinate;
+    private final int index;
 
     Row(String yCoordinate, int index) {
         this.yCoordinate = yCoordinate;
