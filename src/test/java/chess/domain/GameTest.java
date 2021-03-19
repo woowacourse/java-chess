@@ -38,8 +38,7 @@ class GameTest {
 
     @Test
     void pickEndPiece() {
-        Player whitePlayer = new Player(Color.WHITE);
-        assertThatCode(() -> game.action(whitePlayer, Position.from("a2"), Position.from("a4")))
+        assertThatCode(() -> game.action(Position.from("a7"), Position.from("a6")))
                 .doesNotThrowAnyException();
     }
 }

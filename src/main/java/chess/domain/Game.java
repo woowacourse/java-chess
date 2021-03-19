@@ -12,9 +12,11 @@ import java.util.List;
 
 public class Game {
     private final Pieces pieces;
+    private final Turn turn;
 
     public Game() {
         pieces = new Pieces();
+        turn = new Turn();
         pieces.init();
     }
 
@@ -38,11 +40,13 @@ public class Game {
         throw new IllegalArgumentException();
     }
 
-    public void action(Player player, Position from, Position to) {
+    public void action(Position from, Position to) {
+        Player player = turn.player();
         Piece start = pickStartPiece(player, from);
         Piece piece = pieces.getPieceOf(to);
         if (piece.isEmpty()) {
             start.move(to, pieces);
+            turn.next();
             return;
         }
         if (piece.isSameColor(player.getColor())) {
@@ -50,6 +54,7 @@ public class Game {
         }
         start.kill(to, pieces);
         pieces.delete(piece);
+        turn.next();
     }
 
     public boolean isNotEnd() {
