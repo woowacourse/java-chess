@@ -30,6 +30,10 @@ public enum Row {
         return getRow(String.valueOf(Integer.parseInt(number) + direction.getCoordinates().get(1)));
     }
 
+    public String getNumber(){
+        return number;
+    }
+
     public int getValue(){
         return Integer.parseInt(number);
     }
