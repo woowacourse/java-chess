@@ -35,4 +35,36 @@ public class Position {
     public static List<Position> generate() {
         return new ArrayList<>(CACHE.values());
     }
+
+    public Position up() {
+        return valueOf(xpoint, ypoint.up());
+    }
+
+    public Position down() {
+        return valueOf(xpoint, ypoint.down());
+    }
+
+    public Position left() {
+        return valueOf(xpoint.left(), ypoint);
+    }
+
+    public Position right() {
+        return valueOf(xpoint.right(), ypoint);
+    }
+
+    public Position leftUp() {
+        return valueOf(xpoint.left(), ypoint.up());
+    }
+
+    public Position rightUp() {
+        return valueOf(xpoint.right(), ypoint.up());
+    }
+
+    public Position downLeft() {
+        return valueOf(xpoint.left(), ypoint.down());
+    }
+
+    public Position downRight() {
+        return valueOf(xpoint.right(), ypoint.down());
+    }
 }

@@ -108,4 +108,76 @@ public class PositionTest {
 
         return positions;
     }
+
+    @Test
+    @DisplayName("up 생성 테스트")
+    void upTest() {
+        Position position = Position.valueOf("c5");
+        assertThat(position.up()).isEqualTo(Position.valueOf("c6"));
+        Position errorTestPosition = Position.valueOf("c8");
+        assertThatThrownBy(errorTestPosition::up).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("down 생성 테스트")
+    void downTest() {
+        Position position = Position.valueOf("c5");
+        assertThat(position.down()).isEqualTo(Position.valueOf("c4"));
+        Position errorTestPosition = Position.valueOf("c1");
+        assertThatThrownBy(errorTestPosition::down).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("left 생성 테스트")
+    void leftTest() {
+        Position position = Position.valueOf("c5");
+        assertThat(position.left()).isEqualTo(Position.valueOf("b5"));
+        Position errorTestPosition = Position.valueOf("a5");
+        assertThatThrownBy(errorTestPosition::left).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("right 생성 테스트")
+    void rightTest() {
+        Position position = Position.valueOf("c5");
+        assertThat(position.right()).isEqualTo(Position.valueOf("d5"));
+        Position errorTestPosition = Position.valueOf("h5");
+        assertThatThrownBy(errorTestPosition::right).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("11시 방향 대각선 테스트")
+    void leftUpTest() {
+        assertThat(Position.valueOf("c5").leftUp()).isEqualTo(Position.valueOf("b6"));
+        assertThatThrownBy(()->Position.valueOf("a5").leftUp()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("b8").leftUp()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("a8").leftUp()).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("1시 방향 대각선 테스트")
+    void rightUpTest() {
+        assertThat(Position.valueOf("c5").rightUp()).isEqualTo(Position.valueOf("d6"));
+        assertThatThrownBy(()->Position.valueOf("h5").rightUp()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("b8").rightUp()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("h8").rightUp()).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("7시 방향 대각선 테스트")
+    void leftDownTest() {
+        assertThat(Position.valueOf("c5").downLeft()).isEqualTo(Position.valueOf("b4"));
+        assertThatThrownBy(()->Position.valueOf("a5").downLeft()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("b1").downLeft()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("a1").downLeft()).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("5시 방향 대각선 테스트")
+    void rightDownTest() {
+        assertThat(Position.valueOf("c5").downRight()).isEqualTo(Position.valueOf("d4"));
+        assertThatThrownBy(()->Position.valueOf("h5").downRight()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("b1").downRight()).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(()->Position.valueOf("h1").downRight()).isInstanceOf(IllegalArgumentException.class);
+    }
 }
