@@ -1,24 +1,24 @@
-package chess.gamestate;
+package chess.domain.gamestate;
 
-import chess.PieceOperator;
-import chess.Turn;
-import chess.command.Command;
+import chess.domain.ChessGame;
+import chess.domain.Turn;
+import chess.domain.command.Command;
 import java.util.List;
 
 public class Ready implements GameState {
 
-    private final PieceOperator pieceOperator;
+    private final ChessGame chessGame;
 
-    public Ready(PieceOperator pieceOperator) {
-        this.pieceOperator = pieceOperator;
+    public Ready(ChessGame chessGame) {
+        this.chessGame = chessGame;
 
     }
 
     @Override
     public GameState operateCommand(Command command, List<String> arguments) {
         if (command == Command.START) {
-            pieceOperator.initialize();
-            return new Running(pieceOperator, new Turn());
+            chessGame.initialize();
+            return new Running(chessGame, new Turn());
         }
         throw new IllegalArgumentException("start 이외의 명령은 입력할 수 없습니다.");
     }

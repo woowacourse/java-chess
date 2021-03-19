@@ -1,7 +1,6 @@
-package chess.gamestate;
+package chess.domain.gamestate;
 
-import chess.PieceOperator;
-import chess.command.Command;
+import chess.domain.command.Command;
 import java.util.List;
 
 public class Finished implements GameState {

@@ -1,10 +1,11 @@
-package chess;
+package chess.domain;
 
-import chess.board.Board;
-import chess.board.Point;
-import chess.board.Row;
-import chess.board.Team;
-import chess.piece.Piece;
+import chess.domain.board.Board;
+import chess.domain.board.Point;
+import chess.domain.board.Row;
+import chess.domain.board.Team;
+import chess.domain.piece.Piece;
+import chess.dto.BoardDto;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PieceOperator {
+public class ChessGame {
 
     private static final Map<Piece, List<Point>> WHITE_INITIAL_POINTS = new HashMap<>();
 
@@ -32,7 +33,7 @@ public class PieceOperator {
 
     private final Board board;
 
-    public PieceOperator(Board board) {
+    public ChessGame(Board board) {
         this.board = board;
     }
 
@@ -60,5 +61,9 @@ public class PieceOperator {
 
     public double score(Team team) {
         return board.score(team);
+    }
+
+    public BoardDto generateBoardDto() {
+        return board.generateBoardDto();
     }
 }

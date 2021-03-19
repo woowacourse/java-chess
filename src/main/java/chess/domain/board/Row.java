@@ -1,6 +1,8 @@
-package chess.board;
+package chess.domain.board;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 public enum Row {
     ONE("1", 0),
@@ -13,9 +15,14 @@ public enum Row {
     EIGHT("8", 7);
 
     private static final int ROW_MAX = 7;
+    private static final List<Row> REVERSE_ROWS = Arrays.asList(Row.values());
 
     private final String yCoordinate;
     private final int index;
+
+    static {
+        REVERSE_ROWS.sort((row1, row2) -> row2.getYIndex() - row1.getYIndex());
+    }
 
     Row(String yCoordinate, int index) {
         this.yCoordinate = yCoordinate;
@@ -27,6 +34,10 @@ public enum Row {
             .filter(row -> row.index == index)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static List<Row> reverseRows() {
+        return Collections.unmodifiableList(REVERSE_ROWS);
     }
 
     public String getYCoordinate() {

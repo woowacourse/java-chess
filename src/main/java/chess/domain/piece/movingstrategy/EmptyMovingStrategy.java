@@ -1,7 +1,7 @@
-package chess.piece.movingstrategy;
+package chess.domain.piece.movingstrategy;
 
-import chess.board.Point;
-import chess.piece.Vector;
+import chess.domain.board.Point;
+import chess.domain.piece.Vector;
 
 public class EmptyMovingStrategy implements MovingStrategy {
 

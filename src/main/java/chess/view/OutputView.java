@@ -1,6 +1,8 @@
 package chess.view;
 
-import chess.board.Team;
+import chess.domain.board.Team;
+import chess.dto.BoardDto;
+import java.util.List;
 
 public class OutputView {
     private static final String INFO_MESSAGE_FORMAT = "> %s\n";
@@ -17,8 +19,10 @@ public class OutputView {
         System.out.printf(INFO_MESSAGE_FORMAT,MOVE_COMMAND);
     }
 
-    public static void printChessBoard() {
-
+    public static void printChessBoard(BoardDto boardDto) {
+        List<List<String>> board = boardDto.board();
+        board.forEach(row -> System.out.println(String.join("", row)));
+        System.out.println();
     }
 
     public static void printTeamScore(double score, Team team) {

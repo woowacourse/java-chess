@@ -1,4 +1,4 @@
-package chess.piece;
+package chess.domain.piece;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,8 @@ public enum Vector {
     SOUTHEAST(1, -1),
     SOUTHWEST(-1, -1),
 
-    FIRST_PAWN_MOVE(0, 2),
+    FIRST_PAWN_UP(0, 2),
+    FIRST_PAWN_DOWN(0, -2),
 
     NNE(1, 2),
     NEE(2, 1),
@@ -33,7 +34,7 @@ public enum Vector {
     }
 
     public static List<Vector> pawnVectors() {
-        return Arrays.asList(NORTH, FIRST_PAWN_MOVE);
+        return Arrays.asList(NORTH, FIRST_PAWN_UP);
     }
 
     public static List<Vector> everyVectors() {
@@ -50,6 +51,12 @@ public enum Vector {
 
     public static List<Vector> knightVectors() {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+    }
+
+    public static boolean hasVector(int horizon, int vertical) {
+        return Arrays.stream(Vector.values())
+            .anyMatch(vector -> (vector.horizon == horizon)
+                && (vector.vertical == vertical));
     }
 
     public static Vector get(int horizon, int vertical) {

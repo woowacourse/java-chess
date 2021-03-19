@@ -1,6 +1,6 @@
-package chess;
+package chess.domain;
 
-import chess.board.Team;
+import chess.domain.board.Team;
 
 public class Turn {
 

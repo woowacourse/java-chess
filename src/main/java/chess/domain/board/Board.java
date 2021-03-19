@@ -1,10 +1,14 @@
-package chess.board;
+package chess.domain.board;
 
 
-import chess.piece.Piece;
-import chess.piece.Vector;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Vector;
+import chess.dto.BoardDto;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -54,6 +58,9 @@ public class Board {
     private boolean canMovePawnToDiagonalDirection(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
+        if (!Vector.hasVector(destination.minusX(source), destination.minusY(source))) {
+            return false;
+        }
         Vector vector = Vector.get(destination.minusX(source), destination.minusY(source));
 
         return canWhitePawnKillEnemy(sourceSquareState, destinationSquareState, vector)
@@ -76,11 +83,13 @@ public class Board {
             && vector.isBlackDiagonalVector();
     }
 
-    private boolean isNotSameTeam(SquareState sourceSquareState, SquareState destinationSquareState) {
+    private boolean isNotSameTeam(SquareState sourceSquareState,
+        SquareState destinationSquareState) {
         return destinationSquareState.isNotSameTeam(sourceSquareState);
     }
 
-    private boolean isNotBlockedToGo(Point source, Point destination, SquareState sourceSquareState) {
+    private boolean isNotBlockedToGo(Point source, Point destination,
+        SquareState sourceSquareState) {
         Vector vector = sourceSquareState.findMovableVector(source, destination);
         int moveCount = 1;
         boolean unblocked = true;
@@ -142,5 +151,23 @@ public class Board {
             .filter(square -> square.isTeam(team))
             .mapToDouble(SquareState::score)
             .sum();
+    }
+
+    public BoardDto generateBoardDto() {
+        List<List<String>> result = new ArrayList<>();
+        for (Row row: Row.reverseRows()) {
+            result.add(generateRow(row));
+        }
+
+        return new BoardDto(result);
+    }
+
+    private List<String> generateRow(Row row) {
+        List<String> rowResult = new ArrayList<>();
+        for (Column column: Column.columns()) {
+            SquareState squareState = squares.get(Point.of(column.getXCoordinate() + row.getYCoordinate()));
+            rowResult.add(squareState.pieceName());
+        }
+        return rowResult;
     }
 }

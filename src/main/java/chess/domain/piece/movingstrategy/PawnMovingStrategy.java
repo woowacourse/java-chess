@@ -1,8 +1,8 @@
-package chess.piece.movingstrategy;
+package chess.domain.piece.movingstrategy;
 
-import chess.board.Point;
-import chess.board.Row;
-import chess.piece.Vector;
+import chess.domain.board.Point;
+import chess.domain.board.Row;
+import chess.domain.piece.Vector;
 import java.util.List;
 
 public class PawnMovingStrategy implements MovingStrategy {
@@ -18,7 +18,7 @@ public class PawnMovingStrategy implements MovingStrategy {
 
         Vector possibleVector = findPawnsVectorByDifference(x, y);
 
-        if (Vector.FIRST_PAWN_MOVE == possibleVector && !source.isRow(Row.TWO)) {
+        if (Vector.FIRST_PAWN_UP == possibleVector && !source.isRow(Row.TWO)) {
             return null;
         }
         return possibleVector;

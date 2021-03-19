@@ -1,35 +1,46 @@
 package chess.contoller;
 
-import chess.PieceOperator;
-import chess.board.Board;
-import chess.board.Team;
-import chess.command.Command;
-import chess.gamestate.GameState;
-import chess.gamestate.Ready;
+import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.Team;
+import chess.domain.command.Command;
+import chess.domain.gamestate.GameState;
+import chess.domain.gamestate.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
     public void play() {
-        Board board = new Board();
-        PieceOperator pieceOperator = new PieceOperator(board);
-        GameState gameState = new Ready(pieceOperator);
+        ChessGame chessGame = new ChessGame(new Board());
+        GameState gameState = new Ready(chessGame);
 
+        gameState = ready(gameState);
+        start(chessGame, gameState);
+    }
+
+    private GameState ready(GameState gameState) {
         OutputView.printStartInfo();
         String input = InputView.InputString();
-        gameState = gameState.operateCommand(Command.getByInput(input), Command.getArguments(input));
-        OutputView.printChessBoard();
+        Command command = Command.getByInput(input);
+        gameState = gameState.operateCommand(command, Command.getArguments(input));
+        return gameState;
+    }
 
+    private void start(ChessGame chessGame, GameState gameState) {
         while (gameState.isRunning()) {
-            input = InputView.InputString();
+            OutputView.printChessBoard(chessGame.generateBoardDto());
+            String input = InputView.InputString();
             Command command = Command.getByInput(input);
-            if (command == Command.STATUS) {
-                OutputView.printTeamScore(pieceOperator.score(Team.WHITE), Team.WHITE);
-                OutputView.printTeamScore(pieceOperator.score(Team.BLACK), Team.BLACK);
-            }
-            OutputView.printChessBoard();
-            gameState = gameState.operateCommand(Command.getByInput(input), Command.getArguments(input));
+            gameState = gameState.operateCommand(command, Command.getArguments(input));
+            printScoreIfStatus(chessGame, command);
+        }
+    }
+
+    private void printScoreIfStatus(ChessGame chessGame, Command command) {
+        if (command == Command.STATUS) {
+            OutputView.printTeamScore(chessGame.score(Team.WHITE), Team.WHITE);
+            OutputView.printTeamScore(chessGame.score(Team.BLACK), Team.BLACK);
         }
     }
 }

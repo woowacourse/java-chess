@@ -1,6 +1,10 @@
-package chess.board;
+package chess.domain.board;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public enum Column {
     A("a", 0),
@@ -13,9 +17,14 @@ public enum Column {
     H("h", 7);
 
     private static final int MAX_COLUMN = 7;
+    private static final List<Column> COLUMNS = Arrays.asList(Column.values());
 
     private final String xCoordinate;
     private final int index;
+
+    static {
+        COLUMNS.sort(Comparator.comparingInt(Column::getXIndex));
+    }
 
     Column(String xCoordinate, int index) {
         this.xCoordinate = xCoordinate;
@@ -29,6 +38,10 @@ public enum Column {
             .orElseThrow(IllegalArgumentException::new);
     }
 
+    public static List<Column> columns() {
+        return Collections.unmodifiableList(COLUMNS);
+    }
+
     public String getXCoordinate() {
         return xCoordinate;
     }
@@ -36,6 +49,7 @@ public enum Column {
     public Column opposite() {
         return getByIndex(MAX_COLUMN - index);
     }
+
 
     public int getXIndex() {
         return index;

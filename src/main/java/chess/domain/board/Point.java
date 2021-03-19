@@ -1,6 +1,6 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.Vector;
+import chess.domain.piece.Vector;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

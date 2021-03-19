@@ -1,21 +1,21 @@
-package chess.piece.movingstrategy;
+package chess.domain.piece.movingstrategy;
 
-import chess.board.Point;
-import chess.piece.Vector;
+import chess.domain.board.Point;
+import chess.domain.piece.Vector;
 import java.util.List;
 
-public class BishopMovingStrategy implements MovingStrategy {
+public class RookMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 7;
+    static final int LENGTH = 7;
 
-    private final List<Vector> bishopVector = Vector.diagonalVectors();
+    private final List<Vector> rooksVector = Vector.axisVectors();
 
     @Override
     public Vector findMovableVector(Point source, Point destination) {
         int x = destination.minusX(source);
         int y = destination.minusY(source);
 
-        return bishopVector.stream()
+        return rooksVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
             .orElse(null);

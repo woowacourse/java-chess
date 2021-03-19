@@ -1,9 +1,10 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.piece.Piece;
-import chess.piece.Vector;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Vector;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public class SquareState {
@@ -46,6 +47,14 @@ public class SquareState {
 
     public int getMoveLength() {
         return piece.getMoveLength();
+    }
+
+    public String pieceName() {
+        String pieceName = piece.pieceName();
+        if (team == Team.BLACK) {
+            pieceName = pieceName.toUpperCase(Locale.ROOT);
+        }
+        return pieceName;
     }
 
     public boolean isTeam(Team team) {

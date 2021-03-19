@@ -1,18 +1,18 @@
-package chess.gamestate;
+package chess.domain.gamestate;
 
-import chess.PieceOperator;
-import chess.Turn;
-import chess.board.Point;
-import chess.command.Command;
+import chess.domain.ChessGame;
+import chess.domain.Turn;
+import chess.domain.board.Point;
+import chess.domain.command.Command;
 import java.util.List;
 
 public class Running implements GameState {
 
-    private final PieceOperator pieceOperator;
+    private final ChessGame chessGame;
     private final Turn turn;
 
-    public Running(PieceOperator pieceOperator, Turn turn) {
-        this.pieceOperator = pieceOperator;
+    public Running(ChessGame chessGame, Turn turn) {
+        this.chessGame = chessGame;
         this.turn = turn;
     }
 
@@ -34,10 +34,10 @@ public class Running implements GameState {
         Point source = Point.of(arguments.get(0));
         Point destination = Point.of(arguments.get(1));
 
-        pieceOperator.move(source, destination, turn.now());
+        chessGame.move(source, destination, turn.now());
         turn.next();
 
-        if (!pieceOperator.isOnGoing()) {
+        if (!chessGame.isOnGoing()) {
             return new Finished();
         }
         return this;

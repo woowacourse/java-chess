@@ -1,14 +1,14 @@
-package chess.piece.movingstrategy;
+package chess.domain.piece.movingstrategy;
 
-import chess.board.Point;
-import chess.piece.Vector;
+import chess.domain.board.Point;
+import chess.domain.piece.Vector;
 import java.util.List;
 
-public class KingMovingStrategy implements MovingStrategy {
+public class KnightMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 1;
 
-    private final List<Vector> kingsVector = Vector.everyVectors();
+    private final List<Vector> kingsVector = Vector.knightVectors();
 
     @Override
     public Vector findMovableVector(Point source, Point destination) {

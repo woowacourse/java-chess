@@ -1,11 +1,11 @@
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.PieceOperator;
-import chess.board.Board;
-import chess.board.Point;
-import chess.board.SquareState;
-import chess.board.Team;
-import chess.piece.Piece;
+import chess.domain.ChessGame;
+import chess.domain.board.Board;
+import chess.domain.board.Point;
+import chess.domain.board.SquareState;
+import chess.domain.board.Team;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,15 +13,15 @@ import org.junit.jupiter.api.Test;
 public class BoardTest {
 
     private Board board;
-    private PieceOperator pieceOperator;
+    private ChessGame chessGame;
 
     @BeforeEach
     @DisplayName("보드의 초기 설정")
     void setUp() {
         board = new Board();
-        pieceOperator = new PieceOperator(board);
+        chessGame = new ChessGame(board);
 
-        pieceOperator.initialize();
+        chessGame.initialize();
     }
 
     @Test
@@ -66,7 +66,7 @@ public class BoardTest {
     @DisplayName("킹이 잡히면 게임종료 테스트")
     void gameIsOverWhenKingIsDead() {
         board.move(Point.of("e8"), Point.of("e3"));
-        pieceOperator.move(Point.of("d2"), Point.of("e3"), Team.WHITE);
+        chessGame.move(Point.of("d2"), Point.of("e3"), Team.WHITE);
 
         assertThat(board.isContinued()).isFalse();
     }

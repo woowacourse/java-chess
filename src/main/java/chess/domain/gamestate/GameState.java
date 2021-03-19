@@ -1,6 +1,6 @@
-package chess.gamestate;
+package chess.domain.gamestate;
 
-import chess.command.Command;
+import chess.domain.command.Command;
 import java.util.List;
 
 public interface GameState {
