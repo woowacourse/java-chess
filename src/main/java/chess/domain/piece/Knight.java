@@ -6,7 +6,7 @@ import chess.domain.board.Team;
 
 public class Knight extends AbstractPiece {
     public static final double POINT = 2.5;
-    private static final int MOVE_RANGE = 2;
+    private static final int MOVE_RANGE = 1;
 
     public Knight(Team team) {
         super(team);

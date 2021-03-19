@@ -4,10 +4,10 @@ public enum Team {
     BLACK("흑"),
     WHITE("백");
 
-    private final String name;
+    private final String team;
 
-    Team(String name) {
-        this.name = name;
+    Team(String team) {
+        this.team = team;
     }
 
     public static Team turnOver(Team team) {
@@ -17,8 +17,8 @@ public enum Team {
         return BLACK;
     }
 
-    public String getName() {
-        return name;
+    public String team() {
+        return team;
     }
 
     public boolean isBlack(Team team) {

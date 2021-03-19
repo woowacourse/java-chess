@@ -20,8 +20,8 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printTeamWin(Team team) {
-        System.out.printf("%s팀이 승리하였습니다.\n", team.getName());
+    public static void printWinner(Team team) {
+        System.out.printf("%s팀이 승리하였습니다.\n", team.team());
     }
 
     public static void printBoard(Board board, String turn) {
@@ -52,7 +52,7 @@ public class OutputView {
 
     public static void printStatus(EnumMap<Team, Double> result) {
         for (Map.Entry<Team, Double> entry : result.entrySet()) {
-            System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().getName(), entry.getValue());
+            System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().team(), entry.getValue());
         }
         System.out.println();
     }

@@ -23,7 +23,7 @@ public class ChessController {
 
     public static void start(ChessGame chessGame, String command) {
         chessGame.initBoard(BoardInitializer.init());
-        OutputView.printBoard(chessGame.getBoard(), chessGame.getTurn());
+        OutputView.printBoard(chessGame.board(), chessGame.turn());
     }
 
     public static void move(ChessGame chessGame, String command) {
@@ -31,7 +31,7 @@ public class ChessController {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
         chessGame.move(command);
-        OutputView.printBoard(chessGame.getBoard(), chessGame.getTurn());
+        OutputView.printBoard(chessGame.board(), chessGame.turn());
         confirmKingDead(chessGame);
     }
 
@@ -52,7 +52,7 @@ public class ChessController {
 
     private static void confirmKingDead(ChessGame chessGame) {
         if (chessGame.isEnd()) {
-            OutputView.printTeamWin(chessGame.getWinTeam());
+            OutputView.printWinner(chessGame.winner());
         }
     }
 }

@@ -32,19 +32,19 @@ public class ChessGame {
         state = state.init();
     }
 
-    public Board getBoard() {
+    public Board board() {
         return board;
     }
 
-    public String getTurn() {
-        return turn.getName();
+    public String turn() {
+        return turn.team();
     }
 
     public void move(String command) {
         try {
-            List<Position> coordinates = splitSourceAndTarget(command);
-            Position source = coordinates.get(SOURCE_INDEX - 1);
-            Position target = coordinates.get(TARGET_INDEX - 1);
+            Positions positions = new Positions(splitSourceAndTarget(command));
+            Position source = positions.at(SOURCE_INDEX - 1);
+            Position target = positions.at(TARGET_INDEX - 1);
 
             Piece piece = getPieceAfterCheckTurnAndTeam(source, target);
             Direction currentDirection = source.calculateDirection(target);
@@ -78,15 +78,16 @@ public class ChessGame {
         if (source.isDiagonal(target)) {
             MoveValidator.validateDiagonalMove(board, piece, target, distance);
             movePiece(source, target);
+            return;
         }
         MoveValidator.validateStraightMove(distance);
+        MoveValidator.isPieceExist(board, target);
         straightMoveDistanceOne(source, target, distance);
         straightMoveDistanceTwo(source, target, currentDirection, strategy, distance);
     }
 
     private void straightMoveDistanceOne(Position source, Position target, int distance) {
         if (distance == Pawn.MOVE_DEFAULT_RANGE) {
-            MoveValidator.isPieceExist(board, target);
             movePiece(source, target);
         }
     }
@@ -104,16 +105,16 @@ public class ChessGame {
         Direction currentDirection,
         Strategy strategy,
         int distance) {
-        MoveValidator.validateMoveRange(distance, strategy.getMoveRange());
         for (int i = 1; i <= strategy.getMoveRange(); i++) {
             Position movePosition = source.move(currentDirection, i);
             if (movePosition.equals(target)) {
                 board.isSameTeam(movePosition, turn);
                 movePiece(source, target);
-                break;
+                return;
             }
             MoveValidator.isPieceExist(board, movePosition);
         }
+        MoveValidator.validateMoveRange(distance, strategy.getMoveRange());
     }
 
     private void movePiece(Position source, Position target) {
@@ -183,7 +184,7 @@ public class ChessGame {
         return !state.isExit();
     }
 
-    public Team getWinTeam() {
+    public Team winner() {
         return winner;
     }
 }
