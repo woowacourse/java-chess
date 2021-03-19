@@ -3,8 +3,8 @@ package chess.domain.piece;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.piece.strategy.MoveStrategy;
 import chess.domain.position.Position;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public abstract class Piece {
@@ -23,19 +23,23 @@ public abstract class Piece {
 
     public List<Position> findAllPath(Position currentPosition) {
         return directions().stream()
-                .map(findPathInDirection(currentPosition))
+                .map(direction -> findPathInDirection(direction, currentPosition))
                 .flatMap(List::stream)
-                .distinct()
+//                .distinct()
                 .collect(Collectors.toList())
                 ;
     }
 
-    private Function<Direction, List<Position>> findPathInDirection(Position currentPosition) {
-        return direction -> {
-            return Positions.POSITION_CACHE.stream()
-                    .filter(position -> moveStrategy.canGoFrom(position, currentPosition))
-                    .collect(Collectors.toList());
-        };
+    private List<Position> findPathInDirection(Direction direction, Position currentPosition) {
+        List<Position> positions = new ArrayList<>();
+        while(!currentPosition.isBlockedWhenGoToThis(direction)){
+            positions.add(currentPosition.moveTo(direction));
+            currentPosition = currentPosition.moveTo(direction);
+        }
+        return positions;
+        // if current is boundary stop
+        // if not, add current position and move one direction
+        // but do not add initial position
     }
 
     public boolean isColor(PieceColor color) {

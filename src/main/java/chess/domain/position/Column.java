@@ -36,11 +36,22 @@ public enum Column {
     }
 
     public Column move(Direction direction) {
+        if(isBoundary(direction)){
+            return this;
+        }
         return getColumn(value + direction.getCoordinates().get(0));
     }
 
     public String getName() {
         return name;
+    }
+
+    public boolean isBoundary(Direction direction) {
+//        return this.equals(A) || this.equals(H);
+        if (Direction.RIGHT.equals(direction) || Direction.UP_RIGHT.equals(direction) || Direction.DOWN_RIGHT.equals(direction)) {
+            return this.equals(H);
+        }
+        return this.equals(A);
     }
 
     public int getValue(){
