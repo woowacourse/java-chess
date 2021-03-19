@@ -75,7 +75,6 @@ public class ChessBoard {
         Piece goingToDie = chessBoard.get(end);
 
         if (chessBoard.get(start).isMoveAble(start, end, this)) {
-            //TODO move 로직 구현
             //blank 경우
             if (chessBoard.get(end) == Blank.INSTANCE) {
                 chessBoard.put(start, Blank.INSTANCE);
