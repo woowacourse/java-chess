@@ -7,16 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class King extends PieceOnBoard {
-
     private Position position;
 
     public King(TeamColor teamColor) {
-        super(teamColor, "k");
+        super(teamColor, PieceInformation.KING);
     }
 
 
     public King(TeamColor teamColor, Position position) {
-        super(teamColor, "k");
+        super(teamColor, PieceInformation.KING);
         this.position = position;
     }
 

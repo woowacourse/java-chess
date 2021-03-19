@@ -7,17 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Pawn extends PieceOnBoard {
-
-    private static final String NAME = "p";
     private Position position;
 
     public Pawn(TeamColor teamColor) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.PAWN);
     }
 
 
     public Pawn(TeamColor teamColor, Position position) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.PAWN);
         this.position = position;
     }
 

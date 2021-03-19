@@ -6,12 +6,11 @@ import chess.domain.State;
 import chess.domain.TeamColor;
 
 public abstract class PieceOnBoard implements Piece {
-
     private TeamColor teamColor;
-    private String pieceType;
+    private PieceInformation pieceType;
     private State state;
 
-    public PieceOnBoard(TeamColor teamColor, String pieceType) {
+    public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType) {
         this.teamColor = teamColor;
         this.pieceType = pieceType;
         this.state = State.ALIVE;
@@ -21,9 +20,9 @@ public abstract class PieceOnBoard implements Piece {
     @Override
     public String getPieceName() {
         if (teamColor == TeamColor.BLACK) {
-            return pieceType.toUpperCase();
+            return pieceType.getName().toUpperCase();
         }
-        return pieceType.toLowerCase();
+        return pieceType.getName().toLowerCase();
     }
 
     public boolean movable(Position position, Position target, ChessBoard chessBoard) {

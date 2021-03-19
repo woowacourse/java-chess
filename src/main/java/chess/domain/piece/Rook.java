@@ -7,17 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Rook extends PieceOnBoard {
-
-    private static final String NAME = "r";
     private Position position;
 
     public Rook(TeamColor teamColor) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.ROOK);
     }
 
 
     public Rook(TeamColor teamColor, Position position) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.ROOK);
         this.position = position;
     }
 

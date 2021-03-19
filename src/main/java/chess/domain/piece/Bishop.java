@@ -7,20 +7,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Bishop extends PieceOnBoard {
-
-    private static final String NAME = "b";
     private Position position;
 
     public Bishop(TeamColor teamColor) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.BISHOP);
     }
-
 
     public Bishop(TeamColor teamColor, Position position) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.BISHOP);
         this.position = position;
     }
-
 
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {

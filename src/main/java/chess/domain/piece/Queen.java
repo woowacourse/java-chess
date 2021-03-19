@@ -7,17 +7,15 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Queen extends PieceOnBoard {
-
-    private static final String NAME = "q";
     private Position position;
 
     public Queen(TeamColor teamColor) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.QUEEN);
     }
 
 
     public Queen(TeamColor teamColor, Position position) {
-        super(teamColor, NAME);
+        super(teamColor, PieceInformation.QUEEN);
         this.position = position;
     }
 
