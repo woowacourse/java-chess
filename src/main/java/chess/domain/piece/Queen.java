@@ -14,6 +14,11 @@ public class Queen extends Piece {
     }
 
     @Override
+    public PieceType getPieceType() {
+        return PieceType.QUEEN;
+    }
+
+    @Override
     public boolean isMovable(final Location target) {
         return location.isHorizontalOrVertical(target) || location.isDiagonal(target);
     }

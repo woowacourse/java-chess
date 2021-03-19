@@ -26,4 +26,9 @@ public class Knight extends Piece {
     public List<Location> findPath(Location target) {
         return Collections.emptyList();
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.KNIGHT;
+    }
 }

@@ -14,6 +14,11 @@ public class King extends Piece {
     }
 
     @Override
+    public PieceType getPieceType() {
+        return PieceType.KING;
+    }
+
+    @Override
     public boolean isMovable(final Location target) {
         return location.isAdjacent(target);
     }

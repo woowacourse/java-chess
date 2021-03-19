@@ -13,6 +13,10 @@ public class Bishop extends Piece {
         return new Bishop(location, team);
     }
 
+    public PieceType getPieceType() {
+        return PieceType.BISHOP;
+    }
+
     @Override
     public boolean isMovable(final Location target) {
         return location.isDiagonal(target);

@@ -14,6 +14,11 @@ public class Rook extends Piece {
     }
 
     @Override
+    public PieceType getPieceType() {
+        return PieceType.ROOK;
+    }
+
+    @Override
     public boolean isMovable(final Location target) {
         return location.isHorizontalOrVertical(target);
     }

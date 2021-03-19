@@ -52,4 +52,9 @@ public class Pawn extends Piece {
     public boolean isPawn() {
         return true;
     }
+
+    @Override
+    public PieceType getPieceType() {
+        return PieceType.PAWN;
+    }
 }

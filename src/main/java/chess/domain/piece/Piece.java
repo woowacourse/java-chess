@@ -62,6 +62,8 @@ public abstract class Piece implements Movable {
         return false;
     }
 
+    public abstract PieceType getPieceType();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
