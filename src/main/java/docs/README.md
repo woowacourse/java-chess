@@ -21,13 +21,13 @@
     - [x] `Map<Team, List<Piece>>`를 생성한다.
       - [x] 타입별로 초기 ROW 좌표를 정해주며 Piece 를 생성한다.
 
-- [ ] Board
+- [x] Board
   - [x] 각 팀별 `piece` 리스트를 가진다. `Map<Team, List<Piece>>`  (상태)
-  - [ ] `말(piece)`을 움직이는것을 요청한다.
-    - [ ] `이동하려는 말의 좌표`와 `목적지 좌표`와 `목적지 좌표로 움직이는 유저의 팀`을 전해받는다. `(startPoint, endPoint, team)`
-      - [ ] 유저가 자기의 말을 움직이려고 하는게 맞는지 확인한다.
-        - [ ] 이동하려는 `Piece` 가 Team 키를 통해 `Map<Team, List<Piece>>` 로부터 얻어온 리스트 `List<Piece>`에 있는지 확인한다. 
-    - [ ] `Piece` 에게 `endPoint`로의 이동을 요청한다. `(Map, EndPoint, Team) `
+  - [x] `말(piece)`을 움직이는것을 요청한다.
+    - [x] `이동하려는 말의 좌표`와 `목적지 좌표`와 `목적지 좌표로 움직이는 유저의 팀`을 전해받는다. `(startPoint, endPoint, team)`
+      - [x] 유저가 자기의 말을 움직이려고 하는게 맞는지 확인한다.
+        - [x] 이동하려는 `Piece` 가 Team 키를 통해 `Map<Team, List<Piece>>` 로부터 얻어온 리스트 `List<Piece>`에 있는지 확인한다. 
+    - [x] `Piece` 에게 `endPoint`로의 이동을 요청한다. `(Map, EndPoint) `
 
 - Piece
   - [x] 자신의 `team`을 가지고 있는다. (상태)
@@ -44,8 +44,8 @@
     - [x] king
   - [ ] 목적지로 이동할수 있는지 확인하고 움직인다.
     - [ ] 목적지로 이동할 수 있는지 확인한다.
-      - [ ] 이동할수 있는 `List<Position>`를 확인한다. (장애물까지 모두 고려한 리스트) 요청할때 넘겨주는 정보는 `(Map, Team)`
-        - [ ] piece 별로 갈 수 있는 위치 리스트를 반환한다. `(Map, Team)`
+      - [ ] 이동할수 있는 `List<Position>`를 확인한다. (장애물까지 모두 고려한 리스트) 요청할때 넘겨주는 정보는 `(Map)`
+        - [ ] piece 별로 갈 수 있는 위치 리스트를 반환한다. `(Map)`
           - [ ] pawn
             - [ ] 대각선 **공격**
             - [ ] 아래팀(white)인 경우 black 팀 리스트 에 `(-1, -1)` 의 좌표를 가진 `Piece`가 있다면 포함 o

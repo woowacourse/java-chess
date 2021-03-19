@@ -3,7 +3,9 @@ package chess.domain.pieces;
 import chess.domain.Team;
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 public abstract class Piece {
     protected Position position;
@@ -30,4 +32,10 @@ public abstract class Piece {
     public Position getPosition() {
         return position;
     }
+
+    public boolean samePosition(final Position startPoint) {
+        return this.position.equals(startPoint);
+    };
+
+    public abstract void move(Map<Team, List<Piece>> board, Position endPoint);
 }

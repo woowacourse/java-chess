@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.Team;
 import chess.domain.pieces.Piece;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,5 +17,14 @@ public class Board {
 
     public Map<Team, List<Piece>> toMap() {
         return new HashMap<>(board);
+    }
+
+    public void move(final Position startPoint, final Position endPoint, final Team team) {
+        List<Piece> pieces = board.get(team);
+        Piece startPointPiece = pieces.stream()
+                .filter(piece -> piece.samePosition(startPoint))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 말을 움직이려고 하고 있습니다."));
+        startPointPiece.move(board, endPoint);
     }
 }
