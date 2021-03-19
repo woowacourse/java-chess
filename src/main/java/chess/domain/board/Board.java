@@ -43,7 +43,6 @@ public class Board {
         return pieces.getPieces();
     }
 
-
     public double getWhiteScore() {
         return pieces.getWhiteScore();
     }
@@ -55,4 +54,5 @@ public class Board {
     public boolean isKingsExist() {
         return pieces.isKingsExist();
     }
+
 }
