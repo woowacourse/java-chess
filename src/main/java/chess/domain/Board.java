@@ -1,6 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Empty;
+import chess.domain.piece.Path;
+import chess.domain.piece.Paths;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
@@ -21,7 +23,7 @@ public class Board {
         this.coordinates = new LinkedHashMap<>();
     }
 
-    private void putPiece(Piece piece, Position position) {
+    public void putPiece(Piece piece, Position position) {
         coordinates.put(piece, position);
     }
 
@@ -44,11 +46,10 @@ public class Board {
     }
 
     public void move(Player player, List<String> values) {
-//        Position source = Position.of(values.get(1));
-//        Position target = Position.of(values.get(2));
-//        Piece piece = findPieceBy(source)
-//                .orElseThrow(() -> new IllegalArgumentException("source 위치에 말이 없습니다."));
-//        moveCurrentPiece(player, target, piece);
+        Position source = Position.of(values.get(1));
+        Position target = Position.of(values.get(2));
+        Piece piece = findPieceBy(source);
+        moveCurrentPiece(player, target, piece);
     }
 
     public void move2(Position source, Position target) {
@@ -56,8 +57,11 @@ public class Board {
         putPiece(piece, target);
     }
 
-    public void move3(Piece piece, Position position) {
-        putPiece(piece, position);
+    public void move3(Piece piece, Position target) {
+        Path path = generatePath(piece);
+        if (path.isAble(target)) {
+            putPiece(piece, target);
+        }
     }
 
     private void moveCurrentPiece(Player player, Position target, Piece piece) {
@@ -69,7 +73,12 @@ public class Board {
 //        }
     }
 
+    public Path generatePath(Piece piece) {
+        Paths paths = new Paths(piece.findAllPath(coordinates.get(piece)));
+        return paths.removeObstacles(this);
+    }
+
     public boolean isEmpty(Position position) {
-        return coordinates.containsValue(position);
+        return findPieceBy(position).equals(EMPTY_PIECE);
     }
 }

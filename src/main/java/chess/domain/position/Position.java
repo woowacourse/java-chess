@@ -62,7 +62,7 @@ public class Position {
         return column.getValue();
     }
 
-    public boolean isBlockedWhenGoToThis(Direction direction) {
+    public boolean isBlockedWhenGoTo(Direction direction) {
         return column.isBoundary(direction) || row.isBoundary(direction);
     }
 

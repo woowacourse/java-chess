@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.BoardFactory;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,11 +16,11 @@ class QueenTest {
         Position current = new Position(Column.E, Row.FOUR);
         Piece queen = new Queen(PieceColor.WHITE);
 
-        List<Position> positions = queen.findAllPath(current);
+        Paths paths = new Paths(queen.findAllPath(current));
 
-        for (Position position : positions) {
+        for (Position position : paths.removeObstacles(BoardFactory.initializeBoard()).positions()) {
             System.out.println(position.name());
         }
-        System.out.println(positions.size());
+//        System.out.println(positions.size());
     }
 }

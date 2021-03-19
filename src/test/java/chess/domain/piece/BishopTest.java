@@ -1,11 +1,9 @@
 package chess.domain.piece;
 
-import static org.junit.jupiter.api.Assertions.*;
-
+import chess.domain.BoardFactory;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,11 +15,15 @@ class BishopTest {
         Position current = new Position(Column.E, Row.FOUR);
         Piece bishop = new Bishop(PieceColor.WHITE);
 
-        List<Position> positions = bishop.findAllPath(current);
+        Paths paths = new Paths(bishop.findAllPath(current));
 
-        for (Position position : positions) {
+        for (Position position : paths.pathsToPosition()) {
             System.out.println(position.name());
         }
-        System.out.println(positions.size());
+        System.out.println(paths.pathsToPosition().size());
+
+        for (Position position : paths.removeObstacles(BoardFactory.initializeBoard()).positions()) {
+            System.out.println(position.name());
+        }
     }
 }
