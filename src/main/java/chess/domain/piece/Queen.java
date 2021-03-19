@@ -9,11 +9,12 @@ public class Queen extends Piece {
 
     @Override
     public Direction direction(Piece target) {
-        return null;
+        return Direction.findDirection(this.point, target.point);
     }
 
     @Override
     public Point moveOneStep(Point target, Direction direction) {
-        return null;
+        return this.point.createNextPoint(direction);
     }
+
 }
