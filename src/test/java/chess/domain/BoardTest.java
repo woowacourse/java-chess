@@ -3,6 +3,7 @@ package chess.domain;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import chess.view.OutputView;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -67,12 +68,11 @@ class BoardTest {
                 .hasMessage("본인의 턴에 맞는 말을 움직이세요.");
     }
 
-    //TODO : blank 오류 확인
-//    @Test
-//    void name() {
-//        board.move(new Position("a", "2"), new Position("a", "4"));
-//        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "4")))
-//                .isInstanceOf(IllegalStateException.class)
-//                .hasMessage("비어 있는 칸입니다.");
-//    }3
+
+    @Test
+    void name() {
+        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "5"), Team.WHITE))
+                .isInstanceOf(IllegalStateException.class)
+                .hasMessage("비어 있는 칸입니다.");
+    }
 }

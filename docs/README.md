@@ -26,7 +26,7 @@
 - [x] 보드 테스트 추가
 - [x] NoThing exception 처리
 - [ ] Blank 캐싱
-- [ ] Blank exception 처리
+- [x] Blank exception 처리
 - [x] 팀을 enum 에서 관리
 - [x] input 값 다 소문자 처리
 - [x] end 일 때 무승부 처리

@@ -28,6 +28,15 @@ public class Board {
         throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
     }
 
+    public void validateRightTurn(final Position source, final Team team) {
+        if (chessBoard.get(source).equals(new Blank())) {
+            return;
+        }
+        if (!chessBoard.get(source).isSameTeam(team)) {
+            throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
+        }
+    }
+
     private boolean checkPath(Position source, Position target) {
         List<Position> paths = new ArrayList<>();
         if (source.hasMiddlePath(target)) {
@@ -69,11 +78,5 @@ public class Board {
         return chessBoard.values().stream()
                 .filter(piece -> piece instanceof King)
                 .count() != 2;
-    }
-
-    public void validateRightTurn(final Position source, final Team team) {
-        if (!chessBoard.get(source).isSameTeam(team)) {
-            throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
-        }
     }
 }
