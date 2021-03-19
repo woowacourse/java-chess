@@ -4,8 +4,8 @@
         - [x] start: 게임 시작
         - [x] end : 게임 종료
         - [x] move source위치 target위치: 게임 이동
-        - [ ] status : 현재 남아있는 기물의 점수를 구하여 출력한다.
-        - [ ] 예외) start, end나 move, status가 아닌 다른 문자열을 입력했을 경우
+        - [x] status : 현재 남아있는 기물의 점수를 구하여 출력한다.
+        - [x] 예외) start, end나 move, status가 아닌 다른 문자열을 입력했을 경우
 #### start
 - [x] 초기화된 체스판을 보여준다.
 #### end
