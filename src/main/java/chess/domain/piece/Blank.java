@@ -1,18 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Position;
+import chess.domain.board.Direction;
 import java.util.List;
 
 public class Blank extends Piece {
 
-    public Blank(Color color, Position position) {
-        super(color, position);
+    public Blank(Color color) {
+        super(color, false);
         this.type = Type.BLANK;
     }
 
     @Override
-    public List<Position> getMovablePositions(ChessBoard chessBoard) {
+    public List<Direction> direction() {
         throw new UnsupportedOperationException();
     }
 }

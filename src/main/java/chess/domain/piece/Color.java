@@ -11,10 +11,6 @@ public enum Color {
         return this.equals(BLACK);
     }
 
-    public boolean isNotTurn(Color color) {
-        return !this.equals(color);
-    }
-
     public Color getOppositeColor() {
         if (this.isBlack()) {
             return Color.WHITE;

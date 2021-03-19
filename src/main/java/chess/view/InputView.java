@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
 
@@ -25,7 +26,9 @@ public class InputView {
 
     public static List<String> moveOrStatus() {
         String input = SCANNER.nextLine();
-        List<String> splitInput = Arrays.asList(input.split(" "));
+        List<String> splitInput = Arrays.stream(input.split("\\s"))
+            .map(String::trim)
+            .collect(Collectors.toList());
         validateStatusOrMove(splitInput.get(0));
         return splitInput;
     }

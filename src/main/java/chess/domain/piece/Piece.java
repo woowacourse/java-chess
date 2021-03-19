@@ -1,18 +1,17 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Position;
+import chess.domain.board.Direction;
 import java.util.List;
 
 public abstract class Piece {
 
-    protected final Color color;
+    private final Color color;
+    private final boolean iterable;
     protected Type type;
-    protected Position position;
 
-    public Piece(Color color, Position position) {
+    public Piece(Color color, boolean iterable) {
         this.color = color;
-        this.position = position;
+        this.iterable = iterable;
     }
 
     public String getName() {
@@ -22,20 +21,6 @@ public abstract class Piece {
     public Color getColor() {
         return color;
     }
-
-    public Type getType() {
-        return type;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public void move(Position position) {
-        this.position = position;
-    }
-
-    public abstract List<Position> getMovablePositions(ChessBoard chessBoard);
 
     public boolean isSameColor(Piece piece) {
         return this.getColor().equals(piece.getColor());
@@ -59,5 +44,15 @@ public abstract class Piece {
 
     public boolean isPawn() {
         return type.equals(Type.PAWN);
+    }
+
+    public double score() {
+        return type.getScore();
+    }
+
+    public abstract List<Direction> direction();
+
+    public boolean isIterable() {
+        return iterable;
     }
 }

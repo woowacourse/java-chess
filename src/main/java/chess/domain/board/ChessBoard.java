@@ -6,7 +6,6 @@ import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import java.util.ArrayList;
@@ -18,7 +17,7 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private final List<List<Piece>> chessBoard = new ArrayList<>(8);
+    private final List<List<Square>> chessBoard = new ArrayList<>(8);
 
     public ChessBoard() {
     }
@@ -32,26 +31,26 @@ public class ChessBoard {
     private void initBlack() {
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Rook(Color.BLACK, new Position("a8")),
-                new Knight(Color.BLACK, new Position("b8")),
-                new Bishop(Color.BLACK, new Position("c8")),
-                new Queen(Color.BLACK, new Position("d8")),
-                new King(Color.BLACK, new Position("e8")),
-                new Bishop(Color.BLACK, new Position("f8")),
-                new Knight(Color.BLACK, new Position("g8")),
-                new Rook(Color.BLACK, new Position("h8"))
+                new Square(new Position("a8"), new Rook(Color.BLACK)),
+                new Square(new Position("b8"), new Knight(Color.BLACK)),
+                new Square(new Position("c8"), new Bishop(Color.BLACK)),
+                new Square(new Position("d8"), new Queen(Color.BLACK)),
+                new Square(new Position("e8"), new King(Color.BLACK)),
+                new Square(new Position("f8"), new Bishop(Color.BLACK)),
+                new Square(new Position("g8"), new Knight(Color.BLACK)),
+                new Square(new Position("h8"), new Rook(Color.BLACK))
             ))
         );
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Pawn(Color.BLACK, new Position("a7")),
-                new Pawn(Color.BLACK, new Position("b7")),
-                new Pawn(Color.BLACK, new Position("c7")),
-                new Pawn(Color.BLACK, new Position("d7")),
-                new Pawn(Color.BLACK, new Position("e7")),
-                new Pawn(Color.BLACK, new Position("f7")),
-                new Pawn(Color.BLACK, new Position("g7")),
-                new Pawn(Color.BLACK, new Position("h7"))
+                new Square(new Position("a7"), new Pawn(Color.BLACK)),
+                new Square(new Position("b7"), new Pawn(Color.BLACK)),
+                new Square(new Position("c7"), new Pawn(Color.BLACK)),
+                new Square(new Position("d7"), new Pawn(Color.BLACK)),
+                new Square(new Position("e7"), new Pawn(Color.BLACK)),
+                new Square(new Position("f7"), new Pawn(Color.BLACK)),
+                new Square(new Position("g7"), new Pawn(Color.BLACK)),
+                new Square(new Position("h7"), new Pawn(Color.BLACK))
             ))
         );
     }
@@ -59,100 +58,70 @@ public class ChessBoard {
     private void initWhite() {
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Pawn(Color.WHITE, new Position("a2")),
-                new Pawn(Color.WHITE, new Position("b2")),
-                new Pawn(Color.WHITE, new Position("c2")),
-                new Pawn(Color.WHITE, new Position("d2")),
-                new Pawn(Color.WHITE, new Position("e2")),
-                new Pawn(Color.WHITE, new Position("f2")),
-                new Pawn(Color.WHITE, new Position("g2")),
-                new Pawn(Color.WHITE, new Position("h2"))
+                new Square(new Position("a2"), new Pawn(Color.WHITE)),
+                new Square(new Position("b2"), new Pawn(Color.WHITE)),
+                new Square(new Position("c2"), new Pawn(Color.WHITE)),
+                new Square(new Position("d2"), new Pawn(Color.WHITE)),
+                new Square(new Position("e2"), new Pawn(Color.WHITE)),
+                new Square(new Position("f2"), new Pawn(Color.WHITE)),
+                new Square(new Position("g2"), new Pawn(Color.WHITE)),
+                new Square(new Position("h2"), new Pawn(Color.WHITE))
             ))
         );
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Rook(Color.WHITE, new Position("a1")),
-                new Knight(Color.WHITE, new Position("b1")),
-                new Bishop(Color.WHITE, new Position("c1")),
-                new Queen(Color.WHITE, new Position("d1")),
-                new King(Color.WHITE, new Position("e1")),
-                new Bishop(Color.WHITE, new Position("f1")),
-                new Knight(Color.WHITE, new Position("g1")),
-                new Rook(Color.WHITE, new Position("h1"))
+                new Square(new Position("a1"), new Rook(Color.WHITE)),
+                new Square(new Position("b1"), new Knight(Color.WHITE)),
+                new Square(new Position("c1"), new Bishop(Color.WHITE)),
+                new Square(new Position("d1"), new Queen(Color.WHITE)),
+                new Square(new Position("e1"), new King(Color.WHITE)),
+                new Square(new Position("f1"), new Bishop(Color.WHITE)),
+                new Square(new Position("g1"), new Knight(Color.WHITE)),
+                new Square(new Position("h1"), new Rook(Color.WHITE))
             ))
         );
 
     }
 
     private void initBlank() {
-        for (int i = 0; i < 4; i++) {
+        for (int i = 2; i < 6; i++) {
             chessBoard.add(
                 new ArrayList<>(Arrays.asList(
-                    new Blank(Color.NO_COLOR, new Position(0, i)),
-                    new Blank(Color.NO_COLOR, new Position(1, i)),
-                    new Blank(Color.NO_COLOR, new Position(2, i)),
-                    new Blank(Color.NO_COLOR, new Position(3, i)),
-                    new Blank(Color.NO_COLOR, new Position(4, i)),
-                    new Blank(Color.NO_COLOR, new Position(5, i)),
-                    new Blank(Color.NO_COLOR, new Position(6, i)),
-                    new Blank(Color.NO_COLOR, new Position(7, i))
+                    new Square(new Position(i, 0), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 1), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 2), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 3), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 4), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 5), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 6), new Blank(Color.NO_COLOR)),
+                    new Square(new Position(i, 7), new Blank(Color.NO_COLOR))
                 ))
             );
         }
     }
 
-    public List<List<Piece>> getChessBoard() {
+    public List<List<Square>> getChessBoard() {
         return chessBoard;
     }
 
     public void move(String source, String target) {
-        Position sourcePosition = new Position(source);
-        Position targetPosition = new Position(target);
-        if (sourcePosition.equals(targetPosition)) {
-            throw new IllegalArgumentException();
-        }
-
-        Piece sourcePiece = findPiece(sourcePosition);
-
-        List<Position> movablePositions = sourcePiece.getMovablePositions(this);
-        if (!movablePositions.contains(targetPosition)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
-        }
-
-        sourcePiece.move(targetPosition);
-        chessBoard.get(sourcePosition.getRow()).remove(sourcePosition.getColumn());
-        chessBoard.get(sourcePosition.getRow())
-            .add(sourcePosition.getColumn(), new Blank(Color.NO_COLOR, sourcePosition));
-        chessBoard.get(targetPosition.getRow()).remove(targetPosition.getColumn());
-        chessBoard.get(targetPosition.getRow()).add(targetPosition.getColumn(), sourcePiece);
+        Square sourceSquare = getSquare(new Position(source));
+        Square targetSquare = getSquare(new Position(target));
+        sourceSquare.move(this, targetSquare);
     }
 
-    public Piece findPiece(Position position) {
-        return chessBoard.get(position.getRow()).get(position.getColumn());
-    }
-
-    public boolean isBlank(Position position) {
-        return findPiece(position).isBlank();
-    }
-
-    public boolean isAttackMove(Piece piece, Position position) {
-        return !isBlank(position) && !findPiece(position).isSameColor(piece);
-    }
-
-    public boolean hasNextPossibleSquare(Position position, int xDegree, int yDegree) {
-        return Row.isInBound(position.getRow() + yDegree)
-            && Column.isInBound(position.getColumn() + xDegree);
-    }
-
-    public boolean hasNextBlankSquare(Position position, int xDegree, int yDegree) {
-        return hasNextPossibleSquare(position, xDegree, yDegree)
-            && isBlank(new Position(position.getRow() + yDegree, position.getColumn() + xDegree));
+    public Square getSquare(Position position) {
+        return chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(square -> square.hasSamePosition(position))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isOver() {
         long kingCount = chessBoard.stream()
             .flatMap(Collection::stream)
-            .filter(Piece::isKing)
+            .filter(Square::hasKing)
             .count();
         return kingCount < 2;
     }
@@ -160,15 +129,15 @@ public class ChessBoard {
     public double getScore(Color color) {
         double score = chessBoard.stream()
             .flatMap(Collection::stream)
-            .filter(piece -> piece.isSameColor(color))
-            .mapToDouble(piece -> piece.getType().getScore())
+            .filter(square -> square.hasSameColor(color))
+            .mapToDouble(Square::score)
             .sum();
 
-        Map<Integer, Long> pawnCount = chessBoard.stream()
+        Map<Column, Long> pawnCount = chessBoard.stream()
             .flatMap(Collection::stream)
-            .filter(Piece::isPawn)
-            .filter(piece -> piece.isSameColor(color))
-            .collect(Collectors.groupingBy(piece -> piece.getPosition().getColumn(), Collectors.counting()));
+            .filter(Square::hasPawn)
+            .filter(square -> square.hasSameColor(color))
+            .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
 
         for (long count : pawnCount.values()) {
             if (count >= 2) {

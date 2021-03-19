@@ -20,12 +20,20 @@ public class Position {
         this(Row.findRowByIndex(row), Column.findColumnByIndex(column));
     }
 
-    public int getRow() {
+    public Column getColumn() {
+        return column;
+    }
+
+    public int getRowAsIndex() {
         return row.getIndex();
     }
 
-    public int getColumn() {
+    public int getColumnAsIndex() {
         return column.getIndex();
+    }
+
+    public Position nextPosition(int xDegree, int yDegree) {
+        return new Position(this.row.getIndex() + yDegree, this.column.getIndex() + xDegree);
     }
 
     @Override
