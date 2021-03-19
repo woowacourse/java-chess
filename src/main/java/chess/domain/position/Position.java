@@ -8,7 +8,7 @@ public class Position {
     private final Column column;
     private final Row row;
 
-    private Position(Column column, Row row) {
+    public Position(Column column, Row row) {
         this.column = column;
         this.row = row;
     }
@@ -25,7 +25,16 @@ public class Position {
         return new Position(column, row);
     }
 
-/*    public int columnGap(Position that){
+    public boolean isStraight(Position that){
+        return columnGap(that) == 0 || rowGap(that) == 0;
+    }
+
+    public boolean isDiagonal(Position that){
+        double slope = calculateSlopeWith(that);
+        return slope == 1 || slope == -1;
+    }
+
+    public int columnGap(Position that){
         return column() - that.column();
     }
 
@@ -41,12 +50,13 @@ public class Position {
         return column.getValue();
     }
 
+    public String name(){
+        return this.row.getNumber() + this.column.getName();
+    }
+
     public double calculateSlopeWith(Position that) {
-        if(columnGap(that) == 0) {
-            return
-        }
         return rowGap(that) / columnGap(that);
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {
