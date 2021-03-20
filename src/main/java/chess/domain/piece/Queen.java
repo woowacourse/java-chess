@@ -5,6 +5,8 @@ import chess.domain.Point;
 import java.util.Optional;
 
 public class Queen extends Piece {
+    private static final int QUEEN_SCORE = 9;
+
     public Queen(String name, String color, Point point) {
         super(name, color, point);
     }
@@ -18,6 +20,11 @@ public class Queen extends Piece {
     @Override
     public Point moveOneStep(Point target, Direction direction) {
         return this.point.createNextPoint(direction);
+    }
+
+    @Override
+    public double score() {
+        return QUEEN_SCORE;
     }
 
 }

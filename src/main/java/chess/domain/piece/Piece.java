@@ -33,6 +33,8 @@ public abstract class Piece {
         this.point = target;
     }
 
+    public abstract double score();
+
     public String getName() {
         return name;
     }

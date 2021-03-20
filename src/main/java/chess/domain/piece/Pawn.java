@@ -8,6 +8,9 @@ import static chess.domain.ChessGame.BLACK;
 import static chess.domain.ChessGame.WHITE;
 
 public class Pawn extends Piece {
+
+    public static final int DEFAULT_PAWN_SCORE = 1;
+
     public Pawn(String name, String color, Point point) {
         super(name, color, point);
     }
@@ -38,5 +41,10 @@ public class Pawn extends Piece {
     @Override
     public Point moveOneStep(Point target, Direction direction) {
         return target;
+    }
+
+    @Override
+    public double score() {
+        return DEFAULT_PAWN_SCORE;
     }
 }

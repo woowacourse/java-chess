@@ -5,6 +5,8 @@ import chess.domain.Point;
 import java.util.Optional;
 
 public class Bishop extends Piece {
+    private static final int BISHOP_SCORE = 3;
+
     public Bishop(String name, String color, Point point) {
         super(name, color, point);
     }
@@ -22,5 +24,10 @@ public class Bishop extends Piece {
     @Override
     public Point moveOneStep(Point target, Direction direction) {
         return this.point.createNextPoint(direction);
+    }
+
+    @Override
+    public double score() {
+        return BISHOP_SCORE;
     }
 }

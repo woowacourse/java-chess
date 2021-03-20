@@ -5,6 +5,8 @@ import chess.domain.Point;
 import java.util.Optional;
 
 public class King extends Piece {
+    private static final int KING_SCORE = 0;
+
     public King(String name, String color, Point point) {
         super(name, color, point);
     }
@@ -23,5 +25,10 @@ public class King extends Piece {
     @Override
     public Point moveOneStep(Point target, Direction direction) {
         return target;
+    }
+
+    @Override
+    public double score() {
+        return KING_SCORE;
     }
 }

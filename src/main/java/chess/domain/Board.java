@@ -102,6 +102,31 @@ public class Board {
         }
     }
 
+    public double addScore(String color) {
+        double score = 0;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                if (board[i][j].isSameColor(color)) {
+                    score += board[i][j].score();
+                }
+            }
+        }
+
+        int pawnCount = 0;
+        for (int i = 0; i < 8; i++) {
+            int pawns = 0;
+            for (int j = 0; j < 8; j++) {
+                if (board[j][i] instanceof Pawn && board[j][i].isSameColor(color)) {
+                    pawns++;
+                }
+            }
+            if (pawns >= 2) {
+                pawnCount += pawns;
+            }
+        }
+        return score - pawnCount * 0.5;
+    }
+
     public Piece[][] getBoard() {
         return board;
     }

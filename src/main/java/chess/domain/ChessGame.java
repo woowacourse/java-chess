@@ -29,7 +29,13 @@ public class ChessGame {
         return board.hasBothKings();
     }
 
+    public double calculateScore() {
+        return board.addScore(currentColor);
+    }
+
     public Piece[][] getBoard() {
         return board.getBoard();
     }
+
+
 }
