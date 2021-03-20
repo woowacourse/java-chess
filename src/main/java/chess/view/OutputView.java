@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.grid.Grid;
+import chess.domain.grid.Lines;
 
 import java.util.stream.Collectors;
 
@@ -12,14 +12,17 @@ public class OutputView {
         System.out.println("게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printGridStatus(final Grid grid) {
+    public static void printGridStatus(final Lines lines) {
         System.out.println();
-        String gridStatus = grid.lines()
+        String gridStatus =
+                lines
+                .lines()
                 .stream()
-                .map(line -> line.getPieces()
+                .map(line -> line
+                        .pieces()
                         .stream()
                         .map(piece -> Character.toString(piece.name()))
-                        .collect(Collectors.joining("", "", "  " + (8 - grid.lines().indexOf(line)))))
+                        .collect(Collectors.joining("", "", "  " + (8 - lines.lines().indexOf(line)))))
                 .collect(Collectors.joining("\n"));
         System.out.println(gridStatus);
         System.out.println();

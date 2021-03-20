@@ -24,7 +24,7 @@ public abstract class Playing implements GameState {
 
         validateSourcePieceIsEmpty(sourcePiece);
         GameState gameState = move(chessService, sourcePiece, targetPiece);
-        OutputView.printGridStatus(chessService.grid());
+        OutputView.printGridStatus(chessService.grid().lines());
         return gameState;
     }
 

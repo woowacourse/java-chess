@@ -16,11 +16,11 @@ public class ChessService {
     }
 
     public double score(boolean isBlack) {
-        return grid.score(isBlack);
+        return grid.score().score(isBlack);
     }
 
     public Piece piece(Position position) {
-        return grid.piece(position);
+        return grid.lines().piece(position);
     }
 
     public void move(Piece source, Piece target) {

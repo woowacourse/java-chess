@@ -65,7 +65,7 @@ public class Line {
         return new Line(emptyLine);
     }
 
-    public Piece findPiece(final char xPosition) {
+    public Piece piece(final char xPosition) {
         int index = COLUMN_REFERENCE.indexOf(Character.toString(xPosition));
         return pieces.get(index);
     }
@@ -75,7 +75,7 @@ public class Line {
         pieces.set(index, piece);
     }
 
-    public List<Piece> getPieces() {
+    public List<Piece> pieces() {
         return pieces;
     }
 }

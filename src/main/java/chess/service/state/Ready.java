@@ -9,7 +9,7 @@ public class Ready implements GameState {
     public GameState run(ChessService chessService) {
         String command = InputView.command();
         if (command.equals("start")) {
-            OutputView.printGridStatus(chessService.grid());
+            OutputView.printGridStatus(chessService.grid().lines());
             return new WhiteTurn();
         }
         if (command.equals("end")) {
