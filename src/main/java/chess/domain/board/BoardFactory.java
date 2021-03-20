@@ -1,13 +1,14 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
+import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -37,9 +38,9 @@ public class BoardFactory {
 
     private static void initializePawnPieces(Map<Piece, Position> coordinates) {
         for (Column column : Column.values()) {
-            coordinates.put(new Pawn(PieceColor.WHITE),
+            coordinates.put(new WhitePawn(),
                     Position.ofColumnAndRow(column, WHITE_PAWN_ROW));
-            coordinates.put(new Pawn(PieceColor.BLACK),
+            coordinates.put(new BlackPawn(),
                     Position.ofColumnAndRow(column, BLACK_PAWN_ROW));
         }
     }

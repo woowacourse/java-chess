@@ -27,9 +27,9 @@ class ResultTest {
     @Test
     void pawnScoreInSameColumn() {
         Board board = new Board();
-        board.putPiece(new Pawn(PieceColor.WHITE), Position.ofName("a1"));
-        board.putPiece(new Pawn(PieceColor.WHITE), Position.ofName("a2"));
-        board.putPiece(new Pawn(PieceColor.WHITE), Position.ofName("a3"));
+        board.putPiece(new WhitePawn(), Position.ofName("a1"));
+        board.putPiece(new WhitePawn(), Position.ofName("a2"));
+        board.putPiece(new WhitePawn(), Position.ofName("a3"));
         Result result = new Result(board);
         Score totalScore = result.calculateTotalScore(PieceColor.WHITE);
         assertThat(totalScore).isEqualTo(new Score(1.5));
@@ -39,10 +39,10 @@ class ResultTest {
     @Test
     void pawnScoreInDifferentColumn() {
         Board board = new Board();
-        board.putPiece(new Pawn(PieceColor.BLACK), Position.ofName("a1"));
-        board.putPiece(new Pawn(PieceColor.BLACK), Position.ofName("a2"));
-        board.putPiece(new Pawn(PieceColor.BLACK), Position.ofName("b2"));
-        board.putPiece(new Pawn(PieceColor.BLACK), Position.ofName("c3"));
+        board.putPiece(new BlackPawn(), Position.ofName("a1"));
+        board.putPiece(new BlackPawn(), Position.ofName("a2"));
+        board.putPiece(new BlackPawn(), Position.ofName("b2"));
+        board.putPiece(new BlackPawn(), Position.ofName("c3"));
         Result result = new Result(board);
         Score totalScore = result.calculateTotalScore(PieceColor.BLACK);
         assertThat(totalScore).isEqualTo(new Score(3));

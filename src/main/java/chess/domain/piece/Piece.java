@@ -62,7 +62,15 @@ public abstract class Piece {
         return pieceColor.getColor();
     }
 
+    public PieceColor getColor() {
+        return pieceColor;
+    }
+
     public Score score() {
         return pieceType.getScore();
+    }
+
+    public boolean isSameSide(Piece that) {
+        return !isEnemyOrEmpty(that);
     }
 }
