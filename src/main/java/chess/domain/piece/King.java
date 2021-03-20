@@ -34,17 +34,6 @@ public class King extends Piece {
         return movablePositions;
     }
 
-    @Override
-    public boolean isMovable(Position target, Position destination, Board board) {
-        Piece destinationPiece = board.findPieceFromPosition(destination);
-        Piece targetPiece = board.findPieceFromPosition(target);
-
-        if (Objects.isNull(destinationPiece)) {
-            return true;
-        }
-        return targetPiece.isDifferentTeam(destinationPiece);
-    }
-
     private List<Position> calculateBoardPosition(int changedHorizontalWeight, int changedVerticalWeight) {
         List<Position> result = new ArrayList<>();
         if (isInBorder(changedHorizontalWeight, changedVerticalWeight)) {
