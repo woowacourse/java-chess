@@ -10,10 +10,12 @@ import java.util.List;
 public class ChessGame {
     private Color turn;
     private final CurrentPieces currentPieces;
+    private boolean running;
 
     public ChessGame() {
         this.currentPieces = new CurrentPieces(PieceFactory.initialPieces());
         turn = Color.WHITE;
+        running = true;
     }
 
     public void next() {
@@ -38,5 +40,13 @@ public class ChessGame {
 
     public boolean isRunning() {
         return currentPieces.isAliveAllKings();
+    }
+
+    public boolean startAble(Command command) {
+        command.validateRightFirstCommand();
+        if (command.isEnd()) {
+            this.running = false;
+        }
+        return this.running;
     }
 }

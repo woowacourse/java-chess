@@ -8,22 +8,22 @@ import chess.view.OutputView;
 public class ChessController {
     public void run() {
         try {
-            ChessGame chessGame = new ChessGame();
-            OutputView.printStartMessage();
-            Command firstCommand = new Command(InputView.command());
-            firstCommand.validateRightFirstCommand();
-            if (firstCommand.isStart()) {
-                OutputView.printChessBoard(chessGame.getCurrentPieces());
-            }
-            if (firstCommand.isEnd()) {
-                return;
-            }
-            play(chessGame);
+            start();
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            run();
+            start();
         }
+    }
 
+    private void start() {
+        ChessGame chessGame = new ChessGame();
+        OutputView.printStartMessage();
+        Command firstCommand = new Command(InputView.command());
+        if (chessGame.startAble(firstCommand)) {
+            OutputView.printChessBoard(chessGame.getCurrentPieces());
+            play(chessGame);
+        }
+        end();
     }
 
     public void play(ChessGame chessGame) {
@@ -38,7 +38,7 @@ public class ChessController {
                     chessGame.play(command);
                     OutputView.printChessBoard(chessGame.getCurrentPieces());
                 }
-                if(command.isStatus()) {
+                if (command.isStatus()) {
                     OutputView.printStatus(chessGame.getCurrentPieces());
                 }
             }
@@ -46,6 +46,9 @@ public class ChessController {
             System.out.println(e.getMessage());
             play(chessGame);
         }
+    }
 
+    private void end() {
+        return;
     }
 }
