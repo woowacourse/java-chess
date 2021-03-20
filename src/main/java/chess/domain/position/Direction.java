@@ -70,6 +70,4 @@ public enum Direction {
     public static List<Direction> blackPawnLinearDirection() {
         return Collections.singletonList(S);
     }
-
-
 }

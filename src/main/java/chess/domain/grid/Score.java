@@ -1,9 +1,10 @@
 package chess.domain.grid;
 
+import chess.domain.piece.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
-public class Score {
+public final class Score {
     private static final int LINE_COUNT = 8;
     private static final char MIN_X_POSITION = 'a';
     private static final int SAME_COLUMN_BOUND = 2;
@@ -15,18 +16,19 @@ public class Score {
         this.lines = lines;
     }
 
-    public double score(final boolean isBlack) {
-        return totalScore(isBlack) - pawnScoreInSameColumn(isBlack);
+    public final double score(final Color color) {
+        return totalScore(color) - pawnScoreInSameColumn(color);
     }
 
-    private double pawnScoreInSameColumn(final boolean isBlack) {
+    private double pawnScoreInSameColumn(final Color color) {
         double pawnScoreToDeduct = 0;
         for (int i = 0; i < LINE_COUNT; i++) {
-            pawnScoreToDeduct += pawnCountInSameColumn(isBlack, i);
+            pawnScoreToDeduct += pawnCountInSameColumn(color, i);
         }
         return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;
     }
-    public double pawnCountInSameColumn(final boolean isBlack, final int i) {
+
+    private double pawnCountInSameColumn(final Color color, final int i) {
         double result = 0;
         char x = (char) (MIN_X_POSITION + i);
         int pawnCountInSameColumn =
@@ -34,7 +36,7 @@ public class Score {
                         .lines()
                         .stream()
                         .map(line -> line.piece(x))
-                        .filter(piece -> (piece instanceof Pawn && piece.isBlack() == isBlack))
+                        .filter(piece -> (piece instanceof Pawn && piece.color() == color))
                         .count();
         if (pawnCountInSameColumn >= SAME_COLUMN_BOUND) {
             result += pawnCountInSameColumn;
@@ -42,14 +44,14 @@ public class Score {
         return result;
     }
 
-    public double totalScore(final boolean isBlack) {
+    private double totalScore(final Color color) {
         return lines
                 .lines()
                 .stream()
                 .flatMap(line -> line.pieces()
                         .stream()
                         .filter(piece -> !piece.isEmpty())
-                        .filter(piece -> piece.isBlack() == isBlack)
+                        .filter(piece -> piece.color() == color)
                         .map(Piece::score))
                 .mapToDouble(Double::doubleValue)
                 .sum();

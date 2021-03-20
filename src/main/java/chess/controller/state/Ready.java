@@ -1,25 +1,28 @@
-package chess.service.state;
+package chess.controller.state;
 
 import chess.domain.grid.Grid;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class Ready implements GameState {
+public final class Ready implements GameState {
+    private static final String START_COMMAND = "start";
+    private static final String END_COMMAND = "end";
+
     @Override
-    public GameState run(Grid grid) {
+    public final GameState run(final Grid grid) {
         String command = InputView.command();
-        if (command.equals("start")) {
+        if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
             return new WhiteTurn();
         }
-        if (command.equals("end")) {
+        if (command.equals(END_COMMAND)) {
             return new End();
         }
         throw new IllegalArgumentException("잘못된 입력값입니다.");
     }
 
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return false;
     }
 }

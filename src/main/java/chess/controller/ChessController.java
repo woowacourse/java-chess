@@ -1,8 +1,8 @@
 package chess.controller;
 
+import chess.controller.state.GameState;
+import chess.controller.state.Ready;
 import chess.domain.grid.Grid;
-import chess.service.state.GameState;
-import chess.service.state.Ready;
 import chess.view.OutputView;
 
 public class ChessController {
@@ -14,8 +14,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printChessInstruction();
-        while (!gameState.isFinished()) {
-            this.gameState = gameState.run(new Grid());
+        Grid grid = new Grid();
+        do {
+            this.gameState = gameState.run(grid);
         }
+        while (!gameState.isFinished());
     }
 }

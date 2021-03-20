@@ -1,8 +1,8 @@
-package chess.service.state;
+package chess.controller.state;
 
 public abstract class Finished implements GameState {
     @Override
-    public boolean isFinished() {
+    public final boolean isFinished() {
         return true;
     }
 }

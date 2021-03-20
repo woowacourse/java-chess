@@ -8,27 +8,58 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
+    private static final int DECIMAL = 10;
+
     private Position position;
-    private final boolean isBlack;
+    private final Color color;
 
-    public Piece(final boolean isBlack, final char x, final char y) {
+    public Piece(final Color color, final char x, final int y) {
+        this(color, x, Character.forDigit(y, DECIMAL));
+    }
+
+    public Piece(final Color color, final Position position) {
+        this(color, position.x(), position.y());
+    }
+
+    public Piece(final Color color, final char x, final char y) {
         this.position = new Position(x, y);
-        this.isBlack = isBlack;
+        this.color = color;
     }
 
-    public boolean isBlack() {
-        return isBlack;
-    }
-
-    public Position position() {
+    public final Position position() {
         return position;
     }
 
-    public void moveTo(final Position position) {
+    public final void moveTo(final Position position) {
         this.position = position;
     }
 
-    public void validateRoute(Piece targetPiece, Lines lines) {
+    public final boolean isEmpty() {
+        return this instanceof Empty;
+    }
+
+    public Color color() {
+        return color;
+    }
+
+    public final List<Position> route(final Direction direction, final int stepRange, Lines lines) {
+        List<Position> positions = new ArrayList<>();
+        Position sourcePosition = position();
+
+        for (int i = 1; i <= stepRange; i++) {
+            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
+            if (movedPosition.isInValidRange()) {
+                break;
+            }
+            positions.add(movedPosition);
+            if (!lines.isEmpty(movedPosition)) {
+                break;
+            }
+        }
+        return positions;
+    }
+
+    public final void validateRoute(final Piece targetPiece, final Lines lines) {
         validateSourcePieceEmpty();
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
@@ -41,14 +72,10 @@ public abstract class Piece {
         }
     }
 
-    public boolean isEmpty() {
-        return this instanceof Empty;
-    }
-
     private void validatePositionInGrid(final Piece targetPiece) {
         Position source = this.position();
         Position target = targetPiece.position();
-        if (!source.isInGridRange() || !target.isInGridRange()) {
+        if (source.isInValidRange() || target.isInValidRange()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
@@ -59,11 +86,7 @@ public abstract class Piece {
         }
     }
 
-    private boolean isSameColor(final Piece other) {
-        return this.isBlack == other.isBlack;
-    }
-
-    void validateSteps(Piece targetPiece, Lines lines) {
+    void validateSteps(final Piece targetPiece, final Lines lines) {
         List<Position> movablePositions = new ArrayList<>();
         for (Direction direction : directions()) {
             movablePositions.addAll(route(direction, stepRange(), lines));
@@ -71,29 +94,15 @@ public abstract class Piece {
         targetPiece.validateTargetInMovablePositions(movablePositions);
     }
 
-    public void validateTargetInMovablePositions(final List<Position> movablePositions) {
+    public final void validateTargetInMovablePositions(final List<Position> movablePositions) {
         if (!movablePositions.contains(this.position())) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
 
-    public List<Position> route(final Direction direction, final int stepRange, Lines lines) {
-        List<Position> positions = new ArrayList<>();
-        Position sourcePosition = position();
-
-        for (int i = 1; i <= stepRange; i++) {
-            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
-            if (!movedPosition.isInGridRange()) {
-                break;
-            }
-            positions.add(movedPosition);
-            if (!lines.isEmpty(movedPosition)) {
-                break;
-            }
-        }
-        return positions;
+    private boolean isSameColor(final Piece other) {
+        return this.color == other.color;
     }
-
 
     public abstract List<Direction> directions();
 
