@@ -38,7 +38,7 @@ public enum Direction {
         return y;
     }
 
-    public List<Direction> diagonalDirections() {
+    public static List<Direction> diagonalDirections() {
         return Arrays.asList(
                 UP_RIGHT,
                 UP_LEFT,
@@ -47,7 +47,7 @@ public enum Direction {
         );
     }
 
-    public List<Direction> straightDirections() {
+    public static List<Direction> straightDirections() {
         return Arrays.asList(
                 UP,
                 DOWN,
@@ -56,7 +56,7 @@ public enum Direction {
         );
     }
 
-    public List<Direction> allDirections() {
+    public static List<Direction> allDirections() {
         return Arrays.asList(
                 UP_RIGHT,
                 UP_LEFT,
@@ -69,7 +69,7 @@ public enum Direction {
         );
     }
 
-    public List<Direction> whitePawnDirections() {
+    public static List<Direction> whitePawnDirections() {
         return Arrays.asList(
                 UP,
                 UP_RIGHT,
@@ -77,7 +77,7 @@ public enum Direction {
         );
     }
 
-    public List<Direction> blackPawnDirections() {
+    public static List<Direction> blackPawnDirections() {
         return Arrays.asList(
                 DOWN,
                 DOWN_RIGHT,
@@ -85,7 +85,7 @@ public enum Direction {
         );
     }
 
-    public List<Direction> knightDrections() {
+    public static List<Direction> knightDirections() {
         return Arrays.asList(
                 KNIGHT_UP_RIGHT,
                 KNIGHT_UP_LEFT,

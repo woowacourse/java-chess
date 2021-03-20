@@ -6,24 +6,14 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class Queen extends Piece{
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.LEFT,
-            Direction.DOWN,
-            Direction.UP,
-            Direction.RIGHT,
-            Direction.DOWN_LEFT,
-            Direction.DOWN_RIGHT,
-            Direction.UP_LEFT,
-            Direction.UP_RIGHT
-    );
+public class Queen extends Piece {
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
     private static final Queen BLACK_QUEEN = new Queen(Owner.BLACK);
     private static final Queen WHITE_QUEEN = new Queen(Owner.WHITE);
 
     public Queen(Owner owner) {
-        super(owner);
+        super(owner, Direction.allDirections());
     }
 
     public static Queen getInstanceOf(Owner owner) {
@@ -51,11 +41,6 @@ public class Queen extends Piece{
     @Override
     public String getSymbol() {
         return "Q";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return DIRECTIONS;
     }
 
     @Override

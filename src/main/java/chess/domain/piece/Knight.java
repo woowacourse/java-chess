@@ -3,21 +3,7 @@ package chess.domain.piece;
 import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Knight extends Piece{
-
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.KNIGHT_DOWN_LEFT,
-            Direction.KNIGHT_DOWN_RIGHT,
-            Direction.KNIGHT_LEFT_DOWN,
-            Direction.KNIGHT_LEFT_UP,
-            Direction.KNIGHT_UP_LEFT,
-            Direction.KNIGHT_UP_RIGHT,
-            Direction.KNIGHT_RIGHT_DOWN,
-            Direction.KNIGHT_RIGHT_UP
-    );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
     private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
@@ -36,7 +22,7 @@ public class Knight extends Piece{
     }
 
     public Knight(Owner owner) {
-        super(owner);
+        super(owner, Direction.knightDirections());
     }
 
     @Override
@@ -52,11 +38,6 @@ public class Knight extends Piece{
     @Override
     public String getSymbol() {
         return "N";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return DIRECTIONS;
     }
 
     @Override

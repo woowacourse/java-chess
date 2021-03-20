@@ -6,9 +6,11 @@ import java.util.List;
 
 public abstract class Piece {
     protected final Owner owner;
+    protected final List<Direction> directions;
 
-    public Piece(Owner owner) {
+    public Piece(Owner owner, List<Direction> directions) {
         this.owner = owner;
+        this.directions = directions;
     }
 
     public abstract boolean validateMove(Position source, Position target, Piece targetPiece);
@@ -45,7 +47,9 @@ public abstract class Piece {
         return owner.equals(other.owner);
     }
 
-    public abstract List<Direction> getDirections();
+    public List<Direction> getDirections(){
+        return directions;
+    };
 
     public abstract int getMaxDistance();
 

@@ -7,19 +7,13 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece{
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.LEFT,
-            Direction.DOWN,
-            Direction.UP,
-            Direction.RIGHT
-    );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
     private static final Rook BLACK_ROOK = new Rook(Owner.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Owner.WHITE);
 
     public Rook(Owner owner) {
-        super(owner);
+        super(owner, Direction.straightDirections());
     }
 
     public static Rook getInstanceOf(Owner owner){
@@ -47,11 +41,6 @@ public class Rook extends Piece{
     @Override
     public String getSymbol() {
         return "R";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return DIRECTIONS;
     }
 
     @Override

@@ -4,46 +4,27 @@ import chess.domain.direction.Direction;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 
-import java.util.Arrays;
 import java.util.List;
 
 public abstract class Pawn extends Piece{
     private static final int ABLE_DISTANCE_TO_MOVE = 2;
 
-    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK){
+    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK, Direction.blackPawnDirections()){
         @Override
         public boolean isFirstLine(Horizontal horizontal) {
             return Horizontal.SEVEN.equals(horizontal);
         }
-
-        @Override
-        public List<Direction> getDirections() {
-            return  Arrays.asList(
-                    Direction.DOWN,
-                    Direction.DOWN_LEFT,
-                    Direction.DOWN_RIGHT
-            );
-        }
     };
 
-    private static final Pawn WHITE_PAWN = new Pawn(Owner.WHITE) {
+    private static final Pawn WHITE_PAWN = new Pawn(Owner.WHITE, Direction.whitePawnDirections()) {
         @Override
         public boolean isFirstLine(Horizontal horizontal) {
             return Horizontal.TWO.equals(horizontal);
         }
-
-        @Override
-        public List<Direction> getDirections() {
-            return  Arrays.asList(
-                    Direction.UP,
-                    Direction.UP_LEFT,
-                    Direction.UP_RIGHT
-            );
-        }
     };
 
-    private Pawn(Owner owner) {
-        super(owner);
+    private Pawn(Owner owner, List<Direction> directions) {
+        super(owner, directions);
     }
 
     public static Pawn getInstanceOf(Owner owner){
@@ -61,10 +42,7 @@ public abstract class Pawn extends Piece{
     public abstract boolean isFirstLine(Horizontal horizontal);
 
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
-        if (isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy(targetPiece))) {
-            return true;
-        }
-        return false;
+        return isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy(targetPiece));
     }
 
     private boolean isValidStraightMove(Position source, Position target) {
@@ -95,11 +73,6 @@ public abstract class Pawn extends Piece{
     @Override
     public String getSymbol() {
         return "P";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return null;
     }
 
     @Override

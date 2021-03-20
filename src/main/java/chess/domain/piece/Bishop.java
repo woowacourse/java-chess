@@ -3,16 +3,7 @@ package chess.domain.piece;
 import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class Bishop extends Piece {
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.DOWN_LEFT,
-            Direction.DOWN_RIGHT,
-            Direction.UP_LEFT,
-            Direction.UP_RIGHT
-    );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
 
@@ -32,7 +23,7 @@ public class Bishop extends Piece {
     }
 
     public Bishop(Owner owner) {
-        super(owner);
+        super(owner, Direction.diagonalDirections());
     }
 
     @Override
@@ -48,11 +39,6 @@ public class Bishop extends Piece {
     @Override
     public String getSymbol() {
         return "B";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return DIRECTIONS;
     }
 
     @Override

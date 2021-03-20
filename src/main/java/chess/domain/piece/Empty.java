@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
 
-import java.util.List;
+import java.util.Collections;
 
 public class Empty extends Piece{
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
@@ -11,7 +10,7 @@ public class Empty extends Piece{
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
-        super(Owner.NONE);
+        super(Owner.NONE, Collections.emptyList());
     }
 
     public static Empty getInstance() {
@@ -31,11 +30,6 @@ public class Empty extends Piece{
     @Override
     public String getSymbol() {
         return ".";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        throw new UnsupportedOperationException();
     }
 
     @Override

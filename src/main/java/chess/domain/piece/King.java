@@ -7,16 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 
 public class King extends Piece {
-    private static final List<Direction> DIRECTIONS = Arrays.asList(
-            Direction.LEFT,
-            Direction.DOWN,
-            Direction.UP,
-            Direction.RIGHT,
-            Direction.DOWN_LEFT,
-            Direction.DOWN_RIGHT,
-            Direction.UP_LEFT,
-            Direction.UP_RIGHT
-    );
 
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
 
@@ -24,7 +14,7 @@ public class King extends Piece {
     private static final King WHITE_KING = new King(Owner.WHITE);
 
     public King(Owner owner) {
-        super(owner);
+        super(owner,Direction.allDirections());
     }
 
     public static King getInstanceOf(Owner owner) {
@@ -52,11 +42,6 @@ public class King extends Piece {
     @Override
     public String getSymbol() {
         return "K";
-    }
-
-    @Override
-    public List<Direction> getDirections() {
-        return DIRECTIONS;
     }
 
     @Override
