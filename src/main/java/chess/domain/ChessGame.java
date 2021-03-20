@@ -1,17 +1,18 @@
 package chess.domain;
 
+import chess.domain.piece.Direction;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Strategy;
+import chess.domain.piece.Team;
+import chess.domain.position.MovePath;
+import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import java.util.Arrays;
+import chess.domain.util.StringParser;
 import java.util.EnumMap;
-import java.util.List;
 
 public class ChessGame {
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
-    public static final int COMMAND_SIZE = 3;
 
     private Board board;
     private State state;
@@ -29,117 +30,57 @@ public class ChessGame {
     }
 
     public void move(String command) {
-        List<Position> coordinates = splitSourceAndTargetPosition(command);
-        Position source = coordinates.get(SOURCE_INDEX - 1);
-        Position target = coordinates.get(TARGET_INDEX - 1);
-
-        Piece piece = getSourcePositionPiece(source);
-        board.validateTargetPieceIsSameTeam(target, turn);
-
+        MovePath movePath = StringParser.splitSourceAndTargetPosition(command);
+        Position source = movePath.getSource();
+        Position target = movePath.getTarget();
+        Piece piece = pieceAtSourcePosition(source);
+        Strategy strategy = piece.strategy();
         Direction currentDirection = source.calculateDirection(target);
-        MoveValidator.validateStrategyContainsDirection(currentDirection, piece.strategy());
-        applyMoveStrategyV2(source, target, piece, currentDirection);
+
+        board.validateTargetPieceIsSameTeam(target, turn);
+        MoveValidator.validateStrategyContainsDirection(currentDirection, strategy);
+        MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, source),
+            calculateTargetMove(movePath, currentDirection));
+        if (validateTargetPath(movePath, piece, currentDirection)) {
+            movePiece(source, target);
+        }
     }
 
-    private Piece getSourcePositionPiece(Position source) {
+    private Piece pieceAtSourcePosition(Position source) {
         Piece piece = board.pieceAt(source);
         piece.validateCurrentTurn(turn);
         return piece;
     }
 
-    private void applyMoveStrategy(Position source, Position target, Piece piece, Direction currentDirection) {
-        Strategy strategy = piece.strategy();
-        int sourceTargetDistance = target.calculateDistance(source);
-        if (piece.isPawn()) {
-            movePawnAfterValidate(piece, source, target, currentDirection, strategy, sourceTargetDistance);
-        }
-        moveOthersAfterValidate(source, target, currentDirection, strategy, sourceTargetDistance);
+    private int calculateTargetMove(MovePath movePath, Direction currentDirection) {
+        Position source = movePath.getSource();
+        Position target = movePath.getTarget();
+        return target.calculateDistance(source) / currentDirection.getUnit();
     }
 
-    private void applyMoveStrategyV2(Position source, Position target, Piece piece, Direction currentDirection) {
-        Strategy strategy = piece.strategy();
-        int sourceTargetDistance = target.calculateDistance(source);
-        moveOthersAfterValidateV2(source, target, currentDirection, strategy, sourceTargetDistance, piece);
-    }
-
-    private void movePawnAfterValidate(Piece piece, Position source, Position target, Direction currentDirection, Strategy strategy, int distance) {
-        if (source.isDiagonal(target)) {
-            MoveValidator.validateDiagonalMove(board, piece, target, distance);
-            movePiece(source, target);
-            return;
+    private boolean validateTargetPath(MovePath movePath, Piece piece, Direction currentDirection) {
+        Position source = movePath.getSource();
+        Position target = movePath.getTarget();
+        int targetMove = calculateTargetMove(movePath, currentDirection);
+        for (int i = 1; i < targetMove; i++) {
+            Position currentPosition = source.move(currentDirection, i);
+            board.validateHasPieceInPath(currentPosition);
         }
-        MoveValidator.validateStraightMove(distance);
-        board.validateHasPieceInPath(target);
-        straightMoveDistanceOne(source, target, distance);
-        straightMoveDistanceTwo(source, target, currentDirection, strategy, distance);
-    }
-
-    private void straightMoveDistanceOne(Position source, Position target, int distance) {
-        if (distance == Pawn.MOVE_DEFAULT_RANGE) {
-            movePiece(source, target);
-        }
-    }
-
-    private void straightMoveDistanceTwo(Position source, Position target, Direction currentDirection, Strategy strategy, int distance) {
-        if (distance == Pawn.MOVE_FIRST_RANGE) {
-            MoveValidator.validatePawnLocation(source);
-            moveOthersAfterValidate(source, target, currentDirection, strategy, distance);
-        }
-    }
-
-    private void moveOthersAfterValidate(Position source, Position target, Direction currentDirection, Strategy strategy, int distance) {
-        for (int i = 1; i <= strategy.getMoveRange(); i++) {
-            Position movePosition = source.move(currentDirection, i);
-            if (movePosition.equals(target)) {
-                movePiece(source, target);
-                return;
-            }
-            board.validateHasPieceInPath(movePosition);
-        }
-        MoveValidator.validateMoveRange(distance, strategy.getMoveRange());
-    }
-
-    private void moveOthersAfterValidateV2(Position source, Position target, Direction currentDirection, Strategy strategy, int distance, Piece piece) {
-        int moveRange = calculateMoveRange(piece, strategy, source);
-        for (int i = 1; i <= moveRange; i++) {
-            Position movePosition = source.move(currentDirection, i);
-            if (movePosition.equals(target)) {
-                validatePawnCondition(target, piece, currentDirection);
-                movePiece(source, target);
-                return;
-            }
-            board.validateHasPieceInPath(movePosition);
-        }
-        MoveValidator.validateMoveRange(distance, moveRange);
+        MoveValidator.validatePawnCondition(board, target, piece, currentDirection);
+        return true;
     }
 
     private int calculateMoveRange(Piece piece, Strategy strategy, Position position) {
-        if(!piece.isPawn()) {
+        if (!piece.isPawn()) {
             return strategy.getMoveRange();
         }
-
-        if(position.getY() == Pawn.WHITE_PAWN_START_LINE && piece.getTeam() == Team.WHITE) {
+        if (position.getY() == Pawn.WHITE_PAWN_START_LINE && piece.getTeam() == Team.WHITE) {
             return Pawn.MOVE_FIRST_RANGE;
         }
-
-        if(position.getY() == Pawn.BLACK_PAWN_START_LINE && piece.getTeam() == Team.BLACK) {
+        if (position.getY() == Pawn.BLACK_PAWN_START_LINE && piece.getTeam() == Team.BLACK) {
             return Pawn.MOVE_FIRST_RANGE;
         }
-
         return Pawn.MOVE_DEFAULT_RANGE;
-    }
-
-    private void validatePawnCondition(Position target, Piece piece, Direction direction) {
-        if(!board.hasPieceAt(target)) {
-            if(piece.isPawn() && Direction.isDiagonalDirection(direction)) {
-                throw new IllegalArgumentException("폰은 상대방 말이 없는 대각선 방향으로는 이동할 수 없습니다.");
-            }
-            return;
-        }
-
-        if(piece.isPawn() && Direction.isLinearDirection(direction)) {
-            throw new IllegalArgumentException("폰은 대각선 방향으로만 상대 말을 먹을 수 있습니다.");
-        }
     }
 
     private void movePiece(Position source, Position target) {
@@ -160,27 +101,6 @@ public class ChessGame {
 
     private void turnOver() {
         turn = Team.turnOver(turn);
-    }
-
-    private List<Position> splitSourceAndTargetPosition(String command) {
-        String[] commandParameters = command.split(" ");
-        if (commandParameters.length != COMMAND_SIZE) {
-            throw new IllegalArgumentException("[ERROR] move 명령어는 두 개의 좌표가 필요합니다.");
-        }
-        String source = commandParameters[SOURCE_INDEX];
-        String target = commandParameters[TARGET_INDEX];
-
-        return Arrays
-            .asList(Position.of(convertFileToCoordinate(source), convertRankToCoordinate(source))
-                , Position.of(convertFileToCoordinate(target), convertRankToCoordinate(target)));
-    }
-
-    private Rank convertRankToCoordinate(String coordinate) {
-        return Rank.of(Integer.parseInt(String.valueOf(coordinate.charAt(1))));
-    }
-
-    private File convertFileToCoordinate(String coordinate) {
-        return File.of(String.valueOf(coordinate.charAt(0)));
     }
 
     public EnumMap<Team, Double> calculatePoint() {

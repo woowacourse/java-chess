@@ -3,8 +3,13 @@ package chess.domain;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.piece.Direction;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Strategy;
+import chess.domain.piece.Team;
+import chess.domain.position.Position;
+import chess.domain.util.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,13 +21,6 @@ class MoveValidatorTest {
     void setUp() {
         board = BoardInitializer.init();
     }
-
-//    @Test
-//    void isPieceExist() {
-//        assertThatThrownBy(() -> MoveValidator.isPieceExist(board, Position.of("a1")))
-//            .isInstanceOf(IllegalArgumentException.class)
-//            .hasMessageContaining("말이 존재합니다.");
-//    }
 
     @Test
     void validatePawnLocation() {
@@ -52,12 +50,5 @@ class MoveValidatorTest {
         assertThatThrownBy(() -> MoveValidator.validateStraightMove(3))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("폰은 두 칸 이상");
-    }
-
-    @Test
-    void validateMoveRange() {
-        assertThatThrownBy(() -> MoveValidator.validateMoveRange(3, 1))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("이동할 수 있는 거리");
     }
 }
