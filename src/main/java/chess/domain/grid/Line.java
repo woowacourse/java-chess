@@ -11,6 +11,13 @@ public class Line {
     private static final int DECIMAL = 10;
     private static final String COLUMN_REFERENCE = "abcdefgh";
     private static final char FIRST_COLUMN = 'a';
+    private static final char SECOND_COLUMN = 'b';
+    private static final char THIRD_COLUMN = 'c';
+    private static final char FOURTH_COLUMN = 'd';
+    private static final char FIFTH_COLUMN = 'e';
+    private static final char SIXTH_COLUMN = 'f';
+    private static final char SEVENTH_COLUMN = 'g';
+    private static final char EIGHT_COLUMN = 'h';
 
     private final List<Piece> pieces;
 
@@ -19,14 +26,14 @@ public class Line {
     }
 
     public static Line general(final int rowNumber, final boolean isBlack) {
-        Rook rookLeft = new Rook(isBlack, 'a', Character.forDigit(rowNumber, DECIMAL));
-        Knight knightLeft = new Knight(isBlack, 'b', Character.forDigit(rowNumber, DECIMAL));
-        Bishop bishopLeft = new Bishop(isBlack, 'c', Character.forDigit(rowNumber, DECIMAL));
-        Queen queen = new Queen(isBlack, 'd', Character.forDigit(rowNumber, DECIMAL));
-        King king = new King(isBlack, 'e', Character.forDigit(rowNumber, DECIMAL));
-        Bishop bishopRight = new Bishop(isBlack, 'f', Character.forDigit(rowNumber, DECIMAL));
-        Knight knightRight = new Knight(isBlack, 'g', Character.forDigit(rowNumber, DECIMAL));
-        Rook rookRight = new Rook(isBlack, 'h', Character.forDigit(rowNumber, DECIMAL));
+        Rook rookLeft = new Rook(isBlack, FIRST_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Knight knightLeft = new Knight(isBlack, SECOND_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Bishop bishopLeft = new Bishop(isBlack, THIRD_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Queen queen = new Queen(isBlack, FOURTH_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        King king = new King(isBlack, FIFTH_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Bishop bishopRight = new Bishop(isBlack, SIXTH_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Knight knightRight = new Knight(isBlack, SEVENTH_COLUMN, Character.forDigit(rowNumber, DECIMAL));
+        Rook rookRight = new Rook(isBlack, EIGHT_COLUMN, Character.forDigit(rowNumber, DECIMAL));
         List<Piece> generalLine = Arrays.asList(
                 rookLeft,
                 knightLeft,
