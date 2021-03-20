@@ -9,6 +9,8 @@ import java.util.List;
 public class ChessGame {
 
     public static final String TURN_MESSAGE = "%s의 차례입니다.";
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
 
     private final ChessBoard chessBoard;
     private Color turn;
@@ -23,8 +25,8 @@ public class ChessGame {
     }
 
     public void run(List<String> input) {
-        String source = input.get(1);
-        String target = input.get(2);
+        String source = input.get(SOURCE_INDEX);
+        String target = input.get(TARGET_INDEX);
         Square sourceSquare = chessBoard.getSquare(Position.of(source));
 
         validateTurn(sourceSquare);

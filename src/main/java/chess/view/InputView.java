@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 public class InputView {
 
     private static final Scanner SCANNER = new Scanner(System.in);
+    private static final String START = "start";
+    private static final String END = "end";
+    public static final String MOVE = "move";
+    public static final String STATUS = "status";
 
     private InputView() {
     }
@@ -15,11 +19,11 @@ public class InputView {
     public static boolean isStart() {
         String input = SCANNER.nextLine();
         validate(input);
-        return "start".equals(input);
+        return START.equals(input);
     }
 
     private static void validate(String input) {
-        if (!"start".equals(input) && !"end".equals(input)) {
+        if (!START.equals(input) && !END.equals(input)) {
             throw new IllegalArgumentException();
         }
     }
@@ -34,7 +38,7 @@ public class InputView {
     }
 
     public static void validateStatusOrMove(String input) {
-        if (!"status".equals(input) && !"move".equals(input)) {
+        if (!STATUS.equals(input) && !MOVE.equals(input)) {
             throw new IllegalArgumentException();
         }
     }

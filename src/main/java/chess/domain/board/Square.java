@@ -8,6 +8,11 @@ import java.util.Objects;
 
 public class Square {
 
+    private static final String SAME_TARGET = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
+    private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
+    private static final int BLACK_STARTING_POSITION = 1;
+    private static final int WHITE_STARTING_POSITION = 6;
+
     private final Position position;
     private Piece piece;
 
@@ -23,12 +28,12 @@ public class Square {
     public void move(ChessBoard chessBoard, Square targetSquare) {
 
         if (this.equals(targetSquare)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(SAME_TARGET);
         }
 
         List<Square> movablePositions = Path.getMovableSquares(chessBoard, this);
         if (!movablePositions.contains(targetSquare)) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
         }
 
         targetSquare.addPiece(piece);
@@ -90,9 +95,9 @@ public class Square {
 
     public boolean isStartingPosition() {
         if (piece.isBlack()) {
-            return position.getRowAsIndex() == 1;
+            return position.getRowAsIndex() == BLACK_STARTING_POSITION;
         }
-        return position.getRowAsIndex() == 6;
+        return position.getRowAsIndex() == WHITE_STARTING_POSITION;
     }
 
     public List<Direction> getDirections() {

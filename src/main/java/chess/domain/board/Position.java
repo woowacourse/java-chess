@@ -6,6 +6,9 @@ import java.util.Objects;
 import java.util.Optional;
 
 public class Position {
+
+    private static final String OUT_OF_BOUND_MESSAGE = "체스판 범위를 벗어난 위치입니다.";
+
     private static final Map<String, Position> cache = new HashMap<>();
 
     static {
@@ -29,19 +32,19 @@ public class Position {
     public static Position of(Row row, Column column) {
         String key = generateKey(row, column);
         return Optional.ofNullable(cache.get(key))
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
     }
 
     public static Position of(int row, int column) {
         String key = generateKey(Row.findRowByIndex(row), Column.findColumnByIndex(column));
         return Optional.ofNullable(cache.get(key))
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
     }
 
     public static Position of(String input) {
         String key = generateKey(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
         return Optional.ofNullable(cache.get(key))
-            .orElseThrow(IllegalArgumentException::new);
+            .orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
     }
 
     private static String generateKey(Row row, Column column) {

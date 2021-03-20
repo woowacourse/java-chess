@@ -14,8 +14,8 @@ public class ResultTest {
         Result result = new Result(10, 15);
         Map<Color, String> winOrLose = result.getWinOrLose();
 
-        assertThat(winOrLose.get(Color.BLACK)).isEqualTo("패");
-        assertThat(winOrLose.get(Color.WHITE)).isEqualTo("승");
+        assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.LOSE);
+        assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.WIN);
     }
 
     @Test
@@ -23,8 +23,8 @@ public class ResultTest {
         Result result = new Result(15, 15);
         Map<Color, String> winOrLose = result.getWinOrLose();
 
-        assertThat(winOrLose.get(Color.BLACK)).isEqualTo("무");
-        assertThat(winOrLose.get(Color.WHITE)).isEqualTo("무");
+        assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.DRAW);
+        assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.DRAW);
     }
 
     @Test
@@ -32,7 +32,7 @@ public class ResultTest {
         Result result = new Result(15, 10);
         Map<Color, String> winOrLose = result.getWinOrLose();
 
-        assertThat(winOrLose.get(Color.BLACK)).isEqualTo("승");
-        assertThat(winOrLose.get(Color.WHITE)).isEqualTo("패");
+        assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.WIN);
+        assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.LOSE);
     }
 }

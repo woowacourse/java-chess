@@ -6,6 +6,8 @@ import java.util.List;
 
 public class Path {
 
+    public static final int LINEAR_DIRECTION_DEGREE = 0;
+
     private Path() {}
 
     public static List<Square> getMovableSquares(ChessBoard chessBoard, Square square) {
@@ -70,7 +72,7 @@ public class Path {
         if (square.hasNextPossibleSquare(xDegree, yDegree)) {
             Square nextSquare = chessBoard
                 .getSquare(square.getPosition().nextPosition(xDegree, yDegree));
-            if (xDegree == 0) {
+            if (xDegree == LINEAR_DIRECTION_DEGREE) {
                 if (nextSquare.isBlank()) {
                     movableSquares.add(nextSquare);
                 }

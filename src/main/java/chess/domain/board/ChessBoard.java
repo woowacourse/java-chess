@@ -17,7 +17,12 @@ import java.util.stream.Collectors;
 
 public class ChessBoard {
 
-    private final List<List<Square>> chessBoard = new ArrayList<>(8);
+    private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
+    private static final int BOARD_SIZE = 8;
+    private static final int NUMBER_OF_KINGS = 2;
+    private static final int COLUMN_NEIGHBOR_PAWN = 2;
+
+    private final List<List<Square>> chessBoard = new ArrayList<>(BOARD_SIZE);
 
     public ChessBoard() {
         initBlank();
@@ -29,7 +34,7 @@ public class ChessBoard {
     }
 
     private void initBlank() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
             chessBoard.add(
                 new ArrayList<>(Arrays.asList(
                     new Square(Position.of(i, 0), new Blank(Color.NO_COLOR)),
@@ -108,15 +113,15 @@ public class ChessBoard {
             .flatMap(Collection::stream)
             .filter(Square::hasKing)
             .count();
-        return kingCount < 2;
+        return kingCount < NUMBER_OF_KINGS;
     }
 
     public double getScore(Color color) {
         double score = calculateScore(color);
         Map<Column, Long> pawnCount = calculatePawnCount(color);
         for (long count : pawnCount.values()) {
-            if (count >= 2) {
-                score -= (double) count / 2;
+            if (count >= COLUMN_NEIGHBOR_PAWN) {
+                score -= (double) count * PAWN_SCORE_PUNISHMENT_RATIO;
             }
         }
         return score;

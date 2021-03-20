@@ -7,8 +7,11 @@ import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
+import jdk.internal.util.xml.impl.Input;
 
 public class Controller {
+
+    private static final int COMMAND_INDEX = 0;
 
     public void run() {
         ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
@@ -27,12 +30,12 @@ public class Controller {
     public void playGame(ChessGame chessGame) {
         List<String> input = InputView.moveOrStatus();
 
-        if ("move".equals(input.get(0))) {
+        if (InputView.MOVE.equals(input.get(COMMAND_INDEX))) {
             chessGame.run(input);
             OutputView.printChessBoard(chessGame.getChessBoard());
             playGame(chessGame);
         }
-        if ("status".equals(input.get(0)) || chessGame.isOver()) {
+        if (InputView.STATUS.equals(input.get(COMMAND_INDEX)) || chessGame.isOver()) {
             endGame(chessGame);
         }
     }
