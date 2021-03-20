@@ -30,3 +30,21 @@
 - [x] 칸의 상태 확인하기 
 - [x] 칸의 말을 가져오기
 - [x] 칸이 어디에 위치해있는지 (좌표?)
+
+### 수정 사항
+- ChessController.java
+  - try/catch 문 2개 추가
+    - run 메소드에 추가하여 잘못된 명령어 입력 시 에러 메시지 출력 (ex: movement a2 a4, stat...)
+    - move 메소드에 추가하여 잘못된 좌표 입력 시 에러 메시지 출력 (ex: move a0 a4, move a2 a10)
+  - 애매한 에러 메시지 변경
+    - 왕이 잡힌 후 move 명령어 수행 시 
+      - "[ERROR] 게임이 초기화되지 않았습니다." -> "[ERROR] 게임이 초기화되지 않았거나 종료되었습니다."
+  
+- ChessGame.java
+  - 유효성 검증 추가
+    - move 명령어 이후에 좌표를 하나만 입력했을때 Index 오류 발생
+      - splitSourceAndTargetPosition 메소드에 예외 throw 추가
+  - 새로운 StringParser 객체 생성
+    - String 형태의 command를 좌표로 변환해주는 로직을 객체로 따로 뺌
+    - 기존 List<Position>으로 반환하던 것을 source와 target Position을 담고 있는 MovePath 객체를 생성하여 반환
+  - pawn과 다른 말들의 이동을 나눴던 로직을 하나의 로직으로 통합
