@@ -73,7 +73,7 @@ public class QueenTest {
         grid.lines().assign(new Position("b2"), queen);
         grid.lines().assign(new Position("c3"), obstacle);
         assertThatThrownBy(() -> {
-            queen.validateRoute(new Empty('d', '4'), grid.lines());
+            queen.validateRoute(obstacle, grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 }

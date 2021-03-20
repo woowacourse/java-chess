@@ -45,7 +45,7 @@ public class KnightTest {
     public void validateRoute_True() {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
-        Knight opponent = new Knight(Color.BLACK, 'c', '3');
+        Knight opponent = new Knight(Color.BLACK, 'c', '4');
         grid.lines().assign(new Position("b2"), knight);
         grid.lines().assign(new Position("c4"), opponent);
         assertThatCode(() -> {
@@ -54,7 +54,7 @@ public class KnightTest {
     }
 
     @Test
-    @DisplayName("Knight이 갈 수 없는 위치.")
+    @DisplayName("Knight가 갈 수 없는 위치.")
     public void validateMove_False() {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
@@ -69,11 +69,11 @@ public class KnightTest {
     public void validateMove_FalseWhenObstaclesAhead() {
         Grid grid = new Grid(new TestGridStrategy());
         Knight knight = new Knight(Color.WHITE, 'b', '2');
-        Knight obstacle = new Knight(Color.WHITE, 'c', '3');
+        Knight obstacle = new Knight(Color.WHITE, 'c', '4');
         grid.lines().assign(new Position("b2"), knight);
-        grid.lines().assign(new Position("c3"), obstacle);
+        grid.lines().assign(new Position("c4"), obstacle);
         assertThatThrownBy(() -> {
-            knight.validateRoute(new Empty('d', '4'), grid.lines());
+            knight.validateRoute(new Empty('d', '6'), grid.lines());
         }).isInstanceOf(IllegalArgumentException.class).hasMessage("이동할 수 없는 위치입니다.");
     }
 }
