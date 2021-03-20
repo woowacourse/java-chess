@@ -85,6 +85,9 @@ public class Board {
             throw new IllegalArgumentException();
         }
         Cell currentCell = cells.get(currentCoordinate);
+        if (!currentCell.isTeamOf(teamType)) {
+            throw new IllegalArgumentException("나의 기물이 아닙니다.");
+        }
 
         if (!currentCell.isMovableTo(this, currentCoordinate, targetCoordinate)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
