@@ -9,11 +9,11 @@ public class Position {
         final List<String> alphabets = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         final List<String> numbers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
 
-        alphabets.stream().flatMap(alphabet -> numbers.stream().map(number -> alphabet + number))
-                .forEach(positionStr -> positionMap.put(
-                        positionStr,
-                        new Position(alphabets.indexOf(positionStr.substring(0, 1)),
-                                numbers.indexOf(positionStr.substring(1, 2)))));
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                positionMap.put(alphabets.get(i) + numbers.get(j), new Position(i, j));
+            }
+        }
     }
 
     private final int x;
@@ -32,10 +32,16 @@ public class Position {
         return new Position(x + xDistance, y + yDistance);
     }
 
-    public boolean checkDiagonalToDirection(final Position destination, final int direction) {
-        int xDiff = Math.abs(destination.x - this.x);
-        int yDiff = destination.y - this.y;
-        return xDiff == 1 && yDiff == direction;
+    public boolean checkStraight(final Position destination) {
+        final boolean xSame = (this.x == destination.x);
+        final boolean ySame = (this.y == destination.y);
+        return xSame || ySame;
+    }
+
+    public boolean checkDiagonal(final Position destination) {
+        final int xDiff = Math.abs(this.x - destination.x);
+        final int yDiff = Math.abs(this.y - destination.y);
+        return xDiff == yDiff;
     }
 
     public boolean checkAdjacentFourWay(final Position destination) {
@@ -45,26 +51,30 @@ public class Position {
     }
 
     public boolean checkAdjacentEightWay(final Position destination) {
-        return checkAdjacentFourWay(destination) || checkDiagonalToDirection(destination, 1)
-                || checkDiagonalToDirection(destination, -1);
+        return checkAdjacentFourWay(destination) || checkAdjacentDiagonalToDirection(destination, 1)
+                || checkAdjacentDiagonalToDirection(destination, -1);
     }
 
-    public boolean checkDiagonalRule(final Position destination) {
-        final int xDiff = Math.abs(this.x - destination.x);
-        final int yDiff = Math.abs(this.y - destination.y);
-        return xDiff == yDiff;
-    }
-
-    public boolean checkStraightRule(final Position destination) {
-        final boolean xSame = (this.x == destination.x);
-        final boolean ySame = (this.y == destination.y);
-        return xSame || ySame;
+    public boolean checkAdjacentDiagonalToDirection(final Position destination, final int direction) {
+        int xDiff = Math.abs(destination.x - this.x);
+        int yDiff = destination.y - this.y;
+        return xDiff == 1 && yDiff == direction;
     }
 
     public List<Position> generateDiagonalPath(final Position destination) {
         final int xDiff = (destination.x - this.x);
         final int yDiff = (destination.y - this.y);
         return generateDiagonalPathByDiff(destination, xDiff, yDiff);
+    }
+
+    public boolean checkKnightMoveRule(final Position destination) {
+        final int xDiff = Math.abs(this.x - destination.x);
+        final int yDiff = Math.abs(this.y - destination.y);
+        return ((xDiff == 1 && yDiff == 2) || (xDiff == 2 && yDiff == 1));
+    }
+
+    public boolean checkSameColumn(int x) {
+        return this.x == x;
     }
 
     private List<Position> generateDiagonalPathByDiff(final Position destination, final int xDiff, final int yDiff) {
@@ -107,14 +117,6 @@ public class Position {
             path = path.moveXandY(xDistance, yDistance);
         }
         return rightUpPath;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     @Override

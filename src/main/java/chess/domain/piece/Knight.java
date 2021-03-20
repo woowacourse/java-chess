@@ -5,21 +5,19 @@ import chess.domain.Position;
 import java.util.Map;
 
 public class Knight extends Piece {
-    private static final int UNICODE_DECIMAL = 9816;
+    private static final int KNIGHT_UNICODE_DECIMAL = 9816;
 
     public Knight() {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return checkPositionRule(current, destination);
     }
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        int xDiff = Math.abs(current.getX() - destination.getX());
-        int yDiff = Math.abs(current.getY() - destination.getY());
-        return ((xDiff == 1 && yDiff == 2) || (xDiff == 2 && yDiff == 1));
+        return current.checkKnightMoveRule(destination);
     }
 
     @Override
@@ -34,7 +32,7 @@ public class Knight extends Piece {
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL;
+        return KNIGHT_UNICODE_DECIMAL;
     }
 
     @Override
