@@ -56,7 +56,7 @@ public abstract class Team {
 
     public abstract void move(final Position current, final Position destination);
 
-    public Piece killPiece(Position destination) {
+    public Piece deletePiece(Position destination) {
         return piecePosition.remove(destination);
     }
 

@@ -11,42 +11,54 @@ import java.util.Map;
 public class ChessGame {
     private final BlackTeam blackTeam;
     private final WhiteTeam whiteTeam;
-    private Team currentTurn;
+    private Team currentTurnTeam;
     private boolean isPlaying;
 
     public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
-        this.currentTurn = this.whiteTeam;
+        this.currentTurnTeam = this.whiteTeam;
         this.isPlaying = true;
     }
 
     public void move(final Position current, final Position destination) {
-        final Piece chosenPiece = currentTurn.choosePiece(current);
-        validateMovable(current, destination, chosenPiece);
+        validateMove(current, destination);
+        currentTurnTeam.move(current, destination);
+        captureEnemy(destination);
+    }
 
-        Team enemy = getEnemy();
-        if (enemy.havePiece(destination)) {
-            killEnemyPiece(destination, enemy);
+    private void validateMove(final Position current, final Position destination) {
+        final Piece chosenPiece = currentTurnTeam.choosePiece(current);
+        if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
+            chosenPiece.isMoved();
+            return;
         }
-
-        currentTurn.move(current, destination);
-        chosenPiece.isMoved();
+        throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
     }
 
-    private void validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
-        if (currentTurn.havePiece(destination) || !chosenPiece.isMovable(current, destination, generateChessBoard())) {
-            throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    public Map<Position, Piece> generateChessBoard() {
+        final Map<Position, Piece> chessBoard = blackTeam.getPiecePosition();
+        chessBoard.putAll(whiteTeam.getPiecePosition());
+        return Collections.unmodifiableMap(chessBoard);
+    }
+
+    private void captureEnemy(final Position destination) {
+        final Team enemyTeam = getEnemy();
+        if (enemyTeam.havePiece(destination)) {
+            final Piece enemyPiece = enemyTeam.deletePiece(destination);
+            currentTurnTeam.catchPiece(enemyPiece);
+            checkMate(enemyPiece);
         }
     }
 
-    private void killEnemyPiece(Position destination, Team enemy) {
-        Piece piece = enemy.killPiece(destination);
-        currentTurn.catchPiece(piece);
-        checkMate(piece);
+    private Team getEnemy() {
+        if (currentTurnTeam == blackTeam) {
+            return whiteTeam;
+        }
+        return blackTeam;
     }
 
-    private void checkMate(Piece piece) {
+    private void checkMate(final Piece piece) {
         if (piece.isKing()) {
             finish();
         }
@@ -56,25 +68,12 @@ public class ChessGame {
         isPlaying = false;
     }
 
+    public void changeTurn() {
+        currentTurnTeam = getEnemy();
+    }
+
     public boolean isPlaying() {
         return isPlaying;
-    }
-
-    private Team getEnemy() {
-        if (currentTurn == blackTeam) {
-            return whiteTeam;
-        }
-        return blackTeam;
-    }
-
-    public void changeTurn() {
-        currentTurn = getEnemy();
-    }
-
-    public Map<Position, Piece> generateChessBoard() {
-        final Map<Position, Piece> chessBoard = blackTeam.getPiecePosition();
-        chessBoard.putAll(whiteTeam.getPiecePosition());
-        return Collections.unmodifiableMap(chessBoard);
     }
 
     public double calculateBlackTeamScore() {
