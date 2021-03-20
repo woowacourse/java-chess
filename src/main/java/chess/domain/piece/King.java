@@ -5,10 +5,9 @@ import java.util.Map;
 
 public class King extends AbstractPiece {
 
+    private static final double SCORE = 0;
     private static final String SYMBOL = "k";
     private static final int ABLE_LENGTH = 1;
-
-    public static final double SCORE = 0;
 
     public King(Color color, Position position) {
         super(color, position);

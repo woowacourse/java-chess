@@ -5,9 +5,8 @@ import java.util.Map;
 
 public class Rook extends AbstractPiece {
 
-    private static final String SYMBOL = "r";
-
     private static final double SCORE = 5;
+    private static final String SYMBOL = "r";
     private static final int ABLE_LENGTH = 7;
 
     public Rook(Color color, Position position) {

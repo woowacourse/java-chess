@@ -4,10 +4,9 @@ import java.util.Map;
 
 public class Blank extends AbstractPiece {
 
+    private static final double SCORE = 0;
     private static final String ERROR_MESSAGE = "해당 위치에 말이 존재하지 않습니다";
     private static final String SYMBOL = ".";
-
-    public static final double SCORE = 0;
 
     public Blank() {
         super(Color.BLANK, Position.of(0, 0));

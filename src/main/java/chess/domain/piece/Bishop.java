@@ -5,10 +5,9 @@ import java.util.Map;
 
 public class Bishop extends AbstractPiece {
 
+    private static final double SCORE = 3;
     private static final String SYMBOL = "b";
     private static final int ABLE_LENGTH = 7;
-
-    public static final double SCORE = 3;
 
     public Bishop(Color color, Position position) {
         super(color, position);

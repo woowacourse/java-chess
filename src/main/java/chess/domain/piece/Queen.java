@@ -6,9 +6,8 @@ import java.util.Map;
 public class Queen extends AbstractPiece {
 
     private static final String SYMBOL = "q";
-
     private static final double SCORE = 9;
-    public static final int ABLE_LENGTH = 7;
+    private static final int ABLE_LENGTH = 7;
 
     public Queen(Color color, Position position) {
         super(color, position);
