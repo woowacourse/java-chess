@@ -1,21 +1,21 @@
-package chess.domain.piece.movingstrategy;
+package chess.domain.piece.movementStrategy;
 
 import chess.domain.board.Point;
 import chess.domain.piece.MoveVector;
 import java.util.List;
 
-public class RookMovingStrategy implements MovingStrategy {
+public class KnightMovementStrategy implements MovementStrategy {
 
-    static final int LENGTH = 7;
+    private static final int LENGTH = 1;
 
-    private final List<MoveVector> ROOKS_MOVE_VECTORS = MoveVector.axisVectors();
+    private static final List<MoveVector> KNIGHTS_MOVE_VECTORS = MoveVector.knightVectors();
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
         int x = destination.xDifference(source);
         int y = destination.yDifference(source);
 
-        return ROOKS_MOVE_VECTORS.stream()
+        return KNIGHTS_MOVE_VECTORS.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("이동할 수 있는 방향이 아닙니다."));
@@ -26,12 +26,12 @@ public class RookMovingStrategy implements MovingStrategy {
         int x = destination.xDifference(source);
         int y = destination.yDifference(source);
 
-        return ROOKS_MOVE_VECTORS.stream()
+        return KNIGHTS_MOVE_VECTORS.stream()
             .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
     }
 
     @Override
-    public int movingLength() {
+    public int movementRange() {
         return LENGTH;
     }
 }

@@ -1,44 +1,44 @@
 package chess.domain.piece;
 
 import chess.domain.board.Point;
-import chess.domain.piece.movingstrategy.BishopMovingStrategy;
-import chess.domain.piece.movingstrategy.EmptyMovingStrategy;
-import chess.domain.piece.movingstrategy.KingMovingStrategy;
-import chess.domain.piece.movingstrategy.KnightMovingStrategy;
-import chess.domain.piece.movingstrategy.MovingStrategy;
-import chess.domain.piece.movingstrategy.PawnMovingStrategy;
-import chess.domain.piece.movingstrategy.QueenMovingStrategy;
-import chess.domain.piece.movingstrategy.RookMovingStrategy;
+import chess.domain.piece.movementStrategy.BishopMovementStrategy;
+import chess.domain.piece.movementStrategy.EmptyMovementStrategy;
+import chess.domain.piece.movementStrategy.KingMovementStrategy;
+import chess.domain.piece.movementStrategy.KnightMovementStrategy;
+import chess.domain.piece.movementStrategy.MovementStrategy;
+import chess.domain.piece.movementStrategy.PawnMovementStrategy;
+import chess.domain.piece.movementStrategy.QueenMovementStrategy;
+import chess.domain.piece.movementStrategy.RookMovementStrategy;
 
 public enum Piece {
-    KING(new KingMovingStrategy(), 0, "k"),
-    QUEEN(new QueenMovingStrategy(), 9, "q"),
-    ROOK(new RookMovingStrategy(), 5, "r"),
-    BISHOP(new BishopMovingStrategy(), 3, "b"),
-    KNIGHT(new KnightMovingStrategy(), 2.5, "n"),
-    PAWN(new PawnMovingStrategy(), 1, "p"),
-    EMPTY(new EmptyMovingStrategy(), 0, ".");
+    KING(new KingMovementStrategy(), 0, "k"),
+    QUEEN(new QueenMovementStrategy(), 9, "q"),
+    ROOK(new RookMovementStrategy(), 5, "r"),
+    BISHOP(new BishopMovementStrategy(), 3, "b"),
+    KNIGHT(new KnightMovementStrategy(), 2.5, "n"),
+    PAWN(new PawnMovementStrategy(), 1, "p"),
+    EMPTY(new EmptyMovementStrategy(), 0, ".");
 
-    private final MovingStrategy movingStrategy;
+    private final MovementStrategy movementStrategy;
     private final double score;
     private final String pieceName;
 
-    Piece(MovingStrategy movingStrategy, double score, String pieceName) {
-        this.movingStrategy = movingStrategy;
+    Piece(MovementStrategy movementStrategy, double score, String pieceName) {
+        this.movementStrategy = movementStrategy;
         this.score = score;
         this.pieceName = pieceName;
     }
 
     public MoveVector movableVector(Point source, Point destination) {
-        return movingStrategy.movableVector(source, destination);
+        return movementStrategy.movableVector(source, destination);
     }
 
     public boolean hasMovableVector(Point source, Point destination) {
-        return movingStrategy.hasMovableVector(source, destination);
+        return movementStrategy.hasMovableVector(source, destination);
     }
 
-    public int movingLength() {
-        return movingStrategy.movingLength();
+    public int movementRange() {
+        return movementStrategy.movementRange();
     }
 
     public double score() {

@@ -2,12 +2,11 @@ package chess.domain.gamestate;
 
 import chess.domain.Turn;
 import chess.domain.board.Point;
-import chess.domain.board.Team;
 
 public class Finished implements GameState {
 
-    private static final IllegalArgumentException EXCEPTION
-        = new IllegalArgumentException("올바르지 않은 입력입니다.");
+    private static final IllegalArgumentException EXCEPTION =
+        new IllegalArgumentException("올바르지 않은 입력입니다.");
 
     @Override
     public GameState start() {

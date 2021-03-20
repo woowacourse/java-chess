@@ -1,9 +1,9 @@
-package chess.domain.piece.movingstrategy;
+package chess.domain.piece.movementStrategy;
 
 import chess.domain.board.Point;
 import chess.domain.piece.MoveVector;
 
-public class EmptyMovingStrategy implements MovingStrategy {
+public class EmptyMovementStrategy implements MovementStrategy {
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
@@ -16,7 +16,7 @@ public class EmptyMovingStrategy implements MovingStrategy {
     }
 
     @Override
-    public int movingLength() {
+    public int movementRange() {
         return 0;
     }
 }

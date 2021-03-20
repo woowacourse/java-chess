@@ -13,15 +13,15 @@ public class Board {
 
     public static final int FIRST_NEXT_MOVE_COUNT = 2;
     private static final double HALF_PAWN_SCORE = 0.5;
-    private static final int FIRST_MOVING_PAWN_LENGTH = 2;
+    private static final int FIRST_MOVING_PAWN_RANGE = 2;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
-    private boolean deadKing;
+    private boolean isDeadKing;
 
     public Board() {
         Point.allPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
-        deadKing = false;
+        isDeadKing = false;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
@@ -31,7 +31,7 @@ public class Board {
 
     public void move(Point source, Point destination) {
         if (squares.get(destination).isPieceTypeOf(Piece.KING)) {
-            deadKing = true;
+            isDeadKing = true;
         }
         squares.put(destination, squares.get(source));
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
@@ -61,7 +61,8 @@ public class Board {
         for (Point now = source.movedPoint(moveVector); isNotArrived(destination, now) && success;
             now = now.movedPoint(moveVector)) {
             success =
-                isUnderMoveLength(source, nextMoveCount, moveVector) && squares.get(now).isEmpty();
+                isWithinMovementRange(source, nextMoveCount, moveVector) && squares.get(now)
+                    .isEmpty();
             nextMoveCount++;
         }
         return success;
@@ -71,12 +72,12 @@ public class Board {
         return !now.equals(destination);
     }
 
-    private boolean isUnderMoveLength(Point source, int moveCount, MoveVector moveVector) {
-        int length = squares.get(source).movingLength();
+    private boolean isWithinMovementRange(Point source, int moveCount, MoveVector moveVector) {
+        int range = squares.get(source).movementRange();
         if (isFirstStraightMovingPawn(source, moveVector)) {
-            length = FIRST_MOVING_PAWN_LENGTH;
+            range = FIRST_MOVING_PAWN_RANGE;
         }
-        return moveCount <= length;
+        return moveCount <= range;
     }
 
     private boolean isFirstStraightMovingPawn(Point source, MoveVector moveVector) {
@@ -112,7 +113,7 @@ public class Board {
     }
 
     public boolean isKingDead() {
-        return deadKing;
+        return isDeadKing;
     }
 
     public double score(Team team) {

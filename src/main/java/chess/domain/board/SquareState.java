@@ -54,8 +54,8 @@ public class SquareState {
         return piece.hasMovableVector(source, destination);
     }
 
-    public int movingLength() {
-        return piece.movingLength();
+    public int movementRange() {
+        return piece.movementRange();
     }
 
     public String pieceName() {

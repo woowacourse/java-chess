@@ -18,8 +18,6 @@ public class Ready implements GameState {
         = new IllegalArgumentException("올바르지 않은 입력입니다.");
     private static final Map<Piece, List<Point>> WHITE_INITIAL_POINTS = new HashMap<>();
 
-    private final Board board;
-
     static {
         WHITE_INITIAL_POINTS.put(Piece.KING, Collections.singletonList(Point.of("e1")));
         WHITE_INITIAL_POINTS.put(Piece.QUEEN, Collections.singletonList(Point.of("d1")));
@@ -33,6 +31,8 @@ public class Ready implements GameState {
                 .collect(Collectors.toList())
         );
     }
+
+    private final Board board;
 
     public Ready(Board board) {
         this.board = board;
