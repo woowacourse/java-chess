@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
+import chess.domain.result.Score;
 import chess.util.RenderingUtils;
 
 public class OutputView {
@@ -30,5 +31,14 @@ public class OutputView {
 
     public static void printError(IllegalArgumentException e) {
         System.out.println(NEWLINE + e.getMessage());
+    }
+
+    public static void printScore(PieceColor color, Score score) {
+        System.out.println(color.getColor() + "의 점수: " + score.is());
+
+    }
+
+    public static void printWinner(String winner) {
+        System.out.println(winner);
     }
 }
