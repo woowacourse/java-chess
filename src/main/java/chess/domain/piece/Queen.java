@@ -4,7 +4,6 @@ import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
 public class Queen extends Piece {
-
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
     private static final Queen BLACK_QUEEN = new Queen(Owner.BLACK);
     private static final Queen WHITE_QUEEN = new Queen(Owner.WHITE);

@@ -4,7 +4,6 @@ import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
 public class King extends Piece {
-
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
 
     private static final King BLACK_KING = new King(Owner.BLACK);

@@ -4,8 +4,8 @@ import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
 public class Knight extends Piece {
-
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
+
     private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Owner.WHITE);
 

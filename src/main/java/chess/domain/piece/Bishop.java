@@ -4,7 +4,6 @@ import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
 public class Bishop extends Piece {
-
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
 
     private static final Bishop BLACK_BISHOP = new Bishop(Owner.BLACK);

@@ -7,9 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class Piece {
-    protected final Owner owner;
-    protected final List<Direction> directions;
-    protected final Score score;
+    private final Owner owner;
+    private final List<Direction> directions;
+    private final Score score;
 
     public Piece(final Owner owner, final Score score, final List<Direction> directions) {
         this.owner = owner;
@@ -19,12 +19,8 @@ public abstract class Piece {
 
     public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 
-    public final Score score() {
-        return this.score;
-    }
 
-    ;
-
+    // TODO :: View에서 해야할 일
     public final String decideUpperOrLower(final String symbol) {
         if (owner.equals(Owner.BLACK)) {
             return symbol.toUpperCase();
@@ -47,7 +43,7 @@ public abstract class Piece {
         return this.owner.isSameTeam(other.owner);
     }
 
-    public List<Direction> getDirections() {
+    public final List<Direction> getDirections() {
         return Collections.unmodifiableList(directions);
     }
 
@@ -57,7 +53,12 @@ public abstract class Piece {
 
     public abstract int getMaxDistance();
 
+    // XXX :: instance of 사용? 오버라이드?
     public boolean isKing() {
         return this instanceof King;
+    }
+
+    public final Score score() {
+        return this.score;
     }
 }
