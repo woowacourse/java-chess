@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 public class ResultTest {
 
     @Test
-    void result() {
+    void resultWhite() {
         Result result = new Result(10, 15);
         Map<Color, String> winOrLose = result.getWinOrLose();
 
@@ -25,5 +25,14 @@ public class ResultTest {
 
         assertThat(winOrLose.get(Color.BLACK)).isEqualTo("무");
         assertThat(winOrLose.get(Color.WHITE)).isEqualTo("무");
+    }
+
+    @Test
+    void resultBlack() {
+        Result result = new Result(15, 10);
+        Map<Color, String> winOrLose = result.getWinOrLose();
+
+        assertThat(winOrLose.get(Color.BLACK)).isEqualTo("승");
+        assertThat(winOrLose.get(Color.WHITE)).isEqualTo("패");
     }
 }
