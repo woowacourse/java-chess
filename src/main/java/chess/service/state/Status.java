@@ -1,13 +1,13 @@
 package chess.service.state;
 
-import chess.service.ChessService;
+import chess.domain.grid.Grid;
 import chess.view.OutputView;
 
 public class Status extends Finished {
     @Override
-    public GameState run(ChessService chessService) {
-        double blackScore = chessService.score(true);
-        double whiteScore = chessService.score(false);
+    public GameState run(Grid grid) {
+        double blackScore = grid.score().score(true);
+        double whiteScore = grid.score().score(false);
         OutputView.printScores(true, blackScore);
         OutputView.printScores(false, whiteScore);
         OutputView.printWinner(blackScore > whiteScore);

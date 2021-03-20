@@ -1,9 +1,9 @@
 package chess.service.state;
 
-import chess.service.ChessService;
+import chess.domain.grid.Grid;
 
 public interface GameState {
-    public GameState run(ChessService chessService);
+    public GameState run(Grid grid);
 
     public boolean isFinished();
 }

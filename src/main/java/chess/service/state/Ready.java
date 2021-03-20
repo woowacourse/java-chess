@@ -1,15 +1,15 @@
 package chess.service.state;
 
-import chess.service.ChessService;
+import chess.domain.grid.Grid;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Ready implements GameState {
     @Override
-    public GameState run(ChessService chessService) {
+    public GameState run(Grid grid) {
         String command = InputView.command();
         if (command.equals("start")) {
-            OutputView.printGridStatus(chessService.grid().lines());
+            OutputView.printGridStatus(grid.lines());
             return new WhiteTurn();
         }
         if (command.equals("end")) {

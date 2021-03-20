@@ -1,10 +1,10 @@
 package chess.service.state;
 
-import chess.service.ChessService;
+import chess.domain.grid.Grid;
 
 public class End extends Finished {
     @Override
-    public GameState run(ChessService chessService) {
+    public GameState run(Grid grid) {
         return new End();
     }
 }

@@ -1,15 +1,15 @@
 package chess.service.state;
 
+import chess.domain.grid.Grid;
 import chess.domain.piece.Piece;
-import chess.service.ChessService;
 import chess.view.OutputView;
 
 public class WhiteTurn extends Playing {
 
     @Override
-    GameState move(ChessService chessService, Piece sourcePiece, Piece targetPiece) {
+    GameState move(Grid grid, Piece sourcePiece, Piece targetPiece) {
         validateIfWhite(sourcePiece);
-        chessService.move(sourcePiece, targetPiece);
+        grid.move(sourcePiece, targetPiece);
 
         if (catchedKing(targetPiece)) {
             OutputView.printWinner(!targetPiece.isBlack());
