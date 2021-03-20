@@ -11,11 +11,7 @@ public enum Team {
         this.teamName = teamName;
     }
 
-    public boolean isBlack() {
-        return this == BLACK;
-    }
-
-    public Team oppositeTeam() {
+    public Team opposingTeam() {
         if (this == WHITE) {
             return BLACK;
         }
@@ -27,5 +23,9 @@ public enum Team {
 
     public String teamName() {
         return teamName;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
     }
 }

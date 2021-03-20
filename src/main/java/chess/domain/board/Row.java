@@ -29,7 +29,7 @@ public enum Row {
         this.index = index;
     }
 
-    public static Row foundRowByIndex(int index) {
+    public static Row rowByIndex(int index) {
         return Arrays.stream(Row.values())
             .filter(row -> row.index == index)
             .findFirst()
@@ -40,15 +40,15 @@ public enum Row {
         return Collections.unmodifiableList(REVERSE_ROWS);
     }
 
-    public String coordinate() {
-        return coordinate;
+    public Row opposingRow() {
+        return rowByIndex(ROW_MAX - index);
     }
 
     public int index() {
         return index;
     }
 
-    public Row oppositeRow() {
-        return foundRowByIndex(ROW_MAX - index);
+    public String coordinate() {
+        return coordinate;
     }
 }

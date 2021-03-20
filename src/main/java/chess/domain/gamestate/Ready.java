@@ -28,7 +28,7 @@ public class Ready implements GameState {
         WHITE_INITIAL_POINTS.put(Piece.KNIGHT, Arrays.asList(Point.of("b1"), Point.of("g1")));
         WHITE_INITIAL_POINTS.put(
             Piece.PAWN,
-            Point.AllPoints().stream()
+            Point.allPoints().stream()
                 .filter(point -> point.isRow(Row.TWO))
                 .collect(Collectors.toList())
         );

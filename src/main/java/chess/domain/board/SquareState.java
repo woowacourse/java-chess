@@ -1,10 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
 import chess.domain.piece.MoveVector;
+import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public class SquareState {
@@ -13,7 +12,7 @@ public class SquareState {
 
     static {
         for (Piece piece : Piece.values()) {
-            iterateTeam(piece);
+            generateSquareStatePoolByPiece(piece);
         }
     }
 
@@ -25,7 +24,7 @@ public class SquareState {
         this.team = team;
     }
 
-    private static void iterateTeam(Piece piece) {
+    private static void generateSquareStatePoolByPiece(Piece piece) {
         for (Team team : Team.values()) {
             SQUARE_STATE_POOL.add(new SquareState(piece, team));
         }
@@ -40,28 +39,35 @@ public class SquareState {
 
     public MoveVector movableVector(Point source, Point destination) {
         if (team.isBlack()) {
-            return piece.movableVector(source.oppositePoint(), destination.oppositePoint()).oppositeVector();
+            return piece
+                .movableVector(source.originSymmetricPoint(), destination.originSymmetricPoint())
+                .oppositeVector();
         }
         return piece.movableVector(source, destination);
     }
 
     public boolean hasMovableVector(Point source, Point destination) {
         if (team.isBlack()) {
-            return piece.hasMovableVector(source.oppositePoint(), destination.oppositePoint());
+            return piece.hasMovableVector(source.originSymmetricPoint(),
+                destination.originSymmetricPoint());
         }
         return piece.hasMovableVector(source, destination);
     }
 
-    public int getMoveLength() {
+    public int movingLength() {
         return piece.movingLength();
     }
 
     public String pieceName() {
         String pieceName = piece.pieceName();
         if (team == Team.BLACK) {
-            pieceName = pieceName.toUpperCase(Locale.ROOT);
+            pieceName = pieceName.toUpperCase();
         }
         return pieceName;
+    }
+
+    public double score() {
+        return piece.score();
     }
 
     public boolean isTeam(Team team) {
@@ -73,23 +79,19 @@ public class SquareState {
     }
 
     public boolean isEnemy(SquareState sourceSquareState) {
-        return team == sourceSquareState.team.oppositeTeam();
+        return team == sourceSquareState.team.opposingTeam();
     }
 
     public boolean isEmpty() {
         return team == Team.NONE;
     }
 
-    public boolean isPawn() {
-        return this.piece == Piece.PAWN;
+    public boolean isPieceTypeOf(Piece piece) {
+        return this.piece == piece;
     }
 
-    public boolean isKing() {
-        return piece == Piece.KING;
-    }
-
-    public double score() {
-        return piece.score();
+    public boolean isNotPieceTypeOf(Piece piece) {
+        return this.piece != piece;
     }
 
     @Override

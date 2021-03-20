@@ -30,10 +30,6 @@ public enum MoveVector {
         this.vertical = vertical;
     }
 
-    public static List<MoveVector> pawnVectors() {
-        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
-    }
-
     public static List<MoveVector> everyVectors() {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH, NORTHEAST, NORTHWEST, SOUTHEAST, SOUTHWEST);
     }
@@ -46,8 +42,20 @@ public enum MoveVector {
         return Arrays.asList(EAST, WEST, SOUTH, NORTH);
     }
 
+    public static List<MoveVector> pawnVectors() {
+        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
+    }
+
     public static List<MoveVector> knightVectors() {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
+    }
+
+    public static MoveVector moveVectorByValues(int horizon, int vertical) {
+        return Arrays.stream(MoveVector.values())
+            .filter(vector -> (vector.horizon == horizon)
+                && (vector.vertical == vertical))
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isDiagonalVector() {
@@ -56,14 +64,6 @@ public enum MoveVector {
 
     public boolean isPawnStraight() {
         return this == NORTH || this == SOUTH;
-    }
-
-    public static MoveVector foundMoveVector(int horizon, int vertical) {
-        return Arrays.stream(MoveVector.values())
-            .filter(vector -> (vector.horizon == horizon)
-                && (vector.vertical == vertical))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isSameDirection(int horizon, int vertical) {
@@ -78,14 +78,14 @@ public enum MoveVector {
     }
 
     public MoveVector oppositeVector() {
-        return foundMoveVector((-1) * horizon, (-1) * vertical);
+        return moveVectorByValues((-1) * horizon, (-1) * vertical);
     }
 
-    public int getHorizon() {
+    public int horizon() {
         return horizon;
     }
 
-    public int getVertical() {
+    public int vertical() {
         return vertical;
     }
 }

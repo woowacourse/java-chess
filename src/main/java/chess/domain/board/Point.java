@@ -42,16 +42,41 @@ public class Point {
         }
     }
 
-    public static List<Point> AllPoints() {
+    public static List<Point> allPoints() {
         return new ArrayList<>(POINT_POOL.values());
     }
 
-    public Point yAxisOppositePoint() {
-        return Point.of(this.x.coordinate() + this.y.oppositeRow().coordinate());
+    public Point yAxisSymmetricPoint() {
+        return Point.of(this.x.coordinate() + this.y.opposingRow().coordinate());
     }
 
-    public Point oppositePoint() {
-        return Point.of(this.x.oppositeColumn().coordinate() + this.y.oppositeRow().coordinate());
+    public Point originSymmetricPoint() {
+        return Point.of(this.x.opposingColumn().coordinate() + this.y.opposingRow().coordinate());
+    }
+
+    public int xDifference(Point source) {
+        return this.x.index() - source.x.index();
+    }
+
+    public int yDifference(Point source) {
+        return this.y.index() - source.y.index();
+    }
+
+    public Point movedPoint(MoveVector moveVector) {
+        return Point.of(movedPointCoordinate(moveVector));
+    }
+
+    private String movedPointCoordinate(MoveVector moveVector) {
+        return Column.columnByIndex(movedXIndex(moveVector)).coordinate() +
+            Row.rowByIndex(movedYIndex(moveVector)).coordinate();
+    }
+
+    private int movedYIndex(MoveVector moveVector) {
+        return y.index() + moveVector.vertical();
+    }
+
+    private int movedXIndex(MoveVector moveVector) {
+        return x.index() + moveVector.horizon();
     }
 
     public boolean isRow(Row row) {
@@ -60,30 +85,5 @@ public class Point {
 
     public boolean isColumn(Column column) {
         return x == column;
-    }
-
-    public int XDifference(Point source) {
-        return this.x.index() - source.x.index();
-    }
-
-    public int YDifference(Point source) {
-        return this.y.index() - source.y.index();
-    }
-
-    public Point movedPoint(MoveVector moveVector) {
-        return Point.of(movedPointName(moveVector));
-    }
-
-    private String movedPointName(MoveVector moveVector) {
-        return Column.foundColumnByIndex(movedXIndex(moveVector)).coordinate() +
-            Row.foundRowByIndex(movedYIndex(moveVector)).coordinate();
-    }
-
-    private int movedYIndex(MoveVector moveVector) {
-        return y.index() + moveVector.getVertical();
-    }
-
-    private int movedXIndex(MoveVector moveVector) {
-        return x.index() + moveVector.getHorizon();
     }
 }

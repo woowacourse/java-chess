@@ -28,7 +28,7 @@ public class ChessGameTest {
     @DisplayName("킹 이동 테스트(이동 위치에 아군 말이 있는 경우 예외처리)")
     void kingWithInvalidMove() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("e1"), Point.of("e2")))
+            chessGame.move(Point.of("e1"), Point.of("e2")))
             .withMessage("불가능한 이동입니다.");
     }
 
@@ -37,7 +37,7 @@ public class ChessGameTest {
     void kingsMoveToInvalidPoint() {
         board.move(Point.of("e2"), Point.of("f3"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("e1"), Point.of("e3")))
+            chessGame.move(Point.of("e1"), Point.of("e3")))
             .withMessage("불가능한 이동입니다.");
     }
 
@@ -55,14 +55,14 @@ public class ChessGameTest {
         board.move(Point.of("e2"), Point.of("f3"));
         board.move(Point.of("e1"), Point.of("e3"));
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("e3"), Point.of("f4"));
-            chessGame.tryToMove(Point.of("f4"), Point.of("f5"));
-            chessGame.tryToMove(Point.of("f5"), Point.of("e6"));
-            chessGame.tryToMove(Point.of("e6"), Point.of("d6"));
-            chessGame.tryToMove(Point.of("d6"), Point.of("c5"));
-            chessGame.tryToMove(Point.of("c5"), Point.of("c4"));
-            chessGame.tryToMove(Point.of("c4"), Point.of("d3"));
-            chessGame.tryToMove(Point.of("d3"), Point.of("e3"));
+            chessGame.move(Point.of("e3"), Point.of("f4"));
+            chessGame.move(Point.of("f4"), Point.of("f5"));
+            chessGame.move(Point.of("f5"), Point.of("e6"));
+            chessGame.move(Point.of("e6"), Point.of("d6"));
+            chessGame.move(Point.of("d6"), Point.of("c5"));
+            chessGame.move(Point.of("c5"), Point.of("c4"));
+            chessGame.move(Point.of("c4"), Point.of("d3"));
+            chessGame.move(Point.of("d3"), Point.of("e3"));
         }).doesNotThrowAnyException();
     }
 
@@ -80,12 +80,12 @@ public class ChessGameTest {
         board.move(Point.of("d1"), Point.of("d3"));
 
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("d3"), Point.of("d6"));
-            chessGame.tryToMove(Point.of("d6"), Point.of("d3"));
-            chessGame.tryToMove(Point.of("d3"), Point.of("g6"));
-            chessGame.tryToMove(Point.of("g6"), Point.of("d3"));
-            chessGame.tryToMove(Point.of("d3"), Point.of("a6"));
-            chessGame.tryToMove(Point.of("a6"), Point.of("d3"));
+            chessGame.move(Point.of("d3"), Point.of("d6"));
+            chessGame.move(Point.of("d6"), Point.of("d3"));
+            chessGame.move(Point.of("d3"), Point.of("g6"));
+            chessGame.move(Point.of("g6"), Point.of("d3"));
+            chessGame.move(Point.of("d3"), Point.of("a6"));
+            chessGame.move(Point.of("a6"), Point.of("d3"));
         }).doesNotThrowAnyException();
     }
 
@@ -93,7 +93,7 @@ public class ChessGameTest {
     @DisplayName("퀸 이동 테스트(이동 위치에 아군 말이 있는 경우 예외처리)")
     void queensMoveToInvalidMove() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("d1"), Point.of("d2"))
+            chessGame.move(Point.of("d1"), Point.of("d2"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -101,7 +101,7 @@ public class ChessGameTest {
     @DisplayName("퀸 이동 테스트(해당 위치로 가는 길이 막힌 경우 예외처리)")
     void queensMoveToInvalidPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("d1"), Point.of("d3"))
+            chessGame.move(Point.of("d1"), Point.of("d3"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -120,10 +120,10 @@ public class ChessGameTest {
         board.move(Point.of("b2"), Point.of("b3"));
 
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("c1"), Point.of("h6"));
-            chessGame.tryToMove(Point.of("h6"), Point.of("c1"));
-            chessGame.tryToMove(Point.of("c1"), Point.of("a3"));
-            chessGame.tryToMove(Point.of("a3"), Point.of("c1"));
+            chessGame.move(Point.of("c1"), Point.of("h6"));
+            chessGame.move(Point.of("h6"), Point.of("c1"));
+            chessGame.move(Point.of("c1"), Point.of("a3"));
+            chessGame.move(Point.of("a3"), Point.of("c1"));
         }).doesNotThrowAnyException();
     }
 
@@ -131,7 +131,7 @@ public class ChessGameTest {
     @DisplayName("비숍 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void bishopMoveToInvalidPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("c1"), Point.of("c4"))
+            chessGame.move(Point.of("c1"), Point.of("c4"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -149,10 +149,10 @@ public class ChessGameTest {
         board.move(Point.of("a2"), Point.of("a6"));
 
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("a1"), Point.of("a5"));
-            chessGame.tryToMove(Point.of("a5"), Point.of("h5"));
-            chessGame.tryToMove(Point.of("h5"), Point.of("a5"));
-            chessGame.tryToMove(Point.of("a5"), Point.of("a1"));
+            chessGame.move(Point.of("a1"), Point.of("a5"));
+            chessGame.move(Point.of("a5"), Point.of("h5"));
+            chessGame.move(Point.of("h5"), Point.of("a5"));
+            chessGame.move(Point.of("a5"), Point.of("a1"));
         }).doesNotThrowAnyException();
     }
 
@@ -161,7 +161,7 @@ public class ChessGameTest {
     void rookMoveToInvalidPoint() {
         board.move(Point.of("b2"), Point.of("b3"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("a1"), Point.of("f6"))
+            chessGame.move(Point.of("a1"), Point.of("f6"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -177,14 +177,14 @@ public class ChessGameTest {
         });
         chessGame.start();
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("b1"), Point.of("c3"));
-            chessGame.tryToMove(Point.of("c3"), Point.of("e4"));
-            chessGame.tryToMove(Point.of("e4"), Point.of("c3"));
-            chessGame.tryToMove(Point.of("c3"), Point.of("a4"));
-            chessGame.tryToMove(Point.of("a4"), Point.of("c3"));
-            chessGame.tryToMove(Point.of("c3"), Point.of("b5"));
-            chessGame.tryToMove(Point.of("b5"), Point.of("c3"));
-            chessGame.tryToMove(Point.of("c3"), Point.of("b1"));
+            chessGame.move(Point.of("b1"), Point.of("c3"));
+            chessGame.move(Point.of("c3"), Point.of("e4"));
+            chessGame.move(Point.of("e4"), Point.of("c3"));
+            chessGame.move(Point.of("c3"), Point.of("a4"));
+            chessGame.move(Point.of("a4"), Point.of("c3"));
+            chessGame.move(Point.of("c3"), Point.of("b5"));
+            chessGame.move(Point.of("b5"), Point.of("c3"));
+            chessGame.move(Point.of("c3"), Point.of("b1"));
         }).doesNotThrowAnyException();
     }
 
@@ -192,7 +192,7 @@ public class ChessGameTest {
     @DisplayName("나이트 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void knightMoveToInvalidPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("b1"), Point.of("b3"))
+            chessGame.move(Point.of("b1"), Point.of("b3"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -200,8 +200,8 @@ public class ChessGameTest {
     @DisplayName("폰을 유효한 위치로 이동 테스트")
     void pawnWithValidMove() {
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("b2"), Point.of("b3"));
-            chessGame.tryToMove(Point.of("b7"), Point.of("b6"));
+            chessGame.move(Point.of("b2"), Point.of("b3"));
+            chessGame.move(Point.of("b7"), Point.of("b6"));
         }).doesNotThrowAnyException();
     }
 
@@ -211,10 +211,10 @@ public class ChessGameTest {
         board.move(Point.of("b2"), Point.of("b3"));
         board.move(Point.of("b7"), Point.of("b6"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("b3"), Point.of("b2"))
+            chessGame.move(Point.of("b3"), Point.of("b2"))
         ).withMessage("불가능한 이동입니다.");
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("b6"), Point.of("b7"))
+            chessGame.move(Point.of("b6"), Point.of("b7"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -222,8 +222,8 @@ public class ChessGameTest {
     @DisplayName("폰을 유효한 위치로 이동 테스트(첫 이동인 경우 2칸 허용)")
     void pawnWithValidMoveWhenFirstMove() {
         assertThatCode(() -> {
-            chessGame.tryToMove(Point.of("b2"), Point.of("b4"));
-            chessGame.tryToMove(Point.of("b7"), Point.of("b5"));
+            chessGame.move(Point.of("b2"), Point.of("b4"));
+            chessGame.move(Point.of("b7"), Point.of("b5"));
         }).doesNotThrowAnyException();
     }
 
@@ -232,7 +232,7 @@ public class ChessGameTest {
     void pawnWithInvalidMoveWhenFirstMove() {
         board.move(Point.of("b2"), Point.of("c3"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("c2"), Point.of("c4"))
+            chessGame.move(Point.of("c2"), Point.of("c4"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -242,10 +242,10 @@ public class ChessGameTest {
         board.move(Point.of("b2"), Point.of("b3"));
         board.move(Point.of("c7"), Point.of("c6"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("b3"), Point.of("b5"))
+            chessGame.move(Point.of("b3"), Point.of("b5"))
         ).withMessage("불가능한 이동입니다.");
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("c6"), Point.of("c4"))
+            chessGame.move(Point.of("c6"), Point.of("c4"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -255,7 +255,7 @@ public class ChessGameTest {
         board.move(Point.of("e7"), Point.of("e5"));
         board.move(Point.of("d2"), Point.of("d4"));
 
-        assertThatCode(() -> chessGame.tryToMove(Point.of("d4"), Point.of("e5")))
+        assertThatCode(() -> chessGame.move(Point.of("d4"), Point.of("e5")))
             .doesNotThrowAnyException();
     }
 
@@ -265,7 +265,7 @@ public class ChessGameTest {
         board.move(Point.of("e7"), Point.of("e4"));
         board.move(Point.of("d2"), Point.of("d5"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("d5"), Point.of("e4"))
+            chessGame.move(Point.of("d5"), Point.of("e4"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -273,7 +273,7 @@ public class ChessGameTest {
     @DisplayName("폰 이동 테스트(적이 없을 때 대각선으로 이동하려는 경우 예외처리)")
     void pawnMoveToInvalidPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("b2"), Point.of("c3"))
+            chessGame.move(Point.of("b2"), Point.of("c3"))
         ).withMessage("불가능한 이동입니다.");
     }
 
@@ -281,16 +281,16 @@ public class ChessGameTest {
     @DisplayName("빈 공간을 이동하려는 경우 예외 처리")
     void moveEmptyPoint() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("c3"), Point.of("c4"))
+            chessGame.move(Point.of("c3"), Point.of("c4"))
         ).withMessage("불가능한 이동입니다.");
     }
 
     @Test
     @DisplayName("자신의 턴이 아닌 말을 이동시키려는 경우 예외처리")
     void moveEnemyPiece() {
-        chessGame.tryToMove(Point.of("b2"), Point.of("b3"));
+        chessGame.move(Point.of("b2"), Point.of("b3"));
         assertThatIllegalArgumentException().isThrownBy(() ->
-            chessGame.tryToMove(Point.of("a2"), Point.of("a3"))
+            chessGame.move(Point.of("a2"), Point.of("a3"))
         ).withMessage("불가능한 이동입니다.");
     }
 }

@@ -68,7 +68,7 @@ public class BoardTest {
     void gameIsOverWhenKingIsDead() {
         assertThat(board.isKingDead()).isFalse();
         board.move(Point.of("e8"), Point.of("e3"));
-        chessGame.tryToMove(Point.of("d2"), Point.of("e3"));
+        chessGame.move(Point.of("d2"), Point.of("e3"));
 
         assertThat(board.isKingDead()).isTrue();
     }

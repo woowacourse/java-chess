@@ -29,7 +29,7 @@ public class ChessGame {
         gameState = gameState.end();
     }
 
-    public void tryToMove(Point source, Point destination) {
+    public void move(Point source, Point destination) {
         gameState = gameState.move(source, destination, turn);
     }
 

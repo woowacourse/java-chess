@@ -10,7 +10,7 @@ public enum Command {
     START("start", 0, (chessGame, arguments) -> chessGame.start()),
     END("end", 0, (chessGame, arguments) -> chessGame.end()),
     MOVE("move", 2, (chessGame, arguments) ->
-        chessGame.tryToMove(Point.of(arguments.get(0)), Point.of(arguments.get(1)))),
+        chessGame.move(Point.of(arguments.get(0)), Point.of(arguments.get(1)))),
     STATUS("status", 0, (chessGame, arguments) -> chessGame.status());
 
     public static final int ARGUMENT_START_INDEX = 1;
@@ -27,7 +27,7 @@ public enum Command {
         this.operator = operator;
     }
 
-    public static Command foundCommandByIndex(String input) {
+    public static Command commandByInput(String input) {
         List<String> splitInputs = Arrays.asList(input.split(DELIMITER));
         String firstInput = splitInputs.get(OPERATION_INDEX);
         int inputArgumentsCount = splitInputs.size() - 1;
