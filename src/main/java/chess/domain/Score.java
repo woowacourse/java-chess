@@ -9,7 +9,7 @@ public class Score {
         this.whiteScore = whiteScore;
     }
 
-    public static Score calculate(Board board) {
+    public static Score from(Board board) {
         return new Score(
                 board.score(Side.BLACK),
                 board.score(Side.WHITE));

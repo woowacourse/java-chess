@@ -48,4 +48,13 @@ public class OutputView {
         System.out.println("Black: " + score.blackScore());
         System.out.println("White: " + score.whiteScore());
     }
+
+    public static void printWinner(Side winner) {
+        System.out.println();
+        System.out.println("Winner: " + winner.name());
+    }
+
+    public static void printError(Exception exception) {
+        System.out.println(exception.getMessage());
+    }
 }

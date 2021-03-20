@@ -5,6 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.exception.InvalidCommandException;
 import chess.exception.InvalidMovementException;
 
 import java.util.List;
@@ -31,6 +32,30 @@ public class Board {
         movePiece(from, to, piece);
     }
 
+    private void validateIsMyPiece(Side playerSide, Piece piece) {
+        if (!piece.isSideEqualTo(playerSide)) {
+            throw new InvalidMovementException("자신의 기물만 움직일 수 있습니다.");
+        }
+    }
+
+    private void checkRoute(List<Position> route) {
+        // TODO 가독성 좋게 개선(이동경로 장애물 체크)
+        route.stream()
+                .map(board::get)
+                .map(Piece::isBlank)
+                .filter(isBlank -> !isBlank)
+                .findAny()
+                .ifPresent(isBlank -> {
+                    throw new InvalidMovementException("이동경로에 다른 기물이 존재합니다.");
+                });
+    }
+
+    private void validateMyPieceExistToPosition(Position to, Side playerSide) {
+        if (board.get(to).isSideEqualTo(playerSide)) {
+            throw new InvalidMovementException("이동하려는 위치에 자신의 기물이 존재합니다.");
+        }
+    }
+
     private void movePiece(Position from, Position to, Piece piece) {
         board.put(to, piece);
         board.put(from, Blank.getBlank());
@@ -42,30 +67,6 @@ public class Board {
             // TODO 폰에 관한 로직은 폰에게 옮기기
             checkMoveDiagonal(from, to);
             checkMoveVertical(from, to);
-        }
-    }
-
-    private void validateMyPieceExistToPosition(Position to, Side playerSide) {
-        if (board.get(to).isSideEqualTo(playerSide)) {
-            throw new InvalidMovementException("이동하려는 위치에 자신의 기물이 존재합니다.");
-        }
-    }
-
-    private void validateIsMyPiece(Side playerSide, Piece piece) {
-        if (!piece.isSideEqualTo(playerSide)) {
-            throw new InvalidMovementException("자신의 기물만 움직일 수 있습니다.");
-        }
-    }
-
-    private void checkMoveVertical(Position from, Position to) {
-        if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
-            checkPieceExistInToPosition(to);
-        }
-    }
-
-    private void checkPieceExistInToPosition(Position to) {
-        if (!board.get(to).isBlank()) {
-            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
         }
     }
 
@@ -81,16 +82,16 @@ public class Board {
         }
     }
 
-    private void checkRoute(List<Position> route) {
-        // TODO 가독성 좋게 개선(이동경로 장애물 체크)
-        route.stream()
-                .map(board::get)
-                .map(Piece::isBlank)
-                .filter(isBlank -> !isBlank)
-                .findAny()
-                .ifPresent(isBlank -> {
-                    throw new InvalidMovementException("이동경로에 다른 기물이 존재합니다.");
-                });
+    private void checkMoveVertical(Position from, Position to) {
+        if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
+            checkPieceExistInToPosition(to);
+        }
+    }
+
+    private void checkPieceExistInToPosition(Position to) {
+        if (!board.get(to).isBlank()) {
+            throw new InvalidMovementException("이동하려는 위치에 기물이 존재합니다.");
+        }
     }
 
     public String getInitial(Position position) {
@@ -109,6 +110,7 @@ public class Board {
     }
 
     private double scoreOnlyPawn(Side side) {
+        // TODO 뎁스, 길이 줄이기
         double score = 0;
 
         for (Column column : Column.values()) {
@@ -140,5 +142,22 @@ public class Board {
                 .filter(piece -> !piece.isPawn())
                 .mapToDouble(Piece::score)
                 .sum();
+    }
+
+    public Side winner() {
+        if (!isGameSet()) {
+            return Side.NONE;
+        }
+
+        Piece piece = board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .findAny()
+                .orElseThrow(InvalidCommandException::new);
+
+        if (piece.isSideEqualTo(Side.BLACK)) {
+            return Side.BLACK;
+        }
+        return Side.WHITE;
     }
 }
