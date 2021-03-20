@@ -25,6 +25,17 @@ public class Pawn extends Piece {
         super(position, name, color, score);
     }
 
+    public static List<Pawn> initialPawns() {
+        List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
+                .map(position -> new Pawn(position, "P", Color.BLACK, SCORE))
+                .collect(Collectors.toList());
+        List<Pawn> whitePawns = INITIAL_WHITE_POSITIONS.stream()
+                .map(position -> new Pawn(position, "p", Color.WHITE, SCORE))
+                .collect(Collectors.toList());
+        blackPawns.addAll(whitePawns);
+        return blackPawns;
+    }
+
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
@@ -81,16 +92,5 @@ public class Pawn extends Piece {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
-    }
-
-    public static List<Pawn> generate() {
-        List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Pawn(position, "P", Color.BLACK, SCORE))
-                .collect(Collectors.toList());
-        List<Pawn> whitePawns = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Pawn(position, "p", Color.WHITE, SCORE))
-                .collect(Collectors.toList());
-        blackPawns.addAll(whitePawns);
-        return blackPawns;
     }
 }

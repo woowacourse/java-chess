@@ -22,6 +22,17 @@ public class Rook extends Piece {
         super(position, name, color, score);
     }
 
+    public static List<Rook> initialRooks() {
+        List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
+                .map(position -> new Rook(position, "R", Color.BLACK, SCORE))
+                .collect(Collectors.toList());
+        List<Rook> whiteRooks = INITIAL_WHITE_POSITIONS.stream()
+                .map(position -> new Rook(position, "r", Color.WHITE, SCORE))
+                .collect(Collectors.toList());
+        blackRooks.addAll(whiteRooks);
+        return blackRooks;
+    }
+
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         // 대각선인지 확인
@@ -42,16 +53,5 @@ public class Rook extends Piece {
             currentPieces.removePieceByPosition(target);
         }
         this.position = target;
-    }
-
-    public static List<Rook> generate() {
-        List<Rook> blackRooks = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Rook(position, "R", Color.BLACK, SCORE))
-                .collect(Collectors.toList());
-        List<Rook> whiteRooks = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Rook(position, "r", Color.WHITE, SCORE))
-                .collect(Collectors.toList());
-        blackRooks.addAll(whiteRooks);
-        return blackRooks;
     }
 }

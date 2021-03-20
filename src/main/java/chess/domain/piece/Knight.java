@@ -22,6 +22,17 @@ public class Knight extends Piece {
     }
 
 
+    public static List<Knight> initialKnights() {
+        List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
+                .map(position -> new Knight(position, "N", Color.BLACK, SCORE))
+                .collect(Collectors.toList());
+        List<Knight> whiteKnights = INITIAL_WHITE_POSITIONS.stream()
+                .map(position -> new Knight(position, "n", Color.WHITE, SCORE))
+                .collect(Collectors.toList());
+        blackKnights.addAll(whiteKnights);
+        return blackKnights;
+    }
+
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         if (!((Math.abs(this.position.subtractX(target)) == 2 && Math.abs(this.position.subtractY(target)) == 1) ||
@@ -37,16 +48,5 @@ public class Knight extends Piece {
             currentPieces.removePieceByPosition(target);
         }
         this.position = target;
-    }
-
-    public static List<Knight> generate() {
-        List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Knight(position, "N", Color.BLACK, SCORE))
-                .collect(Collectors.toList());
-        List<Knight> whiteKnights = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Knight(position, "n", Color.WHITE, SCORE))
-                .collect(Collectors.toList());
-        blackKnights.addAll(whiteKnights);
-        return blackKnights;
     }
 }

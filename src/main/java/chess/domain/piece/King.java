@@ -20,6 +20,12 @@ public class King extends Piece {
         super(position, name, color, score);
     }
 
+    public static List<King> initialKings() {
+        List<King> kings = new ArrayList();
+        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK, SCORE));
+        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE, SCORE));
+        return kings;
+    }
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
@@ -57,12 +63,5 @@ public class King extends Piece {
             }
         }
         this.position = target;
-    }
-
-    public static List<King> generate() {
-        List<King> kings = new ArrayList();
-        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK, SCORE));
-        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE, SCORE));
-        return kings;
     }
 }

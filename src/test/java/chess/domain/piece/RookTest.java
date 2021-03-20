@@ -12,13 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class RookTest {
-    private CurrentPieces currentPieces;
-
-    @BeforeEach
-    void setUp() {
-        currentPieces = CurrentPieces.generate();
-    }
-
     @DisplayName("Rook 객체 생성 확인")
     @Test
     void 룩_객체_생성() {
@@ -31,11 +24,12 @@ public class RookTest {
     @DisplayName("초기화된 룩 객체들 생성 확인")
     @Test
     void 룩_객체들_생성() {
-        List<Rook> rooks = Rook.generate();
+        List<Rook> rooks = Rook.initialRooks();
 
         assertThat(rooks.size()).isEqualTo(4);
     }
 
+    @DisplayName("룩의 이동을 확인한다.")
     @Test
     void 룩_이동() {
         List<Piece> current = Arrays.asList(
@@ -50,8 +44,9 @@ public class RookTest {
         assertThat(rook.getPosition()).isEqualTo(target);
     }
 
+    @DisplayName("룩의 이동 규칙에 어긋나는 경우 - 예외")
     @Test
-    void 룩_이동_규칙에_어긋나는_경우_예() {
+    void 룩_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
                 new Rook(Position.of('a', '8'), "R", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
@@ -60,19 +55,20 @@ public class RookTest {
 
         Piece rook = currentPieces.findByPosition(source);
 
-        assertThatThrownBy(() ->  rook.move(target, currentPieces))
+        assertThatThrownBy(() -> rook.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("target에 상대 말이 있는 경우")
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
                 new Rook(Position.of('a', '8'), "R", Color.BLACK),
-                new Pawn(Position.of('a','5'),"p", Color.WHITE));
+                new Pawn(Position.of('a', '5'), "p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('a', '8'); // 비숍 위치
-        Position target = Position.of('a','5'); // 옮기고자 하는 위치
+        Position target = Position.of('a', '5'); // 옮기고자 하는 위치
         Piece rook = currentPieces.findByPosition(source);
 
         rook.move(target, currentPieces);

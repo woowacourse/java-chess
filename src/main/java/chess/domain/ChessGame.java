@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
 
 import java.util.List;
@@ -11,7 +12,7 @@ public class ChessGame {
     private final CurrentPieces currentPieces;
 
     public ChessGame() {
-        this.currentPieces = CurrentPieces.generate();
+        this.currentPieces = new CurrentPieces(PieceFactory.initialPieces());
         turn = Color.WHITE;
     }
 

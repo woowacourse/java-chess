@@ -20,6 +20,13 @@ public class Queen extends Piece {
         super(position, name, color, score);
     }
 
+    public static List<Queen> initialQueens() {
+        List<Queen> queens = new ArrayList();
+        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q", Color.BLACK, SCORE));
+        queens.add(new Queen(INITIAL_WHITE_POSITION, "q", Color.WHITE, SCORE));
+        return queens;
+    }
+
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         // 십자인지 확인
@@ -57,12 +64,5 @@ public class Queen extends Piece {
             }
         }
         this.position = target;
-    }
-
-    public static List<Queen> generate() {
-        List<Queen> queens = new ArrayList();
-        queens.add(new Queen(INITIAL_BLACK_POSITION, "Q", Color.BLACK, SCORE));
-        queens.add(new Queen(INITIAL_WHITE_POSITION, "q", Color.WHITE, SCORE));
-        return queens;
     }
 }

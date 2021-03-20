@@ -22,6 +22,17 @@ public class Bishop extends Piece {
         super(position, name, color, score);
     }
 
+    public static List<Bishop> initialBishops() {
+        List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
+                .map(position -> new Bishop(position, "B", Color.BLACK, SCORE))
+                .collect(Collectors.toList());
+        List<Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
+                .map(position -> new Bishop(position, "b", Color.WHITE, SCORE))
+                .collect(Collectors.toList());
+        blackBishops.addAll(whiteBishops);
+        return blackBishops;
+    }
+
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
@@ -43,16 +54,5 @@ public class Bishop extends Piece {
             currentPieces.removePieceByPosition(target);
         }
         this.position = target;
-    }
-
-    public static List<Bishop> generate() {
-        List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Bishop(position, "B", Color.BLACK, SCORE))
-                .collect(Collectors.toList());
-        List<Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Bishop(position, "b", Color.WHITE, SCORE))
-                .collect(Collectors.toList());
-        blackBishops.addAll(whiteBishops);
-        return blackBishops;
     }
 }

@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Color;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CurrentPieces {
 
@@ -12,17 +11,17 @@ public class CurrentPieces {
     public CurrentPieces(List<Piece> currentPieces) {
         this.currentPieces = new ArrayList<>(currentPieces);
     }
-
-    public static CurrentPieces generate() {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(King.generate());
-        pieces.addAll(Knight.generate());
-        pieces.addAll(Queen.generate());
-        pieces.addAll(Rook.generate());
-        pieces.addAll(Bishop.generate());
-        pieces.addAll(Pawn.generate());
-        return new CurrentPieces(pieces);
-    }
+//
+//    public static CurrentPieces generate() {
+//        List<Piece> pieces = new ArrayList<>();
+//        pieces.addAll(King.initialKings());
+//        pieces.addAll(Knight.initialKnights());
+//        pieces.addAll(Queen.initialQueens());
+//        pieces.addAll(Rook.initialRooks());
+//        pieces.addAll(Bishop.initialBishops());
+//        pieces.addAll(Pawn.initialPawns());
+//        return new CurrentPieces(pieces);
+//    }
 
     public List<Piece> getCurrentPieces() {
         return currentPieces;

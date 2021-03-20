@@ -11,9 +11,7 @@ public class PieceFactoryTest {
     @DisplayName("초기 기물들을 만든다.")
     @Test
     void 초기_기물_생성() {
-        PieceFactory pieceFactory = new PieceFactory();
-
-        List<Piece> currentPieces = pieceFactory.initialPieces();
+        List<Piece> currentPieces = PieceFactory.initialPieces();
         int initialPiecesCount = currentPieces.size();
 
         assertThat(initialPiecesCount).isEqualTo(32);

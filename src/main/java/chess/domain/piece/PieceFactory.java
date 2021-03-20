@@ -7,14 +7,14 @@ public class PieceFactory {
     public PieceFactory() {
     }
 
-    public List<Piece> initialPieces() {
+    public static List<Piece> initialPieces() {
         List<Piece> initialPieces = new ArrayList<>();
-        initialPieces.addAll(King.generate());
-        initialPieces.addAll(Knight.generate());
-        initialPieces.addAll(Queen.generate());
-        initialPieces.addAll(Rook.generate());
-        initialPieces.addAll(Bishop.generate());
-        initialPieces.addAll(Pawn.generate());
+        initialPieces.addAll(King.initialKings());
+        initialPieces.addAll(Knight.initialKnights());
+        initialPieces.addAll(Queen.initialQueens());
+        initialPieces.addAll(Rook.initialRooks());
+        initialPieces.addAll(Bishop.initialBishops());
+        initialPieces.addAll(Pawn.initialPawns());
         return initialPieces;
     }
 }

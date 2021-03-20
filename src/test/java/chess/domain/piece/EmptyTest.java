@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -7,6 +8,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class EmptyTest {
+    private CurrentPieces initialPieces;
+
+    @BeforeEach
+    void setUp() {
+        initialPieces = new CurrentPieces(PieceFactory.initialPieces());
+    }
 
     @DisplayName("Empty 객체 생성 확인")
     @Test
@@ -21,10 +28,9 @@ public class EmptyTest {
     @Test
     void 움직일_수_없다() {
         Empty empty = new Empty();
-        CurrentPieces currentPieces = CurrentPieces.generate();
         Position target = Position.of('e', '6');
 
-        assertThatThrownBy(() -> empty.move(target, currentPieces))
+        assertThatThrownBy(() -> empty.move(target, initialPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

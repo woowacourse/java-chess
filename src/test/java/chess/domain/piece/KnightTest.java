@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class KnightTest {
-    private CurrentPieces currentPieces;
-
-    @BeforeEach
-    void setUp() {
-        currentPieces = CurrentPieces.generate();
-    }
-
     @DisplayName("Knight 객체 생성 확인")
     @Test
     void 나이트_객체_생성() {
@@ -31,11 +23,12 @@ public class KnightTest {
     @DisplayName("초기화된 Knight 객체들 생성 확인")
     @Test
     void 나이트_객체들_생성() {
-        List<Knight> nights = Knight.generate();
+        List<Knight> nights = Knight.initialKnights();
 
         assertThat(nights.size()).isEqualTo(4);
     }
 
+    @DisplayName("나이트의 이동을 확인한다.")
     @Test
     void 나이트_이동() {
         List<Piece> current = Arrays.asList(
@@ -50,8 +43,9 @@ public class KnightTest {
         assertThat(knight.getPosition()).isEqualTo(target);
     }
 
+    @DisplayName("나이트 이동 규칙에 어긋나는 경우 - 예외.")
     @Test
-    void 룩_이동_규칙에_어긋나는_경우_예() {
+    void 나이트_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
                 new Knight(Position.of('b', '8'), "N", Color.BLACK));
         CurrentPieces currentPieces = new CurrentPieces(current);
@@ -60,19 +54,20 @@ public class KnightTest {
 
         Piece knight = currentPieces.findByPosition(source);
 
-        assertThatThrownBy(() ->  knight.move(target, currentPieces))
+        assertThatThrownBy(() -> knight.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("target에 상대 말이 있는 경우")
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
                 new Knight(Position.of('b', '8'), "N", Color.BLACK),
-                new Pawn(Position.of('d','7'),"p", Color.WHITE));
+                new Pawn(Position.of('d', '7'), "p", Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('b', '8'); // 비숍 위치
-        Position target = Position.of('d','7'); // 옮기고자 하는 위치
+        Position target = Position.of('d', '7'); // 옮기고자 하는 위치
         Piece knight = currentPieces.findByPosition(source);
 
         knight.move(target, currentPieces);
