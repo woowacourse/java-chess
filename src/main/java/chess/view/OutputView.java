@@ -55,7 +55,7 @@ public class OutputView {
             printResultScores(winner.anyTeamExcludingThis(), result);
             return;
         }
-        System.out.println(winner.teamName() + "이 승리하였습니다.");
+        System.out.println(winner.teamName() + "팀이 승리하였습니다.");
         printResultScores(winner, result);
     }
 

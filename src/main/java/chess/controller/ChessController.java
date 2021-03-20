@@ -62,6 +62,7 @@ public class ChessController {
     }
 
     private void showResult(final Board board) {
+        OutputView.printCurrentBoard(board.unwrap());
         OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
             OutputView.printResult(new ChessResult(board));
