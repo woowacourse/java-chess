@@ -8,13 +8,13 @@ public final class Point {
     private static final int MAX_INDEX = 8;
     private static final Point[] POINTS = new Point[MAX_INDEX];
 
-    private final int point;
-
     static {
         for (int i = 0; i < MAX_INDEX; i++) {
             POINTS[i] = new Point(i);
         }
     }
+
+    private final int point;
 
     private Point(int point) {
         this.point = point;
