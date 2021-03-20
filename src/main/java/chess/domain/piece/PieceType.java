@@ -1,17 +1,19 @@
 package chess.domain.piece;
 
+import chess.domain.result.Score;
+
 public enum PieceType {
 
-    EMPTY(".",0),
-    PAWN("p",1),
-    ROOK("r",5),
-    KNIGHT("n",2.5),
-    BISHOP("b",3),
-    QUEEN("q",9),
-    KING("k",0);
+    EMPTY(".", 0),
+    PAWN("p", 1),
+    ROOK("r", 5),
+    KNIGHT("n", 2.5),
+    BISHOP("b", 3),
+    QUEEN("q", 9),
+    KING("k", 0);
 
-    private String type;
-    private Score score;
+    private final String type;
+    private final Score score;
 
     PieceType(String type, double score) {
         this(type, new Score(score));

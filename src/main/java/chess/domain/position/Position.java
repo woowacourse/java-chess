@@ -7,14 +7,14 @@ import java.util.Objects;
 
 public class Position {
 
-    private final Column column;
-    private final Row row;
-
     private static final Map<String, Position> POSITION_CACHE = new HashMap<>();
 
     static {
         positionCache();
     }
+
+    private final Column column;
+    private final Row row;
 
     private Position(Column column, Row row) {
         this.column = column;
@@ -31,6 +31,22 @@ public class Position {
 
     public static Position ofColumnAndRow(Column column, Row row) {
         return ofName(column.getName() + row.getNumber());
+    }
+
+    private static void positionCache() {
+        columnCache();
+    }
+
+    private static void columnCache() {
+        for (Column column : Column.values()) {
+            rowCache(column);
+        }
+    }
+
+    private static void rowCache(Column column) {
+        for (Row row : Row.values()) {
+            POSITION_CACHE.put(column.getName() + row.getNumber(), new Position(column, row));
+        }
     }
 
     public boolean isWhitePawnStartLine() {
@@ -75,22 +91,6 @@ public class Position {
 
     public String name() {
         return this.column.getName() + this.row.getNumber();
-    }
-
-    private static void positionCache(){
-        columnCache();
-    }
-
-    private static void columnCache() {
-        for (Column column : Column.values()) {
-            rowCache(column);
-        }
-    }
-
-    private static void rowCache(Column column) {
-        for (Row row : Row.values()) {
-            POSITION_CACHE.put(column.getName() + row.getNumber(), new Position(column,row));
-        }
     }
 
     @Override

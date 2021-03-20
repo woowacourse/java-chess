@@ -1,6 +1,8 @@
-package chess.domain.piece;
+package chess.domain.result;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import java.util.Map;
@@ -26,7 +28,7 @@ public class Result {
         return pieces.keySet()
                 .stream()
                 .filter(piece -> !piece.isPawn())
-                .map(piece -> piece.pieceType.getScore())
+                .map(piece -> piece.score())
                 .reduce(Score::add)
                 .orElse(new Score(0))
                 ;

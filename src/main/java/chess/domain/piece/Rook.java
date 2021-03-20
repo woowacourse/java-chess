@@ -10,7 +10,7 @@ public class Rook extends Piece {
         super(PieceType.ROOK, pieceColor, new RookStrategy());
     }
 
-    public List<Direction> directions(){
+    public List<Direction> directions() {
         return Direction.straightDirection();
     }
 }

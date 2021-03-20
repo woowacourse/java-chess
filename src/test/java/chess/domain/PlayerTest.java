@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.player.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -34,10 +35,10 @@ class PlayerTest {
         List<Piece> whitePieces = PieceProvider.whitePieces();
 
         // Then
-        for(Piece whitePiece : whitePieces) {
+        for (Piece whitePiece : whitePieces) {
             assertTrue(whitePlayer.isOwnerOf(whitePiece));
         }
-        for(Piece blackPiece : blackPieces) {
+        for (Piece blackPiece : blackPieces) {
             assertTrue(blackPlayer.isOwnerOf(blackPiece));
         }
     }
@@ -50,10 +51,10 @@ class PlayerTest {
         List<Piece> whitePieces = PieceProvider.whitePieces();
 
         // Then
-        for(Piece whitePiece : whitePieces) {
+        for (Piece whitePiece : whitePieces) {
             assertFalse(blackPlayer.isOwnerOf(whitePiece));
         }
-        for(Piece blackPiece : blackPieces) {
+        for (Piece blackPiece : blackPieces) {
             assertFalse(whitePlayer.isOwnerOf(blackPiece));
         }
     }

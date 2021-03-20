@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.result;
 
 import java.util.Objects;
 
@@ -8,15 +8,15 @@ public class Score {
 
     private final double score;
 
-    Score(double score){
+    public Score(double score) {
         this.score = score;
     }
 
-    public Score add(Score that){
+    public Score add(Score that) {
         return new Score(score + that.score);
     }
 
-    public Score minus(Score that){
+    public Score minus(Score that) {
         return new Score(score - that.score);
     }
 

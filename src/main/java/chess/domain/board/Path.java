@@ -1,6 +1,6 @@
-package chess.domain.piece;
+package chess.domain.board;
 
-import chess.domain.Board;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +14,7 @@ public class Path {
     }
 
     public boolean isAble(Position position) {
-        if(positions.contains(position)){
+        if (positions.contains(position)) {
             return true;
         }
         throw new IllegalArgumentException("해당 말이 이동할 수 없는 위치입니다.");

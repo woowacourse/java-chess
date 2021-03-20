@@ -1,8 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.Path;
-import chess.domain.piece.Paths;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
@@ -41,9 +39,9 @@ public class Board {
 
     public void move(Piece piece, Position target) {
         Path path = generatePath(piece);
-        path.positions().forEach(position -> {
-            System.out.println(position);
-        });
+//        path.positions().forEach(position -> {
+//            System.out.println(position);
+//        });
         if (path.isAble(target)) {
             coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
@@ -60,14 +58,14 @@ public class Board {
         return coordinates;
     }
 
-    public Map<Piece, Position> remainPieces(PieceColor color){
+    public Map<Piece, Position> remainPieces(PieceColor color) {
         return coordinates.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().hasColor(color))
                 .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
-    public Map<Piece, Position> remainPawns(Map<Piece, Position> pieces){
+    public Map<Piece, Position> remainPawns(Map<Piece, Position> pieces) {
         return pieces.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().isPawn())

@@ -1,7 +1,7 @@
 package chess.domain.position;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import chess.domain.piece.strategy.Direction;
 import org.junit.jupiter.api.DisplayName;

@@ -1,7 +1,11 @@
 package chess.domain;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
+import chess.domain.player.Player;
+import chess.domain.player.Players;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +22,7 @@ public class Game {
         players = Players.of(Arrays.asList(
                 Player.of(PieceColor.WHITE),
                 Player.of(PieceColor.BLACK)
-                ));
+        ));
         currentColor = PieceColor.WHITE;
         isPlaying = true;
     }
@@ -29,7 +33,7 @@ public class Game {
             isPlaying = false;
             return;
         }
-        if(Command.isStatus(values.get(0))){
+        if (Command.isStatus(values.get(0))) {
 
             return;
         }
@@ -42,7 +46,7 @@ public class Game {
         board.move(chosenPiece, target);
         currentColor = currentColor.reversed();
 
-        if(board.kingDead()) {
+        if (board.kingDead()) {
             isPlaying = false;
         }
     }

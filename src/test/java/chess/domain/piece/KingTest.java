@@ -2,8 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;

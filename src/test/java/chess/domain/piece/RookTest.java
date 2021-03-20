@@ -2,8 +2,9 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.Board;
-import chess.domain.BoardFactory;
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -18,7 +19,7 @@ class RookTest {
         Position current = Position.ofName("e4");
         Piece rook = new Rook(PieceColor.WHITE);
         Paths paths = new Paths();
-        paths = paths.findAllPath(rook,current);
+        paths = paths.findAllPath(rook, current);
         assertThat(paths.pathsToPosition()).isEqualTo(rookE4WithoutObstacles());
     }
 
