@@ -27,20 +27,20 @@ class QueenTest {
             Position.of(2, 4)
         );
 
-        Queen queen = new Queen(WHITE, Position.of(3,3));
+        Queen queen = new Queen(WHITE, Position.of(3, 3));
 
         List<Position> existPiecePositions =
             new ArrayList<>(Arrays.asList(
                 Position.of(2, 2),
                 Position.of(2, 3),
                 Position.of(4, 3),
-                Position.of(4,2),
-                Position.of(5,1)
+                Position.of(4, 2),
+                Position.of(5, 1)
             ));
 
         List<Position> enemiesPositions = Arrays.asList(
             Position.of(2, 4),
-            Position.of(4,4)
+            Position.of(4, 4)
         );
         existPiecePositions.addAll(enemiesPositions);
 

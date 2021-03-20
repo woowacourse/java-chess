@@ -22,7 +22,7 @@ class KnightTest {
             Position.of(2, 1)
         );
 
-        Knight knight = new Knight(WHITE, Position.of(3,3));
+        Knight knight = new Knight(WHITE, Position.of(3, 3));
 
         List<Position> existPiecePositions =
             new ArrayList<>(Arrays.asList(
@@ -33,12 +33,13 @@ class KnightTest {
 
         List<Position> enemiesPositions = Arrays.asList(
             Position.of(1, 4),
-            Position.of(2,1)
+            Position.of(2, 1)
         );
         existPiecePositions.addAll(enemiesPositions);
 
         knight.updateMovablePositions(existPiecePositions, enemiesPositions);
 
-        Assertions.assertThat(knight.movablePositions()).hasSameElementsAs(expectedMovablePositions);
+        Assertions.assertThat(knight.movablePositions())
+            .hasSameElementsAs(expectedMovablePositions);
     }
 }

@@ -24,7 +24,7 @@ class ChessGameImplTest {
     void movePiece_pieceNotFoundException() {
         ChessGameImpl chessGame = ChessGameImpl.from(new ArrayList<>(), WHITE);
         Assertions.assertThatThrownBy(() ->
-            chessGame.movePiece(Position.of(1,1), Position.of(2,2))
+            chessGame.movePiece(Position.of(1, 1), Position.of(2, 2))
         ).isInstanceOf(PieceNotFoundException.class);
     }
 
@@ -34,7 +34,7 @@ class ChessGameImplTest {
         Queen queen = new Queen(BLACK, Position.of(1, 1));
         ChessGameImpl chessGame = ChessGameImpl.from(Collections.singletonList(queen), WHITE);
         Assertions.assertThatThrownBy(() ->
-            chessGame.movePiece(queen.currentPosition(), Position.of(2,2))
+            chessGame.movePiece(queen.currentPosition(), Position.of(2, 2))
         ).isInstanceOf(InvalidTurnException.class);
     }
 
@@ -44,7 +44,7 @@ class ChessGameImplTest {
         Queen queen = new Queen(WHITE, Position.of(1, 1));
         ChessGameImpl chessGame = ChessGameImpl.from(Collections.singletonList(queen), WHITE);
         Assertions.assertThatThrownBy(() ->
-            chessGame.movePiece(queen.currentPosition(), Position.of(3,2))
+            chessGame.movePiece(queen.currentPosition(), Position.of(3, 2))
         ).isInstanceOf(ImpossibleMoveException.class);
     }
 
@@ -52,12 +52,12 @@ class ChessGameImplTest {
     @DisplayName("정상적으로 움직일 때")
     void movePiece() {
         Queen queen = new Queen(WHITE, Position.of(1, 1));
-        Knight knight = new Knight(BLACK, Position.of(4,4));
+        Knight knight = new Knight(BLACK, Position.of(4, 4));
         ChessGameImpl chessGame = ChessGameImpl.from(Arrays.asList(queen, knight), WHITE);
         chessGame.movePiece(queen.currentPosition(), knight.currentPosition());
 
         Assertions.assertThat(chessGame.pieceByPosition(knight.currentPosition())).contains(queen);
-        Assertions.assertThat(chessGame.pieceByPosition(Position.of(1,1))).isEmpty();
+        Assertions.assertThat(chessGame.pieceByPosition(Position.of(1, 1))).isEmpty();
     }
 
     @Test
@@ -122,7 +122,7 @@ class ChessGameImplTest {
             Arrays.asList(whiteQueen, blackKing), WHITE
         );
 
-        chessGame.movePiece(whiteQueen.currentPosition(), Position.of(2,2));
+        chessGame.movePiece(whiteQueen.currentPosition(), Position.of(2, 2));
         Assertions.assertThat(chessGame.isChecked()).isTrue();
     }
 
@@ -135,7 +135,7 @@ class ChessGameImplTest {
         ChessGameImpl chessGame = ChessGameImpl.from(
             Arrays.asList(whiteQueen1, whiteQueen2, blackKing), WHITE
         );
-        chessGame.movePiece(whiteQueen1.currentPosition(), Position.of(6,1));
+        chessGame.movePiece(whiteQueen1.currentPosition(), Position.of(6, 1));
         Assertions.assertThat(chessGame.isCheckmate()).isTrue();
     }
 }

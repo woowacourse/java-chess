@@ -10,15 +10,15 @@ class PositionTest {
     @DisplayName("Position을 생성할 때 캐싱이 되는 지 확인")
     void createPosition() {
         Position position = Position.of(1, 2);
-        Assertions.assertThat(position).isEqualTo(Position.of(1,2));
-        Assertions.assertThat(position).isSameAs(Position.of(1,2));
+        Assertions.assertThat(position).isEqualTo(Position.of(1, 2));
+        Assertions.assertThat(position).isSameAs(Position.of(1, 2));
     }
 
     @Test
     @DisplayName("Direction을 받을 때 앞으로 나아가는 지 확인")
     void goPosition() {
         Position position = Position.of(1, 2);
-        Assertions.assertThat(position.go(Direction.RIGHT)).isSameAs(Position.of(2,2));
+        Assertions.assertThat(position.go(Direction.RIGHT)).isSameAs(Position.of(2, 2));
     }
 
     @Test

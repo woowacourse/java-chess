@@ -88,7 +88,9 @@ public abstract class Piece {
         return details.score();
     }
 
-    public boolean isKing() {return this instanceof King;}
+    public boolean isKing() {
+        return this instanceof King;
+    }
 
     public String name() {
         if (isSameColor(WHITE)) {

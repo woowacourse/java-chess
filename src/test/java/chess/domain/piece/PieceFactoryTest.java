@@ -15,7 +15,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 폰 초기 자리 확인")
     void createInitialPawn() {
-        List<Piece> pawns = PieceFactory.initialPieces(8,0,7)
+        List<Piece> pawns = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof Pawn)
             .collect(Collectors.toList());
@@ -30,14 +30,16 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whitePawnPositions).hasSameElementsAs(ExpectedInitialPieces.whitePawnsPositions());
-        Assertions.assertThat(blackPawnPositions).hasSameElementsAs(ExpectedInitialPieces.blackPawnPositions());
+        Assertions.assertThat(whitePawnPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whitePawnsPositions());
+        Assertions.assertThat(blackPawnPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackPawnPositions());
     }
 
     @Test
     @DisplayName("팀색 별 비숍 초기 자리 확인")
     void createInitialBishop() {
-        List<Piece> bishops = PieceFactory.initialPieces(8,0,7)
+        List<Piece> bishops = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof Bishop)
             .collect(Collectors.toList());
@@ -52,14 +54,16 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whiteBishopPositions).hasSameElementsAs(ExpectedInitialPieces.whiteBishopPositions());
-        Assertions.assertThat(blackBishopPositions).hasSameElementsAs(ExpectedInitialPieces.blackBishopPositions());
+        Assertions.assertThat(whiteBishopPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whiteBishopPositions());
+        Assertions.assertThat(blackBishopPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackBishopPositions());
     }
 
     @Test
     @DisplayName("팀색 별 나이트 초기 자리 확인")
     void createInitialKnight() {
-        List<Piece> knights = PieceFactory.initialPieces(8,0,7)
+        List<Piece> knights = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof Knight)
             .collect(Collectors.toList());
@@ -74,14 +78,16 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whiteKnightPositions).hasSameElementsAs(ExpectedInitialPieces.whiteKnightPositions());
-        Assertions.assertThat(blackKnightPositions).hasSameElementsAs(ExpectedInitialPieces.blackKnightPositions());
+        Assertions.assertThat(whiteKnightPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whiteKnightPositions());
+        Assertions.assertThat(blackKnightPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackKnightPositions());
     }
 
     @Test
     @DisplayName("팀색 별 룩 초기 자리 확인")
     void createInitialRook() {
-        List<Piece> rooks = PieceFactory.initialPieces(8,0,7)
+        List<Piece> rooks = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof Rook)
             .collect(Collectors.toList());
@@ -96,14 +102,16 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whiteRookPositions).hasSameElementsAs(ExpectedInitialPieces.whiteRookPositions());
-        Assertions.assertThat(blackRookPositions).hasSameElementsAs(ExpectedInitialPieces.blackRookPositions());
+        Assertions.assertThat(whiteRookPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whiteRookPositions());
+        Assertions.assertThat(blackRookPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackRookPositions());
     }
 
     @Test
     @DisplayName("팀색 별 퀸 초기 자리 확인")
     void createInitialQueen() {
-        List<Piece> queens = PieceFactory.initialPieces(8,0,7)
+        List<Piece> queens = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof Queen)
             .collect(Collectors.toList());
@@ -118,14 +126,16 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whiteQueenPositions).hasSameElementsAs(ExpectedInitialPieces.whiteQueenPositions());
-        Assertions.assertThat(blackQueenPositions).hasSameElementsAs(ExpectedInitialPieces.blackQueenPositions());
+        Assertions.assertThat(whiteQueenPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whiteQueenPositions());
+        Assertions.assertThat(blackQueenPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackQueenPositions());
     }
 
     @Test
     @DisplayName("팀색 별 킹 초기 자리 확인")
     void createInitialKing() {
-        List<Piece> kings = PieceFactory.initialPieces(8,0,7)
+        List<Piece> kings = PieceFactory.initialPieces(8, 0, 7)
             .stream()
             .filter(piece -> piece instanceof King)
             .collect(Collectors.toList());
@@ -140,7 +150,9 @@ class PieceFactoryTest {
             .map(Piece::currentPosition)
             .collect(Collectors.toList());
 
-        Assertions.assertThat(whiteKingPositions).hasSameElementsAs(ExpectedInitialPieces.whiteKingPositions());
-        Assertions.assertThat(blackKingPositions).hasSameElementsAs(ExpectedInitialPieces.blackKingPositions());
+        Assertions.assertThat(whiteKingPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.whiteKingPositions());
+        Assertions.assertThat(blackKingPositions)
+            .hasSameElementsAs(ExpectedInitialPieces.blackKingPositions());
     }
 }

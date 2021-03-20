@@ -22,7 +22,7 @@ public final class GameResult {
     }
 
     public TeamColor winner() {
-        if(whiteTeamScore.greaterThan(blackTeamScore)) {
+        if (whiteTeamScore.greaterThan(blackTeamScore)) {
             return WHITE;
         }
         return BLACK;

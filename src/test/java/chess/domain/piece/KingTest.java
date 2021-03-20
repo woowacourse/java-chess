@@ -23,7 +23,7 @@ class KingTest {
             Position.of(2, 4)
         );
 
-        King king = new King(WHITE, Position.of(3,3));
+        King king = new King(WHITE, Position.of(3, 3));
 
         List<Position> existPiecePositions =
             new ArrayList<>(Arrays.asList(
@@ -34,7 +34,7 @@ class KingTest {
 
         List<Position> enemiesPositions = Arrays.asList(
             Position.of(2, 4),
-            Position.of(4,4)
+            Position.of(4, 4)
         );
         existPiecePositions.addAll(enemiesPositions);
 

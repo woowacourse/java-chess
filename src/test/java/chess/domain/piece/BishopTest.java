@@ -25,7 +25,7 @@ class BishopTest {
             Position.of(2, 4)
         );
 
-        Bishop bishop = new Bishop(WHITE, Position.of(3,3));
+        Bishop bishop = new Bishop(WHITE, Position.of(3, 3));
 
         List<Position> existPiecePositions =
             new ArrayList<>(Arrays.asList(
@@ -41,6 +41,7 @@ class BishopTest {
 
         bishop.updateMovablePositions(existPiecePositions, enemiesPositions);
 
-        Assertions.assertThat(bishop.movablePositions()).hasSameElementsAs(expectedMovablePositions);
+        Assertions.assertThat(bishop.movablePositions())
+            .hasSameElementsAs(expectedMovablePositions);
     }
 }

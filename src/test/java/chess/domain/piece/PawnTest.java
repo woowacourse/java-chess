@@ -22,7 +22,7 @@ class PawnTest {
             Position.of(3, 3)
         );
 
-        Pawn pawn = new Pawn(WHITE, Position.of(3,1));
+        Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
 
         List<Position> existPiecePositions = Collections.emptyList();
 
@@ -39,13 +39,14 @@ class PawnTest {
         List<Position> expectedMovablePositions =
             Collections.singletonList(Position.of(3, 3));
 
-        Pawn pawn = new Pawn(WHITE, Position.of(3,1));
+        Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
         List<Position> existPiecePositions = Collections.emptyList();
 
         List<Position> enemiesPositions = Collections.emptyList();
 
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
-        Position targetPosition = pawn.currentPosition().go(Direction.forwardDirection(WHITE).get(0));
+        Position targetPosition = pawn.currentPosition()
+            .go(Direction.forwardDirection(WHITE).get(0));
         pawn.move(targetPosition);
 
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
@@ -59,9 +60,9 @@ class PawnTest {
         List<Position> expectedMovablePositions =
             Collections.singletonList(Position.of(4, 2));
 
-        Pawn pawn = new Pawn(WHITE, Position.of(3,1));
+        Pawn pawn = new Pawn(WHITE, Position.of(3, 1));
 
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(3,2));
+        List<Position> existPiecePositions = Collections.singletonList(Position.of(3, 2));
 
         List<Position> enemiesPositions = Collections.singletonList(Position.of(4, 2));
 
@@ -78,7 +79,7 @@ class PawnTest {
             Position.of(3, 4)
         );
 
-        Pawn pawn = new Pawn(BLACK, Position.of(3,6));
+        Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
         List<Position> existPiecePositions = Collections.emptyList();
 
@@ -95,13 +96,14 @@ class PawnTest {
         List<Position> expectedMovablePositions =
             Collections.singletonList(Position.of(3, 4));
 
-        Pawn pawn = new Pawn(BLACK, Position.of(3,6));
+        Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
         List<Position> existPiecePositions = Collections.emptyList();
         List<Position> enemiesPositions = Collections.emptyList();
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
-        Position targetPosition = pawn.currentPosition().go(Direction.forwardDirection(BLACK).get(0));
+        Position targetPosition = pawn.currentPosition()
+            .go(Direction.forwardDirection(BLACK).get(0));
         pawn.move(targetPosition);
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
@@ -114,9 +116,9 @@ class PawnTest {
         List<Position> expectedMovablePositions =
             Collections.singletonList(Position.of(4, 5));
 
-        Pawn pawn = new Pawn(BLACK, Position.of(3,6));
+        Pawn pawn = new Pawn(BLACK, Position.of(3, 6));
 
-        List<Position> existPiecePositions = Collections.singletonList(Position.of(3,5));
+        List<Position> existPiecePositions = Collections.singletonList(Position.of(3, 5));
 
         List<Position> enemiesPositions = Collections.singletonList(Position.of(4, 5));
 

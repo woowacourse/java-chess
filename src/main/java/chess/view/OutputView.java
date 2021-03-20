@@ -24,7 +24,8 @@ public final class OutputView {
         System.out.println(stringBuilder);
     }
 
-    private static void appendPieceNames(BoardDto boardDto, StringBuilder stringBuilder, int column) {
+    private static void appendPieceNames(BoardDto boardDto, StringBuilder stringBuilder,
+        int column) {
         for (int x = 0; x < boardDto.boardSize(); x++) {
             Position currentPosition = Position.of(x, column);
             stringBuilder.append(boardDto.board().getOrDefault(currentPosition, EMPTY_SPACE));

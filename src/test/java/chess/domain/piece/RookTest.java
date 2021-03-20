@@ -27,7 +27,7 @@ class RookTest {
             Position.of(4, 3)
         );
 
-        Rook rook = new Rook(WHITE, Position.of(3,3));
+        Rook rook = new Rook(WHITE, Position.of(3, 3));
 
         List<Position> existPiecePositions =
             new ArrayList<>(Collections.singletonList(Position.of(3, 5)));
