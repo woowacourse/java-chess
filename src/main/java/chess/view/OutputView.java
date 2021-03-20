@@ -22,4 +22,8 @@ public class OutputView {
             System.out.println();
         }
     }
+    
+    public static void printStatus(double blackScore, double whiteScore) {
+        System.out.printf("검은색은 %.2f점. 흰색은 %.2f점이 된다.", blackScore, whiteScore);
+    }
 }

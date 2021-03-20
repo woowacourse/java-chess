@@ -128,4 +128,12 @@ public class Board {
     public List<Piece> toList() {
         return pieces;
     }
+
+    public boolean isKingAlive(Team team) {
+        return pieces
+            .stream()
+            .filter(piece -> piece.isSameTeam(team))
+            .filter(piece -> piece.isKing())
+            .findAny().isPresent();
+    }
 }

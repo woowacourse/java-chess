@@ -62,6 +62,10 @@ public abstract class Piece implements Movable {
         return false;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public abstract PieceType getPieceType();
 
     @Override
