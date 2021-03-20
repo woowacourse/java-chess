@@ -1,8 +1,7 @@
 package chess.controller;
 
-import chess.domain.BoardInitializer;
+import chess.domain.util.BoardInitializer;
 import chess.domain.ChessGame;
-import chess.domain.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -10,6 +9,20 @@ public class ChessController {
 
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
+
+    public void run() {
+        ChessGame chessGame = new ChessGame();
+        OutputView.printCommandInfo();
+        while (chessGame.isRunning()) {
+            try {
+                String inputCmd = InputView.inputCommand();
+                Command command = Command.of(splitCommand(inputCmd));
+                command.apply(chessGame, inputCmd);
+            } catch (IllegalArgumentException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
 
     public static void start(ChessGame chessGame, String command) {
         chessGame.initBoard(BoardInitializer.init());
@@ -19,7 +32,7 @@ public class ChessController {
     public static void move(ChessGame chessGame, String command) {
         try {
             if (chessGame.isReady() || chessGame.isEnd()) {
-                throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+                throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았거나 종료되었습니다.");
             }
             chessGame.move(command);
             OutputView.printBoard(chessGame.getPrintBoardDto());
@@ -41,20 +54,6 @@ public class ChessController {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
         OutputView.printStatus(chessGame.calculatePoint());
-    }
-
-    public void run() {
-        ChessGame chessGame = new ChessGame();
-        OutputView.printCommandInfo();
-        while (chessGame.isRunning()) {
-            try {
-                String inputCmd = InputView.inputCommand();
-                Command command = Command.of(splitCommand(inputCmd));
-                command.apply(chessGame, inputCmd);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
     }
 
     private String splitCommand(String inputCmd) {
