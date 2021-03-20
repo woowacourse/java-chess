@@ -29,6 +29,11 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean hasMiddlePath() {
+        return true;
+    }
+
+    @Override
     public double getScore() {
         return SCORE;
     }

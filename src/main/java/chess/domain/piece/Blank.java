@@ -21,6 +21,11 @@ public class Blank extends Piece {
     }
 
     @Override
+    public boolean hasMiddlePath() {
+        return false;
+    }
+
+    @Override
     public double getScore() {
         return 0;
     }

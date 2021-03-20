@@ -19,6 +19,11 @@ public class King extends GeneralPiece {
     }
 
     @Override
+    public boolean hasMiddlePath() {
+        return false;
+    }
+
+    @Override
     public double getScore() {
         return SCORE;
     }

@@ -36,6 +36,8 @@ public abstract class Piece {
 
     public abstract boolean canMove(final Position source, final Position target,
         final Piece piece);
+    
+    public abstract boolean hasMiddlePath();
 
     public abstract double getScore();
 

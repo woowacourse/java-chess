@@ -43,7 +43,7 @@ public class Board {
     }
 
     private boolean checkPath(final Position source, final Position target) {
-        final List<Position> paths = initializePaths(source, target);
+        final List<Position> paths = initializePaths(source, target, chessBoard.get(source));
         if (paths.isEmpty()) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
         }
@@ -53,8 +53,8 @@ public class Board {
         return false;
     }
 
-    private List<Position> initializePaths(final Position source, final Position target) {
-        if (source.hasMiddlePath(target)) {
+    private List<Position> initializePaths(final Position source, final Position target, final Piece piece) {
+        if (piece.hasMiddlePath() && source.hasMiddlePath(target)) {
             return updatePosition(source, target);
         }
         return new ArrayList<>();
