@@ -30,7 +30,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected boolean isEmptyPiece() {
+    public boolean isEmptyPiece() {
         return true;
     }
 
@@ -40,7 +40,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    protected boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 }

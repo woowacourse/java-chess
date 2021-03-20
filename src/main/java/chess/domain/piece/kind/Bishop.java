@@ -40,7 +40,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isEmptyPiece() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
@@ -50,7 +50,7 @@ public class Bishop extends Piece {
     }
 
     @Override
-    protected boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 }

@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.*;
 import chess.domain.piece.kind.Empty;
-import chess.domain.piece.kind.King;
-import chess.domain.piece.kind.Pawn;
 import chess.domain.piece.kind.Piece;
 
 import java.util.HashMap;
@@ -82,7 +80,7 @@ public class Board {
     }
 
     private void validateSourcePieceNotEmpty(Piece piece) {
-        if (piece instanceof Empty) {
+        if (piece.isEmptyPiece()) {
             throw new IllegalArgumentException("기물이 존재하지 않습니다.");
         }
     }
@@ -100,7 +98,7 @@ public class Board {
     }
 
     private void validateNextPoint(Point point) {
-        if (!(selectPiece(point) instanceof Empty)) {
+        if (!(selectPiece(point).isEmptyPiece())) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
@@ -134,7 +132,7 @@ public class Board {
                 .filter(point -> point.getColumn() == column)
                 .map(board::get)
                 .filter(piece -> piece.isSameColor(color))
-                .filter(piece -> piece instanceof Pawn)
+                .filter(Piece::isPawn)
                 .count();
         if(columnPawnCount >= PAWN_COUNT_THRESHOLD_TO_HALF_SCORE) {
             return (int) columnPawnCount;

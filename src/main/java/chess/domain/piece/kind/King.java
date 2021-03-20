@@ -36,7 +36,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isEmptyPiece() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
@@ -46,7 +46,7 @@ public class King extends Piece {
     }
 
     @Override
-    protected boolean isPawn() {
+    public boolean isPawn() {
         return false;
     }
 }

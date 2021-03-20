@@ -60,8 +60,8 @@ public abstract class Piece {
         return Objects.hash(name, color, point);
     }
 
-    protected abstract boolean isEmptyPiece();
+    public abstract boolean isEmptyPiece();
 
     public abstract boolean isKing();
-    protected abstract boolean isPawn();
+    public abstract boolean isPawn();
 }

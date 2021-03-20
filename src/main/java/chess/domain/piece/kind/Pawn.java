@@ -69,7 +69,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isEmptyPiece() {
+    public boolean isEmptyPiece() {
         return false;
     }
 
@@ -79,7 +79,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    protected boolean isPawn() {
+    public boolean isPawn() {
         return true;
     }
 }
