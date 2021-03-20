@@ -18,7 +18,8 @@ class KingTest {
     void generatePath() {
         Position current = Position.ofName("e4");
         Piece king = new King(PieceColor.WHITE);
-        Paths paths = new Paths(king.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(king, current);
 
         assertThat(paths.pathsToPosition()).isEqualTo(kingE4WithoutObstacles());
     }
@@ -28,7 +29,8 @@ class KingTest {
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
         Piece king = new King(PieceColor.WHITE);
-        Paths paths = new Paths(king.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(king, current);
         Board board = BoardFactory.initializeBoard();
         Piece firstBlackPiece = board.findPieceBy(Position.ofName("e7"));
         Piece secondBlackPiece = board.findPieceBy(Position.ofName("f7"));

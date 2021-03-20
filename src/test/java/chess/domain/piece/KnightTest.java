@@ -18,8 +18,8 @@ class KnightTest {
     void generatePath() {
         Position current = Position.ofName("e4");
         Piece knight = new Knight(PieceColor.WHITE);
-        Paths paths = new Paths(knight.findAllPath(current));
-
+        Paths paths = new Paths();
+        paths = paths.findAllPath(knight, current);
         assertThat(paths.pathsToPosition()).isEqualTo(knightE4WithoutObstacles());
     }
 
@@ -28,7 +28,8 @@ class KnightTest {
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
         Piece knight = new Knight(PieceColor.WHITE);
-        Paths paths = new Paths(knight.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(knight, current);
         Board board = BoardFactory.initializeBoard();
         Piece firstBlackPiece = board.findPieceBy(Position.ofName("d7"));
         Piece secondBlackPiece = board.findPieceBy(Position.ofName("f7"));

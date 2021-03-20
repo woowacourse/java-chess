@@ -6,6 +6,7 @@ public enum Command {
     START("start"),
     END("end"),
     MOVE("move"),
+    STATUS("status"),
     SHOW("show"),
     HIDE("hide");
 

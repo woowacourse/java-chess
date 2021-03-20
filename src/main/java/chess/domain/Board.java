@@ -4,10 +4,13 @@ import chess.domain.piece.Empty;
 import chess.domain.piece.Path;
 import chess.domain.piece.Paths;
 import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -36,27 +39,31 @@ public class Board {
                 ;
     }
 
-    public Position findPositionBy(Piece piece) {
-        return coordinates.get(piece);
-    }
-
     public void move(Piece piece, Position target) {
         Path path = generatePath(piece);
+        path.positions().forEach(position -> {
+            System.out.println(position);
+        });
         if (path.isAble(target)) {
+            coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
         }
     }
 
     public Path generatePath(Piece piece) {
-        Paths paths = new Paths(piece.findAllPath(coordinates.get(piece)));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(piece, coordinates.get(piece));
         return paths.removeObstacles(piece, this);
-    }
-
-    public boolean isEmpty(Position position) {
-        return findPieceBy(position).equals(EMPTY_PIECE);
     }
 
     public Map<Piece, Position> getCoordinates() {
         return coordinates;
+    }
+
+    public List<Piece> remainPieces(PieceColor color){
+        return coordinates.keySet()
+            .stream()
+            .filter(piece -> piece.hasColor(color))
+            .collect(Collectors.toList());
     }
 }

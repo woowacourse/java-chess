@@ -14,7 +14,10 @@ public class Path {
     }
 
     public boolean isAble(Position position) {
-        return positions.contains(position);
+        if(positions.contains(position)){
+            return true;
+        }
+        throw new IllegalArgumentException("해당 말이 이동할 수 없는 위치입니다.");
     }
 
     public List<Position> removeObstacleInPath(Piece piece, Board board) {

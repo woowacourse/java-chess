@@ -17,7 +17,8 @@ class BishopTest {
     void generatePath() {
         Position current = Position.ofName("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
-        Paths paths = new Paths(bishop.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(bishop, current);
         assertThat(paths.pathsToPosition()).isEqualTo(bishopE4WithoutObstacles());
     }
 
@@ -26,7 +27,8 @@ class BishopTest {
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
-        Paths paths = new Paths(bishop.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(bishop, current);
         assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions()).isEqualTo(
                 bishopE4WithObstacles());
     }
