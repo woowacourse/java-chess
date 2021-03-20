@@ -1,14 +1,17 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class Queen extends Piece {
     private static final int QUEEN_SCORE = 9;
+    private static final String QUEEN_NAME = "q";
 
-    public Queen(String name, String color, Point point) {
-        super(name, color, point);
+    public Queen(Color color, Point point) {
+        super(QUEEN_NAME, color, point);
     }
 
     @Override

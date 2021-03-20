@@ -1,18 +1,24 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Name;
 
 import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Piece {
     public static final String IMPOSSIBLE_ROUTE_ERROR_MESSAGE = "기물이 이동할 수 없는 경로입니다.";
-    protected final String name;
-    protected final String color;
+    protected static final int MOVE_STRAIGHT_ONE_SQUARE = 1;
+    protected static final int MOVE_DIAGONAL_ONE_SQUARE = 2;
+
+    protected final Name name;
+    protected final Color color;
     protected Point point;
 
-    public Piece(String name, String color, Point point) {
-        this.name = name;
+    public Piece(String name, Color color, Point point) {
+        this.name = new Name(name, color);
         this.color = color;
         this.point = point;
     }
@@ -21,11 +27,11 @@ public abstract class Piece {
 
     public abstract Point moveOneStep(Point target, Direction direction);
 
-    public boolean isSameColor(String currentColor) {
+    public boolean isSameColor(Color currentColor) {
         return currentColor.equals(this.color);
     }
 
-    public boolean isNotSameColor(String currentColor) {
+    public boolean isNotSameColor(Color currentColor) {
         return !currentColor.equals(this.color);
     }
 
@@ -36,7 +42,7 @@ public abstract class Piece {
     public abstract double score();
 
     public String getName() {
-        return name;
+        return name.getName();
     }
 
     @Override
@@ -45,7 +51,7 @@ public abstract class Piece {
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
         return Objects.equals(name, piece.name) &&
-                Objects.equals(color, piece.color) &&
+                color == piece.color &&
                 Objects.equals(point, piece.point);
     }
 

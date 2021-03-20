@@ -1,14 +1,17 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
+    private static final String ROOK_NAME = "r";
 
-    public Rook(String name, String color, Point point) {
-        super(name, color, point);
+    public Rook(Color color, Point point) {
+        super(ROOK_NAME, color, point);
     }
 
     @Override

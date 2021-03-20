@@ -1,14 +1,17 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class Empty extends Piece {
     private static final int EMPTY_SCORE = 0;
+    private static final String EMPTY_PIECE_NAME = ".";
 
-    public Empty(String name, String color, Point point) {
-        super(name, color, point);
+    public Empty(Color color, Point point) {
+        super(EMPTY_PIECE_NAME, color, point);
     }
 
     @Override

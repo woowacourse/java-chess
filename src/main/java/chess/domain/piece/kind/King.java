@@ -1,14 +1,17 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class King extends Piece {
     private static final int KING_SCORE = 0;
+    private static final String KING_NAME = "k";
 
-    public King(String name, String color, Point point) {
-        super(name, color, point);
+    public King(Color color, Point point) {
+        super(KING_NAME, color, point);
     }
 
     @Override
@@ -16,7 +19,7 @@ public class King extends Piece {
         Direction direction = Direction.findDirection(this.point, target.point);
         int distance = this.point.calculateDistance(target.point);
 
-        if (distance == 1 || distance == 2) {
+        if (distance == MOVE_STRAIGHT_ONE_SQUARE || distance == MOVE_DIAGONAL_ONE_SQUARE) {
             return Optional.of(direction);
         }
         throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);

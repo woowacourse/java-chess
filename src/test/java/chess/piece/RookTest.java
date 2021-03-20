@@ -2,12 +2,15 @@ package chess.piece;
 
 import chess.domain.Point;
 import chess.domain.piece.*;
+import chess.domain.piece.kind.Empty;
+import chess.domain.piece.kind.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
 
-import static chess.domain.ChessGame.BLACK;
+
+import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,24 +19,24 @@ public class RookTest {
     @DisplayName("Rook 생성")
     @Test
     public void create() {
-        Rook rook1 = new Rook("R", "BLACK", Point.valueOf(0, 0));
-        assertThat(Pieces.findPiece(0, 0)).isEqualTo(rook1);
-        Rook rook2 = new Rook("R", "BLACK", Point.valueOf(0, 7));
-        assertThat(Pieces.findPiece(0, 7)).isEqualTo(rook2);
-        Rook rook3 = new Rook("r", "WHITE", Point.valueOf(7, 0));
-        assertThat(Pieces.findPiece(7, 0)).isEqualTo(rook3);
-        Rook rook4 = new Rook("r", "WHITE", Point.valueOf(7, 7));
-        assertThat(Pieces.findPiece(7, 7)).isEqualTo(rook4);
+        Rook rook1 = new Rook(BLACK, Point.valueOf(0, 0));
+        assertThat(PieceType.findPiece(0, 0)).isEqualTo(rook1);
+        Rook rook2 = new Rook(BLACK, Point.valueOf(0, 7));
+        assertThat(PieceType.findPiece(0, 7)).isEqualTo(rook2);
+        Rook rook3 = new Rook(WHITE, Point.valueOf(7, 0));
+        assertThat(PieceType.findPiece(7, 0)).isEqualTo(rook3);
+        Rook rook4 = new Rook(WHITE, Point.valueOf(7, 7));
+        assertThat(PieceType.findPiece(7, 7)).isEqualTo(rook4);
     }
     
     @DisplayName("Rook의 가능한 방향 확인")
     @Test
     void checkRookPossibleMove() {
-        Rook rook = new Rook("R", BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(".", null, Point.valueOf(5, 4));
-        Empty empty2 = new Empty(".", null, Point.valueOf(4, 5));
-        Empty empty3 = new Empty(".", null, Point.valueOf(3, 4));
-        Empty empty4 = new Empty(".", null, Point.valueOf(4, 3));
+        Rook rook = new Rook(BLACK, Point.valueOf(4, 4));
+        Empty empty = new Empty(NOTHING, Point.valueOf(5, 4));
+        Empty empty2 = new Empty(NOTHING, Point.valueOf(4, 5));
+        Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 4));
+        Empty empty4 = new Empty(NOTHING, Point.valueOf(4, 3));
 
         assertEquals(Optional.of(Direction.SOUTH), rook.direction(empty));
         assertEquals(Optional.of(Direction.EAST), rook.direction(empty2));
@@ -44,11 +47,11 @@ public class RookTest {
     @DisplayName("Rook의 불가능한 방향 확인")
     @Test
     void checkRookImpossibleMove() {
-        Rook rook = new Rook("R", BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(".", null, Point.valueOf(3, 3));
-        Empty empty2 = new Empty(".", null, Point.valueOf(5, 5));
-        Empty empty3 = new Empty(".", null, Point.valueOf(5, 3));
-        Empty empty4 = new Empty(".", null, Point.valueOf(3, 5));
+        Rook rook = new Rook(BLACK, Point.valueOf(4, 4));
+        Empty empty = new Empty(NOTHING, Point.valueOf(3, 3));
+        Empty empty2 = new Empty(NOTHING, Point.valueOf(5, 5));
+        Empty empty3 = new Empty(NOTHING, Point.valueOf(5, 3));
+        Empty empty4 = new Empty(NOTHING, Point.valueOf(3, 5));
 
         assertThatThrownBy(() -> rook.direction(empty))
                 .isInstanceOf(IllegalArgumentException.class);

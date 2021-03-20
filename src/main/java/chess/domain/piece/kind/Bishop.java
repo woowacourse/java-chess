@@ -1,14 +1,17 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class Bishop extends Piece {
+    private static final String BISHOP_NAME = "b";
     private static final int BISHOP_SCORE = 3;
 
-    public Bishop(String name, String color, Point point) {
-        super(name, color, point);
+    public Bishop(Color color, Point point) {
+        super(BISHOP_NAME, color, point);
     }
 
     @Override

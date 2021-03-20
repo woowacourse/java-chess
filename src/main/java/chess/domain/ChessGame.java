@@ -1,13 +1,15 @@
 package chess.domain;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.Color;
+import chess.domain.piece.kind.Piece;
+
+import java.util.Map;
+
+import static chess.domain.piece.Color.*;
 
 public class ChessGame {
-    public static final String WHITE = "WHITE";
-    public static final String BLACK = "BLACK";
-
     private final Board board;
-    private String currentColor = WHITE;
+    private Color currentColor = WHITE;
 
     public ChessGame() {
         this.board = new Board();
@@ -18,7 +20,7 @@ public class ChessGame {
         this.currentColor = switchTurn();
     }
 
-    private String switchTurn() {
+    private Color switchTurn() {
         if (this.currentColor.equals(WHITE)) {
             return BLACK;
         }
@@ -33,9 +35,7 @@ public class ChessGame {
         return board.addScore(currentColor);
     }
 
-    public Piece[][] getBoard() {
+    public Map<Point, Piece> getBoard() {
         return board.getBoard();
     }
-
-
 }

@@ -1,13 +1,21 @@
 package chess.domain;
 
 import chess.domain.piece.*;
+import chess.domain.piece.kind.Empty;
+import chess.domain.piece.kind.King;
+import chess.domain.piece.kind.Pawn;
+import chess.domain.piece.kind.Piece;
 
-import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
     private static final int BOARD_SIZE = 8;
+    private static final int PAWN_COUNT_THRESHOLD_TO_HALF_SCORE = 2;
+    private static final int KINGS_COUNT_TO_PLAY = 2;
+    private static final double OVERLAPPED_PAWN_SCORE = 0.5;
 
-    private final Piece[][] board = new Piece[BOARD_SIZE][BOARD_SIZE];
+    private final Map<Point, Piece> board = new HashMap<>();
 
     public Board() {
         initialize();
@@ -15,13 +23,17 @@ public class Board {
 
     private void initialize() {
         for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                board[i][j] = Pieces.findPiece(i, j);
-            }
+            initializeColumn(i);
         }
     }
 
-    public void movePiece(Point source, Point target, String currentColor) {
+    private void initializeColumn(int i) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            board.put(Point.valueOf(i, j), PieceType.findPiece(i, j));
+        }
+    }
+
+    public void movePiece(Point source, Point target, Color currentColor) {
         Piece sourcePiece = selectPiece(source);
         validateSourcePieceNotEmpty(sourcePiece);
         validateSourcePieceColor(currentColor, sourcePiece);
@@ -32,36 +44,41 @@ public class Board {
         moveStepByStep(source, target, sourcePiece, targetPiece);
     }
 
+
     private Piece selectPiece(Point point) {
-        int x = point.getColumn();
-        int y = point.getRow();
-        return this.board[y][x];
+        return board.get(point);
     }
 
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
         Point currentPoint = source;
         Direction direction = sourcePiece.direction(targetPiece).orElse(null);
-        while (!currentPoint.equals(target)) {
-            Piece temp = pickPiece(currentPoint);
+        boolean isArriveAtTarget = currentPoint.equals(target);
+        while (!isArriveAtTarget) {
+            Piece temp = selectPiece(currentPoint);
             currentPoint = temp.moveOneStep(target, direction);
-            // TODO: depth 해결
-            if (currentPoint.equals(target)) {
-                replacePiece(sourcePiece, new Empty(".", null, source));
-                sourcePiece.movePoint(target);
-                replacePiece(targetPiece, sourcePiece);
-                break;
-            }
+            isArriveAtTarget = currentPoint.equals(target);
+            moveTowardTarget(source, target, sourcePiece, isArriveAtTarget);
+            checkNextPointPossible(currentPoint, isArriveAtTarget);
+        }
+    }
+
+    private void checkNextPointPossible(Point currentPoint, boolean flag) {
+        if (!flag) {
             validateNextPoint(currentPoint);
         }
     }
 
+    private void moveTowardTarget(Point source, Point target, Piece sourcePiece, boolean flag) {
+        if (flag) {
+            sourcePiece.movePoint(target);
+            replacePiece(source, target);
+        }
+    }
+
     public boolean hasBothKings() {
-        return Arrays.stream(this.board)
-                .flatMap(
-                        row -> Arrays.stream(row)
-                                .filter(piece -> piece instanceof King)
-                )
-                .count() == 2;
+        return board.values().stream()
+                .filter(piece -> piece instanceof King)
+                .count() == KINGS_COUNT_TO_PLAY;
     }
 
     private void validateSourcePieceNotEmpty(Piece piece) {
@@ -70,92 +87,62 @@ public class Board {
         }
     }
 
-    private void validateSourcePieceColor(String currentColor, Piece sourcePiece) {
+    private void validateSourcePieceColor(Color currentColor, Piece sourcePiece) {
         if (sourcePiece.isNotSameColor(currentColor)) {
             throw new IllegalArgumentException("기물의 색이 일치하지 않아 움직일 수 없는 기물입니다.");
         }
     }
 
-    private void validateTargetPieceColor(String currentColor, Piece targetPiece) {
+    private void validateTargetPieceColor(Color currentColor, Piece targetPiece) {
         if (targetPiece.isSameColor(currentColor)) {
             throw new IllegalArgumentException("도착지에 아군이 존재합니다.");
         }
     }
 
     private void validateNextPoint(Point point) {
-        if (!(pickPiece(point) instanceof Empty)) {
+        if (!(selectPiece(point) instanceof Empty)) {
             throw new IllegalArgumentException("이동할 수 없습니다.");
         }
     }
 
-    private Piece pickPiece(Point point) {
-        return board[point.getRow()][point.getColumn()];
+    private void replacePiece(Point source, Point target) {
+        Piece sourcePiece = board.get(source);
+
+        board.replace(target, sourcePiece);
+        board.replace(source, new Empty(Color.NOTHING, source));
     }
 
-    private void replacePiece(Piece currentPiece, Piece expectedPiece) {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j].equals(currentPiece)) {
-                    board[i][j] = expectedPiece;
-                }
-            }
-        }
+    public double addScore(Color color) {
+        double totalScore = board.values().stream()
+                .filter(piece -> piece.isSameColor(color))
+                .map(Piece::score)
+                .reduce((double) 0, Double::sum);
+
+        return totalScore - calculatePawnScore(color);
     }
 
-    public double addScore(String color) {
-        return calculatePieceScore(color) - calculatePawnScore(color);
-    }
-
-    private double calculatePieceScore(String color) {
-        double totalScore = 0;
-        for (int i = 0; i < 8; i++) {
-            totalScore += addRowPieceScore(color, totalScore, board[i]);
-        }
-        return totalScore;
-    }
-
-    private double addRowPieceScore(String color, double totalScore, Piece[] pieces) {
-        for (int j = 0; j < 8; j++) {
-            totalScore += addPieceScore(color, pieces[j]);
-        }
-        return totalScore;
-    }
-
-    private double addPieceScore(String color, Piece piece) {
-        if (piece.isSameColor(color)) {
-            return piece.score();
-        }
-        return 0;
-    }
-
-    private double calculatePawnScore(String color) {
+    private double calculatePawnScore(Color color) {
         int pawnCountInColumn = 0;
-        for (int i = 0; i < 8; i++) {
-            pawnCountInColumn += countPawnsInColumn(color, i);
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            pawnCountInColumn += addColumnPawnCount(color, i);
         }
-        return pawnCountInColumn * 0.5;
+        return pawnCountInColumn * OVERLAPPED_PAWN_SCORE;
     }
 
-    private int countPawnsInColumn(String color, int i) {
-        int pawnsInColumn = 0;
-        for (int j = 0; j < 8; j++) {
-            Piece piece = board[j][i];
-            pawnsInColumn += countPawn(color, piece);
-        }
-        if (pawnsInColumn >= 2) {
-            return pawnsInColumn;
+    private int addColumnPawnCount(Color color, int column) {
+        long columnPawnCount = board.keySet().stream()
+                .filter(point -> point.getColumn() == column)
+                .map(board::get)
+                .filter(piece -> piece.isSameColor(color))
+                .filter(piece -> piece instanceof Pawn)
+                .count();
+        if(columnPawnCount >= PAWN_COUNT_THRESHOLD_TO_HALF_SCORE) {
+            return (int) columnPawnCount;
         }
         return 0;
     }
 
-    private int countPawn(String color, Piece piece) {
-        if (piece instanceof Pawn && piece.isSameColor(color)) {
-            return 1;
-        }
-        return 0;
-    }
-
-    public Piece[][] getBoard() {
+    public Map<Point, Piece> getBoard() {
         return board;
     }
 }

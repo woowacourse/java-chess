@@ -1,7 +1,10 @@
 package chess.view;
 
 import chess.domain.ChessGame;
-import chess.domain.piece.Piece;
+import chess.domain.Point;
+import chess.domain.piece.kind.Piece;
+
+import java.util.Map;
 
 public class OutputView {
     public static final String START = "start";
@@ -18,7 +21,7 @@ public class OutputView {
     }
 
     public static void printBoard(ChessGame chessGame) {
-        Piece[][] pieces = chessGame.getBoard();
+        Map<Point, Piece> pieces = chessGame.getBoard();
         for (int i = 0; i < 8; i++) {
             StringBuilder oneLine = new StringBuilder();
             makeOneLine(pieces, i, oneLine);
@@ -27,16 +30,22 @@ public class OutputView {
         System.out.println();
     }
 
-    private static void makeOneLine(Piece[][] pieces, int i, StringBuilder oneLine) {
+    private static void makeOneLine(Map<Point, Piece> pieces, int i, StringBuilder oneLine) {
         for (int j = 0; j < 8; j++) {
             oneLine.append(makeOneCharacter(pieces, i, j));
         }
     }
 
-    private static String makeOneCharacter(Piece[][] pieces, int i, int j) {
-        if (pieces[i][j] != null) {
-            return pieces[i][j].getName();
-        }
-        return ".";
+    private static String makeOneCharacter(Map<Point, Piece> pieces, int i, int j) {
+        Point point = Point.valueOf(i, j);
+        return pieces.get(point).getName();
+    }
+
+    public static void printScore(double score) {
+        System.out.println(score);
+    }
+
+    public static void noticeGameFinished() {
+        System.out.println("게임이 끝났습니다. 새로운 게임을 시작하시려면 start, 종료를 원하시면 end를 입력하세요.");
     }
 }

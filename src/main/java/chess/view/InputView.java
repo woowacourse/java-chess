@@ -4,13 +4,13 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
+
+import static chess.controller.ChessController.MOVE;
+import static chess.controller.ChessController.STATUS;
 
 public class InputView {
     public static final String INVALID_INPUT_ERROR_MESSAGE = "올바르지 않은 입력입니다.";
     private static final Scanner scanner = new Scanner(System.in);
-    private static final String INPUT_MOVE = "move";
-    public static final String STATUS = "status";
 
     private InputView() {
     }
@@ -33,13 +33,10 @@ public class InputView {
         }
 
         List<String> inputMoving = Arrays.asList(input.split(" "));
-
-        if (!inputMoving.get(0).equals(INPUT_MOVE)) {
+        if (!inputMoving.get(0).equals(MOVE)) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
 
-        return inputMoving.stream()
-                .skip(1)
-                .collect(Collectors.toList());
+        return inputMoving;
     }
 }

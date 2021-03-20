@@ -1,21 +1,25 @@
-package chess.domain.piece;
+package chess.domain.piece.kind;
 
 import chess.domain.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 import java.util.Optional;
 
 public class Knight extends Piece {
     private static final double KNIGHT_SCORE = 2.5;
+    private static final int POSSIBLE_DISTANCE_OF_KNIGHT = 5;
+    private static final String KNIGHT_NAME = "n";
 
-    public Knight(String name, String color, Point point) {
-        super(name, color, point);
+    public Knight(Color color, Point point) {
+        super(KNIGHT_NAME, color, point);
     }
 
     @Override
     public Optional<Direction> direction(Piece target) {
         int distance = this.point.calculateDistance(target.point);
 
-        if (distance != 5) {
+        if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
             throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
         }
         return Optional.empty();
