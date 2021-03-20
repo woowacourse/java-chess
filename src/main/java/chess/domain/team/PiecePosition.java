@@ -43,6 +43,7 @@ public class PiecePosition {
         final Piece chosenPiece = choosePiece(current);
         piecePosition.remove(current);
         piecePosition.put(destination, chosenPiece);
+        chosenPiece.moved();
     }
 
     public final boolean havePiece(final Position position) {

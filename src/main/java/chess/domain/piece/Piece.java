@@ -6,7 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Piece {
-    protected boolean isMoved = false;
+    private boolean isFirstMove;
+
+    Piece() {
+        isFirstMove = true;
+    }
 
     public abstract boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard);
 
@@ -21,7 +25,11 @@ public abstract class Piece {
                 .noneMatch(chessBoard::containsKey);
     }
 
-    public void isMoved() {
-        this.isMoved = true;
+    public final void moved() {
+        isFirstMove = false;
+    }
+
+    public final boolean isFirstMove() {
+        return isFirstMove;
     }
 }

@@ -45,7 +45,6 @@ public class ChessGame {
     private void validateMove(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurnTeam.choosePiece(current);
         if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
-            chosenPiece.isMoved();
             return;
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
