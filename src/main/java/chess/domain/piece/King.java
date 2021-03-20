@@ -14,7 +14,7 @@ public class King extends Piece {
     private static final King WHITE_KING = new King(Owner.WHITE);
 
     public King(Owner owner) {
-        super(owner,Direction.allDirections());
+        super(owner, new Score(0.0d), Direction.allDirections());
     }
 
     public static King getInstanceOf(Owner owner) {
@@ -32,11 +32,6 @@ public class King extends Piece {
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public Score score() {
-        return new Score(0);
     }
 
     @Override

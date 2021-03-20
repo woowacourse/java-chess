@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
 
+import java.net.Socket;
 import java.util.Arrays;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class Queen extends Piece {
     private static final Queen WHITE_QUEEN = new Queen(Owner.WHITE);
 
     public Queen(Owner owner) {
-        super(owner, Direction.allDirections());
+        super(owner, new Score(9.0d), Direction.allDirections());
     }
 
     public static Queen getInstanceOf(Owner owner) {
@@ -31,11 +32,6 @@ public class Queen extends Piece {
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

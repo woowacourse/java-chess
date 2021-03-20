@@ -7,13 +7,12 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece{
-
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
     private static final Rook BLACK_ROOK = new Rook(Owner.BLACK);
     private static final Rook WHITE_ROOK = new Rook(Owner.WHITE);
 
     public Rook(Owner owner) {
-        super(owner, Direction.straightDirections());
+        super(owner, new Score(5.0d), Direction.straightDirections());
     }
 
     public static Rook getInstanceOf(Owner owner){
@@ -31,11 +30,6 @@ public class Rook extends Piece{
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

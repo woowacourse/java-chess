@@ -21,8 +21,7 @@ public class ChessController {
         OutputView.printInitialBoard(chessManager.getBoard());
 
         while (true) {
-            String userInput = InputView.getUserMoveCommand();
-            MoveCommand moveCommand = MoveCommand.of(userInput);
+            MoveCommand moveCommand = MoveCommand.of(InputView.getUserMoveCommand());
             chessManager.readCommand(moveCommand);
             OutputView.printInitialBoard(chessManager.getBoard());
         }

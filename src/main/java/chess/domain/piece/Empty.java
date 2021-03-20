@@ -10,7 +10,7 @@ public class Empty extends Piece{
     private static final Empty EMPTY = new Empty();
 
     private Empty() {
-        super(Owner.NONE, Collections.emptyList());
+        super(Owner.NONE, new Score(0), Collections.emptyList());
     }
 
     public static Empty getInstance() {
@@ -20,11 +20,6 @@ public class Empty extends Piece{
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         throw new UnsupportedOperationException();
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

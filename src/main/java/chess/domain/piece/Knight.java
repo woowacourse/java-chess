@@ -22,17 +22,12 @@ public class Knight extends Piece{
     }
 
     public Knight(Owner owner) {
-        super(owner, Direction.knightDirections());
+        super(owner, new Score(2.5), Direction.knightDirections());
     }
 
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

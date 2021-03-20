@@ -23,17 +23,12 @@ public class Bishop extends Piece {
     }
 
     public Bishop(Owner owner) {
-        super(owner, Direction.diagonalDirections());
+        super(owner, new Score(3.0d) , Direction.diagonalDirections());
     }
 
     @Override
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

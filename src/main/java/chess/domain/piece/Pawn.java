@@ -24,7 +24,7 @@ public abstract class Pawn extends Piece{
     };
 
     private Pawn(Owner owner, List<Direction> directions) {
-        super(owner, directions);
+        super(owner, new Score(1.0d), directions);
     }
 
     public static Pawn getInstanceOf(Owner owner){
@@ -63,11 +63,6 @@ public abstract class Pawn extends Piece{
         }
 
         return false;
-    }
-
-    @Override
-    public Score score() {
-        return null;
     }
 
     @Override

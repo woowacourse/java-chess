@@ -7,15 +7,19 @@ import java.util.List;
 public abstract class Piece {
     protected final Owner owner;
     protected final List<Direction> directions;
+    protected final Score score;
 
-    public Piece(Owner owner, List<Direction> directions) {
+    public Piece(Owner owner, Score score, List<Direction> directions) {
         this.owner = owner;
+        this.score = score;
         this.directions = directions;
     }
 
     public abstract boolean validateMove(Position source, Position target, Piece targetPiece);
 
-    public abstract Score score();
+    public final Score score(){
+        return this.score;
+    };
 
     public final String decideUpperOrLower(String symbol){
         if(owner.equals(Owner.BLACK)){
@@ -31,7 +35,7 @@ public abstract class Piece {
 
     public abstract String getSymbol();
 
-    public boolean isEnemy(Piece other){
+    public final boolean isEnemy(Piece other){
         if(owner.equals(Owner.BLACK)){
             return other.owner == Owner.WHITE;
         }
@@ -43,7 +47,7 @@ public abstract class Piece {
         throw new IllegalArgumentException();
     }
 
-    public boolean isSameTeam(Piece other){
+    public final boolean isSameTeam(Piece other){
         return owner.equals(other.owner);
     }
 
