@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.board;
 
+import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovementException;
 import org.junit.jupiter.api.BeforeEach;

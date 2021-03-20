@@ -1,6 +1,4 @@
-package chess.domain.position.exception;
-
-import chess.exception.ChessException;
+package chess.exception;
 
 public class PositionException extends ChessException {
 

@@ -1,8 +1,8 @@
 package chess.domain.gamestate;
 
-import chess.domain.Board;
-import chess.domain.BoardTestInitializer;
 import chess.domain.Side;
+import chess.domain.board.Board;
+import chess.domain.board.BoardTestInitializer;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

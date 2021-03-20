@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
