@@ -7,19 +7,21 @@ import chess.domain.position.Position;
 
 public class MoveValidator {
 
-    public static void validateStrategyContainsDirection(Direction currentDirection, Strategy strategy) {
+    public static void validateStrategyContainsDirection(Direction currentDirection,
+        Strategy strategy) {
         if (!strategy.containsDirection(currentDirection)) {
             throw new IllegalArgumentException("[ERROR] 이 말은 해당 방향으로 이동할 수 없습니다.");
         }
     }
 
     public static void validateMoveRange(int moveRange, int targetMove) {
-        if(moveRange < targetMove) {
+        if (moveRange < targetMove) {
             throw new IllegalArgumentException("[ERROR] 이동할 수 있는 거리를 벗어났습니다.");
         }
     }
 
-    public static void validatePawnCondition(Board board, Position target, Piece piece, Direction direction) {
+    public static void validatePawnCondition(Board board, Position target, Piece piece,
+        Direction direction) {
         if (!board.hasPieceAt(target)) {
             MoveValidator.validateTargetIsBlank(piece, direction);
             return;
@@ -41,8 +43,10 @@ public class MoveValidator {
         }
     }
 
-    public static void validateDiagonalMove(Board board, Piece piece, Position target, int distance) {
-        if (distance >= 2 || !board.hasPieceAt(target) || board.pieceAt(target).isSameTeam(piece.getTeam())) {
+    public static void validateDiagonalMove(Board board, Piece piece, Position target,
+        int distance) {
+        if (distance >= 2 || !board.hasPieceAt(target) || board.pieceAt(target)
+            .isSameTeam(piece.getTeam())) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대팀의 말이 있는 경우 한 칸 이동할 수 있습니다.");
         }
     }

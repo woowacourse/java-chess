@@ -1,7 +1,6 @@
 package chess.domain.util;
 
 import chess.domain.Board;
-import chess.domain.piece.Team;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -9,6 +8,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import java.util.ArrayList;

@@ -6,9 +6,9 @@ import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
 public class StringParser {
+    public static final int COMMAND_SIZE = 3;
     private static final int SOURCE_INDEX = 1;
     private static final int TARGET_INDEX = 2;
-    public static final int COMMAND_SIZE = 3;
 
     public static MovePath splitSourceAndTargetPosition(String command) {
         String[] commandParameters = command.split(" ");

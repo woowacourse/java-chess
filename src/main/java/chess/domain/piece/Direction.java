@@ -61,6 +61,14 @@ public enum Direction {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
     }
 
+    public static boolean isDiagonalDirection(Direction direction) {
+        return diagonalDirection().contains(direction);
+    }
+
+    public static boolean isLinearDirection(Direction direction) {
+        return linearDirection().contains(direction);
+    }
+
     public int getXDegree() {
         return xDegree;
     }
@@ -71,13 +79,5 @@ public enum Direction {
 
     public int getUnit() {
         return (int) Math.sqrt(xDegree * xDegree + yDegree * yDegree);
-    }
-
-    public static boolean isDiagonalDirection(Direction direction) {
-        return diagonalDirection().contains(direction);
-    }
-
-    public static boolean isLinearDirection(Direction direction) {
-        return linearDirection().contains(direction);
     }
 }
