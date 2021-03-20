@@ -47,5 +47,9 @@ public abstract class Piece {
         return color == piece.color;
     }
 
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
 
 }

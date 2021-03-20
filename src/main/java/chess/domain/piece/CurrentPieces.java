@@ -73,4 +73,9 @@ public class CurrentPieces {
             currentPieces.remove(targetPiece);
         }
     }
+
+    public boolean hasSamePositionPiece(Position target) {
+        return currentPieces.stream()
+                .anyMatch(piece -> piece.isSamePosition(target));
+    }
 }

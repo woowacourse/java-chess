@@ -1,8 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.CurrentPieces;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
 import java.util.Arrays;
@@ -39,30 +37,18 @@ public enum Cross {
     }
 
     public void hasPieceInPath(Position source, Position target, CurrentPieces currentPieces) {
-        int xSum = changeValues[0];
-        int ySum = changeValues[1];
         int sourceX = source.getX();
         int sourceY = source.getY();
-        if (this == UP || this == DOWN) {
-            int count = Math.abs(source.subtractX(target));
-            for (int i = 1; i < count; i++) {
-                Piece piece = currentPieces.findByPosition(
-                        Position.of((char) (sourceX + (xSum * i)), (char) (sourceY)));
-                if (!(piece instanceof Empty)) {
-                    throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                }
-            }
+        int count = Math.max(Math.abs(source.subtractX(target)), Math.abs(source.subtractY(target)));
+        for (int i = 1; i < count; i++) {
+            validatePieceInPath(currentPieces, sourceX, sourceY, i);
         }
+    }
 
-        if (this == RIGHT || this == LEFT) {
-            int count = Math.abs(source.subtractY(target));
-            for (int i = 1; i < count; i++) {
-                Piece piece = currentPieces.findByPosition(
-                        Position.of((char) (sourceX), (char) (sourceY + (ySum * i))));
-                if (!(piece instanceof Empty)) {
-                    throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                }
-            }
+    private void validatePieceInPath(CurrentPieces currentPieces, int sourceX, int sourceY, int count) {
+        if (currentPieces.hasSamePositionPiece(
+                Position.of((char) (sourceX + (changeValues[0] * count)), (char) (sourceY + (changeValues[1] * count))))) {
+            throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
         }
     }
 }
