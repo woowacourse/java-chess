@@ -119,12 +119,8 @@ public class ChessBoard {
     public double getScore(Color color) {
         double score = calculateScore(color);
         Map<Column, Long> pawnCount = calculatePawnCount(color);
-        for (long count : pawnCount.values()) {
-            if (count >= COLUMN_NEIGHBOR_PAWN) {
-                score -= (double) count * PAWN_SCORE_PUNISHMENT_RATIO;
-            }
-        }
-        return score;
+        double punishmentScore = calculatePunishmentScore(pawnCount);
+        return score - punishmentScore;
     }
 
     private double calculateScore(Color color) {
@@ -141,5 +137,12 @@ public class ChessBoard {
             .filter(Square::hasPawn)
             .filter(square -> square.hasSameColor(color))
             .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
+    }
+
+    private double calculatePunishmentScore(Map<Column, Long> pawnCount) {
+        return pawnCount.values().stream()
+            .filter(count -> count >= COLUMN_NEIGHBOR_PAWN)
+            .mapToDouble(count -> count * PAWN_SCORE_PUNISHMENT_RATIO)
+            .sum();
     }
 }
