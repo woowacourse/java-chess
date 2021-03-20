@@ -11,6 +11,9 @@ import java.util.Map;
 
 public final class ChessController {
 
+    private static final String newline = System.lineSeparator();
+    private static final int CHESS_SIZE = 8;
+
     public void run() {
         OutputView.printStart();
         final Board board = new Board();
@@ -71,8 +74,8 @@ public final class ChessController {
     }
 
     private void chessNewLine(final StringBuilder stringBuilder, final int count) {
-        if (count != 0 && count % 8 == 0) {
-            stringBuilder.append("\n");
+        if (count != 0 && count % CHESS_SIZE == 0) {
+            stringBuilder.append(newline);
         }
     }
 }
