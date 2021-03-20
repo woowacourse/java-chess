@@ -14,6 +14,7 @@ public final class Pawn extends Piece {
     private static final int STEP_RANGE = 1;
     private static final int TWO_STEP_RANGE = 2;
     private static final int SCORE = 1;
+    private static final int TWO_STEP = 2;
 
     private boolean moved = false;
 
@@ -23,10 +24,6 @@ public final class Pawn extends Piece {
 
     public Pawn(final Color color, final char x, final char y) {
         super(color, x, y);
-    }
-
-    public final int twoStepRange() {
-        return TWO_STEP_RANGE;
     }
 
     public final boolean hasMoved() {
@@ -40,7 +37,7 @@ public final class Pawn extends Piece {
             movablePositions.addAll(route(direction, stepRange(), lines));
         }
         for (Direction direction : twoStepDirections()) {
-            movablePositions.addAll(route(direction, twoStepRange(), lines));
+            movablePositions.addAll(route(direction, TWO_STEP_RANGE, lines));
         }
         movablePositions = movablePositions.stream()
                 .distinct()
@@ -68,7 +65,7 @@ public final class Pawn extends Piece {
     }
 
     private void validateTwoSteps(final Piece targetPiece) {
-        if (hasMoved() && Math.abs(targetPiece.position().y() - position().y()) == 2) {
+        if (hasMoved() && Math.abs(targetPiece.position().y() - position().y()) == TWO_STEP) {
             throw new IllegalArgumentException("폰은 초기 자리에서만 두칸 이동 가능합니다.");
         }
     }
