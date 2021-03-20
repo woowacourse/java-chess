@@ -13,9 +13,9 @@ public class Paths {
         this.paths = paths;
     }
 
-    public Path removeObstacles(Board board) {
+    public Path removeObstacles(Piece piece, Board board) {
         return new Path(paths.stream()
-                .map(path -> path.removeObstacleInPath(board))
+                .map(path -> path.removeObstacleInPath(piece, board))
                 .flatMap(List::stream)
                 .collect(Collectors.toList())
         );

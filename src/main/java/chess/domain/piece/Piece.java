@@ -37,12 +37,20 @@ public abstract class Piece {
         return new Path(positions);
     }
 
+    public boolean isNotMyPiece(Piece that) {
+        return that.equals(PieceType.EMPTY) || isEnemyOrEmpty(that);
+    }
+
     public boolean isColor(PieceColor color) {
         return pieceColor.equals(color);
     }
 
-    public boolean isEnemy(Piece that) {
-        return !isColor(that.pieceColor);
+    public boolean isEnemy(Piece that){
+        return this.pieceColor.equals(that.pieceColor.reversed());
+    }
+
+    public boolean isEnemyOrEmpty(Piece that) {
+        return !this.pieceColor.equals(that.pieceColor);
     }
 
     public String getName() {
