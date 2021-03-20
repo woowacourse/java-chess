@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.board.Team;
 import chess.domain.piece.Pawn;
 import chess.domain.utils.BoardInitializer;
@@ -9,6 +10,8 @@ import chess.domain.utils.MoveValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -37,19 +40,11 @@ class MoveValidatorTest {
     @DisplayName("대각선으로 폰이 이동할 수 있는 경우")
     @Test
     void validateDiagonalMove() {
-        board.movePiece(Position.of("a7"), Position.of("a3"));
+        board.movePiece(new Positions(Arrays.asList(Position.of("a7"), Position.of("a3"))));
         assertThatCode(() -> MoveValidator
                 .validateDiagonalMove(board, new Pawn(Team.WHITE), Position.of("a3"), 1))
                 .doesNotThrowAnyException();
     }
-
-//    @Test
-//    void validateDirection() {
-//        Strategy strategy = new Knight(Team.BLACK).strategy();
-//        assertThatThrownBy(() -> MoveValidator.validateDirection(Direction.SOUTHEAST, strategy))
-//            .isInstanceOf(IllegalArgumentException.class)
-//            .hasMessageContaining("해당 좌표로 이동할 수 없습니다.");
-//    }
 
     @Test
     void validateStraightMove() {

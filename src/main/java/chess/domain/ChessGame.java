@@ -82,7 +82,7 @@ public class ChessGame {
         if (board.containsPosition(positions.target())) {
             confirmKingCaptured(positions.target());
         }
-        board.movePiece2(positions);
+        board.movePiece(positions);
         turnOver();
     }
 

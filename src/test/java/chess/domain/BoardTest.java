@@ -2,12 +2,15 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Positions;
 import chess.domain.board.Team;
 import chess.domain.piece.Rook;
 import chess.domain.utils.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -35,7 +38,7 @@ class BoardTest {
     @DisplayName("피스 움직이기")
     @Test
     void movePiece() {
-        board.movePiece(Position.of("a1"), Position.of("a3"));
+        board.movePiece(new Positions(Arrays.asList(Position.of("a1"), Position.of("a3"))));
 
         assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Rook.class);
         assertThatThrownBy(() -> board.pieceAt(Position.of("a1")))
@@ -51,8 +54,8 @@ class BoardTest {
     @DisplayName("같은 세로줄에 위치한 폰의 개수만큼 점수 차감")
     @Test
     void updatePawnPoint() {
-        board.movePiece(Position.of("d2"), Position.of("e3"));
-        board.movePiece(Position.of("f2"), Position.of("e4"));
+        board.movePiece(new Positions(Arrays.asList(Position.of("d2"), Position.of("e3"))));
+        board.movePiece(new Positions(Arrays.asList(Position.of("f2"), Position.of("e4"))));
         assertThat(board.updatePawnPoint(Team.WHITE)).isEqualTo(1.5);
     }
 }

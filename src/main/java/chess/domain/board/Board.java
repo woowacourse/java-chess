@@ -33,11 +33,6 @@ public class Board {
         }
     }
 
-    public void movePiece(Position source, Position target) {
-        chessBoard.put(target, chessBoard.get(source));
-        chessBoard.remove(source);
-    }
-
     public double calculateTotalPoint(Team team) {
         return PointCalculator.calculate(chessBoard, team);
     }
@@ -46,7 +41,7 @@ public class Board {
         return PointCalculator.calculatePawn(chessBoard, team);
     }
 
-    public void movePiece2(Positions positions) {
+    public void movePiece(Positions positions) {
         chessBoard.put(positions.target(), chessBoard.get(positions.source()));
         chessBoard.remove(positions.source());
     }
