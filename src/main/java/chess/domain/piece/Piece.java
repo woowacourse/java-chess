@@ -19,7 +19,7 @@ public abstract class Piece {
     }
 
     protected boolean isOpponent(final Piece piece) {
-        return this.team != piece.team;
+        return this.team.isOppositeTeam(piece.team);
     }
 
     public boolean isSameTeam(final Team team) {
@@ -36,7 +36,7 @@ public abstract class Piece {
 
     public abstract boolean canMove(final Position source, final Position target,
         final Piece piece);
-    
+
     public abstract boolean hasMiddlePath();
 
     public abstract double getScore();

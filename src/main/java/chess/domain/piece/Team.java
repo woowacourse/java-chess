@@ -34,6 +34,10 @@ public enum Team {
         return this.oppositeTeam().teamName;
     }
 
+    public boolean isOppositeTeam(final Team team) {
+        return this.oppositeTeam() == team;
+    }
+
     public Team oppositeTeam() {
         if (this == BLACK) {
             return WHITE;
