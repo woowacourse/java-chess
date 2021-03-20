@@ -27,11 +27,11 @@ public class MoveValidator {
         }
     }
 
-    public static void validateDirection(Direction currentDirection, Strategy strategy) {
-        if (!strategy.containsDirection(currentDirection)) {
-            throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
-        }
-    }
+//    public static void validateDirection(Direction currentDirection, Strategy strategy) {
+//        if (!strategy.containsDirection(currentDirection)) {
+//            throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
+//        }
+//    }
 
     public static void validateStraightMove(int distance) {
         if (distance > 2) {

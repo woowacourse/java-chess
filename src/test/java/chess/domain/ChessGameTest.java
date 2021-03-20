@@ -33,7 +33,7 @@ class ChessGameTest {
     @Test
     void move() {
         chessGame.initBoard(BoardInitializer.init());
-        chessGame.move("move a2 a3");
+        chessGame.move2("move a2 a3");
         Board board = chessGame.board();
         assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Pawn.class);
     }

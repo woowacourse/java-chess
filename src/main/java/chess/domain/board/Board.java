@@ -23,7 +23,7 @@ public class Board {
         return chessBoard.get(position);
     }
 
-    public void isSameTeam(Position position, Team team) {
+    public void confirmSameTeamPiece(Position position, Team team) {
         if (!chessBoard.containsKey(position)) {
             return;
         }
@@ -44,5 +44,10 @@ public class Board {
 
     public double updatePawnPoint(Team team) {
         return PointCalculator.calculatePawn(chessBoard, team);
+    }
+
+    public void movePiece2(Positions positions) {
+        chessBoard.put(positions.target(), chessBoard.get(positions.source()));
+        chessBoard.remove(positions.source());
     }
 }

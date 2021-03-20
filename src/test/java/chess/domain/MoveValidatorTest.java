@@ -43,13 +43,13 @@ class MoveValidatorTest {
             .doesNotThrowAnyException();
     }
 
-    @Test
-    void validateDirection() {
-        Strategy strategy = new Knight(Team.BLACK).strategy();
-        assertThatThrownBy(() -> MoveValidator.validateDirection(Direction.SOUTHEAST, strategy))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("해당 좌표로 이동할 수 없습니다.");
-    }
+//    @Test
+//    void validateDirection() {
+//        Strategy strategy = new Knight(Team.BLACK).strategy();
+//        assertThatThrownBy(() -> MoveValidator.validateDirection(Direction.SOUTHEAST, strategy))
+//            .isInstanceOf(IllegalArgumentException.class)
+//            .hasMessageContaining("해당 좌표로 이동할 수 없습니다.");
+//    }
 
     @Test
     void validateStraightMove() {

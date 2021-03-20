@@ -55,6 +55,14 @@ public class Position {
         return y - this.getY();
     }
 
+    public int calculateFilePoint2(Position target) {
+        return target.getX() - this.getX();
+    }
+
+    public int calculateRankPoint2(Position target) {
+        return target.getY() - this.getY();
+    }
+
     private int gcd(int a, int b) {
         if (b == 0) {
             return a;
@@ -80,15 +88,23 @@ public class Position {
             (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
     }
 
+    public double powAxisX(Position x) {
+        return Math.pow(this.getX() - x.getX(), 2);
+    }
+
+    public double powAxisY(Position y) {
+        return Math.pow(this.getY() - y.getY(), 2);
+    }
+
     public boolean isDiagonal(Position position) {
         return Math.abs(calculateFileGap(position)) == Math.abs(calculateRankGap(position));
     }
 
-    private int calculateRankGap(Position position) {
+    public int calculateRankGap(Position position) {
         return this.getY() - position.getY();
     }
 
-    private int calculateFileGap(Position position) {
+    public int calculateFileGap(Position position) {
         return this.getX() - position.getX();
     }
 

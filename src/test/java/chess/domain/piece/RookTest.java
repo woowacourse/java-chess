@@ -25,7 +25,7 @@ class RookTest {
     @Test
     void team() {
         Rook rook = new Rook(Team.BLACK);
-        assertThatThrownBy(() -> rook.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> rook.confirmTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

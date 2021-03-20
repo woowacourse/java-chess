@@ -25,7 +25,7 @@ class KnightTest {
     @Test
     void team() {
         Knight knight = new Knight(Team.BLACK);
-        assertThatThrownBy(() -> knight.checkTurn(Team.WHITE))
+        assertThatThrownBy(() -> knight.confirmTurn(Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
