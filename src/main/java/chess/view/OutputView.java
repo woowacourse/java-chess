@@ -18,10 +18,6 @@ public class OutputView {
         System.out.println(MESSAGE_PREFIX + "게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
     }
 
-    public static void printMessage(final String message) {
-        System.out.println(message);
-    }
-
     public static void printCurrentBoard(final Map<Position, Piece> chessBoard) {
         System.out.println();
         int lastVerticalValue = 8;
@@ -46,11 +42,14 @@ public class OutputView {
     }
 
     public static void printGameResultNotice() {
+        System.out.println();
+        System.out.println("게임이 종료되었습니다.");
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
     public static void printResult(final ChessResult result) {
         final Team winner = result.getWinner();
+        System.out.println();
         if (winner.undefined()) {
             System.out.println("무승부입니다.");
             printResultScores(winner.anyTeamExcludingThis(), result);
