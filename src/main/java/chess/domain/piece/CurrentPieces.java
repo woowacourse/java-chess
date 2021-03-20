@@ -32,7 +32,7 @@ public class CurrentPieces {
         return currentPieces.stream()
                 .filter(piece -> position.equals(piece.getPosition()))
                 .findFirst()
-                .orElse(Empty.EMPTY);
+                .orElse(new Empty());
     }
 
     public void removePieceByPosition(Position target) {
