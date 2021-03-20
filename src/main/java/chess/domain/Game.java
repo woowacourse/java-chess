@@ -35,15 +35,8 @@ public class Game {
             throw new IllegalArgumentException("말을 움직일 수 없습니다.");
         }
         Position target = Position.ofName(values.get(2));
-        board.move3(chosenPiece, target);
+        board.move(chosenPiece, target);
         currentColor = currentColor.reversed();
-    }
-
-    public void execute(Command command) {
-        // input 이 end 일 경우
-
-        // input 이 move position position 일 경우
-
     }
 
     public boolean isPlaying() {

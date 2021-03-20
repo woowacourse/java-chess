@@ -6,7 +6,6 @@ import chess.domain.piece.Paths;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -27,10 +26,6 @@ public class Board {
         coordinates.put(piece, position);
     }
 
-    public Map<Piece, Position> getCoordinates() {
-        return coordinates;
-    }
-
     public Piece findPieceBy(Position position) {
         return coordinates.entrySet()
                 .stream()
@@ -45,32 +40,11 @@ public class Board {
         return coordinates.get(piece);
     }
 
-    public void move(Player player, List<String> values) {
-        Position source = Position.ofName(values.get(1));
-        Position target = Position.ofName(values.get(2));
-        Piece piece = findPieceBy(source);
-        moveCurrentPiece(player, target, piece);
-    }
-
-    public void move2(Position source, Position target) {
-        Piece piece = findPieceBy(source);
-        putPiece(piece, target);
-    }
-
-    public void move3(Piece piece, Position target) {
+    public void move(Piece piece, Position target) {
         Path path = generatePath(piece);
         if (path.isAble(target)) {
             putPiece(piece, target);
         }
-    }
-
-    private void moveCurrentPiece(Player player, Position target, Piece piece) {
-//        if (player.isOwnerOf(piece)) {
-//            Path path = Path.of(piece, this);
-//            if (piece.canMove(this) && path.isAble(target)) {
-//                putPiece(piece, target);
-//            }
-//        }
     }
 
     public Path generatePath(Piece piece) {
@@ -80,5 +54,9 @@ public class Board {
 
     public boolean isEmpty(Position position) {
         return findPieceBy(position).equals(EMPTY_PIECE);
+    }
+
+    public Map<Piece, Position> getCoordinates() {
+        return coordinates;
     }
 }

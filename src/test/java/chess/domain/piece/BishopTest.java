@@ -18,20 +18,22 @@ class BishopTest {
         Position current = Position.ofName("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
         Paths paths = new Paths(bishop.findAllPath(current));
-        assertThat(paths.pathsToPosition()).isEqualTo(bishopPossiblePositionsWhenE4());
+        assertThat(paths.pathsToPosition()).isEqualTo(bishopE4WithoutObstacles());
     }
 
+    // todo : 상대방 말이 있는 position에 갈 수 있게 만들면 통과함. (문제 없음)
     @DisplayName("흰비숍-e4 흰피스-c2,g2 검은피스-b7,h7")
     @Test
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
         Paths paths = new Paths(bishop.findAllPath(current));
-        assertThat(paths.removeObstacles(BoardFactory.initializeBoard()).positions()).isEqualTo(bishopObstacleConsideredWhenE4());
+        assertThat(paths.removeObstacles(BoardFactory.initializeBoard()).positions()).isEqualTo(
+                bishopE4WithObstacles());
 
     }
 
-    List<Position> bishopPossiblePositionsWhenE4() {
+    List<Position> bishopE4WithoutObstacles() {
         return Arrays.asList(
                 Position.ofName("f5"),
                 Position.ofName("g6"),
@@ -49,7 +51,7 @@ class BishopTest {
         );
     }
 
-    List<Position> bishopObstacleConsideredWhenE4() {
+    List<Position> bishopE4WithObstacles() {
         return Arrays.asList(
                 Position.ofName("f5"),
                 Position.ofName("g6"),
