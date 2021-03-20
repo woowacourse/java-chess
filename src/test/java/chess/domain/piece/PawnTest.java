@@ -98,7 +98,7 @@ public class PawnTest {
     @DisplayName("이미 이동한 화이트 폰이 움직일 수 있는 칸인지 체크한다.")
     void when_pawn_already_moved_check_can_move_that_position() {
         final Pawn whitePawn = new Pawn(1);
-        whitePawn.isMoved();
+        whitePawn.moved();
         final Position current = Position.of("a4");
         final Position validDest = Position.of("a5");
         final Position invalidDest = Position.of("a6");

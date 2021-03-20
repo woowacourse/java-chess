@@ -28,10 +28,25 @@ public class Pawn extends Piece {
 
     @Override
     public boolean checkPositionRule(final Position current, final Position destination) {
-        if (isMoved) {
-            return checkPositionRuleAfterMove(current, destination);
+        if (isFirstMove()) {
+            return checkPositionRuleFirstMove(current, destination);
         }
-        return checkPositionRuleFirstMove(current, destination);
+        return checkPositionRuleAfterMove(current, destination);
+    }
+
+    private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
+        if (current.moveXandY(0, direction).equals(destination) ||
+                current.moveXandY(0, direction * 2).equals(destination)) {
+            return true;
+        }
+        return current.checkAdjacentDiagonalToDirection(destination, direction);
+    }
+
+    private boolean checkPositionRuleAfterMove(final Position current, final Position destination) {
+        if (current.moveXandY(0, direction).equals(destination)) {
+            return true;
+        }
+        return current.checkAdjacentDiagonalToDirection(destination, direction);
     }
 
     @Override
@@ -42,21 +57,6 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
-    }
-
-    private boolean checkPositionRuleAfterMove(final Position current, final Position destination) {
-        if (current.moveXandY(0, direction).equals(destination)) {
-            return true;
-        }
-        return current.checkAdjacentDiagonalToDirection(destination, direction);
-    }
-
-    private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
-        if (current.moveXandY(0, direction).equals(destination) ||
-                current.moveXandY(0, direction * 2).equals(destination)) {
-            return true;
-        }
-        return current.checkAdjacentDiagonalToDirection(destination, direction);
     }
 
     @Override
