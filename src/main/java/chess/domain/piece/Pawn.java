@@ -6,8 +6,9 @@ import java.util.Map;
 public class Pawn extends AbstractPiece {
 
     private static final String SYMBOL = "p";
-
-    public static final double SCORE = 1;
+    private static final double SCORE = 1;
+    private static final int BLACK_PAWN_ROW = 6;
+    private static final int WHITE_PAWN_ROW = 1;
     private static final int ABLE_LENGTH = 1;
 
     public Pawn(Color color, Position position) {
@@ -56,12 +57,14 @@ public class Pawn extends AbstractPiece {
         return directions.stream()
             .filter(direction -> this.position.canMove(position, direction, ableLength))
             .findAny()
-            .orElseGet(() -> {
-                if (isFirst() && this.position.canMove(position, forward(), ableLength + 1)) {
-                    return forward();
-                }
-                throw new IllegalArgumentException(ERROR_CAN_NOT_MOVE);
-            });
+            .orElseGet(() -> forWordTwoMove(position, ableLength));
+    }
+
+    private Direction forWordTwoMove(Position position, int ableLength) {
+        if (isFirst() && this.position.canMove(position, forward(), ableLength + 1)) {
+            return forward();
+        }
+        throw new IllegalArgumentException(ERROR_CAN_NOT_MOVE);
     }
 
     private Direction forward() {
@@ -72,7 +75,7 @@ public class Pawn extends AbstractPiece {
     }
 
     private boolean isFirst() {
-        return position.getX().point() == 1 && color.isWhite()
-            || position.getX().point() == 6 && color.isBlack();
+        return position.isSameRow(Point.from(WHITE_PAWN_ROW)) && color.isWhite()
+            || position.isSameRow(Point.from(BLACK_PAWN_ROW)) && color.isBlack();
     }
 }
