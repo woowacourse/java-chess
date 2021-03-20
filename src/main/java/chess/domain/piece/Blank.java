@@ -8,11 +8,11 @@ import chess.exception.PieceDoesNotExistException;
 import java.util.List;
 
 public class Blank extends Piece {
-    private static final String BLANK_INITIAL = ".";
+    private static final String INITIAL = ".";
     private static final Blank CACHED_BLANK = new Blank();
 
     public Blank() {
-        super(Side.NONE, BLANK_INITIAL);
+        super(Side.NONE, INITIAL);
     }
 
     public static Blank getBlank() {

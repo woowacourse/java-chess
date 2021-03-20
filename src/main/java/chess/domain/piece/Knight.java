@@ -8,21 +8,21 @@ import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
-    private static final String KNIGHT_INITIAL = "N";
-    private static final double KNIGHT_SCORE = 2.5;
-    private static final int KNIGHT_MOVE_RULE_FIRST = 1;
-    private static final int KNIGHT_MOVE_RULE_SECOND = 2;
+    private static final String INITIAL = "N";
+    private static final double SCORE = 2.5;
+    private static final int MOVE_RULE_FIRST = 1;
+    private static final int MOVE_RULE_SECOND = 2;
 
     public Knight(Side side) {
-        super(side, KNIGHT_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        if (Math.abs(rowDifference) == KNIGHT_MOVE_RULE_SECOND && Math.abs(columnDifference) == KNIGHT_MOVE_RULE_FIRST) {
+        if (Math.abs(rowDifference) == MOVE_RULE_SECOND && Math.abs(columnDifference) == MOVE_RULE_FIRST) {
             return true;
         }
-        return Math.abs(rowDifference) == KNIGHT_MOVE_RULE_FIRST && Math.abs(columnDifference) == KNIGHT_MOVE_RULE_SECOND;
+        return Math.abs(rowDifference) == MOVE_RULE_FIRST && Math.abs(columnDifference) == MOVE_RULE_SECOND;
     }
 
     @Override
@@ -47,7 +47,7 @@ public class Knight extends Piece {
 
     @Override
     public double score() {
-        return KNIGHT_SCORE;
+        return SCORE;
     }
 
     @Override

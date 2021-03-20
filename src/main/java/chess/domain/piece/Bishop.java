@@ -7,11 +7,11 @@ import chess.exception.InvalidMethodCallException;
 import java.util.List;
 
 public class Bishop extends Piece {
-    private static final String BISHOP_INITIAL = "B";
-    private static final int BISHOP_SCORE = 3;
+    private static final String INITIAL = "B";
+    private static final int SCORE = 3;
 
     public Bishop(Side side) {
-        super(side, BISHOP_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Bishop extends Piece {
 
     @Override
     public double score() {
-        return BISHOP_SCORE;
+        return SCORE;
     }
 
     @Override

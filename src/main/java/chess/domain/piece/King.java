@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
-    private static final String KING_INITIAL = "K";
-    private static final int KING_SCORE = 0;
+    private static final String INITIAL = "K";
+    private static final int SCORE = 0;
 
     public King(Side side) {
-        super(side, KING_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
@@ -42,7 +42,7 @@ public class King extends Piece {
 
     @Override
     public double score() {
-        return KING_SCORE;
+        return SCORE;
     }
 
     @Override

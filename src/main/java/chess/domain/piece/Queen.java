@@ -7,11 +7,11 @@ import chess.exception.InvalidMethodCallException;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final String QUEEN_INITIAL = "Q";
-    private static final int QUEEN_SCORE = 9;
+    private static final String INITIAL = "Q";
+    private static final int SCORE = 9;
 
     public Queen(Side side) {
-        super(side, QUEEN_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class Queen extends Piece {
 
     @Override
     public double score() {
-        return QUEEN_SCORE;
+        return SCORE;
     }
 
     @Override

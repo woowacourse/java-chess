@@ -6,18 +6,17 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Piece {
-    private static final String PAWN_INITIAL = "P";
-    private static final int PAWN_SCORE = 1;
+    private static final String INITIAL = "P";
     private static final int BLACK_DIRECTION = 1;
     private static final int WHITE_DIRECTION = -1;
     private static final int DOUBLE_FORWARD = 2;
     private static final int PAWN_ROUTE_COUNT_ONE_FORWARD = 0;
-    private static final double PAWN_ONE_SCORE = 1;
-    private static final double PAWN_MULTIPLE_SCORE = 0.5;
-    private static final int PAWN_COUNT_STANDARD = 1;
+    private static final double ONE_SCORE = 1;
+    private static final double MULTIPLE_SCORE = 0.5;
+    private static final int MULTIPLE_SCORE_LIMIT = 1;
 
     public Pawn(Side side) {
-        super(side, PAWN_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class Pawn extends Piece {
 
     @Override
     public double score() {
-        return PAWN_SCORE;
+        return ONE_SCORE;
     }
 
     @Override
@@ -80,16 +79,19 @@ public class Pawn extends Piece {
 
     @Override
     public boolean forward(Position from, Position to) {
-        return Position.differenceOfColumn(from, to) == PAWN_ROUTE_COUNT_ONE_FORWARD || Position.differenceOfRow(from, to) == PAWN_ROUTE_COUNT_ONE_FORWARD;
+        if (Position.differenceOfColumn(from, to) != 0) {
+            return false;
+        }
+        return Position.differenceOfRow(from, to) < 2;
     }
 
     public static double scoreByCount(int count) {
         double score = 0;
-        if (count == PAWN_COUNT_STANDARD) {
-            score += PAWN_ONE_SCORE;
+        if (count == MULTIPLE_SCORE_LIMIT) {
+            score += ONE_SCORE;
         }
-        if (count > PAWN_COUNT_STANDARD) {
-            score += count * PAWN_MULTIPLE_SCORE;
+        if (count > MULTIPLE_SCORE_LIMIT) {
+            score += count * MULTIPLE_SCORE;
         }
         return score;
     }

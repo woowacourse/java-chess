@@ -7,11 +7,11 @@ import chess.exception.InvalidMethodCallException;
 import java.util.List;
 
 public class Rook extends Piece {
-    private static final String ROOK_INITIAL = "R";
-    private static final int ROOK_SCORE = 5;
+    private static final String INITIAL = "R";
+    private static final int SCORE = 5;
 
     public Rook(Side side) {
-        super(side, ROOK_INITIAL);
+        super(side, INITIAL);
     }
 
     @Override
@@ -45,7 +45,7 @@ public class Rook extends Piece {
 
     @Override
     public double score() {
-        return ROOK_SCORE;
+        return SCORE;
     }
 
     @Override
