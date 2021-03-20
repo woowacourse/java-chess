@@ -48,7 +48,7 @@ public abstract class Piece {
 
         for (int i = 1; i <= stepRange; i++) {
             Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
-            if (movedPosition.isInValidRange()) {
+            if (!movedPosition.isInValidRange()) {
                 break;
             }
             positions.add(movedPosition);
@@ -75,7 +75,7 @@ public abstract class Piece {
     private void validatePositionInGrid(final Piece targetPiece) {
         Position source = this.position();
         Position target = targetPiece.position();
-        if (source.isInValidRange() || target.isInValidRange()) {
+        if (!source.isInValidRange() || !target.isInValidRange()) {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
