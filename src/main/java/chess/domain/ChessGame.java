@@ -9,18 +9,16 @@ import java.util.Collections;
 import java.util.Map;
 
 public class ChessGame {
-    public static final int BLACK_TEAM = 0;
-    public static final int WHITE_TEAM = 1;
-
     private final BlackTeam blackTeam;
     private final WhiteTeam whiteTeam;
     private Team currentTurn;
-    private boolean isEnd = false;
+    private boolean isPlaying;
 
     public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
         this.currentTurn = this.whiteTeam;
+        this.isPlaying = true;
     }
 
     public void move(final Position current, final Position destination) {
@@ -55,11 +53,11 @@ public class ChessGame {
     }
 
     public void finish() {
-        isEnd = true;
+        isPlaying = false;
     }
 
-    public boolean isEnd() {
-        return isEnd;
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     private Team getEnemy() {
@@ -79,16 +77,12 @@ public class ChessGame {
         return Collections.unmodifiableMap(chessBoard);
     }
 
-    public double calculateScoreByTeam(final int team) {
-        if (team == BLACK_TEAM) {
-            return blackTeam.calculateTotalScore();
-        }
+    public double calculateBlackTeamScore() {
+        return blackTeam.calculateTotalScore();
+    }
 
-        if (team == WHITE_TEAM) {
-            return whiteTeam.calculateTotalScore();
-        }
-
-        return 0;
+    public double calculateWhiteTeamScore() {
+        return whiteTeam.calculateTotalScore();
     }
 
     public BlackTeam getBlackTeam() {

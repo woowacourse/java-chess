@@ -46,7 +46,7 @@ public class ChessGameTest {
         chessGame.move(Position.of("g7"), Position.of("g5"));
         chessGame.changeTurn();
 
-        assertThat(chessGame.isEnd()).isFalse();
+        assertThat(chessGame.isPlaying()).isTrue();
 
         chessGame.move(Position.of("d1"), Position.of("h5"));
         chessGame.changeTurn();
@@ -57,6 +57,6 @@ public class ChessGameTest {
         chessGame.move(Position.of("h5"), Position.of("e8"));
         chessGame.changeTurn();
 
-        assertThat(chessGame.isEnd()).isTrue();
+        assertThat(chessGame.isPlaying()).isFalse();
     }
 }

@@ -27,13 +27,13 @@ public class ChessController {
     }
 
     private void playChessGame(ChessGame chessGame) {
-        while (!chessGame.isEnd()) {
+        while (chessGame.isPlaying()) {
             printChessBoard(chessGame);
             singleTurn(chessGame);
             chessGame.changeTurn();
         }
-        final double blackTeamScore = chessGame.calculateScoreByTeam(ChessGame.BLACK_TEAM);
-        final double whiteTeamScore = chessGame.calculateScoreByTeam(ChessGame.WHITE_TEAM);
+        final double blackTeamScore = chessGame.calculateBlackTeamScore();
+        final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
         OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);
     }
 
