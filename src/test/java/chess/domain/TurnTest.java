@@ -32,6 +32,4 @@ public class TurnTest {
         List<Team> expectedTeams = Arrays.asList(Team.BLACK, Team.WHITE, Team.BLACK, Team.WHITE);
         assertThat(teams).isEqualTo(expectedTeams);
     }
-
-
 }
