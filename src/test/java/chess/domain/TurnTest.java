@@ -2,7 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Turn;
 import chess.domain.board.Team;
 import java.util.ArrayList;
 import java.util.Arrays;

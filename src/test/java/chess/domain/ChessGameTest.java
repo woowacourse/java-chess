@@ -4,8 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.ChessGame;
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
