@@ -1,8 +1,8 @@
 package chess.utils;
 
 import chess.domain.board.LineDto;
-import chess.domain.piece.Piece;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -6,8 +6,6 @@ import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.Map;
 
-import static spark.Spark.get;
-
 public class WebUIChessApplication {
     public static void main(String[] args) {
 //        get("/", (req, res) -> {

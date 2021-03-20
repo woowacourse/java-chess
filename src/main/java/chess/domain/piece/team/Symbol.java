@@ -1,7 +1,5 @@
 package chess.domain.piece.team;
 
-import chess.domain.piece.King;
-
 public enum Symbol {
     KING("k", "K"),
     QUEEN("q", "Q"),
