@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
-public class Point {
+public final class Point {
 
     private static final int MIN_INDEX = 0;
     private static final int MAX_INDEX = 8;
@@ -33,7 +33,11 @@ public class Point {
     }
 
     public Point add(int distance) {
-        return new Point(point + distance);
+        return from(point + distance);
+    }
+
+    public boolean isAdd(int point) {
+        return this.point + point >= MIN_INDEX && this.point + point < MAX_INDEX;
     }
 
     @Override
