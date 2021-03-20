@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -21,7 +22,28 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public abstract boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate);
+    public boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate) {
+        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
+        List<Coordinate> possibleCoordinates = new ArrayList<>();
+        List<Direction> directions = getDirections();
+        if (!directions.contains(moveCommandDirection)) {
+            return false;
+        }
+        Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
+        while (!movingCoordinate.equals(targetCoordinate)) {
+            Piece piece = board.find(movingCoordinate);
+            if (piece != null) {
+                break;
+            }
+            possibleCoordinates.add(movingCoordinate);
+            movingCoordinate = movingCoordinate.move(moveCommandDirection);
+        }
+        Piece piece = board.find(movingCoordinate);
+        if (piece == null || !piece.isTeamOf(this.getTeamType())) {
+            possibleCoordinates.add(movingCoordinate);
+        }
+        return possibleCoordinates.contains(targetCoordinate);
+    }
 
     public boolean isPawn() {
         return name.equalsIgnoreCase("p");

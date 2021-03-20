@@ -27,38 +27,20 @@ public class King extends Piece {
 
     @Override
     public boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate) {
-        List<Direction> directions = getDirections();
-        List<Coordinate> possibleAllCoordinates = getPossibleCoordinates(currentCoordinate, directions);
+        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
         List<Coordinate> possibleCoordinates = new ArrayList<>();
-
-        if (!possibleAllCoordinates.contains(targetCoordinate)) {
+        List<Direction> directions = getDirections();
+        if (!directions.contains(moveCommandDirection)) {
             return false;
         }
 
-        for (Coordinate coordinate : possibleAllCoordinates) {
-            Piece piece = board.find(coordinate);
-            if (piece == null || !piece.isTeamOf(getTeamType())) {
-                possibleCoordinates.add(coordinate);
-            }
+        Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
+
+        Piece piece = board.find(movingCoordinate);
+        if (piece == null || !piece.isTeamOf(this.getTeamType())) {
+            possibleCoordinates.add(movingCoordinate);
         }
 
-        List<Coordinate> checkCoordinates = board.findCheckCoordinatesNew(currentCoordinate, possibleCoordinates, getTeamType());
-        possibleCoordinates.removeAll(checkCoordinates);
         return possibleCoordinates.contains(targetCoordinate);
-    }
-
-    private List<Coordinate> getPossibleCoordinates(Coordinate currentCoordinate,
-        List<Direction> directions) {
-
-        List<Coordinate> possibleCoordinates = new ArrayList<>();
-        for (Direction direction : directions) {
-            Coordinate nextCoordinate;
-            try {
-                nextCoordinate = currentCoordinate.move(direction);
-                possibleCoordinates.add(nextCoordinate);
-            } catch (Exception ignored) {
-            }
-        }
-        return possibleCoordinates;
     }
 }

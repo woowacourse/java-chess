@@ -80,24 +80,6 @@ class KingTest {
         assertThat(isMovable).isFalse();
     }
 
-    @DisplayName("King은 체크 위치에 이동 불가")
-    @Test
-    void cannotMoveToCheckCoordinate1() {
-        board.put(new King(TeamType.WHITE), Coordinate.from("e7"));
-
-        boolean isMovable = king.isMovableTo(board, currentCoordinate, Coordinate.from("e6"));
-        assertThat(isMovable).isFalse();
-    }
-
-    @DisplayName("King은 체크 위치에 이동 불가")
-    @Test
-    void cannotMoveToCheckCoordinate2() {
-        board.put(new Rook(TeamType.WHITE), Coordinate.from("c5"));
-
-        boolean isMovable = king.isMovableTo(board, currentCoordinate, Coordinate.from("e5"));
-        assertThat(isMovable).isFalse();
-    }
-
     @DisplayName("King의 도착위치에 적 팀 기물이 있으면 이동 가능")
     @Test
     void moveToDestinationWhenEnemyExistsOnDestination() {
