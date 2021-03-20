@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
 import java.util.Map;
@@ -16,7 +17,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
     private Board board;
-    private Map<Coordinate, Piece> cells;
+    private Map<Coordinate, Cell> cells;
 
     @DisplayName("생성 테스트")
     @Test
@@ -39,7 +40,7 @@ class PawnTest {
             void setup() {
                 board = Board.getInstance();
                 cells = board.getCells();
-                cells.put(currentCoordinate, pawn);
+                cells.get(currentCoordinate).put(pawn);
             }
 
             @DisplayName("폰의 DOWN방향 한 칸 앞에 아무것도 없으면, 갈 수 있다.")
@@ -58,7 +59,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d6");
 
                 Piece dummy = new Rook(TeamType.BLACK);
-                board.put(dummy, Coordinate.from("d6"));
+                cells.get(Coordinate.from("d6")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -81,7 +82,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d5");
 
                 Piece dummy = new Rook(TeamType.BLACK);
-                board.put(dummy, Coordinate.from("d6"));
+                cells.get(Coordinate.from("d6")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -94,7 +95,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d5");
 
                 Piece dummy = new Rook(TeamType.BLACK);
-                board.put(dummy, Coordinate.from("d5"));
+                cells.get(Coordinate.from("d5")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -119,7 +120,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from(destinationInput);
 
                 Piece dummy = new Rook(TeamType.WHITE);
-                board.put(dummy, destination);
+                cells.get(destination).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -149,7 +150,7 @@ class PawnTest {
             void setup() {
                 board = Board.getInstance();
                 cells = board.getCells();
-                cells.put(currentCoordinate, pawn);
+                cells.get(currentCoordinate).put(pawn);
             }
 
             @DisplayName("폰의 UP방향 한 칸 앞에 아무것도 없으면, 갈 수 있다.")
@@ -168,7 +169,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d3");
 
                 Piece dummy = new Rook(TeamType.WHITE);
-                board.put(dummy, Coordinate.from("d3"));
+                cells.get(Coordinate.from("d3")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -191,7 +192,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d4");
 
                 Piece dummy = new Rook(TeamType.BLACK);
-                board.put(dummy, Coordinate.from("d3"));
+                cells.get(Coordinate.from("d3")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -204,7 +205,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from("d4");
 
                 Piece dummy = new Rook(TeamType.WHITE);
-                board.put(dummy, Coordinate.from("d4"));
+                cells.get(Coordinate.from("d4")).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 
@@ -229,7 +230,7 @@ class PawnTest {
                 Coordinate destination = Coordinate.from(destinationInput);
 
                 Piece dummy = new Rook(TeamType.BLACK);
-                board.put(dummy, destination);
+                cells.get(destination).put(dummy);
 
                 boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
 

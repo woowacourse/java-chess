@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
@@ -31,15 +32,16 @@ public abstract class Piece {
         }
         Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
         while (!movingCoordinate.equals(targetCoordinate)) {
-            Piece piece = board.find(movingCoordinate);
-            if (piece != null) {
+            Cell cell = board.find(movingCoordinate);
+            if (!cell.isEmpty()) {
                 break;
             }
             possibleCoordinates.add(movingCoordinate);
             movingCoordinate = movingCoordinate.move(moveCommandDirection);
         }
-        Piece piece = board.find(movingCoordinate);
-        if (piece == null || !piece.isTeamOf(this.getTeamType())) {
+
+        Cell cell = board.find(movingCoordinate);
+        if (cell.isMovable(teamType)) {
             possibleCoordinates.add(movingCoordinate);
         }
         return possibleCoordinates.contains(targetCoordinate);

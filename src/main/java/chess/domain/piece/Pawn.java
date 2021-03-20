@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
@@ -32,24 +33,27 @@ public class Pawn extends Piece {
 
         Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
         while (!movingCoordinate.equals(targetCoordinate)) {
-            Piece piece = board.find(movingCoordinate);
-            if (piece != null) {
+
+            Cell cell = board.find(movingCoordinate);
+            if (!cell.isEmpty()) {
                 break;
             }
             possibleCoordinates.add(movingCoordinate);
             movingCoordinate = movingCoordinate.move(moveCommandDirection);
         }
-        Piece piece = board.find(movingCoordinate);
+
+        Cell cell = board.find(movingCoordinate);
         if (moveCommandDirection.isDiagonal()) {
-            if (piece != null && !piece.isTeamOf(this.getTeamType())) {
+            if (cell.hasEnemy(getTeamType())) {
                 possibleCoordinates.add(movingCoordinate);
             }
         }
         if (!moveCommandDirection.isDiagonal()) {
-            if (piece == null || !piece.isTeamOf(this.getTeamType())) {
+            if (cell.isEmpty()) {
                 possibleCoordinates.add(movingCoordinate);
             }
         }
+
         return possibleCoordinates.contains(targetCoordinate);
     }
 }

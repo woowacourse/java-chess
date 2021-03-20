@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
@@ -25,8 +26,9 @@ public class Knight extends Piece {
             return false;
         }
         Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
-        Piece piece = board.find(movingCoordinate);
-        if (piece == null || !piece.isTeamOf(this.getTeamType())) {
+
+        Cell cell = board.find(movingCoordinate);
+        if (cell.isMovable(getTeamType())) {
             possibleCoordinates.add(movingCoordinate);
         }
         return possibleCoordinates.contains(targetCoordinate);

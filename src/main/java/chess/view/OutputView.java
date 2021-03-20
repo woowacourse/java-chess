@@ -28,7 +28,7 @@ public class OutputView {
 
     private static void printFiles(Rank rank, Board board) {
         for (File file : File.values()) {
-            Piece piece = board.find(new Coordinate(file, rank));
+            Piece piece = board.find(new Coordinate(file, rank)).getPiece();
             printPiece(piece);
         }
         System.out.println();

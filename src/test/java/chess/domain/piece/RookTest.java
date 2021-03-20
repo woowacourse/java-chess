@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
 import java.util.Map;
@@ -22,12 +23,12 @@ class RookTest {
     @Test
     void rookMoveOnEmptyBoard() {
         Board board = Board.getInstance();
-        Map<Coordinate, Piece> cells = board.getCells();
+        Map<Coordinate, Cell> cells = board.getCells();
         Rook rook = new Rook(TeamType.BLACK);
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate targetCoordinate = Coordinate.from("d5");
 
-        cells.put(currentCoordinate, rook);
+        cells.get(currentCoordinate).put(rook);
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isTrue();
@@ -37,16 +38,16 @@ class RookTest {
     @Test
     void rookMoveEnemyPieceOnTargetCoordinate() {
         Board board = Board.getInstance();
-        Map<Coordinate, Piece> cells = board.getCells();
+        Map<Coordinate, Cell> cells = board.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate routeCoordinate = Coordinate.from("d7");
         Coordinate targetCoordinate = Coordinate.from("d7");
 
-        cells.put(currentCoordinate, rook);
+        cells.get(currentCoordinate).put(rook);
         Piece enemyPiece = new Queen(TeamType.WHITE);
-        cells.put(routeCoordinate, enemyPiece);
+        cells.get(routeCoordinate).put(enemyPiece);
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isTrue();
@@ -56,14 +57,14 @@ class RookTest {
     @Test
     void rookCannotMoveOtherPieceOnRoute() {
         Board board = Board.getInstance();
-        Map<Coordinate, Piece> cells = board.getCells();
+        Map<Coordinate, Cell> cells = board.getCells();
         Rook rook = new Rook(TeamType.BLACK);
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate routeCoordinate = Coordinate.from("d6");
         Coordinate targetCoordinate = Coordinate.from("d7");
 
-        cells.put(currentCoordinate, rook);
-        cells.put(routeCoordinate, new Rook(TeamType.WHITE));
+        cells.get(currentCoordinate).put(rook);
+        cells.get(routeCoordinate).put(new Rook(TeamType.WHITE));
 
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
         assertThat(isMovable).isFalse();
@@ -73,16 +74,17 @@ class RookTest {
     @Test
     void rookCannotMoveOwnPieceOnTargetCoordinate() {
         Board board = Board.getInstance();
-        Map<Coordinate, Piece> cells = board.getCells();
+        Map<Coordinate, Cell> cells = board.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate routeCoordinate = Coordinate.from("d7");
         Coordinate targetCoordinate = Coordinate.from("d7");
 
-        cells.put(currentCoordinate, rook);
+        cells.get(currentCoordinate).put(rook);
         Piece ownPiece = new Pawn(TeamType.BLACK);
-        cells.put(routeCoordinate, ownPiece);
+        cells.get(routeCoordinate).put(ownPiece);
+
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isFalse();
@@ -92,13 +94,13 @@ class RookTest {
     @Test
     void rookCannotInvalidTargetCoordinate() {
         Board board = Board.getInstance();
-        Map<Coordinate, Piece> cells = board.getCells();
+        Map<Coordinate, Cell> cells = board.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate targetCoordinate = Coordinate.from("c5");
 
-        cells.put(currentCoordinate, rook);
+        cells.get(currentCoordinate).put(rook);
 
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
 

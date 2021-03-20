@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
@@ -23,38 +22,41 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
-    private static final Board BOARD = Board.getInstance();
+    private static Board BOARD;
 
     private static Stream<Arguments> getDefaultBlackPieces() {
+        BOARD = Board.getInstance();
         BOARD.initialize();
         return Stream.of(
-            Arguments.of(BOARD.find(new Coordinate(File.A, Rank.EIGHT)), "R"),
-            Arguments.of(BOARD.find(new Coordinate(File.B, Rank.EIGHT)), "N"),
-            Arguments.of(BOARD.find(new Coordinate(File.C, Rank.EIGHT)), "B"),
-            Arguments.of(BOARD.find(new Coordinate(File.D, Rank.EIGHT)), "Q"),
-            Arguments.of(BOARD.find(new Coordinate(File.E, Rank.EIGHT)), "K"),
-            Arguments.of(BOARD.find(new Coordinate(File.F, Rank.EIGHT)), "B"),
-            Arguments.of(BOARD.find(new Coordinate(File.G, Rank.EIGHT)), "N"),
-            Arguments.of(BOARD.find(new Coordinate(File.H, Rank.EIGHT)), "R")
+            Arguments.of(BOARD.find(Coordinate.from("a8")), "R"),
+            Arguments.of(BOARD.find(Coordinate.from("b8")), "N"),
+            Arguments.of(BOARD.find(Coordinate.from("c8")), "B"),
+            Arguments.of(BOARD.find(Coordinate.from("d8")), "Q"),
+            Arguments.of(BOARD.find(Coordinate.from("e8")), "K"),
+            Arguments.of(BOARD.find(Coordinate.from("f8")), "B"),
+            Arguments.of(BOARD.find(Coordinate.from("g8")), "N"),
+            Arguments.of(BOARD.find(Coordinate.from("h8")), "R")
         );
     }
 
     private static Stream<Arguments> getDefaultWhitePieces() {
+        BOARD = Board.getInstance();
         BOARD.initialize();
         return Stream.of(
-            Arguments.of(BOARD.find(new Coordinate(File.A, Rank.ONE)), "r"),
-            Arguments.of(BOARD.find(new Coordinate(File.B, Rank.ONE)), "n"),
-            Arguments.of(BOARD.find(new Coordinate(File.C, Rank.ONE)), "b"),
-            Arguments.of(BOARD.find(new Coordinate(File.D, Rank.ONE)), "q"),
-            Arguments.of(BOARD.find(new Coordinate(File.E, Rank.ONE)), "k"),
-            Arguments.of(BOARD.find(new Coordinate(File.F, Rank.ONE)), "b"),
-            Arguments.of(BOARD.find(new Coordinate(File.G, Rank.ONE)), "n"),
-            Arguments.of(BOARD.find(new Coordinate(File.H, Rank.ONE)), "r")
+            Arguments.of(BOARD.find(Coordinate.from("a1")), "r"),
+            Arguments.of(BOARD.find(Coordinate.from("b1")), "n"),
+            Arguments.of(BOARD.find(Coordinate.from("c1")), "b"),
+            Arguments.of(BOARD.find(Coordinate.from("d1")), "q"),
+            Arguments.of(BOARD.find(Coordinate.from("e1")), "k"),
+            Arguments.of(BOARD.find(Coordinate.from("f1")), "b"),
+            Arguments.of(BOARD.find(Coordinate.from("g1")), "n"),
+            Arguments.of(BOARD.find(Coordinate.from("h1")), "r")
         );
     }
 
     @BeforeEach
     void setup() {
+        BOARD = Board.getInstance();
         BOARD.initialize();
     }
 
@@ -63,7 +65,7 @@ class BoardTest {
     class Context_initialize {
 
         private Piece getPiece(File file, Rank rank) {
-            return BOARD.find(new Coordinate(file, rank));
+            return BOARD.getCells().get(new Coordinate(file, rank)).getPiece();
         }
 
         @DisplayName("7Rank를 모두 흑의 폰으로 초기화한다")
@@ -90,15 +92,15 @@ class BoardTest {
     @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
     @MethodSource("getDefaultBlackPieces")
     @ParameterizedTest
-    void boardInitialization_BlackPieces(Piece piece, String pieceName) {
-        assertThat(piece.getName()).isEqualTo(pieceName);
+    void boardInitialization_BlackPieces(Cell cell, String pieceName) {
+        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
     }
 
     @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
     @MethodSource("getDefaultWhitePieces")
     @ParameterizedTest
-    void boardInitialization_WhitePieces(Piece piece, String pieceName) {
-        assertThat(piece.getName()).isEqualTo(pieceName);
+    void boardInitialization_WhitePieces(Cell cell, String pieceName) {
+        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
     }
 
     @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 백팀")
@@ -107,7 +109,8 @@ class BoardTest {
         String currentCoordinate = "b2";
         TeamType teamType = TeamType.WHITE;
 
-        Piece piece = BOARD.find(currentCoordinate, teamType);
+        Cell cell = BOARD.find(Coordinate.from(currentCoordinate));
+        Piece piece = cell.getPiece();
 
         assertThat(piece.getName()).isEqualTo("p");
         assertThat(piece.isTeamOf(teamType)).isTrue();
@@ -119,80 +122,39 @@ class BoardTest {
         String currentCoordinate = "c8";
         TeamType teamType = TeamType.BLACK;
 
-        Piece piece = BOARD.find(currentCoordinate, teamType);
+        Cell cell = BOARD.find(Coordinate.from(currentCoordinate));
+        Piece piece = cell.getPiece();
 
         assertThat(piece.getName()).isEqualTo("B");
         assertThat(piece.isTeamOf(teamType)).isTrue();
     }
 
-    @DisplayName("move 명령 - 보드 현재 위치의 기물이 존재하지 않으면, 예외가 발생한다. - 백팀")
-    @Test
-    void findPieceOnBoard_WhiteTeam_EmptyCell() {
-        String currentCoordinate = "b3";
-        TeamType teamType = TeamType.WHITE;
-
-        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("말이 존재하지 않습니다.");
-    }
-
-    @DisplayName("move 명령 - 보드 현재 위치에 자신의 기물이 존재하지 않으면, 예외가 발생한다. - 백팀")
-    @Test
-    void findPieceOnBoard_WhiteTeam_NotMyPiece() {
-        String currentCoordinate = "e7";
-        TeamType teamType = TeamType.WHITE;
-
-        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("자신의 말이 아닙니다.");
-    }
-
-    @DisplayName("move 명령 - 보드 현재 위치의 기물이 존재하지 않으면, 예외가 발생한다. - 흑팀")
-    @Test
-    void findPieceOnBoard_BlackTeam_EmptyCell() {
-        String currentCoordinate = "e5";
-        TeamType teamType = TeamType.BLACK;
-
-        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("말이 존재하지 않습니다.");
-    }
-
-    @DisplayName("move 명령 - 보드 현재 위치에 자신의 기물이 존재하지 않으면, 예외가 발생한다. - 흑팀")
-    @Test
-    void findPieceOnBoard_BlackTeam_NotMyPiece() {
-        String currentCoordinate = "a1";
-        TeamType teamType = TeamType.BLACK;
-
-        assertThatThrownBy(() -> BOARD.find(currentCoordinate, teamType))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("자신의 말이 아닙니다.");
-    }
-
     @DisplayName("점수 계산")
     @Test
     void calculateScores() {
-        Map<Coordinate, Piece> cells = BOARD.getCells();
-        cells.clear();
+        BOARD = BOARD.getInstance();
+        Map<Coordinate, Cell> cells = BOARD.getCells();
 
-        cells.put(Coordinate.from("b8"), new King(TeamType.BLACK));
-        cells.put(Coordinate.from("c8"), new Rook(TeamType.BLACK));
-        cells.put(Coordinate.from("a7"), new Pawn(TeamType.BLACK));
-        cells.put(Coordinate.from("c7"), new Pawn(TeamType.BLACK));
-        cells.put(Coordinate.from("d7"), new Bishop(TeamType.BLACK));
-        cells.put(Coordinate.from("b6"), new Pawn(TeamType.BLACK));
-        cells.put(Coordinate.from("e6"), new Queen(TeamType.BLACK));
+        cells.get(Coordinate.from("b8")).put(new King(TeamType.BLACK));
 
-        cells.put(Coordinate.from("f4"), new Knight(TeamType.WHITE));
+        cells.get(Coordinate.from("b8")).put(new King(TeamType.BLACK));
+        cells.get(Coordinate.from("c8")).put(new Rook(TeamType.BLACK));
+        cells.get(Coordinate.from("a7")).put(new Pawn(TeamType.BLACK));
+        cells.get(Coordinate.from("c7")).put(new Pawn(TeamType.BLACK));
+        cells.get(Coordinate.from("d7")).put(new Bishop(TeamType.BLACK));
+        cells.get(Coordinate.from("b6")).put(new Pawn(TeamType.BLACK));
+        cells.get(Coordinate.from("e6")).put(new Queen(TeamType.BLACK));
 
-        cells.put(Coordinate.from("g4"), new Queen(TeamType.WHITE));
+        cells.get(Coordinate.from("f4")).put(new Knight(TeamType.WHITE));
 
-        cells.put(Coordinate.from("f3"), new Pawn(TeamType.WHITE));
-        cells.put(Coordinate.from("h3"), new Pawn(TeamType.WHITE));
-        cells.put(Coordinate.from("f2"), new Pawn(TeamType.WHITE));
-        cells.put(Coordinate.from("g2"), new Pawn(TeamType.WHITE));
-        cells.put(Coordinate.from("e1"), new Rook(TeamType.WHITE));
-        cells.put(Coordinate.from("f1"), new King(TeamType.WHITE));
+        cells.get(Coordinate.from("g4")).put(new Queen(TeamType.WHITE));
+
+        cells.get(Coordinate.from("f3")).put(new Pawn(TeamType.WHITE));
+        cells.get(Coordinate.from("h3")).put(new Pawn(TeamType.WHITE));
+        cells.get(Coordinate.from("f2")).put(new Pawn(TeamType.WHITE));
+        cells.get(Coordinate.from("g2")).put(new Pawn(TeamType.WHITE));
+        cells.get(Coordinate.from("e1")).put(new Rook(TeamType.WHITE));
+        cells.get(Coordinate.from("f1")).put(new King(TeamType.WHITE));
 
         Result result = BOARD.calculateScores();
 
@@ -209,7 +171,7 @@ class BoardTest {
     @DisplayName("흑 팀의 킹이 죽었을 때")
     @Test
     void blackKingDied() {
-        Map<Coordinate, Piece> cells = BOARD.getCells();
+        Map<Coordinate, Cell> cells = BOARD.getCells();
         cells.remove(Coordinate.from("e8"));
         assertThat(BOARD.isKingCheckmate()).isTrue();
     }
@@ -217,7 +179,7 @@ class BoardTest {
     @DisplayName("백 팀의 킹이 죽었을 때")
     @Test
     void whiteKingDied() {
-        Map<Coordinate, Piece> cells = BOARD.getCells();
+        Map<Coordinate, Cell> cells = BOARD.getCells();
         cells.remove(Coordinate.from("e1"));
         assertThat(BOARD.isKingCheckmate()).isTrue();
     }

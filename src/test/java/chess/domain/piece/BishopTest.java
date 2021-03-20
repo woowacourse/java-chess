@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
 import java.util.Map;
@@ -16,7 +17,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 class BishopTest {
 
     private Board board;
-    private Map<Coordinate, Piece> cells;
+    private Map<Coordinate, Cell> cells;
     private final Piece bishop = new Bishop(TeamType.BLACK);
     private final Coordinate currentCoordinate = Coordinate.from("d5");
 
@@ -24,7 +25,7 @@ class BishopTest {
     void setup() {
         board = Board.getInstance();
         cells = board.getCells();
-        cells.put(currentCoordinate, bishop);
+        cells.get(currentCoordinate).put(bishop);
     }
 
     @DisplayName("생성 테스트")
@@ -62,7 +63,7 @@ class BishopTest {
         Coordinate destination = Coordinate.from("b3");
 
         Piece dummy = new Rook(TeamType.BLACK);
-        board.put(dummy, Coordinate.from("c4"));
+        cells.get(Coordinate.from("c4")).put(dummy);
         boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
         assertThat(isMovable).isFalse();
@@ -73,7 +74,7 @@ class BishopTest {
     void cannotMoveWhenSameTeamPieceExistsOnDestination() {
         Coordinate destination = Coordinate.from("b3");
         Piece dummy = new Rook(TeamType.BLACK);
-        board.put(dummy, destination);
+        cells.get(destination).put(dummy);
 
         boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
@@ -85,7 +86,7 @@ class BishopTest {
     void moveToDestinationWhenEnemyExistsOnDestination() {
         Coordinate destination = Coordinate.from("b3");
         Piece dummy = new Rook(TeamType.WHITE);
-        board.put(dummy, destination);
+        cells.get(destination).put(dummy);
 
         boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
 
