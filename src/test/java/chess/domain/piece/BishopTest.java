@@ -12,7 +12,7 @@ import org.junit.jupiter.api.Test;
 class BishopTest {
 
     // todo : 여기 테스트들은 path에 있어도 될 것 같고?
-    @DisplayName("흰비숍-e4 흰피스-없음 검은피스-없음")
+    @DisplayName("이동가능한 전체 위치를 구한다. 상황 : 흰비숍-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
         Position current = Position.ofName("e4");
@@ -22,7 +22,7 @@ class BishopTest {
     }
 
     // todo : 상대방 말이 있는 position에 갈 수 있게 만들면 통과함. (문제 없음)
-    @DisplayName("흰비숍-e4 흰피스-c2,g2 검은피스-b7,h7")
+    @DisplayName("장애물을 고려하여 위치를 구한다. 상황 : 흰비숍-e4 흰피스-c2,g2 검은피스-b7,h7")
     @Test
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
