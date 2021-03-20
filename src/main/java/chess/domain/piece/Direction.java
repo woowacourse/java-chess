@@ -31,13 +31,7 @@ public enum Direction {
     }
 
     private static int distinctDirection(int weight) {
-        if (weight > 0) {
-            return 1;
-        }
-        if (weight < 0) {
-            return -1;
-        }
-        return 0;
+        return Integer.compare(weight, 0);
     }
 
     public int getX() {
