@@ -1,17 +1,21 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
+import chess.domain.piece.Piece;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
 
 public class InitBoardGenerator {
 
-    private InitBoardGenerator(){}
+    private InitBoardGenerator() {
+    }
 
-    public static List<Map<Position, Piece>> initLines(){
+    public static List<Map<Position, Piece>> initLines() {
         List<Map<Position, Piece>> lines = new ArrayList<>();
         for (Ypoint ypoint : Ypoint.values()) {
             lines.add(initLine(ypoint));

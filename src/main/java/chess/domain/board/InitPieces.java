@@ -1,30 +1,26 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
 import chess.domain.board.position.Xpoint;
 import chess.domain.board.position.Ypoint;
-import chess.domain.piece.team.Black;
-import chess.domain.piece.team.Symbol;
-import chess.domain.piece.team.Neutral;
-import chess.domain.piece.team.White;
+import chess.domain.piece.*;
 
 import java.util.Arrays;
 import java.util.List;
 
 public enum InitPieces {
-    BLACK_ROOK(Xpoint.getRookPoints(), Ypoint.getBlackPoint(), new Rook(new Black(Symbol.ROOK))),
-    WHITE_ROOK(Xpoint.getRookPoints(), Ypoint.getWhitePoint(), new Rook(new White(Symbol.ROOK))),
-    BLACK_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getBlackPoint(), new Knight(new Black(Symbol.KNIGHT))),
-    WHITE_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getWhitePoint(), new Knight(new White(Symbol.KNIGHT))),
-    BLACK_BISHOP(Xpoint.getBishopPoints(), Ypoint.getBlackPoint(), new Bishop(new Black(Symbol.BISHOP))),
-    WHITE_BISHOP(Xpoint.getBishopPoints(), Ypoint.getWhitePoint(), new Bishop(new White(Symbol.BISHOP))),
-    BLACK_QUEEN(Xpoint.getQueenPoint(), Ypoint.getBlackPoint(), new Queen(new Black(Symbol.QUEEN))),
-    WHITE_QUEEN(Xpoint.getQueenPoint(), Ypoint.getWhitePoint(), new Queen(new White(Symbol.QUEEN))),
-    BLACK_KING(Xpoint.getKingPoint(), Ypoint.getBlackPoint(), new King(new Black(Symbol.KING))),
-    WHITE_KING(Xpoint.getKingPoint(), Ypoint.getWhitePoint(), new King(new White(Symbol.KING))),
-    BLACK_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getBlackPawnPoint(), new Pawn(new Black(Symbol.PAWN))),
-    WHITE_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getWhitePawnPoint(), new Pawn(new White(Symbol.PAWN))),
-    EMPTY_PIECE(Xpoint.getPawnOrEmptyPoints(), Ypoint.getEmptyPoints(), new Empty(new Neutral(Symbol.EMPTY)));
+    BLACK_ROOK(Xpoint.getRookPoints(), Ypoint.getBlackPoint(), Rook.createBlack()),
+    WHITE_ROOK(Xpoint.getRookPoints(), Ypoint.getWhitePoint(), Rook.createWhite()),
+    BLACK_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getBlackPoint(), Knight.createBlack()),
+    WHITE_KNIGHT(Xpoint.getKnightPoints(), Ypoint.getWhitePoint(), Knight.createWhite()),
+    BLACK_BISHOP(Xpoint.getBishopPoints(), Ypoint.getBlackPoint(), Bishop.createBlack()),
+    WHITE_BISHOP(Xpoint.getBishopPoints(), Ypoint.getWhitePoint(), Bishop.createWhite()),
+    BLACK_QUEEN(Xpoint.getQueenPoint(), Ypoint.getBlackPoint(), Queen.createBlack()),
+    WHITE_QUEEN(Xpoint.getQueenPoint(), Ypoint.getWhitePoint(), Queen.createWhite()),
+    BLACK_KING(Xpoint.getKingPoint(), Ypoint.getBlackPoint(), King.createBlack()),
+    WHITE_KING(Xpoint.getKingPoint(), Ypoint.getWhitePoint(), King.createWhite()),
+    BLACK_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getBlackPawnPoint(), Pawn.createBlack()),
+    WHITE_PAWN(Xpoint.getPawnOrEmptyPoints(), Ypoint.getWhitePawnPoint(), Pawn.createWhite()),
+    EMPTY_PIECE(Xpoint.getPawnOrEmptyPoints(), Ypoint.getEmptyPoints(), Empty.create());
 
     private final List<Xpoint> xpoints;
     private final List<Ypoint> ypoints;
@@ -36,12 +32,11 @@ public enum InitPieces {
         this.piece = piece;
     }
 
-    public static Piece findPiece(Xpoint xpoint, Ypoint ypoint){
+    public static Piece findPiece(Xpoint xpoint, Ypoint ypoint) {
         return Arrays.stream(values())
                 .filter(p -> p.containsXY(xpoint, ypoint))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new)
-                .piece;
+                .orElseThrow(IllegalAccessError::new).piece;
     }
 
     private boolean containsXY(Xpoint xpoint, Ypoint ypoint) {
