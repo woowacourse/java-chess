@@ -31,26 +31,26 @@ public class ChessBoard {
     private void initBlack() {
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Square(new Position("a8"), new Rook(Color.BLACK)),
-                new Square(new Position("b8"), new Knight(Color.BLACK)),
-                new Square(new Position("c8"), new Bishop(Color.BLACK)),
-                new Square(new Position("d8"), new Queen(Color.BLACK)),
-                new Square(new Position("e8"), new King(Color.BLACK)),
-                new Square(new Position("f8"), new Bishop(Color.BLACK)),
-                new Square(new Position("g8"), new Knight(Color.BLACK)),
-                new Square(new Position("h8"), new Rook(Color.BLACK))
+                new Square(Position.of("a8"), new Rook(Color.BLACK)),
+                new Square(Position.of("b8"), new Knight(Color.BLACK)),
+                new Square(Position.of("c8"), new Bishop(Color.BLACK)),
+                new Square(Position.of("d8"), new Queen(Color.BLACK)),
+                new Square(Position.of("e8"), new King(Color.BLACK)),
+                new Square(Position.of("f8"), new Bishop(Color.BLACK)),
+                new Square(Position.of("g8"), new Knight(Color.BLACK)),
+                new Square(Position.of("h8"), new Rook(Color.BLACK))
             ))
         );
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Square(new Position("a7"), new Pawn(Color.BLACK)),
-                new Square(new Position("b7"), new Pawn(Color.BLACK)),
-                new Square(new Position("c7"), new Pawn(Color.BLACK)),
-                new Square(new Position("d7"), new Pawn(Color.BLACK)),
-                new Square(new Position("e7"), new Pawn(Color.BLACK)),
-                new Square(new Position("f7"), new Pawn(Color.BLACK)),
-                new Square(new Position("g7"), new Pawn(Color.BLACK)),
-                new Square(new Position("h7"), new Pawn(Color.BLACK))
+                new Square(Position.of("a7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("b7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("c7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("d7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("e7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("f7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("g7"), new Pawn(Color.BLACK)),
+                new Square(Position.of("h7"), new Pawn(Color.BLACK))
             ))
         );
     }
@@ -58,26 +58,26 @@ public class ChessBoard {
     private void initWhite() {
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Square(new Position("a2"), new Pawn(Color.WHITE)),
-                new Square(new Position("b2"), new Pawn(Color.WHITE)),
-                new Square(new Position("c2"), new Pawn(Color.WHITE)),
-                new Square(new Position("d2"), new Pawn(Color.WHITE)),
-                new Square(new Position("e2"), new Pawn(Color.WHITE)),
-                new Square(new Position("f2"), new Pawn(Color.WHITE)),
-                new Square(new Position("g2"), new Pawn(Color.WHITE)),
-                new Square(new Position("h2"), new Pawn(Color.WHITE))
+                new Square(Position.of("a2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("b2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("c2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("d2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("e2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("f2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("g2"), new Pawn(Color.WHITE)),
+                new Square(Position.of("h2"), new Pawn(Color.WHITE))
             ))
         );
         chessBoard.add(
             new ArrayList<>(Arrays.asList(
-                new Square(new Position("a1"), new Rook(Color.WHITE)),
-                new Square(new Position("b1"), new Knight(Color.WHITE)),
-                new Square(new Position("c1"), new Bishop(Color.WHITE)),
-                new Square(new Position("d1"), new Queen(Color.WHITE)),
-                new Square(new Position("e1"), new King(Color.WHITE)),
-                new Square(new Position("f1"), new Bishop(Color.WHITE)),
-                new Square(new Position("g1"), new Knight(Color.WHITE)),
-                new Square(new Position("h1"), new Rook(Color.WHITE))
+                new Square(Position.of("a1"), new Rook(Color.WHITE)),
+                new Square(Position.of("b1"), new Knight(Color.WHITE)),
+                new Square(Position.of("c1"), new Bishop(Color.WHITE)),
+                new Square(Position.of("d1"), new Queen(Color.WHITE)),
+                new Square(Position.of("e1"), new King(Color.WHITE)),
+                new Square(Position.of("f1"), new Bishop(Color.WHITE)),
+                new Square(Position.of("g1"), new Knight(Color.WHITE)),
+                new Square(Position.of("h1"), new Rook(Color.WHITE))
             ))
         );
 
@@ -87,14 +87,14 @@ public class ChessBoard {
         for (int i = 2; i < 6; i++) {
             chessBoard.add(
                 new ArrayList<>(Arrays.asList(
-                    new Square(new Position(i, 0), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 1), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 2), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 3), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 4), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 5), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 6), new Blank(Color.NO_COLOR)),
-                    new Square(new Position(i, 7), new Blank(Color.NO_COLOR))
+                    new Square(Position.of(i, 0), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 1), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 2), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 3), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 4), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 5), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 6), new Blank(Color.NO_COLOR)),
+                    new Square(Position.of(i, 7), new Blank(Color.NO_COLOR))
                 ))
             );
         }
@@ -105,8 +105,8 @@ public class ChessBoard {
     }
 
     public void move(String source, String target) {
-        Square sourceSquare = getSquare(new Position(source));
-        Square targetSquare = getSquare(new Position(target));
+        Square sourceSquare = getSquare(Position.of(source));
+        Square targetSquare = getSquare(Position.of(target));
         sourceSquare.move(this, targetSquare);
     }
 

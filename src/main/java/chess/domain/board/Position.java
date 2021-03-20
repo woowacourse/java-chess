@@ -1,23 +1,51 @@
 package chess.domain.board;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Position {
+    private static final Map<String, Position> cache = new HashMap<>();
+
+    static {
+        for (final Row row : Row.values()) {
+            for (final Column column : Column.values()) {
+                final String key = generateKey(row, column);
+                final Position position = new Position(row, column);
+                cache.put(key, position);
+            }
+        }
+    }
 
     private final Row row;
     private final Column column;
 
-    public Position(Row row, Column col) {
+    private Position(Row row, Column col) {
         this.row = row;
         this.column = col;
     }
 
-    public Position(String input) {
-        this(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
+    public static Position of(Row row, Column column) {
+        String key = generateKey(row, column);
+        return Optional.ofNullable(cache.get(key))
+            .orElseThrow(IllegalArgumentException::new);
     }
 
-    public Position(int row, int column) {
-        this(Row.findRowByIndex(row), Column.findColumnByIndex(column));
+    public static Position of(int row, int column) {
+        String key = generateKey(Row.findRowByIndex(row), Column.findColumnByIndex(column));
+        return Optional.ofNullable(cache.get(key))
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public static Position of(String input) {
+        String key = generateKey(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
+        return Optional.ofNullable(cache.get(key))
+            .orElseThrow(IllegalArgumentException::new);
+    }
+
+    private static String generateKey(Row row, Column column) {
+        return row.name() + column.name();
     }
 
     public Column getColumn() {
@@ -33,7 +61,7 @@ public class Position {
     }
 
     public Position nextPosition(int xDegree, int yDegree) {
-        return new Position(this.row.getIndex() + yDegree, this.column.getIndex() + xDegree);
+        return Position.of(this.row.getIndex() + yDegree, this.column.getIndex() + xDegree);
     }
 
     @Override

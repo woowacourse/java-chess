@@ -15,18 +15,24 @@ public class Path {
             int xDegree = direction.getXDegree();
             int yDegree = direction.getYDegree();
 
-            if (square.isIterable()) {
-                movableSquares.addAll(iterableSquare(chessBoard, square, xDegree, yDegree));
-            }
-            if (!square.isIterable() && !square.isPawn()) {
-                movableSquares.addAll(nonIterableSquare(chessBoard, square, xDegree, yDegree));
-            }
-            if (!square.isIterable() && square.isPawn()) {
-                movableSquares.addAll(pawnMovableSquare(chessBoard, square, xDegree, yDegree));
-            }
+            movableSquares.addAll(moveByType(chessBoard, square, xDegree, yDegree));
         }
         return movableSquares;
 
+    }
+
+    private static List<Square> moveByType(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {
+        List<Square> movableSquares = new ArrayList<>();
+        if (square.isIterable()) {
+            movableSquares.addAll(iterableSquare(chessBoard, square, xDegree, yDegree));
+        }
+        if (!square.isIterable() && !square.isPawn()) {
+            movableSquares.addAll(nonIterableSquare(chessBoard, square, xDegree, yDegree));
+        }
+        if (!square.isIterable() && square.isPawn()) {
+            movableSquares.addAll(pawnMovableSquare(chessBoard, square, xDegree, yDegree));
+        }
+        return Collections.unmodifiableList(movableSquares);
     }
 
     private static List<Square> iterableSquare(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {

@@ -23,7 +23,7 @@ public class ChessGame {
     public void run(List<String> input) {
         String source = input.get(1);
         String target = input.get(2);
-        Square sourceSquare = chessBoard.getSquare(new Position(source));
+        Square sourceSquare = chessBoard.getSquare(Position.of(source));
 
         validateTurn(sourceSquare);
 
