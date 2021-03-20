@@ -39,13 +39,13 @@ class PositionTest {
     @MethodSource("getRouteVerticalTestcase")
     void getRouteVertical(Position from, Position to) {
         assertThat(Position.route(from, to))
-                .contains(Position.of("c1"), Position.of("b1"));
+                .contains(Position.from("c1"), Position.from("b1"));
     }
 
     private static Stream<Arguments> getRouteVerticalTestcase() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Position.of("d1")),
-                Arguments.of(Position.of("d1"), Position.of("a1"))
+                Arguments.of(Position.from("a1"), Position.from("d1")),
+                Arguments.of(Position.from("d1"), Position.from("a1"))
 
         );
     }
@@ -54,13 +54,13 @@ class PositionTest {
     @MethodSource("getRouteHorizontalTestcase")
     void getRouteHorizontal(Position from, Position to) {
         assertThat(Position.route(from, to))
-                .contains(Position.of("b2"), Position.of("b3"));
+                .contains(Position.from("b2"), Position.from("b3"));
     }
 
     private static Stream<Arguments> getRouteHorizontalTestcase() {
         return Stream.of(
-                Arguments.of(Position.of("b1"), Position.of("b4")),
-                Arguments.of(Position.of("b4"), Position.of("b1"))
+                Arguments.of(Position.from("b1"), Position.from("b4")),
+                Arguments.of(Position.from("b4"), Position.from("b1"))
         );
     }
 
@@ -68,13 +68,13 @@ class PositionTest {
     @MethodSource("getRoutePositiveInclineTestcase")
     void getRoutePositiveIncline(Position from, Position to) {
         assertThat(Position.route(from, to))
-                .contains(Position.of("c3"), Position.of("d4"));
+                .contains(Position.from("c3"), Position.from("d4"));
     }
 
     private static Stream<Arguments> getRoutePositiveInclineTestcase() {
         return Stream.of(
-                Arguments.of(Position.of("b2"), Position.of("e5")),
-                Arguments.of(Position.of("e5"), Position.of("b2"))
+                Arguments.of(Position.from("b2"), Position.from("e5")),
+                Arguments.of(Position.from("e5"), Position.from("b2"))
         );
     }
 
@@ -82,13 +82,13 @@ class PositionTest {
     @MethodSource("getRouteNegativeInclineTestcase")
     void getRouteNegativeIncline(Position from, Position to) {
         assertThat(Position.route(from, to))
-                .contains(Position.of("c4"), Position.of("d3"));
+                .contains(Position.from("c4"), Position.from("d3"));
     }
 
     private static Stream<Arguments> getRouteNegativeInclineTestcase() {
         return Stream.of(
-                Arguments.of(Position.of("b5"), Position.of("e2")),
-                Arguments.of(Position.of("e2"), Position.of("b5"))
+                Arguments.of(Position.from("b5"), Position.from("e2")),
+                Arguments.of(Position.from("e2"), Position.from("b5"))
         );
     }
 }
