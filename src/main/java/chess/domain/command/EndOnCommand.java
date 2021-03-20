@@ -2,16 +2,12 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class EndOnCommand extends PozCommand {
+public class EndOnCommand implements Command {
     private static final String COMMAND_NAME = "end";
 
-    public EndOnCommand(ChessGame chessGame) {
-        super(chessGame);
-    }
-
     @Override
-    public String run(String input) {
-        getChessGame().end();
+    public String run(String input, ChessGame chessGame) {
+        chessGame.end();
         return null;
     }
 

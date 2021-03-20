@@ -3,20 +3,16 @@ package chess.domain.command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Team;
 
-public class StatusOnCommand extends PozCommand {
+public class StatusOnCommand implements Command {
     private static final String COMMAND_NAME = "status";
     private static final String COMMAND_MESSAGE = "BLACK 팀의 점수 : %f, WHITE 팀의 점수 : %f %s";
     private static final String BLACK_WIN = "BLACK 팀이 유리한 상황입니다.";
     private static final String WHITE_WIN = "WHITE 팀이 유리한 상황입니다.";
     private static final String DRAW = "동등한 상황입니다.";
 
-    public StatusOnCommand(ChessGame chessGame) {
-        super(chessGame);
-    }
-
     @Override
-    public String run(String input) {
-        return compositeFormat(getChessGame().status(Team.BLACK), getChessGame().status(Team.WHITE));
+    public String run(String input, ChessGame chessGame) {
+        return compositeFormat(chessGame.status(Team.BLACK), chessGame.status(Team.WHITE));
     }
 
     private String compositeFormat(double blackScore, double whiteScore) {

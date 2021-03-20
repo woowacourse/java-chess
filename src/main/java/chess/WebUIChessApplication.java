@@ -12,16 +12,7 @@ public class WebUIChessApplication {
 //            Map<String, Object> model = new HashMap<>();
 //            return render(model, "index.html");
 //        });
-        ChessGame chessGame = new ChessGame();
-        Commands commands = new Commands(
-                Arrays.asList(
-                        new EndOnCommand(chessGame),
-                        new StartOnCommand(chessGame),
-                        new MoveOnCommand(chessGame),
-                        new StatusOnCommand(chessGame)
-                )
-        );
-        new ChessController().run(chessGame, commands);
+        new ChessController().run();
     }
 //
 //    private static String render(Map<String, Object> model, String templatePath) {
