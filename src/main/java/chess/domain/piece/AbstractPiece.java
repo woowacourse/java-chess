@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
 
@@ -45,9 +44,6 @@ public abstract class AbstractPiece implements Piece {
         for (int distance = 1; distance < 7; distance++) {
             int dx = direction.getXDegree() * distance;
             int dy = direction.getYDegree() * distance;
-            if (!this.position.isAdd(dx, dy)) {
-                return;
-            }
             Position movePosition = this.position.add(dx, dy);
             if (movePosition.equals(position)) {
                 return;
@@ -56,22 +52,5 @@ public abstract class AbstractPiece implements Piece {
                 throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
             }
         }
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        AbstractPiece that = (AbstractPiece) o;
-        return color == that.color && Objects.equals(position, that.position);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(color, position);
     }
 }
