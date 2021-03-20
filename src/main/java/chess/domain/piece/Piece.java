@@ -47,11 +47,7 @@ public abstract class Piece {
     }
 
     protected boolean isCorrectDirection(Direction moveCommandDirection) {
-        List<Direction> directions = getDirections();
-        if (!directions.contains(moveCommandDirection)) {
-            return true;
-        }
-        return false;
+        return directions.contains(moveCommandDirection);
     }
 
     public boolean isPawn() {
