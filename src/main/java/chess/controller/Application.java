@@ -13,44 +13,56 @@ public class Application {
     public static TeamType teamType = TeamType.WHITE;
 
     public static void main(String[] args) {
-        InputView.printGameStartMessage();
-        List<String> playerCommand = InputView.inputPlayerCommand();
-        Command command = Command.findCommand(playerCommand.get(0));
-
-        Board board = Board.getInstance();
-        board.initialize();
-        if (command != Command.START && command != Command.END) {
-            throw new IllegalArgumentException();
-        }
+        Command command = getFirstCommand();
         if (command == Command.START) {
-            startChessGame(board);
+            run();
         }
     }
 
-    private static void startChessGame(Board board) {
-        OutputView.printBoard(board);
+    private static Command getFirstCommand() {
+        InputView.printGameStartMessage();
+        List<String> playerCommand = InputView.inputPlayerCommand();
+        return Command.findCommand(playerCommand.get(0));
+    }
 
+    private static void run() {
+        Board board = initializeBoard();
+        OutputView.printBoard(board);
+        startChessGame(board);
+        OutputView.printWinner(board.winner());
+    }
+
+    private static void startChessGame(Board board) {
         Command command = Command.START;
         while (command != Command.END && !board.isKingCheckmate()) {
             List<String> playerCommand = InputView.inputPlayerCommand();
             command = Command.findCommand(playerCommand.get(0));
-            executeCommand(command, board, playerCommand);
+            startChessGame(command, board, playerCommand);
             OutputView.printBoard(board);
         }
-        OutputView.printWinner(board.winner());
     }
 
-    private static void executeCommand(Command command, Board board, List<String> playerCommand) {
+    private static Board initializeBoard() {
+        Board board = Board.getInstance();
+        board.initialize();
+        return board;
+    }
+
+    private static void startChessGame(Command command, Board board, List<String> playerCommand) {
         if (command == Command.MOVE) {
-            Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
-            Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
-            board.move(currentCoordinate, targetCoordinate, teamType);
-            teamType = teamType.nextTurn();
+            move(board, playerCommand);
             return;
         }
         if (command == Command.STATUS) {
             Result result = board.calculateScores();
             OutputView.printScoreResult(result);
         }
+    }
+
+    private static void move(Board board, List<String> playerCommand) {
+        Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
+        Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
+        board.move(currentCoordinate, targetCoordinate, teamType);
+        teamType = teamType.nextTurn();
     }
 }
