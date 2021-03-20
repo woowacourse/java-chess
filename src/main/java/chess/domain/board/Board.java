@@ -3,9 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
@@ -37,11 +35,8 @@ public class Board {
         }
     }
 
-    private boolean checkPath(Position source, Position target) {
-        List<Position> paths = new ArrayList<>();
-        if (source.hasMiddlePath(target)) {
-            paths = updatePosition(source, target);
-        }
+    private boolean checkPath(final Position source, final Position target) {
+        final List<Position> paths = pathPositions(source, target);
         if (paths.isEmpty()) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
         }
@@ -51,16 +46,11 @@ public class Board {
         return false;
     }
 
-    private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
-        if (chessBoard.get(source) instanceof Pawn) {
-            return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+    private List<Position> pathPositions(final Position source, final Position target) {
+        if (source.hasMiddlePath(target)) {
+            return updatePosition(source, target);
         }
-        return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
-    }
-
-    private boolean hasNoPiecesInPath(final List<Position> paths) {
-        return paths.stream()
-                .allMatch(path -> chessBoard.get(path) instanceof Blank);
+        return new ArrayList<>();
     }
 
     private List<Position> updatePosition(final Position source, final Position target) {
@@ -72,6 +62,18 @@ public class Board {
             nextPosition = nextPosition.next(direction);
         }
         return paths;
+    }
+
+    private boolean hasNoPiecesInPath(final List<Position> paths) {
+        return paths.stream()
+                .allMatch(path -> chessBoard.get(path) instanceof Blank);
+    }
+
+    private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
+        if (chessBoard.get(source) instanceof Pawn) {
+            return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+        }
+        return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
     }
 
     public boolean isKingDead() {
