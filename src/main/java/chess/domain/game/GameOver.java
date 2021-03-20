@@ -1,5 +1,7 @@
 package chess.domain.game;
 
+import java.util.Objects;
+
 public class GameOver {
 
     private boolean gameOver;
@@ -19,4 +21,5 @@ public class GameOver {
     public void changeGameOver() {
         gameOver = !gameOver;
     }
+
 }
