@@ -30,7 +30,7 @@ public class ChessController {
         if (chessGame.isReady() || chessGame.isEnd()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
-        chessGame.move2(command);
+        chessGame.move(command);
         OutputView.printBoard(chessGame.board(), chessGame.turn());
         confirmKingDead(chessGame);
     }

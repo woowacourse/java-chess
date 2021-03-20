@@ -29,6 +29,6 @@ public class Strategy {
 
     public boolean canMove() {
         moveRange -= 1;
-        return moveRange > 0;
+        return moveRange >= 0;
     }
 }
