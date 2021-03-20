@@ -27,14 +27,15 @@ public class ChessController {
             menu = Menu.of(userInput);
 
             if(menu.isMove()){
-                chessManager.readCommand(MoveCommand.of(userInput));
+                chessManager.move(MoveCommand.of(userInput));
                 OutputView.printBoard(chessManager.getBoard());
             }
 
             if(menu.isStatus()){
-                chessManager.calculateStatus();
                 OutputView.printStatus(chessManager.calculateStatus());
             }
         } while (!chessManager.isEnd() && !menu.isEnd());
+
+        OutputView.printGameResult(chessManager.calculateStatus());
     }
 }

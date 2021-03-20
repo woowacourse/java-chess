@@ -13,6 +13,7 @@ import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> board;
+    private boolean isEnd = false;
 
     public Board(Map<Position, Piece> board) {
         this.board = board;
@@ -30,12 +31,22 @@ public class Board {
         return board;
     }
 
-    public void move(Position source, Position target) {
-        List<Position> ablePositions = ableToMove(source);
-        if (!ablePositions.contains(target)) {
+    public void move(Position source, Position target, Owner owner) {
+        if (!of(source).isOwner(owner)) {
             throw new IllegalArgumentException();
         }
+
+        if (!ableToMove(source).contains(target)) {
+            throw new IllegalArgumentException();
+        }
+        checkGameEnd(target);
         movePiece(source, target);
+    }
+
+    private void checkGameEnd(Position target){
+        if(of(target).isKing()){
+            isEnd = true;
+        }
     }
 
     private void movePiece(Position source, Position target) {
@@ -57,14 +68,26 @@ public class Board {
 
     private Score calculateScore(Owner owner){
         Score score = new Score(0);
+        boolean existKing = false;
 
         for(Vertical v : Vertical.values()){
             for(Horizontal h : Horizontal.values()){
                 Piece piece = of(v,h);
-                if(piece.isOwner(owner)){
-                    score = score.plus(piece.score());
+
+                if(!piece.isOwner(owner) ){
+                    continue;
                 }
+
+                if(piece.isKing()){
+                    existKing = true;
+                }
+
+                score = score.plus(piece.score());
             }
+        }
+
+        if(existKing == false){
+            return new Score(0);
         }
 
         return score.calculatePawnPenaltyScore(getPawnCountInLine(owner));
@@ -119,7 +142,6 @@ public class Board {
     }
 
     public boolean isEnd() {
-        // TODO
-        return false;
+        return isEnd;
     }
 }

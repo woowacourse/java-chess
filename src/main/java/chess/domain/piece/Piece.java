@@ -2,6 +2,7 @@ package chess.domain.piece;
 import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
 
+import java.util.Collections;
 import java.util.List;
 
 public abstract class Piece {
@@ -36,32 +37,24 @@ public abstract class Piece {
     public abstract String getSymbol();
 
     public final boolean isEnemy(Piece other){
-        if(owner.equals(Owner.BLACK)){
-            return other.owner == Owner.WHITE;
-        }
-
-        if(owner.equals(Owner.WHITE)){
-            return other.owner == Owner.BLACK;
-        }
-
-        throw new IllegalArgumentException();
+        return this.owner.isEnemy(other.owner);
     }
 
     public final boolean isSameTeam(Piece other){
-        return owner.equals(other.owner);
+        return this.owner.isSameTeam(other.owner);
     }
 
     public List<Direction> getDirections(){
-        return directions;
+        return Collections.unmodifiableList(directions);
     };
 
     public boolean isOwner(Owner owner) {
-        return this.owner.equals(owner);
+        return this.owner.isSameTeam(owner);
     }
 
     public abstract int getMaxDistance();
 
-    public Owner getOwner(){
-        return this.owner;
+    public boolean isKing() {
+        return this instanceof King;
     }
 }

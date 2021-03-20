@@ -3,9 +3,11 @@ package chess.manager;
 import chess.domain.command.MoveCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.piece.Owner;
 
 public class ChessManager {
     private final Board board;
+    private Owner turn = Owner.BLACK;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
@@ -15,8 +17,9 @@ public class ChessManager {
         return board;
     }
 
-    public void readCommand(MoveCommand moveCommand) {
-        board.move(moveCommand.source(), moveCommand.target());
+    public void move(MoveCommand moveCommand) {
+        board.move(moveCommand.source(), moveCommand.target(), turn);
+        turn = turn.reverse();
     }
 
     public Status calculateStatus(){
