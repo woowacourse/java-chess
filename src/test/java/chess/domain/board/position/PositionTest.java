@@ -94,4 +94,48 @@ public class PositionTest {
         assertThat(Position.valueOf("c1").rightDown()).isEqualTo(Position.valueOf("c1"));
         assertThat(Position.valueOf("h1").rightDown()).isEqualTo(Position.valueOf("h1"));
     }
+
+    @Test
+    @DisplayName("12시 방향 벡터 테스트")
+    void upVectorTest() {
+        assertThat(Position.valueOf("c8").upVector()).containsExactly();
+        assertThat(Position.valueOf("c1").upVector()).containsExactly(
+                Position.valueOf("c2"), Position.valueOf("c3"),
+                Position.valueOf("c4"), Position.valueOf("c5"),
+                Position.valueOf("c6"), Position.valueOf("c7"),
+                Position.valueOf("c8"));
+    }
+
+    @Test
+    @DisplayName("6시 방향 벡터 테스트")
+    void downVectorTest() {
+        assertThat(Position.valueOf("c1").downVector()).containsExactly();
+        assertThat(Position.valueOf("c8").downVector()).containsExactly(
+                Position.valueOf("c7"), Position.valueOf("c6"),
+                Position.valueOf("c5"), Position.valueOf("c4"),
+                Position.valueOf("c3"), Position.valueOf("c2"),
+                Position.valueOf("c1"));
+    }
+
+    @Test
+    @DisplayName("9시 방향 벡터 테스트")
+    void leftVectorTest() {
+        assertThat(Position.valueOf("a5").leftVector()).containsExactly();
+        assertThat(Position.valueOf("h5").leftVector()).containsExactly(
+                Position.valueOf("g5"), Position.valueOf("f5"),
+                Position.valueOf("e5"), Position.valueOf("d5"),
+                Position.valueOf("c5"), Position.valueOf("b5"),
+                Position.valueOf("a5"));
+    }
+
+    @Test
+    @DisplayName("3시 방향 벡터 테스트")
+    void rightVectorTest() {
+        assertThat(Position.valueOf("h5").rightVector()).containsExactly();
+        assertThat(Position.valueOf("a5").rightVector()).containsExactly(
+                Position.valueOf("b5"), Position.valueOf("c5"),
+                Position.valueOf("d5"), Position.valueOf("e5"),
+                Position.valueOf("f5"), Position.valueOf("g5"),
+                Position.valueOf("h5"));
+    }
 }

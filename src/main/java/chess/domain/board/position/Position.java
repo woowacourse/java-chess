@@ -40,8 +40,16 @@ public class Position {
         return valueOf(xpoint, ypoint.up());
     }
 
+    public Position doubleUp() {
+        return up().up();
+    }
+
     public Position down() {
         return valueOf(xpoint, ypoint.down());
+    }
+
+    public Position doubleDown() {
+        return down().down();
     }
 
     public Position left() {
@@ -88,11 +96,51 @@ public class Position {
         return movedPosition.isSameX(this.xpoint) || movedPosition.isSameY(this.ypoint);
     }
 
-    private boolean isSameX(Xpoint xpoint) {
+    public boolean isSameX(Xpoint xpoint) {
         return this.xpoint.equals(xpoint);
     }
 
-    private boolean isSameY(Ypoint ypoint) {
+    public boolean isSameY(Ypoint ypoint) {
         return this.ypoint.equals(ypoint);
+    }
+
+    public List<Position> upVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.up()) {
+            position = position.up();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> downVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.down()) {
+            position = position.down();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> leftVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.left()) {
+            position = position.left();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> rightVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.right()) {
+            position = position.right();
+            vector.add(position);
+        }
+        return vector;
     }
 }

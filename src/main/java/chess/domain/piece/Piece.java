@@ -1,18 +1,33 @@
 package chess.domain.piece;
 
-import chess.domain.piece.team.Team;
+import chess.domain.piece.team.Color;
+import chess.domain.piece.team.Symbol;
 
 import java.util.Objects;
 
 public abstract class Piece {
-    protected final Team team;
+    private final Color color;
+    private final Symbol symbol;
 
-    protected Piece(Team team) {
-        this.team = team;
+    public Piece(Color color, Symbol symbol) {
+        this.color = color;
+        this.symbol = symbol;
+
     }
 
     public String getSymbol() {
-        return team.getSymbol();
+        if (color.equals(Color.BLACK)) {
+            return symbol.getBlack();
+        }
+        return symbol.getWhite();
+    }
+
+    public boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
+
+    public boolean isWhite() {
+        return color.equals(Color.WHITE);
     }
 
     @Override
@@ -20,11 +35,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return Objects.equals(team, piece.team);
+        return color == piece.color && symbol == piece.symbol;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(team);
+        return Objects.hash(color, symbol);
     }
 }
