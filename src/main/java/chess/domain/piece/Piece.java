@@ -6,12 +6,12 @@ import chess.domain.position.Position;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private static final int DECIMAL = 10;
-
-    private Position position;
     private final Color color;
+    private Position position;
 
     public Piece(final Color color, final char x, final int y) {
         this(color, x, Character.forDigit(y, DECIMAL));
@@ -111,4 +111,17 @@ public abstract class Piece {
     public abstract char name();
 
     public abstract double score();
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Piece piece = (Piece) o;
+        return Objects.equals(position, piece.position) && color == piece.color;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(position, color);
+    }
 }
