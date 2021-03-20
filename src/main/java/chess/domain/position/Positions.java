@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 
 public class Positions {
 
+    // todo : 현재 이 클래스는 안 쓰고 있음 (모두 private 처리 해둠)
 
     private Positions() {
     }
@@ -26,7 +27,7 @@ public class Positions {
 
     private static List<Position> positionsInRow(Row row){
         return Stream.of(Column.values())
-                .map(column -> Position.of(column,row))
+                .map(column -> Position.ofColumnAndRow(column,row))
                 .collect(Collectors.toList())
                 ;
     }

@@ -24,7 +24,6 @@ public abstract class Piece {
     public List<Path> findAllPath(Position currentPosition) {
         return directions().stream()
                 .map(direction -> findPathInDirection(direction, currentPosition))
-//                .flatMap(List::stream)
                 .collect(Collectors.toList())
                 ;
     }

@@ -2,11 +2,8 @@ package chess.domain.position;
 
 import chess.domain.piece.strategy.Direction;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Position {
 
@@ -19,14 +16,6 @@ public class Position {
         positionCache();
     }
 
-    private static void positionCache(){
-        for (Column column : Column.values()) {
-            for (Row row : Row.values()) {
-                POSITION_CACHE.put(column.getName() + row.getNumber(), new Position(column,row));
-            }
-        }
-    }
-
     private Position(Column column, Row row) {
         this.column = column;
         this.row = row;
@@ -36,13 +25,12 @@ public class Position {
         this(Column.getColumn(column), Row.getRow(row));
     }
 
-    public static Position of(String value) {
-//        return new Position(value.substring(0, 1), value.substring(1));
+    public static Position ofName(String value) {
         return POSITION_CACHE.get(value);
     }
 
-    public static Position of(Column column, Row row) {
-        return new Position(column, row);
+    public static Position ofColumnAndRow(Column column, Row row) {
+        return ofName(column.getName() + row.getNumber());
     }
 
     public boolean isWhitePawnStartLine() {
@@ -89,6 +77,22 @@ public class Position {
         return this.column.getName() + this.row.getNumber();
     }
 
+    private static void positionCache(){
+        columnCache();
+    }
+
+    private static void columnCache() {
+        for (Column column : Column.values()) {
+            rowCache(column);
+        }
+    }
+
+    private static void rowCache(Column column) {
+        for (Row row : Row.values()) {
+            POSITION_CACHE.put(column.getName() + row.getNumber(), new Position(column,row));
+        }
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -110,6 +114,6 @@ public class Position {
     public Position moveTo(Direction direction) {
         Column newColumn = column.move(direction);
         Row newRow = row.move(direction);
-        return Position.of(newColumn, newRow);
+        return Position.ofColumnAndRow(newColumn, newRow);
     }
 }

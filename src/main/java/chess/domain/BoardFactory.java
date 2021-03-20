@@ -37,15 +37,15 @@ public class BoardFactory {
 
     private static void initializePawnPieces(Map<Piece, Position> coordinates) {
         for (Column column : Column.values()) {
-            coordinates.put(new Pawn(PieceColor.WHITE), Position.of(column, WHITE_PAWN_ROW));
-            coordinates.put(new Pawn(PieceColor.BLACK), Position.of(column, BLACK_PAWN_ROW));
+            coordinates.put(new Pawn(PieceColor.WHITE), Position.ofColumnAndRow(column, WHITE_PAWN_ROW));
+            coordinates.put(new Pawn(PieceColor.BLACK), Position.ofColumnAndRow(column, BLACK_PAWN_ROW));
         }
     }
 
     private static void initializeSpecialPiecesByRow(Map<Piece, Position> coordinates, Row row, PieceColor color) {
         Map<Column, Piece> pieces = createSpecialPieces(color);
         for (Column column : Column.values()) {
-            coordinates.put(pieces.get(column), Position.of(column, row));
+            coordinates.put(pieces.get(column), Position.ofColumnAndRow(column, row));
         }
     }
 

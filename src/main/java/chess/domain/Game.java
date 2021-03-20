@@ -29,12 +29,12 @@ public class Game {
             isPlaying = false;
             return;
         }
-        Position source = Position.of(values.get(1));
+        Position source = Position.ofName(values.get(1));
         Piece chosenPiece = board.findPieceBy(source);
         if (!players.currentPlayer(currentColor).isOwnerOf(chosenPiece)) {
             throw new IllegalArgumentException("말을 움직일 수 없습니다.");
         }
-        Position target = Position.of(values.get(2));
+        Position target = Position.ofName(values.get(2));
         board.move3(chosenPiece, target);
         currentColor = currentColor.reversed();
     }
