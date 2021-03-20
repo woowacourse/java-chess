@@ -6,19 +6,23 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 
 public interface State {
-    Board board();
-
     State start();
 
     State move(Position from, Position to);
 
     State status();
 
-    boolean isGameSet();
+    State finished();
+
+    Board board();
+
+    Side side();
 
     Score score();
 
     Side winner();
 
-    Side side();
+    boolean isGameSet();
+
+    boolean isFinished();
 }

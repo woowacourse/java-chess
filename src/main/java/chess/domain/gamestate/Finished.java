@@ -6,14 +6,13 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
-public class GameSet extends GameState {
-
-    public GameSet(Board board, Side side) {
+public class Finished extends GameState {
+    public Finished(Board board, Side side) {
         super(board, side);
     }
 
     @Override
-    public GameState start() {
+    public State start() {
         throw new InvalidCommandException();
     }
 
@@ -23,32 +22,32 @@ public class GameSet extends GameState {
     }
 
     @Override
-    public GameState status() {
-        return this;
+    public State status() {
+        throw new InvalidCommandException();
     }
 
     @Override
     public State finished() {
-        return new Finished(board(), side());
+        throw new InvalidCommandException();
     }
 
     @Override
     public boolean isGameSet() {
-        return true;
+        throw new InvalidCommandException();
     }
 
     @Override
     public Score score() {
-        return Score.from(board());
+        throw new InvalidCommandException();
     }
 
     @Override
     public Side winner() {
-        return board().winner();
+        throw new InvalidCommandException();
     }
 
     @Override
     public boolean isFinished() {
-        return false;
+        return true;
     }
 }
