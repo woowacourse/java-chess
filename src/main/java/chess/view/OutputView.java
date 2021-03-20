@@ -4,7 +4,6 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Square;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import java.util.List;
 import java.util.Map;
 

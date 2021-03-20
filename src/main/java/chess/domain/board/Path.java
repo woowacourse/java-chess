@@ -8,7 +8,8 @@ public class Path {
 
     public static final int LINEAR_DIRECTION_DEGREE = 0;
 
-    private Path() {}
+    private Path() {
+    }
 
     public static List<Square> getMovableSquares(ChessBoard chessBoard, Square square) {
         List<Square> movableSquares = new ArrayList<>();
@@ -23,7 +24,8 @@ public class Path {
 
     }
 
-    private static List<Square> moveByType(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {
+    private static List<Square> moveByType(ChessBoard chessBoard, Square square, int xDegree,
+        int yDegree) {
         List<Square> movableSquares = new ArrayList<>();
         if (square.isIterable()) {
             movableSquares.addAll(iterableSquare(chessBoard, square, xDegree, yDegree));
@@ -37,7 +39,8 @@ public class Path {
         return Collections.unmodifiableList(movableSquares);
     }
 
-    private static List<Square> iterableSquare(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {
+    private static List<Square> iterableSquare(ChessBoard chessBoard, Square square, int xDegree,
+        int yDegree) {
         List<Square> movableSquares = new ArrayList<>();
         Square currentSquare = square;
         while (currentSquare.hasNextPossibleSquare(xDegree, yDegree)) {
@@ -55,7 +58,8 @@ public class Path {
         return Collections.unmodifiableList(movableSquares);
     }
 
-    private static List<Square> nonIterableSquare(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {
+    private static List<Square> nonIterableSquare(ChessBoard chessBoard, Square square, int xDegree,
+        int yDegree) {
         List<Square> movableSquares = new ArrayList<>();
         if (square.hasNextPossibleSquare(xDegree, yDegree)) {
             Square nextSquare = chessBoard
@@ -67,7 +71,8 @@ public class Path {
         return Collections.unmodifiableList(movableSquares);
     }
 
-    private static List<Square> pawnMovableSquare(ChessBoard chessBoard, Square square, int xDegree, int yDegree) {
+    private static List<Square> pawnMovableSquare(ChessBoard chessBoard, Square square, int xDegree,
+        int yDegree) {
         List<Square> movableSquares = new ArrayList<>();
         if (square.hasNextPossibleSquare(xDegree, yDegree)) {
             Square nextSquare = chessBoard
