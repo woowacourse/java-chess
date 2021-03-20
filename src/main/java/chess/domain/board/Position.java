@@ -83,21 +83,12 @@ public class Position {
             Rank.of(this.rank.getRank() + dir.getYDegree() * step));
     }
 
-    public int calculateDistance(Position source) {
-        return (int) Math.sqrt(
-            (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
-    }
-
     public double powAxisX(Position x) {
         return Math.pow(this.getX() - x.getX(), 2);
     }
 
     public double powAxisY(Position y) {
         return Math.pow(this.getY() - y.getY(), 2);
-    }
-
-    public boolean isDiagonal(Position position) {
-        return Math.abs(calculateFileGap(position)) == Math.abs(calculateRankGap(position));
     }
 
     public int calculateRankGap(Position position) {

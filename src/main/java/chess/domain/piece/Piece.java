@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.dto.Strategy;
+import chess.domain.board.Strategy;
 import chess.domain.board.Team;
 
 public interface Piece {

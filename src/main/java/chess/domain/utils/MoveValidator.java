@@ -2,8 +2,7 @@ package chess.domain.utils;
 
 import chess.domain.board.Position;
 import chess.domain.board.Board;
-import chess.domain.board.Direction;
-import chess.domain.dto.Strategy;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public class MoveValidator {
@@ -27,14 +26,8 @@ public class MoveValidator {
         }
     }
 
-//    public static void validateDirection(Direction currentDirection, Strategy strategy) {
-//        if (!strategy.containsDirection(currentDirection)) {
-//            throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
-//        }
-//    }
-
     public static void validateStraightMove(int distance) {
-        if (distance > 2) {
+        if (distance > Pawn.MOVE_FIRST_RANGE) {
             throw new IllegalArgumentException("[ERROR] 폰은 두 칸 이상 움직일 수 없습니다.");
         }
     }

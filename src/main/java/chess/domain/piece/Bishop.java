@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Direction;
-import chess.domain.dto.Strategy;
+import chess.domain.board.Strategy;
 import chess.domain.board.Team;
 
 public class Bishop extends AbstractPiece{

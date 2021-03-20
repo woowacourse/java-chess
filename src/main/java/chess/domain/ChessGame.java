@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.*;
-import chess.domain.dto.Strategy;
+import chess.domain.board.Strategy;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;
@@ -9,13 +9,9 @@ import chess.domain.state.State;
 import chess.domain.utils.MoveValidator;
 import chess.view.OutputView;
 
-import java.util.Arrays;
 import java.util.EnumMap;
-import java.util.List;
 
 public class ChessGame {
-    private static final int SOURCE_INDEX = 1;
-    private static final int TARGET_INDEX = 2;
 
     private Board board;
     private State state;
@@ -32,17 +28,9 @@ public class ChessGame {
         state = state.init();
     }
 
-    public Board board() {
-        return board;
-    }
-
-    public String turn() {
-        return turn.team();
-    }
-
     public void move(String command) {
         try {
-            Positions positions = new Positions(splitSourceAndTarget(command));
+            Positions positions = new Positions(command);
             Piece piece = board.pieceAt(positions.source());
             piece.confirmTurn(turn);
             board.confirmSameTeamPiece(positions.target(), turn);
@@ -55,7 +43,7 @@ public class ChessGame {
     private void moveBody(Positions positions, Piece piece) {
         final Direction direction = positions.computeDirection();
         final Strategy strategy = piece.strategy();
-        strategy.containsDirection1(direction);
+        strategy.moveTowards(direction);
         actionEachPiece(positions, piece, direction, strategy);
     }
 
@@ -121,32 +109,6 @@ public class ChessGame {
         }
     }
 
-    private void turnOver() {
-        turn = Team.turnOver(turn);
-    }
-
-    // TODO 객체로 감싸기
-    private List<Position> splitSourceAndTarget(String command) {
-        String[] commandParameters = command.split(" ");
-        String source = commandParameters[SOURCE_INDEX];
-        String target = commandParameters[TARGET_INDEX];
-
-        return Arrays
-            .asList(Position.of(convertFileToCoordinate(source), convertRankToCoordinate(source))
-                , Position.of(convertFileToCoordinate(target), convertRankToCoordinate(target)));
-    }
-
-    // TODO 다른 곳에서 할 수 있는지 확인하고 변경하기!
-    private Rank convertRankToCoordinate(String coordinate) {
-        return Rank.of(Integer.parseInt(String.valueOf(coordinate.charAt(1))));
-    }
-
-    private File convertFileToCoordinate(String coordinate) {
-        return File.of(String.valueOf(coordinate.charAt(0)));
-    }
-
-
-    // TODO Point 객체 새로 만들기
     public EnumMap<Team, Double> calculatePoint() {
         EnumMap<Team, Double> result = new EnumMap<>(Team.class);
         calculateEachTeamPoint(result, Team.BLACK);
@@ -160,7 +122,6 @@ public class ChessGame {
         result.put(team, totalPoint);
     }
 
-    // TODO 상태 변수 체커 한번에 모으
     public boolean isReady() {
         return state.isReady();
     }
@@ -179,5 +140,17 @@ public class ChessGame {
 
     public Team winner() {
         return winner;
+    }
+
+    public Board board() {
+        return board;
+    }
+
+    public String turn() {
+        return turn.team();
+    }
+
+    private void turnOver() {
+        turn = Team.turnOver(turn);
     }
 }

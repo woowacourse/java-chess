@@ -1,4 +1,4 @@
-package chess.domain.dto;
+package chess.domain.board;
 
 import chess.domain.board.Direction;
 
@@ -17,11 +17,7 @@ public class Strategy {
         return moveRange;
     }
 
-    public boolean containsDirection(Direction currentDirection) {
-        return directions.contains(currentDirection);
-    }
-
-    public void containsDirection1(Direction currentDirection) {
+    public void moveTowards(Direction currentDirection) {
         if (!directions.contains(currentDirection)) {
             throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
         }

@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class Positions {
@@ -10,6 +11,28 @@ public class Positions {
 
     public Positions(List<Position> positions) {
         this.positions = positions;
+    }
+
+    public Positions(String input) {
+        this.positions = splitSourceAndTarget(input);
+    }
+
+    private List<Position> splitSourceAndTarget(String command) {
+        String[] commandParameters = command.split(" ");
+        String source = commandParameters[SOURCE + 1];
+        String target = commandParameters[TARGET + 1];
+
+        return Arrays
+                .asList(Position.of(convertFileToCoordinate(source), convertRankToCoordinate(source))
+                        , Position.of(convertFileToCoordinate(target), convertRankToCoordinate(target)));
+    }
+
+    private Rank convertRankToCoordinate(String coordinate) {
+        return Rank.of(Integer.parseInt(String.valueOf(coordinate.charAt(1))));
+    }
+
+    private File convertFileToCoordinate(String coordinate) {
+        return File.of(String.valueOf(coordinate.charAt(0)));
     }
 
     public Position at(int index) {
