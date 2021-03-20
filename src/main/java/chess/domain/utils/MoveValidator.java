@@ -1,7 +1,7 @@
 package chess.domain.utils;
 
-import chess.domain.board.Position;
 import chess.domain.board.Board;
+import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
@@ -19,9 +19,9 @@ public class MoveValidator {
     }
 
     public static void validateDiagonalMove(Board board, Piece piece, Position target,
-        int distance) {
+                                            int distance) {
         if (distance >= 2 || !board.containsPosition(target)
-            || board.pieceAt(target).isSameTeam(piece.getTeam())) {
+                || board.pieceAt(target).isSameTeam(piece.getTeam())) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선에 상대팀의 말이 있는 경우 한 칸 이동할 수 있습니다.");
         }
     }

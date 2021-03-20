@@ -22,9 +22,9 @@ public enum Command {
 
     public static Command of(String input) {
         return Arrays.stream(values())
-            .filter(value -> input.equals(value.command))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 명령어 입니다."));
+                .filter(value -> input.equals(value.command))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 명령어 입니다."));
     }
 
     public void apply(ChessGame chessGame, String command) {

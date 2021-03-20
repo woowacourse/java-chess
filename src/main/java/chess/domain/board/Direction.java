@@ -32,9 +32,9 @@ public enum Direction {
 
     public static Direction of(int x, int y) {
         return Arrays.stream(Direction.values())
-            .filter(direction -> direction.getXDegree() == x && direction.getYDegree() == y)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 방향은 존재하지 않습니다."));
+                .filter(direction -> direction.getXDegree() == x && direction.getYDegree() == y)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 해당 방향은 존재하지 않습니다."));
     }
 
     public static List<Direction> linearDirection() {

@@ -49,7 +49,7 @@ public class Positions {
 
     public int computeDistance() {
         return (int) Math.sqrt(
-                (source().powAxisX(target())+ source().powAxisY(target())));
+                (source().powAxisX(target()) + source().powAxisY(target())));
     }
 
     public boolean isDiagonal() {

@@ -3,24 +3,24 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Team;
-import chess.domain.utils.BoardInitializer;
 import chess.domain.piece.Pawn;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.util.EnumMap;
-
+import chess.domain.utils.BoardInitializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.*;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.EnumMap;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChessGameTest {
-    ChessGame chessGame;
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
+    ChessGame chessGame;
 
     @BeforeEach
     void setUp() {

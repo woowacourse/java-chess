@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.board.Direction;
-
 import java.util.List;
 
 public class Strategy {

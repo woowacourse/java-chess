@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Team;
 
-public abstract class AbstractPiece implements Piece{
+public abstract class AbstractPiece implements Piece {
     private final Team team;
 
     protected AbstractPiece(Team team) {

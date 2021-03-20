@@ -4,7 +4,7 @@ import chess.domain.board.Direction;
 import chess.domain.board.Strategy;
 import chess.domain.board.Team;
 
-public class Bishop extends AbstractPiece{
+public class Bishop extends AbstractPiece {
 
     public static final double POINT = 3;
     private static final int MOVE_RANGE = 8;

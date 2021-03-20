@@ -1,12 +1,10 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
 import chess.domain.board.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.*;
 
 class KnightTest {
     @Test
@@ -26,7 +24,7 @@ class KnightTest {
     void team() {
         Knight knight = new Knight(Team.BLACK);
         assertThatThrownBy(() -> knight.confirmTurn(Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("킹인지 확인하기")

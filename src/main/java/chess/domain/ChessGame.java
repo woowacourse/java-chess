@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.*;
-import chess.domain.board.Strategy;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.state.Ready;

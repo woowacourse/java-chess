@@ -20,9 +20,9 @@ public enum Rank {
 
     public static Rank of(int rank) {
         return Arrays.stream(values())
-            .filter(value -> rank == value.rank)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
+                .filter(value -> rank == value.rank)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
     }
 
     public int getRank() {

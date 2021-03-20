@@ -1,12 +1,10 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.board.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 class BishopTest {
     @Test
@@ -26,7 +24,7 @@ class BishopTest {
     void team() {
         Bishop bishop = new Bishop(Team.BLACK);
         assertThatThrownBy(() -> bishop.confirmTurn(Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("킹인지 확인하기")

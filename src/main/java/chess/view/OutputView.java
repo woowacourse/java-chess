@@ -1,11 +1,8 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.File;
-import chess.domain.board.Position;
-import chess.domain.board.Rank;
-import chess.domain.board.Team;
+import chess.domain.board.*;
 import chess.domain.piece.Piece;
+
 import java.util.EnumMap;
 import java.util.Map;
 
@@ -25,7 +22,7 @@ public class OutputView {
     }
 
     public static void printBoard(Board board, String turn) {
-        System.out.println( turn+ "팀의 차례입니다.");
+        System.out.println(turn + "팀의 차례입니다.");
         for (Rank rank : Rank.values()) {
             printPiece(board, rank);
             System.out.println();

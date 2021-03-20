@@ -1,15 +1,17 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
-import chess.domain.board.*;
-import chess.domain.utils.BoardInitializer;
+import chess.domain.board.Board;
+import chess.domain.board.Position;
+import chess.domain.board.Team;
 import chess.domain.piece.Pawn;
+import chess.domain.utils.BoardInitializer;
 import chess.domain.utils.MoveValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class MoveValidatorTest {
     Board board;
@@ -22,14 +24,14 @@ class MoveValidatorTest {
     @Test
     void isPieceExist() {
         assertThatThrownBy(() -> MoveValidator.isPieceExist(board, Position.of("a1")))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("말이 존재합니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("말이 존재합니다.");
     }
 
     @Test
     void validatePawnLocation() {
         assertThatCode(() -> MoveValidator.validatePawnLocation(Position.of("a2")))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("대각선으로 폰이 이동할 수 있는 경우")
@@ -37,8 +39,8 @@ class MoveValidatorTest {
     void validateDiagonalMove() {
         board.movePiece(Position.of("a7"), Position.of("a3"));
         assertThatCode(() -> MoveValidator
-            .validateDiagonalMove(board, new Pawn(Team.WHITE), Position.of("a3"), 1))
-            .doesNotThrowAnyException();
+                .validateDiagonalMove(board, new Pawn(Team.WHITE), Position.of("a3"), 1))
+                .doesNotThrowAnyException();
     }
 
 //    @Test
@@ -52,14 +54,14 @@ class MoveValidatorTest {
     @Test
     void validateStraightMove() {
         assertThatThrownBy(() -> MoveValidator.validateStraightMove(3))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("폰은 두 칸 이상");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("폰은 두 칸 이상");
     }
 
     @Test
     void validateMoveRange() {
         assertThatThrownBy(() -> MoveValidator.validateMoveRange(3, 1))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("이동할 수 있는 거리");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessageContaining("이동할 수 있는 거리");
     }
 }

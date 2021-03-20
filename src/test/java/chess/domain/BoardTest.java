@@ -1,17 +1,15 @@
 package chess.domain;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 import chess.domain.board.Board;
 import chess.domain.board.Position;
 import chess.domain.board.Team;
-import chess.domain.utils.BoardInitializer;
 import chess.domain.piece.Rook;
+import chess.domain.utils.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.*;
 
 class BoardTest {
 
@@ -41,7 +39,7 @@ class BoardTest {
 
         assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Rook.class);
         assertThatThrownBy(() -> board.pieceAt(Position.of("a1")))
-            .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("팀의 포인트 합산")

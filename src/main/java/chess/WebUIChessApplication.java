@@ -1,11 +1,12 @@
 package chess;
 
-import static spark.Spark.get;
+import spark.ModelAndView;
+import spark.template.handlebars.HandlebarsTemplateEngine;
 
 import java.util.HashMap;
 import java.util.Map;
-import spark.ModelAndView;
-import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import static spark.Spark.get;
 
 public class WebUIChessApplication {
     public static void main(String[] args) {

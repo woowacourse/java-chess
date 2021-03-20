@@ -22,16 +22,16 @@ public enum File {
 
     public static File of(String file) {
         return Arrays.stream(values())
-            .filter(value -> file.equals(value.file))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
+                .filter(value -> file.equals(value.file))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
     }
 
     public static File of(int file) {
         return Arrays.stream(values())
-            .filter(value -> file == value.index)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
+                .filter(value -> file == value.index)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 범위를 벗어났습니다."));
     }
 
     public String getFile() {

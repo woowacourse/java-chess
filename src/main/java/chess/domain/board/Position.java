@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Pawn;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -14,18 +15,17 @@ public class Position {
         }
     }
 
+    private final File file;
+    private final Rank rank;
+    private Position(File file, Rank rank) {
+        this.file = file;
+        this.rank = rank;
+    }
+
     private static void makePositionWith(File file) {
         for (final Rank rank : Rank.values()) {
             POSITIONS.put(makeKey(file, rank), new Position(file, rank));
         }
-    }
-
-    private final File file;
-    private final Rank rank;
-
-    private Position(File file, Rank rank) {
-        this.file = file;
-        this.rank = rank;
     }
 
     public static Position of(String position) {
@@ -80,7 +80,7 @@ public class Position {
 
     public Position move(Direction dir, int step) {
         return Position.of(File.of(this.file.getIndex() + dir.getXDegree() * step),
-            Rank.of(this.rank.getRank() + dir.getYDegree() * step));
+                Rank.of(this.rank.getRank() + dir.getYDegree() * step));
     }
 
     public double powAxisX(Position x) {
@@ -101,7 +101,7 @@ public class Position {
 
     public boolean isLocatedAtStartLine() {
         return this.getY() == Pawn.WHITE_PAWN_START_LINE
-            || this.getY() == Pawn.BLACK_PAWN_START_LINE;
+                || this.getY() == Pawn.BLACK_PAWN_START_LINE;
     }
 
     @Override
