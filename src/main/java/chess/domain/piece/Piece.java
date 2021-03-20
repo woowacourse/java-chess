@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -27,7 +25,8 @@ public abstract class Piece {
         if (!isCorrectDirection(moveCommandDirection)) {
             return false;
         }
-        if (board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, moveCommandDirection)) {
+        if (board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate,
+            moveCommandDirection)) {
             return false;
         }
         return board.find(targetCoordinate).isMovable(teamType);

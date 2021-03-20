@@ -1,11 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Pawn extends Piece {
     private static final String NAME = "P";
@@ -16,7 +13,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate) {
+    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
+        Coordinate targetCoordinate) {
         Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
         if (!isCorrectDirection(moveCommandDirection)) {
             return false;
@@ -43,7 +41,8 @@ public class Pawn extends Piece {
             return false;
         }
         Direction direction = currentCoordinate.calculateDirection(targetCoordinate);
-        boolean hasPieceOnRoute = board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, direction);
+        boolean hasPieceOnRoute = board
+            .hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, direction);
         return !hasPieceOnRoute && board.find(targetCoordinate).isEmpty();
     }
 

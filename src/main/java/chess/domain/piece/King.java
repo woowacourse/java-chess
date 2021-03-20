@@ -3,8 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class King extends Piece {
     private static final String NAME = "K";
@@ -22,6 +20,7 @@ public class King extends Piece {
             return false;
         }
         Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return nextCoordinate.equals(targetCoordinate) && board.find(targetCoordinate).isMovable(getTeamType());
+        return nextCoordinate.equals(targetCoordinate) && board.find(targetCoordinate)
+            .isMovable(getTeamType());
     }
 }

@@ -1,11 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import java.util.ArrayList;
-import java.util.List;
 
 public class Knight extends Piece {
     private static final String NAME = "N";
@@ -23,6 +20,7 @@ public class Knight extends Piece {
             return false;
         }
         Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return nextCoordinate.equals(targetCoordinate) && board.isMovable(nextCoordinate, getTeamType());
+        return nextCoordinate.equals(targetCoordinate) && board
+            .isMovable(nextCoordinate, getTeamType());
     }
 }
