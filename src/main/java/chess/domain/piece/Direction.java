@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.piece;
 
 import java.util.Arrays;
 import java.util.List;
@@ -67,6 +67,10 @@ public enum Direction {
 
     public int getYDegree() {
         return yDegree;
+    }
+
+    public int getUnit() {
+        return (int) Math.sqrt(xDegree * xDegree + yDegree * yDegree);
     }
 
     public static boolean isDiagonalDirection(Direction direction) {
