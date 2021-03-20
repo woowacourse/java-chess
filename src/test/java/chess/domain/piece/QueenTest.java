@@ -17,7 +17,8 @@ class QueenTest {
     void generatePath() {
         Position current = Position.ofName("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = new Paths(queen.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(queen, current);
 
         assertThat(paths.pathsToPosition()).isEqualTo(queenE4WithoutObstacles());
     }
@@ -27,7 +28,8 @@ class QueenTest {
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
         Piece queen = new Queen(PieceColor.WHITE);
-        Paths paths = new Paths(queen.findAllPath(current));
+        Paths paths = new Paths();
+        paths = paths.findAllPath(queen, current);
         assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions()).isEqualTo(
                 queenE4WithObstacles());
     }
