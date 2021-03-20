@@ -7,6 +7,14 @@ import chess.view.OutputView;
 public final class Status extends Finished {
     @Override
     public final GameState run(final Grid grid) {
+        try {
+            return runStatus(grid);
+        } catch (IllegalArgumentException error) {
+            return statusException(grid, error);
+        }
+    }
+
+    private End runStatus(Grid grid) {
         double blackScore = grid.score(Color.BLACK);
         double whiteScore = grid.score(Color.WHITE);
         OutputView.printScores(Color.BLACK, blackScore);
@@ -18,5 +26,10 @@ public final class Status extends Finished {
             OutputView.printWinner(Color.WHITE);
         }
         return new End();
+    }
+
+    private GameState statusException(Grid grid, IllegalArgumentException error) {
+        OutputView.printError(error);
+        return run(grid);
     }
 }

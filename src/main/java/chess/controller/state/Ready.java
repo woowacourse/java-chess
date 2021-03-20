@@ -10,6 +10,14 @@ public final class Ready implements GameState {
 
     @Override
     public final GameState run(final Grid grid) {
+        try {
+            return runReady(grid);
+        } catch (IllegalArgumentException error) {
+            return readyException(grid, error);
+        }
+    }
+
+    private GameState runReady(Grid grid) {
         String command = InputView.command();
         if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
@@ -19,6 +27,11 @@ public final class Ready implements GameState {
             return new End();
         }
         throw new IllegalArgumentException("잘못된 입력값입니다.");
+    }
+
+    private GameState readyException(Grid grid, IllegalArgumentException error) {
+        OutputView.printError(error);
+        return run(grid);
     }
 
     @Override

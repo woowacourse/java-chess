@@ -12,13 +12,22 @@ import java.util.List;
 
 public abstract class Playing implements GameState {
     private static final String WHITE_SPACE_DELIMITER = " ";
+    private static final String STATUS_COMMAND = "status";
     private static final int SOURCE_ARG_INDEX = 1;
     private static final int TARGET_ARG_INDEX = 2;
 
     @Override
     public final GameState run(final Grid grid) {
+        try {
+            return runPlaying(grid);
+        } catch (IllegalArgumentException error) {
+            return playingException(grid, error);
+        }
+    }
+
+    private GameState runPlaying(Grid grid) {
         String input = InputView.command();
-        if (input.equals("status")) {
+        if (input.equals(STATUS_COMMAND)) {
             return new Status().run(grid);
         }
         List<Piece> moveInput = parsedPieces(grid, input);
@@ -27,6 +36,11 @@ public abstract class Playing implements GameState {
         GameState gameState = move(grid, sourcePiece, targetPiece);
         OutputView.printGridStatus(grid.lines());
         return gameState;
+    }
+
+    private GameState playingException(Grid grid, IllegalArgumentException error) {
+        OutputView.printError(error);
+        return run(grid);
     }
 
     @Override
