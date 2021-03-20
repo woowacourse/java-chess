@@ -2,7 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.BoardFactory;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -29,8 +30,9 @@ class BishopTest {
         Piece bishop = new Bishop(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(bishop, current);
-        assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions()).isEqualTo(
-                bishopE4WithObstacles());
+        assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions())
+                .isEqualTo(
+                        bishopE4WithObstacles());
     }
 
     List<Position> bishopE4WithoutObstacles() {

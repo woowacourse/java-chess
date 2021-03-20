@@ -52,10 +52,10 @@ public enum Column {
                 || Direction.R_UU.equals(direction)) {
             return this.equals(H);
         }
-        if(Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)){
+        if (Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)) {
             return this.equals(G) || this.equals(H);
         }
-        if(Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)){
+        if (Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)) {
             return this.equals(B) || this.equals(A);
         }
         return this.equals(A);

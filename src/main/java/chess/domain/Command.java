@@ -12,7 +12,7 @@ public enum Command {
 
     private final String message;
 
-    Command (String message) {
+    Command(String message) {
         this.message = message;
     }
 

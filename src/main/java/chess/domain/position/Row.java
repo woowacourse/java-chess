@@ -43,10 +43,10 @@ public enum Row {
                 || Direction.RR_D.equals(direction)) {
             return this.equals(ONE);
         }
-        if(Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)){
+        if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
             return this.equals(TWO) || this.equals(ONE);
         }
-        if(Direction.R_UU.equals(direction) || Direction.L_UU.equals(direction)){
+        if (Direction.R_UU.equals(direction) || Direction.L_UU.equals(direction)) {
             return this.equals(SEVEN) || this.equals(EIGHT);
         }
         return this.equals(EIGHT);

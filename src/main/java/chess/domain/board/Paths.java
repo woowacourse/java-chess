@@ -1,6 +1,6 @@
-package chess.domain.piece;
+package chess.domain.board;
 
-import chess.domain.Board;
+import chess.domain.piece.Piece;
 import chess.domain.piece.strategy.Direction;
 import chess.domain.position.Position;
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ public class Paths {
 
     private final List<Path> paths;
 
-    public Paths(){
+    public Paths() {
         paths = new ArrayList<>();
     }
 
@@ -21,14 +21,14 @@ public class Paths {
 
     public Paths findAllPath(Piece piece, Position currentPosition) {
         return new Paths(piece.directions().stream()
-            .map(direction -> findPathInDirection(direction, currentPosition))
-            .collect(Collectors.toList())
+                .map(direction -> findPathInDirection(direction, currentPosition))
+                .collect(Collectors.toList())
         );
     }
 
     private Path findPathInDirection(Direction direction, Position currentPosition) {
         List<Position> positions = new ArrayList<>();
-        while(!currentPosition.isBlockedWhenGoTo(direction)){
+        while (!currentPosition.isBlockedWhenGoTo(direction)) {
             positions.add(currentPosition.moveTo(direction));
             currentPosition = currentPosition.moveTo(direction);
         }
@@ -43,7 +43,7 @@ public class Paths {
         );
     }
 
-    public List<Position> pathsToPosition(){
+    public List<Position> pathsToPosition() {
         return paths.stream()
                 .map(path -> path.positions())
                 .flatMap(List::stream)

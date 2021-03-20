@@ -17,10 +17,10 @@ public enum PieceColor {
     }
 
     public PieceColor reversed() {
-        if(this.equals(NOTHING)) {
+        if (this.equals(NOTHING)) {
             return this;
         }
-        if(this.equals(WHITE)){
+        if (this.equals(WHITE)) {
             return BLACK;
         }
         return WHITE;

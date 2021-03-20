@@ -17,14 +17,14 @@ public class ChessController {
 
     private void executeGame() {
         OutputView.printGuideMessage();
-        if(Command.isStart(InputView.receiveInput())) {
+        if (Command.isStart(InputView.receiveInput())) {
             playGame();
         }
     }
 
     private void playGame() {
         Game game = new Game();
-        while(game.isPlaying()) {
+        while (game.isPlaying()) {
             OutputView.printBoard(game.getBoard());
             OutputView.printTurn(game.getCurrentColor());
             executeCommand(game);

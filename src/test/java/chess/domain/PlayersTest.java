@@ -5,6 +5,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.PieceColor;
+import chess.domain.player.Player;
+import chess.domain.player.Players;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

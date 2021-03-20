@@ -32,7 +32,8 @@ class RowTest {
     @DisplayName("입력된 방향만큼 행을 이동시킨다.")
     @ParameterizedTest
     @CsvSource(value = {"UP:SIX", "RIGHT:FIVE", "DOWN:FOUR", "LEFT:FIVE", "UP_RIGHT:SIX",
-            "DOWN_RIGHT:FOUR", "DOWN_LEFT:FOUR", "UP_LEFT:SIX", "L_UU:SEVEN", "R_UU:SEVEN", "RR_U:SIX",
+            "DOWN_RIGHT:FOUR", "DOWN_LEFT:FOUR", "UP_LEFT:SIX", "L_UU:SEVEN", "R_UU:SEVEN",
+            "RR_U:SIX",
             "RR_D:FOUR", "R_DD:THREE", "L_DD:THREE", "LL_U:SIX", "LL_D:FOUR"}, delimiter = ':')
     void move(Direction direction, Row expected) {
         assertEquals(Row.FIVE.move(direction), expected);

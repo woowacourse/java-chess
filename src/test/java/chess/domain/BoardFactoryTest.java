@@ -2,6 +2,8 @@ package chess.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+import chess.domain.board.Board;
+import chess.domain.board.BoardFactory;
 import chess.util.RenderingUtils;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Board;
+import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
 import chess.util.RenderingUtils;
 

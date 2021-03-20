@@ -1,83 +1,81 @@
 package chess.domain.board;
 
-import chess.domain.piece.EmptyPiece;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Color;
-import chess.domain.position.Column;
+import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
-import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
-public final class Board {
+public class Board {
 
-    private final Map<Position, Piece> coordinates;
+    private static final Piece EMPTY_PIECE = new Empty();
+    private final Map<Piece, Position> coordinates;
 
-    public Board(Map<Position, Piece> coordinates) {
+    public Board(Map<Piece, Position> coordinates) {
         this.coordinates = coordinates;
     }
 
-    public Board movePiece(final Position sourcePosition, final Position targetPosition) {
-        final Map<Position, Piece> nextCoordinates = new HashMap<>(coordinates);
-        final Piece sourcePiece = coordinates.get(sourcePosition);
-        nextCoordinates.replace(targetPosition, sourcePiece);
-        nextCoordinates.replace(sourcePosition, EmptyPiece.getInstance());
-        return new Board(nextCoordinates);
+    public Board() {
+        this.coordinates = new LinkedHashMap<>();
     }
 
-    public boolean hasAvailablePath(final Position sourcePosition, final Position targetPosition) {
-        return pathsOf(sourcePosition).contains(targetPosition);
+    public void putPiece(Piece piece, Position position) {
+        coordinates.put(piece, position);
     }
 
-    public List<Piece> remainingSpecialPieces(final Color color) {
-        return coordinates.values()
+    public Piece findPieceBy(Position position) {
+        return coordinates.entrySet()
                 .stream()
-                .filter(piece -> !piece.isEmpty())
-                .filter(piece -> !piece.isPawn())
-                .filter(piece -> piece.isColor(color))
-                .collect(Collectors.toList())
-                ;
-    }
-
-    public Piece pieceAt(final Position position) {
-        return coordinates.get(position);
-    }
-
-    public int kingCount() {
-        return (int) coordinates.values()
-                .stream()
-                .filter(Piece::isKing)
-                .count()
-                ;
-    }
-
-    public Piece remainingKing() {
-        return coordinates.values()
-                .stream()
-                .filter(Piece::isKing)
+                .filter(entry -> Objects.equals(entry.getValue(), position))
+                .map(Map.Entry::getKey)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("킹이 없습니다."));
-    }
-
-    public int pawnCount(final Column column, final Color color) {
-        return (int) coordinates.entrySet()
-                .stream()
-                .filter(entry -> entry.getKey().isOfColumn(column))
-                .filter(entry -> entry.getValue().isPawn())
-                .filter(entry -> entry.getValue().isColor(color))
-                .count()
+                .orElse(EMPTY_PIECE)
                 ;
     }
 
-    private Path pathsOf(final Position sourcePosition) {
-        final Piece piece = coordinates.get(sourcePosition);
-        return new Path(
-                piece.directions()
+    public void move(Piece piece, Position target) {
+        Path path = generatePath(piece);
+//        path.positions().forEach(position -> {
+//            System.out.println(position);
+//        });
+        if (path.isAble(target)) {
+            coordinates.remove(findPieceBy(target));
+            putPiece(piece, target);
+        }
+    }
+
+    public Path generatePath(Piece piece) {
+        Paths paths = new Paths();
+        paths = paths.findAllPath(piece, coordinates.get(piece));
+        return paths.removeObstacles(piece, this);
+    }
+
+    public Map<Piece, Position> getCoordinates() {
+        return coordinates;
+    }
+
+    public Map<Piece, Position> remainPieces(PieceColor color) {
+        return coordinates.entrySet()
                 .stream()
-                .map(direction -> piece.pathFrom(direction, sourcePosition))
-                .map(path -> path.removeObstacleInPath(sourcePosition, this))
-                .flatMap(List::stream)
-                .collect(Collectors.toList()));
+                .filter(entry -> entry.getKey().hasColor(color))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public Map<Piece, Position> remainPawns(Map<Piece, Position> pieces) {
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isPawn())
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public boolean kingDead() {
+        int count = (int) coordinates.keySet().stream()
+                .filter(Piece::isKing)
+                .count();
+        return count == 1;
     }
 }

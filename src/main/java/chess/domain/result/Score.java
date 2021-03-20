@@ -5,7 +5,6 @@ import java.util.Objects;
 public class Score {
 
     public static final Score MAX = new Score(38);
-    public static final Score MIN = new Score(0);
 
     private final double score;
 
@@ -15,6 +14,10 @@ public class Score {
 
     public Score add(Score that) {
         return new Score(score + that.score);
+    }
+
+    public Score minus(Score that) {
+        return new Score(score - that.score);
     }
 
     @Override
@@ -37,9 +40,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    public String is() {
-        return String.valueOf(score);
     }
 }

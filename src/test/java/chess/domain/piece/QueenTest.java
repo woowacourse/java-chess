@@ -2,7 +2,8 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-import chess.domain.BoardFactory;
+import chess.domain.board.BoardFactory;
+import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -30,8 +31,9 @@ class QueenTest {
         Piece queen = new Queen(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(queen, current);
-        assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions()).isEqualTo(
-                queenE4WithObstacles());
+        assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions())
+                .isEqualTo(
+                        queenE4WithObstacles());
     }
 
     List<Position> queenE4WithoutObstacles() {
