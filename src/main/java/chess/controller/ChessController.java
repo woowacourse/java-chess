@@ -2,19 +2,19 @@ package chess.controller;
 
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
-import chess.manager.Menu;
 import chess.manager.ChessManager;
+import chess.manager.Menu;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         new ChessController().run();
     }
 
     public void run() {
-        if(!Menu.of(InputView.getNewGameCommand()).isStart()){
+        if (!Menu.of(InputView.getNewGameCommand()).isStart()) {
             return;
         }
 
@@ -23,11 +23,11 @@ public class ChessController {
 
         String userInput;
         Menu menu;
-        do{
+        do {
             userInput = InputView.getUserCommand();
             menu = Menu.of(userInput);
 
-            if(menu.isMove()){
+            if (menu.isMove()) {
                 chessManager.move(MoveCommand.of(userInput));
                 OutputView.printBoard(chessManager.getBoard());
             }
@@ -36,7 +36,7 @@ public class ChessController {
                 OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getAbleToMove(ShowCommand.of(userInput)));
             }
 
-            if(menu.isStatus()){
+            if (menu.isStatus()) {
                 OutputView.printStatus(chessManager.calculateStatus());
             }
         } while (!chessManager.isEnd() && !menu.isEnd());

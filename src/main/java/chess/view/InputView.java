@@ -13,10 +13,6 @@ public class InputView {
         return SCANNER.nextLine();
     }
 
-    public static String getUserMoveCommand() {
-        return SCANNER.nextLine();
-    }
-
     public static String getUserCommand() {
         return SCANNER.nextLine();
     }

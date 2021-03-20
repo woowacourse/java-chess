@@ -1,15 +1,19 @@
 package chess.domain.piece;
 
-import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
+import chess.domain.direction.Direction;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
 
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
     private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Owner.WHITE);
 
-    public static Knight getInstanceOf(Owner owner) {
+    public Knight(final Owner owner) {
+        super(owner, new Score(2.5), Direction.knightDirections());
+    }
+
+    public static Knight getInstanceOf(final Owner owner) {
         if (owner.equals(Owner.BLACK)) {
             return BLACK_KNIGHT;
         }
@@ -21,12 +25,8 @@ public class Knight extends Piece{
         throw new IllegalArgumentException("Invalid Knight");
     }
 
-    public Knight(Owner owner) {
-        super(owner, new Score(2.5), Direction.knightDirections());
-    }
-
     @Override
-    public boolean validateMove(Position source, Position target, Piece targetPiece) {
+    public boolean validateMove(final Position source, final Position target, final Piece targetPiece) {
         return true;
     }
 

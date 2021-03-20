@@ -7,16 +7,16 @@ public class MoveCommand {
     private final Position source;
     private final Position target;
 
-    private MoveCommand(Position source, Position target) {
+    private MoveCommand(final Position source, final Position target) {
         this.source = source;
         this.target = target;
     }
 
-    public static MoveCommand of(String[] input) {
+    public static MoveCommand of(final String[] input) {
         return new MoveCommand(new Position(input[1]), new Position(input[2]));
     }
 
-    public static MoveCommand of(String input) {
+    public static MoveCommand of(final String input) {
         return of(input.split(" "));
     }
 

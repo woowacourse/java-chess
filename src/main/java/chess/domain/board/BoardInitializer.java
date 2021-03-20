@@ -5,13 +5,15 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.*;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class BoardInitializer {
     private static final int BOARD_LENGTH = 8;
 
     public static Board initiateBoard() {
-        Map<Position, Piece> map = new LinkedHashMap<>();
+        final Map<Position, Piece> map = new LinkedHashMap<>();
 
         putLineInMap(map, Horizontal.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
         putLineInMap(map, Horizontal.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
@@ -25,14 +27,14 @@ public class BoardInitializer {
         return new Board(map);
     }
 
-    private static void putLineInMap(Map<Position, Piece> map, Horizontal horizontal, Piece[] pieces){
-        Vertical[] verticals = Vertical.values();
-        for(int i =0; i<BOARD_LENGTH; i++){
+    private static void putLineInMap(final Map<Position, Piece> map, final Horizontal horizontal, final Piece[] pieces) {
+        final Vertical[] verticals = Vertical.values();
+        for (int i = 0; i < BOARD_LENGTH; i++) {
             map.put(new Position(verticals[i], horizontal), pieces[i]);
         }
     }
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner){
+    private static Piece[] getPiecesOfFirstLine(final Owner owner) {
         return new Piece[]{
                 Rook.getInstanceOf(owner),
                 Knight.getInstanceOf(owner),
@@ -45,14 +47,14 @@ public class BoardInitializer {
         };
     }
 
-    private static Piece[] getPiecesOfSecondLine(Owner owner){
-        Piece[] pieces = new Pawn[BOARD_LENGTH];
+    private static Piece[] getPiecesOfSecondLine(final Owner owner) {
+        final Piece[] pieces = new Pawn[BOARD_LENGTH];
         Arrays.fill(pieces, Pawn.getInstanceOf(owner));
         return pieces;
     }
 
-    private static Piece[] getEmptyLine(){
-        Piece[] pieces = new Empty[BOARD_LENGTH];
+    private static Piece[] getEmptyLine() {
+        final Piece[] pieces = new Empty[BOARD_LENGTH];
         Arrays.fill(pieces, Empty.getInstance());
         return pieces;
     }

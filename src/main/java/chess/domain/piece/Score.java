@@ -10,19 +10,15 @@ public class Score {
         this.value = value;
     }
 
-    public double value() {
-        return this.value;
-    }
-
-    public Score plus(Score score) {
+    public Score plus(final Score score) {
         return new Score(this.value + score.value);
     }
 
-    public double score(){
+    public double score() {
         return this.value;
     }
 
-    public Score calculatePawnPenaltyScore(int pawnCountInLine) {
+    public Score calculatePawnPenaltyScore(final int pawnCountInLine) {
         return new Score(this.value - (PAWN_PANALTY_SCORE * pawnCountInLine));
     }
 }

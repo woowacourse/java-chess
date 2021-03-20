@@ -6,15 +6,15 @@ public class ShowCommand {
 
     private final Position source;
 
-    private ShowCommand(Position source) {
+    private ShowCommand(final Position source) {
         this.source = source;
     }
 
-    public static ShowCommand of(String[] input) {
+    public static ShowCommand of(final String[] input) {
         return new ShowCommand(new Position(input[1]));
     }
 
-    public static ShowCommand of(String input) {
+    public static ShowCommand of(final String input) {
         return of(input.split(" "));
     }
 

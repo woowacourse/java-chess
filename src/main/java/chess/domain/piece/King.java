@@ -1,10 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.direction.Direction;
 import chess.domain.board.position.Position;
-
-import java.util.Arrays;
-import java.util.List;
+import chess.domain.direction.Direction;
 
 public class King extends Piece {
 
@@ -13,11 +10,11 @@ public class King extends Piece {
     private static final King BLACK_KING = new King(Owner.BLACK);
     private static final King WHITE_KING = new King(Owner.WHITE);
 
-    public King(Owner owner) {
+    public King(final Owner owner) {
         super(owner, new Score(0.0d), Direction.allDirections());
     }
 
-    public static King getInstanceOf(Owner owner) {
+    public static King getInstanceOf(final Owner owner) {
         if (owner.equals(Owner.BLACK)) {
             return BLACK_KING;
         }
@@ -30,7 +27,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean validateMove(Position source, Position target, Piece targetPiece) {
+    public boolean validateMove(final Position source, final Position target, final Piece targetPiece) {
         return true;
     }
 

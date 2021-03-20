@@ -16,11 +16,11 @@ public enum Owner {
         throw new IllegalStateException();
     }
 
-    public boolean isEnemy(Owner other){
+    public boolean isEnemy(final Owner other) {
         return this.reverse().equals(other);
     }
 
-    public boolean isSameTeam(Owner other){
+    public boolean isSameTeam(final Owner other) {
         return this.equals(other);
     }
 }

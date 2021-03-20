@@ -25,17 +25,9 @@ public enum Direction {
     private final int x;
     private final int y;
 
-    Direction(int x, int y) {
+    Direction(final int x, final int y) {
         this.x = x;
         this.y = y;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
     }
 
     public static List<Direction> diagonalDirections() {
@@ -96,5 +88,13 @@ public enum Direction {
                 KNIGHT_LEFT_UP,
                 KNIGHT_LEFT_DOWN
         );
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

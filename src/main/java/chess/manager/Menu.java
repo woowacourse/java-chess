@@ -12,7 +12,7 @@ public enum Menu {
     private final String command;
     private final int parameterCount;
 
-    Menu(final String command, int parameterCount) {
+    Menu(final String command, final int parameterCount) {
         this.command = command;
         this.parameterCount = parameterCount;
     }
@@ -25,11 +25,11 @@ public enum Menu {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    private boolean isSameCommand(String input) {
+    private boolean isSameCommand(final String input) {
         return this.command.equals(input);
     }
 
-    private boolean isSameParameterSize(int size){
+    private boolean isSameParameterSize(final int size) {
         return this.parameterCount == size;
     }
 
@@ -51,9 +51,5 @@ public enum Menu {
 
     public boolean isShow() {
         return this.equals(SHOW);
-    }
-
-    public int getParameterCount() {
-        return this.parameterCount;
     }
 }

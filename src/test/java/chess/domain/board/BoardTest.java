@@ -42,10 +42,10 @@ public class BoardTest {
         };
     }
 
-    @DisplayName("입력한 위치의 Square를 가져온다")
+    @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
     void of(){
-        Piece piece = board.of(Vertical.B, Horizontal.TWO);
+        final Piece piece = board.of(Vertical.B, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));
     }
@@ -53,10 +53,10 @@ public class BoardTest {
     @DisplayName("입력한 위치로 이동된다.")
     @Test
     void moveTest() {
-        Position source = new Position(Vertical.B, Horizontal.TWO);
-        Position target = new Position(Vertical.C, Horizontal.ONE);
+        final Position source = new Position(Vertical.B, Horizontal.TWO);
+        final Position target = new Position(Vertical.B, Horizontal.THREE);
 
-        board.move(source, target);
+        board.move(source, target, Owner.WHITE);
 
         assertThat(board.of(source)).isInstanceOf(Empty.class);
         assertThat(board.of(target)).isInstanceOf(Pawn.class);

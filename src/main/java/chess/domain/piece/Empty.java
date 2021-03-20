@@ -4,7 +4,7 @@ import chess.domain.board.position.Position;
 
 import java.util.Collections;
 
-public class Empty extends Piece{
+public class Empty extends Piece {
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
 
     private static final Empty EMPTY = new Empty();
@@ -18,7 +18,7 @@ public class Empty extends Piece{
     }
 
     @Override
-    public boolean validateMove(Position source, Position target, Piece targetPiece) {
+    public boolean validateMove(final Position source, final Position target, final Piece targetPiece) {
         throw new UnsupportedOperationException();
     }
 
