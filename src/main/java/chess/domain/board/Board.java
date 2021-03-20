@@ -82,18 +82,13 @@ public class Board {
     }
 
     public void move(Coordinate currentCoordinate, Coordinate targetCoordinate, TeamType teamType) {
-        if (currentCoordinate.equals(targetCoordinate)) {
-            throw new IllegalArgumentException();
-        }
         Cell currentCell = cells.get(currentCoordinate);
         if (!currentCell.isTeamOf(teamType)) {
             throw new IllegalArgumentException("나의 기물이 아닙니다.");
         }
-
         if (!currentCell.isMovableTo(this, currentCoordinate, targetCoordinate)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-
         Cell targetCell = cells.get(targetCoordinate);
         currentCell.movePieceTo(targetCell);
     }
@@ -109,33 +104,39 @@ public class Board {
     }
 
     private double calculatePieceScores(TeamType teamType) {
+        double scoreTotalExceptPawn = getScoreTotalExceptPawn(teamType);
+        double pawnScores = 0;
+        for (File file : File.values()) {
+            int pawnCounts = getPawnCounts(teamType, file);
+            pawnScores += getPawnScores(teamType, pawnCounts);
+        }
+        return scoreTotalExceptPawn + pawnScores;
+    }
 
-        double scoreTotalExceptPawn = cells.values()
+    private double getPawnScores(TeamType teamType, int pawnCounts) {
+        if (pawnCounts == 0) {
+            return 0;
+        }
+        if (pawnCounts == 1) {
+            return new Pawn(teamType).getScore();
+        }
+        return (new Pawn(teamType).getScore() / 2) * pawnCounts;
+    }
+
+    private int getPawnCounts(TeamType teamType, File file) {
+        return (int) Arrays.stream(Rank.values())
+            .map(rank -> new Coordinate(file, rank))
+            .map(cells::get)
+            .filter(cell -> cell.isTeamOf(teamType) && cell.hasPawn())
+            .count();
+    }
+
+    private double getScoreTotalExceptPawn(TeamType teamType) {
+        return cells.values()
             .stream()
             .filter(cell -> cell.isTeamOf(teamType) && !cell.hasPawn())
             .mapToDouble(Cell::getPieceScore)
             .sum();
-
-        double pawnScores = 0;
-        for (File file : File.values()) {
-            int pawnCounts = 0;
-            for (Rank rank : Rank.values()) {
-                Coordinate coordinate = new Coordinate(file, rank);
-                Cell cell = cells.get(coordinate);
-                if (cell.isTeamOf(teamType) && cell.hasPawn()) {
-                    pawnCounts++;
-                }
-            }
-            if (pawnCounts == 0) {
-                continue;
-            }
-            if (pawnCounts == 1) {
-                pawnScores += new Pawn(teamType).getScore();
-            } else {
-                pawnScores += (new Pawn(teamType).getScore() / 2) * pawnCounts;
-            }
-        }
-        return scoreTotalExceptPawn + pawnScores;
     }
 
     public boolean isKingCheckmate() {
