@@ -1,56 +1,76 @@
 package chess.controller;
 
 import chess.controller.command.Command;
-import chess.controller.command.Start;
 import chess.domain.Board;
-import chess.domain.Side;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
+import chess.exception.ChessException;
+import chess.exception.InvalidCommandException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
     public void start() {
         OutputView.startGame();
+        State state = new Ready(Board.getGamingBoard());
         Command command = command();
-
         if (command.isStart()) {
-            startGame();
+            startGame(state);
         }
     }
 
-    private void startGame() {
-        final Board board = Board.getGamingBoard();
-        State state = new Ready(board);
+    private void startGame(State initialState) {
+        State state = initialState.start();
+        printBoard(state);
 
-        // TODO
-        state = state.start();
-        Side side = Side.BLACK;
-
-        Command command = new Start();
-
-        // TODO try Catch
-        while (!command.isEnd()) {
-            if (state.isGameSet()) {
-                state = state.gameSet();
-                //Side가 이겼습니다! 출력
-            }
-            OutputView.print(board, side);
-
-            command = command();
-            if (command.isMove()) {
-                state = state.move(command.source(), command.target(), side);
-                side = side.changeTurn();
-            }
-            if (command.isStatus()) {
-                state = state.status();
-                OutputView.print(state.score());
-                // TODO 누가 승리? -> 킹이 잡혔을 때 추가
-            }
+        while (!state.isFinished()) {
+            state = turn(state);
         }
+    }
+
+    private void printBoard(State state) {
+        OutputView.print(state.board(), state.side());
+
+        if (state.isGameSet()) {
+            OutputView.printWinner(state.winner());
+        }
+    }
+
+    private State turn(State state) {
+        try {
+            state = execute(command(), state);
+            printBoard(state);
+        } catch (ChessException e) {
+            OutputView.printError(e);
+            return turn(state);
+        }
+        return state;
+    }
+
+    private State execute(Command command, State state) {
+
+        if (command.isMove()) {
+            state = state.move(command.source(), command.target());
+        }
+
+        if (command.isStatus()) {
+            state = state.status();
+            OutputView.print(state.score());
+            return state;
+        }
+
+        if (command.isEnd()) {
+            state = state.finished();
+        }
+        return state;
     }
 
     private Command command() {
-        return Command.from(InputView.command());
+        try {
+            return Command.from(InputView.command());
+        } catch (InvalidCommandException e) {
+            OutputView.printError(e);
+            return command();
+        }
     }
 }
