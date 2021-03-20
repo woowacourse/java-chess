@@ -39,7 +39,7 @@ public class BlackTeamTest {
     @DisplayName("블랙팀의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score() {
         final BlackTeam blackTeam = new BlackTeam();
-        double blackTeamScore = blackTeam.calculateTotalScore();
+        double blackTeamScore = blackTeam.calculateScore();
         assertThat(blackTeamScore).isEqualTo(38.0);
     }
 
@@ -48,7 +48,7 @@ public class BlackTeamTest {
     void calculate_score_pawn_same_y_axis() {
         final BlackTeam blackTeam = new BlackTeam();
         blackTeam.move(Position.of("b7"), Position.of("a6"));
-        double blackTeamScore = blackTeam.calculateTotalScore();
+        double blackTeamScore = blackTeam.calculateScore();
         assertThat(blackTeamScore).isEqualTo(37.0);
     }
 }

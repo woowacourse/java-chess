@@ -77,11 +77,11 @@ public class ChessGame {
     }
 
     public double calculateBlackTeamScore() {
-        return blackTeam.calculateTotalScore();
+        return blackTeam.calculateScore();
     }
 
     public double calculateWhiteTeamScore() {
-        return whiteTeam.calculateTotalScore();
+        return whiteTeam.calculateScore();
     }
 
     public BlackTeam getBlackTeam() {

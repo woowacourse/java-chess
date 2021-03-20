@@ -39,7 +39,7 @@ public class WhiteTeamTest {
     @DisplayName("화이트의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score() {
         final WhiteTeam whiteTeam = new WhiteTeam();
-        double whiteTeamScore = whiteTeam.calculateTotalScore();
+        double whiteTeamScore = whiteTeam.calculateScore();
         assertThat(whiteTeamScore).isEqualTo(38.0);
     }
 
@@ -48,7 +48,7 @@ public class WhiteTeamTest {
     void calculate_score_pawn_same_y_axis() {
         final WhiteTeam whiteTeam = new WhiteTeam();
         whiteTeam.move(Position.of("b2"), Position.of("a3"));
-        double whiteTeamScore = whiteTeam.calculateTotalScore();
+        double whiteTeamScore = whiteTeam.calculateScore();
         assertThat(whiteTeamScore).isEqualTo(37.0);
     }
 }
