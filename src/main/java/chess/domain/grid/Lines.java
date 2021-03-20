@@ -19,11 +19,6 @@ public class Lines {
         this.lines = new ArrayList<>(lines);
     }
 
-    public Line line(final char y) {
-        int index = ROW_REFERENCE.indexOf(y);
-        return lines.get(index);
-    }
-
     public double pawnCountInSameColumn(final boolean isBlack, final int i) {
         double result = 0;
         char x = (char) (MIN_X_POSITION + i);
@@ -49,11 +44,16 @@ public class Lines {
                 .sum();
     }
 
-    public Piece piece(final Position position) {
+    private Piece piece(final Position position) {
         char x = position.x();
         char y = position.y();
         Line line = line(y);
         return line.findPiece(x);
+    }
+
+    private Line line(final char y) {
+        int index = ROW_REFERENCE.indexOf(y);
+        return lines.get(index);
     }
 
     public void assign(final Position position, final Piece piece) {

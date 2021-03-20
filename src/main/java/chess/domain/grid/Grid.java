@@ -39,13 +39,6 @@ public class Grid {
         update(sourcePiece, targetPiece);
     }
 
-    public Piece piece(final Position position) {
-        char x = position.x();
-        char y = position.y();
-        Line line = lines.line(y);
-        return line.findPiece(x);
-    }
-
     public double score(final boolean isBlack) {
         return lines.totalScore(isBlack) - pawnScoreInSameColumn(isBlack);
     }
