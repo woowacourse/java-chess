@@ -1,8 +1,9 @@
-package chess.domain;
+package chess.domain.game;
 
 import chess.domain.piece.Team;
 
 public class Turn {
+
     private Team team;
 
     public Turn() {
