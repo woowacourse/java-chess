@@ -31,11 +31,15 @@ class KnightTest {
         Piece knight = new Knight(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(knight, current);
-        Board board = BoardFactory.initializeBoard();
-        Piece firstBlackPiece = board.findPieceBy(Position.ofName("d7"));
-        Piece secondBlackPiece = board.findPieceBy(Position.ofName("f7"));
-        board.move(firstBlackPiece, Position.ofName("d6"));
-        board.move(secondBlackPiece, Position.ofName("f6"));
+        Board board = new Board();
+        Piece firstBlackPiece = new Bishop(PieceColor.BLACK);
+        Piece secondBlackPiece = new Bishop(PieceColor.BLACK);
+        Piece firstWhitePiece = new Bishop(PieceColor.WHITE);
+        Piece secondWhitePiece = new Bishop(PieceColor.WHITE);
+        board.putPiece(firstBlackPiece, Position.ofName("d6"));
+        board.putPiece(secondBlackPiece, Position.ofName("f6"));
+        board.putPiece(firstWhitePiece, Position.ofName("d2"));
+        board.putPiece(secondWhitePiece, Position.ofName("f2"));
         assertThat(paths.removeObstacles(knight, board).positions()).isEqualTo(
                 knightE4WithObstacles());
     }
@@ -46,8 +50,8 @@ class KnightTest {
                 Position.ofName("f6"),
                 Position.ofName("g5"),
                 Position.ofName("g3"),
-                Position.ofName("d2"),
                 Position.ofName("f2"),
+                Position.ofName("d2"),
                 Position.ofName("c5"),
                 Position.ofName("c3")
         );

@@ -21,16 +21,19 @@ public class Paths {
 
     public Paths findAllPath(Piece piece, Position currentPosition) {
         return new Paths(piece.directions().stream()
-                .map(direction -> findPathInDirection(direction, currentPosition))
+                .map(direction -> findPathInDirection(piece, direction, currentPosition))
                 .collect(Collectors.toList())
         );
     }
 
-    private Path findPathInDirection(Direction direction, Position currentPosition) {
+    private Path findPathInDirection(Piece piece, Direction direction, Position currentPosition) {
         List<Position> positions = new ArrayList<>();
         while (!currentPosition.isBlockedWhenGoTo(direction)) {
             positions.add(currentPosition.moveTo(direction));
             currentPosition = currentPosition.moveTo(direction);
+            if (piece.isKing() || piece.isKnight() || piece.isPawn()) {
+                break;
+            }
         }
         return new Path(positions);
     }
