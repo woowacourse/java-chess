@@ -1,21 +1,16 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.Color;
 import chess.domain.Command;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
 
 public class ChessController {
     public void run() {
         try {
             ChessGame chessGame = new ChessGame();
             OutputView.printStartMessage();
-            Command firstCommand = new Command(InputView.inputRunningCommand());
+            Command firstCommand = new Command(InputView.command());
             firstCommand.validateRightFirstCommand();
             if (firstCommand.isStart()) {
                 OutputView.printChessBoard(chessGame.getCurrentPieces());
@@ -34,7 +29,7 @@ public class ChessController {
     public void play(ChessGame chessGame) {
         try {
             while (chessGame.isRunning()) {
-                Command command = new Command(InputView.inputRunningCommand());
+                Command command = new Command(InputView.command());
                 command.validateRunningCommand();
                 if (command.isEnd()) {
                     break;
