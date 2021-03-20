@@ -19,7 +19,7 @@ public abstract class Piece {
     }
 
     protected boolean isOpponent(final Piece piece) {
-        return this.team != piece.team;
+        return this.team == piece.team.oppositeTeam();
     }
 
     public boolean isSameTeam(final Team team) {

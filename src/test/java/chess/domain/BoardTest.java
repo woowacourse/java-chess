@@ -40,7 +40,7 @@ class BoardTest {
 
     @ParameterizedTest
     @DisplayName("폰 이동이 불가능한 경우")
-    @ValueSource(strings = {"a,2,a,3", "a,2,a,4"})
+    @ValueSource(strings = {"a,2,a,3", "a,2,a,4", "a,2,b,3"})
     void checkPawnPath(final String input) {
         final Team team = Team.WHITE;
         board.unwrap().put(new Position("a", "3"), new Queen(team));
