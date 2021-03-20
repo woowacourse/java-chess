@@ -1,7 +1,6 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.player.TeamType;
 import org.junit.jupiter.api.DisplayName;

@@ -37,20 +37,6 @@ public class Application {
             executeCommand(command, board, playerCommand);
             OutputView.printBoard(board);
         }
-
-
-
-
-//
-//        List<String> playerCommand = InputView.inputPlayerCommand();
-//        Command command = Command.findCommand(playerCommand.get(0));
-//
-//        while (command != Command.END && !board.isKingCheckmate()) {
-//            executeCommand(command, board, playerCommand);
-//            OutputView.printBoard(board);
-//            playerCommand = InputView.inputPlayerCommand();
-//            command = Command.findCommand(playerCommand.get(0));
-//        }
         OutputView.printWinner(board.winner());
     }
 

@@ -36,7 +36,7 @@ class BoardTest {
             Arguments.of(BOARD.find(new Coordinate(File.F, Rank.EIGHT)), "B"),
             Arguments.of(BOARD.find(new Coordinate(File.G, Rank.EIGHT)), "N"),
             Arguments.of(BOARD.find(new Coordinate(File.H, Rank.EIGHT)), "R")
-            );
+        );
     }
 
     private static Stream<Arguments> getDefaultWhitePieces() {
@@ -178,7 +178,7 @@ class BoardTest {
         cells.put(Coordinate.from("b8"), new King(TeamType.BLACK));
         cells.put(Coordinate.from("c8"), new Rook(TeamType.BLACK));
         cells.put(Coordinate.from("a7"), new Pawn(TeamType.BLACK));
-        cells.put(Coordinate.from("c7"),  new Pawn(TeamType.BLACK));
+        cells.put(Coordinate.from("c7"), new Pawn(TeamType.BLACK));
         cells.put(Coordinate.from("d7"), new Bishop(TeamType.BLACK));
         cells.put(Coordinate.from("b6"), new Pawn(TeamType.BLACK));
         cells.put(Coordinate.from("e6"), new Queen(TeamType.BLACK));

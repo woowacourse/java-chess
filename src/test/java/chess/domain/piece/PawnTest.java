@@ -137,6 +137,7 @@ class PawnTest {
                 assertThat(isMovable).isFalse();
             }
         }
+
         @DisplayName("백팀일 경우")
         @Nested
         class WhiteTeam {

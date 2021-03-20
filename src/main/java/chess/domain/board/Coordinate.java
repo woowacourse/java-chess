@@ -43,7 +43,7 @@ public class Coordinate {
     public Coordinate moveForward(TeamType teamType) {
         if (teamType == TeamType.BLACK) {
             return new Coordinate(this.file, this.rank.decrease());
-       }
+        }
         return null;
     }
 

@@ -6,7 +6,6 @@ import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public abstract class Piece {
 
@@ -22,7 +21,8 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate) {
+    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
+        Coordinate targetCoordinate) {
         Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
         List<Coordinate> possibleCoordinates = new ArrayList<>();
         List<Direction> directions = getDirections();

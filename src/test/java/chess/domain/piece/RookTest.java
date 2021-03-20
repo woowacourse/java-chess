@@ -2,12 +2,10 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.player.TeamType;
-import java.util.List;
 import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -69,7 +67,7 @@ class RookTest {
 
         boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
         assertThat(isMovable).isFalse();
-     }
+    }
 
     @DisplayName("빈 체스판 - 룩 이동 - 이동 불가 - 도착 위치에 자신의 기물 존재")
     @Test
