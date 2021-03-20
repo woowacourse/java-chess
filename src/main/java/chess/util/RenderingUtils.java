@@ -15,17 +15,17 @@ public class RenderingUtils {
 
     public static String renderBoard(Board board) {
         return Stream.of(Row.values())
-                .map(index -> renderRow(board, index))
-                .collect(Collectors.joining("\n"))
-                ;
+            .map(index -> renderRow(board, index))
+            .collect(Collectors.joining("\n"))
+            ;
     }
 
     private static String renderRow(Board board, Row row) {
         return Stream.of(Column.values())
-                .map(column -> Position.ofColumnAndRow(column, row))
-                .map(position -> renderPosition(board.findPieceBy(position)))
-                .collect(Collectors.joining())
-                ;
+            .map(column -> Position.ofColumnAndRow(column, row))
+            .map(position -> renderPosition(board.findPieceBy(position)))
+            .collect(Collectors.joining())
+            ;
     }
 
     private static String renderPosition(Piece piece) {

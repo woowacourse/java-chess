@@ -3,7 +3,7 @@ package chess.domain.piece;
 import chess.domain.piece.strategy.Direction;
 import java.util.List;
 
-public class WhitePawn extends Pawn{
+public class WhitePawn extends Pawn {
 
     public WhitePawn() {
         super(PieceColor.WHITE);

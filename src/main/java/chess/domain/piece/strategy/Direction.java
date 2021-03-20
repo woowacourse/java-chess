@@ -13,8 +13,8 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     UP_LEFT(-1, 1),
 
-    UU(0,2),
-    DD(0,-2),
+    UU(0, 2),
+    DD(0, -2),
 
     L_UU(-1, 2),
     R_UU(1, 2),

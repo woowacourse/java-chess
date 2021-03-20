@@ -22,8 +22,8 @@ public class Game {
     public Game() {
         board = BoardFactory.initializeBoard();
         players = Players.of(Arrays.asList(
-                Player.of(PieceColor.WHITE),
-                Player.of(PieceColor.BLACK)
+            Player.of(PieceColor.WHITE),
+            Player.of(PieceColor.BLACK)
         ));
         currentColor = PieceColor.WHITE;
         isPlaying = true;
@@ -38,7 +38,8 @@ public class Game {
         if (Command.isStatus(values.get(0))) {
             Result result = new Result(board);
             OutputView.printScore(currentColor, result.calculateTotalScore(currentColor));
-            OutputView.printScore(getCurrentColor().reversed(), result.calculateTotalScore(getCurrentColor().reversed()));
+            OutputView.printScore(getCurrentColor().reversed(),
+                result.calculateTotalScore(getCurrentColor().reversed()));
             OutputView.printWinner(result.findWinner());
             return;
         }

@@ -38,23 +38,23 @@ public class Path {
             if (piece.isSameSide(thatPiece)) {
                 break;
             }
-            if(piece.hasColor(PieceColor.WHITE) && !thisPosition.isWhitePawnStartLine()){
-                if(thisPosition.rowGap(position) != 1){
+            if (piece.hasColor(PieceColor.WHITE) && !thisPosition.isWhitePawnStartLine()) {
+                if (thisPosition.rowGap(position) != 1) {
                     break;
                 }
             }
-            if(piece.hasColor(PieceColor.BLACK) && !thisPosition.isBlackPawnStartLine()){
-                if(thisPosition.rowGap(position) != 1){
+            if (piece.hasColor(PieceColor.BLACK) && !thisPosition.isBlackPawnStartLine()) {
+                if (thisPosition.rowGap(position) != 1) {
                     break;
                 }
             }
-            if(thisPosition.isDiagonal(position)){
-                if(thatPiece.isEmpty()){
+            if (thisPosition.isDiagonal(position)) {
+                if (thatPiece.isEmpty()) {
                     break;
                 }
             }
-            if(thisPosition.isStraight(position)){
-                if(piece.isEnemy(thatPiece)){
+            if (thisPosition.isStraight(position)) {
+                if (piece.isEnemy(thatPiece)) {
                     break;
                 }
             }
