@@ -2,7 +2,7 @@ package chess.domain;
 
 import java.util.*;
 
-public class Position {
+public final class Position {
     private static final Map<String, Position> positionMap = new HashMap<>();
 
     static {

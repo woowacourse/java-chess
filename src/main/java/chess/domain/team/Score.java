@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class Score {
+public final class Score {
     private static final Map<Piece, Double> scoreByPiece = new HashMap<>();
 
     private static final double SINGLE_KING_SCORE = 0.0;

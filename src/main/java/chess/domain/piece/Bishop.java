@@ -5,7 +5,7 @@ import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
     private static final int BISHOP_UNICODE_DECIMAL = 9815;
 
     public Bishop() {

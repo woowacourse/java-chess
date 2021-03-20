@@ -5,7 +5,7 @@ import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     private static final int PAWN_UNICODE_DECIMAL = 9817;
 
     private final int direction;

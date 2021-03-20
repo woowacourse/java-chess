@@ -4,7 +4,7 @@ import chess.domain.Position;
 
 import java.util.Map;
 
-public class King extends Piece {
+public final class King extends Piece {
     private static final int KING_UNICODE_DECIMAL = 9812;
 
     public King() {

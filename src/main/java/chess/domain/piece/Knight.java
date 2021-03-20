@@ -4,7 +4,7 @@ import chess.domain.Position;
 
 import java.util.Map;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
     private static final int KNIGHT_UNICODE_DECIMAL = 9816;
 
     public Knight() {

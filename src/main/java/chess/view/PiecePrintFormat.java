@@ -5,7 +5,7 @@ import chess.domain.piece.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PiecePrintFormat {
+public final class PiecePrintFormat {
     private static final Map<Piece, String> pieceFormat = new HashMap<>();
 
     static {

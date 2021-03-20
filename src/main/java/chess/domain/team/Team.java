@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 
 import java.util.Map;
 
-public class Team {
+public final class Team {
     private final PiecePosition piecePosition;
     private final PieceCaptured pieceCaptured;
     private final Score score;
@@ -16,31 +16,31 @@ public class Team {
         this.score = new Score();
     }
 
-    public final Piece choosePiece(final Position position) {
+    public Piece choosePiece(final Position position) {
         return piecePosition.choosePiece(position);
     }
 
-    public final void movePiece(final Position current, final Position destination) {
+    public void movePiece(final Position current, final Position destination) {
         piecePosition.movePiece(current, destination);
     }
 
-    public final boolean havePiece(final Position position) {
+    public boolean havePiece(final Position position) {
         return piecePosition.havePiece(position);
     }
 
-    public final Piece deletePiece(final Position destination) {
+    public Piece deletePiece(final Position destination) {
         return piecePosition.deletePiece(destination);
     }
 
-    public final void catchPiece(final Piece piece) {
+    public void catchPiece(final Piece piece) {
         pieceCaptured.add(piece);
     }
 
-    public final double calculateScore() {
+    public double calculateScore() {
         return score.calculateScore(currentPiecePosition());
     }
 
-    public final Map<Position, Piece> currentPiecePosition() {
+    public Map<Position, Piece> currentPiecePosition() {
         return piecePosition.getPiecePosition();
     }
 }

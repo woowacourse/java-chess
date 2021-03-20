@@ -5,7 +5,7 @@ import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
     private static final int QUEEN_UNICODE_DECIMAL = 9813;
 
     public Queen() {

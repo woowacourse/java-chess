@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PieceCaptured {
+public final class PieceCaptured {
     private final List<Piece> pieceCaptured;
 
     public PieceCaptured() {

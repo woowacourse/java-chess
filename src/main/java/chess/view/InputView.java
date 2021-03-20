@@ -5,14 +5,14 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-public class InputView {
+public final class InputView {
     private static final Scanner scanner = new Scanner(System.in);
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
-    public static final int THREE_WORDS = 3;
-    public static final int ONE_WORD = 1;
+    private static final int THREE_WORDS = 3;
+    private static final int ONE_WORD = 1;
 
     private InputView() {
     }

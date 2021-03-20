@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class ChessController {
+public final class ChessController {
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
 

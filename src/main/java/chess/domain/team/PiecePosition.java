@@ -6,7 +6,7 @@ import chess.domain.piece.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PiecePosition {
+public final class PiecePosition {
     private final Map<Position, Piece> piecePosition;
 
     public PiecePosition(final int pawnColumn, final int pawnDirection, final int pieceColumn) {

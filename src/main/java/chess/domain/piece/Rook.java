@@ -5,7 +5,7 @@ import chess.domain.Position;
 import java.util.List;
 import java.util.Map;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
     private static final int ROOK_UNICODE_DECIMAL = 9814;
 
     public Rook() {
