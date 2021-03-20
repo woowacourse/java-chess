@@ -35,8 +35,6 @@ public class Game {
             throw new IllegalArgumentException("말을 움직일 수 없습니다.");
         }
         Position target = Position.of(values.get(2));
-//        board.move(players.currentPlayer(currentColor), values);
-//        board.move2(source, target);
         board.move3(chosenPiece, target);
         currentColor = currentColor.reversed();
     }

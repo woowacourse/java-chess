@@ -17,7 +17,7 @@ public class Path {
         return positions.contains(position);
     }
 
-    public List<Position> removeObstacleinPath(Board board) {
+    public List<Position> removeObstacleInPath(Board board) {
         List<Position> cleanPath = new ArrayList<>();
         for(Position position : positions) {
             if(!board.isEmpty(position)){

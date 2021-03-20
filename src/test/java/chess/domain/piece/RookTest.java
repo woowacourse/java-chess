@@ -1,9 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Board;
-import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,13 +11,13 @@ class RookTest {
     @Test
     void generatePath() {
         Board board = new Board();
-        Position current = new Position(Column.E, Row.FOUR);
+        Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
 
         board.putPiece(rook, current);
-        board.putPiece(new Rook(PieceColor.WHITE),new Position(Column.E, Row.TWO));
-        board.putPiece(new Bishop(PieceColor.WHITE),new Position(Column.B, Row.FOUR));
-        board.putPiece(new Rook(PieceColor.BLACK),new Position(Column.E, Row.EIGHT));
+        board.putPiece(new Rook(PieceColor.WHITE), Position.of("e2"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("b4"));
+        board.putPiece(new Rook(PieceColor.BLACK), Position.of("e8"));
         Paths paths = new Paths(rook.findAllPath(current));
 
         for (Position position : paths.removeObstacles(board).positions()) {
