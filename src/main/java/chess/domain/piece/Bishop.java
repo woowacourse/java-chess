@@ -5,15 +5,15 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public class Bishop extends Piece {
+public class Bishop extends Piece implements FlexibleDistanceMovable {
 
-    public Bishop(Color color) {
-        super(color,true);
-        this.type = Type.BISHOP;
-    }
+	public Bishop(Color color, Position position) {
+		super(color, position);
+		this.type = Type.BISHOP;
+	}
 
-    @Override
-    public List<Direction> direction() {
-        return Direction.diagonalDirection();
-    }
+	@Override
+	public List<Direction> directions() {
+		return Direction.diagonalDirection();
+	}
 }

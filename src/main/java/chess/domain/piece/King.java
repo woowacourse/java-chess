@@ -5,15 +5,15 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public class King extends Piece {
+public class King extends Piece implements FixedDistanceMovable {
 
-    public King(Color color) {
-        super(color,false);
-        this.type = Type.KING;
-    }
+	public King(Color color, Position position) {
+		super(color, position);
+		this.type = Type.KING;
+	}
 
-    @Override
-    public List<Direction> direction() {
-        return Direction.everyDirection();
-    }
+	@Override
+	public List<Direction> directions() {
+		return Direction.everyDirection();
+	}
 }

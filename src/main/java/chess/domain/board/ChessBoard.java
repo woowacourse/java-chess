@@ -2,126 +2,141 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessBoard {
-    public static final int LAST_BOARD_INDEX = 7;
-    public static final int BOARD_SIZE = 8;
-    private static final double PAWN_SCORE_PUNISHMENT_RATIO = 0.5;
-    private static final int NUMBER_OF_KINGS = 2;
-    private static final int COLUMN_NEIGHBOR_PAWN = 2;
+	public static final int BOARD_SIZE = 8;
+	private static final double PAWN_PUNISHMENT_RATIO = 0.5;
+	private static final int NUMBER_OF_KINGS = 2;
+	private static final int MINIMUM_PUNISHABLE_PAWN_COUNT = 2;
+	private static final String BLANK_MOVE_ERROR = "공백은 움직일 수 없습니다.";
 
-    private final List<Square> chessBoard = new ArrayList<>();
+	private final Map<Position, Piece> board = new LinkedHashMap<>();
 
-    public ChessBoard() {
-        initBlank();
-    }
+	public ChessBoard() {
+		initBlank();
+	}
 
-    public void initBoard() {
-        initBlack();
-        initWhite();
-    }
+	public void initBoard() {
+		initBlack();
+		initWhite();
+	}
 
-    private void initBlank() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                chessBoard.add(new Square(Position.of(i, j), new Blank(Color.NO_COLOR)));
-            }
-        }
-    }
+	private void initBlank() {
+		for (int i = 0; i < BOARD_SIZE; i++) {
+			for (int j = 0; j < BOARD_SIZE; j++) {
+				board.put(Position.of(i, j), new Blank(Color.NO_COLOR, Position.of(i, j)));
+			}
+		}
+	}
 
-    private void initBlack() {
-        getSquare(Position.of("a8")).replacePiece(new Rook(Color.BLACK));
-        getSquare(Position.of("b8")).replacePiece(new Knight(Color.BLACK));
-        getSquare(Position.of("c8")).replacePiece(new Bishop(Color.BLACK));
-        getSquare(Position.of("d8")).replacePiece(new Queen(Color.BLACK));
-        getSquare(Position.of("e8")).replacePiece(new King(Color.BLACK));
-        getSquare(Position.of("f8")).replacePiece(new Bishop(Color.BLACK));
-        getSquare(Position.of("g8")).replacePiece(new Knight(Color.BLACK));
-        getSquare(Position.of("h8")).replacePiece(new Rook(Color.BLACK));
+	private void initBlack() {
+		replace(Position.of("a8"), new Rook(Color.BLACK, Position.of("a8")));
+		replace(Position.of("b8"), new Knight(Color.BLACK, Position.of("b8")));
+		replace(Position.of("c8"), new Bishop(Color.BLACK, Position.of("c8")));
+		replace(Position.of("d8"), new Queen(Color.BLACK, Position.of("d8")));
+		replace(Position.of("e8"), new King(Color.BLACK, Position.of("e8")));
+		replace(Position.of("f8"), new Bishop(Color.BLACK, Position.of("f8")));
+		replace(Position.of("g8"), new Knight(Color.BLACK, Position.of("g8")));
+		replace(Position.of("h8"), new Rook(Color.BLACK, Position.of("h8")));
 
-        getSquare(Position.of("a7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("b7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("c7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("d7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("e7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("f7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("g7")).replacePiece(new Pawn(Color.BLACK));
-        getSquare(Position.of("h7")).replacePiece(new Pawn(Color.BLACK));
-    }
+		replace(Position.of("a7"), new Pawn(Color.BLACK, Position.of("a7")));
+		replace(Position.of("b7"), new Pawn(Color.BLACK, Position.of("b7")));
+		replace(Position.of("c7"), new Pawn(Color.BLACK, Position.of("c7")));
+		replace(Position.of("d7"), new Pawn(Color.BLACK, Position.of("d7")));
+		replace(Position.of("e7"), new Pawn(Color.BLACK, Position.of("e7")));
+		replace(Position.of("f7"), new Pawn(Color.BLACK, Position.of("f7")));
+		replace(Position.of("g7"), new Pawn(Color.BLACK, Position.of("g7")));
+		replace(Position.of("h7"), new Pawn(Color.BLACK, Position.of("h7")));
+	}
 
-    private void initWhite() {
-        getSquare(Position.of("a1")).replacePiece(new Rook(Color.WHITE));
-        getSquare(Position.of("b1")).replacePiece(new Knight(Color.WHITE));
-        getSquare(Position.of("c1")).replacePiece(new Bishop(Color.WHITE));
-        getSquare(Position.of("d1")).replacePiece(new Queen(Color.WHITE));
-        getSquare(Position.of("e1")).replacePiece(new King(Color.WHITE));
-        getSquare(Position.of("f1")).replacePiece(new Bishop(Color.WHITE));
-        getSquare(Position.of("g1")).replacePiece(new Knight(Color.WHITE));
-        getSquare(Position.of("h1")).replacePiece(new Rook(Color.WHITE));
+	private void initWhite() {
+		replace(Position.of("a1"), new Rook(Color.WHITE, Position.of("a1")));
+		replace(Position.of("b1"), new Knight(Color.WHITE, Position.of("b1")));
+		replace(Position.of("c1"), new Bishop(Color.WHITE, Position.of("c1")));
+		replace(Position.of("d1"), new Queen(Color.WHITE, Position.of("d1")));
+		replace(Position.of("e1"), new King(Color.WHITE, Position.of("e1")));
+		replace(Position.of("f1"), new Bishop(Color.WHITE, Position.of("f1")));
+		replace(Position.of("g1"), new Knight(Color.WHITE, Position.of("g1")));
+		replace(Position.of("h1"), new Rook(Color.WHITE, Position.of("h1")));
 
-        getSquare(Position.of("a2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("b2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("c2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("d2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("e2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("f2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("g2")).replacePiece(new Pawn(Color.WHITE));
-        getSquare(Position.of("h2")).replacePiece(new Pawn(Color.WHITE));
-    }
+		replace(Position.of("a2"), new Pawn(Color.WHITE, Position.of("a2")));
+		replace(Position.of("b2"), new Pawn(Color.WHITE, Position.of("b2")));
+		replace(Position.of("c2"), new Pawn(Color.WHITE, Position.of("c2")));
+		replace(Position.of("d2"), new Pawn(Color.WHITE, Position.of("d2")));
+		replace(Position.of("e2"), new Pawn(Color.WHITE, Position.of("e2")));
+		replace(Position.of("f2"), new Pawn(Color.WHITE, Position.of("f2")));
+		replace(Position.of("g2"), new Pawn(Color.WHITE, Position.of("g2")));
+		replace(Position.of("h2"), new Pawn(Color.WHITE, Position.of("h2")));
+	}
 
-    public List<Square> getChessBoard() {
-        return chessBoard;
-    }
+	public void replace(Position position, Piece piece) {
+		board.replace(position, piece);
+	}
 
-    public void move(String source, String target) {
-        Square sourceSquare = getSquare(Position.of(source));
-        Square targetSquare = getSquare(Position.of(target));
-        sourceSquare.move(this, targetSquare);
-    }
+	public void move(String source, String target) {
+		Position sourcePosition = Position.of(source);
+		Position targetPosition = Position.of(target);
+		Direction direction = Path.findDirection(this, sourcePosition, targetPosition);
 
-    public Square getSquare(Position position) {
-        return chessBoard.stream()
-            .filter(square -> square.hasSamePosition(position))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
-    }
+		Piece sourcePiece = getPieceAt(sourcePosition);
+		sourcePiece.move(this, direction, targetPosition);
 
-    public boolean isOver() {
-        long kingCount = chessBoard.stream()
-            .filter(Square::hasKing)
-            .count();
-        return kingCount < NUMBER_OF_KINGS;
-    }
+		board.replace(targetPosition, sourcePiece);
+		board.replace(sourcePosition, new Blank(Color.NO_COLOR, sourcePosition));
+	}
 
-    public double getScore(Color color) {
-        double score = calculateScore(color);
-        Map<Column, Long> pawnCount = calculatePawnCount(color);
-        double punishmentScore = calculatePunishmentScore(pawnCount);
-        return score - punishmentScore;
-    }
+	public List<Direction> getCandidateDirections(Position position) {
+		return board.get(position).directions();
+	}
 
-    private double calculateScore(Color color) {
-        return chessBoard.stream()
-            .filter(square -> square.hasSameColor(color))
-            .mapToDouble(Square::score)
-            .sum();
-    }
+	public Map<Position, Piece> getChessBoard() {
+		return board;
+	}
 
-    private Map<Column, Long> calculatePawnCount(Color color) {
-        return chessBoard.stream()
-            .filter(Square::hasPawn)
-            .filter(square -> square.hasSameColor(color))
-            .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
-    }
+	public Piece getPieceAt(Position position) {
+		return board.get(position);
+	}
 
-    private double calculatePunishmentScore(Map<Column, Long> pawnCount) {
-        return pawnCount.values().stream()
-            .filter(count -> count >= COLUMN_NEIGHBOR_PAWN)
-            .mapToDouble(count -> count * PAWN_SCORE_PUNISHMENT_RATIO)
-            .sum();
-    }
+	public boolean isOngoing() {
+		long kingCount = board.values()
+				.stream()
+				.filter(Piece::isKing)
+				.count();
+		return kingCount == NUMBER_OF_KINGS;
+	}
+
+	public double getScore(Color color) {
+		double score = calculateScore(color);
+		Map<Column, Long> pawnCountPerColumn = calculatePawnCount(color);
+		double punishmentScore = calculatePunishmentScore(pawnCountPerColumn);
+		return score - punishmentScore;
+	}
+
+	private double calculateScore(Color color) {
+		return board.values()
+				.stream()
+				.filter(piece -> piece.isSameColor(color))
+				.mapToDouble(Piece::score)
+				.sum();
+	}
+
+	private Map<Column, Long> calculatePawnCount(Color color) {
+		return board.entrySet()
+				.stream()
+				.filter(positionPieceEntry -> positionPieceEntry.getValue().isPawn())
+				.filter(positionPieceEntry -> positionPieceEntry.getValue().isSameColor(color))
+				.collect(Collectors.groupingBy(positionPieceEntry -> positionPieceEntry.getKey().getColumn(), Collectors.counting()));
+	}
+
+	private double calculatePunishmentScore(Map<Column, Long> pawnCountPerColumn) {
+		return pawnCountPerColumn.values()
+				.stream()
+				.filter(count -> count >= MINIMUM_PUNISHABLE_PAWN_COUNT)
+				.mapToDouble(count -> count * PAWN_PUNISHMENT_RATIO)
+				.sum();
+	}
 }

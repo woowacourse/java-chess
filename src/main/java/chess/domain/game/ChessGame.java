@@ -2,56 +2,61 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.board.Square;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+
 import java.util.List;
 
 public class ChessGame {
+	public static final String TURN_MESSAGE = "%s의 차례입니다.";
+	public static final String NOT_MOVING_ERROR = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
+	private static final int SOURCE_INDEX = 1;
+	private static final int TARGET_INDEX = 2;
 
-    public static final String TURN_MESSAGE = "%s의 차례입니다.";
-    public static final int SOURCE_INDEX = 1;
-    public static final int TARGET_INDEX = 2;
+	private final ChessBoard chessBoard;
+	private Color turn;
 
-    private final ChessBoard chessBoard;
-    private Color turn;
+	public ChessGame(ChessBoard chessBoard, Color turn) {
+		this.chessBoard = chessBoard;
+		this.turn = turn;
+	}
 
-    public ChessGame(ChessBoard chessBoard, Color turn) {
-        this.chessBoard = chessBoard;
-        this.turn = turn;
-    }
+	public void start() {
+		chessBoard.initBoard();
+	}
 
-    public void start() {
-        chessBoard.initBoard();
-    }
+	public void run(List<String> input) {
+		String source = input.get(SOURCE_INDEX);
+		String target = input.get(TARGET_INDEX);
+		if (source.equals(target)) {
+			throw new IllegalArgumentException(NOT_MOVING_ERROR);
+		}
 
-    public void run(List<String> input) {
-        String source = input.get(SOURCE_INDEX);
-        String target = input.get(TARGET_INDEX);
-        Square sourceSquare = chessBoard.getSquare(Position.of(source));
+		Piece sourcePiece = chessBoard.getPieceAt(Position.of(source));
 
-        validateTurn(sourceSquare);
+		validateTurn(sourcePiece);
 
-        chessBoard.move(source, target);
-        turn = turn.getOppositeColor();
-    }
+		chessBoard.move(source, target);
+		turn = turn.getOppositeColor();
+	}
 
-    private void validateTurn(Square sourceSquare) {
-        if (!sourceSquare.hasSameColor(turn)) {
-            throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
-        }
-    }
+	private void validateTurn(Piece sourcePiece) {
+		if (!sourcePiece.isSameColor(turn)) {
+			throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
+		}
+	}
 
-    public boolean isOver() {
-        return chessBoard.isOver();
-    }
+	public boolean isOngoing() {
+		return chessBoard.isOngoing();
+	}
 
-    public Result result() {
-        double blackScore = chessBoard.getScore(Color.WHITE);
-        double whiteScore = chessBoard.getScore(Color.BLACK);
-        return new Result(blackScore, whiteScore);
-    }
+	public Result result() {
+		double blackScore = chessBoard.getScore(Color.WHITE);
+		double whiteScore = chessBoard.getScore(Color.BLACK);
+		return new Result(blackScore, whiteScore);
+	}
 
-    public ChessBoard getChessBoard() {
-        return chessBoard;
-    }
+	public ChessBoard getChessBoard() {
+		return chessBoard;
+	}
 }
