@@ -20,8 +20,7 @@ public enum Direction {
     RIGHT_RIGHT_UP(2, 1),
     RIGHT_RIGHT_DOWN(2, -1),
     RIGHT_UP_UP(1, 2),
-    RIGHT_DOWN_DOWN(1, -2),
-    OTHERS(0, 0);
+    RIGHT_DOWN_DOWN(1, -2);
 
     private final int x;
     private final int y;
@@ -33,7 +32,7 @@ public enum Direction {
 
     public static Direction findDirection(int fileDiff, int rankDiff) {
         if (fileDiff == 0 && rankDiff == 0) {
-            return OTHERS;
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
         if (fileDiff == 0) {
             return verticalDirection(rankDiff);
@@ -47,7 +46,7 @@ public enum Direction {
         if (Math.abs(fileDiff) + Math.abs(rankDiff) == 3) {
             return knightDirection(fileDiff, rankDiff);
         }
-        return OTHERS;
+        throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
     }
 
     private static Direction knightDirection(int fileDiff, int rankDiff) {

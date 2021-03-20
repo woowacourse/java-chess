@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
@@ -57,8 +58,8 @@ class KingTest {
     void cannotMoveInvalidDirection2() {
         Coordinate destination = Coordinate.from("e8");
 
-        boolean isMovable = king.isMovableTo(board, currentCoordinate, destination);
-        assertThat(isMovable).isFalse();
+        assertThatThrownBy(() -> king.isMovableTo(board, currentCoordinate, destination))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("King은 두 칸 이상 이동할 수 없다.")
