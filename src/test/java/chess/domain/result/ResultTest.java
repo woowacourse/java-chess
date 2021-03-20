@@ -1,9 +1,13 @@
-package chess.domain.piece;
+package chess.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.BlackPawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.PieceColor;
+import chess.domain.piece.WhitePawn;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
 import chess.domain.result.Score;

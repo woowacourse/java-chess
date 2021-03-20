@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.player;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -7,7 +7,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.player.Player;
 import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
