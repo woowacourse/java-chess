@@ -43,6 +43,10 @@ public final class Position {
         return Position.of(moveDirection.column() + column, moveDirection.row() + row);
     }
 
+    public int column() {
+        return column;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

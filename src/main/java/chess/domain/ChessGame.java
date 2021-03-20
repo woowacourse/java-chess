@@ -2,6 +2,8 @@ package chess.domain;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.scorecalculator.ChessScoreCalculator;
+import chess.domain.scorecalculator.ScoreCalculator;
 import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
 import java.util.ArrayList;
@@ -16,11 +18,13 @@ public final class ChessGame {
     private static final int END_LINE = 7;
 
     private final List<Piece> pieces;
+    private final ScoreCalculator scoreCalculator;
     private TeamColor currentColor;
 
-    private ChessGame(List<Piece> pieces, TeamColor teamColor) {
+    private ChessGame(List<Piece> pieces, TeamColor teamColor, ScoreCalculator scoreCalculator) {
         this.pieces = new ArrayList<>(pieces);
         currentColor = teamColor;
+        this.scoreCalculator = scoreCalculator;
     }
 
     public static ChessGame initialGame() {
@@ -31,7 +35,7 @@ public final class ChessGame {
     }
 
     public static ChessGame from(List<Piece> pieces, TeamColor teamColor) {
-        ChessGame chessGame = new ChessGame(pieces, teamColor);
+        ChessGame chessGame = new ChessGame(pieces, teamColor, new ChessScoreCalculator());
         chessGame.updateMovablePositions();
         return chessGame;
     }
@@ -41,28 +45,8 @@ public final class ChessGame {
             piece.updateMovablePositions(
                 existPiecePositions(),
                 existPiecePositionsByColor(piece.enemyColor())
-                )
+            )
         );
-    }
-
-    public void movePiece(Position currentPosition, Position targetPosition) {
-        Piece currentPiece = pieceByPosition(currentPosition).orElseThrow(PieceNotFoundException::new);;
-        if (!currentPiece.isSameColor(currentColor)) {
-            throw new InvalidTurnException(currentColor);
-        }
-        Optional<Piece> targetPiece = pieceByPosition(targetPosition);
-
-        currentPiece.move(targetPosition);
-        targetPiece.ifPresent(pieces::remove);
-        updateMovablePositions();
-        currentColor = currentColor.reverse();
-
-    }
-
-    public Optional<Piece> pieceByPosition(Position currentPosition) {
-        return pieces.stream()
-            .filter(piece -> piece.samePosition(currentPosition))
-            .findAny();
     }
 
     private List<Position> existPiecePositions() {
@@ -75,6 +59,42 @@ public final class ChessGame {
         return pieces.stream()
             .filter(piece -> piece.isSameColor(teamColor))
             .map(Piece::currentPosition)
+            .collect(Collectors.toList());
+    }
+
+    public void movePiece(Position currentPosition, Position targetPosition) {
+        Piece currentPiece = pieceByPosition(currentPosition)
+            .orElseThrow(PieceNotFoundException::new);
+        ;
+        if (!currentPiece.isSameColor(currentColor)) {
+            throw new InvalidTurnException(currentColor);
+        }
+        Optional<Piece> targetPiece = pieceByPosition(targetPosition);
+
+        currentPiece.move(targetPosition);
+        targetPiece.ifPresent(pieces::remove);
+        updateMovablePositions();
+        currentColor = currentColor.reverse();
+    }
+
+    public Optional<Piece> pieceByPosition(Position currentPosition) {
+        return pieces.stream()
+            .filter(piece -> piece.samePosition(currentPosition))
+            .findAny();
+    }
+
+    public GameResult gameResult() {
+        return new GameResult(scoreByTeamColor(TeamColor.WHITE), scoreByTeamColor(TeamColor.BLACK));
+    }
+
+    private Score scoreByTeamColor(TeamColor teamColor) {
+        List<Piece> pieces = piecesByTeamColor(teamColor);
+        return scoreCalculator.calculate(pieces);
+    }
+
+    private List<Piece> piecesByTeamColor(TeamColor teamColor) {
+        return pieces.stream()
+            .filter(piece -> piece.isSameColor(teamColor))
             .collect(Collectors.toList());
     }
 }

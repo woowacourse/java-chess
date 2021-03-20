@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Position;
+import chess.domain.Score;
 import chess.domain.TeamColor;
 import chess.exception.ImpossibleMoveException;
 import java.util.ArrayList;
@@ -71,5 +72,17 @@ public abstract class Piece {
 
     public TeamColor enemyColor() {
         return details.color().reverse();
+    }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
+    public int column() {
+        return currentPosition.column();
+    }
+
+    public Score score() {
+        return details.score();
     }
 }

@@ -28,4 +28,8 @@ public final class Details {
     public TeamColor color() {
         return teamColor;
     }
+
+    public Score score() {
+        return score;
+    }
 }

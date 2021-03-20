@@ -4,6 +4,7 @@ import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Queen;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.InvalidTurnException;
@@ -56,5 +57,44 @@ class ChessGameTest {
 
         Assertions.assertThat(chessGame.pieceByPosition(knight.currentPosition())).contains(queen);
         Assertions.assertThat(chessGame.pieceByPosition(Position.of(1,1))).isEmpty();
+    }
+
+    @Test
+    @DisplayName("처음 시작할 때의 스코어")
+    void gameResult_initialScore() {
+        ChessGame chessGame = ChessGame.initialGame();
+        GameResult gameResult = chessGame.gameResult();
+
+        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(38));
+        Assertions.assertThat(gameResult.blackTeamScore()).isEqualTo(new Score(38));
+    }
+
+    @Test
+    @DisplayName("같은 행에 폰이 3개일 경우 점수 계산")
+    void gameResult_pawn_sameColumn() {
+        ChessGame chessGame = ChessGame.from(
+            Arrays.asList(
+                new Pawn(WHITE, Position.of(2, 3)),
+                new Pawn(WHITE, Position.of(2, 4))
+            ), WHITE
+        );
+        GameResult gameResult = chessGame.gameResult();
+
+        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(1.0));
+    }
+
+    @Test
+    @DisplayName("다른 행에 폰이 3개일 경우 점수 계산")
+    void gameResult_pawn_distinctColumn() {
+        ChessGame chessGame = ChessGame.from(
+            Arrays.asList(
+                new Pawn(WHITE, Position.of(3, 4)),
+                new Pawn(WHITE, Position.of(2, 4))
+            ), WHITE
+        );
+        GameResult gameResult = chessGame.gameResult();
+
+        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(2));
+        Assertions.assertThat(gameResult.winner()).isEqualTo(WHITE);
     }
 }
