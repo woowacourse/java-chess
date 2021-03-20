@@ -61,7 +61,6 @@ public class OutputView {
 
     private static void printResultScores(final Team team, final ChessResult result) {
         System.out.println(team.teamName() + "점수 : " + result.calculateScore(team));
-        System.out.println(
-            team.oppositeTeamName() + "점수 : " + result.calculateScore(team.oppositeTeam()));
+        System.out.println(team.oppositeTeamName() + "점수 : " + result.calculateScore(team.oppositeTeam()));
     }
 }

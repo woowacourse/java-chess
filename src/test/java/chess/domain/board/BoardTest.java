@@ -36,9 +36,8 @@ class BoardTest {
     @ValueSource(strings = {"a,1,a,7", "c,1,h,7", "d,1,d,8", "d,1,a,4", "b,1,c,2", "e,1,d,1"})
     void checkPath(final String input) {
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board
-            .move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]),
-                Team.WHITE))
+        assertThatThrownBy(
+            () -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

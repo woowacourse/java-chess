@@ -19,10 +19,8 @@ public class KingInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new King(Team.BLACK)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new King(Team.WHITE)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new King(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new King(Team.WHITE)));
         }
         return chessBoard;
     }

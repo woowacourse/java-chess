@@ -35,8 +35,7 @@ public class InputView {
 
     public static List<String> inputRuntimeCommand() {
         try {
-            final List<String> commands = Arrays
-                .asList(SCANNER.nextLine().toLowerCase().split(" "));
+            final List<String> commands = Arrays.asList(SCANNER.nextLine().toLowerCase().split(" "));
             validateRuntimeCommand(commands);
             return commands;
         } catch (IllegalStateException e) {
@@ -57,8 +56,7 @@ public class InputView {
 
     private static boolean isValidMoveCommand(final List<String> commands) {
         return MOVE_COMMAND.equals(commands.get(0)) && commands.size() == MOVE_COMMAND_SIZE &&
-            commands.get(1).length() == POSITION_LENGTH
-            && commands.get(2).length() == POSITION_LENGTH;
+            commands.get(1).length() == POSITION_LENGTH && commands.get(2).length() == POSITION_LENGTH;
     }
 
     public static boolean isStatusInput() {

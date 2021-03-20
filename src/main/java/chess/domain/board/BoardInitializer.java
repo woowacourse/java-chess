@@ -30,8 +30,7 @@ public class BoardInitializer {
     public static Map<Position, Piece> initializeBoard() {
         final Map<Position, Piece> chessBoard = new TreeMap<>();
         for (String horizontal : HORIZONTAL_RANGE) {
-            VERTICAL_RANGE.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), Blank.getInstance()));
+            VERTICAL_RANGE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), Blank.getInstance()));
         }
         locationInitializers.forEach(initializer -> chessBoard.putAll(initializer.initialize()));
         return chessBoard;

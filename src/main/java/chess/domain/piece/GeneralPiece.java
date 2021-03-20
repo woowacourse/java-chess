@@ -19,8 +19,7 @@ public abstract class GeneralPiece extends Piece {
 
     private boolean isPossibleDirection(final Position source, final Position target) {
         return possibleDirections.stream()
-            .anyMatch(
-                possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
+            .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
     }
 
     protected abstract List<Direction> createPossibleDirections();

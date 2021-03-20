@@ -20,10 +20,8 @@ public class BishopInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new Bishop(Team.BLACK)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new Bishop(Team.WHITE)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Bishop(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Bishop(Team.WHITE)));
         }
         return chessBoard;
     }

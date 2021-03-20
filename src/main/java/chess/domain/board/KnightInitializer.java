@@ -20,10 +20,8 @@ public class KnightInitializer implements LocationInitializer {
     public Map<Position, Piece> initialize() {
         final Map<Position, Piece> chessBoard = new HashMap<>();
         for (String horizontal : HORIZONTALS) {
-            VERTICALS_BLACK.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new Knight(Team.BLACK)));
-            VERTICALS_WHITE.forEach(vertical -> chessBoard
-                .put(new Position(horizontal, vertical), new Knight(Team.WHITE)));
+            VERTICALS_BLACK.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Knight(Team.BLACK)));
+            VERTICALS_WHITE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), new Knight(Team.WHITE)));
         }
         return chessBoard;
     }
