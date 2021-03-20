@@ -3,13 +3,13 @@ package chess.domain.piece;
 import java.util.List;
 import java.util.Map;
 
-public class Queen extends AbstractPiece {
+public final class Queen extends AbstractPiece {
 
     private static final String SYMBOL = "q";
     private static final double SCORE = 9;
     private static final int ABLE_LENGTH = 7;
 
-    public Queen(Color color, Position position) {
+    public Queen(final Color color, final Position position) {
         super(color, position);
     }
 
@@ -19,7 +19,7 @@ public class Queen extends AbstractPiece {
     }
 
     @Override
-    public Piece move(Position position, Map<Position, Piece> pieces) {
+    public Piece move(final Position position, final Map<Position, Piece> pieces) {
         final List<Direction> directions = Direction.everyDirection();
         Direction direction = findDirection(position, directions, ABLE_LENGTH);
 

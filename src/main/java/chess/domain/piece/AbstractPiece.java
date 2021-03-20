@@ -18,31 +18,31 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return color == this.color;
     }
 
     @Override
-    public boolean isSameColumn(Point point) {
+    public boolean isSameColumn(final Point point) {
         return position.isSameColumn(point);
     }
 
-    protected Direction findDirection(Position position, List<Direction> directions,
-        int ableLength) {
+    protected Direction findDirection(final Position position, final List<Direction> directions,
+        final int ableLength) {
         return directions.stream()
             .filter(direction -> this.position.canMove(position, direction, ableLength))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException(ERROR_CAN_NOT_MOVE));
     }
 
-    protected String changeColorSymbol(String symbol) {
+    protected String changeColorSymbol(final String symbol) {
         if (color.isBlack()) {
             return symbol.toUpperCase();
         }
         return symbol;
     }
 
-    protected void validateObstacle(Position position, Direction direction,
+    protected void validateObstacle(final Position position, final Direction direction,
         Map<Position, Piece> pieces) {
         int dx = direction.getXDegree();
         int dy = direction.getYDegree();
@@ -56,7 +56,7 @@ public abstract class AbstractPiece implements Piece {
         }
     }
 
-    private int findDistance(Position position, Direction direction) {
+    private int findDistance(final Position position, final Direction direction) {
         int dx = direction.getXDegree();
         int dy = direction.getYDegree();
 

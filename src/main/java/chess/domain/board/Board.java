@@ -5,7 +5,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import java.util.Map;
 
-public class Board {
+public final class Board {
 
     private final Pieces pieces = new Pieces();
     private State state;
@@ -15,7 +15,7 @@ public class Board {
         state.finish();
     }
 
-    public void movePiece(String sourceValue, String targetValue) {
+    public void movePiece(final String sourceValue, final String targetValue) {
         // todo - 상태패턴에게 책임 넘기기
         if (state.isFinish()) {
             throw new IllegalArgumentException("게임진행중이 아닙니다.");
@@ -23,7 +23,6 @@ public class Board {
         Position sourcePosition = Position.of(sourceValue);
         Position targetPosition = Position.of(targetValue);
         pieces.movePiece(sourcePosition, targetPosition, state);
-//        state.nextTurn();
     }
 
     public void init() {
@@ -31,7 +30,7 @@ public class Board {
         state = new State();
     }
 
-    public double score(Color color) {
+    public double score(final Color color) {
         return pieces.score(color);
     }
 

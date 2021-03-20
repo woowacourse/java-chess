@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.List;
 import java.util.Map;
 
-public class Pawn extends AbstractPiece {
+public final class Pawn extends AbstractPiece {
 
     private static final String SYMBOL = "p";
     private static final double SCORE = 1;
@@ -11,7 +11,7 @@ public class Pawn extends AbstractPiece {
     private static final int WHITE_PAWN_ROW = 1;
     private static final int ABLE_LENGTH = 1;
 
-    public Pawn(Color color, Position position) {
+    public Pawn(final Color color, final Position position) {
         super(color, position);
     }
 
@@ -26,7 +26,7 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    public Piece move(Position position, Map<Position, Piece> pieces) {
+    public Piece move(final Position position, final Map<Position, Piece> pieces) {
         final List<Direction> directions = findPawnDirection();
         Direction direction = findDirection(position, directions, ABLE_LENGTH);
         if (isForward(direction) && !(pieces.get(position) instanceof Blank)) {
@@ -39,7 +39,7 @@ public class Pawn extends AbstractPiece {
         return new Pawn(color, position);
     }
 
-    private boolean isForward(Direction direction) {
+    private boolean isForward(final Direction direction) {
         return direction == forward();
     }
 
@@ -52,15 +52,15 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    protected Direction findDirection(Position position, List<Direction> directions,
-        int ableLength) {
+    protected Direction findDirection(final Position position, final List<Direction> directions,
+        final int ableLength) {
         return directions.stream()
             .filter(direction -> this.position.canMove(position, direction, ableLength))
             .findAny()
             .orElseGet(() -> forWordTwoMove(position, ableLength));
     }
 
-    private Direction forWordTwoMove(Position position, int ableLength) {
+    private Direction forWordTwoMove(final Position position, final int ableLength) {
         if (isFirst() && this.position.canMove(position, forward(), ableLength + 1)) {
             return forward();
         }

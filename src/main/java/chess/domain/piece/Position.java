@@ -22,34 +22,34 @@ public final class Position {
     private final Point x;
     private final Point y;
 
-    private Position(int x, int y) {
+    private Position(final int x, final int y) {
         this(Point.from(x), Point.from(y));
     }
 
-    private Position(Point x, Point y) {
+    private Position(final Point x, final Point y) {
         this.x = x;
         this.y = y;
     }
 
-    public static Position of(Point x, Point y) {
+    public static Position of(final Point x, final Point y) {
         return of(x.point(), y.point());
     }
 
-    public static Position of(String value) {
+    public static Position of(final String value) {
         int x = value.charAt(INDEX_X) - CORRECTION_X;
         int y = value.charAt(INDEX_Y) - CORRECTION_Y;
         return of(x, y);
     }
 
-    public static Position of(int x, int y) {
+    public static Position of(final int x, final int y) {
         return positions[asIndex(x, y)];
     }
 
-    private static int asIndex(int x, int y) {
+    private static int asIndex(final int x, final int y) {
         return x * POSITION_MAX_SIZE + y;
     }
 
-    public boolean canMove(Position position, Direction direction, int ableLength) {
+    public boolean canMove(final Position position, final Direction direction, final int ableLength) {
         return IntStream.rangeClosed(DEFAULT_MOVE_LENGTH, ableLength)
             .filter(distance -> isAdd(direction.getXDegree() * distance,
                 direction.getYDegree() * distance))
@@ -61,8 +61,20 @@ public final class Position {
             .anyMatch(position::equals);
     }
 
-    public boolean isAdd(int x, int y) {
+    public boolean isAdd(final int x, final int y) {
         return this.x.isAdd(x) && this.y.isAdd(y);
+    }
+
+    public Position add(final int x, int y) {
+        return Position.of(this.x.add(x), this.y.add(y));
+    }
+
+    public boolean isSameColumn(final Point point) {
+        return y.equals(point);
+    }
+
+    public boolean isSameRow(final Point point) {
+        return x.equals(point);
     }
 
     @Override
@@ -80,17 +92,5 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-
-    public Position add(int x, int y) {
-        return Position.of(this.x.add(x), this.y.add(y));
-    }
-
-    public boolean isSameColumn(Point point) {
-        return y.equals(point);
-    }
-
-    public boolean isSameRow(Point point) {
-        return x.equals(point);
     }
 }

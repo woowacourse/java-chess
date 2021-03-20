@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import java.util.Map;
 
-public class Blank extends AbstractPiece {
+public final class Blank extends AbstractPiece {
 
     private static final double SCORE = 0;
     private static final String ERROR_MESSAGE = "해당 위치에 말이 존재하지 않습니다";
@@ -12,7 +12,7 @@ public class Blank extends AbstractPiece {
         super(Color.BLANK, Position.of(0, 0));
     }
 
-    public Blank(Color color, Position position) {
+    public Blank(final Color color, final Position position) {
         super(color, position);
     }
 
@@ -27,7 +27,7 @@ public class Blank extends AbstractPiece {
     }
 
     @Override
-    public Piece move(Position position, Map<Position, Piece> pieces) {
+    public Piece move(final Position position, final Map<Position, Piece> pieces) {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
 }

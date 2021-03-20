@@ -8,9 +8,9 @@ public interface Piece {
 
     double score();
 
-    boolean isSameColor(Color color);
+    boolean isSameColor(final Color color);
 
-    Piece move(Position position, Map<Position, Piece> pieces);
+    Piece move(final Position position, final Map<Position, Piece> pieces);
 
-    boolean isSameColumn(Point point);
+    boolean isSameColumn(final Point point);
 }

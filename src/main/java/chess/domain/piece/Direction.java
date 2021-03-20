@@ -25,7 +25,7 @@ public enum Direction {
     private final int yDegree;
     private final int xDegree;
 
-    Direction(int yDegree, int xDegree) {
+    Direction(final int yDegree, final int xDegree) {
         this.yDegree = yDegree;
         this.xDegree = xDegree;
     }

@@ -16,27 +16,27 @@ public final class Point {
 
     private final int point;
 
-    private Point(int point) {
+    private Point(final int point) {
         this.point = point;
     }
 
-    public static Point from(int point) {
+    public static Point from(final int point) {
         validate(point);
 
         return POINTS[point];
     }
 
-    private static void validate(int position) {
+    private static void validate(final int position) {
         if (position < MIN_INDEX || position >= MAX_INDEX) {
             throw new IllegalArgumentException("인덱스는 0이상 7이하이어야 합니다.");
         }
     }
 
-    public Point add(int distance) {
+    public Point add(final int distance) {
         return from(point + distance);
     }
 
-    public boolean isAdd(int point) {
+    public boolean isAdd(final int point) {
         return this.point + point >= MIN_INDEX && this.point + point < MAX_INDEX;
     }
 

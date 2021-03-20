@@ -3,13 +3,13 @@ package chess.domain.piece;
 import java.util.List;
 import java.util.Map;
 
-public class Bishop extends AbstractPiece {
+public final class Bishop extends AbstractPiece {
 
     private static final double SCORE = 3;
     private static final String SYMBOL = "b";
     private static final int ABLE_LENGTH = 7;
 
-    public Bishop(Color color, Position position) {
+    public Bishop(final Color color, final Position position) {
         super(color, position);
     }
 
@@ -24,7 +24,7 @@ public class Bishop extends AbstractPiece {
     }
 
     @Override
-    public Piece move(Position position, Map<Position, Piece> pieces) {
+    public Piece move(final Position position, final Map<Position, Piece> pieces) {
         final List<Direction> directions = Direction.diagonalDirection();
         Direction direction = findDirection(position, directions, ABLE_LENGTH);
 

@@ -41,7 +41,7 @@ public final class Pieces {
         initGeneral(WHITE_GENERAL_ROW, Color.WHITE);
     }
 
-    private void initGeneral(int row, Color color) {
+    private void initGeneral(final int row, final Color color) {
         pieces.put(Position.of(row, 0), new Rook(color, Position.of(row, 0)));
         pieces.put(Position.of(row, 1), new Knight(color, Position.of(row, 1)));
         pieces.put(Position.of(row, 2), new Bishop(color, Position.of(row, 2)));
@@ -52,7 +52,7 @@ public final class Pieces {
         pieces.put(Position.of(row, 7), new Rook(color, Position.of(row, 7)));
     }
 
-    private void initPawn(int row, Color color) {
+    private void initPawn(final int row, final Color color) {
         for (int y = 0; y <= MAX_INDEX; y++) {
             pieces.put(Position.of(row, y), new Pawn(color, Position.of(row, y)));
         }
@@ -64,7 +64,7 @@ public final class Pieces {
         }
     }
 
-    public void movePiece(Position sourcePosition, Position targetPosition, State state) {
+    public void movePiece(final Position sourcePosition, final Position targetPosition, final State state) {
         Piece sourcePiece = pieces.get(sourcePosition);
         validateColorOfPiece(sourcePiece, state);
 
@@ -80,13 +80,13 @@ public final class Pieces {
         state.nextTurn();
     }
 
-    private void validateColorOfPiece(Piece sourcePiece, State state) {
+    private void validateColorOfPiece(final Piece sourcePiece, final State state) {
         if (!state.isSameColor(sourcePiece)) {
             throw new IllegalArgumentException("움직이려 하는 말은 상대방의 말입니다.");
         }
     }
 
-    public double score(Color color) {
+    public double score(final Color color) {
         double score = pieces.values()
             .stream()
             .filter(piece -> piece.isSameColor(color))
@@ -96,7 +96,7 @@ public final class Pieces {
         return score - duplicatePawn(color) * DUPLICATE_PAWN_SCORE;
     }
 
-    private long duplicatePawn(Color color) {
+    private long duplicatePawn(final Color color) {
         long count = 0;
         List<Piece> pawns = pieces.values()
             .stream()
@@ -114,7 +114,7 @@ public final class Pieces {
         return count;
     }
 
-    private long duplicateCount(long pawnCount) {
+    private long duplicateCount(final long pawnCount) {
         if (pawnCount >= DUPLICATE_COUNT) {
             return pawnCount;
         }
