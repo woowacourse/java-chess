@@ -1,9 +1,13 @@
 package chess.manager;
 
+import chess.domain.board.position.Position;
 import chess.domain.command.MoveCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
+import chess.domain.command.ShowCommand;
 import chess.domain.piece.Owner;
+
+import java.util.List;
 
 public class ChessManager {
     private final Board board;
@@ -20,6 +24,10 @@ public class ChessManager {
     public void move(MoveCommand moveCommand) {
         board.move(moveCommand.source(), moveCommand.target(), turn);
         turn = turn.reverse();
+    }
+
+    public List<Position> getAbleToMove(ShowCommand showCommand){
+        return board.getAbleToMove(showCommand.source());
     }
 
     public Status calculateStatus(){

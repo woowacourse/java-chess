@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.command.MoveCommand;
+import chess.domain.command.ShowCommand;
 import chess.manager.Menu;
 import chess.manager.ChessManager;
 import chess.view.InputView;
@@ -29,6 +30,10 @@ public class ChessController {
             if(menu.isMove()){
                 chessManager.move(MoveCommand.of(userInput));
                 OutputView.printBoard(chessManager.getBoard());
+            }
+
+            if (menu.isShow()) {
+                OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getAbleToMove(ShowCommand.of(userInput)));
             }
 
             if(menu.isStatus()){

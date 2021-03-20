@@ -6,7 +6,8 @@ public enum Menu {
     START("start", 1),
     END("end", 1),
     MOVE("move", 3),
-    STATUS("status", 1);
+    STATUS("status", 1),
+    SHOW("show", 2);
 
     private final String command;
     private final int parameterCount;
@@ -46,6 +47,10 @@ public enum Menu {
 
     public boolean isStart() {
         return this.equals(START);
+    }
+
+    public boolean isShow() {
+        return this.equals(SHOW);
     }
 
     public int getParameterCount() {

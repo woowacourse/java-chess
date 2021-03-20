@@ -144,4 +144,8 @@ public class Board {
     public boolean isEnd() {
         return isEnd;
     }
+
+    public List<Position> getAbleToMove(Position source) {
+        return ableToMove(source);
+    }
 }

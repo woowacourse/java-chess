@@ -1,7 +1,6 @@
 package chess.domain.command;
 
 import chess.domain.board.position.Position;
-import chess.manager.Menu;
 
 public class MoveCommand {
 

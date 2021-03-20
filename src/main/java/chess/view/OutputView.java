@@ -2,23 +2,42 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
+import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Piece;
 import chess.manager.Status;
 
+import java.util.List;
+
 public class OutputView {
 
     public static void printBoard(final Board board) {
-        int i =0;
-        for(Piece piece : board.getBoard().values()) {
-            System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
-            if(i++ >6){
-                i =0;
-                System.out.println();
+        for(Horizontal h : Horizontal.values()){
+            for(Vertical v : Vertical.values()){
+                Piece piece = board.getBoard().get(new Position(v,h));
+                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
             }
+            System.out.println();
         }
-        System.out.println();
     }
+
+    public static void printAbleToMove(final Board board, final List<Position> ableToMove){
+        for(Horizontal h : Horizontal.values()){
+            for(Vertical v : Vertical.values()){
+                Position p = new Position(v,h);
+
+                if(ableToMove.contains(p)){
+                    System.out.print("*");
+                    continue;
+                }
+
+                Piece piece = board.getBoard().get(p);
+                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
+            }
+            System.out.println();
+        }
+    }
+
 
     public static void printStatus(Status status) {
         System.out.println("White score : "+status.whiteScore());
