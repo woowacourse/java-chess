@@ -1,18 +1,16 @@
-package chess.domain.piece;
+package chess.domain.position;
 
-import chess.domain.position.Column;
-import chess.domain.position.Position;
-import chess.domain.position.Row;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Positions {
 
-    public static final List<Position> POSITION_CACHE;
 
     private Positions() {
     }
+
+    private static final List<Position> POSITION_CACHE;
 
     static {
         POSITION_CACHE = positions();
