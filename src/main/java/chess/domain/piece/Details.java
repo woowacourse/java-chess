@@ -32,4 +32,8 @@ public final class Details {
     public Score score() {
         return score;
     }
+
+    public String name() {
+        return name;
+    }
 }

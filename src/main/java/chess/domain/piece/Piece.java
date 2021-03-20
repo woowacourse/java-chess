@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import static chess.domain.TeamColor.WHITE;
+
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
@@ -88,7 +90,10 @@ public abstract class Piece {
 
     public boolean isKing() {return this instanceof King;}
 
-    public boolean notAvailableMove() {
-        return movablePositions.isEmpty();
+    public String name() {
+        if (isSameColor(WHITE)) {
+            return details.name();
+        }
+        return details.name().toUpperCase();
     }
 }

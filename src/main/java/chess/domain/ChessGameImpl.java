@@ -1,6 +1,7 @@
 package chess.domain;
 
 import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toMap;
 import static java.util.stream.Collectors.toSet;
 
 import chess.domain.piece.Piece;
@@ -11,10 +12,11 @@ import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 
-public final class ChessGameImpl implements ChessGame{
+public final class ChessGameImpl implements ChessGame {
 
     private static final int BOARD_SIZE = 8;
     private static final int START_LINE = 0;
@@ -24,7 +26,8 @@ public final class ChessGameImpl implements ChessGame{
     private final ScoreCalculator scoreCalculator;
     private TeamColor currentColor;
 
-    private ChessGameImpl(List<Piece> pieces, TeamColor teamColor, ScoreCalculator scoreCalculator) {
+    private ChessGameImpl(List<Piece> pieces, TeamColor teamColor,
+        ScoreCalculator scoreCalculator) {
         this.pieces = new ArrayList<>(pieces);
         currentColor = teamColor;
         this.scoreCalculator = scoreCalculator;
@@ -35,6 +38,10 @@ public final class ChessGameImpl implements ChessGame{
             PieceFactory.initialPieces(BOARD_SIZE, START_LINE, END_LINE),
             TeamColor.WHITE
         );
+    }
+
+    public static ChessGameImpl emptyGame() {
+        return from(new ArrayList<>(), TeamColor.WHITE);
     }
 
     public static ChessGameImpl from(List<Piece> pieces, TeamColor teamColor) {
@@ -113,9 +120,9 @@ public final class ChessGameImpl implements ChessGame{
         Set<Position> enemiesAttackPositions = attackPositionsByColor(currentColor.reverse());
 
         return enemiesAttackPositions.contains(
-                kingByColor(currentColor)
-                    .orElseThrow(PieceNotFoundException::new)
-                    .currentPosition()
+            kingByColor(currentColor)
+                .orElseThrow(PieceNotFoundException::new)
+                .currentPosition()
         );
     }
 
@@ -129,9 +136,9 @@ public final class ChessGameImpl implements ChessGame{
     @Override
     public boolean isCheckmate() {
         Set<Position> attackPositions = attackPositionsByColor(currentColor.reverse());
-        List<Position> movablePositions =
-            kingByColor(currentColor).orElseThrow(PieceNotFoundException::new)
-                .movablePositions();
+        Piece king = kingByColor(currentColor).orElseThrow(PieceNotFoundException::new);
+        List<Position> movablePositions = king.movablePositions();
+        movablePositions.add(king.currentPosition());
         return attackPositions.containsAll(movablePositions);
     }
 
@@ -140,5 +147,24 @@ public final class ChessGameImpl implements ChessGame{
             .stream()
             .filter(Piece::isKing)
             .findAny();
+    }
+
+    @Override
+    public Map<Position, String> nameGroupingByPosition() {
+        return pieces.stream()
+            .collect(toMap(
+                Piece::currentPosition,
+                Piece::name
+            ));
+    }
+
+    @Override
+    public int boardSize() {
+        return BOARD_SIZE;
+    }
+
+    @Override
+    public TeamColor currentColor() {
+        return currentColor;
     }
 }

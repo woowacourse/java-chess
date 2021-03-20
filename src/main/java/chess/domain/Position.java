@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.exception.InvalidPositionException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public final class Position {
 
     private static void validateValues(int column, int row) {
         if (isNotValid(column, row)) {
-            throw new IllegalArgumentException("체스판을 넘어서는 범위입니다.");
+            throw new InvalidPositionException();
         }
     }
 

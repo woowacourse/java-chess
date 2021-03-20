@@ -28,6 +28,10 @@ public final class Score {
         return value > score.value;
     }
 
+    public double value() {
+        return value;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
