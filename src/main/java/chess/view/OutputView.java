@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.Board;
+import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.File;
 import chess.domain.board.Rank;
@@ -13,6 +14,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class OutputView {
+    private static final String EMPTY_CELL = ".";
+
     private OutputView() {
     }
 
@@ -22,24 +25,25 @@ public class OutputView {
             .sorted(Comparator.reverseOrder())
             .collect(Collectors.toList());
 
-        reversedRanks.forEach(rank -> printFiles(rank, board));
+        reversedRanks.forEach(rank -> printFilesByRank(rank, board));
         System.out.println();
     }
 
-    private static void printFiles(Rank rank, Board board) {
+    private static void printFilesByRank(Rank rank, Board board) {
         for (File file : File.values()) {
-            Piece piece = board.find(new Coordinate(file, rank)).getPiece();
-            printPiece(piece);
+            Cell cell = board.find(new Coordinate(file, rank));
+            printCell(cell);
         }
         System.out.println();
     }
 
-    private static void printPiece(Piece piece) {
-        if (piece != null) {
-            System.out.print(piece.getName());
+    private static void printCell(Cell cell) {
+        if (cell.isEmpty()) {
+            System.out.print(EMPTY_CELL);
             return;
         }
-        System.out.print(".");
+        Piece piece = cell.getPiece();
+        System.out.print(piece.getName());
     }
 
     public static void printScoreResult(Result result) {

@@ -29,7 +29,9 @@ public class Application {
         Board board = initializeBoard();
         OutputView.printBoard(board);
         startChessGame(board);
-        OutputView.printWinner(board.winner());
+        if (board.isKingCheckmate()) {
+            OutputView.printWinner(board.winner());
+        }
     }
 
     private static void startChessGame(Board board) {
