@@ -1,11 +1,10 @@
 package chess.domain;
 
+import chess.domain.command.Command;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Position;
-
-import java.util.List;
 
 public class ChessGame {
     private Color turn;
@@ -27,9 +26,9 @@ public class ChessGame {
     }
 
     public void play(Command command) {
-        List<String> sourceTarget = command.sourceAndTarget();
-        Position source = Position.of(sourceTarget.get(0).charAt(0), sourceTarget.get(0).charAt(1));
-        Position target = Position.of(sourceTarget.get(1).charAt(0), sourceTarget.get(1).charAt(1));
+        String[] sourceTarget = command.secondAndThirdCommand();
+        Position source = Position.of(sourceTarget[0].charAt(0), sourceTarget[0].charAt(1));
+        Position target = Position.of(sourceTarget[1].charAt(0), sourceTarget[1].charAt(1));
         Piece sourcePiece = currentPieces.findByPosition(source);
         if (!sourcePiece.getColor().same(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");

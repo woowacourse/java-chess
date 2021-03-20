@@ -1,7 +1,6 @@
-package chess.domain;
+package chess.domain.command;
 
 import java.util.Arrays;
-import java.util.List;
 
 public class Command {
     private static final String START = "start";
@@ -57,8 +56,8 @@ public class Command {
         return STATUS.equals(firstCommand);
     }
 
-    public List<String> sourceAndTarget() {
-        return Arrays.asList(splitCommands[1], splitCommands[2]);
+    public String[] secondAndThirdCommand() {
+        return Arrays.copyOfRange(splitCommands, 1, 2);
     }
 
     public void validateRightFirstCommand() {
