@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Grid;
+import chess.domain.grid.gridStrategy.NormalGridStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,5 +27,22 @@ public class PawnTest {
         Position expectedPosition = new Position("a2");
         assertThat(pawn.position()).isEqualTo(expectedPosition);
         assertThat(pawn2.position()).isEqualTo(expectedPosition);
+    }
+
+    @Test
+    @DisplayName("폰이 움직였는 지 여부를 테스트")
+    public void hasMoved_True() {
+        Grid grid = new Grid(new NormalGridStrategy());
+        Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+        pawn.validateSteps(new Empty('b', '3'), grid.lines());
+        assertThat(pawn.hasMoved()).isTrue();
+    }
+
+    @Test
+    @DisplayName("폰이 움직였는 지 여부를 테스트")
+    public void hasMoved_False() {
+        Grid grid = new Grid(new NormalGridStrategy());
+        Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+        assertThat(pawn.hasMoved()).isFalse();
     }
 }
