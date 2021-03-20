@@ -154,7 +154,7 @@ class ChessGameTest {
         assertThat(outContent.toString()).contains("[ERROR] 해당 방향은 존재하지 않습니다.");
     }
 
-    @DisplayName("룩 이동 테스트 - 앞에 말이 있는 경우 이동 불가")
+    @DisplayName("룩 이동 테스트 - 앞에 같은 팀의 말이 있는 경우 이동 불가")
     @Test
     void move_rook1() {
         // given
@@ -173,7 +173,7 @@ class ChessGameTest {
         // given
         chessGame.initBoard(BoardInitializer.init());
 
-        // when능
+        // when
         chessGame.move("move a2 a4");
         chessGame.move("move b7 b5");
 
@@ -187,7 +187,7 @@ class ChessGameTest {
         // given
         chessGame.initBoard(BoardInitializer.init());
 
-        // when능
+        // when
         chessGame.move("move a2 a4");
         chessGame.move("move b7 b5");
         chessGame.move("move a4 a5");
@@ -197,6 +197,70 @@ class ChessGameTest {
 
         //then
         assertThatCode(() -> chessGame.move("move a1 a6")).doesNotThrowAnyException();
+    }
+
+    @DisplayName("룩 이동 테스트 - 앞에 같은 팀의 말이 없는 경우 무한정 이동 가능")
+    @Test
+    void move_rook4() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move a2 a4");
+        chessGame.move("move b7 b5");
+        chessGame.move("move a4 a5");
+        chessGame.move("move c7 c6");
+        chessGame.move("move a5 b5");
+        chessGame.move("move c6 c5");
+
+        //then
+        assertThatCode(() -> chessGame.move("move a1 a7")).doesNotThrowAnyException();
+    }
+
+    @DisplayName("비숍 이동 테스트 - 앞에 같은 팀의 말이 있는 경우 이동 불가")
+    @Test
+    void move_bishop1() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move c1 b2");
+
+        // then
+        assertThat(outContent.toString()).contains("[ERROR] 해당 좌표에 같은 팀의 말이 존재합니다.");
+    }
+
+    @DisplayName("비숍 이동 테스트 - 가로 막는 말이 없는 경우 대각선으로 모든 방향 이동 가능")
+    @Test
+    void move_bishop2() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move b2 b3");
+        chessGame.move("move b7 b5");
+
+        // then
+        assertThatCode(() -> chessGame.move("move c1 a3")).doesNotThrowAnyException(); // 좌상향
+        assertThatCode(() -> chessGame.move("move c8 c6")).doesNotThrowAnyException(); // 좌하향
+        assertThatCode(() -> chessGame.move("move a3 d6")).doesNotThrowAnyException(); // 우상향
+        assertThatCode(() -> chessGame.move("move c6 d3")).doesNotThrowAnyException(); // 우하향
+    }
+
+    @DisplayName("비숍 이동 테스트 - 가로 막는 말이 다른 팀의 말인 경우 이동 가능")
+    @Test
+    void move_bishop3() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move b2 b3");
+        chessGame.move("move b7 b5");
+        chessGame.move("move c1 a3");
+        chessGame.move("move c8 c6");
+
+        // then
+        assertThatCode(() -> chessGame.move("move a3 e7")).doesNotThrowAnyException();
     }
 
     @Test
