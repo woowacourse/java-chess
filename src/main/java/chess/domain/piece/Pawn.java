@@ -20,7 +20,7 @@ public final class Pawn extends Piece {
         List<Position> enemiesPositions) {
         super.updateMovablePositions(existPiecePositions, enemiesPositions);
         if (isNotMoved()) {
-            directions().pawnAddiblePosition(existPiecePositions, currentPosition())
+            directions().pawnAdditionalPosition(existPiecePositions, currentPosition())
                 .ifPresent(position -> movablePositions().add(position));
         }
     }

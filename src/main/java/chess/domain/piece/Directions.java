@@ -81,7 +81,7 @@ public final class Directions {
         return killablePositions;
     }
 
-    public Optional<Position> pawnAddiblePosition(List<Position> existPiecePositions,
+    public Optional<Position> pawnAdditionalPosition(List<Position> existPiecePositions,
         Position currentPosition) {
         Direction direction = moveDirections.get(PAWN_INDEX);
 
