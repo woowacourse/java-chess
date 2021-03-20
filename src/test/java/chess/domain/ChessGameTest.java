@@ -131,6 +131,74 @@ class ChessGameTest {
         assertThatCode(() -> chessGame.move("move b5 a5")).doesNotThrowAnyException();
     }
 
+    @DisplayName("나이트 이동 테스트 - 앞에 말이 있는 경우에도 이동 가능")
+    @Test
+    void move_knight1() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when - then
+        assertThatCode(() -> chessGame.move("move b1 c3")).doesNotThrowAnyException();
+    }
+
+    @DisplayName("나이트 이동 테스트 - 이동 불가능한 곳인 경우 예외")
+    @Test
+    void move_knight2() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move b1 c4");
+
+        //then
+        assertThat(outContent.toString()).contains("[ERROR] 해당 방향은 존재하지 않습니다.");
+    }
+
+    @DisplayName("룩 이동 테스트 - 앞에 말이 있는 경우 이동 불가")
+    @Test
+    void move_rook1() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move a1 a2");
+
+        //then
+        assertThat(outContent.toString()).contains("[ERROR] 해당 좌표에 같은 팀의 말이 존재합니다.");
+    }
+
+    @DisplayName("룩 이동 테스트 - 앞에 말이 없는 경우 이동 가능")
+    @Test
+    void move_rook2() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when능
+        chessGame.move("move a2 a4");
+        chessGame.move("move b7 b5");
+
+        //then
+        assertThatCode(() -> chessGame.move("move a1 a3")).doesNotThrowAnyException();
+    }
+
+    @DisplayName("룩 이동 테스트 - 앞에 말이 없는 경우 무한정 이동 가능")
+    @Test
+    void move_rook3() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when능
+        chessGame.move("move a2 a4");
+        chessGame.move("move b7 b5");
+        chessGame.move("move a4 a5");
+        chessGame.move("move c7 c6");
+        chessGame.move("move a5 b5");
+        chessGame.move("move c6 c5");
+
+        //then
+        assertThatCode(() -> chessGame.move("move a1 a6")).doesNotThrowAnyException();
+    }
+
     @Test
     void calculatePoint() {
         EnumMap<Team, Double> result = new EnumMap<>(Team.class);
