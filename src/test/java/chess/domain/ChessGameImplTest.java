@@ -71,7 +71,7 @@ class ChessGameImplTest {
     }
 
     @Test
-    @DisplayName("같은 행에 폰이 3개일 경우 점수 계산")
+    @DisplayName("같은 행에 폰이 2개일 경우 점수 계산")
     void gameResult_pawn_sameColumn() {
         ChessGameImpl chessGame = ChessGameImpl.from(
             Arrays.asList(
@@ -85,7 +85,7 @@ class ChessGameImplTest {
     }
 
     @Test
-    @DisplayName("다른 행에 폰이 3개일 경우 점수 계산")
+    @DisplayName("다른 행에 폰이 2개일 경우 점수 계산")
     void gameResult_pawn_distinctColumn() {
         ChessGameImpl chessGame = ChessGameImpl.from(
             Arrays.asList(
