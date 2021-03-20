@@ -8,19 +8,19 @@ import chess.view.OutputView;
 public class ChessController {
     public void run(ChessGame chessGame, Commands commands) {
         OutputView.printManual();
-        playGame(chessGame, commands);
+        while (true) {
+            playGame(chessGame, commands);
+        }
     }
 
     public void playGame(ChessGame chessGame, Commands commands) {
-        while (true) {
-            try {
-                String commandMessage = commands.execute(InputView.inputCommand());
-                OutputView.printMessage(commandMessage);
-                OutputView.printBoard(chessGame.getBoard());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                playGame(chessGame, commands);
-            }
+        try {
+            String commandMessage = commands.execute(InputView.inputCommand());
+            OutputView.printMessage(commandMessage);
+            OutputView.printBoard(chessGame.getBoard());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            playGame(chessGame, commands);
         }
     }
 }

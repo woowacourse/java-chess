@@ -3,6 +3,10 @@ package chess.domain.command;
 import chess.domain.ChessGame;
 
 public class MoveOnCommand extends PozCommand {
+    private static final String DELIMITER = " ";
+    private static final int MOVE_COMMAND_LENGTH = 3;
+    private static final int MOVE_COMMAND_TARGET = 1;
+    private static final int MOVE_COMMAND_DESTINATION = 2;
     private static final String COMMAND_NAME = "move";
     private static final String COMMAND_MESSAGE = "%s 에서 %s로 이동을 하였습니다";
 
@@ -12,12 +16,12 @@ public class MoveOnCommand extends PozCommand {
 
     @Override
     public String run(String input) {
-        String[] splitInput = input.split(" ");
-        if (splitInput.length != 3) {
+        String[] splitInput = input.split(DELIMITER);
+        if (splitInput.length != MOVE_COMMAND_LENGTH) {
             throw new IndexOutOfBoundsException();
         }
-        getChessGame().move(splitInput[1], splitInput[2]);
-        return String.format(COMMAND_MESSAGE, splitInput[1], splitInput[2]);
+        getChessGame().move(splitInput[MOVE_COMMAND_TARGET], splitInput[MOVE_COMMAND_DESTINATION]);
+        return String.format(COMMAND_MESSAGE, splitInput[MOVE_COMMAND_TARGET], splitInput[MOVE_COMMAND_DESTINATION]);
     }
 
     @Override
