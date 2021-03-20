@@ -2,7 +2,10 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Pieces;
+import chess.domain.board.State;
 import chess.domain.piece.Bishop;
+import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -16,6 +19,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("보유중인 말들 테스트")
 class PiecesTest {
 
     private final Pieces pieces = new Pieces();
@@ -75,7 +79,7 @@ class PiecesTest {
     void movePiece() {
         State state = new State();
         pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
-        assertThat(pieces.positionIsBlank(Position.of("b2"))).isTrue();
+        assertThat(pieces.pieces().get(Position.of("b2"))).isInstanceOf(Blank.class);
 
         Map<Position, Piece> pieces = this.pieces.pieces();
         assertThat(pieces.get(Position.of("b4"))).isInstanceOf(Pawn.class);

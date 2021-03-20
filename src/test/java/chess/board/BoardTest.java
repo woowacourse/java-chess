@@ -2,11 +2,13 @@ package chess.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+@DisplayName("보드 테스트")
 public class BoardTest {
 
     private Board board;
