@@ -31,7 +31,9 @@ public enum Cross {
     }
 
     public static Cross findCrossByTwoPosition(Position source, Position target) {
-        return Arrays.stream(values()).filter(value -> value.findCross.test(source, target))
+        return Arrays.stream(values())
+                .filter(value -> source.isCross(target))
+                .filter(value -> value.findCross.test(source, target))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 십자 방향이 아닙니다."));
     }

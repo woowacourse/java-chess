@@ -23,40 +23,37 @@ public class King extends Piece {
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
-// 십자인지 확인
-        if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
-                !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
-            throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");
-        }
+        validateKingMove(target);
         if (this.position.isCross(target)) {
-            Cross queenCross = Cross.findCrossByTwoPosition(this.position, target);
-            // 경로에 장애물이 있는지 확인
-            queenCross.hasPieceInPath(this.position, target, currentPieces);
-            // 우리편 말이 있으면 예외
-            Piece targetPiece = currentPieces.findByPosition(target);
-            if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                    (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
-                throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
-            }
-            if (!(targetPiece instanceof Empty)) {
-                currentPieces.removePieceByPosition(target);
-            }
+            moveCross(target, currentPieces);
         }
         if (this.position.isDiagonal(target)) {
-            Diagonal queenDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-            // 경로에 장애물이 있는지 확인
-            queenDiagonal.hasPieceInPath(this.position, target, currentPieces);
-            // 우리편 말이 있으면 예외
-            Piece targetPiece = currentPieces.findByPosition(target);
-            if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                    (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
-                throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
-            }
-            if (!(targetPiece instanceof Empty)) {
-                currentPieces.removePieceByPosition(target);
-            }
+            moveDiagonal(target, currentPieces);
         }
         this.position = target;
+    }
+
+    private void validateKingMove(Position target) {
+        if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
+                !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
+            throw new IllegalArgumentException("[ERROR] 킹 이동 규칙에 어긋납니다.");
+        }
+    }
+
+    private void moveCross(Position target, CurrentPieces currentPieces) {
+        Cross kingCross = Cross.findCrossByTwoPosition(this.position, target);
+        kingCross.hasPieceInPath(this.position, target, currentPieces);
+        Piece targetPiece = currentPieces.findByPosition(target);
+        validateSameColor(targetPiece);
+        currentPieces.removePieceIfNotEmpty(targetPiece);
+    }
+
+    private void moveDiagonal(Position target, CurrentPieces currentPieces) {
+        Diagonal kingDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
+        kingDiagonal.hasPieceInPath(this.position, target, currentPieces);
+        Piece targetPiece = currentPieces.findByPosition(target);
+        validateSameColor(targetPiece);
+        currentPieces.removePieceIfNotEmpty(targetPiece);
     }
 
     public static List<King> generate() {

@@ -36,4 +36,16 @@ public abstract class Piece {
     public Score getScore() {
         return score;
     }
+
+    public void validateSameColor(Piece piece) {
+        if (this.isSameColor(piece)) {
+            throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
+        }
+    }
+
+    public boolean isSameColor(Piece piece) {
+        return color == piece.color;
+    }
+
+
 }

@@ -65,11 +65,12 @@ public class BishopTest {
 
     @Test
     void 비숍_이동() {
-        CurrentPieces currentPieces = CurrentPieces.generate();
+        List<Piece> current = Arrays.asList(
+                new Bishop(Position.of('f', '8'), "B", Color.BLACK));
+        CurrentPieces currentPieces = new CurrentPieces(current);
         Position source = Position.of('f', '8'); // 비숍 위치
         Position target = Position.of('h', '6'); // 옮기고자 하는 위치
         Piece bishop = currentPieces.findByPosition(source);
-        currentPieces.removePieceByPosition(Position.of('g', '7'));
 
         bishop.move(target, currentPieces);
 
@@ -78,14 +79,16 @@ public class BishopTest {
 
     @Test
     void 비숍_이동_규칙에_어긋나는_경우_예() {
-        CurrentPieces currentPieces = CurrentPieces.generate();
+        List<Piece> current = Arrays.asList(
+                new Bishop(Position.of('f', '8'), "B", Color.BLACK));
+        CurrentPieces currentPieces = new CurrentPieces(current);
         Position source = Position.of('f', '8'); // 비숍 위치
         Position target = Position.of('g', '6'); // 옮기고자 하는 위치
         Piece bishop = currentPieces.findByPosition(source);
-        currentPieces.removePieceByPosition(Position.of('g', '7'));
 
         assertThatThrownBy(() ->  bishop.move(target, currentPieces))
-        .isInstanceOf(IllegalArgumentException.class);
+        .isInstanceOf(IllegalArgumentException.class)
+        .hasMessage("[ERROR] 올바른 대각선 방향이 아닙니다.");
     }
 
     @Test

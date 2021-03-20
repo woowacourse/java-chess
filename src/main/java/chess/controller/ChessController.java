@@ -1,14 +1,10 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.Color;
 import chess.domain.Command;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.List;
 
 public class ChessController {
     public void run() {

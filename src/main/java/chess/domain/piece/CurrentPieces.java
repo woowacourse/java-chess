@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.Color;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class CurrentPieces {
 
@@ -67,5 +66,11 @@ public class CurrentPieces {
                 .filter(piece -> piece.getColor().isSame(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
                 .sum() - (count * subtractCount);
+    }
+
+    public void removePieceIfNotEmpty(Piece targetPiece) {
+        if (!(targetPiece instanceof Empty)) {
+            currentPieces.remove(targetPiece);
+        }
     }
 }
