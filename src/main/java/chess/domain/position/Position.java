@@ -121,4 +121,8 @@ public class Position {
         Row newRow = row.move(direction);
         return Position.ofColumnAndRow(newColumn, newRow);
     }
+
+    public boolean isOn(Column column) {
+        return this.column.equals(column);
+    }
 }

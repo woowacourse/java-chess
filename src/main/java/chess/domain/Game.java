@@ -29,6 +29,10 @@ public class Game {
             isPlaying = false;
             return;
         }
+        if(Command.isStatus(values.get(0))){
+
+            return;
+        }
         Position source = Position.ofName(values.get(1));
         Piece chosenPiece = board.findPieceBy(source);
         if (!players.currentPlayer(currentColor).isOwnerOf(chosenPiece)) {

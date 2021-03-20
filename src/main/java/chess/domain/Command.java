@@ -30,4 +30,8 @@ public enum Command {
     public static boolean isEnd(String input) {
         return of(input).equals(END);
     }
+
+    public static boolean isStatus(String input) {
+        return of(input).equals(STATUS);
+    }
 }

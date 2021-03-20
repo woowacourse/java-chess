@@ -52,4 +52,8 @@ public abstract class Piece {
         }
         return this.pieceType.getType();
     }
+
+    public String color() {
+        return pieceColor.getColor();
+    }
 }

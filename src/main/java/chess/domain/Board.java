@@ -7,8 +7,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Position;
 import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
@@ -60,11 +60,18 @@ public class Board {
         return coordinates;
     }
 
-    public List<Piece> remainPieces(PieceColor color){
-        return coordinates.keySet()
-            .stream()
-            .filter(piece -> piece.hasColor(color))
-            .collect(Collectors.toList());
+    public Map<Piece, Position> remainPieces(PieceColor color){
+        return coordinates.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().hasColor(color))
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
+    }
+
+    public Map<Piece, Position> remainPawns(Map<Piece, Position> pieces){
+        return pieces.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().isPawn())
+                .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
     public boolean kingDead() {
