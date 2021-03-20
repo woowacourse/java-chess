@@ -49,8 +49,8 @@ public class PiecePosition {
         return piecePosition.containsKey(position);
     }
 
-    public final Piece deletePiece(final Position destination) {
-        return piecePosition.remove(destination);
+    public final Piece deletePiece(final Position position) {
+        return piecePosition.remove(position);
     }
 
     public final Map<Position, Piece> getPiecePosition() {

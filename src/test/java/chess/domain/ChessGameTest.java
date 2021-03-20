@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -16,14 +14,14 @@ public class ChessGameTest {
     @Test
     @DisplayName("체스 게임이 정상 생성되는지 확인한다")
     void init() {
-        assertThatCode(() -> new ChessGame(new BlackTeam(), new WhiteTeam()))
+        assertThatCode(() -> new ChessGame())
                 .doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("정상적으로 움직일 수 있는 좌표가 주어지면, 이동한다.")
     void move_chess_piece_when_valid_destination_is_given() {
-        final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
+        final ChessGame chessGame = new ChessGame();
         chessGame.move(Position.of("e2"), Position.of("e4"));
 
         final Map<Position, Piece> chessBoard = chessGame.generateChessBoard();
@@ -33,7 +31,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("킹이 잡히면, isEnd가 true로 변한다.")
     void game_end_with_checkmate_test() {
-        final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
+        final ChessGame chessGame = new ChessGame();
         chessGame.move(Position.of("e2"), Position.of("e4"));
         chessGame.changeTurn();
 

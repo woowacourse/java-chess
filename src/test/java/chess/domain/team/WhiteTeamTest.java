@@ -13,8 +13,8 @@ public class WhiteTeamTest {
     @Test
     @DisplayName("화이트팀을 생성하면, 하얀색 기물이 정상 배치된다.")
     void init() {
-        final WhiteTeam whiteTeam = new WhiteTeam();
-        final Map<Position, Piece> whiteTeamPiecePosition = whiteTeam.getPiecePosition();
+        final Team whiteTeam = new Team(new PiecePosition(1, 1, 0));
+        final Map<Position, Piece> whiteTeamPiecePosition = whiteTeam.currentPiecePosition();
 
         assertThat(whiteTeamPiecePosition.get(Position.of("a2"))).isInstanceOf(Pawn.class);
         assertThat(whiteTeamPiecePosition.get(Position.of("b2"))).isInstanceOf(Pawn.class);
@@ -38,7 +38,7 @@ public class WhiteTeamTest {
     @Test
     @DisplayName("화이트의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score() {
-        final WhiteTeam whiteTeam = new WhiteTeam();
+        final Team whiteTeam = new Team(new PiecePosition(1, 1, 0));
         double whiteTeamScore = whiteTeam.calculateScore();
         assertThat(whiteTeamScore).isEqualTo(38.0);
     }
@@ -46,8 +46,8 @@ public class WhiteTeamTest {
     @Test
     @DisplayName("화이트의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score_pawn_same_y_axis() {
-        final WhiteTeam whiteTeam = new WhiteTeam();
-        whiteTeam.move(Position.of("b2"), Position.of("a3"));
+        final Team whiteTeam = new Team(new PiecePosition(1, 1, 0));
+        whiteTeam.movePiece(Position.of("b2"), Position.of("a3"));
         double whiteTeamScore = whiteTeam.calculateScore();
         assertThat(whiteTeamScore).isEqualTo(37.0);
     }

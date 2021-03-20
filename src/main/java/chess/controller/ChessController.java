@@ -3,8 +3,6 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
-import chess.domain.team.WhiteTeam;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PiecePrintFormat;
@@ -21,7 +19,7 @@ public class ChessController {
         OutputView.printChessStartMessage();
         final boolean start = InputView.inputChessStartOrEnd();
         if (start) {
-            final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
+            final ChessGame chessGame = new ChessGame();
             playChessGame(chessGame);
             printChessResult(chessGame);
         }
@@ -42,7 +40,7 @@ public class ChessController {
     }
 
     private Map<Position, String> convertBlackTeamPiece(final ChessGame chessGame) {
-        final Map<Position, Piece> blackPosition = chessGame.getBlackTeam().getPiecePosition();
+        final Map<Position, Piece> blackPosition = chessGame.currentBlackPiecePosition();
         return blackPosition.keySet().stream()
                 .collect(Collectors.toMap(
                         position -> position,
@@ -50,7 +48,7 @@ public class ChessController {
     }
 
     private Map<Position, String> convertWhiteTeamPiece(final ChessGame chessGame) {
-        final Map<Position, Piece> whitePosition = chessGame.getWhiteTeam().getPiecePosition();
+        final Map<Position, Piece> whitePosition = chessGame.currentWhitePiecePosition();
         return whitePosition.keySet().stream()
                 .collect(Collectors.toMap(
                         position -> position,

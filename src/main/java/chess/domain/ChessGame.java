@@ -1,24 +1,39 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.team.BlackTeam;
+import chess.domain.team.PiecePosition;
 import chess.domain.team.Team;
-import chess.domain.team.WhiteTeam;
 
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
-    private final BlackTeam blackTeam;
-    private final WhiteTeam whiteTeam;
+    private static final int BLACK_PAWN_COLUMN = 6;
+    private static final int BLACK_PAWN_DIRECTION = -1;
+    private static final int BLACK_PIECE_COLUMN = 7;
+
+    private static final int WHITE_PAWN_COLUMN = 1;
+    private static final int WHITE_PAWN_DIRECTION = 1;
+    private static final int WHITE_PIECE_COLUMN = 0;
+
+    private final Team blackTeam;
+    private final Team whiteTeam;
     private Team currentTurnTeam;
     private boolean isPlaying;
 
-    public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam) {
-        this.blackTeam = blackTeam;
-        this.whiteTeam = whiteTeam;
+    public ChessGame() {
+        this.blackTeam = initBlackTeam();
+        this.whiteTeam = initWhiteTeam();
         this.currentTurnTeam = this.whiteTeam;
         this.isPlaying = true;
+    }
+
+    private Team initBlackTeam() {
+        return new Team(new PiecePosition(BLACK_PAWN_COLUMN, BLACK_PAWN_DIRECTION, BLACK_PIECE_COLUMN));
+    }
+
+    private Team initWhiteTeam() {
+        return new Team(new PiecePosition(WHITE_PAWN_COLUMN, WHITE_PAWN_DIRECTION, WHITE_PIECE_COLUMN));
     }
 
     public void move(final Position current, final Position destination) {
@@ -39,7 +54,7 @@ public class ChessGame {
     public Map<Position, Piece> generateChessBoard() {
         final Map<Position, Piece> chessBoard = blackTeam.currentPiecePosition();
         chessBoard.putAll(whiteTeam.currentPiecePosition());
-        return Collections.unmodifiableMap(chessBoard);
+        return new HashMap<>(chessBoard);
     }
 
     private void captureEnemy(final Position destination) {
@@ -84,11 +99,11 @@ public class ChessGame {
         return whiteTeam.calculateScore();
     }
 
-    public BlackTeam getBlackTeam() {
-        return blackTeam;
+    public Map<Position, Piece> currentBlackPiecePosition() {
+        return blackTeam.currentPiecePosition();
     }
 
-    public WhiteTeam getWhiteTeam() {
-        return whiteTeam;
+    public Map<Position, Piece> currentWhitePiecePosition() {
+        return whiteTeam.currentPiecePosition();
     }
 }

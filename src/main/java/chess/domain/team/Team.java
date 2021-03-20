@@ -37,7 +37,7 @@ public class Team {
     }
 
     public final double calculateScore() {
-        return score.calculateScore(piecePosition.getPiecePosition());
+        return score.calculateScore(currentPiecePosition());
     }
 
     public final Map<Position, Piece> currentPiecePosition() {

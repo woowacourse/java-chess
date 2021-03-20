@@ -2,6 +2,7 @@ package chess.domain.team;
 
 import chess.domain.Position;
 import chess.domain.piece.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,8 +14,8 @@ public class BlackTeamTest {
     @Test
     @DisplayName("블랙팀을 생성하면, 검은색 기물이 정상 배치된다.")
     void init() {
-        final BlackTeam blackTeam = new BlackTeam();
-        final Map<Position, Piece> blackTeamPiecePosition = blackTeam.getPiecePosition();
+        final Team blackTeam = new Team(new PiecePosition(6, -1, 7));
+        final Map<Position, Piece> blackTeamPiecePosition = blackTeam.currentPiecePosition();
 
         assertThat(blackTeamPiecePosition.get(Position.of("a7"))).isInstanceOf(Pawn.class);
         assertThat(blackTeamPiecePosition.get(Position.of("b7"))).isInstanceOf(Pawn.class);
@@ -38,7 +39,7 @@ public class BlackTeamTest {
     @Test
     @DisplayName("블랙팀의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score() {
-        final BlackTeam blackTeam = new BlackTeam();
+        final Team blackTeam = new Team(new PiecePosition(6, -1, 7));
         double blackTeamScore = blackTeam.calculateScore();
         assertThat(blackTeamScore).isEqualTo(38.0);
     }
@@ -46,8 +47,8 @@ public class BlackTeamTest {
     @Test
     @DisplayName("블랙팀의 초기화 상태에서 점수 계산을 요청하면, 38.0점을 반환한다.")
     void calculate_score_pawn_same_y_axis() {
-        final BlackTeam blackTeam = new BlackTeam();
-        blackTeam.move(Position.of("b7"), Position.of("a6"));
+        final Team blackTeam = new Team(new PiecePosition(6, -1, 7));
+        blackTeam.movePiece(Position.of("b7"), Position.of("a6"));
         double blackTeamScore = blackTeam.calculateScore();
         assertThat(blackTeamScore).isEqualTo(37.0);
     }
