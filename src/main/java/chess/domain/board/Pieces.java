@@ -20,17 +20,25 @@ public final class Pieces {
 
     private static final int MAX_INDEX = 7;
     private static final int MIN_INDEX = 0;
+    private static final int BLACK_GENERAL_ROW = 7;
+    private static final int BLACK_PAWN_ROW = 6;
+    private static final int WHITE_PAWN_ROW = 1;
+    private static final int WHITE_GENERAL_ROW = 0;
+    private static final int MAX_BLANK_ROW = 5;
+    private static final int MIN_BLANK_ROW = 1;
+    private static final double DUPLICATE_PAWN_SCORE = 0.5;
+    private static final int DUPLICATE_COUNT = 2;
 
     private final Map<Position, Piece> pieces = new LinkedHashMap<>();
 
     public void init() {
-        initGeneral(7, Color.BLACK);
-        initPawn(6, Color.BLACK);
-        for (int x = 5; x > 1; x--) {
+        initGeneral(BLACK_GENERAL_ROW, Color.BLACK);
+        initPawn(BLACK_PAWN_ROW, Color.BLACK);
+        for (int x = MAX_BLANK_ROW; x > MIN_BLANK_ROW; x--) {
             initBlank(x);
         }
-        initPawn(1, Color.WHITE);
-        initGeneral(0, Color.WHITE);
+        initPawn(WHITE_PAWN_ROW, Color.WHITE);
+        initGeneral(WHITE_GENERAL_ROW, Color.WHITE);
     }
 
     private void initGeneral(int row, Color color) {
@@ -85,7 +93,7 @@ public final class Pieces {
             .mapToDouble(Piece::score)
             .sum();
 
-        return score - duplicatePawn(color) * 0.5;
+        return score - duplicatePawn(color) * DUPLICATE_PAWN_SCORE;
     }
 
     private long duplicatePawn(Color color) {
@@ -96,7 +104,7 @@ public final class Pieces {
             .filter(piece -> piece instanceof Pawn)
             .collect(Collectors.toList());
 
-        for (int column = 0; column < 8; column++) {
+        for (int column = MIN_INDEX; column <= MAX_INDEX; column++) {
             Point point = Point.from(column);
             long pawnCount = pawns.stream()
                 .filter(piece -> piece.isSameColumn(point))
@@ -107,7 +115,7 @@ public final class Pieces {
     }
 
     private long duplicateCount(long pawnCount) {
-        if (pawnCount >= 2) {
+        if (pawnCount >= DUPLICATE_COUNT) {
             return pawnCount;
         }
         return 0;
