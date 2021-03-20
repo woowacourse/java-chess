@@ -21,8 +21,8 @@ class PlayerTest {
     @Test
     void create() {
         assertAll(
-                () -> assertThatCode(() -> Player.of(PieceColor.WHITE)).doesNotThrowAnyException(),
-                () -> assertThatCode(() -> Player.of(PieceColor.BLACK)).doesNotThrowAnyException()
+            () -> assertThatCode(() -> Player.of(PieceColor.WHITE)).doesNotThrowAnyException(),
+            () -> assertThatCode(() -> Player.of(PieceColor.BLACK)).doesNotThrowAnyException()
         );
     }
 

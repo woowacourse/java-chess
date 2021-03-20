@@ -17,8 +17,8 @@ public class Players {
 
     public Player currentPlayer(PieceColor currentColor) {
         return players.stream()
-                .filter(player -> player.isColor(currentColor))
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 색을 가진 플레이어가 존재하지 않습니다."));
+            .filter(player -> player.isColor(currentColor))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("해당 색을 가진 플레이어가 존재하지 않습니다."));
     }
 }

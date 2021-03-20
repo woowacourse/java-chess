@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.domain.board.Paths;
 import chess.domain.position.Position;
 import java.util.Arrays;
@@ -42,30 +41,30 @@ class KingTest {
         board.putPiece(firstWhitePiece, Position.ofName("e3"));
         board.putPiece(secondWhitePiece, Position.ofName("f3"));
         assertThat(paths.removeObstacles(king, board).positions()).isEqualTo(
-                kingE4WithObstacles());
+            kingE4WithObstacles());
     }
 
     List<Position> kingE4WithoutObstacles() {
         return Arrays.asList(
-                Position.ofName("e5"),
-                Position.ofName("f4"),
-                Position.ofName("e3"),
-                Position.ofName("d4"),
-                Position.ofName("f5"),
-                Position.ofName("f3"),
-                Position.ofName("d3"),
-                Position.ofName("d5")
+            Position.ofName("e5"),
+            Position.ofName("f4"),
+            Position.ofName("e3"),
+            Position.ofName("d4"),
+            Position.ofName("f5"),
+            Position.ofName("f3"),
+            Position.ofName("d3"),
+            Position.ofName("d5")
         );
     }
 
     List<Position> kingE4WithObstacles() {
         return Arrays.asList(
-                Position.ofName("e5"),
-                Position.ofName("f4"),
-                Position.ofName("d4"),
-                Position.ofName("f5"),
-                Position.ofName("d3"),
-                Position.ofName("d5")
+            Position.ofName("e5"),
+            Position.ofName("f4"),
+            Position.ofName("d4"),
+            Position.ofName("f5"),
+            Position.ofName("d3"),
+            Position.ofName("d5")
         );
     }
 }

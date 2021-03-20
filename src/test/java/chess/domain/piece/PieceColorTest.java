@@ -12,8 +12,8 @@ class PieceColorTest {
     @Test
     void reverse() {
         assertAll(
-                () -> assertEquals(PieceColor.BLACK, PieceColor.WHITE.reversed()),
-                () -> assertEquals(PieceColor.WHITE, PieceColor.BLACK.reversed())
+            () -> assertEquals(PieceColor.BLACK, PieceColor.WHITE.reversed()),
+            () -> assertEquals(PieceColor.WHITE, PieceColor.BLACK.reversed())
         );
     }
 }

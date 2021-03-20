@@ -2,8 +2,6 @@ package chess.domain.board;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
 import chess.util.RenderingUtils;
 import org.junit.jupiter.api.Test;
 
@@ -17,12 +15,12 @@ class BoardFactoryTest {
 
     String validRenderedBoard() {
         return "RNBQKBNR\n"
-                + "PPPPPPPP\n"
-                + "........\n"
-                + "........\n"
-                + "........\n"
-                + "........\n"
-                + "pppppppp\n"
-                + "rnbqkbnr";
+            + "PPPPPPPP\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "........\n"
+            + "pppppppp\n"
+            + "rnbqkbnr";
     }
 }

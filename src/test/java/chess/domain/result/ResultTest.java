@@ -9,8 +9,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.WhitePawn;
 import chess.domain.position.Position;
-import chess.domain.result.Result;
-import chess.domain.result.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
