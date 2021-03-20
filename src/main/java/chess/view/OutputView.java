@@ -25,14 +25,16 @@ public class OutputView {
             lastVerticalValue = updateLastVerticalValue(lastVerticalValue, position);
             System.out.print(chessBoard.get(position).getName());
         }
-        System.out.println();
+        System.out.println(" | " + lastVerticalValue);
+        System.out.println("---------");
+        System.out.println("abcdefgh");
     }
 
     private static int updateLastVerticalValue(final int before, final Position position) {
         int newValue = before;
         if (position.getVertical().getValue() != before) {
             newValue = position.getVertical().getValue();
-            System.out.println();
+            System.out.println(" | " + (newValue + 1));
         }
         return newValue;
     }
