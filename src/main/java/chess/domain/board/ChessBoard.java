@@ -127,23 +127,29 @@ public class ChessBoard {
     }
 
     public double getScore(Color color) {
-        double score = chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(square -> square.hasSameColor(color))
-            .mapToDouble(Square::score)
-            .sum();
-
-        Map<Column, Long> pawnCount = chessBoard.stream()
-            .flatMap(Collection::stream)
-            .filter(Square::hasPawn)
-            .filter(square -> square.hasSameColor(color))
-            .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
-
+        double score = calculateScore(color);
+        Map<Column, Long> pawnCount = calculatePawnCount(color);
         for (long count : pawnCount.values()) {
             if (count >= 2) {
                 score -= (double) count / 2;
             }
         }
         return score;
+    }
+
+    private double calculateScore(Color color) {
+        return chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(square -> square.hasSameColor(color))
+            .mapToDouble(Square::score)
+            .sum();
+    }
+
+    private Map<Column, Long> calculatePawnCount(Color color) {
+        return chessBoard.stream()
+            .flatMap(Collection::stream)
+            .filter(Square::hasPawn)
+            .filter(square -> square.hasSameColor(color))
+            .collect(Collectors.groupingBy(Square::getColumn, Collectors.counting()));
     }
 }
