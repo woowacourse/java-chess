@@ -1,3 +1,5 @@
+package chess.domain;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.Turn;
