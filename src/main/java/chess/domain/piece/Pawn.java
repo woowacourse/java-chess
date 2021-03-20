@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
-    private static final Score SCORE = new Score(1);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '7'),
             Position.of('b', '7'), Position.of('c', '7'), Position.of('d', '7'),
             Position.of('e', '7'), Position.of('f', '7'), Position.of('g', '7'),
@@ -19,7 +18,7 @@ public class Pawn extends Piece {
             Position.of('h', '2'));
 
     public Pawn(Position position, Color color) {
-        super(position, Name.PAWN, color, SCORE);
+        super(position, Name.PAWN, color, Score.ONE);
     }
 
     public Pawn(Position position, Name name, Color color, Score score) {

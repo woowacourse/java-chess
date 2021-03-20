@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final Score SCORE = new Score(9);
     private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
 
     public Queen(Position position, Color color) {
-        super(position, Name.QUEEN, color ,SCORE);
+        super(position, Name.QUEEN, color, Score.NINE);
     }
 
     public Queen(Position position, Name name, Color color, Score score) {

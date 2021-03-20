@@ -10,7 +10,7 @@ public abstract class Piece {
     protected Score score;
 
     public Piece(Position position, Name name, Color color) {
-        this(position, name, color, new Score(0));
+        this(position, name, color, Score.ZERO);
     }
 
     public Piece(Position position, Name name, Color color, Score score) {

@@ -2,9 +2,7 @@ package chess.view;
 
 import chess.domain.Color;
 import chess.domain.piece.CurrentPieces;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
 
 import static chess.domain.piece.Position.POSITIONS;
 
