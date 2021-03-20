@@ -34,19 +34,13 @@ public enum Direction {
         if (fileDiff == 0 && rankDiff == 0) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        if (fileDiff == 0) {
-            return verticalDirection(rankDiff);
-        }
-        if (rankDiff == 0) {
-            return horizontalDirection(fileDiff);
+        if (fileDiff == 0 || rankDiff == 0) {
+            return verticalOrHorizontalDirection(fileDiff, rankDiff);
         }
         if (Math.abs(fileDiff) == Math.abs(rankDiff)) {
             return diagonalDirection(fileDiff, rankDiff);
         }
-        if (Math.abs(fileDiff) + Math.abs(rankDiff) == 3) {
-            return knightDirection(fileDiff, rankDiff);
-        }
-        throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        return knightDirection(fileDiff, rankDiff);
     }
 
     private static Direction knightDirection(int fileDiff, int rankDiff) {
@@ -69,14 +63,13 @@ public enum Direction {
         return LEFT_UP;
     }
 
-    private static Direction verticalDirection(int rankDiff) {
+    private static Direction verticalOrHorizontalDirection(int fileDiff, int rankDiff) {
         if (rankDiff > 0) {
             return UP;
         }
-        return DOWN;
-    }
-
-    private static Direction horizontalDirection(int fileDiff) {
+        if (rankDiff < 0) {
+            return DOWN;
+        }
         if (fileDiff > 0) {
             return RIGHT;
         }
