@@ -26,18 +26,15 @@ public class Square {
     }
 
     public void move(ChessBoard chessBoard, Square targetSquare) {
-
         if (this.equals(targetSquare)) {
             throw new IllegalArgumentException(SAME_TARGET);
         }
-
-        List<Square> movablePositions = Path.getMovableSquares(chessBoard, this);
-        if (!movablePositions.contains(targetSquare)) {
-            throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+        if (Path.isMovable(chessBoard, this, targetSquare)) {
+            targetSquare.addPiece(piece);
+            addPiece(new Blank(Color.NO_COLOR));
+            return;
         }
-
-        targetSquare.addPiece(piece);
-        addPiece(new Blank(Color.NO_COLOR));
+        throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
     }
 
     public double score() {
