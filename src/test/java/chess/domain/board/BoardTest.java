@@ -1,9 +1,8 @@
-package chess.board;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.Board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
@@ -92,19 +91,22 @@ public class BoardTest {
     @DisplayName("게임이 끝난 뒤 말을 진행하려 할때 테스트")
     void finishAndMove() {
         killKingOfBlack();
-        assertThatThrownBy(() -> board.movePiece("a1", "a2")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> board.movePiece("a1", "a2"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("빈 공간을 움직이려 할때 테스트")
     void moveBlank() {
-        assertThatThrownBy(() -> board.movePiece("a3", "a4")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> board.movePiece("a3", "a4"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("상대방의 말을 움직이려 할때 테스트")
     void moveOpponentPiece() {
-        assertThatThrownBy(() -> board.movePiece("c7", "c6")).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> board.movePiece("c7", "c6"))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

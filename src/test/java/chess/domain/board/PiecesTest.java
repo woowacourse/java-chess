@@ -1,9 +1,7 @@
-package chess.board;
+package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.board.Pieces;
-import chess.domain.board.State;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
@@ -14,6 +12,8 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.state.Play;
+import chess.domain.state.State;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -77,7 +77,7 @@ class PiecesTest {
     @Test
     @DisplayName("말 이동 테스트")
     void movePiece() {
-        State state = new State();
+        State state = new Play();
         pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
         assertThat(pieces.pieces().get(Position.of("b2"))).isInstanceOf(Blank.class);
 
@@ -86,19 +86,26 @@ class PiecesTest {
     }
 
     private void killKingOfBlack() {
-        State state = new State();
+        State state = new Play();
         pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
+        state.nextTurn();
         pieces.movePiece(Position.of("c7"), Position.of("c5"), state);
+        state.nextTurn();
 
         pieces.movePiece(Position.of("b4"), Position.of("c5"), state);
+        state.nextTurn();
         pieces.movePiece(Position.of("d7"), Position.of("d6"), state);
+        state.nextTurn();
 
         pieces.movePiece(Position.of("c5"), Position.of("d6"), state);
+        state.nextTurn();
         pieces.movePiece(Position.of("b7"), Position.of("b6"), state);
+        state.nextTurn();
 
         pieces.movePiece(Position.of("d6"), Position.of("d7"), state);
+        state.nextTurn();
         pieces.movePiece(Position.of("a7"), Position.of("a6"), state);
-
+        state.nextTurn();
         pieces.movePiece(Position.of("d7"), Position.of("e8"), state);
     }
 
@@ -114,5 +121,15 @@ class PiecesTest {
     void pawnsDuplicateScore() {
         killKingOfBlack();
         assertThat(pieces.score(Color.WHITE)).isEqualTo(37.0);
+    }
+
+    @Test
+    @DisplayName("왕이 죽었는지 테스트")
+    void isKillKing() {
+        assertThat(pieces.isKillKing()).isFalse();
+
+        killKingOfBlack();
+
+        assertThat(pieces.isKillKing()).isTrue();
     }
 }
