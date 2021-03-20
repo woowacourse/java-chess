@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.Team;
+
 public class PrintBoardDto {
     private final Board board;
     private final Team turn;

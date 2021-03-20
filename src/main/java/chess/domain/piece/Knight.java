@@ -1,9 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
-import chess.domain.Strategy;
-import chess.domain.Team;
-
 public class Knight implements Piece {
     public static final double POINT = 2.5;
     private static final int MOVE_RANGE = 1;

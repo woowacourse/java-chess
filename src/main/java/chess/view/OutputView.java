@@ -1,12 +1,12 @@
 package chess.view;
 
 import chess.domain.Board;
-import chess.domain.File;
-import chess.domain.Position;
 import chess.domain.PrintBoardDto;
-import chess.domain.Rank;
-import chess.domain.Team;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Team;
+import chess.domain.position.File;
+import chess.domain.position.Position;
+import chess.domain.position.Rank;
 import java.util.EnumMap;
 import java.util.Map;
 
