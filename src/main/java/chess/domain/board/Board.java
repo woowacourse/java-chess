@@ -60,9 +60,8 @@ public class Board {
 
         for (Point now = source.movedPoint(moveVector); isNotArrived(destination, now) && success;
             now = now.movedPoint(moveVector)) {
-            success =
-                isWithinMovementRange(source, nextMoveCount, moveVector) && squares.get(now)
-                    .isEmpty();
+            success = isWithinMovementRange(source, nextMoveCount, moveVector)
+                && squares.get(now).isEmpty();
             nextMoveCount++;
         }
         return success;

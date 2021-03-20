@@ -6,8 +6,8 @@ import chess.domain.board.Point;
 
 public class Running implements GameState {
 
-    private static final IllegalArgumentException EXCEPTION
-        = new IllegalArgumentException("올바르지 않은 입력입니다.");
+    private static final IllegalArgumentException EXCEPTION =
+        new IllegalArgumentException("올바르지 않은 입력입니다.");
 
     private final Board board;
 
