@@ -15,7 +15,6 @@ public class ChessController {
         if (!InputView.inputInitialCommand()) {
             return;
         }
-
         final ChessGame chessGame = new ChessGame();
         while (!chessGame.isGameOver()) {
             proceedMain(chessGame);
