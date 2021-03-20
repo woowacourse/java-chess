@@ -8,17 +8,26 @@ public class PawnMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 1;
 
-    private final List<MoveVector> pawnsMoveVector = MoveVector.pawnVectors();
+    private static final List<MoveVector> PAWNS_MOVE_VECTORS = MoveVector.pawnVectors();
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
         int x = destination.XDifference(source);
         int y = destination.YDifference(source);
 
-        return pawnsMoveVector.stream()
+        return PAWNS_MOVE_VECTORS.stream()
             .filter(moveVector -> moveVector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("이동할 수 있는 방향이 아닙니다."));
+    }
+
+    @Override
+    public boolean hasMovableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
+
+        return PAWNS_MOVE_VECTORS.stream()
+            .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
     }
 
     @Override

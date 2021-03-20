@@ -33,6 +33,10 @@ public enum Piece {
         return movingStrategy.movableVector(source, destination);
     }
 
+    public boolean hasMovableVector(Point source, Point destination) {
+        return movingStrategy.hasMovableVector(source, destination);
+    }
+
     public int movingLength() {
         return movingStrategy.movingLength();
     }

@@ -38,11 +38,18 @@ public class SquareState {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public MoveVector findMovableVector(Point source, Point destination) {
+    public MoveVector movableVector(Point source, Point destination) {
         if (team.isBlack()) {
             return piece.movableVector(source.oppositePoint(), destination.oppositePoint()).oppositeVector();
         }
         return piece.movableVector(source, destination);
+    }
+
+    public boolean hasMovableVector(Point source, Point destination) {
+        if (team.isBlack()) {
+            return piece.hasMovableVector(source.oppositePoint(), destination.oppositePoint());
+        }
+        return piece.hasMovableVector(source, destination);
     }
 
     public int getMoveLength() {
@@ -75,12 +82,6 @@ public class SquareState {
 
     public boolean isPawn() {
         return this.piece == Piece.PAWN;
-    }
-
-    public boolean hasMovableVector(Point source, Point destination) {
-        MoveVector moveVector = this.findMovableVector(source, destination);
-
-        return moveVector != null;
     }
 
     public boolean isKing() {

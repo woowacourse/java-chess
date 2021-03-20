@@ -8,17 +8,26 @@ public class KnightMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 1;
 
-    private final List<MoveVector> kingsMoveVector = MoveVector.knightVectors();
+    private static final List<MoveVector> KNIGHTS_MOVE_VECTORS = MoveVector.knightVectors();
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
         int x = destination.XDifference(source);
         int y = destination.YDifference(source);
 
-        return kingsMoveVector.stream()
+        return KNIGHTS_MOVE_VECTORS.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("이동할 수 있는 방향이 아닙니다."));
+    }
+
+    @Override
+    public boolean hasMovableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
+
+        return KNIGHTS_MOVE_VECTORS.stream()
+            .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
     }
 
     @Override

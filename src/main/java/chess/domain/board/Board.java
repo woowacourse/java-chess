@@ -47,7 +47,7 @@ public class Board {
 
     private boolean isValidPath(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
-        MoveVector moveVector = sourceSquareState.findMovableVector(source, destination);
+        MoveVector moveVector = sourceSquareState.movableVector(source, destination);
         int nextMoveCount = FIRST_NEXT_MOVE_COUNT;
         boolean success = true;
 
@@ -82,7 +82,7 @@ public class Board {
     private boolean isValidPawnMove(Point source, Point destination) {
         SquareState sourceSquareState = squares.get(source);
         SquareState destinationSquareState = squares.get(destination);
-        MoveVector moveVector = sourceSquareState.findMovableVector(source, destination);
+        MoveVector moveVector = sourceSquareState.movableVector(source, destination);
 
         return !sourceSquareState.isPawn() ||
             (isValidPawnStraightMove(destinationSquareState, moveVector)

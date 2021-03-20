@@ -8,4 +8,6 @@ public interface MovingStrategy {
     MoveVector movableVector(Point source, Point destination);
 
     int movingLength();
+
+    boolean hasMovableVector(Point source, Point destination);
 }

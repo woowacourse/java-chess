@@ -8,17 +8,26 @@ public class KingMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 1;
 
-    private final List<MoveVector> kingsMoveVector = MoveVector.everyVectors();
+    private static final List<MoveVector> KINGS_MOVE_VECTORS = MoveVector.everyVectors();
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
         int x = destination.XDifference(source);
         int y = destination.YDifference(source);
 
-        return kingsMoveVector.stream()
+        return KINGS_MOVE_VECTORS.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("이동할 수 있는 방향이 아닙니다."));
+    }
+
+    @Override
+    public boolean hasMovableVector(Point source, Point destination) {
+        int x = destination.XDifference(source);
+        int y = destination.YDifference(source);
+
+        return KINGS_MOVE_VECTORS.stream()
+            .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
     }
 
     @Override
