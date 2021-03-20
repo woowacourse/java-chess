@@ -3,6 +3,8 @@ package chess.domain.board;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.state.Play;
+import chess.domain.state.State;
 import java.util.Map;
 
 public final class Board {
@@ -11,23 +13,23 @@ public final class Board {
     private State state;
 
     public Board() {
-        state = new State();
-        state.finish();
+        state = new Play();
     }
 
     public void movePiece(final String sourceValue, final String targetValue) {
-        // todo - 상태패턴에게 책임 넘기기
-        if (state.isFinish()) {
-            throw new IllegalArgumentException("게임진행중이 아닙니다.");
-        }
+        state.validateMove();
         Position sourcePosition = Position.of(sourceValue);
         Position targetPosition = Position.of(targetValue);
         pieces.movePiece(sourcePosition, targetPosition, state);
+        if (pieces.isKillKing()) {
+            state = state.nextState();
+        }
+        state.nextTurn();
     }
 
     public void init() {
         pieces.init();
-        state = new State();
+        state = new Play();
     }
 
     public double score(final Color color) {

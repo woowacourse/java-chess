@@ -11,6 +11,7 @@ import chess.domain.piece.Point;
 import chess.domain.piece.Position;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.state.State;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,16 +69,8 @@ public final class Pieces {
         Piece sourcePiece = pieces.get(sourcePosition);
         validateColorOfPiece(sourcePiece, state);
 
-        Piece targetPiece = pieces.get(targetPosition);
-
         pieces.put(targetPosition, sourcePiece.move(targetPosition, pieces()));
         pieces.put(sourcePosition, new Blank());
-
-        if (targetPiece instanceof King) {
-            state.finish();
-            state.setWinner();
-        }
-        state.nextTurn();
     }
 
     private void validateColorOfPiece(final Piece sourcePiece, final State state) {
@@ -123,5 +116,14 @@ public final class Pieces {
 
     public Map<Position, Piece> pieces() {
         return new LinkedHashMap<>(pieces);
+    }
+
+    public boolean isKillKing() {
+        long kingCount = pieces.values()
+            .stream()
+            .filter(piece -> piece instanceof King)
+            .count();
+
+        return kingCount != 2;
     }
 }
