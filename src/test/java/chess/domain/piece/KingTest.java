@@ -32,15 +32,15 @@ class KingTest {
         Piece king = new King(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(king, current);
-        Board board = BoardFactory.initializeBoard();
-        Piece firstBlackPiece = board.findPieceBy(Position.ofName("e7"));
-        Piece secondBlackPiece = board.findPieceBy(Position.ofName("f7"));
-        Piece firstWhitePiece = board.findPieceBy(Position.ofName("e2"));
-        Piece secondWhitePiece = board.findPieceBy(Position.ofName("f2"));
-        board.move(firstBlackPiece, Position.ofName("e5"));
-        board.move(secondBlackPiece, Position.ofName("f5"));
-        board.move(firstWhitePiece, Position.ofName("e3"));
-        board.move(secondWhitePiece, Position.ofName("f3"));
+        Board board = new Board();
+        Piece firstBlackPiece = new Knight(PieceColor.BLACK);
+        Piece secondBlackPiece = new Knight(PieceColor.BLACK);
+        Piece firstWhitePiece = new Knight(PieceColor.WHITE);
+        Piece secondWhitePiece = new Knight(PieceColor.WHITE);
+        board.putPiece(firstBlackPiece, Position.ofName("e5"));
+        board.putPiece(secondBlackPiece, Position.ofName("f5"));
+        board.putPiece(firstWhitePiece, Position.ofName("e3"));
+        board.putPiece(secondWhitePiece, Position.ofName("f3"));
         assertThat(paths.removeObstacles(king, board).positions()).isEqualTo(
                 kingE4WithObstacles());
     }
@@ -48,21 +48,23 @@ class KingTest {
     List<Position> kingE4WithoutObstacles() {
         return Arrays.asList(
                 Position.ofName("e5"),
-                Position.ofName("f5"),
                 Position.ofName("f4"),
-                Position.ofName("f3"),
                 Position.ofName("e3"),
-                Position.ofName("d3"),
                 Position.ofName("d4"),
+                Position.ofName("f5"),
+                Position.ofName("f3"),
+                Position.ofName("d3"),
                 Position.ofName("d5")
         );
     }
 
     List<Position> kingE4WithObstacles() {
         return Arrays.asList(
+                Position.ofName("e5"),
                 Position.ofName("f4"),
-                Position.ofName("d3"),
                 Position.ofName("d4"),
+                Position.ofName("f5"),
+                Position.ofName("d3"),
                 Position.ofName("d5")
         );
     }

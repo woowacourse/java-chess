@@ -27,6 +27,10 @@ public abstract class Piece {
         return this.pieceType.is(PieceType.KING);
     }
 
+    public boolean isKnight() {
+        return this.pieceType.is(PieceType.KNIGHT);
+    }
+
     public boolean isColor(PieceColor color) {
         return this.pieceColor.equals(color);
     }
