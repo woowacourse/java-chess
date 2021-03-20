@@ -84,6 +84,6 @@ public class Board {
     public boolean isKingDead() {
         return chessBoard.values().stream()
             .filter(piece -> piece instanceof King)
-            .count() != 2;
+            .count() != Team.playerNumber();
     }
 }

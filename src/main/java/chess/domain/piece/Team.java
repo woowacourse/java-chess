@@ -13,6 +13,12 @@ public enum Team {
         this.teamName = teamName;
     }
 
+    public static int playerNumber() {
+        return (int) Arrays.stream(Team.values())
+            .filter(team -> team != Team.NOTHING)
+            .count();
+    }
+
     public Team anyTeamExcludingThis() {
         return Arrays.stream(values())
             .filter(team -> team != this)

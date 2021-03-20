@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 
 public class ChessResult {
 
+    private static final int PAWN_EXTRA_SCORE_MINIMUM_COUNT = 2;
     private final Board board;
 
     public ChessResult(final Board board) {
@@ -46,7 +47,7 @@ public class ChessResult {
             .filter(piece -> piece instanceof Pawn)
             .count();
 
-        if (count >= 2) {
+        if (count >= PAWN_EXTRA_SCORE_MINIMUM_COUNT) {
             return count * Pawn.EXTRA_SCORE;
         }
         return 0;
