@@ -2,9 +2,12 @@ package chess.domain.piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.IntStream;
 
 public abstract class AbstractPiece implements Piece {
 
+    private static final int MIN_DISTANCE = 1;
+    private static final int MAX_DISTANCE = 8;
     protected static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
     protected final Color color;
     protected final Position position;
@@ -41,16 +44,28 @@ public abstract class AbstractPiece implements Piece {
 
     protected void validateObstacle(Position position, Direction direction,
         Map<Position, Piece> pieces) {
-        for (int distance = 1; distance < 7; distance++) {
-            int dx = direction.getXDegree() * distance;
-            int dy = direction.getYDegree() * distance;
-            Position movePosition = this.position.add(dx, dy);
-            if (movePosition.equals(position)) {
-                return;
-            }
-            if (!(pieces.get(movePosition) instanceof Blank)) {
-                throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
-            }
+        int dx = direction.getXDegree();
+        int dy = direction.getYDegree();
+
+        boolean isObstacle = IntStream.range(MIN_DISTANCE, findDistance(position, direction))
+            .mapToObj(distance -> this.position.add(dx * distance, dy * distance))
+            .anyMatch(movePosition -> !(pieces.get(movePosition) instanceof Blank));
+
+        if (isObstacle) {
+            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
         }
+    }
+
+    private int findDistance(Position position, Direction direction) {
+        int dx = direction.getXDegree();
+        int dy = direction.getYDegree();
+
+        int distance = 0;
+        boolean isStop = false;
+        while (!isStop && distance++ < MAX_DISTANCE) {
+            Position movePosition = this.position.add(dx * distance, dy * distance);
+            isStop = position.equals(movePosition);
+        }
+        return distance;
     }
 }
