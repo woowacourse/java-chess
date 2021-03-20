@@ -13,6 +13,9 @@ public enum Direction {
     DOWN_LEFT(-1, -1),
     UP_LEFT(-1, 1),
 
+    UU(0,2),
+    DD(0,-2),
+
     L_UU(-1, 2),
     R_UU(1, 2),
     RR_U(2, 1),
@@ -51,11 +54,11 @@ public enum Direction {
     }
 
     public static List<Direction> whitePawnDirection() {
-        return Arrays.asList(UP, UP_RIGHT, UP_LEFT);
+        return Arrays.asList(UP, UP_RIGHT, UP_LEFT, UU);
     }
 
     public static List<Direction> blackPawnDirection() {
-        return Arrays.asList(DOWN, DOWN_RIGHT, DOWN_LEFT);
+        return Arrays.asList(DOWN, DOWN_RIGHT, DOWN_LEFT, DD);
     }
 
     public List<Integer> getCoordinates() {
