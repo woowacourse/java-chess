@@ -3,6 +3,7 @@ package chess.view;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -10,27 +11,20 @@ public class InputView {
     private static final String STATUS_COMMAND = "status";
     private static final String START_COMMAND = "start";
     private static final String END_COMMAND = "end";
+    public static final int THREE_WORDS = 3;
+    public static final int ONE_WORD = 1;
 
     private InputView() {
     }
 
     public static boolean inputChessStartOrEnd() {
         try {
-            final String userInput = scanner.nextLine();
-            return validateStartOrEnd(userInput);
+            final String startOrEndInput = scanner.nextLine();
+            return validateStartOrEnd(startOrEndInput);
         } catch (IllegalArgumentException e) {
             System.out.println(e.getMessage());
             return inputChessStartOrEnd();
         }
-    }
-
-    public static List<String> inputMovePosition() {
-        final String inputMoveCommand = scanner.nextLine();
-        final List<String> splitMoveCommand = Arrays.asList(inputMoveCommand.split(" "));
-        if (MOVE_COMMAND.equals(splitMoveCommand.get(0)) || STATUS_COMMAND.equals(splitMoveCommand.get(0))) {
-            return splitMoveCommand;
-        }
-        throw new IllegalArgumentException("허용되지 않은 명령입니다.");
     }
 
     private static boolean validateStartOrEnd(final String userInput) {
@@ -41,5 +35,32 @@ public class InputView {
             return false;
         }
         throw new IllegalArgumentException("허용되지 않은 명령입니다.");
+    }
+
+    public static List<String> inputTurnOption() {
+        try {
+            final String userTurnInput = scanner.nextLine();
+            final String[] turnOptionInput = userTurnInput.split(" ");
+            return validateTurnOption(turnOptionInput);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return inputTurnOption();
+        }
+    }
+
+    private static List<String> validateTurnOption(final String[] turnOptionInput) {
+        if (MOVE_COMMAND.equals(turnOptionInput[0]) && turnOptionInput.length == THREE_WORDS) {
+            return trimStringArray(turnOptionInput);
+        }
+        if (STATUS_COMMAND.equals(turnOptionInput[0]) && turnOptionInput.length == ONE_WORD) {
+            return trimStringArray(turnOptionInput);
+        }
+        throw new IllegalArgumentException("허용되지 않은 명령입니다.");
+    }
+
+    private static List<String> trimStringArray(final String[] stringArray) {
+        return Arrays.stream(stringArray)
+                .map(String::trim)
+                .collect(Collectors.toList());
     }
 }
