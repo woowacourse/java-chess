@@ -42,27 +42,27 @@ public abstract class Pawn extends Piece{
     public abstract boolean isFirstLine(Horizontal horizontal);
 
     public boolean validateMove(Position source, Position target, Piece targetPiece) {
-        return isValidStraightMove(source, target) || isValidDiagonalMove(source, target, isEnemy(targetPiece));
+        if(source.isStraight(target)){
+            return isValidStraightMove(source, target);
+        }
+
+        return isValidDiagonalMove(source, target, isEnemy(targetPiece));
     }
 
     private boolean isValidStraightMove(Position source, Position target) {
-        return source.isStraight(target) && (isValidBasicMove(source, target) || isValidSpecialMove(source, target));
-    }
+        if(isFirstLine(source.getHorizontal())){
+            return true;
+        }
 
-    private boolean isValidBasicMove(Position source, Position target) {
         return source.getDistance(target) == 1;
     }
 
-    private boolean isValidSpecialMove(Position source, Position target){
-        return isFirstLine(source.getHorizontal())
-                && source.getDistance(target) == ABLE_DISTANCE_TO_MOVE;
-    }
-
     private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){
-        if(!source.isDiagonal(target)){
-            return false;
+        if(isEnemy){
+            return source.getDistance(target) == 1;
         }
-        return source.getDistance(target) == 1 && isEnemy;
+
+        return false;
     }
 
     @Override
