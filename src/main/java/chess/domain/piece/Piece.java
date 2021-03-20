@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import java.util.List;
 import java.util.Map;
 
 public interface Piece {
