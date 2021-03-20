@@ -41,4 +41,8 @@ public class OutputView {
         System.out.println(BLACK_TEAM_SCORE + blackTeamScore);
         System.out.println(WHITE_TEAM_SCORE + whiteTeamScore);
     }
+
+    public static void printErrorMessage(final String errorMessage) {
+        System.out.println(errorMessage);
+    }
 }
