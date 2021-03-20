@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Bishop extends Piece {
-    private static final int UNICODE_DECIMAL = 9815;
+    private static final int BISHOP_UNICODE_DECIMAL = 9815;
 
     public Bishop() {
         super();
@@ -23,7 +23,7 @@ public class Bishop extends Piece {
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return current.checkDiagonalRule(destination);
+        return current.checkDiagonal(destination);
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Bishop extends Piece {
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL;
+        return BISHOP_UNICODE_DECIMAL;
     }
 
     @Override

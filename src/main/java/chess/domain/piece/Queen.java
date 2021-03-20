@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Queen extends Piece {
-    private static final int UNICODE_DECIMAL = 9813;
+    private static final int QUEEN_UNICODE_DECIMAL = 9813;
 
     public Queen() {
     }
@@ -16,20 +16,17 @@ public class Queen extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
-        if (current.checkDiagonalRule(destination)) {
+        if (current.checkDiagonal(destination)) {
             final List<Position> diagonalPath = current.generateDiagonalPath(destination);
             return checkEmptyPath(diagonalPath, chessBoard);
         }
-        if (current.checkStraightRule(destination)) {
-            final List<Position> straightPath = current.generateStraightPath(destination);
-            return checkEmptyPath(straightPath, chessBoard);
-        }
-        return false;
+        final List<Position> straightPath = current.generateStraightPath(destination);
+        return checkEmptyPath(straightPath, chessBoard);
     }
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return current.checkDiagonalRule(destination) || current.checkStraightRule(destination);
+        return current.checkDiagonal(destination) || current.checkStraight(destination);
     }
 
     @Override
@@ -44,7 +41,7 @@ public class Queen extends Piece {
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL;
+        return QUEEN_UNICODE_DECIMAL;
     }
 
     @Override

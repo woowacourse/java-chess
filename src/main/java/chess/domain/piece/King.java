@@ -5,13 +5,13 @@ import chess.domain.Position;
 import java.util.Map;
 
 public class King extends Piece {
-    private static final int UNICODE_DECIMAL = 9812;
+    private static final int KING_UNICODE_DECIMAL = 9812;
 
     public King() {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return checkPositionRule(current, destination);
     }
 
@@ -32,7 +32,7 @@ public class King extends Piece {
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL;
+        return KING_UNICODE_DECIMAL;
     }
 
     @Override

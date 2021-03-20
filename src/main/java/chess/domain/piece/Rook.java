@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
-    private static final int UNICODE_DECIMAL = 9814;
+    private static final int ROOK_UNICODE_DECIMAL = 9814;
 
     public Rook() {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
@@ -22,7 +22,7 @@ public class Rook extends Piece {
 
     @Override
     public boolean checkPositionRule(Position current, Position destination) {
-        return current.checkStraightRule(destination);
+        return current.checkStraight(destination);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Rook extends Piece {
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL;
+        return ROOK_UNICODE_DECIMAL;
     }
 
     @Override

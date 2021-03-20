@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Pawn extends Piece {
-    private static final int UNICODE_DECIMAL = 9817;
+    private static final int PAWN_UNICODE_DECIMAL = 9817;
 
     private final int direction;
 
@@ -19,7 +19,7 @@ public class Pawn extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
-        if (current.checkDiagonalRule(destination)) {
+        if (current.checkDiagonal(destination)) {
             return chessBoard.containsKey(destination);
         }
         final List<Position> straightPath = current.generateStraightPath(destination);
@@ -48,7 +48,7 @@ public class Pawn extends Piece {
         if (current.moveXandY(0, direction).equals(destination)) {
             return true;
         }
-        return current.checkDiagonalToDirection(destination, direction);
+        return current.checkAdjacentDiagonalToDirection(destination, direction);
     }
 
     private boolean checkPositionRuleFirstMove(final Position current, final Position destination) {
@@ -56,12 +56,12 @@ public class Pawn extends Piece {
                 current.moveXandY(0, direction * 2).equals(destination)) {
             return true;
         }
-        return current.checkDiagonalToDirection(destination, direction);
+        return current.checkAdjacentDiagonalToDirection(destination, direction);
     }
 
     @Override
     public int hashCode() {
-        return UNICODE_DECIMAL * direction;
+        return PAWN_UNICODE_DECIMAL * direction;
     }
 
     @Override
