@@ -23,7 +23,7 @@ public class ChessGame {
 
     public void move(final Position current, final Position destination) {
         validateMove(current, destination);
-        currentTurnTeam.move(current, destination);
+        currentTurnTeam.movePiece(current, destination);
         captureEnemy(destination);
     }
 
@@ -37,8 +37,8 @@ public class ChessGame {
     }
 
     public Map<Position, Piece> generateChessBoard() {
-        final Map<Position, Piece> chessBoard = blackTeam.getPiecePosition();
-        chessBoard.putAll(whiteTeam.getPiecePosition());
+        final Map<Position, Piece> chessBoard = blackTeam.currentPiecePosition();
+        chessBoard.putAll(whiteTeam.currentPiecePosition());
         return Collections.unmodifiableMap(chessBoard);
     }
 

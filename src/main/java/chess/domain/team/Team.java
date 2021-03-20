@@ -1,67 +1,46 @@
 package chess.domain.team;
 
 import chess.domain.Position;
-import chess.domain.piece.*;
+import chess.domain.piece.Piece;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public abstract class Team {
-    protected final Map<Position, Piece> piecePosition;
-    protected final List<Piece> capturedPieces;
+public class Team {
+    private final PiecePosition piecePosition;
+    private final PieceCaptured pieceCaptured;
     private final Score score;
 
-    public Team() {
-        piecePosition = new HashMap<>();
-        capturedPieces = new ArrayList<>();
-        score = new Score();
+    public Team(final PiecePosition piecePosition) {
+        this.piecePosition = piecePosition;
+        this.pieceCaptured = new PieceCaptured();
+        this.score = new Score();
     }
 
-    protected void initializePawn(final int pawnColumn, final int pawnDirection) {
-        for (int i = 0; i < 8; i++) {
-            piecePosition.put(new Position(i, pawnColumn), new Pawn(pawnDirection));
-        }
+    public final Piece choosePiece(final Position position) {
+        return piecePosition.choosePiece(position);
     }
 
-    protected void initializePiece(final int pieceColumn) {
-        piecePosition.put(new Position(0, pieceColumn), new Rook());
-        piecePosition.put(new Position(1, pieceColumn), new Knight());
-        piecePosition.put(new Position(2, pieceColumn), new Bishop());
-        piecePosition.put(new Position(3, pieceColumn), new Queen());
-        piecePosition.put(new Position(4, pieceColumn), new King());
-        piecePosition.put(new Position(5, pieceColumn), new Bishop());
-        piecePosition.put(new Position(6, pieceColumn), new Knight());
-        piecePosition.put(new Position(7, pieceColumn), new Rook());
+    public final void movePiece(final Position current, final Position destination) {
+        piecePosition.movePiece(current, destination);
     }
 
-    public Piece choosePiece(final Position position) {
-        if (havePiece(position)) {
-            return piecePosition.get(position);
-        }
-        throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
+    public final boolean havePiece(final Position position) {
+        return piecePosition.havePiece(position);
     }
 
-    public boolean havePiece(final Position position) {
-        return piecePosition.containsKey(position);
+    public final Piece deletePiece(final Position destination) {
+        return piecePosition.deletePiece(destination);
     }
 
-    public Piece deletePiece(Position destination) {
-        return piecePosition.remove(destination);
+    public final void catchPiece(final Piece piece) {
+        pieceCaptured.add(piece);
     }
 
-    public void catchPiece(Piece piece) {
-        capturedPieces.add(piece);
+    public final double calculateScore() {
+        return score.calculateScore(piecePosition.getPiecePosition());
     }
 
-    public abstract void move(final Position current, final Position destination);
-
-    public Map<Position, Piece> getPiecePosition() {
-        return new HashMap<>(piecePosition);
-    }
-
-    public double calculateScore() {
-        return score.calculateScore(piecePosition);
+    public final Map<Position, Piece> currentPiecePosition() {
+        return piecePosition.getPiecePosition();
     }
 }
