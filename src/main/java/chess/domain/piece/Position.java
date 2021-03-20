@@ -31,18 +31,18 @@ public final class Position {
         this.y = y;
     }
 
-    public static Position of(int x, int y) {
-        return positions[asIndex(Point.from(x), Point.from(y))];
+    public static Position of(String value) {
+        int x = value.charAt(1) - '1';
+        int y = value.charAt(0) - 'a';
+        return of(x, y);
     }
 
     public static Position of(Point x, Point y) {
         return of(x.point(), y.point());
     }
 
-    public static Position of(String value) {
-        int x = value.charAt(1) - '1';
-        int y = value.charAt(0) - 'a';
-        return Position.of(x, y);
+    public static Position of(int x, int y) {
+        return positions[asIndex(Point.from(x), Point.from(y))];
     }
 
     private static int asIndex(Point x, Point y) {
