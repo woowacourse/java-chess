@@ -16,6 +16,10 @@ public class Square {
         this.piece = piece;
     }
 
+    public void addPiece(Piece piece) {
+        this.piece = piece;
+    }
+
     public void move(ChessBoard chessBoard, Square targetSquare) {
 
         if (this.equals(targetSquare)) {
@@ -27,8 +31,8 @@ public class Square {
             throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
 
-        targetSquare.piece = this.piece;
-        this.piece = new Blank(Color.NO_COLOR);
+        targetSquare.addPiece(piece);
+        addPiece(new Blank(Color.NO_COLOR));
     }
 
     public double score() {
