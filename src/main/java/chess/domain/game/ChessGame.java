@@ -24,23 +24,23 @@ public class ChessGame {
         return gameOver.isGameOver();
     }
 
-    public void nextTurn() {
-        turn.next();
+    public Team nowTurn() {
+        return turn.now();
     }
 
-    public Board board() {
-        return board;
+    public void nextTurn() {
+        turn.next();
     }
 
     public boolean isKingDead() {
         return board.isKingDead();
     }
 
-    public Team nowTurn() {
-        return turn.now();
-    }
-
     public void move(final Position start, final Position end, final Team nowTurn) {
         board.move(start, end, nowTurn);
+    }
+
+    public Board board() {
+        return board;
     }
 }
