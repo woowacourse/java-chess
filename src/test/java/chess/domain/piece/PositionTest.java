@@ -8,13 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PositionTest {
-    private CurrentPieces currentPieces;
-
-    @BeforeEach
-    void setUp() {
-        currentPieces = CurrentPieces.generate();
-    }
-
     @DisplayName("Position 객체 생성 확인")
     @Test
     void 위치_객체_생성() {
