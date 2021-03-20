@@ -29,16 +29,28 @@ public class Application {
 
     private static void startChessGame(Board board) {
         OutputView.printBoard(board);
-        List<String> playerCommand = InputView.inputPlayerCommand();
 
-        Command command = Command.findCommand(playerCommand.get(0));
+        Command command = Command.START;
         while (command != Command.END && !board.isKingCheckmate()) {
+            List<String> playerCommand = InputView.inputPlayerCommand();
+            command = Command.findCommand(playerCommand.get(0));
             executeCommand(command, board, playerCommand);
             OutputView.printBoard(board);
-            playerCommand = InputView.inputPlayerCommand();
-            command = Command.findCommand(playerCommand.get(0));
         }
-        OutputView.printBoard(board);
+
+
+
+
+//
+//        List<String> playerCommand = InputView.inputPlayerCommand();
+//        Command command = Command.findCommand(playerCommand.get(0));
+//
+//        while (command != Command.END && !board.isKingCheckmate()) {
+//            executeCommand(command, board, playerCommand);
+//            OutputView.printBoard(board);
+//            playerCommand = InputView.inputPlayerCommand();
+//            command = Command.findCommand(playerCommand.get(0));
+//        }
         OutputView.printWinner(board.winner());
     }
 
