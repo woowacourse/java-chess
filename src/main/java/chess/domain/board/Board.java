@@ -3,19 +3,21 @@ package chess.domain.board;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
 
     public Board() {
-        chessBoard = BoardInitializer.initializeBoard();
+        this(BoardInitializer.initializeBoard());
+    }
+
+    public Board(Map<Position, Piece> chessBoard) {
+        this.chessBoard = new TreeMap<>(chessBoard);
     }
 
     public Map<Position, Piece> unwrap() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public void move(final Position source, final Position target, final Team team) {

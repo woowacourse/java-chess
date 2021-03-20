@@ -9,15 +9,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Map;
+import java.util.TreeMap;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
     private Board board;
+    private Map<Position, Piece> rawBoard;
 
     @BeforeEach
     void setUp() {
         board = new Board();
+        rawBoard = new TreeMap<>(board.unwrap());
     }
 
     @Test
@@ -43,9 +48,9 @@ class BoardTest {
     @ValueSource(strings = {"a,2,a,3", "a,2,a,4", "a,2,b,3"})
     void checkPawnPath(final String input) {
         final Team team = Team.WHITE;
-        board.unwrap().put(new Position("a", "3"), new Queen(team));
+        rawBoard.put(new Position("a", "3"), new Queen(team));
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
+        assertThatThrownBy(() -> new Board(rawBoard).move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -53,9 +58,9 @@ class BoardTest {
     @Test
     @DisplayName("킹 한칸만 이동하는 기능")
     void checkKingMove() {
-        board.unwrap().put(new Position("a", "3"), new King(Team.WHITE));
+        rawBoard.put(new Position("a", "3"), new King(Team.WHITE));
         assertThatThrownBy(() ->
-                board.move(new Position("a", "3"), new Position("h", "3"), Team.WHITE))
+                new Board(rawBoard).move(new Position("a", "3"), new Position("h", "3"), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
@@ -64,8 +69,8 @@ class BoardTest {
     @DisplayName("킹이 잡혔는지 확인하는 기능")
     void checkDieKing() {
         assertThat(board.isKingDead()).isFalse();
-        board.unwrap().put(new Position("e", "1"), Blank.getInstance());
-        assertThat(board.isKingDead()).isTrue();
+        rawBoard.put(new Position("e", "1"), Blank.getInstance());
+        assertThat(new Board(rawBoard).isKingDead()).isTrue();
     }
 
     @Test

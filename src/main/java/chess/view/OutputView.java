@@ -11,6 +11,7 @@ public class OutputView {
 
     private static final String MESSAGE_PREFIX = "> ";
     private static final String ERROR_PREFIX = "[ERROR] ";
+    public static final int LAST_VERTICAL_VALUE = 8;
 
     public static void printStartGameMessage() {
         System.out.println(MESSAGE_PREFIX + "체스 게임을 시작합니다.");
@@ -25,7 +26,7 @@ public class OutputView {
 
     public static void printCurrentBoard(final Map<Position, Piece> chessBoard) {
         System.out.println();
-        int lastVerticalValue = 8;
+        int lastVerticalValue = LAST_VERTICAL_VALUE;
         for (final Position position : chessBoard.keySet()) {
             lastVerticalValue = updateLastVerticalValue(lastVerticalValue, position);
             System.out.print(chessBoard.get(position).getName());
@@ -36,8 +37,8 @@ public class OutputView {
     private static int updateLastVerticalValue(final int before, final Position position) {
         int newValue = before;
         if (position.getVertical().getValue() != before) {
-            newValue = position.getVertical().getValue();
             System.out.println();
+            newValue = position.getVertical().getValue();
         }
         return newValue;
     }
