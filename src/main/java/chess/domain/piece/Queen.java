@@ -26,7 +26,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public boolean validateMove(final Position source, final Position target, final Piece targetPiece) {
+    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
     }
 

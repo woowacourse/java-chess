@@ -41,7 +41,7 @@ public abstract class Pawn extends Piece {
 
     public abstract boolean isFirstLine(final Horizontal horizontal);
 
-    public boolean validateMove(final Position source, final Position target, final Piece targetPiece) {
+    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         if (source.isStraight(target)) {
             return isValidStraightMove(source, target);
         }

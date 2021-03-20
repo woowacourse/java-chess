@@ -17,7 +17,7 @@ public abstract class Piece {
         this.directions = directions;
     }
 
-    public abstract boolean validateMove(final Position source, final Position target, final Piece targetPiece);
+    public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 
     public final Score score() {
         return this.score;

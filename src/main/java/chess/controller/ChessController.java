@@ -54,6 +54,6 @@ public class ChessController {
     }
 
     private void showAblePositionToMove(final ShowCommand command){
-        OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getAbleToMove(command));
+        OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(command));
     }
 }

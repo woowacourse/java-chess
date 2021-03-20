@@ -21,13 +21,20 @@ public class ChessManager {
         return board;
     }
 
-    public void move(final MoveCommand moveCommand) {
-        board.move(moveCommand.source(), moveCommand.target(), turn);
+    public void move(final MoveCommand command) {
+        validateTurn(command.source());
+        board.move(command.source(), command.target());
         turn = turn.reverse();
     }
 
-    public List<Position> getAbleToMove(final ShowCommand showCommand) {
-        return board.getAbleToMove(showCommand.source());
+    private void validateTurn(final Position source) {
+        if(!board.isPositionOwner(source, turn)){
+            throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
+        }
+    }
+
+    public List<Position> getReachablePositions(final ShowCommand command) {
+        return board.getAbleToMove(command.source());
     }
 
     public Status calculateStatus() {

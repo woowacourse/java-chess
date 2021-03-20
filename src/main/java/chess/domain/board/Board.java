@@ -32,17 +32,53 @@ public class Board {
         return new HashMap<>(board);
     }
 
-    public void move(final Position source, final Position target, final Owner owner) {
-        if (!of(source).isOwner(owner)) {
-            throw new IllegalArgumentException();
-        }
+    public void move(final Position source, final Position target) {
+        validateMove(source, target);
+        checkGameEnd(target);
+        movePiece(source, target);
+    }
 
+    private void validateMove(final Position source, final Position target){
         if (!ableToMove(source).contains(target)) {
             throw new IllegalArgumentException();
         }
+    }
 
-        checkGameEnd(target);
-        movePiece(source, target);
+    private List<Position> ableToMove(final Position source) {
+        // TODO :: 인덴트 줄이기
+        final List<Position> ableToMove = new ArrayList<>();
+        final Piece sourcePiece = of(source);
+
+        for (final Direction direction : sourcePiece.getDirections()) {
+            for (int distance = 1; distance <= sourcePiece.getMaxDistance(); distance++) {
+                if(isBlocked(source, direction, distance)){
+                    break;
+                }
+
+                final Position target = source.next(direction, distance);
+                if (sourcePiece.isReachable(source, target, of(target))) {
+                    ableToMove.add(target);
+                }
+
+                if (sourcePiece.isEnemy(of(target)) ) {
+                    break;
+                }
+            }
+        }
+
+        return ableToMove;
+    }
+
+    private boolean isBlocked(final Position source, final Direction direction, final int distance){
+        try {
+            return isSameTeam(source, source.next(direction, distance));
+        } catch (IllegalArgumentException e) {
+            return true;
+        }
+    }
+
+    private boolean isSameTeam(final Position source, final Position target){
+        return of(source).isSameTeam(of(target));
     }
 
     private void checkGameEnd(final Position target) {
@@ -111,37 +147,6 @@ public class Board {
         return totalCount;
     }
 
-    public List<Position> ableToMove(final Position source) {
-        final List<Position> ableToMove = new ArrayList<>();
-        final Piece sourcePiece = of(source);
-
-        for (final Direction direction : sourcePiece.getDirections()) {
-            for (int i = 1; i <= sourcePiece.getMaxDistance(); i++) {
-                Position nextPosition;
-                try {
-                    nextPosition = source.next(direction, i);
-                } catch (IllegalArgumentException e) {
-                    break;
-                }
-
-                final Piece nextPiece = of(nextPosition);
-
-                if (sourcePiece.isSameTeam(nextPiece)) {
-                    break;
-                }
-
-                if (sourcePiece.validateMove(source, nextPosition, nextPiece)) {
-                    ableToMove.add(nextPosition);
-                }
-
-                if (sourcePiece.isEnemy(nextPiece)) {
-                    break;
-                }
-            }
-        }
-
-        return ableToMove;
-    }
 
     public boolean isEnd() {
         return isEnd;
@@ -149,5 +154,9 @@ public class Board {
 
     public List<Position> getAbleToMove(final Position source) {
         return ableToMove(source);
+    }
+
+    public boolean isPositionOwner(final Position position, final Owner owner){
+        return of(position).isOwner(owner);
     }
 }
