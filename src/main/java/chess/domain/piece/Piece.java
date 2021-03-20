@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
+
     private final Details details;
     private final Directions directions;
     private Position currentPosition;
@@ -25,11 +26,34 @@ public abstract class Piece {
         this.moved = moved;
     }
 
+    public void updateMovablePositions(List<Position> existPiecePositions,
+        List<Position> enemiesPositions) {
+        movablePositions = new ArrayList<>();
+        movablePositions.addAll(directions.movablePositions(existPiecePositions, currentPosition, details.iterable()));
+        movablePositions.addAll(directions.killablePositions(enemiesPositions, currentPosition, details.iterable()));
+    }
+
+    public void move() {
+        moved = true;
+    }
+
     public boolean isSameColor(TeamColor teamColor) {
         return details.isSameColor(teamColor);
     }
 
     public Position currentPosition() {
         return currentPosition;
+    }
+
+    public List<Position> movablePositions() {
+        return movablePositions;
+    }
+
+    protected boolean isNotMoved() {
+        return !moved;
+    }
+
+    protected Directions directions() {
+        return directions;
     }
 }

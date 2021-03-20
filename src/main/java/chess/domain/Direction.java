@@ -22,12 +22,12 @@ public enum Direction {
     DOWN_RIGHT_RIGHT(2, -1),
     DOWN_DOWN_LEFT(-1, -2),
     DOWN_LEFT_LEFT(-2, -1);
-    private final int x;
-    private final int y;
+    private final int column;
+    private final int row;
 
-    Direction(int x, int y) {
-        this.x = x;
-        this.y = y;
+    Direction(int column, int row) {
+        this.column = column;
+        this.row = row;
     }
 
     public static List<Direction> diagonalDirections() {
@@ -64,11 +64,11 @@ public enum Direction {
         return Arrays.asList(DOWN_LEFT, DOWN_RIGHT);
     }
 
-    public int getX() {
-        return x;
+    public int column() {
+        return column;
     }
 
-    public int getY() {
-        return y;
+    public int row() {
+        return row;
     }
 }

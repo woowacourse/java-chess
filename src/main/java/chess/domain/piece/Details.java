@@ -4,6 +4,7 @@ import chess.domain.Score;
 import chess.domain.TeamColor;
 
 public final class Details {
+
     private final String name;
     private final TeamColor teamColor;
     private final Score score;
@@ -18,5 +19,9 @@ public final class Details {
 
     public boolean isSameColor(TeamColor teamColor) {
         return teamColor == this.teamColor;
+    }
+
+    public boolean iterable() {
+        return iterable;
     }
 }
