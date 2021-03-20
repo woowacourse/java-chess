@@ -14,22 +14,19 @@ import java.util.stream.Collectors;
 public class BoardInitializer {
 
     private static final List<LocationInitializer> locationInitializers;
-    private static final List<String> HORIZONTAL_RANGE = Arrays.stream(Horizontal.values())
-        .map(Horizontal::getSymbol)
+    private static final List<String> HORIZONTAL_RANGE = Arrays.stream(Horizontal.values()).map(Horizontal::getSymbol)
         .collect(Collectors.toList());
-    private static final List<String> VERTICAL_RANGE = Arrays.stream(Vertical.values())
-        .map(Vertical::getSymbol)
+    private static final List<String> VERTICAL_RANGE = Arrays.stream(Vertical.values()).map(Vertical::getSymbol)
         .collect(Collectors.toList());
 
     static {
-        locationInitializers = Arrays
-            .asList(new PawnInitializer(), new RookInitializer(), new KingInitializer(),
+        locationInitializers = Arrays.asList(new PawnInitializer(), new RookInitializer(), new KingInitializer(),
                 new QueenInitializer(), new BishopInitializer(), new KnightInitializer());
     }
 
     public static Map<Position, Piece> initializeBoard() {
         final Map<Position, Piece> chessBoard = new TreeMap<>();
-        for (String horizontal : HORIZONTAL_RANGE) {
+        for (final String horizontal : HORIZONTAL_RANGE) {
             VERTICAL_RANGE.forEach(vertical -> chessBoard.put(new Position(horizontal, vertical), Blank.getInstance()));
         }
         locationInitializers.forEach(initializer -> chessBoard.putAll(initializer.initialize()));

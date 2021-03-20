@@ -62,7 +62,7 @@ public class ChessResult {
         return scoreWinner();
     }
 
-    private Team kingSlayerTeam(Map<Position, Piece> chessBoard) {
+    private Team kingSlayerTeam(final Map<Position, Piece> chessBoard) {
         return chessBoard.values().stream()
             .filter(piece -> piece instanceof King)
             .map(Piece::team)
@@ -74,7 +74,6 @@ public class ChessResult {
         if (calculateScore(Team.BLACK) > calculateScore(Team.WHITE)) {
             return Team.BLACK;
         }
-
         if (calculateScore(Team.BLACK) < calculateScore(Team.WHITE)) {
             return Team.WHITE;
         }

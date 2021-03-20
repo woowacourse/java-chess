@@ -49,8 +49,7 @@ class BoardTest {
         final Team team = Team.WHITE;
         board.unwrap().put(new Position("a", "3"), new Queen(team));
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board
-            .move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
+        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

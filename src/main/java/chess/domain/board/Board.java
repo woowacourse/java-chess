@@ -42,7 +42,7 @@ public class Board {
         }
     }
 
-    private boolean checkPath(Position source, Position target) {
+    private boolean checkPath(final Position source, final Position target) {
         List<Position> paths = new ArrayList<>();
         if (source.hasMiddlePath(target)) {
             paths = updatePosition(source, target);
@@ -56,13 +56,11 @@ public class Board {
         return false;
     }
 
-    private boolean canPieceMoveToTarget(final Position source, final Position target,
-        final List<Position> paths) {
+    private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
         if (chessBoard.get(source) instanceof Pawn) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
         }
-        return chessBoard.get(source)
-            .canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
+        return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
     }
 
     private boolean hasNoPiecesInPath(final List<Position> paths) {

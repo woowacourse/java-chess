@@ -40,8 +40,7 @@ public class Pawn extends Piece {
         return target.subtract(source);
     }
 
-    private boolean checkPossible(final Direction direction, final Piece piece,
-        final Vertical vertical) {
+    private boolean checkPossible(final Direction direction, final Piece piece, final Vertical vertical) {
         if (direction == Direction.NORTH) {
             return piece instanceof Blank;
         }

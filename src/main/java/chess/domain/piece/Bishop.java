@@ -14,8 +14,7 @@ public class Bishop extends GeneralPiece {
 
     @Override
     protected List<Direction> createPossibleDirections() {
-        return Arrays.asList(Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST,
-            Direction.SOUTHWEST);
+        return Arrays.asList(Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST, Direction.SOUTHWEST);
     }
 
     @Override
