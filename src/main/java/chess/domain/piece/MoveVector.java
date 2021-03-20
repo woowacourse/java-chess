@@ -13,9 +13,6 @@ public enum MoveVector {
     SOUTHEAST(1, -1),
     SOUTHWEST(-1, -1),
 
-    FIRST_PAWN_UP(0, 2),
-    FIRST_PAWN_DOWN(0, -2),
-
     NNE(1, 2),
     NEE(2, 1),
     SEE(2, -1),
@@ -34,7 +31,7 @@ public enum MoveVector {
     }
 
     public static List<MoveVector> pawnVectors() {
-        return Arrays.asList(NORTH, FIRST_PAWN_UP);
+        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
     }
 
     public static List<MoveVector> everyVectors() {
@@ -53,10 +50,12 @@ public enum MoveVector {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public static boolean hasNotMoveVector(int horizon, int vertical) {
-        return Arrays.stream(MoveVector.values())
-            .noneMatch(vector -> (vector.horizon == horizon)
-                && (vector.vertical == vertical));
+    public boolean isDiagonalVector() {
+        return diagonalVectors().contains(this);
+    }
+
+    public boolean isPawnStraight() {
+        return this == NORTH || this == SOUTH;
     }
 
     public static MoveVector foundMoveVector(int horizon, int vertical) {
@@ -65,22 +64,6 @@ public enum MoveVector {
                 && (vector.vertical == vertical))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
-    }
-
-    public boolean isWhitePawnsStraight() {
-        return Arrays.asList(NORTH, FIRST_PAWN_UP).contains(this);
-    }
-
-    public boolean isBlackPawnsStraight() {
-        return Arrays.asList(SOUTH, FIRST_PAWN_DOWN).contains(this);
-    }
-
-    public boolean isWhiteDiagonalVector() {
-        return this == NORTHEAST || this == NORTHWEST;
-    }
-
-    public boolean isBlackDiagonalVector() {
-        return this == SOUTHEAST || this == SOUTHWEST;
     }
 
     public boolean isSameDirection(int horizon, int vertical) {

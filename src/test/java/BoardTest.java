@@ -4,9 +4,12 @@ import chess.domain.ChessGame;
 import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.board.SquareState;
 import chess.domain.board.Team;
 import chess.domain.piece.Piece;
+import chess.dto.BoardDto;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -29,48 +32,35 @@ public class BoardTest {
     @DisplayName("빈 보드 생성")
     void createBoard() {
         Board board = new Board();
-        assertThat(board.squareState(Point.of("a1")))
-            .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
-        assertThat(board.squareState(Point.of("a2")))
-            .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
-        assertThat(board.squareState(Point.of("a7")))
-            .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
-        assertThat(board.squareState(Point.of("a8")))
-            .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
+        BoardDto actualBoard = board.boardDto();
+        List<List<String>> expectedBoard = new ArrayList<>();
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+
+        assertThat(expectedBoard).isEqualTo(actualBoard.board());
     }
 
     @Test
     @DisplayName("팀 화이트 초기설정 테스트")
     void initializeBoard() {
-        assertThat(board.squareState(Point.of("a1")))
-            .isEqualTo(SquareState.of(Piece.ROOK, Team.WHITE));
-        assertThat(board.squareState(Point.of("g1")))
-            .isEqualTo(SquareState.of(Piece.KNIGHT, Team.WHITE));
-        assertThat(board.squareState(Point.of("c1")))
-            .isEqualTo(SquareState.of(Piece.BISHOP, Team.WHITE));
-        assertThat(board.squareState(Point.of("d1")))
-            .isEqualTo(SquareState.of(Piece.QUEEN, Team.WHITE));
-        assertThat(board.squareState(Point.of("e1")))
-            .isEqualTo(SquareState.of(Piece.KING, Team.WHITE));
-        assertThat(board.squareState(Point.of("f2")))
-            .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
-    }
+        BoardDto actualBoard = board.boardDto();
+        List<List<String>> expectedBoard = new ArrayList<>();
+        expectedBoard.add(Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R"));
+        expectedBoard.add(Arrays.asList("P", "P", "P", "P", "P", "P", "P", "P"));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList("p", "p", "p", "p", "p", "p", "p", "p"));
+        expectedBoard.add(Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r"));
 
-    @Test
-    @DisplayName("팀 블랙 초기설정 테스트")
-    void initializeBoardAndBlackTeam() {
-        assertThat(board.squareState(Point.of("a8")))
-            .isEqualTo(SquareState.of(Piece.ROOK, Team.BLACK));
-        assertThat(board.squareState(Point.of("g8")))
-            .isEqualTo(SquareState.of(Piece.KNIGHT, Team.BLACK));
-        assertThat(board.squareState(Point.of("c8")))
-            .isEqualTo(SquareState.of(Piece.BISHOP, Team.BLACK));
-        assertThat(board.squareState(Point.of("d8")))
-            .isEqualTo(SquareState.of(Piece.QUEEN, Team.BLACK));
-        assertThat(board.squareState(Point.of("e8")))
-            .isEqualTo(SquareState.of(Piece.KING, Team.BLACK));
-        assertThat(board.squareState(Point.of("f7")))
-            .isEqualTo(SquareState.of(Piece.PAWN, Team.BLACK));
+        assertThat(expectedBoard).isEqualTo(actualBoard.board());
     }
 
     @Test
@@ -106,7 +96,6 @@ public class BoardTest {
     void testScoreWhenSomePiecesNotExist() {
         Board board = new Board();
 
-        // 체스 3단계 예시와 동일
         board.putSymmetrically(Piece.KNIGHT, Point.of("f4"));
         board.putSymmetrically(Piece.QUEEN, Point.of("g4"));
         board.putSymmetrically(Piece.ROOK, Point.of("e1"));

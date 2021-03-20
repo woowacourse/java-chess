@@ -61,8 +61,12 @@ public class SquareState {
         return this.team == team;
     }
 
-    public boolean isNotSameTeam(SquareState squareState) {
-        return this.team != squareState.team;
+    public boolean isNotTeam(Team team) {
+        return this.team != team;
+    }
+
+    public boolean isEnemy(SquareState sourceSquareState) {
+        return team == sourceSquareState.team.oppositeTeam();
     }
 
     public boolean isEmpty() {

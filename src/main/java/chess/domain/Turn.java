@@ -17,7 +17,7 @@ public class Turn {
         return Team.BLACK;
     }
 
-    public void moveToNext() {
+    public void next() {
         white = !white;
     }
 }

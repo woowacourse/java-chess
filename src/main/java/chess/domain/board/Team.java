@@ -15,6 +15,16 @@ public enum Team {
         return this == BLACK;
     }
 
+    public Team oppositeTeam() {
+        if (this == WHITE) {
+            return BLACK;
+        }
+        if (this == BLACK) {
+            return WHITE;
+        }
+        return NONE;
+    }
+
     public String teamName() {
         return teamName;
     }
