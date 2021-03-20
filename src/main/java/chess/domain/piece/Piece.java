@@ -85,4 +85,10 @@ public abstract class Piece {
     public Score score() {
         return details.score();
     }
+
+    public boolean isKing() {return this instanceof King;}
+
+    public boolean notAvailableMove() {
+        return movablePositions.isEmpty();
+    }
 }
