@@ -1,6 +1,6 @@
 package chess.manager;
 
-import chess.domain.MoveCommand;
+import chess.domain.command.MoveCommand;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 
@@ -17,5 +17,13 @@ public class ChessManager {
 
     public void readCommand(MoveCommand moveCommand) {
         board.move(moveCommand.source(), moveCommand.target());
+    }
+
+    public Status calculateStatus(){
+        return board.getStatus();
+    }
+
+    public boolean isEnd() {
+        return board.isEnd();
     }
 }

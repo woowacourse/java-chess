@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.domain.MoveCommand;
+import chess.domain.command.MoveCommand;
 import chess.manager.Menu;
 import chess.manager.ChessManager;
 import chess.view.InputView;
@@ -13,17 +13,28 @@ public class ChessController {
     }
 
     public void run() {
-        if(Menu.isEnd(InputView.getNewGameCommand())){
+        if(!Menu.of(InputView.getNewGameCommand()).isStart()){
             return;
         }
 
         ChessManager chessManager = new ChessManager();
-        OutputView.printInitialBoard(chessManager.getBoard());
+        OutputView.printBoard(chessManager.getBoard());
 
-        while (true) {
-            MoveCommand moveCommand = MoveCommand.of(InputView.getUserMoveCommand());
-            chessManager.readCommand(moveCommand);
-            OutputView.printInitialBoard(chessManager.getBoard());
-        }
+        String userInput;
+        Menu menu;
+        do{
+            userInput = InputView.getUserCommand();
+            menu = Menu.of(userInput);
+
+            if(menu.isMove()){
+                chessManager.readCommand(MoveCommand.of(userInput));
+                OutputView.printBoard(chessManager.getBoard());
+            }
+
+            if(menu.isStatus()){
+                chessManager.calculateStatus();
+                OutputView.printStatus(chessManager.calculateStatus());
+            }
+        } while (!chessManager.isEnd() && !menu.isEnd());
     }
 }

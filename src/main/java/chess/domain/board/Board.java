@@ -4,8 +4,8 @@ import chess.domain.direction.Direction;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Empty;
-import chess.domain.piece.Piece;
+import chess.domain.piece.*;
+import chess.manager.Status;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,6 +51,41 @@ public class Board {
         board.put(position, Empty.getInstance());
     }
 
+    public Status getStatus(){
+        return new Status(calculateScore(Owner.WHITE), calculateScore(Owner.BLACK));
+    }
+
+    private Score calculateScore(Owner owner){
+        Score score = new Score(0);
+
+        for(Vertical v : Vertical.values()){
+            for(Horizontal h : Horizontal.values()){
+                Piece piece = of(v,h);
+                if(piece.isOwner(owner)){
+                    score = score.plus(piece.score());
+                }
+            }
+        }
+
+        return score.calculatePawnPenaltyScore(getPawnCountInLine(owner));
+    }
+
+    private int getPawnCountInLine(Owner owner){
+        int totalCount = 0;
+        for(Vertical v : Vertical.values()){
+            int verticalCount = 0;
+            for(Horizontal h : Horizontal.values()){
+                if(of(v,h).equals(Pawn.getInstanceOf(owner))){
+                    verticalCount++;
+                }
+            }
+            if(verticalCount > 1){
+                totalCount += verticalCount;
+            }
+        }
+        return totalCount;
+    }
+
     public List<Position> ableToMove(Position source) {
         List<Position> ableToMove = new ArrayList<>();
         Piece sourcePiece = of(source);
@@ -81,5 +116,10 @@ public class Board {
         }
 
         return ableToMove;
+    }
+
+    public boolean isEnd() {
+        // TODO
+        return false;
     }
 }

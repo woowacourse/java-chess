@@ -55,9 +55,13 @@ public abstract class Piece {
         return directions;
     };
 
+    public boolean isOwner(Owner owner) {
+        return this.owner.equals(owner);
+    }
+
     public abstract int getMaxDistance();
 
-    public boolean isEmpty(){
-        return this instanceof Empty;
+    public Owner getOwner(){
+        return this.owner;
     }
 }
