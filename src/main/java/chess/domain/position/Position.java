@@ -34,7 +34,7 @@ public class Position {
         return Column.differance(from.column, to.column);
     }
 
-    public static List<Position> getRoute(Position from, Position to) {
+    public static List<Position> route(Position from, Position to) {
 
         int differenceOfColumn = differenceOfColumn(from, to);
         int differenceOfRow = differenceOfRow(from, to);

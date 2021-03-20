@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Bishop extends Piece {
     private static final String BISHOP_INITIAL = "B";
+    public static final int BISHOP_SCORE = 3;
 
     public Bishop(Side side) {
         super(side, BISHOP_INITIAL);
@@ -19,7 +20,7 @@ public class Bishop extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return Position.getRoute(from, to);
+        return Position.route(from, to);
     }
 
     @Override
@@ -30,5 +31,15 @@ public class Bishop extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public double score() {
+        return BISHOP_SCORE;
     }
 }

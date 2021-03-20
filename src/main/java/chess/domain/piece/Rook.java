@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Rook extends Piece {
     private static final String ROOK_INITIAL = "R";
+    private static final int ROOK_SCORE = 5;
 
     public Rook(Side side) {
         super(side, ROOK_INITIAL);
@@ -19,7 +20,7 @@ public class Rook extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return Position.getRoute(from, to);
+        return Position.route(from, to);
     }
 
     @Override
@@ -30,5 +31,15 @@ public class Rook extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public double score() {
+        return ROOK_SCORE;
     }
 }

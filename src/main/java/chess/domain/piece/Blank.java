@@ -37,4 +37,14 @@ public class Blank extends Piece {
     public boolean isPawn() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public double score() {
+        throw new PieceDoesNotExistException();
+    }
 }

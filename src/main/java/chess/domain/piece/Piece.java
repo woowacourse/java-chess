@@ -41,6 +41,10 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
+    public abstract boolean isKing();
+
+    public abstract double score();
+
     public void moved() {
         initPosition = false;
     }

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class Pawn extends Piece {
     private static final String PAWN_INITIAL = "P";
+    private static final int PAWN_SCORE = 1;
 
     public Pawn(Side side) {
         super(side, PAWN_INITIAL);
@@ -26,7 +27,7 @@ public class Pawn extends Piece {
 
     @Override
     protected List<Position> getRoute(Position from, Position to) {
-        return Position.getRoute(from, to);
+        return Position.route(from, to);
     }
 
     @Override
@@ -37,6 +38,11 @@ public class Pawn extends Piece {
     @Override
     public boolean isPawn() {
         return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
     }
 
     private boolean movableOneOrTwoSquare(int rowDifference, int columnDifference, int direction) {
@@ -52,5 +58,10 @@ public class Pawn extends Piece {
 
     private boolean oneSquareForward(int rowDifference, int columnDifference, int direction) {
         return rowDifference == direction && Math.abs(columnDifference) < 2;
+    }
+
+    @Override
+    public double score() {
+        return PAWN_SCORE;
     }
 }

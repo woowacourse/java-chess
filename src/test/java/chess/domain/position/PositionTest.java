@@ -38,7 +38,7 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("getRouteVerticalTestcase")
     void getRouteVertical(Position from, Position to) {
-        assertThat(Position.getRoute(from, to))
+        assertThat(Position.route(from, to))
                 .contains(Position.of("c1"), Position.of("b1"));
     }
 
@@ -53,7 +53,7 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("getRouteHorizontalTestcase")
     void getRouteHorizontal(Position from, Position to) {
-        assertThat(Position.getRoute(from, to))
+        assertThat(Position.route(from, to))
                 .contains(Position.of("b2"), Position.of("b3"));
     }
 
@@ -67,7 +67,7 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("getRoutePositiveInclineTestcase")
     void getRoutePositiveIncline(Position from, Position to) {
-        assertThat(Position.getRoute(from, to))
+        assertThat(Position.route(from, to))
                 .contains(Position.of("c3"), Position.of("d4"));
     }
 
@@ -81,7 +81,7 @@ class PositionTest {
     @ParameterizedTest
     @MethodSource("getRouteNegativeInclineTestcase")
     void getRouteNegativeIncline(Position from, Position to) {
-        assertThat(Position.getRoute(from, to))
+        assertThat(Position.route(from, to))
                 .contains(Position.of("c4"), Position.of("d3"));
     }
 
