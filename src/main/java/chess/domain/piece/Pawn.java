@@ -17,8 +17,8 @@ public final class Pawn extends Piece {
 
     private boolean moved = false;
 
-    public Pawn(final Color color, final char x, final int y) {
-        super(color, x, y);
+    public Pawn(final Color color, final char x, final int rowNumber) {
+        super(color, x, rowNumber);
     }
 
     public Pawn(final Color color, final char x, final char y) {
