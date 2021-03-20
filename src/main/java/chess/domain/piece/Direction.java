@@ -22,12 +22,12 @@ public enum Direction {
     WWN(-2, 1),
     WWS(-2, -1);
     
-    private final int xDegree;
     private final int yDegree;
+    private final int xDegree;
     
-    Direction(int xDegree, int yDegree) {
-        this.xDegree = xDegree;
+    Direction(int yDegree, int xDegree) {
         this.yDegree = yDegree;
+        this.xDegree = xDegree;
     }
     
     public int getXDegree() {
