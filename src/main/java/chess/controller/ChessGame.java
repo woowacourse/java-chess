@@ -1,56 +1,56 @@
 package chess.controller;
 
+import chess.controller.command.Command;
+import chess.controller.command.Start;
 import chess.domain.Board;
 import chess.domain.Side;
-import chess.domain.position.Position;
-import chess.exception.ChessException;
-import chess.exception.InvalidCommandException;
+import chess.domain.gamestate.Ready;
+import chess.domain.gamestate.State;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
     public void start() {
         OutputView.startGame();
-        String command = InputView.command();
+        Command command = command();
 
-        if (command.equals("start")) {
+        if (command.isStart()) {
             startGame();
         }
     }
 
     private void startGame() {
         final Board board = Board.getGamingBoard();
-        Side side = Side.BLACK; // TODO 첫 턴이 블랙? 가독성 좋지 않음
+        State state = new Ready(board);
 
-        do {
-            // TODO 가독성 안좋은 do-while 개선
-            side = side.changeTurn();
-            OutputView.printBoard(board);
-            System.out.println(side.toString()); // TODO 출력 로직 OutputView 이동
-        } while (playerTurn(board, side));
-        // TODO 점수계산?
-    }
+        // TODO
+        state = state.start();
+        Side side = Side.BLACK;
 
-    private boolean playerTurn(Board board, Side side) {
-        try {
-            return executeByCommand(board, side, InputView.command());
-        } catch (ChessException e) {
-            System.out.println(e.getMessage());
-            return playerTurn(board, side);
+        Command command = new Start();
+
+        // TODO try Catch
+        while (!command.isEnd()) {
+            if (state.isGameSet()) {
+                state = state.gameSet();
+                //Side가 이겼습니다! 출력
+            }
+            OutputView.print(board, side);
+
+            command = command();
+            if (command.isMove()) {
+                state = state.move(command.source(), command.target(), side);
+                side = side.changeTurn();
+            }
+            if (command.isStatus()) {
+                state = state.status();
+                OutputView.print(state.score());
+                // TODO 누가 승리? -> 킹이 잡혔을 때 추가
+            }
         }
     }
 
-    private boolean executeByCommand(Board board, Side side, String command) {
-        // TODO command -> 객체로 변경
-        if (command.startsWith("move")) {
-            String[] sourceTarget = command.split(" ");
-            board.move(Position.of(sourceTarget[1]), Position.of(sourceTarget[2]), side);
-            return true;
-        }
-        if (command.equals("end")) {
-            return false;
-        }
-
-        throw new InvalidCommandException();
+    private Command command() {
+        return Command.from(InputView.command());
     }
 }

@@ -2,7 +2,9 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
+import chess.domain.position.Column;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 import chess.exception.InvalidMovementException;
 
 import java.util.List;
@@ -93,5 +95,50 @@ public class Board {
 
     public String getInitial(Position position) {
         return board.get(position).getInitial();
+    }
+
+    public boolean isGameSet() {
+        return board.values()
+                .stream()
+                .filter(Piece::isKing)
+                .count() < 2;
+    }
+
+    public double score(Side side) {
+        return scoreWithoutPawn(side) + scoreOnlyPawn(side);
+    }
+
+    private double scoreOnlyPawn(Side side) {
+        double score = 0;
+
+        for (Column column : Column.values()) {
+            int count = 0;
+
+            for (Row row : Row.values()) {
+                Piece piece = board.get(new Position(column, row));
+
+                if (piece.isPawn() && piece.isSideEqualTo(side)) {
+                    count++;
+                }
+            }
+
+            if (count == 1) {
+                score += 1;
+            }
+            if (count > 1) {
+                score += count * 0.5;
+            }
+        }
+
+        return score;
+    }
+
+    private double scoreWithoutPawn(Side side) {
+        return board.values()
+                .stream()
+                .filter(piece -> piece.isSideEqualTo(side))
+                .filter(piece -> !piece.isPawn())
+                .mapToDouble(Piece::score)
+                .sum();
     }
 }

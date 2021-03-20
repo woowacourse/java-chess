@@ -1,6 +1,8 @@
 package chess.view;
 
 import chess.domain.Board;
+import chess.domain.Score;
+import chess.domain.Side;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
@@ -15,7 +17,12 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void printBoard(Board board) {
+    public static void print(Board board, Side side) {
+        print(board);
+        print(side);
+    }
+
+    public static void print(Board board) {
         System.out.println();
 
         for (Row row : Row.values()) {
@@ -31,5 +38,14 @@ public class OutputView {
                 .forEach(System.out::print);
 
         System.out.println();
+    }
+
+    private static void print(Side side) {
+        System.out.println("Current Turn: " + side.name());
+    }
+
+    public static void print(Score score) {
+        System.out.println("Black: " + score.blackScore());
+        System.out.println("White: " + score.whiteScore());
     }
 }
