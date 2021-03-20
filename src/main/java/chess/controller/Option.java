@@ -9,8 +9,8 @@ public enum Option {
     MOVE("move", ChessAction::move),
     STATUS("status", ((chessAction, message) -> chessAction.status()));
 
-    private String message;
-    private BiFunction<ChessAction, String, GameStatus> function;
+    private final String message;
+    private final BiFunction<ChessAction, String, GameStatus> function;
 
     Option(String message, BiFunction<ChessAction, String, GameStatus> function) {
         this.message = message;
