@@ -5,7 +5,7 @@ public enum Color {
     BLACK,
     NONE;
 
-    public boolean isSame(Color color) {
+    public boolean same(Color color) {
         return this == color;
     }
 

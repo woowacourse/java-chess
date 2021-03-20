@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class ColorTest {
     @Test
     void 같은_색인지_확인한다() {
-        boolean result = Color.WHITE.isSame(Color.BLACK);
+        boolean result = Color.WHITE.same(Color.BLACK);
 
         assertThat(result).isFalse();
     }

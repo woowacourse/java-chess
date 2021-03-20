@@ -40,7 +40,7 @@ public class King extends Piece {
             queenCross.hasPieceInPath(this.position, target, currentPieces);
             // 우리편 말이 있으면 예외
             Piece targetPiece = currentPieces.findByPosition(target);
-            if (this.color.isSame(targetPiece.color)) {
+            if (this.color.same(targetPiece.color)) {
                 throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
             }
             if (!(targetPiece instanceof Empty)) {
@@ -53,7 +53,7 @@ public class King extends Piece {
             queenDiagonal.hasPieceInPath(this.position, target, currentPieces);
             // 우리편 말이 있으면 예외
             Piece targetPiece = currentPieces.findByPosition(target);
-            if (this.color.isSame(targetPiece.color)) {
+            if (this.color.same(targetPiece.color)) {
                 throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
             }
             if (!(targetPiece instanceof Empty)) {

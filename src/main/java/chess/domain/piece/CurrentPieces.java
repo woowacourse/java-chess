@@ -53,7 +53,7 @@ public class CurrentPieces {
             int index = i;
             int temp = (int) currentPieces.stream()
                     .filter(piece -> piece instanceof Pawn)
-                    .filter(piece -> piece.getColor().isSame(color))
+                    .filter(piece -> piece.getColor().same(color))
                     .filter(piece -> piece.getPosition().getX() == Position.ROW.charAt(index))
                     .count();
             if (temp >= 2) {
@@ -62,7 +62,7 @@ public class CurrentPieces {
         }
         double subtractCount = 0.5;
         return currentPieces.stream()
-                .filter(piece -> piece.getColor().isSame(color))
+                .filter(piece -> piece.getColor().same(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
                 .sum() - (count * subtractCount);
     }

@@ -25,11 +25,11 @@ public class ChessGame {
     }
 
     public void play(Command command) {
-        List<String> sourceTarget = command.getSourceTarget();
+        List<String> sourceTarget = command.sourceAndTarget();
         Position source = Position.of(sourceTarget.get(0).charAt(0), sourceTarget.get(0).charAt(1));
         Position target = Position.of(sourceTarget.get(1).charAt(0), sourceTarget.get(1).charAt(1));
         Piece sourcePiece = currentPieces.findByPosition(source);
-        if (!sourcePiece.getColor().isSame(turn)) {
+        if (!sourcePiece.getColor().same(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");
         }
         sourcePiece.move(target, currentPieces);
