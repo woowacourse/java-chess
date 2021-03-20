@@ -15,7 +15,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 폰 초기 자리 확인")
     void createInitialPawn() {
-        List<Piece> pawns = PieceFactory.initialPieces()
+        List<Piece> pawns = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof Pawn)
             .collect(Collectors.toList());
@@ -37,7 +37,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 비숍 초기 자리 확인")
     void createInitialBishop() {
-        List<Piece> bishops = PieceFactory.initialPieces()
+        List<Piece> bishops = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof Bishop)
             .collect(Collectors.toList());
@@ -59,7 +59,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 나이트 초기 자리 확인")
     void createInitialKnight() {
-        List<Piece> knights = PieceFactory.initialPieces()
+        List<Piece> knights = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof Knight)
             .collect(Collectors.toList());
@@ -81,7 +81,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 룩 초기 자리 확인")
     void createInitialRook() {
-        List<Piece> rooks = PieceFactory.initialPieces()
+        List<Piece> rooks = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof Rook)
             .collect(Collectors.toList());
@@ -103,7 +103,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 퀸 초기 자리 확인")
     void createInitialQueen() {
-        List<Piece> queens = PieceFactory.initialPieces()
+        List<Piece> queens = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof Queen)
             .collect(Collectors.toList());
@@ -125,7 +125,7 @@ class PieceFactoryTest {
     @Test
     @DisplayName("팀색 별 킹 초기 자리 확인")
     void createInitialKing() {
-        List<Piece> kings = PieceFactory.initialPieces()
+        List<Piece> kings = PieceFactory.initialPieces(8,0,7)
             .stream()
             .filter(piece -> piece instanceof King)
             .collect(Collectors.toList());

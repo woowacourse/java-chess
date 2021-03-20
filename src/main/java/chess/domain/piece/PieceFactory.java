@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import static chess.domain.BoardSpecification.BOARD_SIZE;
-import static chess.domain.BoardSpecification.END_LINE;
-import static chess.domain.BoardSpecification.START_LINE;
 import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
@@ -14,22 +11,23 @@ import java.util.List;
 
 public final class PieceFactory {
 
-    public static List<Piece> initialPieces() {
+    public static List<Piece> initialPieces(int boardSize, int startLine, int endLine) {
         List<Piece> pieces = new ArrayList<>();
 
-        pieces.addAll(piecesByColor(WHITE));
-        pieces.addAll(pawnsByColor(WHITE));
+        pieces.addAll(piecesByColor(WHITE, startLine, endLine));
+        pieces.addAll(pawnsByColor(WHITE, boardSize, startLine, endLine));
 
-        pieces.addAll(piecesByColor(BLACK));
-        pieces.addAll(pawnsByColor(BLACK));
+        pieces.addAll(piecesByColor(BLACK, startLine, endLine));
+        pieces.addAll(pawnsByColor(BLACK, boardSize, startLine, endLine));
 
         return pieces;
     }
 
-    private static List<Piece> piecesByColor(TeamColor teamColor) {
-        int row = START_LINE;
+    private static List<Piece> piecesByColor(TeamColor teamColor, int startLine,
+        int endLine) {
+        int row = startLine;
         if (teamColor == BLACK) {
-            row = END_LINE;
+            row = endLine;
         }
         return Arrays.asList(
             new Rook(teamColor, Position.of(0, row)),
@@ -43,15 +41,16 @@ public final class PieceFactory {
         );
     }
 
-    private static List<Piece> pawnsByColor(TeamColor teamColor) {
+    private static List<Piece> pawnsByColor(TeamColor teamColor, int boardSize, int startLine,
+        int endLine) {
         List<Piece> pieces = new ArrayList<>();
 
-        int row = START_LINE + 1;
+        int row = startLine + 1;
         if (teamColor == BLACK) {
-            row = END_LINE - 1;
+            row = endLine - 1;
         }
 
-        for (int column = 0; column < BOARD_SIZE; column++) {
+        for (int column = 0; column < boardSize; column++) {
             pieces.add(new Pawn(teamColor, Position.of(column, row)));
         }
         return pieces;

@@ -16,4 +16,8 @@
 - [x] 초기 배치된 기물들 생성
 
 #### ChessGame
-
+- [x] currentPosition 과 targetPosition 을 받아 체스말 움직이기
+    - [x] currentPosition 에 아무 말이 없다면 예외
+    - [x] targetPosition 으로 이동이 불가능하다면 예외
+    - [x] 다른 팀 색의 말을 선택할 시 예외
+    - [x] targetPosition 에 상대 말이 있다면 상대말은 사라진다. 

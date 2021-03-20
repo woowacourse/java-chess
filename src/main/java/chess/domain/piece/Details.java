@@ -24,4 +24,8 @@ public final class Details {
     public boolean iterable() {
         return iterable;
     }
+
+    public TeamColor color() {
+        return teamColor;
+    }
 }

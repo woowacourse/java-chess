@@ -3,6 +3,7 @@ package chess.domain.piece;
 import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
+import chess.domain.Direction;
 import chess.domain.Position;
 import java.util.Arrays;
 import java.util.Collections;
@@ -36,13 +37,16 @@ class PawnTest {
     @DisplayName("기물들이 있을 때 하얀 폰의 움직임 테스트 (두번 째 턴)")
     void movablePositions_white_secondTurn() {
         List<Position> expectedMovablePositions =
-            Collections.singletonList(Position.of(3, 2));
+            Collections.singletonList(Position.of(3, 3));
 
         Pawn pawn = new Pawn(WHITE, Position.of(3,1));
-        pawn.move();
         List<Position> existPiecePositions = Collections.emptyList();
 
         List<Position> enemiesPositions = Collections.emptyList();
+
+        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
+        Position targetPosition = pawn.currentPosition().go(Direction.forwardDirection(WHITE).get(0));
+        pawn.move(targetPosition);
 
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
@@ -89,14 +93,16 @@ class PawnTest {
     @DisplayName("기물들이 있을 때 검은 폰의 움직임 테스트 (두번 째 턴)")
     void movablePositions_black_secondTurn() {
         List<Position> expectedMovablePositions =
-            Collections.singletonList(Position.of(3, 5));
+            Collections.singletonList(Position.of(3, 4));
 
         Pawn pawn = new Pawn(BLACK, Position.of(3,6));
-        pawn.move();
+
         List<Position> existPiecePositions = Collections.emptyList();
-
         List<Position> enemiesPositions = Collections.emptyList();
+        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
+        Position targetPosition = pawn.currentPosition().go(Direction.forwardDirection(BLACK).get(0));
+        pawn.move(targetPosition);
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
         Assertions.assertThat(pawn.movablePositions()).hasSameElementsAs(expectedMovablePositions);

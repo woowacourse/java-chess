@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Position;
 import chess.domain.TeamColor;
+import chess.exception.ImpossibleMoveException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +18,7 @@ public abstract class Piece {
         this(details, directions, new ArrayList<>(), position, false);
     }
 
-    public Piece(Details details, Directions directions,
+    private Piece(Details details, Directions directions,
         List<Position> movablePositions, Position position, boolean moved) {
         this.details = details;
         this.directions = directions;
@@ -29,12 +30,23 @@ public abstract class Piece {
     public void updateMovablePositions(List<Position> existPiecePositions,
         List<Position> enemiesPositions) {
         movablePositions = new ArrayList<>();
-        movablePositions.addAll(directions.movablePositions(existPiecePositions, currentPosition, details.iterable()));
-        movablePositions.addAll(directions.killablePositions(enemiesPositions, currentPosition, details.iterable()));
+        movablePositions.addAll(
+            directions.movablePositions(existPiecePositions, currentPosition, details.iterable()));
+        movablePositions.addAll(
+            directions.killablePositions(enemiesPositions, currentPosition, details.iterable()));
     }
 
-    public void move() {
-        moved = true;
+    public boolean samePosition(Position position) {
+        return currentPosition.equals(position);
+    }
+
+    public void move(Position targetPosition) {
+        if (movablePositions.contains(targetPosition)) {
+            currentPosition = targetPosition;
+            moved = true;
+            return;
+        }
+        throw new ImpossibleMoveException();
     }
 
     public boolean isSameColor(TeamColor teamColor) {
@@ -55,5 +67,9 @@ public abstract class Piece {
 
     protected Directions directions() {
         return directions;
+    }
+
+    public TeamColor enemyColor() {
+        return details.color().reverse();
     }
 }
