@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMethodCallException;
 
 import java.util.List;
 
 public class Bishop extends Piece {
     private static final String BISHOP_INITIAL = "B";
-    public static final int BISHOP_SCORE = 3;
+    private static final int BISHOP_SCORE = 3;
 
     public Bishop(Side side) {
         super(side, BISHOP_INITIAL);
@@ -15,6 +16,10 @@ public class Bishop extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
+        return isDiagonal(rowDifference, columnDifference);
+    }
+
+    private boolean isDiagonal(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) == Math.abs(columnDifference);
     }
 
@@ -41,5 +46,15 @@ public class Bishop extends Piece {
     @Override
     public double score() {
         return BISHOP_SCORE;
+    }
+
+    @Override
+    public boolean diagonal(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
+
+    @Override
+    public boolean forward(Position from, Position to) {
+        throw new InvalidMethodCallException();
     }
 }

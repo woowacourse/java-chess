@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMethodCallException;
 import chess.exception.PieceDoesNotExistException;
 
 import java.util.List;
@@ -46,5 +47,15 @@ public class Blank extends Piece {
     @Override
     public double score() {
         throw new PieceDoesNotExistException();
+    }
+
+    @Override
+    public boolean diagonal(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
+
+    @Override
+    public boolean forward(Position from, Position to) {
+        throw new InvalidMethodCallException();
     }
 }

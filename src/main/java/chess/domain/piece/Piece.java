@@ -66,4 +66,8 @@ public abstract class Piece {
         }
         return initial;
     }
+
+    public abstract boolean diagonal(Position from, Position to);
+
+    public abstract boolean forward(Position from, Position to);
 }

@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
@@ -12,6 +13,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
+    private static final int KING_COUNT = 2;
+
     private final Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> board) {
@@ -39,11 +42,9 @@ public class Board {
     }
 
     private void checkRoute(List<Position> route) {
-        // TODO 가독성 좋게 개선(이동경로 장애물 체크)
         route.stream()
                 .map(board::get)
-                .map(Piece::isBlank)
-                .filter(isBlank -> !isBlank)
+                .filter(piece -> !piece.isBlank())
                 .findAny()
                 .ifPresent(isBlank -> {
                     throw new InvalidMovementException("이동경로에 다른 기물이 존재합니다.");
@@ -64,27 +65,22 @@ public class Board {
 
     private void validatePawnCase(Position from, Position to, Piece piece) {
         if (piece.isPawn()) {
-            // TODO 폰에 관한 로직은 폰에게 옮기기
-            checkMoveDiagonal(from, to);
-            checkMoveVertical(from, to);
+            checkPawnMove(piece, from, to);
         }
     }
 
-    private void checkMoveDiagonal(Position from, Position to) {
-        if (Math.abs(Position.differenceOfRow(from, to)) == Math.abs(Position.differenceOfColumn(from, to))) {
+    private void checkPawnMove(Piece pawn, Position from, Position to) {
+        if (pawn.diagonal(from, to)) {
             checkOpponentPieceNotExistInToPosition(to);
+        }
+        if (pawn.forward(from, to)) {
+            checkPieceExistInToPosition(to);
         }
     }
 
     private void checkOpponentPieceNotExistInToPosition(Position to) {
         if (board.get(to).isBlank()) {
             throw new InvalidMovementException("이동하려는 위치에 상대 기물이 존재하지 않습니다.");
-        }
-    }
-
-    private void checkMoveVertical(Position from, Position to) {
-        if (Position.differenceOfColumn(from, to) == 0 || Position.differenceOfRow(from, to) == 0) {
-            checkPieceExistInToPosition(to);
         }
     }
 
@@ -102,7 +98,7 @@ public class Board {
         return board.values()
                 .stream()
                 .filter(Piece::isKing)
-                .count() < 2;
+                .count() < KING_COUNT;
     }
 
     public double score(Side side) {
@@ -110,29 +106,23 @@ public class Board {
     }
 
     private double scoreOnlyPawn(Side side) {
-        // TODO 뎁스, 길이 줄이기
         double score = 0;
-
         for (Column column : Column.values()) {
-            int count = 0;
+            score += Pawn.scoreByCount(pawnCountByColumn(side, column));
+        }
+        return score;
+    }
 
-            for (Row row : Row.values()) {
-                Piece piece = board.get(new Position(column, row));
+    private int pawnCountByColumn(Side side, Column column) {
+        int count = 0;
+        for (Row row : Row.values()) {
+            Piece piece = board.get(new Position(column, row));
 
-                if (piece.isPawn() && piece.isSideEqualTo(side)) {
-                    count++;
-                }
-            }
-
-            if (count == 1) {
-                score += 1;
-            }
-            if (count > 1) {
-                score += count * 0.5;
+            if (piece.isPawn() && piece.isSideEqualTo(side)) {
+                count++;
             }
         }
-
-        return score;
+        return count;
     }
 
     private double scoreWithoutPawn(Side side) {

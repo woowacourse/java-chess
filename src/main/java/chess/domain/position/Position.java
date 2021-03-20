@@ -7,6 +7,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Position {
+    private static final int POSITION_LENGTH = 2;
+    private static final int POSITIVE_INCLINE = 1;
+    private static final int NEGATIVE_INCLINE = -1;
 
     private final Column column;
     private final Row row;
@@ -16,8 +19,8 @@ public class Position {
         this.row = row;
     }
 
-    public static Position of(String position) {
-        if (position.length() != 2) {
+    public static Position from(String position) {
+        if (position.length() != POSITION_LENGTH) {
             throw new PositionException("유효하지 않은 좌표입니다.");
         }
 
@@ -106,12 +109,12 @@ public class Position {
         return result;
     }
 
-    private static boolean negativeDiagonal(Position from, Position to) {
-        return differenceOfRow(from, to) / differenceOfColumn(from, to) == -1;
+    private static boolean positiveDiagonal(Position from, Position to) {
+        return differenceOfRow(from, to) / differenceOfColumn(from, to) == POSITIVE_INCLINE;
     }
 
-    private static boolean positiveDiagonal(Position from, Position to) {
-        return differenceOfRow(from, to) / differenceOfColumn(from, to) == 1;
+    private static boolean negativeDiagonal(Position from, Position to) {
+        return differenceOfRow(from, to) / differenceOfColumn(from, to) == NEGATIVE_INCLINE;
     }
 
     private static boolean sameRow(Position from, Position to) {
@@ -127,7 +130,7 @@ public class Position {
     }
 
     private Position getNextNegativeInclinationPosition(int next) {
-        return new Position(column.nextColumn(next), row.nextRow(-1 * next));
+        return new Position(column.nextColumn(next), row.nextRow(NEGATIVE_INCLINE * next));
     }
 
     private Position getNextRowPosition(int next) {

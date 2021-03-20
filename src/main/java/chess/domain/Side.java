@@ -10,6 +10,6 @@ public enum Side {
         if (this == BLACK) {
             return WHITE;
         }
-        throw new IllegalArgumentException("NONE");
+        return NONE;
     }
 }

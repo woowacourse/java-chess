@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMethodCallException;
 
 import java.util.List;
 
@@ -15,6 +16,10 @@ public class Rook extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
+        return isStraight(rowDifference, columnDifference);
+    }
+
+    private boolean isStraight(int rowDifference, int columnDifference) {
         return rowDifference == 0 || columnDifference == 0;
     }
 
@@ -41,5 +46,15 @@ public class Rook extends Piece {
     @Override
     public double score() {
         return ROOK_SCORE;
+    }
+
+    @Override
+    public boolean diagonal(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
+
+    @Override
+    public boolean forward(Position from, Position to) {
+        throw new InvalidMethodCallException();
     }
 }

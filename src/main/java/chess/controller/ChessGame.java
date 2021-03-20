@@ -1,7 +1,7 @@
 package chess.controller;
 
-import chess.controller.command.Command;
 import chess.domain.Board;
+import chess.domain.command.Command;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
 import chess.exception.ChessException;

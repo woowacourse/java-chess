@@ -1,16 +1,18 @@
-package chess.controller.command;
+package chess.domain.command;
 
 import chess.domain.position.Position;
 
 public class Move implements Command {
+    private static final String BLANK = " ";
+
     private final Position from;
     private final Position to;
 
     public Move(String command) {
-        String[] sourceTarget = command.split(" ");
+        String[] sourceTarget = command.split(BLANK);
 
-        from = Position.of(sourceTarget[1]);
-        to = Position.of(sourceTarget[2]);
+        from = Position.from(sourceTarget[1]);
+        to = Position.from(sourceTarget[2]);
     }
 
     @Override

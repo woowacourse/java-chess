@@ -1,9 +1,10 @@
-package chess.controller.command;
+package chess.domain.command;
 
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
-public class End implements Command {
+public class Status implements Command {
+
     @Override
     public boolean isStart() {
         return false;
@@ -26,11 +27,11 @@ public class End implements Command {
 
     @Override
     public boolean isEnd() {
-        return true;
+        return false;
     }
 
     @Override
     public boolean isStatus() {
-        return false;
+        return true;
     }
 }

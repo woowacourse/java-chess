@@ -1,4 +1,4 @@
-package chess.controller.command;
+package chess.domain.command;
 
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;

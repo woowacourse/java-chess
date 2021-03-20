@@ -2,12 +2,13 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMethodCallException;
 
 import java.util.List;
 
 public class Queen extends Piece {
     private static final String QUEEN_INITIAL = "Q";
-    public static final int QUEEN_SCORE = 9;
+    private static final int QUEEN_SCORE = 9;
 
     public Queen(Side side) {
         super(side, QUEEN_INITIAL);
@@ -15,10 +16,18 @@ public class Queen extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        if (rowDifference == 0 || columnDifference == 0) {
+        if (isStraight(rowDifference, columnDifference)) {
             return true;
         }
+        return isDiagonal(rowDifference, columnDifference);
+    }
+
+    private boolean isDiagonal(int rowDifference, int columnDifference) {
         return Math.abs(rowDifference) == Math.abs(columnDifference);
+    }
+
+    private boolean isStraight(int rowDifference, int columnDifference) {
+        return rowDifference == 0 || columnDifference == 0;
     }
 
     @Override
@@ -44,5 +53,15 @@ public class Queen extends Piece {
     @Override
     public double score() {
         return QUEEN_SCORE;
+    }
+
+    @Override
+    public boolean diagonal(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
+
+    @Override
+    public boolean forward(Position from, Position to) {
+        throw new InvalidMethodCallException();
     }
 }
