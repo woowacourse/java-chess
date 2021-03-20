@@ -27,16 +27,15 @@ class KnightTest {
     @Test
     void generateObstacleConsideredPath() {
         Position current = Position.ofName("e4");
-        Piece bishop = new Bishop(PieceColor.WHITE);
-        Paths paths = new Paths(bishop.findAllPath(current));
+        Piece knight = new Knight(PieceColor.WHITE);
+        Paths paths = new Paths(knight.findAllPath(current));
         Board board = BoardFactory.initializeBoard();
         Piece firstBlackPiece = board.findPieceBy(Position.ofName("d7"));
         Piece secondBlackPiece = board.findPieceBy(Position.ofName("f7"));
         board.move(firstBlackPiece, Position.ofName("d6"));
         board.move(secondBlackPiece, Position.ofName("f6"));
-        assertThat(paths.removeObstacles(board).positions()).isEqualTo(
+        assertThat(paths.removeObstacles(knight, board).positions()).isEqualTo(
                 knightE4WithObstacles());
-
     }
 
     List<Position> knightE4WithoutObstacles() {

@@ -94,6 +94,11 @@ public class Position {
     }
 
     @Override
+    public String toString() {
+        return column.getName() + row.getNumber();
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;

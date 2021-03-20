@@ -28,9 +28,8 @@ class BishopTest {
         Position current = Position.ofName("e4");
         Piece bishop = new Bishop(PieceColor.WHITE);
         Paths paths = new Paths(bishop.findAllPath(current));
-        assertThat(paths.removeObstacles(BoardFactory.initializeBoard()).positions()).isEqualTo(
+        assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions()).isEqualTo(
                 bishopE4WithObstacles());
-
     }
 
     List<Position> bishopE4WithoutObstacles() {
@@ -60,7 +59,7 @@ class BishopTest {
                 Position.ofName("d3"),
                 Position.ofName("d5"),
                 Position.ofName("c6"),
-                Position.ofName("h7")
+                Position.ofName("b7")
         );
     }
 }

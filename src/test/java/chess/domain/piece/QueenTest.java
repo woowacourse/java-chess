@@ -16,7 +16,7 @@ class QueenTest {
 
         Paths paths = new Paths(queen.findAllPath(current));
 
-        for (Position position : paths.removeObstacles(BoardFactory.initializeBoard()).positions()) {
+        for (Position position : paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions()) {
             System.out.println(position.name());
         }
 //        System.out.println(positions.size());

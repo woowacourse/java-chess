@@ -49,7 +49,7 @@ public class Board {
 
     public Path generatePath(Piece piece) {
         Paths paths = new Paths(piece.findAllPath(coordinates.get(piece)));
-        return paths.removeObstacles(this);
+        return paths.removeObstacles(piece, this);
     }
 
     public boolean isEmpty(Position position) {

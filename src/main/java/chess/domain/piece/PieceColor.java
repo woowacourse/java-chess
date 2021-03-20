@@ -18,7 +18,7 @@ public enum PieceColor {
 
     public PieceColor reversed() {
         if(this.equals(NOTHING)) {
-            throw new IllegalArgumentException("빈 칸은 색을 바꿀 수 없습니다.");
+            return this;
         }
         if(this.equals(WHITE)){
             return BLACK;

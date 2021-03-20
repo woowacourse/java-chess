@@ -20,7 +20,7 @@ class RookTest {
         board.putPiece(new Rook(PieceColor.BLACK), Position.ofName("e8"));
         Paths paths = new Paths(rook.findAllPath(current));
 
-        for (Position position : paths.removeObstacles(board).positions()) {
+        for (Position position : paths.removeObstacles(rook, board).positions()) {
             System.out.println(position.name());
         }
 //        System.out.println(positions.size());

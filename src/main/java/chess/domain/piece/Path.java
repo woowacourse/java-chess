@@ -17,13 +17,17 @@ public class Path {
         return positions.contains(position);
     }
 
-    public List<Position> removeObstacleInPath(Board board) {
+    public List<Position> removeObstacleInPath(Piece piece, Board board) {
         List<Position> cleanPath = new ArrayList<>();
-        for(Position position : positions) {
-            if(!board.isEmpty(position)){
+        for (Position position : positions) {
+            Piece thatPiece = board.findPieceBy(position);
+            if (!piece.isEnemyOrEmpty(thatPiece)) {
                 break;
             }
             cleanPath.add(position);
+            if (piece.isEnemy(thatPiece)) {
+                break;
+            }
         }
         return cleanPath;
     }
