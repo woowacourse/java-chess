@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import chess.domain.player.TeamType;
 import java.util.ArrayList;
 import java.util.List;
 

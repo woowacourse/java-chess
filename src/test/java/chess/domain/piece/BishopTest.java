@@ -6,7 +6,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
-import chess.domain.player.TeamType;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

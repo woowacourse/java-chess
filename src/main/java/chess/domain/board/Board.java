@@ -7,7 +7,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -149,6 +149,11 @@ public class Board {
             .findAny()
             .map(Cell::getTeamType)
             .orElseThrow(IllegalStateException::new);
+    }
+
+    public boolean isMovable(Coordinate nextCoordinate, TeamType teamType) {
+        Cell cell = cells.get(nextCoordinate);
+        return cell.isMovable(teamType);
     }
 }
 

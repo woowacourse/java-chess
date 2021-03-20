@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.board.Board;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Result;
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 import chess.view.InputView;
 import chess.view.OutputView;
 import java.util.List;
@@ -65,6 +65,6 @@ public class Application {
         Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
         Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
         board.move(currentCoordinate, targetCoordinate, teamType);
-        teamType = teamType.nextTurn();
+        teamType = teamType.getOppositeTeam();
     }
 }

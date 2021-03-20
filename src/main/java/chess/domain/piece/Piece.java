@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Direction;
-import chess.domain.player.TeamType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +44,14 @@ public abstract class Piece {
             possibleCoordinates.add(movingCoordinate);
         }
         return possibleCoordinates.contains(targetCoordinate);
+    }
+
+    protected boolean isCorrectDirection(Direction moveCommandDirection) {
+        List<Direction> directions = getDirections();
+        if (!directions.contains(moveCommandDirection)) {
+            return true;
+        }
+        return false;
     }
 
     public boolean isPawn() {

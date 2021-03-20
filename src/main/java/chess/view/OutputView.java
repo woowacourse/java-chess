@@ -7,7 +7,7 @@ import chess.domain.board.File;
 import chess.domain.board.Rank;
 import chess.domain.board.Result;
 import chess.domain.piece.Piece;
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;

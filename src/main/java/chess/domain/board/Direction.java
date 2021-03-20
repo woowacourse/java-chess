@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.List;
 

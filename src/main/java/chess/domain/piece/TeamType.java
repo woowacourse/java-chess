@@ -1,10 +1,10 @@
-package chess.domain.player;
+package chess.domain.piece;
 
 public enum TeamType {
     WHITE,
     BLACK;
 
-    public TeamType nextTurn() {
+    public TeamType getOppositeTeam() {
         if (this == WHITE) {
             return BLACK;
         }

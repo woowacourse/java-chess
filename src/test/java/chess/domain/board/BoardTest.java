@@ -9,7 +9,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.stream.Stream;

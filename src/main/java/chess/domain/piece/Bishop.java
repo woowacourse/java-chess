@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.board.Direction;
-import chess.domain.player.TeamType;
 
 public class Bishop extends Piece {
     private static final String NAME = "B";

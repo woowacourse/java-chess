@@ -1,7 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.player.TeamType;
+import chess.domain.piece.TeamType;
 
 public class Cell {
     private Piece piece;
