@@ -22,6 +22,8 @@ public class ChessController {
     }
 
     public void run() {
+        OutputView.printStartMessage();
+
         while (!game.isFinished()) {
             turn();
         }

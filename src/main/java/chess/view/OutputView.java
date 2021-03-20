@@ -6,7 +6,8 @@ import chess.view.dto.PieceDto;
 import java.util.Arrays;
 
 public class OutputView {
-
+    private static final String START_MESSAGE = "체스 게임을 시작합니다." + System.lineSeparator() +
+            "게임 시작은 start, 종료는 end 명령을 입력하세요.";
     private static final int BOARD_COLUMN_SIZE = 8;
     private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
     private static final String WINNER_FORMAT = "%s가 승리했습니다!%n";
@@ -37,6 +38,10 @@ public class OutputView {
         if (lineSeparateThreshold % BOARD_COLUMN_SIZE == 0) {
             System.out.println();
         }
+    }
+
+    public static void printStartMessage() {
+        System.out.println(START_MESSAGE);
     }
 
     public static void printExceptionMessage(final String message) {
