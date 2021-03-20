@@ -59,4 +59,9 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(name, color, point);
     }
+
+    protected abstract boolean isEmptyPiece();
+
+    public abstract boolean isKing();
+    protected abstract boolean isPawn();
 }

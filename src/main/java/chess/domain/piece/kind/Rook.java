@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static chess.domain.piece.Direction.*;
-import static chess.domain.piece.Direction.NORTH_WEST;
 
 public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
@@ -38,5 +37,20 @@ public class Rook extends Piece {
     @Override
     public double score() {
         return ROOK_SCORE;
+    }
+
+    @Override
+    protected boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return false;
     }
 }

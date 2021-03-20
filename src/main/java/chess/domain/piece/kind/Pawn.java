@@ -13,8 +13,8 @@ import static chess.domain.piece.Color.WHITE;
 import static chess.domain.piece.Direction.*;
 
 public class Pawn extends Piece {
-    public static final int INITIAL_WHITE_PAWN_ROW = 6;
     public static final int INITIAL_BLACK_PAWN_ROW = 1;
+    public static final int INITIAL_WHITE_PAWN_ROW = 6;
     private static final int DEFAULT_PAWN_SCORE = 1;
     private static final int INITIAL_POSSIBLE_DISTANCE_OF_PAWN = 4;
     private static final String PAWN_NAME = "p";
@@ -37,18 +37,25 @@ public class Pawn extends Piece {
         }
 
         int distance = this.point.calculateDistance(target.point);
-        if (distance == MOVE_STRAIGHT_ONE_SQUARE && target instanceof Empty) {
+        if (distance == MOVE_STRAIGHT_ONE_SQUARE && target.isEmptyPiece()) {
             return Optional.of(direction);
         }
-        if (distance == MOVE_DIAGONAL_ONE_SQUARE && !(target instanceof Empty)) {
+        if (distance == MOVE_DIAGONAL_ONE_SQUARE && !target.isEmptyPiece()) {
             return Optional.of(direction);
         }
-        if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target instanceof Empty &&
-                ((this.color.equals(BLACK) && this.point.getRow() == INITIAL_WHITE_PAWN_ROW) ||
-                        (this.color.equals(WHITE) && this.point.getRow() == INITIAL_BLACK_PAWN_ROW))) {
+        if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target.isEmptyPiece()
+                && (isInitialBlackPawn() || isInitialWhitePawn())) {
             return Optional.of(direction);
         }
         throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+    }
+
+    private boolean isInitialWhitePawn() {
+        return this.color.equals(WHITE) && this.point.getRow() == INITIAL_WHITE_PAWN_ROW;
+    }
+
+    private boolean isInitialBlackPawn() {
+        return this.color.equals(BLACK) && this.point.getRow() == INITIAL_BLACK_PAWN_ROW;
     }
 
     @Override
@@ -59,5 +66,20 @@ public class Pawn extends Piece {
     @Override
     public double score() {
         return DEFAULT_PAWN_SCORE;
+    }
+
+    @Override
+    protected boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return true;
     }
 }

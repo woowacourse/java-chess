@@ -28,4 +28,19 @@ public class Empty extends Piece {
     public double score() {
         return EMPTY_SCORE;
     }
+
+    @Override
+    protected boolean isEmptyPiece() {
+        return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return false;
+    }
 }

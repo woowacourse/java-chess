@@ -77,7 +77,7 @@ public class Board {
 
     public boolean hasBothKings() {
         return board.values().stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .count() == KINGS_COUNT_TO_PLAY;
     }
 

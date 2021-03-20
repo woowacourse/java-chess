@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.piece.Color.*;
-import static chess.domain.piece.kind.Pawn.INITIAL_BLACK_PAWN_ROW;
 import static chess.domain.piece.kind.Pawn.INITIAL_WHITE_PAWN_ROW;
+import static chess.domain.piece.kind.Pawn.INITIAL_BLACK_PAWN_ROW;
 
 public enum PieceType {
     ROOK(Constants.INITIAL_COLUMN_OF_ROOK) {
@@ -80,10 +80,10 @@ public enum PieceType {
     }
 
     private static Piece createDefaultPieces(int row, int column) {
-        if (row == INITIAL_WHITE_PAWN_ROW) {
+        if (row == INITIAL_BLACK_PAWN_ROW) {
             return new Pawn(BLACK, Point.valueOf(row, column));
         }
-        if (row == INITIAL_BLACK_PAWN_ROW) {
+        if (row == INITIAL_WHITE_PAWN_ROW) {
             return new Pawn(WHITE, Point.valueOf(row, column));
         }
         return new Empty(NOTHING, Point.valueOf(row, column));

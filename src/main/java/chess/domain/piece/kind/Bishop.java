@@ -38,4 +38,19 @@ public class Bishop extends Piece {
     public double score() {
         return BISHOP_SCORE;
     }
+
+    @Override
+    protected boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return false;
+    }
 }

@@ -30,4 +30,19 @@ public class Queen extends Piece {
         return QUEEN_SCORE;
     }
 
+    @Override
+    protected boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return false;
+    }
+
 }

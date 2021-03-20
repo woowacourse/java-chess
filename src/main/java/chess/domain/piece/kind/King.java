@@ -34,4 +34,19 @@ public class King extends Piece {
     public double score() {
         return KING_SCORE;
     }
+
+    @Override
+    protected boolean isEmptyPiece() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    protected boolean isPawn() {
+        return false;
+    }
 }
