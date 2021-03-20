@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-
 import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
+
     private final Team team;
     private final String name;
 
@@ -34,14 +34,19 @@ public abstract class Piece {
         return this.team;
     }
 
-    public abstract boolean canMove(final Position source, final Position target, final Piece piece);
+    public abstract boolean canMove(final Position source, final Position target,
+        final Piece piece);
 
     public abstract double getScore();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Piece piece = (Piece) o;
         return Objects.equals(name, piece.name);
     }

@@ -7,13 +7,13 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
-
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class ChessResult {
+
     private final Board board;
 
     public ChessResult(final Board board) {
@@ -31,20 +31,20 @@ public class ChessResult {
     private double getColumnTotalScore(final Team team, final int column) {
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         final List<Piece> pieces = chessBoard.keySet().stream()
-                .filter(position -> position.getHorizontal().getValue() == column)
-                .map(chessBoard::get)
-                .filter(piece -> piece.isSameTeam(team))
-                .collect(Collectors.toList());
+            .filter(position -> position.getHorizontal().getValue() == column)
+            .map(chessBoard::get)
+            .filter(piece -> piece.isSameTeam(team))
+            .collect(Collectors.toList());
 
         return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .reduce(0, Double::sum) - getPawnDiscountScore(pieces);
+            .mapToDouble(Piece::getScore)
+            .reduce(0, Double::sum) - getPawnDiscountScore(pieces);
     }
 
     private double getPawnDiscountScore(final List<Piece> pieces) {
         long count = pieces.stream()
-                .filter(piece -> piece instanceof Pawn)
-                .count();
+            .filter(piece -> piece instanceof Pawn)
+            .count();
 
         if (count >= 2) {
             return count * Pawn.EXTRA_SCORE;
@@ -63,10 +63,10 @@ public class ChessResult {
 
     private Team kingSlayerTeam(Map<Position, Piece> chessBoard) {
         return chessBoard.values().stream()
-                .filter(piece -> piece instanceof King)
-                .map(Piece::team)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+            .filter(piece -> piece instanceof King)
+            .map(Piece::team)
+            .findFirst()
+            .orElseThrow(IllegalArgumentException::new);
     }
 
     private Team scoreWinner() {

@@ -1,5 +1,8 @@
 package chess.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.domain.board.Board;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
@@ -12,10 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 class BoardTest {
+
     private Board board;
 
     @BeforeEach
@@ -36,9 +37,11 @@ class BoardTest {
     @ValueSource(strings = {"a,1,a,7", "c,1,h,7", "d,1,d,8", "d,1,a,4", "b,1,c,2", "e,1,d,1"})
     void checkPath(final String input) {
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), Team.WHITE))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+        assertThatThrownBy(() -> board
+            .move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]),
+                Team.WHITE))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
 
     @ParameterizedTest
@@ -48,9 +51,10 @@ class BoardTest {
         final Team team = Team.WHITE;
         board.unwrap().put(new Position("a", "3"), new Queen(team));
         final String[] inputs = input.split(",");
-        assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치로 이동할 수 없습니다.");
+        assertThatThrownBy(() -> board
+            .move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("해당 위치로 이동할 수 없습니다.");
     }
 
     @Test
@@ -66,16 +70,17 @@ class BoardTest {
     void isRightTurn() {
         final Team team = Team.BLACK;
         assertThatThrownBy(() -> board.validateRightTurn(new Position("a", "2"), team))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("본인의 턴에 맞는 말을 움직이세요.");
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("본인의 턴에 맞는 말을 움직이세요.");
     }
 
 
     @Test
     @DisplayName("빈칸 이동 오류 확인")
     void checkBlankError() {
-        assertThatThrownBy(() -> board.move(new Position("a", "3"), new Position("a", "5"), Team.WHITE))
-                .isInstanceOf(IllegalStateException.class)
-                .hasMessage("비어 있는 칸입니다.");
+        assertThatThrownBy(
+            () -> board.move(new Position("a", "3"), new Position("a", "5"), Team.WHITE))
+            .isInstanceOf(IllegalStateException.class)
+            .hasMessage("비어 있는 칸입니다.");
     }
 }

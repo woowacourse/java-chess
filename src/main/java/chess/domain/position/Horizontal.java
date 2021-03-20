@@ -22,16 +22,16 @@ public enum Horizontal {
 
     public static Horizontal of(final String symbol) {
         return Arrays.stream(values())
-                .filter(horizontal -> horizontal.symbol.equals(symbol))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
+            .filter(horizontal -> horizontal.symbol.equals(symbol))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
     }
 
     public static Horizontal of(final int value) {
         return Arrays.stream(values())
-                .filter(horizontal -> horizontal.value == value)
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
+            .filter(horizontal -> horizontal.value == value)
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
     }
 
     public String getSymbol() {

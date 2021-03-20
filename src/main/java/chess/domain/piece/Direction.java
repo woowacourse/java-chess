@@ -35,10 +35,10 @@ public enum Direction {
 
     public static Direction getMatchingDirection(final List<Integer> result) {
         return Arrays.stream(values())
-                .filter(i -> i.horizontalDegree == result.get(0))
-                .filter(i -> i.verticalDegree == result.get(1))
-                .findFirst()
-                .orElse(NOTHING);
+            .filter(i -> i.horizontalDegree == result.get(0))
+            .filter(i -> i.verticalDegree == result.get(1))
+            .findFirst()
+            .orElse(NOTHING);
     }
 
     public boolean isSameDirection(final List<Integer> result) {

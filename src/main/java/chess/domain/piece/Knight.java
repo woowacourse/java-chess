@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Knight extends GeneralPiece {
+
     private static final String INITIAL_NAME = "N";
     private static final double SCORE = 2.5;
 
@@ -14,7 +15,7 @@ public class Knight extends GeneralPiece {
     @Override
     protected List<Direction> createPossibleDirections() {
         return Arrays.asList(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
-                Direction.WWN, Direction.WWS, Direction.EEN, Direction.EES);
+            Direction.WWN, Direction.WWS, Direction.EEN, Direction.EES);
     }
 
     @Override

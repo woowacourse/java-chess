@@ -15,9 +15,9 @@ public enum Team {
 
     public Team anyTeamExcludingThis() {
         return Arrays.stream(values())
-                .filter(team -> team != this)
-                .findAny()
-                .orElse(NOTHING);
+            .filter(team -> team != this)
+            .findAny()
+            .orElse(NOTHING);
     }
 
     public String teamName() {

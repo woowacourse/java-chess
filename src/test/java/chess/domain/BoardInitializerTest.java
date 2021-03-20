@@ -1,25 +1,31 @@
 package chess.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.BoardInitializer;
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Position;
+import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Map;
-
-import static org.assertj.core.api.Assertions.assertThat;
-
 class BoardInitializerTest {
+
     private final Map<Position, Piece> chessBoard = BoardInitializer.initializeBoard();
 
     @Test
     @DisplayName("폰 초기화 기능")
     void initiatePawn() {
         assertThat(chessBoard.get(new Position("a", "7")))
-                .isInstanceOf(Pawn.class);
+            .isInstanceOf(Pawn.class);
     }
 
     @ParameterizedTest
@@ -28,7 +34,7 @@ class BoardInitializerTest {
     void initiateRook(final String input) {
         final String[] inputs = input.split(",");
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(Rook.class);
+            .isInstanceOf(Rook.class);
     }
 
     @ParameterizedTest
@@ -37,7 +43,7 @@ class BoardInitializerTest {
     void initiateKing(final String input) {
         final String[] inputs = input.split(",");
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(King.class);
+            .isInstanceOf(King.class);
     }
 
     @ParameterizedTest
@@ -46,7 +52,7 @@ class BoardInitializerTest {
     void initiateQueen(final String input) {
         final String[] inputs = input.split(",");
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(Queen.class);
+            .isInstanceOf(Queen.class);
     }
 
     @ParameterizedTest
@@ -55,7 +61,7 @@ class BoardInitializerTest {
     void initiateBishop(final String input) {
         final String[] inputs = input.split(",");
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(Bishop.class);
+            .isInstanceOf(Bishop.class);
     }
 
     @ParameterizedTest
@@ -64,6 +70,6 @@ class BoardInitializerTest {
     void initiateKnight(final String input) {
         final String[] inputs = input.split(",");
         assertThat(chessBoard.get(new Position(inputs[0], inputs[1])))
-                .isInstanceOf(Knight.class);
+            .isInstanceOf(Knight.class);
     }
 }

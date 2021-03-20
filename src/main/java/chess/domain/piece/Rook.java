@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends GeneralPiece {
+
     private static final String INITIAL_NAME = "R";
     private static final double SCORE = 5;
 

@@ -1,15 +1,20 @@
 package chess.domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.board.Board;
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
+import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class ChessResultTest {
+
     private Board board;
     private ChessResult result;
 

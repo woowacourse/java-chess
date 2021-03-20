@@ -1,14 +1,13 @@
 package chess.domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class TeamTest {
+
     @Test
     @DisplayName("상대 팀 이름 확인 기능")
     void oppositeName() {

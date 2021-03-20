@@ -1,13 +1,13 @@
 package chess.domain.position;
 
 import chess.domain.piece.Direction;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
+
     private final Horizontal horizontal;
     private final Vertical vertical;
 
@@ -26,7 +26,7 @@ public class Position implements Comparable<Position> {
 
     public List<Integer> subtract(final Position source) {
         return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
-                this.vertical.getValue() - source.vertical.getValue());
+            this.vertical.getValue() - source.vertical.getValue());
     }
 
     public boolean hasMiddlePath(final Position target) {
@@ -36,8 +36,8 @@ public class Position implements Comparable<Position> {
     private boolean isLinear(final Position target) {
         final List<Integer> result = target.subtract(this);
         return result.stream()
-                .filter(difference -> difference == 0)
-                .count() == 1;
+            .filter(difference -> difference == 0)
+            .count() == 1;
     }
 
     private boolean isDiagonal(final Position target) {
@@ -55,19 +55,19 @@ public class Position implements Comparable<Position> {
     private List<Integer> getDirectionMatcher(Position target) {
         final List<Integer> result = target.subtract(this);
         final int abs = result.stream()
-                .filter(difference -> difference != 0)
-                .map(Math::abs)
-                .findFirst()
-                .orElse(0);
+            .filter(difference -> difference != 0)
+            .map(Math::abs)
+            .findFirst()
+            .orElse(0);
 
         return result.stream()
-                .map(difference -> difference / abs)
-                .collect(Collectors.toList());
+            .map(difference -> difference / abs)
+            .collect(Collectors.toList());
     }
 
     public Position next(final Direction direction) {
         return new Position(horizontal.getValue() + direction.getHorizontalDegree(),
-                vertical.getValue() + direction.getVerticalDegree());
+            vertical.getValue() + direction.getVerticalDegree());
     }
 
     public Horizontal getHorizontal() {
@@ -80,8 +80,12 @@ public class Position implements Comparable<Position> {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Position position = (Position) o;
         return horizontal == position.horizontal && vertical == position.vertical;
     }
