@@ -1,4 +1,4 @@
-package chess.board;
+package chess.domain.board;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -62,7 +62,7 @@ public final class Pieces {
 
         Piece targetPiece = pieces.get(targetPosition);
 
-        pieces.put(targetPosition, sourcePiece.move(targetPosition, this));
+        pieces.put(targetPosition, sourcePiece.move(targetPosition, pieces()));
         pieces.put(sourcePosition, new Blank());
 
         if (targetPiece instanceof King) {
@@ -76,10 +76,6 @@ public final class Pieces {
         if (!state.isSameColor(sourcePiece)) {
             throw new IllegalArgumentException("움직이려 하는 말은 상대방의 말입니다.");
         }
-    }
-
-    public boolean positionIsBlank(Position movePosition) {
-        return pieces.get(movePosition) instanceof Blank;
     }
 
     public double score(Color color) {
