@@ -7,6 +7,8 @@ import chess.domain.piece.PieceColor;
 import chess.domain.player.Player;
 import chess.domain.player.Players;
 import chess.domain.position.Position;
+import chess.domain.result.Result;
+import chess.view.OutputView;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +36,10 @@ public class Game {
             return;
         }
         if (Command.isStatus(values.get(0))) {
-
+            Result result = new Result(board);
+            OutputView.printScore(currentColor, result.calculateTotalScore(currentColor));
+            OutputView.printScore(getCurrentColor().reversed(), result.calculateTotalScore(getCurrentColor().reversed()));
+            OutputView.printWinner(result.findWinner());
             return;
         }
         Position source = Position.ofName(values.get(1));
@@ -48,6 +53,8 @@ public class Game {
 
         if (board.kingDead()) {
             isPlaying = false;
+            Result result = new Result(board);
+            OutputView.printWinner(result.findWinner());
         }
     }
 

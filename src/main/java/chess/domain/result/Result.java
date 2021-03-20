@@ -26,21 +26,21 @@ public class Result {
 
     private Score calculateScoreWithoutPawn(Map<Piece, Position> pieces) {
         return pieces.keySet()
-                .stream()
-                .filter(piece -> !piece.isPawn())
-                .map(piece -> piece.score())
-                .reduce(Score::add)
-                .orElse(new Score(0))
-                ;
+            .stream()
+            .filter(piece -> !piece.isPawn())
+            .map(piece -> piece.score())
+            .reduce(Score::add)
+            .orElse(new Score(0))
+            ;
     }
 
     private Score calculatePawnScore(Map<Piece, Position> pawns) {
         double sum = 0;
         for (Column column : Column.values()) {
             int count = (int) pawns.entrySet()
-                    .stream()
-                    .filter(pawn -> pawn.getValue().isOn(column))
-                    .count();
+                .stream()
+                .filter(pawn -> pawn.getValue().isOn(column))
+                .count();
             if (count <= 2 && count != 0) {
                 sum += 1;
             }
@@ -53,16 +53,16 @@ public class Result {
 
     public String findWinner() {
         if (!board.kingDead()) {
-            return "아직 승자가 정해지지 않았습니다.";
+            throw new IllegalArgumentException("아직 승자가 정해지지 않았습니다.");
         }
         return board.getCoordinates()
-                .keySet()
-                .stream()
-                .filter(Piece::isKing)
-                .map(piece -> piece.color() + "이 이겼습니다.")
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("우승자가 없습니다."))
-                ;
+            .keySet()
+            .stream()
+            .filter(Piece::isKing)
+            .map(piece -> piece.color() + "이 이겼습니다.")
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("우승자가 없습니다."))
+            ;
     }
 
 }
