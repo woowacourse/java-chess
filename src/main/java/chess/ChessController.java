@@ -1,49 +1,78 @@
 package chess;
 
-import chess.board.Board;
-import chess.domain.piece.Color;
+import chess.domain.board.Board;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
+import chess.dto.BoardDTO;
+import chess.dto.PiecesDTO;
 import chess.view.InputView;
 import chess.view.OutputView;
+import java.util.Map;
 
-public class ChessController {
+public final class ChessController {
+
     public void run() {
         OutputView.printStart();
-        Board board = new Board();
-        while (true) {
-            String command = InputView.askCommand();
-            // todo - 명령어 처리방식 변경
-            if (command.equals("start")) {
-                // todo 보드생성은 위로 빼기
-                board.init();
-                // todo - dto로 만들어서 뷰에 던지기
-                OutputView.printBoard(board);
-                // todo - 보드의 상태에 따라서 반복문 설정하기
-                while (!board.isFinish()) {
-                    command = InputView.askCommand();
-                    // todo - 명령어 처리방식 변경
-                    if ("end".equals(command)) {
-                        break;
-                    }
-                    // todo 명령어 처리방식 변경
-                    String[] commands = command.split(" ");
-                    if ("move".equals(commands[0])) {
-                        board.movePiece(commands[1], commands[2]);
-                    }
-                    if ("status".equals(command)) {
-                        // todo - 결과 관련  dto 만들어서 던지기
-                        OutputView.printStatus(board.score(Color.BLACK), board.score(Color.WHITE), board.winner());
-                    }
-                    OutputView.printBoard(board);
-                }
-            }
-            if ("status".equals(command)) {
-                // todo - 결과 관련  dto 만들어서 던지기
-                OutputView.printStatus(board.score(Color.BLACK), board.score(Color.WHITE), board.winner());
-            }
-            if ("exit".equals(command)) {
-                break;
-            }
+        final Board board = new Board();
+        Command command = new Command();
+        while (!command.isExit()) {
+            command = new Command(InputView.askCommand());
+            commandIsStart(board, command);
+            commandIsStatus(board, command);
         }
-        
+    }
+
+    private void commandIsStart(final Board board, final Command command) {
+        if (command.isStart()) {
+            board.init();
+            printBoard(board);
+            playChess(board);
+        }
+    }
+
+    private void playChess(final Board board) {
+        Command command = new Command();
+        while (!board.isFinish() && !command.isEnd()) {
+            command = new Command(InputView.askCommand());
+            commandIsMove(board, command);
+            commandIsStatus(board, command);
+            printBoard(board);
+        }
+    }
+
+    private void commandIsMove(Board board, Command command) {
+        if (command.isMove()) {
+            board.movePiece(command.sourcePosition(), command.targetPosition());
+        }
+    }
+
+    private void printBoard(final Board board) {
+        final Map<Position, Piece> pieces = board.pieces();
+        final PiecesDTO piecesDTO = new PiecesDTO(piecesToString(pieces));
+
+        OutputView.printBoard(piecesDTO);
+    }
+
+    private void commandIsStatus(final Board board, final Command command) {
+        if (command.isStatus()) {
+            OutputView.printStatus(new BoardDTO(board));
+        }
+    }
+
+    private String piecesToString(final Map<Position, Piece> pieces) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        int count = 0;
+        for (Piece piece : pieces.values()) {
+            stringBuilder.append(piece.symbol());
+            count++;
+            chessNewLine(stringBuilder, count);
+        }
+        return stringBuilder.toString();
+    }
+
+    private void chessNewLine(final StringBuilder stringBuilder, final int count) {
+        if (count != 0 && count % 8 == 0) {
+            stringBuilder.append("\n");
+        }
     }
 }
