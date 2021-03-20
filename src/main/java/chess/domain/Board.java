@@ -103,28 +103,56 @@ public class Board {
     }
 
     public double addScore(String color) {
-        double score = 0;
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j].isSameColor(color)) {
-                    score += board[i][j].score();
-                }
-            }
-        }
+        return calculatePieceScore(color) - calculatePawnScore(color);
+    }
 
-        int pawnCount = 0;
+    private double calculatePieceScore(String color) {
+        double totalScore = 0;
         for (int i = 0; i < 8; i++) {
-            int pawns = 0;
-            for (int j = 0; j < 8; j++) {
-                if (board[j][i] instanceof Pawn && board[j][i].isSameColor(color)) {
-                    pawns++;
-                }
-            }
-            if (pawns >= 2) {
-                pawnCount += pawns;
-            }
+            totalScore += addRowPieceScore(color, totalScore, board[i]);
         }
-        return score - pawnCount * 0.5;
+        return totalScore;
+    }
+
+    private double addRowPieceScore(String color, double totalScore, Piece[] pieces) {
+        for (int j = 0; j < 8; j++) {
+            totalScore += addPieceScore(color, pieces[j]);
+        }
+        return totalScore;
+    }
+
+    private double addPieceScore(String color, Piece piece) {
+        if (piece.isSameColor(color)) {
+            return piece.score();
+        }
+        return 0;
+    }
+
+    private double calculatePawnScore(String color) {
+        int pawnCountInColumn = 0;
+        for (int i = 0; i < 8; i++) {
+            pawnCountInColumn += countPawnsInColumn(color, i);
+        }
+        return pawnCountInColumn * 0.5;
+    }
+
+    private int countPawnsInColumn(String color, int i) {
+        int pawnsInColumn = 0;
+        for (int j = 0; j < 8; j++) {
+            Piece piece = board[j][i];
+            pawnsInColumn += countPawn(color, piece);
+        }
+        if (pawnsInColumn >= 2) {
+            return pawnsInColumn;
+        }
+        return 0;
+    }
+
+    private int countPawn(String color, Piece piece) {
+        if (piece instanceof Pawn && piece.isSameColor(color)) {
+            return 1;
+        }
+        return 0;
     }
 
     public Piece[][] getBoard() {
