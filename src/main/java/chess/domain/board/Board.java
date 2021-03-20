@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.piece.TeamType;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -154,6 +155,19 @@ public class Board {
     public boolean isMovable(Coordinate nextCoordinate, TeamType teamType) {
         Cell cell = cells.get(nextCoordinate);
         return cell.isMovable(teamType);
+    }
+
+    public boolean hasPieceOnRouteBeforeDestination(Coordinate currentCoordinate,
+        Coordinate targetCoordinate, Direction moveCommandDirection) {
+        Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
+        List<Coordinate> possibleCoordinates = new ArrayList<>();
+        while (!movingCoordinate.equals(targetCoordinate)) {
+            possibleCoordinates.add(movingCoordinate);
+            movingCoordinate = movingCoordinate.move(moveCommandDirection);
+        }
+        return possibleCoordinates.stream()
+            .map(cells::get)
+            .anyMatch(cell -> !cell.isEmpty());
     }
 }
 

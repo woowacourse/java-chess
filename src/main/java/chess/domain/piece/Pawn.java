@@ -16,43 +16,40 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
+    public boolean isMovableTo(Board board, Coordinate currentCoordinate, Coordinate targetCoordinate) {
         Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        List<Coordinate> possibleCoordinates = new ArrayList<>();
-        List<Direction> directions = getDirections();
-        if (!directions.contains(moveCommandDirection)) {
+        if (!isCorrectDirection(moveCommandDirection)) {
             return false;
         }
-        if (currentCoordinate.isTwoRankForward(targetCoordinate)) {
-            if (!currentCoordinate.isFirstPawnRank(getTeamType())) {
-                return false;
-            }
-        }
-
-        Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
-        while (!movingCoordinate.equals(targetCoordinate)) {
-
-            Cell cell = board.find(movingCoordinate);
-            if (!cell.isEmpty()) {
-                break;
-            }
-            possibleCoordinates.add(movingCoordinate);
-            movingCoordinate = movingCoordinate.move(moveCommandDirection);
-        }
-
-        Cell cell = board.find(movingCoordinate);
-        if (moveCommandDirection.isDiagonal()) {
-            if (cell.hasEnemy(getTeamType())) {
-                possibleCoordinates.add(movingCoordinate);
-            }
-        }
         if (!moveCommandDirection.isDiagonal()) {
-            if (cell.isEmpty()) {
-                possibleCoordinates.add(movingCoordinate);
-            }
+            return isCanMoveForward(board, currentCoordinate, targetCoordinate);
         }
+        Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
+        return isCanMoveDiagonal(board, targetCoordinate, nextCoordinate);
+    }
 
-        return possibleCoordinates.contains(targetCoordinate);
+    private boolean isCanMoveForward(Board board, Coordinate currentCoordinate,
+        Coordinate targetCoordinate) {
+
+        if (currentCoordinate.isTwoRankForward(targetCoordinate)) {
+            return isCanMoveTwoRankForward(board, currentCoordinate, targetCoordinate);
+        }
+        return board.find(targetCoordinate).isEmpty();
+    }
+
+    private boolean isCanMoveTwoRankForward(Board board,
+        Coordinate currentCoordinate, Coordinate targetCoordinate) {
+        if (!currentCoordinate.isFirstPawnRank(getTeamType())) {
+            return false;
+        }
+        Direction direction = currentCoordinate.calculateDirection(targetCoordinate);
+        boolean hasPieceOnRoute = board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, direction);
+        return !hasPieceOnRoute && board.find(targetCoordinate).isEmpty();
+    }
+
+    private boolean isCanMoveDiagonal(Board board, Coordinate targetCoordinate,
+        Coordinate nextCoordinate) {
+        return nextCoordinate.equals(targetCoordinate) &&
+            board.find(targetCoordinate).hasEnemy(getTeamType());
     }
 }

@@ -22,10 +22,6 @@ public class King extends Piece {
             return false;
         }
         Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        List<Coordinate> possibleCoordinates = new ArrayList<>();
-        if (board.isMovable(nextCoordinate, getTeamType())) {
-            possibleCoordinates.add(nextCoordinate);
-        }
-        return possibleCoordinates.contains(targetCoordinate);
+        return nextCoordinate.equals(targetCoordinate) && board.find(targetCoordinate).isMovable(getTeamType());
     }
 }

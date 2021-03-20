@@ -24,26 +24,13 @@ public abstract class Piece {
     public boolean isMovableTo(Board board, Coordinate currentCoordinate,
         Coordinate targetCoordinate) {
         Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        List<Coordinate> possibleCoordinates = new ArrayList<>();
-        List<Direction> directions = getDirections();
-        if (!directions.contains(moveCommandDirection)) {
+        if (!isCorrectDirection(moveCommandDirection)) {
             return false;
         }
-        Coordinate movingCoordinate = currentCoordinate.move(moveCommandDirection);
-        while (!movingCoordinate.equals(targetCoordinate)) {
-            Cell cell = board.find(movingCoordinate);
-            if (!cell.isEmpty()) {
-                break;
-            }
-            possibleCoordinates.add(movingCoordinate);
-            movingCoordinate = movingCoordinate.move(moveCommandDirection);
+        if (board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, moveCommandDirection)) {
+            return false;
         }
-
-        Cell cell = board.find(movingCoordinate);
-        if (cell.isMovable(teamType)) {
-            possibleCoordinates.add(movingCoordinate);
-        }
-        return possibleCoordinates.contains(targetCoordinate);
+        return board.find(targetCoordinate).isMovable(teamType);
     }
 
     protected boolean isCorrectDirection(Direction moveCommandDirection) {
@@ -71,10 +58,6 @@ public abstract class Piece {
 
     public boolean isTeamOf(TeamType teamType) {
         return this.teamType == teamType;
-    }
-
-    public List<Direction> getDirections() {
-        return directions;
     }
 
     public boolean isKing() {
