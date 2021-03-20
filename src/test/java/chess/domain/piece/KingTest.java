@@ -50,7 +50,7 @@ class KingTest {
     @DisplayName("비어있는 좌표로 퀸을 이동하는 경우")
     void canMove() {
         King king = new King(Team.WHITE);
-        assertTrue(king.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(king.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.D, Vertical.FIVE), board));
     }
 
@@ -58,7 +58,7 @@ class KingTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         King king = new King(Team.WHITE);
-        assertTrue(king.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(king.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.C, Vertical.THREE), board));
     }
 
@@ -66,7 +66,7 @@ class KingTest {
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
         King king = new King(Team.WHITE);
-        assertFalse(king.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(king.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.C, Vertical.FOUR), board));
     }
 }

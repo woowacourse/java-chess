@@ -59,7 +59,7 @@ class RookTest {
     @DisplayName("비어있는 좌표로 룩을 이동하는 경우")
     void canMove() {
         Rook rook = new Rook(Team.WHITE);
-        assertTrue(rook.canMove(Position.of(Horizontal.A, Vertical.ONE), Position.of(Horizontal.A, Vertical.FOUR),
+        assertTrue(rook.isMovable(Position.of(Horizontal.A, Vertical.ONE), Position.of(Horizontal.A, Vertical.FOUR),
                 board));
     }
 
@@ -67,7 +67,7 @@ class RookTest {
     @DisplayName("길목에 다른 기물이 있는 경우")
     void canMoveImpossible() {
         Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.A, Vertical.ONE),
+        assertFalse(rook.isMovable(Position.of(Horizontal.A, Vertical.ONE),
                 Position.of(Horizontal.A, Vertical.EIGHT), board));
     }
 
@@ -75,7 +75,7 @@ class RookTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         Rook rook = new Rook(Team.WHITE);
-        assertTrue(rook.canMove(Position.of(Horizontal.A, Vertical.ONE),
+        assertTrue(rook.isMovable(Position.of(Horizontal.A, Vertical.ONE),
                 Position.of(Horizontal.A, Vertical.SEVEN), board));
     }
 
@@ -83,7 +83,7 @@ class RookTest {
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
         Rook rook = new Rook(Team.WHITE);
-        assertFalse(rook.canMove(Position.of(Horizontal.A, Vertical.ONE),
+        assertFalse(rook.isMovable(Position.of(Horizontal.A, Vertical.ONE),
                 Position.of(Horizontal.C, Vertical.ONE), board));
     }
 }

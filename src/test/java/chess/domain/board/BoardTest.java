@@ -29,17 +29,17 @@ class BoardTest {
         Board board = BoardFactory.create();
         board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
                 Position.of(Horizontal.A, Vertical.FOUR));
-        assertThat(board.getBoard().get(Position.of(Horizontal.A, Vertical.TWO))).isNull();
-        assertThat(board.getBoard().get(Position.of(Horizontal.A, Vertical.FOUR))).isInstanceOf(Pawn.class);
+        assertThat(board.findPieceFromPosition(Position.of(Horizontal.A, Vertical.TWO))).isNull();
+        assertThat(board.findPieceFromPosition(Position.of(Horizontal.A, Vertical.FOUR))).isInstanceOf(Pawn.class);
     }
 
     @Test
     @DisplayName("이동 범위 외 기물 이동 수행")
     void movePieceExceptionTest() {
         Board board = BoardFactory.create();
-        assertThatThrownBy(() -> {
-            board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
-                    Position.of(Horizontal.A, Vertical.FIVE));
-        }).isInstanceOf(UnsupportedOperationException.class);
+        assertThatThrownBy(() ->
+                board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
+                    Position.of(Horizontal.A, Vertical.FIVE)))
+                .isInstanceOf(UnsupportedOperationException.class);
     }
 }

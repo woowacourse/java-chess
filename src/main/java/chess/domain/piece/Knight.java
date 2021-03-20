@@ -4,28 +4,17 @@ import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
+import chess.domain.piece.moveStrategy.SpecifiedLocationStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Knight extends Piece {
     private static final String KNIGHT_NAME = "N";
     private static final double SCORE = 2.5;
 
     public Knight(Team team) {
-        super(KNIGHT_NAME, team, SCORE);
-    }
-
-    @Override
-    public boolean canMove(Position target, Position destination, Board board) {
-        Piece destinationPiece = board.getBoard().get(destination);
-        Piece targetPiece = board.getBoard().get(target);
-
-        if (Objects.isNull(destinationPiece)) {
-            return true;
-        }
-        return !targetPiece.isSameTeam(destinationPiece);
+        super(KNIGHT_NAME, team, SCORE, new SpecifiedLocationStrategy());
     }
 
     @Override

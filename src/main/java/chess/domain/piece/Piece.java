@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.piece.moveStrategy.CanMoveStrategy;
 
 import java.util.List;
 
@@ -10,10 +11,13 @@ public abstract class Piece {
     private final Team team;
     private final double score;
 
-    public Piece(String name, Team team, double score) {
+    private final CanMoveStrategy canMoveStrategy;
+
+    public Piece(String name, Team team, double score, CanMoveStrategy canMoveStrategy) {
         this.team = team;
         this.name = convertName(name, team);
         this.score = score;
+        this.canMoveStrategy = canMoveStrategy;
     }
 
     private String convertName(String name, Team team) {
@@ -35,12 +39,18 @@ public abstract class Piece {
         return team.isWhite();
     }
 
-    public abstract boolean canMove(Position target, Position destination, Board board);
+    public boolean isMovable(Position target, Position destination, Board board) {
+        return canMoveStrategy.canMove(target, destination, board);
+    }
 
     public abstract List<Position> searchMovablePositions(Position target);
 
     public boolean isSameTeam(Piece piece) {
-        return team.equals(piece.getTeam());
+        return this.team.equals(piece.getTeam());
+    }
+
+    public boolean isDifferentTeam(Piece piece) {
+        return !this.team.equals(piece.getTeam());
     }
 
     public boolean isSameTeam(Team team) {

@@ -4,53 +4,17 @@ import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
+import chess.domain.piece.moveStrategy.PawnStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Pawn extends Piece {
     private static final String PAWN_NAME = "P";
     private static final double SCORE = 1;
 
     public Pawn(Team team) {
-        super(PAWN_NAME, team, SCORE);
-    }
-
-    @Override
-    public boolean canMove(Position target, Position destination, Board board) {
-        Direction direction = target.directionToDestination(destination);
-        Piece targetPiece = board.findPieceFromPosition(target);
-
-        Position movedPosition = target.moveTowardDirection(direction);
-        Piece movedPositionPiece = board.findPieceFromPosition(movedPosition);
-
-        if (isTopBottom(direction)) {
-            if (Objects.nonNull(movedPositionPiece)) {
-                return false;
-            }
-            if (destination.getVerticalWeight() - target.getVerticalWeight() == 2) {
-                movedPosition = movedPosition.moveTowardDirection(direction);
-                movedPositionPiece = board.findPieceFromPosition(movedPosition);
-                if (Objects.nonNull(movedPositionPiece)) {
-                    return false;
-                }
-            }
-        }
-
-        if (isDiagonal(direction)) {
-            return !Objects.isNull(movedPositionPiece) && !movedPositionPiece.isSameTeam(targetPiece);
-        }
-        return true;
-    }
-
-    private boolean isDiagonal(Direction direction) {
-        return direction == Direction.RIGHT_TOP || direction == Direction.LEFT_TOP
-                || direction == Direction.LEFT_BOTTOM || direction == Direction.RIGHT_BOTTOM;
-    }
-
-    private boolean isTopBottom(Direction direction) {
-        return direction == Direction.TOP || direction == Direction.BOTTOM;
+        super(PAWN_NAME, team, SCORE, new PawnStrategy());
     }
 
     @Override

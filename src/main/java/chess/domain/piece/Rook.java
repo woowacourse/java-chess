@@ -1,9 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
+import chess.domain.piece.moveStrategy.ToEndOfLineStrategy;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -14,7 +14,7 @@ public class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(Team team) {
-        super(ROOK_NAME, team, SCORE);
+        super(ROOK_NAME, team, SCORE, new ToEndOfLineStrategy());
     }
 
     @Override
@@ -33,25 +33,5 @@ public class Rook extends Piece {
         movablePositions.removeAll(Collections.singletonList(target));
 
         return movablePositions;
-    }
-
-    @Override
-    public boolean canMove(Position target, Position destination, Board board) {
-        Direction direction = target.directionToDestination(destination);
-        Position movedPosition = target;
-        while (true) {
-            movedPosition = movedPosition.moveTowardDirection(direction);
-
-            if (movedPosition != destination) {
-                if (board.getBoard().get(movedPosition) != null) {
-                    return false;
-                }
-            }
-            if (movedPosition == destination) {
-                Piece targetPiece = board.getBoard().get(target);
-                Piece destinationPiece = board.getBoard().get(movedPosition);
-                return destinationPiece == null || !destinationPiece.isSameTeam(targetPiece);
-            }
-        }
     }
 }

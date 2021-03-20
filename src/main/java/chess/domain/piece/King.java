@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
+import chess.domain.piece.moveStrategy.SpecifiedLocationStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +15,7 @@ public class King extends Piece {
     private static final double SCORE = 0;
 
     public King(Team team) {
-        super(KING_NAME, team, SCORE);
+        super(KING_NAME, team, SCORE, new SpecifiedLocationStrategy());
     }
 
     @Override
@@ -34,14 +35,14 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove(Position target, Position destination, Board board) {
-        Piece destinationPiece = board.getBoard().get(destination);
-        Piece targetPiece = board.getBoard().get(target);
+    public boolean isMovable(Position target, Position destination, Board board) {
+        Piece destinationPiece = board.findPieceFromPosition(destination);
+        Piece targetPiece = board.findPieceFromPosition(target);
 
         if (Objects.isNull(destinationPiece)) {
             return true;
         }
-        return !targetPiece.isSameTeam(destinationPiece);
+        return targetPiece.isDifferentTeam(destinationPiece);
     }
 
     private List<Position> calculateBoardPosition(int changedHorizontalWeight, int changedVerticalWeight) {

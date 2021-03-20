@@ -75,7 +75,7 @@ class BishopTest {
     @DisplayName("비어있는 좌표로 비숍을 이동하는 경우")
     void canMove() {
         Bishop bishop = new Bishop(Team.WHITE);
-        assertTrue(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(bishop.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.B, Vertical.TWO), board));
     }
 
@@ -83,7 +83,7 @@ class BishopTest {
     @DisplayName("길목에 다른 기물이 있는 경우")
     void canMoveImpossible() {
         Bishop bishop = new Bishop(Team.WHITE);
-        assertFalse(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(bishop.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.G, Vertical.SEVEN), board));
     }
 
@@ -91,7 +91,7 @@ class BishopTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         Bishop bishop = new Bishop(Team.WHITE);
-        assertTrue(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(bishop.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.F, Vertical.SIX), board));
     }
 
@@ -99,7 +99,7 @@ class BishopTest {
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
         Bishop bishop = new Bishop(Team.WHITE);
-        assertFalse(bishop.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(bishop.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.A, Vertical.ONE), board));
     }
 }

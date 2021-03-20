@@ -4,7 +4,6 @@ package chess.domain.board;
 import chess.domain.piece.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Board {
     private static final double TOTAL_SCORE = 38;
@@ -39,7 +38,7 @@ public class Board {
     }
 
     private void move(Position target, Position destination, Piece targetPiece) {
-        if (targetPiece.canMove(target, destination, this)) {
+        if (targetPiece.isMovable(target, destination, this)) {
             Piece destinationPiece = findPieceFromPosition(destination);
             exitGameIfKing(destinationPiece);
             putDeadPieces(destinationPiece);

@@ -1,11 +1,5 @@
 package chess;
 
-import chess.controller.ChessController;
-import chess.domain.ChessGame;
-import chess.domain.command.*;
-
-import java.util.Arrays;
-
 public class WebUIChessApplication {
     public static void main(String[] args) {
 //        get("/", (req, res) -> {

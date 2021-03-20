@@ -66,7 +66,7 @@ class QueenTest {
     @DisplayName("비어있는 좌표로 퀸을 이동하는 경우")
     void canMove() {
         Queen queen = new Queen(Team.WHITE);
-        assertTrue(queen.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(queen.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.C, Vertical.FOUR), board));
     }
 
@@ -74,7 +74,7 @@ class QueenTest {
     @DisplayName("길목에 다른 기물이 있는 경우")
     void canMoveImpossible() {
         Queen queen = new Queen(Team.WHITE);
-        assertFalse(queen.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(queen.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.G, Vertical.SEVEN), board));
     }
 
@@ -82,7 +82,7 @@ class QueenTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         Queen queen = new Queen(Team.WHITE);
-        assertTrue(queen.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(queen.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.F, Vertical.SIX), board));
     }
 
@@ -90,7 +90,7 @@ class QueenTest {
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
         Queen queen = new Queen(Team.WHITE);
-        assertFalse(queen.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(queen.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.B, Vertical.FOUR), board));
     }
 }

@@ -85,7 +85,7 @@ class PawnTest {
     @DisplayName("대각선 이동인데 상대기물이 있는 경우")
     void pawnDiagonalMoveWhenDifferentTeamPieceExistTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertTrue(pawn.canMove(Position.of(Horizontal.B, Vertical.TWO),
+        assertTrue(pawn.isMovable(Position.of(Horizontal.B, Vertical.TWO),
                 Position.of(Horizontal.A, Vertical.THREE), board));
     }
 
@@ -93,7 +93,7 @@ class PawnTest {
     @DisplayName("대각선 이동인데 같은 팀 기물이 있는 경우")
     void pawnDiagonalMoveWhenSameTeamPieceExistTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.B, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.B, Vertical.TWO),
                 Position.of(Horizontal.C, Vertical.THREE), board));
     }
 
@@ -101,7 +101,7 @@ class PawnTest {
     @DisplayName("1칸 직진 이동인데 기물이 있는 경우")
     void pawnGoForwardOneStepWhenOtherPieceExistTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.B, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.B, Vertical.TWO),
                 Position.of(Horizontal.B, Vertical.THREE), board));
     }
 
@@ -109,7 +109,7 @@ class PawnTest {
     @DisplayName("2칸 직진 이동인데 기물이 있는 경우")
     void pawnGoForwardTwoStepWhenOtherPieceExistTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.D, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.D, Vertical.TWO),
                 Position.of(Horizontal.D, Vertical.FOUR), board));
     }
 
@@ -117,7 +117,7 @@ class PawnTest {
     @DisplayName("대각선 이동인데 기물이 없는 경우")
     void pawnDiagonalMoveWhenPieceNotExistTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.D, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.D, Vertical.TWO),
                 Position.of(Horizontal.E, Vertical.THREE), board));
     }
 
@@ -125,7 +125,7 @@ class PawnTest {
     @DisplayName("1칸 직진 이동인데 기물이 없는 경우")
     void pawnGoForwardOneStepTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.F, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.F, Vertical.TWO),
                 Position.of(Horizontal.D, Vertical.THREE), board));
     }
 
@@ -133,7 +133,7 @@ class PawnTest {
     @DisplayName("2칸 직진 이동인데 기물이 없는 경우")
     void pawnGoForwardTwoStepTest() {
         Pawn pawn = new Pawn(Team.WHITE);
-        assertFalse(pawn.canMove(Position.of(Horizontal.F, Vertical.TWO),
+        assertFalse(pawn.isMovable(Position.of(Horizontal.F, Vertical.TWO),
                 Position.of(Horizontal.D, Vertical.FOUR), board));
     }
 

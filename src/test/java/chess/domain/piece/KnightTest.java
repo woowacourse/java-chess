@@ -52,7 +52,7 @@ class KnightTest {
     @DisplayName("비어있는 좌표로 나이트를 이동하는 경우")
     void canMove() {
         Knight knight = new Knight(Team.WHITE);
-        assertTrue(knight.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(knight.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.E, Vertical.SIX), board));
     }
 
@@ -60,7 +60,7 @@ class KnightTest {
     @DisplayName("도착지에 상대편 기물이 있는 경우")
     void canMoveToSideTeamPiecePosition() {
         Knight knight = new Knight(Team.WHITE);
-        assertTrue(knight.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertTrue(knight.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.F, Vertical.THREE), board));
     }
 
@@ -68,7 +68,7 @@ class KnightTest {
     @DisplayName("도착지에 우리편 기물이 있는 경우")
     void canMoveToSameTeamPiecePosition() {
         Knight knight = new Knight(Team.WHITE);
-        assertFalse(knight.canMove(Position.of(Horizontal.D, Vertical.FOUR),
+        assertFalse(knight.isMovable(Position.of(Horizontal.D, Vertical.FOUR),
                 Position.of(Horizontal.B, Vertical.FIVE), board));
     }
 }
