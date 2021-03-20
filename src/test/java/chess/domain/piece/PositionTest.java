@@ -76,12 +76,34 @@ class PositionTest {
     }
 
     @Test
-    @DisplayName("같은 컬럼인지 확인")
+    @DisplayName("같은 column 인지 확인")
     void isSameColumn() {
         Position position = Position.of("a1");
 
         assertThat(position.isSameColumn(Point.from(0))).isTrue();
 
         assertThat(position.isSameColumn(Point.from(7))).isFalse();
+    }
+
+    @Test
+    @DisplayName("같은 row 인지 확인")
+    void isSameRow() {
+        Position position = Position.of("b2");
+
+        assertThat(position.isSameRow(Point.from(1))).isTrue();
+
+        assertThat(position.isSameColumn(Point.from(0))).isFalse();
+    }
+
+    @Test
+    @DisplayName("비교 테스트")
+    void equalsHash() {
+        assertThat(Position.of("a1").equals(Position.of(0, 0))).isTrue();
+
+        assertThat(Position.of("a1").equals(Position.of(0, 1))).isFalse();
+
+        assertThat(Position.of("a3").equals(Point.from(1))).isFalse();
+
+        assertThat(Position.of("a2").hashCode()).isEqualTo(Position.of(1, 0).hashCode());
     }
 }
