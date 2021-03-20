@@ -1,7 +1,6 @@
 package chess.domain.grid;
 
 import chess.domain.piece.Empty;
-import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
@@ -17,7 +16,6 @@ public class Grid {
     private static final int EIGHTH_ROW = 8;
 
     private final Lines lines;
-    private final Route route;
     private final Score score;
 
     public Grid() {
@@ -30,7 +28,6 @@ public class Grid {
         lineGroup.add(Line.pawn(SECOND_ROW, false));
         lineGroup.add(Line.general(FIRST_ROW, false));
         lines = new Lines(lineGroup);
-        route = new Route(lines);
         score = new Score(lines);
     }
 
@@ -43,16 +40,7 @@ public class Grid {
     }
 
     public void move(final Piece sourcePiece, final Piece targetPiece) {
-        sourcePiece.validateSourceAndTargetBeforeMove(sourcePiece, targetPiece);
-
-        if (sourcePiece instanceof Pawn) {
-            route.validatePawnSteps((Pawn) sourcePiece, targetPiece);
-            ((Pawn) sourcePiece).setMoved();
-        }
-        if (!(sourcePiece instanceof Pawn)) {
-            route.validateGeneralSteps(sourcePiece, targetPiece);
-        }
-
+        sourcePiece.validateRoute(targetPiece, lines);
         update(sourcePiece, targetPiece);
     }
 

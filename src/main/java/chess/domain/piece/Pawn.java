@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Lines;
 import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
     private static final char NAME_WHEN_BLACK = 'P';
@@ -17,26 +21,43 @@ public class Pawn extends Piece {
         super(isBlack, x, y);
     }
 
-    public List<Direction> twoStepDirections() {
-        if (isBlack()) {
-            return Direction.blackPawnLinearDirection();
-        }
-        return Direction.whitePawnLinearDirection();
-    }
-
     public int twoStepRange() {
         return TWO_STEP_RANGE;
-    }
-
-    public void setMoved() {
-        moved = true;
     }
 
     public boolean hasMoved() {
         return moved;
     }
 
-    public void validatePawnMove(final Piece targetPiece) {
+    @Override
+    void validateSteps(final Piece targetPiece, Lines lines) {
+        List<Position> movablePositions = new ArrayList<>();
+        for (Direction direction : directions()) {
+            movablePositions.addAll(route(direction, stepRange(), lines));
+        }
+        for (Direction direction : twoStepDirections()) {
+            movablePositions.addAll(route(direction, twoStepRange(), lines));
+        }
+        movablePositions = movablePositions.stream()
+                .distinct()
+                .collect(Collectors.toList());
+        validatePawnMove(targetPiece);
+        targetPiece.validateTargetInMovablePositions(movablePositions);
+        setMoved();
+    }
+
+    private void setMoved() {
+        moved = true;
+    }
+
+    private List<Direction> twoStepDirections() {
+        if (isBlack()) {
+            return Direction.blackPawnLinearDirection();
+        }
+        return Direction.whitePawnLinearDirection();
+    }
+
+    private void validatePawnMove(final Piece targetPiece) {
         validateTwoSteps(targetPiece);
         validateDiagonalMove(targetPiece);
         validateObstacleAhead(targetPiece);

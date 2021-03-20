@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Lines;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Piece {
@@ -26,24 +28,21 @@ public abstract class Piece {
         this.position = position;
     }
 
-    public boolean isEmpty() {
-        return this instanceof Empty;
-    }
-
-    public boolean isSameColor(final Piece other) {
-        return this.isBlack == other.isBlack;
-    }
-
-    public void validateSourceAndTargetBeforeMove(final Piece sourcePiece, final Piece targetPiece) {
-        validateSourcePieceEmpty(sourcePiece);
+    public void validateRoute(Piece targetPiece, Lines lines) {
+        validateSourcePieceEmpty();
         validatePositionInGrid(targetPiece);
         validateTargetPiece(targetPiece);
+        validateSteps(targetPiece, lines);
     }
 
-    public void validateTargetInMovablePositions(final List<Position> movablePositions) {
-        if (!movablePositions.contains(this.position())) {
-            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
+    private void validateSourcePieceEmpty() {
+        if (isEmpty()) {
+            throw new IllegalArgumentException("빈 공간을 옮길 수 없습니다.");
         }
+    }
+
+    public boolean isEmpty() {
+        return this instanceof Empty;
     }
 
     private void validatePositionInGrid(final Piece targetPiece) {
@@ -60,11 +59,41 @@ public abstract class Piece {
         }
     }
 
-    private void validateSourcePieceEmpty(Piece sourcePiece) {
-        if (sourcePiece.isEmpty()) {
-            throw new IllegalArgumentException("빈 공간을 옮길 수 없습니다.");
+    private boolean isSameColor(final Piece other) {
+        return this.isBlack == other.isBlack;
+    }
+
+    void validateSteps(Piece targetPiece, Lines lines) {
+        List<Position> movablePositions = new ArrayList<>();
+        for (Direction direction : directions()) {
+            movablePositions.addAll(route(direction, stepRange(), lines));
+        }
+        targetPiece.validateTargetInMovablePositions(movablePositions);
+    }
+
+    public void validateTargetInMovablePositions(final List<Position> movablePositions) {
+        if (!movablePositions.contains(this.position())) {
+            throw new IllegalArgumentException("이동할 수 없는 위치입니다.");
         }
     }
+
+    public List<Position> route(final Direction direction, final int stepRange, Lines lines) {
+        List<Position> positions = new ArrayList<>();
+        Position sourcePosition = position();
+
+        for (int i = 1; i <= stepRange; i++) {
+            Position movedPosition = sourcePosition.next(direction.getXDegree() * i, direction.getYDegree() * i);
+            if (!movedPosition.isInGridRange()) {
+                break;
+            }
+            positions.add(movedPosition);
+            if (!lines.isEmpty(movedPosition)) {
+                break;
+            }
+        }
+        return positions;
+    }
+
 
     public abstract List<Direction> directions();
 

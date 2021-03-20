@@ -18,7 +18,11 @@ public abstract class Playing implements GameState {
 
     @Override
     public GameState run(Grid grid) {
-        List<Piece> moveInput = pieces(grid, InputView.command());
+        String input = InputView.command();
+        if(input.equals("status")){
+            return new Status().run(grid);
+        }
+        List<Piece> moveInput = pieces(grid, input);
         Piece sourcePiece = moveInput.get(0);
         Piece targetPiece = moveInput.get(1);
 
