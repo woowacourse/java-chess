@@ -8,6 +8,8 @@ import java.util.List;
 
 public class ChessGame {
 
+    public static final String TURN_MESSAGE = "%s의 차례입니다.";
+
     private final ChessBoard chessBoard;
     private Color turn;
 
@@ -33,7 +35,7 @@ public class ChessGame {
 
     private void validateTurn(Square sourceSquare) {
         if (!sourceSquare.hasSameColor(turn)) {
-            throw new IllegalArgumentException("턴 아님!");
+            throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
         }
     }
 
