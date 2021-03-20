@@ -1,4 +1,4 @@
-package chess.domain;
+package chess.domain.player;
 
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
