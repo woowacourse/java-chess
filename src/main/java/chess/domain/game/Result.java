@@ -29,8 +29,8 @@ public class Result {
             winOrLose.put(Color.WHITE, "패");
             return winOrLose;
         }
-        winOrLose.put(Color.BLACK, "승");
-        winOrLose.put(Color.WHITE, "패");
+        winOrLose.put(Color.BLACK, "패");
+        winOrLose.put(Color.WHITE, "승");
         return winOrLose;
     }
 }
