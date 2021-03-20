@@ -16,18 +16,17 @@ public class Point {
         }
     }
 
-    private final Column x;
-    private final Row y;
+    private final Column column;
+    private final Row row;
 
-    public Point(Column x, Row y) {
-        this.x = x;
-        this.y = y;
+    public Point(Column column, Row row) {
+        this.column = column;
+        this.row = row;
     }
 
     private static void generatePointPoolRow(Row row) {
         for (Column column : Column.values()) {
-            POINT_POOL.put(
-                column.coordinate() + row.coordinate(), new Point(column, row));
+            POINT_POOL.put(column.coordinate() + row.coordinate(), new Point(column, row));
         }
     }
 
@@ -47,19 +46,20 @@ public class Point {
     }
 
     public Point yAxisSymmetricPoint() {
-        return Point.of(this.x.coordinate() + this.y.opposingRow().coordinate());
+        return Point.of(this.column.coordinate() + this.row.opposingRow().coordinate());
     }
 
     public Point originSymmetricPoint() {
-        return Point.of(this.x.opposingColumn().coordinate() + this.y.opposingRow().coordinate());
+        return Point
+            .of(this.column.opposingColumn().coordinate() + this.row.opposingRow().coordinate());
     }
 
-    public int xDifference(Point source) {
-        return this.x.index() - source.x.index();
+    public int columnDifference(Point source) {
+        return this.column.index() - source.column.index();
     }
 
-    public int yDifference(Point source) {
-        return this.y.index() - source.y.index();
+    public int rowDifference(Point source) {
+        return this.row.index() - source.row.index();
     }
 
     public Point movedPoint(MoveVector moveVector) {
@@ -72,18 +72,18 @@ public class Point {
     }
 
     private int movedYIndex(MoveVector moveVector) {
-        return y.index() + moveVector.vertical();
+        return row.index() + moveVector.vertical();
     }
 
     private int movedXIndex(MoveVector moveVector) {
-        return x.index() + moveVector.horizon();
+        return column.index() + moveVector.horizon();
     }
 
     public boolean isRow(Row row) {
-        return y == row;
+        return this.row == row;
     }
 
     public boolean isColumn(Column column) {
-        return x == column;
+        return this.column == column;
     }
 }

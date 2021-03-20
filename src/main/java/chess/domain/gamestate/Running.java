@@ -22,15 +22,20 @@ public class Running implements GameState {
 
     @Override
     public GameState move(Point source, Point destination, Turn turn) {
+        validateAndMove(source, destination, turn);
+
+        if (board.isKingDead()) {
+            return new Finished();
+        }
+        return this;
+    }
+
+    private void validateAndMove(Point source, Point destination, Turn turn) {
         if (!board.canMove(source, destination, turn.now())) {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
         board.move(source, destination);
         turn.next();
-        if (board.isKingDead()) {
-            return new Finished();
-        }
-        return this;
     }
 
     @Override

@@ -1,3 +1,4 @@
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
@@ -6,6 +7,10 @@ import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
+import chess.dto.BoardDto;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,23 @@ public class ChessGameTest {
         chessGame = new ChessGame(board, new Turn());
 
         chessGame.start();
+    }
+
+    @Test
+    @DisplayName("팀 화이트 초기설정 테스트")
+    void initializeBoard() {
+        BoardDto actualBoard = board.boardDto();
+        List<List<String>> expectedBoard = new ArrayList<>();
+        expectedBoard.add(Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R"));
+        expectedBoard.add(Arrays.asList("P", "P", "P", "P", "P", "P", "P", "P"));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
+        expectedBoard.add(Arrays.asList("p", "p", "p", "p", "p", "p", "p", "p"));
+        expectedBoard.add(Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r"));
+
+        assertThat(expectedBoard).isEqualTo(actualBoard.board());
     }
 
     @Test

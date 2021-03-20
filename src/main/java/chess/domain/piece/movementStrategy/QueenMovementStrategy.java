@@ -12,8 +12,8 @@ public class QueenMovementStrategy implements MovementStrategy {
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
-        int x = destination.xDifference(source);
-        int y = destination.yDifference(source);
+        int x = destination.columnDifference(source);
+        int y = destination.rowDifference(source);
 
         return QUEENS_MOVE_VECTORS.stream()
             .filter(moveVector -> moveVector.isSameDirection(x, y))
@@ -23,8 +23,8 @@ public class QueenMovementStrategy implements MovementStrategy {
 
     @Override
     public boolean hasMovableVector(Point source, Point destination) {
-        int x = destination.xDifference(source);
-        int y = destination.yDifference(source);
+        int x = destination.columnDifference(source);
+        int y = destination.rowDifference(source);
 
         return QUEENS_MOVE_VECTORS.stream()
             .anyMatch(moveVector -> moveVector.isSameDirection(x, y));

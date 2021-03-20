@@ -12,8 +12,8 @@ public class KnightMovementStrategy implements MovementStrategy {
 
     @Override
     public MoveVector movableVector(Point source, Point destination) {
-        int x = destination.xDifference(source);
-        int y = destination.yDifference(source);
+        int x = destination.columnDifference(source);
+        int y = destination.rowDifference(source);
 
         return KNIGHTS_MOVE_VECTORS.stream()
             .filter(vector -> vector.isSameDirection(x, y))
@@ -23,8 +23,8 @@ public class KnightMovementStrategy implements MovementStrategy {
 
     @Override
     public boolean hasMovableVector(Point source, Point destination) {
-        int x = destination.xDifference(source);
-        int y = destination.yDifference(source);
+        int x = destination.columnDifference(source);
+        int y = destination.rowDifference(source);
 
         return KNIGHTS_MOVE_VECTORS.stream()
             .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
