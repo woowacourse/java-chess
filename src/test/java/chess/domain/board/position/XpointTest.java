@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class XpointTest {
 
@@ -35,7 +34,8 @@ class XpointTest {
         xpoint = xpoint.left();
         assertThat(xpoint).isEqualTo(Xpoint.A);
 
-        assertThatThrownBy(xpoint::left).isInstanceOf(IllegalArgumentException.class);
+        xpoint = xpoint.left();
+        assertThat(xpoint).isEqualTo(Xpoint.A);
     }
 
     @Test
@@ -52,6 +52,7 @@ class XpointTest {
         xpoint = xpoint.right();
         assertThat(xpoint).isEqualTo(Xpoint.H);
 
-        assertThatThrownBy(xpoint::right).isInstanceOf(IllegalArgumentException.class);
+        xpoint = xpoint.right();
+        assertThat(xpoint).isEqualTo(Xpoint.H);
     }
 }

@@ -24,7 +24,7 @@ public enum Ypoint {
         return Collections.singletonList(EIGHT);
     }
 
-    public static List<Ypoint> getWhitePoint(){
+    public static List<Ypoint> getWhitePoint() {
         return Collections.singletonList(ONE);
     }
 
@@ -52,10 +52,18 @@ public enum Ypoint {
     }
 
     public Ypoint up() {
+        if (this == EIGHT) {
+            return this;
+        }
+
         return of(value + 1);
     }
 
     public Ypoint down() {
+        if (this == ONE) {
+            return this;
+        }
+
         return of(value - 1);
     }
 }

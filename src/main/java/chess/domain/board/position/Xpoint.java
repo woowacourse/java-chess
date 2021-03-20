@@ -34,11 +34,11 @@ public enum Xpoint {
         return Arrays.asList(C, F);
     }
 
-    public static List<Xpoint> getQueenPoint(){
+    public static List<Xpoint> getQueenPoint() {
         return Collections.singletonList(D);
     }
 
-    public static List<Xpoint> getKingPoint(){
+    public static List<Xpoint> getKingPoint() {
         return Collections.singletonList(E);
     }
 
@@ -58,10 +58,18 @@ public enum Xpoint {
     }
 
     public Xpoint left() {
+        if (this == A) {
+            return this;
+        }
+
         return of(value - 1);
     }
 
     public Xpoint right() {
+        if (this == H) {
+            return this;
+        }
+
         return of(value + 1);
     }
 }

@@ -22,7 +22,7 @@ public class Position {
 
     public static Position valueOf(String value) {
         Position position = CACHE.get(value);
-        if(Objects.isNull(position)){
+        if (Objects.isNull(position)) {
             throw new IllegalArgumentException("잘못된 좌표입니다.");
         }
         return position;
@@ -53,18 +53,46 @@ public class Position {
     }
 
     public Position leftUp() {
-        return valueOf(xpoint.left(), ypoint.up());
+        Position movedPosition = valueOf(xpoint.left(), ypoint.up());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
     }
 
     public Position rightUp() {
-        return valueOf(xpoint.right(), ypoint.up());
+        Position movedPosition = valueOf(xpoint.right(), ypoint.up());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
     }
 
-    public Position downLeft() {
-        return valueOf(xpoint.left(), ypoint.down());
+    public Position leftDown() {
+        Position movedPosition = valueOf(xpoint.left(), ypoint.down());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
     }
 
-    public Position downRight() {
-        return valueOf(xpoint.right(), ypoint.down());
+    public Position rightDown() {
+        Position movedPosition = valueOf(xpoint.right(), ypoint.down());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    private boolean isSamePosition(Position movedPosition) {
+        return movedPosition.isSameX(this.xpoint) || movedPosition.isSameY(this.ypoint);
+    }
+
+    private boolean isSameX(Xpoint xpoint) {
+        return this.xpoint.equals(xpoint);
+    }
+
+    private boolean isSameY(Ypoint ypoint) {
+        return this.ypoint.equals(ypoint);
     }
 }

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class YpointTest {
 
@@ -35,7 +34,8 @@ class YpointTest {
         ypoint = ypoint.up();
         assertThat(ypoint).isEqualTo(Ypoint.EIGHT);
 
-        assertThatThrownBy(ypoint::up).isInstanceOf(IllegalArgumentException.class);
+        ypoint = ypoint.up();
+        assertThat(ypoint).isEqualTo(Ypoint.EIGHT);
     }
 
     @Test
@@ -52,6 +52,7 @@ class YpointTest {
         ypoint = ypoint.down();
         assertThat(ypoint).isEqualTo(Ypoint.ONE);
 
-        assertThatThrownBy(ypoint::down).isInstanceOf(IllegalArgumentException.class);
+        ypoint = ypoint.down();
+        assertThat(ypoint).isEqualTo(Ypoint.ONE);
     }
 }
