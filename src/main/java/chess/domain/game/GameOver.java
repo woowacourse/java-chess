@@ -1,7 +1,5 @@
 package chess.domain.game;
 
-import java.util.Objects;
-
 public class GameOver {
 
     private boolean gameOver;
