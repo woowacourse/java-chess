@@ -37,6 +37,10 @@ public class Board {
                 ;
     }
 
+    public Position findPositionBy(Piece piece){
+        return coordinates.get(piece);
+    }
+
     public void move(Piece piece, Position target) {
         Path path = generatePath(piece);
 //        path.positions().forEach(position -> {

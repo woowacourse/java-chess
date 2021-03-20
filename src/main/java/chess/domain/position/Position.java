@@ -70,11 +70,11 @@ public class Position {
     }
 
     public int columnGap(Position that) {
-        return column() - that.column();
+        return Math.abs(column() - that.column());
     }
 
     public int rowGap(Position that) {
-        return row() - that.row();
+        return Math.abs(row() - that.row());
     }
 
     public int row() {
