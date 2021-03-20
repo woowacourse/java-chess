@@ -5,9 +5,12 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
+import java.util.Map;
+import java.util.TreeMap;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,7 +50,9 @@ class BoardTest {
     @ValueSource(strings = {"a,2,a,3", "a,2,a,4"})
     void checkPawnPath(final String input) {
         final Team team = Team.WHITE;
-        board.unwrap().put(new Position("a", "3"), new Queen(team));
+        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
+        chessBoard.put(new Position("a", "3"), new Queen(team));
+        board = new Board(chessBoard);
         final String[] inputs = input.split(",");
         assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
             .isInstanceOf(IllegalArgumentException.class)
@@ -58,7 +63,9 @@ class BoardTest {
     @DisplayName("킹이 잡혔는지 확인하는 기능")
     void checkDieKing() {
         assertThat(board.isKingDead()).isFalse();
-        board.unwrap().put(new Position("e", "1"), Blank.getInstance());
+        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
+        chessBoard.put(new Position("e", "1"), Blank.getInstance());
+        board = new Board(chessBoard);
         assertThat(board.isKingDead()).isTrue();
     }
 

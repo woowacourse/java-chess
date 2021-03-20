@@ -8,6 +8,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +20,12 @@ public class Board {
         chessBoard = BoardInitializer.initializeBoard();
     }
 
+    public Board(final Map<Position, Piece> chessBoard) {
+        this.chessBoard = chessBoard;
+    }
+
     public Map<Position, Piece> unwrap() {
-        return chessBoard;
+        return Collections.unmodifiableMap(chessBoard);
     }
 
     public void move(final Position source, final Position target, final Team team) {
