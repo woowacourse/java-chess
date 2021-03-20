@@ -1,7 +1,8 @@
 package chess.dto;
 
 public class PiecesDTO {
-    private String pieces;
+
+    private final String pieces;
 
     public PiecesDTO(String pieces) {
         this.pieces = pieces;

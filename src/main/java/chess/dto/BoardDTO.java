@@ -5,9 +5,9 @@ import chess.domain.piece.Color;
 
 public class BoardDTO {
 
-    private double whiteScore;
-    private double blackScore;
-    private String winner;
+    private final double whiteScore;
+    private final double blackScore;
+    private final String winner;
 
     public BoardDTO(Board board) {
         whiteScore = board.score(Color.WHITE);
