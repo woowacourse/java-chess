@@ -37,6 +37,10 @@ public class Game {
         Position target = Position.ofName(values.get(2));
         board.move(chosenPiece, target);
         currentColor = currentColor.reversed();
+
+        if(board.kingDead()) {
+            isPlaying = false;
+        }
     }
 
     public boolean isPlaying() {
