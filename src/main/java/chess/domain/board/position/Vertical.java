@@ -18,14 +18,14 @@ public enum Vertical {
         this.index = index;
     }
 
-    static Vertical indexOf(final String symbol) {
+    static Vertical parse(final String symbol) {
         return Vertical.valueOf(symbol.toUpperCase());
     }
 
     static Vertical of(final int index) {
         return Arrays.stream(Vertical.values())
                 .filter(v -> v.index == index)
-                .findAny()
+                .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 

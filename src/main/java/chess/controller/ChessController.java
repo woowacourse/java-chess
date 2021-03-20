@@ -9,38 +9,51 @@ import chess.view.OutputView;
 
 public class ChessController {
 
-    public static void main(final String[] args) {
-        new ChessController().run();
+    private final ChessManager chessManager;
+
+    public ChessController(){
+        chessManager = new ChessManager();
     }
 
     public void run() {
         if (!Menu.of(InputView.getNewGameCommand()).isStart()) {
             return;
         }
-
-        ChessManager chessManager = new ChessManager();
         OutputView.printBoard(chessManager.getBoard());
 
         String userInput;
-        Menu menu;
         do {
             userInput = InputView.getUserCommand();
-            menu = Menu.of(userInput);
-
-            if (menu.isMove()) {
-                chessManager.move(MoveCommand.of(userInput));
-                OutputView.printBoard(chessManager.getBoard());
-            }
-
-            if (menu.isShow()) {
-                OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getAbleToMove(ShowCommand.of(userInput)));
-            }
-
-            if (menu.isStatus()) {
-                OutputView.printStatus(chessManager.calculateStatus());
-            }
-        } while (!chessManager.isEnd() && !menu.isEnd());
+            commandExecute(userInput);
+        } while (!chessManager.isEnd() && !Menu.of(userInput).isEnd());
 
         OutputView.printGameResult(chessManager.calculateStatus());
+    }
+
+    private void commandExecute(final String input){
+        final Menu menu = Menu.of(input);
+
+        // XXX :: ENUM 고민
+
+        if (menu.isMove()) {
+            movePiece(MoveCommand.of(input));
+        }
+
+        if (menu.isShow()) {
+            showAblePositionToMove(ShowCommand.of(input));
+        }
+
+        if (menu.isStatus()) {
+            OutputView.printStatus(chessManager.calculateStatus());
+        }
+    }
+
+    private void movePiece(final MoveCommand command){
+        chessManager.move(command);
+        OutputView.printBoard(chessManager.getBoard());
+    }
+
+    private void showAblePositionToMove(final ShowCommand command){
+        OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getAbleToMove(command));
     }
 }

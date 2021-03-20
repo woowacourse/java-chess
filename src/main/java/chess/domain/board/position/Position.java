@@ -14,7 +14,7 @@ public class Position {
     }
 
     public Position(final String[] vh) {
-        this(Vertical.indexOf(vh[0]), Horizontal.indexOf(vh[1]));
+        this(Vertical.parse(vh[0]), Horizontal.parse(vh[1]));
     }
 
     public Position(final String s) {

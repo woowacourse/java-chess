@@ -18,17 +18,17 @@ public enum Horizontal {
         this.index = index;
     }
 
-    static Horizontal indexOf(final String number) {
+    static Horizontal parse(final String number) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == Integer.parseInt(number))
-                .findAny()
+                .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
     static Horizontal of(final int index) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
-                .findAny()
+                .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
