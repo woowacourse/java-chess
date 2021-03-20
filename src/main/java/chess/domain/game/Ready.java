@@ -15,7 +15,7 @@ public class Ready extends Idle {
 
     @Override
     public void start() {
-        chessGame.changeState(new BlackTurn(chessGame));
+        chessGame.changeState(new WhiteTurn(chessGame));
     }
 
     @Override
