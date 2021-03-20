@@ -6,7 +6,6 @@ import domain.chess.piece.Piece;
 import java.util.stream.IntStream;
 
 public class ScoreMachine {
-
     private Piece[][] board;
 
     public ScoreMachine(Piece[][] board) {
@@ -59,9 +58,6 @@ public class ScoreMachine {
                 }
             }
         }
-
         return score;
     }
-
-
 }

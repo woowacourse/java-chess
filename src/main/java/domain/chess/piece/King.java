@@ -51,4 +51,9 @@ public class King extends Piece {
                 .findAny()
                 .isPresent();
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

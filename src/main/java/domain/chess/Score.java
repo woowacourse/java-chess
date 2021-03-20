@@ -6,24 +6,20 @@ public class Score {
 
     private final double value;
 
-    public Score(){
+    public Score() {
         value = 0;
     }
 
-    public Score(double value){
+    public Score(double value) {
         this.value = value;
     }
 
-    public Score sum(Score score){
+    public Score sum(Score score) {
         return new Score(this.value + score.value);
     }
 
     public Score half() {
         return new Score(value / 2);
-    }
-
-    public double getScore() {
-        return value;    // 임시 생성ㅇ
     }
 
     @Override
