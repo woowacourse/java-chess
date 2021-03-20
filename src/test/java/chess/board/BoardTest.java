@@ -5,6 +5,9 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Position;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -124,5 +127,17 @@ public class BoardTest {
     @DisplayName("게임이 끝나지 않을때 승자 확인")
     void name() {
         assertThat(board.winner()).isEqualTo(Color.BLANK);
+    }
+
+    @Test
+    @DisplayName("종속성 확인하기")
+    void pieces() {
+        Map<Position, Piece> pieces = board.pieces();
+
+        assertThat(pieces).isEqualTo(board.pieces());
+
+        board.movePiece("a2", "a4");
+
+        assertThat(pieces).isNotEqualTo(board.pieces());
     }
 }
