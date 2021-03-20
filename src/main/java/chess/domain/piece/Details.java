@@ -15,4 +15,8 @@ public final class Details {
         this.score = score;
         this.iterable = iterable;
     }
+
+    public boolean isSameColor(TeamColor teamColor) {
+        return teamColor == this.teamColor;
+    }
 }
