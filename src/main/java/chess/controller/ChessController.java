@@ -29,6 +29,7 @@ public class ChessController {
             OutputView.printTurn(game.getCurrentColor());
             executeCommand(game);
         }
+        OutputView.printFinishedMessage();
     }
 
     private void executeCommand(Game game) {

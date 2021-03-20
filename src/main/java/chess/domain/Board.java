@@ -66,4 +66,11 @@ public class Board {
             .filter(piece -> piece.hasColor(color))
             .collect(Collectors.toList());
     }
+
+    public boolean kingDead() {
+        int count = (int) coordinates.keySet().stream()
+                .filter(Piece::isKing)
+                .count();
+        return count == 1;
+    }
 }

@@ -20,11 +20,15 @@ public class OutputView {
         System.out.println(NEWLINE + RenderingUtils.renderBoard(board));
     }
 
-    public static void printError(IllegalArgumentException e) {
-        System.out.println(NEWLINE + e.getMessage());
-    }
-
     public static void printTurn(PieceColor currentColor) {
         System.out.println(NEWLINE + currentColor.getColor() + "의 차례입니다.");
+    }
+
+    public static void printFinishedMessage() {
+        System.out.println(NEWLINE + "게임이 종료되었습니다.");
+    }
+
+    public static void printError(IllegalArgumentException e) {
+        System.out.println(NEWLINE + e.getMessage());
     }
 }
