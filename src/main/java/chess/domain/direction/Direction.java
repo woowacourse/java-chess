@@ -1,4 +1,4 @@
-package chess.controller.direction;
+package chess.domain.direction;
 
 public enum Direction {
 
