@@ -4,6 +4,14 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Color;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,6 +25,7 @@ public class ChessBoardTest {
     @BeforeEach
     void setUp() {
         chessBoard = new ChessBoard();
+        chessBoard.initBoard();
     }
 
     @ParameterizedTest
@@ -68,6 +77,13 @@ public class ChessBoardTest {
     void movePawnFailDiagonal() {
         assertThatThrownBy(() -> {
             chessBoard.move("b2", "c3");
+        }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void movePawnFailSame() {
+        assertThatThrownBy(() -> {
+            chessBoard.move("b2", "b2");
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -127,5 +143,38 @@ public class ChessBoardTest {
         assertThatThrownBy(() -> {
             chessBoard.move("b1", "d2");
         }).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    void scoreTest() {
+        chessBoard.move("b2", "b4");
+        chessBoard.move("c7", "c5");
+        chessBoard.move("b4", "c5");
+        assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(37.0);
+        assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(37.0);
+    }
+
+    @Test
+    void scoreTest2() {
+        ChessBoard emptyChessBoard = new ChessBoard();
+        emptyChessBoard.getSquare(Position.of("b8")).addPiece(new King(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("c8")).addPiece(new Rook(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("a7")).addPiece(new Pawn(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("c7")).addPiece(new Pawn(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("d7")).addPiece(new Bishop(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("b6")).addPiece(new Pawn(Color.BLACK));
+        emptyChessBoard.getSquare(Position.of("e6")).addPiece(new Queen(Color.BLACK));
+
+        emptyChessBoard.getSquare(Position.of("f4")).addPiece(new Knight(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("g4")).addPiece(new Queen(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("f3")).addPiece(new Pawn(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("h3")).addPiece(new Pawn(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("f2")).addPiece(new Pawn(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("g2")).addPiece(new Pawn(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("e1")).addPiece(new Rook(Color.WHITE));
+        emptyChessBoard.getSquare(Position.of("f1")).addPiece(new King(Color.WHITE));
+
+        assertThat(emptyChessBoard.getScore(Color.BLACK)).isEqualTo(20.0);
+        assertThat(emptyChessBoard.getScore(Color.WHITE)).isEqualTo(19.5);
     }
 }
