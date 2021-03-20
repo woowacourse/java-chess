@@ -5,48 +5,43 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@DisplayName("위치 테스트")
 class PositionTest {
-    
+
+    @Test
+    @DisplayName("생성자 테스트")
+    void create() {
+        assertThat(Position.of(0,0)).isEqualTo(Position.of("a1"));
+
+        assertThat(Position.of(1,1)).isSameAs(Position.of("b2"));
+    }
+
     @Test
     @DisplayName("이동 가능한지 테스트")
     void canMoveTest() {
-        
-        // given
         Position position = Position.of(1, 2);
         Direction direction = Direction.NORTH;
         int ableLength = 1;
         
         Position targetPosition = Position.of(2, 2);
-        
-        // when
+
         final boolean canMove = position.canMove(targetPosition, direction, ableLength);
-    
-        // then
+
         assertThat(canMove).isTrue();
     }
     
     @Test
     @DisplayName("이동 불가능한지 테스트")
     void cannotMoveTest() {
-        
-        // given
+
         Position position = Position.of(1, 2);
         Direction direction = Direction.NORTH;
         int ableLength = 1;
         
         Position targetPosition = Position.of(1, 3);
         
-        // when
         final boolean canMove = position.canMove(targetPosition, direction, ableLength);
         
-        // then
         assertThat(canMove).isFalse();
-    }
-    
-    @Test
-    @DisplayName("문자열로 위치생성 테스트")
-    void createTest() {
-        assertThat(Position.of("b2")).isEqualTo(Position.of(1, 1));
-        assertThat(Position.of("b3")).isEqualTo(Position.of(2, 1));
     }
 }

@@ -1,58 +1,76 @@
 package chess.domain.piece;
 
-import chess.board.Board;
-import org.assertj.core.api.ThrowableAssert;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
+import chess.domain.board.Pieces;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
-
+@DisplayName("룩 테스트")
 class RookTest {
-    
-    private Rook rook;
-    
-    private List<List<Piece>> pieces;
-    
+
+    private Piece rook;
+    private Map<Position, Piece> pieces;
+
     @BeforeEach
     void setUp() {
-        Position position = Position.of(0, 0);
-    
-        rook = new Rook(Color.BLACK, position);
-        
-        Board board = new Board();
-        board.init();
-        
-        pieces = board.getBoard();
-        
-        pieces.get(1).set(0, new Blank(Color.BLANK, Position.of(1, 0)));
+        rook = new Rook(Color.BLANK, Position.of("e5"));
+
+        Pieces pieces = new Pieces();
+        pieces.init();
+
+        this.pieces = pieces.pieces();
     }
-    
+
     @Test
     @DisplayName("이동검사")
     void move() {
-        Position position = Position.of(2, 0);
-        
-        ThrowableAssert.ThrowingCallable callable = () -> rook.move(position, pieces);
-        
-        assertThatCode(callable).doesNotThrowAnyException();
+        assertThatCode(() -> rook.move(Position.of("a5"), pieces)).doesNotThrowAnyException();
+
+        assertThatCode(() -> rook.move(Position.of("g5"), pieces)).doesNotThrowAnyException();
+
+        assertThatCode(() -> rook.move(Position.of("e6"), pieces)).doesNotThrowAnyException();
+
+        assertThatCode(() -> rook.move(Position.of("e3"), pieces)).doesNotThrowAnyException();
     }
-    
+
     @Test
     @DisplayName("이동 에러 검사")
     void validate() {
-        Position position = Position.of(2, 1);
-        
-        ThrowableAssert.ThrowingCallable callable = () -> rook.move(position, pieces);
-        
-        assertThatIllegalArgumentException().isThrownBy(callable);
+        assertThatThrownBy(() -> rook.move(Position.of("c6"), pieces))
+            .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.move(Position.of("f6"), pieces))
+            .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.move(Position.of("g3"), pieces))
+            .isInstanceOf(IllegalArgumentException.class);
+
+        assertThatThrownBy(() -> rook.move(Position.of("d3"), pieces))
+            .isInstanceOf(IllegalArgumentException.class);
     }
-    
+
     @Test
     @DisplayName("점수 반환 테스트")
     void score() {
-        assertThat(rook.getScore()).isEqualTo(5);
+        assertThat(rook.score()).isEqualTo(5);
+    }
+
+    @Test
+    @DisplayName("흰색일때 심볼 테스트")
+    void whiteSymbol() {
+        Piece piece = new Rook(Color.WHITE, Position.of("a1"));
+        assertThat(piece.symbol()).isEqualTo("r");
+    }
+
+    @Test
+    @DisplayName("검정색일때 심볼 테스트")
+    void blackSymbol() {
+        Piece piece = new Rook(Color.BLACK, Position.of("a1"));
+        assertThat(piece.symbol()).isEqualTo("R");
     }
 }
