@@ -26,7 +26,7 @@ class KingTest {
     @ParameterizedTest(name = "King 빈 이동경로 반환")
     @CsvSource({"b2,a1", "b2,b3", "b2,a2"})
     void routeSuccess(String from, String to) {
-        assertThat(king.route(Position.of(from), Position.of(to))).isEmpty();
+        assertThat(king.route(Position.from(from), Position.from(to))).isEmpty();
     }
 
     @ParameterizedTest(name = "King 이동 실패")
@@ -38,8 +38,8 @@ class KingTest {
 
     private static Stream<Arguments> routeFailTestcase() {
         return Stream.of(
-                Arguments.of(Position.of("a1"), Position.of("a1")),
-                Arguments.of(Position.of("a1"), Position.of("a3"))
+                Arguments.of(Position.from("a1"), Position.from("a1")),
+                Arguments.of(Position.from("a1"), Position.from("a3"))
         );
     }
 }
