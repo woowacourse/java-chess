@@ -2,10 +2,10 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public abstract class PozCommand implements Command {
+public abstract class MainCommand implements Command {
     private final ChessGame chessGame;
 
-    public PozCommand(ChessGame chessGame) {
+    public MainCommand(ChessGame chessGame) {
         this.chessGame = chessGame;
     }
 

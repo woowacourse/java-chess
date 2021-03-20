@@ -2,7 +2,7 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class EndOnCommand extends PozCommand {
+public class EndOnCommand extends MainCommand {
     private static final String COMMAND_NAME = "end";
 
     public EndOnCommand(ChessGame chessGame) {

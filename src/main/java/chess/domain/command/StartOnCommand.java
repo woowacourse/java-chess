@@ -2,7 +2,7 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class StartOnCommand extends PozCommand {
+public class StartOnCommand extends MainCommand {
     private static final String COMMAND_NAME = "start";
     private static final String COMMAND_MESSAGE = "체스판을 세팅했습니다.";
 

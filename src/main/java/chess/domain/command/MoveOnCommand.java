@@ -2,7 +2,7 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class MoveOnCommand extends PozCommand {
+public class MoveOnCommand extends MainCommand {
     private static final String DELIMITER = " ";
     private static final int MOVE_COMMAND_LENGTH = 3;
     private static final int MOVE_COMMAND_TARGET = 1;

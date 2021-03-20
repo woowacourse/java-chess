@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.ChessGame;
 import chess.domain.piece.Team;
 
-public class StatusOnCommand extends PozCommand {
+public class StatusOnCommand extends MainCommand {
     private static final String COMMAND_NAME = "status";
     private static final String COMMAND_MESSAGE = "BLACK 팀의 점수 : %f, WHITE 팀의 점수 : %f %s";
     private static final String BLACK_WIN = "BLACK 팀이 유리한 상황입니다.";
