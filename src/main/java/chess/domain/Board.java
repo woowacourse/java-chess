@@ -46,8 +46,8 @@ public class Board {
     }
 
     public void move(Player player, List<String> values) {
-        Position source = Position.of(values.get(1));
-        Position target = Position.of(values.get(2));
+        Position source = Position.ofName(values.get(1));
+        Position target = Position.ofName(values.get(2));
         Piece piece = findPieceBy(source);
         moveCurrentPiece(player, target, piece);
     }

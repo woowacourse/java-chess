@@ -10,8 +10,8 @@ class PositionTest {
     @DisplayName("Position을 생성한다.")
     @Test
     void position(){
-        Position actual = Position.of(Column.A,Row.ONE);
-        assertEquals(actual, Position.of(Column.A,Row.ONE));
-        assertEquals(actual, Position.of("a1"));
+        Position actual = Position.ofColumnAndRow(Column.A,Row.ONE);
+        assertEquals(actual, Position.ofColumnAndRow(Column.A,Row.ONE));
+        assertEquals(actual, Position.ofName("a1"));
     }
 }

@@ -11,13 +11,13 @@ class RookTest {
     @Test
     void generatePath() {
         Board board = new Board();
-        Position current = Position.of("e4");
+        Position current = Position.ofName("e4");
         Piece rook = new Rook(PieceColor.WHITE);
 
         board.putPiece(rook, current);
-        board.putPiece(new Rook(PieceColor.WHITE), Position.of("e2"));
-        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("b4"));
-        board.putPiece(new Rook(PieceColor.BLACK), Position.of("e8"));
+        board.putPiece(new Rook(PieceColor.WHITE), Position.ofName("e2"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("b4"));
+        board.putPiece(new Rook(PieceColor.BLACK), Position.ofName("e8"));
         Paths paths = new Paths(rook.findAllPath(current));
 
         for (Position position : paths.removeObstacles(board).positions()) {
