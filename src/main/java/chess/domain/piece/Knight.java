@@ -13,7 +13,7 @@ public class Knight extends Piece {
     private static final double SCORE = 2.5;
 
     public Knight(TeamType teamType) {
-        super(teamType, NAME, SCORE, Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP, Direction.LEFT_DOWN_DOWN, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP, Direction.RIGHT_RIGHT_UP, Direction.RIGHT_RIGHT_DOWN));
+        super(teamType, NAME, SCORE, Direction.getKnightDirections());
     }
 
     @Override

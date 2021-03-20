@@ -20,15 +20,7 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(TeamType teamType) {
-        super(teamType, NAME, SCORE, filterDirections(teamType));
-
-    }
-
-    private static List<Direction> filterDirections(TeamType teamType) {
-        if (teamType == TeamType.BLACK) {
-            return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
-        }
-        return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
+        super(teamType, NAME, SCORE, Direction.getPawnDirections(teamType));
     }
 
     @Override

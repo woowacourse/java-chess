@@ -9,6 +9,7 @@ import static chess.domain.board.Direction.RIGHT_DOWN;
 import static chess.domain.board.Direction.RIGHT_UP;
 import static chess.domain.board.Direction.UP;
 
+import chess.domain.board.Direction;
 import chess.domain.player.TeamType;
 import java.util.Arrays;
 
@@ -17,7 +18,6 @@ public class Queen extends Piece {
     private static final double SCORE = 9;
 
     public Queen(TeamType teamType) {
-        super(teamType, NAME, SCORE,
-            Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN));
+        super(teamType, NAME, SCORE, Direction.getQueenDirections());
     }
 }

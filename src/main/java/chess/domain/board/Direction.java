@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.player.TeamType;
 import java.util.Arrays;
 import java.util.List;
 
@@ -95,5 +96,34 @@ public enum Direction {
         List<Direction> diagonalDirections
             = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
         return diagonalDirections.contains(this);
+    }
+
+    public static List<Direction> getKingDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+    }
+
+
+    public static List<Direction> getBishopDirections() {
+        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+    }
+
+    public static List<Direction> getQueenDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+    }
+
+    public static List<Direction> getKnightDirections() {
+        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP, Direction.LEFT_DOWN_DOWN,
+            Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP, Direction.RIGHT_RIGHT_UP, Direction.RIGHT_RIGHT_DOWN);
+    }
+
+    public static List<Direction> getRookDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN);
+    }
+
+    public static List<Direction> getPawnDirections(TeamType teamType) {
+        if (teamType == TeamType.BLACK) {
+            return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
+        }
+        return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
     }
 }
