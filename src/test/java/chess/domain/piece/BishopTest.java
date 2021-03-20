@@ -23,7 +23,7 @@ public class BishopTest {
     @DisplayName("Bishop 객체 생성 확인")
     @Test
     void 비숍_객체_생성() {
-        Bishop bishop = new Bishop(Position.of('c', '8'), "B", Color.BLACK);
+        Bishop bishop = new Bishop(Position.of('c', '8'), Color.BLACK);
 
         assertThat(bishop.getPosition()).isEqualTo(Position.of('c', '8'));
         assertThat(bishop.getName()).isEqualTo("B");
@@ -41,7 +41,7 @@ public class BishopTest {
     @Test
     void 비숍_이동_확인() {
         List<Piece> currentPieces = Arrays.asList(
-                new Bishop(Position.of('c', '8'), "B", Color.BLACK));
+                new Bishop(Position.of('c', '8'), Color.BLACK));
         CurrentPieces pieces = new CurrentPieces(currentPieces);
         Position source = Position.of('c', '8');
         Position target = Position.of('e', '6');
@@ -82,8 +82,8 @@ public class BishopTest {
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Bishop(Position.of('c', '8'), "B", Color.BLACK),
-                new Pawn(Position.of('f', '5'), "p", Color.WHITE));
+                new Bishop(Position.of('c', '8'), Color.BLACK),
+                new Pawn(Position.of('f', '5'), Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         Position source = Position.of('c', '8'); // 비숍 위치

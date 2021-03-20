@@ -71,12 +71,12 @@ public class CurrentPiecesTest {
     @Test
     void 팀별_점수_계산_세로줄_같은색_폰() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '8'), "P", Color.BLACK, new Score(1)),
-                new Pawn(Position.of('a', '7'), "P", Color.BLACK, new Score(1)),
-                new Pawn(Position.of('d', '8'), "P", Color.BLACK, new Score(1)),
-                new Pawn(Position.of('d', '7'), "P", Color.BLACK, new Score(1)),
-                new Pawn(Position.of('c', '1'), "p", Color.WHITE, new Score(1)),
-                new Pawn(Position.of('c', '2'), "p", Color.WHITE, new Score(1)));
+                new Pawn(Position.of('a', '8'), Color.BLACK),
+                new Pawn(Position.of('a', '7'), Color.BLACK),
+                new Pawn(Position.of('d', '8'), Color.BLACK),
+                new Pawn(Position.of('d', '7'), Color.BLACK),
+                new Pawn(Position.of('c', '1'), Color.WHITE),
+                new Pawn(Position.of('c', '2'), Color.WHITE));
         CurrentPieces currentPieces = new CurrentPieces(current);
 
         assertThat(currentPieces.sumScoreByColor(Color.BLACK)).isEqualTo(2);

@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Name;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,21 +14,21 @@ public class Knight extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('b', '1'),
             Position.of('g', '1'));
 
-    public Knight(Position position, String name, Color color) {
-        super(position, name, color);
+    public Knight(Position position, Color color) {
+        super(position, Name.KNIGHT, color, SCORE);
     }
 
-    public Knight(Position position, String name, Color color, Score score) {
+    public Knight(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
     }
 
 
     public static List<Knight> initialKnights() {
         List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Knight(position, "N", Color.BLACK, SCORE))
+                .map(position -> new Knight(position, Color.BLACK))
                 .collect(Collectors.toList());
         List<Knight> whiteKnights = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Knight(position, "n", Color.WHITE, SCORE))
+                .map(position -> new Knight(position, Color.WHITE))
                 .collect(Collectors.toList());
         blackKnights.addAll(whiteKnights);
         return blackKnights;
@@ -40,8 +41,7 @@ public class Knight extends Piece {
             throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
         }
         Piece targetPiece = currentPieces.findByPosition(target);
-        if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
+        if (this.color.isSame(targetPiece.color)) {
             throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
         }
         if (!(targetPiece instanceof Empty)) {

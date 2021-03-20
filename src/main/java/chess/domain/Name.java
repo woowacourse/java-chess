@@ -6,7 +6,8 @@ public enum Name {
     KNIGHT("N"),
     PAWN("P"),
     QUEEN("Q"),
-    ROOK("R");
+    ROOK("R"),
+    NONE(".");
 
     private final String name;
 

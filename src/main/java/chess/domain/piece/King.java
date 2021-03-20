@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Cross;
 import chess.domain.Diagonal;
+import chess.domain.Name;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,18 +13,18 @@ public class King extends Piece {
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');
 
-    public King(Position position, String name, Color color) {
-        super(position, name, color);
+    public King(Position position, Color color) {
+        super(position, Name.KING, color, SCORE);
     }
 
-    public King(Position position, String name, Color color, Score score) {
+    public King(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
     }
 
     public static List<King> initialKings() {
         List<King> kings = new ArrayList();
-        kings.add(new King(INITIAL_BLACK_POSITION, "K", Color.BLACK, SCORE));
-        kings.add(new King(INITIAL_WHITE_POSITION, "k", Color.WHITE, SCORE));
+        kings.add(new King(INITIAL_BLACK_POSITION, Color.BLACK));
+        kings.add(new King(INITIAL_WHITE_POSITION, Color.WHITE));
         return kings;
     }
 
@@ -40,8 +41,7 @@ public class King extends Piece {
             queenCross.hasPieceInPath(this.position, target, currentPieces);
             // 우리편 말이 있으면 예외
             Piece targetPiece = currentPieces.findByPosition(target);
-            if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                    (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
+            if (this.color.isSame(targetPiece.color)) {
                 throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
             }
             if (!(targetPiece instanceof Empty)) {
@@ -54,8 +54,7 @@ public class King extends Piece {
             queenDiagonal.hasPieceInPath(this.position, target, currentPieces);
             // 우리편 말이 있으면 예외
             Piece targetPiece = currentPieces.findByPosition(target);
-            if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                    (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
+            if (this.color.isSame(targetPiece.color)) {
                 throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
             }
             if (!(targetPiece instanceof Empty)) {

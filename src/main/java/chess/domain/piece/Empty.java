@@ -1,13 +1,14 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Name;
 
 public class Empty extends Piece {
     public Empty() {
-        this(Position.EMPTY, ".", Color.NONE);
+        this(Position.EMPTY, Name.NONE, Color.NONE);
     }
 
-    public Empty(Position position, String name, Color color) {
+    public Empty(Position position, Name name, Color color) {
         super(position, name, color);
     }
 

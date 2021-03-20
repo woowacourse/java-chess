@@ -61,7 +61,6 @@ public class CurrentPieces {
             }
         }
         double subtractCount = 0.5;
-
         return currentPieces.stream()
                 .filter(piece -> piece.getColor().isSame(color))
                 .mapToDouble(piece -> piece.getScore().getValue())

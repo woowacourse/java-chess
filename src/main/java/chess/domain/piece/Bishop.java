@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Diagonal;
+import chess.domain.Name;
 
 import java.util.Arrays;
 import java.util.List;
@@ -14,20 +15,20 @@ public class Bishop extends Piece {
     private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('c', '1'),
             Position.of('f', '1'));
 
-    public Bishop(Position position, String name, Color color) {
-        super(position, name, color);
+    public Bishop(Position position, Color color) {
+        super(position, Name.BISHOP, color, SCORE);
     }
 
-    public Bishop(Position position, String name, Color color, Score score) {
+    public Bishop(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
     }
 
     public static List<Bishop> initialBishops() {
         List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Bishop(position, "B", Color.BLACK, SCORE))
+                .map(position -> new Bishop(position, Color.BLACK))
                 .collect(Collectors.toList());
         List<Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Bishop(position, "b", Color.WHITE, SCORE))
+                .map(position -> new Bishop(position, Color.WHITE))
                 .collect(Collectors.toList());
         blackBishops.addAll(whiteBishops);
         return blackBishops;
@@ -46,13 +47,13 @@ public class Bishop extends Piece {
 
         // 우리편 말이 있으면 예외
         Piece targetPiece = currentPieces.findByPosition(target);
-        if ((Character.isUpperCase(this.name.charAt(0)) && Character.isUpperCase(targetPiece.name.charAt(0))) ||
-                (Character.isLowerCase(this.name.charAt(0)) && Character.isLowerCase(targetPiece.name.charAt(0)))) {
+        if (this.color.isSame(targetPiece.color)) {
             throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
         }
         if (!(targetPiece instanceof Empty)) {
             currentPieces.removePieceByPosition(target);
         }
         this.position = target;
+
     }
 }

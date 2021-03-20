@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Name;
 
 import java.util.Arrays;
 import java.util.List;
@@ -17,20 +18,20 @@ public class Pawn extends Piece {
             Position.of('e', '2'), Position.of('f', '2'), Position.of('g', '2'),
             Position.of('h', '2'));
 
-    public Pawn(Position position, String name, Color color) {
-        super(position, name, color);
+    public Pawn(Position position, Color color) {
+        super(position, Name.PAWN, color, SCORE);
     }
 
-    public Pawn(Position position, String name, Color color, Score score) {
+    public Pawn(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
     }
 
     public static List<Pawn> initialPawns() {
         List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Pawn(position, "P", Color.BLACK, SCORE))
+                .map(position -> new Pawn(position, Color.BLACK))
                 .collect(Collectors.toList());
         List<Pawn> whitePawns = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Pawn(position, "p", Color.WHITE, SCORE))
+                .map(position -> new Pawn(position, Color.WHITE))
                 .collect(Collectors.toList());
         blackPawns.addAll(whitePawns);
         return blackPawns;
@@ -48,7 +49,7 @@ public class Pawn extends Piece {
             this.position = target;
             return;
         }
-        if (this.position.getY() == '7' && this.name.equals("P")) { // 블랙 초기화
+        if (this.position.getY() == '7' && this.color == Color.BLACK) { // 블랙 초기화
             if (this.position.subtractY(target) > 0 && this.position.subtractY(target) <= 2) { // 빠꾸 금지 && 2칸 내 이동
                 for (int i = 1; i <= position.subtractY(target); i++) { // 장애물 검사
                     Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
@@ -61,7 +62,7 @@ public class Pawn extends Piece {
             }
         }
 
-        if (this.position.getY() == '2' && this.name.equals("p")) { // 화이트
+        if (this.position.getY() == '2' && this.color == Color.WHITE) { // 화이트
             if (target.subtractY(this.position) > 0 && target.subtractY(this.position) <= 2) {
                 for (int i = 1; i <= target.subtractY(this.position); i++) {
                     Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));
@@ -74,7 +75,7 @@ public class Pawn extends Piece {
             }
         }
 
-        if (this.position.subtractY(target) == 1 && this.name.equals("P")) { // 블랙
+        if (this.position.subtractY(target) == 1 && this.color == Color.BLACK) { // 블랙
             Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - 1)));
             if (!(piece instanceof Empty)) {
                 throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
@@ -83,7 +84,7 @@ public class Pawn extends Piece {
             return;
         }
 
-        if (target.subtractY(this.position) == 1 && this.name.equals("p")) { // 화이트
+        if (target.subtractY(this.position) == 1 && this.color == Color.WHITE) { // 화이트
             Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + 1)));
             if (!(piece instanceof Empty)) {
                 throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
