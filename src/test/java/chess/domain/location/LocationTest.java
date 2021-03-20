@@ -33,6 +33,23 @@ class LocationTest {
             .isInstanceOf(IllegalArgumentException.class);
     }
 
+    @DisplayName("객체 생성 및 유효성 검사 - 문자열 좌표")
+    @Test
+    void create_inputValue() {
+        // given
+        String input1 = "a1";
+        String input2 = "y1";
+
+        // when
+        Location location = Location.of(input1);
+
+        // then
+        assertThat(location.getX()).isEqualTo(1);
+        assertThat(location.getY()).isEqualTo(1);
+        assertThatThrownBy(() -> Location.of(input2))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
     @DisplayName("수평, 수직 테스트")
     @Test
     void isHorizontalOrVertical_test() {
