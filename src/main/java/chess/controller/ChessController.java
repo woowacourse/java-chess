@@ -20,21 +20,21 @@ public class ChessController {
 
         final Board board = new Board();
         final Turn turn = new Turn();
-        proceedMain(board, turn);
+        proceed(board, turn);
     }
 
-    private void proceedMain(final Board board, final Turn turn) {
+    private void proceed(final Board board, final Turn turn) {
         try {
-            proceed(board, turn);
+            play(board, turn);
         } catch (IllegalStateException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
-            proceedMain(board, turn);
+            proceed(board, turn);
         } catch (GameOverException e) {
             showResult(board, e.getMessage());
         }
     }
 
-    private void proceed(final Board board, final Turn turn) {
+    private void play(final Board board, final Turn turn) {
         OutputView.printCurrentBoard(board.unwrap());
         final List<String> runtimeCommands = InputView.inputRuntimeCommand();
 
@@ -43,7 +43,7 @@ public class ChessController {
         checkGameOver(board.isKingDead(), turn.now().oppositeTeamName() + "의 king이 죽어서 게임이 종료되었습니다.");
 
         turn.next();
-        proceed(board, turn);
+        play(board, turn);
     }
 
     private void checkGameOver(final boolean isGameOver, final String message) throws GameOverException {
