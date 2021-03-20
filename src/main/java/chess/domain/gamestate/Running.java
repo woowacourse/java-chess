@@ -8,8 +8,8 @@ import chess.exception.InvalidCommandException;
 
 public class Running extends GameState {
 
-    public Running(Board board) {
-        super(board);
+    public Running(Board board, Side side) {
+        super(board, side);
     }
 
     @Override
@@ -18,17 +18,12 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState gameSet() {
-        return new GameSet(board());
-    }
-
-    @Override
-    public GameState move(Position from, Position to, Side side) {
-        board().move(from, to, side);
+    public GameState move(Position from, Position to) {
+        board().move(from, to, side());
         if (board().isGameSet()) {
-            return new GameSet(board());
+            return new GameSet(board(), side());
         }
-        return new Running(board());
+        return new Running(board(), changeTurn());
     }
 
     @Override
@@ -43,6 +38,11 @@ public class Running extends GameState {
 
     @Override
     public Score score() {
-        return Score.calculate(board());
+        return Score.from(board());
+    }
+
+    @Override
+    public Side winner() {
+        throw new InvalidCommandException();
     }
 }

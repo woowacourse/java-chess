@@ -9,21 +9,16 @@ import chess.exception.InvalidCommandException;
 public class Ready extends GameState {
 
     public Ready(Board board) {
-        super(board);
+        super(board, Side.NONE);
     }
 
     @Override
     public GameState start() {
-        return new Running(board());
+        return new Running(board(), Side.WHITE);
     }
 
     @Override
-    public GameState gameSet() {
-        throw new InvalidCommandException();
-    }
-
-    @Override
-    public GameState move(Position from, Position to, Side side) {
+    public State move(Position from, Position to) {
         throw new InvalidCommandException();
     }
 
@@ -39,6 +34,11 @@ public class Ready extends GameState {
 
     @Override
     public Score score() {
+        throw new InvalidCommandException();
+    }
+
+    @Override
+    public Side winner() {
         throw new InvalidCommandException();
     }
 }
