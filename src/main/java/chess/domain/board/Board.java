@@ -3,7 +3,9 @@ package chess.domain.board;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 public class Board {
     private final Map<Position, Piece> chessBoard;
@@ -70,10 +72,10 @@ public class Board {
     }
 
     private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
-        if (chessBoard.get(source) instanceof Pawn) {
-            return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+        if (chessBoard.get(source).multipleMovable()) {
+            return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
         }
-        return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
+        return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
     }
 
     public boolean isKingDead() {

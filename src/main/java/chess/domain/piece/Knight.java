@@ -21,4 +21,9 @@ public class Knight extends GeneralPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public boolean multipleMovable() {
+        return false;
+    }
 }

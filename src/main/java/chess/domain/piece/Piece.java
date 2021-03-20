@@ -38,6 +38,8 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract boolean multipleMovable();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

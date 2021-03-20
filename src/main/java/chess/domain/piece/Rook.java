@@ -20,4 +20,9 @@ public class Rook extends GeneralPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public boolean multipleMovable() {
+        return true;
+    }
 }

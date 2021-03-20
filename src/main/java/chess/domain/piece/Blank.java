@@ -23,4 +23,9 @@ public class Blank extends Piece {
     public double getScore() {
         return 0;
     }
+
+    @Override
+    public boolean multipleMovable() {
+        return false;
+    }
 }

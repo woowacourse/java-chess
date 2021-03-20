@@ -1,10 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Blank;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Team;
+import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -49,6 +46,16 @@ class BoardTest {
         board.unwrap().put(new Position("a", "3"), new Queen(team));
         final String[] inputs = input.split(",");
         assertThatThrownBy(() -> board.move(new Position(inputs[0], inputs[1]), new Position(inputs[2], inputs[3]), team))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("해당 위치로 이동할 수 없습니다.");
+    }
+
+    @Test
+    @DisplayName("킹 한칸만 이동하는 기능")
+    void checkKingMove() {
+        board.unwrap().put(new Position("a", "3"), new King(Team.WHITE));
+        assertThatThrownBy(() ->
+                board.move(new Position("a", "3"), new Position("h", "3"), Team.WHITE))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("해당 위치로 이동할 수 없습니다.");
     }

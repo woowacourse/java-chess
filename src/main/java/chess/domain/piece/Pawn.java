@@ -33,6 +33,11 @@ public class Pawn extends Piece {
         return SCORE;
     }
 
+    @Override
+    public boolean multipleMovable() {
+        return false;
+    }
+
     private List<Integer> subtractByTeam(final Position source, final Position target) {
         if (team() == Team.BLACK) {
             return source.subtract(target);
