@@ -4,11 +4,15 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Square;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
+
+import javax.swing.*;
 import java.util.List;
 import java.util.Map;
 
-public class OutputView {
+import static chess.domain.board.ChessBoard.BOARD_SIZE;
+import static chess.domain.board.ChessBoard.LAST_BOARD_INDEX;
 
+public class OutputView {
     public static final String RESULT_FORMAT = "%s: %.1f점 - %s%n";
 
     private OutputView() {
@@ -22,11 +26,12 @@ public class OutputView {
     }
 
     public static void printChessBoard(ChessBoard chessBoard) {
-        for (List<Square> rank : chessBoard.getChessBoard()) {
-            for (Square square : rank) {
-                System.out.print(square.getName());
+        List<Square> squares = chessBoard.getChessBoard();
+        for (int i = 0; i < squares.size(); i++) {
+            System.out.print(squares.get(i).getName());
+            if (i % BOARD_SIZE == LAST_BOARD_INDEX) {
+                System.out.println();
             }
-            System.out.println();
         }
         System.out.println();
     }

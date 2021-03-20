@@ -21,20 +21,20 @@ public class Square {
         this.piece = piece;
     }
 
-    public void addPiece(Piece piece) {
-        this.piece = piece;
-    }
-
     public void move(ChessBoard chessBoard, Square targetSquare) {
         if (this.equals(targetSquare)) {
             throw new IllegalArgumentException(SAME_TARGET);
         }
         if (Path.isMovable(chessBoard, this, targetSquare)) {
-            targetSquare.addPiece(piece);
-            addPiece(new Blank(Color.NO_COLOR));
+            targetSquare.replacePiece(piece);
+            replacePiece(new Blank(Color.NO_COLOR));
             return;
         }
         throw new IllegalArgumentException(NOT_MOVABLE_POSITION);
+    }
+
+    public void replacePiece(Piece piece) {
+        this.piece = piece;
     }
 
     public double score() {
@@ -53,8 +53,8 @@ public class Square {
         return piece.isPawn();
     }
 
-    public boolean hasSameColor(Color turn) {
-        return piece.isSameColor(turn);
+    public boolean hasSameColor(Color color) {
+        return piece.isSameColor(color);
     }
 
     public boolean isNotSameColor(Square square) {
@@ -85,9 +85,9 @@ public class Square {
         return piece.getName();
     }
 
-    public boolean hasNextPossibleSquare(int xDegree, int yDegree) {
-        return Row.isInBound(position.getRowAsIndex() + yDegree)
-            && Column.isInBound(position.getColumnAsIndex() + xDegree);
+    public boolean hasNextPossibleSquare(Direction direction) {
+        return Row.isInBound(position.getRowAsIndex() + direction.getYDegree())
+            && Column.isInBound(position.getColumnAsIndex() + direction.getXDegree());
     }
 
     public boolean isStartingPosition() {
@@ -99,6 +99,10 @@ public class Square {
 
     public List<Direction> getDirections() {
         return piece.direction();
+    }
+
+    public Position nextPosition(Direction direction) {
+        return position.nextPosition(direction.getXDegree(), direction.getYDegree());
     }
 
     @Override
