@@ -13,7 +13,7 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
@@ -22,17 +22,17 @@ public final class Bishop extends Piece {
     }
 
     @Override
-    public boolean isCastlingMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isCastlingMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return false;
     }
 
     @Override
-    public boolean isPromotionMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isPromotionMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return false;
     }
 
     @Override
-    public boolean checkPositionRule(Position current, Position destination) {
+    public boolean checkPositionRule(final Position current, final Position destination) {
         return current.checkDiagonal(destination);
     }
 

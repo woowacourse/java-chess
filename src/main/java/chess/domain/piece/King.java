@@ -23,7 +23,7 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isPromotionMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isPromotionMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return false;
     }
 
