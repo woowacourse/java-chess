@@ -1,6 +1,6 @@
-package chess.domain.board;
+package chess.domain.piece.type;
 
-import chess.domain.piece.TeamType;
+import chess.domain.player.type.TeamColor;
 import java.util.Arrays;
 import java.util.List;
 
@@ -30,7 +30,7 @@ public enum Direction {
         this.y = y;
     }
 
-    public static Direction findDirection(int fileDiff, int rankDiff) {
+    public static Direction of(int fileDiff, int rankDiff) {
         if (fileDiff == 0 && rankDiff == 0) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
@@ -84,40 +84,43 @@ public enum Direction {
         return y;
     }
 
+    public boolean isForward() {
+        return !isDiagonal();
+    }
+
     public boolean isDiagonal() {
         List<Direction> diagonalDirections
             = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
         return diagonalDirections.contains(this);
     }
 
-    public static List<Direction> getKingDirections() {
-        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
-    }
-
-
-    public static List<Direction> getBishopDirections() {
-        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
-    }
-
-    public static List<Direction> getQueenDirections() {
-        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
-    }
-
-    public static List<Direction> getKnightDirections() {
-        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
-            Direction.LEFT_DOWN_DOWN,
-            Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP, Direction.RIGHT_RIGHT_UP,
-            Direction.RIGHT_RIGHT_DOWN);
-    }
-
-    public static List<Direction> getRookDirections() {
-        return Arrays.asList(LEFT, RIGHT, UP, DOWN);
-    }
-
-    public static List<Direction> getPawnDirections(TeamType teamType) {
-        if (teamType == TeamType.BLACK) {
+    public static List<Direction> pawnDirections(TeamColor teamType) {
+        if (teamType == TeamColor.BLACK) {
             return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
         }
         return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
+    }
+
+    public static List<Direction> knightDirections() {
+        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
+            Direction.LEFT_DOWN_DOWN, Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP,
+            Direction.RIGHT_RIGHT_UP, Direction.RIGHT_RIGHT_DOWN);
+    }
+
+
+    public static List<Direction> rookDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN);
+    }
+
+    public static List<Direction> bishopDirections() {
+        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+    }
+
+    public static List<Direction> queenDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
+    }
+
+    public static List<Direction> kingDirections() {
+        return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
     }
 }

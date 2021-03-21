@@ -1,65 +1,84 @@
 package chess.domain.piece;
 
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
+import chess.domain.piece.cache.PiecesCache;
+import chess.domain.piece.type.Direction;
+import chess.domain.piece.type.PieceType;
+import chess.domain.piece.type.PieceWithColorType;
+import chess.domain.player.type.TeamColor;
+import chess.domain.position.MoveRoute;
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
-
-    private final TeamType teamType;
-    private final String name;
+    private final PieceType pieceType;
+    private final TeamColor teamColor;
     private final double score;
     private final List<Direction> directions;
 
-    public Piece(TeamType teamType, String name, double score, List<Direction> directions) {
-        this.teamType = teamType;
-        this.name = name;
+    public Piece(PieceType pieceType, TeamColor teamColor, double score,
+        List<Direction> directions) {
+        this.pieceType = pieceType;
+        this.teamColor = teamColor;
         this.score = score;
         this.directions = directions;
     }
 
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        if (!isCorrectDirection(moveCommandDirection)) {
-            return false;
+    public static Piece of(PieceWithColorType pieceWithColorType) {
+        return PiecesCache.find(pieceWithColorType.type(), pieceWithColorType.color());
+    }
+
+    public static Piece of(PieceType pieceType, TeamColor teamColor) {
+        return PiecesCache.find(pieceType, teamColor);
+    }
+
+    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+        Direction moveDirection = moveRoute.direction();
+        if (isNotCorrectDirection(moveDirection)
+            || board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        if (board.hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate,
-            moveCommandDirection)) {
-            return false;
+        if (board.isNotCellEmpty(moveRoute.destination())
+            && !board.isEnemyExists(moveRoute.destination(), teamColor)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        return board.find(targetCoordinate).isMovable(teamType);
+        return true;
     }
 
-    protected boolean isCorrectDirection(Direction moveCommandDirection) {
-        return directions.contains(moveCommandDirection);
+    protected boolean isNotCorrectDirection(Direction moveCommandDirection) {
+        return !directions.contains(moveCommandDirection);
     }
 
-    public boolean isPawn() {
-        return name.equalsIgnoreCase("p");
+    public PieceType type() {
+        return pieceType;
     }
 
-    public String getName() {
-        if (teamType == TeamType.WHITE) {
-            return name.toLowerCase();
-        }
-        return name;
+    public TeamColor color() {
+        return teamColor;
     }
 
-    public double getScore() {
+    public double score() {
         return score;
     }
 
-    public TeamType getTeamType() {
-        return teamType;
+    public String getName() {
+        return pieceType.name(teamColor);
     }
 
-    public boolean isTeamOf(TeamType teamType) {
-        return this.teamType == teamType;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Piece)) {
+            return false;
+        }
+        Piece piece = (Piece) o;
+        return pieceType == piece.pieceType && teamColor == piece.teamColor;
     }
 
-    public boolean isKing() {
-        return name.equalsIgnoreCase("k");
+    @Override
+    public int hashCode() {
+        return Objects.hash(pieceType, teamColor);
     }
 }

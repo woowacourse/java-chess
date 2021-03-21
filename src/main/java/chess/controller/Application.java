@@ -1,70 +1,74 @@
 package chess.controller;
 
+import static chess.controller.Command.END;
+import static chess.controller.Command.MOVE;
+import static chess.controller.Command.START;
+import static chess.controller.Command.STATUS;
+import static chess.domain.player.type.TeamColor.WHITE;
+
+import chess.controller.dto.CommandDTO;
+import chess.controller.dto.ScoresDTO;
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
-import chess.domain.board.Result;
-import chess.domain.piece.TeamType;
+import chess.domain.board.setting.BoardDefaultSetting;
+import chess.domain.player.score.Scores;
+import chess.domain.player.type.TeamColor;
+import chess.domain.position.MoveRoute;
 import chess.view.InputView;
 import chess.view.OutputView;
-import java.util.List;
 
 public class Application {
-
-    public static TeamType teamType = TeamType.WHITE;
+    private static TeamColor currentTurnTeamColor = WHITE;
+    private static Board board;
 
     public static void main(String[] args) {
-        Command command = getFirstCommand();
-        if (command == Command.START) {
+        board = new Board(new BoardDefaultSetting());
+        InputView.printGameStartMessage();
+        Command command = getCommandDTO().command();
+        if (command == START) {
             run();
         }
     }
 
-    private static Command getFirstCommand() {
-        InputView.printGameStartMessage();
-        List<String> playerCommand = InputView.inputPlayerCommand();
-        return Command.findCommand(playerCommand.get(0));
+    private static CommandDTO getCommandDTO() {
+        return InputView.getCommand();
     }
 
     private static void run() {
-        Board board = initializeBoard();
-        OutputView.printBoard(board);
         startChessGame(board);
-        if (board.isKingCheckmate()) {
-            OutputView.printWinner(board.winner());
+        if (board.isKingDead()) {
+            OutputView.printBoard(board);
+            OutputView.printWinnerTeamColor(currentTurnTeamColor.opposite());
         }
     }
 
     private static void startChessGame(Board board) {
-        Command command = Command.START;
-        while (command != Command.END && !board.isKingCheckmate()) {
-            List<String> playerCommand = InputView.inputPlayerCommand();
-            command = Command.findCommand(playerCommand.get(0));
-            startChessGame(command, board, playerCommand);
+        Command command = START;
+        while (isNotGameEnd(board, command)) {
             OutputView.printBoard(board);
+            CommandDTO commandDTO = getCommandDTO();
+            executeCommand(commandDTO);
+            command = commandDTO.command();
         }
     }
 
-    private static Board initializeBoard() {
-        Board board = Board.getInstance();
-        board.initialize();
-        return board;
+    private static boolean isNotGameEnd(Board board, Command command) {
+        return command != END && !board.isKingDead();
     }
 
-    private static void startChessGame(Command command, Board board, List<String> playerCommand) {
-        if (command == Command.MOVE) {
-            move(board, playerCommand);
+    private static void executeCommand(CommandDTO commandDTO) {
+        Command command = commandDTO.command();
+        if (command == MOVE) {
+            move(commandDTO.moveRoute());
             return;
         }
-        if (command == Command.STATUS) {
-            Result result = board.calculateScores();
-            OutputView.printScoreResult(result);
+        if (command == STATUS) {
+            Scores scores = board.scores();
+            OutputView.printScores(new ScoresDTO(scores));
         }
     }
 
-    private static void move(Board board, List<String> playerCommand) {
-        Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
-        Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
-        board.move(currentCoordinate, targetCoordinate, teamType);
-        teamType = teamType.getOppositeTeam();
+    private static void move(MoveRoute moveRoute) {
+        board.move(moveRoute, currentTurnTeamColor);
+        currentTurnTeamColor = currentTurnTeamColor.opposite();
     }
 }

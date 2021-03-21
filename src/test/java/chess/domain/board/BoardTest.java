@@ -1,186 +1,145 @@
 package chess.domain.board;
 
+import static chess.domain.piece.type.PieceWithColorType.B_BP;
+import static chess.domain.piece.type.PieceWithColorType.B_KG;
+import static chess.domain.piece.type.PieceWithColorType.B_PN;
+import static chess.domain.piece.type.PieceWithColorType.B_QN;
+import static chess.domain.piece.type.PieceWithColorType.B_RK;
+import static chess.domain.piece.type.PieceWithColorType.W_KG;
+import static chess.domain.piece.type.PieceWithColorType.W_NT;
+import static chess.domain.piece.type.PieceWithColorType.W_PN;
+import static chess.domain.piece.type.PieceWithColorType.W_QN;
+import static chess.domain.piece.type.PieceWithColorType.W_RK;
+import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.piece.Bishop;
-import chess.domain.piece.King;
-import chess.domain.piece.Knight;
+import chess.domain.board.setting.BoardCustomSetting;
+import chess.domain.board.setting.BoardDefaultSetting;
+import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
-import chess.domain.piece.Queen;
-import chess.domain.piece.Rook;
-import chess.domain.piece.TeamType;
+import chess.domain.player.score.Scores;
+import chess.domain.position.MoveRoute;
+import chess.domain.position.Position;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.stream.Stream;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 class BoardTest {
-    private static Board BOARD;
-
-    private static Stream<Arguments> getDefaultBlackPieces() {
-        BOARD = Board.getInstance();
-        BOARD.initialize();
-        return Stream.of(
-            Arguments.of(BOARD.find(Coordinate.from("a8")), "R"),
-            Arguments.of(BOARD.find(Coordinate.from("b8")), "N"),
-            Arguments.of(BOARD.find(Coordinate.from("c8")), "B"),
-            Arguments.of(BOARD.find(Coordinate.from("d8")), "Q"),
-            Arguments.of(BOARD.find(Coordinate.from("e8")), "K"),
-            Arguments.of(BOARD.find(Coordinate.from("f8")), "B"),
-            Arguments.of(BOARD.find(Coordinate.from("g8")), "N"),
-            Arguments.of(BOARD.find(Coordinate.from("h8")), "R")
-        );
-    }
-
-    private static Stream<Arguments> getDefaultWhitePieces() {
-        BOARD = Board.getInstance();
-        BOARD.initialize();
-        return Stream.of(
-            Arguments.of(BOARD.find(Coordinate.from("a1")), "r"),
-            Arguments.of(BOARD.find(Coordinate.from("b1")), "n"),
-            Arguments.of(BOARD.find(Coordinate.from("c1")), "b"),
-            Arguments.of(BOARD.find(Coordinate.from("d1")), "q"),
-            Arguments.of(BOARD.find(Coordinate.from("e1")), "k"),
-            Arguments.of(BOARD.find(Coordinate.from("f1")), "b"),
-            Arguments.of(BOARD.find(Coordinate.from("g1")), "n"),
-            Arguments.of(BOARD.find(Coordinate.from("h1")), "r")
-        );
-    }
+    private Board board;
 
     @BeforeEach
-    void setup() {
-        BOARD = Board.getInstance();
-        BOARD.initialize();
+    void setUp() {
+        board = new Board(new BoardDefaultSetting());
     }
 
-    @DisplayName("initialize 메서드는")
+    @DisplayName("기물 이동")
     @Nested
-    class Context_initialize {
-
-        private Piece getPiece(File file, Rank rank) {
-            return BOARD.getCells().get(new Coordinate(file, rank)).getPiece();
-        }
-
-        @DisplayName("7Rank를 모두 흑의 폰으로 초기화한다")
+    class MovePiece {
+        @DisplayName("출발 위치에 자신의 기물이 없는 경우 - 빈 칸인 경우")
         @Test
-        void boardInitialization_BlackPawn() {
-            boolean isAllBlackPawn = Arrays.stream(File.values())
-                .map(file -> getPiece(file, Rank.SEVEN).getName())
-                .allMatch(name -> name.equals("P"));
+        void cannotMovePieceAtStartPositionEmpty() {
+            MoveRoute moveRoute = new MoveRoute("a3", "a4");
 
-            assertThat(isAllBlackPawn).isTrue();
+            assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
         }
 
-        @DisplayName("2Rank는 모두 백의 폰으로 초기화한다.")
+        @DisplayName("출발 위치에 자신의 기물이 없는 경우 - 적의 기물이 있는 경우")
         @Test
-        void boardInitialization_WhitePawn() {
-            boolean isAllWhitePawn = Arrays.stream(File.values())
-                .map(file -> getPiece(file, Rank.TWO).getName())
-                .allMatch(name -> name.equals("p"));
+        void cannotMovePieceAtStartPositionEnemyPiece() {
+            MoveRoute moveRoute = new MoveRoute("a7", "a6");
 
-            assertThat(isAllWhitePawn).isTrue();
+            assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+        }
+
+        @DisplayName("기물 이동")
+        @Test
+        void movePiece() {
+            MoveRoute moveRoute = new MoveRoute("a2", "a4");
+            board.move(moveRoute, WHITE);
+
+            assertThat(board.find(Position.of("a2")).isEmpty()).isTrue();
+            assertThat(board.find(Position.of("a4")).piece()).isEqualTo(new Pawn(WHITE));
+        }
+
+        @DisplayName("기물이 이동할 수 없는 도착위치")
+        @Test
+        void cannotMovePieceToDestination() {
+            MoveRoute moveRoute = new MoveRoute("a2", "a5");
+
+            assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+                .isInstanceOf(IllegalArgumentException.class);
+
+            assertThat(board.find(Position.of("a2")).piece()).isEqualTo(new Pawn(WHITE));
+            assertThat(board.find(Position.of("a5")).isEmpty()).isTrue();
         }
     }
 
-    @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
-    @MethodSource("getDefaultBlackPieces")
-    @ParameterizedTest
-    void boardInitialization_BlackPieces(Cell cell, String pieceName) {
-        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
-    }
+    @DisplayName("King이 잡혔는지 확인")
+    @Nested
+    class KingDead {
+        @DisplayName("King이 잡혔을 때")
+        @Test
+        void isKingDead() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, null, null, null)
+            );
+            Board board = new Board(customBoardSetting);
 
-    @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
-    @MethodSource("getDefaultWhitePieces")
-    @ParameterizedTest
-    void boardInitialization_WhitePieces(Cell cell, String pieceName) {
-        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
-    }
+            assertThat(board.isKingDead()).isTrue();
+        }
 
-    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 백팀")
-    @Test
-    void findPieceOnBoard_WhiteTeam() {
-        String currentCoordinate = "b2";
-        TeamType teamType = TeamType.WHITE;
+        @DisplayName("King이 잡히지 않았을 때")
+        @Test
+        void isNotKingDead() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, W_KG, null, null)
+            );
+            Board board = new Board(customBoardSetting);
 
-        Cell cell = BOARD.find(Coordinate.from(currentCoordinate));
-        Piece piece = cell.getPiece();
-
-        assertThat(piece.getName()).isEqualTo("p");
-        assertThat(piece.isTeamOf(teamType)).isTrue();
-    }
-
-    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 흑팀")
-    @Test
-    void findPieceOnBoard_BlackTeam() {
-        String currentCoordinate = "c8";
-        TeamType teamType = TeamType.BLACK;
-
-        Cell cell = BOARD.find(Coordinate.from(currentCoordinate));
-        Piece piece = cell.getPiece();
-
-        assertThat(piece.getName()).isEqualTo("B");
-        assertThat(piece.isTeamOf(teamType)).isTrue();
+            assertThat(board.isKingDead()).isFalse();
+        }
     }
 
     @DisplayName("점수 계산")
     @Test
-    void calculateScores() {
-        BOARD = BOARD.getInstance();
-        Map<Coordinate, Cell> cells = BOARD.getCells();
+    void scores() {
+        BoardSetting customBoardSetting = new BoardCustomSetting(
+            Arrays.asList(
+                null, B_KG, B_RK, null, null, null, null, null,
+                B_PN, null, B_PN, B_BP, null, null, null, null,
+                null, B_PN, null, null, B_QN, null, null, null,
+                null, null, null, null, null, null, null, null,
+                null, null, null, null, null, W_NT, W_QN, null,
+                null, null, null, null, null, W_PN, null, W_PN,
+                null, null, null, null, null, W_PN, W_PN, null,
+                null, null, null, null, W_RK, W_KG, null, null)
+        );
+        Board board = new Board(customBoardSetting);
 
-        cells.get(Coordinate.from("b8")).put(new King(TeamType.BLACK));
+        Scores scores = board.scores();
 
-        cells.get(Coordinate.from("b8")).put(new King(TeamType.BLACK));
-        cells.get(Coordinate.from("c8")).put(new Rook(TeamType.BLACK));
-        cells.get(Coordinate.from("a7")).put(new Pawn(TeamType.BLACK));
-        cells.get(Coordinate.from("c7")).put(new Pawn(TeamType.BLACK));
-        cells.get(Coordinate.from("d7")).put(new Bishop(TeamType.BLACK));
-        cells.get(Coordinate.from("b6")).put(new Pawn(TeamType.BLACK));
-        cells.get(Coordinate.from("e6")).put(new Queen(TeamType.BLACK));
-
-        cells.get(Coordinate.from("f4")).put(new Knight(TeamType.WHITE));
-
-        cells.get(Coordinate.from("g4")).put(new Queen(TeamType.WHITE));
-
-        cells.get(Coordinate.from("f3")).put(new Pawn(TeamType.WHITE));
-        cells.get(Coordinate.from("h3")).put(new Pawn(TeamType.WHITE));
-        cells.get(Coordinate.from("f2")).put(new Pawn(TeamType.WHITE));
-        cells.get(Coordinate.from("g2")).put(new Pawn(TeamType.WHITE));
-        cells.get(Coordinate.from("e1")).put(new Rook(TeamType.WHITE));
-        cells.get(Coordinate.from("f1")).put(new King(TeamType.WHITE));
-
-        Result result = BOARD.calculateScores();
-
-        assertThat(result.getBlackTeamScore()).isEqualTo(20);
-        assertThat(result.getWhiteTeamScore()).isEqualTo(19.5);
-    }
-
-    @DisplayName("양 팀의 킹이 모두 살아있을 때")
-    @Test
-    void allKingsAlive() {
-        assertThat(BOARD.isKingCheckmate()).isFalse();
-    }
-
-    @DisplayName("흑 팀의 킹이 죽었을 때")
-    @Test
-    void blackKingDied() {
-        Map<Coordinate, Cell> cells = BOARD.getCells();
-        cells.remove(Coordinate.from("e8"));
-        assertThat(BOARD.isKingCheckmate()).isTrue();
-    }
-
-    @DisplayName("백 팀의 킹이 죽었을 때")
-    @Test
-    void whiteKingDied() {
-        Map<Coordinate, Cell> cells = BOARD.getCells();
-        cells.remove(Coordinate.from("e1"));
-        assertThat(BOARD.isKingCheckmate()).isTrue();
+        assertThat(scores.blackPlayerScore().getScore()).isEqualTo(20);
+        assertThat(scores.whitePlayerScore().getScore()).isEqualTo(19.5);
     }
 }

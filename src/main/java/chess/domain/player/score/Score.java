@@ -1,7 +1,6 @@
-package chess.domain.board;
+package chess.domain.player.score;
 
 public class Score {
-
     private final double score;
 
     public Score(double score) {

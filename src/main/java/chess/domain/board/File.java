@@ -1,7 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.type.Direction;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 public enum File {
     A("a", 1),
@@ -14,34 +14,45 @@ public enum File {
     H("h", 8);
 
     private final String value;
-    private final int x;
+    private final int order;
 
-    File(String value, int x) {
+    File(String value, int order) {
         this.value = value;
-        this.x = x;
+        this.order = order;
     }
 
-    public static File findValueOf(String fileInput) {
-        return findFile((File file) -> file.value.equals(fileInput));
+    public static File of(String fileInput) {
+        return findFileByValue(fileInput);
     }
 
-    public static File findFile(Predicate<File> predicate) {
+    private static File findFileByValue(String value) {
         return Arrays.stream(File.values())
-            .filter(predicate)
+            .filter(file -> file.value().equals(value))
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
     }
 
-    public String getValue() {
+    public File move(Direction direction) {
+        int movedX = order + direction.getX();
+        return findFileByOrder(movedX);
+    }
+
+    private static File findFileByOrder(int order) {
+        return Arrays.stream(File.values())
+            .filter(file -> file.order() == order)
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
+    }
+
+    public boolean isSameAs(File destinationFile) {
+        return this == destinationFile;
+    }
+
+    public String value() {
         return value;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public File move(Direction direction) {
-        int targetX = x + direction.getX();
-        return findFile(file -> file.x == targetX);
+    public int order() {
+        return order;
     }
 }

@@ -1,26 +1,28 @@
 package chess.domain.board;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.TeamType;
+import chess.domain.piece.type.PieceType;
+import chess.domain.piece.type.PieceWithColorType;
+import chess.domain.player.type.TeamColor;
+import chess.domain.position.MoveRoute;
 
 public class Cell {
     private Piece piece;
+
+    public Cell(PieceWithColorType pieceWithColorType) {
+        if (pieceWithColorType != null) {
+            piece = Piece.of(pieceWithColorType);
+            return;
+        }
+        piece = null;
+    }
 
     public void put(Piece piece) {
         this.piece = piece;
     }
 
-    public boolean isMovable(TeamType teamType) {
-        return piece == null || !piece.isTeamOf(teamType);
-    }
-
-    public boolean hasEnemy(TeamType teamType) {
-        return piece != null && !piece.isTeamOf(teamType);
-    }
-
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        return piece.isMovableTo(board, currentCoordinate, targetCoordinate);
+    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+        return piece.isMovableTo(moveRoute, board);
     }
 
     public void movePieceTo(Cell targetCell) {
@@ -28,40 +30,19 @@ public class Cell {
         piece = null;
     }
 
-    public boolean isTeamOf(TeamType teamType) {
-        if (piece == null) {
-            return false;
-        }
-        return piece.isTeamOf(teamType);
-    }
-
-    public boolean hasPawn() {
-        if (piece == null) {
-            return false;
-        }
-        return piece.isPawn();
-    }
-
-    public double getPieceScore() {
-        return piece.getScore();
-    }
-
-    public boolean hasKing() {
-        if (piece == null) {
-            return false;
-        }
-        return piece.isKing();
-    }
-
-    public TeamType getTeamType() {
-        return piece.getTeamType();
+    public TeamColor teamColor() {
+        return piece.color();
     }
 
     public boolean isEmpty() {
         return piece == null;
     }
 
-    public Piece getPiece() {
+    public PieceType pieceType() {
+        return piece.type();
+    }
+
+    public Piece piece() {
         return piece;
     }
 }

@@ -1,26 +1,30 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.type.PieceType.KING;
+
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
+import chess.domain.piece.type.Direction;
+import chess.domain.player.type.TeamColor;
+import chess.domain.position.MoveRoute;
+import chess.domain.position.Position;
 
 public class King extends Piece {
-    private static final String NAME = "K";
     private static final double SCORE = 0;
 
-    public King(TeamType teamType) {
-        super(teamType, NAME, SCORE, Direction.getKingDirections());
+    public King(TeamColor teamColor) {
+        super(KING, teamColor, SCORE, Direction.kingDirections());
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        if (!isCorrectDirection(moveCommandDirection)) {
-            return false;
+    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+        if (isNotCorrectDirection(moveRoute.direction())) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return nextCoordinate.equals(targetCoordinate) && board.find(targetCoordinate)
-            .isMovable(getTeamType());
+        Position nextPosition = moveRoute.nextPositionOfStartPosition();
+        if (!(moveRoute.isDestination(nextPosition)
+            && board.isCellEmptyOrEnemyExists(nextPosition, color()))) {
+            throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
+        }
+        return true;
     }
 }

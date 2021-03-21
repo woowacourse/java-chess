@@ -1,12 +1,14 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
+import static chess.domain.piece.type.PieceType.QUEEN;
+
+import chess.domain.piece.type.Direction;
+import chess.domain.player.type.TeamColor;
 
 public class Queen extends Piece {
-    private static final String NAME = "Q";
     private static final double SCORE = 9;
 
-    public Queen(TeamType teamType) {
-        super(teamType, NAME, SCORE, Direction.getQueenDirections());
+    public Queen(TeamColor teamColor) {
+        super(QUEEN, teamColor, SCORE, Direction.queenDirections());
     }
 }

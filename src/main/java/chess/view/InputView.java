@@ -1,12 +1,10 @@
 package chess.view;
 
-import java.util.Arrays;
-import java.util.List;
+import chess.controller.dto.CommandDTO;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
-    private static final String DELIMITER = " ";
 
     private InputView() {
     }
@@ -16,8 +14,8 @@ public class InputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static List<String> inputPlayerCommand() {
-        String[] splitCommand = SCANNER.nextLine().split(DELIMITER);
-        return Arrays.asList(splitCommand);
+    public static CommandDTO getCommand() {
+        String commandLineInput = SCANNER.nextLine();
+        return new CommandDTO(commandLineInput);
     }
 }

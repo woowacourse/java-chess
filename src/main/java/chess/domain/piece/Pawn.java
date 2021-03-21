@@ -1,54 +1,76 @@
 package chess.domain.piece;
 
+import static chess.domain.piece.type.PieceType.PAWN;
+
 import chess.domain.board.Board;
-import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
+import chess.domain.piece.type.Direction;
+import chess.domain.player.type.TeamColor;
+import chess.domain.position.MoveRoute;
+import chess.domain.position.Position;
 
 public class Pawn extends Piece {
-    private static final String NAME = "P";
-    private static final double SCORE = 1;
+    private static final double DEFAULT_SCORE = 1;
+    private static final double HALF_SCORE = DEFAULT_SCORE / 2;
 
-    public Pawn(TeamType teamType) {
-        super(teamType, NAME, SCORE, Direction.getPawnDirections(teamType));
+    public Pawn(TeamColor teamColor) {
+        super(PAWN, teamColor, DEFAULT_SCORE, Direction.pawnDirections(teamColor));
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        if (!isCorrectDirection(moveCommandDirection)) {
-            return false;
+    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+        Direction moveDirection = moveRoute.direction();
+        if (isNotCorrectDirection(moveDirection)) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        if (!moveCommandDirection.isDiagonal()) {
-            return isCanMoveForward(board, currentCoordinate, targetCoordinate);
+        if (moveDirection.isForward()) {
+            return isCanMoveForward(moveRoute, board);
         }
-        Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return isCanMoveDiagonal(board, targetCoordinate, nextCoordinate);
+        return isCanMoveDiagonal(moveRoute, board);
     }
 
-    private boolean isCanMoveForward(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-
-        if (currentCoordinate.isTwoRankForward(targetCoordinate)) {
-            return isCanMoveTwoRankForward(board, currentCoordinate, targetCoordinate);
+    private boolean isCanMoveForward(MoveRoute moveRoute, Board board) {
+        if (moveRoute.isRankForwardedBy(2)) {
+            return isCanMoveTwoRankForward(moveRoute, board);
         }
-        return board.find(targetCoordinate).isEmpty();
+        if (moveRoute.isRankForwardedBy(1)) {
+            return isCanMoveOneRankForward(moveRoute, board);
+        }
+        throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
     }
 
-    private boolean isCanMoveTwoRankForward(Board board,
-        Coordinate currentCoordinate, Coordinate targetCoordinate) {
-        if (!currentCoordinate.isFirstPawnRank(getTeamType())) {
-            return false;
+
+    private boolean isCanMoveTwoRankForward(MoveRoute moveRoute, Board board) {
+        if (!moveRoute.isStartPositionFirstPawnPosition(color())) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
-        Direction direction = currentCoordinate.calculateDirection(targetCoordinate);
-        boolean hasPieceOnRoute = board
-            .hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, direction);
-        return !hasPieceOnRoute && board.find(targetCoordinate).isEmpty();
+        if (board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)
+            || board.isNotCellEmpty(moveRoute.destination())) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        return true;
     }
 
-    private boolean isCanMoveDiagonal(Board board, Coordinate targetCoordinate,
-        Coordinate nextCoordinate) {
-        return nextCoordinate.equals(targetCoordinate) &&
-            board.find(targetCoordinate).hasEnemy(getTeamType());
+    private boolean isCanMoveOneRankForward(MoveRoute moveRoute, Board board) {
+        if (board.isNotCellEmpty(moveRoute.destination())) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        return true;
+    }
+
+    private boolean isCanMoveDiagonal(MoveRoute moveRoute, Board board) {
+        Position nextPosition = moveRoute.nextPositionOfStartPosition();
+        if (!(board.isEnemyExists(moveRoute.destination(), color())
+            && nextPosition.equals(moveRoute.destination()))) {
+            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+        }
+        return true;
+    }
+
+    public static double defaultScore() {
+        return DEFAULT_SCORE;
+    }
+
+    public static double halfScore() {
+        return HALF_SCORE;
     }
 }
