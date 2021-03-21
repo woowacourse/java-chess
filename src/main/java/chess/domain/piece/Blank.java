@@ -13,7 +13,6 @@ public class Blank implements Piece {
     private Blank() {
     }
 
-
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
         return false;
