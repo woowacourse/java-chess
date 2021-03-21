@@ -22,8 +22,6 @@ public enum Direction {
 	WWN(-2, -1),
 	WWS(-2, 1);
 
-	public static final int LINEAR_DIRECTION_DEGREE = 0;
-
 	private final int xDegree;
 	private final int yDegree;
 

@@ -3,7 +3,6 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Row {
-
 	ONE(7, '1'),
 	TWO(6, '2'),
 	THREE(5, '3'),

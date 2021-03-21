@@ -8,7 +8,7 @@ public class Path {
 	private Path() {
 	}
 
-	public static Direction findDirection(ChessBoard chessBoard, Position sourcePosition, Position targetPosition) {
+	static Direction findDirection(ChessBoard chessBoard, Position sourcePosition, Position targetPosition) {
 		List<Direction> directions = chessBoard.getCandidateDirections(sourcePosition);
 		return directions.stream()
 				.filter(direction -> isMovableDirection(sourcePosition, targetPosition, direction))
@@ -16,7 +16,7 @@ public class Path {
 				.orElseThrow(() -> new IllegalArgumentException(NOT_MOVABLE_DIRECTION_ERROR));
 	}
 
-	private static boolean isMovableDirection(Position sourcePosition, Position targetPosition, Direction direction) {
+	static boolean isMovableDirection(Position sourcePosition, Position targetPosition, Direction direction) {
 		Position currentPosition = sourcePosition;
 		while (currentPosition.hasNextPosition(direction)) {
 			currentPosition = currentPosition.nextPosition(direction);
