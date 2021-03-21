@@ -14,7 +14,7 @@ public class ChessController {
         }
         Game game = new Game();
         OutputView.printWayToMove();
-        game.display();
+        OutputView.display(game.getPieces());
 
         play(game);
         printScoreIfWanted(game);
@@ -50,7 +50,7 @@ public class ChessController {
         String from = positions.get(0);
         String to = positions.get(1);
         game.move(Position.from(from), Position.from(to));
-        game.display();
+        OutputView.display(game.getPieces());
     }
 
     private void printScoreIfWanted(Game game) {

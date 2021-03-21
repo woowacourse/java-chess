@@ -2,7 +2,14 @@ package chess.view;
 
 import chess.domain.Player;
 import chess.domain.piece.Color;
+import chess.domain.piece.Pieces;
+import chess.domain.position.Column;
+import chess.domain.position.Position;
+import chess.domain.position.Row;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class OutputView {
@@ -35,5 +42,17 @@ public class OutputView {
 
     public static void printCurrentPlayer(Player player) {
         System.out.println(NEWLINE + "현재 플레이어는 : " + player.getColor().name());
+    }
+
+    public static void display(Pieces pieces) {
+        List<Row> rows = Arrays.asList(Row.values());
+        Collections.reverse(rows);
+        for (Row row : rows) {
+            for (Column column : Column.values()) {
+                System.out.print(pieces.getPieceOf(Position.of(column, row))
+                                       .display());
+            }
+            System.out.println();
+        }
     }
 }

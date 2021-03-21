@@ -19,18 +19,6 @@ public class Game {
         pieces.init();
     }
 
-    public void display() {
-        List<Row> rows = Arrays.asList(Row.values());
-        Collections.reverse(rows);
-        for (Row row : rows) {
-            for (Column column : Column.values()) {
-                System.out.print(pieces.getPieceOf(Position.of(column, row))
-                                       .display());
-            }
-            System.out.println();
-        }
-    }
-
     public void move(Position from, Position to) {
         Player player = turn.player();
         player.move(from, to, pieces);
@@ -53,5 +41,9 @@ public class Game {
         scores.put(Color.BLACK, pieces.score(Color.BLACK));
         scores.put(Color.WHITE, pieces.score(Color.WHITE));
         return scores;
+    }
+
+    public Pieces getPieces() {
+        return pieces;
     }
 }

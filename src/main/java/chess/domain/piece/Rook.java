@@ -20,6 +20,7 @@ public class Rook extends Division {
     private void validateNoneBetween(Position to, Pieces pieces) {
         List<Position> positions = position.getBetween(to);
         if (positions.stream()
+                     .filter(pieces::hasPieceOf)
                      .anyMatch(pieces::hasPieceOf)) {
             throw new IllegalArgumentException();
         }

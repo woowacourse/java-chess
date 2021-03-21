@@ -18,12 +18,6 @@ class GameTest {
         game = new Game();
     }
 
-    @Test
-    void display() {
-        game.display();
-    }
-
-
 
     @Test
     void pickEndPiece() {
