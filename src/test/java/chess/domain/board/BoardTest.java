@@ -34,6 +34,16 @@ class BoardTest {
     }
 
     @Test
+    @DisplayName("같은 팀이 연속 두 번 움직이려고 시도한다.")
+    void moveSameTeamTwiceTest() {
+        Board board = BoardFactory.create();
+        board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
+                Position.of(Horizontal.A, Vertical.FOUR));
+        assertThatThrownBy(() -> board.movePiece(Position.of(Horizontal.A, Vertical.FOUR),
+                Position.of(Horizontal.A, Vertical.FIVE))).isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
     @DisplayName("이동 범위 외 기물 이동 수행")
     void movePieceExceptionTest() {
         Board board = BoardFactory.create();

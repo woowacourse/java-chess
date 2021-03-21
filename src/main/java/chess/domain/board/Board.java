@@ -11,12 +11,15 @@ public class Board {
     private static final double PAWN_SAME_HORIZONTAL_MIN_COUNT = 2;
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
+
     private final Map<Position, Piece> board;
     private final Map<Team, Double> deadPieceByTeam;
+    private Team lastTurn;
 
     public Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
         this.deadPieceByTeam = initializeDeadPieceByTeamMap();
+        lastTurn = Team.BLACK;
     }
 
     private Map<Team, Double> initializeDeadPieceByTeamMap() {
@@ -39,6 +42,7 @@ public class Board {
 
     private void move(Position target, Position destination, Piece targetPiece) {
         if (targetPiece.isMovable(target, destination, this)) {
+            checkTurn(targetPiece);
             Piece destinationPiece = findPieceFromPosition(destination);
             exitGameIfKing(destinationPiece);
             putDeadPieces(destinationPiece);
@@ -47,6 +51,13 @@ public class Board {
             return;
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+    }
+
+    private void checkTurn(Piece targetPiece) {
+        if (targetPiece.isSameTeam(lastTurn)) {
+            throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
+        }
+        lastTurn = targetPiece.getTeam();
     }
 
     private void exitGameIfKing(Piece piece) {

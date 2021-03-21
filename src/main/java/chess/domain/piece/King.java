@@ -8,7 +8,6 @@ import chess.domain.piece.moveStrategy.SpecifiedLocationStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class King extends Piece {
     private static final String KING_NAME = "K";
