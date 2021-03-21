@@ -19,8 +19,10 @@ public class OutputView {
             lineSeparatorIfSatisfyCondition(i);
             System.out.print(boardStatus[i]);
         }
+        System.out.println("  " + 1);
 
         System.out.println();
+        System.out.println("abcdefgh");
     }
 
     private static String[] createBoardStatus(BoardDto boardDto) {
@@ -35,8 +37,8 @@ public class OutputView {
     }
 
     private static void lineSeparatorIfSatisfyCondition(final int lineSeparateThreshold) {
-        if (lineSeparateThreshold % BOARD_COLUMN_SIZE == 0) {
-            System.out.println();
+        if (lineSeparateThreshold !=0 && lineSeparateThreshold % BOARD_COLUMN_SIZE == 0) {
+            System.out.println("  " + (BOARD_COLUMN_SIZE - lineSeparateThreshold / BOARD_COLUMN_SIZE + 1));
         }
     }
 
