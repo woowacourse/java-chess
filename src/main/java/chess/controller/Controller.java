@@ -16,10 +16,10 @@ public class Controller {
         do {
             command = Repeater.repeatOnError(() -> CommandRouter.findByInputCommand(InputView.getCommand()));
             executeCommandOrPassOnError(chessGameManager, command);
-        } while(!command.isEnd() && chessGameManager.getGameStatus() != GameStatus.END);
-        // TODO
-        // 분기 1. 사용자가 시작도 안 하고 종료를 눌러버린 경우, 아무 것도 출력하지 않고 끝
-        // 분기 2. 점수차 혹은 킹이 잡혔는지의 여부에 따라 승자를 출력하고 종료
+        } while(!command.isEnd() && !chessGameManager.isSameStatus(GameStatus.END));
+        if (chessGameManager.isSameStatus(GameStatus.END)) {
+            OutputView.printResult(chessGameManager.getStatistics());
+        }
     }
 
     private static void executeCommandOrPassOnError(ChessGameManager chessGameManager, Command command) {

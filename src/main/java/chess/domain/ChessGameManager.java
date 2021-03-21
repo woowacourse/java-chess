@@ -6,9 +6,12 @@ import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
 import chess.domain.position.Position;
+import chess.domain.statistics.ChessGameStatistics;
+import chess.domain.statistics.MatchResult;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class ChessGameManager {
@@ -66,19 +69,40 @@ public class ChessGameManager {
     }
 
     public void updateEndCondition() {
-        boolean isEnd = coloredPieces.stream()
-                .anyMatch(ColoredPieces::isKingDead);
-        
+        boolean isEnd = isKingDeadEndCondition();
+
         if (isEnd) {
             gameStatus = GameStatus.END;
         }
+    }
+
+    private boolean isKingDeadEndCondition() {
+        return coloredPieces.stream()
+                .anyMatch(ColoredPieces::isKingDead);
+    }
+
+    private Color kingAliveColor() {
+        return coloredPieces.stream()
+                .filter(ColoredPieces::isKingAlive)
+                .map(ColoredPieces::getColor)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("왕이 다 죽어 승자가 없습니다."));
     }
 
     public Board getBoard() {
         return this.board;
     }
 
-    public GameStatus getGameStatus() {
-        return gameStatus;
+    public boolean isSameStatus(GameStatus gameStatus) {
+        return this.gameStatus == gameStatus;
     }
+
+    public ChessGameStatistics getStatistics() {
+        Map<Color, Double> scoreMap = board.getScoreMap();
+        if (isKingDeadEndCondition()) {
+            return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResultByColor(kingAliveColor()));
+        }
+        return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResult(scoreMap.get(Color.WHITE), scoreMap.get(Color.BLACK)));
+    }
+
 }

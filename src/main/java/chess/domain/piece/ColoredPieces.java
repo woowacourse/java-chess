@@ -46,11 +46,19 @@ public class ColoredPieces {
         return !pieces.contains(new King(color));
     }
 
+    public boolean isKingAlive() {
+        return pieces.contains(new King(color));
+    }
+
     public int size() {
         return pieces.size();
     }
 
     public boolean contains(RealPiece realPiece){
         return pieces.contains(realPiece);
+    }
+
+    public Color getColor() {
+        return this.color;
     }
 }
