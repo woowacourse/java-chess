@@ -30,7 +30,7 @@ public abstract class Pawn extends Piece {
     private Pawn(final Owner owner, final List<Direction> directions) {
         super(
                 owner,
-                new Score(1.0d),
+                Score.PAWN,
                 directions,
                 Distance.TWO,
                 "P"

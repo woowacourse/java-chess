@@ -11,7 +11,7 @@ public class Queen extends Piece {
     public Queen(final Owner owner) {
         super(
                 owner,
-                new Score(9.0d),
+                Score.QUEEN,
                 Direction.allDirections(),
                 Distance.SEVEN,
                 "Q"

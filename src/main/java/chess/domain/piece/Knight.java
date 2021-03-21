@@ -11,7 +11,7 @@ public class Knight extends Piece {
     public Knight(final Owner owner) {
         super(
                 owner,
-                new Score(2.5),
+                Score.KNIGHT,
                 Direction.knightDirections(),
                 Distance.ONE,
                 "N"

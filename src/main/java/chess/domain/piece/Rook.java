@@ -11,7 +11,7 @@ public class Rook extends Piece {
     public Rook(final Owner owner) {
         super(
                 owner,
-                new Score(5.0d),
+                Score.ROOK,
                 Direction.straightDirections(),
                 Distance.SEVEN,
                 "R"

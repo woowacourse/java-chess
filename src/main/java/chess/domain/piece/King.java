@@ -11,7 +11,7 @@ public class King extends Piece {
     public King(final Owner owner) {
         super(
                 owner,
-                new Score(0.0d),
+                Score.KING,
                 Direction.allDirections(),
                 Distance.ONE,
                 "K"

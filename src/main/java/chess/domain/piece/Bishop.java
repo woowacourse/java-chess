@@ -11,7 +11,7 @@ public class Bishop extends Piece {
     public Bishop(final Owner owner) {
         super(
                 owner,
-                new Score(3.0d),
+                Score.BISHOP,
                 Direction.diagonalDirections(),
                 Distance.SEVEN,
                 "B"

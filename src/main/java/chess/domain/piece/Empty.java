@@ -11,7 +11,7 @@ public class Empty extends Piece {
     private Empty() {
         super(
                 Owner.NONE,
-                new Score(0),
+                Score.EMPTY,
                 Collections.emptyList(),
                 Distance.ONE,
                 "."
