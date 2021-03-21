@@ -24,10 +24,10 @@ public class ChessController {
             return;
         }
         chessBoard.initializeDefaultPieces();
-        OutputView.printBoard(chessBoard);
+        OutputView.printChessBoard(chessBoard);
         startChessGame();
         if (chessBoard.isKingCheckmate()) {
-            OutputView.printWinner(chessBoard.winner());
+            OutputView.printWinnerTeam(chessBoard.winner());
         }
     }
 
@@ -52,7 +52,7 @@ public class ChessController {
             validatePlayerCommand(playerCommand);
             command = Command.findCommand(playerCommand.get(0));
             executeCommand(command, playerCommand);
-            OutputView.printBoard(chessBoard);
+            OutputView.printChessBoard(chessBoard);
         }
     }
 
@@ -63,7 +63,7 @@ public class ChessController {
         }
         if (command == Command.STATUS) {
             Result result = chessBoard.calculateScores();
-            OutputView.printScoreResult(result);
+            OutputView.printScoreStatus(result);
         }
     }
 

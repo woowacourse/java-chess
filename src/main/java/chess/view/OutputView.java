@@ -7,6 +7,7 @@ import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class OutputView {
@@ -15,25 +16,24 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBoard(ChessBoard chessBoard) {
-        List<Rank> ranks = Arrays.asList(Rank.values());
-        List<Rank> reversedRanks = ranks.stream()
+    public static void printChessBoard(ChessBoard chessBoard) {
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
+        List<Rank> ranks = Arrays.stream(Rank.values())
                 .sorted(Comparator.reverseOrder())
                 .collect(Collectors.toList());
-
-        reversedRanks.forEach(rank -> printFilesByRank(rank, chessBoard));
+        ranks.forEach(rank -> printFilesByRank(rank, cells));
         System.out.println();
     }
 
-    private static void printFilesByRank(Rank rank, ChessBoard chessBoard) {
-        for (File file : File.values()) {
-            Cell cell = chessBoard.find(new Coordinate(file, rank));
-            printCell(cell);
-        }
+    private static void printFilesByRank(Rank rank, Map<Coordinate, Cell> cells) {
+        Arrays.stream(File.values())
+                .map(file -> new Coordinate(file, rank))
+                .forEach(coordinate -> printCell(coordinate, cells));
         System.out.println();
     }
 
-    private static void printCell(Cell cell) {
+    private static void printCell(Coordinate coordinate, Map<Coordinate, Cell> cells) {
+        Cell cell = cells.get(coordinate);
         if (cell.isEmpty()) {
             System.out.print(EMPTY_CELL);
             return;
@@ -42,13 +42,13 @@ public class OutputView {
         System.out.print(piece.getName());
     }
 
-    public static void printScoreResult(Result result) {
+    public static void printScoreStatus(Result result) {
         double blackTeamScore = result.getBlackTeamScore();
         double whiteTeamScore = result.getWhiteTeamScore();
         System.out.printf("흑팀 점수 : %.1f, 백팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 
-    public static void printWinner(TeamType winnerTeam) {
+    public static void printWinnerTeam(TeamType winnerTeam) {
         if (winnerTeam == TeamType.BLACK) {
             System.out.println("흑팀이 이겼습니다.");
             return;
