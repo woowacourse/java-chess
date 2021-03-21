@@ -37,25 +37,46 @@ public final class ChessGame {
     }
 
     public void move(final Position current, final Position destination) {
-        validateMove(current, destination);
-        currentTurnTeam.movePiece(current, destination);
-        captureEnemy(destination);
-    }
-
-    private void validateMove(final Position current, final Position destination) {
-        final Piece chosenPiece = currentTurnTeam.choosePiece(current);
-        if (chosenPiece.isKing() && chosenPiece.isCastlingMovable(current, destination, generateChessBoard())) {
-            currentTurnTeam.moveCastlingRook(destination);
-            return;
-        }
-        if (chosenPiece.isPawn() && chosenPiece.isPromotionMovable(current, destination, generateChessBoard())) {
-            currentTurnTeam.promotePiece(current);
-            return;
-        }
-        if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
+        if (checkValidMove(current, destination)) {
+            currentTurnTeam.movePiece(current, destination);
+            captureEnemy(destination);
             return;
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
+    }
+
+    private boolean checkValidMove(final Position current, final Position destination) {
+        final Piece chosenPiece = currentTurnTeam.choosePiece(current);
+        if (checkSpecialMove(chosenPiece, current, destination)) {
+            return true;
+        }
+        return chosenPiece.isMovable(current, destination, generateChessBoard());
+    }
+
+    private boolean checkSpecialMove(final Piece chosenPiece, final Position current, final Position destination) {
+        if (checkCastlingMove(chosenPiece, current, destination)) {
+            return true;
+        }
+        if (checkPromotionMove(chosenPiece, current, destination)) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkCastlingMove(final Piece chosenPiece, final Position current, final Position destination) {
+        if (chosenPiece.isKing() && chosenPiece.isCastlingMovable(current, destination, generateChessBoard())) {
+            currentTurnTeam.moveCastlingRook(destination);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean checkPromotionMove(final Piece chosenPiece, final Position current, final Position destination) {
+        if (chosenPiece.isPawn() && chosenPiece.isPromotionMovable(current, destination, generateChessBoard())) {
+            currentTurnTeam.promotePiece(current);
+            return true;
+        }
+        return false;
     }
 
     public Map<Position, Piece> generateChessBoard() {
