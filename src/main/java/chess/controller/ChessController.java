@@ -71,6 +71,6 @@ public class ChessController {
         Coordinate current = Coordinate.from(playerCommand.get(1));
         Coordinate destination = Coordinate.from(playerCommand.get(2));
         chessBoard.move(current, destination, teamType);
-        teamType = teamType.getOppositeTeam();
+        teamType = teamType.findOppositeTeam();
     }
 }
