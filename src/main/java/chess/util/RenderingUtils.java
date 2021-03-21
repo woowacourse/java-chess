@@ -15,10 +15,10 @@ public class RenderingUtils {
 
     public static String renderBoard(Board board) {
         final String visualBoard = Stream.of(Row.values())
-            .map(index -> renderRow(board, index) + " " + index.getNumber())
+            .map(index -> index.getNumber() + " " + renderRow(board, index) + index.getNumber())
             .collect(Collectors.joining("\n"))
             ;
-        final String columnInfo = "\nabcdefgh\n";
+        final String columnInfo = "\n  a b c d e f g h\n";
         return columnInfo + visualBoard + columnInfo;
     }
 
@@ -31,6 +31,6 @@ public class RenderingUtils {
     }
 
     private static String renderPosition(Piece piece) {
-        return piece.getName();
+        return piece.getName() + " ";
     }
 }

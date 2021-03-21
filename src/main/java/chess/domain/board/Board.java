@@ -43,9 +43,6 @@ public class Board {
 
     public void move(Piece piece, Position target) {
         Path path = generatePath(piece);
-//        path.positions().forEach(position -> {
-//            System.out.println(position);
-//        });
         if (path.isAble(target)) {
             coordinates.remove(findPieceBy(target));
             putPiece(piece, target);
