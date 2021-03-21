@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 
 import java.util.Objects;
 
@@ -14,11 +17,36 @@ public abstract class AbstractPiece implements Piece {
         this.directionGroup = directionGroup;
     }
     
+    @Override
+    public boolean isBlank() {
+        return color.isBlank();
+    }
+    
+    @Override
+    public boolean isSameColorAs(Color color) {
+        return this.color == color;
+    }
+    
+    protected void checkObstacleExistsAtDirection(MovePosition movePosition, Direction direction, Board board) {
+        Position sourcePosition = movePosition.getSourcePosition();
+        sourcePosition = direction.addDegreeTo(sourcePosition);
+        while (sourcePosition.isInRange() && !movePosition.isArrived(sourcePosition)) {
+            checkPieceIsBlank(board, sourcePosition);
+            sourcePosition = direction.addDegreeTo(sourcePosition);
+        }
+    }
+    
     protected String changeColorSymbol(String symbol) {
         if (color.isBlack()) {
             return symbol.toUpperCase();
         }
         return symbol;
+    }
+    
+    private void checkPieceIsBlank(Board board, Position sourcePosition) {
+        if (!board.isBlank(sourcePosition)) {
+            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
+        }
     }
     
     @Override
@@ -36,25 +64,5 @@ public abstract class AbstractPiece implements Piece {
     @Override
     public int hashCode() {
         return Objects.hash(color);
-    }
-    
-    @Override
-    public boolean isSameColorAs(Color color) {
-        return this.color == color;
-    }
-    
-    protected boolean isObstacleAtDirection(Position sourcePosition, Position targetPosition, Direction direction,
-                                            Board board) {
-        while (sourcePosition.isInRange()) {
-            sourcePosition = direction.addDegreeTo(sourcePosition);
-            if (sourcePosition.equals(targetPosition)) {
-                return false;
-            }
-
-            if (!board.isBlank(sourcePosition)) {
-                return true;
-            }
-        }
-        return false;
     }
 }
