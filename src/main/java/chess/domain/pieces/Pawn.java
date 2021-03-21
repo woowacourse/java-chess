@@ -1,12 +1,12 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class Pawn extends Piece {
     private static final String BLACK_TEAM_ROW = "7";
@@ -28,72 +28,91 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(final Map<Team, Pieces> board) {
+    public List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
         addAttackablePositions(movablePositions, board);
-        addMovablePositionsWhenInit(movablePositions, board);
-        addMovablePositions(movablePositions, board);
+        addMovablePositions(movablePositions, board, 1);
+
+        if (getTeam() == Team.BLACK) {
+            blackInitMove(board, movablePositions);
+        }
+        if (getTeam() == Team.WHITE) {
+            whiteInitMove(board, movablePositions);
+        }
         return movablePositions;
     }
 
-    private void addMovablePositions(List<Position> movablePositions, Map<Team, Pieces> board) {
-        Team myTeam = super.getTeam();
-
-        if (myTeam.equals(Team.WHITE)) {
-            Position curPosition = super.getPosition();
-
-            int nx = curPosition.getRow() - 1;
-            int ny = curPosition.getCol();
-            Position position = new Position(nx, ny);
-            Pieces blackTeamPieces = board.get(Team.BLACK);
-            Pieces whiteTeamPieces = board.get(Team.WHITE);
-
-            if (!blackTeamPieces.containByPosition(position) && !whiteTeamPieces.containByPosition(position)) {
-                movablePositions.add(position);
-            }
-
+    private void whiteInitMove(final Board board, final List<Position> movablePositions) {
+        if (getPosition().getRow() == Row.getLocation(WHITE_TEAM_ROW)) {
+            addMovablePositions(movablePositions, board, 2);
         }
     }
 
-    private void addMovablePositionsWhenInit(final List<Position> movablePositions, final Map<Team, Pieces> board) {
-        Team myTeam = super.getTeam();
-
-        if (myTeam.equals(Team.WHITE)) {
-            Position curPosition = super.getPosition();
-            if (curPosition.getRow() == Row.getLocation(WHITE_TEAM_ROW)) {
-                int nx = curPosition.getRow() - 2;
-                int ny = curPosition.getCol();
-                Position position = new Position(nx, ny);
-                Pieces blackTeamPieces = board.get(Team.BLACK);
-                Pieces whiteTeamPieces = board.get(Team.WHITE);
-
-                if (!blackTeamPieces.containByPosition(position) && !whiteTeamPieces.containByPosition(position)) {
-                    movablePositions.add(position);
-                }
-            }
+    private void blackInitMove(final Board board, final List<Position> movablePositions) {
+        if (getPosition().getRow() == Row.getLocation(BLACK_TEAM_ROW)) {
+            addMovablePositions(movablePositions, board, 2);
         }
     }
 
-    private void addAttackablePositions(final List<Position> movablePositions, final Map<Team, Pieces> board) {
-        Team myTeam = super.getTeam();
+    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
+        Position curPosition = getPosition();
+        if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getCol())) {
+            return;
+        }
+        Position movedPosition = new Position(curPosition.getRow() + getStraightRow(degree), curPosition.getCol());
 
-        int dx[] = {-1, -1};
-        int dy[] = {-1, 1};
-        if (myTeam.equals(Team.WHITE)) {
-            Position curPosition = super.getPosition();
-            for (int dir = 0; dir < dx.length; ++dir) {
-                int nx = curPosition.getRow() + dx[dir];
-                int ny = curPosition.getCol() + dy[dir];
-                if (nx < 0 || nx >= 8 || ny < 0 || ny >= 8) continue;
+        if (!board.piecesByTeam(Team.BLACK).containByPosition(movedPosition) && !board.piecesByTeam(Team.WHITE).containByPosition(movedPosition)) {
+            movablePositions.add(movedPosition);
+        }
+    }
 
-                Position attackPosition = new Position(nx, ny);
+    private int getStraightRow(final int degree) {
+        if (getTeam() == Team.BLACK) {
+            return degree;
+        }
+        return -degree;
+    }
 
-                Pieces otherTeamPieces = board.get(Team.BLACK);
+    private void addAttackablePositions(final List<Position> movablePositions, final Board board) {
+        Team myTeam = getTeam();
+        if (myTeam.equals(Team.WHITE)) {    // Team Enum에 메소드 만들어서 현재팀넣으면, 다른팀 가져오게 해야함 쓰일곳이 많음
+            addWhiteTeamAttackPosition(movablePositions, board);
+            return;
+        }
+        addBlackTeamAttackPosition(movablePositions, board);
+    }
 
-                if (otherTeamPieces.containByPosition(attackPosition)) {
-                    movablePositions.add(attackPosition);
-                }
-            }
+    private void addBlackTeamAttackPosition(final List<Position> movablePositions, final Board board) {
+        int[] dx = {1, 1};
+        int[] dy = {-1, 1};
+        checkAttackPosition(movablePositions, board, dx, dy);
+    }
+
+    private void addWhiteTeamAttackPosition(final List<Position> movablePositions, final Board board) {
+        int[] dx = {-1, -1};
+        int[] dy = {-1, 1};
+        checkAttackPosition(movablePositions, board, dx, dy);
+    }
+
+    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] dx, final int[] dy) {
+        Position curPosition = getPosition();
+        for (int dir = 0; dir < dx.length; ++dir) {
+            int nx = curPosition.getRow() + dx[dir];
+            int ny = curPosition.getCol() + dy[dir];
+            addAttackablePosition(movablePositions, board, nx, ny);
+        }
+    }
+
+    private void addAttackablePosition(final List<Position> movablePositions, Board board, final int nextRow, final int nextCol) {
+        if (!board.validateRange(nextRow, nextCol)) {
+            return;
+        }
+
+        Position attackPosition = new Position(nextRow, nextCol);
+        Pieces otherTeamPieces = board.piecesByTeam(Team.BLACK); // Team Enum에 메소드 만들어서 현재팀넣으면, 다른팀 가져오게 해야함 쓰일곳이 많음
+
+        if (otherTeamPieces.containByPosition(attackPosition)) {
+            movablePositions.add(attackPosition);
         }
     }
 }
