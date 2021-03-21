@@ -15,6 +15,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class RookTest {
 
@@ -38,6 +39,14 @@ class RookTest {
         @Nested
         class Context_EmptyChessBoard {
 
+            @DisplayName("현재 위치에서 현재 위치로 이동할 수 없다.")
+            @Test
+            void cannotMoveToCurrentDestination() {
+                assertThatCode(() -> rook.isMovable(chessBoard, current, current))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("현재 위치와 도착 위치가 동일합니다.");
+            }
+
             @DisplayName("동서남북 방향으로 최소 1칸 이상 이동 가능하다.")
             @ParameterizedTest
             @ValueSource(strings = {"d4", "d7", "c5", "f5"})
@@ -58,6 +67,17 @@ class RookTest {
                 boolean isMovable = rook.isMovable(chessBoard, current, destination);
 
                 assertThat(isMovable).isFalse();
+            }
+
+            @DisplayName("정의되지 않은 방향으로는 이동할 수 없다.")
+            @ParameterizedTest
+            @ValueSource(strings = {"a1", "b8"})
+            void cannotMoveUndefinedDirection(String destinationInput) {
+                Coordinate destination = Coordinate.from(destinationInput);
+
+                assertThatCode(() -> rook.isMovable(chessBoard, current, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("주어진 위치로의 방향을 찾을 수 없습니다.");
             }
         }
 
