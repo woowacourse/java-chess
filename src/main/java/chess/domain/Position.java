@@ -9,11 +9,8 @@ public final class Position {
         final List<String> alphabets = Arrays.asList("a", "b", "c", "d", "e", "f", "g", "h");
         final List<String> numbers = Arrays.asList("1", "2", "3", "4", "5", "6", "7", "8");
 
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                positionMap.put(alphabets.get(i) + numbers.get(j), new Position(i, j));
-            }
-        }
+        alphabets.forEach(alphabet -> numbers.forEach(number ->
+                positionMap.put(alphabet + number, new Position(alphabets.indexOf(alphabet), numbers.indexOf(number)))));
     }
 
     private final int x;

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class PositionTest {
@@ -19,6 +20,15 @@ public class PositionTest {
         Position userInputPosition = Position.of(input);
         Position boardPosition = new Position(x, y);
         assertThat(userInputPosition).isEqualTo(boardPosition);
+    }
+
+    @ParameterizedTest
+    @CsvSource(value = {"z1", "8a", "호호"})
+    @DisplayName("사용자가 체스 판에 있는 문자를 입력하면, 알맞은 Position 객체를 반환한다")
+    void position_with_user_input(final String input) {
+        assertThatCode(() -> Position.of(input))
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("체스판에 없는 칸입니다");
     }
 
     @Test
