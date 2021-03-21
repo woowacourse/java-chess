@@ -1,46 +1,43 @@
 package chess.domain.piece;
 
-import chess.board.Board;
+import chess.game.Board;
+import chess.game.InitializedChess;
 import org.assertj.core.api.ThrowableAssert;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class BlankTest {
     
-    private Blank blank;
-    
-    private List<List<Piece>> pieces;
-    
-    @BeforeEach
-    void setUp() {
-        Position position = Position.of(3, 0);
-    
-        blank = new Blank(Color.BLACK, position);
-        
-        Board board = new Board();
-        board.init();
-        
-        pieces = board.getBoard();
-    }
-    
     @Test
-    @DisplayName("이동 에러 검사")
-    void validate() {
-        Position position = Position.of(3, 1);
+    @DisplayName("블랭크를 다른 칸으로 이동시키려 할 경우 예외 발생")
+    void move_TryToMoveBlank_ExceptionThrown() {
         
-        ThrowableAssert.ThrowingCallable callable = () -> blank.move(position, pieces);
+        // given
+        Blank blank = new Blank(Color.WHITE);
+        Position sourcePosition = Position.of("a3");
+        Position targetPosition = Position.of("a4");
+        Board board = InitializedChess.create()
+                                      .getBoard();
         
-        assertThatIllegalArgumentException().isThrownBy(callable);
+        // when
+        ThrowableAssert.ThrowingCallable callable = () -> blank.move(sourcePosition, targetPosition, board);
+        
+        // then
+        assertThatIllegalArgumentException().isThrownBy(callable)
+                                            .withMessage("해당 위치에는 기물이 존재하지 않습니다");
     }
     
     @Test
     @DisplayName("점수 반환 테스트")
-    void score() {
-        assertThat(blank.getScore()).isEqualTo(0);
+    void scoreTest() {
+        
+        // when
+        final double score = new Blank(Color.BLACK).getScore();
+        
+        // then
+        assertThat(score).isEqualTo(0);
     }
 }

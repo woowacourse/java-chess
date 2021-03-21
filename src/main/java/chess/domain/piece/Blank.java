@@ -1,15 +1,19 @@
 package chess.domain.piece;
 
-import java.util.List;
+import chess.game.Board;
 
 public class Blank extends AbstractPiece {
     
+    public static final double SCORE = 0;
+    private static final DirectionGroup DIRECTION_GROUP = DirectionGroup.createBlankDirectionGroup();
     private static final String SYMBOL = ".";
     
-    public static final double SCORE = 0;
+    public Blank() {
+        super(Color.BLANK, DIRECTION_GROUP);
+    }
     
-    public Blank(Color color, Position position) {
-        super(color, position);
+    public Blank(Color color) {
+        super(color, DIRECTION_GROUP);
     }
     
     @Override
@@ -23,7 +27,7 @@ public class Blank extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position position, List<List<Piece>> board) {
-        throw new IllegalArgumentException("해당 위치에 말이 존재하지 않습니다");
+    public Piece move(Position sourcePosition, Position targetPosition, Board board) {
+        throw new IllegalArgumentException("해당 위치에는 기물이 존재하지 않습니다");
     }
 }
