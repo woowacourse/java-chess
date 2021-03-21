@@ -1,7 +1,10 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
+import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Position;
+import chess.domain.piece.black.BlackRook;
+import chess.domain.piece.white.WhiteKnight;
 import chess.domain.piece.white.WhitePawn;
 import chess.domain.piece.white.WhiteRook;
 import org.junit.jupiter.api.DisplayName;
@@ -49,4 +52,49 @@ class RookMoveConditionTest {
         assertThat(actualCol).isFalse();
         assertThat(actualRow).isFalse();
     }
+
+    @DisplayName("룩의 붙어있는 적 먹기 테스트")
+    @Test
+    void isSatisfyBy_catchAttachOtherColors() {
+        RookMoveCondition condition = new RookMoveCondition();
+        ChessPiece queen = BlackRook.createWithCoordinate(4, 4);
+
+        int[] row = {0, 0, 1, -1};
+        int[] col = {1, -1, 0, 0};
+
+        for (int i = 0; i < row.length; i++) {
+            int dr = row[i] + 4;
+            int dc = col[i] + 4;
+
+            Board board = new Board(Arrays.asList(
+                    queen,
+                    WhiteKnight.createWithCoordinate(dr, dc)
+            ));
+
+            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+        }
+    }
+
+    @DisplayName("룩의 떨어져있는 적 먹기 테스트")
+    @Test
+    void isSatisfyBy_catchRemoteOtherColors() {
+        RookMoveCondition condition = new RookMoveCondition();
+        ChessPiece queen = BlackRook.createWithCoordinate(4, 4);
+
+        int[] row = {0, 0, 1, -1};
+        int[] col = {1, -1, 0, 0};
+
+        for (int i = 0; i < row.length; i++) {
+            int dr = row[i] + 4;
+            int dc = col[i] + 4;
+
+            Board board = new Board(Arrays.asList(
+                    queen,
+                    WhiteKnight.createWithCoordinate(dr, dc)
+            ));
+
+            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+        }
+    }
+
 }

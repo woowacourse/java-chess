@@ -30,32 +30,4 @@ class CatchingPieceBlackPawnMoveConditionTest {
         assertThat(falseActual).isFalse();
     }
 
-    @DisplayName("보드를 벗어나면 안된다.")
-    @Test
-    void isSatisfyBy_outOfBoardBoundTest() {
-        CatchingPieceBlackPawnMoveCondition condition = new CatchingPieceBlackPawnMoveCondition();
-        Board board = new Board(
-                Arrays.asList(
-                        BlackPawn.createWithCoordinate(0, 0)
-                )
-        );
-
-        boolean actualLeft = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
-                new Position(-1, 0));
-
-        boolean actualDown = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
-                new Position(8, 0));
-
-        boolean actualUp = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
-                new Position(0, -1));
-
-        boolean actualRight = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
-                new Position(0, 8));
-
-
-        assertThat(actualLeft).isFalse();
-        assertThat(actualDown).isFalse();
-        assertThat(actualUp).isFalse();
-        assertThat(actualRight).isFalse();
-    }
 }

@@ -14,6 +14,7 @@ public class BishopMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&
+                isNotExistSameColorObstacleOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(target);
     }
 
@@ -27,7 +28,16 @@ public class BishopMoveCondition extends MoveCondition {
 
         return pieces.stream()
                 .filter(isExistInMoveArea(piece, target))
-                .noneMatch(hasSameGradientWithSourceAndTarget(piece, target));
+                .filter(hasSameGradientWithSourceAndTarget(piece, target))
+                .noneMatch(piece::isSameColor);
+    }
+
+    private boolean isNotExistSameColorObstacleOnTarget(Board board, ChessPiece piece, Position target) {
+        return board.getWhitePieces().stream()
+                .noneMatch(
+                        pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
+                                pieceOnBoard.isSameColor(piece)
+                );
     }
 
     private Predicate<ChessPiece> hasSameGradientWithSourceAndTarget(final ChessPiece piece, final Position target) {
@@ -43,10 +53,10 @@ public class BishopMoveCondition extends MoveCondition {
         int minRow = Math.min(piece.getRow(), target.getRow());
 
         return pieceOnBoard ->
-                minCol <= pieceOnBoard.getColumn() &&
-                        pieceOnBoard.getColumn() <= maxCol &&
-                        minRow <= pieceOnBoard.getRow() &&
-                        pieceOnBoard.getRow() <= maxRow;
+                minCol < pieceOnBoard.getColumn() &&
+                        pieceOnBoard.getColumn() < maxCol &&
+                        minRow < pieceOnBoard.getRow() &&
+                        pieceOnBoard.getRow() < maxRow;
     }
 
 }

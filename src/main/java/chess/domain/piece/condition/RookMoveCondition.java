@@ -13,6 +13,7 @@ public class RookMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovable(piece, target) &&
                 isNotExistObstacleOnCrossPath(board, piece, target) &&
+                isNotExistSameColorObstacleOnTarget(board, piece, target) &&
                 isNotChessPieceOutOfBoard(target);
     }
 
@@ -24,7 +25,14 @@ public class RookMoveCondition extends MoveCondition {
     private boolean isNotExistObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
         return board.getAllPieces().stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistObstacleOnCrossPath(piece, target)
+                .noneMatch(isExistObstacleOnCrossPath(piece, target));
+    }
+
+    private boolean isNotExistSameColorObstacleOnTarget(Board board, ChessPiece piece, Position target) {
+        return board.getWhitePieces().stream()
+                .noneMatch(
+                        pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
+                                pieceOnBoard.isSameColor(piece)
                 );
     }
 
@@ -34,9 +42,18 @@ public class RookMoveCondition extends MoveCondition {
         int maxRow = Math.max(piece.getRow(), target.getRow());
         int minRow = Math.min(piece.getRow(), target.getRow());
 
-        return pieceOnBoard ->
-                (minRow <= pieceOnBoard.getRow()) && (pieceOnBoard.getRow() <= maxRow) &&
-                        (minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol);
+        if (piece.getColumn() == target.getColumn()) {
+            return pieceOnBoard -> pieceOnBoard.getColumn() == piece.getColumn() &&
+                    minRow < pieceOnBoard.getRow() && pieceOnBoard.getRow() < maxRow;
+        }
+
+        if (piece.getRow() == target.getRow()) {
+            return pieceOnBoard -> pieceOnBoard.getRow() == piece.getRow() &&
+                    minCol < pieceOnBoard.getColumn() && pieceOnBoard.getColumn() < maxCol;
+        }
+
+
+        throw new IllegalArgumentException("잘못된 접근입니다.");
     }
 
 }

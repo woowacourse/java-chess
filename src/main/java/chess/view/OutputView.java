@@ -37,7 +37,7 @@ public class OutputView {
     }
 
     private static void lineSeparatorIfSatisfyCondition(final int lineSeparateThreshold) {
-        if (lineSeparateThreshold !=0 && lineSeparateThreshold % BOARD_COLUMN_SIZE == 0) {
+        if (lineSeparateThreshold != 0 && lineSeparateThreshold % BOARD_COLUMN_SIZE == 0) {
             System.out.println("  " + (BOARD_COLUMN_SIZE - lineSeparateThreshold / BOARD_COLUMN_SIZE + 1));
         }
     }
