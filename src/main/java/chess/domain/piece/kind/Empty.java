@@ -14,7 +14,7 @@ public class Empty extends Piece {
 
     @Override
     public void validateMovable(Direction direction, Piece targetPiece) {
-        throw new IllegalArgumentException("비어 있는 칸입니다.");
+        throw new UnsupportedOperationException("비어 있는 칸입니다.");
     }
 
     @Override
