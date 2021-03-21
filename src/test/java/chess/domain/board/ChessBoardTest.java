@@ -194,7 +194,7 @@ class ChessBoardTest {
 
             assertThatCode(() -> chessBoard.move(invalidCurrent, destination, TeamType.WHITE))
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("현재 위치에 기물이 없습니다.");
+                    .hasMessage("조작할 수 있는 기물이 없습니다.");
         }
 
         @DisplayName("현재 위치에 기물이 있더라도 팀이 다르면 예외를 발생시킨다.")
@@ -202,7 +202,7 @@ class ChessBoardTest {
         void cannotMoveWhenInvalidTeam() {
             assertThatCode(() -> chessBoard.move(current, destination, TeamType.BLACK))
                     .isInstanceOf(IllegalStateException.class)
-                    .hasMessage("상대방의 팀은 조작할 수 없습니다.");
+                    .hasMessage("조작할 수 있는 기물이 없습니다.");
         }
 
         @DisplayName("도착 지점이 현재 위치와 동일하면 예외가 발생한다.")

@@ -39,24 +39,24 @@ public class Cell {
         return pieceOnCell.isEmpty() || !isTeamOf(teamType);
     }
 
-    public boolean isEmpty() {
-        return pieceOnCell.isEmpty();
-    }
-
     public boolean hasEnemy(TeamType teamType) {
         return !pieceOnCell.isEmpty() && !isTeamOf(teamType);
     }
 
     public boolean isTeamOf(TeamType teamType) {
-        return getPiece().isTeamOf(teamType);
+        return !pieceOnCell.isEmpty() && getPiece().isTeamOf(teamType);
     }
 
     public boolean hasKing() {
-        return getPiece().isKing();
+        return !pieceOnCell.isEmpty() && getPiece().isKing();
     }
 
     public boolean hasPawn() {
-        return getPiece().isPawn();
+        return !pieceOnCell.isEmpty() && getPiece().isPawn();
+    }
+
+    public boolean isEmpty() {
+        return pieceOnCell.isEmpty();
     }
 
     public double getPieceScore() {

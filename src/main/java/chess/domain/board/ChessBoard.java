@@ -55,7 +55,7 @@ public class ChessBoard {
     public void move(Coordinate current, Coordinate destination, TeamType teamType) {
         Cell currentCell = cells.get(current);
         if (!currentCell.isTeamOf(teamType)) {
-            throw new IllegalStateException("상대방의 팀은 조작할 수 없습니다.");
+            throw new IllegalStateException("조작할 수 있는 기물이 없습니다.");
         }
         if (!currentCell.hasMovablePiece(this, current, destination)) {
             throw new IllegalStateException("이동할 수 없는 도착 위치 입니다.");
@@ -83,7 +83,7 @@ public class ChessBoard {
     private double calculateScoreTotalExceptPawn(TeamType teamType) {
         return cells.values()
                 .stream()
-                .filter(cell -> !cell.isEmpty() && cell.isTeamOf(teamType) && !cell.hasPawn())
+                .filter(cell -> cell.isTeamOf(teamType) && !cell.hasPawn())
                 .mapToDouble(Cell::getPieceScore)
                 .sum();
     }
@@ -92,7 +92,7 @@ public class ChessBoard {
         return (int) Arrays.stream(Rank.values())
                 .map(rank -> new Coordinate(file, rank))
                 .map(cells::get)
-                .filter(cell -> !cell.isEmpty() && cell.isTeamOf(teamType) && cell.hasPawn())
+                .filter(cell -> cell.isTeamOf(teamType) && cell.hasPawn())
                 .count();
     }
 
@@ -110,7 +110,7 @@ public class ChessBoard {
     public boolean isKingCheckmate() {
         return cells.values()
                 .stream()
-                .filter(cell -> !cell.isEmpty() && cell.hasKing())
+                .filter(Cell::hasKing)
                 .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
     }
 
@@ -120,7 +120,7 @@ public class ChessBoard {
         }
         return cells.values()
                 .stream()
-                .filter(cell -> !cell.isEmpty() && cell.hasKing())
+                .filter(Cell::hasKing)
                 .map(Cell::getTeamType)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("승리한 팀을 찾을 수 없습니다."));
