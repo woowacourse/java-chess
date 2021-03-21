@@ -59,7 +59,7 @@ public final class ChessController {
         try {
             final List<String> turnOption = InputView.inputTurnOption();
             controlUserCommand(chessGame, turnOption);
-        } catch (Exception e) {
+        } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             progressSingleTurn(chessGame);
         }
