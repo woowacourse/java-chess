@@ -2,9 +2,13 @@ package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.location.Location;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.team.Team;
 import chess.utils.BoardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -12,282 +16,72 @@ import org.junit.jupiter.api.Test;
 
 class BoardTest {
 
-    private static final char[][] TEST_BOARD = {
-        {'R', 'N', '.', 'Q', 'K', 'B', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
-        {'.', '.', '.', '.', '.', '.', 'N', 'R'},
-        {'.', '.', '.', '.', '.', '.', '.', 'p'},
-        {'.', '.', '.', '.', '.', '.', '.', '.'},
-        {'.', '.', 'B', '.', '.', 'p', '.', '.'},
-        {'.', '.', '.', '.', 'P', '.', 'p', '.'},
-        {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}
-    };
-
-    private Board initialBoard;
-    private Board testBoard;
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        initialBoard = BoardUtil.generateInitialBoard();
-        testBoard = BoardUtil.convertToBoard(TEST_BOARD);
+        board = BoardUtil.generateInitialBoard();
     }
 
-    @DisplayName("체스 말은 시작위치와 목표위치가 같으면 이동하지 못한다.")
+    @DisplayName("기물 이동 - 출발 위치와 목표 위치가 같을 수 없다.")
     @Test
-    void move_samePosition() {
-        // given, when
+    void nonMovable_same() {
+        // given
         Location source = Location.of(1, 1);
         Location target = Location.of(1, 1);
 
         // then
-        assertThatThrownBy(() -> initialBoard.move(source, target))
+        assertThatThrownBy(() -> board.move(source, target, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("목표위치에 같은 팀의 말이 있으면 이동하지 못한다.")
+    @DisplayName("기물 이동 - 현재 턴의 기물만 이동할 수 있다.")
     @Test
-    void move_sameTeamAtTarget() {
-        // given, when
-        Location rookLocation = Location.of(1, 1);
-        Location pawnLocation = Location.of(1, 2);
-
-        // then
-        assertThatThrownBy(() -> initialBoard.move(rookLocation, pawnLocation))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("이동 테스트 - 룩")
-    @Test
-    void move_rook() {
+    void nonMovable_turn() {
         // given
-        Location source = Location.of(1, 1);
+        Location blackPawnLocation = Location.of(1, 7);
         Location target = Location.of(1, 5);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, target);
 
         // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("공격 테스트 - 룩")
-    @Test
-    void attack_rook() {
-        // given
-        Location source = Location.of(1, 1);
-        Location target = Location.of(1, 8);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
-    }
-
-    @DisplayName("이동 테스트 - 나이트")
-    @Test
-    void move_knight() {
-        // given
-        Location source = Location.of(2, 1);
-        Location target = Location.of(1, 3);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("공격 테스트 - 나이트")
-    @Test
-    void attack_knight() {
-        // given
-        Location source = Location.of(2, 1);
-        Location target = Location.of(3, 3);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
-    }
-
-    @DisplayName("이동 테스트 - 비숍")
-    @Test
-    void move_bishop() {
-        // given
-        Location source = Location.of(3, 1);
-        Location target = Location.of(5, 3);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("공격 테스트 - 비숍")
-    @Test
-    void attack_bishop() {
-        // given
-        Location source = Location.of(3, 1);
-        Location target = Location.of(8, 6);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
-    }
-
-    @DisplayName("이동 테스트 - 퀸")
-    @Test
-    void move_queen() {
-        // given
-        Location source = Location.of(4, 1);
-        Location target = Location.of(4, 5);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("공격 테스트 - 퀸")
-    @Test
-    void attack_queen() {
-        // given
-        Location source = Location.of(4, 1);
-        Location target = Location.of(4, 8);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
-    }
-
-    @DisplayName("이동 테스트 - 킹")
-    @Test
-    void move_king() {
-        // given
-        Location source = Location.of(5, 1);
-        Location target = Location.of(6, 2);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("공격 테스트 - 킹")
-    @Test
-    void attack_king() {
-        // given
-        Location source = Location.of(5, 1);
-        Location target = Location.of(5, 2);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
-
-        // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
-    }
-
-    @DisplayName("이동 테스트 - 초기 위치 폰")
-    @Test
-    void move_pawnInInitial() {
-        // given
-        Location initialSource = Location.of(7, 2);
-        Location initialTarget = Location.of(7, 4);
-        Piece sourcePiece = testBoard.find(initialSource);
-
-        // when
-        testBoard.move(initialSource, initialTarget);
-
-        // then
-        assertThat(testBoard.find(initialTarget)).isEqualTo(sourcePiece);
-    }
-
-    @DisplayName("이동 테스트 - 초기 위치가 아닌 폰")
-    @Test
-    void move_pawnNotInInitial() {
-        // given
-        Location source = Location.of(6, 3);
-        Location possibleTarget = Location.of(6, 4);
-        Location impossibleTarget = Location.of(6, 6);
-        Piece sourcePiece = testBoard.find(source);
-
-        // when
-        testBoard.move(source, possibleTarget);
-
-        // then
-        assertThat(testBoard.find(possibleTarget)).isEqualTo(sourcePiece);
-        assertThatThrownBy(() -> testBoard.move(possibleTarget, impossibleTarget))
+        assertThatThrownBy(() -> board.move(blackPawnLocation, target, Team.WHITE))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("폰이 직선 이동하는 경우 목표 위치에 적의 말이 있으면 이동하지 못한다.")
+    @DisplayName("검색 - 위치값에 따라 기물을 찾을 수 있다.")
     @Test
-    void move_forward_pawn() {
-        // given, when
-        Location source = Location.of(8, 5);
-        Location target = Location.of(8, 6);
-        Piece sourcePiece = testBoard.find(target);
-
-        // then
-        assertThatThrownBy(() -> testBoard.move(source, target))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("공격 테스트 - 폰")
-    @Test
-    void attack_pawn() {
+    void find() {
         // given
-        Location source = Location.of(8, 5);
-        Location target = Location.of(7, 6);
-        Piece sourcePiece = testBoard.find(source);
-        Piece targetPiece = testBoard.find(target);
-
-        // when
-        testBoard.move(source, target);
+        Location whitePawn = Location.of(1,2);
+        Location blackPawn = Location.of(1, 7);
+        Location whiteQueen = Location.of(4, 1);
+        Location blackQueen = Location.of(4, 8);
 
         // then
-        assertThat(testBoard.find(target)).isEqualTo(sourcePiece);
-        assertThat(testBoard.toList()).doesNotContain(targetPiece);
+        assertAll(
+            () -> assertThat(board.find(whitePawn)).isEqualTo(Pawn.of(Location.of(1,2), Team.WHITE)),
+            () -> assertThat(board.find(blackPawn)).isEqualTo(Pawn.of(Location.of(1,7), Team.BLACK)),
+            () -> assertThat(board.find(whiteQueen)).isEqualTo(Queen.of(Location.of(4,1), Team.WHITE)),
+            () -> assertThat(board.find(blackQueen)).isEqualTo(Queen.of(Location.of(4,8), Team.BLACK))
+        );
     }
 
-    @DisplayName("폰은 목표위치에 적이 있어야 공격할 수 있다.")
+    @DisplayName("존재 여부 - 위치값에 따라 기물이 존재하는지 확인할 수 있다.")
     @Test
-    void move_diagonal_pawn() {
-        // given, when
-        Location source = Location.of(6, 3);
-        Location target = Location.of(5, 4);
+    void isPieceExistIn() {
+        // given
+        Location existLocation1 = Location.of(1, 2);
+        Location existLocation2 = Location.of(5, 1);
+        Location existLocation3 = Location.of(6, 1);
+        Location nonExistLocation1 = Location.of(3, 3);
+        Location nonExistLocation2 = Location.of(4, 4);
+        Location nonExistLocation3 = Location.of(5, 3);
 
         // then
-        assertThatThrownBy(() -> testBoard.move(source, target))
-            .isInstanceOf(IllegalArgumentException.class);
+        assertThat(board.isPieceExistIn(existLocation1)).isTrue();
+        assertThat(board.isPieceExistIn(existLocation2)).isTrue();
+        assertThat(board.isPieceExistIn(existLocation3)).isTrue();
+        assertThat(board.isPieceExistIn(nonExistLocation1)).isFalse();
+        assertThat(board.isPieceExistIn(nonExistLocation2)).isFalse();
+        assertThat(board.isPieceExistIn(nonExistLocation3)).isFalse();
     }
 }
