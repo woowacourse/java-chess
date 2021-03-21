@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Horizontal {
     A("a", 1),
@@ -32,6 +34,12 @@ public enum Horizontal {
             .filter(horizontal -> horizontal.value == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
+    }
+
+    public static List<String> horizontalSymbols() {
+        return Arrays.stream(values())
+            .map(Horizontal::getSymbol)
+            .collect(Collectors.toList());
     }
 
     public String getSymbol() {

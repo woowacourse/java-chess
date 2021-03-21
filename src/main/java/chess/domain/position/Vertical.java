@@ -1,6 +1,8 @@
 package chess.domain.position;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Vertical {
     ONE("1", 1),
@@ -32,6 +34,12 @@ public enum Vertical {
             .filter(vertical -> vertical.value == value)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치를 찾을 수 없습니다."));
+    }
+
+    public static List<String> verticalSymbols() {
+        return Arrays.stream(values())
+            .map(Vertical::getSymbol)
+            .collect(Collectors.toList());
     }
 
     public String getSymbol() {
