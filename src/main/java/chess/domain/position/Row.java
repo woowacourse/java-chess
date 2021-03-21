@@ -49,6 +49,7 @@ public enum Row {
             return this.equals(EIGHT);
 
         }
+        // todo : 춘식과 이거 의논해보자... 첫번째는 에러 아닌가?
         if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
             return this.equals(TWO) || this.equals(ONE);
         }
