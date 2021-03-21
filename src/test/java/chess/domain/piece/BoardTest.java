@@ -1,39 +1,58 @@
 package chess.domain.piece;
 
-import chess.board.Board;
-import chess.view.OutputView;
-import org.junit.jupiter.api.BeforeEach;
+import chess.game.Board;
+import chess.game.Chess;
+import chess.game.InitializedChess;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BoardTest {
     
-    private Board board;
+    private final Chess chess = InitializedChess.create();
+    private final Board board = chess.getBoard();
     
-    @BeforeEach
-    void setUp() {
-        board = new Board();
-        board.init();
+    public static Chess createEmptyBoard() {
+        return new Chess(new Board(new HashMap<>()));
     }
     
     @Test
     @DisplayName("보드 초기화")
-    void a() {
-        
-        // given
-        final List<List<Piece>> board = this.board.getBoard();
-        // when
+    void initializeBoardTest() {
         
         // then
-        assertThat(board.get(0).get(0)).isInstanceOf(Rook.class);
-        assertThat(board.get(0).get(1)).isInstanceOf(Knight.class);
-        assertThat(board.get(0).get(2)).isInstanceOf(Bishop.class);
-        // 필요시 테스트케이스 추가
+        final Map<Position, Piece> chessBord = this.board.getBoard();
+        assertThat(chessBord.get(Position.of("a1"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.of("b1"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.of("c1"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.of("d1"))).isInstanceOf(Queen.class);
+        assertThat(chessBord.get(Position.of("e1"))).isInstanceOf(King.class);
+        assertThat(chessBord.get(Position.of("f1"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.of("g1"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.of("h1"))).isInstanceOf(Rook.class);
+        
+        for (int i = 0; i < 8; i++) {
+            Position position = Position.of(i, 1);
+            assertThat(chessBord.get(position)).isInstanceOf(Pawn.class);
+        }
+        
+        assertThat(chessBord.get(Position.of("a8"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.of("b8"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.of("c8"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.of("d8"))).isInstanceOf(Queen.class);
+        assertThat(chessBord.get(Position.of("e8"))).isInstanceOf(King.class);
+        assertThat(chessBord.get(Position.of("f8"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.of("g8"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.of("h8"))).isInstanceOf(Rook.class);
+        
+        for (int i = 0; i < 8; i++) {
+            Position position = Position.of(i, 6);
+            assertThat(chessBord.get(position)).isInstanceOf(Pawn.class);
+        }
     }
     
     @Test
@@ -41,100 +60,84 @@ public class BoardTest {
     void movePiece() {
         
         // given
-        final String sourceValue = "b2";
-        final String targetValue = "b3";
-    
+        final String source = "b2";
+        final String target = "b3";
+        
         // when
-        board.movePiece(sourceValue, targetValue);
+        chess.movePiece(source, target);
         
         // then
-        Position sourcePosition = Position.of(sourceValue);
-        Position targetPosition = Position.of(targetValue);
+        Position sourcePosition = Position.of(source);
+        Position targetPosition = Position.of(target);
         
-        final int sourceX = sourcePosition.getX().getPoint();
-        final int sourceY = sourcePosition.getY().getPoint();
-    
-        final int targetX = targetPosition.getX().getPoint();
-        final int targetY = targetPosition.getY().getPoint();
-    
-        final Piece sourcePiece = board.getBoard()
-                                 .get(sourceX)
-                                 .get(sourceY);
-        
+        final Map<Position, Piece> chessBoard = this.board.getBoard();
+        final Piece sourcePiece = chessBoard.get(sourcePosition);
         assertThat(sourcePiece).isInstanceOf(Blank.class);
-    
-        final Piece targetPiece = board.getBoard()
-                                       .get(targetX)
-                                       .get(targetY);
-    
+        
+        final Piece targetPiece = chessBoard.get(targetPosition);
         assertThat(targetPiece).isInstanceOf(Pawn.class);
     }
     
     @Test
-    @DisplayName("끝났는지 확인")
-    void d() {
-        assertThat(board.isFinish()).isFalse();
-    
-        killKingOfBlack();
-    
-        assertThat(board.isFinish()).isTrue();
+    @DisplayName("킹이 죽으면 게임 상태를 멈춤으로 변경")
+    void isRunning_IfKingIsDead_StatusISStop() {
+        assertThat(chess.isRunning()).isTrue();
+        
+        final Chess newChess = killKingOfBlack();
+        
+        assertThat(newChess.isRunning()).isFalse();
     }
     
-    private void killKingOfBlack() {
-        board.movePiece("b2", "b4");
-        board.movePiece("c7", "c5");
-        
-        board.movePiece("b4", "c5");
-        board.movePiece("d7", "d6");
-        
-        board.movePiece("c5", "d6");
-        board.movePiece("b7", "b6");
-        
-        board.movePiece("d6", "d7");
-        board.movePiece("a7", "a6");
-        
-        board.movePiece("d7", "e8");
+    private Chess killKingOfBlack() {
+        Position whitePawnPosition = Position.of("d7");
+        Board newBoard = BoardUtils.put(board, whitePawnPosition, Pawn.createWhitePawn());
+        return new Chess(newBoard).movePiece("d7", "e8");
     }
     
     @Test
     @DisplayName("폰이 일직선에 없을때 점수 확인")
-    void b() {
-        killKingOfBlack();
-        assertThat(board.score(Color.BLACK)).isEqualTo(36.0);
+    void score_PawnsAreAnotherFile() {
+        
+        // given
+        final Chess emptyChess = createEmptyBoard();
+        Board newBoard = emptyChess.getBoard();
+        newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
+        newBoard = BoardUtils.put(newBoard, Position.of("b1"), Pawn.createWhitePawn());
+        final Chess chessAddedPawns = new Chess(newBoard);
+        
+        // when
+        final double score = chessAddedPawns.score(Color.WHITE);
+        
+        // then
+        assertThat(score).isEqualTo(2.0);
     }
     
     @Test
     @DisplayName("폰이 일직선에 있을때 점수 확인")
-    void e() {
-        killKingOfBlack();
-        assertThat(board.score(Color.WHITE)).isEqualTo(37.0);
+    void score_PawnsAreSameFile() {
+        // given
+        final Chess emptyChess = createEmptyBoard();
+        Board newBoard = emptyChess.getBoard();
+        newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
+        newBoard = BoardUtils.put(newBoard, Position.of("a2"), Pawn.createWhitePawn());
+        final Chess chessAddedPawns = new Chess(newBoard);
+        
+        // when
+        final double score = chessAddedPawns.score(Color.WHITE);
+        
+        // then
+        assertThat(score).isEqualTo(1.0);
     }
     
     @Test
     @DisplayName("게임이 끝난 후 승자 확인")
-    void c() {
-        
-        // given
+    void winner() {
         
         
         // when
-        killKingOfBlack();
-    
+        final Chess newChess = killKingOfBlack();
+        
         // then
-        assertThat(board.winner()).isEqualTo(Color.WHITE);
+        assertThat(newChess.winner()).isEqualTo(Color.WHITE);
     }
-    
-//    @Test
-//    @DisplayName("게임이 끝나지 않은 상태에서 승자 확인 -> 에러")
-//    void f() {
-//
-//        // given
-//
-//
-//        // when
-//
-//
-//        // then
-//        assertThatThrownBy(() -> board.winner()).isInstanceOf(IllegalArgumentException.class);
-//    }
 }
