@@ -1,13 +1,12 @@
-package domain.chess;
+package domain;
 
-import domain.chess.piece.*;
+import domain.piece.*;
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 class PieceFactoryTest {
 
@@ -49,6 +48,6 @@ class PieceFactoryTest {
                 Rook.Of("r", Position.Of(7, 7), false),
                 Rook.Of("r", Position.Of(7, 0), false)
         );
-        assertThat(pieces).containsAll(expected);
+        Assertions.assertThat(pieces).containsAll(expected);
     }
 }

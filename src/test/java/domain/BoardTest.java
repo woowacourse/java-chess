@@ -1,7 +1,7 @@
-package domain.chess;
+package domain;
 
-import domain.chess.piece.Pawn;
-import domain.chess.piece.Position;
+import domain.piece.Pawn;
+import domain.piece.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

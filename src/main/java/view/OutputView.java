@@ -1,7 +1,7 @@
 package view;
 
-import domain.chess.Board;
-import domain.chess.piece.Piece;
+import domain.Board;
+import domain.piece.Piece;
 
 public class OutputView {
     public static void showBoard(Board board) {

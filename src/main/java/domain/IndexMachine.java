@@ -1,6 +1,6 @@
-package domain.chess;
+package domain;
 
-import domain.chess.piece.Position;
+import domain.piece.Position;
 
 import java.util.Arrays;
 

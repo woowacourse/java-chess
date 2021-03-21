@@ -1,7 +1,7 @@
-package domain.chess;
+package domain;
 
-import domain.chess.piece.Pawn;
-import domain.chess.piece.Piece;
+import domain.piece.Pawn;
+import domain.piece.Piece;
 
 import java.util.stream.IntStream;
 

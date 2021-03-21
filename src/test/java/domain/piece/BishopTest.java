@@ -1,7 +1,7 @@
-package domain.chess.piece;
+package domain.piece;
 
-import domain.chess.Board;
-import domain.chess.PieceFactory;
+import domain.Board;
+import domain.PieceFactory;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
