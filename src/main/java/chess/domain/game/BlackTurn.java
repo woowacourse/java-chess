@@ -14,7 +14,7 @@ public class BlackTurn extends Running {
         chessGame.catchWhitePiece();
         chessGame.changeState(new WhiteTurn(chessGame));
 
-        if (!chessGame.isKingCaught()) {
+        if (chessGame.isKingCaught()) {
             chessGame.changeState(new BlackWin(chessGame));
         }
     }

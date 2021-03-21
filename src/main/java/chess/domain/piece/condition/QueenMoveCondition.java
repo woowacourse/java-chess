@@ -12,8 +12,8 @@ public class QueenMoveCondition extends MoveCondition {
     public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
-                isNotExistObstacleOnCrossPath(board, piece, target) &&
-                isNotExistObstacleOnXPath(board, piece, target) &&
+                (isNotExistObstacleOnCrossPath(board, piece, target) ||
+                isNotExistObstacleOnXPath(board, piece, target)) &&
                 isNotChessPieceOutOfBoard(target);
     }
 
