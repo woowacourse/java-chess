@@ -9,6 +9,7 @@ import java.util.Objects;
 
 public class Coordinate {
     private static final String DELIMITER = "";
+    private static final int VALID_COORDINATE_TOKEN_SIZE = 2;
 
     private final File file;
     private final Rank rank;
@@ -29,7 +30,7 @@ public class Coordinate {
     }
 
     private static void validateCoordinate(List<String> coordinateToken) {
-        if (coordinateToken.size() != 2) {
+        if (coordinateToken.size() != VALID_COORDINATE_TOKEN_SIZE) {
             throw new IllegalArgumentException("위치에 해당하는 유효한 좌표 값은 두 자리의 문자열입니다.");
         }
     }
