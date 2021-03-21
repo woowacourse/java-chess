@@ -10,6 +10,7 @@ public final class OutputView {
     private static final String CHESS_INIT_MESSAGE = "> 체스 게임을 시작합니다.";
     private static final String CHESS_START_GUIDE_MESSAGE = "> 게임 시작 : start";
     private static final String CHESS_END_GUIDE_MESSAGE = "> 게임 종료 : end";
+    private static final String CHESS_STATUS_GUIDE_MESSAGE = "> 점수 현황 : status";
     private static final String CHESS_MOVE_GUIDE_MESSAGE = "> 게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String BLACK_TEAM_SCORE = "블랙팀 점수: ";
     private static final String WHITE_TEAM_SCORE = "화이트팀 점수: ";
@@ -22,6 +23,7 @@ public final class OutputView {
         System.out.println(CHESS_INIT_MESSAGE);
         System.out.println(CHESS_START_GUIDE_MESSAGE);
         System.out.println(CHESS_END_GUIDE_MESSAGE);
+        System.out.println(CHESS_STATUS_GUIDE_MESSAGE);
         System.out.println(CHESS_MOVE_GUIDE_MESSAGE);
     }
 
