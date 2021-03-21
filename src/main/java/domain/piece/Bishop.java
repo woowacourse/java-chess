@@ -26,19 +26,9 @@ public class Bishop extends Piece {
         }};
     }
 
-    public boolean checkDiagonal(Position start, Position end) {
-        int rowDiff = Math.abs(start.getRow() - end.getRow());
-        int colDiff = Math.abs(start.getColumn() - end.getColumn());
-        return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
-    }
-
-    private boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
-        return !board.containsKey(nextPosition);
-    }
-
     @Override
     public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
-        if (!checkDiagonal(start, end)) {
+        if (!isDiagonal(start, end)) {
             return false;
         }
 

@@ -42,6 +42,22 @@ public abstract class Piece {
         return this.isBlack == piece.isBlack;
     }
 
+    protected boolean isDiagonal(Position start, Position end) {
+        int rowDiff = Math.abs(start.getRow() - end.getRow());
+        int colDiff = Math.abs(start.getColumn() - end.getColumn());
+        return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
+    }
+
+    public boolean isLinear(Position start, Position end) {
+        int rowDiff = Math.abs(start.getRow() - end.getRow());
+        int colDiff = Math.abs(start.getColumn() - end.getColumn());
+        return (rowDiff == 0) || (colDiff == 0);
+    }
+
+    protected boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
+        return !board.containsKey(nextPosition);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
