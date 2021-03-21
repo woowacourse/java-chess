@@ -4,48 +4,63 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
+import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.manager.Status;
 
+import java.util.Collections;
 import java.util.List;
 
 public class OutputView {
+    private static final String STAR_SHAPE = "*";
 
     public static void printBoard(final Board board) {
-        for (final Horizontal h : Horizontal.values()) {
+        printPieceOrStar(board);
+    }
+
+    public static void printReachableBoard(final Board board, final List<Position> ableToMove) {
+        printPieceOrStar(board, ableToMove);
+    }
+
+    public static void printPieceOrStar(final Board board) {
+        final List<Position> starPositions = Collections.emptyList();
+        printPieceOrStar(board, starPositions);
+    }
+
+    public static void printPieceOrStar(final Board board, final List<Position> starPositions) {
+        for (final Horizontal h : Horizontal.reversedValues()) {
             for (final Vertical v : Vertical.values()) {
-                final Piece piece = board.getBoard().get(new Position(v, h));
-                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
+                printSymbol(board.getPieceOf(new Position(v,h)), starPositions.contains(new Position(v,h)));
             }
             System.out.println();
         }
     }
 
-    public static void printAbleToMove(final Board board, final List<Position> ableToMove) {
-        for (final Horizontal h : Horizontal.values()) {
-            for (final Vertical v : Vertical.values()) {
-                final Position p = new Position(v, h);
-
-                if (ableToMove.contains(p)) {
-                    System.out.print("*");
-                    continue;
-                }
-
-                final Piece piece = board.getBoard().get(p);
-                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
-            }
-            System.out.println();
-        }
+    private static void printSymbol(final Piece piece, final boolean isStar){
+        System.out.print(decideSymbol(piece, isStar));
     }
 
+    private static String decideSymbol(final Piece piece, final boolean isStar){
+        if (isStar) {
+            return STAR_SHAPE;
+        }
+        return decideUpperOrLower(piece.getSymbol(), piece.isOwner(Owner.BLACK));
+    }
 
-    public static void printStatus(final Status status) {
+    private final static String decideUpperOrLower(final String symbol, final boolean isBlackPiece) {
+        if (isBlackPiece){
+            return symbol.toUpperCase();
+        }
+        return symbol.toLowerCase();
+    }
+
+    public static void printScores(final Status status) {
         System.out.println("White score : " + status.whiteScore());
         System.out.println("Black score : " + status.blackScore());
     }
 
     public static void printGameResult(final Status status) {
-        printStatus(status);
+        printScores(status);
 
         System.out.println("=== 게임 결과 ===");
 

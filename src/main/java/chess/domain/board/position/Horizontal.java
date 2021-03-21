@@ -1,6 +1,7 @@
 package chess.domain.board.position;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 public enum Horizontal {
     ONE(1),
@@ -42,5 +43,11 @@ public enum Horizontal {
 
     public Horizontal add(final int h) {
         return of(index + h);
+    }
+
+    public static Horizontal[] reversedValues(){
+        Horizontal[] values = values();
+        Arrays.sort(values, Collections.reverseOrder());
+        return values;
     }
 }

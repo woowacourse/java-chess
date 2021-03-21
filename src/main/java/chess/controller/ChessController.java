@@ -1,11 +1,14 @@
 package chess.controller;
 
+import chess.domain.board.position.Position;
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
 import chess.manager.ChessManager;
 import chess.manager.Menu;
 import chess.view.InputView;
 import chess.view.OutputView;
+
+import java.util.List;
 
 public class ChessController {
 
@@ -16,18 +19,22 @@ public class ChessController {
     }
 
     public void run() {
-        if (!Menu.of(InputView.getNewGameCommand()).isStart()) {
-            return;
-        }
-        OutputView.printBoard(chessManager.getBoard());
+        readStart();
+        executeUserCommands();
+        printResult();
+    }
 
+    private void readStart(){
+        while(!Menu.of(InputView.getNewGameCommand()).isStart()){}
+        OutputView.printBoard(chessManager.getBoard());
+    }
+
+    private void executeUserCommands(){
         String userInput;
         do {
             userInput = InputView.getUserCommand();
             commandExecute(userInput);
         } while (!chessManager.isEnd() && !Menu.of(userInput).isEnd());
-
-        OutputView.printGameResult(chessManager.calculateStatus());
     }
 
     private void commandExecute(final String input){
@@ -44,7 +51,7 @@ public class ChessController {
         }
 
         if (menu.isStatus()) {
-            OutputView.printStatus(chessManager.calculateStatus());
+            OutputView.printScores(chessManager.calculateStatus());
         }
     }
 
@@ -54,6 +61,11 @@ public class ChessController {
     }
 
     private void showAblePositionToMove(final ShowCommand command){
-        OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(command));
+        List<Position> reachablePositions = chessManager.getReachablePositions(command);
+        OutputView.printReachableBoard(chessManager.getBoard(),reachablePositions);
+    }
+
+    private void printResult(){
+        OutputView.printGameResult(chessManager.calculateStatus());
     }
 }

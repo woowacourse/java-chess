@@ -159,4 +159,8 @@ public class Board {
     public boolean isPositionOwner(final Position position, final Owner owner){
         return of(position).isOwner(owner);
     }
+
+    public Piece getPieceOf(final Position position){
+        return of(position);
+    }
 }
