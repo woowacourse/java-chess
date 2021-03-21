@@ -16,14 +16,16 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Location target) {
+    public void validateMovingAbilityToTarget(Location target) {
         int subX = Math.abs(location.subtractX(target));
         int subY = Math.abs(location.subtractY(target));
-        return ((subX == 1 && subY == 2) || (subX == 2 && subY == 1));
+        if (!((subX == 1 && subY == 2) || (subX == 2 && subY == 1))) {
+            throw new IllegalArgumentException("[ERROR] 나이트는 해당 위치로 이동할 능력이 없습니다.");
+        }
     }
 
     @Override
-    public List<Location> findPath(Location target) {
+    public List<Location> findPathTo(Location target) {
         return Collections.emptyList();
     }
 }
