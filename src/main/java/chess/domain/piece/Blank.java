@@ -44,6 +44,11 @@ public class Blank implements Piece {
     }
 
     @Override
+    public void setPosition(Position end) {
+        throw new IllegalArgumentException("공백은 움직일 수 없습니다.");
+    }
+
+    @Override
     public String toString() {
         return " .\n";
     }

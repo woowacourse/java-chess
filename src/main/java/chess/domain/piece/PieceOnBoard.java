@@ -7,8 +7,8 @@ import chess.domain.TeamColor;
 
 public abstract class PieceOnBoard implements Piece {
 
-    private TeamColor teamColor;
-    private PieceInformation pieceType;
+    private final TeamColor teamColor;
+    private final PieceInformation pieceType;
     private State state;
     private Position position;
 
@@ -70,6 +70,11 @@ public abstract class PieceOnBoard implements Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    @Override
+    public void setPosition(Position end) {
+        position = end;
     }
 
     @Override

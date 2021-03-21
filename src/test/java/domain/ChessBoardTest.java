@@ -1,9 +1,12 @@
 package domain;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.ChessBoard;
+import chess.domain.Position;
+import chess.domain.piece.Knight;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -39,7 +42,11 @@ public class ChessBoardTest {
         }).isInstanceOf(IllegalArgumentException.class);
     }
 
+    @Test
+    @DisplayName("위치 이동 테스트")
+    void change_position_test() {
+        chessBoard.move("b1", "c3");
+        assertThat(chessBoard.getPiece(Position.valueOf("c3"))).isInstanceOf(Knight.class);
 
-
-
+    }
 }

@@ -18,4 +18,6 @@ public interface Piece {
     void dead();
 
     State getState();
+
+    void setPosition(Position end);
 }

@@ -8,10 +8,8 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class ChessBoard {
 
@@ -25,47 +23,59 @@ public class ChessBoard {
 
     private void initBoard() {
 
-        Set<String> positionKeySet = Position.getPositionKeySet();
-
-        Iterator<String> iter = positionKeySet.iterator();
-
-        createUniqueLine(TeamColor.WHITE, iter);
-        createPawnLine(TeamColor.WHITE, iter);
-        createBlankLine(TeamColor.NONE, iter);
-        createBlankLine(TeamColor.NONE, iter);
-        createBlankLine(TeamColor.NONE, iter);
-        createBlankLine(TeamColor.NONE, iter);
-        createPawnLine(TeamColor.BLACK, iter);
-        createUniqueLine(TeamColor.BLACK, iter);
-    }
-
-    private void createBlankLine(TeamColor none, Iterator<String> iter) {
-        for (int i = 0; i < 8; i++) {
-            chessBoard.put(Position.valueOf(iter.next()), Blank.INSTANCE);
+        for (int j = 1; j <= 8; j++) {
+            for (char i = 'a'; i <= 'h'; i++) {
+                String boardPosition = "" + i + j;
+                chessBoard.put(Position.valueOf(boardPosition), Blank.INSTANCE);
+            }
         }
+        createPawnLine();
+        createUniqueLine();
     }
 
-    private void createPawnLine(TeamColor color, Iterator<String> iter) {
-        for (int i = 0; i < 8; i++) {
-            chessBoard.put(Position.valueOf(iter.next()), new Pawn(color));
+    private void createPawnLine() {
+        for (char i = 'a'; i <= 'h'; i++) {
+            String boardPosition = "" + i + "2";
+            chessBoard.put(Position.valueOf(boardPosition),
+                new Pawn(TeamColor.WHITE, Position.valueOf(boardPosition)));
         }
+
+        for (char i = 'a'; i <= 'h'; i++) {
+            String boardPosition = "" + i + "7";
+            chessBoard.put(Position.valueOf(boardPosition),
+                new Pawn(TeamColor.BLACK, Position.valueOf(boardPosition)));
+        }
+
     }
 
+    private void createUniqueLine() {
+        // g화이트
+        TeamColor color = TeamColor.WHITE;
 
-    private void createUniqueLine(TeamColor color, Iterator<String> iter) {
-        chessBoard.put(Position.valueOf(iter.next()), new Rook(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Knight(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Bishop(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Queen(color));
-        chessBoard.put(Position.valueOf(iter.next()), new King(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Bishop(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Knight(color));
-        chessBoard.put(Position.valueOf(iter.next()), new Rook(color));
+        chessBoard.put(Position.valueOf("a1"), new Rook(color, Position.valueOf("a1")));
+        chessBoard.put(Position.valueOf("b1"), new Knight(color, Position.valueOf("b1")));
+        chessBoard.put(Position.valueOf("c1"), new Bishop(color, Position.valueOf("c1")));
+        chessBoard.put(Position.valueOf("d1"), new Queen(color, Position.valueOf("d1")));
+        chessBoard.put(Position.valueOf("e1"), new King(color, Position.valueOf("e1")));
+        chessBoard.put(Position.valueOf("f1"), new Bishop(color, Position.valueOf("f1")));
+        chessBoard.put(Position.valueOf("g1"), new Knight(color, Position.valueOf("g1")));
+        chessBoard.put(Position.valueOf("h1"), new Rook(color, Position.valueOf("h1")));
+
+        // 블랙
+
+        color = TeamColor.BLACK;
+
+        chessBoard.put(Position.valueOf("a8"), new Rook(color, Position.valueOf("a8")));
+        chessBoard.put(Position.valueOf("b8"), new Knight(color, Position.valueOf("b8")));
+        chessBoard.put(Position.valueOf("c8"), new Bishop(color, Position.valueOf("c8")));
+        chessBoard.put(Position.valueOf("d8"), new Queen(color, Position.valueOf("d8")));
+        chessBoard.put(Position.valueOf("e8"), new King(color, Position.valueOf("e8")));
+        chessBoard.put(Position.valueOf("f8"), new Bishop(color, Position.valueOf("f8")));
+        chessBoard.put(Position.valueOf("g8"), new Knight(color, Position.valueOf("g8")));
+        chessBoard.put(Position.valueOf("h8"), new Rook(color, Position.valueOf("h8")));
     }
-
 
     public Map<Position, Piece> getChessBoard() {
-//        return Collections.unmodifiableMap(chessBoard);
         return chessBoard;
     }
 
@@ -75,7 +85,7 @@ public class ChessBoard {
         Position end = Position.valueOf(target);
         Piece startPiece = chessBoard.get(start);
         Piece goingToDie = chessBoard.get(end);
-
+        startPiece.setPosition(end);
         if (chessBoard.get(start).isMoveAble(start, end, this)) {
             //blank 경우
             if (chessBoard.get(end) == Blank.INSTANCE) {
