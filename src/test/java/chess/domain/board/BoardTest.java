@@ -84,4 +84,25 @@ class BoardTest {
         assertThat(board.isPieceExistIn(nonExistLocation2)).isFalse();
         assertThat(board.isPieceExistIn(nonExistLocation3)).isFalse();
     }
+
+    @DisplayName("점수 계산 - 현재 보드의 기물을 이용해 각 팀의 점수를 계산할 수 있다.")
+    @Test
+    void calculateScore() {
+        // given
+        char[][] testBoard = {
+            {'.', 'K', 'R', '.', '.', '.', '.', '.'},
+            {'P', '.', 'P', 'B', '.', '.', '.', '.'},
+            {'.', 'P', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', 'p', '.', 'p'},
+            {'.', '.', '.', '.', '.', 'p', 'p', '.'},
+            {'.', '.', '.', '.', 'r', 'k', '.', '.'}
+        };
+        Board board = BoardUtil.convertToBoard(testBoard);
+
+        // then
+        assertThat(board.score(Team.BLACK)).isEqualTo(20);
+        assertThat(board.score(Team.WHITE)).isEqualTo(19.5);
+    }
 }

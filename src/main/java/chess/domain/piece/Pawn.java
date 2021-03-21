@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
+import chess.domain.score.PieceScore;
 import chess.domain.team.Team;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,5 +73,15 @@ public class Pawn extends Piece {
         int subX = location.subtractX(target);
         int subY = location.subtractY(target);
         return subX != 0 && subY == 1 && !board.isPieceExistIn(target);
+    }
+
+    @Override
+    public PieceScore pieceScore() {
+        return PieceScore.PAWN;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

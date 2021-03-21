@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.location.Location;
+import chess.domain.score.PieceScore;
 import chess.domain.team.Team;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,33 +28,31 @@ public abstract class Piece {
     }
 
     public final void validateTargetIsNotSameTeam(Location target, Board board) {
-        if (board.isPieceExistIn(target) && this.isSameColor(board.find(target))) {
+        if (board.isPieceExistIn(target) && this.isSameTeam(board.find(target))) {
             throw new IllegalArgumentException("목표 위치에 같은 팀의 말이 있습니다.");
         }
     }
 
-    private final boolean isSameColor(Piece other) {
-        return (isBlackColor() && other.isBlackColor())
-            || (isWhiteColor() && other.isWhiteColor());
+    private final boolean isSameTeam(Piece other) {
+        return (isBlackTeam() && other.isBlackTeam())
+            || (isWhiteTeam() && other.isWhiteTeam());
     }
 
-    public final boolean isSameColor(Team team) {
+    public final boolean isSameTeam(Team team) {
         return this.team.equals(team);
     }
 
-    private final boolean isBlackColor() {
+    private final boolean isBlackTeam() {
         return team.isBlack();
     }
 
-    private final boolean isWhiteColor() {
+    private final boolean isWhiteTeam() {
         return team.isWhite();
     }
 
     public final boolean isExistIn(Location location) {
         return this.location.equals(location);
     }
-
-    protected abstract void validateMovingAbilityToTarget(Location target);
 
     protected final void validateNotExistObjectInPath(List<Location> path, Board board) {
         for (Location location : path) {
@@ -89,6 +88,20 @@ public abstract class Piece {
 
     private final void move(final Location target) {
         this.location = target;
+    }
+
+    protected abstract void validateMovingAbilityToTarget(Location target);
+
+    public abstract PieceScore pieceScore();
+
+    public abstract boolean isPawn();
+
+    public int getX() {
+        return location.getX();
+    }
+
+    public int getY() {
+        return location.getY();
     }
 
     @Override

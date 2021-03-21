@@ -31,23 +31,6 @@ public class Location {
             && (MIN_LOCATION <= y && y <= MAX_LOCATION);
     }
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Location location = (Location) o;
-        return x == location.x && y == location.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
-    }
-
     public boolean canMoveHorizontallyOrVerticallyTo(final Location target) {
         return canMoveHorizontallyTo(target) || canMoveVerticallyTo(target);
     }
@@ -86,5 +69,30 @@ public class Location {
 
     public boolean isRangeByStep(int dx, int dy) {
         return isRange(x + dx, y + dy);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Location location = (Location) o;
+        return x == location.x && y == location.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

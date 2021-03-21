@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.location.Location;
+import chess.domain.score.PieceScore;
 import chess.domain.team.Team;
 
 public class Rook extends Piece {
@@ -18,5 +19,15 @@ public class Rook extends Piece {
         if (!location.canMoveHorizontallyOrVerticallyTo(target)) {
             throw new IllegalArgumentException("[ERROR] 룩은 해당 위치로 이동할 능력이 없습니다.");
         }
+    }
+
+    @Override
+    public PieceScore pieceScore() {
+        return PieceScore.ROOK;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }

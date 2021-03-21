@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.location.Location;
+import chess.domain.score.PieceScore;
 import chess.domain.team.Team;
 import java.util.Collections;
 import java.util.List;
@@ -27,5 +28,15 @@ public class Knight extends Piece {
     @Override
     public List<Location> findPathTo(Location target) {
         return Collections.emptyList();
+    }
+
+    @Override
+    public PieceScore pieceScore() {
+        return PieceScore.KNIGHT;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
     }
 }
