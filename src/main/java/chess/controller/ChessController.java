@@ -50,7 +50,7 @@ public final class ChessController {
     private void move(final ChessGame chessGame, final List<String> runtimeCommands) {
         final Position start = getPositionByCommands(runtimeCommands.get(1).split(""));
         final Position end = getPositionByCommands(runtimeCommands.get(2).split(""));
-        chessGame.move(start, end, chessGame.nowTurn());
+        chessGame.move(start, end);
 
         if (chessGame.isKingDead()) {
             chessGame.changeGameOver();

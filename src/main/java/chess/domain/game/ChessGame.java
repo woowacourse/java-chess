@@ -24,10 +24,6 @@ public class ChessGame {
         return gameOver.isGameOver();
     }
 
-    public Team nowTurn() {
-        return turn.now();
-    }
-
     public void nextTurn() {
         turn.next();
     }
@@ -36,8 +32,8 @@ public class ChessGame {
         return board.isKingDead();
     }
 
-    public void move(final Position start, final Position end, final Team nowTurn) {
-        board.move(start, end, nowTurn);
+    public void move(final Position start, final Position end) {
+        board.move(start, end, turn.now());
     }
 
     public Board board() {
