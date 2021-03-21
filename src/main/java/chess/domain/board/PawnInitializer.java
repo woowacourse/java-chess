@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class PawnInitializer implements LocationInitializer {
+public final class PawnInitializer implements LocationInitializer {
 
     private static final List<String> HORIZONTALS = Arrays.stream(Horizontal.values())
         .map(Horizontal::getSymbol)

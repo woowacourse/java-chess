@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.Arrays;
 import java.util.List;
 
-public class King extends GeneralPiece {
+public final class King extends GeneralPiece {
 
     private static final String INITIAL_NAME = "K";
     private static final double SCORE = 0;

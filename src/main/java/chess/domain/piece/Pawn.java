@@ -5,7 +5,7 @@ import chess.domain.position.Vertical;
 import java.util.Arrays;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
 
     public static final double EXTRA_SCORE = 0.5;
     private static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2, 7);

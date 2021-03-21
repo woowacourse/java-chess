@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class BoardInitializer {
+public final class BoardInitializer {
 
     private static final List<LocationInitializer> locationInitializers;
     private static final List<String> HORIZONTAL_RANGE = Horizontal.horizontalSymbols();

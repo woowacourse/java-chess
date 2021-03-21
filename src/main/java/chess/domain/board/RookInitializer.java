@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RookInitializer implements LocationInitializer {
+public final class RookInitializer implements LocationInitializer {
 
     private static final List<String> HORIZONTALS = Arrays.asList("a", "h");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");

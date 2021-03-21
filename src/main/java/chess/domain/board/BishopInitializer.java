@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BishopInitializer implements LocationInitializer {
+public final class BishopInitializer implements LocationInitializer {
 
     private static final List<String> HORIZONTALS = Arrays.asList("c", "f");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");
