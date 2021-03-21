@@ -7,6 +7,8 @@ import chess.domain.game.Ready;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Collections;
 
@@ -46,11 +48,13 @@ class MoveCommandTest {
     @Test
     void isUsable() {
         assertThat(moveCommand.isUsable("move a1 a2")).isTrue();
-        assertThat(moveCommand.isUsable("move a1a2")).isFalse();
-        assertThat(moveCommand.isUsable("move a1 a23")).isFalse();
-        assertThat(moveCommand.isUsable("move a123 a2")).isFalse();
-        assertThat(moveCommand.isUsable("move2 a1 a2")).isFalse();
-        assertThat(moveCommand.isUsable("move a1 a1 a2")).isFalse();
+    }
+
+    @DisplayName("올바르지 않은 입력을 확인한다.")
+    @ParameterizedTest
+    @CsvSource({"move a1a2", "move a1 a23", "move a123 a2", "move2 a1 a2", "move a1 a1 a2"})
+    void isUsable_failCase(String input) {
+        assertThat(moveCommand.isUsable(input)).isFalse();
     }
 
     @DisplayName("Status 인지 확인한다.")
