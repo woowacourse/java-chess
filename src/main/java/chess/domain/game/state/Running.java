@@ -3,7 +3,6 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 
 public abstract class Running extends Started {
-
     public Running(Board board) {
         super(board);
     }
@@ -16,10 +15,5 @@ public abstract class Running extends Started {
     @Override
     public State end() {
         return new End(board());
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 }

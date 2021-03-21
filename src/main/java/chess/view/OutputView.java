@@ -13,4 +13,8 @@ public class OutputView {
             System.out.println();
         }
     }
+
+    public static void printErrorException(String message) {
+        System.out.println(message);
+    }
 }

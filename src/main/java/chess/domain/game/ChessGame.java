@@ -21,7 +21,8 @@ public class ChessGame {
 //        MoveStrategy moveStrategy = piece.moveStrategy();
 //        return moveStrategy.movable(board, source);
 //    }
-    public boolean isRunning() {
-        return state.isRunning();
+
+    public boolean isNotFinished() {
+        return state.isNotFinished();
     }
 }

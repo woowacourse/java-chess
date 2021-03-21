@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 
 public abstract class Finished extends Started {
-
     public Finished(Board board) {
         super(board);
     }
@@ -17,5 +16,10 @@ public abstract class Finished extends Started {
     @Override
     public State end() {
         throw new IllegalStateException();
+    }
+
+    @Override
+    public boolean isNotFinished() {
+        return false;
     }
 }

@@ -3,7 +3,6 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 
 public abstract class Started implements State {
-
     private final Board board;
 
     public Started(Board board) {
@@ -15,7 +14,7 @@ public abstract class Started implements State {
     }
 
     @Override
-    public boolean isRunning() {
-        return false;
+    public boolean isNotFinished() {
+        return true;
     }
 }
