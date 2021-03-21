@@ -21,7 +21,7 @@ public abstract class Piece {
         validateTargetIsNotSameTeam(target, board);
         validateMovingAbilityToTarget(target);
         validateNotExistObjectInPath(findPathTo(target), board);
-        validatePawnMovable();
+        validatePawnMovable(target, board);
         removeIfExist(target, board);
         move(target);
     }
@@ -78,7 +78,7 @@ public abstract class Piece {
         return path;
     }
 
-    protected void validatePawnMovable() { }
+    protected void validatePawnMovable(Location target, Board board) { }
 
     private void removeIfExist(Location target, Board board) {
         if (board.isPieceExistIn(target)) {

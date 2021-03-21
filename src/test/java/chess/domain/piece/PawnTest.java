@@ -1,81 +1,167 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.domain.board.Board;
 import chess.domain.location.Location;
-import chess.domain.team.Team;
+import chess.utils.BoardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class PawnTest {
 
-    private Pawn whitePawn;
-    private Pawn blackPawn;
+    private static final char[][] TEST_BOARD_VALUE = {
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'},
+        {'.', '.', 'R', 'B', 'q', '.', 'P', '.'},
+        {'.', '.', '.', 'p', '.', '.', '.', '.'},
+        {'n', '.', '.', '.', '.', '.', '.', '.'},
+        {'p', '.', '.', '.', '.', 'p', '.', '.'},
+        {'.', '.', '.', '.', '.', '.', '.', '.'}
+    };
+
+    private Board board;
 
     @BeforeEach
     void setUp() {
-        whitePawn = Pawn.of(Location.of(4, 2), Team.WHITE);
-        blackPawn = Pawn.of(Location.of(4, 7), Team.BLACK);
+        board = BoardUtil.convertToBoard(TEST_BOARD_VALUE);
     }
 
-    @DisplayName("흰색 폰은 4가지 위치로 이동 가능하다.")
+    @DisplayName("폰 이동 능력 테스트 - 전방으로 1칸씩 전진할 수 있다.")
     @Test
-    void movable_white_test() {
-        // given, when
-        Location frontTarget = Location.of(4, 3);
-        Location twoFrontTarget = Location.of(5, 3);
-        Location leftDiagonalTarget = Location.of(3, 3);
-        Location rightDiagonalTarget = Location.of(5, 3);
+    void movable_oneStep() {
+        // given
+        Location source = Location.of(6, 2);
+        Location target = Location.of(6, 3);
+        Piece pawn = board.find(source);
 
         // then
-        assertThat(whitePawn.isMovable(frontTarget)).isTrue();
-        assertThat(whitePawn.isMovable(twoFrontTarget)).isTrue();
-        assertThat(whitePawn.isMovable(leftDiagonalTarget)).isTrue();
-        assertThat(whitePawn.isMovable(rightDiagonalTarget)).isTrue();
+        assertThatCode(() -> pawn.moveTo(target, board)).doesNotThrowAnyException();
+        assertThat(board.find(target)).isEqualTo(pawn);
     }
 
-    @DisplayName("검정색 폰은 4가지 위치로 이동 가능하다.")
+    @DisplayName("폰 이동 능력 테스트 - 초기 위치인 경우 전방으로 2칸 전진할 수 있다.")
     @Test
-    void movable_black_test() {
+    void movable_twoStep() {
         // given, when
-        Location frontTarget = Location.of(4, 6);
-        Location twoFrontTarget = Location.of(4, 5);
-        Location leftDiagonalTarget = Location.of(3, 6);
-        Location rightDiagonalTarget = Location.of(5, 6);
+        Location source = Location.of(6, 2);
+        Location target = Location.of(6, 4);
+        Piece pawn = board.find(source);
 
         // then
-        assertThat(blackPawn.isMovable(frontTarget)).isTrue();
-        assertThat(blackPawn.isMovable(twoFrontTarget)).isTrue();
-        assertThat(blackPawn.isMovable(leftDiagonalTarget)).isTrue();
-        assertThat(blackPawn.isMovable(rightDiagonalTarget)).isTrue();
+        assertThatCode(() -> pawn.moveTo(target, board)).doesNotThrowAnyException();
+        assertThat(board.find(target)).isEqualTo(pawn);
     }
 
-    @DisplayName("흰색 폰은 4가지 위치 이외로는 이동 불가능하다.")
+    @DisplayName("폰 이동 능력 테스트 - 초기 위치가 아닌 경우 전방으로 2칸 움직일 수 없다.")
     @Test
-    void nonMovable_white_test() {
-        // given, when
-        Location backTarget = Location.of(4, 1);
-        Location leftTarget = Location.of(3, 2);
-        Location rightTarget = Location.of(5, 2);
+    void nonMovable_twoStep() {
+        // given
+        Location source = Location.of(7, 5);
+        Location target = Location.of(7, 3);
+        Piece pawn = board.find(source);
 
         // then
-        assertThat(whitePawn.isMovable(backTarget)).isFalse();
-        assertThat(whitePawn.isMovable(leftTarget)).isFalse();
-        assertThat(whitePawn.isMovable(rightTarget)).isFalse();
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 
-    @DisplayName("검정색 폰은 4가지 위치 이외로는 이동 불가능하다.")
+    @DisplayName("폰 이동 능력 테스트 - 전진만 가능하며 뒤로 움직일 수 없다.")
     @Test
-    void nonMovable_black_test() {
-        // given, when
-        Location backTarget = Location.of(4, 8);
-        Location leftTarget = Location.of(3, 7);
-        Location rightTarget = Location.of(5, 7);
+    void nonMovable_back() {
+        // given
+        Location source = Location.of(7, 5);
+        Location target = Location.of(7, 6);
+        Piece pawn = board.find(source);
 
         // then
-        assertThat(blackPawn.isMovable(backTarget)).isFalse();
-        assertThat(blackPawn.isMovable(leftTarget)).isFalse();
-        assertThat(blackPawn.isMovable(rightTarget)).isFalse();
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 이동 능력 테스트 - 전진만 가능하며 옆으로 움직일 수 없다.")
+    @Test
+    void nonMovable_side() {
+        // given
+        Location source = Location.of(7, 5);
+        Location target = Location.of(6, 5);
+        Piece pawn = board.find(source);
+
+        // then
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 이동 능력 테스트 - 목표위치까지의 경로에 기물이 존재할 경우 이동할 수 없다.")
+    @Test
+    void nonMovable_path() {
+        // given
+        Location source = Location.of(1, 2);
+        Location target = Location.of(1, 4);
+        Piece pawn = board.find(source);
+
+        // then
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 이동 능력 테스트 - 앞에 기물(아군, 적 포함)있으면 이동할 수 없다.")
+    @Test
+    void nonMovable_exist() {
+        // given
+        Location source = Location.of(4, 4);
+        Location target = Location.of(4, 5);
+        Piece pawn = board.find(source);
+
+        // then
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 이동 능력 테스트 - 적이 없는 경우엔 대각선으로 1칸 이동할 수 없다.")
+    @Test
+    void nonMovable_diagonal_1() {
+        // given
+        Location source = Location.of(1, 2);
+        Location target = Location.of(2, 3);
+        Piece pawn = board.find(source);
+
+        // then
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 인동 능력 테스트 - 대각선에 아군이 위치한 경우 이동할 수 없다.")
+    @Test
+    void nonMovable_diagonal_2() {
+        // given
+        Location source = Location.of( 4, 4);
+        Location target = Location.of(5, 5);
+        Piece pawn = board.find(source);
+
+        // then
+        assertThatThrownBy(() -> pawn.moveTo(target, board))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("폰 공격 테스트 - 대각선에 적이 위치한 경우 대각선으로 1칸 이동할 수 있다.")
+    @Test
+    void moveAndAttack() {
+        // given
+        Location source = Location.of(4, 4);
+        Location target = Location.of(3, 5);
+        Piece pawn = board.find(source);
+        Piece targetPiece = board.find(target);
+
+        // when
+        pawn.moveTo(target, board);
+
+        // then
+        assertThat(board.find(target)).isEqualTo(pawn);
+        assertThat(board.toList()).doesNotContain(targetPiece);
     }
 }
