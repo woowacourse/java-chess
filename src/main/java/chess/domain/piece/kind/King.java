@@ -22,7 +22,7 @@ public class King extends Piece {
         if (distance == MOVE_STRAIGHT_ONE_SQUARE || distance == MOVE_DIAGONAL_ONE_SQUARE) {
             return Optional.of(direction);
         }
-        throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+        throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
     }
 
     @Override

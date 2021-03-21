@@ -9,7 +9,6 @@ import java.util.Objects;
 import java.util.Optional;
 
 public abstract class Piece {
-    public static final String IMPOSSIBLE_ROUTE_ERROR_MESSAGE = "기물이 이동할 수 없는 경로입니다.";
     protected static final int MOVE_STRAIGHT_ONE_SQUARE = 1;
     protected static final int MOVE_DIAGONAL_ONE_SQUARE = 2;
 

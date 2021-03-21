@@ -20,7 +20,7 @@ public class Knight extends Piece {
         int distance = this.point.calculateDistance(target.point);
 
         if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
-            throw new IllegalArgumentException(Piece.IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+            throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
         return Optional.empty();
     }
