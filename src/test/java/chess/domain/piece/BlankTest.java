@@ -12,8 +12,9 @@ public class BlankTest {
     @DisplayName("해당 위치가 비어있으면 이동 불가")
     void canMove() {
         final Piece blank = Blank.getInstance();
-        assertThatThrownBy(() -> blank.canMove(new Position("e", "3"), new Position("e", "4"),
-            new Queen(Team.WHITE)))
+        final Position start = new Position("e", "3");
+        final Position end = new Position("e", "4");
+        assertThatThrownBy(() -> blank.canMove(start, end, new Queen(Team.WHITE)))
             .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("비어 있는 칸입니다.");
     }
