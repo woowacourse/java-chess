@@ -10,7 +10,6 @@ public class Pawn extends Piece {
     private static final int BLACK_DIRECTION = 1;
     private static final int WHITE_DIRECTION = -1;
     private static final int DOUBLE_FORWARD = 2;
-    private static final int PAWN_ROUTE_COUNT_ONE_FORWARD = 0;
     private static final double ONE_SCORE = 1;
     private static final double MULTIPLE_SCORE = 0.5;
     private static final int MULTIPLE_SCORE_LIMIT = 1;
