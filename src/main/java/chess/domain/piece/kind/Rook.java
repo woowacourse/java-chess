@@ -14,12 +14,12 @@ public class Rook extends Piece {
 
     @Override
     public void validateMovable(Direction direction, Piece targetPiece) {
-        if (isNotMovable(direction)) {
+        if (isNotMovableDirection(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
     }
 
-    private boolean isNotMovable(Direction direction) {
+    private boolean isNotMovableDirection(Direction direction) {
         return !Direction.rookDirection().contains(direction);
     }
 

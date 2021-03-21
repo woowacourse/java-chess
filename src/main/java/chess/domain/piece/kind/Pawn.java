@@ -27,6 +27,10 @@ public class Pawn extends Piece {
         }
     }
 
+    private boolean isNotMovableDirection(Direction direction) {
+        return !Direction.pawnDirection(this.color).contains(direction);
+    }
+
     private boolean isNotMovableRoute(Piece targetPiece) {
         int distance = this.point.calculateDistance(targetPiece.point);
         if (targetPiece.isEmptyPiece() && distance == MOVE_STRAIGHT_ONE_SQUARE) {
@@ -40,10 +44,6 @@ public class Pawn extends Piece {
             return false;
         }
         return true;
-    }
-
-    private boolean isNotMovableDirection(Direction direction) {
-        return !Direction.pawnDirection(this.color).contains(direction);
     }
 
     private boolean isInitialWhitePawn() {
