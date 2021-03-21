@@ -1,10 +1,13 @@
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-
 import chess.domain.command.Command;
-import java.util.Collections;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class CommandTest {
 
@@ -39,7 +42,7 @@ public class CommandTest {
     @Test
     @DisplayName("무브 커맨드")
     void moveCommand() {
-        assertThat(Command.getByInput("move a1 a2")).isEqualTo(Command.MOVE);
+        assertThat(Command.getByInput("move")).isEqualTo(Command.MOVE);
     }
 
     @Test
@@ -50,13 +53,14 @@ public class CommandTest {
         ).withMessage("유효하지 않은 입력입니다.");
 
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Command.getByInput("move a1 a2 a3")
+            Command.getByInput("move a1 a2")
         ).withMessage("유효하지 않은 입력입니다.");
     }
 
     @Test
     @DisplayName("인자 리스트를 구하는 테스트")
     void testGetArguments() {
-        assertThat(Command.getArguments("start")).isEqualTo(Collections.emptyList());
+        List<String> input = Arrays.asList("start");
+        assertThat(Command.getArguments(input)).isEqualTo(Collections.emptyList());
     }
 }

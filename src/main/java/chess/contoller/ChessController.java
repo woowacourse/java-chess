@@ -9,6 +9,8 @@ import chess.domain.gamestate.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.List;
+
 public class ChessController {
 
     public void play() {
@@ -21,8 +23,8 @@ public class ChessController {
 
     private GameState ready(GameState gameState) {
         OutputView.printStartInfo();
-        String input = InputView.InputString();
-        Command command = Command.getByInput(input);
+        List<String> input = InputView.InputString();
+        Command command = Command.getByInput(input.get(0));
         gameState = gameState.operateCommand(command, Command.getArguments(input));
         return gameState;
     }
@@ -30,8 +32,8 @@ public class ChessController {
     private void start(ChessGame chessGame, GameState gameState) {
         while (gameState.isRunning()) {
             OutputView.printChessBoard(chessGame.generateBoardDto());
-            String input = InputView.InputString();
-            Command command = Command.getByInput(input);
+            List<String>  input = InputView.InputString();
+            Command command = Command.getByInput(input.get(0));
             gameState = gameState.operateCommand(command, Command.getArguments(input));
             printScoreIfStatus(chessGame, command);
         }

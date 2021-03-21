@@ -8,6 +8,8 @@ import java.util.List;
 
 public class Running implements GameState {
 
+    public static final int SOURCE_INDEX = 0;
+    public static final int DESTINATION_INDEX = 1;
     private final ChessGame chessGame;
     private final Turn turn;
 
@@ -31,8 +33,8 @@ public class Running implements GameState {
     }
 
     private GameState updateStateWhenMove(List<String> arguments) {
-        Point source = Point.of(arguments.get(0));
-        Point destination = Point.of(arguments.get(1));
+        Point source = Point.of(arguments.get(SOURCE_INDEX));
+        Point destination = Point.of(arguments.get(DESTINATION_INDEX));
 
         chessGame.move(source, destination, turn.now());
         turn.next();
