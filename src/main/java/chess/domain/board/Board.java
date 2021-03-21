@@ -91,6 +91,6 @@ public final class Board {
     public boolean isKingDead() {
         return chessBoard.values().stream()
             .filter(Piece::isKing)
-            .count() != Team.playerNumber();
+            .count() != Team.PLAYER_NUMBER;
     }
 }

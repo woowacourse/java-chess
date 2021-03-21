@@ -7,16 +7,11 @@ public enum Team {
     WHITE("white"),
     NOTHING("");
 
+    public static final int PLAYER_NUMBER = 2;
     private final String teamName;
 
     Team(final String teamName) {
         this.teamName = teamName;
-    }
-
-    public static int playerNumber() {
-        return (int) Arrays.stream(Team.values())
-            .filter(team -> team != Team.NOTHING)
-            .count();
     }
 
     public Team anyTeamExcludingThis() {
