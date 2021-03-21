@@ -1,9 +1,8 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.white.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,11 +18,11 @@ class NormalWhitePawnMoveConditionTest {
     void isSatisfyBy() {
         NormalWhitePawnMoveCondition condition = new NormalWhitePawnMoveCondition();
         Board board = new Board(Collections.singletonList(
-                Piece.createPawn(Color.WHITE, 7, 0)
+                WhitePawn.createWithCoordinate(7, 0)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 7, 0),
+        boolean rightActual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(6, 0));
-        boolean falseActual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 7, 0),
+        boolean falseActual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(5, 0));
 
         assertThat(rightActual).isTrue();
@@ -35,11 +34,11 @@ class NormalWhitePawnMoveConditionTest {
     void isSatisfyBy_false() {
         NormalWhitePawnMoveCondition condition = new NormalWhitePawnMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createPawn(Color.WHITE, 7, 0),
-                Piece.createPawn(Color.WHITE, 6, 0)
+                WhitePawn.createWithCoordinate(7, 0),
+                WhitePawn.createWithCoordinate(6, 0)
 
         ));
-        boolean actual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 7, 0),
+        boolean actual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 0),
                 new Position(6, 0));
 
         assertThat(actual).isFalse();

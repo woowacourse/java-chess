@@ -1,9 +1,8 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.black.BlackKnight;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,7 +18,7 @@ class KnightMoveConditionTest {
     void isSatisfyBy() {
         KnightMoveCondition condition = new KnightMoveCondition();
         Board board = new Board(Collections.singletonList(
-                Piece.createPawn(Color.BLACK, 4, 4)
+                BlackKnight.createWithCoordinate(4, 4)
         ));
 
         int[] row = {2, 2, -2, -2, 1, -1, 1, -1};
@@ -29,10 +28,10 @@ class KnightMoveConditionTest {
             int dr = 4 + row[i];
             int dc = 4 + col[i];
 
-            assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(dr, dc))).isTrue();
+            assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(dr, dc))).isTrue();
         }
 
-        assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(2, 4))).isFalse();
+        assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(2, 4))).isFalse();
     }
 
     @DisplayName("나이트의 도착지에 아군 말이 있으면 안된다.")
@@ -40,10 +39,10 @@ class KnightMoveConditionTest {
     void isSatisfyBy_false() {
         KnightMoveCondition condition = new KnightMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createKnight(Color.BLACK, 4, 4),
-                Piece.createPawn(Color.BLACK, 7, 5)
+                BlackKnight.createWithCoordinate(4, 4),
+                BlackKnight.createWithCoordinate(7, 5)
         ));
 
-        assertThat(condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 4, 4), new Position(7, 5))).isFalse();
+        assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(7, 5))).isFalse();
     }
 }

@@ -18,13 +18,6 @@ class StatusCommandTest {
         statusCommand = new StatusCommand(new ChessGame(new Board(PieceFactory.createPieces())));
     }
 
-    @DisplayName("Status 명령어를 통해 점수를 가져온다.")
-    @Test
-    void execute() {
-        assertThat(statusCommand.getWhiteScore()).isEqualTo(34);
-        assertThat(statusCommand.getBlackScore()).isEqualTo(34);
-    }
-
     @DisplayName("올바른 입력인지 확인한다.")
     @Test
     void isUsable() {

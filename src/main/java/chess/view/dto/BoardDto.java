@@ -13,9 +13,9 @@ public class BoardDto {
     List<PieceDto> pieceDtos;
 
     public BoardDto(final Board board) {
-        this.row = board.getRow();
-        this.column = board.getColumn();
-        this.pieceDtos = board.getPieces().stream()
+        this.row = Board.getRow();
+        this.column = Board.getColumn();
+        this.pieceDtos = board.getAllPieces().stream()
                 .map(PieceDto::new)
                 .collect(toList());
     }

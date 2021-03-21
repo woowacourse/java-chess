@@ -1,6 +1,6 @@
 package chess.view.dto;
 
-import chess.domain.piece.Piece;
+import chess.domain.piece.ChessPiece;
 
 public class PieceDto {
 
@@ -8,7 +8,7 @@ public class PieceDto {
     private final int row;
     private final int column;
 
-    public PieceDto(Piece piece) {
+    public PieceDto(ChessPiece piece) {
         this.notation = piece.getNotation();
         this.row = piece.getRow();
         this.column = piece.getColumn();

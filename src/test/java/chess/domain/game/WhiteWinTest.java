@@ -1,10 +1,12 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.PieceFactory;
+import chess.domain.piece.black.BlackPawn;
+import chess.domain.piece.white.WhiteQueen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -16,14 +18,17 @@ class WhiteWinTest {
 
     @BeforeEach
     void setUp() {
-        chessGame = new ChessGame(new Board(PieceFactory.createPieces()));
+        chessGame = new ChessGame(new Board(Arrays.asList(
+                WhiteQueen.createWithCoordinate(0, 0),
+                BlackPawn.createWithCoordinate(0, 1)
+        )));
         whiteWin = new WhiteWin(chessGame);
     }
 
     @Test
     void getWinnerColor() {
-        assertThat(whiteWin.getWinnerColor().isPresent()).isTrue();
-        assertThat(whiteWin.getWinnerColor().get()).isSameAs(Color.WHITE);
+        assertThat(whiteWin.getWinnerColorNotation().isPresent()).isTrue();
+        assertThat(whiteWin.getWinnerColorNotation().get()).isSameAs("백");
     }
 
     @Test

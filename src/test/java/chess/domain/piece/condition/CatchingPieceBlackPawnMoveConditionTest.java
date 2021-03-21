@@ -1,9 +1,9 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.black.BlackPawn;
+import chess.domain.piece.white.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +18,12 @@ class CatchingPieceBlackPawnMoveConditionTest {
     void isSatisfyBy() {
         CatchingPieceBlackPawnMoveCondition condition = new CatchingPieceBlackPawnMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createPawn(Color.BLACK, 0, 2),
-                Piece.createRook(Color.WHITE, 1, 3)
+                BlackPawn.createWithCoordinate(0, 2),
+                WhitePawn.createWithCoordinate(1, 3)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 0, 2),
+        boolean rightActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 2),
                 new Position(1, 3));
-        boolean falseActual = condition.isSatisfyBy(board, Piece.createPawn(Color.BLACK, 0, 2),
+        boolean falseActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 2),
                 new Position(1, 1));
 
         assertThat(rightActual).isTrue();
@@ -36,20 +36,20 @@ class CatchingPieceBlackPawnMoveConditionTest {
         CatchingPieceBlackPawnMoveCondition condition = new CatchingPieceBlackPawnMoveCondition();
         Board board = new Board(
                 Arrays.asList(
-                        Piece.createQueen(Color.BLACK, 0, 0)
+                        BlackPawn.createWithCoordinate(0, 0)
                 )
         );
 
-        boolean actualLeft = condition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean actualLeft = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(-1, 0));
 
-        boolean actualDown = condition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean actualDown = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(8, 0));
 
-        boolean actualUp = condition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean actualUp = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(0, -1));
 
-        boolean actualRight = condition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean actualRight = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 0),
                 new Position(0, 8));
 
 

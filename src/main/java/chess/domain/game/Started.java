@@ -1,6 +1,7 @@
 package chess.domain.game;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.black.BlackPiece;
+import chess.domain.piece.white.WhitePiece;
 
 import java.util.Optional;
 
@@ -19,20 +20,20 @@ public abstract class Started implements State {
     }
 
     @Override
-    public Optional<Color> getWinnerColor() {
+    public Optional<String> getWinnerColorNotation() {
         double blackScore = chessGame.getBlackScore();
         double whiteScore = chessGame.getWhiteScore();
 
         return calculateWinner(blackScore, whiteScore);
     }
 
-    private Optional<Color> calculateWinner(double blackScore, double whiteScore) {
+    private Optional<String> calculateWinner(double blackScore, double whiteScore) {
         if (blackScore > whiteScore) {
-            return Optional.of(Color.BLACK);
+            return Optional.of(BlackPiece.NOTATION);
         }
 
         if (whiteScore > blackScore) {
-            return Optional.of(Color.WHITE);
+            return Optional.of(WhitePiece.NOTATION);
         }
 
         return Optional.empty();

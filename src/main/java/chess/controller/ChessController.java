@@ -53,7 +53,8 @@ public class ChessController {
             return;
         }
 
-        game.getWinnerColor().ifPresent(color -> OutputView.printWinner(color.getName()));
+        game.getWinnerColorNotation()
+                .ifPresent(OutputView::printWinner);
     }
 
     private void printBoard() {

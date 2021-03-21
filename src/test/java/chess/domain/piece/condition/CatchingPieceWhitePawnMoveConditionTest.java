@@ -1,9 +1,10 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.black.BlackKnight;
+import chess.domain.piece.black.BlackRook;
+import chess.domain.piece.white.WhitePawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -18,12 +19,12 @@ class CatchingPieceWhitePawnMoveConditionTest {
     void isSatisfyBy() {
         CatchingPieceWhitePawnMoveCondition condition = new CatchingPieceWhitePawnMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createPawn(Color.WHITE, 7, 2),
-                Piece.createRook(Color.BLACK, 6, 3)
+                WhitePawn.createWithCoordinate(7, 2),
+                BlackKnight.createWithCoordinate(6, 3)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 7, 2),
+        boolean rightActual = condition.isSatisfyBy(board, WhitePawn.createWithCoordinate(7, 2),
                 new Position(6, 3));
-        boolean falseActual = condition.isSatisfyBy(board, Piece.createRook(Color.BLACK, 6, 3),
+        boolean falseActual = condition.isSatisfyBy(board, BlackRook.createWithCoordinate(6, 3),
                 new Position(6, 1));
 
         assertThat(rightActual).isTrue();

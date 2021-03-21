@@ -28,7 +28,7 @@ public class Position {
         return column;
     }
 
-    public Position changePosition(Position target, Board board, Piece piece, List<MoveCondition> moveConditions) {
+    public Position changePosition(Position target, Board board, ChessPiece piece, List<MoveCondition> moveConditions) {
         Optional<MoveCondition> selectedCondition = moveConditions.stream()
                 .filter(moveCondition -> moveCondition.isSatisfyBy(board, piece, target))
                 .findAny();

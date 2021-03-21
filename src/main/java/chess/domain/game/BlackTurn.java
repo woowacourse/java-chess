@@ -1,10 +1,8 @@
 package chess.domain.game;
 
-import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class BlackTurn extends Running {
-    private static final Color COLOR = Color.BLACK;
 
     public BlackTurn(final ChessGame chessGame) {
         super(chessGame);
@@ -12,11 +10,11 @@ public class BlackTurn extends Running {
 
     @Override
     public void move(final Position source, final Position target) {
-        chessGame.movePiece(COLOR, source, target);
-        chessGame.catchPiece(COLOR);
+        chessGame.moveBlackPiece(source, target);
+        chessGame.catchWhitePiece();
         chessGame.changeState(new WhiteTurn(chessGame));
 
-        if (!chessGame.isKingsExist()) {
+        if (!chessGame.isKingCaught()) {
             chessGame.changeState(new BlackWin(chessGame));
         }
     }

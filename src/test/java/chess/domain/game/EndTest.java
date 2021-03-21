@@ -21,7 +21,7 @@ class EndTest {
 
     @Test
     void getWinnerColor() {
-        assertThat(end.getWinnerColor().isPresent()).isFalse();
+        assertThat(end.getWinnerColorNotation().isPresent()).isFalse();
     }
 
     @Test

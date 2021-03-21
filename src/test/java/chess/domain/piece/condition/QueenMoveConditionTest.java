@@ -1,9 +1,9 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.white.WhitePawn;
+import chess.domain.piece.white.WhiteQueen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +19,12 @@ class QueenMoveConditionTest {
     void isSatisfyBy() {
         QueenMoveCondition condition = new QueenMoveCondition();
         Board board = new Board(Collections.singletonList(
-                Piece.createQueen(Color.WHITE, 4, 4)
+                WhiteQueen.createWithCoordinate(4, 4)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
+        boolean rightActual = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 4));
 
-        boolean falseActual = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
+        boolean falseActual = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 5));
 
         assertThat(rightActual).isTrue();
@@ -36,14 +36,14 @@ class QueenMoveConditionTest {
     void isSatisfyBy_false() {
         QueenMoveCondition condition = new QueenMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createQueen(Color.WHITE, 4, 4),
-                Piece.createPawn(Color.WHITE, 5, 4),
-                Piece.createPawn(Color.WHITE, 5, 5)
+                WhiteQueen.createWithCoordinate(4, 4),
+                WhitePawn.createWithCoordinate(5, 4),
+                WhitePawn.createWithCoordinate(5, 5)
         ));
 
-        boolean actualCross = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4),
+        boolean actualCross = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4),
                 new Position(7, 4));
-        boolean actualX = condition.isSatisfyBy(board, Piece.createQueen(Color.WHITE, 4, 4), new Position(6, 6));
+        boolean actualX = condition.isSatisfyBy(board, WhiteQueen.createWithCoordinate(4, 4), new Position(6, 6));
 
         assertThat(actualCross).isFalse();
         assertThat(actualX).isFalse();

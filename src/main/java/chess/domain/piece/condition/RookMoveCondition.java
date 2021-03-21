@@ -1,7 +1,7 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Piece;
+import chess.domain.piece.ChessPiece;
 import chess.domain.piece.Position;
 
 import java.util.function.Predicate;
@@ -9,26 +9,26 @@ import java.util.function.Predicate;
 public class RookMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final Piece piece, final Position target) {
+    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovable(piece, target) &&
                 isNotExistObstacleOnCrossPath(board, piece, target) &&
-                isNotChessPieceOutOfBoard(board, target);
+                isNotChessPieceOutOfBoard(target);
     }
 
-    private boolean isRightMovable(final Piece piece, final Position target) {
+    private boolean isRightMovable(final ChessPiece piece, final Position target) {
         return piece.getRow() == target.getRow() ||
                 piece.getColumn() == target.getColumn();
     }
 
-    private boolean isNotExistObstacleOnCrossPath(Board board, Piece piece, Position target) {
-        return board.getPieces().stream()
+    private boolean isNotExistObstacleOnCrossPath(Board board, ChessPiece piece, Position target) {
+        return board.getAllPieces().stream()
                 .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
                 .noneMatch(isExistObstacleOnCrossPath(piece, target)
                 );
     }
 
-    private Predicate<Piece> isExistObstacleOnCrossPath(final Piece piece, final Position target) {
+    private Predicate<ChessPiece> isExistObstacleOnCrossPath(final ChessPiece piece, final Position target) {
         int maxCol = Math.max(piece.getColumn(), target.getColumn());
         int minCol = Math.min(piece.getColumn(), target.getColumn());
         int maxRow = Math.max(piece.getRow(), target.getRow());

@@ -1,13 +1,13 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.black.BlackBishop;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -18,13 +18,13 @@ class BishopMoveConditionTest {
     void isSatisfyBy_checkMoveConditionIsRight() {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
         Board board = new Board(
-                Arrays.asList(
-                        Piece.createBishop(Color.BLACK, 0, 0)
+                Collections.singletonList(
+                        BlackBishop.createWithCoordinate(0, 0)
                 )
         );
-        boolean rightActual = bishopMoveCondition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean rightActual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(1, 1));
-        boolean falseActual = bishopMoveCondition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean falseActual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(1, 0));
 
         assertThat(rightActual).isTrue();
@@ -37,12 +37,12 @@ class BishopMoveConditionTest {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
         Board board = new Board(
                 Arrays.asList(
-                        Piece.createBishop(Color.BLACK, 0, 0),
-                        Piece.createPawn(Color.BLACK, 1, 1)
+                        BlackBishop.createWithCoordinate(0, 0),
+                        BlackBishop.createWithCoordinate(1, 1)
                 )
         );
 
-        boolean actual = bishopMoveCondition.isSatisfyBy(board, Piece.createBishop(Color.BLACK, 0, 0),
+        boolean actual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(2, 2));
 
         assertThat(actual).isFalse();

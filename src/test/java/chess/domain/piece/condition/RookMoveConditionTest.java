@@ -1,9 +1,9 @@
 package chess.domain.piece.condition;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
+import chess.domain.piece.white.WhitePawn;
+import chess.domain.piece.white.WhiteRook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -19,12 +19,12 @@ class RookMoveConditionTest {
     void isSatisfyBy() {
         RookMoveCondition condition = new RookMoveCondition();
         Board board = new Board(Collections.singletonList(
-                Piece.createPawn(Color.WHITE, 0, 1)
+                WhiteRook.createWithCoordinate(0, 1)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 0, 1),
+        boolean rightActual = condition.isSatisfyBy(board, WhiteRook.createWithCoordinate(0, 1),
                 new Position(7, 1));
 
-        boolean falseActual = condition.isSatisfyBy(board, Piece.createPawn(Color.WHITE, 0, 1),
+        boolean falseActual = condition.isSatisfyBy(board, WhiteRook.createWithCoordinate(0, 1),
                 new Position(7, 0));
 
         assertThat(rightActual).isTrue();
@@ -36,14 +36,14 @@ class RookMoveConditionTest {
     void isSatisfyBy_false() {
         RookMoveCondition condition = new RookMoveCondition();
         Board board = new Board(Arrays.asList(
-                Piece.createRook(Color.WHITE, 0, 1),
-                Piece.createPawn(Color.WHITE, 3, 1),
-                Piece.createPawn(Color.WHITE, 0, 2)
+                WhiteRook.createWithCoordinate(0, 1),
+                WhitePawn.createWithCoordinate(3, 1),
+                WhitePawn.createWithCoordinate(0, 2)
         ));
 
-        boolean actualCol = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 0, 1),
+        boolean actualCol = condition.isSatisfyBy(board, WhiteRook.createWithCoordinate(0, 1),
                 new Position(0, 4));
-        boolean actualRow = condition.isSatisfyBy(board, Piece.createRook(Color.WHITE, 0, 1),
+        boolean actualRow = condition.isSatisfyBy(board, WhiteRook.createWithCoordinate(0, 1),
                 new Position(7, 1));
 
         assertThat(actualCol).isFalse();
