@@ -24,4 +24,5 @@ public interface Piece {
 
     Score getScore();
 
+    Character getColumn();
 }

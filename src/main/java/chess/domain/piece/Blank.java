@@ -58,4 +58,10 @@ public class Blank implements Piece {
     public Score getScore() {
         return null;
     }
+
+
+    @Override
+    public Character getColumn() {
+        throw new IllegalArgumentException("공백의 값을 구할 수 없습니다.");
+    }
 }

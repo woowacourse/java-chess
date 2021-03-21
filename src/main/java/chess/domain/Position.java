@@ -158,9 +158,10 @@ public class Position {
         return this.number == 2;
     }
 
-    public int getColumn() {
-        return number;
+    public Character getColumn() {
+        return alpha;
     }
+
 
     @Override
     public String toString() {

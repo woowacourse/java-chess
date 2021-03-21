@@ -2,7 +2,6 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.TeamColor;
 import chess.domain.piece.Bishop;
@@ -17,18 +16,10 @@ import chess.domain.player.Score;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PiecesTest {
-
-    private ChessBoard chessBoard;
-
-    @BeforeEach
-    void setUp() {
-        this.chessBoard = new ChessBoard();
-    }
 
     @Test
     @DisplayName("0일때 점수계산 확인")
@@ -80,6 +71,7 @@ public class PiecesTest {
         );
         Pieces pieces = new Pieces(piecesValue);
 
+        System.out.println(pieces.calculateScore());
         assertThat(pieces.calculateScore()).isEqualTo(new Score(1.5));
     }
 }

@@ -59,6 +59,11 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
+    public Character getColumn() {
+        return position.getColumn();
+    }
+
+    @Override
     public void dead() {
         state = State.DEAD;
     }
