@@ -29,6 +29,6 @@ class NameTest {
     @DisplayName("기물의 이름이 공백인 경우 미리 캐싱해둔 EMPTY가 반환된다.")
     @Test
     void create_empty_name_if_input_blank() {
-        assertThat(Name.of(" ", true)).isEqualTo(Name.EMPTY);
+        assertThat(Name.of(".", true)).isEqualTo(Name.EMPTY);
     }
 }

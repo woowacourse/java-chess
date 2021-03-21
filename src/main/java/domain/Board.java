@@ -1,7 +1,9 @@
 package domain;
 
-import domain.piece.Empty;
-import domain.piece.Pawn;
+import domain.exception.InvalidMoveException;
+import domain.piece.Direction;
+import domain.piece.objects.Empty;
+import domain.piece.objects.Pawn;
 import domain.piece.Piece;
 import domain.piece.Position;
 
@@ -10,10 +12,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import static domain.Color.*;
+import static domain.piece.Color.*;
 
 public class Board {
-    public static final int SIZE = 8;
     private Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> pieces) {
@@ -22,10 +23,11 @@ public class Board {
 
     public void move(Position start, Position end) {
         Piece piece = board.get(start);
-        if (piece.canMove2(getBoard(), start, end)) {
-            board.remove(start);
-            board.put(end, piece);
+        if (!piece.canMove2(getBoard(), start, end)) {
+            throw new InvalidMoveException();
         }
+        board.remove(start);
+        board.put(end, piece);
     }
 
     public Map<Position, Piece> getBoard() {
@@ -37,8 +39,8 @@ public class Board {
     }
 
     public boolean canMovable(Position position, boolean color) {
-        Piece piece = board.get(position);
-        return !(piece instanceof Empty) &&  piece.isSameColor(color);
+        Piece piece = getPiece(position);
+        return !(piece instanceof Empty) && piece.isSameColor(color);
     }
 
     public Map<Position, Piece> getTeam(boolean color) {

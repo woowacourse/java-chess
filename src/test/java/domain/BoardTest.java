@@ -1,7 +1,7 @@
 package domain;
 
-import domain.piece.Empty;
-import domain.piece.King;
+import domain.piece.objects.Empty;
+import domain.piece.objects.King;
 import domain.piece.Piece;
 import domain.piece.Position;
 import org.junit.jupiter.api.BeforeEach;

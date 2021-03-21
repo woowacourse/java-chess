@@ -1,8 +1,7 @@
 package domain.piece;
 
-import domain.Color;
-import domain.Direction;
-import domain.Score;
+import domain.piece.objects.King;
+import domain.score.Score;
 
 import java.util.Map;
 import java.util.Objects;
