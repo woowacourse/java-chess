@@ -23,10 +23,9 @@ public class Application {
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.STATUS) {
-                //TODO
+                OutputView.printScore(chessBoard.result());
             }
             if (Commands.getInstance(command.get(0)) == Commands.END) {
-                //TODO
                 break;
             }
 

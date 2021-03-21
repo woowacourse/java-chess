@@ -9,7 +9,9 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.player.Pieces;
+import chess.domain.player.Score;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -153,6 +155,21 @@ public class ChessBoard {
 
     public Piece getPiece(Position position) {
         return chessBoard.get(position);
+    }
+
+    public Result result() {
+        Map<TeamColor, Score> result = new HashMap<>();
+        result.put(TeamColor.BLACK, blackPieces.calculateScore());
+        result.put(TeamColor.WHITE, whitePieces.calculateScore());
+
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
+            return new Result(result, TeamColor.BLACK);
+        }
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
+            return new Result(result, TeamColor.WHITE);
+        }
+
+        return new Result(result, TeamColor.NONE);
     }
 }
 

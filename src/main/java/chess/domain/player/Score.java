@@ -2,7 +2,7 @@ package chess.domain.player;
 
 import java.util.Objects;
 
-public class Score {
+public class Score implements Comparable<Score> {
 
     public static final Score ZERO = new Score(0);
     private final double score;
@@ -35,8 +35,12 @@ public class Score {
 
     @Override
     public String toString() {
-        return "Score{" +
-            "score=" + score +
-            '}';
+        return String.valueOf(score);
     }
+
+    @Override
+    public int compareTo(Score o) {
+        return Double.compare(score, o.score);
+    }
+
 }
