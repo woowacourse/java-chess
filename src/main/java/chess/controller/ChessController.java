@@ -7,9 +7,12 @@ import chess.view.OutputView;
 
 public class ChessController {
     public void run() {
-        Game game = new Game();
-
         OutputView.printStartMessage();
+        if (InputView.willNotPlayGame()) {
+            return;
+        }
+
+        Game game = new Game();
         game.display();
         while (game.isNotEnd()) {
             String[] inputString = InputView.requestInput();

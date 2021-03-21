@@ -12,4 +12,15 @@ public class InputView {
         String userInput = scanner.nextLine();
         return userInput.split(" ");
     }
+
+    public static boolean willNotPlayGame() {
+        String userInput = scanner.nextLine();
+        if ("start".equals(userInput)) {
+            return false;
+        }
+        if ("end".equals(userInput)) {
+            return true;
+        }
+        throw new IllegalArgumentException();
+    }
 }
