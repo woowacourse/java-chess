@@ -8,10 +8,19 @@ import chess.domain.position.Position;
 public class ChessGame {
 
     private Board board;
+    private boolean isPlaying = true;
 
     public void initSetting() {
         BoardFactory boardFactory = new BoardFactory();
         board = boardFactory.getBoard();
+    }
+
+    public void end() {
+        isPlaying = false;
+    }
+
+    public boolean isPlaying() {
+        return isPlaying;
     }
 
     public Board getBoard() {

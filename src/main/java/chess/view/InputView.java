@@ -10,15 +10,19 @@ public class InputView {
     }
 
     public static String getCommand() {
-        String command = SCANNER.next().toLowerCase(Locale.ROOT);
-        validateCommand(command);
-        return command;
+        try {
+            String command = SCANNER.next().toUpperCase(Locale.ROOT);
+            validateCommand(command);
+            return command;
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+            return getCommand();
+        }
     }
 
     public static String getPoint() {
         return SCANNER.next().toLowerCase(Locale.ROOT);
     }
-
 
     private static void validateCommand(final String command) {
         if (!Command.isValidateCommand(command)) {
