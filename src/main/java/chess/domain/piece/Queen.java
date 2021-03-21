@@ -29,7 +29,7 @@ public class Queen extends Piece {
 
     @Override
     public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces, targetPieces);
+        List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
     }
@@ -40,20 +40,20 @@ public class Queen extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes2(basePieces, targetPieces));
-        positions.addAll(makeDownRoutes2(basePieces, targetPieces));
-        positions.addAll(makeLeftRoutes2(basePieces, targetPieces));
-        positions.addAll(makeRightRoutes2(basePieces, targetPieces));
-        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
-        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
-        positions.addAll(makeDownLeftRoutes2(basePieces, targetPieces));
-        positions.addAll(makeDownRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpRoutes(basePieces, targetPieces));
+        positions.addAll(makeDownRoutes(basePieces, targetPieces));
+        positions.addAll(makeLeftRoutes(basePieces, targetPieces));
+        positions.addAll(makeRightRoutes(basePieces, targetPieces));
+        positions.addAll(makeUpLeftRoutes(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes(basePieces, targetPieces));
+        positions.addAll(makeDownLeftRoutes(basePieces, targetPieces));
+        positions.addAll(makeDownRightRoutes(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -75,7 +75,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -97,7 +97,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -119,7 +119,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -141,7 +141,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -166,7 +166,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -191,7 +191,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -216,7 +216,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();

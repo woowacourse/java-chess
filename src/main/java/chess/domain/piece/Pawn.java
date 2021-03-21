@@ -41,7 +41,7 @@ public class Pawn extends Piece {
 
     @Override
     public void move2(Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces, targetPieces);
+        List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
     }
@@ -52,22 +52,22 @@ public class Pawn extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         if (isFirst) {
-            positions.addAll(makeFirstUpRoutes2(basePieces, targetPieces));
-            positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
-            positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
+            positions.addAll(makeFirstUpRoutes(basePieces, targetPieces));
+            positions.addAll(makeUpRightRoutes(basePieces, targetPieces));
+            positions.addAll(makeUpLeftRoutes(basePieces, targetPieces));
             this.isFirst = false;
             return positions;
         }
-        positions.addAll(makeAfterFirstUpRoutes2(basePieces, targetPieces));
-        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
-        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeAfterFirstUpRoutes(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes(basePieces, targetPieces));
+        positions.addAll(makeUpLeftRoutes(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeFirstUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeFirstUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
@@ -88,7 +88,7 @@ public class Pawn extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
@@ -104,7 +104,7 @@ public class Pawn extends Piece {
         return Collections.emptyList();
     }
 
-    private List<Position> makeUpLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
@@ -120,7 +120,7 @@ public class Pawn extends Piece {
         return Collections.emptyList();
     }
 
-    private List<Position> makeAfterFirstUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeAfterFirstUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;

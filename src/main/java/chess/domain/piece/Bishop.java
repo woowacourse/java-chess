@@ -39,7 +39,7 @@ public class Bishop extends Piece {
 
     @Override
     public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces, targetPieces);
+        List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
         changePosition(target.getPosition());
@@ -51,16 +51,16 @@ public class Bishop extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
-        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
-        positions.addAll(makeDownLeftRoutes2(basePieces, targetPieces));
-        positions.addAll(makeDownRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpLeftRoutes(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes(basePieces, targetPieces));
+        positions.addAll(makeDownLeftRoutes(basePieces, targetPieces));
+        positions.addAll(makeDownRightRoutes(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -85,7 +85,7 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -110,7 +110,7 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -135,7 +135,7 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();

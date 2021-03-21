@@ -39,7 +39,7 @@ public class Knight extends Piece {
 
     @Override
     public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces);
+        List<Position> positions = makeRoutes(basePieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
     }
@@ -50,7 +50,7 @@ public class Knight extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces pieces) {
+    private List<Position> makeRoutes(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(makeUpLeftRoutes(pieces));
         positions.addAll(makeUpRightRoutes(pieces));
