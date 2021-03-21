@@ -22,14 +22,14 @@ public enum Horizontal {
         this.index = index;
     }
 
-    static Horizontal parse(final String number) {
+    public static Horizontal parse(final String number) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == Integer.parseInt(number))
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    static Horizontal of(final int index) {
+    public static Horizontal of(final int index) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
                 .findFirst()

@@ -21,11 +21,11 @@ public enum Vertical {
         this.index = index;
     }
 
-    static Vertical parse(final String symbol) {
+    public static Vertical parse(final String symbol) {
         return Vertical.valueOf(symbol.toUpperCase());
     }
 
-    static Vertical of(final int index) {
+    public static Vertical of(final int index) {
         return Arrays.stream(Vertical.values())
                 .filter(v -> v.index == index)
                 .findFirst()

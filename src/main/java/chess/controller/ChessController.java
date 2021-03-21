@@ -40,8 +40,6 @@ public class ChessController {
     private void commandExecute(final String input){
         final Menu menu = Menu.of(input);
 
-        // XXX :: ENUM 고민
-
         if (menu.isMove()) {
             movePiece(MoveCommand.of(input));
         }

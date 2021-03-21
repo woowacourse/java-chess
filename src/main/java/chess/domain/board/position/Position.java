@@ -52,9 +52,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
     }
-
-    @Override
-    public String toString() {
-        return vertical.getIndex() + " " + horizontal.getIndex();
-    }
 }
