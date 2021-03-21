@@ -38,8 +38,7 @@ public class Pawn extends Piece {
         if (!current.isDefaultPawnRank(getTeamType())) {
             return false;
         }
-        Direction direction = current.evaluateDirection(destination);
-        boolean hasPieceOnRouteBeforeDestination = chessBoard.hasPieceOnRouteBeforeDestination(current, destination, direction);
+        boolean hasPieceOnRouteBeforeDestination = chessBoard.hasPieceOnRouteBeforeDestination(current, destination);
         return !hasPieceOnRouteBeforeDestination && chessBoard.isEmptyOn(destination);
     }
 

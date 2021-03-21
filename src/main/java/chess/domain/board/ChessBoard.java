@@ -7,6 +7,7 @@ import java.util.*;
 
 public class ChessBoard {
     private static final int CHESS_BOARD_SIZE = 64;
+    private static final int KING_COUNTS_FOR_CHECKMATE_CONDITION = 1;
 
     private final Map<Coordinate, Cell> cells;
 
@@ -54,10 +55,10 @@ public class ChessBoard {
     public void move(Coordinate current, Coordinate destination, TeamType teamType) {
         Cell currentCell = cells.get(current);
         if (!currentCell.isTeamOf(teamType)) {
-            throw new IllegalArgumentException("우리 팀의 기물이 아닙니다.");
+            throw new IllegalStateException("상대방의 팀은 조작할 수 없습니다.");
         }
         if (!currentCell.hasMovablePiece(this, current, destination)) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalStateException("이동할 수 없는 도착 위치 입니다.");
         }
         Cell targetCell = cells.get(destination);
         currentCell.movePieceTo(targetCell);
@@ -110,7 +111,7 @@ public class ChessBoard {
         return cells.values()
                 .stream()
                 .filter(cell -> !cell.isEmpty() && cell.hasKing())
-                .count() == 1L;
+                .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
     }
 
     public TeamType findWinnerTeam() {
@@ -119,7 +120,7 @@ public class ChessBoard {
         }
         return cells.values()
                 .stream()
-                .filter(Cell::hasKing)
+                .filter(cell -> !cell.isEmpty() && cell.hasKing())
                 .map(Cell::getTeamType)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("승리한 팀을 찾을 수 없습니다."));
@@ -137,9 +138,10 @@ public class ChessBoard {
         return cells.get(coordinate).hasEnemy(teamType);
     }
 
-    public boolean hasPieceOnRouteBeforeDestination(Coordinate start, Coordinate destination, Direction direction) {
+    public boolean hasPieceOnRouteBeforeDestination(Coordinate current, Coordinate destination) {
         List<Coordinate> possibleCoordinates = new ArrayList<>();
-        Coordinate nextCoordinate = start.move(direction);
+        Direction direction = current.evaluateDirection(destination);
+        Coordinate nextCoordinate = current.move(direction);
         while (!nextCoordinate.equals(destination)) {
             possibleCoordinates.add(nextCoordinate);
             nextCoordinate = nextCoordinate.move(direction);

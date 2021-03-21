@@ -25,7 +25,7 @@ public abstract class Piece {
         if (!isCorrectDirection(direction)) {
             return false;
         }
-        if (chessBoard.hasPieceOnRouteBeforeDestination(current, destination, direction)) {
+        if (chessBoard.hasPieceOnRouteBeforeDestination(current, destination)) {
             return false;
         }
         return chessBoard.isEmptyOrHasEnemyOn(destination, teamType);
