@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 import java.util.List;
 
@@ -25,7 +24,7 @@ public class Pawn extends Division {
     }
 
     private boolean canMoveDouble(Position to) {
-        return (getPawnMovementSize(to) == 2) && position.hasRow(initRow());
+        return (getPawnMovementSize(to) == 2) && position.hasRow(initPawnRow());
     }
 
     private int getPawnMovementSize(Position to) {
@@ -33,13 +32,6 @@ public class Pawn extends Division {
             throw new IllegalArgumentException();
         }
         return position.diffRow(to) / color.moveUnit();
-    }
-
-    private Row initRow() {
-        if (isBlack()) {
-            return Row.SEVEN;
-        }
-        return Row.TWO;
     }
 
     private void validateNoneBetween(Position to, Pieces pieces) {

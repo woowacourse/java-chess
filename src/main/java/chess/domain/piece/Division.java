@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Column;
 import chess.domain.position.Position;
+import chess.domain.position.Row;
 
 public abstract class Division extends Basis {
     protected final Color color;
@@ -13,12 +14,8 @@ public abstract class Division extends Basis {
         this.position = position;
     }
 
-    public boolean isBlack() {
-        return Color.BLACK.equals(color);
-    }
-
-    public boolean isWhite() {
-        return Color.WHITE.equals(color);
+    protected Row initPawnRow() {
+        return color.initPawnRow();
     }
 
     public abstract void moveToEmpty(Position to, Pieces pieces);
@@ -32,7 +29,7 @@ public abstract class Division extends Basis {
 
     @Override
     public String display() {
-        if (isBlack()) {
+        if (Color.BLACK.equals(color)) {
             return super.display()
                         .toUpperCase();
         }
