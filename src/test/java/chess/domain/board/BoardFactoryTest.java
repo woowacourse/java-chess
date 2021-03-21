@@ -14,13 +14,15 @@ class BoardFactoryTest {
     }
 
     String validRenderedBoard() {
-        return "RNBQKBNR\n"
-            + "PPPPPPPP\n"
-            + "........\n"
-            + "........\n"
-            + "........\n"
-            + "........\n"
-            + "pppppppp\n"
-            + "rnbqkbnr";
+        return "\nabcdefgh\n"
+                + "RNBQKBNR 8\n"
+                + "PPPPPPPP 7\n"
+                + "........ 6\n"
+                + "........ 5\n"
+                + "........ 4\n"
+                + "........ 3\n"
+                + "pppppppp 2\n"
+                + "rnbqkbnr 1"
+                + "\nabcdefgh\n";
     }
 }
