@@ -1,96 +1,74 @@
 package domain.piece;
 
+import domain.Direction;
 import domain.Score;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
+import java.util.stream.IntStream;
 
 public class Pawn extends Piece {
     private static final Score SCORE = new Score(1);
-    public static final List<Pawn> PAWNS = Arrays.asList(Pawn.Of("P", Position.Of(1, 0), true),
-            Pawn.Of("P", Position.Of(1, 1), true),
-            Pawn.Of("P", Position.Of(1, 2), true),
-            Pawn.Of("P", Position.Of(1, 3), true),
-            Pawn.Of("P", Position.Of(1, 4), true),
-            Pawn.Of("P", Position.Of(1, 5), true),
-            Pawn.Of("P", Position.Of(1, 6), true),
-            Pawn.Of("P", Position.Of(1, 7), true),
-            Pawn.Of("p", Position.Of(6, 0), false),
-            Pawn.Of("p", Position.Of(6, 1), false),
-            Pawn.Of("p", Position.Of(6, 2), false),
-            Pawn.Of("p", Position.Of(6, 3), false),
-            Pawn.Of("p", Position.Of(6, 4), false),
-            Pawn.Of("p", Position.Of(6, 5), false),
-            Pawn.Of("p", Position.Of(6, 6), false),
-            Pawn.Of("p", Position.Of(6, 7), false));
+    public static final Map<Position, Pawn> PAWNS = new HashMap<Position, Pawn>() {{
+        put(Position.of("a7"), Pawn.of("P", true));
+        put(Position.of("b7"), Pawn.of("P", true));
+        put(Position.of("c7"), Pawn.of("P", true));
+        put(Position.of("d7"), Pawn.of("P", true));
+        put(Position.of("e7"), Pawn.of("P", true));
+        put(Position.of("f7"), Pawn.of("P", true));
+        put(Position.of("g7"), Pawn.of("P", true));
+        put(Position.of("h7"), Pawn.of("P", true));
+        put(Position.of("a2"), Pawn.of("p", false));
+        put(Position.of("b2"), Pawn.of("p", false));
+        put(Position.of("c2"), Pawn.of("p", false));
+        put(Position.of("d2"), Pawn.of("p", false));
+        put(Position.of("e2"), Pawn.of("p", false));
+        put(Position.of("f2"), Pawn.of("p", false));
+        put(Position.of("g2"), Pawn.of("p", false));
+        put(Position.of("h2"), Pawn.of("p", false));
+    }};
 
-    private Pawn(String name, int x, int y, boolean isBlack) {
-        super(name, SCORE, Position.Of(x, y), isBlack);
+    private Pawn(String name, boolean isBlack) {
+        super(name, SCORE, isBlack);
     }
 
-    public static Pawn Of(String name, Position position, boolean color) {
-        return new Pawn(name, position.getRow(), position.getColumn(), color);
+    public static Pawn of(String name, boolean color) {
+        return new Pawn(name, color);
     }
 
-    public static List<Pawn> initialPawnPieces() {
+    public static Map<Position, Pawn> initialPawnPieces() {
         return PAWNS;
     }
 
     @Override
-    public Pawn movePosition(Position position) {
-        return new Pawn(getName(), position.getRow(), position.getColumn(), isBlack());
+    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+        List<Direction> directions = new ArrayList<>(selectDirectionByColor());
+        boolean result = movableLinear(directions.remove(0), board, start, end);
+        if (!result) {
+            result = movableDiagonal(directions, board, start, end);
+        }
+        return result;
     }
 
-    @Override
-    public boolean canMove(Piece[][] board, Position endPosition) {
-        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
-
-        if (canForward(board, endPosition, 1)) return true;
-        if (canForward(board, endPosition, 2)) return true;
-
-        if (catchDiagonal(board, endPosition, true)) return true;
-        if (catchDiagonal(board, endPosition, false)) return true;
-
-        return false;
+    private boolean movableDiagonal(List<Direction> directions, Map<Position, Piece> board, Position start, Position end) {
+        return directions.stream()
+                .map(direction -> start.move(direction))
+                .filter(next -> next.equals(end) && board.containsKey(next) && !board.get(next).isSameColor(this))
+                .findAny()
+                .isPresent();
     }
 
-    private boolean canForward(Piece[][] board, Position endPosition, int step) {
-        if (step == 2 && !PAWNS.contains(this)) {
-            return false;
-        }
-
-        if (!isBlack()) {
-            step = -step;
-        }
-
-
-        if (board[endPosition.getRow()][endPosition.getColumn()] == null
-                && isEqualsPosition(endPosition, step, 0)) {
+    private boolean movableLinear(Direction direction, Map<Position, Piece> board, Position start, Position end) {
+        Position next = start.move(direction);
+        if (next.equals(end) && isEmptyPosition(board, end)) {
             return true;
         }
-        return false;
+        return PAWNS.containsKey(start) && next.move(direction).equals(end) && !board.containsKey(end);
     }
 
-    private boolean catchDiagonal(Piece[][] board, Position endPosition, boolean isLeft) {
-        int rowStep = 1;
-        if (!isBlack()) {
-            rowStep = -rowStep;
+    private List<Direction> selectDirectionByColor() {
+        if (isBlack()) {
+            return Direction.blackPawnDirection();
         }
-
-        int colStep = 1;
-        if (isLeft) {
-            colStep = -colStep;
-        }
-
-        if (isEqualsPosition(endPosition, rowStep, colStep)
-                && (board[endPosition.getRow()][endPosition.getColumn()] != null
-                && board[endPosition.getRow()][endPosition.getColumn()].isBlack() != isBlack())) {
-            return true;
-        }
-        return false;
-    }
-
-    private boolean isEqualsPosition(Position endPosition, int rowStep, int colStep) {
-        return position.getRow() + rowStep == endPosition.getRow() && position.getColumn() + colStep == endPosition.getColumn();
+        return Direction.whitePawnDirection();
     }
 }
