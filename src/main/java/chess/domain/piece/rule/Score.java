@@ -1,7 +1,6 @@
-package chess.domain.piece;
+package chess.domain.piece.rule;
 
 public class Score {
-
     private static final double PAWN_PANALTY_SCORE = 0.5d;
 
     private final double value;

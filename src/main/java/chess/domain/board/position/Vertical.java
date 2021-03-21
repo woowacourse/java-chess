@@ -1,5 +1,8 @@
 package chess.domain.board.position;
 
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+
 import java.util.Arrays;
 
 public enum Vertical {
@@ -33,11 +36,7 @@ public enum Vertical {
         return index;
     }
 
-    public int getDistance(final Vertical other) {
-        return Math.abs(this.index - other.getIndex());
-    }
-
-    public Vertical add(final int v) {
-        return of(index + v);
+    public Vertical add(final Direction direction, final Distance distance) {
+        return of(index + direction.getX() * distance.getValue());
     }
 }

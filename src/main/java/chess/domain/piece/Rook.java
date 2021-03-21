@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+import chess.domain.piece.rule.Score;
 
 public class Rook extends Piece {
     private static final Rook BLACK_ROOK = new Rook(Owner.BLACK);
@@ -12,7 +13,7 @@ public class Rook extends Piece {
                 owner,
                 new Score(5.0d),
                 Direction.straightDirections(),
-                7,
+                Distance.SEVEN,
                 "R"
         );
     }
@@ -27,10 +28,5 @@ public class Rook extends Piece {
         }
 
         throw new IllegalArgumentException("Invalid Rook");
-    }
-
-    @Override
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        return true;
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.direction;
+package chess.domain.piece.rule;
 
 public enum Direction {
 

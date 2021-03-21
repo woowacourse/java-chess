@@ -1,16 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.board.position.Position;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+import chess.domain.piece.rule.Score;
 
-import java.util.Collections;
 import java.util.List;
 
 public abstract class Piece {
     private final Owner owner;
-    private final List<Direction> directions;
+    private final List<Direction> ableDirections;
     private final Score score;
-    private final int distance;
+    private final Distance ableDistance;
     private final String symbol;
 
     // XXX :: 빌더 패턴 공부하기
@@ -18,25 +19,23 @@ public abstract class Piece {
     public Piece(final Owner owner,
                  final Score score,
                  final List<Direction> directions,
-                 final int distance,
+                 final Distance distance,
                  final String symbol) {
 
         this.owner = owner;
         this.score = score;
-        this.directions = directions;
-        this.distance = distance;
+        this.ableDirections = directions;
+        this.ableDistance = distance;
         this.symbol = symbol;
     }
 
-    public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
+    public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece){
+        return ableDirections.contains(direction) && distance.isBelow(ableDistance);
+    }
 
     public final String getSymbol(){
         return symbol;
     };
-
-    public final int getMaxDistance(){
-        return distance;
-    }
 
     public final boolean isEnemy(final Piece other) {
         return this.owner.isEnemy(other.owner);
@@ -44,10 +43,6 @@ public abstract class Piece {
 
     public final boolean isSameTeam(final Piece other) {
         return this.owner.isSameTeam(other.owner);
-    }
-
-    public final List<Direction> getDirections() {
-        return Collections.unmodifiableList(directions);
     }
 
     public boolean isOwner(final Owner owner) {

@@ -1,5 +1,5 @@
 package chess.domain.piece;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
 import chess.domain.board.position.Position;
 
 import java.util.List;

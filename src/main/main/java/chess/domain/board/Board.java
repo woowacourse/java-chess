@@ -1,6 +1,6 @@
 package chess.domain.board;
 
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;

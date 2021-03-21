@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+import chess.domain.piece.rule.Score;
 
 public class Knight extends Piece {
     private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
@@ -12,7 +13,7 @@ public class Knight extends Piece {
                 owner,
                 new Score(2.5),
                 Direction.knightDirections(),
-                1,
+                Distance.ONE,
                 "N"
         );
     }
@@ -27,10 +28,5 @@ public class Knight extends Piece {
         }
 
         throw new IllegalArgumentException("Invalid Knight");
-    }
-
-    @Override
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        return true;
     }
 }

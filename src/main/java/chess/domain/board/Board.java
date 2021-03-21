@@ -3,8 +3,10 @@ package chess.domain.board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
 import chess.domain.piece.*;
+import chess.domain.piece.rule.Score;
 import chess.manager.Status;
 
 import java.util.ArrayList;
@@ -49,20 +51,20 @@ public class Board {
         final List<Position> ableToMove = new ArrayList<>();
         final Piece sourcePiece = of(source);
 
-        /*
-            XXX :: piece의 방향과 가능 거리를 가져와 처리하지 말고 piece에서 처리할 수 있도록
-         */
+        for (final Direction direction : Direction.values()) {
+            for (final Distance distance : Distance.values()) {
 
-        for (final Direction direction : sourcePiece.getDirections()) {
-            for (int distance = 1; distance <= sourcePiece.getMaxDistance(); distance++) {
                 if(isBlocked(source, direction, distance)){
                     break;
                 }
 
                 final Position target = source.next(direction, distance);
-                if (sourcePiece.isReachable(source, target, of(target))) {
-                    ableToMove.add(target);
+
+                if(!sourcePiece.isReachable(direction, distance, source, of(target))){
+                    break;
                 }
+
+                ableToMove.add(target);
 
                 if (sourcePiece.isEnemy(of(target)) ) {
                     break;
@@ -73,7 +75,7 @@ public class Board {
         return ableToMove;
     }
 
-    private boolean isBlocked(final Position source, final Direction direction, final int distance){
+    private boolean isBlocked(final Position source, final Direction direction, final Distance distance){
         try {
             return of(source).isSameTeam(of(source.next(direction, distance)));
         } catch (IllegalArgumentException e) {

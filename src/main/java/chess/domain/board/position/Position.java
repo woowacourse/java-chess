@@ -1,6 +1,7 @@
 package chess.domain.board.position;
 
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
 
 import java.util.Objects;
 
@@ -31,34 +32,12 @@ public class Position {
         return new Position(input);
     }
 
-    public boolean isStraight(final Position other) {
-        return this.horizontal.equals(other.horizontal) || this.vertical.equals(other.vertical);
-    }
-
-    public boolean isDiagonal(final Position other) {
-        return this.horizontal.getDistance(other.horizontal)
-                == this.vertical.getDistance(other.vertical);
-    }
-
-    public int getDistance(final Position other) {
-        if (isStraight(other)) {
-            return this.horizontal.getDistance(other.horizontal)
-                    + this.vertical.getDistance(other.vertical);
-        }
-
-        if (isDiagonal(other)) {
-            return this.horizontal.getDistance(other.horizontal);
-        }
-
-        throw new IllegalArgumentException();
-    }
-
     public Horizontal getHorizontal() {
         return horizontal;
     }
 
-    public Position next(final Direction direction, final int distance) {
-        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
+    public Position next(final Direction direction, final Distance distance) {
+        return new Position(vertical.add(direction, distance), horizontal.add(direction, distance));
     }
 
     @Override

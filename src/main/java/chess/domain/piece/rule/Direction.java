@@ -1,4 +1,4 @@
-package chess.domain.direction;
+package chess.domain.piece.rule;
 
 import java.util.Arrays;
 import java.util.List;
@@ -96,5 +96,13 @@ public enum Direction {
 
     public int getY() {
         return y;
+    }
+
+    public boolean isDiagonal(){
+        return diagonalDirections().contains(this);
+    }
+
+    public boolean isStraight() {
+        return straightDirections().contains(this);
     }
 }

@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+import chess.domain.piece.rule.Score;
 
 public class Queen extends Piece {
     private static final Queen BLACK_QUEEN = new Queen(Owner.BLACK);
@@ -12,7 +13,7 @@ public class Queen extends Piece {
                 owner,
                 new Score(9.0d),
                 Direction.allDirections(),
-                7,
+                Distance.SEVEN,
                 "Q"
         );
     }
@@ -27,10 +28,5 @@ public class Queen extends Piece {
         }
 
         throw new IllegalArgumentException("Invalid Queen");
-    }
-
-    @Override
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        return true;
     }
 }

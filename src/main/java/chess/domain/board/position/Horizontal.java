@@ -1,5 +1,8 @@
 package chess.domain.board.position;
 
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -37,12 +40,8 @@ public enum Horizontal {
         return index;
     }
 
-    public int getDistance(final Horizontal other) {
-        return Math.abs(this.index - other.getIndex());
-    }
-
-    public Horizontal add(final int h) {
-        return of(index + h);
+    public Horizontal add(final Direction direction, final Distance distance) {
+        return of(index + direction.getY() * distance.getValue());
     }
 
     public static Horizontal[] reversedValues(){

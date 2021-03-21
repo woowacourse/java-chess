@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.position.Position;
-import chess.domain.direction.Direction;
+import chess.domain.piece.rule.Direction;
+import chess.domain.piece.rule.Distance;
+import chess.domain.piece.rule.Score;
 
 public class Bishop extends Piece {
     private static final Bishop BLACK_BISHOP = new Bishop(Owner.BLACK);
@@ -12,7 +13,7 @@ public class Bishop extends Piece {
                 owner,
                 new Score(3.0d),
                 Direction.diagonalDirections(),
-                7,
+                Distance.SEVEN,
                 "B"
         );
     }
@@ -27,10 +28,5 @@ public class Bishop extends Piece {
         }
 
         throw new IllegalArgumentException("Invalid Bishop");
-    }
-
-    @Override
-    public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
-        return true;
     }
 }
