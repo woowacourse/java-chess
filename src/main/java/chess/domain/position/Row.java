@@ -21,9 +21,9 @@ public enum Row {
 
     public static Row getRow(String value) {
         return Arrays.stream(values())
-            .filter(row -> row.number.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
+                .filter(row -> row.number.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 행입니다."));
     }
 
     public Row move(Direction direction) {
@@ -39,9 +39,15 @@ public enum Row {
 
     public boolean isBoundary(Direction direction) {
         if (Direction.DOWN.equals(direction) || Direction.DOWN_LEFT.equals(direction)
-            || Direction.DOWN_RIGHT.equals(direction) || Direction.LL_D.equals(direction)
-            || Direction.RR_D.equals(direction)) {
+                || Direction.DOWN_RIGHT.equals(direction) || Direction.LL_D.equals(direction)
+                || Direction.RR_D.equals(direction)) {
             return this.equals(ONE);
+        }
+        if (Direction.UP.equals(direction) || Direction.UP_LEFT.equals(direction)
+                || Direction.UP_RIGHT.equals(direction) || Direction.LL_U.equals(direction)
+                || Direction.RR_U.equals(direction)) {
+            return this.equals(EIGHT);
+
         }
         if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
             return this.equals(TWO) || this.equals(ONE);
@@ -49,7 +55,7 @@ public enum Row {
         if (Direction.R_UU.equals(direction) || Direction.L_UU.equals(direction)) {
             return this.equals(SEVEN) || this.equals(EIGHT);
         }
-        return this.equals(EIGHT);
+        return false;
     }
 
     public int getValue() {
