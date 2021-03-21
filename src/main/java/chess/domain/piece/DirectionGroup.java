@@ -1,11 +1,16 @@
 package chess.domain.piece;
 
+import chess.domain.Color;
+import chess.domain.position.MovePosition;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DirectionGroup {
     
     private static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
+    
+    private static final int CANNOT_MOVE_LENGTH = 0;
     
     private final List<Direction> directionGroup;
     private final int movableLength;
@@ -16,26 +21,25 @@ public class DirectionGroup {
     }
     
     public static DirectionGroup createBlankDirectionGroup() {
-        return new DirectionGroup(new ArrayList<>(), 0);
+        return new DirectionGroup(new ArrayList<>(), CANNOT_MOVE_LENGTH);
     }
     
-    public Direction findDirection(Position sourcePosition, Position targetPosition) {
+    public Direction findDirection(MovePosition movePosition) {
         return directionGroup.stream()
-                             .filter(direction -> sourcePosition.canMove(targetPosition, direction, movableLength))
+                             .filter(direction -> movePosition.canMove(direction, movableLength))
                              .findAny()
                              .orElseThrow(() -> new IllegalArgumentException(ERROR_CAN_NOT_MOVE));
     }
     
-    public Direction findDirectionOfPawn(Position sourcePosition, Position targetPosition, Color color) {
+    public Direction findDirectionOfPawn(MovePosition movePosition, Color color) {
         final int maxMovableLength = 2;
         final Direction forwardDirection = color.getPawnForwardDirection();
-        final boolean isAtDefaultPosition = sourcePosition.isAtDefaultPawnPosition(color);
-        final boolean canMoveTwoSteps = sourcePosition.canMove(targetPosition, forwardDirection, maxMovableLength);
+        final boolean isAtDefaultPosition = movePosition.isAtDefaultPawnPosition(color);
+        final boolean canMoveTwoSteps = movePosition.canMove(forwardDirection, maxMovableLength);
         
         if (isAtDefaultPosition && canMoveTwoSteps) {
             return forwardDirection;
         }
-        
-        return findDirection(sourcePosition, targetPosition);
+        return findDirection(movePosition);
     }
 }

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.params.ParameterizedTest;

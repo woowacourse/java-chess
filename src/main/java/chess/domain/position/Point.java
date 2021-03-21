@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import java.util.Objects;
 
@@ -27,8 +27,8 @@ public class Point {
         return point < MIN_INDEX_OF_BOARD || point > MAX_INDEX_OF_BOARD;
     }
     
-    public boolean isOutOfBounds() {
-        return isOutOfBounds(point);
+    public boolean isInRange() {
+        return !isOutOfBounds(point);
     }
     
     public Point add(int distance) {

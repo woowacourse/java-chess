@@ -1,6 +1,8 @@
-package chess.domain.game;
+package chess.domain.board;
 
+import chess.domain.Color;
 import chess.domain.piece.*;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -40,16 +42,16 @@ public class InitializedBoard {
     }
     
     private static void createPawns(Map<Position, Piece> board, int yPoint, Color color) {
-        createPieces(board, yPoint, Pawn.from(color));
+        createPiecesAtRow(board, yPoint, Pawn.from(color));
     }
     
     private static void createBlanks(Map<Position, Piece> board) {
         for (int yPoint = BLANK_START_INDEX; yPoint <= BLANK_END_INDEX; yPoint++) {
-            createPieces(board, yPoint, new Blank(Color.BLANK));
+            createPiecesAtRow(board, yPoint, new Blank(Color.BLANK));
         }
     }
     
-    private static void createPieces(Map<Position, Piece> board, int yPoint, Piece piece) {
+    private static void createPiecesAtRow(Map<Position, Piece> board, int yPoint, Piece piece) {
         for (int xPoint = MIN_INDEX; xPoint <= MAX_INDEX; xPoint++) {
             board.put(Position.of(xPoint, yPoint), piece);
         }

@@ -1,4 +1,6 @@
-package chess.domain.piece;
+package chess.domain;
+
+import chess.domain.piece.Direction;
 
 import java.util.List;
 
@@ -36,6 +38,10 @@ public enum Color {
     
     public boolean isWhite() {
         return this == WHITE;
+    }
+    
+    public boolean isBlank() {
+        return this == BLANK;
     }
     
     public abstract Color next();
