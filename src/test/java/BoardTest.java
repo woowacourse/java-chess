@@ -8,6 +8,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
@@ -21,7 +23,7 @@ public class BoardTest {
         board = new Board();
         chessGame = new ChessGame(board);
 
-        chessGame.initialize();
+        chessGame.start();
     }
 
     @Test
@@ -85,10 +87,11 @@ public class BoardTest {
         board.move(Point.of("e8"), Point.of("e7"));
         board.move(Point.of("e7"), Point.of("e6"));
         board.move(Point.of("e6"), Point.of("f5"));
-        chessGame.move(Point.of("d2"), Point.of("d4"), Team.WHITE);
-        chessGame.move(Point.of("d1"), Point.of("d3"), Team.WHITE);
-        chessGame.move(Point.of("d3"), Point.of("f5"), Team.WHITE);
 
-        assertThat(board.isContinued()).isFalse();
+        board.move(Point.of("d2"), Point.of("d4"));
+        board.move(Point.of("d1"), Point.of("d3"));
+        chessGame.move(Arrays.asList("move", "d3", "f5"));
+
+        assertThat(chessGame.isRunning()).isFalse();
     }
 }

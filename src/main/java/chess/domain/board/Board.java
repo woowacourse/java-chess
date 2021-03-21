@@ -4,23 +4,20 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Vector;
 import chess.dto.BoardDto;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import java.util.*;
 
 public class Board {
 
     private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
-    private boolean onGoing;
+    private boolean aliveKing;
 
     public Board() {
         Point.getAllPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
-        onGoing = true;
+        aliveKing = true;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
@@ -46,9 +43,7 @@ public class Board {
     }
 
     private boolean canMovePawn(Point source, Point destination) {
-        SquareState sourceSquareState = squares.get(source);
-        return (canMovePawnToStraight(source, destination)
-                && isNotBlockedToGo(source, destination, sourceSquareState))
+        return canMovePawnToStraight(source, destination)
                 || canMovePawnToDiagonalDirection(source, destination);
     }
 
@@ -144,7 +139,7 @@ public class Board {
 
     public void move(Point source, Point destination) {
         if (squares.get(destination).isKing()) {
-            onGoing = false;
+            aliveKing = !aliveKing;
         }
         squares.put(destination, squares.get(source));
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
@@ -156,7 +151,7 @@ public class Board {
     }
 
     public boolean isContinued() {
-        return onGoing;
+        return aliveKing;
     }
 
     public double score(Team team) {

@@ -1,17 +1,41 @@
 package chess.domain.gamestate;
 
-import chess.domain.command.Command;
-import java.util.List;
+import chess.domain.board.Board;
 
 public class Finished implements GameState {
+    private Board board;
+
+    public Finished(Board board) {
+        this.board = board;
+    }
 
     @Override
-    public GameState operateCommand(Command command, List<String> arguments) {
-        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+    public GameState start() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
+    }
+
+    @Override
+    public GameState end() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
+    }
+
+    @Override
+    public GameState move() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
+    }
+
+    @Override
+    public GameState status() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
+    }
+
+    @Override
+    public Board board() {
+        throw new IllegalStateException("체스 보드를 불러 올 수 없는 상태입니다.");
     }
 
     @Override
     public boolean isRunning() {
-        return false;
+        return board.isContinued();
     }
 }
