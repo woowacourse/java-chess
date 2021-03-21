@@ -16,7 +16,7 @@ public class Path {
 				.orElseThrow(() -> new IllegalArgumentException(NOT_MOVABLE_DIRECTION_ERROR));
 	}
 
-	static boolean isMovableDirection(Position sourcePosition, Position targetPosition, Direction direction) {
+	private static boolean isMovableDirection(Position sourcePosition, Position targetPosition, Direction direction) {
 		Position currentPosition = sourcePosition;
 		while (currentPosition.hasNextPosition(direction)) {
 			currentPosition = currentPosition.nextPosition(direction);

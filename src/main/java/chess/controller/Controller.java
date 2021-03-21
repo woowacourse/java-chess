@@ -23,13 +23,13 @@ public class Controller {
 		}
 	}
 
-	public void startGame(ChessGame chessGame) {
+	private void startGame(ChessGame chessGame) {
 		chessGame.start();
 		OutputView.printChessBoard(chessGame.getChessBoard());
 		playGame(chessGame);
 	}
 
-	public void playGame(ChessGame chessGame) {
+	private void playGame(ChessGame chessGame) {
 		while (chessGame.isOngoing()) {
 			List<String> input = InputView.moveOrStatus();
 			if (InputView.STATUS.equals(input.get(COMMAND_INDEX))) {
@@ -40,7 +40,7 @@ public class Controller {
 		}
 	}
 
-	public void gameResult(ChessGame chessGame) {
+	private void gameResult(ChessGame chessGame) {
 		Result result = chessGame.result();
 		OutputView.printResult(result);
 	}

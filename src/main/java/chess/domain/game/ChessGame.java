@@ -50,6 +50,10 @@ public class ChessGame {
 		}
 	}
 
+	public ChessBoard getChessBoard() {
+		return chessBoard;
+	}
+
 	public boolean isOngoing() {
 		return chessBoard.isOngoing();
 	}
@@ -67,9 +71,5 @@ public class ChessGame {
 		resultStatistics.put(Color.BLACK, blackScore);
 		resultStatistics.put(Color.WHITE, whiteScore);
 		return resultStatistics;
-	}
-
-	public ChessBoard getChessBoard() {
-		return chessBoard;
 	}
 }

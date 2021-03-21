@@ -11,7 +11,7 @@ import java.util.Map;
 import static chess.domain.board.ChessBoard.BOARD_SIZE;
 
 public class OutputView {
-	public static final String RESULT_FORMAT = "%s: %.1f점 - %s%n";
+	private static final String RESULT_FORMAT = "%s: %.1f점 - %s%n";
 
 	private OutputView() {
 	}
