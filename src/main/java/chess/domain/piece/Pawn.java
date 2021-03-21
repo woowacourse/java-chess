@@ -7,8 +7,6 @@ import chess.domain.direction.Direction;
 import java.util.List;
 
 public abstract class Pawn extends Piece {
-    private static final int ABLE_DISTANCE_TO_MOVE = 2;
-
     private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK, Direction.blackPawnDirections()) {
         @Override
         public boolean isFirstLine(final Horizontal horizontal) {
@@ -24,7 +22,13 @@ public abstract class Pawn extends Piece {
     };
 
     private Pawn(final Owner owner, final List<Direction> directions) {
-        super(owner, new Score(1.0d), directions);
+        super(
+                owner,
+                new Score(1.0d),
+                directions,
+                2,
+                "P"
+        );
     }
 
     public static Pawn getInstanceOf(final Owner owner) {
@@ -63,15 +67,5 @@ public abstract class Pawn extends Piece {
         }
 
         return false;
-    }
-
-    @Override
-    public String getSymbol() {
-        return "P";
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 }

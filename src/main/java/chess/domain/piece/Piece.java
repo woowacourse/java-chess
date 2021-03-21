@@ -10,30 +10,33 @@ public abstract class Piece {
     private final Owner owner;
     private final List<Direction> directions;
     private final Score score;
+    private final int distance;
+    private final String symbol;
 
-    public Piece(final Owner owner, final Score score, final List<Direction> directions) {
+    // XXX :: 빌더 패턴 공부하기
+    // XXX :: Symbol은 view로 빼기
+    public Piece(final Owner owner,
+                 final Score score,
+                 final List<Direction> directions,
+                 final int distance,
+                 final String symbol) {
+
         this.owner = owner;
         this.score = score;
         this.directions = directions;
+        this.distance = distance;
+        this.symbol = symbol;
     }
 
     public abstract boolean isReachable(final Position source, final Position target, final Piece targetPiece);
 
+    public final String getSymbol(){
+        return symbol;
+    };
 
-    // TODO :: View에서 해야할 일
-    public final String decideUpperOrLower() {
-        if (owner.equals(Owner.BLACK)) {
-            return getSymbol().toUpperCase();
-        }
-
-        if (owner.equals(Owner.WHITE)) {
-            return getSymbol().toLowerCase();
-        }
-
-        return getSymbol();
+    public final int getMaxDistance(){
+        return distance;
     }
-
-    public abstract String getSymbol();
 
     public final boolean isEnemy(final Piece other) {
         return this.owner.isEnemy(other.owner);
@@ -51,11 +54,17 @@ public abstract class Piece {
         return this.owner.isSameTeam(owner);
     }
 
-    public abstract int getMaxDistance();
+     /*
+       XXX :: instance of 사용? 오버라이드?
+        상위 클래스에서 하위 클래스를 사용하는 것은 잘못되었다고 생각한다.
+     */
 
-    // XXX :: instance of 사용? 오버라이드?
     public boolean isKing() {
         return this instanceof King;
+    }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
     }
 
     public final Score score() {

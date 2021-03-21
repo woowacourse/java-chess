@@ -4,6 +4,8 @@ import chess.domain.direction.Direction;
 
 import java.util.Objects;
 
+// XXX :: Position 캐싱하기
+
 public class Position {
     private final Vertical vertical;
     private final Horizontal horizontal;
@@ -55,8 +57,12 @@ public class Position {
         return horizontal;
     }
 
+    public Position next(final Direction direction, final int distance) {
+        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
+    }
+
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
@@ -66,10 +72,6 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(vertical, horizontal);
-    }
-
-    public Position next(final Direction direction, final int distance) {
-        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
     }
 
     @Override

@@ -4,13 +4,17 @@ import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
 
 public class Bishop extends Piece {
-    private static final int ABLE_DISTANCE_TO_MOVE = 7;
-
     private static final Bishop BLACK_BISHOP = new Bishop(Owner.BLACK);
     private static final Bishop WHITE_BISHOP = new Bishop(Owner.WHITE);
 
     public Bishop(final Owner owner) {
-        super(owner, new Score(3.0d), Direction.diagonalDirections());
+        super(
+                owner,
+                new Score(3.0d),
+                Direction.diagonalDirections(),
+                7,
+                "B"
+        );
     }
 
     public static Bishop getInstanceOf(final Owner owner) {
@@ -28,15 +32,5 @@ public class Bishop extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public String getSymbol() {
-        return "B";
-    }
-
-    @Override
-    public int getMaxDistance() {
-        return ABLE_DISTANCE_TO_MOVE;
     }
 }

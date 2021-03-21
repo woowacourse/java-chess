@@ -49,6 +49,10 @@ public class Board {
         final List<Position> ableToMove = new ArrayList<>();
         final Piece sourcePiece = of(source);
 
+        /*
+            XXX :: piece의 방향과 가능 거리를 가져와 처리하지 말고 piece에서 처리할 수 있도록
+         */
+
         for (final Direction direction : sourcePiece.getDirections()) {
             for (int distance = 1; distance <= sourcePiece.getMaxDistance(); distance++) {
                 if(isBlocked(source, direction, distance)){
@@ -71,14 +75,10 @@ public class Board {
 
     private boolean isBlocked(final Position source, final Direction direction, final int distance){
         try {
-            return isSameTeam(source, source.next(direction, distance));
+            return of(source).isSameTeam(of(source.next(direction, distance)));
         } catch (IllegalArgumentException e) {
             return true;
         }
-    }
-
-    private boolean isSameTeam(final Position source, final Position target){
-        return of(source).isSameTeam(of(target));
     }
 
     private void checkGameEnd(final Position target) {
@@ -88,16 +88,8 @@ public class Board {
     }
 
     private void movePiece(final Position source,final Position target) {
-        putPiece(source, target);
-        putEmpty(source);
-    }
-
-    private void putPiece(final Position source, final Position target) {
         board.put(target, board.get(source));
-    }
-
-    private void putEmpty(final Position position) {
-        board.put(position, Empty.getInstance());
+        board.put(source, Empty.getInstance());
     }
 
     public Status getStatus() {
@@ -136,7 +128,11 @@ public class Board {
         for (final Vertical v : Vertical.values()) {
             int verticalCount = 0;
             for (final Horizontal h : Horizontal.values()) {
-                if (of(v, h).equals(Pawn.getInstanceOf(owner))) {
+                if(!of(v, h).isOwner(owner)){
+                    continue;
+                }
+
+                if (of(v, h).isPawn()) {
                     verticalCount++;
                 }
             }
@@ -146,7 +142,6 @@ public class Board {
         }
         return totalCount;
     }
-
 
     public boolean isEnd() {
         return isEnd;
