@@ -7,6 +7,7 @@ import chess.domain.position.Target;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
@@ -25,48 +26,47 @@ public class Queen extends Piece {
 
     @Override
     public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
     }
 
     @Override
-    public void move2(Target target, Pieces pieces) {
-
+    public void move2(final Target target, final Pieces pieces) {
+        List<Position> positions = makeRoutes2(pieces);
+        checkTarget(target, positions);
+        pieces.changePiecePosition(this, target);
     }
 
-    private void checkTarget(Target target, List<Position> positions) {
+    private void checkTarget(final Target target, final List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
     }
 
-    private List<Position> makeRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes(chessBoard));
-        positions.addAll(makeDownRoutes(chessBoard));
-        positions.addAll(makeLeftRoutes(chessBoard));
-        positions.addAll(makeRightRoutes(chessBoard));
-        positions.addAll(makeUpLeftRoutes(chessBoard));
-        positions.addAll(makeUpRightRoutes(chessBoard));
-        positions.addAll(makeDownLeftRoutes(chessBoard));
-        positions.addAll(makeDownRightRoutes(chessBoard));
+        positions.addAll(makeUpRoutes2(pieces));
+        positions.addAll(makeDownRoutes2(pieces));
+        positions.addAll(makeLeftRoutes2(pieces));
+        positions.addAll(makeRightRoutes2(pieces));
+        positions.addAll(makeUpLeftRoutes2(pieces));
+        positions.addAll(makeUpRightRoutes2(pieces));
+        positions.addAll(makeDownLeftRoutes2(pieces));
+        positions.addAll(makeDownRightRoutes2(pieces));
         return positions;
     }
 
-    private List<Position> makeRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRightRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index < 8; index++) {
             Position nextPosition = Position.valueOf(rank, index + 1);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -75,18 +75,19 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeLeftRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index > 1; index--) {
             Position nextPosition = Position.valueOf(rank, index - 1);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -95,18 +96,19 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index > 1; index--) {
             Position nextPosition = Position.valueOf(index - 1, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -115,18 +117,19 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index < 8; index++) {
             Position nextPosition = Position.valueOf(index + 1, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -135,7 +138,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRightRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -145,11 +148,12 @@ public class Queen extends Piece {
             if (file > 7) {
                 break;
             }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -158,7 +162,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -168,11 +172,12 @@ public class Queen extends Piece {
             if (file < 1) {
                 break;
             }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -181,7 +186,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRightRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -191,11 +196,12 @@ public class Queen extends Piece {
             if (file > 7) {
                 break;
             }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -204,7 +210,7 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -214,11 +220,12 @@ public class Queen extends Piece {
             if (file < 1) {
                 break;
             }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
