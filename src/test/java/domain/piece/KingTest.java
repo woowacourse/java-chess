@@ -29,8 +29,8 @@ class KingTest {
         King king = King.of("K", true);
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("e4"), King.of("K", true));
-            put(Position.of("f4"), Pawn.of("P", false));
-            put(Position.of("d3"), Pawn.of("P", false));
+            put(Position.of("f4"), Pawn.of("p", false));
+            put(Position.of("d3"), Pawn.of("p", false));
         }});
         assertThat(king.canMove2(board.getBoard(), Position.of("e4"), Position.of("f4"))).isTrue();
         assertThat(king.canMove2(board.getBoard(), Position.of("e4"), Position.of("d3"))).isTrue();

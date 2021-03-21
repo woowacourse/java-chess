@@ -42,7 +42,7 @@ class QueenTest {
         Queen queen = Queen.of("Q", true);
         Board board = new Board(new HashMap<Position, Piece>(){{
             put(Position.of("e5"), queen);
-            put(Position.of("g7"), Pawn.of("p", true));
+            put(Position.of("g7"), Pawn.of("P", true));
         }});
         assertThat(queen.canMove2(board.getBoard(), Position.of("e5"), Position.of("g7"))).isFalse();
     }
@@ -65,7 +65,7 @@ class QueenTest {
         Board board = new Board(new HashMap<Position, Piece>(){{
             put(Position.of("e4"), queen);
             put(Position.of("e5"), Pawn.of("P", true));
-            put(Position.of("f3"), Pawn.of("P", false));
+            put(Position.of("f3"), Pawn.of("p", false));
         }});
         assertThat(queen.canMove2(board.getBoard(), Position.of("e4"), Position.of("e6"))).isFalse();
         assertThat(queen.canMove2(board.getBoard(), Position.of("e4"), Position.of("g2"))).isFalse();

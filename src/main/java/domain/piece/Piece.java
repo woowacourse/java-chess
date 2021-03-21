@@ -6,32 +6,20 @@ import java.util.Map;
 import java.util.Objects;
 
 public abstract class Piece {
-    private final String name;
+    private final Name name;
     private final Score score;
     private final boolean isBlack;
 
     public abstract boolean canMove2(Map<Position, Piece> board, Position start, Position end);
 
     public Piece(String name, Score score, boolean isBlack) {
-        this.name = name;
+        this.name = Name.of(name, isBlack);
         this.score = score;
         this.isBlack = isBlack;
     }
 
-    public boolean isBlack() {
-        return isBlack;
-    }
-
-    public String getName() {
-        return name;
-    }
-
     public Score getScore() {
         return score;
-    }
-
-    public boolean isKing() {
-        return false;
     }
 
     public boolean isSameColor(boolean color) {
@@ -56,6 +44,10 @@ public abstract class Piece {
 
     protected boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
         return !board.containsKey(nextPosition);
+    }
+
+    public boolean isKingDead() {
+        return this instanceof King;
     }
 
     @Override
