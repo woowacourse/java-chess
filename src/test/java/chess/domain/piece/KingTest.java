@@ -6,89 +6,105 @@ import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class KingTest {
+
     private final Piece king = new King(TeamType.BLACK);
-    private final Coordinate currentCoordinate = Coordinate.from("d5");
+    private final Coordinate current = Coordinate.from("d5");
     private ChessBoard chessBoard;
     private Map<Coordinate, Cell> cells;
 
     @BeforeEach
     void setup() {
-        chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
-        cells = chessBoard.getCells();
-        cells.get(currentCoordinate).put(king);
+        cells = ChessBoardGenerator.generateEmptyBoard();
+        chessBoard = new ChessBoard(cells);
+        cells.get(current).put(king);
     }
 
-    @DisplayName("생성 테스트")
-    @Test
-    void makeKing() {
-        assertThatCode(() -> new King(TeamType.BLACK))
-                .doesNotThrowAnyException();
-    }
+    @DisplayName("King의 isMovable 메서드는")
+    @Nested
+    class Describe_isMovable {
 
-    @DisplayName("King은 모든 방향으로 한 칸 이동할 수 있다")
-    @ParameterizedTest
-    @ValueSource(strings = {"c6", "e6", "c4", "e4", "d4", "d6", "c5", "e5"})
-    void moveDiagonal(String targetCoordinateInput) {
-        Coordinate destination = Coordinate.from(targetCoordinateInput);
-        boolean isMovable = king.isMovable(chessBoard, currentCoordinate, destination);
-        assertThat(isMovable).isTrue();
-    }
+        @DisplayName("빈 체스판에서")
+        @Nested
+        class Context_EmptyChessBoard {
 
-    @DisplayName("갈 수 없는 방향 이동")
-    @Test
-    void cannotMoveInvalidDirection1() {
-        Coordinate destination = Coordinate.from("e7");
+            @DisplayName("현재 위치에서 현재 위치로 이동할 수 없다.")
+            @Test
+            void cannotMoveToCurrentDestination() {
+                assertThatCode(() -> king.isMovable(chessBoard, current, current))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("현재 위치와 도착 위치가 동일합니다.");
+            }
 
-        boolean isMovable = king.isMovable(chessBoard, currentCoordinate, destination);
-        assertThat(isMovable).isFalse();
-    }
+            @DisplayName("동서남북 대각선 방향으로 1칸씩 움직일 수 있다.")
+            @ParameterizedTest
+            @ValueSource(strings = {"d4", "d6", "c5", "e5", "c4", "c6", "e4", "e6"})
+            void moveOnlyOneStepEveryDirection(String destinationInput) {
+                Coordinate destination = Coordinate.from(destinationInput);
 
-    @DisplayName("갈 수 없는 방향 이동")
-    @Test
-    void cannotMoveInvalidDirection2() {
-        Coordinate destination = Coordinate.from("e8");
+                boolean isMovable = king.isMovable(chessBoard, current, destination);
 
-        assertThatThrownBy(() -> king.isMovable(chessBoard, currentCoordinate, destination))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
+                assertThat(isMovable).isTrue();
+            }
 
-    @DisplayName("King은 두 칸 이상 이동할 수 없다.")
-    @Test
-    void cannotMoveOverTwoCells() {
-        Coordinate destination = Coordinate.from("b3");
+            @DisplayName("그 외의 경우 이동할 수 없다.")
+            @ParameterizedTest
+            @ValueSource(strings = {"d3", "d7", "b5", "f5"})
+            void cannotMoveWExceptValidDirection(String destinationInput) {
+                Coordinate destination = Coordinate.from(destinationInput);
 
-        boolean isMovable = king.isMovable(chessBoard, currentCoordinate, destination);
-        assertThat(isMovable).isFalse();
-    }
+                boolean isMovable = king.isMovable(chessBoard, current, destination);
 
-    @DisplayName("King의 도착위치에 같은 팀 기물이 있으면 이동 불가")
-    @Test
-    void cannotMoveWhenSameTeamPieceExistsOnDestination() {
-        Coordinate destination = Coordinate.from("c4");
+                assertThat(isMovable).isFalse();
+            }
 
-        cells.get(destination).put(new Rook(TeamType.BLACK));
+            @DisplayName("정의되지 않은 방향으로는 이동할 수 없다.")
+            @ParameterizedTest
+            @ValueSource(strings = {"a4", "c1"})
+            void cannotMoveUndefinedDirection(String destinationInput) {
+                Coordinate destination = Coordinate.from(destinationInput);
 
-        boolean isMovable = king.isMovable(chessBoard, currentCoordinate, destination);
-        assertThat(isMovable).isFalse();
-    }
+                assertThatCode(() -> king.isMovable(chessBoard, current, destination))
+                        .isInstanceOf(IllegalArgumentException.class)
+                        .hasMessage("주어진 위치로의 방향을 찾을 수 없습니다.");
+            }
+        }
 
-    @DisplayName("King의 도착위치에 적 팀 기물이 있으면 이동 가능")
-    @Test
-    void moveToDestinationWhenEnemyExistsOnDestination() {
-        Coordinate destination = Coordinate.from("c4");
-        Piece dummy = new Rook(TeamType.WHITE);
-        cells.get(destination).put(dummy);
-        boolean isMovable = king.isMovable(chessBoard, currentCoordinate, destination);
+        @DisplayName("적이나 아군 기물이 졵재하는 체스판에서")
+        @Nested
+        class Context_InitializedChessBoard {
 
-        assertThat(isMovable).isTrue();
+            private final Coordinate destination = Coordinate.from("c4");
+
+            @DisplayName("도착 위치에 아군이 존재하는 경우 이동할 수 없다.")
+            @Test
+            void cannotMoveWhenSameTeamExistsOnDestination() {
+                cells.get(destination).put(new King(TeamType.BLACK));
+
+                boolean isMovable = king.isMovable(chessBoard, current, destination);
+
+                assertThat(isMovable).isFalse();
+            }
+
+            @DisplayName("도착 위치에 적군이 존재하는 경우 이동할 수 있다.")
+            @Test
+            void canMoveWhenEnemyExistsOnDestination() {
+                cells.get(destination).put(new King(TeamType.WHITE));
+
+                boolean isMovable = king.isMovable(chessBoard, current, destination);
+
+                assertThat(isMovable).isTrue();
+            }
+        }
     }
 }
