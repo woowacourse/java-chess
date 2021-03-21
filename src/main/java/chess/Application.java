@@ -19,7 +19,8 @@ public class Application {
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.MOVE) {
-                //TODO
+                chessBoard.move(command.get(1), command.get(2));
+                OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.STATUS) {
                 //TODO

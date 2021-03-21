@@ -129,8 +129,9 @@ public class ChessBoard {
             chessBoard.put(start, Blank.INSTANCE);
             startPiece.setPosition(end);
         }
-
+        throw new IllegalArgumentException("잘못된 이동입니다.");
     }
+
 
     private void validatePosition(String source, String target) {
         if (source.equals(target)) {
