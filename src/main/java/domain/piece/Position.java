@@ -1,5 +1,8 @@
 package domain.piece;
 
+import domain.Direction;
+import domain.IndexMachine;
+
 import java.util.Objects;
 
 public class Position {
@@ -11,8 +14,12 @@ public class Position {
         this.column = column;
     }
 
-    public static Position Of(int x, int y) {
-        return new Position(x, y);
+    public static Position valueOf(int row, int column) {
+        return new Position(row, column);
+    }
+
+    public static Position of(String input) {
+        return IndexMachine.convertPosition(input);
     }
 
     public int getRow() {
@@ -21,6 +28,10 @@ public class Position {
 
     public int getColumn() {
         return column;
+    }
+
+    public Position move(Direction direction) {
+        return Position.valueOf(row + direction.getX(), column + direction.getY());
     }
 
     @Override
