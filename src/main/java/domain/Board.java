@@ -3,38 +3,30 @@ package domain;
 import domain.piece.Piece;
 import domain.piece.Position;
 
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
-    public static final int SIZE = 8;
-    private Piece[][] board = new Piece[SIZE][SIZE];
+    private static final int SIZE = 8;
+    private Map<Position, Piece> board;
 
-    public Board() {
-    }
-
-    public Board(List<Piece> pieces) {
-        pieces.stream().forEach(piece -> put(piece, piece.getPosition()));
+    public Board(Map<Position, Piece> pieces) {
+        board = new HashMap<>(pieces);
     }
 
     public void move(Position start, Position end) {
-        Piece piece = board[start.getRow()][start.getColumn()];
-        if (!piece.canMove(board, end)) {
-            throw new IllegalArgumentException("말을 움직일 수 없습니다!");
+        Piece startPiece = board.get(start);
+        if (startPiece.canMove2(start, end)) {
+            board.remove(start);
+            board.put(end, startPiece);
         }
-        piece = piece.movePosition(end);
-        put(piece, end);
-        board[start.getRow()][start.getColumn()] = null;
-    }
-
-    public void put(Piece piece, Position movePosition) {
-        board[movePosition.getRow()][movePosition.getColumn()] = piece;
-    }
-
-    public Piece[][] getBoard() {
-        return board;
     }
 
     public Piece getPiece(Position position) {
-        return board[position.getRow()][position.getColumn()];
+        return board.get(position);
+    }
+
+    public boolean canMovable(Position position, boolean color) {
+        return board.get(position).isSameColor(color);
     }
 }

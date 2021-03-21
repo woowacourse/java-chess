@@ -2,18 +2,18 @@ package domain;
 
 import domain.piece.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PieceFactory {
-    public static List<Piece> createPieces() {
-        List<Piece> pieces = new ArrayList<>();
-        pieces.addAll(Bishop.initialBishopPieces());
-        pieces.addAll(King.initialKingPieces());
-        pieces.addAll(Queen.initialQueenPieces());
-        pieces.addAll(Knight.initialKnightPieces());
-        pieces.addAll(Pawn.initialPawnPieces());
-        pieces.addAll(Rook.initialRookPieces());
+    public static Map<Position, Piece> createPieces() {
+        Map<Position, Piece> pieces = new HashMap<Position, Piece>();
+        pieces.putAll(Bishop.initialBishopPieces());
+        pieces.putAll(King.initialKingPieces());
+        pieces.putAll(Queen.initialQueenPieces());
+        pieces.putAll(Knight.initialKnightPieces());
+        pieces.putAll(Pawn.initialPawnPieces());
+        pieces.putAll(Rook.initialRookPieces());
         return pieces;
     }
 }

@@ -5,49 +5,50 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 class PieceFactoryTest {
-
     @DisplayName("PieceFactory create 호출 시 자동으로 말들이 자동 생성된다.")
     @Test
     void peice_factory_generate() {
-        List<Piece> pieces = PieceFactory.createPieces();
-        List<Piece> expected = Arrays.asList(
-                Bishop.Of("B", Position.Of(0, 2), true),
-                Bishop.Of("B", Position.Of(0, 5), true),
-                Bishop.Of("b", Position.Of(7, 2), false),
-                Bishop.Of("b", Position.Of(7, 5), false),
-                King.Of("K", Position.Of(0, 4), true),
-                King.Of("k", Position.Of(7, 4), false),
-                Knight.Of("N", Position.Of(0, 1), true),
-                Knight.Of("N", Position.Of(0, 6), true),
-                Knight.Of("n", Position.Of(7, 1), false),
-                Knight.Of("n", Position.Of(7, 6), false),
-                Queen.Of("Q", Position.Of(0, 3), true),
-                Queen.Of("q", Position.Of(7, 3), false),
-                Pawn.Of("P", Position.Of(1, 0), true),
-                Pawn.Of("P", Position.Of(1, 1), true),
-                Pawn.Of("P", Position.Of(1, 2), true),
-                Pawn.Of("P", Position.Of(1, 4), true),
-                Pawn.Of("P", Position.Of(1, 3), true),
-                Pawn.Of("P", Position.Of(1, 5), true),
-                Pawn.Of("P", Position.Of(1, 6), true),
-                Pawn.Of("P", Position.Of(1, 7), true),
-                Pawn.Of("p", Position.Of(6, 0), false),
-                Pawn.Of("p", Position.Of(6, 1), false),
-                Pawn.Of("p", Position.Of(6, 2), false),
-                Pawn.Of("p", Position.Of(6, 3), false),
-                Pawn.Of("p", Position.Of(6, 4), false),
-                Pawn.Of("p", Position.Of(6, 5), false),
-                Pawn.Of("p", Position.Of(6, 6), false),
-                Pawn.Of("p", Position.Of(6, 7), false),
-                Rook.Of("R", Position.Of(0, 0), true),
-                Rook.Of("R", Position.Of(0, 7), true),
-                Rook.Of("r", Position.Of(7, 7), false),
-                Rook.Of("r", Position.Of(7, 0), false)
-        );
-        Assertions.assertThat(pieces).containsAll(expected);
+        Map<Position, Piece> pieces = PieceFactory.createPieces();
+        Map<Position, Piece> expected = new HashMap<Position, Piece>() {
+            {
+                put(Position.of("c8"), Bishop.of("B", true));
+                put(Position.of("f8"), Bishop.of("B", true));
+                put(Position.of("c1"), Bishop.of("b", false));
+                put(Position.of("f5"), Bishop.of("b", false));
+                put(Position.of("e8"), King.of("K", true));
+                put(Position.of("e1"), King.of("k", false));
+                put(Position.of("b8"), Knight.of("N", true));
+                put(Position.of("g8"), Knight.of("N", true));
+                put(Position.of("b1"), Knight.of("n", false));
+                put(Position.of("g1"), Knight.of("n", false));
+                put(Position.of("d8"), Queen.of("Q", true));
+                put(Position.of("d3"), Queen.of("q", false));
+                put(Position.of("a7"), Pawn.of("P", true));
+                put(Position.of("b7"), Pawn.of("P", true));
+                put(Position.of("c7"), Pawn.of("P", true));
+                put(Position.of("d7"), Pawn.of("P", true));
+                put(Position.of("e7"), Pawn.of("P", true));
+                put(Position.of("f7"), Pawn.of("P", true));
+                put(Position.of("g7"), Pawn.of("P", true));
+                put(Position.of("h7"), Pawn.of("P", true));
+                put(Position.of("a6"), Pawn.of("p", false));
+                put(Position.of("b6"), Pawn.of("p", false));
+                put(Position.of("c6"), Pawn.of("p", false));
+                put(Position.of("d6"), Pawn.of("p", false));
+                put(Position.of("e6"), Pawn.of("p", false));
+                put(Position.of("f6"), Pawn.of("p", false));
+                put(Position.of("g6"), Pawn.of("p", false));
+                put(Position.of("h6"), Pawn.of("p", false));
+                put(Position.of("a8"), Rook.of("R", true));
+                put(Position.of("h8"), Rook.of("R", true));
+                put(Position.of("a1"), Rook.of("r", false));
+                put(Position.of("h1"), Rook.of("r", false));
+            }
+        };
+        Assertions.assertThat(pieces).containsAllEntriesOf(expected);
     }
 }

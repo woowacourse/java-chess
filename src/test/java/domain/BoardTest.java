@@ -1,25 +1,51 @@
 package domain;
 
-import domain.piece.Pawn;
+import domain.piece.King;
+import domain.piece.Piece;
 import domain.piece.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class BoardTest {
-    @DisplayName("보드 생성 시 모든 말들이 세팅된다.")
-    @Test
-    void board_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        board.move(Position.Of(1, 0), Position.Of(3, 0));
-        assertThat(board.getPiece(Position.Of(3, 0))).isInstanceOf(Pawn.class);
+    private Map<Position, Piece> pieces;
+
+    @DisplayName("2개의 king을 peices에 담는다.")
+    @BeforeEach
+    void setUp() {
+        pieces = new HashMap<Position, Piece>() {
+            {
+                put(Position.of("a7"), King.of("K", true));
+                put(Position.of("a1"), King.of("k", false));
+            }
+        };
     }
 
-    @DisplayName("빈 보드를 만든다.")
+    @DisplayName("정상적인 체스 기물이 들어오는 경우 체스 보드판이 생성된다.")
     @Test
-    void make_empty_board_test() {
-        Board board = new Board();
-        assertThat(board.getBoard()[0][0] == null).isTrue();
+    void board_generate() {
+        Board board = new Board(pieces);
+        assertThat(board.getPiece(Position.of("a7"))).isEqualTo(King.of("K", true));
+        assertThat(board.getPiece(Position.of("a1"))).isEqualTo(King.of("k", false));
+    }
+
+    @DisplayName("a7의 체스 기물(king)을 b6로 옮긴다.")
+    @Test
+    void piece_move_on_board() {
+        Board board = new Board(pieces);
+        board.move(Position.of("a7"), Position.of("b6"));
+        assertThat(board.getPiece(Position.of("b6"))).isEqualTo(King.of("K", true));
+    }
+
+    @DisplayName("이동하기 위해 선택한 기물의 색깔이 현재 유저의 색깔과 일치하는 지 검사한다.")
+    @Test
+    void correct_user_turn_check() {
+        Board board = new Board(pieces);
+        assertThat(board.canMovable(Position.of("a7"), true)).isTrue();
     }
 }
