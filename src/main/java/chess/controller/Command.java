@@ -8,20 +8,20 @@ public enum Command {
     STATUS("status"),
     END("end");
 
-    private final String value;
+    private final String signature;
 
-    Command(String value) {
-        this.value = value;
+    Command(String signature) {
+        this.signature = signature;
     }
 
     public static Command findCommand(String commandInput) {
         return Arrays.stream(Command.values())
-            .filter(command -> command.hasEqualValue(commandInput))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("명령어를 잘못 입력했습니다."));
+                .filter(command -> command.hasSameSignature(commandInput))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("명령어를 잘못 입력했습니다."));
     }
 
-    private boolean hasEqualValue(String value) {
-        return this.value.equals(value);
+    private boolean hasSameSignature(String value) {
+        return this.signature.equals(value);
     }
 }
