@@ -15,7 +15,7 @@ public abstract class Finished extends Started {
 
     @Override
     public State end() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("게임이 이미 종료되었습니다.");
     }
 
     @Override

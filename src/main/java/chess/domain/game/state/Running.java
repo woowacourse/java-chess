@@ -9,11 +9,16 @@ public abstract class Running extends Started {
 
     @Override
     public State start() {
-        throw new IllegalStateException();
+        throw new IllegalStateException("게임이 이미 진행 중 입니다.");
     }
 
     @Override
     public State end() {
         return new End(board());
+    }
+
+    @Override
+    public boolean isNotFinished() {
+        return true;
     }
 }
