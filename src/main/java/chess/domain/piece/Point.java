@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
+import static chess.ChessConstant.MAX_INDEX_OF_BOARD;
+import static chess.ChessConstant.MIN_INDEX_OF_BOARD;
+
 public class Point {
-    
-    private static final int MIN_INDEX = 0;
-    private static final int MAX_INDEX = 7;
     
     private static final String ERROR_OUT_OF_RANGE = "인덱스는 0이상 7이하이어야 합니다.";
     
@@ -23,8 +23,12 @@ public class Point {
         return new Point(point);
     }
     
-    private static boolean isOutOfBounds(int position) {
-        return position < MIN_INDEX || position > MAX_INDEX;
+    private static boolean isOutOfBounds(int point) {
+        return point < MIN_INDEX_OF_BOARD || point > MAX_INDEX_OF_BOARD;
+    }
+    
+    public boolean isOutOfBounds() {
+        return isOutOfBounds(point);
     }
     
     public Point add(int distance) {
@@ -50,5 +54,9 @@ public class Point {
     
     public int getPoint() {
         return point;
+    }
+    
+    public boolean equalsTo(int point) {
+        return this.point == point;
     }
 }
