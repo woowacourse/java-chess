@@ -14,6 +14,7 @@ import java.util.stream.Collectors;
 public final class ChessController {
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
+    private static final String END_COMMAND = "end";
 
     public void run() {
         OutputView.printChessStartMessage();
@@ -21,7 +22,7 @@ public final class ChessController {
         if (start) {
             final ChessGame chessGame = new ChessGame();
             playChessGame(chessGame);
-            printChessResult(chessGame);
+            printChessScore(chessGame);
         }
     }
 
@@ -65,18 +66,20 @@ public final class ChessController {
         }
     }
 
-    private void controlUserCommand(final ChessGame chessGame, final List<String> movePositions) {
-        if (MOVE_COMMAND.equals(movePositions.get(0))) {
-            final Position start = Position.of(movePositions.get(1));
-            final Position destination = Position.of(movePositions.get(2));
-            chessGame.move(start, destination);
+    private void controlUserCommand(final ChessGame chessGame, final List<String> turnOption) {
+        if (MOVE_COMMAND.equals(turnOption.get(0))) {
+            chessGame.move(Position.of(turnOption.get(1)), Position.of(turnOption.get(2)));
         }
-        if (STATUS_COMMAND.equals(movePositions.get(0))) {
+        if (STATUS_COMMAND.equals(turnOption.get(0))) {
+            printChessScore(chessGame);
+            progressSingleTurn(chessGame);
+        }
+        if (END_COMMAND.equals(turnOption.get(0))) {
             chessGame.finish();
         }
     }
 
-    private void printChessResult(ChessGame chessGame) {
+    private void printChessScore(ChessGame chessGame) {
         final double blackTeamScore = chessGame.calculateBlackTeamScore();
         final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
         OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);

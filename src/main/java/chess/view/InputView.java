@@ -22,7 +22,7 @@ public final class InputView {
             final String startOrEndInput = scanner.nextLine();
             return validateStartOrEnd(startOrEndInput);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return inputChessStartOrEnd();
         }
     }
@@ -43,7 +43,7 @@ public final class InputView {
             final String[] turnOptionInput = userTurnInput.split(" ");
             return validateTurnOption(turnOptionInput);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printErrorMessage(e.getMessage());
             return inputTurnOption();
         }
     }
@@ -53,6 +53,9 @@ public final class InputView {
             return trimStringArray(turnOptionInput);
         }
         if (STATUS_COMMAND.equals(turnOptionInput[0]) && turnOptionInput.length == ONE_WORD) {
+            return trimStringArray(turnOptionInput);
+        }
+        if (END_COMMAND.equals(turnOptionInput[0]) && turnOptionInput.length == ONE_WORD) {
             return trimStringArray(turnOptionInput);
         }
         throw new IllegalArgumentException("허용되지 않은 명령입니다.");
