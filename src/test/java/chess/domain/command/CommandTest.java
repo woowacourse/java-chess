@@ -14,8 +14,10 @@ public class CommandTest {
         String[] splitCommands = new String[]{"move", "a1", "a2"};
         Command command2 = new Command(splitCommands);
 
-        assertThat(command1.sourceAndTarget())
-                .isEqualTo(command2.sourceAndTarget());
+        assertThat(command1.secondCommand())
+                .isEqualTo(command2.secondCommand());
+        assertThat(command1.thirdCommand())
+                .isEqualTo(command2.thirdCommand());
     }
 
     @DisplayName("first-command 객체와 string 배열로 명령어 객체를 생성한다.")
@@ -28,8 +30,10 @@ public class CommandTest {
         Command command1 = new Command(firstCommandString, splitCommands);
         Command command2 = new Command(firstCommand, splitCommands);
 
-        assertThat(command1.sourceAndTarget())
-                .isEqualTo(command2.sourceAndTarget());
+        assertThat(command1.secondCommand())
+                .isEqualTo(command2.secondCommand());
+        assertThat(command1.thirdCommand())
+                .isEqualTo(command2.thirdCommand());
     }
 
     @DisplayName("move 명령어의 형식을 검증한다. - 3개 단위가 아닐 경우 예외")
@@ -37,7 +41,9 @@ public class CommandTest {
     void move_명령어_형식_검증() {
         Command command = new Command("move a1 a2 a4");
 
-        assertThatThrownBy(() -> command.sourceAndTarget())
+        assertThatThrownBy(command::secondCommand)
+                .isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(command::thirdCommand)
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -24,9 +24,8 @@ public class ChessGame {
     }
 
     public void play(Command command) {
-        String[] sourceTarget = command.sourceAndTarget();
-        Position source = Position.of(sourceTarget[0]);
-        Position target = Position.of(sourceTarget[1]);
+        Position source = Position.of(command.secondCommand());
+        Position target = Position.of(command.thirdCommand());
         Piece sourcePiece = currentPieces.findByPosition(source);
         if (!sourcePiece.getColor().same(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");

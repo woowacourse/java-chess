@@ -1,9 +1,5 @@
 ## 할일
-컨트롤러 play에서 command도 넘겨줘야하지 않을까... 
-
 * chessBoard 만들기
-* command에 enum 쓰기
-첫 단계에서는 firstCommand를 받는다.
 * position 이름 생각하기
 * piece한테 메시지 보내서 position 비교하기
 

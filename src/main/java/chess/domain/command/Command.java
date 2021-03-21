@@ -2,11 +2,11 @@ package chess.domain.command;
 
 import chess.controller.ChessController;
 
-import java.util.Arrays;
-
 public class Command {
     public static final String BLANK = " ";
     public static final int FIRST_COMMAND_INDEX = 0;
+    public static final int SECOND_COMMAND_INDEX = 1;
+    public static final int THIRD_COMMAND_INDEX = 2;
 
     private final FirstCommand firstCommand;
     private final String[] splitCommands;
@@ -32,9 +32,14 @@ public class Command {
         return input.split(BLANK);
     }
 
-    public String[] sourceAndTarget() {
+    public String secondCommand() {
         validateForMoveCommand(splitCommands);
-        return Arrays.copyOfRange(splitCommands, 1, 3);
+        return splitCommands[SECOND_COMMAND_INDEX];
+    }
+
+    public String thirdCommand() {
+        validateForMoveCommand(splitCommands);
+        return splitCommands[THIRD_COMMAND_INDEX];
     }
 
     private void validateForMoveCommand(String[] splitCommands) {
