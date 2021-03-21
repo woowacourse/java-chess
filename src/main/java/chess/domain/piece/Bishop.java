@@ -16,7 +16,7 @@ public class Bishop extends Piece {
             Position.of('f', '1'));
 
     public Bishop(Position position, Color color) {
-        super(position, Name.BISHOP, color, Score.THREE);
+        super(position, Name.BISHOP, color, new Score(3));
     }
 
     public Bishop(Position position, Name name, Color color, Score score) {

@@ -14,7 +14,7 @@ public class Queen extends Piece {
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
 
     public Queen(Position position, Color color) {
-        super(position, Name.QUEEN, color, Score.NINE);
+        super(position, Name.QUEEN, color, new Score(9));
     }
 
     public Queen(Position position, Name name, Color color, Score score) {

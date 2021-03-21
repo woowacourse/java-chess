@@ -1,5 +1,4 @@
 ## 할일
-* 피스별
 * chessBoard 만들기
 * position 이름 생각하기
 * piece한테 메시지 보내서 position 비교하기

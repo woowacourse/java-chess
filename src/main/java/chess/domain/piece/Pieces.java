@@ -3,10 +3,13 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.toList;
 
 public class Pieces {
-
     public static final int KING_COUNT = 2;
     private List<Piece> pieces;
 
@@ -20,7 +23,7 @@ public class Pieces {
 
     public Piece findByPosition(Position position) {
         return pieces.stream()
-                .filter(piece -> position.equals(piece.getPosition()))
+                .filter(piece -> piece.isSamePosition(position))
                 .findFirst()
                 .orElse(new Empty());
     }
@@ -36,26 +39,22 @@ public class Pieces {
                 .count();
     }
 
-
-    public double sumScoreByColor(Color color) {
-        int count = 0;
-        for (int i = 0; i < Position.Xs.length(); i++) {
-            int index = i;
-            int temp = (int) pieces.stream()
-                    .filter(piece -> piece instanceof Pawn)
-                    .filter(piece -> piece.isSameTeam(color))
-                    .filter(piece -> piece.getPosition().getX() == Position.Xs.charAt(index))
-                    .count();
-            if (temp >= 2) {
-                count += temp;
-            }
-        }
-        double subtractCount = 0.5;
+    public Pieces piecesByColor(Color color) {
         return pieces.stream()
                 .filter(piece -> piece.isSameTeam(color))
-                .mapToDouble(piece -> piece.getScore().getValue())
-                .sum() - (count * subtractCount);
+                .collect(Collectors.collectingAndThen(toList(), Pieces::new));
     }
 
+    public Score totalScore() {
+        return new Score(pieces.stream()
+                .mapToDouble(Piece::score)
+                .sum());
+    }
 
+    public int pawnCountByX(char index) {
+        return (int) pieces.stream()
+                .filter(Piece::isPawn)
+                .filter(piece -> piece.position.sameX(index))
+                .count();
+    }
 }

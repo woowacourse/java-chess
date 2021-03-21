@@ -15,7 +15,7 @@ public class Knight extends Piece {
             Position.of('g', '1'));
 
     public Knight(Position position, Color color) {
-        super(position, Name.KNIGHT, color, Score.TOW_FIVE);
+        super(position, Name.KNIGHT, color, new Score(2.5));
     }
 
     public Knight(Position position, Name name, Color color, Score score) {

@@ -16,7 +16,7 @@ public class Rook extends Piece {
             Position.of('h', '1'));
 
     public Rook(Position position, Color color) {
-        super(position, Name.ROOK, color, Score.FIVE);
+        super(position, Name.ROOK, color, new Score(5));
     }
 
     public Rook(Position position, Name name, Color color, Score score) {

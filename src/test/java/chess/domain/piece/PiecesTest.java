@@ -48,18 +48,23 @@ public class PiecesTest {
         assertThat(pieces.getPieces().size()).isEqualTo(31);
     }
 
-    @DisplayName("현재 기물들의 팀별 점수를 계산한다.")
+    @DisplayName("색 별 기물들의 점수 총합을 구한다.")
     @Test
     void 팀별_점수_계산() {
         Pieces pieces = new Pieces(PieceFactory.initialPieces());
+        Pieces blackPieces = pieces.piecesByColor(Color.BLACK);
+        Pieces whitePieces = pieces.piecesByColor(Color.WHITE);
 
-        assertThat(pieces.sumScoreByColor(Color.WHITE)).isEqualTo(38);
-        assertThat(pieces.sumScoreByColor(Color.BLACK)).isEqualTo(38);
+        double blackScore = blackPieces.totalScore().getValue();
+        double whiteScore = whitePieces.totalScore().getValue();
+
+        assertThat(blackScore).isEqualTo(38);
+        assertThat(whiteScore).isEqualTo(38);
     }
 
-    @DisplayName("현재 기물들의 팀별 점수를 계산한다. - 세로줄에 같은 색 폰이 있는 경우")
+    @DisplayName("세로줄에 같은 말이 몇개인지 구한다.")
     @Test
-    void 팀별_점수_계산_세로줄_같은색_폰() {
+    void 세로줄_같은색_폰() {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '8'), Color.BLACK),
                 new Pawn(Position.of('a', '7'), Color.BLACK),
@@ -69,7 +74,8 @@ public class PiecesTest {
                 new Pawn(Position.of('c', '2'), Color.WHITE));
         Pieces pieces = new Pieces(current);
 
-        assertThat(pieces.sumScoreByColor(Color.BLACK)).isEqualTo(2);
-        assertThat(pieces.sumScoreByColor(Color.WHITE)).isEqualTo(1);
+        int pawnCountByX = pieces.pawnCountByX('a');
+
+        assertThat(pawnCountByX).isEqualTo(2);
     }
 }

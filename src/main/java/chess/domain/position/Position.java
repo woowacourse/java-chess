@@ -7,13 +7,14 @@ import java.util.Objects;
 public class Position {
     public static final Position EMPTY = new Position('0', '0');
     public static final List<Position> POSITIONS;
+    public static final int CHANGE_LINE_POINT = 8;
     public static final String Xs = "abcdefgh";
     private static final String Ys = "87654321";
 
     static {
         POSITIONS = new ArrayList<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
+        for (int i = 0; i < CHANGE_LINE_POINT; i++) {
+            for (int j = 0; j < CHANGE_LINE_POINT; j++) {
                 POSITIONS.add(new Position(Xs.charAt(j), Ys.charAt(i)));
             }
         }
@@ -54,6 +55,10 @@ public class Position {
 
     public int xDistance(Position anotherPosition) {
         return this.x - anotherPosition.x;
+    }
+
+    public boolean sameX(char anotherX) {
+        return x == anotherX;
     }
 
     public boolean largeY(Position anotherPosition) {

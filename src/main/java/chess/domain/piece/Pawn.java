@@ -21,7 +21,7 @@ public class Pawn extends Piece {
     public static final char WHITE_INITIAL_Y = '2';
 
     public Pawn(Position position, Color color) {
-        super(position, Name.PAWN, color, Score.ONE);
+        super(position, Name.PAWN, color, new Score(1));
     }
 
     public Pawn(Position position, Name name, Color color, Score score) {
@@ -38,7 +38,6 @@ public class Pawn extends Piece {
         blackPawns.addAll(whitePawns);
         return blackPawns;
     }
-
 
     @Override
     public void move(Position target, Pieces pieces) {

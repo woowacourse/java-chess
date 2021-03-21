@@ -61,7 +61,7 @@ public class ChessController {
     }
 
     public void status() {
-        OutputView.printStatus(chessGame.getCurrentPieces());
+        OutputView.printStatus(chessGame.scoreStatus());
     }
 
     public void end() {

@@ -33,8 +33,8 @@ public abstract class Piece {
         return name.nameByColor(color);
     }
 
-    public Score getScore() {
-        return score;
+    public double score() {
+        return score.getValue();
     }
 
     public boolean isSameTeam(Piece targetPiece) {
@@ -48,4 +48,13 @@ public abstract class Piece {
     public boolean isEmpty() {
         return this instanceof Empty;
     }
+
+    public boolean isPawn() {
+        return this instanceof Pawn;
+    }
+
+    public boolean isSamePosition(Position position) {
+        return this.position.equals(position);
+    }
+
 }

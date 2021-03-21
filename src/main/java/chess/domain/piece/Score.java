@@ -1,20 +1,24 @@
 package chess.domain.piece;
 
-public enum Score {
-    ZERO(0),
-    ONE(1),
-    THREE(3),
-    TOW_FIVE(2.5),
-    FIVE(5),
-    NINE(9);
+public class Score {
+    public static final Score ZERO = new Score(0);
+    public static final double SUBTRACT_VALUE = 0.5;
 
     private final double value;
 
-    Score(double value) {
+    public Score(double value) {
         this.value = value;
     }
 
     public double getValue() {
         return value;
+    }
+
+    public double sum(Score anotherScore) {
+        return value + anotherScore.value;
+    }
+
+    public double subtractedByMultipliedCount(int sameXPawnCount) {
+        return value - (SUBTRACT_VALUE * sameXPawnCount);
     }
 }

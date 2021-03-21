@@ -54,4 +54,8 @@ public class ChessGame {
     public boolean runnable() {
         return pieces.isAliveAllKings();
     }
+
+    public ScoreStatus scoreStatus() {
+        return ScoreStatus.generateByColor(pieces);
+    }
 }
