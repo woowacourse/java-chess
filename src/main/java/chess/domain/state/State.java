@@ -1,6 +1,7 @@
 package chess.domain.state;
 
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
@@ -13,4 +14,6 @@ public interface State {
     State move(final Source source, final Target target);
 
     Optional<Piece> findPiece(final Position position);
+
+    Pieces pieces();
 }
