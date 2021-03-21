@@ -69,7 +69,7 @@
           - [x] 포함된다면 `piece` 에 position을 변경한다..
           - [x] Map의 key를 통해 확인한 적팀 리스트에 목적지에 위치한 `piece`가 있다면 적팀 리스트에서 해당 `piece`를 삭제한다.
 
-    - [ ] knight
+    - [x] knight
     - [x] bishop
     - [ ] queen
     - [ ] king
