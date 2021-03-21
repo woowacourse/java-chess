@@ -1,6 +1,7 @@
 package chess.domain.result;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
@@ -56,7 +57,9 @@ class ResultTest {
     void findWinner(String positionName, String colorName) {
         Board board = BoardFactory.initializeBoard();
         Result result = new Result(board);
-        assertThat(result.findWinner()).isEqualTo("아직 승자가 정해지지 않았습니다.");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> result.findWinner())
+                .withMessage("아직 승자가 정해지지 않았습니다.");
         Piece king = board.findPieceBy(Position.ofName(positionName));
         board.getCoordinates().remove(king);
         assertThat(result.findWinner()).isEqualTo(colorName + "이 이겼습니다.");
