@@ -1,34 +1,36 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
-import chess.domain.board.Board;
 import chess.domain.board.Cell;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
-import java.util.Map;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 class RookTest {
     @DisplayName("생성 테스트")
     @Test
     void makeRook() {
         assertThatCode(() -> new Rook(TeamType.BLACK))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("빈 체스판 - 룩 이동 - 이동 가능")
     @Test
     void rookMoveOnEmptyBoard() {
-        Board board = Board.getInstance();
-        Map<Coordinate, Cell> cells = board.getCells();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
         Rook rook = new Rook(TeamType.BLACK);
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate targetCoordinate = Coordinate.from("d5");
 
         cells.get(currentCoordinate).put(rook);
-        boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
+        boolean isMovable = rook.isMovable(chessBoard, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isTrue();
     }
@@ -36,8 +38,8 @@ class RookTest {
     @DisplayName("목적지에 적 기물 - 룩 이동 - 이동 가능")
     @Test
     void rookMoveEnemyPieceOnTargetCoordinate() {
-        Board board = Board.getInstance();
-        Map<Coordinate, Cell> cells = board.getCells();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
@@ -47,7 +49,7 @@ class RookTest {
         cells.get(currentCoordinate).put(rook);
         Piece enemyPiece = new Queen(TeamType.WHITE);
         cells.get(routeCoordinate).put(enemyPiece);
-        boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
+        boolean isMovable = rook.isMovable(chessBoard, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isTrue();
     }
@@ -55,8 +57,8 @@ class RookTest {
     @DisplayName("빈 체스판 - 룩 이동 - 이동 불가 - 이동 경로 중간에 다른 기물 존재")
     @Test
     void rookCannotMoveOtherPieceOnRoute() {
-        Board board = Board.getInstance();
-        Map<Coordinate, Cell> cells = board.getCells();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
         Rook rook = new Rook(TeamType.BLACK);
         Coordinate currentCoordinate = Coordinate.from("d4");
         Coordinate routeCoordinate = Coordinate.from("d6");
@@ -65,15 +67,15 @@ class RookTest {
         cells.get(currentCoordinate).put(rook);
         cells.get(routeCoordinate).put(new Rook(TeamType.WHITE));
 
-        boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
+        boolean isMovable = rook.isMovable(chessBoard, currentCoordinate, targetCoordinate);
         assertThat(isMovable).isFalse();
     }
 
     @DisplayName("빈 체스판 - 룩 이동 - 이동 불가 - 도착 위치에 자신의 기물 존재")
     @Test
     void rookCannotMoveOwnPieceOnTargetCoordinate() {
-        Board board = Board.getInstance();
-        Map<Coordinate, Cell> cells = board.getCells();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
@@ -84,7 +86,7 @@ class RookTest {
         Piece ownPiece = new Pawn(TeamType.BLACK);
         cells.get(routeCoordinate).put(ownPiece);
 
-        boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
+        boolean isMovable = rook.isMovable(chessBoard, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isFalse();
     }
@@ -92,8 +94,8 @@ class RookTest {
     @DisplayName("빈 체스판 - 룩 이동 - 이동 불가 - 이동할 수 없는 도착 위치")
     @Test
     void rookCannotInvalidTargetCoordinate() {
-        Board board = Board.getInstance();
-        Map<Coordinate, Cell> cells = board.getCells();
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        Map<Coordinate, Cell> cells = chessBoard.getCells();
         Rook rook = new Rook(TeamType.BLACK);
 
         Coordinate currentCoordinate = Coordinate.from("d4");
@@ -101,7 +103,7 @@ class RookTest {
 
         cells.get(currentCoordinate).put(rook);
 
-        boolean isMovable = rook.isMovableTo(board, currentCoordinate, targetCoordinate);
+        boolean isMovable = rook.isMovable(chessBoard, currentCoordinate, targetCoordinate);
 
         assertThat(isMovable).isFalse();
     }

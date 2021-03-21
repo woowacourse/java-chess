@@ -1,9 +1,14 @@
 package chess.domain.board;
 
+import chess.domain.piece.Direction;
 import chess.domain.piece.TeamType;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Coordinate {
+    private static final String DELIMITER = "";
 
     private final File file;
     private final Rank rank;
@@ -13,13 +18,41 @@ public class Coordinate {
         this.rank = rank;
     }
 
-    public static Coordinate from(String currentCoordinateInput) {
-        String[] currentSplit = currentCoordinateInput.split("");
-        String fileInput = currentSplit[0];
-        String rankInput = currentSplit[1];
-        File file = File.findValueOf(fileInput);
-        Rank rank = Rank.findValueOf(rankInput);
+    public static Coordinate from(String coordinateInput) {
+        List<String> coordinateToken = Arrays.asList(coordinateInput.split(DELIMITER));
+        validateCoordinate(coordinateToken);
+        String fileInput = coordinateToken.get(0);
+        String rankInput = coordinateToken.get(1);
+        File file = File.findFileByCondition(fileInput);
+        Rank rank = Rank.findRankByValue(rankInput);
         return new Coordinate(file, rank);
+    }
+
+    private static void validateCoordinate(List<String> coordinateToken) {
+        if (coordinateToken.size() != 2) {
+            throw new IllegalArgumentException("위치에 해당하는 유효한 좌표 값은 두 자리의 문자열입니다.");
+        }
+    }
+
+    public Direction evaluateDirection(Coordinate targetCoordinate) {
+        int fileDiff = targetCoordinate.file.calculateDifference(file);
+        int rankDiff = targetCoordinate.rank.calculateDifference(rank);
+        return Direction.findDirection(fileDiff, rankDiff);
+    }
+
+    public Coordinate move(Direction direction) {
+        return new Coordinate(file.move(direction), rank.move(direction));
+    }
+
+    public boolean isTwoRankForwardFrom(Coordinate targetCoordinate) {
+        return Math.abs(targetCoordinate.rank.calculateDifference(rank)) == 2 && targetCoordinate.file == file;
+    }
+
+    public boolean isDefaultPawnRank(TeamType teamType) {
+        if (teamType == TeamType.BLACK) {
+            return rank == Rank.SEVEN;
+        }
+        return rank == Rank.TWO;
     }
 
     @Override
@@ -37,47 +70,5 @@ public class Coordinate {
     @Override
     public int hashCode() {
         return Objects.hash(file, rank);
-    }
-
-
-    public Coordinate moveForward(TeamType teamType) {
-        if (teamType == TeamType.BLACK) {
-            return new Coordinate(this.file, this.rank.decrease());
-        }
-        return null;
-    }
-
-    public Direction calculateDirection(Coordinate targetCoordinate) {
-        File targetFile = targetCoordinate.getFile();
-        Rank targetRank = targetCoordinate.getRank();
-
-        int fileDiff = targetFile.getX() - file.getX();
-        int rankDiff = targetRank.getY() - rank.getY();
-
-        return Direction.findDirection(fileDiff, rankDiff);
-    }
-
-    public File getFile() {
-        return file;
-    }
-
-    public Rank getRank() {
-        return rank;
-    }
-
-    public Coordinate move(Direction direction) {
-        return new Coordinate(file.move(direction), rank.move(direction));
-    }
-
-    public boolean isTwoRankForward(Coordinate targetCoordinate) {
-        return Math.abs(targetCoordinate.getRank().getY()
-            - this.rank.getY()) == 2 && file.getX() == targetCoordinate.getFile().getX();
-    }
-
-    public boolean isFirstPawnRank(TeamType teamType) {
-        if (teamType == TeamType.BLACK) {
-            return rank == Rank.SEVEN;
-        }
-        return rank == Rank.TWO;
     }
 }

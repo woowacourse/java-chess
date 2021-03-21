@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.Direction;
+
 import java.util.Arrays;
 import java.util.function.Predicate;
 
@@ -13,35 +15,39 @@ public enum File {
     G("g", 7),
     H("h", 8);
 
-    private final String value;
+    private final String signature;
     private final int x;
 
-    File(String value, int x) {
-        this.value = value;
+    File(String signature, int x) {
+        this.signature = signature;
         this.x = x;
     }
 
-    public static File findValueOf(String fileInput) {
-        return findFile((File file) -> file.value.equals(fileInput));
+    public static File findFileByCondition(String fileInput) {
+        return findFileByCondition(file -> file.hasSameSignature(fileInput));
     }
 
-    public static File findFile(Predicate<File> predicate) {
+    private static File findFileByCondition(Predicate<File> hasSameValue) {
         return Arrays.stream(File.values())
-            .filter(predicate)
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
+                .filter(hasSameValue)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 File(열)값 입니다."));
     }
 
-    public String getValue() {
-        return value;
-    }
-
-    public int getX() {
-        return x;
+    private boolean hasSameSignature(String fileInput) {
+        return signature.equals(fileInput);
     }
 
     public File move(Direction direction) {
-        int targetX = x + direction.getX();
-        return findFile(file -> file.x == targetX);
+        int nextX = direction.calculateFile(x);
+        return findFileByCondition(file -> file.hasSameX(nextX));
+    }
+
+    private boolean hasSameX(int x) {
+        return this.x == x;
+    }
+
+    public int calculateDifference(File file) {
+        return this.x - file.x;
     }
 }

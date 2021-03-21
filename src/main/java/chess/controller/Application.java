@@ -1,11 +1,13 @@
 package chess.controller;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
 import chess.domain.board.Result;
 import chess.domain.piece.TeamType;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 
 public class Application {
@@ -26,45 +28,40 @@ public class Application {
     }
 
     private static void run() {
-        Board board = initializeBoard();
-        OutputView.printBoard(board);
-        startChessGame(board);
-        if (board.isKingCheckmate()) {
-            OutputView.printWinner(board.winner());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        chessBoard.initializeDefaultPieces();
+        OutputView.printBoard(chessBoard);
+        startChessGame(chessBoard);
+        if (chessBoard.isKingCheckmate()) {
+            OutputView.printWinner(chessBoard.winner());
         }
     }
 
-    private static void startChessGame(Board board) {
+    private static void startChessGame(ChessBoard chessBoard) {
         Command command = Command.START;
-        while (command != Command.END && !board.isKingCheckmate()) {
+        while (command != Command.END && !chessBoard.isKingCheckmate()) {
             List<String> playerCommand = InputView.inputPlayerCommand();
             command = Command.findCommand(playerCommand.get(0));
-            startChessGame(command, board, playerCommand);
-            OutputView.printBoard(board);
+            startChessGame(command, chessBoard, playerCommand);
+            OutputView.printBoard(chessBoard);
         }
     }
 
-    private static Board initializeBoard() {
-        Board board = Board.getInstance();
-        board.initialize();
-        return board;
-    }
-
-    private static void startChessGame(Command command, Board board, List<String> playerCommand) {
+    private static void startChessGame(Command command, ChessBoard chessBoard, List<String> playerCommand) {
         if (command == Command.MOVE) {
-            move(board, playerCommand);
+            move(chessBoard, playerCommand);
             return;
         }
         if (command == Command.STATUS) {
-            Result result = board.calculateScores();
+            Result result = chessBoard.calculateScores();
             OutputView.printScoreResult(result);
         }
     }
 
-    private static void move(Board board, List<String> playerCommand) {
+    private static void move(ChessBoard chessBoard, List<String> playerCommand) {
         Coordinate currentCoordinate = Coordinate.from(playerCommand.get(1));
         Coordinate targetCoordinate = Coordinate.from(playerCommand.get(2));
-        board.move(currentCoordinate, targetCoordinate, teamType);
+        chessBoard.move(currentCoordinate, targetCoordinate, teamType);
         teamType = teamType.getOppositeTeam();
     }
 }

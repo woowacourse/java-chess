@@ -1,12 +1,9 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
-import chess.domain.board.Board;
 import chess.domain.board.Cell;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -14,15 +11,20 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 class PawnTest {
-    private Board board;
+    private ChessBoard chessBoard;
     private Map<Coordinate, Cell> cells;
 
     @DisplayName("생성 테스트")
     @Test
     void makePawn() {
         assertThatCode(() -> new Pawn(TeamType.BLACK))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("폰 이동 테스트")
@@ -37,8 +39,8 @@ class PawnTest {
 
             @BeforeEach
             void setup() {
-                board = Board.getInstance();
-                cells = board.getCells();
+                chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+                cells = chessBoard.getCells();
                 cells.get(currentCoordinate).put(pawn);
             }
 
@@ -47,7 +49,7 @@ class PawnTest {
             void pawnCanMoveForward() {
                 Coordinate destination = Coordinate.from("d6");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -60,7 +62,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.BLACK);
                 cells.get(Coordinate.from("d6")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -70,7 +72,7 @@ class PawnTest {
             void pawnCanMoveTwoCellsForwardFirstTime() {
                 Coordinate destination = Coordinate.from("d5");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -83,7 +85,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.BLACK);
                 cells.get(Coordinate.from("d6")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -96,7 +98,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.BLACK);
                 cells.get(Coordinate.from("d5")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -107,7 +109,7 @@ class PawnTest {
                 currentCoordinate = Coordinate.from("d6");
                 Coordinate destination = Coordinate.from("d4");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -121,7 +123,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.WHITE);
                 cells.get(destination).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -132,7 +134,7 @@ class PawnTest {
             void pawnCannotMoveDiagonal(String destinationInput) {
                 Coordinate destination = Coordinate.from(destinationInput);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -147,8 +149,8 @@ class PawnTest {
 
             @BeforeEach
             void setup() {
-                board = Board.getInstance();
-                cells = board.getCells();
+                chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+                cells = chessBoard.getCells();
                 cells.get(currentCoordinate).put(pawn);
             }
 
@@ -157,7 +159,7 @@ class PawnTest {
             void pawnCanMoveForward() {
                 Coordinate destination = Coordinate.from("d3");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -170,7 +172,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.WHITE);
                 cells.get(Coordinate.from("d3")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -180,7 +182,7 @@ class PawnTest {
             void pawnCanMoveTwoCellsForwardFirstTime() {
                 Coordinate destination = Coordinate.from("d4");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -193,7 +195,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.BLACK);
                 cells.get(Coordinate.from("d3")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -206,7 +208,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.WHITE);
                 cells.get(Coordinate.from("d4")).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -217,7 +219,7 @@ class PawnTest {
                 currentCoordinate = Coordinate.from("d3");
                 Coordinate destination = Coordinate.from("d5");
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }
@@ -231,7 +233,7 @@ class PawnTest {
                 Piece dummy = new Rook(TeamType.BLACK);
                 cells.get(destination).put(dummy);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isTrue();
             }
@@ -242,7 +244,7 @@ class PawnTest {
             void pawnCannotMoveDiagonal(String destinationInput) {
                 Coordinate destination = Coordinate.from(destinationInput);
 
-                boolean isMovable = pawn.isMovableTo(board, currentCoordinate, destination);
+                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
 
                 assertThat(isMovable).isFalse();
             }

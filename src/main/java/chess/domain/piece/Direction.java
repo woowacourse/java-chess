@@ -1,6 +1,5 @@
-package chess.domain.board;
+package chess.domain.piece;
 
-import chess.domain.piece.TeamType;
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,25 +31,31 @@ public enum Direction {
 
     public static Direction findDirection(int fileDiff, int rankDiff) {
         if (fileDiff == 0 && rankDiff == 0) {
-            throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
+            throw new IllegalArgumentException("현재 위치와 도착 위치가 동일합니다.");
         }
         if (fileDiff == 0 || rankDiff == 0) {
-            return verticalOrHorizontalDirection(fileDiff, rankDiff);
+            return findVerticalOrHorizontalDirection(fileDiff, rankDiff);
         }
         if (Math.abs(fileDiff) == Math.abs(rankDiff)) {
-            return diagonalDirection(fileDiff, rankDiff);
+            return findDiagonalDirection(fileDiff, rankDiff);
         }
-        return knightDirection(fileDiff, rankDiff);
+        return findKnightDirection(fileDiff, rankDiff);
     }
 
-    private static Direction knightDirection(int fileDiff, int rankDiff) {
-        return Arrays.stream(Direction.values())
-            .filter(direction -> direction.x == fileDiff && direction.y == rankDiff)
-            .findAny()
-            .orElseThrow(IllegalArgumentException::new);
+    private static Direction findVerticalOrHorizontalDirection(int fileDiff, int rankDiff) {
+        if (fileDiff > 0) {
+            return RIGHT;
+        }
+        if (fileDiff < 0) {
+            return LEFT;
+        }
+        if (rankDiff > 0) {
+            return UP;
+        }
+        return DOWN;
     }
 
-    private static Direction diagonalDirection(int fileDiff, int rankDiff) {
+    private static Direction findDiagonalDirection(int fileDiff, int rankDiff) {
         if (fileDiff > 0 && rankDiff > 0) {
             return RIGHT_UP;
         }
@@ -63,40 +68,15 @@ public enum Direction {
         return LEFT_UP;
     }
 
-    private static Direction verticalOrHorizontalDirection(int fileDiff, int rankDiff) {
-        if (rankDiff > 0) {
-            return UP;
-        }
-        if (rankDiff < 0) {
-            return DOWN;
-        }
-        if (fileDiff > 0) {
-            return RIGHT;
-        }
-        return LEFT;
-    }
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public boolean isDiagonal() {
-        List<Direction> diagonalDirections
-            = Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
-        return diagonalDirections.contains(this);
+    private static Direction findKnightDirection(int fileDiff, int rankDiff) {
+        return Arrays.stream(Direction.values())
+                .filter(direction -> direction.hasSameDegree(fileDiff, rankDiff))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("주어진 위치로의 방향을 찾을 수 없습니다."));
     }
 
     public static List<Direction> getKingDirections() {
         return Arrays.asList(LEFT, RIGHT, UP, DOWN, LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
-    }
-
-
-    public static List<Direction> getBishopDirections() {
-        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
     }
 
     public static List<Direction> getQueenDirections() {
@@ -104,10 +84,11 @@ public enum Direction {
     }
 
     public static List<Direction> getKnightDirections() {
-        return Arrays.asList(Direction.LEFT_LEFT_DOWN, Direction.LEFT_LEFT_UP, Direction.LEFT_UP_UP,
-            Direction.LEFT_DOWN_DOWN,
-            Direction.RIGHT_DOWN_DOWN, Direction.RIGHT_UP_UP, Direction.RIGHT_RIGHT_UP,
-            Direction.RIGHT_RIGHT_DOWN);
+        return Arrays.asList(LEFT_LEFT_DOWN, LEFT_LEFT_UP, LEFT_UP_UP, LEFT_DOWN_DOWN, RIGHT_DOWN_DOWN, RIGHT_UP_UP, RIGHT_RIGHT_UP, RIGHT_RIGHT_DOWN);
+    }
+
+    public static List<Direction> getBishopDirections() {
+        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN);
     }
 
     public static List<Direction> getRookDirections() {
@@ -119,5 +100,25 @@ public enum Direction {
             return Arrays.asList(DOWN, LEFT_DOWN, RIGHT_DOWN);
         }
         return Arrays.asList(UP, LEFT_UP, RIGHT_UP);
+    }
+
+    private boolean hasSameDegree(int fileDiff, int rankDiff) {
+        return x == fileDiff && y == rankDiff;
+    }
+
+    public boolean isDiagonal() {
+        return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN).contains(this);
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int calculateRank(int y) {
+        return this.y + y;
+    }
+
+    public int calculateFile(int x) {
+        return this.x + x;
     }
 }

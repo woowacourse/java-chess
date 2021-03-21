@@ -1,26 +1,23 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
 
 public class Knight extends Piece {
     private static final String NAME = "N";
     private static final double SCORE = 2.5;
 
     public Knight(TeamType teamType) {
-        super(teamType, NAME, SCORE, Direction.getKnightDirections());
+        super(NAME, teamType, SCORE, Direction.getKnightDirections());
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        if (!isCorrectDirection(moveCommandDirection)) {
+    public boolean isMovable(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
+        Direction direction = current.evaluateDirection(destination);
+        if (!isCorrectDirection(direction)) {
             return false;
         }
-        Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return nextCoordinate.equals(targetCoordinate) && board
-            .isMovable(nextCoordinate, getTeamType());
+        Coordinate nextCoordinate = current.move(direction);
+        return nextCoordinate.equals(destination) && chessBoard.isEmptyOrHasEnemyOn(destination, getTeamType());
     }
 }

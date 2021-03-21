@@ -1,54 +1,48 @@
 package chess.domain.piece;
 
-import chess.domain.board.Board;
+import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
-import chess.domain.board.Direction;
 
 public class Pawn extends Piece {
     private static final String NAME = "P";
     private static final double SCORE = 1;
 
     public Pawn(TeamType teamType) {
-        super(teamType, NAME, SCORE, Direction.getPawnDirections(teamType));
+        super(NAME, teamType, SCORE, Direction.getPawnDirections(teamType));
     }
 
     @Override
-    public boolean isMovableTo(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-        Direction moveCommandDirection = currentCoordinate.calculateDirection(targetCoordinate);
-        if (!isCorrectDirection(moveCommandDirection)) {
+    public boolean isMovable(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
+        Direction direction = current.evaluateDirection(destination);
+        if (!isCorrectDirection(direction)) {
             return false;
         }
-        if (!moveCommandDirection.isDiagonal()) {
-            return isCanMoveForward(board, currentCoordinate, targetCoordinate);
+        if (!direction.isDiagonal()) {
+            return isMovableForward(chessBoard, current, destination);
         }
-        Coordinate nextCoordinate = currentCoordinate.move(moveCommandDirection);
-        return isCanMoveDiagonal(board, targetCoordinate, nextCoordinate);
+        Coordinate nextCoordinate = current.move(direction);
+        return isMovableDiagonal(chessBoard, nextCoordinate, destination);
     }
 
-    private boolean isCanMoveForward(Board board, Coordinate currentCoordinate,
-        Coordinate targetCoordinate) {
-
-        if (currentCoordinate.isTwoRankForward(targetCoordinate)) {
-            return isCanMoveTwoRankForward(board, currentCoordinate, targetCoordinate);
+    private boolean isMovableForward(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
+        if (destination.isTwoRankForwardFrom(current)) {
+            return isMovableTwoRankForward(chessBoard, current, destination);
         }
-        return board.find(targetCoordinate).isEmpty();
+        Direction direction = current.evaluateDirection(destination);
+        Coordinate nextCoordinate = current.move(direction);
+        return nextCoordinate.equals(destination) && chessBoard.isEmptyOn(destination);
     }
 
-    private boolean isCanMoveTwoRankForward(Board board,
-        Coordinate currentCoordinate, Coordinate targetCoordinate) {
-        if (!currentCoordinate.isFirstPawnRank(getTeamType())) {
+    private boolean isMovableTwoRankForward(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
+        if (!current.isDefaultPawnRank(getTeamType())) {
             return false;
         }
-        Direction direction = currentCoordinate.calculateDirection(targetCoordinate);
-        boolean hasPieceOnRoute = board
-            .hasPieceOnRouteBeforeDestination(currentCoordinate, targetCoordinate, direction);
-        return !hasPieceOnRoute && board.find(targetCoordinate).isEmpty();
+        Direction direction = current.evaluateDirection(destination);
+        boolean hasPieceOnRouteBeforeDestination = chessBoard.hasPieceOnRouteBeforeDestination(current, destination, direction);
+        return !hasPieceOnRouteBeforeDestination && chessBoard.isEmptyOn(destination);
     }
 
-    private boolean isCanMoveDiagonal(Board board, Coordinate targetCoordinate,
-        Coordinate nextCoordinate) {
-        return nextCoordinate.equals(targetCoordinate) &&
-            board.find(targetCoordinate).hasEnemy(getTeamType());
+    private boolean isMovableDiagonal(ChessBoard chessBoard, Coordinate nextCoordinate, Coordinate destination) {
+        return nextCoordinate.equals(destination) && chessBoard.hasEnemyOn(destination, getTeamType());
     }
 }

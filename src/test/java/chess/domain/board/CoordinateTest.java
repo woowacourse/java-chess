@@ -1,10 +1,9 @@
 package chess.domain.board;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
-import chess.domain.piece.TeamType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class CoordinateTest {
 
@@ -15,14 +14,5 @@ class CoordinateTest {
         Coordinate targetCoordinate = new Coordinate(File.A, Rank.EIGHT);
 
         assertThat(coordinate).isEqualTo(targetCoordinate);
-    }
-
-    @DisplayName("블랙 팀일 때 전진하는 경우, Rank가 1 감소한다.")
-    @Test
-    void moveForward_BlackTeam() {
-        Coordinate coordinate = Coordinate.from("d7");
-        Coordinate afterCoordinate = coordinate.moveForward(TeamType.BLACK);
-
-        assertThat(afterCoordinate).isEqualTo(Coordinate.from("d6"));
     }
 }

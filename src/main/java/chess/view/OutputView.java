@@ -1,13 +1,9 @@
 package chess.view;
 
-import chess.domain.board.Board;
-import chess.domain.board.Cell;
-import chess.domain.board.Coordinate;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
-import chess.domain.board.Result;
+import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
+
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
@@ -19,19 +15,19 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void printBoard(Board board) {
+    public static void printBoard(ChessBoard chessBoard) {
         List<Rank> ranks = Arrays.asList(Rank.values());
         List<Rank> reversedRanks = ranks.stream()
-            .sorted(Comparator.reverseOrder())
-            .collect(Collectors.toList());
+                .sorted(Comparator.reverseOrder())
+                .collect(Collectors.toList());
 
-        reversedRanks.forEach(rank -> printFilesByRank(rank, board));
+        reversedRanks.forEach(rank -> printFilesByRank(rank, chessBoard));
         System.out.println();
     }
 
-    private static void printFilesByRank(Rank rank, Board board) {
+    private static void printFilesByRank(Rank rank, ChessBoard chessBoard) {
         for (File file : File.values()) {
-            Cell cell = board.find(new Coordinate(file, rank));
+            Cell cell = chessBoard.find(new Coordinate(file, rank));
             printCell(cell);
         }
         System.out.println();

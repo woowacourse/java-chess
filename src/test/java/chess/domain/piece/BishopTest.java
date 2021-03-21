@@ -1,29 +1,31 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
-import chess.domain.board.Board;
 import chess.domain.board.Cell;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.ChessBoardGenerator;
 import chess.domain.board.Coordinate;
-import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Map;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 class BishopTest {
 
-    private Board board;
-    private Map<Coordinate, Cell> cells;
     private final Piece bishop = new Bishop(TeamType.BLACK);
     private final Coordinate currentCoordinate = Coordinate.from("d5");
+    private ChessBoard chessBoard;
+    private Map<Coordinate, Cell> cells;
 
     @BeforeEach
     void setup() {
-        board = Board.getInstance();
-        cells = board.getCells();
+        chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+        cells = chessBoard.getCells();
         cells.get(currentCoordinate).put(bishop);
     }
 
@@ -31,7 +33,7 @@ class BishopTest {
     @Test
     void makeBishop() {
         assertThatCode(() -> new Bishop(TeamType.BLACK))
-            .doesNotThrowAnyException();
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("Bishop은 대각선으로 이동할 수 있다")
@@ -40,7 +42,7 @@ class BishopTest {
     void moveDiagonal(String targetCoordinateInput) {
         Coordinate destination = Coordinate.from(targetCoordinateInput);
 
-        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+        boolean isMovable = bishop.isMovable(chessBoard, currentCoordinate, destination);
 
         assertThat(isMovable).isTrue();
     }
@@ -51,7 +53,7 @@ class BishopTest {
     void cannotMoveDirectionNotDiagonal(String targetCoordinateInput) {
         Coordinate destination = Coordinate.from(targetCoordinateInput);
 
-        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+        boolean isMovable = bishop.isMovable(chessBoard, currentCoordinate, destination);
 
         assertThat(isMovable).isFalse();
     }
@@ -63,7 +65,7 @@ class BishopTest {
 
         Piece dummy = new Rook(TeamType.BLACK);
         cells.get(Coordinate.from("c4")).put(dummy);
-        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+        boolean isMovable = bishop.isMovable(chessBoard, currentCoordinate, destination);
 
         assertThat(isMovable).isFalse();
     }
@@ -75,7 +77,7 @@ class BishopTest {
         Piece dummy = new Rook(TeamType.BLACK);
         cells.get(destination).put(dummy);
 
-        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+        boolean isMovable = bishop.isMovable(chessBoard, currentCoordinate, destination);
 
         assertThat(isMovable).isFalse();
     }
@@ -87,7 +89,7 @@ class BishopTest {
         Piece dummy = new Rook(TeamType.WHITE);
         cells.get(destination).put(dummy);
 
-        boolean isMovable = bishop.isMovableTo(board, currentCoordinate, destination);
+        boolean isMovable = bishop.isMovable(chessBoard, currentCoordinate, destination);
 
         assertThat(isMovable).isTrue();
     }

@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.Direction;
+
 import java.util.Arrays;
 
 public enum Rank {
@@ -18,28 +20,31 @@ public enum Rank {
         this.y = y;
     }
 
-    public static Rank findValueOf(String rankInput) {
-        return findRank(Integer.parseInt(rankInput));
+    public static Rank findRankByValue(String rankInput) {
+        return findRankByValue(Integer.parseInt(rankInput));
     }
 
-    private static Rank findRank(int y) {
+    private static Rank findRankByValue(int y) {
         return Arrays.stream(Rank.values())
-            .filter(rank -> rank.y == y)
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값 입니다."));
+                .filter(rank -> rank.hasSameY(y))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank(행)값 입니다."));
     }
 
-    public Rank decrease() {
-        int decreasedValue = this.y - 1;
-        return findRank(decreasedValue);
+    private boolean hasSameY(int y) {
+        return this.y == y;
+    }
+
+    public Rank move(Direction direction) {
+        int nextY = direction.calculateRank(y);
+        return findRankByValue(nextY);
+    }
+
+    public int calculateDifference(Rank rank) {
+        return this.y - rank.y;
     }
 
     public int getY() {
         return y;
-    }
-
-    public Rank move(Direction direction) {
-        int targetY = y + direction.getY();
-        return findRank(targetY);
     }
 }
