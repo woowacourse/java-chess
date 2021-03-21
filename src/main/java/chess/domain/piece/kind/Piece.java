@@ -27,12 +27,12 @@ public abstract class Piece {
 
     public abstract Point moveOneStep(Point target, Direction direction);
 
-    public boolean isSameColor(Color currentColor) {
-        return currentColor.equals(this.color);
+    public boolean isSameTeam(Color color) {
+        return color.isSameAs(this.color);
     }
 
-    public boolean isNotSameColor(Color currentColor) {
-        return !currentColor.equals(this.color);
+    public boolean isIncorrectTurn(Color color) {
+        return !color.isSameAs(this.color);
     }
 
     public void movePoint(Point target) {
@@ -40,6 +40,12 @@ public abstract class Piece {
     }
 
     public abstract double score();
+
+    public abstract boolean isEmptyPiece();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     public String getName() {
         return name.getName();
@@ -59,9 +65,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(name, color, point);
     }
-
-    public abstract boolean isEmptyPiece();
-
-    public abstract boolean isKing();
-    public abstract boolean isPawn();
 }

@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.ChessGame;
 import chess.domain.Point;
+import chess.domain.Score;
 import chess.domain.piece.kind.Piece;
 
 import java.util.Map;
@@ -41,8 +42,8 @@ public class OutputView {
         return pieces.get(point).getName();
     }
 
-    public static void printScore(double score) {
-        System.out.println(score);
+    public static void printScore(Score score) {
+        System.out.println(score.getScore());
     }
 
     public static void noticeGameFinished() {

@@ -8,8 +8,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static chess.domain.piece.Color.*;
-import static chess.domain.piece.kind.Pawn.INITIAL_WHITE_PAWN_ROW;
 import static chess.domain.piece.kind.Pawn.INITIAL_BLACK_PAWN_ROW;
+import static chess.domain.piece.kind.Pawn.INITIAL_WHITE_PAWN_ROW;
 
 public enum PieceType {
     ROOK(Constants.INITIAL_COLUMN_OF_ROOK) {
@@ -103,12 +103,12 @@ public enum PieceType {
     public abstract Piece create(int row, int column);
 
     private static class Constants {
-        private static final int INITIAL_WHITE_ROW_WITHOUT_PAWN = 7;
-        private static final int INITIAL_BLACK_ROW_WITHOUT_PAWN = 0;
         public static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);
         public static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);
         public static final List<Integer> INITIAL_COLUMN_OF_BISHOP = Arrays.asList(2, 5);
         public static final List<Integer> INITIAL_COLUMN_OF_QUEEN = Collections.singletonList(3);
         public static final List<Integer> INITIAL_COLUMN_OF_KING = Collections.singletonList(4);
+        private static final int INITIAL_WHITE_ROW_WITHOUT_PAWN = 7;
+        private static final int INITIAL_BLACK_ROW_WITHOUT_PAWN = 0;
     }
 }

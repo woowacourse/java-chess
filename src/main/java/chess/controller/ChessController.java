@@ -25,19 +25,15 @@ public class ChessController {
     private void playGame(ChessGame chessGame) {
         while (chessGame.isNotEnd()) {
             List<String> userInput = InputView.inputMoveOrStatus();
-            makeScore(chessGame, userInput);
-            move(chessGame, userInput);
+            makeScoreOrMove(chessGame, userInput);
         }
     }
 
-    private void makeScore(ChessGame chessGame, List<String> userInput) {
-        if(userInput.get(0).equals(STATUS)) {
+    private void makeScoreOrMove(ChessGame chessGame, List<String> userInput) {
+        if (userInput.get(0).equals(STATUS)) {
             OutputView.printScore(chessGame.calculateScore());
         }
-    }
-
-    private void move(ChessGame chessGame, List<String> userInput) {
-        if(userInput.get(0).equals(MOVE)) {
+        if (userInput.get(0).equals(MOVE)) {
             Point source = Point.of(userInput.get(1));
             Point target = Point.of(userInput.get(2));
             chessGame.playTurn(source, target);

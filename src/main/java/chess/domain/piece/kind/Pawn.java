@@ -19,8 +19,8 @@ public class Pawn extends Piece {
     private static final int INITIAL_POSSIBLE_DISTANCE_OF_PAWN = 4;
     private static final String PAWN_NAME = "p";
 
-    private static final List<Direction> whiteDirection = Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
-    private static final List<Direction> blackDirection = Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    private static final List<Direction> whitePawnDirection = Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+    private static final List<Direction> blackPawnDirection = Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
 
     public Pawn(Color color, Point point) {
         super(PAWN_NAME, color, point);
@@ -29,10 +29,10 @@ public class Pawn extends Piece {
     @Override
     public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        if (this.color.equals(WHITE) && !whiteDirection.contains(direction)) {
+        if (this.color.equals(WHITE) && !whitePawnDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        if (this.color.equals(BLACK) && !blackDirection.contains(direction)) {
+        if (this.color.equals(BLACK) && !blackPawnDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
 
@@ -51,11 +51,11 @@ public class Pawn extends Piece {
     }
 
     private boolean isInitialWhitePawn() {
-        return this.color.equals(WHITE) && this.point.getRow() == INITIAL_WHITE_PAWN_ROW;
+        return this.color.equals(WHITE) && this.point.isSameRow(INITIAL_WHITE_PAWN_ROW);
     }
 
     private boolean isInitialBlackPawn() {
-        return this.color.equals(BLACK) && this.point.getRow() == INITIAL_BLACK_PAWN_ROW;
+        return this.color.equals(BLACK) && this.point.isSameRow(INITIAL_BLACK_PAWN_ROW);
     }
 
     @Override

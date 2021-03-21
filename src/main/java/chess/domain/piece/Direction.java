@@ -23,8 +23,8 @@ public enum Direction {
     }
 
     public static Direction findDirection(Point source, Point target) {
-        int initialRowDifference = target.getRow() - source.getRow();
-        int initialColumnDifference = target.getColumn() - source.getColumn();
+        int initialRowDifference = target.subtractRow(source);
+        int initialColumnDifference = target.subtractColumn(source);
 
         if (initialRowDifference == 0 && initialColumnDifference == 0) {
             throw new IllegalArgumentException("기물이 움직이지 않습니다.");
@@ -41,15 +41,15 @@ public enum Direction {
                 .findAny().orElseThrow(RuntimeException::new);
     }
 
-    private static int normalizeDifference(int diff) {
-        return Integer.compare(diff, 0);
+    private static int normalizeDifference(int difference) {
+        return Integer.compare(difference, 0);
     }
 
-    public int getRowDirection() {
-        return rowDirection;
+    public int addCurrentRow(int row) {
+        return rowDirection + row;
     }
 
-    public int getColumnDirection() {
-        return columnDirection;
+    public int addCurrentColumn(int column) {
+        return columnDirection + column;
     }
 }

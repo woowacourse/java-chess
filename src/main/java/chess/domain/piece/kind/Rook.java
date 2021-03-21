@@ -14,7 +14,7 @@ public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
     private static final String ROOK_NAME = "r";
 
-    private static final List<Direction> myDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
+    private static final List<Direction> rookDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
 
     public Rook(Color color, Point point) {
         super(ROOK_NAME, color, point);
@@ -23,7 +23,7 @@ public class Rook extends Piece {
     @Override
     public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        if (!myDirection.contains(direction)) {
+        if (!rookDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
         return Optional.of(direction);

@@ -5,5 +5,10 @@ public enum Color {
     BLACK("BLACK"),
     NOTHING("NOTHING");
 
-    Color(String colorName) { }
+    Color(String colorName) {
+    }
+
+    public boolean isSameAs(Color color) {
+        return this.equals(color);
+    }
 }

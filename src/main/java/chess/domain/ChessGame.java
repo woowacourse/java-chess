@@ -5,7 +5,8 @@ import chess.domain.piece.kind.Piece;
 
 import java.util.Map;
 
-import static chess.domain.piece.Color.*;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 public class ChessGame {
     private final Board board;
@@ -31,8 +32,8 @@ public class ChessGame {
         return board.hasBothKings();
     }
 
-    public double calculateScore() {
-        return board.addScore(currentColor);
+    public Score calculateScore() {
+        return board.makeScore(currentColor);
     }
 
     public Map<Point, Piece> getBoard() {

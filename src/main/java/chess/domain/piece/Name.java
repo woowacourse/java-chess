@@ -2,7 +2,8 @@ package chess.domain.piece;
 
 import java.util.Objects;
 
-import static chess.domain.piece.Color.*;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 public class Name {
     private final String name;
@@ -12,10 +13,10 @@ public class Name {
     }
 
     private String createName(String name, Color color) {
-        if(color.equals(BLACK)) {
+        if (color.isSameAs(BLACK)) {
             return name.toUpperCase();
         }
-        if(color.equals(WHITE)) {
+        if (color.isSameAs(WHITE)) {
             return name.toLowerCase();
         }
         return name;

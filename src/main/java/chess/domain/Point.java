@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
-import chess.view.InputView;
 
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +14,8 @@ public class Point {
     private static final char MAXIMUM_LETTER = 'h';
     private static final int MINIMUM_RANK = 1;
     private static final int MAXIMUM_RANK = 8;
+    private static final int LETTER_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private static final List<Point> points;
 
@@ -32,26 +33,26 @@ public class Point {
     private final int column;
 
     private Point(char letter, int rank) {
-        column = convertLetterToIndex(letter);
         row = convertRankToIndex(rank);
+        column = convertLetterToIndex(letter);
     }
 
     public static Point of(String point) {
-        return of(point.charAt(0), Character.getNumericValue(point.charAt(1)));
+        return of(point.charAt(LETTER_INDEX), Character.getNumericValue(point.charAt(RANK_INDEX)));
     }
 
     private static Point of(char letter, int rank) {
         return points.stream()
                 .filter(p -> p.column == p.convertLetterToIndex(letter) && p.row == p.convertRankToIndex(rank))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     public static Point valueOf(int row, int column) {
         return points.stream()
                 .filter(p -> p.column == column && p.row == row)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException(InputView.INVALID_INPUT_ERROR_MESSAGE));
+                .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     private int convertLetterToIndex(char letter) {
@@ -63,19 +64,27 @@ public class Point {
     }
 
     public int calculateDistance(Point point) {
-        return ((int) Math.pow(this.column - point.getColumn(), 2) + (int) Math.pow(this.row - point.getRow(), 2));
+        return ((int) Math.pow(this.column - point.column, 2) + (int) Math.pow(this.row - point.row, 2));
     }
 
     public Point createNextPoint(Direction direction) {
-        return valueOf(this.row + direction.getRowDirection(), this.column + direction.getColumnDirection());
+        return valueOf(direction.addCurrentRow(this.row), direction.addCurrentColumn(this.column));
     }
 
-    public int getRow() {
-        return this.row;
+    public boolean isSameRow(int row) {
+        return this.row == row;
     }
 
-    public int getColumn() {
-        return this.column;
+    public boolean isSameColumn(int column) {
+        return this.column == column;
+    }
+
+    public int subtractRow(Point point) {
+        return this.row - point.row;
+    }
+
+    public int subtractColumn(Point point) {
+        return this.column - point.column;
     }
 
     @Override
