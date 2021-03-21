@@ -34,7 +34,7 @@ public class ChessController {
 
     private void executeCommand(Game game) {
         try {
-            game.command(InputView.receiveInput());
+            game.execute(InputView.receiveInput());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
             executeCommand(game);

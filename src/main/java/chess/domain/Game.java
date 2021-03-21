@@ -29,7 +29,7 @@ public class Game {
         isPlaying = true;
     }
 
-    public void command(String input) {
+    public void execute(String input) {
         List<String> values = Arrays.asList(input.split(" "));
         if (Command.isEnd(values.get(0))) {
             isPlaying = false;
@@ -61,6 +61,7 @@ public class Game {
 
     public boolean isPlaying() {
         return isPlaying;
+//        return !board.kingDead();
     }
 
     public Board getBoard() {
