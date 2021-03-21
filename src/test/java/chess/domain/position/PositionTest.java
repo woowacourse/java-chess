@@ -12,27 +12,27 @@ class PositionTest {
     @Test
     @DisplayName("Poistion을 생성하면, Position 인스턴스가 생성된다.")
     void create() {
-        int x = 1;
-        int y = 2;
-        Position position = new Position(x, y);
+        int row = 1;
+        int col = 2;
+        Position position = new Position(row, col);
         assertThat(position).isInstanceOf(Position.class);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 8})
-    @DisplayName("x를 -1이랑 8로 넣으면, 예외가 발생한다.")
-    void invalidRangeX(final int x) {
-        int y = 2;
+    @ValueSource(ints = {-1})
+    @DisplayName("row를 -1로 넣으면, 예외가 발생한다.")
+    void invalidRangeX(final int row) {
+        int col = 2;
 
-        assertThatThrownBy(() -> new Position(x, y)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @ParameterizedTest
-    @ValueSource(ints = {-1, 8})
-    @DisplayName("y를 -1이랑 8로 넣으면, 예외가 발생한다.")
-    void invalidRangeY(final int y) {
-        int x = 2;
+    @ValueSource(ints = {-1})
+    @DisplayName("col를 -1로 넣으면, 예외가 발생한다.")
+    void invalidRangeY(final int col) {
+        int row = 2;
 
-        assertThatThrownBy(() -> new Position(x, y)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(IllegalArgumentException.class);
     }
 }

@@ -1,11 +1,11 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
 import java.util.List;
-import java.util.Map;
 
 public class Rook extends Piece {
     private static final String BLACK_TEAM_ROW = "8";
@@ -30,7 +30,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(Map<Team, Pieces> board) {
+    public List<Position> getMovablePositions(final Board board) {
         return null;
     }
 }

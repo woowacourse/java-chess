@@ -1,13 +1,14 @@
 package chess.domain.pieces;
 
 import chess.domain.Team;
+import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 public abstract class Piece {
+
     private Position position;
     private final Team team;
     private final String initial;
@@ -41,23 +42,24 @@ public abstract class Piece {
         return this.position.equals(startPoint);
     }
 
-    public final void move(final Map<Team, Pieces> board, final Position endPoint) {
+    public final void move(final Board board, final Position endPoint) {
         List<Position> movablePositions = getMovablePositions(board);
         validateEndPoint(endPoint, movablePositions);
         erasePiece(board, endPoint);
         this.position = endPoint;
     }
 
-    private void erasePiece(Map<Team, Pieces> board, Position endPoint) {
-        Pieces anotherTeamPieces = board.get(Team.getAnotherTeam(team));
+    private void erasePiece(Board board, Position endPoint) {
+        Pieces anotherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(team));
         anotherTeamPieces.removePieceByPosition(endPoint);
     }
 
     private void validateEndPoint(final Position endPoint, final List<Position> movablePositions) {
+        //System.out.println(movablePositions.size());
         if (!movablePositions.contains(endPoint)) {
             throw new IllegalArgumentException("갈수 없는 위치입니다.");
         }
     }
 
-    public abstract List<Position> getMovablePositions(Map<Team, Pieces> board);
+    public abstract List<Position> getMovablePositions(final Board board);
 }

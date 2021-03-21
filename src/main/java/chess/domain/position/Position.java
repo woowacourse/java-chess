@@ -4,7 +4,6 @@ import java.util.Objects;
 
 public class Position {
     public static final int RANGE_MIN_PIVOT = 0;
-    public static final int RANGE_MAX_PIVOT = 7;
     private final int row;
     private final int col;
 
@@ -15,8 +14,8 @@ public class Position {
     }
 
     private void validateRange(final int row, final int col) {
-        if (row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT) {
-            throw new IllegalArgumentException("잘못된 범위입니다.");
+        if (row < RANGE_MIN_PIVOT || col < RANGE_MIN_PIVOT) {
+            throw new IllegalArgumentException("좌표에는 음수가 들어갈 수 없습니다.");
         }
     }
 
@@ -27,6 +26,7 @@ public class Position {
     public int getCol() {
         return col;
     }
+
 
     @Override
     public boolean equals(Object o) {
