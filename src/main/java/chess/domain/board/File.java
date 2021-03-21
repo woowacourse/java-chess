@@ -23,11 +23,11 @@ public enum File {
         this.x = x;
     }
 
-    public static File findFileByCondition(String fileInput) {
-        return findFileByCondition(file -> file.hasSameSignature(fileInput));
+    public static File findFileBySignature(String fileInput) {
+        return findFileOnCondition(file -> file.hasSameSignature(fileInput));
     }
 
-    private static File findFileByCondition(Predicate<File> hasSameValue) {
+    private static File findFileOnCondition(Predicate<File> hasSameValue) {
         return Arrays.stream(File.values())
                 .filter(hasSameValue)
                 .findAny()
@@ -40,7 +40,7 @@ public enum File {
 
     public File move(Direction direction) {
         int nextX = direction.calculateFile(x);
-        return findFileByCondition(file -> file.hasSameX(nextX));
+        return findFileOnCondition(file -> file.hasSameX(nextX));
     }
 
     private boolean hasSameX(int x) {

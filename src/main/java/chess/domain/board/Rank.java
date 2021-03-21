@@ -20,11 +20,11 @@ public enum Rank {
         this.y = y;
     }
 
-    public static Rank findRankByValue(String rankInput) {
-        return findRankByValue(Integer.parseInt(rankInput));
+    public static Rank findRankBySignature(String rankInput) {
+        return findRankBySignature(Integer.parseInt(rankInput));
     }
 
-    private static Rank findRankByValue(int y) {
+    private static Rank findRankBySignature(int y) {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.hasSameY(y))
                 .findAny()
@@ -37,7 +37,7 @@ public enum Rank {
 
     public Rank move(Direction direction) {
         int nextY = direction.calculateRank(y);
-        return findRankByValue(nextY);
+        return findRankBySignature(nextY);
     }
 
     public int calculateDifference(Rank rank) {

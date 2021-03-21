@@ -28,11 +28,11 @@ class RankTest {
                 Arguments.of(Direction.RIGHT_RIGHT_DOWN, Rank.TWO));
     }
 
-    @DisplayName("문자열과 매치되는 Rank(행) 열거형을 탐색한다.")
+    @DisplayName("문자열과 매치되는 Rank(열) 열거형을 탐색한다.")
     @ParameterizedTest
     @MethodSource("getRankInputAndEnum")
     void findRank(String rankInput, Rank expectedRank) {
-        Rank rank = Rank.findRankByValue(rankInput);
+        Rank rank = Rank.findRankBySignature(rankInput);
 
         assertThat(rank).isEqualTo(expectedRank);
     }
@@ -40,7 +40,7 @@ class RankTest {
     @DisplayName("문자열과 매치되는 Rank가 없는 경우 예외를 발생한다.")
     @Test
     void cannotFindRank() {
-        assertThatCode(() -> Rank.findRankByValue("9"))
+        assertThatCode(() -> Rank.findRankBySignature("9"))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("잘못된 Rank(열)값 입니다.");
     }

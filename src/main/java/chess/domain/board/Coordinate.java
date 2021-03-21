@@ -23,8 +23,8 @@ public class Coordinate {
         validateCoordinate(coordinateToken);
         String fileInput = coordinateToken.get(0);
         String rankInput = coordinateToken.get(1);
-        File file = File.findFileByCondition(fileInput);
-        Rank rank = Rank.findRankByValue(rankInput);
+        File file = File.findFileBySignature(fileInput);
+        Rank rank = Rank.findRankBySignature(rankInput);
         return new Coordinate(file, rank);
     }
 
