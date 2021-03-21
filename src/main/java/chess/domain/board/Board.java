@@ -1,6 +1,14 @@
-package chess.domain.game;
+package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.Color;
+import chess.domain.Status;
+import chess.domain.piece.Blank;
+import chess.domain.piece.King;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Point;
+import chess.domain.position.Position;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +36,25 @@ public class Board {
         return board.get(position);
     }
     
-    public void move(Piece sourcePiece, Position sourcePosition, Position targetPosition) {
+    public Status move(MovePosition movePosition) {
+        final Position sourcePosition = movePosition.getSourcePosition();
+        final Position targetPosition = movePosition.getTargetPosition();
+        final Piece sourcePiece = board.get(sourcePosition);
+        final Piece targetPiece = board.get(targetPosition);
+        
+        sourcePiece.checkToMoveToTargetPosition(movePosition, this);
         board.put(sourcePosition, new Blank());
-        board.put(targetPosition, sourcePiece.move(sourcePosition, targetPosition, this));
+        board.put(targetPosition, sourcePiece);
+        
+        if (kingWillDie(targetPiece)) {
+            return Status.KING_DEAD;
+        }
+        
+        return Status.RUNNING;
+    }
+    
+    private boolean kingWillDie(Piece targetPiece) {
+        return targetPiece instanceof King;
     }
     
     public double score(Color color) {
@@ -65,7 +89,7 @@ public class Board {
     }
     
     public boolean isBlank(Position position) {
-        return board.get(position)
-                    .isSameColorAs(Color.BLANK);
+        final Piece piece = board.get(position);
+        return piece.isSameColorAs(Color.BLANK);
     }
 }

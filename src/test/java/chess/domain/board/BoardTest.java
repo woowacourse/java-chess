@@ -1,22 +1,28 @@
-package chess.domain.piece;
+package chess.domain.board;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.piece.*;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
     
-    private final Chess chess = Chess.createWithInitializedBoard();
-    private final Board board = chess.getBoard();
+    private Chess chess;
+    private Board board;
     
-    public static Chess createEmptyBoard() {
-        return new Chess(new Board(new HashMap<>()));
+    
+    @BeforeEach
+    void setUp() {
+        chess = Chess.createWithInitializedBoard();
+        board = chess.getBoard();
     }
     
     @Test
@@ -59,16 +65,14 @@ public class BoardTest {
     void movePiece() {
         
         // given
-        final String source = "b2";
-        final String target = "b3";
+        Position sourcePosition = Position.of("b2");
+        Position targetPosition = Position.of("b3");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        chess.movePiece(source, target);
+        chess.movePiece(movePosition);
         
         // then
-        Position sourcePosition = Position.of(source);
-        Position targetPosition = Position.of(target);
-        
         final Map<Position, Piece> chessBoard = this.board.getBoard();
         final Piece sourcePiece = chessBoard.get(sourcePosition);
         assertThat(sourcePiece).isInstanceOf(Blank.class);
@@ -82,15 +86,19 @@ public class BoardTest {
     void isRunning_IfKingIsDead_StatusISStop() {
         assertThat(chess.isRunning()).isTrue();
         
-        final Chess newChess = killKingOfBlack();
+        killKingOfBlack();
         
-        assertThat(newChess.isRunning()).isFalse();
+        assertThat(chess.isRunning()).isFalse();
     }
     
-    private Chess killKingOfBlack() {
+    private void killKingOfBlack() {
         Position whitePawnPosition = Position.of("d7");
         Board newBoard = BoardUtils.put(board, whitePawnPosition, Pawn.createWhitePawn());
-        return new Chess(newBoard).movePiece("d7", "e8");
+        chess = new Chess(newBoard);
+        
+        Position blackKingPosition = Position.of("e8");
+        MovePosition movePosition = new MovePosition(whitePawnPosition, blackKingPosition);
+        chess.movePiece(movePosition);
     }
     
     @Test
@@ -98,7 +106,7 @@ public class BoardTest {
     void score_PawnsAreAnotherFile() {
         
         // given
-        final Chess emptyChess = createEmptyBoard();
+        final Chess emptyChess = Chess.createWithEmptyBoard();
         Board newBoard = emptyChess.getBoard();
         newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
         newBoard = BoardUtils.put(newBoard, Position.of("b1"), Pawn.createWhitePawn());
@@ -115,7 +123,7 @@ public class BoardTest {
     @DisplayName("폰이 일직선에 있을때 점수 확인")
     void score_PawnsAreSameFile() {
         // given
-        final Chess emptyChess = createEmptyBoard();
+        final Chess emptyChess = Chess.createWithEmptyBoard();
         Board newBoard = emptyChess.getBoard();
         newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
         newBoard = BoardUtils.put(newBoard, Position.of("a2"), Pawn.createWhitePawn());
@@ -132,11 +140,10 @@ public class BoardTest {
     @DisplayName("게임이 끝난 후 승자 확인")
     void winner() {
         
-        
         // when
-        final Chess newChess = killKingOfBlack();
+        killKingOfBlack();
         
         // then
-        assertThat(newChess.winner()).isEqualTo(Color.WHITE);
+        assertThat(chess.winner()).isEqualTo(Color.WHITE);
     }
 }
