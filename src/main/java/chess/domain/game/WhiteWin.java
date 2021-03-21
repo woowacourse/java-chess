@@ -1,5 +1,7 @@
 package chess.domain.game;
 
+import chess.domain.piece.white.WhitePiece;
+
 import java.util.Optional;
 
 public class WhiteWin extends Finished {
@@ -9,6 +11,6 @@ public class WhiteWin extends Finished {
 
     @Override
     public Optional<String> getWinnerColorNotation() {
-        return chessGame.getWinnerColorNotation();
+        return Optional.of(WhitePiece.NOTATION);
     }
 }

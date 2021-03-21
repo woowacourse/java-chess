@@ -10,7 +10,7 @@ public class BoardDto {
 
     private final int row;
     private final int column;
-    List<PieceDto> pieceDtos;
+    private List<PieceDto> pieceDtos;
 
     public BoardDto(final Board board) {
         this.row = Board.getRow();

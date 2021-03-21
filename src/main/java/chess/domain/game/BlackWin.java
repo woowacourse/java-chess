@@ -1,5 +1,7 @@
 package chess.domain.game;
 
+import chess.domain.piece.black.BlackPiece;
+
 import java.util.Optional;
 
 public class BlackWin extends Finished {
@@ -9,6 +11,6 @@ public class BlackWin extends Finished {
 
     @Override
     public Optional<String> getWinnerColorNotation() {
-        return chessGame.getWinnerColorNotation();
+        return Optional.of(BlackPiece.NOTATION);
     }
 }
