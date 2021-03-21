@@ -18,18 +18,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class RookTest {
-    private static ChessBoard chessBoard;
-
     private static State white;
     private static State black;
 
     @BeforeEach
     void init() {
-        chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
-        chessBoard.put(Rook.from("r", B3));
-        chessBoard.put(Pawn.from("P", B6));
-        chessBoard.put(Bishop.from("b", E3));
-
         white = StateFactory.initialization(new Pieces(
                 Arrays.asList(
                         Rook.from("r", B3),
