@@ -33,20 +33,20 @@ class PointTest {
     @Test
     void createWithIndex() {
         assertDoesNotThrow(
-                () -> Point.valueOf(0, 7)
+                () -> Point.of(0, 7)
         );
         assertDoesNotThrow(
-                () -> Point.valueOf(7, 0)
+                () -> Point.of(7, 0)
         );
     }
 
     @DisplayName("인덱스로 범위 밖 좌표 생성 시 예외 처리")
     @Test
     void checkValueOfRange() {
-        assertThatThrownBy(() -> Point.valueOf(-1, -1)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.valueOf(0, 8)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.valueOf(8, 0)).isInstanceOf(IllegalArgumentException.class);
-        assertThatThrownBy(() -> Point.valueOf(8, 8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of(-1, -1)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of(0, 8)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of(8, 0)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Point.of(8, 8)).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("위치 간 거리 계산 확인")

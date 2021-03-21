@@ -19,20 +19,20 @@ public class KingTest {
     @DisplayName("King 생성")
     @Test
     public void create() {
-        King king1 = new King(BLACK, Point.valueOf(0, 4));
+        King king1 = new King(BLACK, Point.of(0, 4));
         assertThat(PieceType.findPiece(0, 4)).isEqualTo(king1);
-        King king2 = new King(WHITE, Point.valueOf(7, 4));
+        King king2 = new King(WHITE, Point.of(7, 4));
         assertThat(PieceType.findPiece(7, 4)).isEqualTo(king2);
     }
 
     @DisplayName("King의 가능한 거리 확인")
     @Test
     void checkKingPossibleMove() {
-        King king = new King(BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(NOTHING, Point.valueOf(5, 4));
-        Empty empty2 = new Empty(NOTHING, Point.valueOf(4, 5));
-        Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 5));
-        Empty empty4 = new Empty(NOTHING, Point.valueOf(5, 3));
+        King king = new King(BLACK, Point.of(4, 4));
+        Empty empty = new Empty(NOTHING, Point.of(5, 4));
+        Empty empty2 = new Empty(NOTHING, Point.of(4, 5));
+        Empty empty3 = new Empty(NOTHING, Point.of(3, 5));
+        Empty empty4 = new Empty(NOTHING, Point.of(5, 3));
 
         assertEquals(Optional.of(Direction.SOUTH), king.direction(empty));
         assertEquals(Optional.of(Direction.EAST), king.direction(empty2));
@@ -43,11 +43,11 @@ public class KingTest {
     @DisplayName("King의 불가능한 거리 확인")
     @Test
     void checkKingImpossibleMove() {
-        King king = new King(BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(NOTHING, Point.valueOf(2, 2));
-        Empty empty2 = new Empty(NOTHING, Point.valueOf(2, 6));
-        Empty empty3 = new Empty(NOTHING, Point.valueOf(4, 6));
-        Empty empty4 = new Empty(NOTHING, Point.valueOf(2, 4));
+        King king = new King(BLACK, Point.of(4, 4));
+        Empty empty = new Empty(NOTHING, Point.of(2, 2));
+        Empty empty2 = new Empty(NOTHING, Point.of(2, 6));
+        Empty empty3 = new Empty(NOTHING, Point.of(4, 6));
+        Empty empty4 = new Empty(NOTHING, Point.of(2, 4));
 
         assertThatThrownBy(() -> king.direction(empty))
                 .isInstanceOf(IllegalArgumentException.class);

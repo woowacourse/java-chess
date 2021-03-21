@@ -30,14 +30,14 @@ public class BoardTest {
         Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
-        assertThat(pieces.get(Point.valueOf(value, 0))).isInstanceOf(Rook.class);
-        assertThat(pieces.get(Point.valueOf(value, 1))).isInstanceOf(Knight.class);
-        assertThat(pieces.get(Point.valueOf(value, 2))).isInstanceOf(Bishop.class);
-        assertThat(pieces.get(Point.valueOf(value, 3))).isInstanceOf(Queen.class);
-        assertThat(pieces.get(Point.valueOf(value, 4))).isInstanceOf(King.class);
-        assertThat(pieces.get(Point.valueOf(value, 5))).isInstanceOf(Bishop.class);
-        assertThat(pieces.get(Point.valueOf(value, 6))).isInstanceOf(Knight.class);
-        assertThat(pieces.get(Point.valueOf(value, 7))).isInstanceOf(Rook.class);
+        assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Rook.class);
+        assertThat(pieces.get(Point.of(value, 1))).isInstanceOf(Knight.class);
+        assertThat(pieces.get(Point.of(value, 2))).isInstanceOf(Bishop.class);
+        assertThat(pieces.get(Point.of(value, 3))).isInstanceOf(Queen.class);
+        assertThat(pieces.get(Point.of(value, 4))).isInstanceOf(King.class);
+        assertThat(pieces.get(Point.of(value, 5))).isInstanceOf(Bishop.class);
+        assertThat(pieces.get(Point.of(value, 6))).isInstanceOf(Knight.class);
+        assertThat(pieces.get(Point.of(value, 7))).isInstanceOf(Rook.class);
     }
 
     @DisplayName("초기화된 폰 위치 확인")
@@ -47,14 +47,14 @@ public class BoardTest {
         Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
-        assertThat(pieces.get(Point.valueOf(value, 0))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 1))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 2))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 3))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 4))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 5))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 6))).isInstanceOf(Pawn.class);
-        assertThat(pieces.get(Point.valueOf(value, 7))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 1))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 2))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 3))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 4))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 5))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 6))).isInstanceOf(Pawn.class);
+        assertThat(pieces.get(Point.of(value, 7))).isInstanceOf(Pawn.class);
     }
 
     @DisplayName("초기화된 빈 위치 확인")
@@ -64,14 +64,14 @@ public class BoardTest {
         Board board = new Board();
         Map<Point, Piece> pieces = board.getBoard();
 
-        assertThat(pieces.get(Point.valueOf(value, 0))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 1))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 2))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 3))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 4))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 5))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 6))).isInstanceOf(Empty.class);
-        assertThat(pieces.get(Point.valueOf(value, 7))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 0))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 1))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 2))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 3))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 4))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 5))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 6))).isInstanceOf(Empty.class);
+        assertThat(pieces.get(Point.of(value, 7))).isInstanceOf(Empty.class);
     }
 
     @DisplayName("유저로부터 입력받은 대로 기물 이동 확인")
