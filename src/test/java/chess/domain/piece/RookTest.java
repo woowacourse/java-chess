@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.game.Board;
-import chess.domain.game.InitializedChess;
+import chess.domain.game.Chess;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,7 @@ class RookTest {
     
     private final Rook rook = new Rook(Color.WHITE);
     private final Position sourcePosition = Position.of("a1");
-    private final Board board = InitializedChess.create()
-                                                .getBoard();
+    private final Board board = Chess.createWithInitializedBoard().getBoard();
     
     @Test
     @DisplayName("직선 1칸 이동 검사")

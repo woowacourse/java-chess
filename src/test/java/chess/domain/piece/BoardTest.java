@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.game.Board;
 import chess.domain.game.Chess;
-import chess.domain.game.InitializedChess;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -13,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
     
-    private final Chess chess = InitializedChess.create();
+    private final Chess chess = Chess.createWithInitializedBoard();
     private final Board board = chess.getBoard();
     
     public static Chess createEmptyBoard() {

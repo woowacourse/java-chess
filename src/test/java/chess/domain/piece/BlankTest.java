@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.game.Board;
-import chess.domain.game.InitializedChess;
+import chess.domain.game.Chess;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,8 +19,7 @@ class BlankTest {
         Blank blank = new Blank(Color.WHITE);
         Position sourcePosition = Position.of("a3");
         Position targetPosition = Position.of("a4");
-        Board board = InitializedChess.create()
-                                      .getBoard();
+        Board board = Chess.createWithInitializedBoard().getBoard();
         
         // when
         ThrowableAssert.ThrowingCallable callable = () -> blank.move(sourcePosition, targetPosition, board);

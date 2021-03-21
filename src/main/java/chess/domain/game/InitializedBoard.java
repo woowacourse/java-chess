@@ -5,7 +5,7 @@ import chess.domain.piece.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class InitializedChess {
+public class InitializedBoard {
     
     private static final int MIN_INDEX = 0;
     private static final int MAX_INDEX = 7;
@@ -16,7 +16,7 @@ public class InitializedChess {
     private static final int BLANK_START_INDEX = 2;
     private static final int BLANK_END_INDEX = 5;
     
-    public static Chess create() {
+    public static Board create() {
         final Map<Position, Piece> board = new HashMap<>();
         createNonPawns(board, MIN_INDEX, Color.WHITE);
         createPawns(board, WHITE_PAWN_INDEX, Color.WHITE);
@@ -25,7 +25,7 @@ public class InitializedChess {
         createPawns(board, BLACK_PAWN_INDEX, Color.BLACK);
         
         createBlanks(board);
-        return new Chess(new Board(board));
+        return new Board(board);
     }
     
     private static void createNonPawns(Map<Position, Piece> board, int yPoint, Color color) {

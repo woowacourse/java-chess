@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.game.Board;
-import chess.domain.game.InitializedChess;
+import chess.domain.game.Chess;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,8 +12,7 @@ class BishopTest {
     
     private final Bishop bishop = new Bishop(Color.WHITE);
     private final Position sourcePosition = Position.of("c1");
-    private final Board board = InitializedChess.create()
-                                                .getBoard();
+    private final Board board = Chess.createWithInitializedBoard().getBoard();
     
     @Test
     @DisplayName("대각선 1칸 이동 검사")

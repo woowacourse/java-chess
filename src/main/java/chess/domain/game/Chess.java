@@ -20,6 +20,10 @@ public class Chess {
         this.turn = turn;
     }
     
+    public static Chess createWithInitializedBoard() {
+        return new Chess(InitializedBoard.create());
+    }
+    
     public boolean isRunning() {
         return status.isRunning();
     }
