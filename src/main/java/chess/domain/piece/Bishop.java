@@ -39,7 +39,7 @@ public class Bishop extends Piece {
 
     @Override
     public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces);
+        List<Position> positions = makeRoutes2(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
         changePosition(target.getPosition());
@@ -51,16 +51,16 @@ public class Bishop extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces pieces) {
+    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpLeftRoutes2(pieces));
-        positions.addAll(makeUpRightRoutes2(pieces));
-        positions.addAll(makeDownLeftRoutes2(pieces));
-        positions.addAll(makeDownRightRoutes2(pieces));
+        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownRightRoutes2(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes2(final Pieces pieces) {
+    private List<Position> makeDownRightRoutes2(final Pieces pieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -70,20 +70,22 @@ public class Bishop extends Piece {
             if (file > 7) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = pieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = pieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
             }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
         }
         return positions;
     }
 
-    private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
+    private List<Position> makeDownLeftRoutes2(final Pieces pieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -93,21 +95,22 @@ public class Bishop extends Piece {
             if (file < 1) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = pieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = pieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes2(final Pieces pieces) {
+    private List<Position> makeUpRightRoutes2(final Pieces pieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -117,21 +120,22 @@ public class Bishop extends Piece {
             if (file > 7) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = pieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = pieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
+    private List<Position> makeUpLeftRoutes2(final Pieces pieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -141,14 +145,15 @@ public class Bishop extends Piece {
             if (file < 1) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = pieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = pieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
