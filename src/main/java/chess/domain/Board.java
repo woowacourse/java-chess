@@ -51,26 +51,32 @@ public class Board {
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
         Point currentPoint = source;
         Direction direction = sourcePiece.direction(targetPiece).orElse(null);
-        boolean isArriveAtTarget = currentPoint.equals(target);
-        while (!isArriveAtTarget) {
-            Piece currentPiece = selectPiece(currentPoint);
-            currentPoint = currentPiece.moveOneStep(target, direction);
-            isArriveAtTarget = currentPoint.equals(target);
-            moveTowardTarget(source, target, sourcePiece, isArriveAtTarget);
-            checkNextPointPossible(currentPoint, isArriveAtTarget);
+        boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
+
+        while (!isArrivedAtTarget) {
+            Point nextPoint = selectSourcePieceAndFindNextPoint(currentPoint, target, direction);
+            isArrivedAtTarget = nextPoint.isSamePoint(target);
+            movePieceToTargetPoint(source, target, sourcePiece, isArrivedAtTarget);
+            checkNextPointIfNotArrived(nextPoint, isArrivedAtTarget);
+            currentPoint = nextPoint;
         }
     }
 
-    private void checkNextPointPossible(Point currentPoint, boolean isArriveAtTarget) {
-        if (!isArriveAtTarget) {
-            validateNextPoint(currentPoint);
-        }
+    private Point selectSourcePieceAndFindNextPoint(Point currentPoint, Point target, Direction direction) {
+        Piece currentPiece = selectPiece(currentPoint);
+        return currentPiece.moveOneStep(target, direction);
     }
 
-    private void moveTowardTarget(Point source, Point target, Piece sourcePiece, boolean isArriveAtTarget) {
-        if (isArriveAtTarget) {
+    private void movePieceToTargetPoint(Point source, Point target, Piece sourcePiece, boolean isArrivedAtTarget) {
+        if (isArrivedAtTarget) {
             sourcePiece.movePoint(target);
             replacePiece(source, target);
+        }
+    }
+
+    private void checkNextPointIfNotArrived(Point nextPoint, boolean isArrivedAtTarget) {
+        if (!isArrivedAtTarget) {
+            validateNextPoint(nextPoint);
         }
     }
 
