@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
 import chess.domain.Diagonal;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -88,7 +87,7 @@ public class BishopTest {
 
         assertThatThrownBy(() ->  bishop.move(target, currentPieces))
         .isInstanceOf(IllegalArgumentException.class)
-        .hasMessage("[ERROR] 올바른 대각선 방향이 아닙니다.");
+        .hasMessage("[ERROR] 올바른 방향이 아닙니다.");
     }
 
     @Test

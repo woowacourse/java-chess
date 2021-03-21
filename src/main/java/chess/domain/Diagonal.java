@@ -33,7 +33,7 @@ public enum Diagonal {
                 .filter(value -> source.isDiagonal(target))
                 .filter(value -> value.findDiagonal.test(source, target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 대각선 방향이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다."));
     }
 
     public void hasPieceInPath(Position source, Position target, CurrentPieces currentPieces) {

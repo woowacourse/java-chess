@@ -18,8 +18,8 @@ public class Position {
         }
     }
 
-    private char x;
-    private char y;
+    private final char x;
+    private final char y;
 
     private Position(char x, char y) {
         this.x = x;

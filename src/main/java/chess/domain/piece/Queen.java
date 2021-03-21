@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Cross;
-import chess.domain.Diagonal;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class Queen extends Piece {
+public class Queen extends Move {
     private static final Score SCORE = new Score(9);
     private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
@@ -36,22 +32,6 @@ public class Queen extends Piece {
         if (!this.position.isCross(target) && !this.position.isDiagonal(target)) {
             throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");
         }
-    }
-
-    private void moveCross(Position target, CurrentPieces currentPieces) {
-        Cross queenCross = Cross.findCrossByTwoPosition(this.position, target);
-        queenCross.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
-    }
-
-    private void moveDiagonal(Position target, CurrentPieces currentPieces) {
-        Diagonal queenDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-        queenDiagonal.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
     }
 
     public static List<Queen> generate() {

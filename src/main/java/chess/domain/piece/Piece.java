@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-
 public abstract class Piece {
     protected Position position;
     protected String name;
@@ -51,5 +49,7 @@ public abstract class Piece {
         return this.position.equals(position);
     }
 
-
+    public boolean isEmpty() {
+        return this instanceof Empty;
+    }
 }
