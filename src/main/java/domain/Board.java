@@ -4,7 +4,7 @@ import domain.exception.InvalidMoveException;
 import domain.piece.Direction;
 import domain.piece.objects.Empty;
 import domain.piece.objects.Pawn;
-import domain.piece.Piece;
+import domain.piece.objects.Piece;
 import domain.piece.Position;
 
 import java.util.Collections;
@@ -23,7 +23,7 @@ public class Board {
 
     public void move(Position start, Position end) {
         Piece piece = board.get(start);
-        if (!piece.canMove2(getBoard(), start, end)) {
+        if (!piece.canMove(getBoard(), start, end)) {
             throw new InvalidMoveException();
         }
         board.remove(start);

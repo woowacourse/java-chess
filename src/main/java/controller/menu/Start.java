@@ -1,7 +1,7 @@
 package controller.menu;
 
 import domain.ChessGame;
-import domain.piece.PieceFactory;
+import domain.piece.objects.PieceFactory;
 import view.OutputView;
 
 public class Start implements Command {

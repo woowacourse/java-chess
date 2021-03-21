@@ -4,7 +4,7 @@ import domain.piece.Position;
 
 import java.util.Arrays;
 
-public enum IndexMachine {
+public enum IndexMachine { // TODO : ROW와 COLUMN 나누기
     COLUMN_ZERO('a', 0),
     COLUMN_ONE('b', 1),
     COLUMN_TWO('c', 2),
@@ -13,6 +13,7 @@ public enum IndexMachine {
     COLUMN_FIVE('f', 5),
     COLUMN_SIX('g', 6),
     COLUMN_SEVEN('h', 7),
+
     ROW_ZERO('8', 0),
     ROW_ONE('7', 1),
     ROW_TWO('6', 2),

@@ -1,10 +1,7 @@
 package domain.piece.objects;
 
 import domain.Board;
-import domain.piece.Piece;
 import domain.piece.Position;
-import domain.piece.objects.Bishop;
-import domain.piece.objects.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -25,7 +22,7 @@ class BishopTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("c5"), bishop);
         }});
-        assertThat(bishop.canMove2(board.getBoard(), Position.of("c5"), Position.of(endPosition))).isTrue();
+        assertThat(bishop.canMove(board.getBoard(), Position.of("c5"), Position.of(endPosition))).isTrue();
     }
 
     @DisplayName("이동 방향이 대각선이고, 목적지에 적 기물이 있을 경우 목적지로 이동한다.")
@@ -36,7 +33,7 @@ class BishopTest {
             put(Position.of("c5"), bishop);
             put(Position.of("d4"), Pawn.of("p", false));
         }});
-        assertThat(bishop.canMove2(board.getBoard(), Position.of("c5"), Position.of("d4"))).isTrue();
+        assertThat(bishop.canMove(board.getBoard(), Position.of("c5"), Position.of("d4"))).isTrue();
     }
 
     @DisplayName("비숍이 이동하려는 위치가 대각선이 아니면 실패를 반환한다.")
@@ -47,7 +44,7 @@ class BishopTest {
         Board board = new Board(new HashMap<Position, Piece>() {{
             put(Position.of("c5"), bishop);
         }});
-        assertThat(bishop.canMove2(board.getBoard(), Position.of("c5"), Position.of(endPosition))).isFalse();
+        assertThat(bishop.canMove(board.getBoard(), Position.of("c5"), Position.of(endPosition))).isFalse();
     }
 
     @DisplayName("이동 경로 중간에 기물이 존재하면(색깔 구분 없음), 이동할 수 없다.")
@@ -59,7 +56,7 @@ class BishopTest {
             put(Position.of(from), bishop);
             put(Position.of(middle), Pawn.of(name, color));
         }});
-        assertThat(bishop.canMove2(board.getBoard(), Position.of(from), Position.of(to))).isFalse();
+        assertThat(bishop.canMove(board.getBoard(), Position.of(from), Position.of(to))).isFalse();
     }
 
     @DisplayName("목적지에 같은 색깔의 기물이 있는 경우 이동할 수 없다.")
@@ -70,6 +67,6 @@ class BishopTest {
             put(Position.of("e5"), bishop);
             put(Position.of("g3"), Pawn.of("P", true));
         }});
-        assertThat(bishop.canMove2(board.getBoard(), Position.of("e5"), Position.of("g3"))).isFalse();
+        assertThat(bishop.canMove(board.getBoard(), Position.of("e5"), Position.of("g3"))).isFalse();
     }
 }

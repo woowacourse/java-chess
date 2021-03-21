@@ -2,7 +2,7 @@ package domain.score;
 
 import domain.Board;
 import domain.piece.objects.Pawn;
-import domain.piece.Piece;
+import domain.piece.objects.Piece;
 import domain.piece.Position;
 
 import java.util.Map;

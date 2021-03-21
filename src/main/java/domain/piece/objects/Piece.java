@@ -1,6 +1,9 @@
-package domain.piece;
+package domain.piece.objects;
 
-import domain.piece.objects.King;
+import domain.piece.Color;
+import domain.piece.Direction;
+import domain.piece.Name;
+import domain.piece.Position;
 import domain.score.Score;
 
 import java.util.Map;
@@ -11,7 +14,7 @@ public abstract class Piece {
     private final Score score;
     private final Color color;
 
-    public abstract boolean canMove2(Map<Position, Piece> board, Position start, Position end);
+    public abstract boolean canMove(Map<Position, Piece> board, Position start, Position end);
 
     public Piece(String name, Score score, boolean isBlack) {
         this.name = Name.of(name, isBlack);

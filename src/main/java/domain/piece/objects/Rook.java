@@ -1,7 +1,6 @@
 package domain.piece.objects;
 
 import domain.piece.Direction;
-import domain.piece.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 
@@ -29,7 +28,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         if (!isLinear(start, end)) {
             return false;
         }

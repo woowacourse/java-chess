@@ -1,5 +1,6 @@
-package domain.piece;
+package domain.piece.objects;
 
+import domain.piece.Position;
 import domain.piece.objects.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;

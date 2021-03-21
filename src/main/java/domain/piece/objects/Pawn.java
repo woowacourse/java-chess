@@ -1,7 +1,6 @@
 package domain.piece.objects;
 
 import domain.piece.Direction;
-import domain.piece.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 
@@ -43,7 +42,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         List<Direction> directions = new ArrayList<>(selectDirectionByColor());
         boolean result = movableLinear(directions.remove(0), board, start, end);
         if (!result) {

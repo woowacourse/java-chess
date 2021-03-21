@@ -1,6 +1,5 @@
 package domain.piece.objects;
 
-import domain.piece.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 
@@ -17,7 +16,7 @@ public final class Empty extends Piece {
     }
 
     @Override
-    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         return false;
     }
 }

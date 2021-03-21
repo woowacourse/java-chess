@@ -1,7 +1,6 @@
 package domain.piece.objects;
 
 import domain.piece.Direction;
-import domain.piece.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 
@@ -34,7 +33,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         List<Direction> directions = Direction.knightDirection();
         return directions.stream()
                 .map(direction -> start.move(direction))

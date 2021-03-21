@@ -1,9 +1,8 @@
 package domain;
 
-import controller.menu.End;
 import domain.exception.ImmovableSamePositionException;
 import domain.exception.InvalidMoveException;
-import domain.piece.Piece;
+import domain.piece.objects.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 import domain.score.ScoreMachine;

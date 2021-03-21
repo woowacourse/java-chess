@@ -1,7 +1,6 @@
 package domain.piece.objects;
 
 import domain.piece.Direction;
-import domain.piece.Piece;
 import domain.piece.Position;
 import domain.score.Score;
 
@@ -26,7 +25,7 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean canMove2(Map<Position, Piece> board, Position start, Position end) {
+    public boolean canMove(Map<Position, Piece> board, Position start, Position end) {
         List<Direction> directions = new ArrayList<>();
         directions.addAll(Direction.linearDirection());
         directions.addAll(Direction.diagonalDirection());
