@@ -2,8 +2,8 @@ package chess.controller;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
-import chess.domain.board.Result;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 

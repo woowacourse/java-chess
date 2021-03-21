@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
+import chess.domain.result.Score;
 
 public class King extends Piece {
     private static final String NAME = "K";

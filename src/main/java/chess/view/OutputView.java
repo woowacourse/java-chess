@@ -3,6 +3,7 @@ package chess.view;
 import chess.domain.board.*;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
+import chess.domain.result.Result;
 
 import java.util.Arrays;
 import java.util.Comparator;

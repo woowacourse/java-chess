@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.result.Score;
+
 public class Bishop extends Piece {
     private static final String NAME = "B";
     private static final double SCORE = 3;

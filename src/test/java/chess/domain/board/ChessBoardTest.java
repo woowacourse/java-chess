@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
+import chess.domain.result.Result;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;

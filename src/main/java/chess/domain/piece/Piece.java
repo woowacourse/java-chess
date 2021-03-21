@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
+import chess.domain.result.Score;
 
 import java.util.List;
 

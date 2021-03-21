@@ -1,6 +1,4 @@
-package chess.domain.board;
-
-import chess.domain.piece.Score;
+package chess.domain.result;
 
 public class Result {
 
