@@ -11,11 +11,13 @@ import java.util.List;
 public final class Grid {
     private Lines lines;
     private Score score;
+    private Color turn;
 
     public Grid(GridStrategy gridStrategy) {
         List<Line> lineGroup = gridStrategy.LinesInInitGrid();
-        lines = new Lines(lineGroup);
-        score = new Score(lines);
+        this.lines = new Lines(lineGroup);
+        this.score = new Score(lines);
+        this.turn = Color.WHITE;
     }
 
     public final Lines lines() {
@@ -32,7 +34,20 @@ public final class Grid {
 
     public final void move(final Piece sourcePiece, final Piece targetPiece) {
         sourcePiece.validateRoute(targetPiece, lines);
+        changeTurn();
         update(sourcePiece, targetPiece);
+    }
+
+    public void changeTurn() {
+        if (turn == Color.WHITE) {
+            turn = Color.BLACK;
+            return;
+        }
+        turn = Color.WHITE;
+    }
+
+    public boolean isMyTurn(Color color) {
+        return turn == color;
     }
 
     private void update(final Piece sourcePiece, final Piece targetPiece) {

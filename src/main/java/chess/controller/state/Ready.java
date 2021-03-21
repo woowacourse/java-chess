@@ -21,7 +21,7 @@ public final class Ready implements GameState {
         String command = InputView.command();
         if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
-            return new WhiteTurn();
+            return new Playing();
         }
         if (command.equals(END_COMMAND)) {
             return new End();
