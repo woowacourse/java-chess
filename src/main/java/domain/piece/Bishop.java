@@ -13,6 +13,10 @@ public class Bishop extends Piece {
         super(name, SCORE, color);
     }
 
+    public static Bishop of(String name, boolean color) {
+        return new Bishop(name, color);
+    }
+
     public static Map<Position, Bishop> initialBishopPieces() {
         return new HashMap<Position, Bishop>() {{
             put(Position.of("c8"), Bishop.of("B", true));
@@ -22,14 +26,14 @@ public class Bishop extends Piece {
         }};
     }
 
-    public static Bishop of(String name, boolean color) {
-        return new Bishop(name, color);
-    }
-
     public boolean checkDiagonal(Position start, Position end) {
         int rowDiff = Math.abs(start.getRow() - end.getRow());
         int colDiff = Math.abs(start.getColumn() - end.getColumn());
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
+    }
+
+    private boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
+        return !board.containsKey(nextPosition);
     }
 
     @Override
@@ -38,15 +42,11 @@ public class Bishop extends Piece {
             return false;
         }
 
-        Direction direction = Direction.findDirection(start, end);
+        Direction direction = Direction.findDiagonalDirection(start, end);
         do {
             start = start.move(direction);
         } while (!start.equals(end) && isEmptyPosition(board, start));
 
         return start.equals(end) && (isEmptyPosition(board, end) || !this.isSameColor(board.get(end)));
-    }
-
-    private boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
-        return !board.containsKey(nextPosition);
     }
 }
