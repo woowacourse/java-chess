@@ -1,0 +1,46 @@
+package chess.domain.player;
+
+import chess.domain.position.Position;
+import chess.domain.position.Source;
+import chess.domain.position.Target;
+import chess.domain.state.State;
+
+import static chess.view.Command.*;
+
+public class Round {
+    private final Player whitePlayer;
+    private final Player blackPlayer;
+
+    public Round(final State white, final State black) {
+        this(new WhitePlayer(white), new BlackPlayer(black));
+    }
+
+    public Round(final Player whitePlayer, final Player blackPlayer) {
+        this.whitePlayer = whitePlayer;
+        this.blackPlayer = blackPlayer;
+    }
+
+    public void move(final String command, final String sourceText, final String targetText) {
+        if (isMove(command)) {
+            Position sourcePosition = Position.find(sourceText);
+            Position targetPosition = Position.find(targetText);
+            moveByTurn(sourcePosition, targetPosition);
+        }
+    }
+
+    private void moveByTurn(Position sourcePosition, Position targetPosition) {
+        if (whitePlayer.isFinish()) {
+            Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
+            Target target = Target.valueOf(source, targetPosition, whitePlayer.getState());
+            blackPlayer.move(source, target, whitePlayer.getState());
+            return;
+        }
+        Source source = Source.valueOf(sourcePosition, whitePlayer.getState());
+        Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());
+        whitePlayer.move(source, target, blackPlayer.getState());
+    }
+
+    private boolean isMove(final String command) {
+        return MOVE.isSame(command);
+    }
+}

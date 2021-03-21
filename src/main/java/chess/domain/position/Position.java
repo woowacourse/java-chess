@@ -50,6 +50,13 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
+    public static Position find(String source) {
+        if (Objects.isNull(POSITIONS.get(source))) {
+            throw new IllegalArgumentException("없는 위치입니다!");
+        }
+        return POSITIONS.get(source);
+    }
+
     public Rank getRank() {
         return rank;
     }
