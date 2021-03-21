@@ -3,9 +3,11 @@ package chess.domain.piece;
 import chess.domain.board.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
-import javafx.geometry.Pos;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class King extends Piece {
     private static final String SYMBOL = "Kk";
@@ -22,17 +24,37 @@ public class King extends Piece {
         return new King(piece, position, Color.WHITE);
     }
 
-    @Override
-    public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
+    private static void validate(final String piece) {
+        if (!SYMBOL.contains(piece)) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+        if (piece.length() > 1) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
     }
 
     @Override
-    public void move2(Target target, Pieces pieces) {
+    public void move(final Target target, final ChessBoard chessBoard) {
+    }
 
+    @Override
+    public void move2(final Target target, final Pieces pieces) {
+        List<Position> positions = makeRoutes2(pieces);
+        checkTarget(target, positions);
+        pieces.changePiecePosition(this, target);
+    }
+
+    private List<Position> makeRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        positions.addAll(makeUpRoutes2(pieces));
+        positions.addAll(makeDownRoutes2(pieces));
+        positions.addAll(makeLeftRoutes2(pieces));
+        positions.addAll(makeRightRoutes2(pieces));
+        positions.addAll(makeUpLeftRoutes2(pieces));
+        positions.addAll(makeUpRightRoutes2(pieces));
+        positions.addAll(makeDownLeftRoutes2(pieces));
+        positions.addAll(makeDownRightRoutes2(pieces));
+        return positions;
     }
 
     private void checkTarget(Target target, List<Position> positions) {
@@ -41,126 +63,121 @@ public class King extends Piece {
         }
     }
 
-    private List<Position> makeRoutes(ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes(chessBoard));
-        positions.addAll(makeDownRoutes(chessBoard));
-        positions.addAll(makeLeftRoutes(chessBoard));
-        positions.addAll(makeRightRoutes(chessBoard));
-        positions.addAll(makeUpLeftRoutes(chessBoard));
-        positions.addAll(makeUpRightRoutes(chessBoard));
-        positions.addAll(makeDownLeftRoutes(chessBoard));
-        positions.addAll(makeDownRightRoutes(chessBoard));
-        return positions;
-    }
-
-    private List<Position> makeUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank + 1, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeDownRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank - 1, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeLeftRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank, file - 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRightRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank, file + 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank + 1, file - 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRightRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank + 1, file + 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeDownLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank - 1, file - 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeDownRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRightRoutes2(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank - 1, file + 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -174,14 +191,5 @@ public class King extends Piece {
     @Override
     public int hashCode() {
         return super.hashCode();
-    }
-
-    private static void validate(final String piece) {
-        if (!SYMBOL.contains(piece)) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
-        if (piece.length() > 1) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
     }
 }
