@@ -12,7 +12,6 @@ public class ChessBoard {
 	private static final double PAWN_PUNISHMENT_RATIO = 0.5;
 	private static final int NUMBER_OF_KINGS = 2;
 	private static final int MINIMUM_PUNISHABLE_PAWN_COUNT = 2;
-	private static final String BLANK_MOVE_ERROR = "공백은 움직일 수 없습니다.";
 
 	private final Map<Position, Piece> board = new LinkedHashMap<>();
 
@@ -73,20 +72,17 @@ public class ChessBoard {
 		replace(Position.of("h2"), new Pawn(Color.WHITE, Position.of("h2")));
 	}
 
-	public void replace(Position position, Piece piece) {
-		board.replace(position, piece);
-	}
-
 	public void move(String source, String target) {
 		Position sourcePosition = Position.of(source);
 		Position targetPosition = Position.of(target);
 		Direction direction = Path.findDirection(this, sourcePosition, targetPosition);
 
-		Piece sourcePiece = getPieceAt(sourcePosition);
+		Piece sourcePiece = getPiece(sourcePosition);
 		sourcePiece.move(this, direction, targetPosition);
+	}
 
-		board.replace(targetPosition, sourcePiece);
-		board.replace(sourcePosition, new Blank(Color.NO_COLOR, sourcePosition));
+	public void replace(Position position, Piece piece) {
+		board.replace(position, piece);
 	}
 
 	public List<Direction> getCandidateDirections(Position position) {
@@ -97,11 +93,11 @@ public class ChessBoard {
 		return board;
 	}
 
-	public Piece getPieceAt(Position position) {
+	public Piece getPiece(Position position) {
 		return board.get(position);
 	}
 
-	public boolean isOngoing() {
+	public boolean bothKingsAlive() {
 		long kingCount = board.values()
 				.stream()
 				.filter(Piece::isKing)

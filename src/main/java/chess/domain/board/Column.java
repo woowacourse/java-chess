@@ -3,7 +3,6 @@ package chess.domain.board;
 import java.util.Arrays;
 
 public enum Column {
-
 	A(0, 'a'),
 	B(1, 'b'),
 	C(2, 'c'),

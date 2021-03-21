@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece implements Movable {
-	private static final String NOT_MOVABLE_POSITION_ERROR = "이동할 수 없는 위치입니다.";
+	public static final String NOT_MOVABLE_POSITION_ERROR = "이동할 수 없는 위치입니다.";
 
 	protected Type type;
 	private final Color color;
@@ -57,7 +57,9 @@ public abstract class Piece implements Movable {
 
 	public void move(ChessBoard chessBoard, Direction direction, Position targetPosition) {
 		if (isMovable(chessBoard, direction, targetPosition)) {
+			chessBoard.replace(this.position, new Blank(Color.NO_COLOR, this.position));
 			this.position = targetPosition;
+			chessBoard.replace(targetPosition, this);
 			return;
 		}
 		throw new IllegalArgumentException(NOT_MOVABLE_POSITION_ERROR);

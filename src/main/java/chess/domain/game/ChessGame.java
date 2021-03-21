@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ChessGame {
 	public static final String TURN_MESSAGE = "%s의 차례입니다.";
-	public static final String NOT_MOVING_ERROR = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
+	public static final String NO_MOVEMENT_ERROR = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
 	private static final int SOURCE_INDEX = 1;
 	private static final int TARGET_INDEX = 2;
 
@@ -28,16 +28,19 @@ public class ChessGame {
 	public void run(List<String> input) {
 		String source = input.get(SOURCE_INDEX);
 		String target = input.get(TARGET_INDEX);
-		if (source.equals(target)) {
-			throw new IllegalArgumentException(NOT_MOVING_ERROR);
-		}
+		validateMovement(source, target);
 
-		Piece sourcePiece = chessBoard.getPieceAt(Position.of(source));
-
+		Piece sourcePiece = chessBoard.getPiece(Position.of(source));
 		validateTurn(sourcePiece);
 
 		chessBoard.move(source, target);
 		turn = turn.getOppositeColor();
+	}
+
+	private void validateMovement(final String source, final String target) {
+		if (source.equals(target)) {
+			throw new IllegalArgumentException(NO_MOVEMENT_ERROR);
+		}
 	}
 
 	private void validateTurn(Piece sourcePiece) {
@@ -47,7 +50,7 @@ public class ChessGame {
 	}
 
 	public boolean isOngoing() {
-		return chessBoard.isOngoing();
+		return chessBoard.bothKingsAlive();
 	}
 
 	public Result result() {

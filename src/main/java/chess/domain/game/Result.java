@@ -6,10 +6,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Result {
-
 	public static final String DRAW = "무";
 	public static final String WIN = "승";
 	public static final String LOSE = "패";
+
 	private final Map<Color, Double> result = new HashMap<>();
 
 	public Result(double blackScore, double whiteScore) {
