@@ -16,6 +16,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
+import chess.domain.game.ChessGame;
 import chess.domain.piece.type.PieceType;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
@@ -94,11 +95,11 @@ class PieceTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    Board board = new Board(customBoardSetting);
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
                     String startPositionInput = "d5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -115,13 +116,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("아래 방향으로 이동")
@@ -138,13 +140,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 방향으로 이동")
@@ -161,13 +164,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 방향으로 이동")
@@ -184,13 +188,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -207,13 +212,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -230,13 +236,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -253,13 +260,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
             }
 
@@ -282,11 +290,11 @@ class PieceTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    Board board = new Board(customBoardSetting);
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
                     String startPositionInput = "d5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -303,13 +311,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -326,13 +335,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
@@ -349,13 +359,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
@@ -372,13 +383,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -395,13 +407,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -418,13 +431,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -441,13 +455,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
             }
 
@@ -470,11 +485,12 @@ class PieceTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    Board board = new Board(customBoardSetting);
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
+
                     String startPositionInput = "d5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -491,13 +507,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("아래 방향으로 이동")
@@ -514,13 +531,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 방향으로 이동")
@@ -537,13 +555,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 방향으로 이동")
@@ -560,13 +579,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -583,13 +603,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -606,13 +627,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
@@ -629,13 +651,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
@@ -652,13 +675,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -675,13 +699,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -698,13 +723,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -721,13 +747,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
             }
 
@@ -750,11 +777,11 @@ class PieceTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    Board board = new Board(customBoardSetting);
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
                     String startPositionInput = "d5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("위 방향으로 한 칸 이동")
@@ -771,13 +798,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("아래 방향으로 한 칸 이동")
@@ -794,13 +822,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "d4";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 방향으로 한 칸 이동")
@@ -817,13 +846,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "e5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 방향으로 한 칸 이동")
@@ -840,13 +870,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 한 칸 이동")
@@ -863,13 +894,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 한 칸 이동")
@@ -886,13 +918,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c4";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 한 칸 이동")
@@ -909,13 +942,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "e6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 한 칸 이동")
@@ -932,13 +966,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "e4";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -955,13 +990,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -978,13 +1014,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
             }
 
@@ -1007,11 +1044,11 @@ class PieceTest {
                             null, null, null, null, null, null, null, null)
                     );
 
-                    Board board = new Board(customBoardSetting);
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
                     String startPositionInput = "d5";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 왼쪽 위 방향으로 한 번 이동")
@@ -1028,13 +1065,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "b6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 왼쪽 아래 방향으로 한 번 이동")
@@ -1051,13 +1089,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c3";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 위 위 방향으로 한 번 이동")
@@ -1074,13 +1113,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c7";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("왼쪽 아래 아래 방향으로 한 번 이동")
@@ -1097,13 +1137,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c3";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 오른쪽 위 방향으로 한 번 이동")
@@ -1120,13 +1161,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "f6";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 오른쪽 아래 방향으로 한 번 이동")
@@ -1143,13 +1185,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "f4";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 위 위 방향으로 한 번 이동")
@@ -1166,13 +1209,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "e7";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("오른쪽 아래 아래 방향으로 한 번 이동")
@@ -1189,13 +1233,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "e3";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -1212,13 +1257,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c7";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCannotMoveTo(moveRoute, board);
+                    assertCannotMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("이동 경로 중간에 적 기물이 존재해도, 이동할 수 있다.")
@@ -1235,13 +1281,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c7";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -1258,13 +1305,14 @@ class PieceTest {
                             null, null, null, null, null, null, null, null,
                             null, null, null, null, null, null, null, null)
                     );
-                    Board board = new Board(customBoardSetting);
+
+                    ChessGame chessGame = new ChessGame(customBoardSetting);
 
                     String startPositionInput = "d5";
                     String destinationInput = "c7";
                     MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                    assertCanMoveTo(moveRoute, board);
+                    assertCanMoveTo(moveRoute, chessGame.board());
                 }
             }
 
@@ -1290,11 +1338,11 @@ class PieceTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        Board board = new Board(customBoardSetting);
+                        ChessGame chessGame = new ChessGame(customBoardSetting);
                         String startPositionInput = "d5";
                         MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                        assertCannotMoveTo(moveRoute, board);
+                        assertCannotMoveTo(moveRoute, chessGame.board());
                     }
 
                     @DisplayName("한 칸 전진")
@@ -1314,14 +1362,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1338,14 +1387,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("위 방향으로 이동할 수 없다.")
@@ -1362,14 +1412,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
@@ -1386,14 +1437,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d3";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
 
@@ -1414,14 +1466,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "d5";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1438,14 +1491,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "d5";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -1462,14 +1516,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "d5";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("위 방향으로 이동할 수 없다.")
@@ -1486,14 +1541,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d7";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
 
@@ -1514,14 +1570,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "c6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
@@ -1538,14 +1595,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "e6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
@@ -1562,14 +1620,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "c6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
@@ -1586,14 +1645,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d7";
                             String destinationInput = "e6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
                 }
@@ -1617,11 +1677,11 @@ class PieceTest {
                                 null, null, null, null, null, null, null, null)
                         );
 
-                        Board board = new Board(customBoardSetting);
+                        ChessGame chessGame = new ChessGame(customBoardSetting);
                         String startPositionInput = "d5";
                         MoveRoute moveRoute = new MoveRoute(startPositionInput, destinationInput);
 
-                        assertCannotMoveTo(moveRoute, board);
+                        assertCannotMoveTo(moveRoute, chessGame.board());
                     }
 
                     @DisplayName("한 칸 전진")
@@ -1641,14 +1701,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1665,14 +1726,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d6";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("아래 방향으로 이동할 수 없다.")
@@ -1689,14 +1751,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
@@ -1713,14 +1776,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d5";
                             String destinationInput = "d7";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
 
@@ -1741,14 +1805,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1765,14 +1830,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -1789,14 +1855,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "d4";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("아래 방향으로 이동할 수 없다.")
@@ -1813,14 +1880,15 @@ class PieceTest {
                                     null, null, null, null, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d3";
                             String destinationInput = "d1";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
 
@@ -1841,14 +1909,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "c3";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
@@ -1865,14 +1934,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "e3";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCanMoveTo(moveRoute, board);
+                            assertCanMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
@@ -1889,14 +1959,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "c3";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
 
                         @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
@@ -1913,14 +1984,15 @@ class PieceTest {
                                     null, null, null, W_PN, null, null, null, null,
                                     null, null, null, null, null, null, null, null)
                             );
-                            Board board = new Board(customBoardSetting);
+
+                            ChessGame chessGame = new ChessGame(customBoardSetting);
 
                             String startPositionInput = "d2";
                             String destinationInput = "e3";
-                            MoveRoute moveRoute = new MoveRoute(startPositionInput,
-                                destinationInput);
+                            MoveRoute moveRoute
+                                = new MoveRoute(startPositionInput, destinationInput);
 
-                            assertCannotMoveTo(moveRoute, board);
+                            assertCannotMoveTo(moveRoute, chessGame.board());
                         }
                     }
                 }
@@ -1942,8 +2014,8 @@ class PieceTest {
     }
 
     private Piece findPieceToMove(MoveRoute moveRoute, Board board) {
-        return board.find(
+        return board.findPiece(
             Position.of(moveRoute.startPosition().file(), moveRoute.startPosition().rank())
-        ).piece();
+        );
     }
 }

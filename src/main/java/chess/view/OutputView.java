@@ -31,7 +31,7 @@ public class OutputView {
 
     private static void printFilesByRank(Rank rank, Board board) {
         for (File file : File.values()) {
-            Cell cell = board.find(Position.of(file, rank));
+            Cell cell = board.findCell(Position.of(file, rank));
             printCell(cell);
         }
         System.out.println();
@@ -53,6 +53,6 @@ public class OutputView {
     }
 
     public static void printWinnerTeamColor(TeamColor winnerTeamColor) {
-        System.out.println(winnerTeamColor.koreanColorName() + "팀이 이겼습니다.");
+        System.out.println(winnerTeamColor.koreanColorName() + " 팀이 이겼습니다.");
     }
 }

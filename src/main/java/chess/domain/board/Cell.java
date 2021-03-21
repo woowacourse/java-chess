@@ -2,19 +2,14 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceType;
-import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 
 public class Cell {
     private Piece piece;
 
-    public Cell(PieceWithColorType pieceWithColorType) {
-        if (pieceWithColorType != null) {
-            piece = Piece.of(pieceWithColorType);
-            return;
-        }
-        piece = null;
+    public Cell(Piece piece) {
+        this.piece = piece;
     }
 
     public void put(Piece piece) {

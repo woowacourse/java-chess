@@ -2,74 +2,50 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceType.KING;
 
-import chess.domain.board.setting.BoardSetting;
+import chess.domain.game.MoveCommand;
 import chess.domain.piece.Piece;
-import chess.domain.piece.type.PieceWithColorType;
-import chess.domain.player.Players;
-import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
-import chess.domain.position.cache.PositionsCache;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Board {
-    private final Players players = new Players();
     private final Map<Position, Cell> cells = new HashMap<>();
 
-    public Board(BoardSetting boardSetting) {
-        List<PieceWithColorType> piecesSetting = boardSetting.piecesSetting();
-        for (int index = 0; index < piecesSetting.size(); index++) {
-            setBoard(piecesSetting, index);
-        }
-    }
-
-    private void setBoard(List<PieceWithColorType> piecesSetting, int index) {
-        Position position = PositionsCache.get(index);
-        Cell cell = new Cell(piecesSetting.get(index));
+    public void setPiece(Position position, Piece piece) {
+        Cell cell = new Cell(piece);
         cells.put(position, cell);
-        if (!cell.isEmpty()) {
-            players.add(cell.piece(), position);
-        }
     }
 
-    public Cell find(Position position) {
+    public Cell findCell(Position position) {
         return cells.get(position);
     }
 
-    public void move(MoveRoute moveRoute, TeamColor currentTurnTeamColor) {
-        Cell startPositionCell = cells.get(moveRoute.startPosition());
-        validateOwnPiece(currentTurnTeamColor, startPositionCell);
-        validateDestination(moveRoute, startPositionCell);
-        updatePiecesOfPlayers(moveRoute, startPositionCell);
-        Cell destinationCell = cells.get(moveRoute.destination());
-        if (!destinationCell.isEmpty()) {
-            Piece deadPiece = destinationCell.piece();
-            players.remove(deadPiece, moveRoute.destination());
-        }
+    public Piece findPiece(Position position) {
+        return findCell(position).piece();
+    }
+
+    public void move(MoveCommand moveCommand) {
+        Cell startPositionCell = cells.get(moveCommand.startPosition());
+        validateOwnPiece(startPositionCell, moveCommand.teamColor());
+        validateMoveRoute(startPositionCell, moveCommand.moveRoute());
+        Cell destinationCell = cells.get(moveCommand.destination());
         startPositionCell.movePieceTo(destinationCell);
     }
 
-    private void updatePiecesOfPlayers(MoveRoute moveRoute, Cell startPositionCell) {
-        Piece movingPiece = startPositionCell.piece();
-        players.remove(movingPiece, moveRoute.startPosition());
-        players.add(movingPiece, moveRoute.destination());
-    }
-
-
-    private void validateOwnPiece(TeamColor currentTurnTeamColor, Cell startPositionCell) {
+    private void validateOwnPiece(Cell startPositionCell, TeamColor teamColor) {
         if (startPositionCell.isEmpty()) {
             throw new IllegalArgumentException("출발 위치에 기물이 존재하지 않습니다.");
         }
-        if (!(startPositionCell.teamColor() == currentTurnTeamColor)) {
+        if (startPositionCell.teamColor() != teamColor) {
             throw new IllegalArgumentException("자신의 기물이 아닙니다.");
         }
     }
 
-    private void validateDestination(MoveRoute moveRoute, Cell startPositionCell) {
+    private void validateMoveRoute(Cell startPositionCell, MoveRoute moveRoute) {
         if (!startPositionCell.isMovableTo(moveRoute, this)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
@@ -88,17 +64,17 @@ public class Board {
     }
 
     public boolean isNotCellEmpty(Position position) {
-        Cell cell = find(position);
+        Cell cell = findCell(position);
         return !cell.isEmpty();
     }
 
     public boolean isEnemyExists(Position position, TeamColor teamColor) {
-        Cell cell = find(position);
+        Cell cell = findCell(position);
         return !cell.isEmpty() && cell.teamColor() != teamColor;
     }
 
     public boolean isCellEmptyOrEnemyExists(Position position, TeamColor teamColor) {
-        Cell cell = find(position);
+        Cell cell = findCell(position);
         return cell.isEmpty() || cell.teamColor() != teamColor;
     }
 
@@ -106,10 +82,6 @@ public class Board {
         return cells.values().stream()
             .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
             .count() == 1;
-    }
-
-    public Scores scores() {
-        return players.scores();
     }
 }
 
