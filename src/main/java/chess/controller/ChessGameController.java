@@ -12,11 +12,12 @@ public class ChessGameController {
     private final ChessGame chessGame;
     private boolean gameFlag = true;
     private String command;
+    private Team currentTurn;
 
     public ChessGameController(final ChessGame chessGame) {
         this.chessGame = chessGame;
+        this.currentTurn = Team.WHITE;
     }
-
 
     public void run() {
         OutputView.printStartMessage();
@@ -34,10 +35,12 @@ public class ChessGameController {
             if ("move".equals(command)) {
                 try {
                     move();
+                    currentTurn = Team.getAnotherTeam(currentTurn);
                 } catch (IllegalArgumentException e) {
                     System.out.println(e.getMessage());
                     command = InputView.getCommand();
                     move();
+                    currentTurn = Team.getAnotherTeam(currentTurn);
                 }
             }
         }
@@ -47,13 +50,10 @@ public class ChessGameController {
         String startPointStr = InputView.getPoint();
         String endPointStr = InputView.getPoint();
 
-        System.out.println(startPointStr);
-        System.out.println(endPointStr);
-
         Position startPoint = new Position(Row.getLocation(startPointStr.charAt(1) + ""), Col.getLocation(startPointStr.charAt(0) + ""));
         Position endPoint = new Position(Row.getLocation(endPointStr.charAt(1) + ""), Col.getLocation(endPointStr.charAt(0) + ""));
 
-        chessGame.move(startPoint, endPoint, Team.WHITE);
+        chessGame.move(startPoint, endPoint, currentTurn);
         printBoard();
     }
 
