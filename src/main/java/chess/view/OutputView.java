@@ -10,7 +10,7 @@ public class OutputView {
             "게임 시작은 start, 종료는 end 명령을 입력하세요.";
     private static final int BOARD_COLUMN_SIZE = 8;
     private static final String SCORE_FORMAT = "백: %.1f 흑: %.1f %n";
-    private static final String WINNER_FORMAT = "%s가 승리했습니다!%n";
+    private static final String WINNER_FORMAT = "%s이 승리했습니다!%n";
 
     public static void drawBoard(final BoardDto boardDto) {
         String[] boardStatus = createBoardStatus(boardDto);
