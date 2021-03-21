@@ -1,6 +1,7 @@
 package chess.controller.command;
 
 import chess.domain.ChessGameManager;
+import chess.view.OutputView;
 
 import java.util.List;
 
@@ -16,5 +17,11 @@ public class Start implements Command {
     @Override
     public void execute(ChessGameManager chessGameManager) {
         chessGameManager.start();
+        OutputView.printBoard(chessGameManager.getBoard());
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 }

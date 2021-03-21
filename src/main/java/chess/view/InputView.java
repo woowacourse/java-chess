@@ -1,6 +1,9 @@
 package chess.view;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
@@ -8,9 +11,10 @@ public class InputView {
     private InputView() {
     }
 
-    public static boolean inputMenuSelection() {
-        System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
-        MenuOption menuSelection = MenuOption.findByKeyword(scanner.nextLine());
-        return menuSelection == MenuOption.START;
+    public static List<String> getCommand() {
+        return Arrays.stream(scanner.nextLine().split(" "))
+                .map(String::trim)
+                .filter(string -> !string.isEmpty())
+                .collect(Collectors.toList());
     }
 }

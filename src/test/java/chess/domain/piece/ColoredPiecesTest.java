@@ -8,7 +8,6 @@ import org.junit.jupiter.params.provider.EnumSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ColoredPiecesTest {
     ColoredPieces coloredPieces;
@@ -30,7 +29,7 @@ class ColoredPiecesTest {
     @DisplayName("킹이 살아있는지 확인한다")
     @Test
     void isKingAliveTest() {
-        assertThat(coloredPieces.isKingAlive()).isTrue();
+        assertThat(coloredPieces.isKingDead()).isTrue();
     }
 
     @DisplayName("기물을 제거한다")

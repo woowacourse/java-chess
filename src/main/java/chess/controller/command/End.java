@@ -17,4 +17,9 @@ public class End implements Command {
     public void execute(ChessGameManager chessGameManager) {
         chessGameManager.end();
     }
+
+    @Override
+    public boolean isEnd() {
+        return true;
+    }
 }

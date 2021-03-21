@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveResult;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -22,9 +23,9 @@ public class Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public void move(Position from, Position to) {
+    public MoveResult move(Position from, Position to) {
         Square fromSquare = this.findByPosition(from);
-        fromSquare.move(createMoveOrder(from, to));
+        return fromSquare.move(createMoveOrder(from, to));
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {

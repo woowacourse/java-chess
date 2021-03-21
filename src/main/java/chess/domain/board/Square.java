@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
+import chess.domain.order.MoveResult;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.RealPiece;
@@ -29,14 +30,18 @@ public class Square {
         return piece.getNotation();
     }
 
-    public void move(MoveOrder moveOrder) {
+    public MoveResult move(MoveOrder moveOrder) {
         if (!hasPiece()) {
             throw new NoSuchElementException("해당 위치엔 말이 없습니다.");
         }
 
         if (piece.canMove(moveOrder)) {
+            Piece removedPiece = moveOrder.getTo().piece;
             moveOrder.getTo().piece = this.piece;
             this.piece = new Blank();
+            return new MoveResult(removedPiece);
         }
+
+        throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
     }
 }

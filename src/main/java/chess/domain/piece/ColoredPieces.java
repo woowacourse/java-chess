@@ -38,8 +38,12 @@ public class ColoredPieces {
         pieces.remove(realPiece);
     }
 
-    public boolean isKingAlive() {
-        return pieces.contains(new King(color));
+    public boolean isSameColor(Color color){
+        return this.color == color;
+    }
+
+    public boolean isKingDead() {
+        return !pieces.contains(new King(color));
     }
 
     public int size() {

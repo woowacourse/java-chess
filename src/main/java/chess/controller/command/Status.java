@@ -17,4 +17,9 @@ public class Status implements Command{
     public void execute(ChessGameManager chessGameManager) {
         chessGameManager.status();
     }
+
+    @Override
+    public boolean isEnd() {
+        return false;
+    }
 }

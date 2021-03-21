@@ -2,6 +2,7 @@ package chess.controller.command;
 
 import chess.domain.ChessGameManager;
 import chess.domain.position.Position;
+import chess.view.OutputView;
 
 import java.util.List;
 
@@ -24,5 +25,11 @@ public class Move implements Command{
     @Override
     public void execute(ChessGameManager chessGameManager) {
         chessGameManager.move(from, to);
+        OutputView.printBoard(chessGameManager.getBoard());
+    }
+
+    @Override
+    public boolean isEnd() {
+        return false;
     }
 }
