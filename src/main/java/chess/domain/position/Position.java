@@ -1,20 +1,20 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public class Position {
-    public static final String Xs = "abcdefgh";
-    private static final String Ys = "87654321";
     public static final Position EMPTY = new Position('0', '0');
     public static final List<Position> POSITIONS;
+    public static final String Xs = "abcdefgh";
+    private static final String Ys = "87654321";
 
     static {
         POSITIONS = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                POSITIONS.add(Position.of(Xs.charAt(j), Ys.charAt(i)));
+                POSITIONS.add(new Position(Xs.charAt(j), Ys.charAt(i)));
             }
         }
     }
@@ -28,20 +28,16 @@ public class Position {
     }
 
     public static Position of(String xy) {
-        validatePosition(xy.charAt(0), xy.charAt(1));
-        return new Position(xy.charAt(0), xy.charAt(1));
+        return of(xy.charAt(0), xy.charAt(1));
     }
 
-    public static Position of(char x, char y) {
-        validatePosition(x, y);
-        return new Position(x, y);
-    }
-
-    private static void validatePosition(char x, char y) {
-        if (Xs.contains(String.valueOf(x)) && Ys.contains(String.valueOf(y))) {
-            return;
-        }
-        throw new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다.");
+    public static Position of(char anotherX, char anotherY) {
+        return POSITIONS.stream()
+                .filter(position ->
+                        position.x == anotherX && position.y == anotherY)
+                .findFirst()
+                .orElseThrow(() ->
+                        new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다."));
     }
 
     public char getX() {

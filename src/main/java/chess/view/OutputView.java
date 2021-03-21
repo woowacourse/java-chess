@@ -4,7 +4,7 @@ import chess.domain.Color;
 import chess.domain.piece.Pieces;
 import chess.domain.piece.Piece;
 
-import static chess.domain.piece.Position.POSITIONS;
+import static chess.domain.position.Position.POSITIONS;
 
 public class OutputView {
     public static final int CHANGE_LINE_POINT = 8;

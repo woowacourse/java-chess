@@ -1,9 +1,7 @@
-package chess.domain;
+package chess.domain.position;
 
-import chess.domain.piece.Pieces;
-import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Position;
+import chess.domain.piece.Pieces;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -46,9 +44,7 @@ public enum Cross {
             for (int i = 1; i < count; i++) {
                 Piece piece = pieces.findByPosition(
                         Position.of((char) (sourceX + (xSum * i)), (char) (sourceY)));
-                if (!(piece instanceof Empty)) {
-                    throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                }
+                checkAbleToJump(piece);
             }
         }
 
@@ -57,10 +53,14 @@ public enum Cross {
             for (int i = 1; i < count; i++) {
                 Piece piece = pieces.findByPosition(
                         Position.of((char) (sourceX), (char) (sourceY + (ySum * i))));
-                if (!(piece instanceof Empty)) {
-                    throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                }
+                checkAbleToJump(piece);
             }
+        }
+    }
+
+    private void checkAbleToJump(Piece piece) {
+        if (!(piece.isEmpty())) {
+            throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
         }
     }
 }

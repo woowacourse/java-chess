@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Name;
+import chess.domain.position.Position;
 
 import java.util.Arrays;
 import java.util.List;
@@ -16,6 +17,8 @@ public class Pawn extends Piece {
             Position.of('b', '2'), Position.of('c', '2'), Position.of('d', '2'),
             Position.of('e', '2'), Position.of('f', '2'), Position.of('g', '2'),
             Position.of('h', '2'));
+    public static final char BLACK_INITIAL_Y = '7';
+    public static final char WHITE_INITIAL_Y = '2';
 
     public Pawn(Position position, Color color) {
         super(position, Name.PAWN, color, Score.ONE);
@@ -49,7 +52,7 @@ public class Pawn extends Piece {
             this.position = target;
             return;
         }
-        if (this.position.getY() == '7' && this.color == Color.BLACK) { // 블랙 초기화
+        if (this.position.getY() == BLACK_INITIAL_Y && this.color == Color.BLACK) { // 블랙 초기화
             if (this.position.yDistance(target) > 0 && this.position.yDistance(target) <= 2) { // 빠꾸 금지 && 2칸 내 이동
                 for (int i = 1; i <= position.yDistance(target); i++) { // 장애물 검사
                     Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
@@ -62,7 +65,7 @@ public class Pawn extends Piece {
             }
         }
 
-        if (this.position.getY() == '2' && this.color == Color.WHITE) { // 화이트
+        if (this.position.getY() == WHITE_INITIAL_Y && this.color == Color.WHITE) { // 화이트
             if (target.yDistance(this.position) > 0 && target.yDistance(this.position) <= 2) {
                 for (int i = 1; i <= target.yDistance(this.position); i++) {
                     Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));

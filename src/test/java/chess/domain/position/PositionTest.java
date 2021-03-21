@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -76,5 +76,11 @@ public class PositionTest {
         boolean result = position1.isCross(position2);
 
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("매개변수 수 만큼 x축으로 이동한다.")
+    @Test
+    void x축으로_이동() {
+
     }
 }

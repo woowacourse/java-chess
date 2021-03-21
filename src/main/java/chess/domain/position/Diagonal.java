@@ -1,8 +1,7 @@
-package chess.domain;
+package chess.domain.position;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
-import chess.domain.piece.Position;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;
@@ -32,7 +31,8 @@ public enum Diagonal {
     public static Diagonal findDiagonalByTwoPosition(Position source, Position target) {
         return Arrays.stream(values()).filter(value -> value.findDiagonal.test(source, target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 대각선 방향이 아닙니다."));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("[ERROR] 올바른 대각선 방향이 아닙니다."));
     }
 
     public void hasPieceInPath(Position source, Position target, Pieces pieces) {
@@ -55,6 +55,4 @@ public enum Diagonal {
             throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
         }
     }
-
-
 }

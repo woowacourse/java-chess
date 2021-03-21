@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Color;
 import chess.domain.Name;
+import chess.domain.position.Position;
 
 public abstract class Piece {
     protected Position position;

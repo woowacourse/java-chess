@@ -4,7 +4,7 @@ import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
-import chess.domain.piece.Position;
+import chess.domain.position.Position;
 
 public class ChessGame {
     private final Pieces pieces;
