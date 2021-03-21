@@ -1,13 +1,13 @@
 package chess.domain.piece;
 
-import java.util.List;
+import chess.domain.game.Board;
 
 public interface Piece {
     String getSymbol();
     
     double getScore();
     
-    boolean isSameColor(Color color);
+    boolean isSameColorAs(Color color);
     
-    Piece move(Position position, List<List<Piece>> board);
+    Piece move(Position sourcePosition, Position targetPosition, Board board);
 }
