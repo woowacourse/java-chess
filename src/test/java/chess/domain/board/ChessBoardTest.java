@@ -1,7 +1,5 @@
-package chess.board;
+package chess.domain.board;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.Position;
 import chess.domain.piece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;

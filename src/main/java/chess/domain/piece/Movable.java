@@ -11,5 +11,5 @@ public interface Movable {
 
 	Position nextPosition(Direction direction);
 
-	boolean isNotSameColor(Piece piece);
+	boolean isNotAlly(Piece piece);
 }

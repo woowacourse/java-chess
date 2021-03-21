@@ -16,6 +16,6 @@ public interface FlexibleDistanceMovable extends Movable {
 			nextPosition = nextPosition.nextPosition(direction);
 			nextPiece = chessBoard.getPiece(nextPosition);
 		}
-		return this.isNotSameColor(nextPiece);
+		return this.isNotAlly(nextPiece);
 	}
 }

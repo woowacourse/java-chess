@@ -31,17 +31,17 @@ public class Pawn extends Piece {
 	private boolean isLinearMovable(ChessBoard chessBoard, Direction direction, Position targetPosition) {
 		Position nextPosition = this.nextPosition(direction);
 		Piece nextPiece = chessBoard.getPiece(nextPosition);
-		if (nextPiece.isBlank() && nextPosition.equals(targetPosition)) {
+		if (nextPosition.equals(targetPosition) && nextPiece.isBlank()) {
 			return true;
 		}
 		Position twoStepNextPosition = nextPosition.nextPosition(direction);
 		Piece twoStepNextPiece = chessBoard.getPiece(twoStepNextPosition);
-		return nextPiece.isBlank() && twoStepNextPiece.isBlank() && twoStepNextPosition.equals(targetPosition);
+		return twoStepNextPosition.equals(targetPosition) && twoStepNextPiece.isBlank() && nextPiece.isBlank();
 	}
 
 	private boolean isDiagonalMovable(ChessBoard chessBoard, Direction direction, Position targetPosition) {
 		Position nextPosition = this.nextPosition(direction);
 		Piece nextPiece = chessBoard.getPiece(nextPosition);
-		return nextPosition.equals(targetPosition) && !nextPiece.isBlank() && this.isNotSameColor(nextPiece);
+		return nextPosition.equals(targetPosition) && !nextPiece.isBlank() && this.isNotAlly(nextPiece);
 	}
 }

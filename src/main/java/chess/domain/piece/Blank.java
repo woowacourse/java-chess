@@ -9,8 +9,8 @@ import java.util.List;
 public class Blank extends Piece {
 	public static final String BLANK_MOVE_ERROR = "공백은 움직일 수 없습니다.";
 
-	public Blank(Color color, Position position) {
-		super(color, position);
+	public Blank(Position position) {
+		super(position);
 		this.type = Type.BLANK;
 	}
 

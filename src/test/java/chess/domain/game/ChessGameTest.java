@@ -1,8 +1,7 @@
-package chess.game;
+package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.game.ChessGame;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Color;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -30,7 +29,7 @@ public class ChessGameTest {
 	@DisplayName("킹이 죽으면 게임 끝")
 	void killKing() {
 		ChessBoard chessBoard = chessGame.getChessBoard();
-		chessBoard.replace(Position.of("e1"), new Blank(Color.NO_COLOR, Position.of("e1")));
+		chessBoard.replace(Position.of("e1"), new Blank(Position.of("e1")));
 
 		assertThat(chessGame.isOngoing()).isFalse();
 	}

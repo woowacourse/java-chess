@@ -1,8 +1,7 @@
-package chess.piece;
+package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.piece.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -56,7 +55,7 @@ public class PawnTest {
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 
-		chessBoard.replace(Position.of("b3"), new Blank(Color.NO_COLOR, Position.of("b3")));
+		chessBoard.replace(Position.of("b3"), new Blank(Position.of("b3")));
 		chessBoard.replace(Position.of("b4"), new Knight(Color.WHITE, Position.of("b4"))); // 아군
 		assertThatThrownBy(() -> chessBoard.move(Position.of("b2"), Position.of("b4")))
 				.isInstanceOf(IllegalArgumentException.class)

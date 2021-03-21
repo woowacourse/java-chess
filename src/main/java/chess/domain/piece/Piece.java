@@ -9,25 +9,38 @@ import java.util.Objects;
 
 public abstract class Piece implements Movable {
 	public static final String NOT_MOVABLE_POSITION_ERROR = "이동할 수 없는 위치입니다.";
+	public static final String NO_COLOR_ERROR = "색깔은 흑이나 백이어야 합니다.";
 
 	private final Color color;
 	protected Type type;
 	private Position position;
 
-	public Piece(Color color, Position position) {
+	protected Piece(Color color, Position position) {
+		validateColor(color);
 		this.color = color;
 		this.position = position;
+	}
+
+	protected Piece(Position position) {
+		this.color = Color.NO_COLOR;
+		this.position = position;
+	}
+
+	private void validateColor(final Color color) {
+		if (Color.NO_COLOR.equals(color)) {
+			throw new IllegalArgumentException(NO_COLOR_ERROR);
+		}
 	}
 
 	public String getName() {
 		return type.nameByColor(color);
 	}
 
-	public Color getColor() {
+	private Color getColor() {
 		return color;
 	}
 
-	public boolean isNotSameColor(Piece piece) {
+	public boolean isNotAlly(Piece piece) {
 		return !this.getColor().equals(piece.getColor());
 	}
 
@@ -57,7 +70,7 @@ public abstract class Piece implements Movable {
 
 	public void move(ChessBoard chessBoard, Direction direction, Position targetPosition) {
 		if (isMovable(chessBoard, direction, targetPosition)) {
-			chessBoard.replace(this.position, new Blank(Color.NO_COLOR, this.position));
+			chessBoard.replace(this.position, new Blank(this.position));
 			this.position = targetPosition;
 			chessBoard.replace(targetPosition, this);
 			return;
@@ -76,11 +89,11 @@ public abstract class Piece implements Movable {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		final Piece piece = (Piece) o;
-		return color == piece.color && Objects.equals(position, piece.position) && type == piece.type;
+		return color == piece.color && type == piece.type && Objects.equals(position, piece.position);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(color, position, type);
+		return Objects.hash(color, type, position);
 	}
 }

@@ -1,6 +1,5 @@
-package chess.game;
+package chess.domain.game;
 
-import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.Test;
 

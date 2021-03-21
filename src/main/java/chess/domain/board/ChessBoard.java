@@ -27,7 +27,7 @@ public class ChessBoard {
 	private void initBlank() {
 		for (int i = 0; i < BOARD_SIZE; i++) {
 			for (int j = 0; j < BOARD_SIZE; j++) {
-				board.put(Position.of(i, j), new Blank(Color.NO_COLOR, Position.of(i, j)));
+				board.put(Position.of(i, j), new Blank(Position.of(i, j)));
 			}
 		}
 	}
