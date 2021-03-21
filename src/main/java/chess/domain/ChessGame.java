@@ -22,7 +22,7 @@ public class ChessGame {
     }
 
     private Color switchTurn() {
-        if (this.currentColor.equals(WHITE)) {
+        if (this.currentColor.isSameAs(WHITE)) {
             return BLACK;
         }
         return WHITE;
