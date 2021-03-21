@@ -31,26 +31,18 @@ public enum IndexMachine {
     }
 
     public static Position convertPosition(String input) {
-        char row = input.charAt(0);
-        char column = input.charAt(1);
+        char row = input.charAt(1);
+        char column = input.charAt(0);
         int x = Arrays.stream(IndexMachine.values()).
-                filter(value -> value.getName() == row)
+                filter(value -> value.name == row)
                 .findAny()
                 .get()
-                .getIndex();
+                .index;
         int y = Arrays.stream(IndexMachine.values()).
-                filter(value -> value.getName() == column)
+                filter(value -> value.name == column)
                 .findAny()
                 .get()
-                .getIndex();
-        return Position.Of(x, y);
-    }
-
-    private char getName() {
-        return name;
-    }
-
-    private int getIndex() {
-        return index;
+                .index;
+        return Position.valueOf(x, y);
     }
 }
