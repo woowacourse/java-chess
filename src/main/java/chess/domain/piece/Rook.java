@@ -14,7 +14,9 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Location target) {
-        return location.isHorizontalOrVertical(target);
+    public void validateMovingAbilityToTarget(Location target) {
+        if (!location.canMoveHorizontallyOrVerticallyTo(target)) {
+            throw new IllegalArgumentException("[ERROR] 룩은 해당 위치로 이동할 능력이 없습니다.");
+        }
     }
 }
