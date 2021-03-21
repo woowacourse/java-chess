@@ -75,7 +75,7 @@ public class Pawn extends Piece {
 
     private void addAttackablePositions(final List<Position> movablePositions, final Board board) {
         Team myTeam = getTeam();
-        if (myTeam.equals(Team.WHITE)) {    // Team Enum에 메소드 만들어서 현재팀넣으면, 다른팀 가져오게 해야함 쓰일곳이 많음
+        if (myTeam.equals(Team.WHITE)) {
             addWhiteTeamAttackPosition(movablePositions, board);
             return;
         }
@@ -109,7 +109,7 @@ public class Pawn extends Piece {
         }
 
         Position attackPosition = new Position(nextRow, nextCol);
-        Pieces otherTeamPieces = board.piecesByTeam(Team.BLACK); // Team Enum에 메소드 만들어서 현재팀넣으면, 다른팀 가져오게 해야함 쓰일곳이 많음
+        Pieces otherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(getTeam()));
 
         if (otherTeamPieces.containByPosition(attackPosition)) {
             movablePositions.add(attackPosition);

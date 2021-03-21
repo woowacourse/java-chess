@@ -49,13 +49,12 @@ public abstract class Piece {
         this.position = endPoint;
     }
 
-    private void erasePiece(Board board, Position endPoint) {
+    private void erasePiece(final Board board, final Position endPoint) {
         Pieces anotherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(team));
         anotherTeamPieces.removePieceByPosition(endPoint);
     }
 
     private void validateEndPoint(final Position endPoint, final List<Position> movablePositions) {
-        //System.out.println(movablePositions.size());
         if (!movablePositions.contains(endPoint)) {
             throw new IllegalArgumentException("갈수 없는 위치입니다.");
         }
