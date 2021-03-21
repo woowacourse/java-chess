@@ -28,7 +28,7 @@ public class Board {
 
     private void initializeColumn(int i) {
         for (int j = 0; j < BOARD_SIZE; j++) {
-            board.put(Point.valueOf(i, j), PieceType.findPiece(i, j));
+            board.put(Point.of(i, j), PieceType.findPiece(i, j));
         }
     }
 

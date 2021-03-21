@@ -48,7 +48,7 @@ public class Point {
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
-    public static Point valueOf(int row, int column) {
+    public static Point of(int row, int column) {
         return points.stream()
                 .filter(p -> p.isSameColumn(column) && p.isSameRow(row))
                 .findFirst()
@@ -68,7 +68,11 @@ public class Point {
     }
 
     public Point createNextPoint(Direction direction) {
-        return valueOf(direction.addCurrentRow(this.row), direction.addCurrentColumn(this.column));
+        return of(direction.addCurrentRow(this.row), direction.addCurrentColumn(this.column));
+    }
+
+    public boolean isSamePoint(Point target) {
+        return this.equals(target);
     }
 
     public boolean isSameRow(int row) {
@@ -99,9 +103,5 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
-    }
-
-    public boolean isSamePoint(Point target) {
-        return this.equals(target);
     }
 }

@@ -16,10 +16,10 @@ public enum PieceType {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
-                return new Rook(BLACK, Point.valueOf(row, column));
+                return new Rook(BLACK, Point.of(row, column));
             }
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
-                return new Rook(WHITE, Point.valueOf(row, column));
+                return new Rook(WHITE, Point.of(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -28,10 +28,10 @@ public enum PieceType {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
-                return new Knight(BLACK, Point.valueOf(row, column));
+                return new Knight(BLACK, Point.of(row, column));
             }
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
-                return new Knight(WHITE, Point.valueOf(row, column));
+                return new Knight(WHITE, Point.of(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -40,10 +40,10 @@ public enum PieceType {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
-                return new Bishop(BLACK, Point.valueOf(row, column));
+                return new Bishop(BLACK, Point.of(row, column));
             }
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
-                return new Bishop(WHITE, Point.valueOf(row, column));
+                return new Bishop(WHITE, Point.of(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -52,10 +52,10 @@ public enum PieceType {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
-                return new Queen(BLACK, Point.valueOf(row, column));
+                return new Queen(BLACK, Point.of(row, column));
             }
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
-                return new Queen(WHITE, Point.valueOf(row, column));
+                return new Queen(WHITE, Point.of(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -64,10 +64,10 @@ public enum PieceType {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
-                return new King(BLACK, Point.valueOf(row, column));
+                return new King(BLACK, Point.of(row, column));
             }
             if (row == Constants.INITIAL_WHITE_ROW_WITHOUT_PAWN) {
-                return new King(WHITE, Point.valueOf(row, column));
+                return new King(WHITE, Point.of(row, column));
             }
             return createDefaultPieces(row, column);
         }
@@ -81,12 +81,12 @@ public enum PieceType {
 
     private static Piece createDefaultPieces(int row, int column) {
         if (row == INITIAL_BLACK_PAWN_ROW) {
-            return new Pawn(BLACK, Point.valueOf(row, column));
+            return new Pawn(BLACK, Point.of(row, column));
         }
         if (row == INITIAL_WHITE_PAWN_ROW) {
-            return new Pawn(WHITE, Point.valueOf(row, column));
+            return new Pawn(WHITE, Point.of(row, column));
         }
-        return new Empty(NOTHING, Point.valueOf(row, column));
+        return new Empty(NOTHING, Point.of(row, column));
     }
 
     public static Piece findPiece(int row, int column) {

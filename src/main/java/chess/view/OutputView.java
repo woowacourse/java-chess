@@ -38,7 +38,7 @@ public class OutputView {
     }
 
     private static String makeOneCharacter(Map<Point, Piece> pieces, int i, int j) {
-        Point point = Point.valueOf(i, j);
+        Point point = Point.of(i, j);
         return pieces.get(point).getName();
     }
 
