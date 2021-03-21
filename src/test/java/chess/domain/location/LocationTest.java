@@ -22,7 +22,7 @@ class LocationTest {
         assertThat(location).isEqualTo(Location.of(1, 1));
     }
 
-    @DisplayName("유효성 검사")
+    @DisplayName("위치값은 보드의 범위를 벗어날 수 없다.")
     @Test
     void create_validation() {
         assertThatThrownBy(() -> Location.of(1, 0))
@@ -41,8 +41,8 @@ class LocationTest {
         Location verticalTarget = Location.of(1, 5);
 
         // then
-        assertThat(location.isHorizontalOrVertical(horizontalTarget)).isTrue();
-        assertThat(location.isHorizontalOrVertical(verticalTarget)).isTrue();
+        assertThat(location.canMoveHorizontallyOrVerticallyTo(horizontalTarget)).isTrue();
+        assertThat(location.canMoveHorizontallyOrVerticallyTo(verticalTarget)).isTrue();
     }
 
     @DisplayName("대각선 테스트")
@@ -53,8 +53,8 @@ class LocationTest {
         Location nonDiaGonamTarget = Location.of(3, 4);
 
         // then
-        assertThat(location.isDiagonal(diagonalTarget)).isTrue();
-        assertThat(location.isDiagonal(nonDiaGonamTarget)).isFalse();
+        assertThat(location.canMoveDigonallyTo(diagonalTarget)).isTrue();
+        assertThat(location.canMoveDigonallyTo(nonDiaGonamTarget)).isFalse();
     }
 
     @DisplayName("인접한 위치면 true를 반환한다")

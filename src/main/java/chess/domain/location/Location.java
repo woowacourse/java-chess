@@ -48,19 +48,19 @@ public class Location {
         return Objects.hash(x, y);
     }
 
-    public boolean isHorizontalOrVertical(final Location target) {
-        return isHorizontal(target) || isVertical(target);
+    public boolean canMoveHorizontallyOrVerticallyTo(final Location target) {
+        return canMoveHorizontallyTo(target) || canMoveVerticallyTo(target);
     }
 
-    private boolean isHorizontal(final Location target) {
+    private boolean canMoveHorizontallyTo(final Location target) {
         return this.y == target.y;
     }
 
-    private boolean isVertical(final Location target) {
+    private boolean canMoveVerticallyTo(final Location target) {
         return this.x == target.x;
     }
 
-    public boolean isDiagonal(final Location target) {
+    public boolean canMoveDigonallyTo(final Location target) {
         return Math.abs(this.x - target.x) == Math.abs(this.y - target.y);
     }
 
