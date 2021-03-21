@@ -43,14 +43,14 @@ public class Point {
 
     private static Point of(char letter, int rank) {
         return points.stream()
-                .filter(p -> p.column == p.convertLetterToIndex(letter) && p.row == p.convertRankToIndex(rank))
+                .filter(p -> p.isSameColumn(p.convertLetterToIndex(letter)) && p.isSameRow(p.convertRankToIndex(rank)))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
 
     public static Point valueOf(int row, int column) {
         return points.stream()
-                .filter(p -> p.column == column && p.row == row)
+                .filter(p -> p.isSameColumn(column) && p.isSameRow(row))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
@@ -64,7 +64,7 @@ public class Point {
     }
 
     public int calculateDistance(Point point) {
-        return ((int) Math.pow(this.column - point.column, 2) + (int) Math.pow(this.row - point.row, 2));
+        return ((int) Math.pow(this.subtractRow(point), 2) + (int) Math.pow(this.subtractColumn(point), 2));
     }
 
     public Point createNextPoint(Direction direction) {
@@ -99,5 +99,9 @@ public class Point {
     @Override
     public int hashCode() {
         return Objects.hash(column, row);
+    }
+
+    public boolean isSamePoint(Point target) {
+        return this.equals(target);
     }
 }
