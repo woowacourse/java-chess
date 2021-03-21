@@ -31,8 +31,16 @@ public class Cell {
         return pieceOnCell.get(CURRENT_PIECE_INDEX);
     }
 
+    public boolean hasMovablePiece(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
+        return getPiece().isMovable(chessBoard, current, destination);
+    }
+
     public boolean isEmptyOrHasEnemy(TeamType teamType) {
         return pieceOnCell.isEmpty() || !isTeamOf(teamType);
+    }
+
+    public boolean isEmpty() {
+        return pieceOnCell.isEmpty();
     }
 
     public boolean hasEnemy(TeamType teamType) {
@@ -41,14 +49,6 @@ public class Cell {
 
     public boolean isTeamOf(TeamType teamType) {
         return getPiece().isTeamOf(teamType);
-    }
-
-    public boolean hasMovablePiece(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
-        return getPiece().isMovable(chessBoard, current, destination);
-    }
-
-    public boolean isEmpty() {
-        return pieceOnCell.isEmpty();
     }
 
     public boolean hasKing() {
