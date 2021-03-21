@@ -30,10 +30,12 @@ public class ChessController {
     }
 
     private void makeScoreOrMove(ChessGame chessGame, List<String> userInput) {
-        if (userInput.get(0).equals(STATUS)) {
+        String operation = userInput.get(0);
+
+        if (operation.equals(STATUS)) {
             OutputView.printScore(chessGame.calculateScore());
         }
-        if (userInput.get(0).equals(MOVE)) {
+        if (operation.equals(MOVE)) {
             Point source = Point.of(userInput.get(1));
             Point target = Point.of(userInput.get(2));
             chessGame.playTurn(source, target);
