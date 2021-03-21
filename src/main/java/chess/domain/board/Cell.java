@@ -26,7 +26,7 @@ public class Cell {
 
     public Piece getPiece() {
         if (pieceOnCell.isEmpty()) {
-            throw new IllegalArgumentException("현재 위치에 기물이 없습니다.");
+            throw new IllegalStateException("현재 위치에 기물이 없습니다.");
         }
         return pieceOnCell.get(CURRENT_PIECE_INDEX);
     }
