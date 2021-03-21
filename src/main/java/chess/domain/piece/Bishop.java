@@ -23,7 +23,7 @@ public final class Bishop extends GeneralPiece {
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 }

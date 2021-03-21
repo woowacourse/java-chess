@@ -42,16 +42,16 @@ class ChessResultTest {
     @Test
     @DisplayName("점수 높은 팀 확인 기능")
     void checkScoreWinner() {
-        assertThat(result.getWinner()).isEqualTo(Team.NOTHING);
+        assertThat(result.winner()).isEqualTo(Team.NOTHING);
         Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         chessBoard.put(new Position("a", "3"), new Rook(Team.WHITE));
         result = new ChessResult(new Board(chessBoard));
-        assertThat(result.getWinner()).isEqualTo(Team.WHITE);
+        assertThat(result.winner()).isEqualTo(Team.WHITE);
 
         chessBoard = new TreeMap<>(board.unwrap());
         chessBoard.put(new Position("a", "4"), new Queen(Team.BLACK));
         result = new ChessResult(new Board(chessBoard));
-        assertThat(result.getWinner()).isEqualTo(Team.BLACK);
+        assertThat(result.winner()).isEqualTo(Team.BLACK);
     }
 
     @Test
@@ -60,6 +60,6 @@ class ChessResultTest {
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         chessBoard.put(new Position("e", "8"), Blank.getInstance());
         result = new ChessResult(new Board(chessBoard));
-        assertThat(result.getWinner()).isEqualTo(Team.WHITE);
+        assertThat(result.winner()).isEqualTo(Team.WHITE);
     }
 }

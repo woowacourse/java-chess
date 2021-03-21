@@ -23,7 +23,7 @@ public class OutputView {
         int lastVerticalValue = 8;
         for (final Position position : chessBoard.keySet()) {
             lastVerticalValue = updateLastVerticalValue(lastVerticalValue, position);
-            System.out.print(chessBoard.get(position).getName());
+            System.out.print(chessBoard.get(position).name());
         }
         System.out.println(" | " + lastVerticalValue);
         System.out.println("---------");
@@ -32,8 +32,8 @@ public class OutputView {
 
     private static int updateLastVerticalValue(final int before, final Position position) {
         int newValue = before;
-        if (position.getVertical().getValue() != before) {
-            newValue = position.getVertical().getValue();
+        if (position.getVertical().value() != before) {
+            newValue = position.getVertical().value();
             System.out.println(" | " + (newValue + 1));
         }
         return newValue;
@@ -50,7 +50,7 @@ public class OutputView {
     }
 
     public static void printResult(final ChessResult result) {
-        final Team winner = result.getWinner();
+        final Team winner = result.winner();
         System.out.println();
         if (winner.undefined()) {
             System.out.println("무승부입니다.");

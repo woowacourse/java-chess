@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 
@@ -68,7 +68,7 @@ public final class Pawn extends Piece {
             return piece.isOpponent(this);
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece.isBlank();
+            return INITIAL_VERTICALS.contains(vertical.value()) && piece.isBlank();
         }
         return false;
     }

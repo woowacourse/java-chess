@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
@@ -9,7 +8,6 @@ import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 import java.util.List;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public final class ChessResult {
@@ -24,25 +22,25 @@ public final class ChessResult {
     public double calculateScore(final Team team) {
         double total = 0;
         for (final Horizontal column : Horizontal.values()) {
-            total += getColumnTotalScore(team, column.getValue());
+            total += calculateColumnTotalScore(team, column.value());
         }
         return total;
     }
 
-    private double getColumnTotalScore(final Team team, final int column) {
+    private double calculateColumnTotalScore(final Team team, final int column) {
         final Map<Position, Piece> chessBoard = board.unwrap();
         final List<Piece> pieces = chessBoard.keySet().stream()
-            .filter(position -> position.getHorizontal().getValue() == column)
+            .filter(position -> position.getHorizontal().value() == column)
             .map(chessBoard::get)
             .filter(piece -> piece.isSameTeam(team))
             .collect(Collectors.toList());
 
         return pieces.stream()
-            .mapToDouble(Piece::getScore)
-            .reduce(0, Double::sum) - getPawnDiscountScore(pieces);
+            .mapToDouble(Piece::score)
+            .reduce(0, Double::sum) - calculatePawnDiscountScore(pieces);
     }
 
-    private double getPawnDiscountScore(final List<Piece> pieces) {
+    private double calculatePawnDiscountScore(final List<Piece> pieces) {
         long count = pieces.stream()
             .filter(Piece::isPawn)
             .count();
@@ -53,7 +51,7 @@ public final class ChessResult {
         return 0;
     }
 
-    public Team getWinner() {
+    public Team winner() {
         final Map<Position, Piece> chessBoard = board.unwrap();
         if (board.isKingDead()) {
             return kingSlayerTeam(chessBoard);

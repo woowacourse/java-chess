@@ -26,7 +26,7 @@ public abstract class Piece {
         return this.team == team;
     }
 
-    public String getName() {
+    public String name() {
         return name;
     }
 
@@ -39,7 +39,7 @@ public abstract class Piece {
 
     public abstract boolean hasMiddlePath();
 
-    public abstract double getScore();
+    public abstract double score();
 
     public abstract boolean isPawn();
 

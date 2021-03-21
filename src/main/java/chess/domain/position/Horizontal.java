@@ -38,15 +38,15 @@ public enum Horizontal {
 
     public static List<String> horizontalSymbols() {
         return Arrays.stream(values())
-            .map(Horizontal::getSymbol)
+            .map(Horizontal::symbol)
             .collect(Collectors.toList());
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 

@@ -24,7 +24,7 @@ public final class King extends GeneralPiece {
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 

@@ -26,7 +26,7 @@ public final class Blank extends Piece {
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return 0;
     }
 

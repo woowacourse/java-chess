@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public final class PawnInitializer implements LocationInitializer {
 
     private static final List<String> HORIZONTALS = Arrays.stream(Horizontal.values())
-        .map(Horizontal::getSymbol)
+        .map(Horizontal::symbol)
         .collect(Collectors.toList());
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("2");
     private static final List<String> VERTICALS_BLACK = Collections.singletonList("7");

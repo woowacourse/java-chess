@@ -38,19 +38,19 @@ public enum Vertical {
 
     public static List<String> verticalSymbols() {
         return Arrays.stream(values())
-            .map(Vertical::getSymbol)
+            .map(Vertical::symbol)
             .collect(Collectors.toList());
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 
     public boolean isSameValue(final Vertical vertical) {
-        return value == vertical.getValue();
+        return value == vertical.value();
     }
 }
