@@ -30,7 +30,7 @@ public final class ChessResult {
     }
 
     private double getColumnTotalScore(final Team team, final int column) {
-        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
+        final Map<Position, Piece> chessBoard = board.unwrap();
         final List<Piece> pieces = chessBoard.keySet().stream()
             .filter(position -> position.getHorizontal().getValue() == column)
             .map(chessBoard::get)
@@ -54,7 +54,7 @@ public final class ChessResult {
     }
 
     public Team getWinner() {
-        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
+        final Map<Position, Piece> chessBoard = board.unwrap();
         if (board.isKingDead()) {
             return kingSlayerTeam(chessBoard);
         }
