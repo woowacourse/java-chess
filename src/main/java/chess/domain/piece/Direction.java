@@ -3,6 +3,9 @@ package chess.domain.piece;
 import chess.domain.Point;
 
 import java.util.Arrays;
+import java.util.List;
+
+import static chess.domain.piece.Color.WHITE;
 
 public enum Direction {
     NORTH(-1, 0),
@@ -43,6 +46,21 @@ public enum Direction {
 
     private static int normalizeDifference(int difference) {
         return Integer.compare(difference, 0);
+    }
+
+    public static List<Direction> pawnDirection(Color color) {
+        if (color.isSameAs(WHITE)) {
+            return Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
+        }
+        return Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
+    }
+
+    public static List<Direction> rookDirection() {
+        return Arrays.asList(NORTH, SOUTH, EAST, WEST);
+    }
+
+    public static List<Direction> bishopDirection() {
+        return Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST, NORTH_WEST);
     }
 
     public int addCurrentRow(int row) {
