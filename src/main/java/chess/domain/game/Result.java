@@ -10,11 +10,10 @@ public class Result {
 	public static final String WIN = "승";
 	public static final String LOSE = "패";
 
-	private final Map<Color, Double> result = new HashMap<>();
+	private final Map<Color, Double> result;
 
-	public Result(double blackScore, double whiteScore) {
-		result.put(Color.BLACK, blackScore);
-		result.put(Color.WHITE, whiteScore);
+	public Result(Map<Color, Double> result) {
+		this.result = result;
 	}
 
 	public Map<Color, Double> getResult() {

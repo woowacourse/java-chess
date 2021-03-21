@@ -95,17 +95,17 @@ public class ChessBoard {
 		return board.get(position);
 	}
 
+	public boolean isNotCorrectTurn(Position position, Color turn) {
+		Piece sourcePiece = board.get(position);
+		return !sourcePiece.isSameColor(turn);
+	}
+
 	public boolean isOngoing() {
 		long kingCount = board.values()
 				.stream()
 				.filter(Piece::isKing)
 				.count();
 		return kingCount == NUMBER_OF_KINGS;
-	}
-
-	public boolean isNotCorrectTurn(Position position, Color turn) {
-		Piece sourcePiece = board.get(position);
-		return !sourcePiece.isSameColor(turn);
 	}
 
 	public double getScore(Color color) {

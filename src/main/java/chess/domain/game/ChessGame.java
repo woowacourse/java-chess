@@ -4,7 +4,9 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
 	public static final String TURN_MESSAGE = "%s의 차례입니다.";
@@ -51,9 +53,18 @@ public class ChessGame {
 	}
 
 	public Result result() {
+		Map<Color, Double> resultStatistics = createResultStatistics();
+		return new Result(resultStatistics);
+	}
+
+	private Map<Color, Double> createResultStatistics() {
 		double blackScore = chessBoard.getScore(Color.WHITE);
 		double whiteScore = chessBoard.getScore(Color.BLACK);
-		return new Result(blackScore, whiteScore);
+
+		Map<Color, Double> resultStatistics = new HashMap<>();
+		resultStatistics.put(Color.BLACK, blackScore);
+		resultStatistics.put(Color.WHITE, whiteScore);
+		return resultStatistics;
 	}
 
 	public ChessBoard getChessBoard() {
