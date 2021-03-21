@@ -3,9 +3,15 @@ package chess.domain.piece;
 import java.util.Objects;
 import java.util.stream.IntStream;
 
+import static chess.ChessConstant.DEFAULT_INDEX_OF_BLACK_PAWN;
+import static chess.ChessConstant.DEFAULT_INDEX_OF_WHITE_PAWN;
+
 public class Position {
     
-    private static final int DEFAULT_MOVE_LENGTH = 1;
+    private static final int MIN_MOVE_LENGTH = 1;
+    
+    private static final int RANK_CHARACTER_INDEX = 0;
+    private static final int FILE_CHARACTER_INDEX = 1;
     
     // TODO 캐싱 구현하기
     private final Point x;
@@ -23,19 +29,27 @@ public class Position {
     }
     
     public static Position of(String value) {
-        int x = value.charAt(1) - '1';
-        int y = value.charAt(0) - 'a';
+        int x = value.charAt(RANK_CHARACTER_INDEX) - 'a';
+        int y = value.charAt(FILE_CHARACTER_INDEX) - '1';
         return Position.of(x, y);
     }
     
-    public boolean canMove(Position position, Direction direction, int ableLength) {
-        return IntStream.rangeClosed(DEFAULT_MOVE_LENGTH, ableLength)
+    public Position add(int xDistance, int yDistance) {
+        return new Position(this.x.add(xDistance), this.y.add(yDistance));
+    }
+    
+    public boolean canMove(Position targetPosition, Direction direction, int maxMoveLength) {
+        return IntStream.rangeClosed(MIN_MOVE_LENGTH, maxMoveLength)
                         .mapToObj(distance -> {
-                            Point dx = x.add(direction.getYDegree() * distance);
-                            Point dy = y.add(direction.getXDegree() * distance);
-                            return new Position(dx, dy);
+                            Point xPoint = x.add(direction.getXDegree() * distance);
+                            Point yPoint = y.add(direction.getYDegree() * distance);
+                            return new Position(xPoint, yPoint);
                         })
-                        .anyMatch(position1 -> position1.equals(position));
+                        .anyMatch(targetPosition::equals);
+    }
+    
+    public boolean isInRange() {
+        return !x.isOutOfBounds() && !y.isOutOfBounds();
     }
     
     @Override
@@ -61,5 +75,13 @@ public class Position {
     
     public Point getY() {
         return y;
+    }
+    
+    public boolean isAtDefaultPawnPosition(Color color) {
+        if (color.isWhite()) {
+            return y.equalsTo(DEFAULT_INDEX_OF_WHITE_PAWN);
+        }
+        
+        return y.equalsTo(DEFAULT_INDEX_OF_BLACK_PAWN);
     }
 }
