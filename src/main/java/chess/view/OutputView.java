@@ -1,10 +1,11 @@
 package chess.view;
 
-import chess.board.Board;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
+import chess.domain.game.Chess;
+import chess.domain.game.SymbolBoard;
 
-import java.util.List;
+import static chess.ChessConstant.MAX_INDEX_OF_BOARD;
+import static chess.ChessConstant.MIN_INDEX_OF_BOARD;
 
 public class OutputView {
     
@@ -15,11 +16,12 @@ public class OutputView {
         System.out.println("> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
     
-    public static void printBoard(Board board) {
-        final List<List<Piece>> chessBoard = board.getBoard();
-        for (int i = chessBoard.size()-1; i >= 0; i--) {
-            for (Piece piece : chessBoard.get(i)) {
-                System.out.print(piece.getSymbol());
+    public static void printBoard(Chess chess) {
+        final String[][] board = SymbolBoard.from(chess)
+                                            .getBoard();
+        for (int j = MAX_INDEX_OF_BOARD; j >= MIN_INDEX_OF_BOARD; j--) {
+            for (int i = MIN_INDEX_OF_BOARD; i <= MAX_INDEX_OF_BOARD; i++) {
+                System.out.print(board[i][j]);
             }
             System.out.println();
         }
@@ -31,6 +33,14 @@ public class OutputView {
         System.out.println("BLACK - 점수 : " + blackScore);
         System.out.println("WHITE - 점수 : " + whiteScore);
         System.out.println("WINNER : " + winner.color());
+        System.out.println();
+    }
+    
+    public static void printMessageThatKingIsDead(Color winner) {
+        System.out.printf("%s 의 킹이 죽었습니다." + System.lineSeparator(), winner.next()
+                                                                           .color());
+        System.out.printf("%s 의 승리!" + System.lineSeparator(), winner.color());
+        
         System.out.println();
     }
 }
