@@ -79,7 +79,7 @@ public final class ChessController {
         }
     }
 
-    private void printChessScore(ChessGame chessGame) {
+    private void printChessScore(final ChessGame chessGame) {
         final double blackTeamScore = chessGame.calculateBlackTeamScore();
         final double whiteTeamScore = chessGame.calculateWhiteTeamScore();
         OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);

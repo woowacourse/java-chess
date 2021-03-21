@@ -12,18 +12,21 @@ public final class King extends Piece {
     }
 
     @Override
-    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination,
+                             final Map<Position, Piece> chessBoard) {
         return checkPositionRule(current, destination);
     }
 
     @Override
-    public boolean isCastlingMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+    public boolean isCastlingMovable(final Position current, final Position destination,
+                                     final Map<Position, Piece> chessBoard) {
         return checkKingSideCastlingRule(current, destination, chessBoard)
                 || checkQueenSideCastlingRule(current, destination, chessBoard);
     }
 
     @Override
-    public boolean isPromotionMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isPromotionMovable(final Position current, final Position destination,
+                                      final Map<Position, Piece> chessBoard) {
         return false;
     }
 
@@ -32,7 +35,8 @@ public final class King extends Piece {
         return current.checkAdjacentEightWay(destination);
     }
 
-    private boolean checkKingSideCastlingRule(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+    private boolean checkKingSideCastlingRule(final Position current, final Position destination,
+                                              final Map<Position, Piece> chessBoard) {
         if (isFirstMove() && current.moveXandY(2, 0).equals(destination)) {
             final Position kingSideRookPosition = destination.moveXandY(1, 0);
             return checkCastlingPossibleRook(kingSideRookPosition, current, chessBoard);
@@ -40,7 +44,8 @@ public final class King extends Piece {
         return false;
     }
 
-    private boolean checkQueenSideCastlingRule(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+    private boolean checkQueenSideCastlingRule(final Position current, final Position destination,
+                                               final Map<Position, Piece> chessBoard) {
         if (isFirstMove() && current.moveXandY(-2, 0).equals(destination)) {
             final Position queenSideRookPosition = destination.moveXandY(-2, 0);
             return checkCastlingPossibleRook(queenSideRookPosition, current, chessBoard);
@@ -48,7 +53,8 @@ public final class King extends Piece {
         return false;
     }
 
-    private boolean checkCastlingPossibleRook(final Position rookPosition, final Position current, final Map<Position, Piece> chessBoard) {
+    private boolean checkCastlingPossibleRook(final Position rookPosition, final Position current,
+                                              final Map<Position, Piece> chessBoard) {
         if (chessBoard.containsKey(rookPosition)) {
             final Piece piece = chessBoard.get(rookPosition);
             final List<Position> kingToRookPath = current.generateStraightPath(rookPosition);
