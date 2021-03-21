@@ -1,11 +1,12 @@
 ## 할일
+* 피스별
 * chessBoard 만들기
 * position 이름 생각하기
 * piece한테 메시지 보내서 position 비교하기
 
 ## 완료한 일
 * Position 포장가
-* 64 리스트인 체스보드를 매핑해 currentPieces 출력
+* 64 리스트인 체스보드를 매핑해 pieces 출력
 * 체스 보드에서 체스 말에게 위치값 넣어주면서 초기화
 * position 변수를 String으로 다 바꾸기, 연산도 이 객체에서하기
 * currentPieces에서 기물 삭제 기능 구현해야함 
@@ -16,10 +17,10 @@
 #### 궁금한 것
 output view에서 많은 일을 하고 있지 않은가.
 ``` java
-public static void printChessBoard(CurrentPieces currentPieces) {
+public static void printChessBoard(CurrentPieces pieces) {
     for (int i = 0; i < POSITIONS.size(); i++) {
         checkChangeLinePoint(i);
-        Piece piece = currentPieces.findByPosition(POSITIONS.get(i));
+        Piece piece = pieces.findByPosition(POSITIONS.get(i));
         System.out.print(piece.getName());
     }
     System.out.println();

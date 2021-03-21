@@ -28,22 +28,24 @@ public class King extends Piece {
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-// 십자인지 확인
-        if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
-                !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
-            throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");
-        }
+    public void move(Position target, Pieces pieces) {
+        checkMoveRule(target);
         if (this.position.isCross(target)) {
             Cross queenCross = Cross.findCrossByTwoPosition(this.position, target);
-            // 경로에 장애물이 있는지 확인
-            queenCross.hasPieceInPath(this.position, target, currentPieces);
+            queenCross.hasPieceInPath(this.position, target, pieces);
         }
         if (this.position.isDiagonal(target)) {
             Diagonal queenDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-            // 경로에 장애물이 있는지 확인
-            queenDiagonal.hasPieceInPath(this.position, target, currentPieces);
+            queenDiagonal.hasPieceInPath(this.position, target, pieces);
         }
         this.position = target;
+    }
+
+    @Override
+    public void checkMoveRule(Position target) {
+        if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
+                !(this.position.xDistance(target) == 1 || this.position.yDistance(target) == 1)) {
+            throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");
+        }
     }
 }

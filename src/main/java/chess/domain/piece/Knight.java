@@ -34,12 +34,16 @@ public class Knight extends Piece {
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        if (!((Math.abs(this.position.subtractX(target)) == 2 && Math.abs(this.position.subtractY(target)) == 1) ||
-                (Math.abs(this.position.subtractX(target)) == 1 && Math.abs(this.position.subtractY(target)) == 2))) {
+    public void move(Position target, Pieces pieces) {
+        checkMoveRule(target);
+        this.position = target;
+    }
+
+    @Override
+    public void checkMoveRule(Position target) {
+        if (!((Math.abs(this.position.xDistance(target)) == 2 && Math.abs(this.position.yDistance(target)) == 1) ||
+                (Math.abs(this.position.xDistance(target)) == 1 && Math.abs(this.position.yDistance(target)) == 2))) {
             throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
         }
-        Piece targetPiece = currentPieces.findByPosition(target);
-        this.position = target;
     }
 }

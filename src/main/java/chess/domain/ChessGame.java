@@ -1,30 +1,30 @@
 package chess.domain;
 
 import chess.domain.command.Command;
-import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.Position;
 
 public class ChessGame {
-    private final CurrentPieces currentPieces;
+    private final Pieces pieces;
     private Color turn;
 
     public ChessGame() {
-        this(new CurrentPieces(PieceFactory.initialPieces()));
+        this(new Pieces(PieceFactory.initialPieces()));
     }
 
-    public ChessGame(CurrentPieces currentPieces) {
-        this(currentPieces, Color.WHITE);
+    public ChessGame(Pieces pieces) {
+        this(pieces, Color.WHITE);
     }
 
-    public ChessGame(CurrentPieces currentPieces, Color turn) {
-        this.currentPieces = currentPieces;
+    public ChessGame(Pieces pieces, Color turn) {
+        this.pieces = pieces;
         this.turn = turn;
     }
 
-    public CurrentPieces getCurrentPieces() {
-        return currentPieces;
+    public Pieces getCurrentPieces() {
+        return pieces;
     }
 
     public void next() {
@@ -34,16 +34,16 @@ public class ChessGame {
     public void movePieceFromSourceToTarget(Command command) {
         Position source = Position.of(command.secondCommand());
         Position target = Position.of(command.thirdCommand());
-        Piece sourcePiece = currentPieces.findByPosition(source);
+        Piece sourcePiece = pieces.findByPosition(source);
         checkAbleToMove(sourcePiece, target);
-        currentPieces.removePieceByPosition(target);
-        sourcePiece.move(target, currentPieces);
+        pieces.removePieceByPosition(target);
+        sourcePiece.move(target, pieces);
         next();
     }
 
     private void checkAbleToMove(Piece sourcePiece, Position target) {
-        Piece targetPiece = currentPieces.findByPosition(target);
-        if (!sourcePiece.getColor().same(turn)) {
+        Piece targetPiece = pieces.findByPosition(target);
+        if (!sourcePiece.isSameTeam(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");
         }
         if (sourcePiece.isSameTeam(targetPiece)) {
@@ -52,8 +52,6 @@ public class ChessGame {
     }
 
     public boolean runnable() {
-        return currentPieces.isAliveAllKings();
+        return pieces.isAliveAllKings();
     }
-
-
 }

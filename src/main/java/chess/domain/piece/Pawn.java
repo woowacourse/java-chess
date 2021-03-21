@@ -38,20 +38,21 @@ public class Pawn extends Piece {
 
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        if (this.position.isDiagonal(target) && (Math.abs(this.position.subtractX(target)) == 1 && Math.abs(this.position.subtractY(target)) == 1)) {
-            Piece targetPiece = currentPieces.findByPosition(target);
+    public void move(Position target, Pieces pieces) {
+        if (this.position.isDiagonal(target) && (Math.abs(this.position.xDistance(target)) == 1 &&
+                Math.abs(this.position.yDistance(target)) == 1)) {
+            Piece targetPiece = pieces.findByPosition(target);
             if (targetPiece instanceof Empty) {
                 throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
             }
-            currentPieces.removePieceByPosition(target);
+            pieces.removePieceByPosition(target);
             this.position = target;
             return;
         }
         if (this.position.getY() == '7' && this.color == Color.BLACK) { // 블랙 초기화
-            if (this.position.subtractY(target) > 0 && this.position.subtractY(target) <= 2) { // 빠꾸 금지 && 2칸 내 이동
-                for (int i = 1; i <= position.subtractY(target); i++) { // 장애물 검사
-                    Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
+            if (this.position.yDistance(target) > 0 && this.position.yDistance(target) <= 2) { // 빠꾸 금지 && 2칸 내 이동
+                for (int i = 1; i <= position.yDistance(target); i++) { // 장애물 검사
+                    Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
                     if (!(piece instanceof Empty)) {
                         throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
                     }
@@ -62,9 +63,9 @@ public class Pawn extends Piece {
         }
 
         if (this.position.getY() == '2' && this.color == Color.WHITE) { // 화이트
-            if (target.subtractY(this.position) > 0 && target.subtractY(this.position) <= 2) {
-                for (int i = 1; i <= target.subtractY(this.position); i++) {
-                    Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));
+            if (target.yDistance(this.position) > 0 && target.yDistance(this.position) <= 2) {
+                for (int i = 1; i <= target.yDistance(this.position); i++) {
+                    Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));
                     if (!(piece instanceof Empty)) {
                         throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
                     }
@@ -74,8 +75,8 @@ public class Pawn extends Piece {
             }
         }
 
-        if (this.position.subtractY(target) == 1 && this.color == Color.BLACK) { // 블랙
-            Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - 1)));
+        if (this.position.yDistance(target) == 1 && this.color == Color.BLACK) { // 블랙
+            Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - 1)));
             if (!(piece instanceof Empty)) {
                 throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
             }
@@ -83,8 +84,8 @@ public class Pawn extends Piece {
             return;
         }
 
-        if (target.subtractY(this.position) == 1 && this.color == Color.WHITE) { // 화이트
-            Piece piece = currentPieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + 1)));
+        if (target.yDistance(this.position) == 1 && this.color == Color.WHITE) { // 화이트
+            Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + 1)));
             if (!(piece instanceof Empty)) {
                 throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
             }
@@ -92,5 +93,10 @@ public class Pawn extends Piece {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
+    }
+
+    @Override
+    public void checkMoveRule(Position target) {
+
     }
 }

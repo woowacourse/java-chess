@@ -20,6 +20,10 @@ public abstract class Piece {
         this.score = score;
     }
 
+    public abstract void move(Position target, Pieces pieces);
+
+    public abstract void checkMoveRule(Position target);
+
     public Position getPosition() {
         return position;
     }
@@ -28,17 +32,19 @@ public abstract class Piece {
         return name.nameByColor(color);
     }
 
-    public abstract void move(Position target, CurrentPieces currentPieces);
-
-    public Color getColor() {
-        return color;
-    }
-
     public Score getScore() {
         return score;
     }
 
     public boolean isSameTeam(Piece targetPiece) {
         return this.color.same(targetPiece.color);
+    }
+
+    public boolean isSameTeam(Color anotherColor) {
+        return this.color.same(anotherColor);
+    }
+
+    public boolean isEmpty() {
+        return this instanceof Empty;
     }
 }

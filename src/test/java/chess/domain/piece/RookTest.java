@@ -33,12 +33,12 @@ public class RookTest {
     void 룩_이동() {
         List<Piece> current = Arrays.asList(
                 new Rook(Position.of('a', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('a', '8'); // 비숍 위치
         Position target = Position.of('a', '1'); // 옮기고자 하는 위치
-        Piece rook = currentPieces.findByPosition(source);
+        Piece rook = pieces.findByPosition(source);
 
-        rook.move(target, currentPieces);
+        rook.move(target, pieces);
 
         assertThat(rook.getPosition()).isEqualTo(target);
     }
@@ -48,13 +48,13 @@ public class RookTest {
     void 룩_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
                 new Rook(Position.of('a', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('a', '8'); // 비숍 위치
         Position target = Position.of('b', '1'); // 옮기고자 하는 위치
 
-        Piece rook = currentPieces.findByPosition(source);
+        Piece rook = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> rook.move(target, currentPieces))
+        assertThatThrownBy(() -> rook.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

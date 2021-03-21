@@ -29,7 +29,7 @@ public class PositionTest {
         Position position1 = Position.of('a', '1');
         Position position2 = Position.of('a', '5');
 
-        int difference = position1.subtractY(position2);
+        int difference = position1.yDistance(position2);
 
         assertThat(difference).isEqualTo(-4);
     }
@@ -40,7 +40,7 @@ public class PositionTest {
         Position position1 = Position.of('a', '1');
         Position position2 = Position.of('a', '5');
 
-        boolean result = position1.isSubtractYPositive(position2);
+        boolean result = position1.largeY(position2);
 
         assertThat(result).isFalse();
     }
@@ -51,7 +51,7 @@ public class PositionTest {
         Position position1 = Position.of('a', '1');
         Position position2 = Position.of('c', '5');
 
-        boolean result = position1.isSubtractXPositive(position2);
+        boolean result = position1.largeX(position2);
 
         assertThat(result).isFalse();
     }

@@ -12,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class PawnTest {
-    private CurrentPieces initialPieces;
+    private Pieces initialPieces;
 
     @BeforeEach
     void setUp() {
-        initialPieces = new CurrentPieces(PieceFactory.initialPieces());
+        initialPieces = new Pieces(PieceFactory.initialPieces());
     }
 
     @DisplayName("Pawn 객체 생성 확인")
@@ -70,13 +70,13 @@ public class PawnTest {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '7'), Color.BLACK),
                 new Pawn(Position.of('a', '6'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
         Position source = Position.of('a', '7'); // 비숍 위치
         Position target = Position.of('a', '5'); // 옮기고자 하는 위치
-        Piece pawn = currentPieces.findByPosition(source);
+        Piece pawn = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+        assertThatThrownBy(() -> pawn.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -86,15 +86,15 @@ public class PawnTest {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '7'), Color.BLACK),
                 new Pawn(Position.of('b', '6'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
         Position source = Position.of('a', '7'); // 비숍 위치
         Position target = Position.of('b', '6'); // 옮기고자 하는 위치
-        Piece pawn = currentPieces.findByPosition(source);
+        Piece pawn = pieces.findByPosition(source);
 
-        pawn.move(target, currentPieces);
+        pawn.move(target, pieces);
 
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+        assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
 
     @DisplayName("검정 말이 흰 말을 공격한다. - 말이 없을 경우")
@@ -102,13 +102,13 @@ public class PawnTest {
     void 검은말이_상대편_말을_공격한다_예외() {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '7'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
         Position source = Position.of('a', '7');
         Position target = Position.of('b', '6');
-        Piece pawn = currentPieces.findByPosition(source);
+        Piece pawn = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+        assertThatThrownBy(() -> pawn.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -118,15 +118,15 @@ public class PawnTest {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '2'), Color.WHITE),
                 new Pawn(Position.of('b', '3'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
         Position source = Position.of('a', '2');
         Position target = Position.of('b', '3');
-        Piece pawn = currentPieces.findByPosition(source);
+        Piece pawn = pieces.findByPosition(source);
 
-        pawn.move(target, currentPieces);
+        pawn.move(target, pieces);
 
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
+        assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
 
     @DisplayName("흰 말이 검정 말을 공격한다. - 말이 없을 경우")
@@ -134,13 +134,13 @@ public class PawnTest {
     void 흰말이_상대편_말을_공격한다_예외() {
         List<Piece> current = Arrays.asList(
                 new Pawn(Position.of('a', '2'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
         Position source = Position.of('a', '2');
         Position target = Position.of('b', '3');
-        Piece pawn = currentPieces.findByPosition(source);
+        Piece pawn = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> pawn.move(target, currentPieces))
+        assertThatThrownBy(() -> pawn.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

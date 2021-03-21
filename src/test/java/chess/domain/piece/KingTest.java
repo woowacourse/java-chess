@@ -33,12 +33,12 @@ public class KingTest {
     void 킹_이동_십자() {
         List<Piece> current = Arrays.asList(
                 new King(Position.of('e', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('e', '8'); // 비숍 위치
         Position target = Position.of('e', '7'); // 옮기고자 하는 위치
-        Piece king = currentPieces.findByPosition(source);
+        Piece king = pieces.findByPosition(source);
 
-        king.move(target, currentPieces);
+        king.move(target, pieces);
 
         assertThat(king.getPosition()).isEqualTo(target);
     }
@@ -48,12 +48,12 @@ public class KingTest {
     void 킹_이동_대각선() {
         List<Piece> current = Arrays.asList(
                 new King(Position.of('e', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('e', '8'); //
         Position target = Position.of('f', '7'); // 옮기고자 하는 위치
-        Piece king = currentPieces.findByPosition(source);
+        Piece king = pieces.findByPosition(source);
 
-        king.move(target, currentPieces);
+        king.move(target, pieces);
 
         assertThat(king.getPosition()).isEqualTo(target);
     }
@@ -63,13 +63,13 @@ public class KingTest {
     void 킹_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
         List<Piece> current = Arrays.asList(
                 new King(Position.of('e', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('e', '8'); // 비숍 위치
         Position target = Position.of('b', '1'); // 옮기고자 하는 위치
 
-        Piece king = currentPieces.findByPosition(source);
+        Piece king = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> king.move(target, currentPieces))
+        assertThatThrownBy(() -> king.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

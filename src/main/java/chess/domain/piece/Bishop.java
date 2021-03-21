@@ -33,16 +33,18 @@ public class Bishop extends Piece {
         return blackBishops;
     }
 
+    @Override
+    public void move(Position target, Pieces pieces) {
+        checkMoveRule(target);
+        Diagonal bishopDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
+        bishopDiagonal.hasPieceInPath(this.position, target, pieces);
+        this.position = target;
+    }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        // 대각선인지 확인
+    public void checkMoveRule(Position target) {
         if (!this.position.isDiagonal(target)) {
             throw new IllegalArgumentException("[ERROR] 비숍 이동 규칙에 어긋납니다.");
         }
-        Diagonal bishopDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-        // 경로에 장애물이 있는지 확인
-        bishopDiagonal.hasPieceInPath(this.position, target, currentPieces);
-        this.position = target;
     }
 }

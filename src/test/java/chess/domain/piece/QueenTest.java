@@ -33,12 +33,12 @@ public class QueenTest {
     void 퀸_이동_십자() {
         List<Piece> current = Arrays.asList(
                 new Queen(Position.of('d', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('d', '8'); // 비숍 위치
         Position target = Position.of('d', '1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        Piece queen = pieces.findByPosition(source);
 
-        queen.move(target, currentPieces);
+        queen.move(target, pieces);
 
         assertThat(queen.getPosition()).isEqualTo(target);
     }
@@ -48,12 +48,12 @@ public class QueenTest {
     void 퀸_이동_대각선() {
         List<Piece> current = Arrays.asList(
                 new Queen(Position.of('d', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('d', '8'); // 비숍 위치
         Position target = Position.of('b', '6'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
+        Piece queen = pieces.findByPosition(source);
 
-        queen.move(target, currentPieces);
+        queen.move(target, pieces);
 
         assertThat(queen.getPosition()).isEqualTo(target);
     }
@@ -63,13 +63,13 @@ public class QueenTest {
     void 퀸_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
         List<Piece> current = Arrays.asList(
                 new Queen(Position.of('d', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('d', '8'); // 비숍 위치
         Position target = Position.of('b', '1'); // 옮기고자 하는 위치
 
-        Piece queen = currentPieces.findByPosition(source);
+        Piece queen = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> queen.move(target, currentPieces))
+        assertThatThrownBy(() -> queen.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

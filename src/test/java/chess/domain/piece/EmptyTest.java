@@ -8,11 +8,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class EmptyTest {
-    private CurrentPieces initialPieces;
+    private Pieces initialPieces;
 
     @BeforeEach
     void setUp() {
-        initialPieces = new CurrentPieces(PieceFactory.initialPieces());
+        initialPieces = new Pieces(PieceFactory.initialPieces());
     }
 
     @DisplayName("Empty 객체 생성 확인")

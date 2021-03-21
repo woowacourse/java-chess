@@ -33,12 +33,12 @@ public class KnightTest {
     void 나이트_이동() {
         List<Piece> current = Arrays.asList(
                 new Knight(Position.of('b', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('b', '8'); // 비숍 위치
         Position target = Position.of('c', '6'); // 옮기고자 하는 위치
-        Piece knight = currentPieces.findByPosition(source);
+        Piece knight = pieces.findByPosition(source);
 
-        knight.move(target, currentPieces);
+        knight.move(target, pieces);
 
         assertThat(knight.getPosition()).isEqualTo(target);
     }
@@ -48,13 +48,13 @@ public class KnightTest {
     void 나이트_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
                 new Knight(Position.of('b', '8'), Color.BLACK));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
         Position source = Position.of('b', '8'); // 비숍 위치
         Position target = Position.of('b', '1'); // 옮기고자 하는 위치
 
-        Piece knight = currentPieces.findByPosition(source);
+        Piece knight = pieces.findByPosition(source);
 
-        assertThatThrownBy(() -> knight.move(target, currentPieces))
+        assertThatThrownBy(() -> knight.move(target, pieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

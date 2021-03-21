@@ -52,28 +52,28 @@ public class Position {
         return y;
     }
 
-    public int subtractY(Position anotherPosition) {
+    public int yDistance(Position anotherPosition) {
         return this.y - anotherPosition.y;
     }
 
-    public int subtractX(Position anotherPosition) {
+    public int xDistance(Position anotherPosition) {
         return this.x - anotherPosition.x;
     }
 
-    public boolean isSubtractYPositive(Position anotherPosition) {
+    public boolean largeY(Position anotherPosition) {
         return this.y > anotherPosition.y;
     }
 
-    public boolean isSubtractXPositive(Position anotherPosition) {
+    public boolean largeX(Position anotherPosition) {
         return this.x > anotherPosition.x;
     }
 
     public boolean isDiagonal(Position target) {
-        return Math.abs(subtractX(target)) == Math.abs(subtractY(target));
+        return Math.abs(xDistance(target)) == Math.abs(yDistance(target));
     }
 
     public boolean isCross(Position target) {
-        return (this.getX() == target.getX()) || (this.getY() == target.getY());
+        return (this.x == target.x) || (this.y == target.y);
     }
 
     @Override

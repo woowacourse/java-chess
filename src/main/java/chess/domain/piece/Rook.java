@@ -34,14 +34,17 @@ public class Rook extends Piece {
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
-        // 대각선인지 확인
+    public void move(Position target, Pieces pieces) {
+        checkMoveRule(target);
+        Cross rookCross = Cross.findCrossByTwoPosition(this.position, target);
+        rookCross.hasPieceInPath(this.position, target, pieces);
+        this.position = target;
+    }
+
+    @Override
+    public void checkMoveRule(Position target) {
         if (!this.position.isCross(target)) {
             throw new IllegalArgumentException("[ERROR] 룩 이동 규칙에 어긋납니다.");
         }
-        Cross rookCross = Cross.findCrossByTwoPosition(this.position, target);
-        // 경로에 장애물이 있는지 확인
-        rookCross.hasPieceInPath(this.position, target, currentPieces);
-        this.position = target;
     }
 }

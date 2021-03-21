@@ -13,7 +13,12 @@ public class Empty extends Piece {
     }
 
     @Override
-    public void move(Position target, CurrentPieces currentPieces) {
+    public void move(Position target, Pieces pieces) {
+        throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
+    }
+
+    @Override
+    public void checkMoveRule(Position target) {
         throw new IllegalArgumentException("[ERROR] 존재하지 않는 기물입니다.");
     }
 }

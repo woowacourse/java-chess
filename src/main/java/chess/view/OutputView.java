@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.Color;
-import chess.domain.piece.CurrentPieces;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.Piece;
 
 import static chess.domain.piece.Position.POSITIONS;
@@ -21,10 +21,10 @@ public class OutputView {
         System.out.println("명령어를 입력해주세요.");
     }
 
-    public static void printChessBoard(CurrentPieces currentPieces) {
+    public static void printChessBoard(Pieces pieces) {
         for (int i = 0; i < POSITIONS.size(); i++) {
             checkChangeLinePoint(i);
-            Piece piece = currentPieces.findByPosition(POSITIONS.get(i));
+            Piece piece = pieces.findByPosition(POSITIONS.get(i));
             System.out.print(piece.getName());
         }
         System.out.println();
@@ -36,8 +36,8 @@ public class OutputView {
         }
     }
 
-    public static void printStatus(CurrentPieces currentPieces) {
-        System.out.println("black: " + currentPieces.sumScoreByColor(Color.BLACK));
-        System.out.println("white: " + currentPieces.sumScoreByColor(Color.WHITE));
+    public static void printStatus(Pieces pieces) {
+        System.out.println("black: " + pieces.sumScoreByColor(Color.BLACK));
+        System.out.println("white: " + pieces.sumScoreByColor(Color.WHITE));
     }
 }

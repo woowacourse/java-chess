@@ -13,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class BishopTest {
-    private CurrentPieces initialPieces;
+    private Pieces initialPieces;
 
     @BeforeEach
     void setUp() {
-        initialPieces = new CurrentPieces(PieceFactory.initialPieces());
+        initialPieces = new Pieces(PieceFactory.initialPieces());
     }
 
     @DisplayName("Bishop 객체 생성 확인")
@@ -42,7 +42,7 @@ public class BishopTest {
     void 비숍_이동_확인() {
         List<Piece> currentPieces = Arrays.asList(
                 new Bishop(Position.of('c', '8'), Color.BLACK));
-        CurrentPieces pieces = new CurrentPieces(currentPieces);
+        Pieces pieces = new Pieces(currentPieces);
         Position source = Position.of('c', '8');
         Position target = Position.of('e', '6');
         Piece bishop = pieces.findByPosition(source);

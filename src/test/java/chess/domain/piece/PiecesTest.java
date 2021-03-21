@@ -9,20 +9,20 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CurrentPiecesTest {
+public class PiecesTest {
 
     @DisplayName("CurrentPieces 객체 생성 확인")
     @Test
     void 현재_기물_객체_생성() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(32);
+        Pieces pieces = new Pieces(PieceFactory.initialPieces());
+        assertThat(pieces.getPieces().size()).isEqualTo(32);
     }
 
     @DisplayName("해당 위치에 있는 기물을 찾는다.")
     @Test
     void 해당_위치에_있는_기물_찾기() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
-        Piece sourcePiece = currentPieces.findByPosition(Position.of('e', '8'));
+        Pieces pieces = new Pieces(PieceFactory.initialPieces());
+        Piece sourcePiece = pieces.findByPosition(Position.of('e', '8'));
 
         assertThat(sourcePiece).isInstanceOf(King.class);
     }
@@ -30,8 +30,8 @@ public class CurrentPiecesTest {
     @DisplayName("해당 위치에 있는 기물을 찾는다. - 없을 경우 Empty")
     @Test
     void 해당_위치에_있는_기물_찾기_EMPTY() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
-        Piece sourcePiece = currentPieces.findByPosition(Position.of('e', '4'));
+        Pieces pieces = new Pieces(PieceFactory.initialPieces());
+        Piece sourcePiece = pieces.findByPosition(Position.of('e', '4'));
 
         assertThat(sourcePiece).isInstanceOf(Empty.class);
     }
@@ -39,21 +39,21 @@ public class CurrentPiecesTest {
     @DisplayName("현재 기물들 중 해당 위치 기물 제거 확인")
     @Test
     void 해당_위치_기물_제거_확인() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
+        Pieces pieces = new Pieces(PieceFactory.initialPieces());
         Position target = Position.of('g', '7');
 
-        currentPieces.removePieceByPosition(target);
+        pieces.removePieceByPosition(target);
 
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(31);
+        assertThat(pieces.getPieces().size()).isEqualTo(31);
     }
 
     @DisplayName("현재 기물들의 팀별 점수를 계산한다.")
     @Test
     void 팀별_점수_계산() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
+        Pieces pieces = new Pieces(PieceFactory.initialPieces());
 
-        assertThat(currentPieces.sumScoreByColor(Color.WHITE)).isEqualTo(38);
-        assertThat(currentPieces.sumScoreByColor(Color.BLACK)).isEqualTo(38);
+        assertThat(pieces.sumScoreByColor(Color.WHITE)).isEqualTo(38);
+        assertThat(pieces.sumScoreByColor(Color.BLACK)).isEqualTo(38);
     }
 
     @DisplayName("현재 기물들의 팀별 점수를 계산한다. - 세로줄에 같은 색 폰이 있는 경우")
@@ -66,9 +66,9 @@ public class CurrentPiecesTest {
                 new Pawn(Position.of('d', '7'), Color.BLACK),
                 new Pawn(Position.of('c', '1'), Color.WHITE),
                 new Pawn(Position.of('c', '2'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
+        Pieces pieces = new Pieces(current);
 
-        assertThat(currentPieces.sumScoreByColor(Color.BLACK)).isEqualTo(2);
-        assertThat(currentPieces.sumScoreByColor(Color.WHITE)).isEqualTo(1);
+        assertThat(pieces.sumScoreByColor(Color.BLACK)).isEqualTo(2);
+        assertThat(pieces.sumScoreByColor(Color.WHITE)).isEqualTo(1);
     }
 }

@@ -4,20 +4,21 @@ import chess.domain.Color;
 
 import java.util.*;
 
-public class CurrentPieces {
+public class Pieces {
 
-    private List<Piece> currentPieces;
+    public static final int KING_COUNT = 2;
+    private List<Piece> pieces;
 
-    public CurrentPieces(List<Piece> currentPieces) {
-        this.currentPieces = new ArrayList<>(currentPieces);
+    public Pieces(List<Piece> pieces) {
+        this.pieces = new ArrayList<>(pieces);
     }
 
-    public List<Piece> getCurrentPieces() {
-        return currentPieces;
+    public List<Piece> getPieces() {
+        return pieces;
     }
 
     public Piece findByPosition(Position position) {
-        return currentPieces.stream()
+        return pieces.stream()
                 .filter(piece -> position.equals(piece.getPosition()))
                 .findFirst()
                 .orElse(new Empty());
@@ -25,11 +26,13 @@ public class CurrentPieces {
 
     public void removePieceByPosition(Position target) {
         Piece piece = findByPosition(target);
-        currentPieces.remove(piece);
+        pieces.remove(piece);
     }
 
     public boolean isAliveAllKings() {
-        return 2 == (int) currentPieces.stream().filter(piece -> piece instanceof King).count();
+        return KING_COUNT == (int) pieces.stream()
+                .filter(piece -> piece instanceof King)
+                .count();
     }
 
 
@@ -37,9 +40,9 @@ public class CurrentPieces {
         int count = 0;
         for (int i = 0; i < Position.Xs.length(); i++) {
             int index = i;
-            int temp = (int) currentPieces.stream()
+            int temp = (int) pieces.stream()
                     .filter(piece -> piece instanceof Pawn)
-                    .filter(piece -> piece.getColor().same(color))
+                    .filter(piece -> piece.isSameTeam(color))
                     .filter(piece -> piece.getPosition().getX() == Position.Xs.charAt(index))
                     .count();
             if (temp >= 2) {
@@ -47,9 +50,11 @@ public class CurrentPieces {
             }
         }
         double subtractCount = 0.5;
-        return currentPieces.stream()
-                .filter(piece -> piece.getColor().same(color))
+        return pieces.stream()
+                .filter(piece -> piece.isSameTeam(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
                 .sum() - (count * subtractCount);
     }
+
+
 }
