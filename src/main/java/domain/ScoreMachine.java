@@ -2,62 +2,62 @@ package domain;
 
 import domain.piece.Pawn;
 import domain.piece.Piece;
+import domain.piece.Position;
 
-import java.util.stream.IntStream;
+import java.util.Map;
 
 public class ScoreMachine {
-    private Piece[][] board;
+    private ScoreMachine() {
 
-    public ScoreMachine(Piece[][] board) {
-        this.board = board;
     }
 
-    public Score blackPiecesScore() {
-        Score score = new Score();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j] != null && board[i][j].isBlack()) {
-                    if (board[i][j] instanceof Pawn) {
-                        score = addPawnScore(i, j, score);
-                        continue;
-                    }
-                    score = score.sum(board[i][j].getScore());
-                }
-            }
-        }
-
-        return score;
+    public static Score blackPiecesScore(Board board) {
+        return getScore(board, board.getBlackTeam());
     }
 
-    private Score addPawnScore(int row, int column, Score score) {
-        if (isExistSamePawn(row, column)) {
-            return score.sum(board[row][column].getScore().half());
-        }
-        return score.sum(board[row][column].getScore());
+    public static Score whitePiecesScore(Board board) {
+        return getScore(board, board.getWhiteTeam());
     }
 
-    private boolean isExistSamePawn(int row, int column) {
-        return IntStream.range(0, Board.SIZE)
-                .filter(i -> board[i][column] instanceof Pawn && i != row && board[i][column].isBlack() == board[row][column].isBlack())
-                .findAny()
-                .isPresent();
-    }
-
-    public Score whitePiecesScore() {
-        Score score = new Score();
-
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                if (board[i][j] != null && !board[i][j].isBlack()) {
-                    if (board[i][j] instanceof Pawn) {
-                        score = addPawnScore(i, j, score);
-                        continue;
-                    }
-                    score = score.sum(board[i][j].getScore());
-                }
-            }
+    private static Score getScore(Board board, Map<Position, Piece> team) {
+        Score score = Score.ZERO;
+        for (Map.Entry<Position, Piece> entry : team.entrySet()) {
+            score = addScore(score, entry, board);
         }
         return score;
     }
+
+    private static Score addScore(Score score, Map.Entry<Position, Piece> entry, Board board) {
+        if (entry.getValue() instanceof Pawn) {
+            score = addPawnScore(entry, score, board);
+            return score;
+        }
+        score = score.add(entry.getValue().getScore());
+        return score;
+    }
+
+    private static Score addPawnScore(Map.Entry<Position, Piece> pawn, Score score, Board board) {
+        if (board.isExistSamePawn(pawn)) {
+            return score.add(pawn.getValue().getScore().half());
+        }
+        return score.add(pawn.getValue().getScore());
+    }
+//
+//
+//    public Score whitePiecesScore() {
+//        Score score = new Score();
+//
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                if (board[i][j] != null && !board[i][j].isBlack()) {
+//                    if (board[i][j] instanceof Pawn) {
+//                        score = addPawnScore(i, j, score);
+//                        continue;
+//                    }
+//                    score = score.sum(board[i][j].getScore());
+//                }
+//            }
+//        }
+//        return score;
+//    }
 }
