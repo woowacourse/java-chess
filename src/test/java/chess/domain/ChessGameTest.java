@@ -16,15 +16,4 @@ public class ChessGameTest {
 
         assertThat(chessGame.getCurrentPieces()).isInstanceOf(CurrentPieces.class);
     }
-
-    @DisplayName("게임의 시작 여부를 확인한다.")
-    @Test
-    void 게임_시작_여부_확인() {
-        ChessGame chessGame = new ChessGame();
-        Command command = new Command("start");
-
-        boolean startAble = chessGame.startAble(command);
-
-        assertThat(startAble).isTrue();
-    }
 }

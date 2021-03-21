@@ -1,16 +1,14 @@
 package chess.domain.command;
 
+import chess.controller.ChessController;
+
 import java.util.Arrays;
 
 public class Command {
-    private static final String START = "start";
-    private static final String END = "end";
-    private static final String MOVE = "move";
-    private static final String STATUS = "status";
     public static final String BLANK = " ";
     public static final int FIRST_COMMAND_INDEX = 0;
 
-    private final String firstCommand;
+    private final FirstCommand firstCommand;
     private final String[] splitCommands;
 
     public Command(String fullCommands) {
@@ -22,53 +20,34 @@ public class Command {
     }
 
     public Command(String firstCommand, String[] splitCommands) {
+        this(FirstCommand.findFirstCommand(firstCommand), splitCommands);
+    }
+
+    public Command(FirstCommand firstCommand, String[] splitCommands) {
         this.firstCommand = firstCommand;
         this.splitCommands = splitCommands;
     }
 
     private static String[] splitCommand(String input) {
-        String[] splitCommand = input.split(BLANK);
-        validateCommand(splitCommand);
-        return splitCommand;
+        return input.split(BLANK);
     }
 
-    private static void validateCommand(String[] values) {
-        String firstCommand = values[FIRST_COMMAND_INDEX];
-        if (!(START.equals(firstCommand) || END.equals(firstCommand) ||
-                MOVE.equals(firstCommand) || STATUS.equals(firstCommand))) {
-            throw new IllegalArgumentException("[ERROR] 올바른 명령어가 아닙니다.");
+    public String[] sourceAndTarget() {
+        validateForMoveCommand(splitCommands);
+        return Arrays.copyOfRange(splitCommands, 1, 3);
+    }
+
+    private void validateForMoveCommand(String[] splitCommands) {
+        if (splitCommands.length != 3) {
+            throw new IllegalArgumentException("[ERROR] move source위치 target위치 형식으로 입력해주세요");
         }
     }
 
-    public boolean isStart() {
-        return START.equals(firstCommand);
+    public void runFirstAction(ChessController chessController) {
+        firstCommand.runFirstAction(chessController);
     }
 
-    public boolean isMove() {
-        return MOVE.equals(firstCommand);
-    }
-
-    public boolean isEnd() {
-        return END.equals(firstCommand);
-    }
-
-    public boolean isStatus() {
-        return STATUS.equals(firstCommand);
-    }
-
-    public String[] secondAndThirdCommand() {
-        return Arrays.copyOfRange(splitCommands, 1, 2);
-    }
-
-    public void validateRightFirstCommand() {
-        if (!(isStart() || isEnd())) {
-            throw new IllegalArgumentException("[ERROR] 올바른 첫 명령어가 아닙니다.");
-        }
-    }
-
-    public void validateRunningCommand() {
-        if (!(isMove() || isEnd() || isStatus())) {
-            throw new IllegalArgumentException("[ERROR] 올바른 진행 명령어가 아닙니다.");
-        }
+    public void runRunningAction(ChessController chessController, Command command) {
+        firstCommand.runRunningAction(chessController, command);
     }
 }

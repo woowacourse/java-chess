@@ -11,17 +11,6 @@ public class CurrentPieces {
     public CurrentPieces(List<Piece> currentPieces) {
         this.currentPieces = new ArrayList<>(currentPieces);
     }
-//
-//    public static CurrentPieces generate() {
-//        List<Piece> pieces = new ArrayList<>();
-//        pieces.addAll(King.initialKings());
-//        pieces.addAll(Knight.initialKnights());
-//        pieces.addAll(Queen.initialQueens());
-//        pieces.addAll(Rook.initialRooks());
-//        pieces.addAll(Bishop.initialBishops());
-//        pieces.addAll(Pawn.initialPawns());
-//        return new CurrentPieces(pieces);
-//    }
 
     public List<Piece> getCurrentPieces() {
         return currentPieces;
@@ -49,12 +38,12 @@ public class CurrentPieces {
 
     public double sumScoreByColor(Color color) {
         int count = 0;
-        for (int i = 0; i < Position.ROW.length(); i++) {
+        for (int i = 0; i < Position.Xs.length(); i++) {
             int index = i;
             int temp = (int) currentPieces.stream()
                     .filter(piece -> piece instanceof Pawn)
                     .filter(piece -> piece.getColor().same(color))
-                    .filter(piece -> piece.getPosition().getX() == Position.ROW.charAt(index))
+                    .filter(piece -> piece.getPosition().getX() == Position.Xs.charAt(index))
                     .count();
             if (temp >= 2) {
                 count += temp;

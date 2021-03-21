@@ -5,16 +5,16 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
-    public final static String ROW = "abcdefgh";
-    private final static String COL = "87654321";
+    public static final String Xs = "abcdefgh";
+    private static final String Ys = "87654321";
     public static final Position EMPTY = new Position('0', '0');
-    public final static List<Position> POSITIONS;
+    public static final List<Position> POSITIONS;
 
     static {
         POSITIONS = new ArrayList<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                POSITIONS.add(Position.of(ROW.charAt(j), COL.charAt(i)));
+                POSITIONS.add(Position.of(Xs.charAt(j), Ys.charAt(i)));
             }
         }
     }
@@ -27,13 +27,18 @@ public class Position {
         this.y = y;
     }
 
+    public static Position of(String xy) {
+        validatePosition(xy.charAt(0), xy.charAt(1));
+        return new Position(xy.charAt(0), xy.charAt(1));
+    }
+
     public static Position of(char x, char y) {
         validatePosition(x, y);
         return new Position(x, y);
     }
 
     private static void validatePosition(char x, char y) {
-        if (ROW.contains(String.valueOf(x)) && COL.contains(String.valueOf(y))) {
+        if (Xs.contains(String.valueOf(x)) && Ys.contains(String.valueOf(y))) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다.");
@@ -45,20 +50,6 @@ public class Position {
 
     public char getY() {
         return y;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Position position = (Position) o;
-        return x == position.x &&
-                y == position.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
     }
 
     public int subtractY(Position anotherPosition) {
@@ -83,5 +74,19 @@ public class Position {
 
     public boolean isCross(Position target) {
         return (this.getX() == target.getX()) || (this.getY() == target.getY());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Position position = (Position) o;
+        return x == position.x &&
+                y == position.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

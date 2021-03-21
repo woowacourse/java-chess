@@ -7,6 +7,8 @@ import chess.domain.piece.Piece;
 import static chess.domain.piece.Position.POSITIONS;
 
 public class OutputView {
+    public static final int CHANGE_LINE_POINT = 8;
+
     private OutputView() {
     }
 
@@ -15,15 +17,23 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요");
     }
 
+    public static void printRequestCommandMessage() {
+        System.out.println("명령어를 입력해주세요.");
+    }
+
     public static void printChessBoard(CurrentPieces currentPieces) {
         for (int i = 0; i < POSITIONS.size(); i++) {
-            if (i % 8 == 0) {
-                System.out.println();
-            }
+            checkChangeLinePoint(i);
             Piece piece = currentPieces.findByPosition(POSITIONS.get(i));
             System.out.print(piece.getName());
         }
         System.out.println();
+    }
+
+    private static void checkChangeLinePoint(int i) {
+        if (i % CHANGE_LINE_POINT == 0) {
+            System.out.println();
+        }
     }
 
     public static void printStatus(CurrentPieces currentPieces) {

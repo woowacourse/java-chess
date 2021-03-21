@@ -7,61 +7,37 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CommandTest {
-    @DisplayName("start 명령어 생성을 확인한다.")
+    @DisplayName("입력 받은 String 또는 String 배열로 명령어 객체를 생성한다.")
     @Test
-    void start_명령어_생성() {
-        Command command = new Command("start");
+    void String으로_명령어_객체_생성() {
+        Command command1 = new Command("move a1 a2");
+        String[] splitCommands = new String[]{"move", "a1", "a2"};
+        Command command2 = new Command(splitCommands);
 
-        boolean isStart = command.isStart();
-
-        assertThat(isStart).isTrue();
+        assertThat(command1.sourceAndTarget())
+                .isEqualTo(command2.sourceAndTarget());
     }
 
-    @DisplayName("end 명령어 생성을 확인한다.")
+    @DisplayName("first-command 객체와 string 배열로 명령어 객체를 생성한다.")
     @Test
-    void end_명령어_생성() {
-        Command command = new Command("end");
+    void firstCommand_객체로_명령어_객체_생성() {
+        String firstCommandString = "move";
+        FirstCommand firstCommand = FirstCommand.findFirstCommand(firstCommandString);
+        String[] splitCommands = new String[]{"move", "a1", "a2"};
 
-        boolean isEnd = command.isEnd();
+        Command command1 = new Command(firstCommandString, splitCommands);
+        Command command2 = new Command(firstCommand, splitCommands);
 
-        assertThat(isEnd).isTrue();
+        assertThat(command1.sourceAndTarget())
+                .isEqualTo(command2.sourceAndTarget());
     }
 
-    @DisplayName("status 명령어 생성을 확인한다.")
+    @DisplayName("move 명령어의 형식을 검증한다. - 3개 단위가 아닐 경우 예외")
     @Test
-    void status_명령어_생성() {
-        Command command = new Command("status");
+    void move_명령어_형식_검증() {
+        Command command = new Command("move a1 a2 a4");
 
-        boolean isStatus = command.isStatus();
-
-        assertThat(isStatus).isTrue();
-    }
-
-    @DisplayName("move 명령어 생성을 확인한다.")
-    @Test
-    void move_명령어_생성() {
-        Command command = new Command("move a3 a4");
-
-        boolean isMove = command.isMove();
-
-        assertThat(isMove).isTrue();
-    }
-
-    @DisplayName("첫번째 명령어를 검증한다.")
-    @Test
-    void 첫번째_명령어_검증() {
-        Command command = new Command("move a3 a4");
-
-        assertThatThrownBy(command::validateRightFirstCommand)
-        .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("진행 명령어를 검증한다.")
-    @Test
-    void 진행_명령어_검증() {
-        Command command = new Command("start");
-
-        assertThatThrownBy(command::validateRunningCommand)
+        assertThatThrownBy(() -> command.sourceAndTarget())
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }
