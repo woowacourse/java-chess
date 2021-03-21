@@ -20,7 +20,13 @@ class PiecesTest {
     void setUp() {
         List<Piece> piecesList = Arrays.asList(
                 new King(Team.WHITE, new Position(1, 2)),
-                new Pawn(Team.WHITE, new Position(4, 5))
+                new Queen(Team.WHITE, new Position(2, 2)),
+                new Rook(Team.WHITE, new Position(3, 3)),
+                new Bishop(Team.WHITE, new Position(4, 4)),
+                new Knight(Team.WHITE, new Position(5, 5)),
+
+                new Pawn(Team.WHITE, new Position(4, 5)),
+                new Pawn(Team.WHITE, new Position(3, 5))
         );
         pieces = new Pieces(piecesList);
     }
@@ -50,8 +56,9 @@ class PiecesTest {
     @Test
     @DisplayName("특정 위치에 해당하는 piece가 있다면, 삭제한다.")
     void removePieceByPosition() {
+        int originalSize = pieces.toList().size();
         pieces.removePieceByPosition(new Position(4, 5));
-        assertThat(pieces.toList()).hasSize(1);
+        assertThat(pieces.toList()).hasSize(originalSize - 1);
     }
 
     @Test
@@ -59,4 +66,12 @@ class PiecesTest {
     void kingAlive() {
         assertTrue(pieces.kingAlive());
     }
+
+    @Test
+    @DisplayName("점수를 계산한다.")
+    void calculateScore() {
+        double score = pieces.calculateScore(0, 7);
+        assertThat((int) (score * 10)).isEqualTo((int) (20.5 * 10));
+    }
+
 }

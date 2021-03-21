@@ -25,7 +25,6 @@ public class Board {
     public void move(final Position startPoint, final Position endPoint, final Team team) {
         Pieces pieces = board.get(team);
         Piece startPointPiece = pieces.getPieceByPosition(startPoint);
-
         startPointPiece.move(this, endPoint);
     }
 
@@ -41,4 +40,10 @@ public class Board {
         Pieces enemyPieces = board.get(Team.getAnotherTeam(team));
         return !enemyPieces.kingAlive();
     }
+
+    public double scoreByTeam(final Team team) {
+        Pieces pieces = board.get(team);
+        return pieces.calculateScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
+    }
+
 }

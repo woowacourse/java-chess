@@ -8,6 +8,7 @@ import chess.domain.position.Position;
 public class ChessGame {
     private Board board;
     private boolean isPlaying = true;
+    private Team winner;
 
     public void initSetting() {
         BoardFactory boardFactory = new BoardFactory();
@@ -29,7 +30,16 @@ public class ChessGame {
     public void move(final Position startPoint, final Position endPoint, final Team team) {
         board.move(startPoint, endPoint, team);
         if (board.isEnemyKingDie(team)) {
+            winner = team;
             end();
         }
+    }
+
+    public double getScoreByTeam(final Team team) {
+        return board.scoreByTeam(team);
+    }
+
+    public Team winner() {
+        return winner;
     }
 }

@@ -8,12 +8,13 @@ import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pawn extends NoKingPieces {
+public class Pawn extends Piece {
     private static final String BLACK_TEAM_ROW = "7";
     private static final String WHITE_TEAM_ROW = "2";
+    private static final double SCORE = 1.0;
 
     public Pawn(final Team team, final Position position) {
-        super(position, "P", team);
+        super(position, "P", team, SCORE);
     }
 
     public static Pawn of(final Team team, final int col) {
@@ -40,6 +41,16 @@ public class Pawn extends NoKingPieces {
             whiteInitMove(board, movablePositions);
         }
         return movablePositions;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     private void whiteInitMove(final Board board, final List<Position> movablePositions) {
@@ -83,23 +94,23 @@ public class Pawn extends NoKingPieces {
     }
 
     private void addBlackTeamAttackPosition(final List<Position> movablePositions, final Board board) {
-        int[] dx = {1, 1};
-        int[] dy = {-1, 1};
-        checkAttackPosition(movablePositions, board, dx, dy);
+        int[] rowDir = {1, 1};
+        int[] colDir = {-1, 1};
+        checkAttackPosition(movablePositions, board, rowDir, colDir);
     }
 
     private void addWhiteTeamAttackPosition(final List<Position> movablePositions, final Board board) {
-        int[] dx = {-1, -1};
-        int[] dy = {-1, 1};
-        checkAttackPosition(movablePositions, board, dx, dy);
+        int[] rowDir = {-1, -1};
+        int[] colDir = {-1, 1};
+        checkAttackPosition(movablePositions, board, rowDir, colDir);
     }
 
-    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] dx, final int[] dy) {
+    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] rowDir, final int[] colDir) {
         Position curPosition = getPosition();
-        for (int dir = 0; dir < dx.length; ++dir) {
-            int nx = curPosition.getRow() + dx[dir];
-            int ny = curPosition.getCol() + dy[dir];
-            addAttackablePosition(movablePositions, board, nx, ny);
+        for (int dir = 0; dir < rowDir.length; ++dir) {
+            int nextRow = curPosition.getRow() + rowDir[dir];
+            int nextCol = curPosition.getCol() + colDir[dir];
+            addAttackablePosition(movablePositions, board, nextRow, nextCol);
         }
     }
 

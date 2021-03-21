@@ -11,13 +11,15 @@ import java.util.List;
 public class King extends Piece {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
+    private static final double SCORE = 0.0;
+    private static final int INIT_COL = 4;
 
     public King(final Team team, final Position position) {
-        super(position, "K", team);
+        super(position, "K", team, SCORE);
     }
 
     public static King of(final Team team, final int col) {
-        if (col != 4) {
+        if (col != INIT_COL) {
             throw new IllegalArgumentException("잘못된 초기 위치입니다.");
         }
         return new King(team, getInitPosition(team, col));
@@ -44,8 +46,13 @@ public class King extends Piece {
     }
 
     @Override
-    public boolean isKing() {
+    public final boolean isKing() {
         return true;
+    }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
     }
 
     private void addMovablePositions(List<Position> movablePositions, Board board, int rowDir, int colDir) {

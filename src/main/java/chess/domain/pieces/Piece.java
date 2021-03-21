@@ -8,13 +8,14 @@ import java.util.List;
 import java.util.Locale;
 
 public abstract class Piece {
-
     private Position position;
     private final Team team;
     private final String initial;
+    private final Double score;
 
-    public Piece(final Position position, final String initial, final Team team) {
+    public Piece(final Position position, final String initial, final Team team, final Double score) {
         this.position = position;
+        this.score = score;
         this.initial = checkTeam(team, initial);
         this.team = team;
     }
@@ -63,4 +64,14 @@ public abstract class Piece {
     public abstract List<Position> getMovablePositions(final Board board);
 
     public abstract boolean isKing();
+
+    public abstract boolean isPawn();
+
+    public Double score() {
+        return score;
+    }
+
+    public boolean sameCol(final int col) {
+        return position.sameCol(col);
+    }
 }

@@ -11,13 +11,16 @@ import java.util.List;
 public class Rook extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
+    private static final double SCORE = 5.0;
+    private static final int LEFT_SIDE_INIT_COL = 0;
+    private static final int RIGHT_SIDE_INIT_COL = 7;
 
     public Rook(final Team team, final Position position) {
-        super(position, "R", team);
+        super(position, "R", team, SCORE);
     }
 
     public static Rook of(final Team team, final int col) {
-        if (col != 0 && col != 7) {
+        if (col != LEFT_SIDE_INIT_COL && col != RIGHT_SIDE_INIT_COL) {
             throw new IllegalArgumentException("잘못된 초기 위치입니다.");
         }
         return new Rook(team, getInitPosition(team, col));

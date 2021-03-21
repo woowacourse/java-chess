@@ -11,13 +11,15 @@ import java.util.List;
 public class Queen extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
+    private static final double SCORE = 9.0;
+    private static final int INIT_COL = 3;
 
     public Queen(final Team team, final Position position) {
-        super(position, "Q", team);
+        super(position, "Q", team, SCORE);
     }
 
     public static Queen of(final Team team, final int col) {
-        if (col != 3) {
+        if (col != INIT_COL) {
             throw new IllegalArgumentException("잘못된 초기 위치입니다.");
         }
         return new Queen(team, getInitPosition(team, col));
