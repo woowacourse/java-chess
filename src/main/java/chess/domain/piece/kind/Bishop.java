@@ -4,17 +4,14 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
-import static chess.domain.piece.Direction.*;
 
 public class Bishop extends Piece {
     private static final String BISHOP_NAME = "b";
     private static final int BISHOP_SCORE = 3;
 
-    private static final List<Direction> bishopDirection = Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST, NORTH_WEST);
+    private static final List<Direction> bishopDirection = Direction.bishopDirection();
 
     public Bishop(Color color, Point point) {
         super(BISHOP_NAME, color, point);
@@ -23,7 +20,7 @@ public class Bishop extends Piece {
     @Override
     public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        if (!bishopDirection.contains(direction)) {
+        if (bishopDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
         return Optional.of(direction);
