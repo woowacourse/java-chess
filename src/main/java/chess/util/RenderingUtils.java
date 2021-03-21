@@ -18,8 +18,8 @@ public class RenderingUtils {
             .map(index -> renderRow(board, index) + " " + index.getNumber())
             .collect(Collectors.joining("\n"))
             ;
-        final String columnInfo = "\nABCDEFGH\n";
-        return visualBoard + columnInfo;
+        final String columnInfo = "\nabcdefgh\n";
+        return columnInfo + visualBoard + columnInfo;
     }
 
     private static String renderRow(Board board, Row row) {

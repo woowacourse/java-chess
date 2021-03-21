@@ -23,16 +23,16 @@ public enum Column {
 
     public static Column getColumn(String value) {
         return Arrays.stream(values())
-            .filter(column -> column.name.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+                .filter(column -> column.name.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
 
     public static Column getColumn(int intValue) {
         return Arrays.stream(values())
-            .filter(column -> column.value == intValue)
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+                .filter(column -> column.value == intValue)
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
     }
 
     public Column move(Direction direction) {
@@ -48,8 +48,8 @@ public enum Column {
 
     public boolean isBoundary(Direction direction) {
         if (Direction.RIGHT.equals(direction) || Direction.UP_RIGHT.equals(direction)
-            || Direction.DOWN_RIGHT.equals(direction) || Direction.R_DD.equals(direction)
-            || Direction.R_UU.equals(direction)) {
+                || Direction.DOWN_RIGHT.equals(direction) || Direction.R_DD.equals(direction)
+                || Direction.R_UU.equals(direction)) {
             return this.equals(H);
         }
         if (Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)) {
@@ -58,7 +58,12 @@ public enum Column {
         if (Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)) {
             return this.equals(B) || this.equals(A);
         }
-        return this.equals(A);
+        if (Direction.LEFT.equals(direction) || Direction.UP_LEFT.equals(direction)
+                || Direction.DOWN_LEFT.equals(direction) || Direction.L_DD.equals(direction)
+                || Direction.L_UU.equals(direction)) {
+            return this.equals(A);
+        }
+        return false;
     }
 
     public int getValue() {
