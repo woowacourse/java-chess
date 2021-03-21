@@ -41,7 +41,7 @@ public class ChessController {
     private void validatePlayerCommand(List<String> playerCommand) {
         int commandSize = playerCommand.size();
         if (commandSize != 1 && commandSize != 3) {
-            throw new IllegalArgumentException("명령어를 잘 못 입력했습니다.");
+            throw new IllegalArgumentException("명령어를 잘못 입력했습니다.");
         }
     }
 

@@ -1,21 +1,23 @@
 package chess.controller;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-
-import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.stream.Stream;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+
 class CommandTest {
 
     private static Stream<Arguments> getCommandInputAndEnum() {
         return Stream.of(Arguments.of("start", Command.START),
-            Arguments.of("move", Command.MOVE),
-            Arguments.of("end", Command.END));
+                Arguments.of("move", Command.MOVE),
+                Arguments.of("end", Command.END),
+                Arguments.of("status", Command.STATUS));
     }
 
     @DisplayName("명령어에 해당하는 Enum을 탐색한다")
@@ -31,7 +33,7 @@ class CommandTest {
     @Test
     void throwExceptionWhenInvalidCommand() {
         assertThatCode(() -> Command.findCommand("invalid"))
-            .isInstanceOf(IllegalArgumentException.class)
-            .hasMessage("명령어를 잘못 입력했습니다.");
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage("명령어를 잘못 입력했습니다.");
     }
 }
