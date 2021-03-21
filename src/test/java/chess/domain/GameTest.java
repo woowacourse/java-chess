@@ -23,19 +23,7 @@ class GameTest {
         game.display();
     }
 
-    @Test
-    void validatePieceToMove() {
-        Player whitePlayer = new Player(Color.WHITE);
-        assertThatCode(() -> game.pickStartPiece(whitePlayer, Position.from("a2")))
-                .doesNotThrowAnyException();
-    }
 
-    @Test
-    void validatePieceToMoveError() {
-        Player whitePlayer = new Player(Color.WHITE);
-        assertThatThrownBy(() -> game.pickStartPiece(whitePlayer, Position.from("a7")))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
 
     @Test
     void pickEndPiece() {

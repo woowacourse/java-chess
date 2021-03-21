@@ -31,28 +31,9 @@ public class Game {
         }
     }
 
-    public Piece pickStartPiece(Player player, Position position) {
-        Piece piece = pieces.getPieceOf(position);
-        if (piece.isSameColor(player.getColor())) {
-            return piece;
-        }
-        throw new IllegalArgumentException();
-    }
-
     public void move(Position from, Position to) {
         Player player = turn.player();
-        Piece start = pickStartPiece(player, from);
-        Piece piece = pieces.getPieceOf(to);
-        if (piece.isEmpty()) {
-            start.moveToEmpty(to, pieces);
-            turn.next();
-            return;
-        }
-        if (piece.isSameColor(player.getColor())) {
-            throw new IllegalArgumentException();
-        }
-        start.moveForKill(to, pieces);
-        pieces.delete(piece);
+        player.move(from, to, pieces);
         turn.next();
     }
 
