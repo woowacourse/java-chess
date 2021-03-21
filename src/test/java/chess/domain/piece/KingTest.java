@@ -45,4 +45,38 @@ public class KingTest {
 
         assertThat(king.isMovable(current, destination, chessBoard)).isFalse();
     }
+
+    @Test
+    @DisplayName("King이 킹사이드 캐슬링이 가능하다면, 참을 반환한다.")
+    void when_king_side_castling_available_return_true() {
+        final King whiteKing = new King();
+        final Position kingCurrent = Position.of("e1");
+
+        final Rook whiteRook = new Rook();
+        final Position rookCurrent = Position.of("h1");
+
+        final Map<Position, Piece> chessBoard = new HashMap<>();
+        chessBoard.put(kingCurrent, whiteKing);
+        chessBoard.put(rookCurrent, whiteRook);
+
+        final Position kingAfterCastling = Position.of("g1");
+        assertThat(whiteKing.isCastlingMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
+    }
+
+    @Test
+    @DisplayName("King이 퀸사이드 캐슬링이 가능하다면, 참을 반환한다.")
+    void when_queen_side_castling_available_return_true() {
+        final King whiteKing = new King();
+        final Position kingCurrent = Position.of("e1");
+
+        final Rook whiteRook = new Rook();
+        final Position rookCurrent = Position.of("a1");
+
+        final Map<Position, Piece> chessBoard = new HashMap<>();
+        chessBoard.put(kingCurrent, whiteKing);
+        chessBoard.put(rookCurrent, whiteRook);
+
+        final Position kingAfterCastling = Position.of("c1");
+        assertThat(whiteKing.isCastlingMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
+    }
 }

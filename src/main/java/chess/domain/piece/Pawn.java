@@ -27,6 +27,11 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public boolean isCastlingMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+        return false;
+    }
+
+    @Override
     public boolean checkPositionRule(final Position current, final Position destination) {
         if (isFirstMove()) {
             return checkPositionRuleFirstMove(current, destination);
@@ -51,6 +56,11 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isRook() {
         return false;
     }
 

@@ -21,6 +21,11 @@ public final class Rook extends Piece {
     }
 
     @Override
+    public boolean isCastlingMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+        return false;
+    }
+
+    @Override
     public boolean checkPositionRule(Position current, Position destination) {
         return current.checkStraight(destination);
     }
@@ -28,6 +33,11 @@ public final class Rook extends Piece {
     @Override
     public boolean isKing() {
         return false;
+    }
+
+    @Override
+    public boolean isRook() {
+        return true;
     }
 
     @Override

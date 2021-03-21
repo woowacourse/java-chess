@@ -46,6 +46,18 @@ public final class PiecePosition {
         chosenPiece.moved();
     }
 
+    public void moveCastlingRook(final Position kingDestination) {
+        final Position kingSideRook = kingDestination.moveXandY(1, 0);
+        if (havePiece(kingSideRook)) {
+            movePiece(kingSideRook, kingSideRook.moveXandY(-2, 0));
+            return;
+        }
+        final Position queenSideRook = kingDestination.moveXandY(-2, 0);
+        if (havePiece(queenSideRook)) {
+            movePiece(queenSideRook, queenSideRook.moveXandY(3, 0));
+        }
+    }
+
     public final boolean havePiece(final Position position) {
         return piecePosition.containsKey(position);
     }

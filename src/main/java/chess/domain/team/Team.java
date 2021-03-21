@@ -24,6 +24,10 @@ public final class Team {
         piecePosition.movePiece(current, destination);
     }
 
+    public void moveCastlingRook(final Position destination) {
+        piecePosition.moveCastlingRook(destination);
+    }
+
     public boolean havePiece(final Position position) {
         return piecePosition.havePiece(position);
     }

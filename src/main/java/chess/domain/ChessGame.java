@@ -44,6 +44,10 @@ public final class ChessGame {
 
     private void validateMove(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurnTeam.choosePiece(current);
+        if (chosenPiece.isKing() && chosenPiece.isCastlingMovable(current, destination, generateChessBoard())) {
+            currentTurnTeam.moveCastlingRook(destination);
+            return;
+        }
         if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
             return;
         }

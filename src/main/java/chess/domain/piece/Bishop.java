@@ -22,12 +22,22 @@ public final class Bishop extends Piece {
     }
 
     @Override
+    public boolean isCastlingMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+        return false;
+    }
+
+    @Override
     public boolean checkPositionRule(Position current, Position destination) {
         return current.checkDiagonal(destination);
     }
 
     @Override
     public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isRook() {
         return false;
     }
 

@@ -57,4 +57,20 @@ public class ChessGameTest {
 
         assertThat(chessGame.isPlaying()).isFalse();
     }
+
+    @Test
+    @DisplayName("캐슬링이 정상적으로 이루어질 수 있다면, 캐슬링을 시행한다.")
+    void castling_move_test() {
+        final ChessGame chessGame = new ChessGame();
+        chessGame.move(Position.of("e2"), Position.of("e4"));
+        chessGame.move(Position.of("f1"), Position.of("c4"));
+        chessGame.move(Position.of("g1"), Position.of("f3"));
+
+        assertThatCode(() -> chessGame.move(Position.of("e1"), Position.of("g1")))
+                .doesNotThrowAnyException();
+
+        final Map<Position, Piece> piecePosition = chessGame.generateChessBoard();
+        assertThat(piecePosition.get(Position.of("g1")).isKing()).isTrue();
+        assertThat(piecePosition.get(Position.of("f1")).isRook()).isTrue();
+    }
 }
