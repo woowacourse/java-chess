@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.position;
 
+import chess.domain.TeamColor;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;

@@ -10,6 +10,7 @@ import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.player.Pieces;
 import chess.domain.player.Score;
+import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
