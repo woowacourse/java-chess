@@ -10,12 +10,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import java.util.Optional;
-
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
 public class PawnTest {
     @DisplayName("Pawn 생성")
@@ -31,33 +29,28 @@ public class PawnTest {
     @DisplayName("검은 Pawn의 불가능한 방향 확인")
     @Test
     void checkBlackPawnImpossibleMove() {
-        Pawn blackPawn = new Pawn(BLACK, Point.of(1, 3));
+        Point source = Point.of(1, 3);
+        Pawn blackPawn = new Pawn(BLACK, source);
         Empty empty = new Empty(NOTHING, Point.of(0, 3));
 
+        Direction direction = Direction.findDirection(source, Point.of(0, 3));
+
         assertThatThrownBy(
-                () -> blackPawn.direction(empty)
+                () -> blackPawn.validateMovable(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("하얀 Pawn의 불가능한 방향 확인")
     @Test
     void checkWhitePawnImpossibleMove() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
+        Point source = Point.of(6, 3);
+        Pawn whitePawn = new Pawn(WHITE, source);
         Empty empty = new Empty(NOTHING, Point.of(7, 3));
 
-        assertThatThrownBy(
-                () -> whitePawn.direction(empty)
-        ).isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("목적지에 기물이 있는 경우")
-    @Test
-    void checkTargetExist() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
-        Pawn blackPawn = new Pawn(BLACK, Point.of(5, 3));
+        Direction direction = Direction.findDirection(source, Point.of(7, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.direction(blackPawn)
+                () -> whitePawn.validateMovable(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -66,28 +59,32 @@ public class PawnTest {
     void checkRightDiagonalMove() {
         Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
         Empty empty = new Empty(NOTHING, Point.of(5, 4));
-        Empty empty2 = new Empty(NOTHING, Point.of(5, 2));
-        Pawn blackPawn = new Pawn(BLACK, Point.of(5, 4));
 
-        assertEquals(Optional.of(Direction.NORTH_EAST), whitePawn.direction(blackPawn));
+        Pawn blackPawn = new Pawn(BLACK, Point.of(5, 4));
+        Empty empty2 = new Empty(NOTHING, Point.of(4, 3));
+
+        Direction direction1 = Direction.findDirection(Point.of(6, 3), Point.of(5, 4));
+        Direction direction2 = Direction.findDirection(Point.of(5, 4), Point.of(4, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.direction(empty)
+                () -> whitePawn.validateMovable(direction1, empty)
         ).isInstanceOf(IllegalArgumentException.class);
 
         assertThatThrownBy(
-                () -> whitePawn.direction(empty2)
+                () -> blackPawn.validateMovable(direction2, empty2)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("폰 첫 이동 아니면 두 칸 이동 불가 확인")
     @Test
     void checkInitialPawnImpossibleMove() {
-        Pawn whitePawn = new Pawn(WHITE, Point.of(5, 3));
-        Empty empty = new Empty(NOTHING, Point.of(3, 3));
+        Pawn whitePawn = new Pawn(WHITE, Point.of(2, 3));
+        Empty empty = new Empty(NOTHING, Point.of(4, 3));
+
+        Direction direction = Direction.findDirection(Point.of(2, 3), Point.of(4, 3));
 
         assertThatThrownBy(
-                () -> whitePawn.direction(empty)
+                () -> whitePawn.validateMovable(direction, empty)
         ).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -97,6 +94,8 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, Point.of(6, 3));
         Empty empty = new Empty(NOTHING, Point.of(4, 3));
 
-        assertEquals(Optional.of(Direction.NORTH), whitePawn.direction(empty));
+        Direction direction = Direction.findDirection(Point.of(6, 3), Point.of(4, 3));
+
+        assertDoesNotThrow(() -> whitePawn.validateMovable(direction, empty));
     }
 }

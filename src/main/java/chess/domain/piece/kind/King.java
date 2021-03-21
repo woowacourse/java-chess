@@ -4,8 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Optional;
-
 public class King extends Piece {
     private static final int KING_SCORE = 0;
     private static final String KING_NAME = "k";
@@ -15,14 +13,12 @@ public class King extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
-        int distance = this.point.calculateDistance(target.point);
+    public void validateMovable(Direction direction, Piece targetPiece) {
+        int distance = this.point.calculateDistance(targetPiece.point);
 
-        if (distance == MOVE_STRAIGHT_ONE_SQUARE || distance == MOVE_DIAGONAL_ONE_SQUARE) {
-            return Optional.of(direction);
+        if (distance != MOVE_STRAIGHT_ONE_SQUARE && distance != MOVE_DIAGONAL_ONE_SQUARE) {
+            throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
         }
-        throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
     }
 
     @Override

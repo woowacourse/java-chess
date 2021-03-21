@@ -15,8 +15,7 @@ public enum Direction {
     SOUTH(1, 0),
     SOUTH_WEST(1, -1),
     WEST(0, -1),
-    NORTH_WEST(-1, -1),
-    NO_DIRECTION(0, 0);
+    NORTH_WEST(-1, -1);
 
     private final int rowDirection;
     private final int columnDirection;
@@ -29,14 +28,8 @@ public enum Direction {
     public static Direction findDirection(Point source, Point target) {
         int initialRowDifference = target.subtractRow(source);
         int initialColumnDifference = target.subtractColumn(source);
-
         if (initialRowDifference == 0 && initialColumnDifference == 0) {
             throw new IllegalArgumentException("기물이 움직이지 않습니다.");
-        }
-
-        if ((Math.abs(initialRowDifference) != Math.abs(initialColumnDifference))
-                && initialRowDifference != 0 && initialColumnDifference != 0) {
-            throw new IllegalArgumentException("기물이 움직일 수 없는 방향입니다.");
         }
 
         return Arrays.stream(Direction.values())

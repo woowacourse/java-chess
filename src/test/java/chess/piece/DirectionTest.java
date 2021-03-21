@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 public class DirectionTest {
     @DisplayName("Direction 확인")
     @Test
@@ -17,17 +15,5 @@ public class DirectionTest {
 
         Direction direction2 = Direction.findDirection(Point.of(1, 4), Point.of(0, 4));
         Assertions.assertEquals(Direction.NORTH, direction2);
-    }
-
-    @DisplayName("옳지 않은 Direction 확인")
-    @Test
-    void checkWrongDirection() {
-        assertThatThrownBy(() -> Direction.findDirection(Point.of(1, 4), Point.of(3, 5)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물이 움직일 수 없는 방향입니다.");
-
-        assertThatThrownBy(() -> Direction.findDirection(Point.of(1, 4), Point.of(1, 4)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("기물이 움직이지 않습니다.");
     }
 }

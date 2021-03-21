@@ -8,11 +8,10 @@ import chess.domain.piece.kind.King;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class KingTest {
@@ -28,37 +27,56 @@ public class KingTest {
     @DisplayName("King의 가능한 거리 확인")
     @Test
     void checkKingPossibleMove() {
-        King king = new King(BLACK, Point.of(4, 4));
-        Empty empty = new Empty(NOTHING, Point.of(5, 4));
+        Point source = Point.of(4, 4);
+        King king = new King(BLACK, source);
+
+        Empty empty1 = new Empty(NOTHING, Point.of(5, 4));
         Empty empty2 = new Empty(NOTHING, Point.of(4, 5));
         Empty empty3 = new Empty(NOTHING, Point.of(3, 5));
         Empty empty4 = new Empty(NOTHING, Point.of(5, 3));
 
-        assertEquals(Optional.of(Direction.SOUTH), king.direction(empty));
-        assertEquals(Optional.of(Direction.EAST), king.direction(empty2));
-        assertEquals(Optional.of(Direction.NORTH_EAST), king.direction(empty3));
-        assertEquals(Optional.of(Direction.SOUTH_WEST), king.direction(empty4));
+        Direction direction1 = Direction.findDirection(source, Point.of(5, 4));
+        Direction direction2 = Direction.findDirection(source, Point.of(4, 5));
+        Direction direction3 = Direction.findDirection(source, Point.of(3, 5));
+        Direction direction4 = Direction.findDirection(source, Point.of(5, 3));
+
+        assertEquals(direction1, Direction.SOUTH);
+        assertEquals(direction2, Direction.EAST);
+        assertEquals(direction3, Direction.NORTH_EAST);
+        assertEquals(direction4, Direction.SOUTH_WEST);
+
+        assertDoesNotThrow(() -> king.validateMovable(direction1, empty1));
+        assertDoesNotThrow(() -> king.validateMovable(direction2, empty2));
+        assertDoesNotThrow(() -> king.validateMovable(direction3, empty3));
+        assertDoesNotThrow(() -> king.validateMovable(direction4, empty4));
     }
 
     @DisplayName("King의 불가능한 거리 확인")
     @Test
     void checkKingImpossibleMove() {
-        King king = new King(BLACK, Point.of(4, 4));
-        Empty empty = new Empty(NOTHING, Point.of(2, 2));
+        Point source = Point.of(4, 4);
+        King king = new King(BLACK, source);
+
+        Empty empty1 = new Empty(NOTHING, Point.of(2, 2));
         Empty empty2 = new Empty(NOTHING, Point.of(2, 6));
         Empty empty3 = new Empty(NOTHING, Point.of(4, 6));
         Empty empty4 = new Empty(NOTHING, Point.of(2, 4));
 
-        assertThatThrownBy(() -> king.direction(empty))
+        Direction direction1 = Direction.findDirection(source, Point.of(2, 2));
+        Direction direction2 = Direction.findDirection(source, Point.of(2, 6));
+        Direction direction3 = Direction.findDirection(source, Point.of(4, 6));
+        Direction direction4 = Direction.findDirection(source, Point.of(2, 4));
+
+        assertThatThrownBy(() -> king.validateMovable(direction1, empty1))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.direction(empty2))
+        assertThatThrownBy(() -> king.validateMovable(direction2, empty2))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.direction(empty3))
+        assertThatThrownBy(() -> king.validateMovable(direction3, empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() -> king.direction(empty4))
+        assertThatThrownBy(() -> king.validateMovable(direction4, empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

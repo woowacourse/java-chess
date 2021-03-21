@@ -4,8 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Optional;
-
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
@@ -20,31 +18,31 @@ public class Pawn extends Piece {
         super(PAWN_NAME, color, point);
     }
 
-    @Override
-    public Optional<Direction> direction(Piece targetPiece) {
-        Direction direction = Direction.findDirection(this.point, targetPiece.point);
-        if (isNotMovable(direction)) {
+    public void validateMovable(Direction direction, Piece targetPiece) {
+        if (isNotMovableDirection(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return directionOnMovableCondition(targetPiece, direction);
+        if (isNotMovableRoute(targetPiece)) {
+            throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
+        }
     }
 
-    private Optional<Direction> directionOnMovableCondition(Piece targetPiece, Direction direction) {
+    private boolean isNotMovableRoute(Piece targetPiece) {
         int distance = this.point.calculateDistance(targetPiece.point);
         if (targetPiece.isEmptyPiece() && distance == MOVE_STRAIGHT_ONE_SQUARE) {
-            return Optional.of(direction);
+            return false;
         }
         if (!targetPiece.isEmptyPiece() && distance == MOVE_DIAGONAL_ONE_SQUARE) {
-            return Optional.of(direction);
+            return false;
         }
         if (targetPiece.isEmptyPiece() && distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN
                 && (isInitialBlackPawn() || isInitialWhitePawn())) {
-            return Optional.of(direction);
+            return false;
         }
-        throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
+        return true;
     }
 
-    private boolean isNotMovable(Direction direction) {
+    private boolean isNotMovableDirection(Direction direction) {
         return !Direction.pawnDirection(this.color).contains(direction);
     }
 

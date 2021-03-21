@@ -10,8 +10,6 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static chess.domain.piece.Direction.NO_DIRECTION;
-
 public class Board {
     public static final int BOARD_SIZE = 8;
     private static final int KINGS_COUNT_TO_PLAY = 2;
@@ -45,18 +43,18 @@ public class Board {
         moveStepByStep(source, target, sourcePiece, targetPiece);
     }
 
-
     private Piece selectPiece(Point point) {
         return board.get(point);
     }
 
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
-        Point currentPoint = source;
-        Direction direction = sourcePiece.direction(targetPiece).orElse(NO_DIRECTION);
-        boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
+        Direction direction = Direction.findDirection(source, target);
+        sourcePiece.validateMovable(direction, targetPiece);
 
+        Point currentPoint = source;
+        boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
         while (!isArrivedAtTarget) {
-            Point nextPoint = selectSourcePieceAndFindNextPoint(currentPoint, target, direction);
+            Point nextPoint = selectCurrentPieceAndFindNextPoint(currentPoint, target, direction);
             isArrivedAtTarget = nextPoint.isSamePoint(target);
             movePieceToTargetPoint(source, target, sourcePiece, isArrivedAtTarget);
             checkNextPointIfNotArrived(nextPoint, isArrivedAtTarget);
@@ -64,7 +62,7 @@ public class Board {
         }
     }
 
-    private Point selectSourcePieceAndFindNextPoint(Point currentPoint, Point target, Direction direction) {
+    private Point selectCurrentPieceAndFindNextPoint(Point currentPoint, Point target, Direction direction) {
         Piece currentPiece = selectPiece(currentPoint);
         return currentPiece.moveOneStep(target, direction);
     }

@@ -8,11 +8,10 @@ import chess.domain.piece.kind.Empty;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
-
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class BishopTest {
@@ -32,16 +31,27 @@ public class BishopTest {
     @DisplayName("Bishop의 가능한 방향 확인")
     @Test
     void checkBishopPossibleMove() {
-        Bishop bishop = new Bishop(BLACK, Point.of(4, 4));
-        Empty empty = new Empty(NOTHING, Point.of(5, 5));
+        Point source = Point.of(4, 4);
+        Bishop bishop = new Bishop(BLACK, source);
+        Empty empty1 = new Empty(NOTHING, Point.of(5, 5));
         Empty empty2 = new Empty(NOTHING, Point.of(3, 3));
         Empty empty3 = new Empty(NOTHING, Point.of(3, 5));
         Empty empty4 = new Empty(NOTHING, Point.of(5, 3));
 
-        assertEquals(Optional.of(Direction.SOUTH_EAST), bishop.direction(empty));
-        assertEquals(Optional.of(Direction.NORTH_WEST), bishop.direction(empty2));
-        assertEquals(Optional.of(Direction.NORTH_EAST), bishop.direction(empty3));
-        assertEquals(Optional.of(Direction.SOUTH_WEST), bishop.direction(empty4));
+        Direction direction1 = Direction.findDirection(source, Point.of(5, 5));
+        Direction direction2 = Direction.findDirection(source, Point.of(3, 3));
+        Direction direction3 = Direction.findDirection(source, Point.of(3, 5));
+        Direction direction4 = Direction.findDirection(source, Point.of(5, 3));
+
+        assertEquals(direction1, Direction.SOUTH_EAST);
+        assertEquals(direction2, Direction.NORTH_WEST);
+        assertEquals(direction3, Direction.NORTH_EAST);
+        assertEquals(direction4, Direction.SOUTH_WEST);
+
+        assertDoesNotThrow(() -> bishop.validateMovable(direction1, empty1));
+        assertDoesNotThrow(() -> bishop.validateMovable(direction2, empty2));
+        assertDoesNotThrow(() -> bishop.validateMovable(direction3, empty3));
+        assertDoesNotThrow(() -> bishop.validateMovable(direction4, empty4));
     }
 
     @DisplayName("Bishop의 불가능한 방향 확인")
@@ -50,7 +60,9 @@ public class BishopTest {
         Bishop bishop = new Bishop(BLACK, Point.of(0, 2));
         Empty empty = new Empty(NOTHING, Point.of(5, 2));
 
-        assertThatThrownBy(() -> bishop.direction(empty))
+        Direction direction1 = Direction.findDirection(Point.of(0, 2), Point.of(5, 2));
+
+        assertThatThrownBy(() -> bishop.validateMovable(direction1, empty))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

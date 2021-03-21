@@ -4,8 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Optional;
-
 public class Queen extends Piece {
     private static final int QUEEN_SCORE = 9;
     private static final String QUEEN_NAME = "q";
@@ -15,9 +13,14 @@ public class Queen extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
-        return Optional.of(direction);
+    public void validateMovable(Direction direction, Piece targetPiece) {
+        int initialRowDifference = targetPiece.point.subtractRow(this.point);
+        int initialColumnDifference = targetPiece.point.subtractColumn(this.point);
+
+        if ((Math.abs(initialRowDifference) != Math.abs(initialColumnDifference))
+                && initialRowDifference != 0 && initialColumnDifference != 0) {
+            throw new IllegalArgumentException("기물이 움직일 수 없는 방향입니다.");
+        }
     }
 
     @Override
@@ -44,5 +47,4 @@ public class Queen extends Piece {
     public boolean isPawn() {
         return false;
     }
-
 }

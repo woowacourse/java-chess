@@ -4,8 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Optional;
-
 public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
     private static final String ROOK_NAME = "r";
@@ -15,12 +13,10 @@ public class Rook extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
+    public void validateMovable(Direction direction, Piece targetPiece) {
         if (isNotMovable(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return Optional.of(direction);
     }
 
     private boolean isNotMovable(Direction direction) {

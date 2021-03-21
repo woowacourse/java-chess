@@ -6,7 +6,6 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.Name;
 
 import java.util.Objects;
-import java.util.Optional;
 
 public abstract class Piece {
     protected static final int MOVE_STRAIGHT_ONE_SQUARE = 1;
@@ -22,7 +21,7 @@ public abstract class Piece {
         this.point = point;
     }
 
-    public abstract Optional<Direction> direction(Piece target);
+    public abstract void validateMovable(Direction direction, Piece targetPiece);
 
     public abstract Point moveOneStep(Point target, Direction direction);
 

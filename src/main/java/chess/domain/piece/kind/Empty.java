@@ -4,8 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.Optional;
-
 public class Empty extends Piece {
     private static final int EMPTY_SCORE = 0;
     private static final String EMPTY_PIECE_NAME = ".";
@@ -15,7 +13,7 @@ public class Empty extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
+    public void validateMovable(Direction direction, Piece targetPiece) {
         throw new IllegalArgumentException("비어 있는 칸입니다.");
     }
 
