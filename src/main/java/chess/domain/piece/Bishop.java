@@ -1,13 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Diagonal;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Bishop extends Piece {
+public class Bishop extends Move {
     private static final Score SCORE = new Score(3);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('c', '8'),
             Position.of('f', '8'));
@@ -25,12 +22,13 @@ public class Bishop extends Piece {
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
-        Diagonal bishopDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-        bishopDiagonal.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
+        moveDiagonal(target, currentPieces);
         this.position = target;
+    }
+
+    @Override
+    public void moveCross(Position target, CurrentPieces currentPieces) {
+        throw new IllegalArgumentException("[ERROR] 비숍 이동 규칙에 어긋납니다.");
     }
 
     public static List<Bishop> generate() {

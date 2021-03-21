@@ -1,13 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Cross;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Rook extends Piece {
+public class Rook extends Move {
     private static final Score SCORE = new Score(5);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '8'),
             Position.of('h', '8'));
@@ -24,12 +21,13 @@ public class Rook extends Piece {
 
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
-        Cross rookCross = Cross.findCrossByTwoPosition(this.position, target);
-        rookCross.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
+        moveCross(target, currentPieces);
         this.position = target;
+    }
+
+    @Override
+    public void moveDiagonal(Position target, CurrentPieces currentPieces) {
+        throw new IllegalArgumentException("[ERROR] 룩 이동 규칙에 어긋납니다.");
     }
 
     public static List<Rook> generate() {

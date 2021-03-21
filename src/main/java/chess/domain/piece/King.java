@@ -1,13 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Cross;
-import chess.domain.Diagonal;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece {
+public class King extends Move {
     private static final Score SCORE = new Score(0);
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');
@@ -38,22 +34,6 @@ public class King extends Piece {
                 !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
             throw new IllegalArgumentException("[ERROR] 킹 이동 규칙에 어긋납니다.");
         }
-    }
-
-    private void moveCross(Position target, CurrentPieces currentPieces) {
-        Cross kingCross = Cross.findCrossByTwoPosition(this.position, target);
-        kingCross.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
-    }
-
-    private void moveDiagonal(Position target, CurrentPieces currentPieces) {
-        Diagonal kingDiagonal = Diagonal.findDiagonalByTwoPosition(this.position, target);
-        kingDiagonal.hasPieceInPath(this.position, target, currentPieces);
-        Piece targetPiece = currentPieces.findByPosition(target);
-        validateSameColor(targetPiece);
-        currentPieces.removePieceIfNotEmpty(targetPiece);
     }
 
     public static List<King> generate() {
