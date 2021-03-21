@@ -4,7 +4,6 @@ import chess.domain.piece.Direction;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 public class Position implements Comparable<Position> {
 
@@ -34,35 +33,28 @@ public class Position implements Comparable<Position> {
 
     private boolean isLinear(final Position target) {
         final List<Integer> result = target.subtract(this);
-        return result.stream()
-            .filter(difference -> difference == 0)
-            .count() == 1;
+        final Difference difference = new Difference(result);
+        return difference.hasZeroValue() && !difference.allZeroValue();
     }
 
     private boolean isDiagonal(final Position target) {
         final List<Integer> result = target.subtract(this);
-        return Math.abs(result.get(0)) == Math.abs(result.get(1)) && !result.contains(0);
+        final Difference difference = new Difference(result);
+        return difference.isSameAbsoluteValue() && !difference.hasZeroValue();
     }
 
     public Direction decideDirection(final Position target) {
         if (hasMiddlePath(target)) {
-            final List<Integer> result = directionMatcher(target);
-            return Direction.matchedDirection(result.get(0), result.get(1));
+            final Difference difference = directionMatcher(target);
+            return Direction.matchedDirection(difference.horizontalDegree(), difference.verticalDegree());
         }
         throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
 
-    private List<Integer> directionMatcher(final Position target) {
+    private Difference directionMatcher(final Position target) {
         final List<Integer> result = target.subtract(this);
-        final int abs = result.stream()
-            .filter(difference -> difference != 0)
-            .map(Math::abs)
-            .findFirst()
-            .orElse(0);
-
-        return result.stream()
-            .map(difference -> difference / abs)
-            .collect(Collectors.toList());
+        final Difference difference = new Difference(result);
+        return difference.makeUnitLength();
     }
 
     public Position next(final Direction direction) {
