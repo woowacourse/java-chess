@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import chess.domain.piece.Score;
+
 public class Result {
 
     private final Score blackTeamScore;

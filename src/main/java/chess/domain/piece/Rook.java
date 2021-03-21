@@ -5,6 +5,6 @@ public class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(TeamType teamType) {
-        super(NAME, teamType, SCORE, Direction.getRookDirections());
+        super(NAME, teamType, new Score(SCORE), Direction.getRookDirections());
     }
 }

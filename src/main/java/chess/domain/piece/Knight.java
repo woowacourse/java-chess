@@ -8,7 +8,7 @@ public class Knight extends Piece {
     private static final double SCORE = 2.5;
 
     public Knight(TeamType teamType) {
-        super(NAME, teamType, SCORE, Direction.getKnightDirections());
+        super(NAME, teamType, new Score(SCORE), Direction.getKnightDirections());
     }
 
     @Override

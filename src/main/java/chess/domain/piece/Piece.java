@@ -9,10 +9,10 @@ public abstract class Piece {
 
     private final String name;
     private final TeamType teamType;
-    private final double score;
+    private final Score score;
     private final List<Direction> directions;
 
-    protected Piece(String name, TeamType teamType, double score, List<Direction> directions) {
+    protected Piece(String name, TeamType teamType, Score score, List<Direction> directions) {
         this.name = name;
         this.teamType = teamType;
         this.score = score;
@@ -58,6 +58,6 @@ public abstract class Piece {
     }
 
     public double getScore() {
-        return score;
+        return score.getScore();
     }
 }

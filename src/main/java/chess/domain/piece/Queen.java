@@ -5,6 +5,6 @@ public class Queen extends Piece {
     private static final double SCORE = 9;
 
     public Queen(TeamType teamType) {
-        super(NAME, teamType, SCORE, Direction.getQueenDirections());
+        super(NAME, teamType, new Score(SCORE), Direction.getQueenDirections());
     }
 }

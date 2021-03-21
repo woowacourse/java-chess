@@ -8,7 +8,7 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(TeamType teamType) {
-        super(NAME, teamType, SCORE, Direction.getPawnDirections(teamType));
+        super(NAME, teamType, new Score(SCORE), Direction.getPawnDirections(teamType));
     }
 
     @Override
