@@ -49,9 +49,18 @@ public class OutputView {
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
-    public static void printResult(final ChessResult result) {
+    public static void printResult(final ChessResult result, final boolean isKingDead) {
         final Team winner = result.winner();
         System.out.println();
+        if (isKingDead) {
+            System.out.println(winner.oppositeTeamName() + "팀의 king 체스말이 잡혔습니다.");
+            System.out.println("따라서 " + winner.teamName() + "팀이 승리하였습니다.");
+            return;
+        }
+        printResultWhenEndCommand(winner, result);
+    }
+
+    private static void printResultWhenEndCommand(final Team winner, final ChessResult result) {
         if (winner.undefined()) {
             System.out.println("무승부입니다.");
             printResultScores(winner.anyTeamExcludingThis(), result);
