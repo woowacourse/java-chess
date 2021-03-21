@@ -7,7 +7,7 @@ import chess.domain.position.Target;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Knight extends Piece {
     private static final String SYMBOL = "Nn";
@@ -24,17 +24,24 @@ public class Knight extends Piece {
         return new Knight(piece, position, Color.WHITE);
     }
 
-    @Override
-    public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
+    private static void validate(final String piece) {
+        if (!SYMBOL.contains(piece)) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+        if (piece.length() > 1) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
     }
 
     @Override
-    public void move2(Target target, Pieces pieces) {
+    public void move(final Target target, final ChessBoard chessBoard) {
+    }
 
+    @Override
+    public void move2(final Target target, final Pieces pieces) {
+        List<Position> positions = makeRoutes2(pieces);
+        checkTarget(target, positions);
+        pieces.changePiecePosition(this, target);
     }
 
     private void checkTarget(Target target, List<Position> positions) {
@@ -43,20 +50,20 @@ public class Knight extends Piece {
         }
     }
 
-    private List<Position> makeRoutes(ChessBoard chessBoard) {
+    private List<Position> makeRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpLeftRoutes(chessBoard));
-        positions.addAll(makeUpRightRoutes(chessBoard));
-        positions.addAll(makeDownRightRoutes(chessBoard));
-        positions.addAll(makeDownLeftRoutes(chessBoard));
-        positions.addAll(makeLeftUpRoutes(chessBoard));
-        positions.addAll(makeLeftDownRoutes(chessBoard));
-        positions.addAll(makeRightUpRoutes(chessBoard));
-        positions.addAll(makeRightDownRoutes(chessBoard));
+        positions.addAll(makeUpLeftRoutes(pieces));
+        positions.addAll(makeUpRightRoutes(pieces));
+        positions.addAll(makeDownRightRoutes(pieces));
+        positions.addAll(makeDownLeftRoutes(pieces));
+        positions.addAll(makeLeftUpRoutes(pieces));
+        positions.addAll(makeLeftDownRoutes(pieces));
+        positions.addAll(makeRightUpRoutes(pieces));
+        positions.addAll(makeRightDownRoutes(pieces));
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpLeftRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() + 2;
         int file = position.getFile().getValue() - 1;
@@ -64,16 +71,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRightRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() + 2;
         int file = position.getFile().getValue() + 1;
@@ -81,16 +89,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeDownRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRightRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() - 2;
         int file = position.getFile().getValue() + 1;
@@ -98,16 +107,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeDownLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownLeftRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() - 2;
         int file = position.getFile().getValue() - 1;
@@ -115,16 +125,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeLeftUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeLeftUpRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
         int file = position.getFile().getValue() - 2;
@@ -132,16 +143,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeLeftDownRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeLeftDownRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() - 1;
         int file = position.getFile().getValue() - 2;
@@ -149,16 +161,18 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeRightUpRoutes(final ChessBoard chessBoard) {
+
+    private List<Position> makeRightUpRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
         int file = position.getFile().getValue() + 2;
@@ -166,16 +180,17 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeRightDownRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRightDownRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() - 1;
         int file = position.getFile().getValue() + 2;
@@ -183,10 +198,11 @@ public class Knight extends Piece {
             return Collections.emptyList();
         }
         Position nextPosition = Position.valueOf(rank, file);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> piece = pieces.findPiece(nextPosition);
+        if (!piece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!piece.get().isSameColor(this)) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
@@ -200,14 +216,5 @@ public class Knight extends Piece {
     @Override
     public int hashCode() {
         return super.hashCode();
-    }
-
-    private static void validate(final String piece) {
-        if (!SYMBOL.contains(piece)) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
-        if (piece.length() > 1) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
     }
 }

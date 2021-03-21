@@ -25,4 +25,9 @@ public abstract class Turn implements State {
     public Optional<Piece> findPiece(final Position position) {
         return pieces.findPiece(position);
     }
+
+    @Override
+    public Pieces pieces() {
+        return pieces;
+    }
 }
