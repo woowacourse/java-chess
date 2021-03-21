@@ -61,4 +61,6 @@ public abstract class Piece {
     }
 
     public abstract List<Position> getMovablePositions(final Board board);
+
+    public abstract boolean isKing();
 }

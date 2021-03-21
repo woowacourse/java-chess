@@ -6,7 +6,6 @@ import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
 public class ChessGame {
-
     private Board board;
     private boolean isPlaying = true;
 
@@ -29,6 +28,8 @@ public class ChessGame {
 
     public void move(final Position startPoint, final Position endPoint, final Team team) {
         board.move(startPoint, endPoint, team);
+        if (board.isEnemyKingDie(team)) {
+            end();
+        }
     }
-
 }

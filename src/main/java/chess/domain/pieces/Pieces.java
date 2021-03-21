@@ -34,4 +34,9 @@ public class Pieces {
     public List<Piece> toList() {
         return new ArrayList<>(pieces);
     }
+
+    public boolean kingAlive() {
+        return pieces.stream()
+                .anyMatch(Piece::isKing);
+    }
 }

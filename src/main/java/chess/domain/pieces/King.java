@@ -43,6 +43,11 @@ public class King extends Piece {
         return movablePositions;
     }
 
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
     private void addMovablePositions(List<Position> movablePositions, Board board, int rowDir, int colDir) {
         int curRow = getPosition().getRow();
         int curCol = getPosition().getCol();

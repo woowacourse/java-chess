@@ -36,4 +36,9 @@ public class Board {
     public boolean validateRange(final int row, final int col) {
         return !(row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
+
+    public boolean isEnemyKingDie(final Team team) {
+        Pieces enemyPieces = board.get(Team.getAnotherTeam(team));
+        return !enemyPieces.kingAlive();
+    }
 }

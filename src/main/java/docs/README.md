@@ -76,6 +76,10 @@
     - [x] king
   
 - [x] Pieces (Piece List 일급 컬렉션화)
+  
+- [x] ChessGame
+  - [x] 왕이 잡히면 게임이 종료된다.
+
 
 ---
 
@@ -85,4 +89,4 @@
   
 - [ ] ChessGameController
   - [x] 턴을 번걸아가며 말을 조작하는 기능 구현
-- [ ] ChessGame
+

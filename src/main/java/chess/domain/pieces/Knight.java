@@ -8,7 +8,7 @@ import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends NoKingPieces {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
 
