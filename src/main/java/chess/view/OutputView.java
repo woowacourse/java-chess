@@ -42,5 +42,6 @@ public class OutputView {
 				Color.BLACK.name(), score.get(Color.BLACK), winOrLose.get(Color.BLACK));
 		System.out.printf(RESULT_FORMAT,
 				Color.WHITE.name(), score.get(Color.WHITE), winOrLose.get(Color.WHITE));
+		System.out.println();
 	}
 }

@@ -13,11 +13,13 @@ public class Controller {
 	private static final int COMMAND_INDEX = 0;
 
 	public void run() {
-		ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
+		ChessBoard chessBoard = new ChessBoard();
+		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE);
 		OutputView.gameStart();
 		if (InputView.isStart()) {
 			startGame(chessGame);
 			gameResult(chessGame);
+			run();
 		}
 	}
 
