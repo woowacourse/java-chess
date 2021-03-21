@@ -14,7 +14,7 @@ public class PieceFactory {
     private static final String PAWN = "p";
     private static final int PAWN_SIZE = 8;
 
-    public static List<Piece> initializeWhitePiece() {
+    public static Pieces whitePieces() {
         List<Piece> pieces = new ArrayList<>();
         pieces.add(Rook.from(ROOK, Position.valueOf("1", "a")));
         pieces.add(Knight.from(KNIGHT, Position.valueOf("1", "b")));
@@ -29,10 +29,10 @@ public class PieceFactory {
             pieces.add(Pawn.from(PAWN, Position.valueOf("2", Character.toString((char) ('a' + idx)))));
         }
 
-        return new ArrayList<>(pieces);
+        return new Pieces(pieces);
     }
 
-    public static List<Piece> initializeBlackPiece() {
+    public static Pieces blackPieces() {
         List<Piece> pieces = new ArrayList<>();
         pieces.add(Rook.from(ROOK.toUpperCase(), Position.valueOf("8", "a")));
         pieces.add(Knight.from(KNIGHT.toUpperCase(), Position.valueOf("8", "b")));
@@ -47,6 +47,6 @@ public class PieceFactory {
             pieces.add(Pawn.from(PAWN.toUpperCase(), Position.valueOf("7", Character.toString((char) ('a' + idx)))));
         }
 
-        return new ArrayList<>(pieces);
+        return new Pieces(pieces);
     }
 }

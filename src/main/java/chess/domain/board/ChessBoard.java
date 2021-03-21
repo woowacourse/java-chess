@@ -15,9 +15,11 @@ public class ChessBoard {
     }
 
     public void initializeBoard() {
-        PieceFactory.initializeWhitePiece()
+        PieceFactory.whitePieces()
+                .getPieces()
                 .forEach(piece -> board.putIfAbsent(piece.getPosition(), piece));
-        PieceFactory.initializeBlackPiece()
+        PieceFactory.blackPieces()
+                .getPieces()
                 .forEach(piece -> board.putIfAbsent(piece.getPosition(), piece));
     }
 

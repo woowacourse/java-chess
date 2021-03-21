@@ -7,6 +7,7 @@ import chess.domain.position.Target;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 public class Bishop extends Piece {
     private static final String SYMBOL = "Bb";
@@ -40,10 +41,26 @@ public class Bishop extends Piece {
         changePosition(target.getPosition());
     }
 
+    @Override
+    public void move2(final Target target, final Pieces pieces) {
+        List<Position> positions = makeRoutes2(pieces);
+        checkTarget(target, positions);
+        pieces.changePiecePosition(this, target);
+    }
+
     private void checkTarget(Target target, List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
+    }
+
+    private List<Position> makeRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        positions.addAll(makeUpLeftRoutes2(pieces));
+        positions.addAll(makeUpRightRoutes2(pieces));
+        positions.addAll(makeDownLeftRoutes2(pieces));
+        positions.addAll(makeDownRightRoutes2(pieces));
+        return positions;
     }
 
     private List<Position> makeRoutes(final ChessBoard chessBoard) {
@@ -52,6 +69,29 @@ public class Bishop extends Piece {
         positions.addAll(makeUpRightRoutes(chessBoard));
         positions.addAll(makeDownLeftRoutes(chessBoard));
         positions.addAll(makeDownRightRoutes(chessBoard));
+        return positions;
+    }
+
+    private List<Position> makeDownRightRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
+            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
+            if (file > 7) {
+                break;
+            }
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            if (!piece.get().isSameColor(this)) {
+                positions.add(nextPosition);
+                break;
+            }
+        }
         return positions;
     }
 
@@ -70,6 +110,30 @@ public class Bishop extends Piece {
                 continue;
             }
             if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+                positions.add(nextPosition);
+                break;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
+            Position nextPosition = Position.valueOf(rankIndex - 1, file-- - 1);
+            if (file < 1) {
+                break;
+            }
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -101,6 +165,30 @@ public class Bishop extends Piece {
         return positions;
     }
 
+    private List<Position> makeUpRightRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
+            Position nextPosition = Position.valueOf(rankIndex + 1, file++ + 1);
+            if (file > 7) {
+                break;
+            }
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            if (!piece.get().isSameColor(this)) {
+                positions.add(nextPosition);
+                break;
+            }
+            break;
+        }
+        return positions;
+    }
+
     private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
@@ -116,6 +204,30 @@ public class Bishop extends Piece {
                 continue;
             }
             if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+                positions.add(nextPosition);
+                break;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
+            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
+            if (file < 1) {
+                break;
+            }
+            Optional<Piece> piece = pieces.findPiece(nextPosition);
+            if (!piece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            if (!piece.get().isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }

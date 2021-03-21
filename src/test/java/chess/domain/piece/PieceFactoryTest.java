@@ -13,19 +13,19 @@ class PieceFactoryTest {
     @DisplayName("흰색 기물들을 초기화한다.")
     @Test
     void initializeWhitePiece() {
-        assertThat(PieceFactory.initializeWhitePiece()).hasSize(16);
+        assertThat(PieceFactory.whitePieces().getPieces()).hasSize(16);
     }
 
     @DisplayName("검정색 기물들을 초기화한다.")
     @Test
     void initializeBlackPiece() {
-        assertThat(PieceFactory.initializeBlackPiece()).hasSize(16);
+        assertThat(PieceFactory.blackPieces().getPieces()).hasSize(16);
     }
 
     @DisplayName("흰색 기물이 제대로 들어있는지 확인한다.")
     @Test
     void containsWhitePiece() {
-        List<Piece> pieces = PieceFactory.initializeWhitePiece();
+        List<Piece> pieces = PieceFactory.whitePieces().getPieces();
         Optional<Piece> bishop = pieces.stream()
                 .filter(piece -> piece.equals(Bishop.from("b", Position.emptyPosition())))
                 .findAny();
@@ -56,7 +56,7 @@ class PieceFactoryTest {
     @DisplayName("검정색 기물이 제대로 들어있는지 확인한다.")
     @Test
     void containsBlackPiece() {
-        List<Piece> pieces = PieceFactory.initializeWhitePiece();
+        List<Piece> pieces = PieceFactory.whitePieces().getPieces();
         Optional<Piece> bishop = pieces.stream()
                 .filter(piece -> piece.equals(Bishop.from("B", Position.emptyPosition())))
                 .findAny();

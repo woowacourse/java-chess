@@ -24,6 +24,10 @@ public abstract class Piece implements Movable {
         return PATTERN.matcher(piece).matches();
     }
 
+    public final boolean isBlack() {
+        return color.equals(Color.BLACK);
+    }
+
     public final Position getPosition() {
         return position;
     }

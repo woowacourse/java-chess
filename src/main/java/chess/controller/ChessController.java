@@ -21,7 +21,9 @@ public class ChessController {
     }
 
     private ChessBoard initializeChessBoard() {
-        return new ChessBoard(ChessBoardFactory.initializeBoard());
+        ChessBoard chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
+        chessBoard.initializeBoard();
+        return chessBoard;
     }
 
     private boolean isStart(String userInput) {
