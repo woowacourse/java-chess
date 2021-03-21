@@ -4,7 +4,6 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.List;
 import java.util.Optional;
 
 import static chess.domain.piece.Color.BLACK;
@@ -17,8 +16,6 @@ public class Pawn extends Piece {
     private static final int INITIAL_POSSIBLE_DISTANCE_OF_PAWN = 4;
     private static final String PAWN_NAME = "p";
 
-    private final List<Direction> pawnDirection = Direction.pawnDirection(this.color);
-
     public Pawn(Color color, Point point) {
         super(PAWN_NAME, color, point);
     }
@@ -26,7 +23,7 @@ public class Pawn extends Piece {
     @Override
     public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        if (!pawnDirection.contains(direction)) {
+        if (isNotMovable(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
 
@@ -42,6 +39,10 @@ public class Pawn extends Piece {
             return Optional.of(direction);
         }
         throw new IllegalArgumentException("기물이 이동할 수 없는 경로입니다.");
+    }
+
+    private boolean isNotMovable(Direction direction) {
+        return !Direction.pawnDirection(this.color).contains(direction);
     }
 
     private boolean isInitialWhitePawn() {

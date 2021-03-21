@@ -4,14 +4,11 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-import java.util.List;
 import java.util.Optional;
 
 public class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
     private static final String ROOK_NAME = "r";
-
-    private static final List<Direction> rookDirection = Direction.rookDirection();
 
     public Rook(Color color, Point point) {
         super(ROOK_NAME, color, point);
@@ -20,10 +17,14 @@ public class Rook extends Piece {
     @Override
     public Optional<Direction> direction(Piece target) {
         Direction direction = Direction.findDirection(this.point, target.point);
-        if (!rookDirection.contains(direction)) {
+        if (isNotMovable(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
         return Optional.of(direction);
+    }
+
+    private boolean isNotMovable(Direction direction) {
+        return !Direction.rookDirection().contains(direction);
     }
 
     @Override
