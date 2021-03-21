@@ -4,6 +4,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public class PieceFactory {
+
+    private PieceFactory() {
+    }
+
     public static List<Piece> createPieces() {
         return Arrays.asList(
                 Piece.createRook(Color.BLACK, 0, 0),
