@@ -231,6 +231,4 @@ public class PositionTest {
         assertThat(afterDown).isEqualTo(Position.ERROR);
         assertThat(afterLeft).isEqualTo(Position.ERROR);
     }
-
-
 }

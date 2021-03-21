@@ -36,12 +36,12 @@ public class PiecesTest {
     void score_1() {
         // rook : 5, b: 3, q: 9, : p1 , n: 2.5
         List<Piece> piecesValue = Arrays.asList(
-            new Rook(TeamColor.WHITE),
-            new Bishop(TeamColor.WHITE),
-            new Queen(TeamColor.WHITE),
-            new Pawn(TeamColor.WHITE),
-            new Knight(TeamColor.WHITE),
-            new King(TeamColor.WHITE)
+            new Rook(TeamColor.WHITE, Position.valueOf("b1")),
+            new Bishop(TeamColor.WHITE, Position.valueOf("b1")),
+            new Queen(TeamColor.WHITE, Position.valueOf("b1")),
+            new Pawn(TeamColor.WHITE, Position.valueOf("b1")),
+            new Knight(TeamColor.WHITE, Position.valueOf("b1")),
+            new King(TeamColor.WHITE, Position.valueOf("b1"))
         );
         Pieces pieces = new Pieces(piecesValue);
 
@@ -53,7 +53,7 @@ public class PiecesTest {
     void score_one_pawn() {
         // rook : 5, b: 3, q: 9, : p1 , n: 2.5
         List<Piece> piecesValue = Arrays.asList(
-            new Pawn(TeamColor.WHITE)
+            new Pawn(TeamColor.WHITE, Position.valueOf("b1"))
         );
         Pieces pieces = new Pieces(piecesValue);
 
@@ -71,7 +71,6 @@ public class PiecesTest {
         );
         Pieces pieces = new Pieces(piecesValue);
 
-        System.out.println(pieces.calculateScore());
         assertThat(pieces.calculateScore()).isEqualTo(new Score(1.5));
     }
 }
