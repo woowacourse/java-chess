@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Queen extends Piece {
-    private static final Score SCORE = new Score(9);
+    private static final Score SCORE = Score.of(9);
 
     private Queen(String name, boolean isBlack) {
         super(name, SCORE, isBlack);

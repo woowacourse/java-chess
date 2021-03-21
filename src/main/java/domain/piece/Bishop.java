@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Bishop extends Piece {
-    private static final Score SCORE = new Score(3);
+    private static final Score SCORE = Score.of(3);
 
     private Bishop(String name, boolean color) {
         super(name, SCORE, color);

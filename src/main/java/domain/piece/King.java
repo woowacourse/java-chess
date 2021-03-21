@@ -6,7 +6,7 @@ import domain.Score;
 import java.util.*;
 
 public class King extends Piece {
-    private static final Score SCORE = new Score(0);
+    private static final Score SCORE = Score.of(0);
 
     private King(String name, boolean isBlack) {
         super(name, SCORE, isBlack);
@@ -39,10 +39,5 @@ public class King extends Piece {
 
     private boolean checkPosition(Map<Position, Piece> board, Position nextPosition) {
         return !board.containsKey(nextPosition) || !this.isSameColor(board.get(nextPosition));
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
     }
 }

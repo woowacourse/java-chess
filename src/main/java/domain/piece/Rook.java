@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
-    private static final Score SCORE = new Score(5);
+    private static final Score SCORE = Score.of(5);
 
     private Rook(String name, boolean isBlack) {
         super(name, SCORE, isBlack);

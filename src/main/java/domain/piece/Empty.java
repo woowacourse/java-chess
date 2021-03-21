@@ -7,7 +7,7 @@ import java.util.Map;
 public final class Empty extends Piece{
 
     public Empty() {
-        super("empty", new Score(0), true);
+        super("empty", Score.ZERO, true);
     }
 
     public static Piece create() {

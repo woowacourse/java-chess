@@ -1,21 +1,23 @@
 package domain;
 
-import java.util.Objects;
+import java.util.*;
 
 public class Score {
-
     private final double value;
+    private static final Map<Double, Score> CACHE = new WeakHashMap<>();
 
-    public Score() {
-        value = 0;
-    }
+    public static final Score ZERO = Score.of(0);
 
-    public Score(double value) {
+    private Score(double value) {
         this.value = value;
     }
 
-    public Score sum(Score score) {
-        return new Score(this.value + score.value);
+    public static Score of(double value) {
+        return CACHE.computeIfAbsent(value, Score::new);
+    }
+
+    public Score add(Score score) {
+        return Score.of(this.value + score.value);
     }
 
     public Score half() {
@@ -33,5 +35,9 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(value);
+    }
+
+    public double getScore() { //  test용
+        return value;
     }
 }

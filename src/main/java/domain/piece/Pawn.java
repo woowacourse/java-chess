@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.stream.IntStream;
 
 public class Pawn extends Piece {
-    private static final Score SCORE = new Score(1);
+    private static final Score SCORE = Score.of(1);
     public static final Map<Position, Pawn> PAWNS = new HashMap<Position, Pawn>() {{
         put(Position.of("a7"), Pawn.of("P", true));
         put(Position.of("b7"), Pawn.of("P", true));
