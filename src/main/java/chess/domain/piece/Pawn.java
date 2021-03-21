@@ -45,8 +45,8 @@ public class Pawn extends Piece {
 
     private List<List<Position>> whiteMovable(Position position) {
         List<List<Position>> positions = new ArrayList<>(Arrays.asList(
-            new ArrayList<>(Collections.singletonList(position.up())),
-            Arrays.asList(position.leftUp(), position.rightUp())
+                new ArrayList<>(Collections.singletonList(position.up())),
+                Arrays.asList(position.leftUp(), position.rightUp())
         ));
         if (position.isSameY(Ypoint.TWO)) {
             positions.get(0).add(position.doubleUp());
@@ -56,8 +56,8 @@ public class Pawn extends Piece {
 
     private List<List<Position>> blackMovable(Position position) {
         List<List<Position>> positions = new ArrayList<>(Arrays.asList(
-            new ArrayList<>(Collections.singletonList(position.down())),
-            Arrays.asList(position.leftDown(), position.rightDown())
+                new ArrayList<>(Collections.singletonList(position.down())),
+                Arrays.asList(position.leftDown(), position.rightDown())
         ));
         if (position.isSameY(Ypoint.SEVEN)) {
             positions.get(0).add(position.doubleDown());

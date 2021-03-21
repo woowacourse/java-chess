@@ -141,47 +141,47 @@ public class PositionTest {
 
     @Test
     @DisplayName("11시 방향 벡터 테스트")
-    void leftUpVectorTest(){
+    void leftUpVectorTest() {
         assertThat(Position.of("a8").leftUpVector()).containsExactly();
         assertThat(Position.of("h1").leftUpVector()).containsExactly(
-            Position.of("g2"), Position.of("f3"), Position.of("e4"),
-            Position.of("d5"), Position.of("c6"), Position.of("b7"),
-            Position.of("a8"));
+                Position.of("g2"), Position.of("f3"), Position.of("e4"),
+                Position.of("d5"), Position.of("c6"), Position.of("b7"),
+                Position.of("a8"));
     }
 
     @Test
     @DisplayName("7시 방향 벡터 테스트")
-    void leftDownVectorTest(){
+    void leftDownVectorTest() {
         assertThat(Position.of("a1").leftDownVector()).containsExactly();
         assertThat(Position.of("h8").leftDownVector()).containsExactly(
-            Position.of("g7"), Position.of("f6"), Position.of("e5"),
-            Position.of("d4"), Position.of("c3"), Position.of("b2"),
-            Position.of("a1"));
+                Position.of("g7"), Position.of("f6"), Position.of("e5"),
+                Position.of("d4"), Position.of("c3"), Position.of("b2"),
+                Position.of("a1"));
     }
 
     @Test
     @DisplayName("1시 방향 벡터 테스트")
-    void rightUpVectorTest(){
+    void rightUpVectorTest() {
         assertThat(Position.of("h8").rightUpVector()).containsExactly();
         assertThat(Position.of("a1").rightUpVector()).containsExactly(
-            Position.of("b2"), Position.of("c3"), Position.of("d4"),
-            Position.of("e5"), Position.of("f6"), Position.of("g7"),
-            Position.of("h8"));
+                Position.of("b2"), Position.of("c3"), Position.of("d4"),
+                Position.of("e5"), Position.of("f6"), Position.of("g7"),
+                Position.of("h8"));
     }
 
     @Test
     @DisplayName("5시 방향 벡터 테스트")
-    void rightDownVectorTest(){
+    void rightDownVectorTest() {
         assertThat(Position.of("h1").rightDownVector()).containsExactly();
         assertThat(Position.of("a8").rightDownVector()).containsExactly(
-            Position.of("b7"), Position.of("c6"), Position.of("d5"),
-            Position.of("e4"), Position.of("f3"), Position.of("g2"),
-            Position.of("h1"));
+                Position.of("b7"), Position.of("c6"), Position.of("d5"),
+                Position.of("e4"), Position.of("f3"), Position.of("g2"),
+                Position.of("h1"));
     }
 
     @Test
     @DisplayName("UUL 이동 테스트")
-    void upUpLeftTest(){
+    void upUpLeftTest() {
         assertThat(Position.of("c5").upUpLeft()).isEqualTo(Position.of("b7"));
         assertThat(Position.of("a5").upUpLeft()).isEqualTo(Position.of("a5"));
         assertThat(Position.of("c8").upUpLeft()).isEqualTo(Position.of("c8"));
@@ -190,7 +190,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("UUR 이동 테스트")
-    void downDownLeftTest(){
+    void downDownLeftTest() {
         assertThat(Position.of("c5").upUpRight()).isEqualTo(Position.of("d7"));
         assertThat(Position.of("h5").upUpRight()).isEqualTo(Position.of("h5"));
         assertThat(Position.of("c8").upUpRight()).isEqualTo(Position.of("c8"));
@@ -199,7 +199,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("DDL 이동 테스트")
-    void downDownRightTest(){
+    void downDownRightTest() {
         assertThat(Position.of("c5").downDownLeft()).isEqualTo(Position.of("b3"));
         assertThat(Position.of("a5").downDownLeft()).isEqualTo(Position.of("a5"));
         assertThat(Position.of("c1").downDownLeft()).isEqualTo(Position.of("c1"));
@@ -208,7 +208,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("DDR 이동 테스트")
-    void upUpRightTest(){
+    void upUpRightTest() {
         assertThat(Position.of("c5").downDownRight()).isEqualTo(Position.of("d3"));
         assertThat(Position.of("h5").downDownRight()).isEqualTo(Position.of("h5"));
         assertThat(Position.of("c1").downDownRight()).isEqualTo(Position.of("c1"));
@@ -217,7 +217,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("LLU 이동 테스트")
-    void leftLeftUpTest(){
+    void leftLeftUpTest() {
         assertThat(Position.of("c5").leftLeftUp()).isEqualTo(Position.of("a6"));
         assertThat(Position.of("a5").leftLeftUp()).isEqualTo(Position.of("a5"));
         assertThat(Position.of("c8").leftLeftUp()).isEqualTo(Position.of("c8"));
@@ -226,7 +226,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("LLD 이동 테스트")
-    void leftLeftDownTest(){
+    void leftLeftDownTest() {
         assertThat(Position.of("c5").leftLeftDown()).isEqualTo(Position.of("a4"));
         assertThat(Position.of("a5").leftLeftDown()).isEqualTo(Position.of("a5"));
         assertThat(Position.of("c1").leftLeftDown()).isEqualTo(Position.of("c1"));
@@ -235,7 +235,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("RRU 이동 테스트")
-    void rightRightUpTest(){
+    void rightRightUpTest() {
         assertThat(Position.of("c5").rightRightUp()).isEqualTo(Position.of("e6"));
         assertThat(Position.of("h5").rightRightUp()).isEqualTo(Position.of("h5"));
         assertThat(Position.of("c8").rightRightUp()).isEqualTo(Position.of("c8"));
@@ -244,7 +244,7 @@ public class PositionTest {
 
     @Test
     @DisplayName("RRD 이동 테스트")
-    void rightRightDownTest(){
+    void rightRightDownTest() {
         assertThat(Position.of("c5").rightRightDown()).isEqualTo(Position.of("e4"));
         assertThat(Position.of("h5").rightRightDown()).isEqualTo(Position.of("h5"));
         assertThat(Position.of("c1").rightRightDown()).isEqualTo(Position.of("c1"));

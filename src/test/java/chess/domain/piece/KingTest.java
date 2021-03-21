@@ -1,11 +1,12 @@
 package chess.domain.piece;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.board.position.Position;
-import java.util.List;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 class KingTest {
 

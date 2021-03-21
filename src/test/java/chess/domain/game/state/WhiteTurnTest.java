@@ -1,13 +1,13 @@
 package chess.domain.game.state;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
 import chess.domain.board.Board;
 import chess.domain.board.InitBoardGenerator;
 import chess.domain.board.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class WhiteTurnTest {
 
@@ -23,7 +23,7 @@ class WhiteTurnTest {
     void blackTurnMoveReturnWhiteTurn() {
         WhiteTurn whiteTurn = new WhiteTurn(new Board(InitBoardGenerator.initLines()));
         assertThat(whiteTurn.move(Position.of("c2"), Position.of("c4")))
-            .isInstanceOf(BlackTurn.class);
+                .isInstanceOf(BlackTurn.class);
     }
 
     @Test

@@ -47,7 +47,7 @@ public class Move implements Command {
     }
 
     private void validateCommandPattern(String source, String target) {
-        if(nonMatchedPattern(source) || nonMatchedPattern(target)) {
+        if (nonMatchedPattern(source) || nonMatchedPattern(target)) {
             throw new IllegalArgumentException();
         }
     }

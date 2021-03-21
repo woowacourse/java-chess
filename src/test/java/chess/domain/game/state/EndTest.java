@@ -1,13 +1,13 @@
 package chess.domain.game.state;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-
 import chess.domain.board.Board;
 import chess.domain.board.InitBoardGenerator;
 import chess.domain.board.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class EndTest {
 
@@ -28,7 +28,7 @@ public class EndTest {
     @DisplayName("종료 상태에서 move 명령시 에러 반환")
     void endMoveReturnWhiteTurn() {
         assertThatThrownBy(() -> end.move(Position.of("c5"), Position.of("c6")))
-            .isInstanceOf(IllegalStateException.class);
+                .isInstanceOf(IllegalStateException.class);
     }
 
     @Test

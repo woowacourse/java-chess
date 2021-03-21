@@ -26,10 +26,10 @@ public class Rook extends Piece {
     @Override
     public List<List<Position>> vectors(Position position) {
         return new ArrayList<>(Arrays.asList(
-            position.upVector(),
-            position.downVector(),
-            position.leftVector(),
-            position.rightVector()
+                position.upVector(),
+                position.downVector(),
+                position.leftVector(),
+                position.rightVector()
         ));
     }
 

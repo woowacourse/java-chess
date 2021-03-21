@@ -5,6 +5,7 @@ import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.team.Color;
 import chess.domain.piece.team.Symbol;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,8 +26,8 @@ public class Bishop extends Piece {
     @Override
     public List<List<Position>> vectors(Position position) {
         return new ArrayList<>(Arrays.asList(
-            position.leftUpVector(), position.leftDownVector(),
-            position.rightUpVector(), position.rightDownVector()));
+                position.leftUpVector(), position.leftDownVector(),
+                position.rightUpVector(), position.rightDownVector()));
     }
 
     @Override

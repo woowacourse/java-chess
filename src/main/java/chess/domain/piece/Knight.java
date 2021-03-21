@@ -5,6 +5,7 @@ import chess.domain.movestrategy.KnightMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.team.Color;
 import chess.domain.piece.team.Symbol;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -26,14 +27,14 @@ public class Knight extends Piece {
     @Override
     public List<List<Position>> vectors(Position position) {
         return new ArrayList<>(Arrays.asList(
-            Collections.singletonList(position.upUpLeft()),
-            Collections.singletonList(position.upUpRight()),
-            Collections.singletonList(position.downDownLeft()),
-            Collections.singletonList(position.downDownRight()),
-            Collections.singletonList(position.leftLeftUp()),
-            Collections.singletonList(position.leftLeftDown()),
-            Collections.singletonList(position.rightRightUp()),
-            Collections.singletonList(position.rightRightDown())));
+                Collections.singletonList(position.upUpLeft()),
+                Collections.singletonList(position.upUpRight()),
+                Collections.singletonList(position.downDownLeft()),
+                Collections.singletonList(position.downDownRight()),
+                Collections.singletonList(position.leftLeftUp()),
+                Collections.singletonList(position.leftLeftDown()),
+                Collections.singletonList(position.rightRightUp()),
+                Collections.singletonList(position.rightRightDown())));
     }
 
     @Override

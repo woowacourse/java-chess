@@ -1,4 +1,5 @@
 package chess.controller;
+
 import chess.domain.board.Board;
 import chess.domain.board.InitBoardGenerator;
 import chess.domain.command.Command;

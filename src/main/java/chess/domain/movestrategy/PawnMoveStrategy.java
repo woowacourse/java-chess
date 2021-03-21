@@ -13,7 +13,7 @@ public class PawnMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> movable(Board board, Position source) {
         Piece piece = board.pieceOfPosition(source);
-        if(piece.isWhite()) { // 나중에 수정
+        if (piece.isWhite()) { // 나중에 수정
             return pawnMovablePosition(piece.vectors(source), board);
         }
         return pawnMovablePosition2(piece.vectors(source), board);

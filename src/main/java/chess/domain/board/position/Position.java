@@ -1,10 +1,6 @@
 package chess.domain.board.position;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
 
@@ -114,7 +110,7 @@ public class Position {
         return movedPosition;
     }
 
-    public Position downDownLeft(){
+    public Position downDownLeft() {
         Position movedPosition = of(xpoint.left(), ypoint.down(2));
         if (isSamePosition(movedPosition)) {
             return this;
@@ -122,7 +118,7 @@ public class Position {
         return movedPosition;
     }
 
-    public Position downDownRight(){
+    public Position downDownRight() {
         Position movedPosition = of(xpoint.right(), ypoint.down(2));
         if (isSamePosition(movedPosition)) {
             return this;
@@ -256,10 +252,7 @@ public class Position {
 
     @Override
     public String toString() {
-        return "Position{" +
-                "xpoint=" + xpoint +
-                ", ypoint=" + ypoint +
-                '}';
+        return xpoint.name() + ypoint.getValue();
     }
 
     public int yValue() {

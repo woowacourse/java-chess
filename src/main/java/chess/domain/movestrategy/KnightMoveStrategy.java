@@ -23,7 +23,7 @@ public class KnightMoveStrategy implements MoveStrategy {
 
     private List<Position> knightMovablePosition(List<Position> positions, Board board) {
         return positions.stream()
-                .filter(position -> !board.pieceOfPosition(position).isWhite())
+                .filter(position -> !board.pieceOfPosition(position).isWhite()) // isDifferent
                 .collect(Collectors.toList());
     }
 }

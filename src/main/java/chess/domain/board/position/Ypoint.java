@@ -53,33 +53,29 @@ public enum Ypoint {
 
     public Ypoint up() {
         return Arrays.stream(values())
-            .filter(ypoint -> ypoint.value == this.value + 1)
-            .findFirst()
-            .orElse(this);
+                .filter(ypoint -> ypoint.value == this.value + 1)
+                .findFirst()
+                .orElse(this);
     }
 
     public Ypoint up(int value) {
         return Arrays.stream(values())
-            .filter(ypoint -> ypoint.value == this.value + value)
-            .findFirst()
-            .orElse(this);
+                .filter(ypoint -> ypoint.value == this.value + value)
+                .findFirst()
+                .orElse(this);
     }
 
     public Ypoint down() {
         return Arrays.stream(values())
-            .filter(ypoint -> ypoint.value == this.value - 1)
-            .findFirst()
-            .orElse(this);
+                .filter(ypoint -> ypoint.value == this.value - 1)
+                .findFirst()
+                .orElse(this);
     }
 
     public Ypoint down(int value) {
-        System.out.println(Arrays.stream(values())
+        return Arrays.stream(values())
                 .filter(ypoint -> ypoint.value == this.value - value)
                 .findFirst()
-                .orElse(this));
-        return Arrays.stream(values())
-            .filter(ypoint -> ypoint.value == this.value - value)
-            .findFirst()
-            .orElse(this);
+                .orElse(this);
     }
 }

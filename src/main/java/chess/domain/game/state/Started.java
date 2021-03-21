@@ -10,7 +10,7 @@ public abstract class Started implements State {
         this.board = board;
     }
 
-    public Board board(){
+    public Board board() {
         return this.board;
     }
 

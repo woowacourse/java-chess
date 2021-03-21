@@ -5,9 +5,9 @@ import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.team.Color;
 import chess.domain.piece.team.Symbol;
+
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class Queen extends Piece {
@@ -26,14 +26,14 @@ public class Queen extends Piece {
     @Override
     public List<List<Position>> vectors(Position position) {
         return new ArrayList<>(Arrays.asList(
-            position.upVector(),
-            position.downVector(),
-            position.leftVector(),
-            position.rightVector(),
-            position.leftUpVector(),
-            position.leftDownVector(),
-            position.rightUpVector(),
-            position.rightDownVector()
+                position.upVector(),
+                position.downVector(),
+                position.leftVector(),
+                position.rightVector(),
+                position.leftUpVector(),
+                position.leftDownVector(),
+                position.rightUpVector(),
+                position.rightDownVector()
         ));
     }
 
