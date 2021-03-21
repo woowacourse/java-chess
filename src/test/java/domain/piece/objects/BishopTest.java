@@ -1,6 +1,10 @@
-package domain.piece;
+package domain.piece.objects;
 
 import domain.Board;
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.piece.objects.Bishop;
+import domain.piece.objects.Pawn;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;

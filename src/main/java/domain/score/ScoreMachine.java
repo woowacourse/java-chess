@@ -1,6 +1,7 @@
-package domain;
+package domain.score;
 
-import domain.piece.Pawn;
+import domain.Board;
+import domain.piece.objects.Pawn;
 import domain.piece.Piece;
 import domain.piece.Position;
 

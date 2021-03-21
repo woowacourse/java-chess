@@ -1,10 +1,13 @@
-package domain.piece;
+package domain.piece.objects;
 
-import domain.Direction;
-import domain.Score;
+import domain.piece.Direction;
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.score.Score;
 
 import java.util.*;
-import java.util.stream.IntStream;
+
+import static domain.piece.Color.BLACK;
 
 public class Pawn extends Piece {
     private static final Score SCORE = Score.of(1);
@@ -67,7 +70,7 @@ public class Pawn extends Piece {
     }
 
     private List<Direction> selectDirectionByColor() {
-        if (this.isSameColor(true)) {   // TODO : 상수 처리
+        if (this.isSameColor(BLACK.getValue())) {
             return Direction.blackPawnDirection();
         }
         return Direction.whitePawnDirection();

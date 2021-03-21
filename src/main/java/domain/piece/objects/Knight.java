@@ -1,9 +1,10 @@
-package domain.piece;
+package domain.piece.objects;
 
-import domain.Direction;
-import domain.Score;
+import domain.piece.Direction;
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.score.Score;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -1,6 +1,6 @@
-package domain;
+package domain.piece;
 
-import domain.piece.*;
+import domain.piece.objects.*;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

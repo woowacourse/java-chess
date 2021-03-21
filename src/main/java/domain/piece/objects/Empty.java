@@ -1,10 +1,12 @@
-package domain.piece;
+package domain.piece.objects;
 
-import domain.Score;
+import domain.piece.Piece;
+import domain.piece.Position;
+import domain.score.Score;
 
 import java.util.Map;
 
-public final class Empty extends Piece{
+public final class Empty extends Piece {
 
     public Empty() {
         super(".", Score.ZERO, true);

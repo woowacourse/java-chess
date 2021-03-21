@@ -1,6 +1,8 @@
-package domain;
+package domain.score;
 
+import domain.Board;
 import domain.piece.*;
+import domain.piece.objects.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

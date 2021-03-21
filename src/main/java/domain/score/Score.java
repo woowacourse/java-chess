@@ -1,4 +1,4 @@
-package domain;
+package domain.score;
 
 import java.util.*;
 
