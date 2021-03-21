@@ -3,6 +3,7 @@ package chess.domain.game;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
+import chess.domain.piece.Piece;
 
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,8 @@ public class ChessGame {
 	}
 
 	private void validateTurn(Position position) {
-		if (chessBoard.isNotCorrectTurn(position, turn)) {
+		Piece sourcePiece = chessBoard.getPiece(position);
+		if (!sourcePiece.isSameColor(turn)) {
 			throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
 		}
 	}
