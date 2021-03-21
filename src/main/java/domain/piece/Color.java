@@ -19,6 +19,13 @@ public enum Color {
                 .get();
     }
 
+    public static String findColorName(Boolean color) {
+        if (BLACK.getValue() == color) {
+            return BLACK.name();
+        }
+        return WHITE.name();
+    }
+
     public boolean getValue() {
         return color;
     }
