@@ -9,6 +9,8 @@ import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Objects;
+
 public class ChessGameController {
     private final ChessGame chessGame;
     private Team currentTurn;
@@ -27,16 +29,22 @@ public class ChessGameController {
         while (chessGame.isPlaying()) {
             Command command = Command.valueOf(InputView.getCommand());
             command.execute(chessGame);
-            moveCommand(command);
+            interactiveCommand(command);
             printCurrentBoard(command);
+        }
+        if (Objects.nonNull(chessGame.winner())) {
+            OutputView.printWinner(chessGame.winner(), chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
         }
     }
 
-    private void moveCommand(Command command) {
+
+    private void interactiveCommand(final Command command) {
         if (command.equals(Command.MOVE)) {
             move();
             currentTurn = Team.getAnotherTeam(currentTurn);
-
+        }
+        if (command.equals(Command.STATUS)) {
+            OutputView.printEachTeamScore(chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
         }
     }
 

@@ -88,9 +88,9 @@
 
 ---
 
-- [ ] View
-    - [ ] InputView
-    - [ ] OutputView
+- [x] View
+    - [x] InputView
+    - [x] OutputView
 
 - [x] ChessGameController
     - [x] 턴을 번걸아가며 말을 조작하는 기능 구현
