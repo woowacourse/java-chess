@@ -1,13 +1,12 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.board.Board;
-import chess.utils.DtoAssembler;
-import chess.view.OutputView;
+import chess.domain.board.InitBoardGenerator;
 
 public class ChessGameController {
     public void run() {
-        ChessGame chessGame = new ChessGame(new Board());
-        OutputView.printGameStart(DtoAssembler.assemble(chessGame.start()));
+        Board board = new Board(InitBoardGenerator.initLines());
+        ChessGame chessGame = new ChessGame(board);
     }
 }

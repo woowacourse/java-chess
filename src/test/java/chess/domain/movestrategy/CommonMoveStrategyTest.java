@@ -5,6 +5,7 @@ import chess.domain.board.BoardGenerator;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,12 @@ import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class KnightMoveStrategyTest {
+public class CommonMoveStrategyTest {
     private BoardGenerator boardGenerator;
 
     @BeforeEach
     void setUp() {
-//        boardGenerator = new BoardGenerator();
+        boardGenerator = new BoardGenerator();
     }
 
     @Test
