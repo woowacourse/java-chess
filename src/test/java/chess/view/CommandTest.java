@@ -11,7 +11,7 @@ class CommandTest {
 
     @ParameterizedTest
     @DisplayName("지원되는 명령어가 입력되면, true를 반환한다.")
-    @ValueSource(strings = {"start", "end", "move"})
+    @ValueSource(strings = {"START", "END", "MOVE", "STATUS"})
     void validateCommandCheck(final String command) {
         assertThat(Command.isValidateCommand(command)).isTrue();
     }
