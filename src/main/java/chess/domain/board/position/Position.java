@@ -1,10 +1,13 @@
 package chess.domain.board.position;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class Position {
-    private final Xpoint xpoint;
-    private final Ypoint ypoint;
+
     private static final Map<String, Position> CACHE = new HashMap<>();
 
     static {
@@ -15,12 +18,15 @@ public class Position {
         }
     }
 
+    private final Xpoint xpoint;
+    private final Ypoint ypoint;
+
     public Position(Xpoint xpoint, Ypoint ypoint) {
         this.xpoint = xpoint;
         this.ypoint = ypoint;
     }
 
-    public static Position valueOf(String value) {
+    public static Position of(String value) {
         Position position = CACHE.get(value);
         if (Objects.isNull(position)) {
             throw new IllegalArgumentException("잘못된 좌표입니다.");
@@ -28,8 +34,8 @@ public class Position {
         return position;
     }
 
-    public static Position valueOf(Xpoint xpoint, Ypoint ypoint) {
-        return valueOf(xpoint.getName() + ypoint.getValue());
+    public static Position of(Xpoint xpoint, Ypoint ypoint) {
+        return of(xpoint.getName() + ypoint.getValue());
     }
 
     public static List<Position> generate() {
@@ -37,31 +43,31 @@ public class Position {
     }
 
     public Position up() {
-        return valueOf(xpoint, ypoint.up());
+        return of(xpoint, ypoint.up());
     }
 
     public Position doubleUp() {
-        return up().up();
+        return of(xpoint, ypoint.up(2));
     }
 
     public Position down() {
-        return valueOf(xpoint, ypoint.down());
+        return of(xpoint, ypoint.down());
     }
 
     public Position doubleDown() {
-        return down().down();
+        return of(xpoint, ypoint.down(2));
     }
 
     public Position left() {
-        return valueOf(xpoint.left(), ypoint);
+        return of(xpoint.left(), ypoint);
     }
 
     public Position right() {
-        return valueOf(xpoint.right(), ypoint);
+        return of(xpoint.right(), ypoint);
     }
 
     public Position leftUp() {
-        Position movedPosition = valueOf(xpoint.left(), ypoint.up());
+        Position movedPosition = of(xpoint.left(), ypoint.up());
         if (isSamePosition(movedPosition)) {
             return this;
         }
@@ -69,7 +75,7 @@ public class Position {
     }
 
     public Position rightUp() {
-        Position movedPosition = valueOf(xpoint.right(), ypoint.up());
+        Position movedPosition = of(xpoint.right(), ypoint.up());
         if (isSamePosition(movedPosition)) {
             return this;
         }
@@ -77,7 +83,7 @@ public class Position {
     }
 
     public Position leftDown() {
-        Position movedPosition = valueOf(xpoint.left(), ypoint.down());
+        Position movedPosition = of(xpoint.left(), ypoint.down());
         if (isSamePosition(movedPosition)) {
             return this;
         }
@@ -85,7 +91,71 @@ public class Position {
     }
 
     public Position rightDown() {
-        Position movedPosition = valueOf(xpoint.right(), ypoint.down());
+        Position movedPosition = of(xpoint.right(), ypoint.down());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position upUpLeft() {
+        Position movedPosition = of(xpoint.left(), ypoint.up(2));
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position upUpRight() {
+        Position movedPosition = of(xpoint.right(), ypoint.up(2));
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position downDownLeft(){
+        Position movedPosition = of(xpoint.left(), ypoint.down(2));
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position downDownRight(){
+        Position movedPosition = of(xpoint.right(), ypoint.down(2));
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position leftLeftUp() {
+        Position movedPosition = of(xpoint.left(2), ypoint.up());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position leftLeftDown() {
+        Position movedPosition = of(xpoint.left(2), ypoint.down());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position rightRightUp() {
+        Position movedPosition = of(xpoint.right(2), ypoint.up());
+        if (isSamePosition(movedPosition)) {
+            return this;
+        }
+        return movedPosition;
+    }
+
+    public Position rightRightDown() {
+        Position movedPosition = of(xpoint.right(2), ypoint.down());
         if (isSamePosition(movedPosition)) {
             return this;
         }
@@ -142,5 +212,57 @@ public class Position {
             vector.add(position);
         }
         return vector;
+    }
+
+    public List<Position> leftUpVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.leftUp()) {
+            position = position.leftUp();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> leftDownVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.leftDown()) {
+            position = position.leftDown();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> rightUpVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.rightUp()) {
+            position = position.rightUp();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    public List<Position> rightDownVector() {
+        List<Position> vector = new ArrayList<>();
+        Position position = this;
+        while (position != position.rightDown()) {
+            position = position.rightDown();
+            vector.add(position);
+        }
+        return vector;
+    }
+
+    @Override
+    public String toString() {
+        return "Position{" +
+                "xpoint=" + xpoint +
+                ", ypoint=" + ypoint +
+                '}';
+    }
+
+    public int yValue() {
+        return ypoint.getValue();
     }
 }

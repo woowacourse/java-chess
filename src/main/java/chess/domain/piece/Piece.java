@@ -1,8 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.board.position.Position;
+import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.team.Color;
 import chess.domain.piece.team.Symbol;
 
+import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
@@ -15,12 +18,7 @@ public abstract class Piece {
 
     }
 
-    public String getSymbol() {
-        if (color.equals(Color.BLACK)) {
-            return symbol.getBlack();
-        }
-        return symbol.getWhite();
-    }
+    public abstract List<List<Position>> vectors(Position position);
 
     public boolean isBlack() {
         return color.equals(Color.BLACK);
@@ -28,6 +26,15 @@ public abstract class Piece {
 
     public boolean isWhite() {
         return color.equals(Color.WHITE);
+    }
+
+    public abstract boolean isEmpty();
+
+    public String getSymbol() {
+        if (color.equals(Color.BLACK)) {
+            return symbol.getBlack();
+        }
+        return symbol.getWhite();
     }
 
     @Override
@@ -42,4 +49,6 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, symbol);
     }
+
+    public abstract MoveStrategy moveStrategy();
 }

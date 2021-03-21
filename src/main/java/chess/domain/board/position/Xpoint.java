@@ -58,18 +58,30 @@ public enum Xpoint {
     }
 
     public Xpoint left() {
-        if (this == A) {
-            return this;
-        }
+        return Arrays.stream(values())
+            .filter(xpoint -> xpoint.value == this.value - 1)
+            .findFirst()
+            .orElse(this);
+    }
 
-        return of(value - 1);
+    public Xpoint left(int value) {
+        return Arrays.stream(values())
+            .filter(xpoint -> xpoint.value == this.value - value)
+            .findFirst()
+            .orElse(this);
     }
 
     public Xpoint right() {
-        if (this == H) {
-            return this;
-        }
+        return Arrays.stream(values())
+            .filter(xpoint -> xpoint.value == this.value + 1)
+            .findFirst()
+            .orElse(this);
+    }
 
-        return of(value + 1);
+    public Xpoint right(int value) {
+        return Arrays.stream(values())
+            .filter(xpoint -> xpoint.value == this.value + value)
+            .findFirst()
+            .orElse(this);
     }
 }

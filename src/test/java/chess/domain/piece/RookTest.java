@@ -21,22 +21,22 @@ class RookTest {
     @DisplayName("룩 이동전략 테스트")
     void moveStrategyTest() {
         Rook rook = Rook.createBlack();
-        List<List<Position>> moveStrategy = rook.moveStrategy(Position.valueOf("c5"));
+        List<List<Position>> moveStrategy = rook.vectors(Position.of("c5"));
         assertThat(moveStrategy.get(0)).containsExactly(
-                Position.valueOf("c6"), Position.valueOf("c7"),
-                Position.valueOf("c8")
+                Position.of("c6"), Position.of("c7"),
+                Position.of("c8")
         );
         assertThat(moveStrategy.get(1)).containsExactly(
-                Position.valueOf("c4"), Position.valueOf("c3"),
-                Position.valueOf("c2"), Position.valueOf("c1")
+                Position.of("c4"), Position.of("c3"),
+                Position.of("c2"), Position.of("c1")
         );
         assertThat(moveStrategy.get(2)).containsExactly(
-                Position.valueOf("b5"), Position.valueOf("a5")
+                Position.of("b5"), Position.of("a5")
         );
         assertThat(moveStrategy.get(3)).containsExactly(
-                Position.valueOf("d5"), Position.valueOf("e5"),
-                Position.valueOf("f5"), Position.valueOf("g5"),
-                Position.valueOf("h5")
+                Position.of("d5"), Position.of("e5"),
+                Position.of("f5"), Position.of("g5"),
+                Position.of("h5")
         );
     }
 }

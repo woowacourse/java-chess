@@ -39,6 +39,24 @@ class XpointTest {
     }
 
     @Test
+    @DisplayName("xpoint 복수형 left 테스트")
+    void integerLeftTest() {
+        Xpoint xpoint = Xpoint.D;
+
+        xpoint = xpoint.left(2);
+        assertThat(xpoint).isEqualTo(Xpoint.B);
+
+        xpoint = xpoint.left(1);
+        assertThat(xpoint).isEqualTo(Xpoint.A);
+
+        xpoint = xpoint.left(3);
+        assertThat(xpoint).isEqualTo(Xpoint.A);
+
+        xpoint = xpoint.left(1);
+        assertThat(xpoint).isEqualTo(Xpoint.A);
+    }
+
+    @Test
     @DisplayName("xpoint right 테스트")
     void rightTest() {
         Xpoint xpoint = Xpoint.E;
@@ -53,6 +71,24 @@ class XpointTest {
         assertThat(xpoint).isEqualTo(Xpoint.H);
 
         xpoint = xpoint.right();
+        assertThat(xpoint).isEqualTo(Xpoint.H);
+    }
+
+    @Test
+    @DisplayName("xpoint 복수형 right 테스트")
+    void integerRightTest() {
+        Xpoint xpoint = Xpoint.D;
+
+        xpoint = xpoint.right(2);
+        assertThat(xpoint).isEqualTo(Xpoint.F);
+
+        xpoint = xpoint.right(1);
+        assertThat(xpoint).isEqualTo(Xpoint.G);
+
+        xpoint = xpoint.right(3);
+        assertThat(xpoint).isEqualTo(Xpoint.G);
+
+        xpoint = xpoint.right(1);
         assertThat(xpoint).isEqualTo(Xpoint.H);
     }
 }

@@ -39,6 +39,24 @@ class YpointTest {
     }
 
     @Test
+    @DisplayName("ypoint 복수형 up 테스트")
+    void integerUpTest() {
+        Ypoint ypoint = Ypoint.FIVE;
+
+        ypoint = ypoint.up(2);
+        assertThat(ypoint).isEqualTo(Ypoint.SEVEN);
+
+        ypoint = ypoint.up(1);
+        assertThat(ypoint).isEqualTo(Ypoint.EIGHT);
+
+        ypoint = ypoint.up(3);
+        assertThat(ypoint).isEqualTo(Ypoint.EIGHT);
+
+        ypoint = ypoint.up(1);
+        assertThat(ypoint).isEqualTo(Ypoint.EIGHT);
+    }
+
+    @Test
     @DisplayName("ypoint down 테스트")
     void downTest() {
         Ypoint ypoint = Ypoint.FOUR;
@@ -53,6 +71,24 @@ class YpointTest {
         assertThat(ypoint).isEqualTo(Ypoint.ONE);
 
         ypoint = ypoint.down();
+        assertThat(ypoint).isEqualTo(Ypoint.ONE);
+    }
+
+    @Test
+    @DisplayName("ypoint 복수형 down 테스트")
+    void integerDownTest() {
+        Ypoint ypoint = Ypoint.FIVE;
+
+        ypoint = ypoint.down(2);
+        assertThat(ypoint).isEqualTo(Ypoint.THREE);
+
+        ypoint = ypoint.down(2);
+        assertThat(ypoint).isEqualTo(Ypoint.ONE);
+
+        ypoint = ypoint.down(3);
+        assertThat(ypoint).isEqualTo(Ypoint.ONE);
+
+        ypoint = ypoint.down(1);
         assertThat(ypoint).isEqualTo(Ypoint.ONE);
     }
 }

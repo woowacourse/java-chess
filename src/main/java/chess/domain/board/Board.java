@@ -10,8 +10,8 @@ public class Board {
 
     private final List<Map<Position, Piece>> squares;
 
-    public Board() {
-        squares = InitBoardGenerator.initLines();
+    public Board(final List<Map<Position, Piece>> squares) {
+        this.squares = squares;
     }
 
     public Piece pieceOfPosition(Position position) {

@@ -52,18 +52,30 @@ public enum Ypoint {
     }
 
     public Ypoint up() {
-        if (this == EIGHT) {
-            return this;
-        }
+        return Arrays.stream(values())
+            .filter(ypoint -> ypoint.value == this.value + 1)
+            .findFirst()
+            .orElse(this);
+    }
 
-        return of(value + 1);
+    public Ypoint up(int value) {
+        return Arrays.stream(values())
+            .filter(ypoint -> ypoint.value == this.value + value)
+            .findFirst()
+            .orElse(this);
     }
 
     public Ypoint down() {
-        if (this == ONE) {
-            return this;
-        }
+        return Arrays.stream(values())
+            .filter(ypoint -> ypoint.value == this.value - 1)
+            .findFirst()
+            .orElse(this);
+    }
 
-        return of(value - 1);
+    public Ypoint down(int value) {
+        return Arrays.stream(values())
+            .filter(ypoint -> ypoint.value == this.value - value)
+            .findFirst()
+            .orElse(this);
     }
 }
