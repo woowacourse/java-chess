@@ -23,4 +23,15 @@ public class InputView {
         }
         throw new IllegalArgumentException();
     }
+
+    public static boolean willWatchScore() {
+        String userInput = scanner.nextLine();
+        if ("status".equals(userInput)) {
+            return true;
+        }
+        if ("end".equals(userInput)) {
+            return false;
+        }
+        throw new IllegalArgumentException();
+    }
 }

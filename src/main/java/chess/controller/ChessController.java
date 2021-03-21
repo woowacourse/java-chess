@@ -23,6 +23,9 @@ public class ChessController {
             }
             game.display();
         }
-        OutputView.printScore(game.score());
+
+        if(InputView.willWatchScore()) {
+            OutputView.printScore(game.score());
+        }
     }
 }
