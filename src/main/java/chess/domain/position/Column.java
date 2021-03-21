@@ -44,4 +44,8 @@ public enum Column {
     public int diff(Column column) {
         return column.ordinal() - ordinal();
     }
+
+    public int unitDirection(Column to) {
+        return diff(to) / Math.abs(diff(to));
+    }
 }
