@@ -6,7 +6,6 @@ import chess.domain.position.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Queen extends Piece {
@@ -30,7 +29,7 @@ public class Queen extends Piece {
 
     @Override
     public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = makeRoutes2(basePieces);
+        List<Position> positions = makeRoutes2(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
     }
@@ -41,104 +40,108 @@ public class Queen extends Piece {
         }
     }
 
-    private List<Position> makeRoutes2(final Pieces pieces) {
+    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes2(pieces));
-        positions.addAll(makeDownRoutes2(pieces));
-        positions.addAll(makeLeftRoutes2(pieces));
-        positions.addAll(makeRightRoutes2(pieces));
-        positions.addAll(makeUpLeftRoutes2(pieces));
-        positions.addAll(makeUpRightRoutes2(pieces));
-        positions.addAll(makeDownLeftRoutes2(pieces));
-        positions.addAll(makeDownRightRoutes2(pieces));
+        positions.addAll(makeUpRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownRoutes2(basePieces, targetPieces));
+        positions.addAll(makeLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownRightRoutes2(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeRightRoutes2(final Pieces pieces) {
+    private List<Position> makeRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index < 8; index++) {
             Position nextPosition = Position.valueOf(rank, index + 1);
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeLeftRoutes2(final Pieces pieces) {
+    private List<Position> makeLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index > 1; index--) {
             Position nextPosition = Position.valueOf(rank, index - 1);
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeDownRoutes2(final Pieces pieces) {
+    private List<Position> makeDownRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index > 1; index--) {
             Position nextPosition = Position.valueOf(index - 1, file);
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpRoutes2(final Pieces pieces) {
+    private List<Position> makeUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index < 8; index++) {
             Position nextPosition = Position.valueOf(index + 1, file);
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes2(final Pieces pieces) {
+    private List<Position> makeDownRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -148,21 +151,22 @@ public class Queen extends Piece {
             if (file > 7) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
+    private List<Position> makeDownLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -172,21 +176,22 @@ public class Queen extends Piece {
             if (file < 1) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes2(final Pieces pieces) {
+    private List<Position> makeUpRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -196,21 +201,22 @@ public class Queen extends Piece {
             if (file > 7) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
+    private List<Position> makeUpLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
@@ -220,14 +226,15 @@ public class Queen extends Piece {
             if (file < 1) {
                 break;
             }
-            Optional<Piece> piece = pieces.findPiece(nextPosition);
-            if (!piece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!piece.get().isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
