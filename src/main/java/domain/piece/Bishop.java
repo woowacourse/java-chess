@@ -32,7 +32,7 @@ public class Bishop extends Piece {
             return false;
         }
 
-        Direction direction = Direction.findDiagonalDirection(start, end);
+        Direction direction = getDiagonalDirection(start, end);
         do {
             start = start.move(direction);
         } while (!start.equals(end) && isEmptyPosition(board, start));

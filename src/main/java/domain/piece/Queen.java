@@ -37,7 +37,8 @@ public class Queen extends Piece {
         if (!isLinear(start, end)) {
             return false;
         }
-        Direction direction = Direction.findLinearDirection(start, end);
+
+        Direction direction = getLinearDirection(start, end);
         do {
             start = start.move(direction);
         } while (!start.equals(end) && isEmptyPosition(board, start));
@@ -45,12 +46,13 @@ public class Queen extends Piece {
         return start.equals(end) && (isEmptyPosition(board, end) || !this.isSameColor(board.get(end)));
     }
 
+
     private boolean canMoveDiagonal(Map<Position, Piece> board, Position start, Position end) {
         if (!isDiagonal(start, end)) {
             return false;
         }
 
-        Direction direction = Direction.findDiagonalDirection(start, end);
+        Direction direction = getDiagonalDirection(start, end);
         do {
             start = start.move(direction);
         } while (!start.equals(end) && isEmptyPosition(board, start));

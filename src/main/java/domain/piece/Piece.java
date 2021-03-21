@@ -1,6 +1,7 @@
 package domain.piece;
 
 import domain.Color;
+import domain.Direction;
 import domain.Score;
 
 import java.util.Map;
@@ -45,6 +46,20 @@ public abstract class Piece {
 
     protected boolean isEmptyPosition(Map<Position, Piece> board, Position nextPosition) {
         return !board.containsKey(nextPosition);
+    }
+
+    protected Direction getLinearDirection(Position start, Position end) {
+        int rowDiff = end.getRow() - start.getRow();
+        int colDiff = end.getColumn() - start.getColumn();
+        Direction direction = Direction.findLinearDirection(rowDiff, colDiff);
+        return direction;
+    }
+
+    protected Direction getDiagonalDirection(Position start, Position end) {
+        int rowDiff = end.getRow() - start.getRow();
+        int colDiff = end.getColumn() - start.getColumn();
+        Direction direction = Direction.findDiagonalDirection(rowDiff, colDiff);
+        return direction;
     }
 
     public boolean isKingDead() {

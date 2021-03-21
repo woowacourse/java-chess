@@ -4,7 +4,6 @@ import domain.Direction;
 import domain.Score;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Rook extends Piece {
@@ -32,7 +31,7 @@ public class Rook extends Piece {
         if (!isLinear(start, end)) {
             return false;
         }
-        Direction direction = Direction.findLinearDirection(start, end);
+        Direction direction = getLinearDirection(start, end);
         do {
             start = start.move(direction);
         } while (!start.equals(end) && isEmptyPosition(board, start));

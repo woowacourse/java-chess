@@ -1,7 +1,5 @@
 package domain;
 
-import domain.piece.Position;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,29 +38,23 @@ public enum Direction {
         return y;
     }
 
-    public static Direction findDiagonalDirection(Position start, Position end) { // 4개의 대각선 중 방향을 체크한다.
-        int row = end.getRow() - start.getRow();
-        int col = end.getColumn() - start.getColumn();
-
-        if (row > 0 && col > 0) {
+    public static Direction findDiagonalDirection(int rowDiff, int colDiff) {
+        if (rowDiff > 0 && colDiff > 0) {
             return SOUTHEAST;
         }
 
-        if (row > 0 && col < 0) {
+        if (rowDiff > 0 && colDiff < 0) {
             return SOUTHWEST;
         }
 
-        if (row < 0 && col < 0) {
+        if (rowDiff < 0 && colDiff < 0) {
             return NORTHWEST;
         }
 
         return NORTHEAST;
     }
 
-    public static Direction findLinearDirection(Position start, Position end) {
-        int rowDiff = end.getRow() - start.getRow();
-        int colDiff = end.getColumn() - start.getColumn();
-
+    public static Direction findLinearDirection(int rowDiff, int colDiff) {
         if (rowDiff < 0) {
             return NORTH;
         }
@@ -84,6 +76,10 @@ public enum Direction {
 
     public static List<Direction> diagonalDirection() {
         return Arrays.asList(NORTHEAST, SOUTHEAST, SOUTHWEST, NORTHWEST);
+    }
+
+    public static List<Direction> verticalDirection() {
+        return Arrays.asList(SOUTH, NORTH);
     }
 
     public static List<Direction> knightDirection() {
