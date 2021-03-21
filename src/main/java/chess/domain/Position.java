@@ -61,12 +61,6 @@ public final class Position {
         return xDiff == 1 && yDiff == direction;
     }
 
-    public List<Position> generateDiagonalPath(final Position destination) {
-        final int xDiff = (destination.x - this.x);
-        final int yDiff = (destination.y - this.y);
-        return generateDiagonalPathByDiff(destination, xDiff, yDiff);
-    }
-
     public boolean checkKnightMoveRule(final Position destination) {
         final int xDiff = Math.abs(this.x - destination.x);
         final int yDiff = Math.abs(this.y - destination.y);
@@ -79,6 +73,12 @@ public final class Position {
 
     public boolean isEndRank() {
         return this.y == 0 || this.y == 7;
+    }
+
+    public List<Position> generateDiagonalPath(final Position destination) {
+        final int xDiff = (destination.x - this.x);
+        final int yDiff = (destination.y - this.y);
+        return generateDiagonalPathByDiff(destination, xDiff, yDiff);
     }
 
     private List<Position> generateDiagonalPathByDiff(final Position destination, final int xDiff, final int yDiff) {
