@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.State;
 import chess.domain.TeamColor;
+import chess.domain.player.Score;
 
 public class Blank implements Piece {
 
@@ -51,5 +52,10 @@ public class Blank implements Piece {
     @Override
     public String toString() {
         return " .\n";
+    }
+
+    @Override
+    public Score getScore() {
+        return null;
     }
 }

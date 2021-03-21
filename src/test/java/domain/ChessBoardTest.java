@@ -47,6 +47,11 @@ public class ChessBoardTest {
     void change_position_test() {
         chessBoard.move("b1", "c3");
         assertThat(chessBoard.getPiece(Position.valueOf("c3"))).isInstanceOf(Knight.class);
-
     }
+
+//    @Test
+//    @DisplayName("말 객체 갯수 테스트")
+//    void team_pieces_count_test() {
+//        chessBoard.getWhite
+//    }
 }

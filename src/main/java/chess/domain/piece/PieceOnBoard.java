@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.State;
 import chess.domain.TeamColor;
+import chess.domain.player.Score;
 
 public abstract class PieceOnBoard implements Piece {
 
@@ -60,7 +61,6 @@ public abstract class PieceOnBoard implements Piece {
     @Override
     public void dead() {
         state = State.DEAD;
-
     }
 
     @Override
@@ -70,6 +70,10 @@ public abstract class PieceOnBoard implements Piece {
 
     public Position getPosition() {
         return position;
+    }
+
+    public Score getScore() {
+        return new Score(pieceType.getScore());
     }
 
     @Override

@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.Position;
 import chess.domain.State;
 import chess.domain.TeamColor;
+import chess.domain.player.Score;
 
 public interface Piece {
 
@@ -20,4 +21,7 @@ public interface Piece {
     State getState();
 
     void setPosition(Position end);
+
+    Score getScore();
+
 }

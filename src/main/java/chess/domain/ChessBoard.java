@@ -8,21 +8,50 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
+import chess.domain.player.Pieces;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
 
     //TODO : King 이 dead 상태가 될 경우 게임 종료
     private final Map<Position, Piece> chessBoard;
+    private final Pieces whitePieces;
+    private final Pieces blackPieces;
 
     public ChessBoard() {
         this.chessBoard = new LinkedHashMap<>();
         initBoard();
+        this.whitePieces = initWhitePieces();
+        this.blackPieces = initBlackPieces();
+    }
+
+    private Pieces initWhitePieces() {
+        List<Piece> whitePieces = new ArrayList<>(16);
+        for (int j = 1; j <= 2; j++) {
+            for (char i = 'a'; i <= 'h'; i++) {
+                String boardPosition = "" + i + j;
+                whitePieces.add(chessBoard.get(Position.valueOf(boardPosition)));
+            }
+        }
+        return new Pieces(whitePieces);
+    }
+
+    private Pieces initBlackPieces() {
+
+        List<Piece> blackPieces = new ArrayList<>(16);
+        for (int j = 7; j <= 8; j++) {
+            for (char i = 'a'; i <= 'h'; i++) {
+                String boardPosition = "" + i + j;
+                blackPieces.add(chessBoard.get(Position.valueOf(boardPosition)));
+            }
+        }
+        return new Pieces(blackPieces);
     }
 
     private void initBoard() {
-
         for (int j = 1; j <= 8; j++) {
             for (char i = 'a'; i <= 'h'; i++) {
                 String boardPosition = "" + i + j;
@@ -85,18 +114,20 @@ public class ChessBoard {
         Position end = Position.valueOf(target);
         Piece startPiece = chessBoard.get(start);
         Piece goingToDie = chessBoard.get(end);
-        startPiece.setPosition(end);
+
         if (chessBoard.get(start).isMoveAble(start, end, this)) {
             //blank 경우
             if (chessBoard.get(end) == Blank.INSTANCE) {
                 chessBoard.put(start, Blank.INSTANCE);
                 chessBoard.put(end, startPiece);
+                startPiece.setPosition(end);
                 return;
             }
             // 상대편이 있는 경우
             goingToDie.dead();
             chessBoard.put(end, startPiece);
             chessBoard.put(start, Blank.INSTANCE);
+            startPiece.setPosition(end);
         }
 
     }
