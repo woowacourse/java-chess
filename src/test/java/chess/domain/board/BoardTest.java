@@ -60,7 +60,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("킹이 잡혔는지 확인하는 기능")
+    @DisplayName("두 플레이어 중 킹 체스말이 없는 플레이어가 있는지 확인하는 기능")
     void checkDieKing() {
         assertThat(board.isKingDead()).isFalse();
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
