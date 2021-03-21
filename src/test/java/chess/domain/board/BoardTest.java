@@ -84,7 +84,7 @@ class BoardTest {
     void checkBlankError() {
         assertThatThrownBy(
             () -> board.move(new Position("a", "3"), new Position("a", "5"), Team.WHITE))
-            .isInstanceOf(IllegalStateException.class)
+            .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("비어 있는 칸입니다.");
     }
 }

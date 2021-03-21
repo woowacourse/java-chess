@@ -14,7 +14,7 @@ public class BlankTest {
         final Piece blank = Blank.getInstance();
         assertThatThrownBy(() -> blank.canMove(new Position("e", "3"), new Position("e", "4"),
             new Queen(Team.WHITE)))
-            .isInstanceOf(IllegalStateException.class)
+            .isInstanceOf(UnsupportedOperationException.class)
             .hasMessage("비어 있는 칸입니다.");
     }
 }

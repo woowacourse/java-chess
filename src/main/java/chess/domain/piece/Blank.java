@@ -17,7 +17,7 @@ public class Blank extends Piece {
 
     @Override
     public boolean canMove(final Position source, final Position target, final Piece piece) {
-        throw new IllegalStateException("비어 있는 칸입니다.");
+        throw new UnsupportedOperationException("비어 있는 칸입니다.");
     }
 
     @Override

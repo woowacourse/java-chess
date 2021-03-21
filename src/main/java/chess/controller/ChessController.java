@@ -26,7 +26,7 @@ public class ChessController {
     private void proceedMain(final ChessGame chessGame) {
         try {
             proceed(chessGame);
-        } catch (IllegalStateException | IllegalArgumentException e) {
+        } catch (UnsupportedOperationException | IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
             proceedMain(chessGame);
         }
