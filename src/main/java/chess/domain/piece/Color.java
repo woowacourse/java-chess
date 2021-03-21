@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
+import java.util.Arrays;
 import java.util.function.UnaryOperator;
 
 public enum Color {
     BLACK(String::toUpperCase),
-    WHITE(String::toLowerCase),
-    NONE(notation -> notation);
+    WHITE(String::toLowerCase);
 
     private UnaryOperator<String> notationRule;
 
@@ -15,5 +15,12 @@ public enum Color {
 
     public String changeNotation(String notation){
         return notationRule.apply(notation);
+    }
+
+    public Color opposite() {
+        return Arrays.stream(values())
+                .filter(color -> this != color)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("반대되는 색상이 없습니다."));
     }
 }
