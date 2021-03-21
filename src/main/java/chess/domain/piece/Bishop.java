@@ -6,7 +6,6 @@ import chess.domain.position.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
 public class Bishop extends Piece {
@@ -34,11 +33,8 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
+    public void move(Target target, ChessBoard chessBoard) {
+
     }
 
     @Override
@@ -46,6 +42,7 @@ public class Bishop extends Piece {
         List<Position> positions = makeRoutes2(pieces);
         checkTarget(target, positions);
         pieces.changePiecePosition(this, target);
+        changePosition(target.getPosition());
     }
 
     private void checkTarget(Target target, List<Position> positions) {
@@ -60,15 +57,6 @@ public class Bishop extends Piece {
         positions.addAll(makeUpRightRoutes2(pieces));
         positions.addAll(makeDownLeftRoutes2(pieces));
         positions.addAll(makeDownRightRoutes2(pieces));
-        return positions;
-    }
-
-    private List<Position> makeRoutes(final ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpLeftRoutes(chessBoard));
-        positions.addAll(makeUpRightRoutes(chessBoard));
-        positions.addAll(makeDownLeftRoutes(chessBoard));
-        positions.addAll(makeDownRightRoutes(chessBoard));
         return positions;
     }
 
@@ -95,29 +83,6 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes(final ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
-            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
-            if (file > 7) {
-                break;
-            }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
-                positions.add(nextPosition);
-                break;
-            }
-            break;
-        }
-        return positions;
-    }
-
     private List<Position> makeDownLeftRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
@@ -134,29 +99,6 @@ public class Bishop extends Piece {
                 continue;
             }
             if (!piece.get().isSameColor(this)) {
-                positions.add(nextPosition);
-                break;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeDownLeftRoutes(final ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
-            Position nextPosition = Position.valueOf(rankIndex - 1, file-- - 1);
-            if (file < 1) {
-                break;
-            }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
@@ -189,29 +131,6 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
-            Position nextPosition = Position.valueOf(rankIndex + 1, file++ + 1);
-            if (file > 7) {
-                break;
-            }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
-                positions.add(nextPosition);
-                break;
-            }
-            break;
-        }
-        return positions;
-    }
-
     private List<Position> makeUpLeftRoutes2(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
@@ -228,29 +147,6 @@ public class Bishop extends Piece {
                 continue;
             }
             if (!piece.get().isSameColor(this)) {
-                positions.add(nextPosition);
-                break;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
-            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
-            if (file < 1) {
-                break;
-            }
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
                 positions.add(nextPosition);
                 break;
             }
