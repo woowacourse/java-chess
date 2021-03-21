@@ -1,5 +1,3 @@
-import static org.assertj.core.api.Assertions.assertThat;
-
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
@@ -9,6 +7,8 @@ import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class BoardTest {
 
@@ -81,8 +81,13 @@ public class BoardTest {
     @Test
     @DisplayName("킹이 잡히면 게임종료 테스트")
     void gameIsOverWhenKingIsDead() {
-        board.move(Point.of("e8"), Point.of("e3"));
-        chessGame.move(Point.of("d2"), Point.of("e3"), Team.WHITE);
+        board.move(Point.of("e7"), Point.of("e5"));
+        board.move(Point.of("e8"), Point.of("e7"));
+        board.move(Point.of("e7"), Point.of("e6"));
+        board.move(Point.of("e6"), Point.of("f5"));
+        chessGame.move(Point.of("d2"), Point.of("d4"), Team.WHITE);
+        chessGame.move(Point.of("d1"), Point.of("d3"), Team.WHITE);
+        chessGame.move(Point.of("d3"), Point.of("f5"), Team.WHITE);
 
         assertThat(board.isContinued()).isFalse();
     }

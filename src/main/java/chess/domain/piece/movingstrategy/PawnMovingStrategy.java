@@ -7,9 +7,9 @@ import java.util.List;
 
 public class PawnMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 1;
+    private static final int LENGTH = 2;
 
-    private final List<Vector> pawnsVector = Vector.pawnVectors();
+    private final List<Vector> pawnsVector = Vector.firstWhitePawnVectors();
 
     @Override
     public Vector findMovableVector(Point source, Point destination) {

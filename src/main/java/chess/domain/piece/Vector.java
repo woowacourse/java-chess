@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.board.Point;
+import chess.domain.board.Row;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,8 +36,12 @@ public enum Vector {
         this.vertical = vertical;
     }
 
-    public static List<Vector> pawnVectors() {
+    public static List<Vector> firstWhitePawnVectors() {
         return Arrays.asList(NORTH, FIRST_PAWN_UP);
+    }
+
+    public static List<Vector> firstBlackPawnVectors() {
+        return Arrays.asList(NORTH, FIRST_PAWN_DOWN);
     }
 
     public static List<Vector> everyVectors() {
@@ -67,12 +74,18 @@ public enum Vector {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean isWhitePawnsStraight() {
-        return Arrays.asList(NORTH, FIRST_PAWN_UP).contains(this);
+    public boolean isWhitePawnsStraight(Point source) {
+        if (source.isRow(Row.TWO)) {
+            return firstWhitePawnVectors().contains(this);
+        }
+        return this == NORTH;
     }
 
-    public boolean isBlackPawnsStraight() {
-        return Arrays.asList(SOUTH, FIRST_PAWN_DOWN).contains(this);
+    public boolean isBlackPawnsStraight(Point source) {
+        if (source.isRow(Row.SEVEN)) {
+            return firstBlackPawnVectors().contains(this);
+        }
+        return this == SOUTH;
     }
 
     public boolean isWhiteDiagonalVector() {

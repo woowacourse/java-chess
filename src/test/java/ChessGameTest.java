@@ -1,6 +1,3 @@
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
-
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
@@ -11,6 +8,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class ChessGameTest {
 
@@ -148,8 +148,8 @@ public class ChessGameTest {
     @Test
     @DisplayName("폰을 유효한 위치로 이동 테스트(대각선에 적이 있는 경우에만 대각선 이동 허용)")
     void pawnWithValidMoveWhenFindEnemy() {
-        board.move(Point.of("e7"), Point.of("e5"));
-        board.move(Point.of("d2"), Point.of("d4"));
+        chessGame.move(Point.of("e7"), Point.of("e5"), Team.BLACK);
+        chessGame.move(Point.of("d2"), Point.of("d4"), Team.WHITE);
         chessGame.move(Point.of("d4"), Point.of("e5"), Team.WHITE);
         assertThat(board.getSquareState(Point.of("e5")))
             .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
@@ -172,6 +172,18 @@ public class ChessGameTest {
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("b2"), Point.of("c3"), Team.WHITE)
         ).withMessage("불가능한 이동입니다.");
+    }
+
+    @Test
+    @DisplayName("폰 이동 테스트(적이 바로 앞에 있는 경우 2칸 이동 불가 테스트")
+    void testPawnMoveWhenFrontOfEnemy() {
+        chessGame.move(Point.of("d2"), Point.of("d4"), Team.WHITE);
+        chessGame.move(Point.of("d7"), Point.of("d5"), Team.BLACK);
+        chessGame.move(Point.of("c1"), Point.of("h6"), Team.WHITE);
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> chessGame.move(Point.of("h7"), Point.of("h5"), Team.BLACK))
+        .withMessage("불가능한 이동입니다.")
+        ;
     }
 
     @Test
