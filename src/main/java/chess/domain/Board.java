@@ -111,7 +111,7 @@ public class Board {
 
     private void validateNextPoint(Point point) {
         if (!selectPiece(point).isEmptyPiece()) {
-            throw new IllegalArgumentException("이동할 수 없습니다.");
+            throw new IllegalArgumentException("가는 길이 막혀 있어 이동할 수 없습니다.");
         }
     }
 
