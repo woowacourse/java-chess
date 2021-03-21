@@ -1,5 +1,6 @@
 package domain;
 
+import domain.piece.Empty;
 import domain.piece.King;
 import domain.piece.Piece;
 import domain.piece.Position;
@@ -47,5 +48,12 @@ class BoardTest {
     void correct_user_turn_check() {
         Board board = new Board(pieces);
         assertThat(board.canMovable(Position.of("a7"), true)).isTrue();
+    }
+
+    @DisplayName("빈 칸의 기물을 가져오는 경우 empty가 반환된다.")
+    @Test
+    void get_piece_in_board_if_piece_not_exist() {
+        Board board = new Board(pieces);
+        assertThat(board.getPiece(Position.of("a6"))).isInstanceOf(Empty.class);
     }
 }

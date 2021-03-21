@@ -1,5 +1,6 @@
 package domain.piece;
 
+import domain.Color;
 import domain.Score;
 
 import java.util.Map;
@@ -8,26 +9,26 @@ import java.util.Objects;
 public abstract class Piece {
     private final Name name;
     private final Score score;
-    private final boolean isBlack;
+    private final Color color;
 
     public abstract boolean canMove2(Map<Position, Piece> board, Position start, Position end);
 
     public Piece(String name, Score score, boolean isBlack) {
         this.name = Name.of(name, isBlack);
         this.score = score;
-        this.isBlack = isBlack;
+        this.color = Color.of(isBlack);
     }
 
     public Score getScore() {
         return score;
     }
 
-    public boolean isSameColor(boolean color) {
-        return this.isBlack == color;
+    public boolean isSameColor(boolean value) {
+        return color.equals(Color.of(value));
     }
 
     public boolean isSameColor(Piece piece) {
-        return this.isBlack == piece.isBlack;
+        return color.equals(piece.color);
     }
 
     protected boolean isDiagonal(Position start, Position end) {
@@ -55,11 +56,11 @@ public abstract class Piece {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Piece piece = (Piece) o;
-        return isBlack == piece.isBlack && Objects.equals(name, piece.name) && Objects.equals(score, piece.score);
+        return color == piece.color && Objects.equals(name, piece.name) && Objects.equals(score, piece.score);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, score, isBlack);
+        return Objects.hash(name, score, color);
     }
 }
