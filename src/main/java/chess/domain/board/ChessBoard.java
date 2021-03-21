@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.piece.*;
 
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,14 +43,9 @@ public class ChessBoard {
 		replace(Position.of("g8"), new Knight(Color.BLACK, Position.of("g8")));
 		replace(Position.of("h8"), new Rook(Color.BLACK, Position.of("h8")));
 
-		replace(Position.of("a7"), new Pawn(Color.BLACK, Position.of("a7")));
-		replace(Position.of("b7"), new Pawn(Color.BLACK, Position.of("b7")));
-		replace(Position.of("c7"), new Pawn(Color.BLACK, Position.of("c7")));
-		replace(Position.of("d7"), new Pawn(Color.BLACK, Position.of("d7")));
-		replace(Position.of("e7"), new Pawn(Color.BLACK, Position.of("e7")));
-		replace(Position.of("f7"), new Pawn(Color.BLACK, Position.of("f7")));
-		replace(Position.of("g7"), new Pawn(Color.BLACK, Position.of("g7")));
-		replace(Position.of("h7"), new Pawn(Color.BLACK, Position.of("h7")));
+		for (String position : Arrays.asList("a7", "b7", "c7", "d7", "e7", "f7", "g7", "h7")) {
+			replace(Position.of(position), new Pawn(Color.BLACK, Position.of(position)));
+		}
 	}
 
 	private void initWhite() {
@@ -62,14 +58,9 @@ public class ChessBoard {
 		replace(Position.of("g1"), new Knight(Color.WHITE, Position.of("g1")));
 		replace(Position.of("h1"), new Rook(Color.WHITE, Position.of("h1")));
 
-		replace(Position.of("a2"), new Pawn(Color.WHITE, Position.of("a2")));
-		replace(Position.of("b2"), new Pawn(Color.WHITE, Position.of("b2")));
-		replace(Position.of("c2"), new Pawn(Color.WHITE, Position.of("c2")));
-		replace(Position.of("d2"), new Pawn(Color.WHITE, Position.of("d2")));
-		replace(Position.of("e2"), new Pawn(Color.WHITE, Position.of("e2")));
-		replace(Position.of("f2"), new Pawn(Color.WHITE, Position.of("f2")));
-		replace(Position.of("g2"), new Pawn(Color.WHITE, Position.of("g2")));
-		replace(Position.of("h2"), new Pawn(Color.WHITE, Position.of("h2")));
+		for (String position : Arrays.asList("a2", "b2", "c2", "d2", "e2", "f2", "g2", "h2")) {
+			replace(Position.of(position), new Pawn(Color.WHITE, Position.of(position)));
+		}
 	}
 
 	public void move(Position sourcePosition, Position targetPosition) {
