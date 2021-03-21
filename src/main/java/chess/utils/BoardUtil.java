@@ -34,10 +34,10 @@ public class BoardUtil {
     }
 
     public static Board generateInitialBoard() {
-        return generateBoard(INITIAL_BOARD);
+        return convertToBoard(INITIAL_BOARD);
     }
 
-    public static Board generateBoard(char[][] board) {
+    public static Board convertToBoard(char[][] board) {
         List<Piece> pieces = new ArrayList<>();
         for (int y = 0; y < BOARD_SIZE; y++) {
             for (int x = 0; x < BOARD_SIZE; x++) {

@@ -29,7 +29,7 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         initialBoard = BoardUtil.generateInitialBoard();
-        testBoard = BoardUtil.generateBoard(TEST_BOARD);
+        testBoard = BoardUtil.convertToBoard(TEST_BOARD);
     }
 
     @DisplayName("체스 말은 시작위치와 목표위치가 같으면 이동하지 못한다.")
