@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CurrentPieces {
 
@@ -46,26 +45,23 @@ public class CurrentPieces {
         return 2 == (int) currentPieces.stream().filter(piece -> piece instanceof King).count();
     }
 
-
     public double sumScoreByColor(Color color) {
-        int count = 0;
-        for (int i = 0; i < Position.ROW.length(); i++) {
-            int index = i;
-            int temp = (int) currentPieces.stream()
-                    .filter(piece -> piece instanceof Pawn)
-                    .filter(piece -> piece.getColor().isSame(color))
-                    .filter(piece -> piece.getPosition().getX() == Position.ROW.charAt(index))
-                    .count();
-            if (temp >= 2) {
-                count += temp;
-            }
-        }
-        double subtractCount = 0.5;
-
+        Map<Object, Long> pawns = collectPawnCountsByRow(color);
+        int count = (int) pawns.keySet().stream()
+                .filter(character -> pawns.get(character) >= 2)
+                .mapToLong(character -> pawns.get(character))
+                .sum();
         return currentPieces.stream()
                 .filter(piece -> piece.getColor().isSame(color))
                 .mapToDouble(piece -> piece.getScore().getValue())
-                .sum() - (count * subtractCount);
+                .sum() - (count * 0.5);
+    }
+
+    private Map<Object, Long> collectPawnCountsByRow(Color color) {
+        return currentPieces.stream()
+                .filter(piece -> piece instanceof Pawn)
+                .filter(piece -> piece.getColor().isSame(color))
+                .collect(Collectors.groupingBy(piece -> piece.getPosition().getX(), Collectors.counting()));
     }
 
     public void removePieceIfNotEmpty(Piece targetPiece) {
