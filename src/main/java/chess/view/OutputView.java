@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.Player;
 import chess.domain.piece.Color;
 
 import java.util.Map;
@@ -30,5 +31,9 @@ public class OutputView {
 
     public static void printError(String errorMessage) {
         System.out.println("[ERROR] " + errorMessage);
+    }
+
+    public static void printCurrentPlayer(Player player) {
+        System.out.println(NEWLINE + "현재 플레이어는 : " + player.getColor().name());
     }
 }

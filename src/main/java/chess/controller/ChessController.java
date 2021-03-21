@@ -45,6 +45,7 @@ public class ChessController {
     }
 
     private void tryOneTurn(Game game) {
+        OutputView.printCurrentPlayer(game.currentPlayer());
         List<String> positions = InputView.requestPositions();
         String from = positions.get(0);
         String to = positions.get(1);
