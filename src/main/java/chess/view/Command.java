@@ -25,7 +25,6 @@ public enum Command {
     STATUS("STATUS", false) {
         @Override
         public void execute(ChessGame chessGame) {
-
         }
     };
 
