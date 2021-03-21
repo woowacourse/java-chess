@@ -32,7 +32,7 @@ public class Board {
         Cell cell = new Cell(piecesSetting.get(index));
         cells.put(position, cell);
         if (!cell.isEmpty()) {
-            players.give(cell.piece(), position);
+            players.add(cell.piece(), position);
         }
     }
 
@@ -44,13 +44,19 @@ public class Board {
         Cell startPositionCell = cells.get(moveRoute.startPosition());
         validateOwnPiece(currentTurnTeamColor, startPositionCell);
         validateDestination(moveRoute, startPositionCell);
-
+        updatePiecesOfPlayers(moveRoute, startPositionCell);
         Cell destinationCell = cells.get(moveRoute.destination());
         if (!destinationCell.isEmpty()) {
             Piece deadPiece = destinationCell.piece();
-            removeDeadPieceOfPlayer(deadPiece, moveRoute.destination());
+            players.remove(deadPiece, moveRoute.destination());
         }
         startPositionCell.movePieceTo(destinationCell);
+    }
+
+    private void updatePiecesOfPlayers(MoveRoute moveRoute, Cell startPositionCell) {
+        Piece movingPiece = startPositionCell.piece();
+        players.remove(movingPiece, moveRoute.startPosition());
+        players.add(movingPiece, moveRoute.destination());
     }
 
 
@@ -94,10 +100,6 @@ public class Board {
     public boolean isCellEmptyOrEnemyExists(Position position, TeamColor teamColor) {
         Cell cell = find(position);
         return cell.isEmpty() || cell.teamColor() != teamColor;
-    }
-
-    private void removeDeadPieceOfPlayer(Piece deadPiece, Position position) {
-        players.remove(deadPiece, position);
     }
 
     public boolean isKingDead() {

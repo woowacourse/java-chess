@@ -49,7 +49,7 @@ public class OutputView {
     public static void printScores(ScoresDTO scoresDTO) {
         double blackTeamScore = scoresDTO.blackPlayerScore();
         double whiteTeamScore = scoresDTO.whitePlayerScore();
-        System.out.printf("흑팀 점수 : %.1f, 백팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
+        System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 
     public static void printWinnerTeamColor(TeamColor winnerTeamColor) {

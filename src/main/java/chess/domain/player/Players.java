@@ -18,7 +18,7 @@ public class Players {
         players.addAll(Arrays.asList(new Player(BLACK), new Player(WHITE)));
     }
 
-    public void give(Piece piece, Position position) {
+    public void add(Piece piece, Position position) {
         Player player = findPlayerByTeamColor(piece.color());
         player.give(piece, position);
     }
