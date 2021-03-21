@@ -29,4 +29,19 @@ public final class Blank extends Piece {
     public double getScore() {
         return 0;
     }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -39,7 +39,7 @@ public final class Board {
     }
 
     public void validateRightTurn(final Position source, final Team team) {
-        if (chessBoard.get(source) instanceof Blank) {
+        if (chessBoard.get(source).isBlank()) {
             return;
         }
         if (!chessBoard.get(source).isSameTeam(team)) {
@@ -66,7 +66,7 @@ public final class Board {
     }
 
     private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
-        if (chessBoard.get(source) instanceof Pawn) {
+        if (chessBoard.get(source).isPawn()) {
             return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
         }
         return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
@@ -85,12 +85,12 @@ public final class Board {
 
     private boolean hasNoPiecesInPath(final List<Position> paths) {
         return paths.stream()
-            .allMatch(path -> chessBoard.get(path) instanceof Blank);
+            .allMatch(path -> chessBoard.get(path).isBlank());
     }
 
     public boolean isKingDead() {
         return chessBoard.values().stream()
-            .filter(piece -> piece instanceof King)
+            .filter(Piece::isKing)
             .count() != Team.playerNumber();
     }
 }

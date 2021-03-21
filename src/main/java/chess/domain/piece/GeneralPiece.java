@@ -23,4 +23,19 @@ public abstract class GeneralPiece extends Piece {
     }
 
     protected abstract List<Direction> createPossibleDirections();
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

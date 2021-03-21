@@ -27,4 +27,9 @@ public final class King extends GeneralPiece {
     public double getScore() {
         return SCORE;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

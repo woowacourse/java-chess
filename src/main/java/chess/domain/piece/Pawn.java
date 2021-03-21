@@ -38,6 +38,21 @@ public final class Pawn extends Piece {
         return SCORE;
     }
 
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
     private List<Integer> subtractByTeam(final Position source, final Position target) {
         if (team() == Team.BLACK) {
             return source.subtract(target);
@@ -47,13 +62,13 @@ public final class Pawn extends Piece {
 
     private boolean checkPossible(final Direction direction, final Piece piece, final Vertical vertical) {
         if (direction == Direction.NORTH) {
-            return piece instanceof Blank;
+            return piece.isBlank();
         }
         if (direction == Direction.NORTHEAST || direction == Direction.NORTHWEST) {
             return piece.isOpponent(this);
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece instanceof Blank;
+            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece.isBlank();
         }
         return false;
     }

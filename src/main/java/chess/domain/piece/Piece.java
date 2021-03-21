@@ -41,6 +41,12 @@ public abstract class Piece {
 
     public abstract double getScore();
 
+    public abstract boolean isPawn();
+
+    public abstract boolean isBlank();
+
+    public abstract boolean isKing();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
