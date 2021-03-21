@@ -1,23 +1,17 @@
 package chess.domain.piece;
 
-import java.util.List;
+import chess.domain.game.Board;
+
 import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
     
-    protected static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
     protected final Color color;
-    protected final Position position;
+    protected final DirectionGroup directionGroup;
     
-    public AbstractPiece(Color color, Position position) {
+    public AbstractPiece(Color color, DirectionGroup directionGroup) {
         this.color = color;
-        this.position = position;
-    }
-    
-    protected Direction findDirection(Position position, List<Direction> directions, int ableLength) {
-        return directions.stream()
-                         .filter(direction -> this.position.canMove(position, direction, ableLength))
-                         .findAny().orElseThrow(() -> new IllegalArgumentException(ERROR_CAN_NOT_MOVE));
+        this.directionGroup = directionGroup;
     }
     
     protected String changeColorSymbol(String symbol) {
@@ -36,34 +30,28 @@ public abstract class AbstractPiece implements Piece {
             return false;
         }
         AbstractPiece that = (AbstractPiece) o;
-        return color == that.color && Objects.equals(position, that.position);
+        return color == that.color;
     }
     
     @Override
     public int hashCode() {
-        return Objects.hash(color, position);
+        return Objects.hash(color);
     }
     
     @Override
-    public boolean isSameColor(Color color) {
-        return color == this.color;
+    public boolean isSameColorAs(Color color) {
+        return this.color == color;
     }
     
-    // todo - 함수명 변경 후 즉시 에러 출력
-    protected boolean isObstacleAtDirection(Position position, Direction direction, List<List<Piece>> board) {
-        // todo - 인덴트 줄이기
-        int dx = this.position.getX().getPoint();
-        int dy = this.position.getY().getPoint();
-        for (int i = 1; i < 7; i++) {
-            dx += direction.getYDegree();
-            dy += direction.getXDegree();
-            if (dy < 0 || dy > 7 || dx < 0 || dx > 7) {
-                break;
+    protected boolean isObstacleAtDirection(Position sourcePosition, Position targetPosition, Direction direction,
+                                            Board board) {
+        while (sourcePosition.isInRange()) {
+            sourcePosition = direction.addDegreeTo(sourcePosition);
+            if (sourcePosition.equals(targetPosition)) {
+                return false;
             }
-            if (dy == position.getY().getPoint() && dx == position.getX().getPoint()) {
-                break;
-            }
-            if (!board.get(dx).get(dy).isSameColor(Color.BLANK)){
+
+            if (!board.isBlank(sourcePosition)) {
                 return true;
             }
         }
