@@ -22,7 +22,6 @@ class ScoreMachineTest {
             put(Position.of("f3"), Bishop.of("B", true));
         }};
         Board board = new Board(pieces);
-        System.out.println(ScoreMachine.blackPiecesScore(board).getScore());
         assertThat(ScoreMachine.blackPiecesScore(board)).isEqualTo(Score.of(17));
     }
 

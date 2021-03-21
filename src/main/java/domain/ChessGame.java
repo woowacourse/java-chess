@@ -1,26 +1,38 @@
 package domain;
 
+import controller.menu.End;
+import domain.exception.ImmovableSamePositionException;
+import domain.exception.InvalidMoveException;
 import domain.piece.Piece;
 import domain.piece.Position;
+import domain.score.Score;
+import domain.score.ScoreMachine;
+import domain.state.Finished;
+import domain.state.Running;
+import domain.state.State;
+import domain.state.Wait;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
-    private boolean running;
+    private State state = new Wait();
+    private boolean turn = false;
     private Board board;
 
-    public ChessGame(Map<Position, Piece> pieces) {
-        this.running = true;
+    public void start(Map<Position, Piece> pieces) {
+        state = new Running();
         board = new Board(pieces);
     }
 
-    public void move(Position start, Position end, boolean turn) {
-        if (movablePiece(start, end, turn)) {
-            Piece endPiece = board.getPiece(end);
-            board.move(start, end);
-            isKingDead(endPiece);
+    public void move(Position start, Position end) {
+        if (!movablePiece(start, end, turn)) {
+            throw new InvalidMoveException();
         }
+        Piece endPiece = board.getPiece(end);
+        board.move(start, end);
+        isKingDead(endPiece);
+        turn = !turn;
     }
 
     private boolean movablePiece(Position start, Position end, boolean turn) {
@@ -30,18 +42,14 @@ public class ChessGame {
 
     private void isKingDead(Piece endPiece) {
         if (endPiece.isKingDead()) {
-            running = false;
+            state = new Finished();
         }
     }
 
     private void checkSamePosition(Position start, Position end) {
         if (start.equals(end)) {
-            throw new IllegalArgumentException("현재 위치와 이동 위치가 같습니다.");
+            throw new ImmovableSamePositionException();
         }
-    }
-
-    public boolean isRunning() {
-        return running;
     }
 
     public Map<Boolean, Score> piecesScore() {
@@ -53,5 +61,21 @@ public class ChessGame {
 
     public Board getBoard() {
         return board;
+    }
+
+    public void end() {
+        state = new Finished();
+    }
+
+    public boolean isRunning() {
+        return state instanceof Running;
+    }
+
+    public boolean isWait() {
+        return state instanceof Wait;
+    }
+
+    public boolean isEnd() {
+        return state instanceof Finished;
     }
 }
