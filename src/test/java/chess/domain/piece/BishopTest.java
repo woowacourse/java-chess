@@ -35,15 +35,15 @@ class BishopTest {
     void moveTargetPosition() {
         Source bishop = Source.valueOf(D6, white);
         Target target = Target.valueOf(bishop, C7, white);
-        bishop.move2(target, white.pieces(), black.pieces());
+        bishop.move(target, white.pieces(), black.pieces());
         assertThat(bishop.isSamePosition(C7)).isEqualTo(true);
 
-        bishop.move2(Target.valueOf(bishop, D6, white), white.pieces(), black.pieces());
-        bishop.move2(Target.valueOf(bishop, E7, white), white.pieces(), black.pieces());
+        bishop.move(Target.valueOf(bishop, D6, white), white.pieces(), black.pieces());
+        bishop.move(Target.valueOf(bishop, E7, white), white.pieces(), black.pieces());
         assertThat(bishop.isSamePosition(E7)).isEqualTo(true);
 
-        bishop.move2(Target.valueOf(bishop, D6, white), white.pieces(), black.pieces());
-        bishop.move2(Target.valueOf(bishop, E5, white), white.pieces(), black.pieces());
+        bishop.move(Target.valueOf(bishop, D6, white), white.pieces(), black.pieces());
+        bishop.move(Target.valueOf(bishop, E5, white), white.pieces(), black.pieces());
         assertThat(bishop.isSamePosition(E5)).isEqualTo(true);
     }
 
@@ -53,7 +53,7 @@ class BishopTest {
         Source bishop = Source.valueOf(D6, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            bishop.move2(Target.valueOf(bishop, B7, white), white.pieces(), black.pieces());
+            bishop.move(Target.valueOf(bishop, B7, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", B7);
         assertThat(bishop.isSamePosition(D6)).isEqualTo(true);
     }
@@ -64,7 +64,7 @@ class BishopTest {
         Source bishop = Source.valueOf(D6, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            bishop.move2(Target.valueOf(bishop, C5, white), white.pieces(), black.pieces());
+            bishop.move(Target.valueOf(bishop, C5, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", C5);
         assertThat(bishop.isSamePosition(D6)).isEqualTo(true);
     }
@@ -73,7 +73,7 @@ class BishopTest {
     @Test
     void moveTargetDownPositionException() {
         Source bishop = Source.valueOf(D6, white);
-        bishop.move2(Target.valueOf(bishop, F8, white), white.pieces(), black.pieces());
+        bishop.move(Target.valueOf(bishop, F8, white), white.pieces(), black.pieces());
         assertThat(bishop.isSamePosition(F8)).isEqualTo(true);
     }
 }

@@ -35,11 +35,7 @@ public class Source {
         return this.piece.isSamePosition(piece);
     }
 
-    public void move(final Target target, final ChessBoard chessBoard) {
-        piece.move(target, chessBoard);
-    }
-
-    public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
-        piece.move2(target, basePieces, targetPieces);
+    public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+        piece.move(target, basePieces, targetPieces);
     }
 }

@@ -4,23 +4,34 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
+import chess.domain.state.State;
+import chess.domain.state.StateFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
+
 import static chess.domain.piece.PositionTexture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 class PieceTest {
-    private static ChessBoard chessBoard;
+    private static State white;
+    private static State black;
 
     @BeforeEach
     void init() {
-        chessBoard = new ChessBoard(ChessBoardFactory.initializeBoard());
-        chessBoard.initializeBoard();
+        white = StateFactory.initialization(new Pieces(
+                Arrays.asList(
+                        King.from("k", E4),
+                        Pawn.from("p", E5))));
+        black = StateFactory.initialization(new Pieces(
+                Arrays.asList(
+                        Bishop.from("B", F3),
+                        Rook.from("R", D5))));
     }
 
     @DisplayName("Piece 정상 생성 테스트.")
@@ -94,20 +105,20 @@ class PieceTest {
     @DisplayName("source에서 선택한 말과 target의 말이 같은 색깔이면 예외가 발생한다.")
     @Test
     void samePieceChoiceException() {
-        Source source = Source.valueOf(A2, chessBoard);
+        Source source = Source.valueOf(E4, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            source.move(Target.valueOf(source, B2, chessBoard), chessBoard);
-        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", B2);
+            source.move(Target.valueOf(source, E5, white), white.pieces(), black.pieces());
+        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", E5);
     }
 
     @DisplayName("source에서 선택한 위치와 target의 위치가 같으면 에러가 발생한다.")
     @Test
     void samePositionException() {
-        Source source = Source.valueOf(A2, chessBoard);
+        Source source = Source.valueOf(E4, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            source.move(Target.valueOf(source, A2, chessBoard), chessBoard);
-        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", A2);
+            source.move(Target.valueOf(source, E4, white), white.pieces(), black.pieces());
+        }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", E4);
     }
 }

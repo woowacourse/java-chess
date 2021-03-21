@@ -34,19 +34,19 @@ class RookTest {
     @Test
     void moveTargetPosition() {
         Source rook = Source.valueOf(B3, white);
-        rook.move2(Target.valueOf(rook, D3, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, D3, white), white.pieces(), black.pieces());
         assertThat(rook.isSamePosition(D3)).isEqualTo(true);
 
-        rook.move2(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
-        rook.move2(Target.valueOf(rook, A3, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, A3, white), white.pieces(), black.pieces());
         assertThat(rook.isSamePosition(A3)).isEqualTo(true);
 
-        rook.move2(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
-        rook.move2(Target.valueOf(rook, B5, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B5, white), white.pieces(), black.pieces());
         assertThat(rook.isSamePosition(B5)).isEqualTo(true);
 
-        rook.move2(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
-        rook.move2(Target.valueOf(rook, B1, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B3, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B1, white), white.pieces(), black.pieces());
         assertThat(rook.isSamePosition(B1)).isEqualTo(true);
     }
 
@@ -56,10 +56,10 @@ class RookTest {
         Source rook = Source.valueOf(B3, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            rook.move2(Target.valueOf(rook, F3, white), white.pieces(), black.pieces());
+            rook.move(Target.valueOf(rook, F3, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", F3);
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            rook.move2(Target.valueOf(rook, B7, white), white.pieces(), black.pieces());
+            rook.move(Target.valueOf(rook, B7, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", B7);
         assertThat(rook.isSamePosition(B3)).isEqualTo(true);
     }
@@ -70,7 +70,7 @@ class RookTest {
         Source rook = Source.valueOf(B3, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            rook.move2(Target.valueOf(rook, E3, white), white.pieces(), black.pieces());
+            rook.move(Target.valueOf(rook, E3, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", E3);
         assertThat(rook.isSamePosition(B3)).isEqualTo(true);
     }
@@ -79,7 +79,7 @@ class RookTest {
     @Test
     void moveTargetDownPositionException() {
         Source rook = Source.valueOf(B3, white);
-        rook.move2(Target.valueOf(rook, B1, white), white.pieces(), black.pieces());
+        rook.move(Target.valueOf(rook, B1, white), white.pieces(), black.pieces());
         assertThat(rook.isSamePosition(B1)).isEqualTo(true);
     }
 }

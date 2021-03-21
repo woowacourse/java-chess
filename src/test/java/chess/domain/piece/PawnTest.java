@@ -54,7 +54,7 @@ class PawnTest {
     void firstMove(Position position, boolean canMove) {
         Source pawn = Source.valueOf(B2, white);
 
-        pawn.move2(Target.valueOf(pawn, position, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, position, white), white.pieces(), black.pieces());
         assertThat(pawn.isSamePosition(position)).isEqualTo(canMove);
     }
 
@@ -63,7 +63,7 @@ class PawnTest {
     void firstMoveKill() {
         Source pawn = Source.valueOf(B2, white);
 
-        pawn.move2(Target.valueOf(pawn, C3, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, C3, white), white.pieces(), black.pieces());
         assertThat(pawn.isSamePosition(C3)).isEqualTo(true);
     }
 
@@ -73,7 +73,7 @@ class PawnTest {
         Source pawn = Source.valueOf(F2, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            pawn.move2(Target.valueOf(pawn, G3, white), white.pieces(), black.pieces());
+            pawn.move(Target.valueOf(pawn, G3, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", G3);
         assertThat(pawn.isSamePosition(F2)).isEqualTo(true);
     }
@@ -84,7 +84,7 @@ class PawnTest {
         Source pawn = Source.valueOf(B2, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            pawn.move2(Target.valueOf(pawn, B5, white), white.pieces(), black.pieces());
+            pawn.move(Target.valueOf(pawn, B5, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", B5);
         assertThat(pawn.isSamePosition(B2)).isEqualTo(true);
     }
@@ -95,7 +95,7 @@ class PawnTest {
         Source pawn = Source.valueOf(F2, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            pawn.move2(Target.valueOf(pawn, F4, white), white.pieces(), black.pieces());
+            pawn.move(Target.valueOf(pawn, F4, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", F4);
         assertThat(pawn.isSamePosition(F2)).isEqualTo(true);
     }
@@ -106,8 +106,8 @@ class PawnTest {
     void afterFirstMove() {
         Source pawn = Source.valueOf(D5, white);
 
-        pawn.move2(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
-        pawn.move2(Target.valueOf(pawn, D7, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, D7, white), white.pieces(), black.pieces());
 
         assertThat(pawn.isSamePosition(D7)).isEqualTo(true);
     }
@@ -116,10 +116,10 @@ class PawnTest {
     @Test
     void afterFirstMoveException() {
         Source pawn = Source.valueOf(D5, white);
-        pawn.move2(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            pawn.move2(Target.valueOf(pawn, D8, white), white.pieces(), black.pieces());
+            pawn.move(Target.valueOf(pawn, D8, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", D8);
         assertThat(pawn.isSamePosition(D6)).isEqualTo(true);
     }
@@ -129,8 +129,8 @@ class PawnTest {
     void afterFirstMoveKill() {
         Source pawn = Source.valueOf(D5, white);
 
-        pawn.move2(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
-        pawn.move2(Target.valueOf(pawn, E7, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, E7, white), white.pieces(), black.pieces());
 
         assertThat(pawn.isSamePosition(E7)).isEqualTo(true);
     }
@@ -139,10 +139,10 @@ class PawnTest {
     @Test
     void afterFirstMoveKillException() {
         Source pawn = Source.valueOf(D5, white);
-        pawn.move2(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
+        pawn.move(Target.valueOf(pawn, D6, white), white.pieces(), black.pieces());
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            pawn.move2(Target.valueOf(pawn, C7, white), white.pieces(), black.pieces());
+            pawn.move(Target.valueOf(pawn, C7, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", C7);
         assertThat(pawn.isSamePosition(D6)).isEqualTo(true);
     }

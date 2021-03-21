@@ -41,27 +41,27 @@ class KnightTest {
         Source knight = Source.valueOf(D4, white);
         Target target = Target.valueOf(knight, E6, white);
 
-        knight.move2(target, white.pieces(), black.pieces());
+        knight.move(target, white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(E6)).isEqualTo(true);
 
-        knight.move2(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
-        knight.move2(Target.valueOf(knight, C6, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, C6, white), white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(C6)).isEqualTo(true);
 
-        knight.move2(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
-        knight.move2(Target.valueOf(knight, B5, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, B5, white), white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(B5)).isEqualTo(true);
 
-        knight.move2(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
-        knight.move2(Target.valueOf(knight, B3, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, B3, white), white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(B3)).isEqualTo(true);
 
-        knight.move2(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
-        knight.move2(Target.valueOf(knight, C2, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, C2, white), white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(C2)).isEqualTo(true);
 
-        knight.move2(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
-        knight.move2(Target.valueOf(knight, E2, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, D4, white), white.pieces(), black.pieces());
+        knight.move(Target.valueOf(knight, E2, white), white.pieces(), black.pieces());
         assertThat(knight.isSamePosition(E2)).isEqualTo(true);
     }
 
@@ -71,7 +71,7 @@ class KnightTest {
         Source knight = Source.valueOf(D4, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            knight.move2(Target.valueOf(knight, D6, white), white.pieces(), black.pieces());
+            knight.move(Target.valueOf(knight, D6, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", D6);
         assertThat(knight.isSamePosition(D4)).isEqualTo(true);
     }
@@ -82,7 +82,7 @@ class KnightTest {
         Source knight = Source.valueOf(D4, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            knight.move2(Target.valueOf(knight, F5, white), white.pieces(), black.pieces());
+            knight.move(Target.valueOf(knight, F5, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", F5);
         assertThat(knight.isSamePosition(D4)).isEqualTo(true);
     }

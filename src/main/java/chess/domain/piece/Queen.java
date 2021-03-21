@@ -24,11 +24,7 @@ public class Queen extends Piece {
     }
 
     @Override
-    public void move(final Target target, final ChessBoard chessBoard) {
-    }
-
-    @Override
-    public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+    public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
