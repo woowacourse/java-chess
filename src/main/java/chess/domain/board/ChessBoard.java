@@ -72,9 +72,7 @@ public class ChessBoard {
 		replace(Position.of("h2"), new Pawn(Color.WHITE, Position.of("h2")));
 	}
 
-	public void move(String source, String target) {
-		Position sourcePosition = Position.of(source);
-		Position targetPosition = Position.of(target);
+	public void move(Position sourcePosition, Position targetPosition) {
 		Direction direction = Path.findDirection(this, sourcePosition, targetPosition);
 
 		Piece sourcePiece = getPiece(sourcePosition);
@@ -97,7 +95,7 @@ public class ChessBoard {
 		return board.get(position);
 	}
 
-	public boolean bothKingsAlive() {
+	public boolean isOngoing() {
 		long kingCount = board.values()
 				.stream()
 				.filter(Piece::isKing)
@@ -105,14 +103,19 @@ public class ChessBoard {
 		return kingCount == NUMBER_OF_KINGS;
 	}
 
+	public boolean isNotCorrectTurn(Position position, Color turn) {
+		Piece sourcePiece = board.get(position);
+		return !sourcePiece.isSameColor(turn);
+	}
+
 	public double getScore(Color color) {
-		double score = calculateScore(color);
+		double score = calculateScoreBeforePunishment(color);
 		Map<Column, Long> pawnCountPerColumn = calculatePawnCount(color);
 		double punishmentScore = calculatePunishmentScore(pawnCountPerColumn);
 		return score - punishmentScore;
 	}
 
-	private double calculateScore(Color color) {
+	private double calculateScoreBeforePunishment(Color color) {
 		return board.values()
 				.stream()
 				.filter(piece -> piece.isSameColor(color))

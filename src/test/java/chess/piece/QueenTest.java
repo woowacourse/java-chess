@@ -23,8 +23,8 @@ public class QueenTest {
 	@DisplayName("퀸이 빈 공간으로 제대로 이동하는지")
 	@Test
 	void moveQueen_blank_movePosition() {
-		chessBoard.move("e2", "e4");
-		chessBoard.move("d1", "g4");
+		chessBoard.move(Position.of("e2"), Position.of("e4"));
+		chessBoard.move(Position.of("d1"), Position.of("g4"));
 		assertThat(chessBoard.getPiece(Position.of("g4")).getName()).isEqualTo("q");
 	}
 
@@ -34,12 +34,12 @@ public class QueenTest {
 		chessBoard.replace(Position.of("b3"), new Queen(Color.WHITE, Position.of("b3")));
 
 		chessBoard.replace(Position.of("d5"), new Pawn(Color.WHITE, Position.of("d5"))); // 아군
-		assertThatThrownBy(() -> chessBoard.move("b3", "e6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("e6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 
 		chessBoard.replace(Position.of("d5"), new Knight(Color.BLACK, Position.of("d5"))); // 적군
-		assertThatThrownBy(() -> chessBoard.move("b3", "e6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("e6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -47,7 +47,7 @@ public class QueenTest {
 	@DisplayName("퀸이 이동하는 자리에 아군이 존재하면 에러를 반환 하는지")
 	@Test
 	void moveQueen_allyAtDestination_throwError() {
-		assertThatThrownBy(() -> chessBoard.move("d1", "d2"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("e1"), Position.of("d2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -56,7 +56,7 @@ public class QueenTest {
 	@Test
 	void moveQueen_enemyAtDestination_movePosition() {
 		chessBoard.replace(Position.of("a3"), new Bishop(Color.WHITE, Position.of("a3")));
-		chessBoard.move("a3", "e7");
+		chessBoard.move(Position.of("a3"), Position.of("e7"));
 		assertThat(chessBoard.getPiece(Position.of("e7")).getName()).isEqualTo("b");
 	}
 }

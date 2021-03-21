@@ -6,7 +6,6 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class InputView {
-
 	public static final String MOVE = "move";
 	public static final String STATUS = "status";
 	private static final Scanner SCANNER = new Scanner(System.in);

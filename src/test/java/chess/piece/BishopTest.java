@@ -25,8 +25,8 @@ public class BishopTest {
 	@DisplayName("비숍이 빈 공간으로 제대로 이동하는지")
 	@Test
 	void moveBishop_blank_movePosition() {
-		chessBoard.move("b2", "b3");
-		chessBoard.move("c1", "b2");
+		chessBoard.move(Position.of("b2"), Position.of("b3"));
+		chessBoard.move(Position.of("c1"), Position.of("b2"));
 		assertThat(chessBoard.getPiece(Position.of("b2")).getName()).isEqualTo("b");
 	}
 
@@ -36,12 +36,12 @@ public class BishopTest {
 		chessBoard.replace(Position.of("b3"), new Bishop(Color.WHITE, Position.of("b3")));
 
 		chessBoard.replace(Position.of("d5"), new Pawn(Color.WHITE, Position.of("d5"))); // 아군
-		assertThatThrownBy(() -> chessBoard.move("b3", "e6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("e6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 
 		chessBoard.replace(Position.of("d5"), new Bishop(Color.BLACK, Position.of("d5"))); // 적군
-		assertThatThrownBy(() -> chessBoard.move("b3", "e6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("e6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -49,7 +49,7 @@ public class BishopTest {
 	@DisplayName("비숍이 이동하는 자리에 아군이 존재하면 에러를 반환 하는지")
 	@Test
 	void moveBishop_allyAtDestination_throwError() {
-		assertThatThrownBy(() -> chessBoard.move("c1", "b2"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("c1"), Position.of("b2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -58,7 +58,7 @@ public class BishopTest {
 	@Test
 	void moveBishop_enemyAtDestination_movePosition() {
 		chessBoard.replace(Position.of("a3"), new Bishop(Color.WHITE, Position.of("a3")));
-		chessBoard.move("a3", "e7");
+		chessBoard.move(Position.of("a3"), Position.of("e7"));
 		assertThat(chessBoard.getPiece(Position.of("e7")).getName()).isEqualTo("b");
 	}
 }

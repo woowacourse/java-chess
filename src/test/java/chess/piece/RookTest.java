@@ -2,7 +2,10 @@ package chess.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.piece.*;
+import chess.domain.piece.Color;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -23,8 +26,8 @@ public class RookTest {
 	@DisplayName("룩이 빈 공간으로 제대로 이동하는지")
 	@Test
 	void moveRook_blank_movePosition() {
-		chessBoard.move("a2", "a3");
-		chessBoard.move("a1", "a2");
+		chessBoard.move(Position.of("a2"), Position.of("a3"));
+		chessBoard.move(Position.of("a1"), Position.of("a2"));
 		assertThat(chessBoard.getPiece(Position.of("a2")).getName()).isEqualTo("r");
 	}
 
@@ -34,12 +37,12 @@ public class RookTest {
 		chessBoard.replace(Position.of("b3"), new Rook(Color.WHITE, Position.of("b3")));
 
 		chessBoard.replace(Position.of("b5"), new Pawn(Color.WHITE, Position.of("b5"))); // 아군
-		assertThatThrownBy(() -> chessBoard.move("b3", "b6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("b6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 
 		chessBoard.replace(Position.of("b5"), new Knight(Color.BLACK, Position.of("b5"))); // 적군
-		assertThatThrownBy(() -> chessBoard.move("b3", "b6"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("b3"), Position.of("b6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -47,7 +50,7 @@ public class RookTest {
 	@DisplayName("룩이 이동하는 자리에 아군이 존재하면 에러 반환 하는지")
 	@Test
 	void moveRook_allyAtDestination_throwError() {
-		assertThatThrownBy(() -> chessBoard.move("a1", "a2"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("a1"), Position.of("a2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -56,7 +59,7 @@ public class RookTest {
 	@Test
 	void moveRook_enemyAtDestination_throwError() {
 		chessBoard.replace(Position.of("b3"), new Rook(Color.WHITE, Position.of("b3")));
-		chessBoard.move("b3", "b7");
+		chessBoard.move(Position.of("b3"), Position.of("b7"));
 		assertThat(chessBoard.getPiece(Position.of("b7")).getName()).isEqualTo("r");
 	}
 }

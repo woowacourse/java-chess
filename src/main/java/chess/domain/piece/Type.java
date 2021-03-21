@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 public enum Type {
-
 	PAWN("P", 1),
 	QUEEN("Q", 9),
 	KING("K", 0),

@@ -24,15 +24,15 @@ public class KingTest {
 	@DisplayName("킹이 빈 공간으로 제대로 이동하는지")
 	@Test
 	void moveKing_Blank_movePosition() {
-		chessBoard.move("e2", "e4");
-		chessBoard.move("e1", "e2");
+		chessBoard.move(Position.of("e2"), Position.of("e4"));
+		chessBoard.move(Position.of("e1"), Position.of("e2"));
 		assertThat(chessBoard.getPiece(Position.of("e2")).getName()).isEqualTo("k");
 	}
 
 	@DisplayName("킹이 이동하는 자리에 아군이 존재하면 에러를 반환 하는지")
 	@Test
 	void moveKing_allyAtDestination_throwError() {
-		assertThatThrownBy(() -> chessBoard.move("e1", "e2"))
+		assertThatThrownBy(() -> chessBoard.move(Position.of("e1"), Position.of("e2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NOT_MOVABLE_POSITION_ERROR);
 	}
@@ -41,13 +41,13 @@ public class KingTest {
 	@Test
 	void moveKing_enemyAtDestination_movePosition() {
 		chessBoard.replace(Position.of("b6"), new King(Color.WHITE, Position.of("b6")));
-		chessBoard.move("b6", "b7");
+		chessBoard.move(Position.of("b6"), Position.of("b7"));
 		assertThat(chessBoard.getPiece(Position.of("b7")).getName()).isEqualTo("k");
 
-		chessBoard.move("b7", "a7");
+		chessBoard.move(Position.of("b7"), Position.of("a7"));
 		assertThat(chessBoard.getPiece(Position.of("a7")).getName()).isEqualTo("k");
 
-		chessBoard.move("a7", "b8");
+		chessBoard.move(Position.of("a7"), Position.of("b8"));
 		assertThat(chessBoard.getPiece(Position.of("b8")).getName()).isEqualTo("k");
 	}
 }

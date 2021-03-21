@@ -9,11 +9,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static chess.domain.board.Path.NOT_MOVABLE_DIRECTION_ERROR;
-import static chess.domain.game.ChessGame.NO_MOVEMENT_ERROR;
-import static chess.domain.piece.Piece.NOT_MOVABLE_POSITION_ERROR;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class ChessBoardTest {
 	private ChessBoard chessBoard;
@@ -34,9 +30,9 @@ public class ChessBoardTest {
 	@DisplayName("무승부일 때 점수 계산 제대로 하는지")
 	@Test
 	void scoreTest_draw() {
-		chessBoard.move("b2", "b4");
-		chessBoard.move("c7", "c5");
-		chessBoard.move("b4", "c5");
+		chessBoard.move(Position.of("b2"), Position.of("b4"));
+		chessBoard.move(Position.of("c7"), Position.of("c5"));
+		chessBoard.move(Position.of("b4"), Position.of("c5"));
 		assertThat(chessBoard.getScore(Color.WHITE)).isEqualTo(37.0);
 		assertThat(chessBoard.getScore(Color.BLACK)).isEqualTo(37.0);
 	}

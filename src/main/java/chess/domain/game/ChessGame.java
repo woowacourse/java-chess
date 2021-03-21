@@ -3,7 +3,6 @@ package chess.domain.game;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.piece.Color;
-import chess.domain.piece.Piece;
 
 import java.util.List;
 
@@ -26,31 +25,29 @@ public class ChessGame {
 	}
 
 	public void run(List<String> input) {
-		String source = input.get(SOURCE_INDEX);
-		String target = input.get(TARGET_INDEX);
-		validateMovement(source, target);
+		Position sourcePosition = Position.of(input.get(SOURCE_INDEX));
+		Position targetPosition = Position.of(input.get(TARGET_INDEX));
+		validateMovement(sourcePosition, targetPosition);
+		validateTurn(sourcePosition);
 
-		Piece sourcePiece = chessBoard.getPiece(Position.of(source));
-		validateTurn(sourcePiece);
-
-		chessBoard.move(source, target);
+		chessBoard.move(sourcePosition, targetPosition);
 		turn = turn.getOppositeColor();
 	}
 
-	private void validateMovement(final String source, final String target) {
-		if (source.equals(target)) {
+	private void validateMovement(Position sourcePosition, Position targetPosition) {
+		if (sourcePosition.equals(targetPosition)) {
 			throw new IllegalArgumentException(NO_MOVEMENT_ERROR);
 		}
 	}
 
-	private void validateTurn(Piece sourcePiece) {
-		if (!sourcePiece.isSameColor(turn)) {
+	private void validateTurn(Position position) {
+		if (chessBoard.isNotCorrectTurn(position, turn)) {
 			throw new IllegalArgumentException(String.format(TURN_MESSAGE, turn.name()));
 		}
 	}
 
 	public boolean isOngoing() {
-		return chessBoard.bothKingsAlive();
+		return chessBoard.isOngoing();
 	}
 
 	public Result result() {

@@ -6,7 +6,6 @@ import chess.domain.board.Position;
 import java.util.List;
 
 public class King extends Piece implements FixedDistanceMovable {
-
 	public King(Color color, Position position) {
 		super(color, position);
 		this.type = Type.KING;
