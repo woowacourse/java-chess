@@ -54,5 +54,6 @@ public class PiecePositionTest {
         whitePiecePosition.deletePiece(Position.of("b2"));
         assertThatCode(() -> whitePiecePosition.choosePiece(Position.of("b2")))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("해당 위치에 기물이 없습니다.");    }
+                .hasMessage("해당 위치에 기물이 없습니다.");
+    }
 }

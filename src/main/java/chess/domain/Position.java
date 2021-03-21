@@ -27,7 +27,7 @@ public final class Position {
     public static Position of(final String input) {
         if (positionMap.containsKey(input)) {
             return positionMap.get(input);
-        }    
+        }
         throw new IllegalArgumentException("체스판에 없는 칸입니다");
     }
 
