@@ -1,52 +1,42 @@
 package chess.domain.gamestate;
 
-import chess.domain.ChessGame;
-import chess.domain.Turn;
-import chess.domain.board.Point;
-import chess.domain.command.Command;
-import java.util.List;
+import chess.domain.board.Board;
 
 public class Running implements GameState {
 
-    public static final int SOURCE_INDEX = 0;
-    public static final int DESTINATION_INDEX = 1;
-    private final ChessGame chessGame;
-    private final Turn turn;
+    private Board board;
 
-    public Running(ChessGame chessGame, Turn turn) {
-        this.chessGame = chessGame;
-        this.turn = turn;
+    public Running(Board board) {
+        this.board = board;
     }
 
     @Override
-    public GameState operateCommand(Command command, List<String> arguments) {
-        if (command == Command.MOVE) {
-            return updateStateWhenMove(arguments);
-        }
-        if (command == Command.STATUS) {
-            return this;
-        }
-        if (command == Command.END) {
-            return new Finished();
-        }
-        throw new IllegalArgumentException("올바르지 않은 입력입니다.");
+    public GameState start() {
+        throw new IllegalArgumentException("현재 상태에서 유효하지 않은 명령입니다.");
     }
 
-    private GameState updateStateWhenMove(List<String> arguments) {
-        Point source = Point.of(arguments.get(SOURCE_INDEX));
-        Point destination = Point.of(arguments.get(DESTINATION_INDEX));
+    @Override
+    public GameState end() {
+        return new Finished(board);
+    }
 
-        chessGame.move(source, destination, turn.now());
-        turn.next();
-
-        if (!chessGame.isOnGoing()) {
-            return new Finished();
-        }
+    @Override
+    public GameState move() {
         return this;
     }
 
     @Override
+    public GameState status() {
+        return this;
+    }
+
+    @Override
+    public Board board() {
+        return board;
+    }
+
+    @Override
     public boolean isRunning() {
-        return true;
+        return board.isContinued();
     }
 }

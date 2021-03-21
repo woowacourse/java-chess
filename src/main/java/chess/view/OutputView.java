@@ -29,4 +29,9 @@ public class OutputView {
     public static void printTeamScore(double score, Team team) {
         System.out.printf(INFO_MESSAGE_FORMAT, team.teamName() + " : " + score);
     }
+
+    public static void printMessage(String message) {
+        System.out.println(message);
+        System.out.println();
+    }
 }

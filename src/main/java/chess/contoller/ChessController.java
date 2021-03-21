@@ -4,38 +4,61 @@ import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Team;
 import chess.domain.command.Command;
-import chess.domain.gamestate.GameState;
-import chess.domain.gamestate.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class ChessController {
 
     public void play() {
         ChessGame chessGame = new ChessGame(new Board());
-        GameState gameState = new Ready(chessGame);
 
-        gameState = ready(gameState);
-        start(chessGame, gameState);
+        ready(chessGame);
+        start(chessGame);
     }
 
-    private GameState ready(GameState gameState) {
+    private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
         List<String> input = InputView.InputString();
-        Command command = Command.getByInput(input.get(0));
-        gameState = gameState.operateCommand(command, Command.getArguments(input));
-        return gameState;
+        validateStarCommant(chessGame, input);
     }
 
-    private void start(ChessGame chessGame, GameState gameState) {
-        while (gameState.isRunning()) {
+    private void validateStarCommant(ChessGame chessGame, List<String> input) {
+        try {
+            Command command = Command.getByInput(input.get(0));
+            validateStartCommand(command);
+            command.execute(chessGame, input);
+        } catch (IllegalArgumentException e) {
+            OutputView.printMessage(e.getMessage());
+            ready(chessGame);
+        }
+    }
+
+    private void validateStartCommand(Command command) {
+        List<Command> possibleCommand = Arrays.asList(Command.START, Command.END);
+        if (!possibleCommand.contains(command)) {
+            throw new IllegalArgumentException("start, end 이외의 명령은 입력할 수 없습니다.");
+        }
+    }
+
+    private void start(ChessGame chessGame) {
+        while (chessGame.isRunning()) {
             OutputView.printChessBoard(chessGame.generateBoardDto());
             List<String>  input = InputView.InputString();
+            validateCommand(chessGame, input);
+        }
+    }
+
+    private void validateCommand(ChessGame chessGame, List<String> input) {
+        try {
             Command command = Command.getByInput(input.get(0));
-            gameState = gameState.operateCommand(command, Command.getArguments(input));
+            command.execute(chessGame, input);
             printScoreIfStatus(chessGame, command);
+        } catch (Exception e) {
+            OutputView.printMessage(e.getMessage());
+            start(chessGame);
         }
     }
 
