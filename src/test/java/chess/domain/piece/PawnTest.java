@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
@@ -17,236 +18,293 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 class PawnTest {
+
     private ChessBoard chessBoard;
     private Map<Coordinate, Cell> cells;
 
-    @DisplayName("생성 테스트")
-    @Test
-    void makePawn() {
-        assertThatCode(() -> new Pawn(TeamType.BLACK))
-                .doesNotThrowAnyException();
+    @BeforeEach
+    void setup() {
+        cells = ChessBoardGenerator.generateEmptyBoard();
+        chessBoard = new ChessBoard(cells);
     }
 
-    @DisplayName("폰 이동 테스트")
+    @DisplayName("Pawn의 isMovable 메서드는")
     @Nested
-    class Context_Pawn_Move {
-        @DisplayName("흑팀일 경우")
+    class Describe_isMovable {
+
+        @DisplayName("흑팀일 때")
         @Nested
-        class BlackTeam {
+        class Context_BlackTeam {
 
+            private final Coordinate current = Coordinate.from("d7");
             private final Piece pawn = new Pawn(TeamType.BLACK);
-            private Coordinate currentCoordinate = Coordinate.from("d7");
 
-            @BeforeEach
-            void setup() {
-                chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
-                cells = chessBoard.getCells();
-                cells.get(currentCoordinate).put(pawn);
+            @DisplayName("빈 체스판에서")
+            @Nested
+            class Context_EmptyChessBoard {
+
+                @DisplayName("아래 방향으로 1칸 전진할 수 있다.")
+                @Test
+                void canMoveDownward() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d6");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isTrue();
+                }
+
+                @DisplayName("처음 위치(d7)인 경우 아래 방향으로 2칸 전진할 수 있다.")
+                @Test
+                void canMoveDownwardTwoStep() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d5");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isTrue();
+                }
+
+                @DisplayName("처음 위치(d7)가 아닌 경우 아래 2칸으로 전진할 수 없다.")
+                @Test
+                void cannotMoveDownwardTwoStep() {
+                    cells.get(Coordinate.from("d6")).put(pawn);
+                    Coordinate destination = Coordinate.from("d4");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("대각선에 적이 없어서 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"c6", "e6"})
+                void cannotMoveDiagonal(String destinationInput) {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("앞 3가지 방향의 전진을 제외하면 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"c7", "e7", "c8", "e8", "d8"})
+                void cannotMoveBackward(String destinationInput) {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("정의되지 않은 방향으로는 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"a5", "c1"})
+                void cannotMoveUndefinedDirection(String destinationInput) {
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    assertThatCode(() -> pawn.isMovable(chessBoard, current, destination))
+                            .isInstanceOf(IllegalArgumentException.class)
+                            .hasMessage("주어진 위치로의 방향을 찾을 수 없습니다.");
+                }
             }
 
-            @DisplayName("폰의 DOWN방향 한 칸 앞에 아무것도 없으면, 갈 수 있다.")
-            @Test
-            void pawnCanMoveForward() {
-                Coordinate destination = Coordinate.from("d6");
+            @DisplayName("아군이나 적 기물이 존재하는 체스판에서")
+            @Nested
+            class Context_InitializedChessBoard {
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                private final Piece enemy = new Knight(TeamType.WHITE);
 
-                assertThat(isMovable).isTrue();
-            }
+                @DisplayName("바로 앞에 적이 있더라도 아래 방향으로는 공격할 수 없다.")
+                @Test
+                void cannotMoveDownward() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d6");
+                    cells.get(destination).put(enemy);
 
-            @DisplayName("폰의 DOWN방향 한 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForward() {
-                Coordinate destination = Coordinate.from("d6");
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-                Piece dummy = new Rook(TeamType.BLACK);
-                cells.get(Coordinate.from("d6")).put(dummy);
+                    assertThat(isMovable).isFalse();
+                }
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                @DisplayName("처음 위치(d7)에서 2칸 이동할 때 사이에 기물이 존재하면 팀에 상관없이 이동할 수 없다.")
+                @ParameterizedTest
+                @EnumSource(TeamType.class)
+                void cannotMoveTwiceWhenPieceOnRouteExists(TeamType teamType) {
+                    cells.get(current).put(pawn);
+                    Coordinate route = Coordinate.from("d6");
+                    cells.get(route).put(new Knight(teamType));
 
-                assertThat(isMovable).isFalse();
-            }
+                    Coordinate destination = Coordinate.from("d5");
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-            @DisplayName("폰이 시작 위치이고, DOWN방향으로 두 칸 모두 아무것도 없으면, 갈 수 있다.")
-            @Test
-            void pawnCanMoveTwoCellsForwardFirstTime() {
-                Coordinate destination = Coordinate.from("d5");
+                    assertThat(isMovable).isFalse();
+                }
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                @DisplayName("적이 대각선에 위치한 경우 대각선으로 이동(공격)할 수 있다.")
+                @Test
+                void canMoveDiagonal() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("c6");
+                    cells.get(destination).put(enemy);
 
-                assertThat(isMovable).isTrue();
-            }
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-            @DisplayName("폰이 DOWN방향으로 두 칸 전진하려고 할 때, 한 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCells() {
-                Coordinate destination = Coordinate.from("d5");
+                    assertThat(isMovable).isTrue();
+                }
 
-                Piece dummy = new Rook(TeamType.BLACK);
-                cells.get(Coordinate.from("d6")).put(dummy);
+                @DisplayName("대각선에 아군이 위치한 경우 이동할 수 없다.")
+                @Test
+                void cannotMoveDiagonalWhenSameTeamExists() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("e6");
+                    cells.get(destination).put(new Knight(TeamType.BLACK));
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰이 DOWN방향으로 두 칸 전진하려고 할 때, 두 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCells2() {
-                Coordinate destination = Coordinate.from("d5");
-
-                Piece dummy = new Rook(TeamType.BLACK);
-                cells.get(Coordinate.from("d5")).put(dummy);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰이 시작위치가 아닌 곳에서 DOWN방향으로 두 칸 전진할 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCellsOnNotFirstPlace() {
-                currentCoordinate = Coordinate.from("d6");
-                Coordinate destination = Coordinate.from("d4");
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰의 DOWN방향 대각선 한 칸 앞에 적 기물이 존재하면, 갈 수 있다.")
-            @ParameterizedTest
-            @ValueSource(strings = {"c6", "e6"})
-            void pawnCanMoveDiagonal(String destinationInput) {
-                Coordinate destination = Coordinate.from(destinationInput);
-
-                Piece dummy = new Rook(TeamType.WHITE);
-                cells.get(destination).put(dummy);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isTrue();
-            }
-
-            @DisplayName("폰의 DOWN방향 대각선 한 칸 앞에 적 기물이 없으면, 갈 수 없다.")
-            @ParameterizedTest
-            @ValueSource(strings = {"c6", "e6"})
-            void pawnCannotMoveDiagonal(String destinationInput) {
-                Coordinate destination = Coordinate.from(destinationInput);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
+                    assertThat(isMovable).isFalse();
+                }
             }
         }
 
-        @DisplayName("백팀일 경우")
+        @DisplayName("백팀일 때")
         @Nested
-        class WhiteTeam {
+        class Context_WhiteTeam {
 
+            private final Coordinate current = Coordinate.from("d2");
             private final Piece pawn = new Pawn(TeamType.WHITE);
-            private Coordinate currentCoordinate = Coordinate.from("d2");
 
-            @BeforeEach
-            void setup() {
-                chessBoard = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
-                cells = chessBoard.getCells();
-                cells.get(currentCoordinate).put(pawn);
+            @DisplayName("빈 체스판에서")
+            @Nested
+            class Context_EmptyChessBoard {
+
+                @DisplayName("위 방향으로 1칸 전진할 수 있다.")
+                @Test
+                void canMoveUpward() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d3");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isTrue();
+                }
+
+                @DisplayName("처음 위치(d2)인 경우 위 방향으로 2칸 전진할 수 있다.")
+                @Test
+                void canMoveUpwardTwoStep() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d4");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isTrue();
+                }
+
+                @DisplayName("처음 위치(d2)가 아닌 경우 위 2칸으로 전진할 수 없다.")
+                @Test
+                void cannotMoveUpwardTwoStep() {
+                    cells.get(Coordinate.from("d3")).put(pawn);
+                    Coordinate destination = Coordinate.from("d5");
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("대각선에 적이 없어서 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"c3", "e3"})
+                void cannotMoveDiagonal(String destinationInput) {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("앞 3가지 방향의 전진을 제외하면 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"c2", "e2", "c1", "e1", "d1"})
+                void cannotMoveBackward(String destinationInput) {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
+
+                    assertThat(isMovable).isFalse();
+                }
+
+                @DisplayName("정의되지 않은 방향으로는 이동할 수 없다.")
+                @ParameterizedTest
+                @ValueSource(strings = {"a8", "h1"})
+                void cannotMoveUndefinedDirection(String destinationInput) {
+                    Coordinate destination = Coordinate.from(destinationInput);
+
+                    assertThatCode(() -> pawn.isMovable(chessBoard, current, destination))
+                            .isInstanceOf(IllegalArgumentException.class)
+                            .hasMessage("주어진 위치로의 방향을 찾을 수 없습니다.");
+                }
             }
 
-            @DisplayName("폰의 UP방향 한 칸 앞에 아무것도 없으면, 갈 수 있다.")
-            @Test
-            void pawnCanMoveForward() {
-                Coordinate destination = Coordinate.from("d3");
+            @DisplayName("아군이나 적 기물이 존재하는 체스판에서")
+            @Nested
+            class Context_InitializedChessBoard {
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                private final Piece enemy = new Knight(TeamType.BLACK);
 
-                assertThat(isMovable).isTrue();
-            }
+                @DisplayName("바로 앞에 적이 있더라도 위 방향으로는 공격할 수 없다.")
+                @Test
+                void cannotMoveUpward() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("d3");
+                    cells.get(destination).put(enemy);
 
-            @DisplayName("폰의 UP방향 한 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForward() {
-                Coordinate destination = Coordinate.from("d3");
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-                Piece dummy = new Rook(TeamType.WHITE);
-                cells.get(Coordinate.from("d3")).put(dummy);
+                    assertThat(isMovable).isFalse();
+                }
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                @DisplayName("처음 위치(d2)에서 2칸 이동할 때 사이에 기물이 존재하면 팀에 상관없이 이동할 수 없다.")
+                @ParameterizedTest
+                @EnumSource(TeamType.class)
+                void cannotMoveTwiceWhenPieceOnRouteExists(TeamType teamType) {
+                    cells.get(current).put(pawn);
+                    Coordinate route = Coordinate.from("d3");
+                    cells.get(route).put(new Knight(teamType));
 
-                assertThat(isMovable).isFalse();
-            }
+                    Coordinate destination = Coordinate.from("d4");
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-            @DisplayName("폰이 시작 위치이고, UP방향 두 칸 모두 아무것도 없으면, 갈 수 있다.")
-            @Test
-            void pawnCanMoveTwoCellsForwardFirstTime() {
-                Coordinate destination = Coordinate.from("d4");
+                    assertThat(isMovable).isFalse();
+                }
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                @DisplayName("적이 대각선에 위치한 경우 대각선으로 이동(공격)할 수 있다.")
+                @Test
+                void canMoveDiagonal() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("c3");
+                    cells.get(destination).put(enemy);
 
-                assertThat(isMovable).isTrue();
-            }
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-            @DisplayName("폰이 UP방향 두 칸 전진하려고 할 때, 한 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCells() {
-                Coordinate destination = Coordinate.from("d4");
+                    assertThat(isMovable).isTrue();
+                }
 
-                Piece dummy = new Rook(TeamType.BLACK);
-                cells.get(Coordinate.from("d3")).put(dummy);
+                @DisplayName("대각선에 아군이 위치한 경우 이동할 수 없다.")
+                @Test
+                void cannotMoveDiagonalWhenSameTeamExists() {
+                    cells.get(current).put(pawn);
+                    Coordinate destination = Coordinate.from("e3");
+                    cells.get(destination).put(new Knight(TeamType.WHITE));
 
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
+                    boolean isMovable = pawn.isMovable(chessBoard, current, destination);
 
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰이 UP방향 두 칸 전진하려고 할 때, 두 칸 앞에 기물이 존재하면, 갈 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCells2() {
-                Coordinate destination = Coordinate.from("d4");
-
-                Piece dummy = new Rook(TeamType.WHITE);
-                cells.get(Coordinate.from("d4")).put(dummy);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰이 시작위치가 아닌 곳에서 UP방향 두 칸 전진할 수 없다.")
-            @Test
-            void pawnCannotMoveForwardTwoCellsOnNotFirstPlace() {
-                currentCoordinate = Coordinate.from("d3");
-                Coordinate destination = Coordinate.from("d5");
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
-            }
-
-            @DisplayName("폰의 UP방향 대각선 한 칸 앞에 적 기물이 존재하면, 갈 수 있다.")
-            @ParameterizedTest
-            @ValueSource(strings = {"c3", "e3"})
-            void pawnCanMoveDiagonal(String destinationInput) {
-                Coordinate destination = Coordinate.from(destinationInput);
-
-                Piece dummy = new Rook(TeamType.BLACK);
-                cells.get(destination).put(dummy);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isTrue();
-            }
-
-            @DisplayName("폰의 UP방향 대각선 한 칸 앞에 적 기물이 없으면, 갈 수 없다.")
-            @ParameterizedTest
-            @ValueSource(strings = {"c3", "e3"})
-            void pawnCannotMoveDiagonal(String destinationInput) {
-                Coordinate destination = Coordinate.from(destinationInput);
-
-                boolean isMovable = pawn.isMovable(chessBoard, currentCoordinate, destination);
-
-                assertThat(isMovable).isFalse();
+                    assertThat(isMovable).isFalse();
+                }
             }
         }
     }
