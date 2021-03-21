@@ -28,7 +28,7 @@ public enum Rank {
         return Arrays.stream(Rank.values())
                 .filter(rank -> rank.hasSameY(y))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank(행)값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 Rank(열)값 입니다."));
     }
 
     private boolean hasSameY(int y) {
@@ -42,9 +42,5 @@ public enum Rank {
 
     public int calculateDifference(Rank rank) {
         return this.y - rank.y;
-    }
-
-    public int getY() {
-        return y;
     }
 }

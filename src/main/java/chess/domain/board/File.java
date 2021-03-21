@@ -31,7 +31,7 @@ public enum File {
         return Arrays.stream(File.values())
                 .filter(hasSameValue)
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("잘못된 File(열)값 입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("잘못된 File(행)값 입니다."));
     }
 
     private boolean hasSameSignature(String fileInput) {
