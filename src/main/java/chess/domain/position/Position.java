@@ -1,17 +1,13 @@
-package chess.domain.piece;
+package chess.domain.position;
 
 import java.util.Objects;
-import java.util.stream.IntStream;
-
-import static chess.ChessConstant.DEFAULT_INDEX_OF_BLACK_PAWN;
-import static chess.ChessConstant.DEFAULT_INDEX_OF_WHITE_PAWN;
 
 public class Position {
     
-    private static final int MIN_MOVE_LENGTH = 1;
-    
     private static final int RANK_CHARACTER_INDEX = 0;
     private static final int FILE_CHARACTER_INDEX = 1;
+    
+    private static final int POSITION_WORD_LENGTH = 2;
     
     // TODO 캐싱 구현하기
     private final Point x;
@@ -29,6 +25,10 @@ public class Position {
     }
     
     public static Position of(String value) {
+        if (value.length() != POSITION_WORD_LENGTH) {
+            throw new IllegalArgumentException("위치는 a1 과 같은 형식의 2글자이어야 합니다.");
+        }
+        
         int x = value.charAt(RANK_CHARACTER_INDEX) - 'a';
         int y = value.charAt(FILE_CHARACTER_INDEX) - '1';
         return Position.of(x, y);
@@ -38,18 +38,8 @@ public class Position {
         return new Position(this.x.add(xDistance), this.y.add(yDistance));
     }
     
-    public boolean canMove(Position targetPosition, Direction direction, int maxMoveLength) {
-        return IntStream.rangeClosed(MIN_MOVE_LENGTH, maxMoveLength)
-                        .mapToObj(distance -> {
-                            Point xPoint = x.add(direction.getXDegree() * distance);
-                            Point yPoint = y.add(direction.getYDegree() * distance);
-                            return new Position(xPoint, yPoint);
-                        })
-                        .anyMatch(targetPosition::equals);
-    }
-    
     public boolean isInRange() {
-        return !x.isOutOfBounds() && !y.isOutOfBounds();
+        return x.isInRange() && y.isInRange();
     }
     
     @Override
@@ -77,11 +67,7 @@ public class Position {
         return y;
     }
     
-    public boolean isAtDefaultPawnPosition(Color color) {
-        if (color.isWhite()) {
-            return y.equalsTo(DEFAULT_INDEX_OF_WHITE_PAWN);
-        }
-        
-        return y.equalsTo(DEFAULT_INDEX_OF_BLACK_PAWN);
+    public boolean existsAtRankOf(int point) {
+        return y.equalsTo(point);
     }
 }

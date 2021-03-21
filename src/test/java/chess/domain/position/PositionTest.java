@@ -1,5 +1,6 @@
-package chess.domain.piece;
+package chess.domain.position;
 
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -17,9 +18,10 @@ class PositionTest {
         
         // given
         Position targetPosition = Position.of("a2");
+        MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
-        final boolean canMove = position.canMove(targetPosition, direction, movableLength);
+        final boolean canMove = movePosition.canMove(direction, movableLength);
         
         // then
         assertThat(canMove).isTrue();
@@ -31,9 +33,10 @@ class PositionTest {
         
         // given
         Position targetPosition = Position.of("a3");
+        MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
-        final boolean canMove = position.canMove(targetPosition, direction, movableLength);
+        final boolean canMove = movePosition.canMove(direction, movableLength);
         
         // then
         assertThat(canMove).isFalse();
@@ -45,9 +48,10 @@ class PositionTest {
         
         // given
         Position targetPosition = Position.of("a3");
+        MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
-        final boolean canMove = position.canMove(targetPosition, direction, movableLength);
+        final boolean canMove = movePosition.canMove(direction, movableLength);
         
         // then
         assertThat(canMove).isFalse();
