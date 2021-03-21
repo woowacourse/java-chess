@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public class Bishop extends AbstractPiece {
     
@@ -27,17 +29,8 @@ public class Bishop extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Board board) {
-        Direction direction = DIRECTION_GROUP.findDirection(sourcePosition, targetPosition);
-        
-        if (isObstacleAtDirection(sourcePosition, targetPosition, direction, board)) {
-            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
-        }
-        
-        if (!board.isBlank(targetPosition)) {
-            throw new IllegalArgumentException("타겟 위치에 이미 기물이 있습니다.");
-        }
-        
-        return new Bishop(color);
+    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
+        Direction direction = DIRECTION_GROUP.findDirection(movePosition);
+        checkObstacleExistsAtDirection(movePosition, direction, board);
     }
 }

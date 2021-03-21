@@ -1,47 +1,63 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.*;
 
 class PawnTest {
     private final Pawn pawn = Pawn.createWhitePawn();
     private final Position sourcePosition = Position.of("a2");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private final Board board = Chess.createWithInitializedBoard()
+                                     .getBoard();
     
     @Test
     @DisplayName("1칸 전진 테스트")
     void moveLinearOneStep() {
+        
+        // given
         Position targetPosition = Position.of("a3");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, board);
+        // when
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, board);
         
+        // then
         assertThatCode(callable).doesNotThrowAnyException();
     }
     
     @Test
     @DisplayName("2칸 전진 테스트")
     void moveLinearTwoStep() {
+        
+        // given
         Position targetPosition = Position.of("a4");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, board);
+        // when
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, board);
         
+        // then
         assertThatCode(callable).doesNotThrowAnyException();
     }
     
     @Test
     @DisplayName("3칸 이상 전진 시 예외 발생")
     void moveLinearMultiStep_OverTwoStep_ExceptionThrown() {
+        
+        // given
         Position targetPosition = Position.of("a5");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, board);
+        // when
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, board);
         
+        // then
         assertThatIllegalArgumentException().isThrownBy(callable);
     }
     
@@ -50,13 +66,12 @@ class PawnTest {
     void moveDiagonalOneStep() {
         
         // given
-        final Map<Position, Piece> testBoard = this.board.getBoard();
         Position targetPosition = Position.of("b3");
-        testBoard.put(targetPosition, Pawn.createBlackPawn());
+        Board newBoard = BoardUtils.put(board, targetPosition, Pawn.createBlackPawn());
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition,
-                new Board(testBoard));
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -69,9 +84,10 @@ class PawnTest {
         // given
         Position targetPosition = Position.of("a3");
         Board newBoard = BoardUtils.put(board, targetPosition, Pawn.createBlackPawn());
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable);
@@ -86,9 +102,10 @@ class PawnTest {
         Board newBoard = BoardUtils.put(board, newSourcePosition, Pawn.createWhitePawn());
         
         Position targetPosition = Position.of("c5");
+        MovePosition movePosition = new MovePosition(newSourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(newSourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable);
@@ -100,9 +117,10 @@ class PawnTest {
         
         // given
         final Position targetPosition = Position.of("b3");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, board);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable);
@@ -117,9 +135,10 @@ class PawnTest {
         Board newBoard = BoardUtils.put(board, blackPawnPosition, Pawn.createBlackPawn());
         
         Position targetPosition = Position.of("c4");
+        MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> pawn.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> pawn.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)

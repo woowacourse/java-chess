@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public interface Piece {
     String getSymbol();
@@ -9,5 +11,7 @@ public interface Piece {
     
     boolean isSameColorAs(Color color);
     
-    Piece move(Position sourcePosition, Position targetPosition, Board board);
+    void checkToMoveToTargetPosition(MovePosition movePosition, Board board);
+    
+    boolean isBlank();
 }

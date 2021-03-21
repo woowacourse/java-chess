@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -19,10 +22,13 @@ class BlankTest {
         Blank blank = new Blank(Color.WHITE);
         Position sourcePosition = Position.of("a3");
         Position targetPosition = Position.of("a4");
-        Board board = Chess.createWithInitializedBoard().getBoard();
+        Board board = Chess.createWithInitializedBoard()
+                           .getBoard();
+        
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> blank.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> blank.checkToMoveToTargetPosition(movePosition, board);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)

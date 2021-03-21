@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,8 @@ public class QueenTest {
     
     private final Queen queen = new Queen(Color.WHITE);
     private final Position sourcePosition = Position.of("d1");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private final Board board = Chess.createWithInitializedBoard()
+                                     .getBoard();
     
     @Test
     @DisplayName("대각선 1칸 이동 검사")
@@ -21,9 +25,10 @@ public class QueenTest {
         // given
         final Position targetPosition = Position.of("c2");
         final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -36,9 +41,10 @@ public class QueenTest {
         // given
         final Board newBoard = BoardUtils.put(board, Position.of("c2"), new Blank());
         final Position targetPosition = Position.of("a4");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -52,9 +58,10 @@ public class QueenTest {
         // given
         final Position targetPosition = Position.of("d2");
         final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -67,9 +74,10 @@ public class QueenTest {
         // given
         final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
         final Position targetPosition = Position.of("d4");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -81,9 +89,10 @@ public class QueenTest {
         
         // given
         final Position targetPosition = Position.of("b2");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, board);
         
         
         // then
@@ -96,30 +105,15 @@ public class QueenTest {
         
         // given
         final Position targetPosition = Position.of("d3");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> queen.checkToMoveToTargetPosition(movePosition, board);
         
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
                                             .withMessage("이동하는 경로 사이에 기물이 있습니다.");
-    }
-    
-    @Test
-    @DisplayName("타겟 위치에 이미 기물이 있을 경우 예외 발생")
-    void move_PieceAlreadyExistsAtTarget_ExceptionThrown() {
-        
-        // given
-        final Position targetPosition = Position.of("d2");
-        
-        // when
-        ThrowableAssert.ThrowingCallable callable = () -> queen.move(sourcePosition, targetPosition, board);
-        
-        
-        // then
-        assertThatIllegalArgumentException().isThrownBy(callable)
-                                            .withMessage("타겟 위치에 이미 기물이 있습니다.");
     }
     
     @Test

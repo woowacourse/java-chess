@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public class Blank extends AbstractPiece {
     
@@ -27,7 +29,7 @@ public class Blank extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Board board) {
+    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
         throw new IllegalArgumentException("해당 위치에는 기물이 존재하지 않습니다");
     }
 }

@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +15,8 @@ class KingTest {
     
     private final King king = new King(Color.WHITE);
     private final Position sourcePosition = Position.of("e1");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private final Board board = Chess.createWithInitializedBoard()
+                                     .getBoard();
     
     @Test
     @DisplayName("대각선 1칸 이동 검사")
@@ -21,9 +25,10 @@ class KingTest {
         // given
         final Position targetPosition = Position.of("d2");
         final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> king.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -36,9 +41,10 @@ class KingTest {
         // given
         final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
         final Position targetPosition = Position.of("c3");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> king.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
@@ -51,10 +57,11 @@ class KingTest {
         
         // given
         final Position targetPosition = Position.of("e2");
-        Board boardRemoveE2 = BoardUtils.put(this.board, targetPosition, new Blank());
+        Board newBoard = BoardUtils.put(this.board, targetPosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, boardRemoveE2);
+        ThrowableAssert.ThrowingCallable callable = () -> king.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -67,29 +74,14 @@ class KingTest {
         // given
         final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
         final Position targetPosition = Position.of("d4");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, newBoard);
+        ThrowableAssert.ThrowingCallable callable = () -> king.checkToMoveToTargetPosition(movePosition, newBoard);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
                                             .withMessage("기물이 이동할 수 없는 위치입니다.");
-    }
-    
-    @Test
-    @DisplayName("타겟 위치에 이미 기물이 있을 경우 예외 발생")
-    void move_PieceAlreadyExistsAtTarget_ExceptionThrown() {
-        
-        // given
-        final Position targetPosition = Position.of("d2");
-        
-        // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, board);
-        
-        
-        // then
-        assertThatIllegalArgumentException().isThrownBy(callable)
-                                            .withMessage("타겟 위치에 이미 기물이 있습니다.");
     }
     
     @Test
@@ -98,9 +90,10 @@ class KingTest {
         
         // given
         final Position targetPosition = Position.of("e3");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> king.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> king.checkToMoveToTargetPosition(movePosition, board);
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)

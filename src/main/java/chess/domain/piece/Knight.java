@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public class Knight extends AbstractPiece {
     
@@ -25,13 +27,7 @@ public class Knight extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Board board) {
-        Direction direction = DIRECTION_GROUP.findDirection(sourcePosition, targetPosition);
-        
-        if (!board.isBlank(targetPosition)) {
-            throw new IllegalArgumentException("타겟 위치에 이미 기물이 있습니다.");
-        }
-        
-        return new Knight(color);
+    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
+        DIRECTION_GROUP.findDirection(movePosition);
     }
 }

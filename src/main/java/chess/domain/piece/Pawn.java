@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public class Pawn extends AbstractPiece {
     
@@ -38,14 +40,12 @@ public class Pawn extends AbstractPiece {
     }
     
     @Override
-    public Piece move(Position sourcePosition, Position targetPosition, Board board) {
-        Direction direction = directionGroup.findDirectionOfPawn(sourcePosition, targetPosition, color);
-        if (isObstacleAtDirection(sourcePosition, targetPosition, direction, board)) {
-            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
-        }
+    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
+        Direction direction = directionGroup.findDirectionOfPawn(movePosition, color);
+        checkObstacleExistsAtDirection(movePosition, direction, board);
         
         final boolean isForwardDirection = isForward(direction);
-        final boolean isBlankAtTargetPosition = board.isBlank(targetPosition);
+        final boolean isBlankAtTargetPosition = board.isBlank(movePosition.getTargetPosition());
         if (isForwardDirection && !isBlankAtTargetPosition) {
             throw new IllegalArgumentException("폰이 전진하는 위치에 기물이 있으면 안됩니다.");
         }
@@ -53,8 +53,6 @@ public class Pawn extends AbstractPiece {
         if (!isForwardDirection && isBlankAtTargetPosition) {
             throw new IllegalArgumentException("폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.");
         }
-        
-        return Pawn.from(color);
     }
     
     private boolean isForward(Direction direction) {

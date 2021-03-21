@@ -1,8 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.game.Board;
-import chess.domain.game.Chess;
+import chess.domain.Chess;
+import chess.domain.Color;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
+import chess.domain.position.Position;
 import org.assertj.core.api.ThrowableAssert;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +16,12 @@ class BishopTest {
     
     private final Bishop bishop = new Bishop(Color.WHITE);
     private final Position sourcePosition = Position.of("c1");
-    private final Board board = Chess.createWithInitializedBoard().getBoard();
+    private Board board;
+    
+    @BeforeEach
+    void setUp() {
+        board = Chess.createWithInitializedBoard().getBoard();
+    }
     
     @Test
     @DisplayName("대각선 1칸 이동 검사")
@@ -21,9 +30,10 @@ class BishopTest {
         // given
         final Position targetPosition = Position.of("b2");
         BoardUtils.put(board, targetPosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> bishop.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> bishop.checkToMoveToTargetPosition(movePosition, board);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -36,9 +46,10 @@ class BishopTest {
         // given
         final Position removePosition = Position.of("b2");
         BoardUtils.put(board, removePosition, new Blank());
+        final MovePosition movePosition = new MovePosition(sourcePosition, Position.of("a3"));
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> bishop.move(sourcePosition, Position.of("a3"), board);
+        ThrowableAssert.ThrowingCallable callable = () -> bishop.checkToMoveToTargetPosition(movePosition, board);
         
         // then
         assertThatCode(callable).doesNotThrowAnyException();
@@ -50,9 +61,10 @@ class BishopTest {
         
         // given
         final Position targetPosition = Position.of("b1");
+        final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
-        ThrowableAssert.ThrowingCallable callable = () -> bishop.move(sourcePosition, targetPosition, board);
+        ThrowableAssert.ThrowingCallable callable = () -> bishop.checkToMoveToTargetPosition(movePosition, board);
         
         
         // then
