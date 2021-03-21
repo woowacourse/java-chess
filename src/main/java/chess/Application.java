@@ -11,15 +11,15 @@ public class Application {
     public static void main(String[] args) {
         OutputView.printInitMessage();
         final ChessBoard chessBoard = new ChessBoard();
-        while (true) {
+        while (chessBoard.isPlaying()) {
 //                    return Commands.getInstance(sc.nextLine().trim());
             List<String> command = InputView.command();
-
             if (Commands.getInstance(command.get(0)) == Commands.START) {
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.MOVE) {
                 chessBoard.move(command.get(1), command.get(2));
+
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.STATUS) {
@@ -33,5 +33,6 @@ public class Application {
 
 
     }
+
 
 }

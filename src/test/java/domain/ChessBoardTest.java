@@ -3,10 +3,15 @@ package domain;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import chess.domain.ChessBoard;
 import chess.domain.Position;
+import chess.domain.TeamColor;
+import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,9 +54,15 @@ public class ChessBoardTest {
         assertThat(chessBoard.getPiece(Position.valueOf("c3"))).isInstanceOf(Knight.class);
     }
 
-//    @Test
-//    @DisplayName("말 객체 갯수 테스트")
-//    void team_pieces_count_test() {
-//        chessBoard.getWhite
-//    }
+    @Test
+    @DisplayName("킹이 잡히는 경우 게임 종료")
+    void game_end_die_king() {
+        Piece kingPiece = new King(TeamColor.BLACK, Position.valueOf("b4"));
+        Piece piece = new Queen(TeamColor.WHITE, Position.valueOf("b5"));
+        chessBoard.getChessBoard().put(Position.valueOf("b4"), kingPiece);
+        chessBoard.getChessBoard().put(Position.valueOf("b5"), piece);
+
+        chessBoard.move("b5", "b4");
+        assertFalse(chessBoard.isPlaying());
+    }
 }

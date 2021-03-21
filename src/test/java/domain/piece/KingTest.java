@@ -75,4 +75,5 @@ public class KingTest {
 
         assertFalse(piece.isMoveAble(Position.valueOf("b4"), Position.valueOf("b6"), chessBoard));
     }
+
 }

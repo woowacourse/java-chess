@@ -22,6 +22,7 @@ public class ChessBoard {
     private final Map<Position, Piece> chessBoard;
     private final Pieces whitePieces;
     private final Pieces blackPieces;
+    private boolean gameStatus = true;
 
     public ChessBoard() {
         this.chessBoard = new LinkedHashMap<>();
@@ -110,7 +111,7 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public void move(String source, String target) {
+    public boolean move(String source, String target) {
         validatePosition(source, target);
         Position start = Position.valueOf(source);
         Position end = Position.valueOf(target);
@@ -123,14 +124,19 @@ public class ChessBoard {
                 chessBoard.put(start, Blank.INSTANCE);
                 chessBoard.put(end, startPiece);
                 startPiece.setPosition(end);
-                return;
+                return true;
             }
             // 상대편이 있는 경우
             goingToDie.dead();
             chessBoard.put(end, startPiece);
             chessBoard.put(start, Blank.INSTANCE);
             startPiece.setPosition(end);
+            if (goingToDie instanceof King) {
+                gameStatus = false;
+            }
+            return true;
         }
+
         throw new IllegalArgumentException("잘못된 이동입니다.");
     }
 
@@ -170,6 +176,11 @@ public class ChessBoard {
         }
 
         return new Result(result, TeamColor.NONE);
+    }
+
+
+    public boolean isPlaying() {
+        return gameStatus;
     }
 }
 

@@ -64,6 +64,4 @@ public class King extends PieceOnBoard {
 
         return candidates.contains(target);
     }
-
-
 }
