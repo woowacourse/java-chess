@@ -18,7 +18,7 @@ public final class BoardInitializer {
 
     static {
         locationInitializers = Arrays.asList(new PawnInitializer(), new RookInitializer(), new KingInitializer(),
-                new QueenInitializer(), new BishopInitializer(), new KnightInitializer());
+            new QueenInitializer(), new BishopInitializer(), new KnightInitializer());
     }
 
     public static Map<Position, Piece> initializeBoard() {

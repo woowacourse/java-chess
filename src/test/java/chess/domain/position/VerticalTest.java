@@ -7,6 +7,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class VerticalTest {
+
     @Test
     @DisplayName("symbol을 통해 객체 생성하는 기능 확인")
     void createUsingSymbol() {

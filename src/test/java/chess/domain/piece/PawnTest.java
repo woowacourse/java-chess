@@ -1,14 +1,10 @@
 package chess.domain.piece;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.in;
 
 import chess.domain.position.Position;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 class PawnTest {
@@ -28,7 +24,7 @@ class PawnTest {
 
         assertThat(pawn.canMove(start, end, Blank.getInstance()))
             .isTrue();
-        assertThat(pawn.canMove(start, end,  new King(team.oppositeTeam())))
+        assertThat(pawn.canMove(start, end, new King(team.oppositeTeam())))
             .isFalse();
     }
 
