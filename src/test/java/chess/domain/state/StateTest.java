@@ -4,13 +4,13 @@ import chess.domain.piece.PieceFactory;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static chess.domain.piece.PositionTexture.*;
-import static org.assertj.core.api.Assertions.*;
+import static chess.domain.piece.PositionTexture.A2;
+import static chess.domain.piece.PositionTexture.A3;
+import static org.assertj.core.api.Assertions.assertThat;
 
 class StateTest {
     private static State white;

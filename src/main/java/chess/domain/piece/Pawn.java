@@ -7,7 +7,7 @@ import chess.domain.position.Target;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
@@ -37,15 +37,13 @@ public class Pawn extends Piece {
 
     @Override
     public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
     }
 
     @Override
     public void move2(Target target, final Pieces basePieces, final Pieces targetPieces) {
-
+        List<Position> positions = makeRoutes2(basePieces, targetPieces);
+        checkTarget(target, positions);
+        basePieces.changePiecePosition(this, target);
     }
 
     private void checkTarget(Target target, List<Position> positions) {
@@ -54,29 +52,34 @@ public class Pawn extends Piece {
         }
     }
 
-    private List<Position> makeRoutes(ChessBoard chessBoard) {
+    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         if (isFirst) {
-            positions.addAll(makeFirstUpRoutes(chessBoard));
-            positions.addAll(makeUpRightRoutes(chessBoard));
-            positions.addAll(makeUpLeftRoutes(chessBoard));
+            positions.addAll(makeFirstUpRoutes2(basePieces, targetPieces));
+            positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
+            positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
             this.isFirst = false;
             return positions;
         }
-        positions.addAll(makeAfterFirstUpRoutes(chessBoard));
-        positions.addAll(makeUpRightRoutes(chessBoard));
-        positions.addAll(makeUpLeftRoutes(chessBoard));
+        positions.addAll(makeAfterFirstUpRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpRightRoutes2(basePieces, targetPieces));
+        positions.addAll(makeUpLeftRoutes2(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeFirstUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeFirstUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
         int file = position.getFile().getValue();
         for (int index = 0; index < 2; index++) {
             Position nextPosition = Position.valueOf(rank + index, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                break;
+            }
+            if (!basePiece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
@@ -85,42 +88,51 @@ public class Pawn extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank + 1, file + 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+        if (targetPiece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!basePiece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeUpLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         Position nextPosition = Position.valueOf(rank + 1, file - 1);
-        if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+        Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+        Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+        if (targetPiece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
-        if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+        if (!basePiece.isPresent()) {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
     }
 
-    private List<Position> makeAfterFirstUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeAfterFirstUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
         int file = position.getFile().getValue();
         for (int index = 0; index < 1; index++) {
             Position nextPosition = Position.valueOf(rank + index, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                break;
+            }
+            if (!basePiece.isPresent()) {
                 positions.add(nextPosition);
                 continue;
             }
