@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -72,5 +73,31 @@ public class ChessGameTest {
         final Map<Position, Piece> piecePosition = chessGame.generateChessBoard();
         assertThat(piecePosition.get(Position.of("g1")).isKing()).isTrue();
         assertThat(piecePosition.get(Position.of("f1")).isRook()).isTrue();
+    }
+
+    @Test
+    @DisplayName("끝의 행까지 이동한 폰의 경우, 퀸으로 승격시킨다.")
+    void when_pawn_arrive_at_last_rank_promote() {
+        final ChessGame chessGame = new ChessGame();
+        chessGame.move(Position.of("c2"), Position.of("c4"));
+        chessGame.changeTurn();
+
+        chessGame.move(Position.of("b7"), Position.of("b5"));
+        chessGame.changeTurn();
+
+        chessGame.move(Position.of("c4"), Position.of("b5"));
+        chessGame.changeTurn();
+
+        chessGame.move(Position.of("b8"), Position.of("c6"));
+        chessGame.changeTurn();
+
+        chessGame.move(Position.of("b5"), Position.of("b6"));
+        chessGame.move(Position.of("b6"), Position.of("b7"));
+        Map<Position, Piece> piecePosition = chessGame.generateChessBoard();
+        assertThat(piecePosition.get(Position.of("b7"))).isInstanceOf(Pawn.class);
+
+        chessGame.move(Position.of("b7"), Position.of("b8"));
+        piecePosition = chessGame.generateChessBoard();
+        assertThat(piecePosition.get(Position.of("b8"))).isInstanceOf(Queen.class);
     }
 }

@@ -15,7 +15,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
@@ -27,8 +27,13 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean isCastlingMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isCastlingMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         return false;
+    }
+
+    @Override
+    public boolean isPromotionMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+        return isMovable(current, destination, chessBoard) && destination.isEndRank();
     }
 
     @Override

@@ -21,6 +21,11 @@ public final class Knight extends Piece {
     }
 
     @Override
+    public boolean isPromotionMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+        return false;
+    }
+
+    @Override
     public boolean checkPositionRule(Position current, Position destination) {
         return current.checkKnightMoveRule(destination);
     }

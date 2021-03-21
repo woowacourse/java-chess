@@ -48,6 +48,10 @@ public final class ChessGame {
             currentTurnTeam.moveCastlingRook(destination);
             return;
         }
+        if (chosenPiece.isPawn() && chosenPiece.isPromotionMovable(current, destination, generateChessBoard())) {
+            currentTurnTeam.promotePiece(current);
+            return;
+        }
         if (chosenPiece.isMovable(current, destination, generateChessBoard())) {
             return;
         }

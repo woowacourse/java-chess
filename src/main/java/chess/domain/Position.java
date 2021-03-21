@@ -77,6 +77,10 @@ public final class Position {
         return this.x == x;
     }
 
+    public boolean isEndRank() {
+        return this.y == 0 || this.y == 7;
+    }
+
     private List<Position> generateDiagonalPathByDiff(final Position destination, final int xDiff, final int yDiff) {
         if (xDiff > 0 && yDiff > 0) {
             return generatePathByDirection(destination, 1, 1);

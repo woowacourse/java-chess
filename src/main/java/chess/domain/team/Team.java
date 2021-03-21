@@ -36,6 +36,10 @@ public final class Team {
         return piecePosition.deletePiece(destination);
     }
 
+    public void promotePiece(final Position position) {
+        piecePosition.promote(position);
+    }
+
     public void catchPiece(final Piece piece) {
         pieceCaptured.add(piece);
     }

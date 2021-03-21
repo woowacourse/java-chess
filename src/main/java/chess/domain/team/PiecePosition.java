@@ -48,12 +48,12 @@ public final class PiecePosition {
 
     public void moveCastlingRook(final Position kingDestination) {
         final Position kingSideRook = kingDestination.moveXandY(1, 0);
-        if (havePiece(kingSideRook)) {
+        if (havePiece(kingSideRook) && choosePiece(kingSideRook).isRook()) {
             movePiece(kingSideRook, kingSideRook.moveXandY(-2, 0));
             return;
         }
         final Position queenSideRook = kingDestination.moveXandY(-2, 0);
-        if (havePiece(queenSideRook)) {
+        if (havePiece(queenSideRook) && choosePiece(queenSideRook).isRook()) {
             movePiece(queenSideRook, queenSideRook.moveXandY(3, 0));
         }
     }
@@ -64,6 +64,13 @@ public final class PiecePosition {
 
     public final Piece deletePiece(final Position position) {
         return piecePosition.remove(position);
+    }
+
+    public void promote(final Position position) {
+        if (havePiece(position) && choosePiece(position).isPawn()) {
+            deletePiece(position);
+            piecePosition.put(position, new Queen());
+        }
     }
 
     public final Map<Position, Piece> getPiecePosition() {
