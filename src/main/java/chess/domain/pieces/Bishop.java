@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Bishop extends Piece {
@@ -31,6 +32,37 @@ public class Bishop extends Piece {
 
     @Override
     public List<Position> getMovablePositions(final Board board) {
-        return null;
+        List<Position> movablePositions = new ArrayList<>();
+
+        int[] rowDir = {-1, 1, -1, 1};
+        int[] colDir = {-1, 1, 1, -1};
+
+        for (int dir = 0; dir < colDir.length; ++dir) {
+            addMovablePositions(movablePositions, board, rowDir[dir], colDir[dir]);
+        }
+        return movablePositions;
+    }
+
+    private void addMovablePositions(List<Position> movablePositions, Board board, int rowDir, int colDir) {
+        int curRow = getPosition().getRow();
+        int curCol = getPosition().getCol();
+
+        while (isMoveAbleDir(movablePositions, board, curRow + rowDir, curCol + colDir)) {
+            movablePositions.add(new Position(curRow += rowDir, curCol += colDir));
+        }
+    }
+
+    private boolean isMoveAbleDir(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+        if (!board.validateRange(nextRow, nextCol)) {
+            return false;
+        }
+        if (board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol))) {
+            return false;
+        }
+        if (board.piecesByTeam(Team.getAnotherTeam(getTeam())).containByPosition(new Position(nextRow, nextCol))) {
+            movablePositions.add(new Position(nextRow, nextCol));
+            return false;
+        }
+        return true;
     }
 }

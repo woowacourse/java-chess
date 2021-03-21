@@ -70,7 +70,7 @@
           - [x] Map의 key를 통해 확인한 적팀 리스트에 목적지에 위치한 `piece`가 있다면 적팀 리스트에서 해당 `piece`를 삭제한다.
 
     - [ ] knight
-    - [ ] bishop
+    - [x] bishop
     - [ ] queen
     - [ ] king
   
