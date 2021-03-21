@@ -21,20 +21,23 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public Optional<Direction> direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
+    public Optional<Direction> direction(Piece targetPiece) {
+        Direction direction = Direction.findDirection(this.point, targetPiece.point);
         if (isNotMovable(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
+        return directionOnMovableCondition(targetPiece, direction);
+    }
 
-        int distance = this.point.calculateDistance(target.point);
-        if (distance == MOVE_STRAIGHT_ONE_SQUARE && target.isEmptyPiece()) {
+    private Optional<Direction> directionOnMovableCondition(Piece targetPiece, Direction direction) {
+        int distance = this.point.calculateDistance(targetPiece.point);
+        if (targetPiece.isEmptyPiece() && distance == MOVE_STRAIGHT_ONE_SQUARE) {
             return Optional.of(direction);
         }
-        if (distance == MOVE_DIAGONAL_ONE_SQUARE && !target.isEmptyPiece()) {
+        if (!targetPiece.isEmptyPiece() && distance == MOVE_DIAGONAL_ONE_SQUARE) {
             return Optional.of(direction);
         }
-        if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target.isEmptyPiece()
+        if (targetPiece.isEmptyPiece() && distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN
                 && (isInitialBlackPawn() || isInitialWhitePawn())) {
             return Optional.of(direction);
         }
