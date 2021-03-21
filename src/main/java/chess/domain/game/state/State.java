@@ -9,4 +9,6 @@ public interface State {
     State move(Position source, Position target);
 
     State end();
+
+    boolean isRunning();
 }

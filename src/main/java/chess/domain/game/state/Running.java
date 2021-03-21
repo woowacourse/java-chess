@@ -17,4 +17,9 @@ public abstract class Running extends Started {
     public State end() {
         return new End(board());
     }
+
+    @Override
+    public boolean isRunning() {
+        return true;
+    }
 }

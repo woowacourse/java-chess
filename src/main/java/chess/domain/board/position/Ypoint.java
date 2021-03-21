@@ -73,6 +73,10 @@ public enum Ypoint {
     }
 
     public Ypoint down(int value) {
+        System.out.println(Arrays.stream(values())
+                .filter(ypoint -> ypoint.value == this.value - value)
+                .findFirst()
+                .orElse(this));
         return Arrays.stream(values())
             .filter(ypoint -> ypoint.value == this.value - value)
             .findFirst()

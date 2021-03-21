@@ -13,4 +13,9 @@ public abstract class Started implements State {
     public Board board(){
         return this.board;
     }
+
+    @Override
+    public boolean isRunning() {
+        return false;
+    }
 }
