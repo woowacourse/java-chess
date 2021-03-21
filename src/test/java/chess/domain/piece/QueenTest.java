@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardFactory;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;
@@ -37,27 +35,27 @@ class QueenTest {
     @Test
     void moveTargetPosition() {
         Source queen = Source.valueOf(D6, white);
-        queen.move2(Target.valueOf(queen, C7, white), white.pieces());
+        queen.move2(Target.valueOf(queen, C7, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(C7)).isEqualTo(true);
 
-        queen.move2(Target.valueOf(queen, D6, white), white.pieces());
-        queen.move2(Target.valueOf(queen, D8, white), white.pieces());
+        queen.move2(Target.valueOf(queen, D6, white), white.pieces(), black.pieces());
+        queen.move2(Target.valueOf(queen, D8, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(D8)).isEqualTo(true);
 
-        queen.move2(Target.valueOf(queen, D6, white), white.pieces());
-        queen.move2(Target.valueOf(queen, E7, white), white.pieces());
+        queen.move2(Target.valueOf(queen, D6, white), white.pieces(), black.pieces());
+        queen.move2(Target.valueOf(queen, E7, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(E7)).isEqualTo(true);
 
-        queen.move2(Target.valueOf(queen, D6, white), white.pieces());
-        queen.move2(Target.valueOf(queen, E5, white), white.pieces());
+        queen.move2(Target.valueOf(queen, D6, white), white.pieces(), black.pieces());
+        queen.move2(Target.valueOf(queen, E5, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(E5)).isEqualTo(true);
 
-        queen.move2(Target.valueOf(queen, D6, white), white.pieces());
-        queen.move2(Target.valueOf(queen, F4, white), white.pieces());
+        queen.move2(Target.valueOf(queen, D6, white), white.pieces(), black.pieces());
+        queen.move2(Target.valueOf(queen, F4, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(F4)).isEqualTo(true);
 
-        queen.move2(Target.valueOf(queen, D6, white), white.pieces());
-        queen.move2(Target.valueOf(queen, D2, white), white.pieces());
+        queen.move2(Target.valueOf(queen, D6, white), white.pieces(), black.pieces());
+        queen.move2(Target.valueOf(queen, D2, white), white.pieces(), black.pieces());
         assertThat(queen.isSamePosition(D2)).isEqualTo(true);
     }
 
@@ -67,7 +65,7 @@ class QueenTest {
         Source queen = Source.valueOf(D6, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            queen.move2(Target.valueOf(queen, G5, white), white.pieces());
+            queen.move2(Target.valueOf(queen, G5, white), white.pieces(), black.pieces());
         }).withMessage("이동할 수 없는 위치입니다. 입력 값: %s", G5);
         assertThat(queen.isSamePosition(D6)).isEqualTo(true);
     }
@@ -78,7 +76,7 @@ class QueenTest {
         Source queen = Source.valueOf(D6, white);
 
         assertThatIllegalArgumentException().isThrownBy(() -> {
-            queen.move2(Target.valueOf(queen, H6, white), white.pieces());
+            queen.move2(Target.valueOf(queen, H6, white), white.pieces(), black.pieces());
         }).withMessage("같은 색깔의 기물 위치로는 이동할 수 없습니다. 입력 위치: %s", H6);
         assertThat(queen.isSamePosition(D6)).isEqualTo(true);
     }
@@ -87,7 +85,7 @@ class QueenTest {
     @Test
     void moveTargetUpRightPositionException() {
         Source bishop = Source.valueOf(D6, white);
-        bishop.move2(Target.valueOf(bishop, F8, white), white.pieces());
+        bishop.move2(Target.valueOf(bishop, F8, white), white.pieces(), black.pieces());
         assertThat(bishop.isSamePosition(F8)).isEqualTo(true);
     }
 }

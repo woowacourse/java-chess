@@ -38,10 +38,10 @@ public class Bishop extends Piece {
     }
 
     @Override
-    public void move2(final Target target, final Pieces pieces) {
-        List<Position> positions = makeRoutes2(pieces);
+    public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = makeRoutes2(basePieces);
         checkTarget(target, positions);
-        pieces.changePiecePosition(this, target);
+        basePieces.changePiecePosition(this, target);
         changePosition(target.getPosition());
     }
 

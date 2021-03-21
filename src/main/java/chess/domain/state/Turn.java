@@ -16,8 +16,8 @@ public abstract class Turn implements State {
     }
 
     @Override
-    public State move(Source source, Target target) {
-        pieces.move(source, target);
+    public State move(final Source source, final Target target, final Pieces targetPieces) {
+        pieces.move(source, target, targetPieces);
         return null;
     }
 

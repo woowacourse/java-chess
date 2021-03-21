@@ -31,8 +31,8 @@ public class Pieces {
                 .findAny();
     }
 
-    public void move(final Source source, final Target target) {
-        source.move2(target, this);
+    public void move(final Source source, final Target target, final Pieces targetPieces) {
+        source.move2(target, this, targetPieces);
     }
 
     public void changePiecePosition(final Piece source, final Target target) {

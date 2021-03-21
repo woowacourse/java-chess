@@ -6,7 +6,7 @@ import chess.domain.position.Target;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
@@ -25,106 +25,112 @@ public class Rook extends Piece {
 
     @Override
     public void move(final Target target, final ChessBoard chessBoard) {
-        List<Position> positions = makeRoutes(chessBoard);
-        checkTarget(target, positions);
-        chessBoard.changePiecePosition(this, target.getPosition());
-        changePosition(target.getPosition());
     }
 
     @Override
-    public void move2(Target target, Pieces pieces) {
-
+    public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = makeRoutes2(basePieces, targetPieces);
+        checkTarget(target, positions);
+        basePieces.changePiecePosition(this, target);
     }
 
-    private void checkTarget(Target target, List<Position> positions) {
+    private void checkTarget(final Target target, final List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
     }
 
-    private List<Position> makeRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
-        positions.addAll(makeUpRoutes(chessBoard));
-        positions.addAll(makeDownRoutes(chessBoard));
-        positions.addAll(makeLeftRoutes(chessBoard));
-        positions.addAll(makeRightRoutes(chessBoard));
+        positions.addAll(makeUpRoutes2(basePieces, targetPieces));
+        positions.addAll(makeDownRoutes2(basePieces, targetPieces));
+        positions.addAll(makeLeftRoutes2(basePieces, targetPieces));
+        positions.addAll(makeRightRoutes2(basePieces, targetPieces));
         return positions;
     }
 
-    private List<Position> makeRightRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeRightRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index < 8; index++) {
             Position nextPosition = Position.valueOf(rank, index + 1);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeLeftRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeLeftRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = file; index > 1; index--) {
             Position nextPosition = Position.valueOf(rank, index - 1);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeDownRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeDownRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index > 1; index--) {
             Position nextPosition = Position.valueOf(index - 1, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }
         return positions;
     }
 
-    private List<Position> makeUpRoutes(final ChessBoard chessBoard) {
+    private List<Position> makeUpRoutes2(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
         for (int index = rank; index < 8; index++) {
             Position nextPosition = Position.valueOf(index + 1, file);
-            if (Objects.isNull(chessBoard.findPiece(nextPosition))) {
-                positions.add(nextPosition);
-                continue;
-            }
-            if (!chessBoard.findPiece(nextPosition).isSameColor(this)) {
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
                 positions.add(nextPosition);
                 break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
             }
             break;
         }

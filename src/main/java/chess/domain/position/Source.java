@@ -27,19 +27,19 @@ public class Source {
         return new Source(piece);
     }
 
-    public boolean isSameColor(Piece piece) {
+    public boolean isSameColor(final Piece piece) {
         return this.piece.isSameColor(piece);
     }
 
-    public boolean isSamePosition(Position piece) {
+    public boolean isSamePosition(final Position piece) {
         return this.piece.isSamePosition(piece);
     }
 
-    public void move(Target target, ChessBoard chessBoard) {
+    public void move(final Target target, final ChessBoard chessBoard) {
         piece.move(target, chessBoard);
     }
 
-    public void move2(final Target target, final Pieces pieces) {
-        piece.move2(target, pieces);
+    public void move2(final Target target, final Pieces basePieces, final Pieces targetPieces) {
+        piece.move2(target, basePieces, targetPieces);
     }
 }

@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface State {
     boolean isFinish();
 
-    State move(final Source source, final Target target);
+    State move(final Source source, final Target target, final Pieces targetPieces);
 
     Optional<Piece> findPiece(final Position position);
 

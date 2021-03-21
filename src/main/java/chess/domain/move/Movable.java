@@ -7,5 +7,5 @@ import chess.domain.position.Target;
 public interface Movable {
     void move(final Target target, final ChessBoard chessBoard);
 
-    void move2(final Target target, final Pieces pieces);
+    void move2(final Target target, final Pieces basePieces, final Pieces targetPieces);
 }

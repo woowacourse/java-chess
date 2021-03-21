@@ -44,7 +44,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public void move2(Target target, Pieces pieces) {
+    public void move2(Target target, final Pieces basePieces, final Pieces targetPieces) {
 
     }
 

@@ -31,7 +31,7 @@ class StateTest {
         Source source = Source.valueOf(A2, white);
         Target target = Target.valueOf(source, A3, white);
 
-        State whiteAfterMove = white.move(source, target);
+        State whiteAfterMove = white.move(source, target, black.pieces());
 
         assertThat(whiteAfterMove).isInstanceOf(Finished.class);
     }
