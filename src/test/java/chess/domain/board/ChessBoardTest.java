@@ -5,94 +5,90 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ChessBoardTest {
     private static ChessBoard ChessBOARD;
 
-    private static Stream<Arguments> getDefaultBlackPieces() {
-        ChessBOARD = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
-        ChessBOARD.initializeDefaultPieces();
-        return Stream.of(
-                Arguments.of(ChessBOARD.find(Coordinate.from("a8")), "R"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("b8")), "N"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("c8")), "B"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("d8")), "Q"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("e8")), "K"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("f8")), "B"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("g8")), "N"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("h8")), "R")
-        );
-    }
-
-    private static Stream<Arguments> getDefaultWhitePieces() {
-        ChessBOARD = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
-        ChessBOARD.initializeDefaultPieces();
-        return Stream.of(
-                Arguments.of(ChessBOARD.find(Coordinate.from("a1")), "r"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("b1")), "n"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("c1")), "b"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("d1")), "q"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("e1")), "k"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("f1")), "b"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("g1")), "n"),
-                Arguments.of(ChessBOARD.find(Coordinate.from("h1")), "r")
-        );
-    }
+//    private static Stream<Arguments> getDefaultBlackPieces() {
+//        ChessBOARD = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+//        ChessBOARD.initializeDefaultPieces();
+//        return Stream.of(
+//                Arguments.of(ChessBOARD.find(Coordinate.from("a8")), "R"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("b8")), "N"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("c8")), "B"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("d8")), "Q"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("e8")), "K"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("f8")), "B"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("g8")), "N"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("h8")), "R")
+//        );
+//    }
+//
+//    private static Stream<Arguments> getDefaultWhitePieces() {
+//        ChessBOARD = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
+//        ChessBOARD.initializeDefaultPieces();
+//        return Stream.of(
+//                Arguments.of(ChessBOARD.find(Coordinate.from("a1")), "r"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("b1")), "n"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("c1")), "b"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("d1")), "q"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("e1")), "k"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("f1")), "b"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("g1")), "n"),
+//                Arguments.of(ChessBOARD.find(Coordinate.from("h1")), "r")
+//        );
+//    }
 
     @BeforeEach
     void setup() {
         ChessBOARD = new ChessBoard(ChessBoardGenerator.generateEmptyBoard());
         ChessBOARD.initializeDefaultPieces();
     }
-
-    @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
-    @MethodSource("getDefaultBlackPieces")
-    @ParameterizedTest
-    void boardInitialization_BlackPieces(Cell cell, String pieceName) {
-        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
-    }
-
-    @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
-    @MethodSource("getDefaultWhitePieces")
-    @ParameterizedTest
-    void boardInitialization_WhitePieces(Cell cell, String pieceName) {
-        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
-    }
-
-    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 백팀")
-    @Test
-    void findPieceOnBoard_WhiteTeam() {
-        String currentCoordinate = "b2";
-        TeamType teamType = TeamType.WHITE;
-
-        Cell cell = ChessBOARD.find(Coordinate.from(currentCoordinate));
-        Piece piece = cell.getPiece();
-
-        assertThat(piece.getName()).isEqualTo("p");
-        assertThat(piece.isTeamOf(teamType)).isTrue();
-    }
-
-    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 흑팀")
-    @Test
-    void findPieceOnBoard_BlackTeam() {
-        String currentCoordinate = "c8";
-        TeamType teamType = TeamType.BLACK;
-
-        Cell cell = ChessBOARD.find(Coordinate.from(currentCoordinate));
-        Piece piece = cell.getPiece();
-
-        assertThat(piece.getName()).isEqualTo("B");
-        assertThat(piece.isTeamOf(teamType)).isTrue();
-    }
+//
+//    @DisplayName("초기 기물 배치 - 8Rank 흑의 초기 기물들 배치")
+//    @MethodSource("getDefaultBlackPieces")
+//    @ParameterizedTest
+//    void boardInitialization_BlackPieces(Cell cell, String pieceName) {
+//        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
+//    }
+//
+//    @DisplayName("초기 기물 배치 - 1Rank 백의 초기 기물들 배치")
+//    @MethodSource("getDefaultWhitePieces")
+//    @ParameterizedTest
+//    void boardInitialization_WhitePieces(Cell cell, String pieceName) {
+//        assertThat(cell.getPiece().getName()).isEqualTo(pieceName);
+//    }
+//
+//    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 백팀")
+//    @Test
+//    void findPieceOnBoard_WhiteTeam() {
+//        String currentCoordinate = "b2";
+//        TeamType teamType = TeamType.WHITE;
+//
+//        Cell cell = ChessBOARD.find(Coordinate.from(currentCoordinate));
+//        Piece piece = cell.getPiece();
+//
+//        assertThat(piece.getName()).isEqualTo("p");
+//        assertThat(piece.isTeamOf(teamType)).isTrue();
+//    }
+//
+//    @DisplayName("move 명령 - 보드에 현재 위치의 기물이 존재하면, 반환한다. - 흑팀")
+//    @Test
+//    void findPieceOnBoard_BlackTeam() {
+//        String currentCoordinate = "c8";
+//        TeamType teamType = TeamType.BLACK;
+//
+//        Cell cell = ChessBOARD.find(Coordinate.from(currentCoordinate));
+//        Piece piece = cell.getPiece();
+//
+//        assertThat(piece.getName()).isEqualTo("B");
+//        assertThat(piece.isTeamOf(teamType)).isTrue();
+//    }
 
     @DisplayName("점수 계산")
     @Test

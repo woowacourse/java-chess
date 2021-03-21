@@ -110,10 +110,6 @@ public enum Direction {
         return Arrays.asList(LEFT_UP, LEFT_DOWN, RIGHT_UP, RIGHT_DOWN).contains(this);
     }
 
-    public int getX() {
-        return x;
-    }
-
     public int calculateRank(int y) {
         return this.y + y;
     }

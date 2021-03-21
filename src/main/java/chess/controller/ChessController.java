@@ -27,7 +27,7 @@ public class ChessController {
         OutputView.printChessBoard(chessBoard);
         startChessGame();
         if (chessBoard.isKingCheckmate()) {
-            OutputView.printWinnerTeam(chessBoard.winner());
+            OutputView.printWinnerTeam(chessBoard.findWinnerTeam());
         }
     }
 
