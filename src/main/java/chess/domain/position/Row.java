@@ -24,7 +24,7 @@ public enum Row {
         return Arrays.stream(Row.values())
                 .filter(value -> value.row.equals(row))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new)
+                .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 좌표입니다."))
                 .location;
     }
 }

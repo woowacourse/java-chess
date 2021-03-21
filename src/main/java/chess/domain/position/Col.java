@@ -27,7 +27,7 @@ public enum Col {
         return Arrays.stream(Col.values())
                 .filter(value -> value.col.equals(col))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new)
+                .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 좌표입니다."))
                 .location;
     }
 
