@@ -1,7 +1,13 @@
+import chess.domain.ChessGame;
+import chess.domain.board.Board;
 import chess.domain.command.Command;
+import chess.domain.gamestate.Finished;
+import chess.domain.gamestate.Ready;
+import chess.domain.gamestate.Running;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -62,5 +68,26 @@ public class CommandTest {
     void testGetArguments() {
         List<String> input = Arrays.asList("start");
         assertThat(Command.getArguments(input)).isEqualTo(Collections.emptyList());
+    }
+
+    @Test
+    @DisplayName("명령어에 따라 올바른 실행을 하는지 테스트")
+    void testExecute() {
+        ChessGame chessGame = new ChessGame(new Board());
+        List<String> empty = new ArrayList<>();
+
+        assertThat(chessGame.state() instanceof Ready).isTrue();
+
+        Command.START.execute(chessGame, empty);
+        assertThat(chessGame.state() instanceof Running).isTrue();
+
+        Command.STATUS.execute(chessGame, empty);
+        assertThat(chessGame.state() instanceof Running).isTrue();
+
+        Command.MOVE.execute(chessGame, Arrays.asList("move", "b2", "b4"));
+        assertThat(chessGame.state() instanceof Running).isTrue();
+
+        Command.END.execute(chessGame, empty);
+        assertThat(chessGame.state() instanceof Finished).isTrue();
     }
 }

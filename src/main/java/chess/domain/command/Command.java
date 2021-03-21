@@ -1,20 +1,25 @@
 package chess.domain.command;
 
+import chess.domain.ChessGame;
+
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.BiConsumer;
 
 public enum Command {
-    START("start"),
-    END("end"),
-    MOVE("move"),
-    STATUS("status");
+    START("start", (chessGame, commander) -> chessGame.start()),
+    END("end", (chessGame, commander) -> chessGame.end()),
+    MOVE("move", ChessGame::move),
+    STATUS("status", (chessGame, commander) -> chessGame.status());
 
     private static final int ARGUMENT_START_INDEX = 1;
 
     private final String operation;
+    private final BiConsumer<ChessGame, List<String>> commander;
 
-    Command(String operation) {
+    Command(String operation, BiConsumer<ChessGame, List<String>> commander) {
         this.operation = operation;
+        this.commander = commander;
     }
 
     public static Command getByInput(String input) {
@@ -27,5 +32,9 @@ public enum Command {
 
     public static List<String> getArguments(List<String> input) {
         return input.subList(ARGUMENT_START_INDEX, input.size());
+    }
+
+    public void execute(ChessGame chessGame, List<String> arguments) {
+        commander.accept(chessGame, arguments);
     }
 }
