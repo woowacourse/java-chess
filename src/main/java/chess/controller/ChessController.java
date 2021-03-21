@@ -51,7 +51,7 @@ public class ChessController {
 
     public void move(Command command) {
         try {
-            chessGame.play(command);
+            chessGame.movePieceFromSourceToTarget(command);
             OutputView.printChessBoard(chessGame.getCurrentPieces());
         } catch (Exception e) {
             System.out.println(e.getMessage());

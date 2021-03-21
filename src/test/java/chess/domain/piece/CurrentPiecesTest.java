@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class CurrentPiecesTest {
 
@@ -46,16 +45,6 @@ public class CurrentPiecesTest {
         currentPieces.removePieceByPosition(target);
 
         assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(31);
-    }
-
-    @DisplayName("현재 기물들 중 해당 위치 기물 제거 확인 - 기물이 없을 경우 예외")
-    @Test
-    void 해당_위치_기물_제거_확인_예외() {
-        CurrentPieces currentPieces = new CurrentPieces(PieceFactory.initialPieces());
-        Position target = Position.of('e', '4');
-
-        assertThatThrownBy(() -> currentPieces.removePieceByPosition(target))
-                .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("현재 기물들의 팀별 점수를 계산한다.")

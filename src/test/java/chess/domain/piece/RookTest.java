@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -57,22 +56,5 @@ public class RookTest {
 
         assertThatThrownBy(() -> rook.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("target에 상대 말이 있는 경우")
-    @Test
-    void 상대편_말을_공격한다() {
-        List<Piece> current = Arrays.asList(
-                new Rook(Position.of('a', '8'), Color.BLACK),
-                new Pawn(Position.of('a', '5'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-
-        Position source = Position.of('a', '8');
-        Position target = Position.of('a', '5');
-        Piece rook = currentPieces.findByPosition(source);
-
-        rook.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
     }
 }

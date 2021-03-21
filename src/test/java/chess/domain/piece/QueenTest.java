@@ -72,38 +72,4 @@ public class QueenTest {
         assertThatThrownBy(() -> queen.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @DisplayName("target에 상대 말이 있는 경우 - 십자")
-    @Test
-    void 상대편_말을_공격한다_십자() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.BLACK),
-                new Pawn(Position.of('d', '1'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d', '1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
-
-        queen.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
-    }
-
-    @DisplayName("target에 상대 말이 있는 경우 - 대각선")
-    @Test
-    void 상대편_말을_공격한다_대각선() {
-        List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.BLACK),
-                new Pawn(Position.of('d', '1'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d', '1'); // 옮기고자 하는 위치
-        Piece queen = currentPieces.findByPosition(source);
-
-        queen.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
-    }
 }

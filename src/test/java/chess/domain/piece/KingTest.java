@@ -72,37 +72,4 @@ public class KingTest {
         assertThatThrownBy(() -> king.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @DisplayName("target에 상대 말이 있는 경우 - 십자")
-    @Test
-    void 상대편_말을_공격한다_십자() {
-        List<Piece> current = Arrays.asList(
-                new King(Position.of('d', '8'), Color.BLACK),
-                new Pawn(Position.of('d', '7'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-        Position source = Position.of('d', '8');
-
-        Position target = Position.of('d', '7');
-        Piece king = currentPieces.findByPosition(source);
-        king.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
-    }
-
-    @DisplayName("target에 상대 말이 있는 경우 - 대각선")
-    @Test
-    void 상대편_말을_공격한다_대각선() {
-        List<Piece> current = Arrays.asList(
-                new King(Position.of('d', '8'), Color.BLACK),
-                new Pawn(Position.of('e', '7'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-
-        Position source = Position.of('d', '8');
-        Position target = Position.of('e', '7');
-        Piece king = currentPieces.findByPosition(source);
-
-        king.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
-    }
 }

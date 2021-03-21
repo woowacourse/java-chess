@@ -57,21 +57,4 @@ public class KnightTest {
         assertThatThrownBy(() -> knight.move(target, currentPieces))
                 .isInstanceOf(IllegalArgumentException.class);
     }
-
-    @DisplayName("target에 상대 말이 있는 경우")
-    @Test
-    void 상대편_말을_공격한다() {
-        List<Piece> current = Arrays.asList(
-                new Knight(Position.of('b', '8'), Color.BLACK),
-                new Pawn(Position.of('d', '7'), Color.WHITE));
-        CurrentPieces currentPieces = new CurrentPieces(current);
-
-        Position source = Position.of('b', '8'); // 비숍 위치
-        Position target = Position.of('d', '7'); // 옮기고자 하는 위치
-        Piece knight = currentPieces.findByPosition(source);
-
-        knight.move(target, currentPieces);
-
-        assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(1);
-    }
 }

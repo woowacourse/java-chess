@@ -37,4 +37,8 @@ public abstract class Piece {
     public Score getScore() {
         return score;
     }
+
+    public boolean isSameTeam(Piece targetPiece) {
+        return this.color.same(targetPiece.color);
+    }
 }

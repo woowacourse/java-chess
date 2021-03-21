@@ -40,12 +40,6 @@ public class Knight extends Piece {
             throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
         }
         Piece targetPiece = currentPieces.findByPosition(target);
-        if (this.color.same(targetPiece.color)) {
-            throw new IllegalArgumentException("[ERROR] taget에 같은 편 말이 있습니다.");
-        }
-        if (!(targetPiece instanceof Empty)) {
-            currentPieces.removePieceByPosition(target);
-        }
         this.position = target;
     }
 }

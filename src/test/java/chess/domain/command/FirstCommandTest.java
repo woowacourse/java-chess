@@ -44,6 +44,6 @@ public class FirstCommandTest {
     @Test
     void 첫번째_명령어_예외() {
         assertThatThrownBy(() -> FirstCommand.findFirstCommand("으악"))
-        .isInstanceOf(IllegalArgumentException.class);
+                .isInstanceOf(IllegalArgumentException.class);
     }
 }
