@@ -25,7 +25,7 @@ public final class Pawn extends Piece {
             .findAny()
             .orElse(Direction.NOTHING);
 
-        return direction != Direction.NOTHING && checkPossible(direction, piece, source.getVertical());
+        return direction != Direction.NOTHING && checkPossible(direction, piece, source.vertical());
     }
 
     @Override
@@ -54,20 +54,20 @@ public final class Pawn extends Piece {
     }
 
     private List<Integer> subtractByTeam(final Position source, final Position target) {
-        if (team() == Team.BLACK) {
+        if (team().isBlackTeam()) {
             return source.subtract(target);
         }
         return target.subtract(source);
     }
 
     private boolean checkPossible(final Direction direction, final Piece piece, final Vertical vertical) {
-        if (direction == Direction.NORTH) {
+        if (direction.isNorth()) {
             return piece.isBlank();
         }
-        if (direction == Direction.NORTHEAST || direction == Direction.NORTHWEST) {
+        if (direction.isNorthWest() || direction.isNorthEast()) {
             return piece.isOpponent(this);
         }
-        if (direction == Direction.INITIAL_PAWN_NORTH) {
+        if (direction.isInitialPawnNorth()) {
             return INITIAL_VERTICALS.contains(vertical.value()) && piece.isBlank();
         }
         return false;

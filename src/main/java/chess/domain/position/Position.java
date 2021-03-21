@@ -25,8 +25,7 @@ public class Position implements Comparable<Position> {
     }
 
     public List<Integer> subtract(final Position source) {
-        return Arrays.asList(this.horizontal.value() - source.horizontal.value(),
-            this.vertical.value() - source.vertical.value());
+        return Arrays.asList(this.horizontal.subtract(source.horizontal), this.vertical.subtract(source.vertical));
     }
 
     public boolean hasMiddlePath(final Position target) {
@@ -45,14 +44,15 @@ public class Position implements Comparable<Position> {
         return Math.abs(result.get(0)) == Math.abs(result.get(1)) && !result.contains(0);
     }
 
-    public Direction decideDirection(Position target) {
+    public Direction decideDirection(final Position target) {
         if (hasMiddlePath(target)) {
-            return Direction.matchedDirection(getDirectionMatcher(target));
+            final List<Integer> result = directionMatcher(target);
+            return Direction.matchedDirection(result.get(0), result.get(1));
         }
         throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
 
-    private List<Integer> getDirectionMatcher(Position target) {
+    private List<Integer> directionMatcher(final Position target) {
         final List<Integer> result = target.subtract(this);
         final int abs = result.stream()
             .filter(difference -> difference != 0)
@@ -66,15 +66,15 @@ public class Position implements Comparable<Position> {
     }
 
     public Position next(final Direction direction) {
-        return new Position(horizontal.value() + direction.horizontalDegree(),
-            vertical.value() + direction.verticalDegree());
+        return new Position(horizontal.increaseHorizontal(direction.horizontalDegree()),
+            vertical.increaseVertical(direction.verticalDegree()));
     }
 
-    public Horizontal getHorizontal() {
+    public Horizontal horizontal() {
         return horizontal;
     }
 
-    public Vertical getVertical() {
+    public Vertical vertical() {
         return vertical;
     }
 

@@ -33,6 +33,14 @@ public enum Team {
         return this.oppositeTeam() == team;
     }
 
+    public boolean isBlackTeam() {
+        return this == BLACK;
+    }
+
+    public boolean isSameTeam(final Team team) {
+        return this == team;
+    }
+
     public Team oppositeTeam() {
         if (this == BLACK) {
             return WHITE;

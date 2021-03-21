@@ -33,16 +33,16 @@ public enum Direction {
         this.verticalDegree = verticalDegree;
     }
 
-    public static Direction matchedDirection(final List<Integer> result) {
+    public static Direction matchedDirection(final int horizontalDegree, final int verticalDegree) {
         return Arrays.stream(values())
-            .filter(i -> i.horizontalDegree == result.get(0))
-            .filter(i -> i.verticalDegree == result.get(1))
+            .filter(direction -> direction.horizontalDegree == horizontalDegree)
+            .filter(direction -> direction.verticalDegree == verticalDegree)
             .findFirst()
             .orElse(NOTHING);
     }
 
     public boolean isSameDirection(final List<Integer> result) {
-        return this == matchedDirection(result);
+        return this == matchedDirection(result.get(0), result.get(1));
     }
 
     public int horizontalDegree() {
@@ -51,5 +51,21 @@ public enum Direction {
 
     public int verticalDegree() {
         return verticalDegree;
+    }
+
+    public boolean isNorth() {
+        return this == NORTH;
+    }
+
+    public boolean isNorthWest() {
+        return this == NORTHWEST;
+    }
+
+    public boolean isNorthEast() {
+        return this == NORTHEAST;
+    }
+
+    public boolean isInitialPawnNorth() {
+        return this == INITIAL_PAWN_NORTH;
     }
 }

@@ -50,4 +50,11 @@ public enum Horizontal {
         return value;
     }
 
+    public int subtract(final Horizontal horizontal) {
+        return value - horizontal.value;
+    }
+
+    public int increaseHorizontal(final int degree) {
+        return value + degree;
+    }
 }

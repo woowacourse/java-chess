@@ -11,7 +11,7 @@ public abstract class Piece {
 
     public Piece(final Team team, final String initialName) {
         this.team = team;
-        if (team == Team.BLACK) {
+        if (team.isBlackTeam()) {
             name = initialName.toUpperCase();
             return;
         }
@@ -23,7 +23,7 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(final Team team) {
-        return this.team == team;
+        return this.team.isSameTeam(team);
     }
 
     public String name() {

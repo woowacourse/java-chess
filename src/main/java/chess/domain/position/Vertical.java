@@ -53,4 +53,12 @@ public enum Vertical {
     public boolean isSameValue(final Vertical vertical) {
         return value == vertical.value();
     }
+
+    public int subtract(final Vertical vertical) {
+        return value - vertical.value;
+    }
+
+    public int increaseVertical(final int degree) {
+        return value + degree;
+    }
 }

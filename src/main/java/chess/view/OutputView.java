@@ -32,8 +32,8 @@ public class OutputView {
 
     private static int updateLastVerticalValue(final int before, final Position position) {
         int newValue = before;
-        if (position.getVertical().value() != before) {
-            newValue = position.getVertical().value();
+        if (position.vertical().value() != before) {
+            newValue = position.vertical().value();
             System.out.println(" | " + (newValue + 1));
         }
         return newValue;

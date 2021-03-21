@@ -30,7 +30,7 @@ public final class ChessResult {
     private double calculateColumnTotalScore(final Team team, final int column) {
         final Map<Position, Piece> chessBoard = board.unwrap();
         final List<Piece> pieces = chessBoard.keySet().stream()
-            .filter(position -> position.getHorizontal().value() == column)
+            .filter(position -> position.horizontal().value() == column)
             .map(chessBoard::get)
             .filter(piece -> piece.isSameTeam(team))
             .collect(Collectors.toList());
