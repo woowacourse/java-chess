@@ -19,6 +19,11 @@ class NumberRowTest {
         assertThatCode(() -> NumberRow.valueOf(1)).doesNotThrowAnyException();
     }
 
+    @Test
+    @DisplayName("실패 - 범위를 벗어나는 숫자 입력")
+    void create_fail1(){
+        assertThatThrownBy(() -> NumberRow.valueOf("0")).isInstanceOf(IllegalArgumentException.class);
+    }
 
 
 }
