@@ -1,20 +1,19 @@
 package chess.domain.piece;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
     public final static String ROW = "abcdefgh";
     private final static String COL = "87654321";
     public static final Position EMPTY = new Position('0', '0');
-    public final static List<Position> POSITIONS;
+    public final static Map<String, Position> POSITIONS;
 
     static {
-        POSITIONS = new ArrayList<>();
+        POSITIONS = new LinkedHashMap<>();
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
-                POSITIONS.add(Position.of(ROW.charAt(j), COL.charAt(i)));
+                POSITIONS.put(String.valueOf(ROW.charAt(j)) + COL.charAt(i),
+                        new Position(ROW.charAt(j), COL.charAt(i)));
             }
         }
     }
@@ -29,7 +28,7 @@ public class Position {
 
     public static Position of(char x, char y) {
         validatePosition(x, y);
-        return new Position(x, y);
+        return POSITIONS.get(String.valueOf(x)+y);
     }
 
     private static void validatePosition(char x, char y) {

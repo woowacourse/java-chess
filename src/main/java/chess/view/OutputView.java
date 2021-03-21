@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.domain.Color;
+import chess.domain.piece.Color;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
 
@@ -16,11 +16,13 @@ public class OutputView {
     }
 
     public static void printChessBoard(CurrentPieces currentPieces) {
-        for (int i = 0; i < POSITIONS.size(); i++) {
-            if (i % 8 == 0) {
+        int index = 0;
+        for (String key : POSITIONS.keySet()) {
+            if (index % 8 == 0) {
                 System.out.println();
             }
-            Piece piece = currentPieces.findByPosition(POSITIONS.get(i));
+            index++;
+            Piece piece = currentPieces.findByPosition(POSITIONS.get(key));
             System.out.print(piece.getName());
         }
         System.out.println();
