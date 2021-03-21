@@ -1,7 +1,8 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Bishop;
 import chess.domain.piece.kind.Empty;
 import org.junit.jupiter.api.DisplayName;

@@ -1,14 +1,14 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-
 
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -28,7 +28,7 @@ public class RookTest {
         Rook rook4 = new Rook(WHITE, Point.valueOf(7, 7));
         assertThat(PieceType.findPiece(7, 7)).isEqualTo(rook4);
     }
-    
+
     @DisplayName("Rook의 가능한 방향 확인")
     @Test
     void checkRookPossibleMove() {
@@ -62,7 +62,7 @@ public class RookTest {
         assertThatThrownBy(() -> rook.direction(empty3))
                 .isInstanceOf(IllegalArgumentException.class);
 
-        assertThatThrownBy(() ->rook.direction(empty4))
+        assertThatThrownBy(() -> rook.direction(empty4))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 }

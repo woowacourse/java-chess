@@ -1,7 +1,8 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.King;
 import org.junit.jupiter.api.DisplayName;
@@ -42,7 +43,7 @@ public class KingTest {
     @DisplayName("King의 불가능한 거리 확인")
     @Test
     void checkKingImpossibleMove() {
-        King king = new King( BLACK, Point.valueOf(4, 4));
+        King king = new King(BLACK, Point.valueOf(4, 4));
         Empty empty = new Empty(NOTHING, Point.valueOf(2, 2));
         Empty empty2 = new Empty(NOTHING, Point.valueOf(2, 6));
         Empty empty3 = new Empty(NOTHING, Point.valueOf(4, 6));

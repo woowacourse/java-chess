@@ -10,7 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Map;
 
-import static chess.domain.piece.Color.*;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -99,24 +100,5 @@ public class BoardTest {
         board.movePiece(Point.of("b8"), Point.of("c6"), BLACK);
         board.movePiece(Point.of("h5"), Point.of("e8"), WHITE);
         assertFalse(board.hasBothKings());
-    }
-
-    @DisplayName("초기 점수 확인")
-    @Test
-    void checkScore() {
-        Board board = new Board();
-        assertEquals(38, board.addScore(WHITE));
-        assertEquals(38, board.addScore(BLACK));
-    }
-
-    @DisplayName("폰이 겹쳤을 때 0.5로 계산하는 점수 확인")
-    @Test
-    void checkPawnScore() {
-        Board board = new Board();
-        board.movePiece(Point.of("e2"), Point.of("e4"), WHITE);
-        board.movePiece(Point.of("f7"), Point.of("f5"), BLACK);
-        board.movePiece(Point.of("e4"), Point.of("f5"), WHITE);
-
-        assertEquals(37, board.addScore(WHITE));
     }
 }

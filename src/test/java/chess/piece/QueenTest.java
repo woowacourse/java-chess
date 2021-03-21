@@ -1,14 +1,14 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Queen;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
-
 
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +43,7 @@ public class QueenTest {
     @DisplayName("Queen의 불가능한 위치 확인")
     @Test
     void checkQueenImpossibleMove() {
-        Queen queen = new Queen( BLACK, Point.valueOf(4, 4));
+        Queen queen = new Queen(BLACK, Point.valueOf(4, 4));
         Empty empty = new Empty(NOTHING, Point.valueOf(2, 3));
         Empty empty2 = new Empty(NOTHING, Point.valueOf(6, 5));
         Empty empty3 = new Empty(NOTHING, Point.valueOf(2, 5));

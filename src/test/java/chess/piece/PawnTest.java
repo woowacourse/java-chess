@@ -2,16 +2,15 @@ package chess.piece;
 
 import chess.domain.Point;
 import chess.domain.piece.Direction;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Pawn;
-import chess.domain.piece.PieceType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.Optional;
-
 
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -98,6 +97,6 @@ public class PawnTest {
         Pawn whitePawn = new Pawn(WHITE, Point.valueOf(6, 3));
         Empty empty = new Empty(NOTHING, Point.valueOf(4, 3));
 
-        assertEquals( Optional.of(Direction.NORTH), whitePawn.direction(empty));
+        assertEquals(Optional.of(Direction.NORTH), whitePawn.direction(empty));
     }
 }

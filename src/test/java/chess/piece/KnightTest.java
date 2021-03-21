@@ -1,7 +1,7 @@
 package chess.piece;
 
 import chess.domain.Point;
-import chess.domain.piece.*;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Knight;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +32,7 @@ public class KnightTest {
     @Test
     void checkKnightPossibleMove() {
         Knight knight = new Knight(BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(NOTHING, Point.valueOf(2 , 5));
+        Empty empty = new Empty(NOTHING, Point.valueOf(2, 5));
         Empty empty2 = new Empty(NOTHING, Point.valueOf(2, 3));
         Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 6));
         Empty empty4 = new Empty(NOTHING, Point.valueOf(3, 2));
