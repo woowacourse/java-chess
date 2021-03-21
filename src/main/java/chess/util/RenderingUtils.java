@@ -14,10 +14,12 @@ public class RenderingUtils {
     }
 
     public static String renderBoard(Board board) {
-        return Stream.of(Row.values())
-            .map(index -> renderRow(board, index))
+        final String visualBoard = Stream.of(Row.values())
+            .map(index -> renderRow(board, index) + " " + index.getNumber())
             .collect(Collectors.joining("\n"))
             ;
+        final String columnInfo = "\nABCDEFGH\n";
+        return visualBoard + columnInfo;
     }
 
     private static String renderRow(Board board, Row row) {
