@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.game.Outcome;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
@@ -37,11 +38,11 @@ public class OutputView {
 
 	public static void printResult(Result result) {
 		Map<Color, Double> score = result.getResult();
-		Map<Color, String> winOrLose = result.getWinOrLose();
+		Map<Color, Outcome> winOrLose = result.getWinOrLose();
 		System.out.printf(RESULT_FORMAT,
-				Color.BLACK.name(), score.get(Color.BLACK), winOrLose.get(Color.BLACK));
+				Color.BLACK.name(), score.get(Color.BLACK), winOrLose.get(Color.BLACK).getOutcome());
 		System.out.printf(RESULT_FORMAT,
-				Color.WHITE.name(), score.get(Color.WHITE), winOrLose.get(Color.WHITE));
+				Color.WHITE.name(), score.get(Color.WHITE), winOrLose.get(Color.WHITE).getOutcome());
 		System.out.println();
 	}
 }

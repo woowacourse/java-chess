@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class ResultTest {
 	private Map<Color, Double> resultStatistics;
+
 	@BeforeEach
 	void setUp() {
 		resultStatistics = new HashMap<>();
@@ -21,10 +22,10 @@ public class ResultTest {
 		resultStatistics.put(Color.BLACK, 10d);
 		resultStatistics.put(Color.WHITE, 15d);
 		Result result = new Result(resultStatistics);
-		Map<Color, String> winOrLose = result.getWinOrLose();
+		Map<Color, Outcome> winOrLose = result.getWinOrLose();
 
-		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.LOSE);
-		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.WIN);
+		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Outcome.LOSE);
+		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Outcome.WIN);
 	}
 
 	@Test
@@ -32,10 +33,10 @@ public class ResultTest {
 		resultStatistics.put(Color.BLACK, 15d);
 		resultStatistics.put(Color.WHITE, 15d);
 		Result result = new Result(resultStatistics);
-		Map<Color, String> winOrLose = result.getWinOrLose();
+		Map<Color, Outcome> winOrLose = result.getWinOrLose();
 
-		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.DRAW);
-		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.DRAW);
+		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Outcome.DRAW);
+		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Outcome.DRAW);
 	}
 
 	@Test
@@ -43,9 +44,9 @@ public class ResultTest {
 		resultStatistics.put(Color.BLACK, 15d);
 		resultStatistics.put(Color.WHITE, 10d);
 		Result result = new Result(resultStatistics);
-		Map<Color, String> winOrLose = result.getWinOrLose();
+		Map<Color, Outcome> winOrLose = result.getWinOrLose();
 
-		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Result.WIN);
-		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Result.LOSE);
+		assertThat(winOrLose.get(Color.BLACK)).isEqualTo(Outcome.WIN);
+		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Outcome.LOSE);
 	}
 }
