@@ -10,16 +10,8 @@ public class InputView {
     private InputView() {
     }
 
-    public static List<String> requestPositions() {
-        String userInput = scanner.nextLine();
-        List<String> inputs = Arrays.asList(userInput.split(" "));
-        if (inputs.size() == 3 && "move".equals(inputs.get(0))) {
-            return inputs.subList(1,3);
-        }
-        throw new IllegalArgumentException("잘못된 입력입니다.");
-    }
-
     public static boolean willNotPlayGame() {
+        OutputView.printWillPlayGameMessage();
         String userInput = scanner.nextLine();
         if ("start".equals(userInput)) {
             return false;
@@ -28,6 +20,15 @@ public class InputView {
             return true;
         }
         throw new IllegalArgumentException("start 또는 end 를 입력해주세요");
+    }
+
+    public static List<String> requestPositions() {
+        String userInput = scanner.nextLine();
+        List<String> inputs = Arrays.asList(userInput.split(" "));
+        if (inputs.size() == 3 && "move".equals(inputs.get(0))) {
+            return inputs.subList(1,3);
+        }
+        throw new IllegalArgumentException("잘못된 입력입니다.");
     }
 
     public static boolean willWatchScore() {
