@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.game.Board;
-import chess.game.InitializedChess;
+import chess.domain.game.Board;
+import chess.domain.game.InitializedChess;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package chess.game;
+package chess.domain.game;
 
 import chess.domain.piece.*;
 
@@ -28,6 +28,11 @@ public class Board {
         return board.get(position);
     }
     
+    public void move(Piece sourcePiece, Position sourcePosition, Position targetPosition) {
+        board.put(sourcePosition, new Blank());
+        board.put(targetPosition, sourcePiece.move(sourcePosition, targetPosition, this));
+    }
+    
     public double score(Color color) {
         return sumDefaultScoresOfBoard(color) - sumOptionScoresOfPawns(color);
     }
@@ -52,8 +57,7 @@ public class Board {
         return board.entrySet()
                     .stream()
                     .filter(entry -> isPawnOfColor(color, entry.getValue()))
-                    .collect(groupingBy(entry -> entry.getKey()
-                                                      .getX(), counting()));
+                    .collect(groupingBy(entry -> entry.getKey().getX(), counting()));
     }
     
     private boolean isPawnOfColor(Color Color, Piece piece) {
@@ -63,10 +67,5 @@ public class Board {
     public boolean isBlank(Position position) {
         return board.get(position)
                     .isSameColorAs(Color.BLANK);
-    }
-    
-    public void move(Piece sourcePiece, Position sourcePosition, Position targetPosition) {
-        board.put(sourcePosition, new Blank());
-        board.put(targetPosition, sourcePiece.move(sourcePosition, targetPosition, this));
     }
 }

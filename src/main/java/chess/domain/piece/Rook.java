@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.game.Board;
+import chess.domain.game.Board;
 
 public class Rook extends AbstractPiece {
     private static final int MAX_MOVABLE_LENGTH = 7;

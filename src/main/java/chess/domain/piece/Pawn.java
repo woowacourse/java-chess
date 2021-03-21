@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.game.Board;
+import chess.domain.game.Board;
 
 public class Pawn extends AbstractPiece {
     
