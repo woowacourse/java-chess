@@ -10,6 +10,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static chess.domain.piece.Direction.NO_DIRECTION;
+
 public class Board {
     public static final int BOARD_SIZE = 8;
     private static final int KINGS_COUNT_TO_PLAY = 2;
@@ -50,7 +52,7 @@ public class Board {
 
     private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
         Point currentPoint = source;
-        Direction direction = sourcePiece.direction(targetPiece).orElse(null);
+        Direction direction = sourcePiece.direction(targetPiece).orElse(NO_DIRECTION);
         boolean isArrivedAtTarget = currentPoint.isSamePoint(target);
 
         while (!isArrivedAtTarget) {
