@@ -2,9 +2,11 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceWithColorType.B_BP;
 import static chess.domain.piece.type.PieceWithColorType.B_KG;
+import static chess.domain.piece.type.PieceWithColorType.B_NT;
 import static chess.domain.piece.type.PieceWithColorType.B_PN;
 import static chess.domain.piece.type.PieceWithColorType.B_QN;
 import static chess.domain.piece.type.PieceWithColorType.B_RK;
+import static chess.domain.piece.type.PieceWithColorType.W_BP;
 import static chess.domain.piece.type.PieceWithColorType.W_KG;
 import static chess.domain.piece.type.PieceWithColorType.W_NT;
 import static chess.domain.piece.type.PieceWithColorType.W_PN;
@@ -141,5 +143,29 @@ class BoardTest {
 
         assertThat(scores.blackPlayerScore().getScore()).isEqualTo(20);
         assertThat(scores.whitePlayerScore().getScore()).isEqualTo(19.5);
+    }
+
+    @DisplayName("기물을 잡은 후 점수 계산")
+    @Test
+    void scoresAfterKillEnemyPieceByPawn() {
+        BoardSetting customBoardSetting = new BoardCustomSetting(
+            Arrays.asList(
+                B_RK, B_NT, B_BP, B_QN, B_KG, B_BP, B_NT, B_RK,
+                B_PN, null, B_PN, B_PN, B_PN, B_PN, B_PN, B_PN,
+                null, null, null, null, null, null, null, null,
+                null, B_PN, null, null, null, null, null, null,
+                W_PN, null, null, null, null, null, null, null,
+                null, null, null, null, null, null, null, null,
+                null, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN,
+                W_RK, W_NT, W_BP, W_QN, W_KG, W_BP, W_NT, W_RK)
+        );
+        Board board = new Board(customBoardSetting);
+
+        MoveRoute moveRoute = new MoveRoute("a4", "b5");
+        board.move(moveRoute, WHITE);
+        Scores scores = board.scores();
+
+        assertThat(scores.blackPlayerScore().getScore()).isEqualTo(37);
+        assertThat(scores.whitePlayerScore().getScore()).isEqualTo(37);
     }
 }
