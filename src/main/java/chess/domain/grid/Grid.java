@@ -14,7 +14,7 @@ public final class Grid {
     private Color turn;
 
     public Grid(GridStrategy gridStrategy) {
-        List<Line> lineGroup = gridStrategy.LinesInInitGrid();
+        List<Line> lineGroup = gridStrategy.linesInInitGrid();
         this.lines = new Lines(lineGroup);
         this.score = new Score(lines);
         this.turn = Color.WHITE;

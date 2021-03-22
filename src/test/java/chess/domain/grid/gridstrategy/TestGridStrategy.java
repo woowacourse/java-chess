@@ -9,7 +9,7 @@ import java.util.List;
 
 public class TestGridStrategy implements GridStrategy {
     @Override
-    public List<Line> LinesInInitGrid() {
+    public List<Line> linesInInitGrid() {
         List<Line> lineGroup = new ArrayList<>();
         for (Row row : Row.values()) {
             lineGroup.add(Line.empty(row));
