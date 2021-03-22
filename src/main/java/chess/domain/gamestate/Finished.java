@@ -36,6 +36,6 @@ public class Finished implements GameState {
 
     @Override
     public boolean isRunning() {
-        return board.isContinued();
+        return false;
     }
 }

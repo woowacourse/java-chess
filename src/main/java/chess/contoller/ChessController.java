@@ -46,7 +46,7 @@ public class ChessController {
     private void start(ChessGame chessGame) {
         while (chessGame.isRunning()) {
             OutputView.printChessBoard(chessGame.generateBoardDto());
-            List<String>  input = InputView.InputString();
+            List<String> input = InputView.InputString();
             validateCommand(chessGame, input);
         }
     }

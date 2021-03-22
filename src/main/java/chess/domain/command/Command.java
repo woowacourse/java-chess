@@ -12,8 +12,6 @@ public enum Command {
     MOVE("move", ChessGame::move),
     STATUS("status", (chessGame, commander) -> chessGame.status());
 
-    private static final int ARGUMENT_START_INDEX = 1;
-
     private final String operation;
     private final BiConsumer<ChessGame, List<String>> commander;
 
@@ -27,11 +25,7 @@ public enum Command {
         return Arrays.stream(Command.values())
             .filter(command -> command.operation.equalsIgnoreCase(input))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
-    }
-
-    public static List<String> getArguments(List<String> input) {
-        return input.subList(ARGUMENT_START_INDEX, input.size());
+            .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령입니다."));
     }
 
     public void execute(ChessGame chessGame, List<String> arguments) {

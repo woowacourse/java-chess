@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.board.Team;
 import chess.dto.BoardDto;
+
 import java.util.List;
 
 public class OutputView {
@@ -28,6 +29,7 @@ public class OutputView {
 
     public static void printTeamScore(double score, Team team) {
         System.out.printf(INFO_MESSAGE_FORMAT, team.teamName() + " : " + score);
+        System.out.println();
     }
 
     public static void printMessage(String message) {

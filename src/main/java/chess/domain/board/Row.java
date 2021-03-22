@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public enum Row {
@@ -17,19 +18,19 @@ public enum Row {
     private static final int ROW_MAX = 7;
     private static final List<Row> REVERSE_ROWS = Arrays.asList(Row.values());
 
-    static {
-        REVERSE_ROWS.sort((row1, row2) -> row2.getYIndex() - row1.getYIndex());
-    }
-
     private final String yCoordinate;
     private final int index;
+
+    static {
+        REVERSE_ROWS.sort(Comparator.comparingInt(Row::index).reversed());
+    }
 
     Row(String yCoordinate, int index) {
         this.yCoordinate = yCoordinate;
         this.index = index;
     }
 
-    public static Row getByIndex(int index) {
+    public static Row rowByIndex(int index) {
         return Arrays.stream(Row.values())
             .filter(row -> row.index == index)
             .findFirst()
@@ -40,15 +41,15 @@ public enum Row {
         return Collections.unmodifiableList(REVERSE_ROWS);
     }
 
-    public String getYCoordinate() {
+    public String yCoordinate() {
         return yCoordinate;
     }
 
-    public int getYIndex() {
+    public int index() {
         return index;
     }
 
     public Row opposite() {
-        return getByIndex(ROW_MAX - index);
+        return rowByIndex(ROW_MAX - index);
     }
 }

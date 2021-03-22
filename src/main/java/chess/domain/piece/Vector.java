@@ -22,12 +22,12 @@ public enum Vector {
     NWW(-2, 1),
     NNW(-1, 2);
 
-    private final int horizon;
-    private final int vertical;
+    private final int x;
+    private final int y;
 
-    Vector(int horizon, int vertical) {
-        this.horizon = horizon;
-        this.vertical = vertical;
+    Vector(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     public static List<Vector> pawnVectors() {
@@ -52,19 +52,17 @@ public enum Vector {
 
     public static Vector get(int horizon, int vertical) {
         return Arrays.stream(Vector.values())
-            .filter(vector -> (vector.horizon == horizon)
-                && (vector.vertical == vertical))
+            .filter(vector -> (vector.x == horizon)
+                && (vector.y == vertical))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
 
     public boolean isWhitePawnsStraight() {
-
         return this == NORTH;
     }
 
     public boolean isBlackPawnsStraight() {
-
         return this == SOUTH;
     }
 
@@ -76,26 +74,26 @@ public enum Vector {
         return this == SOUTHEAST || this == SOUTHWEST;
     }
 
-    public boolean isSameDirection(int horizon, int vertical) {
-        if (isOppositeDirection(horizon, vertical)) {
+    public boolean isSameDirection(int x, int y) {
+        if (isOppositeDirection(x, y)) {
             return false;
         }
-        return this.horizon * vertical == this.vertical * horizon;
+        return this.x * y == this.y * x;
     }
 
-    private boolean isOppositeDirection(int horizon, int vertical) {
-        return (this.horizon * horizon < 0) || (this.vertical * vertical < 0);
+    private boolean isOppositeDirection(int x, int y) {
+        return (this.x * x < 0) || (this.y * y < 0);
     }
 
     public Vector opposite() {
-        return get((-1) * horizon, (-1) * vertical);
+        return get((-1) * x, (-1) * y);
     }
 
-    public int getHorizon() {
-        return horizon;
+    public int getX() {
+        return x;
     }
 
-    public int getVertical() {
-        return vertical;
+    public int getY() {
+        return y;
     }
 }

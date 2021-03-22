@@ -13,22 +13,20 @@ public class Ready implements GameState {
 
     private final Board board;
 
-    public Ready(Board board) {
-        this.board = board;
-    }
-
     static {
         WHITE_INITIAL_POINTS.put(Piece.KING, Collections.singletonList(Point.of("e1")));
         WHITE_INITIAL_POINTS.put(Piece.QUEEN, Collections.singletonList(Point.of("d1")));
         WHITE_INITIAL_POINTS.put(Piece.ROOK, Arrays.asList(Point.of("a1"), Point.of("h1")));
         WHITE_INITIAL_POINTS.put(Piece.BISHOP, Arrays.asList(Point.of("c1"), Point.of("f1")));
         WHITE_INITIAL_POINTS.put(Piece.KNIGHT, Arrays.asList(Point.of("b1"), Point.of("g1")));
-        WHITE_INITIAL_POINTS.put(
-                Piece.PAWN,
-                Point.getAllPoints().stream()
-                        .filter(point -> point.isRow(Row.TWO))
-                        .collect(Collectors.toList())
+        WHITE_INITIAL_POINTS.put(Piece.PAWN, Point.getAllPoints().stream()
+                .filter(point -> point.isRow(Row.TWO))
+                .collect(Collectors.toList())
         );
+    }
+
+    public Ready(Board board) {
+        this.board = board;
     }
 
     private void initialize() {

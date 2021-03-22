@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -33,16 +32,16 @@ public class CommandTest {
     @DisplayName("시작 커맨드에 인자를 입력할 경우 예외 처리")
     void startCommandWithArgument() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Command.getByInput("start a1")
-        ).withMessage("유효하지 않은 입력입니다.");
+                Command.getByInput("start a1")
+        ).withMessage("유효하지 않은 명령입니다.");
     }
 
     @Test
     @DisplayName("종료 커맨드에 인자를 입력할 경우 예외 처리")
     void endCommandWithArgument() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Command.getByInput("end a1")
-        ).withMessage("유효하지 않은 입력입니다.");
+                Command.getByInput("end a1")
+        ).withMessage("유효하지 않은 명령입니다.");
     }
 
     @Test
@@ -55,19 +54,37 @@ public class CommandTest {
     @DisplayName("무브 커맨드의 인자가 부족하거나 넘는 경우 예외처리")
     void moveCommandWithInvalidArgumentCount() {
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Command.getByInput("move a1")
-        ).withMessage("유효하지 않은 입력입니다.");
+                Command.getByInput("move a1")
+        ).withMessage("유효하지 않은 명령입니다.");
 
         assertThatIllegalArgumentException().isThrownBy(() ->
-            Command.getByInput("move a1 a2")
-        ).withMessage("유효하지 않은 입력입니다.");
+                Command.getByInput("move a1 a2")
+        ).withMessage("유효하지 않은 명령입니다.");
     }
 
     @Test
-    @DisplayName("인자 리스트를 구하는 테스트")
-    void testGetArguments() {
-        List<String> input = Arrays.asList("start");
-        assertThat(Command.getArguments(input)).isEqualTo(Collections.emptyList());
+    @DisplayName("인자 리스트의 개수를 확인하는 테스트")
+    void testCountArguments() {
+        String input = "move b2 b3";
+        List<String> arguments = Arrays.asList(input.split(" "));
+        assertThat(arguments).hasSize(3);
+    }
+
+    @Test
+    @DisplayName("move 명령어의 인자개수가 잘 못 들어온 경우 예외처리 테스트")
+    void testInvalidArgumentsSize() {
+        ChessGame chessGame = new ChessGame(new Board());
+        chessGame.start();
+
+        String input1 = "move b1";
+        List<String> arguments1 = Arrays.asList(input1.split(" "));
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Command.MOVE.execute(chessGame, arguments1));
+
+        String input2 = "move b1 b2 b3";
+        List<String> arguments2 = Arrays.asList(input2.split(" "));
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> Command.MOVE.execute(chessGame, arguments2));
     }
 
     @Test

@@ -38,13 +38,11 @@ public class Board {
         if (sourceSquare.isPawn()) {
             return canMovePawn(source, destination);
         }
-        return (sourceSquare.hasMovableVector(source, destination)
-                && isValidSourceAndDestination(sourceSquare, destinationSquare)
-                && isValidPath(source, destination, vector));
+        return isValidSourceAndDestination(sourceSquare, destinationSquare)
+                && isValidPath(source, destination, vector);
     }
 
-    private boolean isValidSourceAndDestination(
-            Square sourceSquare, Square destinationSquare) {
+    private boolean isValidSourceAndDestination(Square sourceSquare, Square destinationSquare) {
         return sourceSquare.isNotEmpty() && isNotSameTeam(sourceSquare,
                 destinationSquare);
     }
@@ -103,24 +101,19 @@ public class Board {
                 && destinationSquare.isEmpty();
     }
 
-    private boolean canWhitePawnKillEnemy(
-            Square sourceSquare, Square destinationSquare,
-            Vector vector) {
+    private boolean canWhitePawnKillEnemy(Square sourceSquare, Square destinationSquare, Vector vector) {
         return sourceSquare.isTeam(Team.WHITE)
                 && destinationSquare.isTeam(Team.BLACK)
                 && vector.isWhiteDiagonalVector();
     }
 
-    private boolean canBlackPawnKillEnemy(
-            Square sourceSquare, Square destinationSquare,
-            Vector vector) {
+    private boolean canBlackPawnKillEnemy(Square sourceSquare, Square destinationSquare, Vector vector) {
         return sourceSquare.isTeam(Team.BLACK)
                 && destinationSquare.isTeam(Team.WHITE)
                 && vector.isBlackDiagonalVector();
     }
 
-    private boolean isNotSameTeam(Square sourceSquare,
-                                  Square destinationSquare) {
+    private boolean isNotSameTeam(Square sourceSquare, Square destinationSquare) {
         return destinationSquare.isNotSameTeam(sourceSquare);
     }
 

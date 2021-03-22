@@ -63,27 +63,27 @@ public class Point {
     }
 
     public int minusX(Point source) {
-        return this.x.getXIndex() - source.x.getXIndex();
+        return this.x.index() - source.x.index();
     }
 
     public int minusY(Point source) {
-        return this.y.getYIndex() - source.y.getYIndex();
+        return this.y.index() - source.y.index();
     }
 
     public Point move(Vector vector) {
-        return Point.of(newerName(vector));
+        return Point.of(nextPoint(vector));
     }
 
-    private String newerName(Vector vector) {
-        return Column.getByIndex(newerXIndex(vector)).xCoordinate() +
-            Row.getByIndex(newerYIndex(vector)).yCoordinate();
+    private String nextPoint(Vector vector) {
+        return Column.columnByIndex(newX(vector)).xCoordinate() +
+            Row.rowByIndex(newY(vector)).yCoordinate();
     }
 
-    private int newerYIndex(Vector vector) {
-        return y.getYIndex() + vector.getVertical();
+    private int newY(Vector vector) {
+        return y.index() + vector.getY();
     }
 
-    private int newerXIndex(Vector vector) {
-        return x.getXIndex() + vector.getHorizon();
+    private int newX(Vector vector) {
+        return x.index() + vector.getX();
     }
 }

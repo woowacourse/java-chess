@@ -31,47 +31,47 @@ public class BoardTest {
     void createBoard() {
         Board board = new Board();
         assertThat(board.getSquareState(Point.of("a1")))
-            .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
+                .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
         assertThat(board.getSquareState(Point.of("a2")))
-            .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
+                .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
         assertThat(board.getSquareState(Point.of("a7")))
-            .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
+                .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
         assertThat(board.getSquareState(Point.of("a8")))
-            .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
+                .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
     }
 
     @Test
     @DisplayName("팀 화이트 초기설정 테스트")
     void initializeBoard() {
         assertThat(board.getSquareState(Point.of("a1")))
-            .isEqualTo(Square.of(Piece.ROOK, Team.WHITE));
+                .isEqualTo(Square.of(Piece.ROOK, Team.WHITE));
         assertThat(board.getSquareState(Point.of("g1")))
-            .isEqualTo(Square.of(Piece.KNIGHT, Team.WHITE));
+                .isEqualTo(Square.of(Piece.KNIGHT, Team.WHITE));
         assertThat(board.getSquareState(Point.of("c1")))
-            .isEqualTo(Square.of(Piece.BISHOP, Team.WHITE));
+                .isEqualTo(Square.of(Piece.BISHOP, Team.WHITE));
         assertThat(board.getSquareState(Point.of("d1")))
-            .isEqualTo(Square.of(Piece.QUEEN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.QUEEN, Team.WHITE));
         assertThat(board.getSquareState(Point.of("e1")))
-            .isEqualTo(Square.of(Piece.KING, Team.WHITE));
+                .isEqualTo(Square.of(Piece.KING, Team.WHITE));
         assertThat(board.getSquareState(Point.of("f2")))
-            .isEqualTo(Square.of(Piece.PAWN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
     @DisplayName("팀 블랙 초기설정 테스트")
     void initializeBoardAndBlackTeam() {
         assertThat(board.getSquareState(Point.of("a8")))
-            .isEqualTo(Square.of(Piece.ROOK, Team.BLACK));
+                .isEqualTo(Square.of(Piece.ROOK, Team.BLACK));
         assertThat(board.getSquareState(Point.of("g8")))
-            .isEqualTo(Square.of(Piece.KNIGHT, Team.BLACK));
+                .isEqualTo(Square.of(Piece.KNIGHT, Team.BLACK));
         assertThat(board.getSquareState(Point.of("c8")))
-            .isEqualTo(Square.of(Piece.BISHOP, Team.BLACK));
+                .isEqualTo(Square.of(Piece.BISHOP, Team.BLACK));
         assertThat(board.getSquareState(Point.of("d8")))
-            .isEqualTo(Square.of(Piece.QUEEN, Team.BLACK));
+                .isEqualTo(Square.of(Piece.QUEEN, Team.BLACK));
         assertThat(board.getSquareState(Point.of("e8")))
-            .isEqualTo(Square.of(Piece.KING, Team.BLACK));
+                .isEqualTo(Square.of(Piece.KING, Team.BLACK));
         assertThat(board.getSquareState(Point.of("f7")))
-            .isEqualTo(Square.of(Piece.PAWN, Team.BLACK));
+                .isEqualTo(Square.of(Piece.PAWN, Team.BLACK));
     }
 
     @Test

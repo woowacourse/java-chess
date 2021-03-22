@@ -22,7 +22,7 @@ public enum Column {
     private final int index;
 
     static {
-        COLUMNS.sort(Comparator.comparingInt(Column::getXIndex));
+        COLUMNS.sort(Comparator.comparingInt(Column::index));
     }
 
     Column(String xCoordinate, int index) {
@@ -30,7 +30,7 @@ public enum Column {
         this.index = index;
     }
 
-    public static Column getByIndex(int index) {
+    public static Column columnByIndex(int index) {
         return Arrays.stream(Column.values())
             .filter(column -> column.index == index)
             .findFirst()
@@ -46,10 +46,10 @@ public enum Column {
     }
 
     public Column opposite() {
-        return getByIndex(MAX_COLUMN - index);
+        return columnByIndex(MAX_COLUMN - index);
     }
 
-    public int getXIndex() {
+    public int index() {
         return index;
     }
 }

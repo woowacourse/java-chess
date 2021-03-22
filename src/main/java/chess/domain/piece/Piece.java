@@ -1,14 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.board.Point;
-import chess.domain.piece.movingstrategy.BishopMovingStrategy;
-import chess.domain.piece.movingstrategy.EmptyMovingStrategy;
-import chess.domain.piece.movingstrategy.KingMovingStrategy;
-import chess.domain.piece.movingstrategy.KnightMovingStrategy;
-import chess.domain.piece.movingstrategy.MovingStrategy;
-import chess.domain.piece.movingstrategy.PawnMovingStrategy;
-import chess.domain.piece.movingstrategy.QueenMovingStrategy;
-import chess.domain.piece.movingstrategy.RookMovingStrategy;
+import chess.domain.piece.movingstrategy.*;
 
 public enum Piece {
     KING(new KingMovingStrategy(), 0, "k"),

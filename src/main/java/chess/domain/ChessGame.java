@@ -24,7 +24,7 @@ public class ChessGame {
     }
 
     public void start() {
-        state =state.start();
+        state = state.start();
     }
 
     public void end() {

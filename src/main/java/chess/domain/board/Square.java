@@ -2,23 +2,23 @@ package chess.domain.board;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Vector;
+
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.Objects;
 
 public class Square {
 
     private static final List<Square> SQUARE_STATE_POOL = new ArrayList<>();
 
+    private final Piece piece;
+    private final Team team;
+
     static {
         for (Piece piece : Piece.values()) {
             iterateTeam(piece);
         }
     }
-
-    private final Piece piece;
-    private final Team team;
 
     private Square(Piece piece, Team team) {
         this.piece = piece;
@@ -50,11 +50,10 @@ public class Square {
     }
 
     public String pieceName() {
-        String pieceName = piece.pieceName();
         if (team == Team.BLACK) {
-            pieceName = pieceName.toUpperCase(Locale.ROOT);
+            return piece.pieceName().toUpperCase();
         }
-        return pieceName;
+        return piece.pieceName();
     }
 
     public boolean isTeam(Team team) {
@@ -75,12 +74,6 @@ public class Square {
 
     public boolean isPawn() {
         return this.piece == Piece.PAWN;
-    }
-
-    public boolean hasMovableVector(Point source, Point destination) {
-        Vector vector = this.findMovableVector(source, destination);
-
-        return vector != null;
     }
 
     public boolean isKing() {
