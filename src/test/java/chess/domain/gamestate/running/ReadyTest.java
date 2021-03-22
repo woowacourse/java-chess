@@ -2,7 +2,6 @@ package chess.domain.gamestate.running;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 import chess.domain.board.Board;
 import chess.domain.gamestate.CommandType;
@@ -21,7 +20,7 @@ class ReadyTest {
     @BeforeEach
     void setUp() {
         board = BoardUtil.generateInitialBoard();
-        state = new Ready(board);
+        state = new Ready(board, "ready");
     }
 
     @DisplayName("상태 변경 - ready 상태에서 start로 변경가능하다.")
@@ -31,7 +30,7 @@ class ReadyTest {
         CommandType start = CommandType.START;
 
         // when
-        state = state.processCommand(start);
+        state = state.changeCommand(start, "start");
 
         // then
         assertThat(state).isInstanceOf(Start.class);
@@ -44,7 +43,7 @@ class ReadyTest {
         CommandType end = CommandType.END;
 
         // when
-        state = state.processCommand(end);
+        state = state.changeCommand(end, "end");
 
         // then
         assertThat(state).isInstanceOf(End.class);
@@ -57,7 +56,7 @@ class ReadyTest {
         CommandType move = CommandType.MOVE;
 
         // then
-        assertThatThrownBy(() -> state.processCommand(move))
+        assertThatThrownBy(() -> state.changeCommand(move, "move a2 a3"))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -68,7 +67,7 @@ class ReadyTest {
         CommandType status = CommandType.STATUS;
 
         // then
-        assertThatThrownBy(() -> state.processCommand(status))
+        assertThatThrownBy(() -> state.changeCommand(status, "status"))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

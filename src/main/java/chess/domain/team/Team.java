@@ -11,4 +11,11 @@ public enum Team {
     public boolean isWhite() {
         return this == WHITE;
     }
+
+    public Team reverse() {
+        if (isBlack()) {
+            return WHITE;
+        }
+        return BLACK;
+    }
 }
