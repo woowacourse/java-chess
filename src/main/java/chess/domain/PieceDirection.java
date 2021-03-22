@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public enum Direction {
+public enum PieceDirection {
     UP(0, 1),
     DOWN(0, -1),
     RIGHT(1, 0),
@@ -25,39 +25,39 @@ public enum Direction {
     private final int column;
     private final int row;
 
-    Direction(int column, int row) {
+    PieceDirection(int column, int row) {
         this.column = column;
         this.row = row;
     }
 
-    public static List<Direction> diagonalDirections() {
+    public static List<PieceDirection> diagonalDirections() {
         return Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
     }
 
-    public static List<Direction> straightDirections() {
+    public static List<PieceDirection> straightDirections() {
         return Arrays.asList(UP, DOWN, LEFT, RIGHT);
     }
 
-    public static List<Direction> aroundDirections() {
-        ArrayList<Direction> aroundDirections = new ArrayList<>(diagonalDirections());
-        aroundDirections.addAll(straightDirections());
-        return aroundDirections;
+    public static List<PieceDirection> aroundDirections() {
+        ArrayList<PieceDirection> aroundPieceDirections = new ArrayList<>(diagonalDirections());
+        aroundPieceDirections.addAll(straightDirections());
+        return aroundPieceDirections;
     }
 
-    public static List<Direction> knightDirections() {
+    public static List<PieceDirection> knightDirections() {
         return Arrays.asList(
             UP_UP_LEFT, UP_UP_RIGHT, UP_RIGHT_RIGHT, UP_LEFT_LEFT,
             DOWN_DOWN_LEFT, DOWN_DOWN_RIGHT, DOWN_RIGHT_RIGHT, DOWN_LEFT_LEFT);
     }
 
-    public static List<Direction> forwardDirection(TeamColor teamColor) {
+    public static List<PieceDirection> forwardDirection(TeamColor teamColor) {
         if (teamColor.isWhite()) {
             return Collections.singletonList(UP);
         }
         return Collections.singletonList(DOWN);
     }
 
-    public static List<Direction> forwardDiagonal(TeamColor teamColor) {
+    public static List<PieceDirection> forwardDiagonal(TeamColor teamColor) {
         if (teamColor.isWhite()) {
             return Arrays.asList(UP_LEFT, UP_RIGHT);
         }

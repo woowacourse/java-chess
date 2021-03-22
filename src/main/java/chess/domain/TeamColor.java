@@ -17,4 +17,8 @@ public enum TeamColor {
     public boolean isBlack() {
         return this == BLACK;
     }
+
+    public boolean isReverse(TeamColor teamColor) {
+        return teamColor != this;
+    }
 }

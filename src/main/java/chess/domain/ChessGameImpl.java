@@ -50,7 +50,7 @@ public final class ChessGameImpl implements ChessGame {
         Piece currentPiece = pieces.pieceByPosition(currentPosition)
             .orElseThrow(PieceNotFoundException::new);
         ;
-        if (!currentPiece.isSameColor(currentColor)) {
+        if (currentPiece.isNotSameColor(currentColor)) {
             throw new InvalidTurnException(currentColor);
         }
         Optional<Piece> targetPiece = pieces.pieceByPosition(targetPosition);

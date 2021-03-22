@@ -11,20 +11,20 @@ import java.util.List;
 
 public abstract class Piece {
 
-    private final Details details;
-    private final Directions directions;
+    private final PieceDetails pieceDetails;
+    private final AvailableDirections availableDirections;
     private Position currentPosition;
     private List<Position> movablePositions;
     private boolean moved;
 
-    public Piece(Details details, Directions directions, Position position) {
-        this(details, directions, new ArrayList<>(), position, false);
+    public Piece(PieceDetails pieceDetails, AvailableDirections availableDirections, Position position) {
+        this(pieceDetails, availableDirections, new ArrayList<>(), position, false);
     }
 
-    private Piece(Details details, Directions directions,
+    private Piece(PieceDetails pieceDetails, AvailableDirections availableDirections,
         List<Position> movablePositions, Position position, boolean moved) {
-        this.details = details;
-        this.directions = directions;
+        this.pieceDetails = pieceDetails;
+        this.availableDirections = availableDirections;
         this.movablePositions = movablePositions;
         this.currentPosition = position;
         this.moved = moved;
@@ -34,9 +34,9 @@ public abstract class Piece {
         List<Position> enemiesPositions) {
         movablePositions = new ArrayList<>();
         movablePositions.addAll(
-            directions.movablePositions(existPiecePositions, currentPosition, details.iterable()));
+            availableDirections.movablePositions(existPiecePositions, currentPosition, pieceDetails.iterable()));
         movablePositions.addAll(
-            directions.killablePositions(enemiesPositions, currentPosition, details.iterable()));
+            availableDirections.killablePositions(enemiesPositions, currentPosition, pieceDetails.iterable()));
     }
 
     public boolean samePosition(Position position) {
@@ -53,7 +53,7 @@ public abstract class Piece {
     }
 
     public boolean isSameColor(TeamColor teamColor) {
-        return details.isSameColor(teamColor);
+        return pieceDetails.isSameColor(teamColor);
     }
 
     public Position currentPosition() {
@@ -68,12 +68,12 @@ public abstract class Piece {
         return !moved;
     }
 
-    protected Directions directions() {
-        return directions;
+    protected AvailableDirections directions() {
+        return availableDirections;
     }
 
     public TeamColor enemyColor() {
-        return details.color().reverse();
+        return pieceDetails.color().reverse();
     }
 
     public int column() {
@@ -81,17 +81,21 @@ public abstract class Piece {
     }
 
     public Score score() {
-        return details.score();
+        return pieceDetails.score();
     }
 
     public String name() {
         if (isSameColor(WHITE)) {
-            return details.name();
+            return pieceDetails.name();
         }
-        return details.name().toUpperCase();
+        return pieceDetails.name().toUpperCase();
     }
 
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    public boolean isNotSameColor(TeamColor currentColor) {
+        return pieceDetails.isNotSameColor(currentColor);
+    }
 }

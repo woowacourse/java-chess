@@ -1,6 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
+import chess.domain.PieceDirection;
 import chess.domain.Position;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +9,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class DirectionsTest {
+class AvailableDirectionsTest {
 
     @Test
     @DisplayName("계속해서 위로 올라갈 수 있는 말의 움직일 수 있는 자리를 테스트")
@@ -22,16 +22,16 @@ class DirectionsTest {
                 Position.of(0, 4)
             );
 
-        Directions directions = new Directions(
-            Collections.singletonList(Direction.UP),
-            Collections.singletonList(Direction.UP)
+        AvailableDirections availableDirections = new AvailableDirections(
+            Collections.singletonList(PieceDirection.UP),
+            Collections.singletonList(PieceDirection.UP)
         );
 
         Position currentPosition = Position.of(0, 0);
         List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
         boolean iterable = true;
 
-        List<Position> movablePositions = directions.movablePositions(
+        List<Position> movablePositions = availableDirections.movablePositions(
             existPiecePositions,
             currentPosition,
             iterable
@@ -45,16 +45,16 @@ class DirectionsTest {
     void movablePositions_notIterable() {
         List<Position> expectedMovablePositions = Collections.singletonList(Position.of(0, 1));
 
-        Directions directions = new Directions(
-            Collections.singletonList(Direction.UP),
-            Collections.singletonList(Direction.UP)
+        AvailableDirections availableDirections = new AvailableDirections(
+            Collections.singletonList(PieceDirection.UP),
+            Collections.singletonList(PieceDirection.UP)
         );
 
         Position currentPosition = Position.of(0, 0);
         List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
         boolean iterable = false;
 
-        List<Position> movablePositions = directions.movablePositions(
+        List<Position> movablePositions = availableDirections.movablePositions(
             existPiecePositions,
             currentPosition,
             iterable
@@ -68,16 +68,16 @@ class DirectionsTest {
     void killablePositions_iterable() {
         List<Position> expectedMovablePositions = Collections.singletonList(Position.of(0, 5));
 
-        Directions directions = new Directions(
-            Collections.singletonList(Direction.UP),
-            Collections.singletonList(Direction.UP)
+        AvailableDirections availableDirections = new AvailableDirections(
+            Collections.singletonList(PieceDirection.UP),
+            Collections.singletonList(PieceDirection.UP)
         );
 
         Position currentPosition = Position.of(0, 0);
         List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
         boolean iterable = true;
 
-        List<Position> movablePositions = directions.killablePositions(
+        List<Position> movablePositions = availableDirections.killablePositions(
             existPiecePositions,
             currentPosition,
             iterable
@@ -91,16 +91,16 @@ class DirectionsTest {
     void killablePositions_notIterable() {
         List<Position> expectedMovablePositions = Collections.emptyList();
 
-        Directions directions = new Directions(
-            Collections.singletonList(Direction.UP),
-            Collections.singletonList(Direction.UP)
+        AvailableDirections availableDirections = new AvailableDirections(
+            Collections.singletonList(PieceDirection.UP),
+            Collections.singletonList(PieceDirection.UP)
         );
 
         Position currentPosition = Position.of(0, 0);
         List<Position> existPiecePositions = Collections.singletonList(Position.of(0, 5));
         boolean iterable = false;
 
-        List<Position> movablePositions = directions.killablePositions(
+        List<Position> movablePositions = availableDirections.killablePositions(
             existPiecePositions,
             currentPosition,
             iterable

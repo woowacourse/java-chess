@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
 
-import chess.domain.Direction;
+import chess.domain.PieceDirection;
 import chess.domain.Position;
 import java.util.Arrays;
 import java.util.Collections;
@@ -46,7 +46,7 @@ class PawnTest {
 
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
         Position targetPosition = pawn.currentPosition()
-            .go(Direction.forwardDirection(WHITE).get(0));
+            .go(PieceDirection.forwardDirection(WHITE).get(0));
         pawn.move(targetPosition);
 
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
@@ -103,7 +103,7 @@ class PawnTest {
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 
         Position targetPosition = pawn.currentPosition()
-            .go(Direction.forwardDirection(BLACK).get(0));
+            .go(PieceDirection.forwardDirection(BLACK).get(0));
         pawn.move(targetPosition);
         pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
 

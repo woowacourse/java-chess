@@ -18,16 +18,16 @@ class PositionTest {
     @DisplayName("Direction을 받을 때 앞으로 나아가는 지 확인")
     void goPosition() {
         Position position = Position.of(1, 2);
-        Assertions.assertThat(position.go(Direction.RIGHT)).isSameAs(Position.of(2, 2));
+        Assertions.assertThat(position.go(PieceDirection.RIGHT)).isSameAs(Position.of(2, 2));
     }
 
     @Test
     @DisplayName("Direction을 받을 때 가지 못하는 지 확인")
     void invalidGo() {
         Position position = Position.of(0, 0);
-        Assertions.assertThat(position.invalidGo(Direction.UP)).isFalse();
-        Assertions.assertThat(position.invalidGo(Direction.DOWN)).isTrue();
-        Assertions.assertThat(position.invalidGo(Direction.RIGHT)).isFalse();
-        Assertions.assertThat(position.invalidGo(Direction.LEFT)).isTrue();
+        Assertions.assertThat(position.invalidGo(PieceDirection.UP)).isFalse();
+        Assertions.assertThat(position.invalidGo(PieceDirection.DOWN)).isTrue();
+        Assertions.assertThat(position.invalidGo(PieceDirection.RIGHT)).isFalse();
+        Assertions.assertThat(position.invalidGo(PieceDirection.LEFT)).isTrue();
     }
 }

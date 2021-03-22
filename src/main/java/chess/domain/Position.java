@@ -36,12 +36,12 @@ public final class Position {
             || MAX_POSITION < column;
     }
 
-    public boolean invalidGo(Direction moveDirection) {
-        return isNotValid(moveDirection.column() + column, moveDirection.row() + row);
+    public boolean invalidGo(PieceDirection movePieceDirection) {
+        return isNotValid(movePieceDirection.column() + column, movePieceDirection.row() + row);
     }
 
-    public Position go(Direction moveDirection) {
-        return Position.of(moveDirection.column() + column, moveDirection.row() + row);
+    public Position go(PieceDirection movePieceDirection) {
+        return Position.of(movePieceDirection.column() + column, movePieceDirection.row() + row);
     }
 
     public int column() {

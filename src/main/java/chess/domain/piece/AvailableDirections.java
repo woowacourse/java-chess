@@ -1,31 +1,31 @@
 package chess.domain.piece;
 
-import chess.domain.Direction;
+import chess.domain.PieceDirection;
 import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public final class Directions {
+public final class AvailableDirections {
 
     private static final int PAWN_INDEX = 0;
 
-    private final List<Direction> moveDirections;
-    private final List<Direction> killDirections;
+    private final List<PieceDirection> movePieceDirections;
+    private final List<PieceDirection> killPieceDirections;
 
-    public Directions(List<Direction> moveDirections,
-        List<Direction> killDirections) {
-        this.moveDirections = moveDirections;
-        this.killDirections = killDirections;
+    public AvailableDirections(List<PieceDirection> movePieceDirections,
+        List<PieceDirection> killPieceDirections) {
+        this.movePieceDirections = movePieceDirections;
+        this.killPieceDirections = killPieceDirections;
     }
 
     public List<Position> movablePositions(List<Position> existPiecePositions,
         Position currentPosition, boolean iterable) {
         List<Position> movablePositions = new ArrayList<>();
-        for (Direction moveDirection : moveDirections) {
+        for (PieceDirection movePieceDirection : movePieceDirections) {
             movablePositions.addAll(
                 movablePositionsByDirection(
-                    existPiecePositions, currentPosition, iterable, moveDirection
+                    existPiecePositions, currentPosition, iterable, movePieceDirection
                 )
             );
         }
@@ -33,15 +33,15 @@ public final class Directions {
     }
 
     private List<Position> movablePositionsByDirection(List<Position> existPiecePositions,
-        Position currentPosition, boolean iterable, Direction moveDirection) {
+        Position currentPosition, boolean iterable, PieceDirection movePieceDirection) {
         List<Position> movablePositions = new ArrayList<>();
         do {
-            if (currentPosition.invalidGo(moveDirection) ||
-                existPiecePositions.contains(currentPosition.go(moveDirection))) {
+            if (currentPosition.invalidGo(movePieceDirection) ||
+                existPiecePositions.contains(currentPosition.go(movePieceDirection))) {
                 return movablePositions;
             }
 
-            currentPosition = currentPosition.go(moveDirection);
+            currentPosition = currentPosition.go(movePieceDirection);
             movablePositions.add(currentPosition);
         } while (iterable);
 
@@ -51,10 +51,10 @@ public final class Directions {
     public List<Position> killablePositions(List<Position> enemyPositions,
         Position currentPosition, boolean iterable) {
         List<Position> killablePositions = new ArrayList<>();
-        for (Direction killDirection : killDirections) {
+        for (PieceDirection killPieceDirection : killPieceDirections) {
             killablePositions.addAll(
                 killablePositionsByDirection(
-                    enemyPositions, currentPosition, iterable, killDirection
+                    enemyPositions, currentPosition, iterable, killPieceDirection
                 )
             );
         }
@@ -62,15 +62,15 @@ public final class Directions {
     }
 
     private List<Position> killablePositionsByDirection(List<Position> enemyPositions,
-        Position currentPosition, boolean iterable, Direction killDirection) {
+        Position currentPosition, boolean iterable, PieceDirection killPieceDirection) {
         List<Position> killablePositions = new ArrayList<>();
 
         do {
-            if (currentPosition.invalidGo(killDirection)) {
+            if (currentPosition.invalidGo(killPieceDirection)) {
                 return killablePositions;
             }
 
-            currentPosition = currentPosition.go(killDirection);
+            currentPosition = currentPosition.go(killPieceDirection);
 
             if (enemyPositions.contains(currentPosition)) {
                 killablePositions.add(currentPosition);
@@ -83,10 +83,10 @@ public final class Directions {
 
     public Optional<Position> pawnAdditionalPosition(List<Position> existPiecePositions,
         Position currentPosition) {
-        Direction direction = moveDirections.get(PAWN_INDEX);
+        PieceDirection pieceDirection = movePieceDirections.get(PAWN_INDEX);
 
-        Position oneStep = currentPosition.go(direction);
-        Position twoStep = oneStep.go(direction);
+        Position oneStep = currentPosition.go(pieceDirection);
+        Position twoStep = oneStep.go(pieceDirection);
 
         if (existPiecePositions.contains(oneStep) || existPiecePositions.contains(twoStep)) {
             return Optional.empty();
