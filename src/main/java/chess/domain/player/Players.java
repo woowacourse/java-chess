@@ -9,6 +9,9 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Players {
+    private static final int INDEX_OF_BLACK =0;
+    private static final int INDEX_OF_WHITE =1;
+
     private final List<Player> players;
     private Turn turn;
 
@@ -34,7 +37,9 @@ public class Players {
     }
 
     public Status getStatus(final Board board) {
-        return new Status(players.get(1).calculateScore(board), players.get(0).calculateScore(board));
+        final Player white = players.get(INDEX_OF_WHITE);
+        final Player black = players.get(INDEX_OF_BLACK);
+        return new Status(white.calculateScore(board), black.calculateScore(board));
     }
 
     public boolean isKingDead(final Board board) {
@@ -48,7 +53,7 @@ public class Players {
         final Player turnPlayer = players.get(turn.index());
 
         if (!turnPlayer.contains(source)) {
-            throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
+            throw new IllegalArgumentException("현재 순서의 사용자가 아닙니다.");
         }
     }
 }

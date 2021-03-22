@@ -24,14 +24,6 @@ public class Position {
         this(s.split(""));
     }
 
-    public static Position of(final String input) {
-        if (input.split("").length != 2) {
-            throw new IllegalArgumentException("올바른 위치가 아닙니다.");
-        }
-
-        return new Position(input);
-    }
-
     public Horizontal getHorizontal() {
         return horizontal;
     }
