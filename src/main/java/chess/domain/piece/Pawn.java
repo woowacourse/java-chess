@@ -29,6 +29,11 @@ public final class Pawn extends AbstractPiece {
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
         final List<Direction> directions = findPawnDirection();
         Direction direction = findDirection(position, directions, ABLE_LENGTH);
+        validate(position, pieces, direction);
+        return new Pawn(color, position);
+    }
+
+    private void validate(Position position, Map<Position, Piece> pieces, Direction direction) {
         if (isForward(direction) && !(pieces.get(position) instanceof Blank)) {
             throw new IllegalArgumentException("폰은 전진하는 위치에 기물이 있으면 안됩니다.");
         }
@@ -36,7 +41,6 @@ public final class Pawn extends AbstractPiece {
             throw new IllegalArgumentException("폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.");
         }
         validateObstacle(position, direction, pieces);
-        return new Pawn(color, position);
     }
 
     private boolean isForward(final Direction direction) {
