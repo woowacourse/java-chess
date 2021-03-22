@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PositionTest {
     @DisplayName("Position 객체 생성")
     @Test
-    void create(){
+    void create() {
         final Position position = new Position(Vertical.A, Horizontal.FIVE);
         assertThat(position).isInstanceOf(Position.class);
     }

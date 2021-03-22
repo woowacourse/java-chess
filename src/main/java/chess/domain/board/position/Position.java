@@ -48,7 +48,7 @@ public class Position {
             return this.horizontal.getDistance(other.horizontal);
         }
 
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException("");
     }
 
     public Horizontal getHorizontal() {

@@ -6,7 +6,7 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class Queen extends Piece{
+public class Queen extends Piece {
     private static final List<Direction> DIRECTIONS = Arrays.asList(
             Direction.LEFT,
             Direction.DOWN,

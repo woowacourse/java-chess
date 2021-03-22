@@ -8,7 +8,7 @@ public class Position {
     private final Vertical vertical;
     private final Horizontal horizontal;
 
-    public Position(Vertical vertical, Horizontal horizontal){
+    public Position(Vertical vertical, Horizontal horizontal) {
         this.horizontal = horizontal;
         this.vertical = vertical;
     }
@@ -41,13 +41,13 @@ public class Position {
                 == this.vertical.getDistance(other.vertical);
     }
 
-    public int getDistance(Position other){
-        if(isStraight(other)){
+    public int getDistance(Position other) {
+        if (isStraight(other)) {
             return this.horizontal.getDistance(other.horizontal)
                     + this.vertical.getDistance(other.vertical);
         }
 
-        if(isDiagonal(other)){
+        if (isDiagonal(other)) {
             return this.horizontal.getDistance(other.horizontal);
         }
 
@@ -72,7 +72,7 @@ public class Position {
     }
 
     public Position next(Direction direction, int distance) {
-        return new Position(vertical.add(direction.getX()*distance), horizontal.add(direction.getY()*distance));
+        return new Position(vertical.add(direction.getX() * distance), horizontal.add(direction.getY() * distance));
     }
 
     @Override

@@ -14,33 +14,33 @@ public enum Horizontal {
 
     private final int index;
 
-    Horizontal(int index){
+    Horizontal(int index) {
         this.index = index;
     }
 
-    static Horizontal indexOf(String number){
+    static Horizontal indexOf(String number) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == Integer.parseInt(number))
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    static Horizontal of(int index){
+    static Horizontal of(int index) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
 
-    public int getDistance(Horizontal other){
+    public int getDistance(Horizontal other) {
         return Math.abs(this.index - other.getIndex());
     }
 
-    public Horizontal add(int h){
-        return of(index +h);
+    public Horizontal add(int h) {
+        return of(index + h);
     }
 }

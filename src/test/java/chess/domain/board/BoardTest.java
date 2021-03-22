@@ -29,7 +29,7 @@ public class BoardTest {
         }
     }
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner){
+    private static Piece[] getPiecesOfFirstLine(Owner owner) {
         return new Piece[]{
                 new Rook(owner),
                 new Knight(owner),
@@ -44,7 +44,7 @@ public class BoardTest {
 
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
-    void of(){
+    void of() {
         final Piece piece = board.of(Vertical.B, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));

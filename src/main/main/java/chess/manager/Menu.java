@@ -20,7 +20,7 @@ public enum Menu {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static boolean isEnd(final String input){
+    public static boolean isEnd(final String input) {
         return of(input).equals(END);
     }
 

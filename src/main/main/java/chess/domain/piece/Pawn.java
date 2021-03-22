@@ -7,10 +7,10 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public abstract class Pawn extends Piece{
+public abstract class Pawn extends Piece {
     private static final int ABLE_DISTANCE_TO_MOVE = 2;
 
-    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK){
+    private static final Pawn BLACK_PAWN = new Pawn(Owner.BLACK) {
         @Override
         public boolean isFirstLine(Horizontal horizontal) {
             return Horizontal.SEVEN.equals(horizontal);
@@ -18,7 +18,7 @@ public abstract class Pawn extends Piece{
 
         @Override
         public List<Direction> getDirections() {
-            return  Arrays.asList(
+            return Arrays.asList(
                     Direction.DOWN,
                     Direction.DOWN_LEFT,
                     Direction.DOWN_RIGHT
@@ -34,7 +34,7 @@ public abstract class Pawn extends Piece{
 
         @Override
         public List<Direction> getDirections() {
-            return  Arrays.asList(
+            return Arrays.asList(
                     Direction.UP,
                     Direction.UP_LEFT,
                     Direction.UP_RIGHT
@@ -46,12 +46,12 @@ public abstract class Pawn extends Piece{
         super(owner);
     }
 
-    public static Pawn getInstanceOf(Owner owner){
-        if (owner.equals(Owner.BLACK)){
+    public static Pawn getInstanceOf(Owner owner) {
+        if (owner.equals(Owner.BLACK)) {
             return BLACK_PAWN;
         }
 
-        if (owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             return WHITE_PAWN;
         }
 
@@ -75,13 +75,13 @@ public abstract class Pawn extends Piece{
         return source.getDistance(target) == 1;
     }
 
-    private boolean isValidSpecialMove(Position source, Position target){
+    private boolean isValidSpecialMove(Position source, Position target) {
         return isFirstLine(source.getHorizontal())
                 && source.getDistance(target) == ABLE_DISTANCE_TO_MOVE;
     }
 
-    private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy){
-        if(!source.isDiagonal(target)){
+    private boolean isValidDiagonalMove(Position source, Position target, boolean isEnemy) {
+        if (!source.isDiagonal(target)) {
             return false;
         }
         return source.getDistance(target) == 1 && isEnemy;

@@ -6,7 +6,7 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
 
     private static final List<Direction> DIRECTIONS = Arrays.asList(
             Direction.KNIGHT_DOWN_LEFT,

@@ -61,7 +61,6 @@ public abstract class Pawn extends Piece {
         if (isEnemy) {
             return source.getDistance(target) == 1;
         }
-
         return false;
     }
 

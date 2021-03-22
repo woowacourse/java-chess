@@ -11,7 +11,7 @@ public class ChessController {
 
     private final ChessManager chessManager;
 
-    public ChessController(){
+    public ChessController() {
         chessManager = new ChessManager();
     }
 
@@ -30,7 +30,7 @@ public class ChessController {
         OutputView.printGameResult(chessManager.calculateStatus());
     }
 
-    private void commandExecute(final String input){
+    private void commandExecute(final String input) {
         final Menu menu = Menu.of(input);
 
         // XXX :: ENUM 고민
@@ -48,12 +48,12 @@ public class ChessController {
         }
     }
 
-    private void movePiece(final MoveCommand command){
+    private void movePiece(final MoveCommand command) {
         chessManager.move(command);
         OutputView.printBoard(chessManager.getBoard());
     }
 
-    private void showAblePositionToMove(final ShowCommand command){
+    private void showAblePositionToMove(final ShowCommand command) {
         OutputView.printAbleToMove(chessManager.getBoard(), chessManager.getReachablePositions(command));
     }
 }

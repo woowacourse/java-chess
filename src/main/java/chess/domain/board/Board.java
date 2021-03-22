@@ -38,7 +38,7 @@ public class Board {
         movePiece(source, target);
     }
 
-    private void validateMove(final Position source, final Position target){
+    private void validateMove(final Position source, final Position target) {
         if (!ableToMove(source).contains(target)) {
             throw new IllegalArgumentException();
         }
@@ -51,7 +51,7 @@ public class Board {
 
         for (final Direction direction : sourcePiece.getDirections()) {
             for (int distance = 1; distance <= sourcePiece.getMaxDistance(); distance++) {
-                if(isBlocked(source, direction, distance)){
+                if (isBlocked(source, direction, distance)) {
                     break;
                 }
 
@@ -60,7 +60,7 @@ public class Board {
                     ableToMove.add(target);
                 }
 
-                if (sourcePiece.isEnemy(of(target)) ) {
+                if (sourcePiece.isEnemy(of(target))) {
                     break;
                 }
             }
@@ -69,7 +69,7 @@ public class Board {
         return ableToMove;
     }
 
-    private boolean isBlocked(final Position source, final Direction direction, final int distance){
+    private boolean isBlocked(final Position source, final Direction direction, final int distance) {
         try {
             return isSameTeam(source, source.next(direction, distance));
         } catch (IllegalArgumentException e) {
@@ -77,7 +77,7 @@ public class Board {
         }
     }
 
-    private boolean isSameTeam(final Position source, final Position target){
+    private boolean isSameTeam(final Position source, final Position target) {
         return of(source).isSameTeam(of(target));
     }
 
@@ -87,7 +87,7 @@ public class Board {
         }
     }
 
-    private void movePiece(final Position source,final Position target) {
+    private void movePiece(final Position source, final Position target) {
         putPiece(source, target);
         putEmpty(source);
     }
@@ -156,7 +156,7 @@ public class Board {
         return ableToMove(source);
     }
 
-    public boolean isPositionOwner(final Position position, final Owner owner){
+    public boolean isPositionOwner(final Position position, final Owner owner) {
         return of(position).isOwner(owner);
     }
 }

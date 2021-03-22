@@ -28,7 +28,7 @@ public class ChessManager {
     }
 
     private void validateTurn(final Position source) {
-        if(!board.isPositionOwner(source, turn)){
+        if (!board.isPositionOwner(source, turn)) {
             throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
         }
     }
