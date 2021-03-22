@@ -1,5 +1,6 @@
-package chess.domain.game;
+package chess.domain.game.state;
 
+import chess.domain.game.ChessGame;
 import chess.domain.piece.black.BlackPiece;
 import chess.domain.piece.white.WhitePiece;
 

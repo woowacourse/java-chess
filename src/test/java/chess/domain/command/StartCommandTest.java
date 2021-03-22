@@ -1,6 +1,11 @@
 package chess.domain.command;
 
 import chess.domain.game.*;
+import chess.domain.game.state.finished.BlackWin;
+import chess.domain.game.state.finished.End;
+import chess.domain.game.state.finished.WhiteWin;
+import chess.domain.game.state.running.BlackTurn;
+import chess.domain.game.state.running.WhiteTurn;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

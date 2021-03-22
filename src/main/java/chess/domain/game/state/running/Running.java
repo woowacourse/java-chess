@@ -1,4 +1,7 @@
-package chess.domain.game;
+package chess.domain.game.state.running;
+
+import chess.domain.game.ChessGame;
+import chess.domain.game.state.Started;
 
 public abstract class Running extends Started {
 

@@ -1,7 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.game.ChessGame;
-import chess.domain.game.End;
+import chess.domain.game.state.finished.End;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

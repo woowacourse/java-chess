@@ -1,10 +1,11 @@
-package chess.domain.game;
+package chess.domain.game.state.finished;
 
+import chess.domain.game.ChessGame;
 import chess.domain.piece.Position;
 
-public class Ready extends Idle {
+public class End extends Finished {
 
-    public Ready(final ChessGame chessGame) {
+    public End(final ChessGame chessGame) {
         super(chessGame);
     }
 
@@ -15,12 +16,17 @@ public class Ready extends Idle {
 
     @Override
     public void start() {
-        chessGame.changeState(new WhiteTurn(chessGame));
+        throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
     }
 
     @Override
     public void end() {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
+    }
+
+    @Override
+    public boolean isFinished() {
+        return true;
     }
 
 }

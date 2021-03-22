@@ -1,15 +1,16 @@
-package chess.domain.game;
+package chess.domain.game.state.finished;
 
+import chess.domain.game.ChessGame;
+import chess.domain.game.state.Started;
 import chess.domain.piece.Position;
 
-public class End extends Finished {
-
-    public End(final ChessGame chessGame) {
+public abstract class Finished extends Started {
+    public Finished(ChessGame chessGame) {
         super(chessGame);
     }
 
     @Override
-    public void move(final Position source, final Position target) {
+    public void move(Position source, Position target) {
         throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
     }
 
@@ -27,5 +28,4 @@ public class End extends Finished {
     public boolean isFinished() {
         return true;
     }
-
 }

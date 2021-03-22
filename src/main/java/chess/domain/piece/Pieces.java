@@ -5,7 +5,6 @@ import chess.exception.NoSuchPermittedChessPieceException;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.IntStream;
@@ -24,21 +23,10 @@ public class Pieces<T extends ChessPiece> {
     }
 
     private T findPieceByPosition(final Position source) {
-        validateControllablePiece(source);
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(source))
                 .findAny()
                 .orElseThrow(NoSuchPermittedChessPieceException::new);
-    }
-
-    private void validateControllablePiece(final Position source) {
-        Optional<T> sourcePiece = pieces.stream()
-                .filter(piece -> piece.isSamePosition(source))
-                .findAny();
-
-        if (!sourcePiece.isPresent()) {
-            throw new NoSuchPermittedChessPieceException();
-        }
     }
 
     public void removeIf(Predicate<? super ChessPiece> filter) {

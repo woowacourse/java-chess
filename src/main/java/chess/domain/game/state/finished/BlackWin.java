@@ -1,5 +1,6 @@
-package chess.domain.game;
+package chess.domain.game.state.finished;
 
+import chess.domain.game.ChessGame;
 import chess.domain.piece.black.BlackPiece;
 
 import java.util.Optional;

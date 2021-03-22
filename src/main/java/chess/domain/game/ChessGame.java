@@ -1,6 +1,8 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.game.state.idle.Ready;
+import chess.domain.game.state.State;
 import chess.domain.piece.Position;
 
 import java.util.Optional;

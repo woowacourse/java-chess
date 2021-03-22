@@ -1,5 +1,8 @@
-package chess.domain.game;
+package chess.domain.game.state.running;
 
+import chess.domain.game.ChessGame;
+import chess.domain.game.state.finished.End;
+import chess.domain.game.state.finished.WhiteWin;
 import chess.domain.piece.Position;
 
 public class WhiteTurn extends Running {

@@ -2,8 +2,8 @@ package chess.domain.command;
 
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
-import chess.domain.game.End;
-import chess.domain.game.Ready;
+import chess.domain.game.state.finished.End;
+import chess.domain.game.state.idle.Ready;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
