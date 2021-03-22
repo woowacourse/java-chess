@@ -2,7 +2,6 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceType.KING;
 
-import chess.domain.game.MoveCommand;
 import chess.domain.piece.Piece;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
@@ -28,11 +27,11 @@ public class Board {
         return findCell(position).piece();
     }
 
-    public void move(MoveCommand moveCommand) {
-        Cell startPositionCell = cells.get(moveCommand.startPosition());
-        validateOwnPiece(startPositionCell, moveCommand.teamColor());
-        validateMoveRoute(startPositionCell, moveCommand.moveRoute());
-        Cell destinationCell = cells.get(moveCommand.destination());
+    public void move(MoveRoute moveRoute, TeamColor teamColor) {
+        Cell startPositionCell = cells.get(moveRoute.startPosition());
+        validateOwnPiece(startPositionCell, teamColor);
+        validateMoveRoute(startPositionCell, moveRoute);
+        Cell destinationCell = cells.get(moveRoute.destination());
         startPositionCell.movePieceTo(destinationCell);
     }
 

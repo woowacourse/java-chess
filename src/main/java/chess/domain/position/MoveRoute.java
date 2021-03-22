@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
 
@@ -10,6 +11,11 @@ public class MoveRoute {
     public MoveRoute(String startPositionInput, String destinationInput) {
         startPosition = Position.of(startPositionInput);
         destination = Position.of(destinationInput);
+    }
+
+    public MoveRoute(MoveRequestDTO moveRequestDTO) {
+        startPosition = Position.of(moveRequestDTO.getStartPositionInput());
+        destination = Position.of(moveRequestDTO.getDestinationInput());
     }
 
     public Position startPosition() {

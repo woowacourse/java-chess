@@ -1,11 +1,11 @@
 package chess.view;
 
-import chess.controller.dto.ScoresDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.type.File;
 import chess.domain.board.type.Rank;
 import chess.domain.piece.Piece;
+import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
 import java.util.Arrays;
@@ -46,9 +46,9 @@ public class OutputView {
         System.out.print(piece.getName());
     }
 
-    public static void printScores(ScoresDTO scoresDTO) {
-        double blackTeamScore = scoresDTO.blackPlayerScore();
-        double whiteTeamScore = scoresDTO.whitePlayerScore();
+    public static void printScores(Scores scores) {
+        double blackTeamScore = scores.blackPlayerScore().getScore();
+        double whiteTeamScore = scores.whitePlayerScore().getScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 

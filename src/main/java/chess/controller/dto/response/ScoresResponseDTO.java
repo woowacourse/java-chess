@@ -1,13 +1,13 @@
-package chess.controller.dto;
+package chess.controller.dto.response;
 
 import chess.domain.player.score.Score;
 import chess.domain.player.score.Scores;
 
-public class ScoresDTO {
+public class ScoresResponseDTO {
     private final Score blackPlayerScore;
     private final Score whitePlayerScore;
 
-    public ScoresDTO(Scores scores) {
+    public ScoresResponseDTO(Scores scores) {
         blackPlayerScore = scores.blackPlayerScore();
         whitePlayerScore = scores.whitePlayerScore();
     }

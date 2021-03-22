@@ -15,10 +15,10 @@ import static chess.domain.piece.type.PieceWithColorType.W_RK;
 import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.player.score.Scores;
-import chess.domain.position.MoveRoute;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -110,10 +110,9 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            MoveRoute moveRoute = new MoveRoute("a4", "b5");
-            MoveCommand moveCommand = new MoveCommand(WHITE, moveRoute);
+            MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, "a4", "b5");
 
-            chessGame.move(moveCommand);
+            chessGame.move(moveRequestDTO);
             Scores scores = chessGame.scores();
 
             assertThat(scores.blackPlayerScore().getScore()).isEqualTo(37);

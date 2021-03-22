@@ -1,11 +1,13 @@
 package chess.domain.game;
 
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.Players;
 import chess.domain.player.score.Scores;
+import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
 import chess.domain.position.cache.PositionsCache;
 import java.util.List;
@@ -38,18 +40,19 @@ public class ChessGame {
         board.setPiece(position, piece);
     }
 
-    public void move(MoveCommand moveCommand) {
-        updatePiecesOfPlayers(moveCommand);
-        board.move(moveCommand);
+    public void move(MoveRequestDTO moveRequestDTO) {
+        MoveRoute moveRoute = new MoveRoute(moveRequestDTO);
+        updatePiecesOfPlayers(moveRoute);
+        board.move(moveRoute, moveRequestDTO.getTeamColor());
     }
 
-    private void updatePiecesOfPlayers(MoveCommand moveCommand) {
-        Piece movingPiece = board.findPiece(moveCommand.startPosition());
-        players.remove(movingPiece, moveCommand.startPosition());
-        players.add(movingPiece, moveCommand.destination());
-        if (board.isNotCellEmpty(moveCommand.destination())) {
-            Piece deadPiece = board.findPiece(moveCommand.destination());
-            players.remove(deadPiece, moveCommand.destination());
+    private void updatePiecesOfPlayers(MoveRoute moveRoute) {
+        Piece movingPiece = board.findPiece(moveRoute.startPosition());
+        players.remove(movingPiece, moveRoute.startPosition());
+        players.add(movingPiece, moveRoute.destination());
+        if (board.isNotCellEmpty(moveRoute.destination())) {
+            Piece deadPiece = board.findPiece(moveRoute.destination());
+            players.remove(deadPiece, moveRoute.destination());
         }
     }
 

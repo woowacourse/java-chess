@@ -1,20 +1,18 @@
 package chess.controller;
 
-import static chess.domain.game.type.Command.END;
-import static chess.domain.game.type.Command.MOVE;
-import static chess.domain.game.type.Command.START;
-import static chess.domain.game.type.Command.STATUS;
+import static chess.controller.type.Command.END;
+import static chess.controller.type.Command.MOVE;
+import static chess.controller.type.Command.START;
+import static chess.controller.type.Command.STATUS;
 import static chess.domain.player.type.TeamColor.WHITE;
 
-import chess.controller.dto.CommandDTO;
-import chess.controller.dto.ScoresDTO;
+import chess.controller.dto.request.CommandRequestDTO;
+import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.type.Command;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
-import chess.domain.game.MoveCommand;
-import chess.domain.game.type.Command;
 import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
-import chess.domain.position.MoveRoute;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -25,14 +23,14 @@ public class Application {
     public static void main(String[] args) {
         chessGame = new ChessGame(new BoardDefaultSetting());
         InputView.printGameStartMessage();
-        Command command = getCommandDTO().command();
+        Command command = Command.of(getCommandRequestDTO().getCommandInput());
         if (command == START) {
             run();
         }
     }
 
-    private static CommandDTO getCommandDTO() {
-        return InputView.getCommand();
+    private static CommandRequestDTO getCommandRequestDTO() {
+        return InputView.getCommandRequest();
     }
 
     private static void run() {
@@ -47,9 +45,9 @@ public class Application {
         Command command = START;
         while (isNotGameEnd(command)) {
             OutputView.printBoard(chessGame.board());
-            CommandDTO commandDTO = getCommandDTO();
-            executeCommand(commandDTO);
-            command = commandDTO.command();
+            CommandRequestDTO commandRequestDTO = getCommandRequestDTO();
+            command = Command.of(commandRequestDTO.getCommandInput());
+            executeCommand(command, commandRequestDTO);
         }
     }
 
@@ -57,20 +55,19 @@ public class Application {
         return command != END && !chessGame.isKingDead();
     }
 
-    private static void executeCommand(CommandDTO commandDTO) {
-        Command command = commandDTO.command();
+    private static void executeCommand(Command command, CommandRequestDTO commandRequestDTO) {
         if (command == MOVE) {
-            move(commandDTO.moveRoute());
+            move(commandRequestDTO);
             return;
         }
         if (command == STATUS) {
             Scores scores = chessGame.scores();
-            OutputView.printScores(new ScoresDTO(scores));
+            OutputView.printScores(scores);
         }
     }
 
-    private static void move(MoveRoute moveRoute) {
-        chessGame.move(new MoveCommand(currentTurnTeamColor, moveRoute));
+    private static void move(CommandRequestDTO commandRequestDTO) {
+        chessGame.move(new MoveRequestDTO(currentTurnTeamColor, commandRequestDTO));
         currentTurnTeamColor = currentTurnTeamColor.opposite();
     }
 }
