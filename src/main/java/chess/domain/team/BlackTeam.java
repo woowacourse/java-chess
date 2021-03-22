@@ -13,11 +13,4 @@ public class BlackTeam extends Team {
         initializePawn(BLACK_PAWN_COLUMN, BLACK_PAWN_DIRECTION);
         initializePiece(BLACK_PIECE_COLUMN);
     }
-
-    @Override
-    public void move(final Position current, final Position destination) {
-        final Piece chosenPiece = piecePosition.get(current);
-        piecePosition.remove(current);
-        piecePosition.put(destination, chosenPiece);
-    }
 }

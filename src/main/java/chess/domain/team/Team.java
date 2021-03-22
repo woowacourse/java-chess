@@ -45,14 +45,18 @@ public abstract class Team {
         piecePosition.put(new Position(7, pieceColumn), new Rook());
     }
 
+    public void move(final Position current, final Position destination) {
+        final Piece chosenPiece = piecePosition.get(current);
+        piecePosition.remove(current);
+        piecePosition.put(destination, chosenPiece);
+    }
+
     public Piece choosePiece(final Position position) {
         if (havePiece(position)) {
             return piecePosition.get(position);
         }
         throw new IllegalArgumentException("해당 위치에 기물이 없습니다.");
     }
-
-    public abstract void move(final Position current, final Position destination);
 
     public Piece killPiece(Position destination) {
         return piecePosition.remove(destination);

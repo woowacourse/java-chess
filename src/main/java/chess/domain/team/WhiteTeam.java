@@ -13,11 +13,4 @@ public class WhiteTeam extends Team {
         initializePawn(WHITE_PAWN_COLUMN, WHITE_PAWN_DIRECTION);
         initializePiece(WHITE_PIECE_COLUMN);
     }
-
-    @Override
-    public void move(final Position current, final Position destination) {
-        final Piece chosenPiece = piecePosition.get(current);
-        piecePosition.remove(current);
-        piecePosition.put(destination, chosenPiece);
-    }
 }
