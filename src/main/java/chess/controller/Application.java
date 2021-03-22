@@ -21,11 +21,20 @@ public class Application {
 
     public static void main(String[] args) {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        InputView.printGameStartMessage();
-        String commandInput = getCommandRequestDTO().getCommandInput();
+        String commandInput = getFirstCommandRequest();
         if (Command.of(commandInput) == START) {
             run(chessGame);
+            return;
         }
+        if (Command.of(commandInput) == END) {
+            return;
+        }
+        throw new IllegalArgumentException("게임을 먼저 시작해 주세요.");
+    }
+
+    private static String getFirstCommandRequest() {
+        InputView.printGameStartMessage();
+        return getCommandRequestDTO().getCommandInput();
     }
 
     private static CommandRequestDTO getCommandRequestDTO() {

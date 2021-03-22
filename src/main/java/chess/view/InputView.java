@@ -16,7 +16,6 @@ public class InputView {
     private static final String MOVE_COMMAND = "move";
     private static final String STATUS_COMMAND = "status";
     private static final String END_COMMAND = "end";
-    private static boolean isFirst = true;
 
     private InputView() {
     }
@@ -29,9 +28,7 @@ public class InputView {
     public static CommandRequestDTO getCommandRequest() {
         String commandLineInput = SCANNER.nextLine();
         String[] splitCommandLineInput = commandLineInput.split(COMMAND_DELIMITER);
-        validateFirstCommandInput(splitCommandLineInput[COMMAND_INDEX]);
         validateCommandLineFormat(splitCommandLineInput);
-        isFirst = false;
         return parseCommandLineInput(splitCommandLineInput);
     }
 
@@ -40,19 +37,7 @@ public class InputView {
             validateMoveCommandLineFormat(splitCommandLineInput);
             return;
         }
-        validateCommandLineFormatExceptMove(splitCommandLineInput);
-    }
-
-    private static void validateFirstCommandInput(String commandInput) {
-        if (isFirst) {
-            validateCommandInputIsStartCommand(commandInput);
-        }
-    }
-
-    private static void validateCommandInputIsStartCommand(String commandInput) {
-        if (!(commandInput.equals(START_COMMAND) || commandInput.equals(END_COMMAND))) {
-            throw new IllegalArgumentException("첫 명령어는 start 또는 end만 입력할 수 있습니다.");
-        }
+        validateCommandLineFormatExceptMoveCommand(splitCommandLineInput);
     }
 
     private static void validateMoveCommandLineFormat(String[] splitCommandLineInput) {
@@ -61,7 +46,7 @@ public class InputView {
         }
     }
 
-    private static void validateCommandLineFormatExceptMove(String[] splitCommandLineInput) {
+    private static void validateCommandLineFormatExceptMoveCommand(String[] splitCommandLineInput) {
         if (splitCommandLineInput.length != COMMAND_FACTORS_SIZE_EXCEPT_MOVE) {
             throw new IllegalArgumentException("명령어를 잘못 입력했습니다.");
         }
@@ -74,7 +59,7 @@ public class InputView {
         }
         if (commandInput.equals(START_COMMAND) || commandInput.equals(STATUS_COMMAND)
             || commandInput.equals(END_COMMAND)) {
-            return parseCommandLineInputExceptMove(splitCommandLineInput);
+            return parseCommandLineInputExceptMoveCommand(splitCommandLineInput);
         }
         throw new IllegalArgumentException("명령어를 잘못 입력했습니다.");
     }
@@ -86,7 +71,7 @@ public class InputView {
         return new CommandRequestDTO(commandInput, startPositionInput, destinationInput);
     }
 
-    private static CommandRequestDTO parseCommandLineInputExceptMove(
+    private static CommandRequestDTO parseCommandLineInputExceptMoveCommand(
         String[] splitCommandLineInput) {
 
         String commandInput = splitCommandLineInput[COMMAND_INDEX];
