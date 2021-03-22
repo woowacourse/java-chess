@@ -27,4 +27,9 @@ public abstract class Turn implements State {
     public void removePiece(final Position position) {
         pieces.remove(position);
     }
+
+    @Override
+    public boolean isKing(final Position position) {
+        return pieces.isKing(position);
+    }
 }

@@ -2,6 +2,7 @@ package chess.domain.player;
 
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -27,7 +28,7 @@ public class Round {
         this.command = command;
     }
 
-    private void moveByTurn(Position sourcePosition, Position targetPosition) {
+    private void moveByTurn(final Position sourcePosition, final Position targetPosition) {
         if (whitePlayer.isFinish()) {
             Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
             Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());
@@ -43,7 +44,10 @@ public class Round {
         checkPieces(blackPlayer.getState(), target);
     }
 
-    private void checkPieces(State state, Target target) {
+    private void checkPieces(final State state, final Target target) {
+        if (state.isKing(target.getPosition())) {
+            this.command = this.command.end();
+        }
         if (state.findPiece(target.getPosition()).isPresent()) {
             state.removePiece(target.getPosition());
         }

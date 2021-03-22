@@ -12,4 +12,8 @@ public interface Command {
     default Command ready() {
         return new Ready();
     }
+
+    default Command end() {
+        return new End();
+    }
 }

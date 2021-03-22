@@ -20,4 +20,6 @@ public interface State {
     State toRunningState(final State anotherState);
 
     void removePiece(final Position position);
+
+    boolean isKing(final Position position);
 }
