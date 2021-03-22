@@ -9,6 +9,11 @@ import java.util.Map;
 
 public class Pieces {
 
+    private static final int PAWN_SCORE_BOUNDARY = 1;
+    private static final double CHANGE_PAWN_SCORE = -0.5;
+    private static final int DEFAULT_NUM_PAWN = 0;
+    private static final int PLUS_ONE = 1;
+
     private final List<Piece> pieces;
 
     public Pieces(List<Piece> pieces) {
@@ -29,8 +34,8 @@ public class Pieces {
     }
 
     private Score adjustPawnScore(Integer numPawn, Score sum) {
-        if (numPawn > 1) {
-            sum = sum.add(new Score(-0.5 * numPawn));
+        if (numPawn > PAWN_SCORE_BOUNDARY) {
+            sum = sum.add(new Score(CHANGE_PAWN_SCORE * numPawn));
         }
         return sum;
     }
@@ -41,7 +46,8 @@ public class Pieces {
         }
         if (piece.getState() == State.ALIVE && piece instanceof Pawn) {
             pawnCount
-                .put(piece.getColumn(), pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
+                .put(piece.getColumn(),
+                    pawnCount.getOrDefault(piece.getColumn(), DEFAULT_NUM_PAWN) + PLUS_ONE);
         }
         return sum;
     }
