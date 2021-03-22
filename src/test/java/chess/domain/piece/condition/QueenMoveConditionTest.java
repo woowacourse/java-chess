@@ -62,15 +62,15 @@ class QueenMoveConditionTest {
         int[] col = {0, 0, 1, -1, 1, -1, 1, -1};
 
         for (int i = 0; i < row.length; i++) {
-            int dr = row[i] + 4;
-            int dc = col[i] + 4;
+            int nextRow = row[i] + 4;
+            int nextColumn = col[i] + 4;
 
             Board board = new Board(Arrays.asList(
                     queen,
-                    WhiteKnight.createWithCoordinate(dr, dc)
+                    WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+            assertThat(condition.isSatisfyBy(board, queen, new Position(nextRow, nextColumn))).isTrue();
         }
     }
 
@@ -84,15 +84,15 @@ class QueenMoveConditionTest {
         int[] col = {0, 0, 2, -2, 2, -2, 2, -2};
 
         for (int i = 0; i < row.length; i++) {
-            int dr = row[i] + 4;
-            int dc = col[i] + 4;
+            int nextRow = row[i] + 4;
+            int nextColumn = col[i] + 4;
 
             Board board = new Board(Arrays.asList(
                     queen,
-                    WhiteKnight.createWithCoordinate(dr, dc)
+                    WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, queen, new Position(dr, dc))).isTrue();
+            assertThat(condition.isSatisfyBy(board, queen, new Position(nextRow, nextColumn))).isTrue();
         }
     }
 
