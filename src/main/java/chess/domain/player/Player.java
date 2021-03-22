@@ -2,7 +2,6 @@ package chess.domain.player;
 
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
-import chess.domain.player.score.Score;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
 
@@ -22,7 +21,7 @@ public class Player {
         pieces.remove(piece, position);
     }
 
-    public Score score() {
+    public double score() {
         return pieces.score();
     }
 

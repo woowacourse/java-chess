@@ -1,22 +1,19 @@
 package chess.controller.dto.response;
 
-import chess.domain.player.score.Score;
-import chess.domain.player.score.Scores;
-
 public class ScoresResponseDTO {
-    private final Score blackPlayerScore;
-    private final Score whitePlayerScore;
+    private final double blackTeamScore;
+    private final double whiteTeamScore;
 
-    public ScoresResponseDTO(Scores scores) {
-        blackPlayerScore = scores.blackPlayerScore();
-        whitePlayerScore = scores.whitePlayerScore();
+    public ScoresResponseDTO(double blackTeamScore, double whiteTeamScore) {
+        this.blackTeamScore = blackTeamScore;
+        this.whiteTeamScore = whiteTeamScore;
     }
 
-    public double blackPlayerScore() {
-        return blackPlayerScore.getScore();
+    public double getBlackTeamScore() {
+        return blackTeamScore;
     }
 
-    public double whitePlayerScore() {
-        return whitePlayerScore.getScore();
+    public double getWhiteTeamScore() {
+        return whiteTeamScore;
     }
 }

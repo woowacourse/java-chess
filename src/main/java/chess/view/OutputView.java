@@ -2,12 +2,12 @@ package chess.view;
 
 import static chess.controller.Application.WHITE_TEAM_COLOR;
 
+import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.type.File;
 import chess.domain.board.type.Rank;
 import chess.domain.piece.Piece;
-import chess.domain.player.score.Scores;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -49,9 +49,9 @@ public class OutputView {
         System.out.print(piece.getName());
     }
 
-    public static void printScores(Scores scores) {
-        double blackTeamScore = scores.blackPlayerScore().getScore();
-        double whiteTeamScore = scores.whitePlayerScore().getScore();
+    public static void printScores(ScoresResponseDTO scoresResponseDTO) {
+        double blackTeamScore = scoresResponseDTO.getBlackTeamScore();
+        double whiteTeamScore = scoresResponseDTO.getWhiteTeamScore();
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 

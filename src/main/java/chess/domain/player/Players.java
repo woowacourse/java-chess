@@ -4,7 +4,6 @@ import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 
 import chess.domain.piece.Piece;
-import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
 import java.util.ArrayList;
@@ -35,9 +34,13 @@ public class Players {
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀 색깔 입니다."));
     }
 
-    public Scores scores() {
-        Player blackPlayer = findPlayerByTeamColor(BLACK);
-        Player whitePlayer = findPlayerByTeamColor(WHITE);
-        return new Scores(blackPlayer, whitePlayer);
+    public double blackPlayerScore() {
+        Player blackTeamPlayer = findPlayerByTeamColor(BLACK);
+        return blackTeamPlayer.score();
+    }
+
+    public double whitePlayerScore() {
+        Player whiteTeamPlayer = findPlayerByTeamColor(WHITE);
+        return whiteTeamPlayer.score();
     }
 }

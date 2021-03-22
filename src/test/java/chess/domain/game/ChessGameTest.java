@@ -16,9 +16,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.controller.dto.request.CommandRequestDTO;
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
-import chess.domain.player.score.Scores;
 import java.util.Arrays;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -88,10 +88,10 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            Scores scores = chessGame.scores();
+            ScoresResponseDTO scoresResponseDTO = chessGame.scores();
 
-            assertThat(scores.blackPlayerScore().getScore()).isEqualTo(20);
-            assertThat(scores.whitePlayerScore().getScore()).isEqualTo(19.5);
+            assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(20);
+            assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(19.5);
         }
 
         @DisplayName("기물을 이동하여 적 기물을 잡은 후, Pawn이 한 File에 2개 이상 존재하는 경우")
@@ -114,10 +114,10 @@ class ChessGameTest {
             MoveRequestDTO moveRequestDTO = new MoveRequestDTO("white", commandRequestDTO);
 
             chessGame.move(moveRequestDTO);
-            Scores scores = chessGame.scores();
+            ScoresResponseDTO scoresResponseDTO = chessGame.scores();
 
-            assertThat(scores.blackPlayerScore().getScore()).isEqualTo(37);
-            assertThat(scores.whitePlayerScore().getScore()).isEqualTo(37);
+            assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(37);
+            assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(37);
         }
     }
 }

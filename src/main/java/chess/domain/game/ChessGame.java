@@ -1,12 +1,12 @@
 package chess.domain.game;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.Players;
-import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
@@ -66,7 +66,7 @@ public class ChessGame {
         return board;
     }
 
-    public Scores scores() {
-        return players.scores();
+    public ScoresResponseDTO scores() {
+        return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
     }
 }

@@ -10,7 +10,6 @@ import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.type.Command;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
-import chess.domain.player.score.Scores;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -63,8 +62,7 @@ public class Application {
             return;
         }
         if (command == STATUS) {
-            Scores scores = chessGame.scores();
-            OutputView.printScores(scores);
+            OutputView.printScores(chessGame.scores());
         }
     }
 

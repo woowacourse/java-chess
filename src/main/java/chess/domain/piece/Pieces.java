@@ -3,7 +3,6 @@ package chess.domain.piece;
 import static chess.domain.piece.type.PieceType.PAWN;
 
 import chess.domain.board.type.File;
-import chess.domain.player.score.Score;
 import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -43,8 +42,8 @@ public class Pieces {
         piecesExceptPawn.remove(piece);
     }
 
-    public Score score() {
-        return new Score(scoreExceptPawns() + scoreOfPawns());
+    public double score() {
+        return scoreExceptPawns() + scoreOfPawns();
     }
 
     private double scoreExceptPawns() {
