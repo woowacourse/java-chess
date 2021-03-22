@@ -6,6 +6,7 @@ import domain.piece.Position;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
@@ -28,5 +29,18 @@ public class BoardDto implements MenuDto{
 
     public List<String> getMenuDto() {
         return Collections.unmodifiableList(result);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        BoardDto boardDto = (BoardDto) o;
+        return Objects.equals(result, boardDto.result);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
     }
 }

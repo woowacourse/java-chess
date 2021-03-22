@@ -3,12 +3,10 @@ package domain.menu;
 import domain.ChessGame;
 import domain.dto.BoardDto;
 import domain.dto.MenuDto;
-import domain.exception.CannotStartException;
 import domain.exception.GameNotStartException;
 import domain.exception.ImmovableSamePositionException;
 import domain.exception.InvalidMoveException;
 import domain.piece.Position;
-import view.OutputView;
 
 import java.util.NoSuchElementException;
 

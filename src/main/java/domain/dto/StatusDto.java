@@ -6,6 +6,7 @@ import domain.score.Score;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class StatusDto implements MenuDto {
     Map<String, Double> result = new HashMap<>();
@@ -20,11 +21,16 @@ public class StatusDto implements MenuDto {
         return Collections.unmodifiableMap(result);
     }
 
-    public static Map<String, Double> create(Map<Boolean, Score> piecesScore) {
-        Map<String, Double> result = new HashMap<>();
-        for (Boolean color : piecesScore.keySet()) {
-            result.put(Color.findColorName(color), piecesScore.get(color).getScore());
-        }
-        return result;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        StatusDto statusDto = (StatusDto) o;
+        return Objects.equals(result, statusDto.result);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(result);
     }
 }
