@@ -5,23 +5,23 @@ public enum Turn {
 
     private final int index;
 
-    Turn(int index){
+    Turn(int index) {
         this.index = index;
     }
 
-    public Turn change(){
-        if(this.equals(BLACK)){
+    public Turn change() {
+        if (this.equals(BLACK)) {
             return WHITE;
         }
 
         return BLACK;
     }
 
-    public int index(){
+    public int index() {
         return index;
     }
 
-    public int otherIndex(){
+    public int otherIndex() {
         return change().index;
     }
 }

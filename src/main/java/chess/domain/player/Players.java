@@ -12,7 +12,7 @@ public class Players {
     private final List<Player> players;
     private Turn turn;
 
-    public Players(){
+    public Players() {
         players = Arrays.asList(
                 PlayerInitializer.initPlayer(Owner.BLACK),
                 PlayerInitializer.initPlayer(Owner.WHITE)
@@ -21,7 +21,7 @@ public class Players {
         this.turn = Turn.BLACK;
     }
 
-    public void updatePositions(final Position source, final Position target){
+    public void updatePositions(final Position source, final Position target) {
         final Player turnPlayer = players.get(turn.index());
         final Player otherPlayer = players.get(turn.otherIndex());
 
@@ -29,8 +29,8 @@ public class Players {
         otherPlayer.removeIfExist(target);
     }
 
-    public void changeTurn(){
-        this.turn =  this.turn.change();
+    public void changeTurn() {
+        this.turn = this.turn.change();
     }
 
     public Status getStatus(final Board board) {
@@ -47,7 +47,7 @@ public class Players {
     public void validateTurn(final Position source) {
         final Player turnPlayer = players.get(turn.index());
 
-        if(!turnPlayer.contains(source)){
+        if (!turnPlayer.contains(source)) {
             throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
         }
     }

@@ -9,7 +9,10 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.movement.Direction;
 import chess.domain.piece.movement.Distance;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class Board {
@@ -45,7 +48,7 @@ public class Board {
     private List<Position> addReachableDistance(final Position source, final Direction direction) {
         final List<Position> ableToMove = new ArrayList<>();
         Distance distance = Distance.ONE;
-        while(isReachable(source, direction, distance)){
+        while (isReachable(source, direction, distance)) {
             ableToMove.add(source.next(direction, distance));
             distance = distance.next();
         }

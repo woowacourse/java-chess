@@ -12,17 +12,17 @@ import java.util.stream.Collectors;
 
 public class PlayerInitializer {
 
-    public static Player initPlayer(Owner owner){
-        List<Position> positions = new ArrayList<>();
+    public static Player initPlayer(final Owner owner) {
+        final List<Position> positions = new ArrayList<>();
 
-        if(owner.equals(Owner.BLACK)){
+        if (owner.equals(Owner.BLACK)) {
             positions.addAll(getHorizontalLine(Horizontal.EIGHT));
             positions.addAll(getHorizontalLine(Horizontal.SEVEN));
 
             return new Player(positions, owner);
         }
 
-        if(owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             positions.addAll(getHorizontalLine(Horizontal.TWO));
             positions.addAll(getHorizontalLine(Horizontal.ONE));
 
@@ -32,7 +32,7 @@ public class PlayerInitializer {
         throw new IllegalArgumentException("올바르지 않는 플레이어 생성입니다.");
     }
 
-    private static List<Position> getHorizontalLine(final Horizontal horizontal){
+    private static List<Position> getHorizontalLine(final Horizontal horizontal) {
         return Arrays.stream(Vertical.values())
                 .map(vertical -> new Position(vertical, horizontal))
                 .collect(Collectors.toList());

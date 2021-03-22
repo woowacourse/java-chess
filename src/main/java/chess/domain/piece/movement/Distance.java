@@ -10,7 +10,7 @@ public class Distance {
     private int value;
 
     public Distance(final int value) {
-        if(value < 0){
+        if (value < 0) {
             throw new IllegalArgumentException("Distance는 0이상이어야 한다.");
         }
         this.value = value;
@@ -25,14 +25,14 @@ public class Distance {
     }
 
     public Distance pre() {
-        return new Distance(value-1);
+        return new Distance(value - 1);
     }
 
     public Distance next() {
-        return new Distance(value+1);
+        return new Distance(value + 1);
     }
 
-    public boolean isFirst(){
+    public boolean isFirst() {
         return this.equals(ONE);
     }
 

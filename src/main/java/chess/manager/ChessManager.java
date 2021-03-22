@@ -38,7 +38,7 @@ public class ChessManager {
         return players.getStatus(board);
     }
 
-    public boolean isEnd(){
+    public boolean isEnd() {
         return players.isKingDead(board);
     }
 }

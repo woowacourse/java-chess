@@ -11,7 +11,7 @@ public class Player {
     private final List<Position> positions;
     private final Owner owner;
 
-    public Player(final List<Position> positions, final Owner owner){
+    public Player(final List<Position> positions, final Owner owner) {
         this.positions = positions;
         this.owner = owner;
     }
@@ -27,10 +27,10 @@ public class Player {
         return score.calculatePawnPenaltyScore(pawnCountDuplicatedInLine);
     }
 
-    private Score getScore(final Board board){
+    private Score getScore(final Board board) {
         Score score = Score.EMPTY;
 
-        for(Position position : positions){
+        for (Position position : positions) {
             score = score.plus(board.getPieceOf(position).score());
         }
 
@@ -44,18 +44,18 @@ public class Player {
                 .isPresent();
     }
 
-    public void removeIfExist(Position target) {
-        if(positions.contains(target)){
+    public void removeIfExist(final Position target) {
+        if (positions.contains(target)) {
             positions.remove(target);
         }
     }
 
-    public void move(Position source, Position target) {
+    public void move(final Position source, final Position target) {
         positions.remove(source);
         positions.add(target);
     }
 
-    public boolean contains(final Position position){
+    public boolean contains(final Position position) {
         return positions.contains(position);
     }
 }
