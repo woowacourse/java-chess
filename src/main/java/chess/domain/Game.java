@@ -21,10 +21,6 @@ public class Game {
         this.turnColor = PieceColor.WHITE;
     }
 
-//    public static Game set() {
-//        return new Game(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
-//    }
-
     public void init() {
         this.board = new Board(InitializedBoard.board());
         this.gameState = GameState.START;

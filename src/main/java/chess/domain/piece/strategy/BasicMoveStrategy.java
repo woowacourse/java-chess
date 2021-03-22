@@ -1,7 +1,6 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Position;
-import chess.domain.exceptions.InvalidMoveException;
 
 public abstract class BasicMoveStrategy implements MoveStrategy {
 
