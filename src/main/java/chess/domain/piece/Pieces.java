@@ -38,4 +38,10 @@ public class Pieces {
     public void changePiecePosition(final Piece source, final Target target) {
         source.changePosition(target.getPosition());
     }
+
+    public void remove(final Position position) {
+        if (findPiece(position).isPresent()) {
+            pieces.remove(findPiece(position).get());
+        }
+    }
 }

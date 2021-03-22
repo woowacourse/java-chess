@@ -22,4 +22,9 @@ public abstract class Turn implements State {
     public final Pieces pieces() {
         return pieces;
     }
+
+    @Override
+    public void removePiece(final Position position) {
+        pieces.remove(position);
+    }
 }
