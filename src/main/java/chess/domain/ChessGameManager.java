@@ -22,28 +22,27 @@ public class ChessGameManager {
     private State state;
 
     public ChessGameManager() {
-        updateAndReturnState(StateFactory.init());
+        updateState(StateFactory.init());
     }
 
-    public State start() {
+    public void start() {
         board = BoardFactory.createBoard();
         this.coloredPieces = Arrays.stream(Color.values())
                 .map(ColoredPieces::createByColor)
                 .collect(Collectors.toList());
         currentTurnColor = Color.WHITE;
-        return updateAndReturnState(this.state.start());
+        updateState(this.state.start());
     }
 
-    private State updateAndReturnState(State state) {
+    private void updateState(State state) {
         this.state = state;
-        return this.state;
     }
 
-    public State end() {
-        return updateAndReturnState(this.state.end());
+    public void end() {
+        updateState(this.state.end());
     }
 
-    public State move(Position from, Position to) {
+    public void move(Position from, Position to) {
         if (this.state.isNotRunning()) {
             throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
         }
@@ -54,7 +53,7 @@ public class ChessGameManager {
             opposite.remove(moveResult.getCapturedPiece());
         }
         turnOver();
-        return updateAndReturnState(this.state.move(isKingDeadEndCondition()));
+        updateState(this.state.move(isKingDeadEndCondition()));
     }
 
     private void validateTurn(Position from) {
@@ -80,7 +79,7 @@ public class ChessGameManager {
     }
 
     public ChessGameStatistics getStatistics() {
-        updateAndReturnState(this.state.status());
+        updateState(this.state.status());
         Map<Color, Double> scoreMap = board.getScoreMap();
         if (isKingDeadEndCondition()) {
             return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResultByColor(kingAliveColor()));
