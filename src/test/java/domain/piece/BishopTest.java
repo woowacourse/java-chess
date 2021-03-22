@@ -10,7 +10,7 @@ import chess.domain.board.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
-import chess.domain.piece.TeamColor;
+import chess.domain.state.TeamColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

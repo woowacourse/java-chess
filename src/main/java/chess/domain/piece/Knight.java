@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.state.TeamColor;
 import java.util.HashSet;
 import java.util.Set;
 
