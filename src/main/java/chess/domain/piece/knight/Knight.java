@@ -1,13 +1,14 @@
-package chess.domain.piece;
+package chess.domain.piece.knight;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Score;
 
-public class Knight extends Piece {
+public abstract class Knight extends Piece {
 
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
-    private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
-    private static final Knight WHITE_KNIGHT = new Knight(Owner.WHITE);
 
     public Knight(final Owner owner) {
         super(owner, new Score(2.5), Direction.knightDirections());
@@ -15,11 +16,11 @@ public class Knight extends Piece {
 
     public static Knight getInstanceOf(final Owner owner) {
         if (owner.equals(Owner.BLACK)) {
-            return BLACK_KNIGHT;
+            return BlackKnight.getInstance();
         }
 
         if (owner.equals(Owner.WHITE)) {
-            return WHITE_KNIGHT;
+            return WhiteKnight.getInstance();
         }
 
         throw new IllegalArgumentException("Invalid Knight");
@@ -28,11 +29,6 @@ public class Knight extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public String getSymbol() {
-        return "N";
     }
 
     @Override

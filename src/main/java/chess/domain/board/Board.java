@@ -136,7 +136,7 @@ public class Board {
         for (final Vertical v : Vertical.values()) {
             int verticalCount = 0;
             for (final Horizontal h : Horizontal.values()) {
-                if (of(v, h).equals(Pawn.getInstanceOf(owner))) {
+                if (of(v, h).isSameOwnerPawn(owner)) {
                     verticalCount++;
                 }
             }

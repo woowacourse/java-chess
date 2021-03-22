@@ -1,12 +1,13 @@
-package chess.domain.piece;
+package chess.domain.piece.rook;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Score;
 
-public class Rook extends Piece {
+public abstract class Rook extends Piece {
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
-    private static final Rook BLACK_ROOK = new Rook(Owner.BLACK);
-    private static final Rook WHITE_ROOK = new Rook(Owner.WHITE);
 
     public Rook(final Owner owner) {
         super(owner, new Score(5.0d), Direction.straightDirections());
@@ -14,11 +15,11 @@ public class Rook extends Piece {
 
     public static Rook getInstanceOf(final Owner owner) {
         if (owner.equals(Owner.BLACK)) {
-            return BLACK_ROOK;
+            return BlackRook.getInstance();
         }
 
         if (owner.equals(Owner.WHITE)) {
-            return WHITE_ROOK;
+            return WhiteRook.getInstance();
         }
 
         throw new IllegalArgumentException("Invalid Rook");
@@ -27,11 +28,6 @@ public class Rook extends Piece {
     @Override
     public boolean isReachable(final Position source, final Position target, final Piece targetPiece) {
         return true;
-    }
-
-    @Override
-    public String getSymbol() {
-        return "R";
     }
 
     @Override

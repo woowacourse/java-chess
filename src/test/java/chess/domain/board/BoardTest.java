@@ -4,6 +4,12 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.*;
+import chess.domain.piece.bishop.Bishop;
+import chess.domain.piece.king.King;
+import chess.domain.piece.knight.Knight;
+import chess.domain.piece.pawn.Pawn;
+import chess.domain.piece.queen.Queen;
+import chess.domain.piece.rook.Rook;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -31,14 +37,14 @@ public class BoardTest {
 
     private static Piece[] getPiecesOfFirstLine(Owner owner) {
         return new Piece[]{
-                new Rook(owner),
-                new Knight(owner),
-                new Bishop(owner),
-                new Queen(owner),
-                new King(owner),
-                new Bishop(owner),
-                new Knight(owner),
-                new Rook(owner)
+                Rook.getInstanceOf(owner),
+                Knight.getInstanceOf(owner),
+                Bishop.getInstanceOf(owner),
+                Queen.getInstanceOf(owner),
+                King.getInstanceOf(owner),
+                Bishop.getInstanceOf(owner),
+                Knight.getInstanceOf(owner),
+                Rook.getInstanceOf(owner)
         };
     }
 

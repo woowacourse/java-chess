@@ -23,18 +23,8 @@ public abstract class Piece {
         return this.score;
     }
 
-    ;
-
-    public final String decideUpperOrLower() {
-        if (owner.equals(Owner.BLACK)) {
-            return getSymbol().toUpperCase();
-        }
-
-        if (owner.equals(Owner.WHITE)) {
-            return getSymbol().toLowerCase();
-        }
-
-        return getSymbol();
+    public boolean isSameOwnerPawn(Owner owner) {
+        return this.isPawn() && this.owner.isSameTeam(owner);
     }
 
     public abstract String getSymbol();
@@ -58,6 +48,10 @@ public abstract class Piece {
     public abstract int getMaxDistance();
 
     public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
         return false;
     }
 }

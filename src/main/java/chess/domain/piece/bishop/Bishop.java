@@ -1,28 +1,29 @@
-package chess.domain.piece;
+package chess.domain.piece.bishop;
 
 import chess.domain.board.position.Position;
 import chess.domain.direction.Direction;
+import chess.domain.piece.Owner;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Score;
 
-public class Queen extends Piece {
+public abstract class Bishop extends Piece {
 
     private static final int ABLE_DISTANCE_TO_MOVE = 7;
-    private static final Queen BLACK_QUEEN = new Queen(Owner.BLACK);
-    private static final Queen WHITE_QUEEN = new Queen(Owner.WHITE);
 
-    public Queen(final Owner owner) {
-        super(owner, new Score(9.0d), Direction.allDirections());
+    public Bishop(final Owner owner) {
+        super(owner, new Score(3.0d), Direction.diagonalDirections());
     }
 
-    public static Queen getInstanceOf(final Owner owner) {
+    public static Bishop getInstanceOf(final Owner owner) {
         if (owner.equals(Owner.BLACK)) {
-            return BLACK_QUEEN;
+            return BlackBishop.getInstance();
         }
 
         if (owner.equals(Owner.WHITE)) {
-            return WHITE_QUEEN;
+            return WhiteBishop.getInstance();
         }
 
-        throw new IllegalArgumentException("Invalid Queen");
+        throw new IllegalArgumentException("Invalid Bishop");
     }
 
     @Override
@@ -32,7 +33,7 @@ public class Queen extends Piece {
 
     @Override
     public String getSymbol() {
-        return "Q";
+        return "B";
     }
 
     @Override
