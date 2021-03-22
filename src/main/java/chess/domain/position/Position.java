@@ -37,12 +37,12 @@ public class Position {
         return new Position(pointX, pointY);
     }
     
-    public Point getX() {
-        return x;
+    public int getX() {
+        return x.getPoint();
     }
     
-    public Point getY() {
-        return y;
+    public int getY() {
+        return y.getPoint();
     }
     
     public Position add(int xDistance, int yDistance) {

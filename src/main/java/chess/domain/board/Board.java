@@ -87,7 +87,7 @@ public class Board {
         return (double) pawnCont * OPTION_SCORE_OF_PAWN;
     }
     
-    private Map<Point, Long> countPawnAtColumn(Color color) {
+    private Map<Integer, Long> countPawnAtColumn(Color color) {
         return board.entrySet()
                     .stream()
                     .filter(entry -> isPawnOfColor(color, entry.getValue()))
