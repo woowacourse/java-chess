@@ -14,7 +14,7 @@ public class Blank implements Piece {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
         return false;
     }
 
@@ -44,7 +44,7 @@ public class Blank implements Piece {
     }
 
     @Override
-    public void setPosition(Position end) {
+    public void setCurrentPosition(Position end) {
         throw new IllegalArgumentException("공백은 움직일 수 없습니다.");
     }
 

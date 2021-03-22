@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Moves;
+import chess.domain.position.Position;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -18,51 +19,19 @@ public class Queen extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
 
-        Position position = source.moveUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveUp();
-        }
-        position = source.moveDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveDown();
-        }
-        position = source.moveLeft();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeft();
-        }
-        position = source.moveRight();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRight();
-        }
-
-        position = source.moveLeftDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeftDown();
-        }
-        position = source.moveLeftUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeftUp();
-        }
-        position = source.moveRightDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRightDown();
-        }
-        position = source.moveRightUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRightUp();
-        }
+        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT_UP,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_UP,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.UP,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.DOWN, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT, target, chessBoard));
 
         return candidates.contains(target);
     }
+
 }

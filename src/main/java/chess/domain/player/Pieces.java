@@ -1,6 +1,7 @@
 package chess.domain.player;
 
 import chess.domain.State;
+import chess.domain.TeamColor;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import java.util.HashMap;

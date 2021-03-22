@@ -46,7 +46,7 @@ public class RookTest {
     @DisplayName("룩 움직임 테스트")
     void moveTest() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        assertFalse(piece.isMoveAble(Position.valueOf("a1"), Position.valueOf("a2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
     }
 
     @Test
@@ -55,7 +55,7 @@ public class RookTest {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
         chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a1"), Position.valueOf("a2"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
 
     }
 
@@ -65,7 +65,7 @@ public class RookTest {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
         chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a1"), Position.valueOf("a6"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a6"), chessBoard));
     }
 
     @Test
@@ -73,7 +73,7 @@ public class RookTest {
     void moveTest4() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("a1"), Position.valueOf("a2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class RookTest {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
         chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a1"), Position.valueOf("a7"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a7"), chessBoard));
     }
 
     @Test

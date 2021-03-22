@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
 import chess.domain.TeamColor;
+import chess.domain.position.Moves;
+import chess.domain.position.Position;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,30 +18,12 @@ public class Rook extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
-        Position position = source.moveUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveUp();
-
-        }
-        position = source.moveDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveDown();
-        }
-        position = source.moveLeft();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeft();
-        }
-        position = source.moveRight();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRight();
-        }
-
+        candidates.addAll(moveAsPossible(Moves.UP,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.DOWN, target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT, target, chessBoard));
         return candidates.contains(target);
     }
 

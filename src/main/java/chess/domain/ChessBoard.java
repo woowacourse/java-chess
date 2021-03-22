@@ -18,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 public class ChessBoard {
-
-    //TODO : King 이 dead 상태가 될 경우 게임 종료
     private final Map<Position, Piece> chessBoard;
     private final Pieces whitePieces;
     private final Pieces blackPieces;
@@ -119,19 +117,19 @@ public class ChessBoard {
         Piece startPiece = chessBoard.get(start);
         Piece goingToDie = chessBoard.get(end);
 
-        if (chessBoard.get(start).isMoveAble(start, end, this)) {
+        if (chessBoard.get(start).isMoveAble(end, this)) {
             //blank 경우
             if (chessBoard.get(end) == Blank.INSTANCE) {
                 chessBoard.put(start, Blank.INSTANCE);
                 chessBoard.put(end, startPiece);
-                startPiece.setPosition(end);
+                startPiece.setCurrentPosition(end);
                 return true;
             }
             // 상대편이 있는 경우
             goingToDie.dead();
             chessBoard.put(end, startPiece);
             chessBoard.put(start, Blank.INSTANCE);
-            startPiece.setPosition(end);
+            startPiece.setCurrentPosition(end);
             if (goingToDie instanceof King) {
                 gameStatus = false;
             }

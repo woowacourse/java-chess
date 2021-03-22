@@ -8,7 +8,7 @@ import chess.domain.player.Score;
 
 public interface Piece {
 
-    boolean isMoveAble(Position source, Position target, ChessBoard chessBoard);
+    boolean isMoveAble(Position target, ChessBoard chessBoard);
 
     String getPieceName();
 
@@ -20,7 +20,7 @@ public interface Piece {
 
     State getState();
 
-    void setPosition(Position end);
+    void setCurrentPosition(Position end);
 
     Score getScore();
 

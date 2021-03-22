@@ -17,43 +17,43 @@ public class Pawn extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
 
         Position position;
         if (this.getColor() == TeamColor.BLACK) {
-            position = source.moveDown();
+            position = getCurrentPosition().moveDown();
             if (validBlank(position, chessBoard)) {
                 candidates.add(position);
                 position = position.moveDown();
-                if (validBlank(position, chessBoard) && source.startLine(this.getColor())) {
+                if (validBlank(position, chessBoard) && getCurrentPosition().pawnLine(this.getColor())) {
                     candidates.add(position);
                 }
             }
-            position = source.moveLeftDown();
+            position = getCurrentPosition().moveLeftDown();
             if (isMeetEnemy(position, target, chessBoard)) {
                 candidates.add(position);
             }
-            position = source.moveRightDown();
+            position = getCurrentPosition().moveRightDown();
             if (isMeetEnemy(position, target, chessBoard)) {
                 candidates.add(position);
             }
         }
 
         if (this.getColor() == TeamColor.WHITE) {
-            position = source.moveUp();
+            position = getCurrentPosition().moveUp();
             if (validBlank(position, chessBoard)) {
                 candidates.add(position);
                 position = position.moveUp();
-                if (validBlank(position, chessBoard) && source.startLine(this.getColor())) {
+                if (validBlank(position, chessBoard) && getCurrentPosition().pawnLine(this.getColor())) {
                     candidates.add(position);
                 }
             }
-            position = source.moveLeftUp();
+            position = getCurrentPosition().moveLeftUp();
             if (isMeetEnemy(position, target, chessBoard)) {
                 candidates.add(position);
             }
-            position = source.moveRightUp();
+            position = getCurrentPosition().moveRightUp();
             if (isMeetEnemy(position, target, chessBoard)) {
                 candidates.add(position);
             }

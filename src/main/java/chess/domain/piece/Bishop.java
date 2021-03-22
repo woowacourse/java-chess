@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
+import chess.domain.position.Moves;
 import chess.domain.position.Position;
 import chess.domain.TeamColor;
 import java.util.HashSet;
@@ -17,30 +18,12 @@ public class Bishop extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
-
-        Position position = source.moveLeftDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeftDown();
-        }
-        position = source.moveLeftUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeftUp();
-        }
-        position = source.moveRightDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRightDown();
-        }
-        position = source.moveRightUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRightUp();
-        }
-
+        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.LEFT_UP,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN,target, chessBoard));
+        candidates.addAll(moveAsPossible(Moves.RIGHT_UP,target, chessBoard));
         return candidates.contains(target);
     }
 }
