@@ -9,7 +9,6 @@ import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
-import chess.domain.statistics.ScoreTable;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -73,13 +72,13 @@ public class Board {
 
     private double scorePerFiles(List<Piece> pieces) {
         double score = pieces.stream()
-                .mapToDouble(ScoreTable::convertToScore)
+                .mapToDouble(Piece::getScore)
                 .sum();
         long pawnCount = pieces.stream()
-                .filter(piece -> piece instanceof Pawn)
+                .filter(Piece::isPawn)
                 .count();
         if (pawnCount >= PAWN_SCORE_DISADVANTAGE_SIZE) {
-            score -= pawnCount * ScoreTable.getPawnDisadvantageRatio();
+            score -= pawnCount * Pawn.SCORE_DISADVANTAGE_RATIO;
         }
         return score;
     }
@@ -87,7 +86,6 @@ public class Board {
     private List<Piece> piecesPerFiles(Color color, File file) {
         return positionStreamPerFiles(file)
                 .map(this::findByPosition)
-                .filter(Square::hasPiece)
                 .map(Square::getPiece)
                 .filter(piece -> piece.getColor() == color)
                 .collect(toList());

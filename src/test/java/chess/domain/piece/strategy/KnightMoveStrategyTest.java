@@ -2,6 +2,11 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
 import chess.domain.board.DefaultBoardInitializer;
+import chess.domain.board.Square;
+import chess.domain.board.TestBoardInitializer;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,6 +15,7 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.Arrays;
 import java.util.stream.Stream;
 
 import static chess.domain.piece.Fixture.whiteKnight;
@@ -50,8 +56,18 @@ class KnightMoveStrategyTest {
 
     @DisplayName("목적지에 같은 팀의 말이 있다면 예외")
     @ParameterizedTest
-    @CsvSource({"c3, b1", "c3, d1"})
-    void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteKnight.canMove(board.createMoveOrder(Position.of(from), Position.of(to))));
+    @CsvSource({"WHITE,c3,b1", "BLACK,c3,d1"})
+    void throwExceptionWhenMoveToSameTeam(Color color, String from, String to) {
+        Position fromPosition = Position.of(from);
+        Position toPosition = Position.of(to);
+
+        Square fromSquare = new Square(fromPosition, new Knight(color));
+        Square toSquare = new Square(toPosition, new Pawn(color));
+
+        Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(fromSquare, toSquare));
+
+        assertThatThrownBy(() -> testBoard.move(fromPosition, toPosition))
+            .isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("동일한 진영의 말이 있어서 행마할 수 없습니다.");
     }
 }

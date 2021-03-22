@@ -36,9 +36,6 @@ public class Square {
     }
 
     public Piece getPiece() {
-        if (hasNotPiece()) {
-            throw new NoSuchElementException("해당 칸에는 말이 없습니다.");
-        }
         return piece;
     }
 
