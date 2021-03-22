@@ -10,6 +10,8 @@ public interface Piece {
 
     boolean isSameColor(final Color color);
 
+    boolean isSameColor(final Piece piece);
+
     Piece move(final Position position, final Map<Position, Piece> pieces);
 
     boolean isSameColumn(final Point point);

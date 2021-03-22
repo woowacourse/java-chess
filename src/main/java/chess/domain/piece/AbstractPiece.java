@@ -23,6 +23,11 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
+    public boolean isSameColor(final Piece piece) {
+        return piece.isSameColor(color);
+    }
+
+    @Override
     public boolean isSameColumn(final Point point) {
         return position.isSameColumn(point);
     }
