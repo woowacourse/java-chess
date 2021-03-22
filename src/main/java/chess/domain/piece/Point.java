@@ -26,9 +26,9 @@ public final class Point {
         return POINTS[point];
     }
 
-    private static void validate(final int position) {
+    public static void validate(final int position) {
         if (position < MIN_INDEX || position >= MAX_INDEX) {
-            throw new IllegalArgumentException("인덱스는 0이상 7이하이어야 합니다.");
+            throw new IllegalArgumentException("a1 과 h8 사이여야 합니다.");
         }
     }
 

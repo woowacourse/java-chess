@@ -12,6 +12,7 @@ public final class Position {
     private static final int INDEX_Y = 0;
     private static final char CORRECTION_X = '1';
     private static final char CORRECTION_Y = 'a';
+    private static final int POSITION_VALUE_SIZE = 2;
 
     static {
         IntStream.range(0, POSITION_MAX_SIZE)
@@ -36,13 +37,26 @@ public final class Position {
     }
 
     public static Position of(final String value) {
+        validateValue(value);
         int x = value.charAt(INDEX_X) - CORRECTION_X;
         int y = value.charAt(INDEX_Y) - CORRECTION_Y;
         return of(x, y);
     }
 
+    private static void validateValue(String value) {
+        if (value.length() != POSITION_VALUE_SIZE) {
+            throw new IllegalArgumentException("a1 과 h8 사이여야 합니다.");
+        }
+    }
+
     public static Position of(final int x, final int y) {
+        validate(x, y);
         return positions[asIndex(x, y)];
+    }
+
+    private static void validate(int x, int y) {
+        Point.validate(x);
+        Point.validate(y);
     }
 
     private static int asIndex(final int x, final int y) {
