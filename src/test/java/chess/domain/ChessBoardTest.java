@@ -11,6 +11,8 @@ import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -18,10 +20,12 @@ import org.junit.jupiter.api.Test;
 public class ChessBoardTest {
 
     private ChessBoard chessBoard;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
         this.chessBoard = new ChessBoard();
+        this.board = new HashMap<>(chessBoard.getChessBoard());
     }
 
     @Test
@@ -54,10 +58,12 @@ public class ChessBoardTest {
     void game_end_die_king() {
         Piece kingPiece = new King(TeamColor.BLACK, Position.valueOf("b4"));
         Piece piece = new Queen(TeamColor.WHITE, Position.valueOf("b5"));
-        chessBoard.put(Position.valueOf("b4"), kingPiece);
-        chessBoard.put(Position.valueOf("b5"), piece);
+        board.put(Position.valueOf("b4"), kingPiece);
+        board.put(Position.valueOf("b5"), piece);
 
+        final ChessBoard chessBoard = new ChessBoard(board);
         chessBoard.move("b5", "b4");
+
         assertFalse(chessBoard.isPlaying());
     }
 }

@@ -21,27 +21,37 @@ public class Running implements GameState {
     @Override
     public GameState move(Position source, Position target) {
         Piece startPiece = chessBoard.get(source);
-        Piece goingToDie = chessBoard.get(target);
+        Piece targetPiece = chessBoard.get(target);
 
         if (chessBoard.get(source).isMoveAble(target, chessBoard)) {
-            //blank 경우
-            if (chessBoard.get(target) == Blank.INSTANCE) {
-                chessBoard.put(source, Blank.INSTANCE);
-                chessBoard.put(target, startPiece);
-                startPiece.changePosition(target);
-                return new Running(chessBoard);
-            }
-            // 상대편이 있는 경우
-            goingToDie.dead();
-            chessBoard.put(target, startPiece);
-            chessBoard.put(source, Blank.INSTANCE);
-            startPiece.changePosition(target);
-            if (goingToDie instanceof King) {
-                return new Finished(chessBoard);
-            }
-            return new Running(chessBoard);
+            return moveBoard(source, target, startPiece, targetPiece);
         }
         throw new IllegalArgumentException("잘못된 이동입니다.");
+    }
+
+    private GameState moveBoard(Position source, Position target, Piece startPiece,
+        Piece targetPiece) {
+        if (chessBoard.get(target) == Blank.INSTANCE) {
+            movePieces(source, target, startPiece);
+            return new Running(chessBoard);
+        }
+
+        targetPiece.dead();
+        movePieces(source, target, startPiece);
+        return kingCase(targetPiece);
+    }
+
+    private GameState kingCase(Piece targetPiece) {
+        if (targetPiece instanceof King) {
+            return new Finished(chessBoard);
+        }
+        return new Running(chessBoard);
+    }
+
+    private void movePieces(Position source, Position target, Piece startPiece) {
+        chessBoard.put(source, Blank.INSTANCE);
+        chessBoard.put(target, startPiece);
+        startPiece.changePosition(target);
     }
 
     @Override

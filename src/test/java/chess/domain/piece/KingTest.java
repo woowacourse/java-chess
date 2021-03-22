@@ -8,18 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class KingTest {
 
-
-    private ChessBoard chessBoard;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
-        this.chessBoard = new ChessBoard();
+        board = new ChessBoard().getChessBoard();
     }
 
     @Test
@@ -45,10 +45,10 @@ public class KingTest {
     @Test
     @DisplayName("킹 이 움직일 수 없는 경우")
     void moveKingFail() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("e1"));
-        assertFalse(piece.isMoveAble(Position.valueOf("e2"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("d2"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("f2"), chessBoard));
+        Piece piece = board.get(Position.valueOf("e1"));
+        assertFalse(piece.isMoveAble(Position.valueOf("e2"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("d2"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("f2"), board));
     }
 
     @Test
@@ -56,14 +56,14 @@ public class KingTest {
     void move_king_all_direction() {
         Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a4"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("a3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("a5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("c5"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a4"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("b3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("b5"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("a3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("a5"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("c5"), board));
     }
 
     @Test
@@ -71,7 +71,7 @@ public class KingTest {
     void king_over_move_fail() {
         Piece piece = new King(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b6"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("b6"), board));
     }
 
 }

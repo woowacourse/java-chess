@@ -6,20 +6,23 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
-import chess.domain.position.Position;
 import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
+import chess.domain.position.Position;
+import java.util.HashMap;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class RookTest {
 
-    private ChessBoard chessBoard;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
-        this.chessBoard = new ChessBoard();
+        final Map<Position, Piece> unmodifiableBoard = new ChessBoard().getChessBoard();
+        board = new HashMap<>(unmodifiableBoard);
     }
 
     @Test
@@ -45,70 +48,74 @@ public class RookTest {
     @Test
     @DisplayName("룩 움직임 테스트")
     void moveTest() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        assertFalse(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
+        Piece piece = board.get(Position.valueOf("a1"));
+        assertFalse(piece.isMoveAble(Position.valueOf("a2"), board));
     }
 
     @Test
     @DisplayName("장애물이 없을 경우")
     void moveTest2() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
+        Piece piece = board.get(Position.valueOf("a1"));
+        board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a2"), board));
 
     }
 
     @Test
     @DisplayName("장애물이 없을 경우")
     void moveTest82() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
+        Piece piece = board.get(Position.valueOf("a1"));
+        board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a6"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a6"), board));
     }
 
     @Test
     @DisplayName("같은팀 있는 경우")
     void moveTest4() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
+        Piece piece = board.get(Position.valueOf("a1"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("a2"), board));
     }
 
     @Test
-    @DisplayName("장애물이 없을 경우")
+    @DisplayName("장애물이 없고 target이 상대편인 경우")
     void moveTest3() {
-        Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
+        Piece piece = board.get(Position.valueOf("a1"));
+        board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
-        assertTrue(piece.isMoveAble(Position.valueOf("a7"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("a7"), board));
     }
 
     @Test
     @DisplayName("공백인 경우 이동잘했는가")
     void moveTest5() {
-        Piece origin = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
+        Piece origin = board.get(Position.valueOf("a1"));
+        board.put(Position.valueOf("a2"), Blank.INSTANCE);
 
+        final ChessBoard chessBoard = new ChessBoard(board);
         chessBoard.move("a1", "a6");
-        Piece after = chessBoard.getChessBoard().get(Position.valueOf("a6"));
+        Piece after = board.get(Position.valueOf("a6"));
 
         assertThat(after).isEqualTo(origin);
     }
 
     @Test
-    @DisplayName("장애물인 경우 이동잘했는가")
+    @DisplayName("상대방을 잡는 경우")
     void moveTest6() {
-        Piece origin = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
-        Piece caughtPiece = chessBoard.getChessBoard().get(Position.valueOf("a7"));
+        board.put(Position.valueOf("a2"), Blank.INSTANCE);
+        Piece caughtPiece = board.get(Position.valueOf("a7"));
 
+        final ChessBoard chessBoard = new ChessBoard(board);
         chessBoard.move("a1", "a7");
-        Piece after = chessBoard.getChessBoard().get(Position.valueOf("a7"));
+        final Map<Position, Piece> modifiedChessBoard = chessBoard.getChessBoard();
+        Piece after = modifiedChessBoard.get(Position.valueOf("a7"));
 
         State dead = caughtPiece.getState();
 
+        assertThat(after).isInstanceOf(Rook.class);
         assertThat(dead).isEqualTo(State.DEAD);
     }
+
 }

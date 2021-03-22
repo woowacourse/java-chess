@@ -8,17 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class KnightTest {
 
-    private ChessBoard chessBoard;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
-        this.chessBoard = new ChessBoard();
+        board = new ChessBoard().getChessBoard();
     }
 
     @Test
@@ -46,14 +47,14 @@ public class KnightTest {
     void movable() {
         Piece piece = new Knight(TeamColor.WHITE, Position.valueOf("d5"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("e7"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("f6"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("f4"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("e3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("c3"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b4"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("b6"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("c7"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("e7"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("f6"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("f4"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("e3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("b4"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("b6"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("c7"), board));
     }
 
     @Test
@@ -61,10 +62,10 @@ public class KnightTest {
     void fail_same_team() {
         Piece piece = new Knight(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("d2"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("c3"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("b6"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("f6"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("e7"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("d2"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("c3"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("b6"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("f6"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("e7"), board));
     }
 }

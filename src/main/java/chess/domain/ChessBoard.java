@@ -23,8 +23,6 @@ public class ChessBoard {
     public static final int WHITE_NOT_PAWN_LINE = 1;
     public static final int WHITE_PAWN_LINE = 2;
 
-    //todo: 삭제
-    private Map<Position, Piece> chessBoard;
     private final PieceSet whitePieces;
     private final PieceSet blackPieces;
     private GameState gameState;
@@ -33,6 +31,12 @@ public class ChessBoard {
         this.whitePieces = new WhiteSet();
         this.blackPieces = new BlackSet();
         final Map<Position, Piece> chessBoard = initBoard();
+        this.gameState = new Running(chessBoard);
+    }
+
+    public ChessBoard(Map<Position, Piece> chessBoard) {
+        this.whitePieces = new WhiteSet();
+        this.blackPieces = new BlackSet();
         this.gameState = new Running(chessBoard);
     }
 
@@ -77,7 +81,6 @@ public class ChessBoard {
         gameState = gameState.move(Position.valueOf(source), Position.valueOf(target));
     }
 
-
     private void validatePosition(String source, String target) {
         validateSamePosition(source, target);
         if (gameState.containsKey(Position.valueOf(source)) &&
@@ -91,11 +94,6 @@ public class ChessBoard {
         if (source.equals(target)) {
             throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
         }
-    }
-
-    //todo: 테스트용 컴파일 되기 위해서 남겨둠 ㅠㅠ
-    public void put(Position position, Piece piece) {
-        gameState.put(position, piece);
     }
 
     //todo: 삭제

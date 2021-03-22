@@ -8,17 +8,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class BishopTest {
 
-    private ChessBoard chessBoard;
+    private Map<Position, Piece> board;
 
     @BeforeEach
     void setUp() {
-        this.chessBoard = new ChessBoard();
+        board = new ChessBoard().getChessBoard();
     }
 
     @Test
@@ -47,8 +48,8 @@ public class BishopTest {
     void movable() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("c5"), chessBoard));
-        assertTrue(piece.isMoveAble(Position.valueOf("d6"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("c5"), board));
+        assertTrue(piece.isMoveAble(Position.valueOf("d6"), board));
     }
 
     @Test
@@ -56,7 +57,7 @@ public class BishopTest {
     void fail_movable() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertTrue(piece.isMoveAble(Position.valueOf("e7"), chessBoard));
+        assertTrue(piece.isMoveAble(Position.valueOf("e7"), board));
     }
 
     @Test
@@ -64,7 +65,7 @@ public class BishopTest {
     void fail_same_team() {
         Piece piece = new Bishop(TeamColor.BLACK, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("e7"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("e7"), board));
     }
 
     @Test
@@ -72,7 +73,7 @@ public class BishopTest {
     void fail_position() {
         Piece piece = new Bishop(TeamColor.WHITE, Position.valueOf("b4"));
 
-        assertFalse(piece.isMoveAble(Position.valueOf("b5"), chessBoard));
-        assertFalse(piece.isMoveAble(Position.valueOf("f8"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("b5"), board));
+        assertFalse(piece.isMoveAble(Position.valueOf("f8"), board));
     }
 }
