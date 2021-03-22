@@ -27,8 +27,9 @@ public final class Pieces {
     private static final int WHITE_GENERAL_ROW = 0;
     private static final int MAX_BLANK_ROW = 5;
     private static final int MIN_BLANK_ROW = 1;
-    private static final double DUPLICATE_PAWN_SCORE = 0.5;
     private static final int DUPLICATE_COUNT = 2;
+    private static final int TOTAL_KING_SIZE = 2;
+    private static final double DUPLICATE_PAWN_SCORE = 0.5;
 
     private final Map<Position, Piece> pieces = new LinkedHashMap<>();
 
@@ -67,15 +68,24 @@ public final class Pieces {
 
     public void movePiece(final Position sourcePosition, final Position targetPosition, final State state) {
         Piece sourcePiece = pieces.get(sourcePosition);
-        validateColorOfPiece(sourcePiece, state);
+        Piece targetPiece = pieces.get(targetPosition);
+
+        validateSourcePiece(sourcePiece, state);
+        validateAttackPiece(sourcePiece, targetPiece);
 
         pieces.put(targetPosition, sourcePiece.move(targetPosition, pieces()));
         pieces.put(sourcePosition, new Blank());
     }
 
-    private void validateColorOfPiece(final Piece sourcePiece, final State state) {
+    private void validateSourcePiece(final Piece sourcePiece, final State state) {
         if (!state.isSameColor(sourcePiece)) {
-            throw new IllegalArgumentException("움직이려 하는 말은 상대방의 말입니다.");
+            throw new IllegalArgumentException("움직이려 하는 기물은 상대방의 기물입니다.");
+        }
+    }
+
+    private void validateAttackPiece(final Piece sourcePiece, final Piece targetPiece) {
+        if (sourcePiece.isSameColor(targetPiece)) {
+            throw new IllegalArgumentException("공격하려는 기물은 자신의 기물입니다.");
         }
     }
 
@@ -124,6 +134,6 @@ public final class Pieces {
             .filter(piece -> piece instanceof King)
             .count();
 
-        return kingCount != 2;
+        return kingCount != TOTAL_KING_SIZE;
     }
 }
