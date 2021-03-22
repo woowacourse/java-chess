@@ -45,7 +45,15 @@ public final class ChessController {
 
     private void commandIsMove(Board board, Command command) {
         if (command.isMove()) {
+            movePiece(board, command);
+        }
+    }
+
+    private void movePiece(Board board, Command command) {
+        try {
             board.movePiece(command.sourcePosition(), command.targetPosition());
+        } catch (Exception e) {
+            OutputView.printErrorMessage(e.getMessage());
         }
     }
 
