@@ -20,7 +20,7 @@ public enum Rank {
     SEVEN("7", 7),
     EIGHT("8", 8);
 
-    private static final Map<String, Rank> searchMap;
+    private static final Map<String, Rank> SEARCH_MAP;
     private static final int BLANK_LINE_ROW_PIVOT = 2;
     private static final int NUMBER_OF_BLANK_RANKS = 4;
 
@@ -28,7 +28,7 @@ public enum Rank {
     private final int coordinate;
 
     static {
-        searchMap = Arrays.stream(values())
+        SEARCH_MAP = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
 
@@ -38,7 +38,7 @@ public enum Rank {
     }
 
     public static Rank from(String letter) {
-        return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 Rank가 없습니다.");
+        return Objects.requireNonNull(SEARCH_MAP.get(letter), "해당하는 문자의 Rank가 없습니다.");
     }
 
     public static Rank from(int coordinate) {

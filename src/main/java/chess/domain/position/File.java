@@ -17,13 +17,13 @@ public enum File {
     G("g", 7),
     H("h", 8);
 
-    private static final Map<String, File> searchMap;
+    private static final Map<String, File> SEARCH_MAP;
 
     private final String letter;
     private final int coordinate;
 
     static {
-        searchMap = Arrays.stream(values())
+        SEARCH_MAP = Arrays.stream(values())
                 .collect(toMap(value -> value.letter, Function.identity()));
     }
 
@@ -33,7 +33,7 @@ public enum File {
     }
 
     public static File from(String letter) {
-        return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 File이 없습니다.");
+        return Objects.requireNonNull(SEARCH_MAP.get(letter), "해당하는 문자의 File이 없습니다.");
     }
 
     public static File from(int coordinate){

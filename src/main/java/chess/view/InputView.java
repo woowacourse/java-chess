@@ -7,12 +7,13 @@ import java.util.stream.Collectors;
 
 public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String BLANK = " ";
 
     private InputView() {
     }
 
     public static List<String> getCommand() {
-        return Arrays.stream(scanner.nextLine().split(" "))
+        return Arrays.stream(scanner.nextLine().split(BLANK))
                 .map(String::trim)
                 .filter(string -> !string.isEmpty())
                 .collect(Collectors.toList());

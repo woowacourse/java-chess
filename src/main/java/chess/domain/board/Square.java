@@ -21,7 +21,7 @@ public class Square {
     }
 
     public MoveResult move(MoveOrder moveOrder) {
-        if (!hasPiece()) {
+        if (hasNotPiece()) {
             throw new NoSuchElementException("해당 위치엔 말이 없습니다.");
         }
 
