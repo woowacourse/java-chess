@@ -14,29 +14,33 @@ public class Pieces {
     }
 
     public Score calculateScore() {
-        // 리스트를 돌면서
         Score sum = Score.ZERO;
         Map<Character, Integer> pawnCount = new HashMap<>();
+
         for (Piece piece : pieces) {
-            // 살았는지 확인
-            if (piece.getState() == State.ALIVE) {
-                // 살았으면 각가의 점수를 더해준다.
-                 sum = sum.add(piece.getScore());
-                if (piece instanceof Pawn) {
-                    pawnCount
-                        .put(piece.getColumn(), pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
-                }
-            }
+            sum = sumValue(piece, pawnCount, sum);
         }
-
         for (Integer numPawn : pawnCount.values()) {
-            if (numPawn > 1) {
-                sum = sum.add(new Score(-0.5 * numPawn));
-            }
+            sum = adjustPawnScore(numPawn, sum);
         }
-
         return sum;
     }
 
+    private Score adjustPawnScore(Integer numPawn, Score sum) {
+        if (numPawn > 1) {
+            sum = sum.add(new Score(-0.5 * numPawn));
+        }
+        return sum;
+    }
 
+    private Score sumValue(Piece piece, Map<Character, Integer> pawnCount, Score sum) {
+        if (piece.getState() == State.ALIVE) {
+            sum = sum.add(piece.getScore());
+        }
+        if (piece.getState() == State.ALIVE && piece instanceof Pawn) {
+            pawnCount
+                .put(piece.getColumn(), pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
+        }
+        return sum;
+    }
 }

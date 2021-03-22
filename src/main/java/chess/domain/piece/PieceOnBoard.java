@@ -14,9 +14,7 @@ public abstract class PieceOnBoard implements Piece {
     private Position position;
 
     public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType) {
-        this.teamColor = teamColor;
-        this.pieceType = pieceType;
-        this.state = State.ALIVE;
+        this(teamColor, pieceType, Position.ERROR);
     }
 
     public PieceOnBoard(TeamColor teamColor, PieceInformation pieceType, Position position) {
@@ -26,19 +24,10 @@ public abstract class PieceOnBoard implements Piece {
         this.position = position;
     }
 
-    @Override
-    public String getPieceName() {
-        if (teamColor == TeamColor.BLACK) {
-            return pieceType.getName().toUpperCase();
-        }
-        return pieceType.getName().toLowerCase();
-    }
-
     public boolean movable(Position position, Position target, ChessBoard chessBoard) {
         return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
     }
 
-    // isTargetOrEnemy
     protected boolean isMeetEnemy(Position position, Position target,
         ChessBoard chessBoard) {
         return position == target && isEnemyTeam(chessBoard.getPiece(position));
@@ -198,6 +187,14 @@ public abstract class PieceOnBoard implements Piece {
 
     public Score getScore() {
         return new Score(pieceType.getScore());
+    }
+
+    @Override
+    public String getPieceName() {
+        if (teamColor == TeamColor.BLACK) {
+            return pieceType.getName().toUpperCase();
+        }
+        return pieceType.getName().toLowerCase();
     }
 
     @Override
