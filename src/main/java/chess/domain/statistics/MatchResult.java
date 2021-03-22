@@ -1,6 +1,6 @@
 package chess.domain.statistics;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;

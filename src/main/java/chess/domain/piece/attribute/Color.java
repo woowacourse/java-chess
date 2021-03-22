@@ -1,11 +1,12 @@
-package chess.domain.piece;
+package chess.domain.piece.attribute;
 
 import java.util.Arrays;
 import java.util.function.UnaryOperator;
 
 public enum Color {
     BLACK(String::toUpperCase),
-    WHITE(String::toLowerCase);
+    WHITE(String::toLowerCase),
+    BLANK(UnaryOperator.identity());
 
     private UnaryOperator<String> notationRule;
 

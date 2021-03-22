@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.piece.attribute.Color;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +13,7 @@ public class PieceTest {
         Pawn blackPawn = new Pawn(Color.BLACK);
         Pawn whitePawn = new Pawn(Color.WHITE);
 
-        assertThat(blackPawn.getNotation()).isEqualTo("P");
-        assertThat(whitePawn.getNotation()).isEqualTo("p");
+        assertThat(blackPawn.getNotationText()).isEqualTo("P");
+        assertThat(whitePawn.getNotationText()).isEqualTo("p");
     }
 }

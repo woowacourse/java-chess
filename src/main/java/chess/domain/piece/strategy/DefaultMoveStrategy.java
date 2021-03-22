@@ -2,7 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Square;
 import chess.domain.order.MoveOrder;
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Direction;
 
 import java.util.List;

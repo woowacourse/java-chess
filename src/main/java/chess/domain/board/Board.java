@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.RealPiece;
 import chess.domain.position.Direction;

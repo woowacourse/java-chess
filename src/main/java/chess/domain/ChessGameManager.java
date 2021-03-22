@@ -3,7 +3,7 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.order.MoveResult;
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.piece.ColoredPieces;
 import chess.domain.position.Position;
 import chess.domain.statistics.ChessGameStatistics;

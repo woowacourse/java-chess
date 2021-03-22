@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import chess.domain.piece.*;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
@@ -9,8 +10,8 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Function;
 
-import static chess.domain.piece.Color.BLACK;
-import static chess.domain.piece.Color.WHITE;
+import static chess.domain.piece.attribute.Color.BLACK;
+import static chess.domain.piece.attribute.Color.WHITE;
 import static chess.domain.position.Rank.SEVEN;
 import static chess.domain.position.Rank.TWO;
 import static java.util.stream.Collectors.toMap;

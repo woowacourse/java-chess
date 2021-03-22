@@ -1,7 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.piece.attribute.Notation;
+
 public class Blank extends Piece {
-    private static final String BLANK_NOTATION = ".";
+    private static final Notation BLANK_NOTATION = new Notation(".");
     private static final Blank BLANK = new Blank();
 
     private Blank() {

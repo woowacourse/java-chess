@@ -27,7 +27,7 @@ public class Square {
     }
 
     public String getNotation() {
-        return piece.getNotation();
+        return piece.getNotationText();
     }
 
     public MoveResult move(MoveOrder moveOrder) {

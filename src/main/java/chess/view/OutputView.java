@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.board.Board;
 import chess.domain.board.Square;
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;

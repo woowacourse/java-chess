@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.piece.attribute.Color;
 
 public class Fixture {
     public static final Rook whiteRook = new Rook(Color.WHITE);

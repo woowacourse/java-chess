@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.piece.attribute.Color;
+import chess.domain.piece.attribute.Notation;
 import chess.domain.piece.strategy.MoveStrategy;
 
 import java.util.Objects;
@@ -7,14 +9,14 @@ import java.util.Objects;
 public class RealPiece extends Piece{
     private final Color color;
 
-    public RealPiece(Color color, String notation, MoveStrategy moveStrategy) {
+    public RealPiece(Color color, Notation notation, MoveStrategy moveStrategy) {
         super(notation, moveStrategy);
         this.color = color;
     }
 
     @Override
-    public String getNotation() {
-        return color.changeNotation(super.getNotation());
+    public String getNotationText() {
+        return color.changeNotation(super.getNotationText());
     }
 
     public Color getColor() {

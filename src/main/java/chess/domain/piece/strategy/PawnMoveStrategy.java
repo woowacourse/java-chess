@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.order.MoveOrder;
-import chess.domain.piece.Color;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Direction;
 
 public class PawnMoveStrategy extends DefaultMoveStrategy {
