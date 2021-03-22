@@ -3,7 +3,6 @@ package chess.controller;
 import chess.controller.command.Command;
 import chess.controller.command.CommandRouter;
 import chess.domain.ChessGameManager;
-import chess.domain.GameStatus;
 import chess.util.Repeater;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -16,9 +15,18 @@ public class Controller {
         do {
             command = Repeater.repeatOnError(() -> CommandRouter.findByInputCommand(InputView.getCommand()));
             executeCommandOrPassOnError(chessGameManager, command);
-        } while(!command.isEnd() && !chessGameManager.isSameStatus(GameStatus.END));
-        if (chessGameManager.isSameStatus(GameStatus.END)) {
+        } while (!chessGameManager.isEnd());
+
+        if (chessGameManager.hasGame()) {
+            printGameEndMessageIfKingDeadCondition(chessGameManager);
             OutputView.printResult(chessGameManager.getStatistics());
+        }
+        OutputView.printTerminationMessage();
+    }
+
+    private static void printGameEndMessageIfKingDeadCondition(ChessGameManager chessGameManager) {
+        if (chessGameManager.isKingDeadEndCondition()) {
+            OutputView.printKingDeadMessage();
         }
     }
 

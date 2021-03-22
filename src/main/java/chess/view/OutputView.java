@@ -44,4 +44,12 @@ public class OutputView {
         System.out.printf("백 점수 : %.1f%n", colorsScore.get(Color.WHITE));
         System.out.printf("흑 점수 : %.1f%n", colorsScore.get(Color.BLACK));
     }
+
+    public static void printTerminationMessage() {
+        System.out.println("종료합니다.");
+    }
+
+    public static void printKingDeadMessage() {
+        System.out.println("킹이 잡혔습니다.");
+    }
 }

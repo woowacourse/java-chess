@@ -6,6 +6,7 @@ import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.piece.ColoredPieces;
 import chess.domain.position.Position;
+import chess.domain.state.*;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.domain.statistics.MatchResult;
 
@@ -18,42 +19,47 @@ public class ChessGameManager {
     private Board board;
     private List<ColoredPieces> coloredPieces;
     private Color currentTurnColor;
-    private GameStatus gameStatus = GameStatus.NOT_STARTED;
+    private State state;
 
-    public void start() {
+    public ChessGameManager() {
+        updateAndReturnState(StateFactory.init());
+    }
+
+    public State start() {
         board = BoardFactory.createBoard();
         this.coloredPieces = Arrays.stream(Color.values())
                 .map(ColoredPieces::createByColor)
                 .collect(Collectors.toList());
         currentTurnColor = Color.WHITE;
-        gameStatus = GameStatus.RUNNING;
+        return updateAndReturnState(this.state.start());
     }
 
-    public void end() {
-        gameStatus = GameStatus.END;
+    private State updateAndReturnState(State state) {
+        this.state = state;
+        return this.state;
     }
 
-    public void move(Position from, Position to) {
-        throwExceptionWhenGameIsNotRunning();
+    public State end() {
+        return updateAndReturnState(this.state.end());
+    }
+
+    public State move(Position from, Position to) {
+        if (this.state.isNotRunning()) {
+            throw new IllegalArgumentException("이동 명령을 수행할 수 없습니다. - 진행중인 게임이 없습니다.");
+        }
         validateTurn(from);
         MoveResult moveResult = board.move(from, to);
         if (moveResult.isCaptured()) {
             ColoredPieces opposite = findByColor(currentTurnColor.opposite());
             opposite.remove(moveResult.getCapturedPiece());
         }
-        updateEndCondition();
         turnOver();
+        return updateAndReturnState(this.state.move(isKingDeadEndCondition()));
     }
 
     private void validateTurn(Position from) {
         if (!board.findByPosition(from).getPiece().isSameColor(this.currentTurnColor)) {
             throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
-        }
-    }
-
-    private void throwExceptionWhenGameIsNotRunning() {
-        if (gameStatus != GameStatus.RUNNING) {
-            throw new IllegalArgumentException("게임이 진행중이지 않아 실행할 수 없습니다.");
         }
     }
 
@@ -65,39 +71,16 @@ public class ChessGameManager {
         return coloredPieces.stream()
                 .filter(pieces -> pieces.isSameColor(color))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("없는 진영의 기물들입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("시스템 에러 - 진영을 찾을 수 없습니다."));
     }
 
-    public void updateEndCondition() {
-        boolean isEnd = isKingDeadEndCondition();
-
-        if (isEnd) {
-            gameStatus = GameStatus.END;
-        }
-    }
-
-    private boolean isKingDeadEndCondition() {
+    public boolean isKingDeadEndCondition() {
         return coloredPieces.stream()
                 .anyMatch(ColoredPieces::isKingDead);
     }
 
-    private Color kingAliveColor() {
-        return coloredPieces.stream()
-                .filter(ColoredPieces::isKingAlive)
-                .map(ColoredPieces::getColor)
-                .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("왕이 다 죽어 승자가 없습니다."));
-    }
-
-    public Board getBoard() {
-        return this.board;
-    }
-
-    public boolean isSameStatus(GameStatus gameStatus) {
-        return this.gameStatus == gameStatus;
-    }
-
     public ChessGameStatistics getStatistics() {
+        updateAndReturnState(this.state.status());
         Map<Color, Double> scoreMap = board.getScoreMap();
         if (isKingDeadEndCondition()) {
             return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResultByColor(kingAliveColor()));
@@ -105,4 +88,23 @@ public class ChessGameManager {
         return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResult(scoreMap.get(Color.WHITE), scoreMap.get(Color.BLACK)));
     }
 
+    private Color kingAliveColor() {
+        return coloredPieces.stream()
+                .filter(ColoredPieces::isKingAlive)
+                .map(ColoredPieces::getColor)
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("시스템 에러 - King이 살아있는 진영을 찾을 수 없습니다."));
+    }
+
+    public Board getBoard() {
+        return this.board;
+    }
+
+    public boolean hasGame() {
+        return !(this.state instanceof EndWithoutGame || this.state instanceof InitialState);
+    }
+
+    public boolean isEnd() {
+        return this.state instanceof GameEnd || this.state instanceof EndWithoutGame;
+    }
 }

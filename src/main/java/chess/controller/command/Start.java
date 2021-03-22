@@ -19,9 +19,4 @@ public class Start implements Command {
         chessGameManager.start();
         OutputView.printBoard(chessGameManager.getBoard());
     }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
 }

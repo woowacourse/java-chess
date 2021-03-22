@@ -20,9 +20,4 @@ public class Status implements Command {
         ChessGameStatistics chessGameStatistics = chessGameManager.getStatistics();
         OutputView.printResult(chessGameStatistics);
     }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
 }

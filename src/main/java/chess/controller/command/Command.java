@@ -4,5 +4,4 @@ import chess.domain.ChessGameManager;
 
 public interface Command {
     void execute(ChessGameManager chessGameManager);
-    boolean isEnd();
 }

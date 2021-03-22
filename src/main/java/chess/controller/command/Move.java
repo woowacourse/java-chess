@@ -27,9 +27,4 @@ public class Move implements Command {
         chessGameManager.move(from, to);
         OutputView.printBoard(chessGameManager.getBoard());
     }
-
-    @Override
-    public boolean isEnd() {
-        return false;
-    }
 }
