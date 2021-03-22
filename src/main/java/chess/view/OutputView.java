@@ -45,4 +45,8 @@ public class OutputView {
         System.out.println(String.format(SKELETON_RESULT_BLACK_SCORE + resultDto.blackScore()));
         System.out.println(String.format(WINNER + resultDto.getWinner()));
     }
+
+    public static void printErrorMessage(Exception exception) {
+        System.out.println(exception.getMessage());
+    }
 }

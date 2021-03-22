@@ -204,8 +204,8 @@ public class ChessBoard {
     }
 
     private boolean isMoveAblePosition(String source, String target) {
-        return chessBoard.containsKey(Position.valueOf(source)) && chessBoard
-            .containsKey(Position.valueOf(target));
+        return chessBoard.containsKey(Position.valueOf(source))
+            && chessBoard.containsKey(Position.valueOf(target));
     }
 
     public boolean isBlank(Position position) {

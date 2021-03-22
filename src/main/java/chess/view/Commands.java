@@ -9,6 +9,8 @@ public enum Commands {
     STATUS("status"),
     END("end");
 
+    public static final String EXCEPTION_INPUT = "잘못된 입력입니다.";
+
     private final String command;
 
     Commands(String command) {
@@ -19,6 +21,6 @@ public enum Commands {
         return Arrays.stream(Commands.values())
             .filter(command -> command.command.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 입력입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(EXCEPTION_INPUT));
     }
 }

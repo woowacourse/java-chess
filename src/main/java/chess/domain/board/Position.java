@@ -15,6 +15,7 @@ public class Position {
     private static final int ZERO = 0;
     private static final int ROW_AND_COLUMN = 2;
     private static final int MOVE_ONE_WEIGHT = 1;
+    private static final String ERROR_POSITION = "잘못된 좌표입니다";
 
     private static Map<String, Position> positions = new LinkedHashMap<>(POSITION_SIZE);
 
@@ -41,7 +42,7 @@ public class Position {
         if (positions.containsKey(value)) {
             return positions.get(value);
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(ERROR_POSITION);
     }
 
     public boolean isFront(Position value, TeamColor team) {
