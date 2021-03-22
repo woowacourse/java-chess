@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 
 import java.util.*;
 
-public class Board {
+public final class Board {
     private final Map<Position, Piece> chessBoard;
 
     public Board() {
@@ -30,7 +30,7 @@ public class Board {
         throw new IllegalArgumentException("해당 위치로 이동할 수 없습니다.");
     }
 
-    public void validateRightTurn(final Position source, final Team team) {
+    private void validateRightTurn(final Position source, final Team team) {
         if (chessBoard.get(source) instanceof Blank) {
             return;
         }

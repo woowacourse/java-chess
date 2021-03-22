@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 import java.util.*;
 
-public class RookInitializer implements LocationInitializer {
+final public class RookInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Arrays.asList("a", "h");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");
     private static final List<String> VERTICALS_BLACK = Collections.singletonList("8");

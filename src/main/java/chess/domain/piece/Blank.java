@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.position.Position;
 
-public class Blank extends Piece {
+final public class Blank extends Piece {
     private static final Piece blank = new Blank();
     private static final String INITIAL_NAME = ".";
 

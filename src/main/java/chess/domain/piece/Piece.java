@@ -18,19 +18,19 @@ public abstract class Piece {
         name = initialName.toLowerCase(Locale.ROOT);
     }
 
-    protected boolean isOpponent(final Piece piece) {
+    final protected boolean isOpponent(final Piece piece) {
         return this.team == piece.team.oppositeTeam();
     }
 
-    public boolean isSameTeam(final Team team) {
+    final public boolean isSameTeam(final Team team) {
         return this.team == team;
     }
 
-    public String getName() {
+    final public String getName() {
         return name;
     }
 
-    public Team team() {
+    final public Team team() {
         return this.team;
     }
 

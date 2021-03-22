@@ -13,7 +13,7 @@ public abstract class GeneralPiece extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position source, final Position target, final Piece piece) {
+    final public boolean canMove(final Position source, final Position target, final Piece piece) {
         return isPossibleDirection(source, target) && !isSameTeam(piece.team());
     }
 

@@ -6,7 +6,7 @@ import chess.domain.position.Vertical;
 import java.util.Arrays;
 import java.util.List;
 
-public class Pawn extends Piece {
+final public class Pawn extends Piece {
     private static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2, 7);
     private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST,
             Direction.INITIAL_PAWN_NORTH);

@@ -77,7 +77,7 @@ class BoardTest {
     @DisplayName("턴에 맞는 위치를 선택했는지 검증하는 기능")
     void isRightTurn() {
         final Team team = Team.BLACK;
-        assertThatThrownBy(() -> board.validateRightTurn(new Position("a", "2"), team))
+        assertThatThrownBy(() -> board.move(new Position("a", "2"), new Position("a", "3"), team))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("본인의 턴에 맞는 말을 움직이세요.");
     }

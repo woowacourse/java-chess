@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-public class ChessResult {
+final public class ChessResult {
     private final Board board;
 
     public ChessResult(final Board board) {
@@ -73,11 +73,9 @@ public class ChessResult {
         if (calculateScore(Team.BLACK) > calculateScore(Team.WHITE)) {
             return Team.BLACK;
         }
-
         if (calculateScore(Team.BLACK) < calculateScore(Team.WHITE)) {
             return Team.WHITE;
         }
         return Team.NOTHING;
     }
-
 }
