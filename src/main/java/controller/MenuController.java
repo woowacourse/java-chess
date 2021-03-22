@@ -24,9 +24,9 @@ public class MenuController {
         try {
             MenuDto menuDto = menu.execute(command, game);
             selectOutputView(menuDto);
-        } catch (CannotStartException e) {  // 메뉴를 시작할 수 없는 경우
+        } catch (CannotStartException e) {
             OutputView.alreadyStartGame();
-        } catch (GameNotStartException e) { // 메뉴가 시작되지 않아 움직일 수 없는 경우
+        } catch (GameNotStartException e) {
             OutputView.gameNotStart();
         } catch (NoSuchElementException | ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             OutputView.invalidInputPosition(command);

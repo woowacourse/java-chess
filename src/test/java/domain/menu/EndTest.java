@@ -2,6 +2,7 @@ package domain.menu;
 
 import domain.ChessGame;
 import domain.dto.BoardDto;
+import domain.dto.StatusDto;
 import domain.exception.GameNotStartException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -23,7 +24,7 @@ class EndTest {
     void end_menu_test() {
         (new Start()).execute("start", chessGame);
         assertThat((new End()).execute("end", chessGame))
-                .isEqualTo(new BoardDto(chessGame.getBoard()));
+                .isEqualTo(new StatusDto(chessGame.piecesScore()));
     }
 
     @DisplayName("게임을 실행하지 않고 end 메뉴를 실행하면, 에러가 발생한다.")
