@@ -37,8 +37,6 @@ public abstract class Piece {
         return symbol;
     }
 
-    ;
-
     public final boolean isEnemy(final Piece other) {
         return this.owner.isEnemy(other.owner);
     }

@@ -5,16 +5,17 @@ import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
 import chess.domain.command.MoveCommand;
 import chess.domain.command.ShowCommand;
-import chess.domain.piece.Owner;
+import chess.domain.player.Players;
 
 import java.util.List;
 
 public class ChessManager {
     private final Board board;
-    private Owner turn = Owner.BLACK;
+    private final Players players;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
+        this.players = new Players();
     }
 
     public Board getBoard() {
@@ -22,15 +23,11 @@ public class ChessManager {
     }
 
     public void move(final MoveCommand command) {
-        validateTurn(command.source());
+        players.validateTurn(command.source());
         board.move(command.source(), command.target());
-        turn = turn.reverse();
-    }
 
-    private void validateTurn(final Position source) {
-        if (!board.isPositionOwner(source, turn)) {
-            throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
-        }
+        players.updatePositions(command.source(), command.target());
+        players.changeTurn();
     }
 
     public List<Position> getReachablePositions(final ShowCommand command) {
@@ -38,10 +35,10 @@ public class ChessManager {
     }
 
     public Status calculateStatus() {
-        return board.status();
+        return players.getStatus(board);
     }
 
-    public boolean isEnd() {
-        return board.isEnd();
+    public boolean isEnd(){
+        return players.isKingDead(board);
     }
 }
