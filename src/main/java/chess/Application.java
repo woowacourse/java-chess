@@ -1,8 +1,8 @@
 package chess;
 
-import chess.domain.game.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
+import chess.domain.game.ChessGame;
 import chess.domain.gamestate.Ready;
 import chess.exception.ChessException;
 import chess.exception.InvalidCommandException;
