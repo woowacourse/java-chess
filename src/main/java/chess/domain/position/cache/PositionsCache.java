@@ -1,7 +1,7 @@
 package chess.domain.position.cache;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.board.type.File;
+import chess.domain.board.type.Rank;
 import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.Arrays;

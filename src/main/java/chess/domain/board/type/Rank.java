@@ -1,4 +1,4 @@
-package chess.domain.board;
+package chess.domain.board.type;
 
 import chess.domain.piece.type.Direction;
 import java.util.Arrays;

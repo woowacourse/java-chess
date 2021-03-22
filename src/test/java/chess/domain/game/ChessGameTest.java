@@ -70,50 +70,54 @@ class ChessGameTest {
     }
 
     @DisplayName("점수 계산")
-    @Test
-    void scores() {
-        BoardSetting customBoardSetting = new BoardCustomSetting(
-            Arrays.asList(
-                null, B_KG, B_RK, null, null, null, null, null,
-                B_PN, null, B_PN, B_BP, null, null, null, null,
-                null, B_PN, null, null, B_QN, null, null, null,
-                null, null, null, null, null, null, null, null,
-                null, null, null, null, null, W_NT, W_QN, null,
-                null, null, null, null, null, W_PN, null, W_PN,
-                null, null, null, null, null, W_PN, W_PN, null,
-                null, null, null, null, W_RK, W_KG, null, null)
-        );
+    @Nested
+    class ScoreCalculate {
+        @DisplayName("Pawn이 한 File에 2개 이상 존재하는 경우")
+        @Test
+        void scores() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, W_KG, null, null)
+            );
 
-        ChessGame chessGame = new ChessGame(customBoardSetting);
-        Scores scores = chessGame.scores();
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+            Scores scores = chessGame.scores();
 
-        assertThat(scores.blackPlayerScore().getScore()).isEqualTo(20);
-        assertThat(scores.whitePlayerScore().getScore()).isEqualTo(19.5);
-    }
+            assertThat(scores.blackPlayerScore().getScore()).isEqualTo(20);
+            assertThat(scores.whitePlayerScore().getScore()).isEqualTo(19.5);
+        }
 
-    @DisplayName("기물을 잡은 후 점수 계산")
-    @Test
-    void scoresAfterKillEnemyPieceByPawn() {
-        BoardSetting customBoardSetting = new BoardCustomSetting(
-            Arrays.asList(
-                B_RK, B_NT, B_BP, B_QN, B_KG, B_BP, B_NT, B_RK,
-                B_PN, null, B_PN, B_PN, B_PN, B_PN, B_PN, B_PN,
-                null, null, null, null, null, null, null, null,
-                null, B_PN, null, null, null, null, null, null,
-                W_PN, null, null, null, null, null, null, null,
-                null, null, null, null, null, null, null, null,
-                null, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN,
-                W_RK, W_NT, W_BP, W_QN, W_KG, W_BP, W_NT, W_RK)
-        );
+        @DisplayName("기물을 이동하여 적 기물을 잡은 후, Pawn이 한 File에 2개 이상 존재하는 경우")
+        @Test
+        void scoresAfterKillEnemyPieceByPawn() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    B_RK, B_NT, B_BP, B_QN, B_KG, B_BP, B_NT, B_RK,
+                    B_PN, null, B_PN, B_PN, B_PN, B_PN, B_PN, B_PN,
+                    null, null, null, null, null, null, null, null,
+                    null, B_PN, null, null, null, null, null, null,
+                    W_PN, null, null, null, null, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN, W_PN,
+                    W_RK, W_NT, W_BP, W_QN, W_KG, W_BP, W_NT, W_RK)
+            );
 
-        ChessGame chessGame = new ChessGame(customBoardSetting);
-        MoveRoute moveRoute = new MoveRoute("a4", "b5");
-        MoveCommand moveCommand = new MoveCommand(WHITE, moveRoute);
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+            MoveRoute moveRoute = new MoveRoute("a4", "b5");
+            MoveCommand moveCommand = new MoveCommand(WHITE, moveRoute);
 
-        chessGame.move(moveCommand);
-        Scores scores = chessGame.scores();
+            chessGame.move(moveCommand);
+            Scores scores = chessGame.scores();
 
-        assertThat(scores.blackPlayerScore().getScore()).isEqualTo(37);
-        assertThat(scores.whitePlayerScore().getScore()).isEqualTo(37);
+            assertThat(scores.blackPlayerScore().getScore()).isEqualTo(37);
+            assertThat(scores.whitePlayerScore().getScore()).isEqualTo(37);
+        }
     }
 }

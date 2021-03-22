@@ -1,16 +1,16 @@
 package chess.domain.board.setting;
 
-import static chess.domain.board.Rank.EIGHT;
-import static chess.domain.board.Rank.ONE;
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.board.type.Rank.EIGHT;
+import static chess.domain.board.type.Rank.ONE;
+import static chess.domain.board.type.Rank.SEVEN;
+import static chess.domain.board.type.Rank.TWO;
 import static chess.domain.player.type.TeamColor.BLACK;
 import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import chess.domain.board.Board;
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.board.type.File;
+import chess.domain.board.type.Rank;
 import chess.domain.game.ChessGame;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;

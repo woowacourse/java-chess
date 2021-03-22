@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 import static chess.domain.piece.type.PieceType.PAWN;
 
-import chess.domain.board.File;
+import chess.domain.board.type.File;
 import chess.domain.player.score.Score;
 import chess.domain.position.Position;
 import java.util.HashMap;

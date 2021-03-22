@@ -1,9 +1,9 @@
 package chess.controller;
 
-import static chess.controller.Command.END;
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.START;
-import static chess.controller.Command.STATUS;
+import static chess.domain.game.type.Command.END;
+import static chess.domain.game.type.Command.MOVE;
+import static chess.domain.game.type.Command.START;
+import static chess.domain.game.type.Command.STATUS;
 import static chess.domain.player.type.TeamColor.WHITE;
 
 import chess.controller.dto.CommandDTO;
@@ -11,6 +11,7 @@ import chess.controller.dto.ScoresDTO;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
 import chess.domain.game.MoveCommand;
+import chess.domain.game.type.Command;
 import chess.domain.player.score.Scores;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;

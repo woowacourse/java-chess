@@ -1,9 +1,9 @@
 package chess.controller.dto;
 
-import static chess.controller.Command.MOVE;
-import static chess.controller.Command.of;
+import static chess.domain.game.type.Command.MOVE;
+import static chess.domain.game.type.Command.of;
 
-import chess.controller.Command;
+import chess.domain.game.type.Command;
 import chess.domain.position.MoveRoute;
 
 public class CommandDTO {

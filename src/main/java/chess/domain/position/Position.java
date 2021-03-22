@@ -1,11 +1,11 @@
 package chess.domain.position;
 
-import static chess.domain.board.Rank.SEVEN;
-import static chess.domain.board.Rank.TWO;
+import static chess.domain.board.type.Rank.SEVEN;
+import static chess.domain.board.type.Rank.TWO;
 import static chess.domain.player.type.TeamColor.BLACK;
 
-import chess.domain.board.File;
-import chess.domain.board.Rank;
+import chess.domain.board.type.File;
+import chess.domain.board.type.Rank;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.cache.PositionsCache;

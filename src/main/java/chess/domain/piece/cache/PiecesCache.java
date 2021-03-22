@@ -44,8 +44,7 @@ public class PiecesCache {
 
     public static Piece find(PieceType pieceType, TeamColor teamColor) {
         return pieces.stream()
-            .filter(piece -> piece.type() == pieceType
-                && piece.color() == teamColor)
+            .filter(piece -> piece.type() == pieceType && piece.color() == teamColor)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 기물입니다."));
     }
