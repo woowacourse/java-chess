@@ -143,7 +143,7 @@ public final class ChessGameImpl implements ChessGame {
     }
 
     private Optional<Piece> kingByColor(TeamColor teamColor) {
-        return piecesByTeamColor(currentColor)
+        return piecesByTeamColor(teamColor)
             .stream()
             .filter(Piece::isKing)
             .findAny();
