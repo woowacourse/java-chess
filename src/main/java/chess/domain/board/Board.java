@@ -54,11 +54,10 @@ public class Board {
 
     private List<Position> addReachableDistance(final Position source, final Direction direction) {
         final List<Position> ableToMove = new ArrayList<>();
-        for (final Distance distance : Distance.values()) {
-            if (isBlocked(source, direction, distance) || isUnreachable(source, direction, distance)) {
-                break;
-            }
+        Distance distance = Distance.ONE;
+        while(!isBlocked(source, direction, distance) && !isUnreachable(source, direction, distance)){
             ableToMove.add(source.next(direction, distance));
+            distance = distance.next();
         }
         return ableToMove;
     }
@@ -75,7 +74,7 @@ public class Board {
     private boolean isUnreachable(final Position source, final Direction direction, final Distance distance) {
         final Position target = source.next(direction, distance);
         if (of(source).isSameTeam(of(target)) || isPrePositionEnemy(source, direction, distance)) {
-            return false;
+            return true;
         }
         return !of(source).isReachable(direction, distance, source, of(target));
     }
@@ -84,7 +83,7 @@ public class Board {
         if (distance.equals(Distance.ONE)) {
             return false;
         }
-        final Position prePosition = source.next(direction, distance.before());
+        final Position prePosition = source.next(direction, distance.pre());
         return of(source).isEnemy(of(prePosition));
     }
 

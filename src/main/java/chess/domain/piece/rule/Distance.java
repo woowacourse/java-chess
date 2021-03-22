@@ -1,19 +1,18 @@
 package chess.domain.piece.rule;
 
-import java.util.Arrays;
+import java.util.Objects;
 
-public enum Distance {
-    ONE(1),
-    TWO(2),
-    THREE(3),
-    FOUR(4),
-    FIVE(5),
-    SIX(6),
-    SEVEN(7);
+public class Distance {
+    public static final Distance ONE = new Distance(1);
+    public static final Distance TWO = new Distance(2);
+    public static final Distance SEVEN = new Distance(7);
 
     private int value;
 
-    Distance(final int value) {
+    public Distance(final int value) {
+        if(value < 0){
+            throw new IllegalArgumentException("Distance는 0이상이어야 한다.");
+        }
         this.value = value;
     }
 
@@ -25,17 +24,24 @@ public enum Distance {
         return value;
     }
 
-    public Distance before() {
-        return Arrays.stream(values())
-                .filter(value -> value.value == this.value - 1)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+    public Distance pre() {
+        return new Distance(value-1);
     }
 
     public Distance next() {
-        return Arrays.stream(values())
-                .filter(value -> value.value == this.value + 1)
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+        return new Distance(value+1);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Distance distance = (Distance) o;
+        return value == distance.value;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(value);
     }
 }
