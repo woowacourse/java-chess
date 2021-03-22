@@ -10,8 +10,8 @@ public class Pawn extends Piece {
     private static final int BLACK_DIRECTION = 1;
     private static final int WHITE_DIRECTION = -1;
     private static final int DOUBLE_FORWARD = 2;
-    private static final double ONE_SCORE = 1;
-    private static final double MULTIPLE_SCORE = 0.5;
+    private static final double SINGLE_PAWN_SCORE = 1;
+    private static final double MULTIPLE_PAWN_SCORE = 0.5;
     private static final int MULTIPLE_SCORE_LIMIT = 1;
 
     public Pawn(Side side) {
@@ -25,9 +25,7 @@ public class Pawn extends Piece {
         }
         if (isSideEqualTo(Side.WHITE)) {
             return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
-
         }
-
         return false;
     }
 
@@ -52,23 +50,29 @@ public class Pawn extends Piece {
     }
 
     private boolean movableOneOrTwoSquare(int rowDifference, int columnDifference, int direction) {
-        if (oneSquareForward(rowDifference, columnDifference, direction)) {
+        if (oneSquareForwardOrDiagonal(rowDifference, columnDifference, direction)) {
             return true;
         }
-        return twoSquareForward(rowDifference, direction);
+        return twoSquareForward(rowDifference, columnDifference, direction);
     }
 
-    private boolean twoSquareForward(int rowDifference, int direction) {
-        return rowDifference == direction * DOUBLE_FORWARD && isInitPosition();
+    private boolean twoSquareForward(int rowDifference, int columnDifference, int direction) {
+        if (!isInitPosition()) {
+            return false;
+        }
+        if (columnDifference != 0) {
+            return false;
+        }
+        return rowDifference == direction * DOUBLE_FORWARD;
     }
 
-    private boolean oneSquareForward(int rowDifference, int columnDifference, int direction) {
+    private boolean oneSquareForwardOrDiagonal(int rowDifference, int columnDifference, int direction) {
         return rowDifference == direction && Math.abs(columnDifference) < DOUBLE_FORWARD;
     }
 
     @Override
     public double score() {
-        return ONE_SCORE;
+        return SINGLE_PAWN_SCORE;
     }
 
     @Override
@@ -87,10 +91,10 @@ public class Pawn extends Piece {
     public static double scoreByCount(int count) {
         double score = 0;
         if (count == MULTIPLE_SCORE_LIMIT) {
-            score += ONE_SCORE;
+            score += SINGLE_PAWN_SCORE;
         }
         if (count > MULTIPLE_SCORE_LIMIT) {
-            score += count * MULTIPLE_SCORE;
+            score += count * MULTIPLE_PAWN_SCORE;
         }
         return score;
     }

@@ -20,7 +20,7 @@ class BoardTest {
 
     @BeforeEach
     void setUp() {
-        board = Board.getGamingBoard();
+        board = Board.createGamingBoard();
     }
 
     @ParameterizedTest

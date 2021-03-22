@@ -12,7 +12,7 @@ class ReadyTest {
 
     @BeforeEach
     void setUp() {
-        ready = new Ready(Board.getGamingBoard());
+        ready = new Ready(Board.createGamingBoard());
     }
 
     @Test

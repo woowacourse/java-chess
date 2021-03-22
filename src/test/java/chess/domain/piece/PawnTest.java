@@ -26,7 +26,6 @@ class PawnTest {
         pawnWhite = new Pawn(Side.WHITE);
     }
 
-
     @ParameterizedTest(name = "백 진영 Pawn 이동 성공")
     @MethodSource("routeWhitePawnSuccessTestcase")
     void routeWhitePawnSuccess(Position to) {
@@ -90,7 +89,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("한번도 움직이지 않은 폰 두칸 이동 성공")
+    @DisplayName("한번도 움직이지 않은 Pawn 두칸 이동 성공")
     void moveDoubleSuccess() {
         List<Position> route1 = pawnBlack.route(Position.from("b7"), Position.from("b5"));
         assertThat(route1).containsExactly(Position.from("b6"));
@@ -100,7 +99,7 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("폰 두칸 이동 실패")
+    @DisplayName("한번 이상 이동한 Pawn 두칸 이동 실패")
     void moveDoubleFail() {
         pawnBlack.moved();
         assertThatThrownBy(() -> pawnBlack.route(Position.from("b6"), Position.from("b4")))
@@ -109,6 +108,36 @@ class PawnTest {
         pawnWhite.moved();
         assertThatThrownBy(() -> pawnWhite.route(Position.from("b3"), Position.from("b5")))
                 .isInstanceOf(InvalidMovementException.class);
+    }
+
+    @ParameterizedTest(name = "흑 진영 Pawn 두칸 이동룰에 맞지 않은 이동 실패")
+    @MethodSource("moveBlackPawnFailTestcase")
+    void moveBlackPawnFail(String from, String to) {
+        assertThatThrownBy(() -> pawnBlack.route(Position.from(from), Position.from(to)))
+                .isInstanceOf(InvalidMovementException.class);
+    }
+
+    private static Stream<Arguments> moveBlackPawnFailTestcase() {
+        return Stream.of(
+                Arguments.of("b7", "a5"),
+                Arguments.of("b7", "c5"),
+                Arguments.of("b7", "b4")
+        );
+    }
+
+    @ParameterizedTest(name = "백 진영 Pawn 두칸 이동룰에 맞지 않은 이동 실패")
+    @MethodSource("moveWhitePawnFailTestcase")
+    void moveWhitePawnFail(String from, String to) {
+        assertThatThrownBy(() -> pawnWhite.route(Position.from(from), Position.from(to)))
+                .isInstanceOf(InvalidMovementException.class);
+    }
+
+    private static Stream<Arguments> moveWhitePawnFailTestcase() {
+        return Stream.of(
+                Arguments.of("b2", "a4"),
+                Arguments.of("b2", "c4"),
+                Arguments.of("b2", "b5")
+        );
     }
 
     @Test

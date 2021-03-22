@@ -22,7 +22,7 @@ public class Board {
         this.board = board;
     }
 
-    public static Board getGamingBoard() {
+    public static Board createGamingBoard() {
         return new Board(BoardInitializer.init());
     }
 

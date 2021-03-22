@@ -12,7 +12,7 @@ import chess.view.OutputView;
 public class ChessGame {
     public void start() {
         OutputView.startGame();
-        State state = new Ready(Board.getGamingBoard());
+        State state = new Ready(Board.createGamingBoard());
         Command command = command();
         if (command.isStart()) {
             startGame(state);
