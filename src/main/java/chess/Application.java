@@ -22,26 +22,33 @@ public class Application {
     }
 
     private static void runGame(ChessGame chessGame) {
-        while (!chessGame.state().isFinished()) {
-            turn(chessGame, command());
+        while (!chessGame.isFinished()) {
+            turn(chessGame);
             printBoard(chessGame);
         }
     }
 
-    private static void turn(ChessGame chessGame, Command command) {
+    private static void turn(ChessGame chessGame) {
         try {
+            Command command = command();
             chessGame.execute(command);
+            printStatus(chessGame, command);
         } catch (ChessException e) {
             OutputView.printError(e);
-            turn(chessGame, command());
+            turn(chessGame);
+        }
+    }
+
+    private static void printStatus(ChessGame chessGame, Command command) {
+        if (command.isStatus()) {
+            OutputView.print(chessGame.score());
         }
     }
 
     private static void printBoard(ChessGame chessGame) {
         OutputView.printBoard(chessGame);
 
-        // TODO 디미터 .없애기
-        if (chessGame.state().isGameSet()) {
+        if (chessGame.isGameSet()) {
             OutputView.printWinner(chessGame.winner());
         }
     }
