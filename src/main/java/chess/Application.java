@@ -11,18 +11,7 @@ import java.util.Arrays;
 public class Application {
 
     public static void main(String[] args) {
-        Board board = new Board(PieceFactory.createPieces());
-        ChessGame chessGame = new ChessGame(board);
-
-        Commands commands = new Commands(
-                Arrays.asList(
-                        new StartCommand(chessGame),
-                        new MoveCommand(chessGame),
-                        new EndCommand(chessGame),
-                        new StatusCommand(chessGame))
-        );
-
-        ChessController chessController = new ChessController(board, chessGame, commands);
+        ChessController chessController = new ChessController();
         chessController.run();
     }
 
