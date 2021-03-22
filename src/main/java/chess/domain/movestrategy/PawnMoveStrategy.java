@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -26,6 +27,9 @@ public class PawnMoveStrategy implements MoveStrategy {
     }
 
     private List<Position> forwardPositions(List<Position> positions, Board board) {
+        if (!board.pieceOfPosition(positions.get(0)).isEmpty()) {
+            return new ArrayList<>();
+        }
         return positions.stream()
                 .filter(position -> board.pieceOfPosition(position).isEmpty())
                 .collect(Collectors.toList());
@@ -33,7 +37,7 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     private List<Position> diagonalPositions(List<Position> positions, Board board, Piece sourcePiece) {
         return positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isDifferentColorPiece(sourcePiece))
+                .filter(position -> board.pieceOfPosition(position).isOppositeColorPiece(sourcePiece))
                 .collect(Collectors.toList());
     }
 }

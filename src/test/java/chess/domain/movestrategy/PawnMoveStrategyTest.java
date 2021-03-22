@@ -62,4 +62,24 @@ public class PawnMoveStrategyTest {
         assertThat(moveStrategy.moveStrategy(board, Position.of("d6"))).containsExactlyInAnyOrder(
                 Position.of("d5"), Position.of("e5"));
     }
+
+    @Test
+    @DisplayName("앞이 막혔을 때 화이트 폰 초기 이동 가능 경로 확인")
+    void whitePawnStartMovableWhenBlocked() {
+        boardGenerator.put(Position.of("d3"), Pawn.createBlack());
+        boardGenerator.put(Position.of("d2"), Pawn.createWhite());
+        Board board = new Board(boardGenerator.create());
+        MoveStrategy moveStrategy = Pawn.createWhite().moveStrategy();
+        assertThat(moveStrategy.moveStrategy(board, Position.of("d2"))).containsExactlyInAnyOrder();
+    }
+
+    @Test
+    @DisplayName("앞이 막혔을 때 블랙 폰 초기 이동 가능 경로 확인")
+    void blackPawnStartMovableWhenBlocked() {
+        boardGenerator.put(Position.of("d6"), Pawn.createBlack());
+        boardGenerator.put(Position.of("d7"), Pawn.createBlack());
+        Board board = new Board(boardGenerator.create());
+        MoveStrategy moveStrategy = Pawn.createBlack().moveStrategy();
+        assertThat(moveStrategy.moveStrategy(board, Position.of("d7"))).containsExactlyInAnyOrder();
+    }
 }

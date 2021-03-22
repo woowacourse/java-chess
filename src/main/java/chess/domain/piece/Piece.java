@@ -33,8 +33,15 @@ public abstract class Piece {
         return this.color.equals(piece.color);
     }
 
-    public boolean isDifferentColorPiece(Piece piece) {
+    public boolean isNotSameColorPiece(Piece piece) {
         return !this.color.equals(piece.color);
+    }
+
+    public boolean isOppositeColorPiece(Piece piece) {
+        if (this.color.equals(Color.BLACK) && piece.color.equals(Color.WHITE)) {
+            return true;
+        }
+        return this.color.equals(Color.WHITE) && piece.color.equals(Color.BLACK);
     }
 
     public String getSymbol() {

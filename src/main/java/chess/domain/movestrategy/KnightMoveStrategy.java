@@ -25,7 +25,7 @@ public class KnightMoveStrategy implements MoveStrategy {
 
     private List<Position> knightMovablePosition(List<Position> positions, Board board, Piece sourcePiece) {
         return positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isDifferentColorPiece(sourcePiece))
+                .filter(position -> board.pieceOfPosition(position).isNotSameColorPiece(sourcePiece))
                 .collect(Collectors.toList());
     }
 }

@@ -40,7 +40,7 @@ public class CommonMoveStrategy implements MoveStrategy {
                 .filter(position -> board.pieceOfPosition(position).isNotEmpty())
                 .findFirst().orElse(positions.get(breakIndex - 1));
 
-        if (board.pieceOfPosition(collision).isDifferentColorPiece(sourcePiece)) {
+        if (board.pieceOfPosition(collision).isNotSameColorPiece(sourcePiece)) {
             return positions.indexOf(collision) + 1;
         }
         return positions.indexOf(collision);
