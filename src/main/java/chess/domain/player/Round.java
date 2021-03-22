@@ -2,7 +2,6 @@ package chess.domain.player;
 
 import chess.domain.board.ChessBoardFactory;
 import chess.domain.command.Command;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -76,5 +75,25 @@ public class Round {
             Position targetPosition = Position.find(commands.poll());
             moveByTurn(sourcePosition, targetPosition);
         }
+    }
+
+    public double calculateScore() {
+        Player currentPlayer = currentPlayer();
+        return score(currentPlayer.getState().pieces());
+    }
+
+    public String currentPlayerName() {
+        return currentPlayer().getName();
+    }
+
+    private double score(final Pieces pieces) {
+        return pieces.calculateScore();
+    }
+
+    private Player currentPlayer(){
+        if (blackPlayer.isFinish()) {
+            return blackPlayer;
+        }
+        return whitePlayer;
     }
 }

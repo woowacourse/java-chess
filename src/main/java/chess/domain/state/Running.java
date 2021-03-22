@@ -14,10 +14,8 @@ public class Running extends Turn {
         if (!anotherState.isFinish()) {
             throw new IllegalStateException("상대턴이 아직 끝나지 않았습니다.");
         }
-
         Pieces pieces = pieces();
         pieces.move(source, target, anotherState.pieces());
-
         return new Finished(pieces);
     }
 

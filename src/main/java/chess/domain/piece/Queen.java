@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class Queen extends Piece {
     private static final String SYMBOL = "Qq";
+    private static final double SCORE = 9;
 
     private Queen(final String piece, final Position position, final Color color) {
         super(piece, position, color);
@@ -27,6 +28,11 @@ public class Queen extends Piece {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {

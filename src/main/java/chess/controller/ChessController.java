@@ -28,7 +28,7 @@ public class ChessController {
             inputCommand(round);
             break;
         } catch (RuntimeException runtimeException) {
-            System.out.println("[EROOR]: " + runtimeException.getMessage());
+            System.out.println("[ERROR]: " + runtimeException.getMessage());
         }
     }
 
@@ -36,6 +36,7 @@ public class ChessController {
         while (!round.isEnd()) {
             OutputView.showChessBoard(round.getBoard());
             round.execute(INPUT.inputCommand());
+            OutputView.showScore(round.currentPlayerName(), round.calculateScore());
         }
     }
 }

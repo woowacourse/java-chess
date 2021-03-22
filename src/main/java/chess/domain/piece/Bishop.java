@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class Bishop extends Piece {
     private static final String SYMBOL = "Bb";
+    private static final double SCORE = 3;
 
     private Bishop(final String piece, final Position position, final Color color) {
         super(piece, position, color);
@@ -37,6 +38,11 @@ public class Bishop extends Piece {
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
         changePosition(target.getPosition());
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {

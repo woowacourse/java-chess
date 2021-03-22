@@ -9,6 +9,7 @@ import java.util.Optional;
 
 public class Rook extends Piece {
     private static final String SYMBOL = "Rr";
+    private static final double SCORE = 5;
 
     private Rook(final String piece, final Position position, final Color color) {
         super(piece, position, color);
@@ -22,11 +23,25 @@ public class Rook extends Piece {
         return new Rook(piece, position, Color.WHITE);
     }
 
+    private static void validate(final String piece) {
+        if (!SYMBOL.contains(piece)) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+        if (piece.length() > 1) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+    }
+
     @Override
     public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private void checkTarget(final Target target, final List<Position> positions) {
@@ -140,14 +155,5 @@ public class Rook extends Piece {
     @Override
     public boolean equals(Object obj) {
         return super.equals(obj);
-    }
-
-    private static void validate(final String piece) {
-        if (!SYMBOL.contains(piece)) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
-        if (piece.length() > 1) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
     }
 }

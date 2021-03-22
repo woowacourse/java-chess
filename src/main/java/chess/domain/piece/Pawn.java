@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class Pawn extends Piece {
     private static final String SYMBOL = "Pp";
+    private static final double SCORE = 1;
 
     private boolean isFirst = true;
 
@@ -39,6 +40,12 @@ public class Pawn extends Piece {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+    }
+
+    @Override
+    public double score() {
+        //todo
+        return SCORE;
     }
 
     private void checkTarget(Target target, List<Position> positions) {

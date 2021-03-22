@@ -8,8 +8,11 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import static chess.domain.piece.Color.*;
+
 public class King extends Piece {
     private static final String SYMBOL = "Kk";
+    private static final double SCORE = 0;
 
     private King(final String piece, final Position position, final Color color) {
         super(piece, position, color);
@@ -18,9 +21,9 @@ public class King extends Piece {
     public static King from(final String piece, final Position position) {
         validate(piece);
         if (isBlack(piece)) {
-            return new King(piece, position, Color.BLACK);
+            return new King(piece, position, BLACK);
         }
-        return new King(piece, position, Color.WHITE);
+        return new King(piece, position, WHITE);
     }
 
     private static void validate(final String piece) {
@@ -37,6 +40,11 @@ public class King extends Piece {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {

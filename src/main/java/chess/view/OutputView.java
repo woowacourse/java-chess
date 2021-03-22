@@ -16,7 +16,7 @@ public class OutputView {
     private OutputView() {
     }
 
-    public static void showChessBoard(Map<Position, Piece> chessBoard) {
+    public static void showChessBoard(final Map<Position, Piece> chessBoard) {
         StringBuilder sb = new StringBuilder();
         for (int rank = RANK; rank > 0; rank--) {
             final int finalRank = rank;
@@ -30,10 +30,19 @@ public class OutputView {
         System.out.println(sb.toString());
     }
 
-    private static String checkBoard(Map<Position, Piece> chessBoard, Position position) {
+    public static void showScore(final String name, final double calculateScore) {
+        System.out.println(String.format("%s의 점수: %.1f", name , calculateScore));
+        System.out.println();
+    }
+
+    private static String checkBoard(final Map<Position, Piece> chessBoard, final Position position) {
         if (Objects.isNull(chessBoard.get(position))) {
             return ".";
         }
         return chessBoard.get(position).getPiece();
+    }
+
+    public static void showCurrentPlayer(final String name) {
+        System.out.println(String.format("%s의 턴 입니다.",name));
     }
 }

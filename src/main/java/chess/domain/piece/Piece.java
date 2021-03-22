@@ -62,4 +62,6 @@ public abstract class Piece {
     }
 
     public abstract void move(final Target target, final Pieces basePieces, final Pieces targetPieces);
+
+    public abstract double score();
 }

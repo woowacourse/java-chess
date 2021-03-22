@@ -10,6 +10,7 @@ import java.util.Optional;
 
 public class Knight extends Piece {
     private static final String SYMBOL = "Nn";
+    private static final double SCORE = 2.5;
 
     private Knight(final String piece, final Position position, final Color color) {
         super(piece, position, color);
@@ -37,6 +38,11 @@ public class Knight extends Piece {
         List<Position> positions = makeRoutes(basePieces);
         checkTarget(target, positions);
         basePieces.changePiecePosition(this, target);
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private void checkTarget(Target target, List<Position> positions) {

@@ -26,4 +26,6 @@ public abstract class Player {
     public final void toRunningState(final State anotherState) {
         this.state = this.state.toRunningState(anotherState);
     }
+
+    public abstract String getName();
 }

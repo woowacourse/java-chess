@@ -51,4 +51,10 @@ public class Pieces {
         }
         return false;
     }
+
+    public double calculateScore() {
+        return this.pieces.stream()
+                .mapToDouble(Piece::score)
+                .sum();
+    }
 }
