@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Blank;
-import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.BlackSet;
@@ -11,52 +10,58 @@ import chess.domain.player.WhiteSet;
 import chess.domain.position.AlphaColumn;
 import chess.domain.position.NumberRow;
 import chess.domain.position.Position;
+import chess.domain.state.GameState;
+import chess.domain.state.Running;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class ChessBoard {
-    public static final int BLACK_START_LINE = 7;
-    public static final int BLACK_END_LINE = 8;
-    public static final int WHITE_START_LINE = 1;
-    public static final int WHITE_END_LINE = 2;
-    private final Map<Position, Piece> chessBoard;
+    public static final int BLACK_NOT_PAWN_LINE = 7;
+    public static final int BLACK_PAWN_LINE = 8;
+    public static final int WHITE_NOT_PAWN_LINE = 1;
+    public static final int WHITE_PAWN_LINE = 2;
+
+    //todo: 삭제
+    private Map<Position, Piece> chessBoard;
     private final PieceSet whitePieces;
     private final PieceSet blackPieces;
-    private boolean gameStatus = true;
+    private GameState gameState;
 
     public ChessBoard() {
-        this.chessBoard = new LinkedHashMap<>();
-        initBoard();
         this.whitePieces = new WhiteSet();
         this.blackPieces = new BlackSet();
-        setPieces();
+        final Map<Position, Piece> chessBoard = initBoard();
+        this.gameState = new Running(chessBoard);
     }
 
-    private void initBoard() {
+    private Map<Position, Piece> initBoard() {
+        Map<Position, Piece> chessBoard = new LinkedHashMap<>();
         for (Position position : Position.values()) {
             chessBoard.put(position, Blank.INSTANCE);
         }
+        setPieces(chessBoard);
+        return chessBoard;
     }
 
-    private void setPieces() {
-        setWhitePieces();
-        setBlackPieces();
+    private void setPieces(Map<Position, Piece> chessBoard) {
+        setWhitePieces(chessBoard);
+        setBlackPieces(chessBoard);
     }
 
-    private void setBlackPieces() {
+    private void setBlackPieces(Map<Position, Piece> chessBoard) {
         Iterator<Piece> blacks = blackPieces.values();
-        for (int i = BLACK_START_LINE; i <= BLACK_END_LINE; i++) {
+        for (int i = BLACK_PAWN_LINE; i >= BLACK_NOT_PAWN_LINE; i--) {
             for (AlphaColumn alpha : AlphaColumn.values()) {
                 chessBoard.put(Position.valueOf(alpha, NumberRow.valueOf(i)), blacks.next());
             }
         }
     }
 
-    private void setWhitePieces() {
+    private void setWhitePieces(Map<Position, Piece> chessBoard) {
         Iterator<Piece> whites = whitePieces.values();
-        for (int i = WHITE_START_LINE; i <= WHITE_END_LINE; i++) {
+        for (int i = WHITE_NOT_PAWN_LINE; i <= WHITE_PAWN_LINE; i++) {
             for (AlphaColumn alpha : AlphaColumn.values()) {
                 chessBoard.put(Position.valueOf(alpha, NumberRow.valueOf(i)), whites.next());
             }
@@ -64,58 +69,38 @@ public class ChessBoard {
     }
 
     public Map<Position, Piece> getChessBoard() {
-        return chessBoard;
+        return gameState.getChessBoard();
     }
 
-    public boolean move(String source, String target) {
+    public void move(String source, String target) {
         validatePosition(source, target);
-        Position start = Position.valueOf(source);
-        Position end = Position.valueOf(target);
-        Piece startPiece = chessBoard.get(start);
-        Piece goingToDie = chessBoard.get(end);
-
-        if (chessBoard.get(start).isMoveAble(end, this)) {
-            //blank 경우
-            if (chessBoard.get(end) == Blank.INSTANCE) {
-                chessBoard.put(start, Blank.INSTANCE);
-                chessBoard.put(end, startPiece);
-                startPiece.setCurrentPosition(end);
-                return true;
-            }
-            // 상대편이 있는 경우
-            goingToDie.dead();
-            chessBoard.put(end, startPiece);
-            chessBoard.put(start, Blank.INSTANCE);
-            startPiece.setCurrentPosition(end);
-            if (goingToDie instanceof King) {
-                gameStatus = false;
-            }
-            return true;
-        }
-
-        throw new IllegalArgumentException("잘못된 이동입니다.");
+        gameState = gameState.move(Position.valueOf(source), Position.valueOf(target));
     }
 
 
     private void validatePosition(String source, String target) {
-        if (source.equals(target)) {
-            throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
-        }
-        if (chessBoard.containsKey(Position.valueOf(source)) && chessBoard
-            .containsKey(Position.valueOf(target))) {
+        validateSamePosition(source, target);
+        if (gameState.containsKey(Position.valueOf(source)) &&
+            gameState.containsKey(Position.valueOf(target))) {
             return;
         }
         throw new IllegalArgumentException("잘못된 좌표입니다.");
     }
 
-    public boolean isBlank(Position position) {
-        Piece piece = this.chessBoard.get(position);
-        return piece == Blank.INSTANCE;
+    private void validateSamePosition(String source, String target) {
+        if (source.equals(target)) {
+            throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
+        }
     }
 
+    //todo: 테스트용 컴파일 되기 위해서 남겨둠 ㅠㅠ
+    public void put(Position position, Piece piece) {
+        gameState.put(position, piece);
+    }
 
+    //todo: 삭제
     public Piece getPiece(Position position) {
-        return chessBoard.get(position);
+        return gameState.getPiece(position);
     }
 
     public Result result() {
@@ -135,7 +120,7 @@ public class ChessBoard {
 
 
     public boolean isPlaying() {
-        return gameStatus;
+        return gameState instanceof Running;
     }
 
 }

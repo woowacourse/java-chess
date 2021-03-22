@@ -4,6 +4,7 @@ import chess.domain.ChessBoard;
 import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.position.Position;
 import chess.domain.pieceinformations.TeamColor;
+import java.util.Map;
 
 public class Pawn extends PieceOnBoard {
 
@@ -16,10 +17,14 @@ public class Pawn extends PieceOnBoard {
     }
 
     @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
+    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
         return movablePawn(target, chessBoard);
     }
 
+    @Override
+    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
+        return movablePawn(target, chessBoard);
+    }
 
 
 }

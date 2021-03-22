@@ -53,7 +53,7 @@ public class RookTest {
     @DisplayName("장애물이 없을 경우")
     void moveTest2() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
+        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
 
         assertTrue(piece.isMoveAble(Position.valueOf("a2"), chessBoard));
 
@@ -63,7 +63,7 @@ public class RookTest {
     @DisplayName("장애물이 없을 경우")
     void moveTest82() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
+        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
 
         assertTrue(piece.isMoveAble(Position.valueOf("a6"), chessBoard));
     }
@@ -80,7 +80,7 @@ public class RookTest {
     @DisplayName("장애물이 없을 경우")
     void moveTest3() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
+        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
 
         assertTrue(piece.isMoveAble(Position.valueOf("a7"), chessBoard));
     }
@@ -89,7 +89,7 @@ public class RookTest {
     @DisplayName("공백인 경우 이동잘했는가")
     void moveTest5() {
         Piece origin = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
+        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
 
         chessBoard.move("a1", "a6");
         Piece after = chessBoard.getChessBoard().get(Position.valueOf("a6"));
@@ -101,7 +101,7 @@ public class RookTest {
     @DisplayName("장애물인 경우 이동잘했는가")
     void moveTest6() {
         Piece origin = chessBoard.getChessBoard().get(Position.valueOf("a1"));
-        chessBoard.getChessBoard().put(Position.valueOf("a2"), Blank.INSTANCE);
+        chessBoard.put(Position.valueOf("a2"), Blank.INSTANCE);
         Piece caughtPiece = chessBoard.getChessBoard().get(Position.valueOf("a7"));
 
         chessBoard.move("a1", "a7");

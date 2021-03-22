@@ -19,6 +19,7 @@ public class PawnTest {
     @BeforeEach
     void setUp() {
         this.chessBoard = new ChessBoard();
+
     }
 
     @Test
@@ -87,7 +88,7 @@ public class PawnTest {
     void move_obstacle() {
         Piece piece = chessBoard.getPiece(Position.valueOf("b2"));
         Piece pieceQueen = new Queen(TeamColor.WHITE, Position.valueOf("b3"));
-        chessBoard.getChessBoard().put(Position.valueOf("b3"), pieceQueen);
+        chessBoard.put(Position.valueOf("b3"), pieceQueen);
 
         assertFalse(piece.isMoveAble(Position.valueOf("b3"), chessBoard));
     }
@@ -97,9 +98,9 @@ public class PawnTest {
     void move_enemy_catch() {
         Piece piece = chessBoard.getPiece(Position.valueOf("b2"));
         Piece pieceQueen = new Queen(TeamColor.BLACK, Position.valueOf("b3"));
-        chessBoard.getChessBoard().put(Position.valueOf("b3"), pieceQueen);
-        chessBoard.getChessBoard().put(Position.valueOf("a3"), pieceQueen);
-        chessBoard.getChessBoard().put(Position.valueOf("c3"), pieceQueen);
+        chessBoard.put(Position.valueOf("b3"), pieceQueen);
+        chessBoard.put(Position.valueOf("a3"), pieceQueen);
+        chessBoard.put(Position.valueOf("c3"), pieceQueen);
 
         assertFalse(piece.isMoveAble(Position.valueOf("b3"), chessBoard));
         assertTrue(piece.isMoveAble(Position.valueOf("a3"), chessBoard));
@@ -111,9 +112,9 @@ public class PawnTest {
     void move_teach_catch() {
         Piece piece = chessBoard.getPiece(Position.valueOf("b2"));
         Piece pieceQueen = new Queen(TeamColor.WHITE, Position.valueOf("b3"));
-        chessBoard.getChessBoard().put(Position.valueOf("b3"), pieceQueen);
-        chessBoard.getChessBoard().put(Position.valueOf("a3"), pieceQueen);
-        chessBoard.getChessBoard().put(Position.valueOf("c3"), pieceQueen);
+        chessBoard.put(Position.valueOf("b3"), pieceQueen);
+        chessBoard.put(Position.valueOf("a3"), pieceQueen);
+        chessBoard.put(Position.valueOf("c3"), pieceQueen);
 
         assertFalse(piece.isMoveAble(Position.valueOf("b3"), chessBoard));
         assertFalse(piece.isMoveAble(Position.valueOf("a3"), chessBoard));
@@ -125,8 +126,8 @@ public class PawnTest {
     void move_free() {
         Piece piece = chessBoard.getPiece(Position.valueOf("b2"));
         Piece pieceQueen = new Queen(TeamColor.BLACK, Position.valueOf("b3"));
-        chessBoard.getChessBoard().put(Position.valueOf("a3"), pieceQueen);
-        chessBoard.getChessBoard().put(Position.valueOf("c3"), pieceQueen);
+        chessBoard.put(Position.valueOf("a3"), pieceQueen);
+        chessBoard.put(Position.valueOf("c3"), pieceQueen);
 
         assertTrue(piece.isMoveAble(Position.valueOf("b3"), chessBoard));
         assertTrue(piece.isMoveAble(Position.valueOf("b4"), chessBoard));

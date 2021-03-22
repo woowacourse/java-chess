@@ -5,12 +5,18 @@ import chess.domain.position.Position;
 import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
+import java.util.Map;
 
 public class Blank implements Piece {
 
     public static final Blank INSTANCE = new Blank();
 
     private Blank() {
+    }
+
+    @Override
+    public boolean isMoveAble(Position target, Map<Position, Piece> chessBoard) {
+        return false;
     }
 
     @Override
@@ -39,7 +45,7 @@ public class Blank implements Piece {
     }
 
     @Override
-    public void setCurrentPosition(Position end) {
+    public void changePosition(Position end) {
         throw new IllegalArgumentException("공백은 움직일 수 없습니다.");
     }
 

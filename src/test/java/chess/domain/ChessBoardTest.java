@@ -54,8 +54,8 @@ public class ChessBoardTest {
     void game_end_die_king() {
         Piece kingPiece = new King(TeamColor.BLACK, Position.valueOf("b4"));
         Piece piece = new Queen(TeamColor.WHITE, Position.valueOf("b5"));
-        chessBoard.getChessBoard().put(Position.valueOf("b4"), kingPiece);
-        chessBoard.getChessBoard().put(Position.valueOf("b5"), piece);
+        chessBoard.put(Position.valueOf("b4"), kingPiece);
+        chessBoard.put(Position.valueOf("b5"), piece);
 
         chessBoard.move("b5", "b4");
         assertFalse(chessBoard.isPlaying());
