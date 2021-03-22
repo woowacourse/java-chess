@@ -32,7 +32,7 @@ class PawnTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        pawn.addMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = pawn.movablePositions();
 
         //then
@@ -57,7 +57,7 @@ class PawnTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        pawn.addMovablePositions(existPiecePositions, enemiesPositions);
+        pawn.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = pawn.movablePositions();
 
         //then
@@ -70,14 +70,14 @@ class PawnTest {
         //given
         Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 2));
         ArrayList<Position> positions = new ArrayList<>();
-        pawn.addMovablePositions(positions, positions);
-        pawn.changePosition(Position.of(3, 3));
+        pawn.updateMovablePositions(positions, positions);
+        pawn.move(Position.of(3, 3));
 
         List<Position> expectedPosition = new ArrayList<>();
         expectedPosition.add(Position.of(3, 4));
 
         //when
-        pawn.addMovablePositions(positions, positions);
+        pawn.updateMovablePositions(positions, positions);
         List<Position> movablePosition = pawn.movablePositions();
 
         //then

@@ -32,7 +32,7 @@ class KnightTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        knight.addMovablePositions(existPiecePositions, enemiesPositions);
+        knight.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = knight.movablePositions();
 
         //then

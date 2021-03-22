@@ -32,7 +32,7 @@ class KingTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        king.addMovablePositions(existPiecePositions, enemiesPositions);
+        king.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = king.movablePositions();
 
         //then

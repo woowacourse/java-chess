@@ -35,7 +35,7 @@ class RookTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        rook.addMovablePositions(existPiecePositions, enemiesPositions);
+        rook.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = rook.movablePositions();
 
         //then

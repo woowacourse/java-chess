@@ -35,7 +35,7 @@ public class BishopTest {
         expectedPosition.addAll(enemiesPositions);
 
         //when
-        bishop.addMovablePositions(existPiecePositions, enemiesPositions);
+        bishop.updateMovablePositions(existPiecePositions, enemiesPositions);
         List<Position> movablePosition = bishop.movablePositions();
 
         //then
