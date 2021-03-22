@@ -9,6 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class WhiteTurnTest {
+
     @Test
     @DisplayName("화이트 턴 상태에서 start 명령시 에러 반환")
     void blackTurnStartException() {

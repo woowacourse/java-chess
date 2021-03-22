@@ -13,7 +13,10 @@ public class DtoAssembler {
     public static List<LineDto> assemble(List<Map<Position, Piece>> squares) {
         List<LineDto> lineDtos = new ArrayList<>();
         for (Map<Position, Piece> square : squares) {
-            List<String> pieces = square.values().stream().map(Piece::getSymbol).collect(Collectors.toList());
+            List<String> pieces = square.values()
+                    .stream()
+                    .map(Piece::getSymbol)
+                    .collect(Collectors.toList());
             lineDtos.add(new LineDto(pieces));
         }
         return lineDtos;

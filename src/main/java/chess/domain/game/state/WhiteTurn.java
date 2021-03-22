@@ -2,10 +2,10 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
 public class WhiteTurn extends Running {
-    private final Color color = Color.WHITE;
 
     public WhiteTurn(Board board) {
         super(board);
@@ -13,7 +13,7 @@ public class WhiteTurn extends Running {
 
     @Override
     public boolean isSameColor(Color color) {
-        return this.color.equals(color);
+        return Color.WHITE.equals(color);
     }
 
     @Override
@@ -22,7 +22,13 @@ public class WhiteTurn extends Running {
     }
 
     @Override
-    public void move(Position source, Position target) {
-        board().moveIfValid(source, target);
+    public void moveIfValidColor(Position source, Position target) {
+        Piece sourcePiece = board().pieceOfPosition(source);
+        if (sourcePiece.isBlack()) {
+            throw new IllegalStateException(
+                    Color.WHITE.name() + "턴엔 " + Color.WHITE.name() + "말만 이동 가능합니다."
+            );
+        }
+        board().moveIfValidPosition(source, target);
     }
 }

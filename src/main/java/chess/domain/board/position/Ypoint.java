@@ -5,18 +5,20 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Ypoint {
-    EIGHT(8),
-    SEVEN(7),
-    SIX(6),
-    FIVE(5),
-    FOUR(4),
-    THREE(3),
-    TWO(2),
-    ONE(1);
+    EIGHT("8", 8),
+    SEVEN("7", 7),
+    SIX("6", 6),
+    FIVE("5", 5),
+    FOUR("4", 4),
+    THREE("3", 3),
+    TWO("2", 2),
+    ONE("1", 1);
 
+    private final String name;
     private final int value;
 
-    Ypoint(final int value) {
+    Ypoint(final String name, final int value) {
+        this.name = name;
         this.value = value;
     }
 

@@ -34,11 +34,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public MoveStrategy moveStrategy() {
         return new PawnMoveStrategy();
     }

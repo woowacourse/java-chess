@@ -21,7 +21,7 @@ public class ChessGame {
     }
 
     public void move(Position source, Position target) {
-        this.state.move(source, target);
+        this.state.moveIfValidColor(source, target);
         this.state = state.passTurn();
     }
 

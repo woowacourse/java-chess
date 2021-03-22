@@ -20,7 +20,7 @@ public class Board {
         return squares;
     }
 
-    public void moveIfValid(Position source, Position target) {
+    public void moveIfValidPosition(Position source, Position target) {
         if (isNotMovablePosition(source, target)) {
             throw new IllegalArgumentException("유효하지 않은 좌표 입력입니다.");
         }

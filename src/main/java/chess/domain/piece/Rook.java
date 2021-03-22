@@ -34,11 +34,6 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isEmpty() {
-        return false;
-    }
-
-    @Override
     public MoveStrategy moveStrategy() {
         return new CommonMoveStrategy();
     }

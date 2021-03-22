@@ -10,7 +10,7 @@ import java.util.Map;
 public interface State {
     State start();
 
-    void move(Position source, Position target);
+    void moveIfValidColor(Position source, Position target);
 
     boolean isSameColor(Color color);
 

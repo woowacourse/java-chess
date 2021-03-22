@@ -9,7 +9,7 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public void move(Position source, Position target) {
+    public void moveIfValidColor(Position source, Position target) {
         throw new IllegalStateException();
     }
 

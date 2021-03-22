@@ -28,7 +28,7 @@ public class InitTest {
     @Test
     @DisplayName("초기 상태에서 move 명령시 에러 반환")
     void endMoveReturnWhiteTurn() {
-        assertThatThrownBy(() -> init.move(Position.of("c5"), Position.of("c6")))
+        assertThatThrownBy(() -> init.moveIfValidColor(Position.of("c5"), Position.of("c6")))
                 .isInstanceOf(IllegalStateException.class);
     }
 

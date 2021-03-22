@@ -27,7 +27,7 @@ public class EndTest {
     @Test
     @DisplayName("종료 상태에서 move 명령시 에러 반환")
     void endMoveReturnWhiteTurn() {
-        assertThatThrownBy(() -> end.move(Position.of("c5"), Position.of("c6")))
+        assertThatThrownBy(() -> end.moveIfValidColor(Position.of("c5"), Position.of("c6")))
                 .isInstanceOf(IllegalStateException.class);
     }
 

@@ -13,37 +13,36 @@ public class CommonMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> moveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
-        Piece piece = board.pieceOfPosition(source);
+        Piece sourcePiece = board.pieceOfPosition(source);
 
-        for (List<Position> positions : piece.vectors(source)) {
-            movable.addAll(movablePosition(positions, board));
+        for (List<Position> positions : sourcePiece.vectors(source)) {
+            movable.addAll(movablePosition(positions, board, sourcePiece));
         }
 
+        movable.remove(source);
         return movable;
     }
 
-    private List<Position> movablePosition(List<Position> positions, Board board) {
+    private List<Position> movablePosition(List<Position> positions, Board board, Piece sourcePiece) {
         if (positions.isEmpty()) {
             return positions;
         }
-        int breakIndex = findBreakIndex(positions, board);
+        int breakIndex = findBreakIndex(positions, board, sourcePiece);
 
         return positions.stream()
                 .limit(breakIndex)
                 .collect(Collectors.toList());
     }
 
-    private int findBreakIndex(List<Position> positions, Board board) {
+    private int findBreakIndex(List<Position> positions, Board board, Piece sourcePiece) {
         int breakIndex = positions.size();
         Position collision = positions.stream()
-                .filter(position -> board.pieceOfPosition(position).isBlack() || board.pieceOfPosition(position).isWhite())
+                .filter(position -> board.pieceOfPosition(position).isNotEmpty())
                 .findFirst().orElse(positions.get(breakIndex - 1));
-        if (board.pieceOfPosition(collision).isBlack()) { // isDifferent
-            breakIndex = positions.indexOf(collision) + 1;
+
+        if (board.pieceOfPosition(collision).isDifferentColorPiece(sourcePiece)) {
+            return positions.indexOf(collision) + 1;
         }
-        if (board.pieceOfPosition(collision).isWhite()) { // isSame
-            breakIndex = positions.indexOf(collision);
-        }
-        return breakIndex;
+        return positions.indexOf(collision);
     }
 }

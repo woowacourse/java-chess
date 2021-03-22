@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
+
     private final Color color;
     private final Symbol symbol;
 
@@ -21,11 +22,19 @@ public abstract class Piece {
     public abstract List<List<Position>> vectors(Position position);
 
     public boolean isBlack() {
-        return color.equals(Color.BLACK);
+        return this.color.equals(Color.BLACK);
     }
 
     public boolean isWhite() {
-        return color.equals(Color.WHITE);
+        return this.color.equals(Color.WHITE);
+    }
+
+    public boolean isSameColorPiece(Piece piece) {
+        return this.color.equals(piece.color);
+    }
+
+    public boolean isDifferentColorPiece(Piece piece) {
+        return !this.color.equals(piece.color);
     }
 
     public String getSymbol() {
@@ -35,14 +44,24 @@ public abstract class Piece {
         return symbol.getWhite();
     }
 
-    public abstract boolean isEmpty();
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isNotEmpty() {
+        return true;
+    }
 
     public abstract MoveStrategy moveStrategy();
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Piece piece = (Piece) o;
         return color == piece.color && symbol == piece.symbol;
     }

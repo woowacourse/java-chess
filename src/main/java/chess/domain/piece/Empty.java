@@ -27,6 +27,11 @@ public class Empty extends Piece {
     }
 
     @Override
+    public boolean isNotEmpty() {
+        return false;
+    }
+
+    @Override
     public MoveStrategy moveStrategy() {
         throw new IllegalStateException();
     }

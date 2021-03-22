@@ -13,17 +13,19 @@ public class KnightMoveStrategy implements MoveStrategy {
     @Override
     public Set<Position> moveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
-        Piece piece = board.pieceOfPosition(source);
+        Piece sourcePiece = board.pieceOfPosition(source);
 
-        for (List<Position> positions : piece.vectors(source)) {
-            movable.addAll(knightMovablePosition(positions, board));
+        for (List<Position> positions : sourcePiece.vectors(source)) {
+            movable.addAll(knightMovablePosition(positions, board, sourcePiece));
         }
+
+        movable.remove(source);
         return movable;
     }
 
-    private List<Position> knightMovablePosition(List<Position> positions, Board board) {
+    private List<Position> knightMovablePosition(List<Position> positions, Board board, Piece sourcePiece) {
         return positions.stream()
-                .filter(position -> !board.pieceOfPosition(position).isWhite()) // isDifferent
+                .filter(position -> board.pieceOfPosition(position).isDifferentColorPiece(sourcePiece))
                 .collect(Collectors.toList());
     }
 }
