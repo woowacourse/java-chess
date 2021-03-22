@@ -4,8 +4,10 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public class Empty extends Basis {
+    private static final String EMPTY_DISPLAYNAME = ".";
+
     public Empty() {
-        super(".");
+        super(EMPTY_DISPLAYNAME);
     }
 
     @Override
@@ -14,9 +16,7 @@ public class Empty extends Basis {
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {
-
-    }
+    public void moveForKill(Position to, Pieces pieces) {}
 
     @Override
     public boolean hasPosition(Position position) {

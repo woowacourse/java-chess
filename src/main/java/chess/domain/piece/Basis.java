@@ -20,17 +20,13 @@ public abstract class Basis implements Piece {
 
     public abstract boolean isEmpty();
 
-
     public abstract boolean isKing();
 
-
     public abstract double score();
-
 
     public abstract boolean isPawn();
 
     public abstract Column getColumn();
-
 
     @Override
     public String display() {

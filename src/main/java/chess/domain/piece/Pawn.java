@@ -5,8 +5,13 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Pawn extends Division {
+    private static final String PAWN_DISPLAYNAME = "p";
+    private static final int PAWN_SCORE = 1;
+    private static final int SINGLE_MOVEMENT = 1;
+    private static final int DOUBLE_MOVEMENTS = 2;
+
     public Pawn(Color color, Position position) {
-        super(color, "p", position);
+        super(color, PAWN_DISPLAYNAME, position);
     }
 
     @Override
@@ -24,7 +29,7 @@ public class Pawn extends Division {
     }
 
     private boolean canMoveDouble(Position to) {
-        return (getPawnMovementSize(to) == 2) && position.hasRow(initPawnRow());
+        return (getPawnMovementSize(to) == DOUBLE_MOVEMENTS) && position.hasRow(initPawnRow());
     }
 
     private int getPawnMovementSize(Position to) {
@@ -43,7 +48,7 @@ public class Pawn extends Division {
     }
 
     private boolean canMoveSingle(Position to) {
-        return getPawnMovementSize(to) == 1;
+        return getPawnMovementSize(to) == SINGLE_MOVEMENT;
     }
 
     @Override
@@ -62,7 +67,7 @@ public class Pawn extends Division {
 
     @Override
     public double score() {
-        return 1;
+        return PAWN_SCORE;
     }
 
     @Override

@@ -8,6 +8,9 @@ import chess.view.OutputView;
 import java.util.List;
 
 public class ChessController {
+    private static final int FROM_POSITION_INDEX = 0;
+    private static final int TO_POSITION_INDEX = 1;
+
     public void run() {
         if (willNotPlayGame()) {
             return;
@@ -47,8 +50,8 @@ public class ChessController {
     private void tryOneTurn(Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
         List<String> positions = InputView.requestPositions();
-        String from = positions.get(0);
-        String to = positions.get(1);
+        String from = positions.get(FROM_POSITION_INDEX);
+        String to = positions.get(TO_POSITION_INDEX);
         game.move(Position.from(from), Position.from(to));
         OutputView.display(game.getPieces());
     }

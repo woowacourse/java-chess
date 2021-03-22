@@ -14,6 +14,7 @@ public enum Column {
     G("g"),
     H("h");
 
+    public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
     private final String value;
     private static Column[] columns = values();
 
@@ -23,7 +24,7 @@ public enum Column {
 
     public Column moveBy(int value) {
         if ((this.ordinal() + value) < 0 || this.ordinal() + value >= columns.length) {
-            throw new IllegalArgumentException("범위를 넘어가는 move 입니다");
+            throw new IllegalArgumentException(OVER_RANGE_ERROR);
         }
         return columns[(this.ordinal() + value)];
     }

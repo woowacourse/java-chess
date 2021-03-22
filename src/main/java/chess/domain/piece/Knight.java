@@ -3,8 +3,13 @@ package chess.domain.piece;
 import chess.domain.position.Position;
 
 public class Knight extends Division {
+    private static final String KNIGHT_DISPLAYNAME = "n";
+    private static final double KNIGHT_SCORE = 2.5;
+    public static final int FIRST_POSITION = 2;
+    public static final int SECOND_POSITION = 1;
+
     public Knight(Color color, Position position) {
-        super(color, "n", position);
+        super(color, KNIGHT_DISPLAYNAME, position);
     }
 
     @Override
@@ -12,7 +17,8 @@ public class Knight extends Division {
         int diffRow = Math.abs(position.diffRow(to));
         int diffColumn = Math.abs(position.diffColumn(to));
 
-        if ((diffRow == 2 && diffColumn == 1) || (diffRow == 1 && diffColumn == 2)) {
+        if ((diffRow == FIRST_POSITION && diffColumn == SECOND_POSITION) ||
+            (diffRow == SECOND_POSITION && diffColumn == FIRST_POSITION)) {
             position = to;
             return;
         }
@@ -31,7 +37,7 @@ public class Knight extends Division {
 
     @Override
     public double score() {
-        return 2.5;
+        return KNIGHT_SCORE;
     }
 
     @Override

@@ -14,6 +14,8 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
+    public static final int SAME_COLUMN_CRITERIA = 2;
+    public static final double SAME_COLUMN_SCORE = 0.5;
     private final List<Piece> pieces = new ArrayList<>();
 
     public Pieces(Piece... pieces) {
@@ -107,8 +109,8 @@ public class Pieces {
     }
 
     private double lowerPawnScore(long count) {
-        if (count >= 2) {
-            return count * 0.5;
+        if (count >= SAME_COLUMN_CRITERIA) {
+            return count * SAME_COLUMN_SCORE;
         }
         return count;
     }

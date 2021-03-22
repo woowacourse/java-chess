@@ -5,8 +5,11 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Bishop extends Division {
+    private static final int BISHOP_SCORE = 3;
+    private static final String BISHOP_DISPLAYNAME = "b";
+
     public Bishop(Color color, Position position) {
-        super(color, "b", position);
+        super(color, BISHOP_DISPLAYNAME, position);
     }
 
     @Override
@@ -37,7 +40,7 @@ public class Bishop extends Division {
 
     @Override
     public double score() {
-        return 3;
+        return BISHOP_SCORE;
     }
 
     @Override

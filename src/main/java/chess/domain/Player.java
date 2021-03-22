@@ -16,7 +16,6 @@ public class Player {
         return color;
     }
 
-
     public Piece pickStartPiece(Position position, Pieces pieces) {
         Piece piece = pieces.getPieceOf(position);
         if (piece.isSameColor(color)) {

@@ -15,6 +15,7 @@ public enum Row {
     SEVEN("7"),
     EIGHT("8");
 
+    public static final String OVER_RANGE_ERROR = "범위를 넘어가는 move 입니다";
     private final String value;
     private static Row[] rows = values();
 
@@ -24,7 +25,7 @@ public enum Row {
 
     public Row moveBy(int value) {
         if ((this.ordinal() + value) < 0 || this.ordinal() + value >= rows.length) {
-            throw new IllegalArgumentException("범위를 넘어가는 move 입니다");
+            throw new IllegalArgumentException(OVER_RANGE_ERROR);
         }
         return rows[(this.ordinal() + value)];
     }

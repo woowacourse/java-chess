@@ -84,7 +84,6 @@ public class Position {
                   .collect(Collectors.toList());
     }
 
-
     private List<Position> betweenPositionsHasSameRow(Position to) {
         return column.getBetween(to.column)
                      .stream()

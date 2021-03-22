@@ -5,8 +5,11 @@ import chess.domain.position.Position;
 import java.util.List;
 
 public class Queen extends Division {
+    private static final String QUEEN_DISPLAYNAME = "q";
+    private static final int QUEEN_SCORE = 9;
+
     public Queen(Color color, Position position) {
-        super(color, "q", position);
+        super(color, QUEEN_DISPLAYNAME, position);
     }
 
     @Override
@@ -42,7 +45,7 @@ public class Queen extends Division {
 
     @Override
     public double score() {
-        return 9;
+        return QUEEN_SCORE;
     }
 
     @Override
