@@ -1,6 +1,7 @@
 package chess.domain.player;
 
 import chess.domain.board.ChessBoardFactory;
+import chess.domain.command.Command;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Pieces;
 import chess.domain.position.Position;
@@ -9,28 +10,21 @@ import chess.domain.position.Target;
 import chess.domain.state.State;
 
 import java.util.Map;
-
-import static chess.view.Command.*;
+import java.util.Queue;
 
 public class Round {
     private final Player whitePlayer;
     private final Player blackPlayer;
+    private Command command;
 
-    public Round(final State white, final State black) {
-        this(new WhitePlayer(white), new BlackPlayer(black));
+    public Round(final State white, final State black, final Command command) {
+        this(new WhitePlayer(white), new BlackPlayer(black), command);
     }
 
-    public Round(final Player whitePlayer, final Player blackPlayer) {
+    public Round(final Player whitePlayer, final Player blackPlayer, final Command command) {
         this.whitePlayer = whitePlayer;
         this.blackPlayer = blackPlayer;
-    }
-
-    public void move(final String command, final String sourceText, final String targetText) {
-        if (isMove(command)) {
-            Position sourcePosition = Position.find(sourceText);
-            Position targetPosition = Position.find(targetText);
-            moveByTurn(sourcePosition, targetPosition);
-        }
+        this.command = command;
     }
 
     private void moveByTurn(Position sourcePosition, Position targetPosition) {
@@ -55,10 +49,6 @@ public class Round {
         }
     }
 
-    private boolean isMove(final String command) {
-        return MOVE.isSame(command);
-    }
-
     public Map<Position, Piece> getBoard() {
         Map<Position, Piece> board = ChessBoardFactory.initializeBoard();
         Pieces whitePieces = whitePlayer.getState().pieces();
@@ -68,5 +58,19 @@ public class Round {
         blackPieces.getPieces().forEach(piece -> board.put(piece.getPosition(), piece));
 
         return board;
+    }
+
+    public boolean isEnd() {
+        return command.isEnd();
+    }
+
+    public void execute(final Queue<String> commands) {
+        this.command = this.command.execute(commands.poll());
+        if (this.command.isMove()) {
+            this.command = command.ready();
+            Position sourcePosition = Position.find(commands.poll());
+            Position targetPosition = Position.find(commands.poll());
+            moveByTurn(sourcePosition, targetPosition);
+        }
     }
 }

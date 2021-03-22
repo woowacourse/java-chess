@@ -1,29 +1,28 @@
 package chess.controller;
 
+import chess.domain.command.Command;
+import chess.domain.command.CommandFactory;
 import chess.domain.piece.PieceFactory;
 import chess.domain.player.Round;
 import chess.domain.state.StateFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Queue;
 import java.util.Scanner;
-
-import static chess.view.Command.END;
-import static chess.view.Command.START;
 
 public class ChessController {
     private static final InputView INPUT = new InputView(new Scanner(System.in));
 
     public void run() {
-        if (isStart(INPUT.inputStart())) {
-            startChessGame();
+        Command command = CommandFactory.initialCommand(INPUT.inputStart());
+        if (command.isStart()) {
+            startChessGame(command);
         }
     }
 
-    private void startChessGame() {
+    private void startChessGame(final Command command) {
         Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
-                StateFactory.initialization(PieceFactory.blackPieces()));
+                StateFactory.initialization(PieceFactory.blackPieces()), command);
 
         while (true) try {
             inputCommand(round);
@@ -33,21 +32,10 @@ public class ChessController {
         }
     }
 
-    private void inputCommand(Round round) {
-        String command = "";
-        while (!isEnd(command)) {
+    private void inputCommand(final Round round) {
+        while (!round.isEnd()) {
             OutputView.showChessBoard(round.getBoard());
-            Queue<String> commands = INPUT.inputCommand();
-            command = commands.poll();
-            round.move(command, commands.poll(), commands.poll());
+            round.execute(INPUT.inputCommand());
         }
-    }
-
-    private boolean isStart(final String input) {
-        return START.isSame(input);
-    }
-
-    private boolean isEnd(final String input) {
-        return END.isSame(input);
     }
 }

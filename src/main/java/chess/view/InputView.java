@@ -1,9 +1,10 @@
 package chess.view;
 
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Arrays;
+import java.util.Queue;
+import java.util.Scanner;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class InputView {
     private static final String DELIMITER = " ";

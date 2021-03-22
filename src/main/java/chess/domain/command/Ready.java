@@ -1,6 +1,6 @@
 package chess.domain.command;
 
-public class Start implements Command {
+public class Ready implements Command {
     @Override
     public Command execute(final String command) {
         if ("move".equals(command)) {
@@ -14,7 +14,7 @@ public class Start implements Command {
 
     @Override
     public boolean isStart() {
-        return true;
+        return false;
     }
 
     @Override

@@ -23,7 +23,7 @@ public abstract class Player {
         this.state = this.state.move(source, target, targetState);
     }
 
-    public final void toRunningState(State anotherState){
+    public final void toRunningState(State anotherState) {
         this.state = this.state.toRunningState(anotherState);
     }
 }
