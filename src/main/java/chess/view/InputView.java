@@ -8,7 +8,7 @@ public class InputView {
     private InputView() {
     }
 
-    public static String inputRunningCommand() {
+    public static String inputCommand() {
         return SCANNER.nextLine();
     }
 }
