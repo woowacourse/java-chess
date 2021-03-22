@@ -12,8 +12,8 @@ import java.util.Map;
 public class Board {
 
     public static final int FIRST_NEXT_MOVE_COUNT = 2;
-    private static final double HALF_PAWN_SCORE = 0.5;
     private static final int FIRST_MOVING_PAWN_RANGE = 2;
+    private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
     private boolean isDeadKing;
@@ -43,15 +43,19 @@ public class Board {
 
         return isValidSourceAndDestination(sourceSquareState, destinationSquareState, currentTeam)
             && sourceSquareState.hasMovableVector(source, destination)
-            && isValidPath(source, destination,
-            sourceSquareState.movableVector(source, destination))
-            && isValidPawnMove(source, destination);
+            && canMoveWithMoveVector(source, destination,
+            sourceSquareState.movableVector(source, destination));
     }
 
     private boolean isValidSourceAndDestination(
         SquareState sourceSquareState, SquareState destinationSquareState, Team currentTeam) {
         return sourceSquareState.isTeam(currentTeam)
             && destinationSquareState.isNotTeam(currentTeam);
+    }
+
+    private boolean canMoveWithMoveVector(Point source, Point destination, MoveVector moveVector) {
+        return isValidPath(source, destination, moveVector)
+            && isNotPawnOrValidPawnMove(squares.get(source), squares.get(destination), moveVector);
     }
 
     private boolean isValidPath(Point source, Point destination, MoveVector moveVector) {
@@ -86,29 +90,20 @@ public class Board {
             && (source.isRow(Row.TWO) || source.isRow(Row.SEVEN));
     }
 
-    private boolean isValidPawnMove(Point source, Point destination) {
-        SquareState sourceSquareState = squares.get(source);
-        SquareState destinationSquareState = squares.get(destination);
-        MoveVector moveVector = sourceSquareState.movableVector(source, destination);
-
-        return sourceSquareState.isNotPieceTypeOf(Piece.PAWN) ||
-            (isValidPawnStraightMove(destinationSquareState, moveVector)
-                && isValidPawnDiagonalMove(sourceSquareState, destinationSquareState, moveVector));
-    }
-
-    private boolean isValidPawnStraightMove(SquareState destination, MoveVector moveVector) {
-        if (moveVector.isPawnStraight()) {
-            return destination.isEmpty();
-        }
-        return true;
-    }
-
-    private boolean isValidPawnDiagonalMove(SquareState source, SquareState destination,
+    private boolean isNotPawnOrValidPawnMove(SquareState source, SquareState destination,
         MoveVector moveVector) {
-        if (moveVector.isDiagonalVector()) {
-            return destination.isEnemy(source);
-        }
-        return true;
+        return source.isNotPieceTypeOf(Piece.PAWN) ||
+            (isNotOrValidPawnStraightMove(destination, moveVector)
+                && isNotOrValidPawnDiagonalMove(source, destination, moveVector));
+    }
+
+    private boolean isNotOrValidPawnStraightMove(SquareState destination, MoveVector moveVector) {
+        return !moveVector.isPawnStraight() || destination.isEmpty();
+    }
+
+    private boolean isNotOrValidPawnDiagonalMove(SquareState source, SquareState destination,
+        MoveVector moveVector) {
+        return !moveVector.isDiagonalVector() || destination.isEnemy(source);
     }
 
     public boolean isKingDead() {

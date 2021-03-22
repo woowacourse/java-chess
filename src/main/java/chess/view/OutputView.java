@@ -7,6 +7,7 @@ import java.util.List;
 public class OutputView {
 
     private static final String INFO_MESSAGE_FORMAT = "> %s\n";
+    private static final String SCORE_FORMAT = "%s : %.1f점";
     private static final String START_MESSAGE = "체스 게임을 시작합니다.";
     private static final String START_COMMAND = "게임 시작 : start";
     private static final String END_COMMAND = "게임 종료 : end";
@@ -27,6 +28,7 @@ public class OutputView {
     }
 
     public static void printTeamScore(double score, Team team) {
-        System.out.printf(INFO_MESSAGE_FORMAT, team.teamName() + " : " + score);
+        System.out.printf(INFO_MESSAGE_FORMAT,
+            String.format(SCORE_FORMAT, team.teamName(), score));
     }
 }
