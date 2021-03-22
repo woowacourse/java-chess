@@ -19,11 +19,4 @@ public enum Color {
         }
         return Row.TWO;
     }
-
-    public Row initGeneralRow() {
-        if (this == BLACK) {
-            return Row.EIGHT;
-        }
-        return Row.ONE;
-    }
 }
