@@ -21,11 +21,20 @@ public class Board {
     private final Map<Position, Piece> board;
 
     public Board() {
-        board = new HashMap<>();
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                board.put(new Position(i, j), new EmptyPiece());
-            }
+        board = emptyBoard();
+    }
+
+    private Map<Position, Piece> emptyBoard() {
+        Map<Position, Piece> emptyBoard = new HashMap<>();
+        for (int row = 0; row < 8; row++) {
+            putInitialPiece(emptyBoard, row);
+        }
+        return emptyBoard;
+    }
+
+    private void putInitialPiece(Map<Position, Piece> emptyBoard, int row) {
+        for (int column = 0; column < 8; column++) {
+            emptyBoard.put(new Position(row, column), new EmptyPiece());
         }
     }
 
