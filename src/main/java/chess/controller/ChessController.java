@@ -26,7 +26,7 @@ public class ChessController {
             OutputView.printMessage(commandMessage);
             OutputView.printBoard(chessGame.getBoard());
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            OutputView.printMessage(e.getMessage());
             playGame(chessGame, commands);
         }
     }
