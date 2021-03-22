@@ -18,7 +18,7 @@ public final class Details {
     }
 
     public boolean isSameColor(TeamColor teamColor) {
-        return teamColor == this.teamColor;
+        return teamColor.equals(this.teamColor);
     }
 
     public boolean iterable() {

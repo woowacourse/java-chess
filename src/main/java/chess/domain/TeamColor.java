@@ -9,4 +9,12 @@ public enum TeamColor {
         }
         return WHITE;
     }
+
+    public boolean isWhite() {
+        return this == WHITE;
+    }
+
+    public boolean isBlack() {
+        return this == BLACK;
+    }
 }

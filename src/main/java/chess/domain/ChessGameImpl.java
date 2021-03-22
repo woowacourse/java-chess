@@ -1,16 +1,11 @@
 package chess.domain;
 
-import static java.util.stream.Collectors.toList;
-import static java.util.stream.Collectors.toMap;
-import static java.util.stream.Collectors.toSet;
-
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceFactory;
 import chess.domain.scorecalculator.ChessScoreCalculator;
 import chess.domain.scorecalculator.ScoreCalculator;
 import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -22,76 +17,48 @@ public final class ChessGameImpl implements ChessGame {
     private static final int START_LINE = 0;
     private static final int END_LINE = 7;
 
-    private final List<Piece> pieces;
+    private final Pieces pieces;
     private final ScoreCalculator scoreCalculator;
     private TeamColor currentColor;
 
-    private ChessGameImpl(List<Piece> pieces, TeamColor teamColor,
+    private ChessGameImpl(Pieces pieces, TeamColor teamColor,
         ScoreCalculator scoreCalculator) {
-        this.pieces = new ArrayList<>(pieces);
+        this.pieces = pieces;
         currentColor = teamColor;
         this.scoreCalculator = scoreCalculator;
     }
 
     public static ChessGameImpl initialGame() {
         return from(
-            PieceFactory.initialPieces(BOARD_SIZE, START_LINE, END_LINE),
+            Pieces.from(PieceFactory.initialPieces(BOARD_SIZE, START_LINE, END_LINE)),
             TeamColor.WHITE
         );
     }
 
     public static ChessGameImpl emptyGame() {
-        return from(new ArrayList<>(), TeamColor.WHITE);
+        return from(Pieces.emptyPieces(), TeamColor.WHITE);
     }
 
-    public static ChessGameImpl from(List<Piece> pieces, TeamColor teamColor) {
+    public static ChessGameImpl from(Pieces pieces, TeamColor teamColor) {
         ChessGameImpl chessGame = new ChessGameImpl(pieces, teamColor, new ChessScoreCalculator());
-        chessGame.updateMovablePositions();
+        pieces.updateMovablePositions();
         return chessGame;
-    }
-
-    private void updateMovablePositions() {
-        pieces.forEach(piece ->
-            piece.updateMovablePositions(
-                existPiecePositions(),
-                existPiecePositionsByColor(piece.enemyColor())
-            )
-        );
-    }
-
-    private List<Position> existPiecePositions() {
-        return pieces.stream()
-            .map(Piece::currentPosition)
-            .collect(toList());
-    }
-
-    private List<Position> existPiecePositionsByColor(TeamColor teamColor) {
-        return pieces.stream()
-            .filter(piece -> piece.isSameColor(teamColor))
-            .map(Piece::currentPosition)
-            .collect(toList());
     }
 
     @Override
     public void movePiece(Position currentPosition, Position targetPosition) {
-        Piece currentPiece = pieceByPosition(currentPosition)
+        Piece currentPiece = pieces.pieceByPosition(currentPosition)
             .orElseThrow(PieceNotFoundException::new);
         ;
         if (!currentPiece.isSameColor(currentColor)) {
             throw new InvalidTurnException(currentColor);
         }
-        Optional<Piece> targetPiece = pieceByPosition(targetPosition);
+        Optional<Piece> targetPiece = pieces.pieceByPosition(targetPosition);
 
         currentPiece.move(targetPosition);
         targetPiece.ifPresent(pieces::remove);
-        updateMovablePositions();
+        pieces.updateMovablePositions();
         currentColor = currentColor.reverse();
-    }
-
-    public Optional<Piece> pieceByPosition(Position currentPosition) {
-        return pieces.stream()
-            .filter(piece -> piece.samePosition(currentPosition))
-            .findAny();
     }
 
     @Override
@@ -100,62 +67,37 @@ public final class ChessGameImpl implements ChessGame {
     }
 
     private Score scoreByTeamColor(TeamColor teamColor) {
-        List<Piece> pieces = piecesByTeamColor(teamColor);
-        return scoreCalculator.calculate(pieces);
-    }
-
-    private List<Piece> piecesByTeamColor(TeamColor teamColor) {
-        return pieces.stream()
-            .filter(piece -> piece.isSameColor(teamColor))
-            .collect(toList());
+        List<Piece> piecesByTeamColor = pieces.piecesByTeamColor(teamColor);
+        return scoreCalculator.calculate(piecesByTeamColor);
     }
 
     @Override
     public boolean isKingDead() {
-        return kingByColor(currentColor).isEmpty();
+        return pieces.isKingEmpty(currentColor);
     }
 
     @Override
     public boolean isChecked() {
-        Set<Position> enemiesAttackPositions = attackPositionsByColor(currentColor.reverse());
+        Set<Position> enemiesAttackPositions = pieces.attackPositionsByColor(currentColor.reverse());
 
         return enemiesAttackPositions.contains(
-            kingByColor(currentColor)
-                .orElseThrow(PieceNotFoundException::new)
+            pieces.kingByColor(currentColor)
                 .currentPosition()
         );
     }
 
-    private Set<Position> attackPositionsByColor(TeamColor teamColor) {
-        return piecesByTeamColor(teamColor)
-            .stream()
-            .flatMap(piece -> piece.movablePositions().stream())
-            .collect(toSet());
-    }
-
     @Override
     public boolean isCheckmate() {
-        Set<Position> attackPositions = attackPositionsByColor(currentColor.reverse());
-        Piece king = kingByColor(currentColor).orElseThrow(PieceNotFoundException::new);
+        Set<Position> attackPositions = pieces.attackPositionsByColor(currentColor.reverse());
+        Piece king = pieces.kingByColor(currentColor);
         List<Position> movablePositions = king.movablePositions();
         movablePositions.add(king.currentPosition());
         return attackPositions.containsAll(movablePositions);
     }
 
-    private Optional<Piece> kingByColor(TeamColor teamColor) {
-        return piecesByTeamColor(teamColor)
-            .stream()
-            .filter(Piece::isKing)
-            .findAny();
-    }
-
     @Override
     public Map<Position, String> nameGroupingByPosition() {
-        return pieces.stream()
-            .collect(toMap(
-                Piece::currentPosition,
-                Piece::name
-            ));
+        return pieces.nameGroupingByPosition();
     }
 
     @Override

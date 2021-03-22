@@ -22,7 +22,7 @@ class ChessGameImplTest {
     @Test
     @DisplayName("존재하지 않는 말을 선택할 때")
     void movePiece_pieceNotFoundException() {
-        ChessGameImpl chessGame = ChessGameImpl.from(new ArrayList<>(), WHITE);
+        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.emptyPieces(), WHITE);
         Assertions.assertThatThrownBy(() ->
             chessGame.movePiece(Position.of(1, 1), Position.of(2, 2))
         ).isInstanceOf(PieceNotFoundException.class);
@@ -32,7 +32,7 @@ class ChessGameImplTest {
     @DisplayName("현재 턴의 해당하는 팀이 아닌 다른 팀의 말을 움직일 때")
     void movePiece_invalidTurnException() {
         Queen queen = new Queen(BLACK, Position.of(1, 1));
-        ChessGameImpl chessGame = ChessGameImpl.from(Collections.singletonList(queen), WHITE);
+        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.from(Collections.singletonList(queen)), WHITE);
         Assertions.assertThatThrownBy(() ->
             chessGame.movePiece(queen.currentPosition(), Position.of(2, 2))
         ).isInstanceOf(InvalidTurnException.class);
@@ -42,7 +42,7 @@ class ChessGameImplTest {
     @DisplayName("움직일 수 없는 곳으로 이동할 때")
     void movePiece_impossibleMoveException() {
         Queen queen = new Queen(WHITE, Position.of(1, 1));
-        ChessGameImpl chessGame = ChessGameImpl.from(Collections.singletonList(queen), WHITE);
+        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.from(Collections.singletonList(queen)), WHITE);
         Assertions.assertThatThrownBy(() ->
             chessGame.movePiece(queen.currentPosition(), Position.of(3, 2))
         ).isInstanceOf(ImpossibleMoveException.class);
@@ -53,11 +53,12 @@ class ChessGameImplTest {
     void movePiece() {
         Queen queen = new Queen(WHITE, Position.of(1, 1));
         Knight knight = new Knight(BLACK, Position.of(4, 4));
-        ChessGameImpl chessGame = ChessGameImpl.from(Arrays.asList(queen, knight), WHITE);
+        Pieces pieces = Pieces.from(Arrays.asList(queen, knight));
+        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
         chessGame.movePiece(queen.currentPosition(), knight.currentPosition());
 
-        Assertions.assertThat(chessGame.pieceByPosition(knight.currentPosition())).contains(queen);
-        Assertions.assertThat(chessGame.pieceByPosition(Position.of(1, 1))).isEmpty();
+        Assertions.assertThat(pieces.pieceByPosition(knight.currentPosition())).contains(queen);
+        Assertions.assertThat(pieces.pieceByPosition(Position.of(1, 1))).isEmpty();
     }
 
     @Test
@@ -73,12 +74,11 @@ class ChessGameImplTest {
     @Test
     @DisplayName("같은 행에 폰이 2개일 경우 점수 계산")
     void gameResult_pawn_sameColumn() {
-        ChessGameImpl chessGame = ChessGameImpl.from(
-            Arrays.asList(
-                new Pawn(WHITE, Position.of(2, 3)),
-                new Pawn(WHITE, Position.of(2, 4))
-            ), WHITE
-        );
+        Pieces pieces = Pieces.from(Arrays.asList(
+            new Pawn(WHITE, Position.of(2, 3)),
+            new Pawn(WHITE, Position.of(2, 4))
+        ));
+        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
         GameResult gameResult = chessGame.gameResult();
 
         Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(1.0));
@@ -87,12 +87,11 @@ class ChessGameImplTest {
     @Test
     @DisplayName("다른 행에 폰이 2개일 경우 점수 계산")
     void gameResult_pawn_distinctColumn() {
-        ChessGameImpl chessGame = ChessGameImpl.from(
-            Arrays.asList(
-                new Pawn(WHITE, Position.of(3, 4)),
-                new Pawn(WHITE, Position.of(2, 4))
-            ), WHITE
-        );
+        Pieces pieces = Pieces.from(Arrays.asList(
+            new Pawn(WHITE, Position.of(3, 4)),
+            new Pawn(WHITE, Position.of(2, 4))
+        ));
+        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
         GameResult gameResult = chessGame.gameResult();
 
         Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(2));
@@ -104,9 +103,8 @@ class ChessGameImplTest {
     void kingDead() {
         Queen whiteQueen = new Queen(WHITE, Position.of(2, 2));
         King blackKing = new King(BLACK, Position.of(3, 3));
-        ChessGameImpl chessGame = ChessGameImpl.from(
-            Arrays.asList(whiteQueen, blackKing), WHITE
-        );
+        Pieces pieces = Pieces.from(Arrays.asList(whiteQueen, blackKing));
+        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
 
         chessGame.movePiece(whiteQueen.currentPosition(), blackKing.currentPosition());
 
@@ -118,9 +116,7 @@ class ChessGameImplTest {
     void kingCheck() {
         Queen whiteQueen = new Queen(WHITE, Position.of(2, 0));
         King blackKing = new King(BLACK, Position.of(3, 3));
-        ChessGameImpl chessGame = ChessGameImpl.from(
-            Arrays.asList(whiteQueen, blackKing), WHITE
-        );
+        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.from(whiteQueen, blackKing), WHITE);
 
         chessGame.movePiece(whiteQueen.currentPosition(), Position.of(2, 2));
         Assertions.assertThat(chessGame.isChecked()).isTrue();
@@ -133,7 +129,7 @@ class ChessGameImplTest {
         Queen whiteQueen2 = new Queen(WHITE, Position.of(5, 0));
         King blackKing = new King(BLACK, Position.of(0, 0));
         ChessGameImpl chessGame = ChessGameImpl.from(
-            Arrays.asList(whiteQueen1, whiteQueen2, blackKing), WHITE
+            Pieces.from(whiteQueen1, whiteQueen2, blackKing), WHITE
         );
         chessGame.movePiece(whiteQueen1.currentPosition(), Position.of(6, 1));
         Assertions.assertThat(chessGame.isCheckmate()).isTrue();

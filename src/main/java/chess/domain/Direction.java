@@ -51,14 +51,14 @@ public enum Direction {
     }
 
     public static List<Direction> forwardDirection(TeamColor teamColor) {
-        if (teamColor == TeamColor.WHITE) {
+        if (teamColor.isWhite()) {
             return Collections.singletonList(UP);
         }
         return Collections.singletonList(DOWN);
     }
 
     public static List<Direction> forwardDiagonal(TeamColor teamColor) {
-        if (teamColor == TeamColor.WHITE) {
+        if (teamColor.isWhite()) {
             return Arrays.asList(UP_LEFT, UP_RIGHT);
         }
         return Arrays.asList(DOWN_LEFT, DOWN_RIGHT);

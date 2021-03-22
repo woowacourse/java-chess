@@ -26,7 +26,7 @@ public final class PieceFactory {
     private static List<Piece> piecesByColor(TeamColor teamColor, int startLine,
         int endLine) {
         int row = startLine;
-        if (teamColor == BLACK) {
+        if (teamColor.isBlack()) {
             row = endLine;
         }
         return Arrays.asList(
@@ -46,7 +46,7 @@ public final class PieceFactory {
         List<Piece> pieces = new ArrayList<>();
 
         int row = startLine + 1;
-        if (teamColor == BLACK) {
+        if (teamColor.isBlack()) {
             row = endLine - 1;
         }
 
