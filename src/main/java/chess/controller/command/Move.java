@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public class Move implements Command{
+public class Move implements Command {
     private static final int MOVE_COMMAND_PROPER_SIZE = 3;
     private static final int FROM_POSITION_INDEX = 1;
     private static final int TO_POSITION_INDEX = 2;

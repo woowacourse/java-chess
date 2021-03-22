@@ -38,7 +38,7 @@ public class ColoredPieces {
         pieces.remove(realPiece);
     }
 
-    public boolean isSameColor(Color color){
+    public boolean isSameColor(Color color) {
         return this.color == color;
     }
 
@@ -54,7 +54,7 @@ public class ColoredPieces {
         return pieces.size();
     }
 
-    public boolean contains(RealPiece realPiece){
+    public boolean contains(RealPiece realPiece) {
         return pieces.contains(realPiece);
     }
 

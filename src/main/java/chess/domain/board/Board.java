@@ -41,7 +41,7 @@ public class Board {
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {
-        return new MoveOrder(Direction.of(from, to), getRoute(from,to), board.get(from), board.get(to));
+        return new MoveOrder(Direction.of(from, to), getRoute(from, to), board.get(from), board.get(to));
     }
 
     private List<Square> getRoute(Position from, Position to) {

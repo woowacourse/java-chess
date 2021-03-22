@@ -36,7 +36,7 @@ public enum File {
         return Objects.requireNonNull(searchMap.get(letter), "해당하는 문자의 File이 없습니다.");
     }
 
-    public static File from(int coordinate){
+    public static File from(int coordinate) {
         return Arrays.stream(values())
                 .filter(file -> file.coordinate == coordinate)
                 .findAny()

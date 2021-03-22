@@ -20,7 +20,7 @@ public abstract class Piece {
         return this.moveStrategy.canMove(moveOrder);
     }
 
-    public boolean isNotBlank(){
+    public boolean isNotBlank() {
         return !this.equals(new Blank());
     }
 }

@@ -13,7 +13,7 @@ public enum Color {
         this.notationRule = notationRule;
     }
 
-    public String changeNotation(String notation){
+    public String changeNotation(String notation) {
         return notationRule.apply(notation);
     }
 

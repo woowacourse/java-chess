@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 import java.util.List;
 
-public class Status implements Command{
+public class Status implements Command {
     private static final int STATUS_COMMAND_PROPER_SIZE = 1;
 
     public Status(List<String> inputCommand) {

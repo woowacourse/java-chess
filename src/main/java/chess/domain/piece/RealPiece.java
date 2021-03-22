@@ -4,7 +4,7 @@ import chess.domain.piece.strategy.MoveStrategy;
 
 import java.util.Objects;
 
-public class RealPiece extends Piece{
+public class RealPiece extends Piece {
     private final Color color;
 
     public RealPiece(Color color, String notation, MoveStrategy moveStrategy) {
