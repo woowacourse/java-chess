@@ -8,7 +8,7 @@ public class MoveController implements CommandController {
     
     private final MovePosition movePosition;
     
-    public MoveController(String input) {
+    public MoveController(String[] input) {
         this(MovePosition.from(input));
     }
     

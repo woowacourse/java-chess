@@ -12,10 +12,12 @@ public enum CommandControllerFactory {
     
     private static final String ERROR_COMMAND_CANNOT_FIND = "메뉴에 없는 커맨드입니다.";
     
-    private final String command;
-    private final Function<String, CommandController> controllerFunction;
+    private static final int COMMAND_INDEX = 0;
     
-    CommandControllerFactory(String command, Function<String, CommandController> controllerFunction) {
+    private final String command;
+    private final Function<String[], CommandController> controllerFunction;
+    
+    CommandControllerFactory(String command, Function<String[], CommandController> controllerFunction) {
         this.command = command;
         this.controllerFunction = controllerFunction;
     }
@@ -25,13 +27,13 @@ public enum CommandControllerFactory {
                      .anyMatch(commandFactory -> commandFactory.command.equals(input));
     }
     
-    public static CommandController createFrom(String input) {
+    public static CommandController createFrom(String[] input) {
         return findFunctionByInput(input).apply(input);
     }
     
-    public static Function<String, CommandController> findFunctionByInput(String input) {
+    private static Function<String[], CommandController> findFunctionByInput(String[] input) {
         return Arrays.stream(CommandControllerFactory.values())
-                     .filter(commandFactory -> commandFactory.command.equals(input))
+                     .filter(commandFactory -> commandFactory.command.equals(input[COMMAND_INDEX]))
                      .map(commandFactory -> commandFactory.controllerFunction)
                      .findAny()
                      .orElseThrow(() -> new IllegalArgumentException(ERROR_COMMAND_CANNOT_FIND));

@@ -16,8 +16,8 @@ public class MovePosition {
     private static final String BLANK = " ";
     private static final int POSITIONS_SIZE = 3;
     
-    private static final int SOURCE_POSITION_INDEX = 0;
-    private static final int TARGET_POSITION_INDEX = 1;
+    private static final int SOURCE_POSITION_INDEX = 1;
+    private static final int TARGET_POSITION_INDEX = 2;
     
     private static final int MIN_MOVE_LENGTH = 1;
     
@@ -31,7 +31,7 @@ public class MovePosition {
         this.targetPosition = targetPosition;
     }
     
-    public static MovePosition from(String input) {
+    public static MovePosition from(String[] input) {
         final List<String> positions = trimAndExceptBlank(input);
         if (isSizeMismatch(positions)) {
             throw new IllegalArgumentException(ERROR_MISMATCH_POSITION_SIZE);
@@ -42,8 +42,8 @@ public class MovePosition {
         return new MovePosition(sourcePosition, targetPosition);
     }
     
-    private static List<String> trimAndExceptBlank(String input) {
-        return Arrays.stream(input.split(BLANK))
+    private static List<String> trimAndExceptBlank(String[] input) {
+        return Arrays.stream(input)
                      .filter(position -> !isBlank(position))
                      .map(String::trim)
                      .collect(Collectors.toList());
