@@ -7,6 +7,7 @@ public class Knight extends Division {
     private static final double KNIGHT_SCORE = 2.5;
     public static final int FIRST_POSITION = 2;
     public static final int SECOND_POSITION = 1;
+    public static final String KNIGHT_MOVE_ERROR = "나이트가 이동할 수 없는 위치입니다";
 
     public Knight(final Color color, final Position position) {
         super(color, KNIGHT_DISPLAYNAME, position);
@@ -22,7 +23,7 @@ public class Knight extends Division {
             position = to;
             return;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(KNIGHT_MOVE_ERROR);
     }
 
     @Override

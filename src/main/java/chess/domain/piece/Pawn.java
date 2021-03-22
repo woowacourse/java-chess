@@ -9,6 +9,7 @@ public class Pawn extends Division {
     private static final int PAWN_SCORE = 1;
     private static final int SINGLE_MOVEMENT = 1;
     private static final int DOUBLE_MOVEMENTS = 2;
+    public static final String PAWN_MOVE_ERROR = "폰이 이동할 수 없는 위치입니다";
 
     public Pawn(final Color color, final Position position) {
         super(color, PAWN_DISPLAYNAME, position);
@@ -25,7 +26,7 @@ public class Pawn extends Division {
             position = to;
             return;
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(PAWN_MOVE_ERROR);
     }
 
     private boolean canMoveDouble(final Position to) {
