@@ -62,11 +62,6 @@ public abstract class Pawn extends Piece {
     }
 
     @Override
-    public String getSymbol() {
-        return "P";
-    }
-
-    @Override
     public int getMaxDistance() {
         return ABLE_DISTANCE_TO_MOVE;
     }
