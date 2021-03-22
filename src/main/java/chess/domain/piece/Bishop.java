@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Bishop extends Move {
+    private static final String BISHOP_ERROR = "[ERROR] 비숍 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(3);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('c', '8'),
             Position.of('f', '8'));
@@ -31,7 +32,7 @@ public class Bishop extends Move {
 
     @Override
     public void moveCross(Position target, CurrentPieces currentPieces) {
-        throw new IllegalArgumentException("[ERROR] 비숍 이동 규칙에 어긋납니다.");
+        throw new IllegalArgumentException(BISHOP_ERROR);
     }
 
     public static List<Bishop> generate() {

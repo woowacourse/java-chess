@@ -10,6 +10,7 @@ public enum CommandType {
     STATUS("status");
 
     private final String value;
+    private static final String COMMAND_ERROR = "[ERROR] 올바른 명령이 아닙니다.";
     private static final List<CommandType> FIRST_COMMAND = Arrays.asList(START, END);
     private static final List<CommandType> RUNNING_COMMAND = Arrays.asList(END, MOVE, STATUS);
 
@@ -22,7 +23,7 @@ public enum CommandType {
                 .filter(commandType -> commandType.value.equals(input))
                 .filter(commandType -> FIRST_COMMAND.contains(commandType))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 명령이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException(COMMAND_ERROR));
     }
 
     public static CommandType findRunningCommand(String input) {
@@ -30,6 +31,6 @@ public enum CommandType {
                 .filter(commandType -> commandType.value.equals(input))
                 .filter(commandType -> RUNNING_COMMAND.contains(commandType))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 명령이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException(COMMAND_ERROR));
     }
 }

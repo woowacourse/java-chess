@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Knight extends Piece {
+    private static final String KNIGHT_ERROR = "[ERROR] 나이트의 이동 규칙에 어긋났습니다.";
     private static final Score SCORE = new Score(2.5);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('b', '8'),
             Position.of('g', '8'));
@@ -35,7 +36,7 @@ public class Knight extends Piece {
     private void validateKnightMove(Position target) {
         if (!((Math.abs(this.position.subtractX(target)) == 2 && Math.abs(this.position.subtractY(target)) == 1) ||
                 (Math.abs(this.position.subtractX(target)) == 1 && Math.abs(this.position.subtractY(target)) == 2))) {
-            throw new IllegalArgumentException("[ERROR] 나이트의 이동 규칙에 어긋났습니다.");
+            throw new IllegalArgumentException(KNIGHT_ERROR);
         }
     }
 

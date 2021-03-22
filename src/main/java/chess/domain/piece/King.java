@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class King extends Move {
+    private static final String KING_ERROR = "[ERROR] 킹 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(0);
     private static final Position INITIAL_BLACK_POSITION = Position.of('e', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('e', '1');
@@ -35,7 +36,7 @@ public class King extends Move {
     private void validateKingMove(Position target) {
         if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
                 !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
-            throw new IllegalArgumentException("[ERROR] 킹 이동 규칙에 어긋납니다.");
+            throw new IllegalArgumentException(KING_ERROR);
         }
     }
 

@@ -8,6 +8,7 @@ import chess.view.OutputView;
 import java.util.Arrays;
 
 public class ChessController {
+    private static final String COMMAND_ERROR = "[ERROR] 올바른 명령이 아닙니다.";
     private ChessGame chessGame;
 
     public void run() {
@@ -62,7 +63,7 @@ public class ChessController {
 
     private void validateRemainingCommand(String[] splitInput) {
         if (splitInput.length != 3) {
-            throw new IllegalArgumentException("[ERROR] 잘못 선택하셨습니다.");
+            throw new IllegalArgumentException(COMMAND_ERROR);
         }
     }
 }

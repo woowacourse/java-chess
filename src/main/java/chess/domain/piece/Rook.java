@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Rook extends Move {
+    private static final String ROOK_ERROR = "[ERROR] 룩 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(5);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '8'),
             Position.of('h', '8'));
@@ -31,7 +32,7 @@ public class Rook extends Move {
 
     @Override
     public void moveDiagonal(Position target, CurrentPieces currentPieces) {
-        throw new IllegalArgumentException("[ERROR] 룩 이동 규칙에 어긋납니다.");
+        throw new IllegalArgumentException(ROOK_ERROR);
     }
 
     public static List<Rook> generate() {

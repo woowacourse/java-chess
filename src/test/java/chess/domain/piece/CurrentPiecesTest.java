@@ -45,19 +45,9 @@ public class CurrentPiecesTest {
         CurrentPieces currentPieces = CurrentPieces.generate();
         Position target = Position.of('g', '7');
 
-        currentPieces.removePieceByPosition(target);
+        currentPieces.removePieceIfNotEmpty(currentPieces.findByPosition(target));
 
         assertThat(currentPieces.getCurrentPieces().size()).isEqualTo(31);
-    }
-
-    @DisplayName("현재 기물들 중 해당 위치 기물 제거 확인 - 기물이 없을 경우 예외")
-    @Test
-    void 해당_위치_기물_제거_확인_예외() {
-        CurrentPieces currentPieces = CurrentPieces.generate();
-        Position target = Position.of('e', '4');
-
-        assertThatThrownBy(() -> currentPieces.removePieceByPosition(target))
-        .isInstanceOf(IllegalArgumentException.class);
     }
 
     @DisplayName("현재 기물들의 팀별 점수를 계산한다.")

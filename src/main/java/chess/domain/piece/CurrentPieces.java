@@ -35,14 +35,6 @@ public class CurrentPieces {
                 .orElse(Empty.EMPTY);
     }
 
-    public void removePieceByPosition(Position target) {
-        Piece piece = findByPosition(target);
-        if (piece.isEmpty()) {
-            throw new IllegalArgumentException("[ERROR] target에 제거하고자 하는 기물이 없습니다.");
-        }
-        currentPieces.remove(piece);
-    }
-
     public boolean isAliveAllKings() {
         return (int) currentPieces.stream().filter(piece -> piece instanceof King).count() == 2;
     }

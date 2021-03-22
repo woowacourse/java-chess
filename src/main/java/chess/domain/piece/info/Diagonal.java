@@ -19,6 +19,8 @@ public enum Diagonal {
             source.isSubtractXPositive(target) && source.isSubtractYPositive(target),
             new int[]{-1, -1});
 
+    private static final String DIRECTION_ERROR = "[ERROR] 올바른 방향이 아닙니다.";
+    private static final String OBSTACLE_ERROR = "[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.";
     private final BiPredicate<Position, Position> findDiagonal;
     private final int[] changeValues;
 
@@ -32,7 +34,7 @@ public enum Diagonal {
                 .filter(value -> source.isDiagonal(target))
                 .filter(value -> value.findDiagonal.test(source, target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException(DIRECTION_ERROR));
     }
 
     public void hasPieceInPath(Position source, Position target, CurrentPieces currentPieces) {
@@ -47,7 +49,7 @@ public enum Diagonal {
     private void validatePieceInPath(CurrentPieces currentPieces, int sourceX, int sourceY, int count) {
         if (currentPieces.hasSamePositionPiece(
                 Position.of((char) (sourceX + (changeValues[0] * count)), (char) (sourceY + (changeValues[1] * count))))) {
-            throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
+            throw new IllegalArgumentException(OBSTACLE_ERROR);
         }
     }
 }

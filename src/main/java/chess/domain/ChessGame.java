@@ -8,8 +8,10 @@ import chess.domain.piece.info.Position;
 import java.util.List;
 
 public class ChessGame {
-    private Color turn;
+    private static final String TURN_ERROR = "[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.";
+
     private final CurrentPieces currentPieces;
+    private Color turn;
 
     public ChessGame() {
         this.currentPieces = CurrentPieces.generate();
@@ -35,7 +37,7 @@ public class ChessGame {
 
     private void validateTurn(Piece sourcePiece) {
         if (!sourcePiece.getColor().isSame(turn)) {
-            throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");
+            throw new IllegalArgumentException(TURN_ERROR);
         }
     }
 

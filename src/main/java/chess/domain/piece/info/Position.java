@@ -3,10 +3,13 @@ package chess.domain.piece.info;
 import java.util.*;
 
 public class Position {
-    public final static String ROW = "abcdefgh";
-    private final static String COL = "87654321";
+    private static final String POSITION_RANGE_ERROR = "[ERROR] 올바른 체스판 범위가 아닙니다.";
+    private static final String ROW = "abcdefgh";
+    private static final String COL = "87654321";
+    private static final char BLACK_PAWN_FIRST_COL = '7';
+    private static final char WHITE_PAWN_FIRST_COL = '2';
     public static final Position EMPTY = new Position('0', '0');
-    public final static Map<String, Position> POSITIONS;
+    public static final Map<String, Position> POSITIONS;
 
     static {
         POSITIONS = new LinkedHashMap<>();
@@ -32,10 +35,9 @@ public class Position {
     }
 
     private static void validatePosition(char x, char y) {
-        if (ROW.contains(String.valueOf(x)) && COL.contains(String.valueOf(y))) {
-            return;
+        if (!ROW.contains(String.valueOf(x)) || !COL.contains(String.valueOf(y))) {
+            throw new IllegalArgumentException(POSITION_RANGE_ERROR);
         }
-        throw new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다.");
     }
 
     public char getX() {
@@ -86,10 +88,10 @@ public class Position {
 
     public boolean isFirstTurnIfPawn(Color color) {
         if (color.isSame(Color.BLACK)) {
-            return y == '7';
+            return y == BLACK_PAWN_FIRST_COL;
         }
         if (color.isSame(Color.WHITE)) {
-            return y == '2';
+            return y == WHITE_PAWN_FIRST_COL;
         }
         return false;
     }

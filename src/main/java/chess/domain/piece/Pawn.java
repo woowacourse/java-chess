@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Pawn extends Piece {
+    private static final String PAWN_ERROR = "[ERROR] 폰 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(1);
     private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '7'),
             Position.of('b', '7'), Position.of('c', '7'), Position.of('d', '7'),
@@ -41,7 +42,7 @@ public class Pawn extends Piece {
             this.position = target;
             return;
         }
-        throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
+        throw new IllegalArgumentException(PAWN_ERROR);
     }
 
     private boolean isAttackAble(Position target) {
@@ -73,10 +74,10 @@ public class Pawn extends Piece {
 
     private void validateFirstTurn(Position target) {
         if (this.color == Color.BLACK && (!(this.position.isFirstTurnIfPawn(color)) && this.position.subtractY(target) == 2)) {
-            throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
+            throw new IllegalArgumentException(PAWN_ERROR);
         }
         if (this.color == Color.WHITE && (!(this.position.isFirstTurnIfPawn(color)) && target.subtractY(this.position) == 2)) {
-            throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
+            throw new IllegalArgumentException(PAWN_ERROR);
         }
     }
 

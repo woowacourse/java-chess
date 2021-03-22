@@ -1,6 +1,7 @@
 package chess.domain.piece.info;
 
 public class Score {
+    private static final String NEGATIVE_ERROR = "[ERROR] 음수는 올 수 없습니다.";
     private final double value;
 
     public Score(double value) {
@@ -10,7 +11,7 @@ public class Score {
 
     private void validateNegative(double value) {
         if (value < 0) {
-            throw new IllegalArgumentException("[ERROR] 음수는 올 수 없습니다.");
+            throw new IllegalArgumentException(NEGATIVE_ERROR);
         }
     }
 

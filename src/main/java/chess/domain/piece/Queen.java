@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Move {
+    private static final String QUEEN_ERROR = "[ERROR] 퀸 이동 규칙에 어긋납니다.";
     private static final Score SCORE = new Score(9);
     private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
     private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
@@ -34,7 +35,7 @@ public class Queen extends Move {
 
     private void validateQueenMove(Position target) {
         if (!this.position.isCross(target) && !this.position.isDiagonal(target)) {
-            throw new IllegalArgumentException("[ERROR] 퀸 이동 규칙에 어긋납니다.");
+            throw new IllegalArgumentException(QUEEN_ERROR);
         }
     }
 
