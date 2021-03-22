@@ -38,9 +38,9 @@ public class LinesTest {
     @DisplayName("Lines에서 해당 위치에 해당하는 Piece 제대로 가져오는 지 테스트")
     public void piece() {
         Position position = new Position("a4");
-        Piece piece = lines.piece(position); // 룩(Rook)
-        assertThat(piece.getClass()).isEqualTo(Rook.class);
-        assertThat(piece.position()).isEqualTo(position);
+        Piece rook = lines.piece(position);
+        assertThat(rook.getClass()).isEqualTo(Rook.class);
+        assertThat(rook.position()).isEqualTo(position);
     }
 
     @Test
