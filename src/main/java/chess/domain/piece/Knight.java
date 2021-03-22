@@ -20,51 +20,68 @@ public class Knight extends PieceOnBoard {
 
         Set<Position> candidates = new HashSet<>();
 
-        Position position = source.moveRightUp().moveUp();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveRightUp().moveRight();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-
-        position = source.moveRightDown().moveRight();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveRightDown().moveDown();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-
-        position = source.moveLeftDown().moveDown();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveLeftDown().moveLeft();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-
-        position = source.moveLeftUp().moveLeft();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveLeftUp().moveUp();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-
+        candidates.addAll(knightMoveUp(source, target, chessBoard));
+        candidates.addAll(knightMoveDown(source, target, chessBoard));
+        candidates.addAll(knightMoveLeft(source, target, chessBoard));
+        candidates.addAll(knightMoveRight(source, target, chessBoard));
         return candidates.contains(target);
+
+    }
+
+    private Set<Position> knightMoveUp(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveUp().moveLeftUp();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveUp().moveRightUp();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private Set<Position> knightMoveRight(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveRight().moveRightUp();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveRight().moveRightDown();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private Set<Position> knightMoveDown(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveDown().moveLeftDown();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveDown().moveRightDown();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private Set<Position> knightMoveLeft(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveLeft().moveLeftUp();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveLeft().moveLeftDown();
+        if (movable(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
     }
 
 }
