@@ -54,7 +54,7 @@ public class Pieces {
 
     public double calculateScore() {
         return this.pieces.stream()
-                .mapToDouble(Piece::score)
+                .mapToDouble(piece -> piece.score(pieces))
                 .sum();
     }
 }

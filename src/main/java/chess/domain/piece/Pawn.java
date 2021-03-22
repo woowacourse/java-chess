@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
@@ -43,8 +44,15 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public double score() {
-        //todo
+    public double score(final List<Piece> pieces) {
+        File currentFile = this.getPosition().getFile();
+        boolean isSameFile = pieces.stream()
+                .filter(piece -> !this.equals(piece))
+                .filter(piece -> piece instanceof Pawn)
+                .anyMatch(piece -> currentFile.isSameFile(piece.getFile()));
+        if (isSameFile) {
+            return SCORE / 2;
+        }
         return SCORE;
     }
 

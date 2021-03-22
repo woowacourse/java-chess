@@ -41,8 +41,4 @@ public class OutputView {
         }
         return chessBoard.get(position).getPiece();
     }
-
-    public static void showCurrentPlayer(final String name) {
-        System.out.println(String.format("%s의 턴 입니다.",name));
-    }
 }

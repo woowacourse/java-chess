@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.piece.Piece;
+
 import java.util.Arrays;
 
 public enum File {
@@ -33,6 +35,10 @@ public enum File {
                 .filter(value -> value.file.equals(file))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException(String.format("없는 파일임! 입력 값: %s", file)));
+    }
+
+    public boolean isSameFile(final File file) {
+        return this == file;
     }
 
     public String getFile() {

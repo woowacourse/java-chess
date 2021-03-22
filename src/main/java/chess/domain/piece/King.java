@@ -43,7 +43,7 @@ public class King extends Piece {
     }
 
     @Override
-    public double score() {
+    public double score(final List<Piece> pieces) {
         return SCORE;
     }
 

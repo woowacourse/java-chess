@@ -1,8 +1,10 @@
 package chess.domain.piece;
 
+import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Target;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
@@ -48,6 +50,10 @@ public abstract class Piece {
         return color.equals(piece.color);
     }
 
+    public final File getFile() {
+        return position.getFile();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -63,5 +69,5 @@ public abstract class Piece {
 
     public abstract void move(final Target target, final Pieces basePieces, final Pieces targetPieces);
 
-    public abstract double score();
+    public abstract double score(final List<Piece> pieces);
 }
