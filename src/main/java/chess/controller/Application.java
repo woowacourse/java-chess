@@ -4,7 +4,6 @@ import static chess.controller.type.Command.END;
 import static chess.controller.type.Command.MOVE;
 import static chess.controller.type.Command.START;
 import static chess.controller.type.Command.STATUS;
-import static chess.domain.player.type.TeamColor.WHITE;
 
 import chess.controller.dto.request.CommandRequestDTO;
 import chess.controller.dto.request.MoveRequestDTO;
@@ -12,19 +11,21 @@ import chess.controller.type.Command;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
 import chess.domain.player.score.Scores;
-import chess.domain.player.type.TeamColor;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class Application {
-    private static TeamColor currentTurnTeamColor = WHITE;
+    public static final String WHITE_TEAM_COLOR = "white";
+    public static final String BLACK_TEAM_COLOR = "black";
+
+    private static String currentTurnTeamColor = WHITE_TEAM_COLOR;
     private static ChessGame chessGame;
 
     public static void main(String[] args) {
         chessGame = new ChessGame(new BoardDefaultSetting());
         InputView.printGameStartMessage();
-        Command command = Command.of(getCommandRequestDTO().getCommandInput());
-        if (command == START) {
+        String commandInput = getCommandRequestDTO().getCommandInput();
+        if (Command.of(commandInput) == START) {
             run();
         }
     }
@@ -37,13 +38,14 @@ public class Application {
         startChessGame();
         if (chessGame.isKingDead()) {
             OutputView.printBoard(chessGame.board());
-            OutputView.printWinnerTeamColor(currentTurnTeamColor.opposite());
+            changeCurrentTurnTeamColorToNextTurn();
+            OutputView.printWinnerTeamColor(currentTurnTeamColor);
         }
     }
 
     private static void startChessGame() {
         Command command = START;
-        while (isNotGameEnd(command)) {
+        while (!isGameEnd(command)) {
             OutputView.printBoard(chessGame.board());
             CommandRequestDTO commandRequestDTO = getCommandRequestDTO();
             command = Command.of(commandRequestDTO.getCommandInput());
@@ -51,8 +53,8 @@ public class Application {
         }
     }
 
-    private static boolean isNotGameEnd(Command command) {
-        return command != END && !chessGame.isKingDead();
+    private static boolean isGameEnd(Command command) {
+        return command == END || chessGame.isKingDead();
     }
 
     private static void executeCommand(Command command, CommandRequestDTO commandRequestDTO) {
@@ -68,6 +70,14 @@ public class Application {
 
     private static void move(CommandRequestDTO commandRequestDTO) {
         chessGame.move(new MoveRequestDTO(currentTurnTeamColor, commandRequestDTO));
-        currentTurnTeamColor = currentTurnTeamColor.opposite();
+        changeCurrentTurnTeamColorToNextTurn();
+    }
+
+    private static void changeCurrentTurnTeamColorToNextTurn() {
+        if (currentTurnTeamColor.equals(WHITE_TEAM_COLOR)) {
+            currentTurnTeamColor = BLACK_TEAM_COLOR;
+            return;
+        }
+        currentTurnTeamColor = WHITE_TEAM_COLOR;
     }
 }

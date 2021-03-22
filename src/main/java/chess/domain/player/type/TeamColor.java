@@ -1,23 +1,21 @@
 package chess.domain.player.type;
 
+import java.util.Arrays;
+
 public enum TeamColor {
-    WHITE("백"),
-    BLACK("흑");
+    WHITE("white"),
+    BLACK("black");
 
-    private final String koreanColorName;
+    private final String value;
 
-    TeamColor(String koreanColorName) {
-        this.koreanColorName = koreanColorName;
+    TeamColor(String value) {
+        this.value = value;
     }
 
-    public TeamColor opposite() {
-        if (this == WHITE) {
-            return BLACK;
-        }
-        return WHITE;
-    }
-
-    public String koreanColorName() {
-        return koreanColorName;
+    public static TeamColor of(String teamColorInput) {
+        return Arrays.stream(TeamColor.values())
+            .filter(teamColor -> teamColor.value.equals(teamColorInput))
+            .findAny()
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 팀 색깔 입니다."));
     }
 }

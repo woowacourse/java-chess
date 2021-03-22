@@ -12,9 +12,9 @@ import static chess.domain.piece.type.PieceWithColorType.W_NT;
 import static chess.domain.piece.type.PieceWithColorType.W_PN;
 import static chess.domain.piece.type.PieceWithColorType.W_QN;
 import static chess.domain.piece.type.PieceWithColorType.W_RK;
-import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import chess.controller.dto.request.CommandRequestDTO;
 import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
@@ -110,7 +110,8 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, "a4", "b5");
+            CommandRequestDTO commandRequestDTO = new CommandRequestDTO("move", "a4", "b5");
+            MoveRequestDTO moveRequestDTO = new MoveRequestDTO("white", commandRequestDTO);
 
             chessGame.move(moveRequestDTO);
             Scores scores = chessGame.scores();

@@ -1,20 +1,22 @@
 package chess.view;
 
+
 import chess.controller.dto.request.CommandRequestDTO;
 import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
     private static final String COMMAND_DELIMITER = " ";
-    private static final String MOVE_COMMAND = "move";
-    private static final String START_COMMAND = "start";
-    private static final String STATUS_COMMAND = "status";
-    private static final String END_COMMAND = "end";
     private static final int COMMAND_INDEX = 0;
     private static final int START_POSITION_INDEX = 1;
     private static final int DESTINATION_INDEX = 2;
     private static final int MOVE_COMMAND_FACTORS_SIZE = 3;
     private static final int COMMAND_FACTORS_SIZE_EXCEPT_MOVE = 1;
+    private static final String START_COMMAND = "start";
+    private static final String MOVE_COMMAND = "move";
+    private static final String STATUS_COMMAND = "status";
+    private static final String END_COMMAND = "end";
+    private static boolean isFirst = true;
 
     private InputView() {
     }
@@ -27,7 +29,9 @@ public class InputView {
     public static CommandRequestDTO getCommandRequest() {
         String commandLineInput = SCANNER.nextLine();
         String[] splitCommandLineInput = commandLineInput.split(COMMAND_DELIMITER);
+        validateFirstCommandInput(splitCommandLineInput[COMMAND_INDEX]);
         validateCommandLineFormat(splitCommandLineInput);
+        isFirst = false;
         return parseCommandLineInput(splitCommandLineInput);
     }
 
@@ -37,6 +41,18 @@ public class InputView {
             return;
         }
         validateCommandLineFormatExceptMove(splitCommandLineInput);
+    }
+
+    private static void validateFirstCommandInput(String commandInput) {
+        if (isFirst) {
+            validateCommandInputIsStartCommand(commandInput);
+        }
+    }
+
+    private static void validateCommandInputIsStartCommand(String commandInput) {
+        if (!(commandInput.equals(START_COMMAND) || commandInput.equals(END_COMMAND))) {
+            throw new IllegalArgumentException("첫 명령어는 start 또는 end만 입력할 수 있습니다.");
+        }
     }
 
     private static void validateMoveCommandLineFormat(String[] splitCommandLineInput) {

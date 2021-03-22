@@ -1,12 +1,13 @@
 package chess.view;
 
+import static chess.controller.Application.WHITE_TEAM_COLOR;
+
 import chess.domain.board.Board;
 import chess.domain.board.Cell;
 import chess.domain.board.type.File;
 import chess.domain.board.type.Rank;
 import chess.domain.piece.Piece;
 import chess.domain.player.score.Scores;
-import chess.domain.player.type.TeamColor;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -15,6 +16,8 @@ import java.util.stream.Collectors;
 
 public class OutputView {
     private static final String EMPTY_CELL = ".";
+    private static final String WHITE_TEAM_COLOR_KOREAN = "백";
+    private static final String BLACK_TEAM_COLOR_KOREAN = "흑";
 
     private OutputView() {
     }
@@ -52,7 +55,14 @@ public class OutputView {
         System.out.printf("흑 팀 점수 : %.1f, 백 팀 점수 : %.1f\n", blackTeamScore, whiteTeamScore);
     }
 
-    public static void printWinnerTeamColor(TeamColor winnerTeamColor) {
-        System.out.println(winnerTeamColor.koreanColorName() + " 팀이 이겼습니다.");
+    public static void printWinnerTeamColor(String winnerTeamColor) {
+        System.out.println(getKoreanTeamColorName(winnerTeamColor) + " 팀이 이겼습니다.");
+    }
+
+    private static String getKoreanTeamColorName(String teamColor) {
+        if (teamColor.equals(WHITE_TEAM_COLOR)) {
+            return WHITE_TEAM_COLOR_KOREAN;
+        }
+        return BLACK_TEAM_COLOR_KOREAN;
     }
 }

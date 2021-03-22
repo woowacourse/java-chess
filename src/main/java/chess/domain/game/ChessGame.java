@@ -7,6 +7,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
 import chess.domain.player.Players;
 import chess.domain.player.score.Scores;
+import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
 import chess.domain.position.cache.PositionsCache;
@@ -43,7 +44,8 @@ public class ChessGame {
     public void move(MoveRequestDTO moveRequestDTO) {
         MoveRoute moveRoute = new MoveRoute(moveRequestDTO);
         updatePiecesOfPlayers(moveRoute);
-        board.move(moveRoute, moveRequestDTO.getTeamColor());
+        TeamColor teamColor = TeamColor.of(moveRequestDTO.getTeamColor());
+        board.move(moveRoute, teamColor);
     }
 
     private void updatePiecesOfPlayers(MoveRoute moveRoute) {
