@@ -39,14 +39,16 @@ public abstract class Piece {
     }
 
     protected boolean isDiagonal(Position start, Position end) {
-        int rowDiff = Math.abs(start.getRow() - end.getRow());
-        int colDiff = Math.abs(start.getColumn() - end.getColumn());
+        int[] diff = Position.makeDiff(start, end);
+        int rowDiff = Math.abs(diff[0]);
+        int colDiff = Math.abs(diff[1]);
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
     }
 
     public boolean isLinear(Position start, Position end) {
-        int rowDiff = Math.abs(start.getRow() - end.getRow());
-        int colDiff = Math.abs(start.getColumn() - end.getColumn());
+        int[] diff = Position.makeDiff(start, end);
+        int rowDiff = Math.abs(diff[0]);
+        int colDiff = Math.abs(diff[1]);
         return (rowDiff == 0) || (colDiff == 0);
     }
 
@@ -55,16 +57,14 @@ public abstract class Piece {
     }
 
     protected Direction getLinearDirection(Position start, Position end) {
-        int rowDiff = end.getRow() - start.getRow();
-        int colDiff = end.getColumn() - start.getColumn();
-        Direction direction = Direction.findLinearDirection(rowDiff, colDiff);
+        int[] diff = Position.makeDiff(start, end);
+        Direction direction = Direction.findLinearDirection(diff[0], diff[1]);
         return direction;
     }
 
     protected Direction getDiagonalDirection(Position start, Position end) {
-        int rowDiff = end.getRow() - start.getRow();
-        int colDiff = end.getColumn() - start.getColumn();
-        Direction direction = Direction.findDiagonalDirection(rowDiff, colDiff);
+        int[] diff = Position.makeDiff(start, end);
+        Direction direction = Direction.findDiagonalDirection(diff[0], diff[1]);
         return direction;
     }
 

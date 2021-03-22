@@ -33,6 +33,14 @@ public class Position {
         return Position.valueOf(row + direction.getX(), column + direction.getY());
     }
 
+    public static int[] makeDiff(Position from, Position to) {
+        int[] diff = new int[]{
+                to.getRow() - from.getRow(),
+                to.getColumn() - from.getColumn()
+        };
+        return diff;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
