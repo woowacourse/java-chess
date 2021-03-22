@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+import chess.domain.piece.info.Score;
+
 import java.util.ArrayList;
 import java.util.List;
 

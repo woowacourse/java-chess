@@ -1,5 +1,9 @@
 package chess.domain.piece;
 
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+import chess.domain.piece.info.Score;
+
 public abstract class Piece {
     protected Position position;
     protected final String name;

@@ -1,8 +1,7 @@
-package chess.domain;
+package chess.domain.piece.info;
 
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Position;
 
 import java.util.Arrays;
 import java.util.function.BiPredicate;

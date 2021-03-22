@@ -1,7 +1,10 @@
 package chess.domain.piece;
 
-import chess.domain.Cross;
-import chess.domain.Diagonal;
+import chess.domain.piece.info.Cross;
+import chess.domain.piece.info.Diagonal;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+import chess.domain.piece.info.Score;
 
 public abstract class Move extends Piece {
     public Move(Position position, String name, Color color) {

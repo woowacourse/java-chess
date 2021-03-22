@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+
 import java.util.*;
 import java.util.stream.Collectors;
 

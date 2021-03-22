@@ -1,10 +1,10 @@
 package chess.view;
 
-import chess.domain.piece.Color;
+import chess.domain.piece.info.Color;
 import chess.domain.piece.CurrentPieces;
 import chess.domain.piece.Piece;
 
-import static chess.domain.piece.Position.POSITIONS;
+import static chess.domain.piece.info.Position.POSITIONS;
 
 public class OutputView {
     private OutputView() {

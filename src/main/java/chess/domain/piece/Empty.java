@@ -1,5 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+
 public class Empty extends Piece {
     public static final Empty EMPTY = new Empty(Position.EMPTY, ".", Color.NONE);
 

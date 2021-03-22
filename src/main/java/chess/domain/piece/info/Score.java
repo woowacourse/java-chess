@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.info;
 
 public class Score {
     private final double value;

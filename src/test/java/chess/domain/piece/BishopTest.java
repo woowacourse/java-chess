@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Diagonal;
+import chess.domain.piece.info.Diagonal;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

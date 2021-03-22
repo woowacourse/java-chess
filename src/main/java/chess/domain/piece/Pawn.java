@@ -1,6 +1,9 @@
 package chess.domain.piece;
 
-import chess.domain.Cross;
+import chess.domain.piece.info.Cross;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Position;
+import chess.domain.piece.info.Score;
 
 import java.util.Arrays;
 import java.util.List;
