@@ -23,9 +23,14 @@ public abstract class Player {
         this.state = this.state.move(source, target, targetState);
     }
 
+    public final double calculateScore() {
+        return state.pieces().calculateScore();
+    }
+
     public final void toRunningState(final State anotherState) {
         this.state = this.state.toRunningState(anotherState);
     }
 
     public abstract String getName();
+
 }

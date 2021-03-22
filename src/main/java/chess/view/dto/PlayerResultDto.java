@@ -3,8 +3,8 @@ package chess.view.dto;
 import chess.domain.player.Player;
 
 public class PlayerResultDto {
-    private String name;
-    private double score;
+    private final String name;
+    private final double score;
 
     private PlayerResultDto(final String name, final double score) {
         this.name = name;
@@ -12,7 +12,7 @@ public class PlayerResultDto {
     }
 
     public static PlayerResultDto toDto(final Player player) {
-        return new PlayerResultDto(player.getName(), player.getState().pieces().calculateScore());
+        return new PlayerResultDto(player.getName(), player.calculateScore());
     }
 
     public String getName() {

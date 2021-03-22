@@ -8,7 +8,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import static chess.domain.piece.Color.*;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 public class King extends Piece {
     private static final String SYMBOL = "Kk";

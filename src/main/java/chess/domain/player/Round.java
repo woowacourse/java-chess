@@ -93,7 +93,7 @@ public class Round {
         return pieces.calculateScore();
     }
 
-    private Player currentPlayer(){
+    private Player currentPlayer() {
         if (blackPlayer.isFinish()) {
             return blackPlayer;
         }

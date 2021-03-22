@@ -32,7 +32,7 @@ public class OutputView {
     }
 
     public static void showScore(final String name, final double calculateScore) {
-        System.out.println(String.format("%s의 점수: %.1f", name , calculateScore));
+        System.out.println(String.format("%s의 점수: %.1f", name, calculateScore));
         System.out.println();
     }
 
