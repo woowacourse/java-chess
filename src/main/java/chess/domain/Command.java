@@ -18,9 +18,9 @@ public enum Command {
 
     public static Command of(String value) {
         return Stream.of(values())
-            .filter(command -> command.message.equals(value))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("없는 명령어입니다."));
+                .filter(command -> command.message.equals(value))
+                .findFirst()
+                .orElseThrow(() -> new IllegalArgumentException("없는 명령어입니다."));
     }
 
     public static boolean isStart(String input) {

@@ -40,30 +40,30 @@ class KnightTest {
         board.putPiece(firstWhitePiece, Position.ofName("d2"));
         board.putPiece(secondWhitePiece, Position.ofName("f2"));
         assertThat(paths.removeObstacles(knight, board).positions()).isEqualTo(
-            knightE4WithObstacles());
+                knightE4WithObstacles());
     }
 
     List<Position> knightE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("d6"),
-            Position.ofName("f6"),
-            Position.ofName("g5"),
-            Position.ofName("g3"),
-            Position.ofName("f2"),
-            Position.ofName("d2"),
-            Position.ofName("c5"),
-            Position.ofName("c3")
+                Position.ofName("d6"),
+                Position.ofName("f6"),
+                Position.ofName("g5"),
+                Position.ofName("g3"),
+                Position.ofName("f2"),
+                Position.ofName("d2"),
+                Position.ofName("c5"),
+                Position.ofName("c3")
         );
     }
 
     List<Position> knightE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("d6"),
-            Position.ofName("f6"),
-            Position.ofName("g5"),
-            Position.ofName("g3"),
-            Position.ofName("c5"),
-            Position.ofName("c3")
+                Position.ofName("d6"),
+                Position.ofName("f6"),
+                Position.ofName("g5"),
+                Position.ofName("g3"),
+                Position.ofName("c5"),
+                Position.ofName("c3")
         );
     }
 }

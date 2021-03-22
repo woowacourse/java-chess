@@ -37,8 +37,8 @@ class CommandTest {
         String success_value = "start";
         String fail_value = "end";
         assertAll(
-            () -> assertTrue(Command.isStart(success_value)),
-            () -> assertFalse(Command.isStart(fail_value))
+                () -> assertTrue(Command.isStart(success_value)),
+                () -> assertFalse(Command.isStart(fail_value))
         );
     }
 
@@ -48,8 +48,8 @@ class CommandTest {
         String success_value = "end";
         String fail_value = "start";
         assertAll(
-            () -> assertTrue(Command.isEnd(success_value)),
-            () -> assertFalse(Command.isEnd(fail_value))
+                () -> assertTrue(Command.isEnd(success_value)),
+                () -> assertFalse(Command.isEnd(fail_value))
         );
     }
 }

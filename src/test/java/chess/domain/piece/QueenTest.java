@@ -32,63 +32,63 @@ class QueenTest {
         Paths paths = new Paths();
         paths = paths.findAllPath(queen, current);
         assertThat(paths.removeObstacles(queen, BoardFactory.initializeBoard()).positions())
-            .isEqualTo(
-                queenE4WithObstacles());
+                .isEqualTo(
+                        queenE4WithObstacles());
     }
 
     List<Position> queenE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("e8"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("e2"),
-            Position.ofName("e1"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4"),
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("g2"),
-            Position.ofName("h1"),
-            Position.ofName("d3"),
-            Position.ofName("c2"),
-            Position.ofName("b1"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7"),
-            Position.ofName("a8")
+                Position.ofName("e5"),
+                Position.ofName("e6"),
+                Position.ofName("e7"),
+                Position.ofName("e8"),
+                Position.ofName("f4"),
+                Position.ofName("g4"),
+                Position.ofName("h4"),
+                Position.ofName("e3"),
+                Position.ofName("e2"),
+                Position.ofName("e1"),
+                Position.ofName("d4"),
+                Position.ofName("c4"),
+                Position.ofName("b4"),
+                Position.ofName("a4"),
+                Position.ofName("f5"),
+                Position.ofName("g6"),
+                Position.ofName("h7"),
+                Position.ofName("f3"),
+                Position.ofName("g2"),
+                Position.ofName("h1"),
+                Position.ofName("d3"),
+                Position.ofName("c2"),
+                Position.ofName("b1"),
+                Position.ofName("d5"),
+                Position.ofName("c6"),
+                Position.ofName("b7"),
+                Position.ofName("a8")
         );
     }
 
     List<Position> queenE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4"),
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7")
+                Position.ofName("e5"),
+                Position.ofName("e6"),
+                Position.ofName("e7"),
+                Position.ofName("f4"),
+                Position.ofName("g4"),
+                Position.ofName("h4"),
+                Position.ofName("e3"),
+                Position.ofName("d4"),
+                Position.ofName("c4"),
+                Position.ofName("b4"),
+                Position.ofName("a4"),
+                Position.ofName("f5"),
+                Position.ofName("g6"),
+                Position.ofName("h7"),
+                Position.ofName("f3"),
+                Position.ofName("d3"),
+                Position.ofName("d5"),
+                Position.ofName("c6"),
+                Position.ofName("b7")
         );
     }
 }

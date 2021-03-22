@@ -1,9 +1,9 @@
 package chess.domain.game;
 
 import chess.domain.CommandAsString;
+import chess.domain.board.Board2;
 import chess.domain.game.state.GameState;
 import chess.domain.game.state.InitialState;
-import chess.domain.board.Board2;
 
 public final class Game2 {
 

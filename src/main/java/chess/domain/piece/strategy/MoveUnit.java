@@ -1,6 +1,5 @@
 package chess.domain.piece.strategy;
 
-import chess.domain.position.Position2;
 import java.util.Arrays;
 import java.util.List;
 

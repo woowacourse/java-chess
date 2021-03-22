@@ -22,11 +22,11 @@ class PlayersTest {
     @BeforeEach
     void setUp() {
         playerListWithAllColors = Arrays.asList(
-            Player.of(PieceColor.WHITE),
-            Player.of(PieceColor.BLACK)
+                Player.of(PieceColor.WHITE),
+                Player.of(PieceColor.BLACK)
         );
         playerListWithOnlyWhite = Collections.singletonList(
-            Player.of(PieceColor.WHITE)
+                Player.of(PieceColor.WHITE)
         );
         validPlayers = Players.of(playerListWithAllColors);
         invalidPlayers = Players.of(playerListWithOnlyWhite);
@@ -49,7 +49,7 @@ class PlayersTest {
     @Test
     void currentPlayer_throwsException() {
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> invalidPlayers.currentPlayer(PieceColor.BLACK))
-            .withMessage("해당 색을 가진 플레이어가 존재하지 않습니다.");
+                .isThrownBy(() -> invalidPlayers.currentPlayer(PieceColor.BLACK))
+                .withMessage("해당 색을 가진 플레이어가 존재하지 않습니다.");
     }
 }

@@ -1,6 +1,5 @@
 package chess.domain;
 
-import chess.domain.position.Position2;
 import chess.domain.position.PositionName;
 
 public final class CommandAsString {

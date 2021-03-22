@@ -16,23 +16,23 @@ public class PieceProvider {
 
     public static List<Piece> blackPieces() {
         return Arrays.asList(
-            new BlackPawn(),
-            new Rook(PieceColor.BLACK),
-            new Bishop(PieceColor.BLACK),
-            new Knight(PieceColor.BLACK),
-            new Queen(PieceColor.BLACK),
-            new King(PieceColor.BLACK)
+                new BlackPawn(),
+                new Rook(PieceColor.BLACK),
+                new Bishop(PieceColor.BLACK),
+                new Knight(PieceColor.BLACK),
+                new Queen(PieceColor.BLACK),
+                new King(PieceColor.BLACK)
         );
     }
 
     public static List<Piece> whitePieces() {
         return Arrays.asList(
-            new WhitePawn(),
-            new Rook(PieceColor.WHITE),
-            new Bishop(PieceColor.WHITE),
-            new Knight(PieceColor.WHITE),
-            new Queen(PieceColor.WHITE),
-            new King(PieceColor.WHITE)
+                new WhitePawn(),
+                new Rook(PieceColor.WHITE),
+                new Bishop(PieceColor.WHITE),
+                new Knight(PieceColor.WHITE),
+                new Queen(PieceColor.WHITE),
+                new King(PieceColor.WHITE)
         );
     }
 }

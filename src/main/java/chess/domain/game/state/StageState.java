@@ -16,7 +16,8 @@ public abstract class StageState implements GameState {
         return board;
     }
 
-    protected void moveInBoard(final PositionName source, final PositionName target, final PieceColor currentTurnColor) {
+    protected void moveInBoard(final PositionName source, final PositionName target,
+            final PieceColor currentTurnColor) {
         if (board.isEnemyPiece(source, currentTurnColor.reversed())) {
             throw new IllegalArgumentException("해당 체스말을 움직일 권한이 없습니다.");
         }

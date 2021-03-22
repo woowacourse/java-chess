@@ -23,7 +23,7 @@ class PawnTest {
         board.putPiece(pawn, current);
         paths = paths.findAllPath(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE2WithoutObstaclesWhite());
+                .isEqualTo(pawnE2WithoutObstaclesWhite());
     }
 
     @DisplayName("흰색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 흰폰-e2 흰피스-없음 검은피스-d3,f3")
@@ -38,7 +38,7 @@ class PawnTest {
         board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("f3"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE2WithEnemyWhite());
+                .isEqualTo(pawnE2WithEnemyWhite());
     }
 
     @DisplayName("흰색 폰이 시작점이 아닌 곳에 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰폰-e4 흰피스-d5 검은피스-f5")
@@ -53,7 +53,7 @@ class PawnTest {
         board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("f5"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE4WithObstacleWhite());
+                .isEqualTo(pawnE4WithObstacleWhite());
     }
 
     @DisplayName("검은색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 검은폰-e7 흰피스-없음 검은피스-없음")
@@ -66,7 +66,7 @@ class PawnTest {
         paths = paths.findAllPath(pawn, current);
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE2WithoutObstaclesBlack());
+                .isEqualTo(pawnE2WithoutObstaclesBlack());
     }
 
     @DisplayName("검은색 폰이 시작점에서 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 검은폰-e7 흰피스-d6,f6 검은피스-없음")
@@ -81,7 +81,7 @@ class PawnTest {
         board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("f6"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE2WithEnemyBlack());
+                .isEqualTo(pawnE2WithEnemyBlack());
     }
 
     @DisplayName("검은색 폰이 시작점이 아닌 곳에 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 검은폰-e4 흰피스-d3 검은피스-f3")
@@ -96,52 +96,52 @@ class PawnTest {
         board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("d3"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
-            .isEqualTo(pawnE4WithObstacleBlack());
+                .isEqualTo(pawnE4WithObstacleBlack());
     }
 
     List<Position> pawnE2WithoutObstaclesWhite() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("e4")
+                Position.ofName("e3"),
+                Position.ofName("e4")
         );
     }
 
     List<Position> pawnE2WithEnemyWhite() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("e4")
+                Position.ofName("e3"),
+                Position.ofName("f3"),
+                Position.ofName("d3"),
+                Position.ofName("e4")
         );
     }
 
     List<Position> pawnE4WithObstacleWhite() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("f5")
+                Position.ofName("e5"),
+                Position.ofName("f5")
         );
     }
 
     List<Position> pawnE2WithoutObstaclesBlack() {
         return Arrays.asList(
-            Position.ofName("e6"),
-            Position.ofName("e5")
+                Position.ofName("e6"),
+                Position.ofName("e5")
         );
     }
 
     List<Position> pawnE2WithEnemyBlack() {
         return Arrays.asList(
-            Position.ofName("e6"),
-            Position.ofName("f6"),
-            Position.ofName("d6"),
-            Position.ofName("e5")
+                Position.ofName("e6"),
+                Position.ofName("f6"),
+                Position.ofName("d6"),
+                Position.ofName("e5")
         );
     }
 
     List<Position> pawnE4WithObstacleBlack() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("d3")
+                Position.ofName("e3"),
+                Position.ofName("d3")
         );
     }
 }
