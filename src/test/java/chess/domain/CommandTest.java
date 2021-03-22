@@ -30,25 +30,4 @@ class CommandTest {
         assertThat(Command.of(value)).isEqualTo(Command.MOVE);
     }
 
-    @DisplayName("유저가 입력한 문자열이 start일 때만 true를 반환한다.")
-    @Test
-    void isStart() {
-        String success_value = "start";
-        String fail_value = "end";
-        assertAll(
-            () -> assertTrue(Command.isStart(success_value)),
-            () -> assertFalse(Command.isStart(fail_value))
-        );
-    }
-
-    @DisplayName("유저가 입력한 문자열이 end일 때만 true를 반환한다.")
-    @Test
-    void isEnd() {
-        String success_value = "end";
-        String fail_value = "start";
-        assertAll(
-            () -> assertTrue(Command.isEnd(success_value)),
-            () -> assertFalse(Command.isEnd(fail_value))
-        );
-    }
 }

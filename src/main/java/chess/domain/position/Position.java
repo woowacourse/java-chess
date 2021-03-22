@@ -85,6 +85,12 @@ public class Position {
         return column.isBoundary(direction) || row.isBoundary(direction);
     }
 
+    public Position moveTo(Direction direction) {
+        Column newColumn = column.move(direction);
+        Row newRow = row.move(direction);
+        return Position.of(newColumn, newRow);
+    }
+
     public boolean isOn(Column column) {
         return this.column.equals(column);
     }
@@ -110,11 +116,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, column);
-    }
-
-    public Position moveTo(Direction direction) {
-        Column newColumn = column.move(direction);
-        Row newRow = row.move(direction);
-        return Position.of(newColumn, newRow);
     }
 }

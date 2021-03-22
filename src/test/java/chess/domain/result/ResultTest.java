@@ -35,8 +35,7 @@ class ResultTest {
         board.putPiece(new WhitePawn(), Position.of("a3"));
         Result result = new Result(board);
         assertThat(result.getWhiteScore()).isEqualTo(new Score(1.5));
-        assertThat(result.getBlackScore()).isEqualTo(new Score(1.5));
-
+        assertThat(result.getBlackScore()).isEqualTo(new Score(0));
     }
 
     @DisplayName("같은 행에 있거나 있지 않은 폰들의 점수를 계산한다.")

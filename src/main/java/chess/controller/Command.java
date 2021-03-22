@@ -17,6 +17,8 @@ public enum Command {
     END("end", Command::end),
     STATUS("status", Command::showStatus);
 
+    private static final int SOURCE_POSITION = 1;
+    private static final int TARGET_POSITION = 2;
     private final String message;
     private final BiConsumer<String, Game> consumer;
 
@@ -30,17 +32,13 @@ public enum Command {
             throw new IllegalArgumentException("이미 게임을 진행중입니다.");
         }
         game.changeState(new Running());
-        OutputView.printBoard(game.getBoard());
-        OutputView.printTurn(game.getTurn());
     }
 
     private static void move(String input, Game game) {
         if (!game.isRunning()) {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
         }
-        game.move(positionOf(input, 1), positionOf(input, 2));
-        OutputView.printBoard(game.getBoard());
-        OutputView.printTurn(game.getTurn());
+        game.move(positionOf(input, SOURCE_POSITION), positionOf(input, TARGET_POSITION));
     }
 
     private static void end(String input, Game game) {

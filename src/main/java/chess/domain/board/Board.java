@@ -55,10 +55,6 @@ public class Board {
         return paths.removeObstacles(piece, this);
     }
 
-    public Map<Piece, Position> getCoordinates() {
-        return coordinates;
-    }
-
     public Map<Piece, Position> remainPieces(PieceColor color) {
         return coordinates.entrySet()
             .stream()
@@ -78,5 +74,9 @@ public class Board {
             .filter(Piece::isKing)
             .count();
         return count == 1;
+    }
+
+    public Map<Piece, Position> getCoordinates() {
+        return coordinates;
     }
 }

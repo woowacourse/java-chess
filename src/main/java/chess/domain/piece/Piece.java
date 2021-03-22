@@ -31,6 +31,10 @@ public abstract class Piece {
         return this.pieceType.is(PieceType.KNIGHT);
     }
 
+    public boolean isSameSide(Piece that) {
+        return !isEnemyOrEmpty(that);
+    }
+
     public boolean isEnemy(Piece that) {
         return this.pieceColor.equals(that.pieceColor.reversed());
     }
@@ -60,9 +64,5 @@ public abstract class Piece {
 
     public Score score() {
         return pieceType.getScore();
-    }
-
-    public boolean isSameSide(Piece that) {
-        return !isEnemyOrEmpty(that);
     }
 }

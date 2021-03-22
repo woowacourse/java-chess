@@ -65,7 +65,7 @@ public class Path {
     private void calculateNonePawnPath(Piece piece, Board board, List<Position> cleanPath) {
         for (Position position : positions) {
             Piece thatPiece = board.findPieceBy(position);
-            if (!piece.isSameSide(thatPiece)) {
+            if (piece.isSameSide(thatPiece)) {
                 break;
             }
             cleanPath.add(position);
