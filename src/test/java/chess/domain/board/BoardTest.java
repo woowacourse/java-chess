@@ -71,6 +71,7 @@ public class BoardTest {
         killKingOfBlack();
         assertThat(board.score(Color.BLACK)).isEqualTo(36.0);
 
+        board = new Board();
         board.init();
         killKingOfWhite();
         assertThat(board.score(Color.BLACK)).isEqualTo(37.0);
@@ -82,6 +83,7 @@ public class BoardTest {
         killKingOfBlack();
         assertThat(board.score(Color.WHITE)).isEqualTo(37.0);
 
+        board = new Board();
         board.init();
         killKingOfWhite();
         assertThat(board.score(Color.WHITE)).isEqualTo(36.0);
@@ -106,6 +108,15 @@ public class BoardTest {
     @DisplayName("상대방의 말을 움직이려 할때 테스트")
     void moveOpponentPiece() {
         assertThatThrownBy(() -> board.movePiece("c7", "c6"))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("상대방의 말을 움직이려 할때 테스트")
+    void myPieceAttack() {
+        board.movePiece("a2", "a3");
+        board.movePiece("a7", "a6");
+        assertThatThrownBy(() -> board.movePiece("b2", "a3"))
             .isInstanceOf(IllegalArgumentException.class);
     }
 

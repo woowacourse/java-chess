@@ -1,6 +1,7 @@
 package chess.domain.board;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.piece.Bishop;
 import chess.domain.piece.Blank;
@@ -13,6 +14,7 @@ import chess.domain.piece.Position;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.state.Play;
+import chess.domain.state.Ready;
 import chess.domain.state.State;
 import java.util.Map;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,6 +25,8 @@ import org.junit.jupiter.api.Test;
 class PiecesTest {
 
     private final Pieces pieces = new Pieces();
+    private final State whiteState = new Play(Color.WHITE, new Pieces());
+    private final State blackState = new Play(Color.BLACK, new Pieces());
 
     @BeforeEach
     void setUp() {
@@ -32,9 +36,9 @@ class PiecesTest {
     @Test
     @DisplayName("초기화 후 점수 테스트")
     void initScore() {
-        assertThat(pieces.score(Color.BLACK)).isEqualTo(38);
+        assertThat(pieces.score(Color.BLACK)).isEqualTo(38.0);
 
-        assertThat(pieces.score(Color.WHITE)).isEqualTo(38);
+        assertThat(pieces.score(Color.WHITE)).isEqualTo(38.0);
     }
 
     @Test
@@ -77,7 +81,8 @@ class PiecesTest {
     @Test
     @DisplayName("말 이동 테스트")
     void movePiece() {
-        State state = new Play();
+        State state = new Ready();
+        state = state.init();
         pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
         assertThat(pieces.pieces().get(Position.of("b2"))).isInstanceOf(Blank.class);
 
@@ -86,27 +91,18 @@ class PiecesTest {
     }
 
     private void killKingOfBlack() {
-        State state = new Play();
-        pieces.movePiece(Position.of("b2"), Position.of("b4"), state);
-        state.nextTurn();
-        pieces.movePiece(Position.of("c7"), Position.of("c5"), state);
-        state.nextTurn();
+        pieces.movePiece(Position.of("b2"), Position.of("b4"), whiteState);
+        pieces.movePiece(Position.of("c7"), Position.of("c5"), blackState);
 
-        pieces.movePiece(Position.of("b4"), Position.of("c5"), state);
-        state.nextTurn();
-        pieces.movePiece(Position.of("d7"), Position.of("d6"), state);
-        state.nextTurn();
+        pieces.movePiece(Position.of("b4"), Position.of("c5"), whiteState);
+        pieces.movePiece(Position.of("d7"), Position.of("d6"), blackState);
 
-        pieces.movePiece(Position.of("c5"), Position.of("d6"), state);
-        state.nextTurn();
-        pieces.movePiece(Position.of("b7"), Position.of("b6"), state);
-        state.nextTurn();
+        pieces.movePiece(Position.of("c5"), Position.of("d6"), whiteState);
+        pieces.movePiece(Position.of("b7"), Position.of("b6"), blackState);
 
-        pieces.movePiece(Position.of("d6"), Position.of("d7"), state);
-        state.nextTurn();
-        pieces.movePiece(Position.of("a7"), Position.of("a6"), state);
-        state.nextTurn();
-        pieces.movePiece(Position.of("d7"), Position.of("e8"), state);
+        pieces.movePiece(Position.of("d6"), Position.of("d7"), whiteState);
+        pieces.movePiece(Position.of("a7"), Position.of("a6"), blackState);
+        pieces.movePiece(Position.of("d7"), Position.of("e8"), whiteState);
     }
 
     @Test
@@ -131,5 +127,20 @@ class PiecesTest {
         killKingOfBlack();
 
         assertThat(pieces.isKillKing()).isTrue();
+    }
+
+    @Test
+    @DisplayName("자신의 기물이 아닌 다른 기물을 움직일때 테스트")
+    void validateSourcePiece() {
+        assertThatThrownBy(() -> pieces.movePiece(Position.of("a7"), Position.of("a5"), whiteState))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @Test
+    @DisplayName("공격하는 기물이 자신의 기물일때 테스트")
+    void validateAttackPiece() {
+        pieces.movePiece(Position.of("a2"), Position.of("a3"), whiteState);
+        assertThatThrownBy(() -> pieces.movePiece(Position.of("b2"), Position.of("a3"), whiteState))
+            .isInstanceOf(IllegalArgumentException.class);
     }
 }
