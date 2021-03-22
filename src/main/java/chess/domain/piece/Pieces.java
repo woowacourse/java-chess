@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,39 +19,12 @@ public class Pieces {
         this.pieces.addAll(Arrays.asList(pieces));
     }
 
-    public Pieces() {
+    public void add(Piece piece) {
+        pieces.add(piece);
     }
 
-    public void init() {
-        setUpGeneral();
-        setUpPawn();
-    }
-
-    private void setUpGeneral() {
-        setUpGeneralByColor(Color.BLACK, Row.EIGHT);
-        setUpGeneralByColor(Color.WHITE, Row.ONE);
-    }
-
-    private void setUpGeneralByColor(Color color, Row row) {
-        pieces.add(new Rook(color, Position.of(Column.A, row)));
-        pieces.add(new Knight(color, Position.of(Column.B, row)));
-        pieces.add(new Bishop(color, Position.of(Column.C, row)));
-        pieces.add(new Queen(color, Position.of(Column.D, row)));
-        pieces.add(new King(color, Position.of(Column.E, row)));
-        pieces.add(new Bishop(color, Position.of(Column.F, row)));
-        pieces.add(new Knight(color, Position.of(Column.G, row)));
-        pieces.add(new Rook(color, Position.of(Column.H, row)));
-    }
-
-    public void setUpPawn() {
-        setUpRow(Row.SEVEN, Color.BLACK);
-        setUpRow(Row.TWO, Color.WHITE);
-    }
-
-    private void setUpRow(Row row, Color color) {
-        for (Column column : Column.values()) {
-            pieces.add(new Pawn(color, Position.of(column, row)));
-        }
+    public void delete(Piece piece) {
+        pieces.remove(piece);
     }
 
     public Piece getPieceOf(Position position) {
@@ -69,10 +41,6 @@ public class Pieces {
 
     public List<Piece> toList() {
         return pieces;
-    }
-
-    public void delete(Piece piece) {
-        pieces.remove(piece);
     }
 
     public double score(Color color) {

@@ -30,7 +30,7 @@ public class Empty extends Basis {
 
     @Override
     public boolean isSameColor(Color color) {
-        throw new UnsupportedOperationException();
+        return false;
     }
 
     @Override

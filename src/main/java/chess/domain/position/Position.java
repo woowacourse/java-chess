@@ -43,6 +43,10 @@ public class Position {
         return column.value() + row.value();
     }
 
+    public static List<Position> all () {
+        return new ArrayList<>(cache.values());
+    }
+
     public Position moveBy(int columnValue, int rowValue) {
         return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
     }

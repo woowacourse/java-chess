@@ -1,5 +1,7 @@
 package chess.controller;
 
+import chess.domain.Board;
+import chess.domain.BoardFactory;
 import chess.domain.Game;
 import chess.domain.position.Position;
 import chess.view.InputView;
@@ -11,9 +13,10 @@ public class ChessController {
         if (willNotPlayGame()) {
             return;
         }
-        Game game = new Game();
+        Board board = BoardFactory.create();
+        Game game = new Game(board);
         OutputView.printWayToMove();
-        OutputView.display(game.getPieces());
+        OutputView.display(board.allPieces());
 
         play(game);
         printScoreIfWanted(game);
@@ -47,7 +50,7 @@ public class ChessController {
         OutputView.printCurrentPlayer(game.currentPlayer());
         InputPositionDTO positionInputs = InputView.requestPositions();
         game.move(Position.from(positionInputs.from()), Position.from(positionInputs.to()));
-        OutputView.display(game.getPieces());
+        OutputView.display(game.allBoard());
     }
 
     private void printScoreIfWanted(Game game) {

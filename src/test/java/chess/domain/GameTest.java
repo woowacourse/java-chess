@@ -15,7 +15,8 @@ class GameTest {
 
     @BeforeEach
     void setUp() {
-        game = new Game();
+        Board board = BoardFactory.create();
+        game = new Game(board);
     }
 
 

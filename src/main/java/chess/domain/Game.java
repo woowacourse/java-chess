@@ -2,34 +2,28 @@ package chess.domain;
 
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
-import chess.domain.position.Column;
 import chess.domain.position.Position;
-import chess.domain.position.Row;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Game {
-    private final Pieces pieces;
+    private final Board board;
     private final Turn turn;
 
-    public Game() {
-        pieces = new Pieces();
+    public Game(Board board) {
+        this.board = board;
         turn = new Turn();
-        pieces.init();
     }
 
     public void move(Position from, Position to) {
         Player player = turn.player();
-        player.move(from, to, pieces);
+        board.move(player.color(), from, to);
         turn.next();
     }
 
     public boolean isNotEnd() {
-        return pieces.toList()
-                     .stream()
-                     .filter(Piece::isKing)
-                     .count() == 2;
+        return board.isNotEnd();
     }
 
     public Player currentPlayer() {
@@ -38,12 +32,12 @@ public class Game {
 
     public Map<Color, Double> score() {
         Map<Color, Double> scores = new HashMap<>();
-        scores.put(Color.BLACK, pieces.score(Color.BLACK));
-        scores.put(Color.WHITE, pieces.score(Color.WHITE));
+        scores.put(Color.BLACK, board.score(Color.BLACK));
+        scores.put(Color.WHITE, board.score(Color.WHITE));
         return scores;
     }
 
-    public Pieces getPieces() {
-        return pieces;
+    public Map<Position, Piece> allBoard() {
+        return board.allPieces();
     }
 }
