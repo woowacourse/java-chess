@@ -27,20 +27,23 @@ public class Controller {
     }
 
     public void playGame(ChessGame chessGame) {
-        List<String> input = InputView.moveOrStatus();
+        List<String> input = InputView.moveOrEnd();
 
         if (InputView.MOVE.equals(input.get(COMMAND_INDEX))) {
             chessGame.run(input);
             OutputView.printChessBoard(chessGame.getChessBoard());
             playGame(chessGame);
         }
-        if (InputView.STATUS.equals(input.get(COMMAND_INDEX)) || chessGame.isOver()) {
+        if (InputView.END.equals(input.get(COMMAND_INDEX)) || chessGame.isOver()) {
             endGame(chessGame);
         }
     }
 
     public void endGame(ChessGame chessGame) {
+        OutputView.gameEnd();
         Result result = chessGame.result();
-        OutputView.printResult(result);
+        if (InputView.isStatus()) {
+            OutputView.printResult(result);
+        }
     }
 }
