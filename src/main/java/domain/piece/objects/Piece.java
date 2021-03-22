@@ -8,6 +8,7 @@ import domain.score.Score;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.Queue;
 
 public abstract class Piece {
     private final Name name;
@@ -39,16 +40,16 @@ public abstract class Piece {
     }
 
     protected boolean isDiagonal(Position start, Position end) {
-        int[] diff = Position.makeDiff(start, end);
-        int rowDiff = Math.abs(diff[0]);
-        int colDiff = Math.abs(diff[1]);
+        Queue<Integer> diff = Position.makeDiff(start, end);
+        int rowDiff = Math.abs(diff.poll());
+        int colDiff = Math.abs(diff.poll());
         return (rowDiff != 0 && colDiff != 0) && rowDiff == colDiff;
     }
 
     public boolean isLinear(Position start, Position end) {
-        int[] diff = Position.makeDiff(start, end);
-        int rowDiff = Math.abs(diff[0]);
-        int colDiff = Math.abs(diff[1]);
+        Queue<Integer> diff = Position.makeDiff(start, end);
+        int rowDiff = Math.abs(diff.poll());
+        int colDiff = Math.abs(diff.poll());
         return (rowDiff == 0) || (colDiff == 0);
     }
 
@@ -57,14 +58,14 @@ public abstract class Piece {
     }
 
     protected Direction getLinearDirection(Position start, Position end) {
-        int[] diff = Position.makeDiff(start, end);
-        Direction direction = Direction.findLinearDirection(diff[0], diff[1]);
+        Queue<Integer> diff = Position.makeDiff(start, end);
+        Direction direction = Direction.findLinearDirection(diff.poll(), diff.poll());
         return direction;
     }
 
     protected Direction getDiagonalDirection(Position start, Position end) {
-        int[] diff = Position.makeDiff(start, end);
-        Direction direction = Direction.findDiagonalDirection(diff[0], diff[1]);
+        Queue<Integer> diff = Position.makeDiff(start, end);
+        Direction direction = Direction.findDiagonalDirection(diff.poll(), diff.poll());
         return direction;
     }
 

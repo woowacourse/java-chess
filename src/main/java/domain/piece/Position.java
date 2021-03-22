@@ -2,7 +2,9 @@ package domain.piece;
 
 import domain.IndexMachine;
 
+import java.util.LinkedList;
 import java.util.Objects;
+import java.util.Queue;
 
 public class Position {
     private final int row;
@@ -33,11 +35,10 @@ public class Position {
         return Position.valueOf(row + direction.getX(), column + direction.getY());
     }
 
-    public static int[] makeDiff(Position from, Position to) {
-        int[] diff = new int[]{
-                to.getRow() - from.getRow(),
-                to.getColumn() - from.getColumn()
-        };
+    public static Queue makeDiff(Position from, Position to) {
+        Queue<Integer> diff = new LinkedList<>();
+        diff.add(to.getRow() - from.getRow());
+        diff.add(to.getColumn() - from.getColumn());
         return diff;
     }
 
