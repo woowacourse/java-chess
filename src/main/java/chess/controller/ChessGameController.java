@@ -27,17 +27,24 @@ public class ChessGameController {
 
     private void run() {
         while (chessGame.isPlaying()) {
-            Command command = Command.valueOf(InputView.getCommand());
-            command.execute(chessGame);
-            interactiveCommand(command);
-            printCurrentBoard(command);
+            turnExecute();
         }
         if (Objects.nonNull(chessGame.winner())) {
             OutputView.printWinner(chessGame.winner(), chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
         }
     }
 
-
+    private void turnExecute() {
+        try {
+            Command command = Command.valueOf(InputView.getCommand());
+            command.execute(chessGame);
+            interactiveCommand(command);
+            printCurrentBoard(command);
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+    
     private void interactiveCommand(final Command command) {
         if (command.equals(Command.MOVE)) {
             move();
@@ -55,17 +62,12 @@ public class ChessGameController {
     }
 
     private void move() {
-        try {
-            String startPoint = InputView.getPoint();
-            String endPoint = InputView.getPoint();
+        String startPoint = InputView.getPoint();
+        String endPoint = InputView.getPoint();
 
-            Position startPosition = position(startPoint);
-            Position endPosition = position(endPoint);
-            chessGame.move(startPosition, endPosition, currentTurn);
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-            run();
-        }
+        Position startPosition = position(startPoint);
+        Position endPosition = position(endPoint);
+        chessGame.move(startPosition, endPosition, currentTurn);
     }
 
     private Position position(final String point) {
