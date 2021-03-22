@@ -1,7 +1,6 @@
 package chess.domain.piece.rook;
 
 import chess.domain.piece.Owner;
-import chess.domain.piece.knight.WhiteKnight;
 
 public class BlackRook extends Rook{
 

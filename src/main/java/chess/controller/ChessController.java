@@ -16,11 +16,8 @@ public class ChessController {
     }
 
     public void run() {
-        if (!Menu.of(InputView.getNewGameCommand()).isStart()) {
-            return;
-        }
-        OutputView.printBoard(chessManager.getBoard());
-
+        OutputView.getNewGameCommand();
+        firstCommand();
         String userInput;
         do {
             userInput = InputView.getUserCommand();
@@ -30,10 +27,39 @@ public class ChessController {
         OutputView.printGameResult(chessManager.calculateStatus());
     }
 
+    private void firstCommand() {
+        Menu menu = initFirstCommand();
+        if (menu.isStart()) {
+            OutputView.printBoard(chessManager.getBoard());
+        }
+        if (menu.isEnd()) {
+            OutputView.printEndGame();
+        }
+    }
+
+    private Menu initFirstCommand() {
+        try {
+            String userInput = InputView.getUserCommand();
+            Menu menu = Menu.of(userInput);
+            if (!menu.isStart() && !menu.isEnd()) {
+                throw new IllegalArgumentException("첫 입력은 start(게임시작) 또는 end(게임종료)만 가능합니다.");
+            }
+            return menu;
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            return initFirstCommand();
+        }
+    }
+
     private void commandExecute(final String input) {
         final Menu menu = Menu.of(input);
 
         // XXX :: ENUM 고민
+
+        if (menu.isStart()) {
+            chessManager.resetBoard();
+            OutputView.printBoard(chessManager.getBoard());
+        }
 
         if (menu.isMove()) {
             movePiece(MoveCommand.of(input));

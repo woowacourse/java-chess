@@ -44,4 +44,8 @@ public class ChessManager {
     public boolean isEnd() {
         return board.isEnd();
     }
+
+    public void resetBoard() {
+        board.resetBoard();
+    }
 }
