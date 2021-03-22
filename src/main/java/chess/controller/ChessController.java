@@ -4,8 +4,7 @@ import chess.domain.Game;
 import chess.domain.position.Position;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
+import chess.view.dto.InputPositionDTO;
 
 public class ChessController {
     public void run() {
@@ -46,10 +45,8 @@ public class ChessController {
 
     private void tryOneTurn(Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
-        List<String> positions = InputView.requestPositions();
-        String from = positions.get(0);
-        String to = positions.get(1);
-        game.move(Position.from(from), Position.from(to));
+        InputPositionDTO positionInputs = InputView.requestPositions();
+        game.move(Position.from(positionInputs.from()), Position.from(positionInputs.to()));
         OutputView.display(game.getPieces());
     }
 

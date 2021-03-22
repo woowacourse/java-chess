@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.view.dto.InputPositionDTO;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -22,11 +24,11 @@ public class InputView {
         throw new IllegalArgumentException("start 또는 end 를 입력해주세요");
     }
 
-    public static List<String> requestPositions() {
+    public static InputPositionDTO requestPositions() {
         String userInput = scanner.nextLine();
         List<String> inputs = Arrays.asList(userInput.split(" "));
         if (inputs.size() == 3 && "move".equals(inputs.get(0))) {
-            return inputs.subList(1,3);
+            return new InputPositionDTO(inputs.get(1), inputs.get(2));
         }
         throw new IllegalArgumentException("잘못된 입력입니다.");
     }
