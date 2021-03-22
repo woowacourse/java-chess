@@ -1,64 +1,76 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Blank;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.piece.attribute.Color;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Map;
-import java.util.function.Function;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static chess.domain.piece.attribute.Color.BLACK;
 import static chess.domain.piece.attribute.Color.WHITE;
-import static chess.domain.position.Rank.SEVEN;
-import static chess.domain.position.Rank.TWO;
-import static java.util.stream.Collectors.toMap;
+import static chess.domain.position.File.*;
+import static chess.domain.position.Rank.*;
+import static java.util.stream.Collectors.toList;
 
 public class BoardFactory {
     public static Board createBoard() {
-        Map<Position, Square> board = initialize();
+        List<Square> board = initialize();
         return new Board(board);
     }
 
-    private static Map<Position, Square> initialize() {
-        Map<Position, Square> board = Rank.getBlankRanks().stream()
-                .flatMap(rank ->
-                        Arrays.stream(File.values())
-                                .map(file -> Position.of(file, rank))
-                )
-                .collect(toMap(Function.identity(), position -> new Square(Blank.getInstance())));
+    private static List<Square> initialize() {
+        List<Square> board = createBlankSquare();
 
-        board.put(Position.of("a1"), new Square(new Rook(WHITE)));
-        board.put(Position.of("b1"), new Square(new Knight(WHITE)));
-        board.put(Position.of("c1"), new Square(new Bishop(WHITE)));
-        board.put(Position.of("d1"), new Square(new Queen(WHITE)));
-        board.put(Position.of("e1"), new Square(new King(WHITE)));
-        board.put(Position.of("f1"), new Square(new Bishop(WHITE)));
-        board.put(Position.of("g1"), new Square(new Knight(WHITE)));
-        board.put(Position.of("h1"), new Square(new Rook(WHITE)));
+        board.addAll(createColoredExceptPawn(ONE, WHITE));
 
-        board.putAll(createPawns(TWO, WHITE));
+        board.addAll(createPawns(TWO, WHITE));
 
-        board.put(Position.of("a8"), new Square(new Rook(BLACK)));
-        board.put(Position.of("b8"), new Square(new Knight(BLACK)));
-        board.put(Position.of("c8"), new Square(new Bishop(BLACK)));
-        board.put(Position.of("d8"), new Square(new Queen(BLACK)));
-        board.put(Position.of("e8"), new Square(new King(BLACK)));
-        board.put(Position.of("f8"), new Square(new Bishop(BLACK)));
-        board.put(Position.of("g8"), new Square(new Knight(BLACK)));
-        board.put(Position.of("h8"), new Square(new Rook(BLACK)));
+        board.addAll(createColoredExceptPawn(EIGHT, BLACK));
 
-        board.putAll(createPawns(SEVEN, BLACK));
+        board.addAll(createPawns(SEVEN, BLACK));
 
         return board;
     }
 
-    private static Map<Position, Square> createPawns(Rank rank, Color color) {
+    private static List<Square> createBlankSquare() {
+        return Rank.getBlankRanks().stream()
+                .flatMap(rank ->
+                        Arrays.stream(File.values())
+                                .map(file -> Position.of(file, rank))
+                                .map(position -> new Square(position, Blank.getInstance()))
+                )
+                .collect(Collectors.collectingAndThen(toList(), ArrayList::new));
+    }
+
+    private static List<Square> createColoredExceptPawn(Rank rank, Color color) {
+        return Arrays.asList(
+                new Square(Position.of(A, rank), new Rook(color)),
+                new Square(Position.of(B, rank), new Knight(color)),
+                new Square(Position.of(C, rank), new Bishop(color)),
+                new Square(Position.of(D, rank), new Queen(color)),
+                new Square(Position.of(E, rank), new King(color)),
+                new Square(Position.of(F, rank), new Bishop(color)),
+                new Square(Position.of(G, rank), new Knight(color)),
+                new Square(Position.of(H, rank), new Rook(color))
+        );
+    }
+
+    private static List<Square> createPawns(Rank rank, Color color) {
         return Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
-                .collect(toMap(Function.identity(), position -> new Square(new Pawn(color))));
+                .map(position -> new Square(position, new Pawn(color)))
+                .collect(toList());
     }
 }
 

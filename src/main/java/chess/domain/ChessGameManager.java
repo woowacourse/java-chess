@@ -47,10 +47,6 @@ public class ChessGameManager {
         turnOver();
     }
 
-    public void status() {
-        throwExceptionWhenGameIsNotRunning();
-    }
-
     private void throwExceptionWhenGameIsNotRunning() {
         if (gameStatus != GameStatus.RUNNING) {
             throw new IllegalArgumentException("게임이 진행중이지 않아 실행할 수 없습니다.");

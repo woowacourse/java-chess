@@ -5,8 +5,8 @@ import java.util.function.UnaryOperator;
 
 public enum Color {
     BLACK(String::toUpperCase),
-    WHITE(String::toLowerCase),
-    BLANK(UnaryOperator.identity());
+    WHITE(String::toLowerCase);
+    //BLANK(UnaryOperator.identity());
 
     private UnaryOperator<String> notationRule;
 

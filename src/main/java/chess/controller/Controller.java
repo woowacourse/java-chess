@@ -17,6 +17,7 @@ public class Controller {
             command = Repeater.repeatOnError(() -> CommandRouter.findByInputCommand(InputView.getCommand()));
             executeCommandOrPassOnError(chessGameManager, command);
         } while(!command.isEnd() && !chessGameManager.isSameStatus(GameStatus.END));
+
         if (chessGameManager.isSameStatus(GameStatus.END)) {
             OutputView.printResult(chessGameManager.getStatistics());
         }

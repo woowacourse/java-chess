@@ -2,16 +2,19 @@ package chess.domain.board;
 
 import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
-import chess.domain.piece.attribute.Color;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.RealPiece;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 import chess.domain.statistics.ScoreTable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
@@ -21,18 +24,17 @@ import static java.util.stream.Collectors.toMap;
 public class Board {
     private static final int PAWN_SCORE_DISADVANTAGE_SIZE = 2;
 
-    private final Map<Position, Square> board;
+    private final List<Square> board;
 
-    protected Board(Map<Position, Square> board) {
+    protected Board(List<Square> board) {
         this.board = board;
     }
 
     public Square findByPosition(Position position) {
-        return this.board.get(position);
-    }
-
-    public Map<Position, Square> board() {
-        return Collections.unmodifiableMap(board);
+        return this.board.stream()
+                .filter(square -> square.isSamePosition(position))
+                .findAny()
+                .orElseThrow(() -> new IllegalArgumentException("해당 포지션을 찾을 수 없습니다."));
     }
 
     public MoveResult move(Position from, Position to) {
@@ -41,7 +43,7 @@ public class Board {
     }
 
     public MoveOrder createMoveOrder(Position from, Position to) {
-        return new MoveOrder(Direction.of(from, to), getRoute(from,to), board.get(from), board.get(to));
+        return new MoveOrder(Direction.of(from, to), getRoute(from, to), findByPosition(from), findByPosition(to));
     }
 
     private List<Square> getRoute(Position from, Position to) {
@@ -54,7 +56,7 @@ public class Board {
             currentPosition = currentPosition.getNextPosition(direction);
         }
         return route.stream()
-                .map(board::get)
+                .map(this::findByPosition)
                 .collect(toList());
     }
 
