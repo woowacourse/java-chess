@@ -87,7 +87,7 @@ public class Board {
     public boolean isKingDead() {
         return cells.values().stream()
             .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
-            .count() == 1;
+            .count() < 2;
     }
 
     public BoardResponseDTO status() {

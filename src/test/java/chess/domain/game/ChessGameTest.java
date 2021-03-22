@@ -28,12 +28,32 @@ class ChessGameTest {
     @DisplayName("King이 잡혔는지 확인")
     @Nested
     class KingDead {
-        @DisplayName("King이 잡혔을 때")
+        @DisplayName("King이 1개만 잡혔을 때")
         @Test
-        void isKingDead() {
+        void isOneKingDead() {
             BoardSetting customBoardSetting = new BoardCustomSetting(
                 Arrays.asList(
                     null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, null, null, null)
+            );
+
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+
+            assertThat(chessGame.isKingDead()).isTrue();
+        }
+
+        @DisplayName("2개의 킹들이 모두 잡혔을 때")
+        @Test
+        void isAllKingsDead() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, null, B_RK, null, null, null, null, null,
                     B_PN, null, B_PN, B_BP, null, null, null, null,
                     null, B_PN, null, null, B_QN, null, null, null,
                     null, null, null, null, null, null, null, null,
@@ -110,7 +130,8 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            CommandRequestDTO commandRequestDTO = new CommandRequestDTO("move", "a4", "b5");
+            CommandRequestDTO commandRequestDTO
+                = new CommandRequestDTO("move", "a4", "b5");
             MoveRequestDTO moveRequestDTO = new MoveRequestDTO("white", commandRequestDTO);
 
             chessGame.move(moveRequestDTO);
