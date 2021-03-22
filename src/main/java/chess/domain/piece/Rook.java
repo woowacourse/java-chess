@@ -19,28 +19,8 @@ public class Rook extends PieceOnBoard {
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
-        Position position = source.moveUp();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveUp();
 
-        }
-        position = source.moveDown();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveDown();
-        }
-        position = source.moveLeft();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveLeft();
-        }
-        position = source.moveRight();
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = position.moveRight();
-        }
-
+        candidates.addAll(moveCross(source, target, chessBoard));
         return candidates.contains(target);
     }
 
