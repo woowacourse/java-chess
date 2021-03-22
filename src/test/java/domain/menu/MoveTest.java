@@ -22,7 +22,7 @@ class MoveTest {
     @Test
     void move_menu_test() {
         (new Start()).execute("start", chessGame);
-        assertThat((new Move()).execute("move", chessGame))
+        assertThat((new Move()).execute("move e2 e4", chessGame))
                 .isEqualTo(new BoardDto(chessGame.getBoard()));
     }
 

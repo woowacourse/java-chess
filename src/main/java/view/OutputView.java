@@ -3,8 +3,6 @@ package view;
 import domain.dto.BoardDto;
 import domain.dto.StatusDto;
 
-import java.util.Map;
-
 public class OutputView {
 
     private OutputView() {
@@ -40,5 +38,17 @@ public class OutputView {
     public static void showStatus(StatusDto statusDto) {
         statusDto.getMenuDto().entrySet().stream()
                 .forEach(entry -> System.out.println(entry.getKey() + " : " + entry.getValue() + ""));
+    }
+
+    public static void invalidInputPosition(String command) {
+        System.out.println("잘못된 위치 입력값입니다! (입력 : '" + command + "')");
+    }
+
+    public static void cannotMovePosition(String command) {
+        System.out.println("해당 입력값으로 이동할 수 없습니다. (입력 : " + command + ")");
+    }
+
+    public static void cannotMovesamePosition(String command) {
+        System.out.println("현재 위치와 동일한 위치로 이동할 수 없습니다.(입력 : " + command + ")");
     }
 }

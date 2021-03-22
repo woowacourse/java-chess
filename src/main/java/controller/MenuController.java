@@ -5,9 +5,13 @@ import domain.dto.MenuDto;
 import domain.dto.StatusDto;
 import domain.exception.CannotStartException;
 import domain.exception.GameNotStartException;
+import domain.exception.ImmovableSamePositionException;
+import domain.exception.InvalidMoveException;
 import domain.menu.Menu;
 import domain.ChessGame;
 import view.OutputView;
+
+import java.util.NoSuchElementException;
 
 public class MenuController {
     public void run(String command, ChessGame game) {
@@ -24,6 +28,12 @@ public class MenuController {
             OutputView.alreadyStartGame();
         } catch (GameNotStartException e) { // 메뉴가 시작되지 않아 움직일 수 없는 경우
             OutputView.gameNotStart();
+        } catch (NoSuchElementException | ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
+            OutputView.invalidInputPosition(command);
+        } catch (InvalidMoveException e) {
+            OutputView.cannotMovePosition(command);
+        } catch (ImmovableSamePositionException e) {
+            OutputView.cannotMovesamePosition(command);
         }
     }
 
