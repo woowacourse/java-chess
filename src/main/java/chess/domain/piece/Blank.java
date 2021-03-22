@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import java.util.Map;
@@ -34,8 +33,8 @@ public class Blank implements Piece {
     }
 
     @Override
-    public State getState() {
-        return null;
+    public boolean isAlive() {
+        return false;
     }
 
     @Override

@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
-import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import java.util.Map;
@@ -16,7 +15,7 @@ public interface Piece {
 
     void dead();
 
-    State getState();
+    boolean isAlive();
 
     void changePosition(Position end);
 

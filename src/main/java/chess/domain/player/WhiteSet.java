@@ -86,7 +86,7 @@ public class WhiteSet implements PieceSet{
 
     private List<Piece> alives() {
         return pieces.stream()
-            .filter(piece -> piece.getState() == State.ALIVE)
+            .filter(Piece::isAlive)
             .collect(Collectors.toList());
     }
 

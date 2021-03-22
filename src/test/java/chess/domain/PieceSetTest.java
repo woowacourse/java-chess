@@ -13,7 +13,6 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.BlackSet;
 import chess.domain.player.PieceSet;
 import chess.domain.player.Score;
-import chess.domain.player.WhiteSet;
 import chess.domain.position.Position;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +48,6 @@ public class PieceSetTest {
     @Test
     @DisplayName("폰이 하나만 있을 경우 1점이여야 한다")
     void score_one_pawn() {
-        // rook : 5, b: 3, q: 9, : p1 , n: 2.5
         List<Piece> piecesValue = Arrays.asList(
             new Pawn(TeamColor.WHITE, Position.valueOf("b1"))
         );

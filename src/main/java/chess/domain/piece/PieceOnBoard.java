@@ -53,8 +53,8 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
-    public State getState() {
-        return state;
+    public boolean isAlive() {
+        return state == State.ALIVE;
     }
 
     public Score getScore() {

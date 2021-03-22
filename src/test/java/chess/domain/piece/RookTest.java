@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
-import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 import java.util.HashMap;
@@ -112,10 +111,8 @@ public class RookTest {
         final Map<Position, Piece> modifiedChessBoard = chessBoard.getChessBoard();
         Piece after = modifiedChessBoard.get(Position.valueOf("a7"));
 
-        State dead = caughtPiece.getState();
-
         assertThat(after).isInstanceOf(Rook.class);
-        assertThat(dead).isEqualTo(State.DEAD);
+        assertFalse(caughtPiece.isAlive());
     }
 
 }
