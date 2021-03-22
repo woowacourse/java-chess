@@ -37,6 +37,10 @@ public class Position {
         return this.vertical == vertical;
     }
 
+    public boolean isDifferentVertical(Vertical vertical) {
+        return this.vertical != vertical;
+    }
+
     public static List<Position> getPositions() {
         return Collections.unmodifiableList(CACHE);
     }

@@ -74,7 +74,7 @@ public class Board {
     }
 
     private void movePieceToPosition(Piece targetPiece, Position destination) {
-        if (targetPiece instanceof Pawn && destination.isDeadLine()) {
+        if (targetPiece.canPromotion(destination)) {
             targetPiece = new Queen(targetPiece.getTeam());
         }
         board.put(destination, targetPiece);

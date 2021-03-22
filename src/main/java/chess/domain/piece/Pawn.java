@@ -14,7 +14,7 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(Team team) {
-        super(PAWN_NAME, team, SCORE, new PawnStrategy());
+        super(PAWN_NAME, team, SCORE, new PawnStrategy(), true);
     }
 
     @Override

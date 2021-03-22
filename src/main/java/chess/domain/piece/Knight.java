@@ -14,7 +14,7 @@ public class Knight extends Piece {
     private static final double SCORE = 2.5;
 
     public Knight(Team team) {
-        super(KNIGHT_NAME, team, SCORE, new SpecifiedLocationStrategy());
+        super(KNIGHT_NAME, team, SCORE, new SpecifiedLocationStrategy(), false);
     }
 
     @Override

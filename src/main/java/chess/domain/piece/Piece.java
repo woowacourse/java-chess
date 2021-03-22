@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
+import chess.domain.board.Vertical;
 import chess.domain.piece.moveStrategy.CanMoveStrategy;
 
 import java.util.List;
@@ -10,14 +11,16 @@ public abstract class Piece {
     private final String name;
     private final Team team;
     private final double score;
+    private final boolean promotionChance;
 
     private final CanMoveStrategy canMoveStrategy;
 
-    public Piece(String name, Team team, double score, CanMoveStrategy canMoveStrategy) {
+    public Piece(String name, Team team, double score, CanMoveStrategy canMoveStrategy, boolean promotionChance) {
         this.team = team;
         this.name = convertName(name, team);
         this.score = score;
         this.canMoveStrategy = canMoveStrategy;
+        this.promotionChance = promotionChance;
     }
 
     private String convertName(String name, Team team) {
@@ -51,6 +54,13 @@ public abstract class Piece {
 
     public boolean isSameTeam(Team team) {
         return this.team.equals(team);
+    }
+
+    public boolean canPromotion(Position position) {
+        if (position.isDifferentVertical(Vertical.ONE) && position.isDifferentVertical(Vertical.EIGHT)) {
+            return false;
+        }
+        return promotionChance;
     }
 
     public Team getTeam() {

@@ -15,7 +15,7 @@ public class Queen extends Piece {
     private static final double SCORE = 9;
 
     public Queen(Team team) {
-        super(QUEEN_NAME, team, SCORE, new ToEndOfLineStrategy());
+        super(QUEEN_NAME, team, SCORE, new ToEndOfLineStrategy(), false);
     }
 
     @Override

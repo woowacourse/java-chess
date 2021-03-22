@@ -14,7 +14,7 @@ public class Bishop extends Piece {
     private static final double SCORE = 3;
 
     public Bishop(Team team) {
-        super(BISHOP_NAME, team, SCORE, new ToEndOfLineStrategy());
+        super(BISHOP_NAME, team, SCORE, new ToEndOfLineStrategy(), false);
     }
 
     @Override

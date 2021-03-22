@@ -14,7 +14,7 @@ public class Rook extends Piece {
     private static final double SCORE = 5;
 
     public Rook(Team team) {
-        super(ROOK_NAME, team, SCORE, new ToEndOfLineStrategy());
+        super(ROOK_NAME, team, SCORE, new ToEndOfLineStrategy(), false);
     }
 
     @Override
