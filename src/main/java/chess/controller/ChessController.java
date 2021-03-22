@@ -2,12 +2,12 @@ package chess.controller;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Coordinate;
+import chess.domain.command.Command;
+import chess.domain.command.CommandTokens;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.List;
 
 public class ChessController {
 
@@ -33,33 +33,23 @@ public class ChessController {
 
     private Command inputFirstCommand() {
         InputView.printGameStartMessage();
-        List<String> playerCommand = InputView.inputPlayerCommand();
-        validatePlayerCommand(playerCommand);
-        return Command.findCommand(playerCommand.get(0));
-    }
-
-    private void validatePlayerCommand(List<String> playerCommand) {
-        int commandSize = playerCommand.size();
-        if (commandSize != 1 && commandSize != 3) {
-            throw new IllegalArgumentException("명령어를 잘못 입력했습니다.");
-        }
+        CommandTokens commandTokens = new CommandTokens(InputView.inputPlayerCommand());
+        return Command.findCommand(commandTokens.findMainCommandToken());
     }
 
     private void startChessGame() {
         Command command = Command.START;
         while (command != Command.END && !chessBoard.isKingCheckmate()) {
-            List<String> playerCommand = InputView.inputPlayerCommand();
-            validatePlayerCommand(playerCommand);
-            command = Command.findCommand(playerCommand.get(0));
-            executeCommand(command, playerCommand);
+            CommandTokens commandTokens = new CommandTokens(InputView.inputPlayerCommand());
+            command = Command.findCommand(commandTokens.findMainCommandToken());
+            executeCommand(command, commandTokens);
             OutputView.printChessBoard(chessBoard);
         }
     }
 
-    private void executeCommand(Command command, List<String> playerCommand) {
+    private void executeCommand(Command command, CommandTokens commandTokens) {
         if (command == Command.MOVE) {
-            executeMoveCommand(playerCommand);
-            return;
+            executeMoveCommand(commandTokens);
         }
         if (command == Command.STATUS) {
             Result result = chessBoard.calculateScores();
@@ -67,9 +57,9 @@ public class ChessController {
         }
     }
 
-    private void executeMoveCommand(List<String> playerCommand) {
-        Coordinate current = Coordinate.from(playerCommand.get(1));
-        Coordinate destination = Coordinate.from(playerCommand.get(2));
+    private void executeMoveCommand(CommandTokens commandTokens) {
+        Coordinate current = Coordinate.from(commandTokens.findCurrentCoordinateToken());
+        Coordinate destination = Coordinate.from(commandTokens.findDestinationCoordinateToken());
         chessBoard.move(current, destination, teamType);
         teamType = teamType.findOppositeTeam();
     }
