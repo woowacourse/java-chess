@@ -8,8 +8,8 @@ import java.util.stream.IntStream;
 
 public class KnightMoveCondition extends MoveCondition {
     private static final int COUNT_OF_MOVABLE_PATH = 8;
-    private static final int[] MOVABLE_ROW = new int[]{2, 2, -2, -2, 1, -1, 1, -1};
-    private static final int[] MOVABLE_COLUMN = new int[]{1, -1, 1, -1, 2, 2, -2, -2};
+    private static final int[] MOVABLE_ROW = {2, 2, -2, -2, 1, -1, 1, -1};
+    private static final int[] MOVABLE_COLUMN = {1, -1, 1, -1, 2, 2, -2, -2};
 
     @Override
     public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
