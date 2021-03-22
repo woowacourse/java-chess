@@ -10,6 +10,7 @@ public enum Side {
         if (this == BLACK) {
             return WHITE;
         }
-        return NONE;
+
+        throw new UnsupportedOperationException("NONE은 Side 교체 불가.");
     }
 }
