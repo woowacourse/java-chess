@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Difference;
 import chess.domain.position.Position;
 import chess.domain.position.Vertical;
 import java.util.Arrays;
@@ -20,8 +21,10 @@ public final class Pawn extends Piece {
 
     @Override
     public boolean canMove(final Position source, final Position target, final Piece piece) {
+        final List<Integer> result = subtractByTeam(source, target);
+        final Difference difference = new Difference(result);
         final Direction direction = POSSIBLE_DIRECTIONS.stream()
-            .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
+            .filter(possibleDirection -> possibleDirection.isSameDirection(difference))
             .findAny()
             .orElse(Direction.NOTHING);
 

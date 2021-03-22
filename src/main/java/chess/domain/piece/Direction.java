@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Difference;
 import java.util.Arrays;
 import java.util.List;
 
@@ -41,8 +42,8 @@ public enum Direction {
             .orElse(NOTHING);
     }
 
-    public boolean isSameDirection(final List<Integer> result) {
-        return this == matchedDirection(result.get(0), result.get(1));
+    public boolean isSameDirection(final Difference difference) {
+        return this == matchedDirection(difference.horizontalDegree(), difference.verticalDegree());
     }
 
     public int horizontalDegree() {

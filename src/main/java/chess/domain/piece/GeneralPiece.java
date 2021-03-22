@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.position.Difference;
 import chess.domain.position.Position;
 import java.util.List;
 
@@ -18,8 +19,10 @@ public abstract class GeneralPiece extends Piece {
     }
 
     private boolean isPossibleDirection(final Position source, final Position target) {
+        final List<Integer> result = target.subtract(source);
+        final Difference difference = new Difference(result);
         return possibleDirections.stream()
-            .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
+            .anyMatch(possibleDirection -> possibleDirection.isSameDirection(difference));
     }
 
     protected abstract List<Direction> createPossibleDirections();
