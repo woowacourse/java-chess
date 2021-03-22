@@ -104,12 +104,16 @@ public class Board {
     }
 
     private Score calculateScore(final Owner owner) {
-        Score score = new Score(0);
-
         if (!isKingLive(owner)) {
-            return score;
+            return new Score(0);
         }
 
+        final Score score = getOwnersScore(owner);
+        return score.calculatePawnPenaltyScore(getPawnCountDuplicatedInLine(owner));
+    }
+
+    private Score getOwnersScore(final Owner owner){
+        Score score = new Score(0);
         for (final Vertical v : Vertical.values()) {
             for (final Horizontal h : Horizontal.values()) {
                 if (of(v, h).isOwner(owner)) {
@@ -117,8 +121,7 @@ public class Board {
                 }
             }
         }
-
-        return score.calculatePawnPenaltyScore(getPawnCountDuplicatedInLine(owner));
+        return score;
     }
 
     private boolean isKingLive(final Owner owner) {
@@ -130,14 +133,10 @@ public class Board {
     }
 
     private int getPawnCountDuplicatedInLine(final Owner owner) {
-        int totalCount = 0;
-        for (final Vertical v : Vertical.values()) {
-            int verticalCount = getPawnCountInVerticalLine(v, owner);
-            if (verticalCount > 1) {
-                totalCount += verticalCount;
-            }
-        }
-        return totalCount;
+        return Arrays.stream(Vertical.values())
+                .mapToInt(v -> getPawnCountInVerticalLine(v, owner))
+                .filter(count -> count > 1)
+                .sum();
     }
 
     private int getPawnCountInVerticalLine(final Vertical v, final Owner owner) {
