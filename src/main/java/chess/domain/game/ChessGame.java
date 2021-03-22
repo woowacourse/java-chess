@@ -25,7 +25,7 @@ public class ChessGame {
     }
 
     private void setPieces(BoardSetting boardSetting) {
-        List<PieceWithColorType> piecesSetting = boardSetting.piecesSetting();
+        List<PieceWithColorType> piecesSetting = boardSetting.getPiecesSetting();
         for (int index = 0; index < piecesSetting.size(); index++) {
             Position position = PositionsCache.get(index);
             PieceWithColorType pieceWithColorType = piecesSetting.get(index);

@@ -20,7 +20,7 @@ public abstract class BoardSetting {
         }
     }
 
-    public List<PieceWithColorType> piecesSetting() {
+    public List<PieceWithColorType> getPiecesSetting() {
         return pieces;
     }
 }
