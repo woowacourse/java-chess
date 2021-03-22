@@ -1,73 +1,89 @@
 package domain.piece;
 
-import domain.Board;
-import domain.PieceFactory;
+import domain.board.Board;
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class QueenTest {
 
-    @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.(빈칸일 경우)")
-    @Test
-    void queen_move_if_empty() {
-        Board board = new Board(PieceFactory.createPieces());
-        Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
+    @DisplayName("퀸은 상하좌우와 모든 대각선 방향으로 칸 수 제한 없이 이동할 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a8", "d5,f7", "d5,b3", "d5,h1", "d5,h5", "d5,d1", "d5,a5", "d5,d8"}, delimiter = ',')
+    void testMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Queen blackQueen = new Queen(true);
 
-        assertThat(queen.canMove(board.getBoard(), Position.Of(3, 3))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(2, 4))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(5, 5))).isTrue();
+        board.put(sourcePosition, blackQueen);
 
-        assertThat(queen.canMove(board.getBoard(), Position.Of(3, 5))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(4, 2))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(5, 3))).isTrue();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(4, 6))).isTrue();
+        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("Queen은 전후좌우, 대각선으로 칸수 제한없이 움직일 수 있다.(적 기물이 있는 경우)")
-    @Test
-    void queen_move_if_enemy_exist() {
-        Board board = new Board(PieceFactory.createPieces());
-        Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
-        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 4))).isTrue();
+    @DisplayName("퀸은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,e7", "d5,b8", "d5,c1","d5,f2"}, delimiter = ',')
+    void testNotMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Queen blackQueen = new Queen(true);
+
+        board.put(sourcePosition, blackQueen);
+
+        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("Queen은 전후좌우, 대각선으로 움직일 수 없다.(같은 기물이 있는 경우)")
+    @DisplayName("퀸은 같은 편 기물이 있는 위치로 이동할 수 없다.")
     @Test
-    void queen_cant_move_if_same_piece_exist() {
-        Board board = new Board(PieceFactory.createPieces());
-        Queen queen = Queen.Of("Q", Position.Of(3, 4), true);
-        assertThat(queen.canMove(board.getBoard(), Position.Of(1, 6))).isFalse();
+    void testMoveSameColorPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("a8");
+        Queen blackQueen = new Queen(true);
+        Rook blackRook = new Rook(true);
+
+        board.put(sourcePosition, blackQueen);
+        board.put(targetPosition, blackRook);
+
+        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("Queen은 전후좌우, 대각선 이외의 위치로 움직일 수 없다.")
+    @DisplayName("퀸은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
-    void queen_move_fail_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
+    void testMoveEnemyPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("a8");
+        Queen blackQueen = new Queen(true);
+        Rook blackRook = new Rook(false);
 
-        assertThat(queen.canMove(board.getBoard(), Position.Of(2, 3))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 5))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 3))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(2, 5))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(3, 2))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(5, 2))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(3, 6))).isFalse();
-        assertThat(queen.canMove(board.getBoard(), Position.Of(5, 6))).isFalse();
+        board.put(sourcePosition, blackQueen);
+        board.put(targetPosition, blackRook);
+
+        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("Queen이 이동하려는 경로에 다른 말이 있으면, 실패를 반환한다.")
-    @Test
-    void cant_move_queen_if_piece_exist() {
-        Board board = new Board(PieceFactory.createPieces());
-        Queen queen = Queen.Of("Q", Position.Of(4, 4), true);
-        Pawn pawn = Pawn.Of("P", Position.Of(3, 4), true);
-        board.put(pawn, Position.Of(3, 4));
-        assertThat(queen.canMove(board.getBoard(), Position.Of(2, 4))).isFalse();
+    @DisplayName("퀸은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a8,b7","d5,g8,e6","d5,a2,b3","d5,h1,g2", "d5,h5,e5", "d5,d1,d3", "d5,a5,b5", "d5,d8,d7"}, delimiter = ',')
+    void testObstacleMove(String source, String target, String obstacle) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Position obstaclePosition = new Position(obstacle);
+        Queen blackQueen = new Queen(true);
+        Rook whiteRook = new Rook(false);
 
-        Pawn pawn2 = Pawn.Of("P", Position.Of(5, 5), false);
-        board.put(pawn2, Position.Of(5, 5));
-        assertThat(queen.canMove(board.getBoard(), Position.Of(6, 6))).isFalse();
+        board.put(sourcePosition, blackQueen);
+        board.put(obstaclePosition, whiteRook);
+
+        assertThat(blackQueen.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
+
 }
