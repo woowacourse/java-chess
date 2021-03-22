@@ -36,18 +36,21 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("폰 움직임 성공")
     void movePawnSuccess() {
         chessBoard.move("b2", "b3");
         assertThat(chessBoard.getChessBoard().get(5).get(1).getName()).isEqualTo("p");
     }
 
     @Test
+    @DisplayName("시작점에 있는 폰은 두 칸 전진 가능")
     void movePawnStart() {
         chessBoard.move("b2", "b4");
         assertThat(chessBoard.getChessBoard().get(4).get(1).getName()).isEqualTo("p");
     }
 
     @Test
+    @DisplayName("폰이 대각선으로 움직여 적 진영 공격 성공")
     void attackPawnSuccess() {
         chessBoard.move("c7", "c5");
         chessBoard.move("c5", "c4");
@@ -57,6 +60,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("폰이 적 진영 기물이 있는 직진 위치로는 이동 실패")
     void attackPawnFail() {
         chessBoard.move("c7", "c5");
         chessBoard.move("c5", "c4");
@@ -67,6 +71,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("폰이 후진할 때 예외처리")
     void movePawnFailLinear() {
         assertThatThrownBy(() -> {
             chessBoard.move("b2", "b1");
@@ -74,6 +79,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("폰이 적 진영 기물이 없는 대각선 위치로 이동 실패")
     void movePawnFailDiagonal() {
         assertThatThrownBy(() -> {
             chessBoard.move("b2", "c3");
@@ -81,6 +87,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("제자리 이동 실패")
     void movePawnFailSame() {
         assertThatThrownBy(() -> {
             chessBoard.move("b2", "b2");
@@ -88,6 +95,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("룩 이동 성공")
     void moveRookSuccess() {
         chessBoard.move("a2", "a3");
         chessBoard.move("a1", "a2");
@@ -95,6 +103,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("룩 이동 실패")
     void moveRookFail() {
         assertThatThrownBy(() -> {
             chessBoard.move("a1", "a2");
@@ -102,6 +111,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("룩이 이동하여 적 진영 기물 공격 성공")
     void attackRookSuccess() {
         chessBoard.move("a2", "a4");
         chessBoard.move("a1", "a3");
@@ -111,6 +121,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("비숍 이동 성공")
     void moveBishopSuccess() {
         chessBoard.move("b2", "b3");
         chessBoard.move("c1", "b2");
@@ -118,6 +129,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("비숍 이동 실패")
     void moveBishopFail() {
         assertThatThrownBy(() -> {
             chessBoard.move("c1", "b2");
@@ -125,6 +137,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("비숍이 적 진영 공격 성공")
     void attackBishopSuccess() {
         chessBoard.move("b2", "b3");
         chessBoard.move("c1", "a3");
@@ -133,12 +146,14 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("나이트 이동 성공")
     void moveKnightSuccess() {
         chessBoard.move("b1", "a3");
         assertThat(chessBoard.getChessBoard().get(5).get(0).getName()).isEqualTo("n");
     }
 
     @Test
+    @DisplayName("나이트 이동 실패")
     void moveKnightFail() {
         assertThatThrownBy(() -> {
             chessBoard.move("b1", "d2");
@@ -146,6 +161,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("각 진영 별 점수 계산")
     void scoreTest() {
         chessBoard.move("b2", "b4");
         chessBoard.move("c7", "c5");
@@ -155,6 +171,7 @@ public class ChessBoardTest {
     }
 
     @Test
+    @DisplayName("한 쪽의 킹이 죽고 끝났을 때 점수 계산")
     void scoreTest2() {
         ChessBoard emptyChessBoard = new ChessBoard();
         emptyChessBoard.getSquare(Position.of("b8")).addPiece(new King(Color.BLACK));
