@@ -49,6 +49,7 @@ public class ChessController {
             List<String> input = InputView.InputString();
             validateCommand(chessGame, input);
         }
+        OutputView.printGameOverInfo();
     }
 
     private void validateCommand(ChessGame chessGame, List<String> input) {

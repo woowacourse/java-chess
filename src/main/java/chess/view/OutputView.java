@@ -12,6 +12,7 @@ public class OutputView {
     private static final String START_COMMAND = "게임 시작 : start";
     private static final String END_COMMAND = "게임 종료 : end";
     private static final String MOVE_COMMAND = "게임 이동 : move source위치 target위치 - 예. move b2 b3";
+    private static final String GAME_OVER_MSG = "게임을 종료합니다.";
 
 
     public static void printStartInfo() {
@@ -35,5 +36,9 @@ public class OutputView {
     public static void printMessage(String message) {
         System.out.println(message);
         System.out.println();
+    }
+
+    public static void printGameOverInfo() {
+        System.out.println(GAME_OVER_MSG);
     }
 }
