@@ -54,7 +54,7 @@ public abstract class AbstractPiece implements Piece {
 
         boolean isObstacle = IntStream.range(MIN_DISTANCE, findDistance(position, direction))
             .mapToObj(distance -> this.position.add(dx * distance, dy * distance))
-            .anyMatch(movePosition -> !(pieces.get(movePosition) instanceof Blank));
+            .anyMatch(movePosition -> !(pieces.get(movePosition).isBlank()));
 
         if (isObstacle) {
             throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
@@ -72,5 +72,20 @@ public abstract class AbstractPiece implements Piece {
             isStop = position.equals(movePosition);
         }
         return distance;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isBlank() {
+        return false;
     }
 }

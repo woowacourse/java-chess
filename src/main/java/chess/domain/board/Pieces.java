@@ -104,7 +104,7 @@ public final class Pieces {
         List<Piece> pawns = pieces.values()
             .stream()
             .filter(piece -> piece.isSameColor(color))
-            .filter(piece -> piece instanceof Pawn)
+            .filter(Piece::isPawn)
             .collect(Collectors.toList());
 
         for (int column = MIN_INDEX; column <= MAX_INDEX; column++) {
@@ -131,7 +131,7 @@ public final class Pieces {
     public boolean isKillKing() {
         long kingCount = pieces.values()
             .stream()
-            .filter(piece -> piece instanceof King)
+            .filter(Piece::isKing)
             .count();
 
         return kingCount != TOTAL_KING_SIZE;
