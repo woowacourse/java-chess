@@ -5,6 +5,7 @@ import java.util.Scanner;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
+    public static final int POINT_LENGTH = 2;
 
     private InputView() {
     }
@@ -21,12 +22,20 @@ public class InputView {
     }
 
     public static String getPoint() {
-        return SCANNER.next().toLowerCase(Locale.ROOT);
+        String point = SCANNER.next().toLowerCase(Locale.ROOT);
+        validatePoint(point);
+        return point;
     }
 
     private static void validateCommand(final String command) {
         if (!Command.isValidateCommand(command)) {
             throw new IllegalArgumentException("잘못된 커멘드 입력입니다.");
+        }
+    }
+
+    private static void validatePoint(final String point) {
+        if (point.length() != POINT_LENGTH) {
+            throw new IllegalArgumentException("잘못된 좌표 입니다.");
         }
     }
 }
