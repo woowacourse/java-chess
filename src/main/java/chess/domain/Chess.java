@@ -32,7 +32,7 @@ public class Chess {
     }
     
     public static Chess createWithEmptyBoard() {
-        return new Chess(EmptyBoard.create(), Status.STOP, Color.BLANK);
+        return new Chess(EmptyBoard.create(), Status.STOP, Color.WHITE);
     }
     
     public boolean isRunning() {
