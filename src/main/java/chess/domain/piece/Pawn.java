@@ -41,10 +41,14 @@ public class Pawn extends Piece {
         throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
     }
 
-    private void validateFirstTurn(Position target) {
-        if (!(this.position.getY() == '7') && this.position.subtractY(target) == 2) {
-            throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
+    private boolean isAttackAble(Position target) {
+        if (this.color == Color.BLACK) {
+            return Math.abs(this.position.subtractX(target)) == 1 && this.position.subtractY(target) == 1;
         }
+        if (this.color == Color.WHITE) {
+            return Math.abs(this.position.subtractX(target)) == 1 && this.position.subtractY(target) == -1;
+        }
+        return false;
     }
 
     private void attack(Position target, CurrentPieces currentPieces) {
@@ -64,14 +68,13 @@ public class Pawn extends Piece {
         return false;
     }
 
-    private boolean isAttackAble(Position target) {
-        if (this.color == Color.BLACK) {
-            return Math.abs(this.position.subtractX(target)) == 1 && this.position.subtractY(target) == 1;
+    private void validateFirstTurn(Position target) {
+        if (this.color == Color.BLACK && (!(this.position.getY() == '7') && this.position.subtractY(target) == 2)) {
+            throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
         }
-        if (this.color == Color.WHITE) {
-            return Math.abs(this.position.subtractX(target)) == 1 && this.position.subtractY(target) == -1;
+        if (this.color == Color.WHITE && (!(this.position.getY() == '2') && target.subtractY(this.position) == 2)) {
+            throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
         }
-        return false;
     }
 
     public static List<Pawn> generate() {
