@@ -1,10 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
-import chess.domain.Position;
-import chess.domain.State;
-import chess.domain.TeamColor;
-import chess.domain.player.Score;
+import chess.domain.board.ChessBoard;
+import chess.domain.board.Position;
+import chess.domain.result.Score;
 
 public abstract class PieceOnBoard implements Piece {
 

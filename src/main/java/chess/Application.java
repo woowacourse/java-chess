@@ -1,6 +1,6 @@
 package chess;
 
-import chess.domain.ChessBoard;
+import chess.domain.board.ChessBoard;
 import chess.view.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;

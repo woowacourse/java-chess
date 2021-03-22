@@ -2,17 +2,17 @@ package domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Position;
-import chess.domain.TeamColor;
+import chess.domain.board.Position;
 import chess.domain.piece.Bishop;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.player.Pieces;
-import chess.domain.player.Score;
+import chess.domain.piece.TeamColor;
+import chess.domain.result.Score;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

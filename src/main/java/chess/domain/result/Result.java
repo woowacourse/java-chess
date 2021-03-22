@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.domain.result;
 
-import chess.domain.player.Score;
+import chess.domain.piece.TeamColor;
 import java.util.Map;
 
 public class Result { // DTO

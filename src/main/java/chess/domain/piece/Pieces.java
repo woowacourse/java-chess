@@ -1,8 +1,6 @@
-package chess.domain.player;
+package chess.domain.piece;
 
-import chess.domain.State;
-import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
+import chess.domain.result.Score;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

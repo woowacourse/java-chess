@@ -3,7 +3,7 @@ package domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Position;
+import chess.domain.board.Position;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.DisplayName;
