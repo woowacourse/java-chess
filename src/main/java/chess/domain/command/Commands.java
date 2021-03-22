@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.ChessGame;
+import chess.exception.GameIsNotStartException;
 import chess.exception.NoSuchCommandException;
 
 import java.util.ArrayList;
@@ -15,7 +16,7 @@ public class Commands {
         this.commands = new ArrayList<>(commands);
     }
 
-    public String execute(ChessGame chessGame, String input) {
+    public String execute(ChessGame chessGame, String input) throws GameIsNotStartException {
         return commands.stream()
                 .filter(command -> command.isSameCommand(input.toLowerCase()))
                 .findAny()

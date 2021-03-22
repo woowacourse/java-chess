@@ -21,20 +21,21 @@ public class ChessController {
     }
 
     public boolean playGame(ChessGame chessGame, Commands commands) {
-        String command = commands.execute(chessGame, InputView.inputCommand());
+        boolean play = true;
         try {
-            checkGameStart(chessGame);
+            String command = commands.execute(chessGame, InputView.inputCommand());
+            play = isPlay(command);
+            checkGameStart(chessGame, play);
             OutputView.printBoard(chessGame.getBoard());
             showStatus(command, chessGame);
-            return isPlaying(command);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return isPlaying(command);
         }
+        return play;
     }
 
-    public void checkGameStart(ChessGame chessGame) {
-        if (chessGame.isBeforeStart()) {
+    public void checkGameStart(ChessGame chessGame, boolean isPlay) {
+        if (chessGame.isBeforeStart() && isPlay) {
             throw new GameIsNotStartException();
         }
     }
@@ -45,7 +46,7 @@ public class ChessController {
         }
     }
 
-    public boolean isPlaying(String command) {
+    public boolean isPlay(String command) {
         return !command.equals(END);
     }
 }
