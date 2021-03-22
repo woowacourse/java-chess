@@ -37,7 +37,8 @@ public class Board {
     }
 
     public boolean canMovable(Position position, boolean color) {
-        return board.get(position).isSameColor(color);
+        Piece piece = board.get(position);
+        return !(piece instanceof Empty) &&  piece.isSameColor(color);
     }
 
     public Map<Position, Piece> getTeam(boolean color) {

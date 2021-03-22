@@ -52,7 +52,8 @@ public class Pawn extends Piece {
     private boolean movableDiagonal(List<Direction> directions, Map<Position, Piece> board, Position start, Position end) {
         return directions.stream()
                 .map(direction -> start.move(direction))
-                .filter(next -> next.equals(end) && board.containsKey(next) && !board.get(next).isSameColor(this))
+                .filter(next -> next.equals(end))
+                .filter(next -> board.containsKey(next) && !board.get(next).isSameColor(this))
                 .findAny()
                 .isPresent();
     }
@@ -66,7 +67,7 @@ public class Pawn extends Piece {
     }
 
     private List<Direction> selectDirectionByColor() {
-        if (isBlack()) {
+        if (this.isSameColor(true)) {   // TODO : 상수 처리
             return Direction.blackPawnDirection();
         }
         return Direction.whitePawnDirection();

@@ -4,36 +4,50 @@ import domain.piece.Piece;
 import domain.piece.Position;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 public class ChessGame {
-    private boolean isEnd;
+    private boolean running;
     private Board board;
 
-    public ChessGame(List<Piece> pieces) {
-        this.isEnd = false;
+    public ChessGame(Map<Position, Piece> pieces) {
+        this.running = true;
         board = new Board(pieces);
     }
 
-    public void move(Position start, Position end) {
-        Piece piece = board.getPiece(end);
-        board.move(start, end);
-        if (Objects.nonNull(piece) && piece.isKing()) {
-            isEnd = true;
+    public void move(Position start, Position end, boolean turn) {
+        if (movablePiece(start, end, turn)) {
+            Piece endPiece = board.getPiece(end);
+            board.move(start, end);
+            isKingDead(endPiece);
         }
     }
 
-    public boolean isEnd() {
-        return isEnd;
+    private boolean movablePiece(Position start, Position end, boolean turn) {
+        checkSamePosition(start, end);
+        return board.canMovable(start, turn);
+    }
+
+    private void isKingDead(Piece endPiece) {
+        if (endPiece.isKingDead()) {
+            running = false;
+        }
+    }
+
+    private void checkSamePosition(Position start, Position end) {
+        if (start.equals(end)) {
+            throw new IllegalArgumentException("현재 위치와 이동 위치가 같습니다.");
+        }
+    }
+
+    public boolean isRunning() {
+        return running;
     }
 
     public Map<Boolean, Score> piecesScore() {
-        ScoreMachine scoreMachine = new ScoreMachine(board.getBoard());
         Map<Boolean, Score> result = new HashMap<>();
-        result.put(true, scoreMachine.blackPiecesScore());
-        result.put(false, scoreMachine.whitePiecesScore());
+        result.put(true, ScoreMachine.blackPiecesScore(board));
+        result.put(false, ScoreMachine.whitePiecesScore(board));
         return result;
     }
 
