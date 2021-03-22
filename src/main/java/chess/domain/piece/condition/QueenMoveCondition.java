@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class QueenMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&

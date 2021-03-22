@@ -12,7 +12,7 @@ public class KingMoveCondition extends MoveCondition {
     private static final int[] MOVABLE_COLUMN = {0, 0, 1, -1, 1, -1, 1, -1};
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
                 isNotExistSameColorPieceOnPath(board, piece, target) &&

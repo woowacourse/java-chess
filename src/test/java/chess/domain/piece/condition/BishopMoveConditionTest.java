@@ -20,16 +20,16 @@ class BishopMoveConditionTest {
 
     @DisplayName("비숍이 조건대로 움직이는지 확인한다.")
     @Test
-    void isSatisfyBy_checkMoveConditionIsRight() {
+    void isSatisfiedBy_checkMoveConditionIsRight() {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
         Board board = new Board(
                 Collections.singletonList(
                         BlackBishop.createWithCoordinate(0, 0)
                 )
         );
-        boolean rightActual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
+        boolean rightActual = bishopMoveCondition.isSatisfiedBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(1, 1));
-        boolean falseActual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
+        boolean falseActual = bishopMoveCondition.isSatisfiedBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(1, 0));
 
         assertThat(rightActual).isTrue();
@@ -38,7 +38,7 @@ class BishopMoveConditionTest {
 
     @DisplayName("비숍의 이동 경로에 장애물이 있으면 예외")
     @Test
-    void isSatisfyBy_ifHasObstacleOnMovePathThenException() {
+    void isSatisfiedBy_ifHasObstacleOnMovePathThenException() {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
         Board board = new Board(
                 Arrays.asList(
@@ -47,7 +47,7 @@ class BishopMoveConditionTest {
                 )
         );
 
-        boolean actual = bishopMoveCondition.isSatisfyBy(board, BlackBishop.createWithCoordinate(0, 0),
+        boolean actual = bishopMoveCondition.isSatisfiedBy(board, BlackBishop.createWithCoordinate(0, 0),
                 new Position(2, 2));
 
         assertThat(actual).isFalse();
@@ -56,10 +56,10 @@ class BishopMoveConditionTest {
     @DisplayName("비숍 붙어있는 있는 적으로 이동 테스트")
     @MethodSource("boardsForAttachCatchTest")
     @ParameterizedTest
-    void isSatisfyBy_attachCatch(BlackBishop bishop, Board board, Position target) {
+    void isSatisfiedBy_attachCatch(BlackBishop bishop, Board board, Position target) {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
 
-        boolean actual = bishopMoveCondition.isSatisfyBy(board, bishop, target);
+        boolean actual = bishopMoveCondition.isSatisfiedBy(board, bishop, target);
 
         assertThat(actual).isTrue();
     }
@@ -104,10 +104,10 @@ class BishopMoveConditionTest {
     @DisplayName("비숍 떨어져 있는 적으로 이동 테스트")
     @MethodSource("boardsForRemoteCatchTest")
     @ParameterizedTest
-    void isSatisfyBy_catch(BlackBishop bishop, Board board, Position target) {
+    void isSatisfiedBy_catch(BlackBishop bishop, Board board, Position target) {
         BishopMoveCondition bishopMoveCondition = new BishopMoveCondition();
 
-        boolean actual = bishopMoveCondition.isSatisfyBy(board, bishop, target);
+        boolean actual = bishopMoveCondition.isSatisfiedBy(board, bishop, target);
 
         assertThat(actual).isTrue();
     }

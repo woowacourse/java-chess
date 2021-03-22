@@ -15,15 +15,15 @@ class CatchingPieceBlackPawnMoveConditionTest {
 
     @DisplayName("검정 폰이 상대말을 잡는 움직임을 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         CatchingPieceBlackPawnMoveCondition condition = new CatchingPieceBlackPawnMoveCondition();
         Board board = new Board(Arrays.asList(
                 BlackPawn.createWithCoordinate(0, 2),
                 WhitePawn.createWithCoordinate(1, 3)
         ));
-        boolean rightActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 2),
+        boolean rightActual = condition.isSatisfiedBy(board, BlackPawn.createWithCoordinate(0, 2),
                 new Position(1, 3));
-        boolean falseActual = condition.isSatisfyBy(board, BlackPawn.createWithCoordinate(0, 2),
+        boolean falseActual = condition.isSatisfiedBy(board, BlackPawn.createWithCoordinate(0, 2),
                 new Position(1, 1));
 
         assertThat(rightActual).isTrue();

@@ -10,7 +10,7 @@ import java.util.function.Predicate;
 public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
 
     @Override
-    public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
+    public boolean isSatisfiedBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isNotExistPieceOnPath(board, piece, target) &&

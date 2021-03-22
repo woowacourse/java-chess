@@ -31,7 +31,7 @@ public class Position {
 
     public Position changePosition(Position target, Board board, ChessPiece piece, List<MoveCondition> moveConditions) {
         moveConditions.stream()
-                .filter(moveCondition -> moveCondition.isSatisfyBy(board, piece, target))
+                .filter(moveCondition -> moveCondition.isSatisfiedBy(board, piece, target))
                 .findAny()
                 .orElseThrow(ChessPieceMoveNotAllowException::new);
 

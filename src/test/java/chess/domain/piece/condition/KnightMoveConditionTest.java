@@ -16,7 +16,7 @@ class KnightMoveConditionTest {
 
     @DisplayName("나이트가 조건대로 움직이는지 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         KnightMoveCondition condition = new KnightMoveCondition();
         Board board = new Board(Collections.singletonList(
                 BlackKnight.createWithCoordinate(4, 4)
@@ -29,27 +29,27 @@ class KnightMoveConditionTest {
             int nextRow = 4 + row[i];
             int nextColumn = 4 + col[i];
 
-            assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(nextRow, nextColumn))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(nextRow, nextColumn))).isTrue();
         }
 
-        assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(2, 4))).isFalse();
+        assertThat(condition.isSatisfiedBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(2, 4))).isFalse();
     }
 
     @DisplayName("나이트의 도착지에 아군 말이 있으면 안된다.")
     @Test
-    void isSatisfyBy_sameColorNotAllowOnPath() {
+    void isSatisfiedBy_sameColorNotAllowOnPath() {
         KnightMoveCondition condition = new KnightMoveCondition();
         Board board = new Board(Arrays.asList(
                 BlackKnight.createWithCoordinate(4, 4),
                 BlackKnight.createWithCoordinate(7, 5)
         ));
 
-        assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(7, 5))).isFalse();
+        assertThat(condition.isSatisfiedBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(7, 5))).isFalse();
     }
 
     @DisplayName("나이트의 도착지에 적군 말이 있으면 이동")
     @Test
-    void isSatisfyBy_otherColorAllowOnPath() {
+    void isSatisfiedBy_otherColorAllowOnPath() {
         KnightMoveCondition condition = new KnightMoveCondition();
 
         int[] row = {2, 2, -2, -2, 1, -1, 1, -1};
@@ -64,7 +64,7 @@ class KnightMoveConditionTest {
                     WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(nextRow, nextColumn))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(nextRow, nextColumn))).isTrue();
         }
     }
 

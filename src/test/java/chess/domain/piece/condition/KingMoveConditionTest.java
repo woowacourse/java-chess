@@ -17,7 +17,7 @@ class KingMoveConditionTest {
 
     @DisplayName("킹이 조건대로 움직이는지 확인한다.")
     @Test
-    void isSatisfyBy() {
+    void isSatisfiedBy() {
         KingMoveCondition condition = new KingMoveCondition();
         ChessPiece king = BlackKing.createWithCoordinate(4, 4);
         Board board = new Board(Collections.singletonList(
@@ -31,29 +31,29 @@ class KingMoveConditionTest {
             int nextRow = row[i] + 4;
             int nextColumn = col[i] + 4;
 
-            assertThat(condition.isSatisfyBy(board, king, new Position(nextRow, nextColumn))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, king, new Position(nextRow, nextColumn))).isTrue();
         }
 
-        assertThat(condition.isSatisfyBy(board, king, new Position(0, 0))).isFalse();
+        assertThat(condition.isSatisfiedBy(board, king, new Position(0, 0))).isFalse();
     }
 
     @DisplayName("킹의 이동 경로에 우리팀 말이 있으면 안된다.")
     @Test
-    void isSatisfyBy_sameColorNotAllowOnPath() {
+    void isSatisfiedBy_sameColorNotAllowOnPath() {
         KingMoveCondition condition = new KingMoveCondition();
         Board board = new Board(Arrays.asList(
                 BlackKing.createWithCoordinate(4, 4),
                 BlackKing.createWithCoordinate(4, 3)
         ));
 
-        boolean actual = condition.isSatisfyBy(board, BlackKing.createWithCoordinate(4, 4), new Position(4, 3));
+        boolean actual = condition.isSatisfiedBy(board, BlackKing.createWithCoordinate(4, 4), new Position(4, 3));
 
         assertThat(actual).isFalse();
     }
 
     @DisplayName("킹의 이동 경로에 상대팀 말이 있으면 이동.")
     @Test
-    void isSatisfyBy_otherColorAloowOnPath() {
+    void isSatisfiedBy_otherColorAloowOnPath() {
         KingMoveCondition condition = new KingMoveCondition();
         ChessPiece king = BlackKing.createWithCoordinate(4, 4);
 
@@ -69,7 +69,7 @@ class KingMoveConditionTest {
                     WhiteKnight.createWithCoordinate(nextRow, nextColumn)
             ));
 
-            assertThat(condition.isSatisfyBy(board, king, new Position(nextRow, nextColumn))).isTrue();
+            assertThat(condition.isSatisfiedBy(board, king, new Position(nextRow, nextColumn))).isTrue();
         }
     }
 
