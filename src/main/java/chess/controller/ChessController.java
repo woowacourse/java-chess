@@ -1,71 +1,85 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.domain.command.CommandType;
-import chess.domain.location.Location;
+import static chess.view.InputView.inputCommand;
+import static chess.view.OutputView.printBoard;
+import static chess.view.OutputView.printException;
+import static chess.view.OutputView.printGameEdMessage;
+import static chess.view.OutputView.printGameStartMessage;
+
+import chess.domain.piece.Piece;
+import chess.domain.state.ResultType;
+import chess.domain.state.Start;
+import chess.domain.state.State;
+import chess.domain.state.Status;
 import chess.domain.team.Team;
-import chess.utils.BoardUtil;
-import chess.view.InputView;
+import chess.dto.PiecesDto;
 import chess.view.OutputView;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessController {
 
     public void play() {
-        OutputView.printGameStartMessage();
-        Team team = Team.WHITE;
-        CommandType command = CommandType.from(inputStartCommand());
-
-        Board board = BoardUtil.generateInitialBoard();
-        if (command.isSame(CommandType.START)) {
-            OutputView.printBoard(BoardUtil.generateViewBoard(board));
-        }
-
-        while (!command.isSame(CommandType.END)) {
-            String input = inputRunningCommand();
-            command = CommandType.from(input);
-            if (command.isSame(CommandType.MOVE)) {
-                String[] splited = input.split(" ");
-                Location source = Location.of(splited[1]);
-                Location target = Location.of(splited[2]);
-                board.move(source, target, team);
-                team = team.reverse();
-                OutputView.printBoard(BoardUtil.generateViewBoard(board));
-                if (!board.isKingAlive(team)) {
-                    command = CommandType.END;
-                }
-            } else if (command.isSame(CommandType.STATUS)) {
-                double blackScore = board.score(Team.BLACK);
-                double whiteScore = board.score(Team.WHITE);
-                OutputView.printStatus(blackScore, whiteScore);
+        printGameStartMessage();
+        State state = new Start();
+        while (state.isRunning()) {
+            actWithCommand(state);
+            if (actWithResponse(state)) {
+                state = state.next();
+            } else {
+                state = state.before();
             }
+        }
+        printGameEdMessage();
+    }
+
+    private void actWithCommand(State state) {
+        try {
+            runNeedsCommand(state);
+        } catch (RuntimeException e) {
+            printException(e.getMessage());
+            actWithCommand(state);
         }
     }
 
-    private String inputStartCommand() {
+    private void runNeedsCommand(State state) {
+        if (!state.needsParam()) {
+            return;
+        }
+        state.receive(inputCommand());
+    }
+
+    private boolean actWithResponse(State state) {
         try {
-            String input = InputView.inputCommand();
-            CommandType command = CommandType.from(input);
-            if (command != CommandType.START && command != CommandType.END) {
-                throw new IllegalArgumentException("제대로 입력하세요.");
-            }
-            return input;
+            response(state);
+            return true;
         } catch (RuntimeException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return inputStartCommand();
+            printException(e.getMessage());
+            return false;
         }
     }
 
-    private String inputRunningCommand() {
-        try {
-            String input = InputView.inputCommand();
-            CommandType command = CommandType.from(input);
-            if (command == CommandType.START) {
-                throw new IllegalArgumentException("제대로 입력하세요.");
-            }
-            return input;
-        } catch (RuntimeException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return inputRunningCommand();
+    private void response(State state) {
+        if (ResultType.BOARD.equals(state.resultType())) {
+            responseBoard(state);
         }
+        if (ResultType.SCORE.equals(state.resultType())) {
+            responseScore(state);
+        }
+    }
+
+    private void responseBoard(State state) {
+        List<?> result = (List<?>) state.result();
+        List<Piece> pieces = result.stream()
+            .map(Piece.class::cast)
+            .collect(Collectors.toList());
+
+        printBoard(PiecesDto.from(pieces));
+    }
+
+    private void responseScore(State state) {
+        Map<Team, Double> result = Status.class.cast(state).result();
+        OutputView.printScore(result.get(Team.BLACK), result.get(Team.WHITE));
     }
 }
