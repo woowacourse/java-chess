@@ -1,6 +1,6 @@
-package chess.domain;
+package chess.controller;
 
-import chess.controller.ChessController;
+import chess.domain.Game;
 
 import java.util.Arrays;
 import java.util.function.BiConsumer;

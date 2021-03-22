@@ -1,6 +1,5 @@
 package chess.controller;
 
-import chess.domain.Command;
 import chess.domain.Game;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -14,8 +13,16 @@ public class ChessController {
         OutputView.printInitMessage();
         Game game = new Game();
         while (!game.isEnd()) {
+            selectMenu(game);
+        }
+    }
+
+    private void selectMenu(Game game) {
+        try {
             String input = InputView.receiveInitialResponse();
             Command.playCommand(game, input);
+        } catch (RuntimeException runtimeException) {
+            System.out.println(runtimeException.getMessage());
         }
     }
 
@@ -25,15 +32,22 @@ public class ChessController {
     }
 
     public static void move(Game game, String command) {
+        isStart(game);
+        List<String> processedInput = Arrays.asList(command.split(" "));
+
+        game.move(processedInput.get(1), processedInput.get(2));
+        OutputView.printBoard(game);
+
+        isEnd(game, command);
+    }
+
+    private static void isStart(Game game) {
         if (!game.isStart()) {
             throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
         }
+    }
 
-        List<String> processedInput = Arrays.asList(command.split(" "));
-
-        game.move(processedInput.get(1),processedInput.get(2));
-        OutputView.printBoard(game);
-
+    private static void isEnd(Game game, String command) {
         if (game.isEnd()) {
             end(game, command);
             OutputView.printGameWinner(game);
