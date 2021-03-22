@@ -15,6 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 public class Board {
+    private static final int NUMBER_OF_ALL_KINGS = 2;
+
     private final Map<Position, Cell> cells = new HashMap<>();
 
     public void setPiece(Position position, Piece piece) {
@@ -52,7 +54,7 @@ public class Board {
     }
 
     private void validateMoveRoute(Cell startPositionCell, MoveRoute moveRoute) {
-        if (!startPositionCell.isMovableTo(moveRoute, this)) {
+        if (!startPositionCell.canMoveTo(moveRoute, this)) {
             throw new IllegalArgumentException("이동할 수 없는 도착 위치 입니다.");
         }
     }
@@ -69,7 +71,7 @@ public class Board {
             .anyMatch(cell -> !cell.isEmpty());
     }
 
-    public boolean isNotCellEmpty(Position position) {
+    public boolean isAnyPieceExistsInCell(Position position) {
         Cell cell = findCell(position);
         return !cell.isEmpty();
     }
@@ -77,6 +79,14 @@ public class Board {
     public boolean isEnemyExists(Position position, TeamColor teamColor) {
         Cell cell = findCell(position);
         return !cell.isEmpty() && cell.teamColor() != teamColor;
+    }
+
+    public boolean isOwnPieceExistsInCell(Position position, TeamColor teamColor) {
+        Cell cell = findCell(position);
+        if (cell.isEmpty()) {
+            return false;
+        }
+        return cell.teamColor() == teamColor;
     }
 
     public boolean isCellEmptyOrEnemyExists(Position position, TeamColor teamColor) {
@@ -87,19 +97,19 @@ public class Board {
     public boolean isKingDead() {
         return cells.values().stream()
             .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
-            .count() < 2;
+            .count() < NUMBER_OF_ALL_KINGS;
     }
 
     public BoardResponseDTO status() {
         List<String> cellsStatus = new ArrayList<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
-            addCellsOnRank(cellsStatus, rank);
+            addCellsStatusOnRank(cellsStatus, rank);
         }
         return new BoardResponseDTO(cellsStatus);
     }
 
-    private void addCellsOnRank(List<String> cellsStatus, Rank rank) {
+    private void addCellsStatusOnRank(List<String> cellsStatus, Rank rank) {
         for (File file : File.values()) {
             Cell cell = cells.get(Position.of(file, rank));
             cellsStatus.add(cell.status());

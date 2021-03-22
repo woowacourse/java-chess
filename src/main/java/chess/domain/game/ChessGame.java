@@ -54,7 +54,7 @@ public class ChessGame {
         Piece movingPiece = board.findPiece(moveRoute.startPosition());
         players.remove(movingPiece, moveRoute.startPosition());
         players.add(movingPiece, moveRoute.destination());
-        if (board.isNotCellEmpty(moveRoute.destination())) {
+        if (board.isAnyPieceExistsInCell(moveRoute.destination())) {
             Piece deadPiece = board.findPiece(moveRoute.destination());
             players.remove(deadPiece, moveRoute.destination());
         }

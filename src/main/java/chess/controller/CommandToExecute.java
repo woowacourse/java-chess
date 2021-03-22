@@ -19,12 +19,4 @@ public class CommandToExecute {
     public CommandRequestDTO getCommandRequestDTO() {
         return commandRequestDTO;
     }
-
-    public String getStartPositionInput() {
-        return commandRequestDTO.getStartPositionInput();
-    }
-
-    public String getDestinationInput() {
-        return commandRequestDTO.getDestinationInput();
-    }
 }

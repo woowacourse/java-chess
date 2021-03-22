@@ -16,7 +16,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
         if (isNotCorrectDirection(moveRoute.direction())) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }

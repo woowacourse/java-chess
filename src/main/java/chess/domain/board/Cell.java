@@ -18,8 +18,8 @@ public class Cell {
         this.piece = piece;
     }
 
-    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
-        return piece.isMovableTo(moveRoute, board);
+    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
+        return piece.canMoveTo(moveRoute, board);
     }
 
     public void movePieceTo(Cell targetCell) {

@@ -32,14 +32,13 @@ public abstract class Piece {
         return PiecesCache.find(pieceType, teamColor);
     }
 
-    public boolean isMovableTo(MoveRoute moveRoute, Board board) {
+    public boolean canMoveTo(MoveRoute moveRoute, Board board) {
         Direction moveDirection = moveRoute.direction();
         if (isNotCorrectDirection(moveDirection)
             || board.isAnyPieceExistsOnRouteBeforeDestination(moveRoute)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
-        if (board.isNotCellEmpty(moveRoute.destination())
-            && !board.isEnemyExists(moveRoute.destination(), teamColor)) {
+        if (board.isOwnPieceExistsInCell(moveRoute.destination(), teamColor)) {
             throw new IllegalArgumentException("이동할 수 없는 도착위치 입니다.");
         }
         return true;
