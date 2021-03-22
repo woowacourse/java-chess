@@ -22,18 +22,8 @@ public class Ready extends GameState {
     }
 
     @Override
-    public GameState status() {
-        throw new InvalidCommandException();
-    }
-
-    @Override
     public State finished() {
         return new Finished(board(), currentTurn());
-    }
-
-    @Override
-    public boolean isGameSet() {
-        return false;
     }
 
     @Override
@@ -44,6 +34,11 @@ public class Ready extends GameState {
     @Override
     public Side winner() {
         throw new InvalidCommandException();
+    }
+
+    @Override
+    public boolean isGameSet() {
+        return false;
     }
 
     @Override

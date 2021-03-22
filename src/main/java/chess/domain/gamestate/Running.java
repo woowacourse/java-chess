@@ -26,18 +26,8 @@ public class Running extends GameState {
     }
 
     @Override
-    public GameState status() {
-        return this;
-    }
-
-    @Override
     public State finished() {
         return new Finished(board(), currentTurn());
-    }
-
-    @Override
-    public boolean isGameSet() {
-        return false;
     }
 
     @Override
@@ -48,6 +38,11 @@ public class Running extends GameState {
     @Override
     public Side winner() {
         throw new InvalidCommandException();
+    }
+
+    @Override
+    public boolean isGameSet() {
+        return false;
     }
 
     @Override

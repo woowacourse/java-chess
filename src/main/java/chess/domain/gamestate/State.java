@@ -10,8 +10,6 @@ public interface State {
 
     State move(Position from, Position to);
 
-    State status();
-
     State finished();
 
     Board board();

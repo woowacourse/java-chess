@@ -22,18 +22,8 @@ public class GameSet extends GameState {
     }
 
     @Override
-    public GameState status() {
-        return this;
-    }
-
-    @Override
     public State finished() {
         return new Finished(board(), currentTurn());
-    }
-
-    @Override
-    public boolean isGameSet() {
-        return true;
     }
 
     @Override
@@ -44,6 +34,11 @@ public class GameSet extends GameState {
     @Override
     public Side winner() {
         return board().winner();
+    }
+
+    @Override
+    public boolean isGameSet() {
+        return true;
     }
 
     @Override

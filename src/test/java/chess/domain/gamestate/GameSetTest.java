@@ -10,7 +10,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class GameSetTest {
-
     private Board board;
     private State gameSet;
 
@@ -24,11 +23,5 @@ class GameSetTest {
     @DisplayName("종료 상태로 바뀌는 finished 테스트")
     void finished() {
         assertThat(gameSet.finished()).isInstanceOf(Finished.class);
-    }
-
-    @Test
-    @DisplayName("status 명령어 입력시 GameSet 상태로 유지되는 테스트")
-    void status() {
-        assertThat(gameSet.status()).isInstanceOf(GameSet.class);
     }
 }

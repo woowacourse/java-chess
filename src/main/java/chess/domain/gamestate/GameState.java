@@ -12,10 +12,12 @@ public abstract class GameState implements State {
         this.side = side;
     }
 
+    @Override
     public Board board() {
         return board;
     }
 
+    @Override
     public Side currentTurn() {
         return side;
     }
