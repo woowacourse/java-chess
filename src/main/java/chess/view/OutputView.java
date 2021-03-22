@@ -15,7 +15,7 @@ public class OutputView {
         for (final Horizontal h : Horizontal.values()) {
             for (final Vertical v : Vertical.values()) {
                 final Piece piece = board.getBoard().get(new Position(v, h));
-                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
+                System.out.print(piece.decideUpperOrLower());
             }
             System.out.println();
         }
@@ -32,7 +32,7 @@ public class OutputView {
                 }
 
                 final Piece piece = board.getBoard().get(p);
-                System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
+                System.out.print(piece.decideUpperOrLower());
             }
             System.out.println();
         }

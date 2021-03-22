@@ -147,7 +147,6 @@ public class Board {
         return totalCount;
     }
 
-
     public boolean isEnd() {
         return isEnd;
     }

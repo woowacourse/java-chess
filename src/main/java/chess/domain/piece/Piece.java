@@ -25,16 +25,16 @@ public abstract class Piece {
 
     ;
 
-    public final String decideUpperOrLower(final String symbol) {
+    public final String decideUpperOrLower() {
         if (owner.equals(Owner.BLACK)) {
-            return symbol.toUpperCase();
+            return getSymbol().toUpperCase();
         }
 
         if (owner.equals(Owner.WHITE)) {
-            return symbol.toLowerCase();
+            return getSymbol().toLowerCase();
         }
 
-        return symbol;
+        return getSymbol();
     }
 
     public abstract String getSymbol();
