@@ -23,7 +23,7 @@ class BoardTest {
         board = Board.createGamingBoard();
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이동 성공")
     @MethodSource("moveSuccessTestcase")
     void moveSuccess(Position from, Position to) {
         board.move(from, to, Side.WHITE);
@@ -37,7 +37,7 @@ class BoardTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "이동 불가, 예외 발생")
     @MethodSource("moveFailTestcase")
     void moveFail(Position from, Position to) {
         assertThatThrownBy(() -> board.move(from, to, Side.WHITE))
@@ -54,7 +54,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("왕이 잡혔을 경우 true를 반환하는지 테스트")
+    @DisplayName("왕이 잡히면 true 반환")
     void isGameSet() {
         Board board = new Board(BoardTestInitializer.init());
         board.move(Position.from("d5"), Position.from("f6"), Side.WHITE);
@@ -62,7 +62,7 @@ class BoardTest {
     }
 
     @Test
-    @DisplayName("보드에 남아있는 기물 점수 계산 테스트")
+    @DisplayName("보드에 남아있는 각 팀의 기물 점수 합산")
     void score() {
         Board board = new Board(BoardTestInitializer.init());
         assertThat(board.score(Side.BLACK)).isEqualTo(6);

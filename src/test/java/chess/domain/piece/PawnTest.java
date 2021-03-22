@@ -89,13 +89,13 @@ class PawnTest {
     }
 
     @Test
-    @DisplayName("한번도 움직이지 않은 Pawn 두칸 이동 성공")
+    @DisplayName("한번도 움직이지 않은 Pawn 두칸 이동, 경로 반환")
     void moveDoubleSuccess() {
-        List<Position> route1 = pawnBlack.route(Position.from("b7"), Position.from("b5"));
-        assertThat(route1).containsExactly(Position.from("b6"));
+        List<Position> blackPawnRoute = pawnBlack.route(Position.from("b7"), Position.from("b5"));
+        assertThat(blackPawnRoute).containsExactly(Position.from("b6"));
 
-        List<Position> route2 = pawnWhite.route(Position.from("b2"), Position.from("b4"));
-        assertThat(route2).containsExactly(Position.from("b3"));
+        List<Position> whitePawnRoute = pawnWhite.route(Position.from("b2"), Position.from("b4"));
+        assertThat(whitePawnRoute).containsExactly(Position.from("b3"));
     }
 
     @Test
