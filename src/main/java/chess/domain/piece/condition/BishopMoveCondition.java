@@ -15,7 +15,7 @@ public class BishopMoveCondition extends MoveCondition {
                 isRightMovePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&
                 isNotExistSameColorObstacleOnTarget(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovePath(final ChessPiece piece, final Position target) {

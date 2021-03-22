@@ -14,7 +14,7 @@ public class RookMoveCondition extends MoveCondition {
                 isRightMovable(piece, target) &&
                 isNotExistObstacleOnCrossPath(board, piece, target) &&
                 isNotExistSameColorObstacleOnTarget(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovable(final ChessPiece piece, final Position target) {

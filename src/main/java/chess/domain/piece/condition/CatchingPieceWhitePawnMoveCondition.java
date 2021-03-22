@@ -11,7 +11,7 @@ public class CatchingPieceWhitePawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightMovePath(piece, target) &&
                 isEnemyExist(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightMovePath(final ChessPiece piece, final Position target) {

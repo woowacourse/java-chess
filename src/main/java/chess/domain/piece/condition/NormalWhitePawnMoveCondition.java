@@ -11,7 +11,7 @@ public class NormalWhitePawnMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isMovablePath(piece, target) &&
                 isNotExistPieceOnPath(board, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isMovablePath(final ChessPiece piece, final Position target) {

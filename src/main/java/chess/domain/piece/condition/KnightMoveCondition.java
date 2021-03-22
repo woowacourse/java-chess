@@ -16,7 +16,7 @@ public class KnightMoveCondition extends MoveCondition {
         return !piece.isSamePosition(target) &&
                 isRightPath(piece, target) &&
                 isNotExistSameColorPieceOnPath(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isRightPath(final ChessPiece piece, final Position target) {

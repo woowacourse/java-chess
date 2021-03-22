@@ -15,7 +15,7 @@ public class QueenMoveCondition extends MoveCondition {
                 isMovablePath(piece, target) &&
                 isNotExistObstacleOnPath(board, piece, target) &&
                 isNotExistSameColorObstacleOnTarget(board, piece, target) &&
-                isNotChessPieceOutOfBoard(target);
+                isNotTheChessPieceGoOffTheBoard(target);
     }
 
     private boolean isMovablePath(final ChessPiece piece, final Position target) {
