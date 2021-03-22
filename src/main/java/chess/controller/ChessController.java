@@ -50,6 +50,7 @@ public class ChessController {
     private void executeCommand(Command command, CommandTokens commandTokens) {
         if (command == Command.MOVE) {
             executeMoveCommand(commandTokens);
+            return;
         }
         if (command == Command.STATUS) {
             Result result = chessBoard.calculateScores();
