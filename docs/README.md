@@ -19,10 +19,10 @@
   - [x] rank가 1~8이 아닌 경우에 예외를 발생한다.
   - [x] file이 a~h이 아닌 경우에 예외를 발생한다.
 - [x] ChessBoard 객체 생성
-  - [x] ChessBoardFactory를 생성한다. 
+  - [x] ChessBoardFactory를 생성한다.
     - [x] 유효한(1-8, a-h)의 범위가 아니면 에러가 발생한다.
   - [x] PieceFactory를 생성한다.
-- [x] start를 입력하면 체스판이 출력된다. 
+- [x] start를 입력하면 체스판이 출력된다.
 - [x] 체스판을 출력한다.
 - [x] end를 입력하면 프로그램이 종료된다.
 
@@ -32,36 +32,37 @@
 - [x] 게임 실행 메시지를 출력한다.
 - [x] start를 입력하면 체스판이 출력된다.
 - [x] 체스판을 출력한다.
-- [x] `move source target`을 실행해 이동한다. 
+- [x] `move source target`을 실행해 이동한다.
   - [x] ex. `move b2 b3`
     - [x] move가 아닌 다른 명령어가 들어오면 예외가 발생한다.
     - [x] source의 위치가 없는 위치면 예외가 발생한다.
-    - [x] source 위치에 말이 없으면 예외가 발생한다. 
-    - [x] source로 선택된 말이, 올바른 턴이 아니면, 예외가 발생한다. 
+    - [x] source 위치에 말이 없으면 예외가 발생한다.
+    - [x] source로 선택된 말이, 올바른 턴이 아니면, 예외가 발생한다.
       - ex. `하얀색 턴이면 소문자 기물, 검은색 턴이면 대문자 기물`을 선택해야한다.
     - [x] source와 target이 동일한 경우 예외가 발생한다.
     - [x] target의 위치가 없는 위치면 예외가 발생한다.
     - [x] source에서 선택한 말과 target의 말이 같은 색깔이면 예외가 발생한다.
-    - [x] source에서 선택한 말이 움직임 수 없는 위치를 target에서 선택하면 예외가 발생한다. 
+    - [x] source에서 선택한 말이 움직임 수 없는 위치를 target에서 선택하면 예외가 발생한다.
       - ex. 원래는 지나갈 수 있어도, 이동 경로에 다른 말이 있는경우 지나갈 수 없다.
 
 ### Rook 테스트 케이스 예시
-![rook](https://user-images.githubusercontent.com/50176238/111596208-40073300-8810-11eb-904e-feb0c43117fa.jpg)
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/111596208-40073300-8810-11eb-904e-feb0c43117fa.jpg" width="850" height="600"></p>
 
 ### King 테스트 케이스 예시
-![king](https://user-images.githubusercontent.com/50176238/111624064-8c616b80-882e-11eb-919f-e7c162aa22a1.jpg)
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/111624064-8c616b80-882e-11eb-919f-e7c162aa22a1.jpg" width="850" height="600"></p>
 
 ### Bishop 테스트 케이스 예시
-![bishop](https://user-images.githubusercontent.com/48986787/111715251-c8c8b200-8896-11eb-801d-1c08328b3353.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/48986787/111715251-c8c8b200-8896-11eb-801d-1c08328b3353.png" width="850" height="600"></p>
 
 ### Queen 테스트 케이스 예시
-![queen](https://user-images.githubusercontent.com/50176238/111739494-7b643900-88c6-11eb-9f0b-b981f2ce3730.jpg)
+
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/111739494-7b643900-88c6-11eb-9f0b-b981f2ce3730.jpg" width="850" height="600"></p>
 
 ### Knight 테스트 케이스 예시
-![knight](https://user-images.githubusercontent.com/50176238/111741570-0692fe00-88ca-11eb-8e6c-e9ff71db6e84.jpg)
+<p align="center"><img src="https://user-images.githubusercontent.com/50176238/111741570-0692fe00-88ca-11eb-8e6c-e9ff71db6e84.jpg" width="850" height="600"></p>
 
 ### Pawn 테스트 케이스 예시
-![pawn](https://user-images.githubusercontent.com/48986787/111746634-a6a05580-88d1-11eb-8f12-bdcfc8b166ba.png)
+<p align="center"><img src="https://user-images.githubusercontent.com/48986787/111746634-a6a05580-88d1-11eb-8f12-bdcfc8b166ba.png" width="850" height="750"></p>
 
 <br>
 
