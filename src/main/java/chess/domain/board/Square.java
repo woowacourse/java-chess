@@ -4,7 +4,6 @@ import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.piece.RealPiece;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
 
@@ -36,15 +35,19 @@ public class Square {
         throw new IllegalArgumentException("기물이 움직일 수 없는 상황입니다.");
     }
 
-    public RealPiece getPiece() {
-        if (hasPiece()) {
-            return (RealPiece) this.piece;
+    public Piece getPiece() {
+        if (hasNotPiece()) {
+            throw new NoSuchElementException("해당 칸에는 말이 없습니다.");
         }
-        throw new NoSuchElementException("해당 칸에는 말이 없습니다.");
+        return piece;
     }
 
     public boolean hasPiece() {
         return piece.isNotBlank();
+    }
+
+    public boolean hasNotPiece() {
+        return !piece.isNotBlank();
     }
 
     public Position getPosition() {

@@ -3,7 +3,7 @@ package chess.domain.board;
 import chess.domain.order.MoveOrder;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.RealPiece;
+import chess.domain.piece.Piece;
 import chess.domain.piece.attribute.Color;
 import chess.domain.position.Direction;
 import chess.domain.position.File;
@@ -61,22 +61,22 @@ public class Board {
     }
 
     public Map<Color, Double> getScoreMap() {
-        return Arrays.stream(Color.values())
+        return Color.getUserColors().stream()
                 .collect(toMap(Function.identity(), this::getScore));
     }
 
     private double getScore(Color color) {
         return Arrays.stream(File.values())
-                .mapToDouble(file -> scorePerFiles(realPiecesPerFiles(color, file)))
+                .mapToDouble(file -> scorePerFiles(piecesPerFiles(color, file)))
                 .sum();
     }
 
-    private double scorePerFiles(List<RealPiece> realPieces) {
-        double score = realPieces.stream()
+    private double scorePerFiles(List<Piece> pieces) {
+        double score = pieces.stream()
                 .mapToDouble(ScoreTable::convertToScore)
                 .sum();
-        long pawnCount = realPieces.stream()
-                .filter(realPiece -> realPiece instanceof Pawn)
+        long pawnCount = pieces.stream()
+                .filter(piece -> piece instanceof Pawn)
                 .count();
         if (pawnCount >= PAWN_SCORE_DISADVANTAGE_SIZE) {
             score -= pawnCount * ScoreTable.getPawnDisadvantageRatio();
@@ -84,12 +84,12 @@ public class Board {
         return score;
     }
 
-    private List<RealPiece> realPiecesPerFiles(Color color, File file) {
+    private List<Piece> piecesPerFiles(Color color, File file) {
         return positionStreamPerFiles(file)
                 .map(this::findByPosition)
                 .filter(Square::hasPiece)
                 .map(Square::getPiece)
-                .filter(realPiece -> realPiece.getColor() == color)
+                .filter(piece -> piece.getColor() == color)
                 .collect(toList());
     }
 

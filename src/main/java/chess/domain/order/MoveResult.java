@@ -1,7 +1,6 @@
 package chess.domain.order;
 
 import chess.domain.piece.Piece;
-import chess.domain.piece.RealPiece;
 
 public class MoveResult {
     private final Piece capturedPiece;
@@ -14,9 +13,9 @@ public class MoveResult {
         return capturedPiece.isNotBlank();
     }
 
-    public RealPiece getCapturedPiece() {
+    public Piece getCapturedPiece() {
         if (isCaptured()) {
-            return (RealPiece) capturedPiece;
+            return capturedPiece;
         }
         throw new IllegalArgumentException("잡힌 말이 없습니다.");
     }

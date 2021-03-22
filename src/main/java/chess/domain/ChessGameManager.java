@@ -3,13 +3,12 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.order.MoveResult;
-import chess.domain.piece.attribute.Color;
 import chess.domain.piece.ColoredPieces;
+import chess.domain.piece.attribute.Color;
 import chess.domain.position.Position;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.domain.statistics.MatchResult;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,7 +21,7 @@ public class ChessGameManager {
 
     public void start() {
         board = DefaultBoardInitializer.getBoard();
-        this.coloredPieces = Arrays.stream(Color.values())
+        this.coloredPieces = Color.getUserColors().stream()
                 .map(ColoredPieces::createByColor)
                 .collect(Collectors.toList());
         currentColor = Color.WHITE;

@@ -7,7 +7,7 @@ public class Notation {
         this.notation = notation;
     }
 
-    public String getNotationText(){
-        return notation;
+    public String getNotationText(Color color){
+        return color.changeNotation(notation);
     }
 }

@@ -4,7 +4,7 @@ import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Notation;
 import chess.domain.piece.strategy.KnightMoveStrategy;
 
-public class Knight extends RealPiece {
+public class Knight extends Piece {
     private static final Notation KNIGHT_NOTATION = new Notation("K");
 
     public Knight(Color color) {

@@ -16,8 +16,7 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 import java.util.Arrays;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 
 class PawnMoveStrategyTest {
     private Board board;
@@ -55,12 +54,11 @@ class PawnMoveStrategyTest {
     @DisplayName("첫 움직임일 때 폰이 2칸을 이동할 수 있는지")
     @ParameterizedTest
     @CsvSource({"c2, c4, WHITE", "g7, g5, BLACK"})
-    void throwExceptionWhenMoveOverTwoSquaresNotFirstTurn(String from, String to, Color color) {
+    void pawnMoveOverTwoSquaresAtFirstTurn(String from, String to, Color color) {
         Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
-        assertThatThrownBy(() -> testBoard.move(Position.of(from), Position.of(to)))
-                .isInstanceOf(IllegalArgumentException.class)
-                .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
+        assertThatCode(() -> testBoard.move(Position.of(from), Position.of(to)))
+                .doesNotThrowAnyException();
     }
 
     @DisplayName("대각선에 말이 없을 때 대각선으로 이동하려하면 예외가 발생하는지")
@@ -85,7 +83,7 @@ class PawnMoveStrategyTest {
     @DisplayName("첫 움직임이 아닐 때 2칸 이상 이동할 경우 예외")
     @ParameterizedTest
     @CsvSource({"c3, c5, WHITE", "g6, g4, BLACK"})
-    void pawnMoveOverTwoSquaresAtFirstTurn(String from, String to, Color color) {
+    void throwExceptionWhenMoveOverTwoSquaresNotFirstTurn(String from, String to, Color color) {
         Board testBoard = TestBoardInitializer.createBoard(Arrays.asList(new Square(Position.of(from), new Pawn(color))));
 
         assertThatThrownBy(() -> testBoard.move(Position.of(from), Position.of(to)))

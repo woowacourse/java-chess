@@ -4,7 +4,7 @@ import chess.domain.piece.attribute.Color;
 import chess.domain.piece.attribute.Notation;
 import chess.domain.piece.strategy.QueenMoveStrategy;
 
-public class Queen extends RealPiece {
+public class Queen extends Piece {
     private static final Notation QUEEN_NOTATION = new Notation("Q");
 
     public Queen(Color color) {
