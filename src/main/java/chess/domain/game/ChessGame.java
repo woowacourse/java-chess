@@ -27,7 +27,7 @@ public class ChessGame {
 		chessBoard.initBoard();
 	}
 
-	public void run(List<String> input) {
+	public void movePiece(List<String> input) {
 		Position sourcePosition = Position.of(input.get(SOURCE_INDEX));
 		Position targetPosition = Position.of(input.get(TARGET_INDEX));
 		validateMovement(sourcePosition, targetPosition);

@@ -37,7 +37,7 @@ public class ChessGameTest {
 	@DisplayName("움직이지 않는 입력이 주어졌을 때 에러를 반환하는지")
 	@Test
 	void validate_noMovement_throwError() {
-		AssertionsForClassTypes.assertThatThrownBy(() -> chessGame.run(Arrays.asList("move", "b2", "b2")))
+		AssertionsForClassTypes.assertThatThrownBy(() -> chessGame.movePiece(Arrays.asList("move", "b2", "b2")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(NO_MOVEMENT_ERROR);
 	}
@@ -47,7 +47,7 @@ public class ChessGameTest {
 	void validateTurn() {
 		ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
 		chessGame.start();
-		assertThatThrownBy(() -> chessGame.run(Arrays.asList("move", "b7", "b6")))
+		assertThatThrownBy(() -> chessGame.movePiece(Arrays.asList("move", "b7", "b6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(String.format(TURN_MESSAGE, Color.WHITE));
 	}

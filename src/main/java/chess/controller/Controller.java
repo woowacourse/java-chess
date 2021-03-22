@@ -5,17 +5,18 @@ import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
 import chess.domain.piece.Color;
 import chess.view.InputView;
+import chess.view.Option;
 import chess.view.OutputView;
 
 import java.util.List;
 
-public class Controller {
-	private static final int COMMAND_INDEX = 0;
+import static chess.view.InputView.COMMAND_INDEX;
 
+public class Controller {
 	public void run() {
 		ChessBoard chessBoard = new ChessBoard();
 		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE);
-		OutputView.gameStart();
+		OutputView.printMainScreen();
 		if (InputView.isStart()) {
 			startGame(chessGame);
 			gameResult(chessGame);
@@ -31,11 +32,11 @@ public class Controller {
 
 	private void playGame(ChessGame chessGame) {
 		while (chessGame.isOngoing()) {
-			List<String> input = InputView.moveOrStatus();
-			if (InputView.STATUS.equals(input.get(COMMAND_INDEX))) {
+			List<String> input = InputView.takeMoveOrStatusInput();
+			if (Option.STATUS.getOption().equals(input.get(COMMAND_INDEX))) {
 				break;
 			}
-			chessGame.run(input);
+			chessGame.movePiece(input);
 			OutputView.printChessBoard(chessGame.getChessBoard());
 		}
 	}
