@@ -26,41 +26,6 @@ public class BoardTest {
     }
     
     @Test
-    @DisplayName("보드 초기화")
-    void initializeBoardTest() {
-        
-        // then
-        final Map<Position, Piece> chessBord = this.board.getBoard();
-        assertThat(chessBord.get(Position.from("a1"))).isInstanceOf(Rook.class);
-        assertThat(chessBord.get(Position.from("b1"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.from("c1"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.from("d1"))).isInstanceOf(Queen.class);
-        assertThat(chessBord.get(Position.from("e1"))).isInstanceOf(King.class);
-        assertThat(chessBord.get(Position.from("f1"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.from("g1"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.from("h1"))).isInstanceOf(Rook.class);
-        
-        for (int i = 0; i < 8; i++) {
-            Position position = Position.of(i, 1);
-            assertThat(chessBord.get(position)).isInstanceOf(Pawn.class);
-        }
-        
-        assertThat(chessBord.get(Position.from("a8"))).isInstanceOf(Rook.class);
-        assertThat(chessBord.get(Position.from("b8"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.from("c8"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.from("d8"))).isInstanceOf(Queen.class);
-        assertThat(chessBord.get(Position.from("e8"))).isInstanceOf(King.class);
-        assertThat(chessBord.get(Position.from("f8"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.from("g8"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.from("h8"))).isInstanceOf(Rook.class);
-        
-        for (int i = 0; i < 8; i++) {
-            Position position = Position.of(i, 6);
-            assertThat(chessBord.get(position)).isInstanceOf(Pawn.class);
-        }
-    }
-    
-    @Test
     @DisplayName("기물 이동")
     void movePiece() {
         
