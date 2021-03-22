@@ -28,7 +28,7 @@ public enum Diagonal {
 
     public static Diagonal findDiagonalByTwoPosition(Position source, Position target) {
         return Arrays.stream(values())
-                .filter(value-> source.isDiagonal(target))
+                .filter(value -> source.isDiagonal(target))
                 .filter(value -> value.findDiagonal.test(source, target))
                 .findFirst()
                 .orElseThrow(() ->
@@ -36,13 +36,11 @@ public enum Diagonal {
     }
 
     public void hasPieceInPath(Position source, Position target, Pieces pieces) {
-        int sourceX = source.getX();
-        int sourceY = source.getY();
         int count = Math.abs(source.xDistance(target));
         for (int i = 1; i < count; i++) {
             for (int j = 1; j < count; j++) {
                 Piece piece = pieces.findByPosition(
-                        Position.of((char) (sourceX + (xChangeValue * i)), (char) (sourceY + (yChangeValue * j))));
+                        source.movedPositionByNumber(xChangeValue * i, yChangeValue * j));
                 checkAbleToJump(piece);
             }
         }

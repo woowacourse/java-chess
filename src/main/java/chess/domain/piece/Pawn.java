@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Color;
 import chess.domain.Name;
 import chess.domain.Score;
+import chess.domain.position.Cross;
 import chess.domain.position.Position;
 
 public class Pawn extends Piece {
@@ -15,59 +16,59 @@ public class Pawn extends Piece {
 
     @Override
     public void move(Position target, Pieces pieces) {
-        if (this.position.isDiagonal(target) && (Math.abs(this.position.xDistance(target)) == 1 &&
-                Math.abs(this.position.yDistance(target)) == 1)) {
-            Piece targetPiece = pieces.findByPosition(target);
-            if (targetPiece instanceof Empty) {
-                throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
-            }
-            pieces.removePieceByPosition(target);
-            this.position = target;
+        if (this.position.isDiagonal(target) && position.isSameDistanceByCount(target, 1)) {
+            checkAbleToAttack(target, pieces);
             return;
         }
-        if (this.position.getY() == BLACK_INITIAL_Y && this.color == Color.BLACK) { // 블랙 초기화
-            if (this.position.yDistance(target) > 0 && this.position.yDistance(target) <= 2) { // 빠꾸 금지 && 2칸 내 이동
-                for (int i = 1; i <= position.yDistance(target); i++) { // 장애물 검사
-                    Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - i)));
-                    if (!(piece instanceof Empty)) {
-                        throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                    }
-                }
-                this.position = target;
-                return;
-            }
-        }
-
-        if (this.position.getY() == WHITE_INITIAL_Y && this.color == Color.WHITE) { // 화이트
-            if (target.yDistance(this.position) > 0 && target.yDistance(this.position) <= 2) {
-                for (int i = 1; i <= target.yDistance(this.position); i++) {
-                    Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + i)));
-                    if (!(piece instanceof Empty)) {
-                        throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-                    }
-                }
-                this.position = target;
-                return;
-            }
-        }
-
-        if (this.position.yDistance(target) == 1 && this.color == Color.BLACK) { // 블랙
-            Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() - 1)));
-            if (!(piece instanceof Empty)) {
-                throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-            }
-            this.position = target;
+        if (this.color.same(Color.BLACK) && moveByBlackRule(target, pieces)) {
             return;
         }
-
-        if (target.yDistance(this.position) == 1 && this.color == Color.WHITE) { // 화이트
-            Piece piece = pieces.findByPosition(Position.of(position.getX(), (char) (position.getY() + 1)));
-            if (!(piece instanceof Empty)) {
-                throw new IllegalArgumentException("[ERROR] 기물을 뛰어 넘어 이동할 수 없습니다.");
-            }
-            this.position = target;
+        if (this.color.same(Color.WHITE) && moveByWhiteRule(target, pieces)) {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
+    }
+
+    private void checkAbleToAttack(Position target, Pieces pieces) {
+        Piece targetPiece = pieces.findByPosition(target);
+        if (targetPiece.isEmpty()) {
+            throw new IllegalArgumentException("[ERROR] 공격하려는 위치에 상대방 말이 없습니다.");
+        }
+        pieces.removePieceByPosition(target);
+        this.position = target;
+    }
+
+    private boolean moveByBlackRule(Position target, Pieces pieces) {
+        if (this.position.sameY(BLACK_INITIAL_Y) &&
+                this.position.yDistance(target) > 0 && this.position.yDistance(target) <= 2) {
+            Cross pawnCross = Cross.findCrossByTwoPosition(position, target);
+            pawnCross.hasPieceInPath(position, target, pieces);
+            this.position = target;
+            return true;
+        }
+        if (this.position.yDistance(target) == 1) {
+            Cross pawnCross = Cross.findCrossByTwoPosition(position, target);
+            pawnCross.hasPieceInPath(position, target, pieces);
+            this.position = target;
+            return true;
+        }
+        return false;
+    }
+
+    private boolean moveByWhiteRule(Position target, Pieces pieces) {
+        if (this.position.sameY(WHITE_INITIAL_Y) &&
+                target.yDistance(this.position) > 0 && target.yDistance(this.position) <= 2) {
+            Cross pawnCross = Cross.findCrossByTwoPosition(position, target);
+            pawnCross.hasPieceInPath(position, target, pieces);
+            this.position = target;
+            return true;
+        }
+        if (target.yDistance(this.position) == 1) {
+            Cross pawnCross = Cross.findCrossByTwoPosition(position, target);
+            pawnCross.hasPieceInPath(position, target, pieces);
+            this.position = target;
+            return true;
+        }
+        return false;
     }
 }

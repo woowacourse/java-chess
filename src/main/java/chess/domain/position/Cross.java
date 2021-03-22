@@ -11,7 +11,7 @@ public enum Cross {
             source.sameX(target.getX()) && !source.largeY(target)) {
         @Override
         public void hasPieceInPath(Position source, Position target, Pieces pieces) {
-            int count = Math.abs(source.xDistance(target));
+            int count = Math.abs(source.yDistance(target));
             for (int i = 1; i < count; i++) {
                 Piece piece = pieces.findByPosition(
                         source.movedPositionByNumber(0, i));
@@ -23,7 +23,7 @@ public enum Cross {
             source.sameX(target.getX()) && source.largeY(target)) {
         @Override
         public void hasPieceInPath(Position source, Position target, Pieces pieces) {
-            int count = Math.abs(source.xDistance(target));
+            int count = Math.abs(source.yDistance(target));
             for (int i = 1; i < count; i++) {
                 Piece piece = pieces.findByPosition(
                         source.movedPositionByNumber(0, -i));

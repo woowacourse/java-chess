@@ -1,4 +1,5 @@
 ## 할일
+* pawn 이동을 game으로 옮겨야하나
 * chessBoard 만들기
 * position 이름 생각하기
 * piece한테 메시지 보내서 position 비교하기

@@ -90,21 +90,6 @@ public class PawnTest {
         assertThat(pieces.getPieces().size()).isEqualTo(1);
     }
 
-    @DisplayName("검정 말이 흰 말을 공격한다. - 말이 없을 경우")
-    @Test
-    void 검은말이_상대편_말을_공격한다_예외() {
-        List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '7'), Color.BLACK));
-        Pieces pieces = new Pieces(current);
-
-        Position source = Position.of('a', '7');
-        Position target = Position.of('b', '6');
-        Piece pawn = pieces.findByPosition(source);
-
-        assertThatThrownBy(() -> pawn.move(target, pieces))
-                .isInstanceOf(IllegalArgumentException.class);
-    }
-
     @DisplayName("흰 말이 검정 말을 공격한다.")
     @Test
     void 흰말이_상대편_말을_공격한다() {
