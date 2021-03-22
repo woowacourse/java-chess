@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.controller.ChessGame;
 import chess.domain.Score;
 import chess.domain.Side;
 import chess.domain.board.Board;
@@ -17,9 +18,9 @@ public class OutputView {
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
     }
 
-    public static void print(Board board, Side side) {
-        print(board);
-        print(side);
+    public static void printBoard(ChessGame chessGame) {
+        print(chessGame.board());
+        print(chessGame.currentTurn());
     }
 
     public static void print(Board board) {

@@ -29,7 +29,7 @@ public class Ready extends GameState {
 
     @Override
     public State finished() {
-        return new Finished(board(), side());
+        return new Finished(board(), currentTurn());
     }
 
     @Override

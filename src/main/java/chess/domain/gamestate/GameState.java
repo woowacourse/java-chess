@@ -16,7 +16,7 @@ public abstract class GameState implements State {
         return board;
     }
 
-    public Side side() {
+    public Side currentTurn() {
         return side;
     }
 

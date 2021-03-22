@@ -33,7 +33,7 @@ public class Finished extends GameState {
 
     @Override
     public boolean isGameSet() {
-        throw new InvalidCommandException();
+        return false;
     }
 
     @Override

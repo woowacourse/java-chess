@@ -16,7 +16,7 @@ public interface State {
 
     Board board();
 
-    Side side();
+    Side currentTurn();
 
     Score score();
 

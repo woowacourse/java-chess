@@ -19,9 +19,9 @@ public class Running extends GameState {
 
     @Override
     public GameState move(Position from, Position to) {
-        board().move(from, to, side());
+        board().move(from, to, currentTurn());
         if (board().isGameSet()) {
-            return new GameSet(board(), side());
+            return new GameSet(board(), currentTurn());
         }
         return new Running(board(), changeTurn());
     }
@@ -33,7 +33,7 @@ public class Running extends GameState {
 
     @Override
     public State finished() {
-        return new Finished(board(), side());
+        return new Finished(board(), currentTurn());
     }
 
     @Override
