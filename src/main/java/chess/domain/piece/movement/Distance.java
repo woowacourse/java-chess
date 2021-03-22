@@ -1,4 +1,4 @@
-package chess.domain.piece.rule;
+package chess.domain.piece.movement;
 
 import java.util.Objects;
 
@@ -30,6 +30,10 @@ public class Distance {
 
     public Distance next() {
         return new Distance(value+1);
+    }
+
+    public boolean isFirst(){
+        return this.equals(ONE);
     }
 
     @Override

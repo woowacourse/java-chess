@@ -1,8 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.piece.rule.Direction;
-import chess.domain.piece.rule.Distance;
-import chess.domain.piece.rule.Score;
+import chess.domain.piece.movement.Direction;
+import chess.domain.piece.movement.Distance;
 
 public class King extends Piece {
     private static final King BLACK_KING = new King(Owner.BLACK);

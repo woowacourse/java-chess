@@ -3,7 +3,7 @@ package chess.domain.player;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Owner;
-import chess.domain.piece.rule.Score;
+import chess.domain.piece.Score;
 
 import java.util.List;
 

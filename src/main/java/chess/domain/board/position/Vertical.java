@@ -1,7 +1,7 @@
 package chess.domain.board.position;
 
-import chess.domain.piece.rule.Direction;
-import chess.domain.piece.rule.Distance;
+import chess.domain.piece.movement.Direction;
+import chess.domain.piece.movement.Distance;
 
 import java.util.Arrays;
 

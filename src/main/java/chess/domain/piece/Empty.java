@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.piece.rule.Distance;
-import chess.domain.piece.rule.Score;
+import chess.domain.piece.movement.Distance;
 
 import java.util.Collections;
 

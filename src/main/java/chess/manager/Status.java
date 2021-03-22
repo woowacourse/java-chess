@@ -1,6 +1,6 @@
 package chess.manager;
 
-import chess.domain.piece.rule.Score;
+import chess.domain.piece.Score;
 
 public class Status {
 

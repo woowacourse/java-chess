@@ -1,4 +1,4 @@
-package chess.domain.piece.rule;
+package chess.domain.piece;
 
 public class Score {
 

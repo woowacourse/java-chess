@@ -6,8 +6,8 @@ import chess.domain.board.position.Vertical;
 import chess.domain.piece.Empty;
 import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
-import chess.domain.piece.rule.Direction;
-import chess.domain.piece.rule.Distance;
+import chess.domain.piece.movement.Direction;
+import chess.domain.piece.movement.Distance;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -64,7 +64,7 @@ public class Board {
     }
 
     private boolean isPrePositionEnemy(final Position source, final Direction direction, final Distance distance) {
-        if (distance.equals(Distance.ONE)) {
+        if (distance.isFirst()) {
             return false;
         }
         final Position prePosition = source.next(direction, distance.pre());
