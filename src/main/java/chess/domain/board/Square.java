@@ -8,7 +8,6 @@ import java.util.Objects;
 
 public class Square {
 
-    private static final String SAME_TARGET = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
     private static final String NOT_MOVABLE_POSITION = "이동할 수 없는 위치입니다.";
     private static final int BLACK_STARTING_POSITION = 1;
     private static final int WHITE_STARTING_POSITION = 6;
@@ -26,10 +25,7 @@ public class Square {
     }
 
     public void move(ChessBoard chessBoard, Square targetSquare) {
-        if (this.equals(targetSquare)) {
-            throw new IllegalArgumentException(SAME_TARGET);
-        }
-        if (Path.isMovable(chessBoard, this, targetSquare)) {
+        if (Move.isMovable(chessBoard, this, targetSquare)) {
             targetSquare.addPiece(piece);
             addPiece(new Blank(Color.NO_COLOR));
             return;
@@ -71,6 +67,10 @@ public class Square {
 
     public Position getPosition() {
         return position;
+    }
+
+    public Position nextPosition(Direction direction) {
+        return position.nextPosition(direction);
     }
 
     public boolean isIterable() {

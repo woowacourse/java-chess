@@ -22,6 +22,9 @@ public enum Direction {
     WWN(-2, -1),
     WWS(-2, 1);
 
+    private static final String SAME_TARGET = "현재 위치와 같은 곳으로 이동할 수 없습니다.";
+    public static final String NOT_MOVABLE_DIRECTION = "이동할 수 없는 방향입니다.";
+
     private final int xDegree;
     private final int yDegree;
 
@@ -60,5 +63,39 @@ public enum Direction {
 
     public static List<Direction> blackPawnDirection() {
         return Arrays.asList(SOUTH, SOUTHWEST, SOUTHEAST);
+    }
+
+    public static Direction findDirection(Position source, Position target) {
+        int xGap = gap(source.getColumnAsIndex(), target.getColumnAsIndex());
+        int yGap = gap(source.getRowAsIndex(), target.getRowAsIndex());
+        if (xGap == 0 & yGap == 0) {
+            throw new IllegalArgumentException(SAME_TARGET);
+        }
+        if (xGap == 0) {
+            yGap /= Math.abs(yGap);
+        }
+        if (yGap == 0) {
+            xGap /= Math.abs(xGap);
+        }
+        if (xGap != 0 && yGap != 0) {
+            int divisor = Math.min(Math.abs(xGap), Math.abs(yGap));
+            xGap /= divisor;
+            yGap /= divisor;
+        }
+
+        int finalXGap = xGap;
+        int finalYGap = yGap;
+        return Arrays.stream(Direction.values())
+            .filter(direction -> direction.is(finalXGap, finalYGap))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException(NOT_MOVABLE_DIRECTION));
+    }
+
+    private static int gap(int source, int target) {
+        return target - source;
+    }
+
+    private boolean is(int x, int y) {
+        return this.xDegree == x && this.yDegree == y;
     }
 }

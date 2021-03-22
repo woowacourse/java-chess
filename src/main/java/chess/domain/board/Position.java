@@ -63,8 +63,9 @@ public class Position {
         return column.getIndex();
     }
 
-    public Position nextPosition(int xDegree, int yDegree) {
-        return Position.of(this.row.getIndex() + yDegree, this.column.getIndex() + xDegree);
+    public Position nextPosition(Direction direction) {
+        return Position.of(this.row.getIndex() + direction.getYDegree(),
+            this.column.getIndex() + direction.getXDegree());
     }
 
     @Override
