@@ -40,14 +40,22 @@ public class BoardUtil {
     public static Board generateBoard(char[][] board) {
         List<Piece> pieces = new ArrayList<>();
         for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                char pieceLetter = board[y][x];
-                if (isNotEmpty(pieceLetter)) {
-                    pieces.add(generatePiece(pieceLetter, x, y));
-                }
-            }
+            generateColumn(board[y], pieces, y);
         }
         return Board.of(pieces);
+    }
+
+    private static void generateColumn(char[] chars, List<Piece> pieces, int y) {
+        for (int x = 0; x < BOARD_SIZE; x++) {
+            char pieceLetter = chars[x];
+            addIfNotEmpty(pieces, y, x, pieceLetter);
+        }
+    }
+
+    private static void addIfNotEmpty(List<Piece> pieces, int y, int x, char pieceLetter) {
+        if (isNotEmpty(pieceLetter)) {
+            pieces.add(generatePiece(pieceLetter, x, y));
+        }
     }
 
     private static boolean isNotEmpty(char pieceLetter) {
@@ -75,7 +83,7 @@ public class BoardUtil {
 
     private static Location convertLocation(int x, int y) {
         int transX = x + DEFAULT_POSITION;
-        int transY = 7 - y + DEFAULT_POSITION;
+        int transY = BOARD_SIZE - y;
         return Location.of(transX, transY);
     }
 
