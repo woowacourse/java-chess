@@ -76,10 +76,6 @@ public abstract class Piece {
         return details.color().reverse();
     }
 
-    public boolean isPawn() {
-        return this instanceof Pawn;
-    }
-
     public int column() {
         return currentPosition.column();
     }
@@ -88,14 +84,14 @@ public abstract class Piece {
         return details.score();
     }
 
-    public boolean isKing() {
-        return this instanceof King;
-    }
-
     public String name() {
         if (isSameColor(WHITE)) {
             return details.name();
         }
         return details.name().toUpperCase();
     }
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn() ;
 }

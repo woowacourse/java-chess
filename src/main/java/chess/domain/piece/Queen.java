@@ -12,4 +12,14 @@ public final class Queen extends Piece {
             new Directions(Direction.aroundDirections(), Direction.aroundDirections()),
             position);
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

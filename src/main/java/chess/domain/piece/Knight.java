@@ -13,4 +13,13 @@ public final class Knight extends Piece {
             position);
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

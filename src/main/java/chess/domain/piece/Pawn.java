@@ -24,4 +24,14 @@ public final class Pawn extends Piece {
                 .ifPresent(position -> movablePositions().add(position));
         }
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }
