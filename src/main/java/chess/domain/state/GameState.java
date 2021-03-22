@@ -16,4 +16,5 @@ public interface GameState {
 
     boolean containsKey(Position position);
 
+    GameState terminate();
 }

@@ -55,5 +55,10 @@ public class Finished implements GameState {
         return chessBoard.containsKey(position);
     }
 
+    @Override
+    public GameState terminate() {
+        throw new IllegalArgumentException("이미 끝난 게임입니다.");
+    }
+
 
 }

@@ -101,5 +101,9 @@ public class ChessBoard {
         return gameState instanceof Running;
     }
 
+    public void terminate() {
+        gameState = gameState.terminate();
+    }
+
 }
 
