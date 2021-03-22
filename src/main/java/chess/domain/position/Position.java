@@ -137,7 +137,6 @@ public class Position {
         return row.number().equals("2");
     }
 
-    //todo: 수정필요
     public Character getColumn() {
         return column.alpha().charAt(0);
     }
