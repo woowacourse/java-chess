@@ -1,6 +1,10 @@
 package chess.domain.position;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -17,8 +21,8 @@ public enum Rank {
     EIGHT("8", 8);
 
     private static final Map<String, Rank> searchMap;
-    private static int BLANK_LINE_ROW_PIVOT = 2;
-    private static int NUMBER_OF_BLANK_RANKS = 4;
+    private static final int BLANK_LINE_ROW_PIVOT = 2;
+    private static final int NUMBER_OF_BLANK_RANKS = 4;
 
     private final String letter;
     private final int coordinate;

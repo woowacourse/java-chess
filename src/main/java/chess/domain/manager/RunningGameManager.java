@@ -22,14 +22,17 @@ public class RunningGameManager implements ChessGameManager {
         this.currentColor = currentColor;
     }
 
+    @Override
     public ChessGameManager start() {
         return ChessGameManagerFactory.createRunningGame();
     }
 
+    @Override
     public ChessGameManager end() {
         return ChessGameManagerFactory.createEndGame(getStatistics());
     }
 
+    @Override
     public void move(Position from, Position to) {
         if (board.findByPosition(from).getPiece().getColor() != currentColor) {
             throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
@@ -67,6 +70,7 @@ public class RunningGameManager implements ChessGameManager {
                 .orElseThrow(() -> new IllegalArgumentException("왕이 다 죽어 승자가 없습니다."));
     }
 
+    @Override
     public ChessGameStatistics getStatistics() {
         Map<Color, Double> scoreMap = board.getScoreMap();
         if (isKingDead()) {

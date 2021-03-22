@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 public class Position {
-    public static final int POSITION_FORMAT_LENGTH = 2;
-    public static final int FILE_INDEX = 0;
-    public static final int RANK_INDEX = 1;
+    private static final int POSITION_FORMAT_LENGTH = 2;
+    private static final int FILE_INDEX = 0;
+    private static final int RANK_INDEX = 1;
 
     private final File file;
     private final Rank rank;
@@ -24,7 +24,6 @@ public class Position {
     public static Position of(String position) {
         List<String> splitPosition = Arrays.asList(position.split(""));
 
-        // TODO 검증 로직 및 상수화 리팩토링
         if (splitPosition.size() != POSITION_FORMAT_LENGTH) {
             throw new IllegalArgumentException("위치 형식에 맞는 입력이 아닙니다.");
         }
