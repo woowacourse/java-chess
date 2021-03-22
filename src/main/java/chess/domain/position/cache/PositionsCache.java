@@ -12,6 +12,9 @@ import java.util.stream.Collectors;
 public class PositionsCache {
     private static final List<Position> positions = new ArrayList<>();
 
+    private PositionsCache() {
+    }
+
     static {
         cachePositions();
     }

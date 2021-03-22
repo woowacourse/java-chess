@@ -16,6 +16,9 @@ import java.util.List;
 public class PiecesCache {
     private static final List<Piece> pieces = new ArrayList<>();
 
+    private PiecesCache() {
+    }
+
     static {
         cachePieces();
     }
