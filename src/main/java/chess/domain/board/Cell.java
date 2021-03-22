@@ -6,6 +6,8 @@ import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 
 public class Cell {
+    private static final String EMPTY_STATUS = ".";
+
     private Piece piece;
 
     public Cell(Piece piece) {
@@ -39,5 +41,12 @@ public class Cell {
 
     public Piece piece() {
         return piece;
+    }
+
+    public String status() {
+        if (piece != null) {
+            return piece.name();
+        }
+        return EMPTY_STATUS;
     }
 }

@@ -1,12 +1,12 @@
 package chess.domain.position;
 
-import static chess.domain.board.type.File.A;
-import static chess.domain.board.type.Rank.THREE;
+import static chess.domain.position.type.File.A;
+import static chess.domain.position.type.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.board.type.File;
-import chess.domain.board.type.Rank;
+import chess.domain.position.type.File;
+import chess.domain.position.type.Rank;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

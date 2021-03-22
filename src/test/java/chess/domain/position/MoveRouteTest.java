@@ -1,9 +1,9 @@
 package chess.domain.position;
 
-import static chess.domain.board.type.File.A;
-import static chess.domain.board.type.File.C;
-import static chess.domain.board.type.Rank.FIVE;
-import static chess.domain.board.type.Rank.THREE;
+import static chess.domain.position.type.File.A;
+import static chess.domain.position.type.File.C;
+import static chess.domain.position.type.Rank.FIVE;
+import static chess.domain.position.type.Rank.THREE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 

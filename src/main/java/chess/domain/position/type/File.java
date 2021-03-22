@@ -1,4 +1,4 @@
-package chess.domain.board.type;
+package chess.domain.position.type;
 
 import chess.domain.piece.type.Direction;
 import java.util.Arrays;
@@ -26,10 +26,7 @@ public enum File {
     }
 
     private static File findFileByValue(String value) {
-        return Arrays.stream(File.values())
-            .filter(file -> file.value().equals(value))
-            .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));
+        return File.valueOf(value.toUpperCase());
     }
 
     public File move(Direction direction) {
@@ -38,7 +35,7 @@ public enum File {
     }
 
     private static File findFileByOrder(int order) {
-        return Arrays.stream(File.values())
+        return Arrays.stream(values())
             .filter(file -> file.order() == order)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 file값 입니다."));

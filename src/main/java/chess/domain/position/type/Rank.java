@@ -1,7 +1,10 @@
-package chess.domain.board.type;
+package chess.domain.position.type;
 
 import chess.domain.piece.type.Direction;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public enum Rank {
     ONE(1),
@@ -24,7 +27,7 @@ public enum Rank {
     }
 
     private static Rank findRank(int value) {
-        return Arrays.stream(Rank.values())
+        return Arrays.stream(values())
             .filter(rank -> rank.value() == value)
             .findAny()
             .orElseThrow(() -> new IllegalArgumentException("잘못된 rank값 입니다."));
@@ -33,6 +36,12 @@ public enum Rank {
     public Rank move(Direction direction) {
         int movedY = value + direction.getY();
         return findRank(movedY);
+    }
+
+    public static List<Rank> reversedRanks() {
+        return Arrays.stream(values())
+            .sorted(Comparator.reverseOrder())
+            .collect(Collectors.toList());
     }
 
     public boolean isDiff(Rank destinationRank, int diff) {

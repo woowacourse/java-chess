@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.controller.dto.request.MoveRequestDTO;
+import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.Board;
 import chess.domain.board.setting.BoardSetting;
@@ -43,9 +44,10 @@ public class ChessGame {
 
     public void move(MoveRequestDTO moveRequestDTO) {
         MoveRoute moveRoute = new MoveRoute(moveRequestDTO);
-        updatePiecesOfPlayers(moveRoute);
         TeamColor teamColor = TeamColor.of(moveRequestDTO.getTeamColor());
-        board.move(moveRoute, teamColor);
+        board.validateRoute(moveRoute, teamColor);
+        updatePiecesOfPlayers(moveRoute);
+        board.move(moveRoute);
     }
 
     private void updatePiecesOfPlayers(MoveRoute moveRoute) {
@@ -62,11 +64,11 @@ public class ChessGame {
         return board.isKingDead();
     }
 
-    public Board board() {
-        return board;
+    public BoardResponseDTO boardStatus() {
+        return board.status();
     }
 
-    public ScoresResponseDTO scores() {
+    public ScoresResponseDTO getScores() {
         return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
     }
 }

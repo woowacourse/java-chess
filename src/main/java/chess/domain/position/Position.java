@@ -1,14 +1,14 @@
 package chess.domain.position;
 
-import static chess.domain.board.type.Rank.SEVEN;
-import static chess.domain.board.type.Rank.TWO;
 import static chess.domain.player.type.TeamColor.BLACK;
+import static chess.domain.position.type.Rank.SEVEN;
+import static chess.domain.position.type.Rank.TWO;
 
-import chess.domain.board.type.File;
-import chess.domain.board.type.Rank;
 import chess.domain.piece.type.Direction;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.cache.PositionsCache;
+import chess.domain.position.type.File;
+import chess.domain.position.type.Rank;
 import java.util.Objects;
 
 public class Position {

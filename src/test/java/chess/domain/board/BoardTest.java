@@ -1,63 +1,100 @@
 package chess.domain.board;
 
-import static chess.domain.player.type.TeamColor.WHITE;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
+import chess.controller.dto.request.CommandRequestDTO;
+import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
-import chess.domain.piece.Pawn;
-import chess.domain.position.MoveRoute;
-import chess.domain.position.Position;
+import chess.utils.PositionConverter;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
-    private Board board;
+    private static final String WHITE = "white";
+    private static final String MOVE = "move";
+
+    private ChessGame chessGame;
 
     @BeforeEach
     void setUp() {
-        board = new ChessGame(new BoardDefaultSetting()).board();
+        chessGame = new ChessGame(new BoardDefaultSetting());
     }
 
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 빈 칸인 경우")
     @Test
     void cannotMovePieceAtStartPositionEmpty() {
-        MoveRoute moveRoute = new MoveRoute("a3", "a4");
+        CommandRequestDTO commandRequestDTO
+            = new CommandRequestDTO("move", "a3", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
+
+        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a3")))
+            .isEqualTo(".");
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a4")))
+            .isEqualTo(".");
     }
 
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 적의 기물이 있는 경우")
     @Test
     void cannotMovePieceAtStartPositionEnemyPiece() {
-        MoveRoute moveRoute = new MoveRoute("a7", "a6");
+        CommandRequestDTO commandRequestDTO
+            = new CommandRequestDTO(MOVE, "a7", "a6");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
+
+        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a7")))
+            .isEqualTo("P");
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a6")))
+            .isEqualTo(".");
     }
 
-    @DisplayName("백 팀 - 기물 이동")
+    @DisplayName("백 팀 Pawn - 기물 이동")
     @Test
     void movePiece() {
-        MoveRoute moveRoute = new MoveRoute("a2", "a4");
-        board.move(moveRoute, WHITE);
+        CommandRequestDTO commandRequestDTO
+            = new CommandRequestDTO(MOVE, "a2", "a4");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThat(board.findCell(Position.of("a2")).isEmpty()).isTrue();
-        assertThat(board.findPiece(Position.of("a4"))).isEqualTo(new Pawn(WHITE));
+        chessGame.move(moveRequestDTO);
+        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a2")))
+            .isEqualTo(".");
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a4")))
+            .isEqualTo("p");
     }
 
-    @DisplayName("백 팀 - 기물이 이동할 수 없는 도착위치")
+    @DisplayName("백 팀 Pawn - 기물이 이동할 수 없는 도착위치")
     @Test
     void cannotMovePieceToDestination() {
-        MoveRoute moveRoute = new MoveRoute("a2", "a5");
+        CommandRequestDTO commandRequestDTO
+            = new CommandRequestDTO(MOVE, "a2", "a5");
+        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThatThrownBy(() -> board.move(moveRoute, WHITE))
+        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
-        assertThat(board.findPiece(Position.of("a2"))).isEqualTo(new Pawn(WHITE));
-        assertThat(board.findCell(Position.of("a5")).isEmpty()).isTrue();
+        List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a2")))
+            .isEqualTo("p");
+
+        assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a4")))
+            .isEqualTo(".");
     }
 }

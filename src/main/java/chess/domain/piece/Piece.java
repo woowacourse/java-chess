@@ -61,7 +61,7 @@ public abstract class Piece {
         return score;
     }
 
-    public String getName() {
+    public String name() {
         return pieceType.name(teamColor);
     }
 

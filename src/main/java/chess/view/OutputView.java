@@ -2,51 +2,33 @@ package chess.view;
 
 import static chess.controller.Application.WHITE_TEAM_COLOR;
 
+import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ScoresResponseDTO;
-import chess.domain.board.Board;
-import chess.domain.board.Cell;
-import chess.domain.board.type.File;
-import chess.domain.board.type.Rank;
-import chess.domain.piece.Piece;
-import chess.domain.position.Position;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class OutputView {
-    private static final String EMPTY_CELL = ".";
+    private static final int BOARD_ALL_CELLS_SIZE = 64;
+    private static final int BOARD_WIDTH_SIZE = 8;
     private static final String WHITE_TEAM_COLOR_KOREAN = "백";
     private static final String BLACK_TEAM_COLOR_KOREAN = "흑";
 
     private OutputView() {
     }
 
-    public static void printBoard(Board board) {
-        List<Rank> ranks = Arrays.asList(Rank.values());
-        List<Rank> reversedRanks = ranks.stream()
-            .sorted(Comparator.reverseOrder())
-            .collect(Collectors.toList());
-
-        reversedRanks.forEach(rank -> printFilesByRank(rank, board));
-        System.out.println();
-    }
-
-    private static void printFilesByRank(Rank rank, Board board) {
-        for (File file : File.values()) {
-            Cell cell = board.findCell(Position.of(file, rank));
-            printCell(cell);
+    public static void printBoard(BoardResponseDTO boardResponseDTO) {
+        List<String> cellsStatus = boardResponseDTO.getCellsStatus();
+        for (int cellIndex = 0; cellIndex < BOARD_ALL_CELLS_SIZE; cellIndex++) {
+            printCellStatus(cellsStatus, cellIndex);
         }
         System.out.println();
     }
 
-    private static void printCell(Cell cell) {
-        if (cell.isEmpty()) {
-            System.out.print(EMPTY_CELL);
-            return;
+    private static void printCellStatus(List<String> cellsStatus, int cellIndex) {
+        System.out.print(cellsStatus.get(cellIndex));
+        int cellOrder = cellIndex + 1;
+        if (cellOrder % BOARD_WIDTH_SIZE == 0) {
+            System.out.println();
         }
-        Piece piece = cell.piece();
-        System.out.print(piece.getName());
     }
 
     public static void printScores(ScoresResponseDTO scoresResponseDTO) {

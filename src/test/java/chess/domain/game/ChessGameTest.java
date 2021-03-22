@@ -88,7 +88,7 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            ScoresResponseDTO scoresResponseDTO = chessGame.scores();
+            ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
 
             assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(20);
             assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(19.5);
@@ -114,7 +114,7 @@ class ChessGameTest {
             MoveRequestDTO moveRequestDTO = new MoveRequestDTO("white", commandRequestDTO);
 
             chessGame.move(moveRequestDTO);
-            ScoresResponseDTO scoresResponseDTO = chessGame.scores();
+            ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
 
             assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(37);
             assertThat(scoresResponseDTO.getWhiteTeamScore()).isEqualTo(37);

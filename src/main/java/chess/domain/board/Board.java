@@ -2,10 +2,13 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceType.KING;
 
+import chess.controller.dto.response.BoardResponseDTO;
 import chess.domain.piece.Piece;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
 import chess.domain.position.Position;
+import chess.domain.position.type.File;
+import chess.domain.position.type.Rank;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -27,12 +30,16 @@ public class Board {
         return findCell(position).piece();
     }
 
-    public void move(MoveRoute moveRoute, TeamColor teamColor) {
+    public void move(MoveRoute moveRoute) {
+        Cell startPositionCell = cells.get(moveRoute.startPosition());
+        Cell destinationCell = cells.get(moveRoute.destination());
+        startPositionCell.movePieceTo(destinationCell);
+    }
+
+    public void validateRoute(MoveRoute moveRoute, TeamColor teamColor) {
         Cell startPositionCell = cells.get(moveRoute.startPosition());
         validateOwnPiece(startPositionCell, teamColor);
         validateMoveRoute(startPositionCell, moveRoute);
-        Cell destinationCell = cells.get(moveRoute.destination());
-        startPositionCell.movePieceTo(destinationCell);
     }
 
     private void validateOwnPiece(Cell startPositionCell, TeamColor teamColor) {
@@ -81,6 +88,22 @@ public class Board {
         return cells.values().stream()
             .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
             .count() == 1;
+    }
+
+    public BoardResponseDTO status() {
+        List<String> cellsStatus = new ArrayList<>();
+        List<Rank> reversedRanks = Rank.reversedRanks();
+        for (Rank rank : reversedRanks) {
+            addCellsOnRank(cellsStatus, rank);
+        }
+        return new BoardResponseDTO(cellsStatus);
+    }
+
+    private void addCellsOnRank(List<String> cellsStatus, Rank rank) {
+        for (File file : File.values()) {
+            Cell cell = cells.get(Position.of(file, rank));
+            cellsStatus.add(cell.status());
+        }
     }
 }
 
