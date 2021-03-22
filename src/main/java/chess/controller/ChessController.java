@@ -30,11 +30,8 @@ public class ChessController {
         while (!chessGame.isEnd()) {
             printChessBoard(chessGame);
             singleTurn(chessGame);
-            chessGame.changeTurn();
         }
-        final double blackTeamScore = chessGame.calculateScoreByTeam(ChessGame.BLACK_TEAM);
-        final double whiteTeamScore = chessGame.calculateScoreByTeam(ChessGame.WHITE_TEAM);
-        OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);
+        showGameStatus(chessGame);
     }
 
     private void singleTurn(ChessGame chessGame) {
@@ -50,10 +47,11 @@ public class ChessController {
     private void controlUserCommand(ChessGame chessGame, List<String> movePositions) {
         if (MOVE_COMMAND.equals(movePositions.get(0))) {
             chessGame.move(Position.of(movePositions.get(1)), Position.of(movePositions.get(2)));
+            chessGame.changeTurn();
         }
 
         if (STATUS_COMMAND.equals(movePositions.get(0))) {
-            chessGame.finish();
+           showGameStatus(chessGame);
         }
     }
 
@@ -81,5 +79,11 @@ public class ChessController {
             whitePrintFormat.put(position, PieceNameConverter.convert(piece).toLowerCase());
         }
         return whitePrintFormat;
+    }
+
+    private void showGameStatus(ChessGame chessGame) {
+        final double blackTeamScore = chessGame.calculateScoreByTeam(ChessGame.BLACK_TEAM);
+        final double whiteTeamScore = chessGame.calculateScoreByTeam(ChessGame.WHITE_TEAM);
+        OutputView.printChessGameResult(blackTeamScore, whiteTeamScore);
     }
 }
