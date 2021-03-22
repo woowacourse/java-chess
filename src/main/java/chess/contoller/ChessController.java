@@ -11,7 +11,7 @@ import chess.view.OutputView;
 public class ChessController {
 
     public void play() {
-        ChessGame chessGame = new ChessGame(new Board(), new Turn());
+        ChessGame chessGame = new ChessGame(new Board(), new Turn(Team.WHITE));
         OutputView.printStartInfo();
         start(chessGame);
     }

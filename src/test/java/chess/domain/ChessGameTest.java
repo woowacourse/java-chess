@@ -24,7 +24,7 @@ public class ChessGameTest {
     @DisplayName("보드의 초기 설정")
     void setUp() {
         board = new Board();
-        chessGame = new ChessGame(board, new Turn());
+        chessGame = new ChessGame(board, new Turn(Team.WHITE));
 
         chessGame.start();
     }
@@ -67,7 +67,7 @@ public class ChessGameTest {
     @DisplayName("킹을 유효한 위치로 이동 테스트")
     void kingWithValidMove() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn() {
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
             @Override
             public Team now() {
                 return Team.WHITE;
@@ -92,7 +92,7 @@ public class ChessGameTest {
     @DisplayName("퀸을 유효한 위치로 이동 테스트")
     void queenWithValidMove() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn() {
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
             @Override
             public Team now() {
                 return Team.WHITE;
@@ -131,7 +131,7 @@ public class ChessGameTest {
     @DisplayName("비숍을 유효한 위치로 이동 테스트")
     void bishopWithValidMove() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn() {
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
             @Override
             public Team now() {
                 return Team.WHITE;
@@ -161,7 +161,7 @@ public class ChessGameTest {
     @DisplayName("룩을 유효한 위치로 이동 테스트")
     void rookWithValidMove() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn() {
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
             @Override
             public Team now() {
                 return Team.WHITE;
@@ -191,7 +191,7 @@ public class ChessGameTest {
     @DisplayName("나이트을 유효한 위치로 이동 테스트")
     void knightWithValidMove() {
         Board board = new Board();
-        ChessGame chessGame = new ChessGame(board, new Turn() {
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE) {
             @Override
             public Team now() {
                 return Team.WHITE;

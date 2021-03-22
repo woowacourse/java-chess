@@ -33,7 +33,7 @@ class GameStateTest {
         assertThatIllegalArgumentException().isThrownBy(gameState::end);
         assertThatIllegalArgumentException().isThrownBy(gameState::status);
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn()));
+            .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)));
         assertThat(gameState.start()).hasSameClassAs(new Running(board));
     }
 
@@ -45,7 +45,7 @@ class GameStateTest {
         assertThatIllegalArgumentException().isThrownBy(gameState::start);
         assertThat(gameState.end()).hasSameClassAs(new Finished());
         assertThat(gameState.status()).hasSameClassAs(new Running(board));
-        assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn()))
+        assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)))
             .hasSameClassAs(new Running(board));
     }
 
@@ -58,6 +58,6 @@ class GameStateTest {
         assertThatIllegalArgumentException().isThrownBy(gameState::end);
         assertThatIllegalArgumentException().isThrownBy(gameState::status);
         assertThatIllegalArgumentException()
-            .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn()));
+            .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)));
     }
 }

@@ -14,14 +14,14 @@ public class TurnTest {
     @Test
     @DisplayName("현재 팀을 반환하는지 테스트")
     void nextTurn() {
-        Turn turn = new Turn();
+        Turn turn = new Turn(Team.WHITE);
         assertThat(turn.now()).isEqualTo(Team.WHITE);
     }
 
     @Test
     @DisplayName("다음 팀을 반환하는지 테스트")
     void name() {
-        Turn turn = new Turn();
+        Turn turn = new Turn(Team.WHITE);
 
         List<Team> teams = new ArrayList<>();
         for (int i = 0; i < 4; i++) {

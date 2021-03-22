@@ -4,20 +4,17 @@ import chess.domain.board.Team;
 
 public class Turn {
 
-    private boolean white;
+    private Team currentTeam;
 
-    public Turn() {
-        this.white = true;
+    public Turn(Team firstTeam) {
+        this.currentTeam = firstTeam;
     }
 
     public Team now() {
-        if (white) {
-            return Team.WHITE;
-        }
-        return Team.BLACK;
+        return currentTeam;
     }
 
     public void next() {
-        white = !white;
+        currentTeam = currentTeam.opposingTeam();
     }
 }
