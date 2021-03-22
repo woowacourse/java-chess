@@ -5,13 +5,17 @@ import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 
 public interface Piece {
-    String getSymbol();
-    
-    double getScore();
+    void checkToMoveToTargetPosition(MovePosition movePosition, Board board);
     
     boolean isSameColorAs(Color color);
     
-    void checkToMoveToTargetPosition(MovePosition movePosition, Board board);
-    
     boolean isBlank();
+    
+    boolean isPawn();
+    
+    boolean isKing();
+    
+    String getSymbol();
+    
+    double getScore();
 }
