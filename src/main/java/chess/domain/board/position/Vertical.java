@@ -26,7 +26,7 @@ public enum Vertical {
         return Arrays.stream(Vertical.values())
                 .filter(v -> v.index == index)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 위치입니다."));
     }
 
     public int getIndex() {

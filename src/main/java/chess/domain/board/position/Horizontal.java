@@ -18,18 +18,24 @@ public enum Horizontal {
         this.index = index;
     }
 
-    static Horizontal parse(final String number) {
-        return Arrays.stream(Horizontal.values())
-                .filter(h -> h.index == Integer.parseInt(number))
-                .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+    static Horizontal parse(final String input) {
+        validateParseInt(input);
+        return of(Integer.parseInt(input));
     }
 
     static Horizontal of(final int index) {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 위치입니다."));
+    }
+
+    private static void validateParseInt(String input) {
+        try {
+            Integer.parseInt(input);
+        } catch (NumberFormatException ne) {
+            throw new NumberFormatException("가로열은 숫자를 입력해야합니다.");
+        }
     }
 
     public int getIndex() {
@@ -37,10 +43,14 @@ public enum Horizontal {
     }
 
     public int getDistance(final Horizontal other) {
-        return Math.abs(this.index - other.getIndex());
+        return Math.abs(this.minus(other));
     }
 
     public Horizontal add(final int h) {
         return of(index + h);
+    }
+
+    private int minus(final Horizontal other) {
+        return this.index - other.index;
     }
 }
