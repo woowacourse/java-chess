@@ -1,54 +1,51 @@
 package domain.piece;
 
 import domain.Score;
-
-import java.util.Arrays;
-import java.util.List;
+import domain.board.Board;
+import domain.position.Direction;
+import domain.position.Position;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Knight extends Piece {
+
     private static final Score SCORE = new Score(2.5);
+    private static final String NAME = "k";
 
-    private Knight(String name, int x, int y, boolean isBlack) {
-        super(name, SCORE, Position.Of(x, y), isBlack);
+    public Knight(boolean isBlack) {
+        super(isBlack);
     }
 
-    public static Knight Of(String name, Position position, boolean color) {
-        return new Knight(name, position.getRow(), position.getColumn(), color);
+    public String getName() {
+        return NAME;
     }
 
-    public static List<Knight> initialKnightPieces() {
-        return Arrays.asList(Knight.Of("N", Position.Of(0, 1), true),
-                Knight.Of("N", Position.Of(0, 6), true),
-                Knight.Of("n", Position.Of(7, 1), false),
-                Knight.Of("n", Position.Of(7, 6), false));
+    public Score score() {
+        return SCORE;
+    }
+
+    public static Map<Position, Piece> createInitialKnight() {
+        Map<Position, Piece> initialKnight = new HashMap<>();
+        initialKnight.put(new Position("b8"), new Knight(true));
+        initialKnight.put(new Position("g8"), new Knight(true));
+        initialKnight.put(new Position("b1"), new Knight(false));
+        initialKnight.put(new Position("g1"), new Knight(false));
+        return initialKnight;
     }
 
     @Override
-    public Knight movePosition(Position position) {
-        return new Knight(getName(), position.getRow(), position.getColumn(), isBlack());
+    public boolean isKing() {
+        return true;
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position endPosition) {
-        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
-
-        List<Position> movePositions = Arrays.asList(
-                Position.Of(-2, -1),
-                Position.Of(-1, -2),
-                Position.Of(1, -2),
-                Position.Of(2, -1),
-                Position.Of(2, 1),
-                Position.Of(1, 2),
-                Position.Of(-2, 1),
-                Position.Of(-1, 2));
-
-        int x = position.getRow();
-        int y = position.getColumn();
-
-        return movePositions.stream()
-                .filter(movePosition ->
-                        x + movePosition.getRow() == endPosition.getRow() && y + movePosition.getColumn() == endPosition.getColumn())
-                .findAny()
-                .isPresent();
+    public boolean canMove(Board board, Position source, Position target) {
+        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))) {
+            return false;
+        }
+        return Direction.knightDirection()
+            .stream()
+            .anyMatch(direction -> source.sum(direction).equals(target));
     }
+
 }

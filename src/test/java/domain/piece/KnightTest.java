@@ -1,55 +1,72 @@
 package domain.piece;
 
-import domain.Board;
-import domain.PieceFactory;
+import domain.board.Board;
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class KnightTest {
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.(빈칸일 경우)")
-    @Test
-    void knight_move_if_empty_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Knight knight = Knight.Of("N", Position.Of(4, 4), true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(2, 3))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(3, 2))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(2, 5))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(3, 6))).isEqualTo(true);
 
-        assertThat(knight.canMove(board.getBoard(), Position.Of(5, 2))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(6, 3))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(6, 5))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(5, 6))).isEqualTo(true);
+    @DisplayName("나이트는 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,e7", "d5,f6", "d5,f4", "d5,e3", "d5,c3","d5,b4", "d5,b6", "d5,c7"}, delimiter = ',')
+    void testMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Knight blackKnight = new Knight(true);
+
+        board.put(sourcePosition, blackKnight);
+
+        assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.(다른 색의 기물일 경우)")
-    @Test
-    void knight_move_if_different_color_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Knight knight = Knight.Of("N", Position.Of(4, 4), true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(6, 3))).isEqualTo(true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(6, 5))).isEqualTo(true);
+    @DisplayName("나이트는 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a5", "d5,h5", "d5,d8", "d5,d1"}, delimiter = ',')
+    void testNotMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Knight blackKnight = new Knight(true);
+
+        board.put(sourcePosition, blackKnight);
+
+        assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("knight은 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 없다.(같은 색의 기물일 경우)")
+    @DisplayName("나이트는 같은 편 기물이 있는 위치로 이동할 수 없다.")
     @Test
-    void knight_move_if_same_color_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Knight knight = Knight.Of("N", Position.Of(3, 4), true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(1, 3))).isEqualTo(false);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(1, 5))).isEqualTo(false);
+    void testMoveSameColorPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("e7");
+        Knight blackKnight = new Knight(true);
+        Rook blackRook = new Rook(true);
+
+        board.put(sourcePosition, blackKnight);
+        board.put(targetPosition, blackRook);
+
+        assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("knight의 이동 위치가 잘못된 경우 false가 반환된다.")
+    @DisplayName("킹은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
-    void cant_move_knight_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        Knight knight = Knight.Of("N", Position.Of(4, 4), true);
-        assertThat(knight.canMove(board.getBoard(), Position.Of(3, 3))).isFalse();
-        assertThat(knight.canMove(board.getBoard(), Position.Of(5, 5))).isFalse();
-        assertThat(knight.canMove(board.getBoard(), Position.Of(3, 4))).isFalse();
-        assertThat(knight.canMove(board.getBoard(), Position.Of(4, 4))).isFalse();
+    void testMoveEnemyPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("e7");
+        Knight blackKnight = new Knight(true);
+        Rook blackRook = new Rook(false);
+
+        board.put(sourcePosition, blackKnight);
+        board.put(targetPosition, blackRook);
+
+        assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
+
 }
