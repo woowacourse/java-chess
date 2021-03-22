@@ -1,96 +1,99 @@
 package domain.piece;
 
-import domain.Score;
-
-import java.util.Arrays;
+import domain.board.Board;
+import domain.chessgame.Score;
+import domain.position.Direction;
+import domain.position.Position;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Pawn extends Piece {
-    private static final Score SCORE = new Score(1);
-    public static final List<Pawn> PAWNS = Arrays.asList(Pawn.Of("P", Position.Of(1, 0), true),
-            Pawn.Of("P", Position.Of(1, 1), true),
-            Pawn.Of("P", Position.Of(1, 2), true),
-            Pawn.Of("P", Position.Of(1, 3), true),
-            Pawn.Of("P", Position.Of(1, 4), true),
-            Pawn.Of("P", Position.Of(1, 5), true),
-            Pawn.Of("P", Position.Of(1, 6), true),
-            Pawn.Of("P", Position.Of(1, 7), true),
-            Pawn.Of("p", Position.Of(6, 0), false),
-            Pawn.Of("p", Position.Of(6, 1), false),
-            Pawn.Of("p", Position.Of(6, 2), false),
-            Pawn.Of("p", Position.Of(6, 3), false),
-            Pawn.Of("p", Position.Of(6, 4), false),
-            Pawn.Of("p", Position.Of(6, 5), false),
-            Pawn.Of("p", Position.Of(6, 6), false),
-            Pawn.Of("p", Position.Of(6, 7), false));
 
-    private Pawn(String name, int x, int y, boolean isBlack) {
-        super(name, SCORE, Position.Of(x, y), isBlack);
+    private static final Score SCORE = new Score(0);
+    private static final String NAME = "k";
+
+    public Pawn(boolean isBlack) {
+        super(isBlack);
     }
 
-    public static Pawn Of(String name, Position position, boolean color) {
-        return new Pawn(name, position.getRow(), position.getColumn(), color);
+    public static Map<Position, Piece> createInitialPawn() {
+        Map<Position, Piece> initialPawn = new HashMap<>();
+        initialPawn.put(new Position("a7"), new Pawn(true));
+        initialPawn.put(new Position("b7"), new Pawn(true));
+        initialPawn.put(new Position("c7"), new Pawn(true));
+        initialPawn.put(new Position("d7"), new Pawn(true));
+        initialPawn.put(new Position("e7"), new Pawn(true));
+        initialPawn.put(new Position("f7"), new Pawn(true));
+        initialPawn.put(new Position("g7"), new Pawn(true));
+        initialPawn.put(new Position("h7"), new Pawn(true));
+        initialPawn.put(new Position("a2"), new Pawn(false));
+        initialPawn.put(new Position("b2"), new Pawn(false));
+        initialPawn.put(new Position("c2"), new Pawn(false));
+        initialPawn.put(new Position("d2"), new Pawn(false));
+        initialPawn.put(new Position("e2"), new Pawn(false));
+        initialPawn.put(new Position("f2"), new Pawn(false));
+        initialPawn.put(new Position("g2"), new Pawn(false));
+        initialPawn.put(new Position("h2"), new Pawn(false));
+        return initialPawn;
     }
 
-    public static List<Pawn> initialPawnPieces() {
-        return PAWNS;
+    public String getName() {
+        return NAME;
+    }
+
+    public Score score() {
+        return SCORE;
     }
 
     @Override
-    public Pawn movePosition(Position position) {
-        return new Pawn(getName(), position.getRow(), position.getColumn(), isBlack());
+    public boolean isKing() {
+        return true;
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position endPosition) {
-        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
-
-        if (canForward(board, endPosition, 1)) return true;
-        if (canForward(board, endPosition, 2)) return true;
-
-        if (catchDiagonal(board, endPosition, true)) return true;
-        if (catchDiagonal(board, endPosition, false)) return true;
-
-        return false;
-    }
-
-    private boolean canForward(Piece[][] board, Position endPosition, int step) {
-        if (step == 2 && !PAWNS.contains(this)) {
+    public boolean canMove(Board board, Position source, Position target) {
+        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))) {
             return false;
         }
-
-        if (!isBlack()) {
-            step = -step;
-        }
-
-
-        if (board[endPosition.getRow()][endPosition.getColumn()] == null
-                && isEqualsPosition(endPosition, step, 0)) {
+        List<Direction> directions = new ArrayList<>(findDirections());
+        Direction forwardDirection = directions.remove(0);
+        if (isForwardMovable(board, forwardDirection, source, target)
+            || isDiagonalMovable(board, directions, source, target)) {
             return true;
         }
-        return false;
+        return isFirstMovable(board, forwardDirection, source, target);
     }
 
-    private boolean catchDiagonal(Piece[][] board, Position endPosition, boolean isLeft) {
-        int rowStep = 1;
-        if (!isBlack()) {
-            rowStep = -rowStep;
+    private List<Direction> findDirections() {
+        if (isBlack()) {
+            return Direction.blackPawnDirection();
         }
-
-        int colStep = 1;
-        if (isLeft) {
-            colStep = -colStep;
-        }
-
-        if (isEqualsPosition(endPosition, rowStep, colStep)
-                && (board[endPosition.getRow()][endPosition.getColumn()] != null
-                && board[endPosition.getRow()][endPosition.getColumn()].isBlack() != isBlack())) {
-            return true;
-        }
-        return false;
+        return Direction.whitePawnDirection();
     }
 
-    private boolean isEqualsPosition(Position endPosition, int rowStep, int colStep) {
-        return position.getRow() + rowStep == endPosition.getRow() && position.getColumn() + colStep == endPosition.getColumn();
+    private boolean isForwardMovable(Board board, Direction direction, Position source,
+        Position target) {
+        return board.piece(target).isEmpty() && source.sum(direction).equals(target);
+    }
+
+    private boolean isDiagonalMovable(Board board, List<Direction> directions, Position source,
+        Position target) {
+        return board.piece(target).isNotEmpty() && directions.stream()
+            .anyMatch(direction -> source.sum(direction).equals(target));
+    }
+
+    private boolean isFirstMovable(Board board, Direction direction, Position source,
+        Position target) {
+        if (!createInitialPawn().containsKey(source) || board.piece(target).isNotEmpty()) {
+            return false;
+        }
+        Position firstStep = source.sum(direction);
+        if (board.piece(firstStep).isNotEmpty()) {
+            return false;
+        }
+        source = firstStep.sum(direction);
+        return source.equals(target);
     }
 }

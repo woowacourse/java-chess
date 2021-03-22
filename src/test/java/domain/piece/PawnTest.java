@@ -1,75 +1,134 @@
 package domain.piece;
 
-import domain.Board;
-import domain.PieceFactory;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-
 import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.board.Board;
+import domain.position.Position;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class PawnTest {
 
-    @DisplayName("Pawn은 한 칸 이동이 가능하다.(빈 칸일 경우)")
-    @Test
-    void pawn_move_forward_if_empty_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(2, 0))).isEqualTo(true);
+    @DisplayName("폰은 전방으로 1칸 이동 가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,d6,true", "d2,d3,false"}, delimiter = ',')
+    void testMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+        board.put(sourcePosition, pawn);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("Pawn은 한 칸 이동이 불가능하다.(같은 편 기물이 있는 경우)")
-    @Test
-    void pawn_move_forward_if_same_color_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        board.put(Rook.Of("R", Position.Of(2, 0), true), Position.Of(2, 0));
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(2, 0))).isFalse();
+    @DisplayName("폰은 전방으로 1칸 위치에 기물이 있으면 이동 불가능 하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,d6,true", "d2,d3,false"}, delimiter = ',')
+    void testNotMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+        Knight knight = new Knight(!isBlack);
+
+        board.put(sourcePosition, pawn);
+        board.put(targetPosition, knight);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("Pawn은 최초 위치에서만 2칸 이동이 가능하다.(이동 하려는 위치가 빈 칸일 경우)")
-    @Test
-    void pawn_move_forward_two_step_if_empty_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(3, 0))).isTrue();
+    @DisplayName("폰은 첫 수에 전방으로 2칸 이동 가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,d5,true", "f2,f4,false"}, delimiter = ',')
+    void testFirstMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+
+        board.put(sourcePosition, pawn);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("Pawn은 최초 위치에서만 2칸 이동이 불가능하다.(이동 하려는 위치가 빈 칸일 아닐 경우)")
-    @Test
-    void pawn_cant_move_forward_two_step_if_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        board.put(Rook.Of("R", Position.Of(3, 0), true), Position.Of(3, 0));
+    @DisplayName("폰은 전방으로 2칸 위치에 기물이 있으면, 첫 수에 전방으로 2칸 이동 불가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,d5,true", "f2,f4,false"}, delimiter = ',')
+    void testFirstNotMove(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+        Knight knight = new Knight(!isBlack);
 
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(3, 0))).isFalse();
+        board.put(sourcePosition, pawn);
+        board.put(targetPosition, knight);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
+    @DisplayName("폰은 첫 수가 아니라면 전방으로 2칸 이동 불가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d6,d4,true", "d3,d5,false"}, delimiter = ',')
+    void testFirstNotMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
 
-    @DisplayName("Pawn은 최초 위치가 아닐경우 2칸 이동이 불가능하다.")
-    @Test
-    void pawn_cant_move_forward_two_step_if_not_initial_position() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(2, 0), true);
-        board.put(pawn, Position.Of(2, 0));
+        board.put(sourcePosition, pawn);
 
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(4, 0))).isFalse();
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("Pawn의 전방 대각선에 적 기물이 있는 경우만 이동 가능하다.")
-    @Test
-    void catch_enemy_if_enemy_exist_at_diagonal() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        board.put(King.Of("k", Position.Of(2, 1), false), Position.Of(2, 1));
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(2, 1))).isTrue();
+    @DisplayName("폰은 전방으로 2칸 이동하려는 이동 경로에 장애물이 있을 경우, 이동 불가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,d5,d6,true", "d2,d4,d3,false"}, delimiter = ',')
+    void testFirstNotMoveEmptyPlace(String source, String target, String obstacle,
+        boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Position obstaclePosition = new Position(obstacle);
+        Pawn pawn = new Pawn(isBlack);
+        Knight knight = new Knight(isBlack);
+
+        board.put(sourcePosition, pawn);
+        board.put(obstaclePosition, knight);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("Pawn의 전방 대각선에 적 기물이 없는 경우는 이동 불가능하다.")
-    @Test
-    void catch_enemy_if_enemy_not_exist_at_diagonal() {
-        Board board = new Board(PieceFactory.createPieces());
-        Pawn pawn = Pawn.Of("P", Position.Of(1, 0), true);
-        assertThat(pawn.canMove(board.getBoard(), Position.Of(2, 1))).isFalse();
+    @DisplayName("폰은 전방 양쪽 대각 방향에 적 기물이 있을 경우에 이동 가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,c6,true", "d7,e6,true", "d2,c3,false", "d2,c3,false"}, delimiter = ',')
+    void testDiagonalMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+        Knight knight = new Knight(!isBlack);
+
+        board.put(sourcePosition, pawn);
+        board.put(targetPosition, knight);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isTrue();
+    }
+
+    @DisplayName("폰은 전방 양쪽 대각 방향에 적 기물이 없을 경우에 이동 불가능하다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d7,c6,true", "d7,e6,true", "d2,c3,false", "d2,e3,false"}, delimiter = ',')
+    void testDiagonalNotMoveEmptyPlace(String source, String target, boolean isBlack) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Pawn pawn = new Pawn(isBlack);
+
+        board.put(sourcePosition, pawn);
+
+        assertThat(pawn.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
 }
