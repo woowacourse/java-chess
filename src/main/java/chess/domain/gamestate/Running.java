@@ -7,7 +7,6 @@ import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
 public class Running extends GameState {
-
     public Running(Board board, Side side) {
         super(board, side);
     }

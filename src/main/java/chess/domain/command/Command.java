@@ -13,14 +13,14 @@ public interface Command {
         if (command.startsWith(MOVE_COMMAND)) {
             return new Move(command);
         }
-        if (command.equals(END_COMMAND)) {
-            return new End();
-        }
         if (command.equals(STATUS_COMMAND)) {
             return new Status();
         }
         if (command.equals(START_COMMAND)) {
             return new Start();
+        }
+        if (command.equals(END_COMMAND)) {
+            return new End();
         }
 
         throw new InvalidCommandException();
