@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Score;
 import chess.domain.position.Position;
 
 import java.util.ArrayList;

@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Pieces;
-import chess.domain.piece.Score;
 
 import java.util.EnumMap;
 import java.util.Map;

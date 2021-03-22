@@ -3,8 +3,6 @@ package chess.domain.command;
 import chess.controller.ChessController;
 
 import java.util.Arrays;
-import java.util.function.BiConsumer;
-import java.util.function.Consumer;
 
 public enum FirstCommand {
     START("start", FirstStep.START, Running.NONE),
@@ -36,38 +34,5 @@ public enum FirstCommand {
 
     public void runRunningAction(ChessController chessController, Command command) {
         this.runningAction.accept(chessController, command);
-    }
-
-    enum FirstStep {
-        START(ChessController::start),
-        END(ChessController::end),
-        NONE((ChessController::except));
-
-        private final Consumer<ChessController> firstStepAction;
-
-        FirstStep(Consumer<ChessController> firstStepAction) {
-            this.firstStepAction = firstStepAction;
-        }
-
-        public void accept(ChessController chessController) {
-            firstStepAction.accept(chessController);
-        }
-    }
-
-    enum Running {
-        END((chessController, command) -> chessController.end()),
-        MOVE((ChessController::move)),
-        STATUS(((chessController, command) -> chessController.status())),
-        NONE(((chessController, command) -> chessController.except()));
-
-        private final BiConsumer<ChessController, Command> runningAction;
-
-        Running(BiConsumer<ChessController, Command> runningAction) {
-            this.runningAction = runningAction;
-        }
-
-        public void accept(ChessController chessController, Command command) {
-            runningAction.accept(chessController, command);
-        }
     }
 }

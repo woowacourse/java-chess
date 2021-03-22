@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Score;
 import chess.domain.position.Cross;
 import chess.domain.position.Diagonal;
 import chess.domain.Name;

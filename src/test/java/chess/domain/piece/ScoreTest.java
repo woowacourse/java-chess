@@ -1,5 +1,6 @@
 package chess.domain.piece;
 
+import chess.domain.Score;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

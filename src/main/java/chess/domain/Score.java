@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain;
 
 public class Score {
     public static final Score ZERO = new Score(0);
