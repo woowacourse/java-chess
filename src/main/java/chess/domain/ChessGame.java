@@ -33,7 +33,6 @@ public class ChessGame {
         next();
     }
 
-
     private void validateTurn(Piece sourcePiece) {
         if (!sourcePiece.getColor().isSame(turn)) {
             throw new IllegalArgumentException("[ERROR] 현재 턴이 아닌 말은 움직일 수 없습니다.");

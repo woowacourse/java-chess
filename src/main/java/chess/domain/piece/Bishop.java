@@ -19,7 +19,6 @@ public class Bishop extends Move {
         super(position, name, color, score);
     }
 
-
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         moveDiagonal(target, currentPieces);

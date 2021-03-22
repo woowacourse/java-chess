@@ -4,7 +4,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class CurrentPieces {
-
     private List<Piece> currentPieces;
 
     public CurrentPieces(List<Piece> currentPieces) {

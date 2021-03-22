@@ -19,7 +19,6 @@ public class ChessController {
             System.out.println(e.getMessage());
             run();
         }
-
     }
 
     private void selectFirstCommand(CommandType commandType) {
@@ -37,7 +36,6 @@ public class ChessController {
             System.out.println(e.getMessage());
             gamePlay(chessGame);
         }
-
     }
 
     private void playByCommand(ChessGame chessGame) {
