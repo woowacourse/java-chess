@@ -8,7 +8,6 @@ import chess.domain.position.Position;
 import java.util.Arrays;
 
 public class OutputView {
-
     public static final int BOARD_MAX_SIZE = 8;
 
     private OutputView() {
@@ -18,6 +17,8 @@ public class OutputView {
         System.out.println("> 체스 게임을 시작합니다.");
         System.out.println("> 게임 시작 : start");
         System.out.println("> 게임 종료 : end");
+        System.out.println("> 말 이동 : move source위치 target위치 - ex) move b2 b3");
+        System.out.println("> 현재 점수 : status");
     }
 
     public static void printBoard(final Board board) {
@@ -26,16 +27,16 @@ public class OutputView {
 
         for (int boardSize = 0; boardSize < BOARD_MAX_SIZE; ++boardSize) {
             printOneLine(boardStatus[boardSize]);
-            System.out.printf("  %d", BOARD_MAX_SIZE - boardSize);
+            System.out.printf(" | %d", BOARD_MAX_SIZE - boardSize);
             System.out.println();
         }
         printColUI();
     }
 
     private static void printColUI() {
-        System.out.println();
+        System.out.println("----------------");
         for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
-            System.out.print(alpha);
+            System.out.print(alpha + " ");
         }
         System.out.println();
     }
@@ -61,7 +62,7 @@ public class OutputView {
 
     private static void printOneLine(final String[] line) {
         for (String val : line) {
-            System.out.print(val);
+            System.out.print(val + " ");
         }
     }
 
