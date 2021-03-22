@@ -46,6 +46,10 @@ public class Position {
         return Position.of(this.file.add(direction.getXDegree()), this.rank.add(direction.getYDegree()));
     }
 
+    public boolean isSameRank(Rank rank) {
+        return this.rank == rank;
+    }
+
     @Override
     public String toString() {
         return file.getLetter() + rank.getLetter();

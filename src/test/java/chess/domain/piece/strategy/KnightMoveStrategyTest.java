@@ -29,7 +29,6 @@ class KnightMoveStrategyTest {
                 Arguments.of(Position.of("b1"), Position.of("c3"), true),
                 Arguments.of(Position.of("b1"), Position.of("a3"), true),
                 Arguments.of(Position.of("a3"), Position.of("c4"), true)
-                // TODO 8방을 모두 테스
         );
     }
 

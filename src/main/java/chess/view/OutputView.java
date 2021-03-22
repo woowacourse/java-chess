@@ -32,7 +32,7 @@ public class OutputView {
             String line = Arrays.stream(File.values())
                     .map(file -> Position.of(file, rank))
                     .map(board::findByPosition)
-                    .map(Square::getNotation)
+                    .map(Square::getNotationText)
                     .collect(Collectors.joining());
             System.out.println(line);
         }

@@ -68,8 +68,12 @@ public enum Direction {
                 .orElseThrow(() -> new IllegalArgumentException("움직일 수 없는 방향입니다."));
     }
 
-    public static boolean isDiagonal(Direction direction) {
-        return diagonalDirection().contains(direction);
+    public static boolean isNorthDiagonal(Direction direction) {
+        return Arrays.asList(NORTHEAST, NORTHWEST).contains(direction);
+    }
+
+    public static boolean isSouthDiagonal(Direction direction) {
+        return Arrays.asList(SOUTHWEST, SOUTHEAST).contains(direction);
     }
 
     public int getXDegree() {
