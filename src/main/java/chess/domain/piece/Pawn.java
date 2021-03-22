@@ -72,10 +72,10 @@ public class Pawn extends Piece {
     }
 
     private void validateFirstTurn(Position target) {
-        if (this.color == Color.BLACK && (!(this.position.getY() == '7') && this.position.subtractY(target) == 2)) {
+        if (this.color == Color.BLACK && (!(this.position.isFirstTurnIfPawn(color)) && this.position.subtractY(target) == 2)) {
             throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
         }
-        if (this.color == Color.WHITE && (!(this.position.getY() == '2') && target.subtractY(this.position) == 2)) {
+        if (this.color == Color.WHITE && (!(this.position.isFirstTurnIfPawn(color)) && target.subtractY(this.position) == 2)) {
             throw new IllegalArgumentException("[ERROR] 폰 이동 규칙에 어긋납니다.");
         }
     }

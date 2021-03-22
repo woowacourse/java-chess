@@ -83,4 +83,14 @@ public class Position {
     public boolean isCross(Position target) {
         return (this.getX() == target.getX()) || (this.getY() == target.getY());
     }
+
+    public boolean isFirstTurnIfPawn(Color color) {
+        if (color.isSame(Color.BLACK)) {
+            return y == '7';
+        }
+        if (color.isSame(Color.WHITE)) {
+            return y == '2';
+        }
+        return false;
+    }
 }

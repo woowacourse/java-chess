@@ -23,7 +23,6 @@ public class Knight extends Piece {
         super(position, name, color, score);
     }
 
-
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         validateKnightMove(target);
