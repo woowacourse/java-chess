@@ -1,20 +1,21 @@
 package chess.domain.board;
 
 import chess.domain.piece.Bishop;
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
-import chess.domain.piece.WhitePawn;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class BoardFactory {
 
@@ -37,20 +38,18 @@ public class BoardFactory {
     }
 
     private static void initializePawnPieces(Map<Piece, Position> coordinates) {
-        for (Column column : Column.values()) {
-            coordinates.put(new WhitePawn(),
-                Position.of(column, WHITE_PAWN_ROW));
-            coordinates.put(new BlackPawn(),
-                Position.of(column, BLACK_PAWN_ROW));
-        }
+        Arrays.stream(Column.values()).forEach(column -> {
+            coordinates.put(new Pawn(PieceColor.WHITE), Position.of(column, WHITE_PAWN_ROW));
+            coordinates.put(new Pawn(PieceColor.BLACK), Position.of(column, BLACK_PAWN_ROW));
+        });
     }
 
     private static void initializeSpecialPiecesByRow(Map<Piece, Position> coordinates, Row row,
         PieceColor color) {
         Map<Column, Piece> pieces = createSpecialPieces(color);
-        for (Column column : Column.values()) {
+        Arrays.stream(Column.values()).forEach(column -> {
             coordinates.put(pieces.get(column), Position.of(column, row));
-        }
+        });
     }
 
     private static Map<Column, Piece> createSpecialPieces(PieceColor color) {

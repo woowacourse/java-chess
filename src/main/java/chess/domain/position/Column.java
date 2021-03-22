@@ -13,6 +13,8 @@ public enum Column {
     G(7, "g"),
     H(8, "h");
 
+    private static final String INVALID_COLUMN_ERROR_MESSAGE = "존재하지 않는 열입니다";
+
     private final int value;
     private final String name;
 
@@ -25,14 +27,14 @@ public enum Column {
         return Arrays.stream(values())
             .filter(column -> column.name.equals(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_ERROR_MESSAGE));
     }
 
     public static Column getColumn(int intValue) {
         return Arrays.stream(values())
             .filter(column -> column.value == intValue)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 열입니다"));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COLUMN_ERROR_MESSAGE));
     }
 
     public Column move(Direction direction) {

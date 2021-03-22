@@ -5,10 +5,8 @@ import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
-import chess.domain.piece.BlackPawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.WhitePawn;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

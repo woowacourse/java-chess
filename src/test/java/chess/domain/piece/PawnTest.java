@@ -17,7 +17,7 @@ class PawnTest {
     @Test
     void generatePath_White() {
         Position current = Position.of("e2");
-        Piece pawn = new WhitePawn();
+        Piece pawn = new Pawn(PieceColor.WHITE);
         Paths paths = new Paths();
         Board board = new Board();
         board.putPiece(pawn, current);
@@ -30,7 +30,7 @@ class PawnTest {
     @Test
     void generateAttackPath_White() {
         Position current = Position.of("e2");
-        Piece pawn = new WhitePawn();
+        Piece pawn = new Pawn(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
@@ -45,7 +45,7 @@ class PawnTest {
     @Test
     void generateObstacleConsideredPath_White() {
         Position current = Position.of("e4");
-        Piece pawn = new WhitePawn();
+        Piece pawn = new Pawn(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
@@ -60,7 +60,7 @@ class PawnTest {
     @Test
     void generatePath_Black() {
         Position current = Position.of("e7");
-        Piece pawn = new BlackPawn();
+        Piece pawn = new Pawn(PieceColor.BLACK);
         Paths paths = new Paths();
         Board board = new Board();
         paths = paths.findAllPath(pawn, current);
@@ -73,7 +73,7 @@ class PawnTest {
     @Test
     void generateAttackPath_Black() {
         Position current = Position.of("e7");
-        Piece pawn = new BlackPawn();
+        Piece pawn = new Pawn(PieceColor.BLACK);
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
@@ -88,7 +88,7 @@ class PawnTest {
     @Test
     void generateObstacleConsideredPath_Black() {
         Position current = Position.of("e4");
-        Piece pawn = new BlackPawn();
+        Piece pawn = new Pawn(PieceColor.BLACK);
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();

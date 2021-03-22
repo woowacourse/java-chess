@@ -5,5 +5,5 @@ import chess.domain.position.Position;
 @FunctionalInterface
 public interface MoveStrategy {
 
-    boolean canGoFrom(Position from, Position to);
+    boolean canMove(Position from, Position to);
 }

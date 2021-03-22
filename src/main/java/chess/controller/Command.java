@@ -19,6 +19,11 @@ public enum Command {
 
     private static final int SOURCE_POSITION = 1;
     private static final int TARGET_POSITION = 2;
+    private static final String ALREADY_RUNNING_ERROR_MESSAGE = "이미 게임을 진행중입니다.";
+    private static final String GAME_NOT_STARTED_ERROR_MESSAGE = "아직 게임을 시작하지 않았습니다.";
+    private static final String INVALID_COMMNAD_ERROR_MESSAGE = "잘못된 명령어입니다.";
+    private static final String INVALID_PIECE_ERROR_MESSAGE = "유효하지 않은 체스말을 입력했습니다.";
+
     private final String message;
     private final BiConsumer<String, Game> consumer;
 
@@ -29,14 +34,14 @@ public enum Command {
 
     private static void start(String input, Game game) {
         if (game.isRunning()) {
-            throw new IllegalArgumentException("이미 게임을 진행중입니다.");
+            throw new IllegalArgumentException(ALREADY_RUNNING_ERROR_MESSAGE);
         }
         game.changeState(new Running());
     }
 
     private static void move(String input, Game game) {
         if (!game.isRunning()) {
-            throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+            throw new IllegalArgumentException(GAME_NOT_STARTED_ERROR_MESSAGE);
         }
         game.move(positionOf(input, SOURCE_POSITION), positionOf(input, TARGET_POSITION));
     }
@@ -49,7 +54,7 @@ public enum Command {
 
     private static void showStatus(String input, Game game) {
         if (!game.isRunning()) {
-            throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
+            throw new IllegalArgumentException(GAME_NOT_STARTED_ERROR_MESSAGE);
         }
         Result result = game.getResult();
         OutputView.printStatus(result.getWhiteScore(), result.getBlackScore());
@@ -59,7 +64,7 @@ public enum Command {
         return Stream.of(values())
             .filter(command -> command.is(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMNAD_ERROR_MESSAGE));
     }
 
     private static Position positionOf(String input, int pieceIndex) {
@@ -68,7 +73,7 @@ public enum Command {
         if (matcher.find()) {
             return Position.of(matcher.group(pieceIndex));
         }
-        throw new IllegalArgumentException("유효하지 않은 체스말을 입력했습니다.");
+        throw new IllegalArgumentException(INVALID_PIECE_ERROR_MESSAGE);
     }
 
     private boolean is(String value) {

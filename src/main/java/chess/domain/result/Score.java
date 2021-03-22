@@ -16,6 +16,10 @@ public class Score {
         return new Score(score + that.score);
     }
 
+    public String is() {
+        return String.valueOf(score);
+    }
+
     @Override
     public String toString() {
         return Double.toString(score);
@@ -36,9 +40,5 @@ public class Score {
     @Override
     public int hashCode() {
         return Objects.hash(score);
-    }
-
-    public String is() {
-        return String.valueOf(score);
     }
 }

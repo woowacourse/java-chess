@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 public enum PieceColor {
-
     WHITE("백"),
     BLACK("흑"),
     NOTHING("무");

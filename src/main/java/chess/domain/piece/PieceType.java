@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.result.Score;
 
 public enum PieceType {
-
     EMPTY(".", 0),
     PAWN("p", 1),
     ROOK("r", 5),
@@ -12,6 +11,7 @@ public enum PieceType {
     QUEEN("q", 9),
     KING("k", 0);
 
+    private static final String INVALID_TYPE_ERROR_MESSAGE = "빈 칸은 변환할 수 없습니다.";
     private final String type;
     private final Score score;
 
@@ -26,7 +26,7 @@ public enum PieceType {
 
     public String toBlack() {
         if (this.equals(EMPTY)) {
-            throw new IllegalArgumentException("빈 칸은 변환할 수 없습니다.");
+            throw new IllegalArgumentException(INVALID_TYPE_ERROR_MESSAGE);
         }
         return type.toUpperCase();
     }

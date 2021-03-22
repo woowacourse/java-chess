@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.piece.strategy.Direction;
 import chess.domain.piece.strategy.MoveStrategy;
+import chess.domain.position.Position;
 import chess.domain.result.Score;
 import java.util.List;
 
@@ -39,6 +40,10 @@ public abstract class Piece {
         return this.pieceColor.equals(that.pieceColor.reversed());
     }
 
+    public boolean canMove(Position from, Position to){
+        return moveStrategy.canMove(from, to);
+    }
+
     public boolean isEmpty() {
         return this.pieceType.equals(PieceType.EMPTY);
     }
@@ -51,18 +56,18 @@ public abstract class Piece {
         return this.pieceColor.equals(color);
     }
 
-    public String getName() {
-        if (pieceColor.equals(PieceColor.BLACK)) {
-            return this.pieceType.toBlack();
-        }
-        return this.pieceType.getType();
-    }
-
     public String color() {
         return pieceColor.getColor();
     }
 
     public Score score() {
         return pieceType.getScore();
+    }
+
+    public String getName() {
+        if (pieceColor.equals(PieceColor.BLACK)) {
+            return this.pieceType.toBlack();
+        }
+        return this.pieceType.getType();
     }
 }

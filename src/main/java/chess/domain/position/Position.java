@@ -1,7 +1,9 @@
 package chess.domain.position;
 
 import chess.domain.piece.strategy.Direction;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -62,7 +64,11 @@ public class Position {
     }
 
     public boolean isKnightPath(Position that) {
-        return Math.pow(rowGap(that), 2) + Math.pow(columnGap(that), 2) == 5;
+        return diagonalDistance(that) == 5;
+    }
+
+    public double diagonalDistance(Position that){
+        return Math.pow(rowGap(that),2) + Math.pow(columnGap(that),2);
     }
 
     public int columnGap(Position that) {
@@ -93,6 +99,18 @@ public class Position {
 
     public boolean isOn(Column column) {
         return this.column.equals(column);
+    }
+
+    public boolean isUpperTo(Position that) {
+        return row() > that.row();
+    }
+
+    public boolean isLowerTo(Position that){
+        return row() < that.row();
+    }
+
+    public static List<Position> positions(){
+        return new ArrayList<>(POSITION_CACHE.values());
     }
 
     @Override

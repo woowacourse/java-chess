@@ -10,15 +10,17 @@ import java.util.stream.Stream;
 
 public class RenderingUtils {
 
+    private static final String BLANK = " ";
+    private static final String COLUMN_INFO = "\n  a b c d e f g h\n";
+
     private RenderingUtils() {
     }
 
     public static String renderBoard(Board board) {
         final String visualBoard = Stream.of(Row.values())
-            .map(index -> index.getNumber() + " " + renderRow(board, index) + index.getNumber())
-            .collect(Collectors.joining("\n"));
-        final String columnInfo = "\n  a b c d e f g h\n";
-        return columnInfo + visualBoard + columnInfo;
+            .map(index -> index.getNumber() + BLANK + renderRow(board, index) + index.getNumber())
+            .collect(Collectors.joining(System.lineSeparator()));
+        return COLUMN_INFO + visualBoard + COLUMN_INFO;
     }
 
     private static String renderRow(Board board, Row row) {
@@ -30,6 +32,6 @@ public class RenderingUtils {
     }
 
     private static String renderPosition(Piece piece) {
-        return piece.getName() + " ";
+        return piece.getName() + BLANK;
     }
 }

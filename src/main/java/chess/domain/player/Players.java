@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Players {
 
+    private static final String INVALID_TURN_PLAYER_ERROR_MESSAGE = "해당 색을 가진 플레이어가 존재하지 않습니다.";
+
     private final List<Player> players;
 
     public Players(List<Player> players) {
@@ -19,6 +21,6 @@ public class Players {
         return players.stream()
             .filter(player -> player.isColor(currentColor))
             .findAny()
-            .orElseThrow(() -> new IllegalArgumentException("해당 색을 가진 플레이어가 존재하지 않습니다."));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_TURN_PLAYER_ERROR_MESSAGE));
     }
 }
