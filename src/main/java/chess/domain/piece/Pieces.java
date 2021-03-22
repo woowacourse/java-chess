@@ -21,7 +21,7 @@ public class Pieces {
             // 살았는지 확인
             if (piece.getState() == State.ALIVE) {
                 // 살았으면 각가의 점수를 더해준다.
-                sum = sum.add(piece.getScore());
+                 sum = sum.add(piece.getScore());
                 if (piece instanceof Pawn) {
                     pawnCount
                         .put(piece.getColumn(), pawnCount.getOrDefault(piece.getColumn(), 0) + 1);

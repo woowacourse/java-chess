@@ -20,12 +20,28 @@ import java.util.Map;
 
 public class ChessBoard {
 
-    //TODO : King 이 dead 상태가 될 경우 게임 종료
+    private static final int MAX_NUM_PIECE = 16;
+    private static final int ROW_WHITE_START = 1;
+    private static final int ROW_WHITE_END = 2;
+    private static final char COLUMN_FIRST = 'a';
+    private static final char COLUMN_LAST = 'h';
+    private static final int ROW_BLACK_START = 7;
+    private static final int ROW_BLACK_END = 8;
+    private static final int ROW_FIRST = 1;
+    private static final int ROW_LAST = 8;
+    private static final int ROW_WHITE_PAWN_LINE = 2;
+    private static final int ROW_BLACK_PAWN_LINE = 7;
+    private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
+    private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
+    private static final String EXCEPTION_POSITION = "잘못된 좌표입니다.";
+    private static final int WIN_BOUNDARY = 0;
+
     private final Map<Position, Piece> chessBoard;
     private final Pieces whitePieces;
     private final Pieces blackPieces;
     private boolean gameStatus = true;
 
+    //TODO : init 분리
     public ChessBoard() {
         this.chessBoard = new LinkedHashMap<>();
         initBoard();
@@ -34,58 +50,75 @@ public class ChessBoard {
     }
 
     private Pieces initWhitePieces() {
-        List<Piece> whitePieces = new ArrayList<>(16);
-        for (int j = 1; j <= 2; j++) {
-            for (char i = 'a'; i <= 'h'; i++) {
-                String boardPosition = "" + i + j;
-                whitePieces.add(chessBoard.get(Position.valueOf(boardPosition)));
+        List<Piece> whitePieces = new ArrayList<>(MAX_NUM_PIECE);
+        for (int row = ROW_WHITE_START; row <= ROW_WHITE_END; row++) {
+            for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
+                String piecePositionName = createPieceName(row, column);
+                whitePieces.add(piece(Position.valueOf(piecePositionName)));
             }
         }
         return new Pieces(whitePieces);
     }
 
-    private Pieces initBlackPieces() {
+    private String createPieceName(int row, char column) {
+        return "" + column + row;
+    }
 
+    private Piece piece(Position position) {
+        return chessBoard.get(position);
+    }
+
+    private Pieces initBlackPieces() {
         List<Piece> blackPieces = new ArrayList<>(16);
-        for (int j = 7; j <= 8; j++) {
-            for (char i = 'a'; i <= 'h'; i++) {
-                String boardPosition = "" + i + j;
-                blackPieces.add(chessBoard.get(Position.valueOf(boardPosition)));
+        for (int row = ROW_BLACK_START; row <= ROW_BLACK_END; row++) {
+            for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
+                String piecePositionName = createPieceName(row, column);
+                blackPieces.add(piece(Position.valueOf(piecePositionName)));
             }
         }
         return new Pieces(blackPieces);
     }
 
     private void initBoard() {
-        for (int j = 1; j <= 8; j++) {
-            for (char i = 'a'; i <= 'h'; i++) {
-                String boardPosition = "" + i + j;
-                chessBoard.put(Position.valueOf(boardPosition), Blank.INSTANCE);
+        for (int row = ROW_FIRST; row <= ROW_LAST; row++) {
+            for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
+                String boardPosition = createPieceName(row, column);
+                Piece piece = Blank.INSTANCE;
+                pieceOnChessBoard(boardPosition, piece);
             }
         }
-        createPawnLine();
-        createUniqueLine();
+        initPawnLine();
+        initUniquePieceLine();
     }
 
-    private void createPawnLine() {
-        for (char i = 'a'; i <= 'h'; i++) {
-            String boardPosition = "" + i + "2";
-            chessBoard.put(Position.valueOf(boardPosition),
-                new Pawn(TeamColor.WHITE, Position.valueOf(boardPosition)));
-        }
-
-        for (char i = 'a'; i <= 'h'; i++) {
-            String boardPosition = "" + i + "7";
-            chessBoard.put(Position.valueOf(boardPosition),
-                new Pawn(TeamColor.BLACK, Position.valueOf(boardPosition)));
-        }
-
+    private Piece pieceOnChessBoard(String boardPosition, Piece piece) {
+        return chessBoard.put(Position.valueOf(boardPosition), piece);
     }
 
-    private void createUniqueLine() {
-        // g화이트
+    private Piece pieceOnChessBoard(Position boardPosition, Piece piece) {
+        return chessBoard.put(boardPosition, piece);
+    }
+
+    private void initPawnLine() {
+        for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
+            String boardPosition = createPieceName(ROW_WHITE_PAWN_LINE, column);
+            Piece pawn = new Pawn(TeamColor.WHITE, Position.valueOf(boardPosition));
+            inputPiece(boardPosition, pawn);
+        }
+
+        for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
+            String boardPosition = createPieceName(ROW_BLACK_PAWN_LINE, column);
+            Piece pawn = new Pawn(TeamColor.BLACK, Position.valueOf(boardPosition));
+            inputPiece(boardPosition, pawn);
+        }
+    }
+
+    private Piece inputPiece(String boardPosition, Piece piece) {
+        return chessBoard.put(Position.valueOf(boardPosition), piece);
+    }
+
+    private void initUniquePieceLine() {
         TeamColor color = TeamColor.WHITE;
-
         chessBoard.put(Position.valueOf("a1"), new Rook(color, Position.valueOf("a1")));
         chessBoard.put(Position.valueOf("b1"), new Knight(color, Position.valueOf("b1")));
         chessBoard.put(Position.valueOf("c1"), new Bishop(color, Position.valueOf("c1")));
@@ -95,10 +128,7 @@ public class ChessBoard {
         chessBoard.put(Position.valueOf("g1"), new Knight(color, Position.valueOf("g1")));
         chessBoard.put(Position.valueOf("h1"), new Rook(color, Position.valueOf("h1")));
 
-        // 블랙
-
         color = TeamColor.BLACK;
-
         chessBoard.put(Position.valueOf("a8"), new Rook(color, Position.valueOf("a8")));
         chessBoard.put(Position.valueOf("b8"), new Knight(color, Position.valueOf("b8")));
         chessBoard.put(Position.valueOf("c8"), new Bishop(color, Position.valueOf("c8")));
@@ -113,56 +143,80 @@ public class ChessBoard {
         return chessBoard;
     }
 
-    public boolean move(String source, String target) {
+    public void move(String source, String target) {
         validatePosition(source, target);
         Position start = Position.valueOf(source);
         Position end = Position.valueOf(target);
-        Piece startPiece = chessBoard.get(start);
-        Piece goingToDie = chessBoard.get(end);
 
-        if (chessBoard.get(start).isMoveAble(start, end, this)) {
-            //blank 경우
-            if (chessBoard.get(end) == Blank.INSTANCE) {
-                chessBoard.put(start, Blank.INSTANCE);
-                chessBoard.put(end, startPiece);
-                startPiece.setPosition(end);
-                return true;
-            }
-            // 상대편이 있는 경우
-            goingToDie.dead();
-            chessBoard.put(end, startPiece);
-            chessBoard.put(start, Blank.INSTANCE);
-            startPiece.setPosition(end);
-            if (goingToDie instanceof King) {
-                gameStatus = false;
-            }
-            return true;
+        if (isMoveAblePosition(start, end)) {
+            movePiece(start, end);
+            return;
         }
+        throw new IllegalArgumentException(EXCEPTION_MOVE);
+    }
 
-        throw new IllegalArgumentException("잘못된 이동입니다.");
+    private boolean isMoveAblePosition(Position start, Position end) {
+        return piece(start).isMoveAble(start, end, this);
+    }
+
+    private void checkKilledPieceIsKing(Piece endPiece) {
+        if (endPiece instanceof King) {
+            gameStatus = false;
+        }
+    }
+
+    private void killPiece(Position start, Position end) {
+        Piece startPiece = piece(start);
+        Piece endPiece = piece(end);
+
+        endPiece.dead();
+        pieceOnChessBoard(end, startPiece);
+        pieceOnChessBoard(start, Blank.INSTANCE);
+        startPiece.setPosition(end);
+    }
+
+    private void movePiece(Position start, Position end) {
+        Piece startPiece = piece(start);
+        Piece endPiece = piece(end);
+        if (isBlankPiece(piece(end))) {
+            pieceOnChessBoard(start, Blank.INSTANCE);
+            pieceOnChessBoard(end, startPiece);
+            startPiece.setPosition(end);
+            return;
+        }
+        killPiece(start, end);
+        checkKilledPieceIsKing(endPiece);
+    }
+
+    private boolean isBlankPiece(Piece piece) {
+        return piece == Blank.INSTANCE;
     }
 
 
     private void validatePosition(String source, String target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException("동일한 좌표는 불가능합니다.");
+            throw new IllegalArgumentException(EXCEPTION_DUPLICATE_POSITION);
         }
-        if (chessBoard.containsKey(Position.valueOf(source)) && chessBoard
-            .containsKey(Position.valueOf(target))) {
+        if (isMoveAblePosition(source, target)) {
             return;
         }
-        throw new IllegalArgumentException("잘못된 좌표입니다.");
+        throw new IllegalArgumentException(EXCEPTION_POSITION);
+    }
+
+    private boolean isMoveAblePosition(String source, String target) {
+        return chessBoard.containsKey(Position.valueOf(source)) && chessBoard
+            .containsKey(Position.valueOf(target));
     }
 
     public boolean isBlank(Position position) {
-        Piece piece = this.chessBoard.get(position);
-        boolean ret = piece == Blank.INSTANCE;
+        Piece piece = piece(position);
+        boolean ret = isBlankPiece(piece);
         return ret;
     }
 
 
     public Piece getPiece(Position position) {
-        return chessBoard.get(position);
+        return piece(position);
     }
 
     public Result result() {
@@ -170,14 +224,21 @@ public class ChessBoard {
         result.put(TeamColor.BLACK, blackPieces.calculateScore());
         result.put(TeamColor.WHITE, whitePieces.calculateScore());
 
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
+        if (isBlankWin(result)) {
             return new Result(result, TeamColor.BLACK);
         }
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
+        if (isWhiteWin(result)) {
             return new Result(result, TeamColor.WHITE);
         }
-
         return new Result(result, TeamColor.NONE);
+    }
+
+    private boolean isWhiteWin(Map<TeamColor, Score> result) {
+        return result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < WIN_BOUNDARY;
+    }
+
+    private boolean isBlankWin(Map<TeamColor, Score> result) {
+        return result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > WIN_BOUNDARY;
     }
 
 
