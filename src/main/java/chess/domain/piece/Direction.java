@@ -6,23 +6,10 @@ import java.util.Arrays;
 import java.util.List;
 
 public enum Direction {
-    NORTH(0, 1),
-    NORTHEAST(1, 1),
-    EAST(1, 0),
-    SOUTHEAST(1, -1),
-    SOUTH(0, -1),
-    SOUTHWEST(-1, -1),
-    WEST(-1, 0),
+    NORTH(0, 1), NORTHEAST(1, 1), EAST(1, 0), SOUTHEAST(1, -1), SOUTH(0, -1), SOUTHWEST(-1, -1), WEST(-1, 0),
     NORTHWEST(-1, 1),
     
-    NNE(1, 2),
-    NNW(-1, 2),
-    SSE(1, -2),
-    SSW(-1, -2),
-    EEN(2, 1),
-    EES(2, -1),
-    WWN(-2, 1),
-    WWS(-2, -1);
+    NNE(1, 2), NNW(-1, 2), SSE(1, -2), SSW(-1, -2), EEN(2, 1), EES(2, -1), WWN(-2, 1), WWS(-2, -1);
     
     private final int xDegree;
     private final int yDegree;
@@ -30,14 +17,6 @@ public enum Direction {
     Direction(int xDegree, int yDegree) {
         this.xDegree = xDegree;
         this.yDegree = yDegree;
-    }
-    
-    public int getXDegree() {
-        return xDegree;
-    }
-    
-    public int getYDegree() {
-        return yDegree;
     }
     
     public static List<Direction> linearDirection() {
@@ -66,5 +45,39 @@ public enum Direction {
     
     public Position addDegreeTo(Position position) {
         return position.add(xDegree, yDegree);
+    }
+    
+    public boolean isCorrectDirection(int xDistance, int yDistance, int movableLength) {
+        boolean xCanArrive = canArrive(xDistance, xDegree, movableLength);
+        boolean yCanArrive = canArrive(yDistance, yDegree, movableLength);
+        return xCanArrive && yCanArrive;
+    }
+    
+    private boolean canArrive(int distance, int degree, int movableLength) {
+        if (doesNotMove(distance, degree)) {
+            return true;
+        }
+        
+        if (isOppositeDirection(distance, degree)) {
+            return false;
+        }
+        
+        if (degree != 0 && !canDivideWithoutRemainder(distance, degree, movableLength)) {
+            return false;
+        }
+        
+        return true;
+    }
+    
+    private boolean doesNotMove(int distance, int degree) {
+        return distance == 0 && degree == 0;
+    }
+    
+    private boolean isOppositeDirection(int distance, int degree) {
+        return distance * degree <= 0;
+    }
+    
+    private boolean canDivideWithoutRemainder(int distance, int degree, int movableLength) {
+        return (distance % degree == 0) && (distance / degree <= movableLength);
     }
 }

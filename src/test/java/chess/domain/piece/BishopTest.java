@@ -65,7 +65,6 @@ class BishopTest {
         // when
         ThrowableAssert.ThrowingCallable callable = () -> bishop.checkToMoveToTargetPosition(movePosition, board);
         
-        
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
                                             .withMessage("기물이 이동할 수 없는 위치입니다.");

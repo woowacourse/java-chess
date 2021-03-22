@@ -66,13 +66,9 @@ public class MovePosition {
     }
     
     public boolean canMove(Direction direction, int movableLength) {
-        return IntStream.rangeClosed(MIN_MOVE_LENGTH, movableLength)
-                        .mapToObj(distance -> {
-                            final int xDistance = direction.getXDegree() * distance;
-                            final int yDistance = direction.getYDegree() * distance;
-                            return sourcePosition.add(xDistance, yDistance);
-                        })
-                        .anyMatch(targetPosition::equals);
+        int xDistance = targetPosition.getX() - sourcePosition.getX();
+        int yDistance = targetPosition.getY() - sourcePosition.getY();
+        return direction.isCorrectDirection(xDistance, yDistance, movableLength);
     }
     
     public boolean isAtDefaultPawnPosition(Color color) {

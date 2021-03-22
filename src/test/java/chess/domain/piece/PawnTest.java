@@ -130,10 +130,10 @@ class PawnTest {
     void move_ObstacleIsInPath_ExceptionThrown() {
         
         // given
-        Position blackPawnPosition = Position.from("c3");
+        Position blackPawnPosition = Position.from("a3");
         Board newBoard = BoardUtils.put(board, blackPawnPosition, Pawn.WHITE_INSTANCE);
         
-        Position targetPosition = Position.from("c4");
+        Position targetPosition = Position.from("a4");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -141,7 +141,7 @@ class PawnTest {
         
         // then
         assertThatIllegalArgumentException().isThrownBy(callable)
-                                            .withMessage("기물이 이동할 수 없는 위치입니다.");
+                                            .withMessage("이동하는 경로 사이에 기물이 있습니다.");
     }
     
     @Test
