@@ -1,24 +1,17 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
+import chess.domain.Name;
 import chess.domain.Score;
 import chess.domain.position.Cross;
 import chess.domain.position.Diagonal;
-import chess.domain.Name;
 import chess.domain.position.Position;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static chess.domain.Score.ZERO;
 
 public class King extends Piece {
     public King(Position position, Color color) {
         super(position, Name.KING, color, ZERO);
-    }
-
-    public King(Position position, Name name, Color color, Score score) {
-        super(position, name, color, score);
     }
 
     @Override
@@ -35,7 +28,6 @@ public class King extends Piece {
         this.position = target;
     }
 
-    @Override
     public void checkMoveRule(Position target) {
         if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
                 !(this.position.xDistance(target) == 1 || this.position.yDistance(target) == 1)) {

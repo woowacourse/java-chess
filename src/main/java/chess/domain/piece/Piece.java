@@ -24,8 +24,6 @@ public abstract class Piece {
 
     public abstract void move(Position target, Pieces pieces);
 
-    public abstract void checkMoveRule(Position target);
-
     public Position getPosition() {
         return position;
     }

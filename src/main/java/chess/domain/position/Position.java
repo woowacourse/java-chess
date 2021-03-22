@@ -34,8 +34,7 @@ public class Position {
 
     public static Position of(char x, char y) {
         return POSITIONS.stream()
-                .filter(position ->
-                        position.x == x && position.y == y)
+                .filter(position -> position.x == x && position.y == y)
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다."));
@@ -61,6 +60,10 @@ public class Position {
         return x == anotherX;
     }
 
+    public boolean sameY(char anotherY) {
+        return y == anotherY;
+    }
+
     public boolean largeY(Position anotherPosition) {
         return this.y > anotherPosition.y;
     }
@@ -75,6 +78,10 @@ public class Position {
 
     public boolean isCross(Position target) {
         return (this.x == target.x) || (this.y == target.y);
+    }
+
+    public Position movedPositionByNumber(int xNumber, int yNumber) {
+        return Position.of((char) (x + xNumber), (char) (y + yNumber));
     }
 
     @Override

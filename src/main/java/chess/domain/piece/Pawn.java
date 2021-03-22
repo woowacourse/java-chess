@@ -13,10 +13,6 @@ public class Pawn extends Piece {
         super(position, Name.PAWN, color, new Score(1));
     }
 
-    public Pawn(Position position, Name name, Color color, Score score) {
-        super(position, name, color, score);
-    }
-
     @Override
     public void move(Position target, Pieces pieces) {
         if (this.position.isDiagonal(target) && (Math.abs(this.position.xDistance(target)) == 1 &&
@@ -73,10 +69,5 @@ public class Pawn extends Piece {
             return;
         }
         throw new IllegalArgumentException("[ERROR] 움직일 수 없는 위치입니다.");
-    }
-
-    @Override
-    public void checkMoveRule(Position target) {
-
     }
 }

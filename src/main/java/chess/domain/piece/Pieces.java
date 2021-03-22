@@ -12,7 +12,7 @@ import static java.util.stream.Collectors.toList;
 
 public class Pieces {
     public static final int KING_COUNT = 2;
-    private List<Piece> pieces;
+    private final List<Piece> pieces;
 
     public Pieces(List<Piece> pieces) {
         this.pieces = new ArrayList<>(pieces);
