@@ -30,10 +30,6 @@ public class Board {
         return of(new Position(vertical, horizontal));
     }
 
-    public Map<Position, Piece> getBoard() {
-        return new HashMap<>(board);
-    }
-
     public void move(final Position source, final Position target) {
         validateMove(source, target);
         checkGameEnd(target);
@@ -55,28 +51,22 @@ public class Board {
     private List<Position> addReachableDistance(final Position source, final Direction direction) {
         final List<Position> ableToMove = new ArrayList<>();
         Distance distance = Distance.ONE;
-        while(!isBlocked(source, direction, distance) && !isUnreachable(source, direction, distance)){
+        while(isReachable(source, direction, distance)){
             ableToMove.add(source.next(direction, distance));
             distance = distance.next();
         }
         return ableToMove;
     }
 
-    private boolean isBlocked(final Position source, final Direction direction, final Distance distance) {
+    private boolean isReachable(final Position source, final Direction direction, final Distance distance) {
         try {
-            source.next(direction, distance);
-            return false;
+            final Position target = source.next(direction, distance);
+            return !of(source).isSameTeam(of(target))
+                    && !isPrePositionEnemy(source, direction, distance)
+                    && of(source).isReachable(direction, distance, source, of(target));
         } catch (IllegalArgumentException e) {
-            return true;
+            return false;
         }
-    }
-
-    private boolean isUnreachable(final Position source, final Direction direction, final Distance distance) {
-        final Position target = source.next(direction, distance);
-        if (of(source).isSameTeam(of(target)) || isPrePositionEnemy(source, direction, distance)) {
-            return true;
-        }
-        return !of(source).isReachable(direction, distance, source, of(target));
     }
 
     private boolean isPrePositionEnemy(final Position source, final Direction direction, final Distance distance) {
@@ -158,5 +148,9 @@ public class Board {
 
     public Piece getPieceOf(final Position position) {
         return of(position);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
     }
 }
