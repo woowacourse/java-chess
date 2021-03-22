@@ -16,7 +16,9 @@ public class Rook extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
+
         final List<Position> straightPath = current.generateStraightPath(destination);
+
         return checkEmptyPath(straightPath, chessBoard);
     }
 

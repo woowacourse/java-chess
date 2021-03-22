@@ -17,7 +17,9 @@ public class Bishop extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
+
         final List<Position> diagonalPath = current.generateDiagonalPath(destination);
+
         return checkEmptyPath(diagonalPath, chessBoard);
     }
 
