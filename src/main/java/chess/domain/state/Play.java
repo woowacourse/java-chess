@@ -35,5 +35,4 @@ public class Play extends AbstractState {
     @Override
     public void validateMove() {
     }
-
 }
