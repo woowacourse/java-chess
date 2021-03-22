@@ -1,5 +1,7 @@
 package chess.domain;
 
+import chess.domain.piece.direction.Direction;
+
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
@@ -39,16 +41,16 @@ public class Position {
         return positions.get(key);
     }
 
-    private static boolean isNotValid(int x, int y) {
-        return y < MIN_POSITION || MAX_POSITION < y || x < MIN_POSITION || MAX_POSITION < x;
-    }
-
     public Position go(Direction direction) {
         return Position.of(x + direction.getX(), y + direction.getY());
     }
 
     public boolean invalidGo(Direction direction) {
         return isNotValid(x + direction.getX(), y + direction.getY());
+    }
+
+    private static boolean isNotValid(int x, int y) {
+        return y < MIN_POSITION || MAX_POSITION < y || x < MIN_POSITION || MAX_POSITION < x;
     }
 
     public int row() {

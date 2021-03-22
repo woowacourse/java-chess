@@ -10,4 +10,12 @@ public enum TeamColor {
         }
         return WHITE;
     }
+
+    public boolean isSameColor(TeamColor teamColor) {
+        return this.equals(teamColor);
+    }
+
+    public boolean isNotSameColor(TeamColor teamColor) {
+        return this != teamColor;
+    }
 }

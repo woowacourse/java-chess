@@ -4,25 +4,29 @@ import chess.domain.piece.*;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.PieceNotFoundException;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
-import static java.util.stream.Collectors.toMap;
 
 public class ChessGame {
 
     private static final int BOARD_SIZE = 8;
 
-    private final List<Piece> pieces = new ArrayList<>();
-    private TeamColor currentColor = WHITE;
+    private final Pieces pieces;
+    private TeamColor currentColor;
 
     public ChessGame() {
+        pieces = new Pieces();
+        currentColor = WHITE;
         init();
+    }
+
+    public ChessGame(Pieces pieces, TeamColor currentColor) {
+        this.pieces = pieces;
+        this.currentColor = currentColor;
+        updateMovablePositions();
     }
 
     private void init() {
@@ -34,7 +38,7 @@ public class ChessGame {
         updateMovablePositions();
     }
 
-    private void initPieces(TeamColor teamColor, int y) {
+    private void initPieces(final TeamColor teamColor, final int y) {
         pieces.add(new Rook(teamColor, Position.of(0, y)));
         pieces.add(new Knight(teamColor, Position.of(1, y)));
         pieces.add(new Bishop(teamColor, Position.of(2, y)));
@@ -45,96 +49,55 @@ public class ChessGame {
         pieces.add(new Rook(teamColor, Position.of(7, y)));
     }
 
-    private void initPawns(TeamColor teamColor, int y) {
+    private void initPawns(final TeamColor teamColor, final int y) {
         for (int x = 0; x < BOARD_SIZE; x++) {
             pieces.add(new Pawn(teamColor, Position.of(x, y)));
         }
     }
 
     public void updateMovablePositions() {
-        pieces.forEach(piece ->
-                piece.addMovablePositions(existPiecePositions(),
-                        positionsByTeamColor(piece.enemyColor())
-                )
-        );
+        pieces.updateMovablePositions();
     }
 
-    public boolean isKingDead() {
-        return piecesByTeamColor(currentColor)
-                .stream()
-                .noneMatch(Piece::isKing);
-    }
-
-    public List<Piece> piecesByTeamColor(TeamColor teamColor) {
-        return pieces.stream()
-                .filter(piece -> piece.sameColor(teamColor))
-                .collect(Collectors.toList());
-    }
-
-    public Score totalScoreByTeamColor(TeamColor teamColor) {
-        List<Piece> pieces = piecesByTeamColor(teamColor);
-
-        int pawnCount = (int) pieces.stream()
-                .filter(Piece::isPawn)
-                .count();
-
-        int sameColumnPawnCount = (int) (pawnCount - pieces.stream()
-                .filter(Piece::isPawn)
-                .map(Piece::row)
-                .distinct()
-                .count());
-
-        return pieces.stream()
-                .map(Piece::score)
-                .reduce(Score.from(0), Score::addedScore)
-                .minusPawnCount(sameColumnPawnCount);
-    }
-
-    private List<Position> existPiecePositions() {
-        return pieces.stream()
-                .map(Piece::currentPosition)
-                .collect(Collectors.toList());
-    }
-
-    private List<Position> positionsByTeamColor(TeamColor teamColor) {
-        return piecesByTeamColor(teamColor).stream()
-                .map(Piece::currentPosition)
-                .collect(Collectors.toList());
-    }
-
-    public void move(Position currentPosition, Position targetPosition) throws PieceNotFoundException, ImpossibleMoveException {
+    public void move(final Position currentPosition, final Position targetPosition) throws PieceNotFoundException, ImpossibleMoveException {
         Piece currentPiece = piece(currentPosition).orElseThrow(PieceNotFoundException::new);
-        if (currentPiece.isNotSameColor(currentColor)) {
+        if (currentPiece.notSameColor(currentColor)) {
             throw new ImpossibleMoveException(currentColor + "팀 차례 입니다.");
         }
 
         Optional<Piece> targetPiece = piece(targetPosition);
 
-        currentPiece.changePosition(targetPosition);
+        currentPiece.move(targetPosition);
         targetPiece.ifPresent(pieces::remove);
         updateMovablePositions();
         currentColor = currentColor.reverse();
     }
 
-    public Map<Position, String> nameGroupingByPosition() {
-        return pieces.stream()
-                .collect(toMap(
-                        Piece::currentPosition,
-                        Piece::name
-                ));
+    public boolean isKingDead() {
+        return pieces.isKingDead(currentColor);
     }
 
-    public Optional<Piece> piece(Position position) {
-        return pieces.stream()
-                .filter(piece -> piece.isSamePosition(position))
-                .findAny();
+    public Score totalScoreByTeamColor(final TeamColor teamColor) {
+        return pieces.totalScoreByTeamColor(teamColor);
     }
 
     public TeamColor enemyColor() {
         return currentColor.reverse();
     }
 
+    public Map<Position, String> nameGroupingByPosition() {
+        return pieces.nameGroupingByPosition();
+    }
+
+    public Optional<Piece> piece(final Position position) {
+        return pieces.pieceByPosition(position);
+    }
+
     public int boardSize() {
         return BOARD_SIZE;
+    }
+
+    public ChessResult result() {
+        return new ChessResult(totalScoreByTeamColor(WHITE), totalScoreByTeamColor(BLACK));
     }
 }

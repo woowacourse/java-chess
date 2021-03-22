@@ -64,7 +64,7 @@ public abstract class Piece {
 
     public abstract boolean isKing();
 
-    public List<Position> movablePositions(){
+    public List<Position> movablePositions() {
         return pieceMoving.movablePositions();
     }
 
