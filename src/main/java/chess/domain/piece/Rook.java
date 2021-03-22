@@ -19,16 +19,16 @@ public final class Rook extends AbstractPiece {
     }
 
     @Override
-    public double score() {
-        return SCORE;
-    }
-
-    @Override
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
         final List<Direction> directions = Direction.linearDirection();
         Direction direction = findDirection(position, directions, ABLE_LENGTH);
 
         validateObstacle(position, direction, pieces);
         return new Rook(color, position);
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }
