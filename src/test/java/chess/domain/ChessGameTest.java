@@ -45,11 +45,24 @@ class ChessGameTest {
     }
 
     @Test
-    void move() {
+    void move1() {
         chessGame.initBoard(BoardInitializer.init());
         chessGame.move("move a2 a3");
         Board board = chessGame.board();
         assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Pawn.class);
+    }
+
+    @DisplayName("이동 테스트 - 소스와 타겟이 같을 때 이동 불가")
+    @Test
+    void move2() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move("move a2 a2");
+
+        // then
+        assertThat(outContent.toString()).contains("[ERROR] 해당 좌표에 같은 팀의 말이 존재합니다.");
     }
 
     @DisplayName("Pawn 이동 테스트 - 초기 2칸 이동")

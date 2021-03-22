@@ -30,6 +30,7 @@ public class ChessGame {
     public void move(String command) {
         try {
             Positions positions = new Positions(command);
+            // TODO: 보드로부터 피스를 받아 이동시키는 것이 아니라 보드 내부에서 이동시키도록 변경하기.
             Piece piece = board.pieceAt(positions.source());
             piece.confirmTurn(turn);
             board.confirmSameTeamPiece(positions.target(), turn);
@@ -46,6 +47,7 @@ public class ChessGame {
         actionEachPiece(positions, piece, direction, strategy);
     }
 
+    // TODO : chessgame은 보드에게, 보드는 각 피스에게 일을 시키도록 수정하기
     private void actionEachPiece(Positions positions, Piece piece, Direction direction, Strategy strategy) {
         final int distance = positions.computeDistance();
         if (piece.isPawn()) {
@@ -145,8 +147,8 @@ public class ChessGame {
         return board;
     }
 
-    public String turn() {
-        return turn.team();
+    public Team turn() {
+        return turn;
     }
 
     private void turnOver() {

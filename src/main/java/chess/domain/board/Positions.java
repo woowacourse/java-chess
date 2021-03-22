@@ -9,6 +9,10 @@ public class Positions {
 
     private final List<Position> positions;
 
+    // TODO : 조합으로 변경하기
+    // private final Position source;
+    // private final Position target;
+
     public Positions(List<Position> positions) {
         this.positions = positions;
     }

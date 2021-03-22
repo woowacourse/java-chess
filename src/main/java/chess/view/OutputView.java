@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.*;
+import chess.domain.dto.BoardDto;
 import chess.domain.piece.Piece;
 
 import java.util.EnumMap;
@@ -21,10 +22,10 @@ public class OutputView {
         System.out.printf("%s팀이 승리하였습니다.\n", team.team());
     }
 
-    public static void printBoard(Board board, String turn) {
-        System.out.println(turn + "팀의 차례입니다.");
+    public static void printBoard(BoardDto boardDto) {
+        System.out.println(boardDto.team() + "팀의 차례입니다.");
         for (Rank rank : Rank.values()) {
-            printPiece(board, rank);
+            printPiece(boardDto.board(), rank);
             System.out.println();
         }
         System.out.println();

@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.board.Command;
+import chess.domain.dto.BoardDto;
 import chess.domain.utils.BoardInitializer;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,9 +12,19 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
 
+    public void run() {
+        ChessGame chessGame = new ChessGame();
+        OutputView.printCommandInfo();
+        while (chessGame.isRunning()) {
+            String inputCmd = InputView.inputCommand();
+            Command command = Command.of(splitCommand(inputCmd));
+            command.apply(chessGame, inputCmd);
+        }
+    }
+
     public static void start(ChessGame chessGame, String command) {
         chessGame.initBoard(BoardInitializer.init());
-        OutputView.printBoard(chessGame.board(), chessGame.turn());
+        OutputView.printBoard(new BoardDto(chessGame.board(), chessGame.turn()));
     }
 
     public static void move(ChessGame chessGame, String command) {
@@ -21,7 +32,7 @@ public class ChessController {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
         chessGame.move(command);
-        OutputView.printBoard(chessGame.board(), chessGame.turn());
+        OutputView.printBoard(new BoardDto(chessGame.board(), chessGame.turn()));
         confirmKingDead(chessGame);
     }
 
@@ -39,16 +50,6 @@ public class ChessController {
     private static void confirmKingDead(ChessGame chessGame) {
         if (chessGame.isEnd()) {
             OutputView.printWinner(chessGame.winner());
-        }
-    }
-
-    public void run() {
-        ChessGame chessGame = new ChessGame();
-        OutputView.printCommandInfo();
-        while (chessGame.isRunning()) {
-            String inputCmd = InputView.inputCommand();
-            Command command = Command.of(splitCommand(inputCmd));
-            command.apply(chessGame, inputCmd);
         }
     }
 
