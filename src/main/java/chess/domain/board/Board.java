@@ -91,7 +91,7 @@ public class Board {
         }
     }
 
-    public String getInitial(Position position) {
+    public String getPieceInitialByPosition(Position position) {
         return board.get(position).getInitial();
     }
 

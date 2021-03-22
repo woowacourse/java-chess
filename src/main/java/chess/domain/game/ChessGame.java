@@ -1,4 +1,4 @@
-package chess.controller;
+package chess.domain.game;
 
 import chess.domain.Side;
 import chess.domain.board.Board;
@@ -21,13 +21,17 @@ public class ChessGame {
     public void execute(Command command) {
         if (command.isMove()) {
             state = state.move(command.source(), command.target());
+            return;
         }
         if (command.isStatus()) {
+            // TODO status(), score() 둘 중 하나만 있으면 됨
             state = state.status();
-            OutputView.print(state.score());
+            OutputView.print(state.score()); // TODO 컨트롤러로 이동
+            return;
         }
         if (command.isEnd()) {
             state = state.finished();
+            return;
         }
 
         throw new InvalidCommandException();

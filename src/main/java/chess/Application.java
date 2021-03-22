@@ -1,6 +1,6 @@
 package chess;
 
-import chess.controller.ChessGame;
+import chess.domain.game.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.gamestate.Ready;
