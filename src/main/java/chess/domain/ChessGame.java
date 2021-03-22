@@ -38,9 +38,9 @@ public class ChessGame {
     public void move(List<String> arguments) {
         validateMoveArgument(arguments);
         state = state.move();
+
         Point source = Point.of(arguments.get(SOURCE_INDEX));
         Point destination = Point.of(arguments.get(DESTINATION_INDEX));
-
         move(source, destination, turn.now());
         turn.next();
 
@@ -48,11 +48,24 @@ public class ChessGame {
     }
 
     private void move(Point source, Point destination, Team currentTeam) {
-        if (board.isTeam(source, currentTeam) && board.canMove(source, destination)) {
-            board.move(source, destination);
-            return;
+        validatePoint(source, destination);
+        validateTurn(source, currentTeam);
+        board.move(source, destination);
+    }
+
+    private void validatePoint(Point source, Point destination) {
+        if (board.isEmpty(source)) {
+            throw new IllegalArgumentException("움직일 수 있는 기물이 존재하지 않습니다.");
         }
-        throw new IllegalArgumentException("불가능한 이동입니다.");
+        if (!board.canMove(source, destination)) {
+            throw new IllegalArgumentException("해당 위치로는 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateTurn(Point source, Team currentTeam) {
+        if (!board.isTeam(source, currentTeam)) {
+            throw new IllegalArgumentException("현재 플레이어의 기물이 아닙니다.");
+        }
     }
 
     private void validateMoveArgument(List<String> arguments) {
@@ -70,7 +83,7 @@ public class ChessGame {
     }
 
     public BoardDto generateBoardDto() {
-        return board.generateBoardDto();
+        return board.boardDto();
     }
 
     public GameState state() {

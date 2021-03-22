@@ -1,7 +1,7 @@
 import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.board.SquareState;
+import chess.domain.board.Square;
 import chess.domain.board.Team;
 import chess.domain.piece.Piece;
 import org.assertj.core.api.Assertions;
@@ -16,8 +16,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
 public class ChessGameTest {
-
     private Board board;
+
     private ChessGame chessGame;
 
     @BeforeEach
@@ -30,13 +30,22 @@ public class ChessGameTest {
     }
 
     @Test
+    @DisplayName("빈 공간을 이동하려는 경우 예외 처리")
+    void moveEmptyPoint() {
+        List<String> moveCommander = Arrays.asList("move", "c3", "c4");
+        assertThatIllegalArgumentException()
+                .isThrownBy(() -> chessGame.move(moveCommander))
+                .withMessage("움직일 수 있는 기물이 존재하지 않습니다.");
+    }
+
+    @Test
     @DisplayName("킹 이동 테스트(이동 위치에 아군 말이 있는 경우 예외처리)")
     void kingWithInvalidMove() {
         List<String> moveCommander = Arrays.asList("move", "e1", "e2");
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test
@@ -46,7 +55,7 @@ public class ChessGameTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test
@@ -56,7 +65,7 @@ public class ChessGameTest {
         board.move(Point.of("e1"), Point.of("e2"));
 
         assertThat(board.getSquareState(Point.of("e2")))
-                .isEqualTo(SquareState.of(Piece.KING, Team.WHITE));
+                .isEqualTo(Square.of(Piece.KING, Team.WHITE));
     }
 
     @Test
@@ -67,7 +76,7 @@ public class ChessGameTest {
         chessGame.move(moveCommander);
 
         assertThat(board.getSquareState(Point.of("d2")))
-                .isEqualTo(SquareState.of(Piece.QUEEN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.QUEEN, Team.WHITE));
     }
 
     @Test
@@ -76,7 +85,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "d1", "d2");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test
@@ -85,7 +94,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "d1", "e2");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test
@@ -95,7 +104,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "c1", "h6");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("h6")))
-                .isEqualTo(SquareState.of(Piece.BISHOP, Team.WHITE));
+                .isEqualTo(Square.of(Piece.BISHOP, Team.WHITE));
     }
 
     @Test
@@ -104,7 +113,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "c1", "c4");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("비숍이 움직일 수 있는 위치가 아닙니다.");
     }
 
     @Test
@@ -114,7 +123,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "a1", "a5");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("a5")))
-                .isEqualTo(SquareState.of(Piece.ROOK, Team.WHITE));
+                .isEqualTo(Square.of(Piece.ROOK, Team.WHITE));
     }
 
     @Test
@@ -124,7 +133,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "a1", "f6");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("룩이 움직일 수 있는 위치가 아닙니다.");
     }
 
     @Test
@@ -133,7 +142,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "b1", "c3");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("c3")))
-                .isEqualTo(SquareState.of(Piece.KNIGHT, Team.WHITE));
+                .isEqualTo(Square.of(Piece.KNIGHT, Team.WHITE));
     }
 
     @Test
@@ -142,7 +151,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "b1", "b3");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("나이트가 움직일 수 있는 위치가 아닙니다.");
     }
 
     @Test
@@ -151,7 +160,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "b2", "b3");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("b3")))
-                .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
@@ -160,7 +169,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "b2", "b4");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("b4")))
-                .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.PAWN, Team.WHITE));
     }
 
     @Test
@@ -175,20 +184,19 @@ public class ChessGameTest {
         chessGame.move(moveCommander3);
 
         assertThat(board.getSquareState(Point.of("e5")))
-                .isEqualTo(SquareState.of(Piece.PAWN, Team.WHITE));
+                .isEqualTo(Square.of(Piece.PAWN, Team.WHITE));
         assertThat(board.getSquareState(Point.of("d4")))
-                .isEqualTo(SquareState.of(Piece.EMPTY, Team.NONE));
+                .isEqualTo(Square.of(Piece.EMPTY, Team.NONE));
     }
 
     @Test
     @DisplayName("폰 이동 테스트(첫 이동 외에 2칸 이동을 시도한 경우 예외처리)")
     void pawnMoveToInvalidPointWhenSecondMove() {
-        List<String> moveCommander = Arrays.asList("move", "b2", "b3");
-        chessGame.move(moveCommander);
+        board.move(Point.of("b2"), Point.of("b3"));
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(Arrays.asList("move", "b3", "b5")))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("폰이 움직일 수 있는 위치가 아닙니다.");
     }
 
     @Test
@@ -197,7 +205,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "b2", "c3");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test
@@ -213,16 +221,7 @@ public class ChessGameTest {
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(Arrays.asList("move", "h7", "h5")))
-                .withMessage("불가능한 이동입니다.");
-    }
-
-    @Test
-    @DisplayName("빈 공간을 이동하려는 경우 예외 처리")
-    void moveEmptyPoint() {
-        List<String> moveCommander = Arrays.asList("move", "c3", "c4");
-        assertThatIllegalArgumentException()
-                .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("불가능한 이동입니다.");
+                .withMessage("해당 위치로는 움직일 수 없습니다.");
     }
 
     @Test

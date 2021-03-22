@@ -18,7 +18,7 @@ public class QueenMovingStrategy implements MovingStrategy {
         return queensVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("이 움직일 수 있는 위치가 아닙니다."));
     }
 
     @Override

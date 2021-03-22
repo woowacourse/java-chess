@@ -19,7 +19,7 @@ public class PawnMovingStrategy implements MovingStrategy {
         Vector possibleVector = findPawnsVectorByDifference(x, y);
 
         if (y == 2 && !source.isRow(Row.TWO)) {
-            return null;
+            throw new IllegalArgumentException("폰이 움직일 수 있는 위치가 아닙니다.");
         }
         return possibleVector;
     }
@@ -29,7 +29,7 @@ public class PawnMovingStrategy implements MovingStrategy {
         return pawnsVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("폰이 움직일 수 있는 위치가 아닙니다."));
     }
 
     @Override

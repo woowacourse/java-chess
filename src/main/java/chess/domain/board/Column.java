@@ -18,12 +18,12 @@ public enum Column {
     private static final int MAX_COLUMN = 7;
     private static final List<Column> COLUMNS = Arrays.asList(Column.values());
 
+    private final String xCoordinate;
+    private final int index;
+
     static {
         COLUMNS.sort(Comparator.comparingInt(Column::getXIndex));
     }
-
-    private final String xCoordinate;
-    private final int index;
 
     Column(String xCoordinate, int index) {
         this.xCoordinate = xCoordinate;
@@ -41,14 +41,13 @@ public enum Column {
         return Collections.unmodifiableList(COLUMNS);
     }
 
-    public String getXCoordinate() {
+    public String xCoordinate() {
         return xCoordinate;
     }
 
     public Column opposite() {
         return getByIndex(MAX_COLUMN - index);
     }
-
 
     public int getXIndex() {
         return index;

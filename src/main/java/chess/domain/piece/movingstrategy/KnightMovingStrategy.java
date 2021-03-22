@@ -18,7 +18,7 @@ public class KnightMovingStrategy implements MovingStrategy {
         return kingsVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("나이트가 움직일 수 있는 위치가 아닙니다."));
     }
 
     @Override

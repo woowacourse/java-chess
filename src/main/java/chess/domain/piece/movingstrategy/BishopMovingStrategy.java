@@ -18,7 +18,7 @@ public class BishopMovingStrategy implements MovingStrategy {
         return bishopVector.stream()
             .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
-            .orElse(null);
+            .orElseThrow(() -> new IllegalArgumentException("비숍이 움직일 수 있는 위치가 아닙니다."));
     }
 
     @Override

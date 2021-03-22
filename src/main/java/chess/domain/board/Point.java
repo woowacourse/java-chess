@@ -27,7 +27,7 @@ public class Point {
     private static void iterateXCoordinate(Row row) {
         for (Column column : Column.values()) {
             POINT_POOL.put(
-                column.getXCoordinate() + row.getYCoordinate(), new Point(column, row));
+                column.xCoordinate() + row.yCoordinate(), new Point(column, row));
         }
     }
 
@@ -47,11 +47,11 @@ public class Point {
     }
 
     public Point yAxisOpposite() {
-        return Point.of(this.x.getXCoordinate() + this.y.opposite().getYCoordinate());
+        return Point.of(this.x.xCoordinate() + this.y.opposite().yCoordinate());
     }
 
     public Point opposite() {
-        return Point.of(this.x.opposite().getXCoordinate() + this.y.opposite().getYCoordinate());
+        return Point.of(this.x.opposite().xCoordinate() + this.y.opposite().yCoordinate());
     }
 
     public boolean isRow(Row row) {
@@ -75,8 +75,8 @@ public class Point {
     }
 
     private String newerName(Vector vector) {
-        return Column.getByIndex(newerXIndex(vector)).getXCoordinate() +
-            Row.getByIndex(newerYIndex(vector)).getYCoordinate();
+        return Column.getByIndex(newerXIndex(vector)).xCoordinate() +
+            Row.getByIndex(newerYIndex(vector)).yCoordinate();
     }
 
     private int newerYIndex(Vector vector) {

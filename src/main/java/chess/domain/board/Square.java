@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
-public class SquareState {
+public class Square {
 
-    private static final List<SquareState> SQUARE_STATE_POOL = new ArrayList<>();
+    private static final List<Square> SQUARE_STATE_POOL = new ArrayList<>();
 
     static {
         for (Piece piece : Piece.values()) {
@@ -20,20 +20,20 @@ public class SquareState {
     private final Piece piece;
     private final Team team;
 
-    private SquareState(Piece piece, Team team) {
+    private Square(Piece piece, Team team) {
         this.piece = piece;
         this.team = team;
     }
 
     private static void iterateTeam(Piece piece) {
         for (Team team : Team.values()) {
-            SQUARE_STATE_POOL.add(new SquareState(piece, team));
+            SQUARE_STATE_POOL.add(new Square(piece, team));
         }
     }
 
-    public static SquareState of(Piece piece, Team team) {
+    public static Square of(Piece piece, Team team) {
         return SQUARE_STATE_POOL.stream()
-            .filter(squareState -> squareState.piece == piece && squareState.team == team)
+            .filter(square -> square.piece == piece && square.team == team)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
@@ -61,8 +61,8 @@ public class SquareState {
         return this.team == team;
     }
 
-    public boolean isNotSameTeam(SquareState squareState) {
-        return this.team != squareState.team;
+    public boolean isNotSameTeam(Square square) {
+        return this.team != square.team;
     }
 
     public boolean isNotEmpty() {
@@ -99,8 +99,8 @@ public class SquareState {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        SquareState squareState = (SquareState) o;
-        return Objects.equals(piece, squareState.piece) && team == squareState.team;
+        Square square = (Square) o;
+        return Objects.equals(piece, square.piece) && team == square.team;
     }
 
     @Override
