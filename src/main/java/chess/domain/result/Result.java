@@ -5,9 +5,16 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.PieceColor;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
+import java.util.Arrays;
 import java.util.Map;
 
 public class Result {
+
+    private static final String WINNER_NOT_CHOSEN_ERROR_MESSAGE = "아직 승자가 정해지지 않았습니다.";
+    private static final String WINNING_GUIDE_MESSAGE = "이 이겼습니다.";
+    private static final String NO_WINNER_ERROR_MESSAGE = "우승자가 없습니다.";
+    private static final double PARALLEL_PAWN_SCORE = 0.5;
+    private static final int PARALLEL_PAWN_MIN_COUNT = 2;
 
     private final Board board;
     private final Score whiteScore;
@@ -23,15 +30,14 @@ public class Result {
         Map<Piece, Position> pieces = board.remainPieces(color);
         Map<Piece, Position> pawns = board.remainPawns(pieces);
 
-        Score scoreWithoutPawns = calculateScoreWithoutPawn(pieces);
+        Score scoreWithDefaultPawns = calculateAllScore(pieces);
         Score pawnScore = calculatePawnScore(pawns);
-        return scoreWithoutPawns.add(pawnScore);
+        return scoreWithDefaultPawns.minus(pawnScore);
     }
 
-    private Score calculateScoreWithoutPawn(Map<Piece, Position> pieces) {
+    private Score calculateAllScore(Map<Piece, Position> pieces) {
         return pieces.keySet()
             .stream()
-            .filter(piece -> !piece.isPawn())
             .map(Piece::score)
             .reduce(Score::add)
             .orElse(new Score(0))
@@ -39,33 +45,28 @@ public class Result {
     }
 
     private Score calculatePawnScore(Map<Piece, Position> pawns) {
-        double sum = 0;
-        for (Column column : Column.values()) {
-            int count = (int) pawns.entrySet()
-                .stream()
-                .filter(pawn -> pawn.getValue().isOn(column))
-                .count();
-            if (count <= 2 && count != 0) {
-                sum += 1;
-            }
-            if (count > 2) {
-                sum += count * 0.5;
-            }
-        }
-        return new Score(sum);
+        int parallelPawnCont = Arrays.stream(Column.values())
+            .mapToInt(column ->
+                (int) pawns.entrySet()
+                    .stream().filter(pawn -> pawn.getValue().isOn(column))
+                    .count())
+            .filter(count -> count >= PARALLEL_PAWN_MIN_COUNT)
+            .sum()
+            ;
+        return new Score(parallelPawnCont * PARALLEL_PAWN_SCORE);
     }
 
     public String findWinner() {
         if (!board.kingDead()) {
-            return "아직 승자가 정해지지 않았습니다.";
+            return WINNER_NOT_CHOSEN_ERROR_MESSAGE;
         }
         return board.getCoordinates()
             .keySet()
             .stream()
             .filter(Piece::isKing)
-            .map(piece -> piece.color() + "이 이겼습니다.")
+            .map(piece -> piece.color() + WINNING_GUIDE_MESSAGE)
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("우승자가 없습니다."))
+            .orElseThrow(() -> new IllegalArgumentException(NO_WINNER_ERROR_MESSAGE))
             ;
     }
 

@@ -49,21 +49,17 @@ public enum Column {
     }
 
     public boolean isBoundary(Direction direction) {
-        if (Direction.RIGHT.equals(direction) || Direction.UP_RIGHT.equals(direction)
-            || Direction.DOWN_RIGHT.equals(direction) || Direction.R_DD.equals(direction)
-            || Direction.R_UU.equals(direction)) {
+        if (Direction.rightDirection().contains(direction)) {
             return this.equals(H);
+        }
+        if (Direction.leftDirection().contains(direction)) {
+            return this.equals(A);
         }
         if (Direction.RR_D.equals(direction) || Direction.RR_U.equals(direction)) {
             return this.equals(G) || this.equals(H);
         }
         if (Direction.LL_D.equals(direction) || Direction.LL_U.equals(direction)) {
             return this.equals(B) || this.equals(A);
-        }
-        if (Direction.LEFT.equals(direction) || Direction.UP_LEFT.equals(direction)
-            || Direction.DOWN_LEFT.equals(direction) || Direction.L_DD.equals(direction)
-            || Direction.L_UU.equals(direction)) {
-            return this.equals(A);
         }
         return false;
     }

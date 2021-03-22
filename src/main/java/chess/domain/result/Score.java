@@ -16,6 +16,10 @@ public class Score {
         return new Score(score + that.score);
     }
 
+    public Score minus(Score that) {
+        return new Score(score - that.score);
+    }
+
     public String is() {
         return String.valueOf(score);
     }

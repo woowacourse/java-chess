@@ -57,6 +57,22 @@ public enum Direction {
         return Arrays.asList(DOWN, DOWN_RIGHT, DOWN_LEFT, DD);
     }
 
+    public static List<Direction> downDirection() {
+        return Arrays.asList(DOWN, DOWN_LEFT, DOWN_RIGHT, RR_D, LL_D);
+    }
+
+    public static List<Direction> upDirection() {
+        return Arrays.asList(UP, UP_LEFT, UP_RIGHT, RR_U, LL_U);
+    }
+
+    public static List<Direction> rightDirection() {
+        return Arrays.asList(R_DD, R_UU, RIGHT, DOWN_RIGHT, UP_RIGHT);
+    }
+
+    public static List<Direction> leftDirection() {
+        return Arrays.asList(L_DD, L_UU, LEFT, DOWN_RIGHT, UP_RIGHT);
+    }
+
     public List<Integer> getCoordinates() {
         return Arrays.asList(columnNumber, rowNumber);
     }

@@ -14,6 +14,7 @@ public enum Row {
     ONE("1");
 
     private static final String INVALID_ROW_ERROR_MESSAGE = "존재하지 않는 행입니다.";
+
     private final String number;
 
     Row(String number) {
@@ -39,16 +40,11 @@ public enum Row {
     }
 
     public boolean isBoundary(Direction direction) {
-        if (Direction.DOWN.equals(direction) || Direction.DOWN_LEFT.equals(direction)
-            || Direction.DOWN_RIGHT.equals(direction) || Direction.LL_D.equals(direction)
-            || Direction.RR_D.equals(direction)) {
+        if (Direction.downDirection().contains(direction)) {
             return this.equals(ONE);
         }
-        if (Direction.UP.equals(direction) || Direction.UP_LEFT.equals(direction)
-            || Direction.UP_RIGHT.equals(direction) || Direction.LL_U.equals(direction)
-            || Direction.RR_U.equals(direction)) {
+        if (Direction.upDirection().contains(direction)) {
             return this.equals(EIGHT);
-
         }
         if (Direction.R_DD.equals(direction) || Direction.L_DD.equals(direction)) {
             return this.equals(TWO) || this.equals(ONE);
