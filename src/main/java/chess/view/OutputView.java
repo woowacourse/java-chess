@@ -26,7 +26,18 @@ public class OutputView {
 
         for (int boardSize = 0; boardSize < BOARD_MAX_SIZE; ++boardSize) {
             printOneLine(boardStatus[boardSize]);
+            System.out.printf("  %d", BOARD_MAX_SIZE - boardSize);
+            System.out.println();
         }
+        printColUI();
+    }
+
+    private static void printColUI() {
+        System.out.println();
+        for (char alpha = 'a'; alpha <= 'h'; ++alpha) {
+            System.out.print(alpha);
+        }
+        System.out.println();
     }
 
     private static void putPieceToBoard(final Board board, final String[][] arr) {
@@ -52,7 +63,6 @@ public class OutputView {
         for (String val : line) {
             System.out.print(val);
         }
-        System.out.println();
     }
 
     public static void printEachTeamScore(final Double blackTeamScore, final Double whiteTeamScore) {

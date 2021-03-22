@@ -49,7 +49,7 @@ public class Pawn extends Piece {
     public boolean isPawn() {
         return true;
     }
-    
+
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
         Position curPosition = getPosition();
         if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getCol())) {

@@ -45,5 +45,4 @@ public class Board {
         Pieces pieces = board.get(team);
         return pieces.calculateScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }
-
 }
