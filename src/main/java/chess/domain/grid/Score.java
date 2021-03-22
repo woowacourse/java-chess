@@ -10,9 +10,12 @@ public final class Score {
     private static final int DIVIDER_FOR_PAWN_SCORE = 2;
 
     private final Lines lines;
+    private boolean isKingCaught;
+    private Color colorOfCaughtKing;
 
     public Score(final Lines lines) {
         this.lines = lines;
+        isKingCaught = false;
     }
 
     public double score(final Color color) {
@@ -54,5 +57,26 @@ public final class Score {
                         .map(Piece::score))
                 .mapToDouble(Double::doubleValue)
                 .sum();
+    }
+
+    public void catchKing(Color colorOfCaughtKing) {
+        isKingCaught = true;
+        this.colorOfCaughtKing = colorOfCaughtKing;
+    }
+
+    public boolean isKingCaught() {
+        return isKingCaught;
+    }
+
+    public Color winnerColor() {
+        if (isKingCaught) {
+            return colorOfCaughtKing;
+        }
+        double blackScore = score(Color.BLACK);
+        double whiteScore = score(Color.WHITE);
+        if (blackScore > whiteScore) {
+            return Color.BLACK;
+        }
+        return Color.WHITE;
     }
 }

@@ -3,6 +3,8 @@ package chess.domain.grid.gridStrategy;
 import chess.domain.grid.Line;
 import chess.domain.grid.Row;
 import chess.domain.piece.Color;
+import chess.domain.state.GameState;
+import chess.domain.state.Ready;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,5 +21,10 @@ public class NormalGridStrategy implements GridStrategy {
         lineGroup.add(Line.pawn(Row.SECOND, Color.WHITE));
         lineGroup.add(Line.general(Row.FIRST, Color.WHITE));
         return lineGroup;
+    }
+
+    @Override
+    public GameState initGameState() {
+        return new Ready();
     }
 }

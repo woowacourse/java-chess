@@ -64,8 +64,9 @@ public class PawnTest {
     @Test
     @DisplayName("Pawn이 움직인 적이 있을 때 앞으로 전진하면 예외 발생하는 지 테스트")
     public void validateMove_GoTwoStep_ThrowException() {
-        Grid grid = new Grid(new NormalGridStrategy());
+        Grid grid = new Grid(new TestGridStrategy());
         Pawn pawn = new Pawn(Color.WHITE, 'b', '2');
+        grid.lines().assign(new Position("b2"), pawn);
         grid.move(pawn, new Empty('b', '3'));
         assertThatThrownBy(() -> {
             pawn.validateSteps(new Empty('b', '5'), grid.lines());

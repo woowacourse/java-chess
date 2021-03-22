@@ -1,35 +1,27 @@
 package chess.domain.state;
 
 import chess.domain.grid.Grid;
-import chess.view.OutputView;
+import chess.domain.position.Position;
 
 public final class Ready implements GameState {
-    private static final String START_COMMAND = "start";
-    private static final String END_COMMAND = "end";
+    @Override
+    public GameState start() {
+        return new Playing();
+    }
 
     @Override
-    public GameState run(final Grid grid, final String input) {
-        try {
-            return runReady(grid, input);
-        } catch (IllegalArgumentException error) {
-            return readyException(grid, input, error);
-        }
+    public GameState end() {
+        return new Finished();
     }
 
-    private GameState runReady(Grid grid, final String command) {
-        if (command.equals(START_COMMAND)) {
-            OutputView.printGridStatus(grid.lines());
-            return new Playing();
-        }
-        if (command.equals(END_COMMAND)) {
-            return new End();
-        }
-        throw new IllegalArgumentException("잘못된 입력값입니다.");
+    @Override
+    public GameState move(Grid grid, Position source, Position target) {
+        throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
     }
 
-    private GameState readyException(Grid grid, final String input, IllegalArgumentException error) {
-        OutputView.printError(error);
-        return run(grid, input);
+    @Override
+    public GameState status() {
+        throw new IllegalArgumentException("아직 게임이 시작되지 않았습니다.");
     }
 
     @Override
