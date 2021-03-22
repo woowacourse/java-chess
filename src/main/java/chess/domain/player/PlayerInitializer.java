@@ -4,7 +4,6 @@ import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
 import chess.domain.piece.Owner;
-import javafx.geometry.Pos;
 
 import java.util.ArrayList;
 import java.util.Arrays;

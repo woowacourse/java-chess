@@ -18,7 +18,7 @@ public class Player {
 
     public Score calculateScore(final Board board) {
         if (isKingDead(board)) {
-            return new Score(0);
+            return Score.EMPTY;
         }
 
         final Score score = getScore(board);
@@ -28,7 +28,7 @@ public class Player {
     }
 
     private Score getScore(final Board board){
-        Score score = new Score(0);
+        Score score = Score.EMPTY;
 
         for(Position position : positions){
             score = score.plus(board.getPieceOf(position).score());
