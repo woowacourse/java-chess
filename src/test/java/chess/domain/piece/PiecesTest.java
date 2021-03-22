@@ -48,7 +48,7 @@ public class PiecesTest {
         pieces.updateMovablePositions();
 
         //when
-        Piece expectedKing = pieces.kingByColor(TeamColor.WHITE).get();
+        Piece expectedKing = pieces.kingByColor(TeamColor.WHITE);
 
         //than
         assertThat(expectedKing).isEqualTo(king);

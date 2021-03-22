@@ -3,6 +3,7 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
+import chess.exception.PieceNotFoundException;
 
 import java.util.*;
 import java.util.function.Predicate;
@@ -92,11 +93,12 @@ public class Pieces {
                 .collect(Collectors.toSet());
     }
 
-    public Optional<Piece> kingByColor(TeamColor teamColor) {
+    public Piece kingByColor(TeamColor teamColor) {
         return piecesByTeamColor(teamColor)
                 .stream()
                 .filter(Piece::isKing)
-                .findAny();
+                .findAny()
+                .orElseThrow(PieceNotFoundException::new);
     }
 
     public Map<Position, String> nameGroupingByPosition() {

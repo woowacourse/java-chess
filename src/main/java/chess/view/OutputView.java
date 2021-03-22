@@ -10,7 +10,8 @@ public class OutputView {
     private static final String SCORE_FORM = "%s팀 : %.1f" + System.lineSeparator();
     private static final String WINNER_FORM = "%s팀 승리!";
 
-    private OutputView(){}
+    private OutputView() {
+    }
 
     public static void printByFormat(String format, Object... message) {
         System.out.printf(format, message);

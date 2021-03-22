@@ -85,8 +85,7 @@ public class ChessGame {
     public boolean checked() {
         updateMovablePositions();
         Set<Position> enemyAttackPositions = pieces.attackPositions(enemyColor());
-        Piece king = pieces.kingByColor(currentColor)
-                .orElseThrow(PieceNotFoundException::new);
+        Piece king = pieces.kingByColor(currentColor);
         return enemyAttackPositions.contains(king.currentPosition());
     }
 
