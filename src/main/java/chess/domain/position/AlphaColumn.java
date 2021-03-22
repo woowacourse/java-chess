@@ -1,10 +1,13 @@
 package chess.domain.position;
 
 import chess.domain.utils.RegexUtils;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class AlphaColumn {
+    public static final AlphaColumn ERROR = new AlphaColumn(0);
     public static final int START_NUMBER = 'a';
     public static final int INITIAL_CAPACITY = 8;
     private static final Map<Integer, AlphaColumn> cache = new HashMap<>(INITIAL_CAPACITY);
@@ -14,10 +17,10 @@ public class AlphaColumn {
             cache.put(i, new AlphaColumn(i));
         }
     }
-    private final int number;
+    private final int asciNumber;
 
     private AlphaColumn(int i){
-        this.number = i;
+        this.asciNumber = i;
     }
 
     public static AlphaColumn valueOf(String value) {
@@ -32,7 +35,7 @@ public class AlphaColumn {
         if(cache.containsKey(value)){
             return cache.get(value);
         }
-        throw new IllegalArgumentException("알파벳 좌표가 유효하지 않습니다.");
+        return ERROR;
     }
 
     private static int validCharacter(String value){
@@ -41,4 +44,27 @@ public class AlphaColumn {
         }
         throw new IllegalArgumentException("유효하지 않은 입력입니다. 알파벳이어야 합니다.");
     }
+
+    public String movedAlpha(int value){
+        return AlphaColumn.valueOf(asciNumber + value).alpha();
+    }
+
+    public static List<AlphaColumn> values() {
+        return new ArrayList<>(cache.values());
+    }
+
+    public static List<Integer> keys(){
+        return new ArrayList<>(cache.keySet());
+    }
+
+    public String alpha(){
+        return String.valueOf((char) asciNumber);
+    }
+
+    @Override
+    public String toString() {
+        return  String.valueOf((char) asciNumber);
+    }
+
+
 }

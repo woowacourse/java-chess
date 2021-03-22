@@ -22,8 +22,12 @@ class NumberRowTest {
     @Test
     @DisplayName("실패 - 범위를 벗어나는 숫자 입력")
     void create_fail1(){
-        assertThatThrownBy(() -> NumberRow.valueOf("0")).isInstanceOf(IllegalArgumentException.class);
+        assertThat(NumberRow.valueOf("9")).isEqualTo(NumberRow.ERROR);
     }
 
-
+    @Test
+    @DisplayName("움직임 문자반환")
+    void movedAlpha() {
+        assertThat(NumberRow.valueOf("1").movedNumber(1)).isEqualTo("2");
+    }
 }
