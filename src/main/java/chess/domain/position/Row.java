@@ -4,20 +4,20 @@ import chess.exception.InvalidRowException;
 import java.util.Arrays;
 
 public enum Row {
-    EIGHTH("8", 8), SEVENTH("7", 7), SIXTH("6", 6), FIFTH("5", 5),
-    FOURTH("4", 4), THIRD("3", 3), SECOND("2", 2), FIRST("1", 1);
+    EIGHTH(8), SEVENTH(7), SIXTH(6), FIFTH(5),
+    FOURTH(4), THIRD(3), SECOND(2), FIRST(1);
 
     private final String lineName;
     private final int value;
 
-    Row(String lineName, int value) {
-        this.lineName = lineName;
+    Row(int value) {
         this.value = value;
+        this.lineName = Integer.toString(value);
     }
 
     public static Row from(Character lineName) {
         return Arrays.stream(Row.values())
-                .filter(Row -> Row.lineName.equals(lineName.toString()))
+                .filter(row -> row.lineName.equals(lineName.toString()))
                 .findAny()
                 .orElseThrow(InvalidRowException::new);
     }
