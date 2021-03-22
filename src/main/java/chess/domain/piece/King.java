@@ -35,7 +35,7 @@ public class King extends Move {
 
     private void validateKingMove(Position target) {
         if (!this.position.isCross(target) && !this.position.isDiagonal(target) ||
-                !(this.position.subtractX(target) == 1 || this.position.subtractY(target) == 1)) {
+                !(Math.abs(this.position.subtractX(target)) == 1 || Math.abs(this.position.subtractY(target)) == 1)) {
             throw new IllegalArgumentException(KING_ERROR);
         }
     }
