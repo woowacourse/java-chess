@@ -85,11 +85,6 @@ public class Square {
         return piece.getName();
     }
 
-    public boolean hasNextPossibleSquare(int xDegree, int yDegree) {
-        return Row.isInBound(position.getRowAsIndex() + yDegree)
-            && Column.isInBound(position.getColumnAsIndex() + xDegree);
-    }
-
     public boolean isStartingPosition() {
         if (piece.isBlack()) {
             return position.getRowAsIndex() == BLACK_STARTING_POSITION;

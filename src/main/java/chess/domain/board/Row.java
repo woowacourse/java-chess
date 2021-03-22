@@ -35,10 +35,6 @@ public enum Row {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static boolean isInBound(int index) {
-        return index >= EIGHT.index && index < ONE.index;
-    }
-
     public int getIndex() {
         return index;
     }

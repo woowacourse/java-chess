@@ -35,15 +35,6 @@ public enum Column {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public static boolean isInBound(int index) {
-        try {
-            findColumnByIndex(index);
-            return true;
-        } catch (IllegalArgumentException e) {
-            return false;
-        }
-    }
-
     public int getIndex() {
         return index;
     }
