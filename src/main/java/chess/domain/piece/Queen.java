@@ -12,8 +12,7 @@ public class Queen extends Piece {
                 owner,
                 Score.QUEEN,
                 Direction.allDirections(),
-                Distance.SEVEN,
-                "Q"
+                Distance.SEVEN
         );
     }
 

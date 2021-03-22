@@ -12,8 +12,7 @@ public class King extends Piece {
                 owner,
                 Score.EMPTY,
                 Direction.allDirections(),
-                Distance.ONE,
-                "K"
+                Distance.ONE
         );
     }
 

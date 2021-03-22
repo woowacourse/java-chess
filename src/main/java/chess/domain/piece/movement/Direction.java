@@ -51,16 +51,8 @@ public enum Direction {
     }
 
     public static List<Direction> knightDirections() {
-        return Arrays.asList(
-                KNIGHT_UP_RIGHT,
-                KNIGHT_UP_LEFT,
-                KNIGHT_RIGHT_UP,
-                KNIGHT_RIGHT_DOWN,
-                KNIGHT_DOWN_RIGHT,
-                KNIGHT_DOWN_LEFT,
-                KNIGHT_LEFT_UP,
-                KNIGHT_LEFT_DOWN
-        );
+        return Arrays.asList(KNIGHT_UP_RIGHT, KNIGHT_UP_LEFT, KNIGHT_RIGHT_UP, KNIGHT_RIGHT_DOWN,
+                KNIGHT_DOWN_RIGHT, KNIGHT_DOWN_LEFT, KNIGHT_LEFT_UP, KNIGHT_LEFT_DOWN);
     }
 
     public int getX() {

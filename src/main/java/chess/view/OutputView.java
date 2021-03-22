@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.board.position.Horizontal;
 import chess.domain.board.position.Position;
 import chess.domain.board.position.Vertical;
-import chess.domain.piece.Owner;
 import chess.domain.piece.Piece;
 import chess.manager.Status;
 
@@ -44,14 +43,7 @@ public class OutputView {
         if (isStar) {
             return STAR_SHAPE;
         }
-        return decideUpperOrLower(piece.getSymbol(), piece.isOwner(Owner.BLACK));
-    }
-
-    private final static String decideUpperOrLower(final String symbol, final boolean isBlackPiece) {
-        if (isBlackPiece) {
-            return symbol.toUpperCase();
-        }
-        return symbol.toLowerCase();
+        return PieceSymbol.symbol(piece);
     }
 
     public static void printScores(final Status status) {

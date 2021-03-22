@@ -12,8 +12,7 @@ public class Rook extends Piece {
                 owner,
                 Score.ROOK,
                 Direction.straightDirections(),
-                Distance.SEVEN,
-                "R"
+                Distance.SEVEN
         );
     }
 

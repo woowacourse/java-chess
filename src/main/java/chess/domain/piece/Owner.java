@@ -23,4 +23,12 @@ public enum Owner {
     public boolean isSameTeam(final Owner other) {
         return this.equals(other);
     }
+
+    public boolean isBlack() {
+        return this.equals(BLACK);
+    }
+
+    public boolean isWhite() {
+        return this.equals(WHITE);
+    }
 }

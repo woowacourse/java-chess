@@ -11,29 +11,25 @@ public abstract class Piece {
     private final List<Direction> ableDirections;
     private final Score score;
     private final Distance ableDistance;
-    private final String symbol;
 
     // XXX :: 빌더 패턴 공부하기
-    // XXX :: Symbol은 view로 빼기
     public Piece(final Owner owner,
                  final Score score,
                  final List<Direction> directions,
-                 final Distance distance,
-                 final String symbol) {
+                 final Distance distance) {
 
         this.owner = owner;
         this.score = score;
         this.ableDirections = directions;
         this.ableDistance = distance;
-        this.symbol = symbol;
     }
 
     public final Score score() {
         return this.score;
     }
 
-    public final String getSymbol() {
-        return symbol;
+    public final Owner owner() {
+        return this.owner;
     }
 
     public final boolean isEnemy(final Piece other) {

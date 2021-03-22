@@ -9,8 +9,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Players {
-    private static final int INDEX_OF_BLACK =0;
-    private static final int INDEX_OF_WHITE =1;
+    private static final int INDEX_OF_BLACK = 0;
+    private static final int INDEX_OF_WHITE = 1;
 
     private final List<Player> players;
     private Turn turn;
