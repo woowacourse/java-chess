@@ -82,4 +82,9 @@ public final class Pawn extends AbstractPiece {
         return position.isSameRow(Point.from(WHITE_PAWN_ROW)) && color.isWhite()
             || position.isSameRow(Point.from(BLACK_PAWN_ROW)) && color.isBlack();
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

@@ -31,4 +31,9 @@ public final class King extends AbstractPiece {
         validateObstacle(position, direction, pieces);
         return new King(color, position);
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }

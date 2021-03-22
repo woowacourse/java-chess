@@ -30,4 +30,9 @@ public final class Blank extends AbstractPiece {
     public Piece move(final Position position, final Map<Position, Piece> pieces) {
         throw new IllegalArgumentException(ERROR_MESSAGE);
     }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
 }

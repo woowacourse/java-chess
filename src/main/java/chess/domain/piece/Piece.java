@@ -15,4 +15,10 @@ public interface Piece {
     Piece move(final Position position, final Map<Position, Piece> pieces);
 
     boolean isSameColumn(final Point point);
+
+    boolean isPawn();
+
+    boolean isKing();
+
+    boolean isBlank();
 }
