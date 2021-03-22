@@ -1,8 +1,9 @@
 package chess.domain.gamestate;
 
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.chessgame.PieceMovementRule;
+import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
 
 public class Running implements GameState {
@@ -11,9 +12,11 @@ public class Running implements GameState {
         new IllegalArgumentException("올바르지 않은 입력입니다.");
 
     private final Board board;
+    private final PieceMovementRule pieceMovementRule;
 
     public Running(Board board) {
         this.board = board;
+        this.pieceMovementRule = new PieceMovementRule(board);
     }
 
     @Override
@@ -23,7 +26,7 @@ public class Running implements GameState {
 
     @Override
     public GameState move(Point source, Point destination, Turn turn) {
-        if (!board.canMove(source, destination, turn.now())) {
+        if (!pieceMovementRule.canMove(source, destination, turn.now())) {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
 

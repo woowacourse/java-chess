@@ -3,10 +3,10 @@ package chess.domain.gamestate;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
+import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -18,12 +18,7 @@ class GameStateTest {
 
     @BeforeEach
     void setUp() {
-        board = new Board() {
-            @Override
-            public boolean canMove(Point source, Point destination, Team currentTeam) {
-                return true;
-            }
-        };
+        board = new Board();
     }
 
     @Test
@@ -41,6 +36,7 @@ class GameStateTest {
     @Test
     @DisplayName("Running 상태의 명령어 입력시 상태 변화")
     void running() {
+        board.putSymmetrically(Piece.KING, Point.of("a1"));
         GameState gameState = new Running(board);
 
         assertThatIllegalArgumentException().isThrownBy(gameState::start);

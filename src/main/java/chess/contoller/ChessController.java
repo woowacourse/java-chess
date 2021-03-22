@@ -1,9 +1,9 @@
 package chess.contoller;
 
-import chess.domain.ChessGame;
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Team;
+import chess.domain.chessgame.ChessGame;
+import chess.domain.chessgame.Turn;
 import chess.domain.command.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,16 +11,17 @@ import chess.view.OutputView;
 public class ChessController {
 
     public void play() {
-        ChessGame chessGame = new ChessGame(new Board(), new Turn(Team.WHITE));
+        Board board = new Board();
+        ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
         OutputView.printStartInfo();
-        start(chessGame);
+        start(chessGame, board);
     }
 
-    private void start(ChessGame chessGame) {
+    private void start(ChessGame chessGame, Board board) {
         while (chessGame.isContinue()) {
             inputCommandAndExecute(chessGame);
             OutputView.printCurrentTurn(chessGame.currentTurn());
-            OutputView.printChessBoard(chessGame.boardDto());
+            OutputView.printChessBoard(board.boardDto());
         }
     }
 

@@ -1,23 +1,21 @@
-package chess.domain;
+package chess.domain.chessgame;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.Ready;
-import chess.dto.BoardDto;
 
 public class ChessGame {
 
-    private final Board board;
     private final Turn turn;
+    private final ScoreBoard scoreBoard;
     private GameState gameState;
 
-
     public ChessGame(Board board, Turn turn) {
-        this.board = board;
-        this.turn = turn;
+        this.scoreBoard = new ScoreBoard(board);
         this.gameState = new Ready(board);
+        this.turn = turn;
     }
 
     public void start() {
@@ -41,14 +39,10 @@ public class ChessGame {
     }
 
     public double score(Team team) {
-        return board.score(team);
+        return scoreBoard.score(team);
     }
 
     public Team currentTurn() {
         return turn.now();
-    }
-
-    public BoardDto boardDto() {
-        return board.boardDto();
     }
 }

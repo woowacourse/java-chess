@@ -4,16 +4,12 @@ import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
 import chess.dto.BoardDto;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Board {
-
-    public static final int FIRST_NEXT_MOVE_COUNT = 2;
-    private static final int FIRST_MOVING_PAWN_RANGE = 2;
-    private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
 
@@ -32,91 +28,46 @@ public class Board {
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
     }
 
-    public boolean canMove(Point source, Point destination, Team currentTeam) {
-        SquareState sourceSquareState = squares.get(source);
-        SquareState destinationSquareState = squares.get(destination);
-
-        return isValidSourceAndDestination(sourceSquareState, destinationSquareState, currentTeam)
-            && sourceSquareState.hasMovableVector(source, destination)
-            && canMoveWithMoveVector(source, destination,
-            sourceSquareState.movableVector(source, destination));
-    }
-
-    private boolean isValidSourceAndDestination(
-        SquareState sourceSquareState, SquareState destinationSquareState, Team currentTeam) {
-        return sourceSquareState.isTeam(currentTeam)
-            && destinationSquareState.isNotTeam(currentTeam);
-    }
-
-    private boolean canMoveWithMoveVector(Point source, Point destination, MoveVector moveVector) {
-        return isValidPath(source, destination, moveVector)
-            && isNotPawnOrValidPawnMove(squares.get(source), squares.get(destination), moveVector);
-    }
-
-    private boolean isValidPath(Point source, Point destination, MoveVector moveVector) {
-        int nextMoveCount = FIRST_NEXT_MOVE_COUNT;
-        boolean success = true;
-
-        for (Point now = source.movedPoint(moveVector); isNotArrived(destination, now) && success;
-            now = now.movedPoint(moveVector)) {
-            success = isWithinMovementRange(source, nextMoveCount, moveVector)
-                && squares.get(now).isEmpty();
-            nextMoveCount++;
-        }
-        return success;
-    }
-
-    private boolean isNotArrived(Point destination, Point now) {
-        return !now.equals(destination);
-    }
-
-    private boolean isWithinMovementRange(Point source, int moveCount, MoveVector moveVector) {
-        int range = squares.get(source).movementRange();
-        if (isFirstStraightMovingPawn(source, moveVector)) {
-            range = FIRST_MOVING_PAWN_RANGE;
-        }
-        return moveCount <= range;
-    }
-
-    private boolean isFirstStraightMovingPawn(Point source, MoveVector moveVector) {
-        SquareState sourceSquareState = squares.get(source);
-        return sourceSquareState.isPieceTypeOf(Piece.PAWN)
-            && moveVector.isPawnStraight()
-            && (source.isRow(Row.TWO) || source.isRow(Row.SEVEN));
-    }
-
-    private boolean isNotPawnOrValidPawnMove(SquareState source, SquareState destination,
-        MoveVector moveVector) {
-        return source.isNotPieceTypeOf(Piece.PAWN) ||
-            (isNotOrValidPawnStraightMove(destination, moveVector)
-                && isNotOrValidPawnDiagonalMove(source, destination, moveVector));
-    }
-
-    private boolean isNotOrValidPawnStraightMove(SquareState destination, MoveVector moveVector) {
-        return !moveVector.isPawnStraight() || destination.isEmpty();
-    }
-
-    private boolean isNotOrValidPawnDiagonalMove(SquareState source, SquareState destination,
-        MoveVector moveVector) {
-        return !moveVector.isDiagonalVector() || destination.isEnemy(source);
-    }
-
     public boolean isSamePieceTypeAt(Point point, Piece piece) {
         return squares.get(point).isPieceTypeOf(piece);
     }
 
-    public double score(Team team) {
-        return scoreSum(team) - HALF_PAWN_SCORE * pawnCountInSameColumn(team);
+    public boolean isNotSamePieceTypeAt(Point point, Piece piece) {
+        return !isSamePieceTypeAt(point, piece);
     }
 
-    private long pawnCountInSameColumn(Team team) {
-        return Arrays.stream(Column.values()).mapToLong(column ->
-            pawnCountInColumn(team, column))
-            .filter(count -> count >= 2)
-            .sum();
+    public boolean isSameTeamAt(Point point, Team team) {
+        return squares.get(point).isTeam(team);
     }
 
-    private long pawnCountInColumn(Team team, Column column) {
+    public boolean isNotSameTeamAt(Point point, Team team) {
+        return !isSameTeamAt(point, team);
+    }
+
+    public boolean isNotSameTeam(Point source, Point destination) {
+        SquareState sourceState = squares.get(source);
+        SquareState destinationState = squares.get(destination);
+
+        return sourceState.isEnemy(destinationState);
+    }
+
+    public boolean hasMovableVector(Point source, Point destination) {
+        SquareState sourceState = squares.get(source);
+
+        return sourceState.hasMovableVector(source, destination);
+    }
+
+    public MoveVector movableVector(Point source, Point destination) {
+        SquareState sourceState = squares.get(source);
+
+        return sourceState.movableVector(source, destination);
+    }
+
+    public int movementRange(Point point) {
+        return squares.get(point).movementRange();
+    }
+
+    public long pawnCountInColumn(Team team, Column column) {
         return squares.keySet().stream()
             .filter(point -> point.isColumn(column))
             .map(squares::get)
@@ -124,11 +75,10 @@ public class Board {
             .count();
     }
 
-    private double scoreSum(Team team) {
+    public List<SquareState> AllSquaresFrom(Team team) {
         return squares.values().stream()
-            .filter(square -> square.isTeam(team))
-            .mapToDouble(SquareState::score)
-            .sum();
+            .filter(state -> state.isTeam(team))
+            .collect(Collectors.toList());
     }
 
     public BoardDto boardDto() {

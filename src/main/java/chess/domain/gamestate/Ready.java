@@ -1,9 +1,9 @@
 package chess.domain.gamestate;
 
-import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Row;
+import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
 import java.util.Collections;
