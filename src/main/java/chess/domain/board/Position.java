@@ -3,18 +3,25 @@ package chess.domain.board;
 import chess.domain.piece.TeamColor;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.Set;
 
 public class Position {
 
-    public static final int POSITION_SIZE = 64;
-    public static final Position ERROR = new Position("00");
+    private static final int POSITION_SIZE = 64;
+    private static final String ERROR_POSITION_VALUE = "00";
+    public static final Position ERROR = new Position(ERROR_POSITION_VALUE);
+    private static final int ALPHA_POSITION = 0;
+    private static final int NUMBER_POSITION = 1;
+    private static final int ZERO = 0;
+    private static final int ROW_AND_COLUMN = 2;
+    private static final int MOVE_ONE_WEIGHT = 1;
+
     private static Map<String, Position> positions = new LinkedHashMap<>(POSITION_SIZE);
 
     static {
-        for (int j = 1; j <= 8; j++) {
-            for (char i = 'a'; i <= 'h'; i++) {
-                String boardPosition = "" + i + j;
+        for (int row = ChessBoard.ROW_FIRST; row <= ChessBoard.ROW_LAST; row++) {
+            for (char column = ChessBoard.COLUMN_FIRST; column <= ChessBoard.COLUMN_LAST;
+                column++) {
+                String boardPosition = ChessBoard.createPiecePositionName(row, column);
                 positions.put(boardPosition, new Position(boardPosition));
             }
         }
@@ -25,8 +32,8 @@ public class Position {
 
     private Position(String boardPosition) {
         validateLength(boardPosition);
-        this.alpha = boardPosition.charAt(0);
-        this.number = Character.getNumericValue(boardPosition.charAt(1));
+        this.alpha = boardPosition.charAt(ALPHA_POSITION);
+        this.number = Character.getNumericValue(boardPosition.charAt(NUMBER_POSITION));
     }
 
     public static Position valueOf(String value) {
@@ -36,23 +43,11 @@ public class Position {
         throw new IllegalArgumentException();
     }
 
-    private static Position valueOf(char alpha, int number) {
-        return valueOf("" + alpha + number);
-    }
-
-    public static Set<String> getPositionKeySet() {
-        return positions.keySet();
-    }
-
     public boolean isFront(Position value, TeamColor team) {
         if (team == TeamColor.BLACK) {
-            return number - value.number > 0;
+            return number - value.number > ZERO;
         }
-        return number - value.number < 0;
-    }
-
-    public boolean isMoveAmount(Position position, int value) {
-        return Math.abs(number - position.number) == 1 && alpha == position.alpha;
+        return number - value.number < ZERO;
     }
 
     public boolean isCross(Position value) {
@@ -69,10 +64,6 @@ public class Position {
                 == 1;
     }
 
-    public boolean isDistanceThree(Position value) {
-        return Math.abs(value.alpha - this.alpha) + Math.abs(value.number - this.number) == 3;
-    }
-
     private boolean horizontal(Position value) {
         return alpha != value.alpha && number == value.number;
     }
@@ -82,13 +73,13 @@ public class Position {
     }
 
     private void validateLength(String boardPosition) {
-        if (boardPosition.length() != 2) {
+        if (boardPosition.length() != ROW_AND_COLUMN) {
             throw new IllegalArgumentException();
         }
     }
 
     public Position moveUp() {
-        String next = (char) this.alpha + String.valueOf(this.number + 1);
+        String next = this.alpha + String.valueOf(this.number + MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -96,7 +87,7 @@ public class Position {
     }
 
     public Position moveDown() {
-        String next = (char) this.alpha + String.valueOf(this.number - 1);
+        String next = this.alpha + String.valueOf(this.number - MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -104,7 +95,7 @@ public class Position {
     }
 
     public Position moveLeft() {
-        String next = (char) (this.alpha - 1) + String.valueOf(this.number);
+        String next = (char) (this.alpha - MOVE_ONE_WEIGHT) + String.valueOf(this.number);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -112,7 +103,7 @@ public class Position {
     }
 
     public Position moveRight() {
-        String next = (char) (this.alpha + 1) + String.valueOf(this.number);
+        String next = (char) (this.alpha + MOVE_ONE_WEIGHT) + String.valueOf(this.number);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -120,7 +111,8 @@ public class Position {
     }
 
     public Position moveRightUp() {
-        String next = (char) (this.alpha + 1) + String.valueOf(this.number + 1);
+        String next =
+            (char) (this.alpha + MOVE_ONE_WEIGHT) + String.valueOf(this.number + MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -128,7 +120,8 @@ public class Position {
     }
 
     public Position moveRightDown() {
-        String next = (char) (this.alpha + 1) + String.valueOf(this.number - 1);
+        String next =
+            (char) (this.alpha + MOVE_ONE_WEIGHT) + String.valueOf(this.number - MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -136,7 +129,8 @@ public class Position {
     }
 
     public Position moveLeftUp() {
-        String next = (char) (this.alpha - 1) + String.valueOf(this.number + 1);
+        String next =
+            (char) (this.alpha - MOVE_ONE_WEIGHT) + String.valueOf(this.number + MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -144,7 +138,8 @@ public class Position {
     }
 
     public Position moveLeftDown() {
-        String next = (char) (this.alpha - 1) + String.valueOf(this.number - 1);
+        String next =
+            (char) (this.alpha - MOVE_ONE_WEIGHT) + String.valueOf(this.number - MOVE_ONE_WEIGHT);
         if (positions.containsKey(next)) {
             return Position.valueOf(next);
         }
@@ -154,9 +149,9 @@ public class Position {
 
     public boolean startLine(TeamColor color) {
         if (color == TeamColor.BLACK) {
-            return this.number == 7;
+            return this.number == ChessBoard.ROW_BLACK_PAWN_LINE;
         }
-        return this.number == 2;
+        return this.number == ChessBoard.ROW_WHITE_PAWN_LINE;
     }
 
     public Character getColumn() {

@@ -23,14 +23,14 @@ public class ChessBoard {
     private static final int MAX_NUM_PIECE = 16;
     private static final int ROW_WHITE_START = 1;
     private static final int ROW_WHITE_END = 2;
-    private static final char COLUMN_FIRST = 'a';
-    private static final char COLUMN_LAST = 'h';
+    public static final char COLUMN_FIRST = 'a';
+    public static final char COLUMN_LAST = 'h';
+    public static final int ROW_FIRST = 1;
+    public static final int ROW_LAST = 8;
     private static final int ROW_BLACK_START = 7;
     private static final int ROW_BLACK_END = 8;
-    private static final int ROW_FIRST = 1;
-    private static final int ROW_LAST = 8;
-    private static final int ROW_WHITE_PAWN_LINE = 2;
-    private static final int ROW_BLACK_PAWN_LINE = 7;
+    public static final int ROW_WHITE_PAWN_LINE = 2;
+    public static final int ROW_BLACK_PAWN_LINE = 7;
     private static final String EXCEPTION_MOVE = "잘못된 이동입니다.";
     private static final String EXCEPTION_DUPLICATE_POSITION = "동일한 좌표는 불가능합니다.";
     private static final String EXCEPTION_POSITION = "잘못된 좌표입니다.";
@@ -53,14 +53,14 @@ public class ChessBoard {
         List<Piece> whitePieces = new ArrayList<>(MAX_NUM_PIECE);
         for (int row = ROW_WHITE_START; row <= ROW_WHITE_END; row++) {
             for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
-                String piecePositionName = createPieceName(row, column);
+                String piecePositionName = createPiecePositionName(row, column);
                 whitePieces.add(piece(Position.valueOf(piecePositionName)));
             }
         }
         return new Pieces(whitePieces);
     }
 
-    private String createPieceName(int row, char column) {
+    public static String createPiecePositionName(int row, char column) {
         return "" + column + row;
     }
 
@@ -72,7 +72,7 @@ public class ChessBoard {
         List<Piece> blackPieces = new ArrayList<>(16);
         for (int row = ROW_BLACK_START; row <= ROW_BLACK_END; row++) {
             for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
-                String piecePositionName = createPieceName(row, column);
+                String piecePositionName = createPiecePositionName(row, column);
                 blackPieces.add(piece(Position.valueOf(piecePositionName)));
             }
         }
@@ -82,7 +82,7 @@ public class ChessBoard {
     private void initBoard() {
         for (int row = ROW_FIRST; row <= ROW_LAST; row++) {
             for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
-                String boardPosition = createPieceName(row, column);
+                String boardPosition = createPiecePositionName(row, column);
                 Piece piece = Blank.INSTANCE;
                 pieceOnChessBoard(boardPosition, piece);
             }
@@ -101,13 +101,13 @@ public class ChessBoard {
 
     private void initPawnLine() {
         for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
-            String boardPosition = createPieceName(ROW_WHITE_PAWN_LINE, column);
+            String boardPosition = createPiecePositionName(ROW_WHITE_PAWN_LINE, column);
             Piece pawn = new Pawn(TeamColor.WHITE, Position.valueOf(boardPosition));
             inputPiece(boardPosition, pawn);
         }
 
         for (char column = COLUMN_FIRST; column <= COLUMN_LAST; column++) {
-            String boardPosition = createPieceName(ROW_BLACK_PAWN_LINE, column);
+            String boardPosition = createPiecePositionName(ROW_BLACK_PAWN_LINE, column);
             Piece pawn = new Pawn(TeamColor.BLACK, Position.valueOf(boardPosition));
             inputPiece(boardPosition, pawn);
         }
@@ -210,8 +210,7 @@ public class ChessBoard {
 
     public boolean isBlank(Position position) {
         Piece piece = piece(position);
-        boolean ret = isBlankPiece(piece);
-        return ret;
+        return isBlankPiece(piece);
     }
 
 
