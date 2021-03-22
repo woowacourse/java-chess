@@ -1,12 +1,11 @@
 package chess.domain.position;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class Position {
     public static final Position EMPTY = new Position('0', '0');
     public static final List<Position> POSITIONS;
+    public static final Map<String, Position> CACHE = new LinkedHashMap<>();
     public static final int CHANGE_LINE_POINT = 8;
     public static final String Xs = "abcdefgh";
     private static final String Ys = "87654321";
@@ -22,6 +21,10 @@ public class Position {
 
     private final char x;
     private final char y;
+
+    private Position(String xy) {
+        this(xy.charAt(0), xy.charAt(1));
+    }
 
     private Position(char x, char y) {
         this.x = x;

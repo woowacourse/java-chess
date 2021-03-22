@@ -1,7 +1,7 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Name;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Name;
 import chess.domain.position.Position;
 
 public class Empty extends Piece {

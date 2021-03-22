@@ -2,6 +2,7 @@ package chess.domain;
 
 import chess.domain.command.Command;
 import chess.domain.piece.*;
+import chess.domain.piece.info.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

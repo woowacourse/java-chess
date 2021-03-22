@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Name;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Name;
 import chess.domain.position.Cross;
 import chess.domain.position.Diagonal;
 import chess.domain.position.Position;
 
-import static chess.domain.Score.ZERO;
+import static chess.domain.piece.info.Score.ZERO;
 
 public class King extends Piece {
     public King(Position position, Color color) {
@@ -35,7 +35,7 @@ public class King extends Piece {
     }
 
     public void checkMoveRule(Position target) {
-        if (!(this.position.xDistance(target) == 1 || this.position.yDistance(target) == 1)) {
+        if (!(this.position.isSameDistanceByCount(target, 1))) {
             throw new IllegalArgumentException("[ERROR] 킹 이동 규칙에 어긋납니다.");
         }
     }

@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.Color;
-import chess.domain.Name;
-import chess.domain.Score;
+import chess.domain.piece.info.Color;
+import chess.domain.piece.info.Name;
+import chess.domain.piece.info.Score;
 import chess.domain.position.Cross;
 import chess.domain.position.Diagonal;
 import chess.domain.position.Position;

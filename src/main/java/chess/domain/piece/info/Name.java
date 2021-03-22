@@ -1,4 +1,6 @@
-package chess.domain;
+package chess.domain.piece.info;
+
+import chess.domain.piece.info.Color;
 
 public enum Name {
     BISHOP("B"),
