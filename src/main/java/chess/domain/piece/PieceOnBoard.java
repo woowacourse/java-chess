@@ -164,6 +164,19 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
+    public void dead() {
+        state = State.DEAD;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Score getScore() {
+        return new Score(pieceType.getScore());
+    }
+
+    @Override
     public TeamColor getColor() {
         return teamColor;
     }
@@ -174,21 +187,8 @@ public abstract class PieceOnBoard implements Piece {
     }
 
     @Override
-    public void dead() {
-        state = State.DEAD;
-    }
-
-    @Override
     public State getState() {
         return state;
-    }
-
-    public Position getPosition() {
-        return position;
-    }
-
-    public Score getScore() {
-        return new Score(pieceType.getScore());
     }
 
     @Override
