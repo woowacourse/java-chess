@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.ChessGame;
 
 public interface Command {
-    String run(ChessGame chessGame, String input);
+    String run(ChessGame chessGame, CommandInput commandInput);
 
-    boolean isSameCommand(String command);
+    boolean isSameCommand(CommandInput commandInput);
 }

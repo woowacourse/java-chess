@@ -8,19 +8,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commands {
-    private static final String END = "end";
-
     private final List<Command> commands;
 
     public Commands(List<Command> commands) {
         this.commands = new ArrayList<>(commands);
     }
 
-    public String execute(ChessGame chessGame, String input) throws GameIsNotStartException {
+    public String execute(ChessGame chessGame, CommandInput commandInput) throws GameIsNotStartException {
         return commands.stream()
-                .filter(command -> command.isSameCommand(input.toLowerCase()))
+                .filter(command -> command.isSameCommand(commandInput))
                 .findAny()
                 .orElseThrow(NoSuchCommandException::new)
-                .run(chessGame, input);
+                .run(chessGame, commandInput);
     }
 }
