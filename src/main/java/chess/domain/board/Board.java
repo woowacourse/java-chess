@@ -29,9 +29,7 @@ public class Board {
         originalPiece.movable(source, target);
         checkTurn(originalPiece, turnColor);
 
-        checkPawnCase(source, target, originalPiece);
         checkIsNotSameTeam(source, target);
-
         movePiece(source, target, originalPiece);
     }
 
@@ -41,6 +39,7 @@ public class Board {
     }
 
     private void movePiece(Position source, Position target, Piece originalPiece) {
+        checkPawnCase(source, target, originalPiece);
         judgeKingsState(target);
 
         putPieceAtPosition(target, originalPiece);

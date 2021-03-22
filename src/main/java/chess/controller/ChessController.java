@@ -10,6 +10,8 @@ import java.util.List;
 public class ChessController {
 
     public static final String NOT_START_MESSAGE = "게임이 시작되지 않았습니다.";
+    public static final int SOURCE_INDEX = 1;
+    public static final int TARGET_INDEX = 2;
 
     public void run() {
         OutputView.printInitMessage();
@@ -22,7 +24,7 @@ public class ChessController {
     private void selectMenu(Game game) {
         try {
             String input = InputView.receiveInitialResponse();
-            Command.playCommand(game, input);
+            Commands.playCommand(game, input);
         } catch (RuntimeException runtimeException) {
             System.out.println(runtimeException.getMessage());
         }
@@ -37,7 +39,7 @@ public class ChessController {
         isStart(game);
         List<String> processedInput = Arrays.asList(command.split(" "));
 
-        game.move(processedInput.get(1), processedInput.get(2));
+        game.move(processedInput.get(SOURCE_INDEX), processedInput.get(TARGET_INDEX));
         OutputView.printBoard(game);
 
         isEnd(game, command);
