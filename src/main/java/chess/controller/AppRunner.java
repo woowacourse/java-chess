@@ -5,10 +5,13 @@ import chess.exception.ChessException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class AppRunner {
+public final class AppRunner {
 
     private static final String COMMAND_SPLIT_REGEX = " ";
     private static final int OPTION_INDEX = 0;
+
+    private AppRunner() {
+    }
 
     public static void main(String[] args) {
         ChessAction chessAction = new ChessAction(ChessGameImpl.emptyGame());

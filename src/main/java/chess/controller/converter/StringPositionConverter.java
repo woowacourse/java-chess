@@ -1,10 +1,12 @@
-package chess.util;
+package chess.controller.converter;
 
 import chess.domain.Position;
 
 public final class StringPositionConverter {
 
-    public Position convert(String message) {
+    private StringPositionConverter() {}
+
+    public static Position convert(String message) {
         char[] rowAndColumn = message.toCharArray();
         int x = rowAndColumn[0] - 'a';
         int y = rowAndColumn[1] - '0';

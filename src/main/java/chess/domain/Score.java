@@ -21,7 +21,7 @@ public final class Score {
     }
 
     public Score minusPawnCount(int pawnCount) {
-        return new Score(value - (0.5 * pawnCount));
+        return new Score(value - (PAWN_EXCEPT_SCORE * pawnCount));
     }
 
     public boolean greaterThan(Score score) {

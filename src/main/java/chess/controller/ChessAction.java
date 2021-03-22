@@ -1,10 +1,10 @@
 package chess.controller;
 
+import chess.controller.converter.MessagePositionConverter;
 import chess.domain.ChessGame;
 import chess.domain.ChessGameImpl;
 import chess.domain.GameResult;
-import chess.domain.Position;
-import chess.util.MessagePositionConverter;
+import chess.domain.Positions;
 import chess.view.OutputView;
 import chess.view.dto.BoardDto;
 
@@ -30,10 +30,8 @@ public final class ChessAction {
     }
 
     public GameStatus move(String message) {
-        MessagePositionConverter messagePositionConverter = new MessagePositionConverter(message);
-        Position currentPosition = messagePositionConverter.currentPosition();
-        Position targetPosition = messagePositionConverter.targetPosition();
-        chessGame.movePiece(currentPosition, targetPosition);
+        Positions positions = MessagePositionConverter.convert(message);
+        chessGame.movePiece(positions.currentPosition(), positions.targetPosition());
 
         OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
 
