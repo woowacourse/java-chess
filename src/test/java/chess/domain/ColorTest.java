@@ -1,6 +1,5 @@
-package chess.domain.piece;
+package chess.domain;
 
-import chess.domain.Color;
 import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

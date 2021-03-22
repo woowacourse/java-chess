@@ -23,10 +23,14 @@ public class OutputView {
     private static final String MESSAGE_WHITE_SCORE = "WHITE - 점수 : ";
     
     private static final String FORMAT_KING_IS_DEAD = "%s 의 킹이 죽었습니다." + LINE_SEPARATOR;
-    private static final String FORMAT_WINNER = "%s 의 승리!" + LINE_SEPARATOR + LINE_SEPARATOR;
+    private static final String MESSAGE_DRAW = "BLACK과 WHITE의 점수는 동일합니다.";
+    private static final String FORMAT_WINNER_AND_SCORE = "%s가 %.1f 점 차이로 이기고 있습니다." + LINE_SEPARATOR + LINE_SEPARATOR;
+    private static final String FORMAT_WINNER = "%s의 승리!" + LINE_SEPARATOR + LINE_SEPARATOR;
     
     private static final String MESSAGE_CHESS_IS_ALREADY_STOPPED = "체스 경기는 종료된 상태입니다.";
     private static final String MESSAGE_END_CHESS = "체스 경기를 종료했습니다." + LINE_SEPARATOR;
+    
+    private static final String ERROR_BLACK_IS_EQUAL_TO_WHITE = "BLACK과 WHITE의 점수가 같을 경우 이 메소드를 사용해서는 안됩니다.";
     
     public static void printStart() {
         System.out.println(MESSAGE_START_GAME);
@@ -52,11 +56,16 @@ public class OutputView {
         System.out.println();
     }
     
-    public static void printStatus(double blackScore, double whiteScore) {
+    public static void printStatusWithRunningMessage(double blackScore, double whiteScore) {
         System.out.println(MESSAGE_STATUS);
         System.out.println(MESSAGE_BLACK_SCORE + blackScore);
         System.out.println(MESSAGE_WHITE_SCORE + whiteScore);
-        System.out.printf(FORMAT_WINNER, winner(blackScore, whiteScore));
+        
+        if (blackScore == whiteScore) {
+            System.out.println(MESSAGE_DRAW);
+            return;
+        }
+        System.out.printf(FORMAT_WINNER_AND_SCORE, winner(blackScore, whiteScore), Math.abs(blackScore - whiteScore));
     }
     
     private static String winner(double blackScore, double whiteScore) {
@@ -64,11 +73,18 @@ public class OutputView {
             return "WHITE";
         }
         
-        if (blackScore == whiteScore) {
-            return "DRAW";
+        if (blackScore < whiteScore) {
+            return "BLACK";
         }
         
-        return "BLACK";
+        throw new IllegalStateException(ERROR_BLACK_IS_EQUAL_TO_WHITE);
+    }
+    
+    public static void printStatusWithWinner(double blackScore, double whiteScore, Color winner) {
+        System.out.println(MESSAGE_STATUS);
+        System.out.println(MESSAGE_BLACK_SCORE + blackScore);
+        System.out.println(MESSAGE_WHITE_SCORE + whiteScore);
+        System.out.printf(FORMAT_WINNER, winner.color());
     }
     
     public static void printKingIsDead(Color winner) {

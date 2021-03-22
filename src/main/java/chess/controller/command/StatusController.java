@@ -9,7 +9,14 @@ public class StatusController implements CommandController {
     public Chess execute(Chess chess) {
         final double blackScore = chess.score(Color.BLACK);
         final double whiteScore = chess.score(Color.WHITE);
-        OutputView.printStatus(blackScore, whiteScore);
+        
+        if (chess.isRunning() || chess.isStop()) {
+            OutputView.printStatusWithRunningMessage(blackScore, whiteScore);
+        }
+        
+        if (chess.isKingDead()) {
+            OutputView.printStatusWithWinner(blackScore, whiteScore, chess.winner());
+        }
         return chess;
     }
 }

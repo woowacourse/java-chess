@@ -13,21 +13,21 @@ public enum Color {
         public Color next() {
             return BLACK;
         }
-    }, BLANK("우승자가 존재하지 않습니다.") {
+    }, BLANK("BLANK") {
         @Override
         public Color next() {
             throw new IllegalStateException("Turn이 BLANK로 설정되어 있습니다. 게임을 다시 시작해주세요.");
         }
     };
     
-    private final String winner;
+    private final String color;
     
-    Color(String winner) {
-        this.winner = winner;
+    Color(String color) {
+        this.color = color;
     }
     
     public String color() {
-        return this.winner;
+        return this.color;
     }
     
     public boolean isBlack() {
