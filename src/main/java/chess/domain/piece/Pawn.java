@@ -19,45 +19,93 @@ public class Pawn extends PieceOnBoard {
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
 
-        Position position;
-        if (this.getColor() == TeamColor.BLACK) {
-            position = source.moveDown();
-            if (validBlank(position, chessBoard)) {
-                candidates.add(position);
-                position = position.moveDown();
-                if (validBlank(position, chessBoard) && source.startLine(this.getColor())) {
-                    candidates.add(position);
-                }
-            }
-            position = source.moveLeftDown();
-            if (isMeetEnemy(position, target, chessBoard)) {
-                candidates.add(position);
-            }
-            position = source.moveRightDown();
-            if (isMeetEnemy(position, target, chessBoard)) {
-                candidates.add(position);
-            }
+        if (isBlackPawn()) {
+            candidates = blackPawnMovePattern(source, target, chessBoard);
         }
-
-        if (this.getColor() == TeamColor.WHITE) {
-            position = source.moveUp();
-            if (validBlank(position, chessBoard)) {
-                candidates.add(position);
-                position = position.moveUp();
-                if (validBlank(position, chessBoard) && source.startLine(this.getColor())) {
-                    candidates.add(position);
-                }
-            }
-            position = source.moveLeftUp();
-            if (isMeetEnemy(position, target, chessBoard)) {
-                candidates.add(position);
-            }
-            position = source.moveRightUp();
-            if (isMeetEnemy(position, target, chessBoard)) {
-                candidates.add(position);
-            }
+        if (isWhitePawn()) {
+            candidates = whitePawnMovePattern(source, target, chessBoard);
         }
         return candidates.contains(target);
+    }
+
+    private Set<Position> whitePawnMovePattern(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        candidates.addAll(whiteFront(source, target, chessBoard));
+        candidates.addAll(whiteCatchEnemyPiece(source, target, chessBoard));
+        return candidates;
+    }
+
+    private Set<Position> whiteFront(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+        Position position = source.moveUp();
+        if (validBlank(position, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveUp().moveUp();
+        if (validBlank(source.moveUp().moveUp(), chessBoard) && source.startLine(this.getColor())) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private Set<Position> whiteCatchEnemyPiece(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+        Position position = source.moveLeftUp();
+        if (isMeetEnemy(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveRightUp();
+        if (isMeetEnemy(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private boolean isWhitePawn() {
+        return this.getColor() == TeamColor.WHITE;
+    }
+
+    private Set<Position> blackPawnMovePattern(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        candidates.addAll(blackFront(source, target, chessBoard));
+        candidates.addAll(blackCatchEnemyPiece(source, target, chessBoard));
+        return candidates;
+    }
+
+    private Set<Position> blackFront(Position source, Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+        Position position = source.moveDown();
+        if (validBlank(position, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveDown().moveDown();
+        if (validBlank(source.moveUp().moveUp(), chessBoard) && source.startLine(this.getColor())) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private Set<Position> blackCatchEnemyPiece(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+        Position position = source.moveLeftDown();
+        if (isMeetEnemy(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        position = source.moveRightDown();
+        if (isMeetEnemy(position, target, chessBoard)) {
+            candidates.add(position);
+        }
+        return candidates;
+    }
+
+    private boolean isBlackPawn() {
+        return this.getColor() == TeamColor.BLACK;
     }
 
 
