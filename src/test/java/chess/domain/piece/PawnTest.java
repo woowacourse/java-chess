@@ -16,7 +16,7 @@ class PawnTest {
 
     @Test
     @DisplayName("흰색 폰의 초기 이동 조건 테스트")
-    void testAddMovable_white() {
+    void testUpdateMovable_white() {
         //given
         Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 1));
         List<Position> existPiecePositions = Collections.singletonList(
@@ -41,7 +41,7 @@ class PawnTest {
 
     @Test
     @DisplayName("검은색 폰의 초기 이동 조건 테스트")
-    void testAddMovable_black() {
+    void testUpdateMovable_black() {
         //given
         Pawn pawn = new Pawn(TeamColor.BLACK, Position.of(3, 6));
         List<Position> existPiecePositions = Collections.singletonList(
@@ -66,18 +66,35 @@ class PawnTest {
 
     @Test
     @DisplayName("흰색 폰이 한번 움직인 뒤 조건 테스트")
-    void testAddMovable_moved() throws ImpossibleMoveException {
+    void testUpdateMovable_moved() throws ImpossibleMoveException {
         //given
         Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 2));
-        ArrayList<Position> positions = new ArrayList<>();
-        pawn.updateMovablePositions(positions, positions);
+        pawn.updateMovablePositions(new ArrayList<>(), new ArrayList<>());
         pawn.move(Position.of(3, 3));
-
         List<Position> expectedPosition = new ArrayList<>();
         expectedPosition.add(Position.of(3, 4));
 
         //when
-        pawn.updateMovablePositions(positions, positions);
+        pawn.updateMovablePositions(new ArrayList<>(), new ArrayList<>());
+        List<Position> movablePosition = pawn.movablePositions();
+
+        //then
+        assertThat(movablePosition).hasSameElementsAs(expectedPosition);
+    }
+
+    @Test
+    @DisplayName("흰색 폰이 초기 이동 시 두칸 앞에 기물이 있을 때 테스트")
+    void testUpdateMovable_ExistInTargetPosition() throws ImpossibleMoveException {
+        //given
+        Pawn pawn = new Pawn(TeamColor.WHITE, Position.of(3, 2));
+        List<Position> existPiecePositions = new ArrayList<>(
+                Collections.singletonList(Position.of(3, 4))
+        );
+        pawn.updateMovablePositions(existPiecePositions, new ArrayList<>());
+        List<Position> expectedPosition = new ArrayList<>();
+        expectedPosition.add(Position.of(3, 3));
+
+        //when
         List<Position> movablePosition = pawn.movablePositions();
 
         //then
