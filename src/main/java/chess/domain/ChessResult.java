@@ -41,7 +41,7 @@ public final class ChessResult {
     }
 
     private double calculatePawnDiscountScore(final List<Piece> pieces) {
-        long count = pieces.stream()
+        final long count = pieces.stream()
             .filter(Piece::isPawn)
             .count();
 
