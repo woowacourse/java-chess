@@ -51,6 +51,13 @@ public class Position {
         return new ArrayList<>(cache.values());
     }
 
+    public Position moveFront(TeamColor teamColor){
+        if(teamColor == TeamColor.BLACK){
+            return moveDown();
+        }
+        return moveUp();
+    }
+
     public Position moveUp() {
         String next = column.alpha() + row.movedNumber(1);
         if (cache.containsKey(next)) {
@@ -114,7 +121,7 @@ public class Position {
         }
         return ERROR;
     }
-    
+
     public boolean pawnLine(TeamColor color) {
         if (color == TeamColor.BLACK) {
             return row.number().equals("7");

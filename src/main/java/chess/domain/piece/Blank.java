@@ -24,11 +24,6 @@ public class Blank implements Piece {
     }
 
     @Override
-    public boolean isEnemyTeam(Piece comparePiece) {
-        return false;
-    }
-
-    @Override
     public TeamColor getColor() {
         return null;
     }

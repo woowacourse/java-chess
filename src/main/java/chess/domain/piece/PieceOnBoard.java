@@ -36,10 +36,6 @@ public abstract class PieceOnBoard implements Piece {
         }
         return pieceType.getName().toLowerCase();
     }
-    @Override
-    public boolean isEnemyTeam(Piece comparePiece) {
-        return teamColor != comparePiece.getColor();
-    }
 
     @Override
     public TeamColor getColor() {
@@ -61,10 +57,6 @@ public abstract class PieceOnBoard implements Piece {
         return state;
     }
 
-    public Position getCurrentPosition() {
-        return currentPosition;
-    }
-
     public Score getScore() {
         return new Score(pieceType.getScore());
     }
@@ -79,7 +71,8 @@ public abstract class PieceOnBoard implements Piece {
         return teamColor.name() + "" + pieceType + "\n";
     }
 
-    protected Set<Position> moveAsPossible(Moves direction, Position target, ChessBoard chessBoard){
+    protected Set<Position> moveAsPossible(Moves direction, Position target,
+        ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
         Position position = direction.move(currentPosition);
         while (movable(position, target, chessBoard)) {
@@ -90,7 +83,7 @@ public abstract class PieceOnBoard implements Piece {
     }
 
 
-    protected Position moveOnce(Moves direction, Position target, ChessBoard chessBoard){
+    protected Position moveOnce(Moves direction, Position target, ChessBoard chessBoard) {
         Position position = direction.move(currentPosition);
         if (movable(position, target, chessBoard)) {
             return position;
@@ -98,17 +91,51 @@ public abstract class PieceOnBoard implements Piece {
         return Position.ERROR;
     }
 
-    public boolean movable(Position position, Position target, ChessBoard chessBoard) {
+    protected boolean movablePawn(Position target, ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+        candidates.addAll(checkFront(chessBoard, currentPosition.moveFront(teamColor)));
+        candidates.add(
+            checkFrontDiagonal(target, chessBoard,currentPosition.moveFront(teamColor).moveRight()));
+        candidates.add(
+            checkFrontDiagonal(target, chessBoard, currentPosition.moveFront(teamColor).moveLeft()));
+        return candidates.contains(target);
+    }
+
+    private Position checkFrontDiagonal(Position target, ChessBoard chessBoard, Position position) {
+        if (isMeetEnemy(position, target, chessBoard)) {
+            return position;
+        }
+        return Position.ERROR;
+    }
+
+    private Set<Position> checkFront(ChessBoard chessBoard, Position position) {
+        Set<Position> candidates = new HashSet<>();
+        if (validBlank(position, chessBoard)) {
+            candidates.add(position);
+            position = position.moveFront(teamColor);
+            if (validBlank(position, chessBoard) && currentPosition.pawnLine(teamColor)) {
+                candidates.add(position);
+            }
+        }
+        return candidates;
+    }
+
+
+    private boolean movable(Position position, Position target, ChessBoard chessBoard) {
         return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
     }
 
-    protected boolean isMeetEnemy(Position position, Position target,
+    private boolean isMeetEnemy(Position position, Position target,
         ChessBoard chessBoard) {
         return position == target && isEnemyTeam(chessBoard.getPiece(position));
     }
 
-    protected boolean validBlank(Position position, ChessBoard chessBoard) {
+    private boolean validBlank(Position position, ChessBoard chessBoard) {
         return position != Position.ERROR && chessBoard.isBlank(position);
+    }
+
+    private boolean isEnemyTeam(Piece comparePiece) {
+        return teamColor != comparePiece.getColor();
     }
 
 }

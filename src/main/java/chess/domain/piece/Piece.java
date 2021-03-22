@@ -12,8 +12,6 @@ public interface Piece {
 
     String getPieceName();
 
-    boolean isEnemyTeam(Piece comparePiece);
-
     TeamColor getColor();
 
     void dead();
