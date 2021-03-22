@@ -1,4 +1,4 @@
-package chess.controller.state;
+package chess.domain.state;
 
 public abstract class Finished implements GameState {
     @Override

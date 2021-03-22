@@ -1,14 +1,15 @@
 package chess.controller;
 
-import chess.controller.state.GameState;
-import chess.controller.state.Ready;
 import chess.domain.grid.Grid;
 import chess.domain.grid.gridStrategy.GridStrategy;
 import chess.domain.grid.gridStrategy.NormalGridStrategy;
+import chess.domain.state.GameState;
+import chess.domain.state.Ready;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
+    private static final String START_COMMAND = "start";
     private GameState gameState;
 
     public ChessController() {
@@ -20,8 +21,8 @@ public class ChessController {
         GridStrategy gridStrategy = new NormalGridStrategy();
         Grid grid = new Grid(gridStrategy);
         do {
-            String input = InputView.command();
-            this.gameState = gameState.run(grid);
+            String command = InputView.command();
+            this.gameState = gameState.run(grid, command);
         }
         while (!gameState.isFinished());
     }

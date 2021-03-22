@@ -1,7 +1,6 @@
-package chess.controller.state;
+package chess.domain.state;
 
 import chess.domain.grid.Grid;
-import chess.view.InputView;
 import chess.view.OutputView;
 
 public final class Ready implements GameState {
@@ -9,16 +8,15 @@ public final class Ready implements GameState {
     private static final String END_COMMAND = "end";
 
     @Override
-    public GameState run(final Grid grid) {
+    public GameState run(final Grid grid, final String input) {
         try {
-            return runReady(grid);
+            return runReady(grid, input);
         } catch (IllegalArgumentException error) {
-            return readyException(grid, error);
+            return readyException(grid, input, error);
         }
     }
 
-    private GameState runReady(Grid grid) {
-        String command = InputView.command();
+    private GameState runReady(Grid grid, final String command) {
         if (command.equals(START_COMMAND)) {
             OutputView.printGridStatus(grid.lines());
             return new Playing();
@@ -29,9 +27,9 @@ public final class Ready implements GameState {
         throw new IllegalArgumentException("잘못된 입력값입니다.");
     }
 
-    private GameState readyException(Grid grid, IllegalArgumentException error) {
+    private GameState readyException(Grid grid, final String input, IllegalArgumentException error) {
         OutputView.printError(error);
-        return run(grid);
+        return run(grid, input);
     }
 
     @Override

@@ -1,10 +1,9 @@
-package chess.controller.state;
+package chess.domain.state;
 
 import chess.domain.grid.Grid;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.Arrays;
@@ -19,16 +18,15 @@ public class Playing implements GameState {
     private static final String END_COMMAND = "end";
 
     @Override
-    public final GameState run(final Grid grid) {
+    public final GameState run(final Grid grid, final String input) {
         try {
-            return runPlaying(grid);
+            return runPlaying(grid, input);
         } catch (IllegalArgumentException error) {
-            return playingException(grid, error);
+            return playingException(grid, input, error);
         }
     }
 
-    private GameState runPlaying(Grid grid) {
-        String input = InputView.command();
+    private GameState runPlaying(Grid grid, String input) {
         if (input.equals(STATUS_COMMAND)) {
             return new Status();
         }
@@ -62,9 +60,9 @@ public class Playing implements GameState {
         }
     }
 
-    private GameState playingException(Grid grid, IllegalArgumentException error) {
+    private GameState playingException(Grid grid, String input, IllegalArgumentException error) {
         OutputView.printError(error);
-        return run(grid);
+        return run(grid, input);
     }
 
     private final void validateSourcePieceIsEmpty(final Piece sourcePiece) {
