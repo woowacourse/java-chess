@@ -1,72 +1,89 @@
 package domain.piece;
 
-import domain.Board;
-import domain.PieceFactory;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.board.Board;
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BishopTest {
 
-    @DisplayName("비숍이 대각선으로 이동하는 지 검사한다.(목적지가 빈칸일 경우)")
-    @Test
-    void check_diagonal_if_empty_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Bishop bishop = Bishop.Of("B", Position.Of(3, 3), true);
+    @DisplayName("비숍은 모든 대각 방향으로 칸 수 제한 없이 이동할 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a8", "d5,f7", "d5,b3", "d5,h1"}, delimiter = ',')
+    void testMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Bishop blackBishop = new Bishop(true);
 
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 4))).isTrue();
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 2))).isTrue();
+        board.put(sourcePosition, blackBishop);
 
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 4))).isTrue();
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 2))).isTrue();
+        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("비숍이 대각선으로 이동하는 지 검사한다.(목적지에 적 기물이 있을 경우)")
-    @Test
-    void check_diagonal_if_enemy_piece() {
-        Board board = new Board(PieceFactory.createPieces());
-        Bishop bishop = Bishop.Of("B", Position.Of(3, 3), true);
-        Pawn pawn = Pawn.Of("P", Position.Of(4, 4), true);
+    @DisplayName("비숍은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a5", "d5,h5", "d5,d7", "d5,d2"}, delimiter = ',')
+    void testNotMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Bishop blackBishop = new Bishop(true);
 
-        board.put(pawn, Position.Of(4, 4));
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 4))).isFalse();
+        board.put(sourcePosition, blackBishop);
+
+        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("비숍이 이동하려는 위치가 대각선이 아니면 실패를 반환한다.")
+    @DisplayName("비숍은 같은 편 기물이 있는 위치로 이동할 수 없다.")
     @Test
-    void check_diagonal_false_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        Bishop bishop = Bishop.Of("B", Position.Of(3, 3), true);
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(3, 4))).isFalse();
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(3, 2))).isFalse();
+    void testMoveSameColorPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("a8");
+        Bishop blackBishop = new Bishop(true);
+        Rook blackRook = new Rook(true);
 
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 3))).isFalse();
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(4, 3))).isFalse();
+        board.put(sourcePosition, blackBishop);
+        board.put(targetPosition, blackRook);
 
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(7, 4))).isFalse();
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 5))).isFalse();
+        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
+    @DisplayName("비숍은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
-    void cant_move_bishop_if_piece_exist() {
-        Board board = new Board(PieceFactory.createPieces());
+    void testMoveEnemyPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("a8");
+        Bishop blackBishop = new Bishop(true);
+        Rook blackRook = new Rook(false);
 
-        Bishop bishop = Bishop.Of("B", Position.Of(4, 4), true);
-        Pawn pawn = Pawn.Of("P", Position.Of(3, 3), true);
-        board.put(pawn, Position.Of(3, 3));
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(2, 2))).isFalse();
+        board.put(sourcePosition, blackBishop);
+        board.put(targetPosition, blackRook);
+
+        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("이동할 경로에 같은 편 말이 존재할 경우 이동할 수 없다.")
-    @Test
-    void cant_move_bishop_if_same_color_piece_exist() {
-        Board board = new Board(PieceFactory.createPieces());
+    @DisplayName("비숍은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,a8,b7","d5,g8,e6","d5,a2,b3","d5,h1,g2"}, delimiter = ',')
+    void testObstacleMove(String source, String target, String obstacle) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Position obstaclePosition = new Position(obstacle);
+        Bishop blackBishop = new Bishop(true);
+        Rook whiteRook = new Rook(false);
 
-        Bishop bishop = Bishop.Of("B", Position.Of(4, 4), true);
-        Pawn pawn = Pawn.Of("P", Position.Of(3, 3), true);
-        board.put(pawn, Position.Of(3, 3));
-        assertThat(bishop.canMove(board.getBoard(), Position.Of(3, 3))).isFalse();
+        board.put(sourcePosition, blackBishop);
+        board.put(obstaclePosition, whiteRook);
+
+        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
+
 }
