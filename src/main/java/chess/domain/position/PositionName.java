@@ -2,7 +2,7 @@ package chess.domain.position;
 
 public final class PositionName {
 
-//    private final Column column;
+    //    private final Column column;
 //    private final Row row;
     private final String name;
 

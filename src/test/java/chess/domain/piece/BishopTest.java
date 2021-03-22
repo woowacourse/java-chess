@@ -31,38 +31,38 @@ class BishopTest {
         Paths paths = new Paths();
         paths = paths.findAllPath(bishop, current);
         assertThat(paths.removeObstacles(bishop, BoardFactory.initializeBoard()).positions())
-            .isEqualTo(
-                bishopE4WithObstacles());
+                .isEqualTo(
+                        bishopE4WithObstacles());
     }
 
     List<Position> bishopE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("g2"),
-            Position.ofName("h1"),
-            Position.ofName("d3"),
-            Position.ofName("c2"),
-            Position.ofName("b1"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7"),
-            Position.ofName("a8")
+                Position.ofName("f5"),
+                Position.ofName("g6"),
+                Position.ofName("h7"),
+                Position.ofName("f3"),
+                Position.ofName("g2"),
+                Position.ofName("h1"),
+                Position.ofName("d3"),
+                Position.ofName("c2"),
+                Position.ofName("b1"),
+                Position.ofName("d5"),
+                Position.ofName("c6"),
+                Position.ofName("b7"),
+                Position.ofName("a8")
         );
     }
 
     List<Position> bishopE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7")
+                Position.ofName("f5"),
+                Position.ofName("g6"),
+                Position.ofName("h7"),
+                Position.ofName("f3"),
+                Position.ofName("d3"),
+                Position.ofName("d5"),
+                Position.ofName("c6"),
+                Position.ofName("b7")
         );
     }
 }

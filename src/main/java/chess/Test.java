@@ -2,8 +2,6 @@ package chess;
 
 import chess.domain.board.Board;
 import chess.domain.piece.Piece;
-import chess.domain.piece.PieceColor;
-import chess.domain.piece.Rook;
 import chess.domain.piece.WhitePawn;
 import chess.domain.position.Position;
 import chess.util.RenderingUtils;

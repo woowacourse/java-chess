@@ -1,8 +1,6 @@
 package chess.domain.board;
 
 import chess.domain.position.Position2;
-import chess.domain.piece.PieceColor;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 

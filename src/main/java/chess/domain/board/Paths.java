@@ -21,8 +21,8 @@ public class Paths {
 
     public Paths findAllPath(Piece piece, Position currentPosition) {
         return new Paths(piece.directions().stream()
-            .map(direction -> findPathInDirection(piece, direction, currentPosition))
-            .collect(Collectors.toList())
+                .map(direction -> findPathInDirection(piece, direction, currentPosition))
+                .collect(Collectors.toList())
         );
     }
 
@@ -40,17 +40,17 @@ public class Paths {
 
     public Path removeObstacles(Piece piece, Board board) {
         return new Path(paths.stream()
-            .map(path -> path.removeObstacleInPath(piece, board))
-            .flatMap(List::stream)
-            .collect(Collectors.toList())
+                .map(path -> path.removeObstacleInPath(piece, board))
+                .flatMap(List::stream)
+                .collect(Collectors.toList())
         );
     }
 
     public List<Position> pathsToPosition() {
         return paths.stream()
-            .map(Path::positions)
-            .flatMap(List::stream)
-            .collect(Collectors.toList())
-            ;
+                .map(Path::positions)
+                .flatMap(List::stream)
+                .collect(Collectors.toList())
+                ;
     }
 }

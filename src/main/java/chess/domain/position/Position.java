@@ -108,7 +108,7 @@ public class Position {
         }
         Position position = (Position) o;
         return row == position.row &&
-            column == position.column;
+                column == position.column;
     }
 
     @Override

@@ -15,19 +15,18 @@ public class RenderingUtils {
 
     public static String renderBoard(Board board) {
         final String visualBoard = Stream.of(Row.values())
-            .map(index -> index.getNumber() + " " + renderRow(board, index) + index.getNumber())
-            .collect(Collectors.joining("\n"))
-            ;
+                .map(index -> index.getNumber() + " " + renderRow(board, index) + index.getNumber())
+                .collect(Collectors.joining("\n"));
         final String columnInfo = "\n  a b c d e f g h\n";
         return columnInfo + visualBoard + columnInfo;
     }
 
     private static String renderRow(Board board, Row row) {
         return Stream.of(Column.values())
-            .map(column -> Position.ofColumnAndRow(column, row))
-            .map(position -> renderPosition(board.findPieceBy(position)))
-            .collect(Collectors.joining())
-            ;
+                .map(column -> Position.ofColumnAndRow(column, row))
+                .map(position -> renderPosition(board.findPieceBy(position)))
+                .collect(Collectors.joining())
+                ;
     }
 
     private static String renderPosition(Piece piece) {

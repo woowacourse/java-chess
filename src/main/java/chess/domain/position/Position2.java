@@ -3,7 +3,6 @@ package chess.domain.position;
 import chess.domain.piece.EmptyPiece;
 import chess.domain.piece.Piece2;
 import chess.domain.piece.PieceColor;
-import chess.domain.piece.strategy.MoveUnit;
 
 public final class Position2 {
 
