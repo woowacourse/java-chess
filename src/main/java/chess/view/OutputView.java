@@ -2,11 +2,11 @@ package chess.view;
 
 import chess.domain.Color;
 import chess.domain.ScoreStatus;
-import chess.domain.piece.Pieces;
 import chess.domain.piece.Piece;
+import chess.domain.piece.Pieces;
 
-import static chess.domain.position.Position.POSITIONS;
 import static chess.domain.position.Position.CHANGE_LINE_POINT;
+import static chess.domain.position.Position.POSITIONS;
 
 public class OutputView {
     private OutputView() {

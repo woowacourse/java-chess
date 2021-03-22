@@ -6,7 +6,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
-    private ChessGame chessGame;
+    private final ChessGame chessGame;
 
     public ChessController() {
         this.chessGame = new ChessGame();
@@ -57,7 +57,6 @@ public class ChessController {
             System.out.println(e.getMessage());
             play();
         }
-
     }
 
     public void status() {

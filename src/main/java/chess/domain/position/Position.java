@@ -20,8 +20,8 @@ public class Position {
         }
     }
 
-    private char x;
-    private char y;
+    private final char x;
+    private final char y;
 
     private Position(char x, char y) {
         this.x = x;
@@ -87,6 +87,7 @@ public class Position {
     public boolean isSameDistanceByCount(Position target, int i) {
         return (Math.abs(this.xDistance(target)) == i && Math.abs(this.yDistance(target)) == i);
     }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

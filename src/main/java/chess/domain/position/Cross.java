@@ -62,8 +62,6 @@ public enum Cross {
         this.findCross = findCross;
     }
 
-    public abstract void hasPieceInPath(Position source, Position target, Pieces pieces);
-
     public static Cross findCrossByTwoPosition(Position source, Position target) {
         return Arrays.stream(values())
                 .filter(value -> value.findCross.test(source, target))
@@ -71,6 +69,8 @@ public enum Cross {
                 .orElseThrow(() ->
                         new IllegalArgumentException("[ERROR] 올바른 십자 방향이 아닙니다."));
     }
+
+    public abstract void hasPieceInPath(Position source, Position target, Pieces pieces);
 
     void checkAbleToJump(Piece piece) {
         if (!(piece.isEmpty())) {
