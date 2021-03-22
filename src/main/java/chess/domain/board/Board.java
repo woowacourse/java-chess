@@ -87,7 +87,7 @@ public class Board {
                 .map(this::findByPosition)
                 .filter(Square::hasPiece)
                 .map(Square::getPiece)
-                .filter(realPiece -> realPiece.getColor() == color)
+                .filter(realPiece -> realPiece.isSameColor(color))
                 .collect(toList());
     }
 

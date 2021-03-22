@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 public class ChessGameManager {
     private Board board;
     private List<ColoredPieces> coloredPieces;
-    private Color currentColor;
+    private Color currentTurnColor;
     private GameStatus gameStatus = GameStatus.NOT_STARTED;
 
     public void start() {
@@ -25,7 +25,7 @@ public class ChessGameManager {
         this.coloredPieces = Arrays.stream(Color.values())
                 .map(ColoredPieces::createByColor)
                 .collect(Collectors.toList());
-        currentColor = Color.WHITE;
+        currentTurnColor = Color.WHITE;
         gameStatus = GameStatus.RUNNING;
     }
 
@@ -35,16 +35,20 @@ public class ChessGameManager {
 
     public void move(Position from, Position to) {
         throwExceptionWhenGameIsNotRunning();
-        if (board.findByPosition(from).getPiece().getColor() != currentColor) {
-            throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
-        }
+        validateTurn(from);
         MoveResult moveResult = board.move(from, to);
         if (moveResult.isCaptured()) {
-            ColoredPieces opposite = findByColor(currentColor.opposite());
+            ColoredPieces opposite = findByColor(currentTurnColor.opposite());
             opposite.remove(moveResult.getCapturedPiece());
         }
         updateEndCondition();
         turnOver();
+    }
+
+    private void validateTurn(Position from) {
+        if (!board.findByPosition(from).getPiece().isSameColor(this.currentTurnColor)) {
+            throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
+        }
     }
 
     private void throwExceptionWhenGameIsNotRunning() {
@@ -54,7 +58,7 @@ public class ChessGameManager {
     }
 
     private void turnOver() {
-        currentColor = currentColor.opposite();
+        currentTurnColor = currentTurnColor.opposite();
     }
 
     private ColoredPieces findByColor(Color color) {

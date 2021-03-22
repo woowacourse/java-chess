@@ -30,7 +30,7 @@ public class PawnMoveStrategy extends DefaultMoveStrategy {
         if (!moveOrder.getTo().hasPiece()) {
             throw new IllegalArgumentException("상대 말을 잡을 때에만 대각선으로 움직일 수 있습니다.");
         }
-        if (moveOrder.getTo().getPiece().getColor() == this.color) {
+        if (moveOrder.getTo().getPiece().isSameColor(this.color)) {
             throw new IllegalArgumentException("아군 말이 있어 대각선으로 움직일 수 없습니다.");
         }
     }

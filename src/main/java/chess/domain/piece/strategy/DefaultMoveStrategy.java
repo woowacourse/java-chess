@@ -2,7 +2,6 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Square;
 import chess.domain.order.MoveOrder;
-import chess.domain.piece.Color;
 import chess.domain.position.Direction;
 
 import java.util.List;
@@ -42,10 +41,7 @@ public abstract class DefaultMoveStrategy implements MoveStrategy {
     }
 
     private void validateSameColorPiece(MoveOrder moveOrder) {
-        Color fromColor = moveOrder.getFrom().getPiece().getColor();
-        Color toColor = moveOrder.getTo().getPiece().getColor();
-
-        if (fromColor == toColor) {
+        if (moveOrder.getFrom().getPiece().isSameColor(moveOrder.getTo().getPiece())) {
             throw new IllegalArgumentException("동일한 진영의 말이 있어서 행마할 수 없습니다.");
         }
     }

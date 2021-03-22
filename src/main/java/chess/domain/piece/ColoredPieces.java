@@ -32,7 +32,7 @@ public class ColoredPieces {
     }
 
     public void remove(RealPiece realPiece) {
-        if (realPiece.getColor() != color) {
+        if (!realPiece.isSameColor(this.color)) {
             throw new IllegalArgumentException("진영이 다른 피스를 제거할 수 없습니다");
         }
         pieces.remove(realPiece);

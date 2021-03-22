@@ -17,8 +17,12 @@ public class RealPiece extends Piece {
         return color.changeNotation(super.getNotation());
     }
 
-    public Color getColor() {
-        return color;
+    public boolean isSameColor(Color color) {
+        return this.color == color;
+    }
+
+    public boolean isSameColor(RealPiece realPiece) {
+        return this.color == realPiece.color;
     }
 
     @Override
