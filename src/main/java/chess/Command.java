@@ -5,6 +5,7 @@ public final class Command {
     private static final int TARGET_INDEX = 2;
     private static final int SOURCE_INDEX = 1;
     private static final int COMMAND_INDEX = 0;
+    private static final int TOTAL_MOVE_COMMAND_SIZE = 3;
 
     private final String command;
     private final String[] commands;
@@ -51,6 +52,9 @@ public final class Command {
     private void validate() {
         if (!isMove()) {
             throw new IllegalArgumentException("이동 명령이 아닙니다.");
+        }
+        if (commands.length != TOTAL_MOVE_COMMAND_SIZE) {
+            throw new IllegalArgumentException("이동 명령의 인자수가 맞지 않습니다.");
         }
     }
 }
