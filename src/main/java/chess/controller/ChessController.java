@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.command.Commands;
 import chess.domain.piece.Team;
+import chess.exception.GameIsNotStartException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -20,26 +21,31 @@ public class ChessController {
     }
 
     public boolean playGame(ChessGame chessGame, Commands commands) {
+        String command = commands.execute(chessGame, InputView.inputCommand());
         try {
-            String commandMessage = commands.execute(chessGame, InputView.inputCommand());
-            OutputView.printMessage(commandMessage);
+            checkGameStart(chessGame);
             OutputView.printBoard(chessGame.getBoard());
-            showStatus(commandMessage, chessGame.status(Team.BLACK), chessGame.status(Team.WHITE));
-            return isPlaying(commandMessage);
+            showStatus(command, chessGame);
+            return isPlaying(command);
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            playGame(chessGame, commands);
-            return true;
+            return isPlaying(command);
         }
     }
 
-    public void showStatus(String input, double blackScore, double whiteScore) {
-        if (input.equals(STATUS)) {
-            OutputView.printStatus(blackScore, whiteScore);
+    public void checkGameStart(ChessGame chessGame) {
+        if (chessGame.isBeforeStart()) {
+            throw new GameIsNotStartException();
         }
     }
 
-    public boolean isPlaying(String input) {
-        return !input.equals(END);
+    public void showStatus(String command, ChessGame chessGame) {
+        if (command.equals(STATUS)) {
+            OutputView.printStatus(chessGame.status(Team.BLACK), chessGame.status(Team.WHITE));
+        }
+    }
+
+    public boolean isPlaying(String command) {
+        return !command.equals(END);
     }
 }

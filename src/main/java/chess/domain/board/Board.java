@@ -15,6 +15,8 @@ public class Board {
     private final Map<Position, Piece> board;
     private final Map<Team, Double> deadPieceByTeam;
     private Team lastTurn;
+    private Score blackScore;
+    private Score whiteScore;
 
     public Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
@@ -91,9 +93,13 @@ public class Board {
         throw new UnsupportedOperationException("이동 불가능한 좌표입니다.");
     }
 
-    public double calculateScore(Team team) {
-        double defaultScore = TOTAL_SCORE - deadPieceByTeam.get(team);
-        return defaultScore - countOfSameLinePawn(team) * PAWN_SAME_HORIZONTAL_SCORE;
+    public void calculateScore() {
+        double blackScore = TOTAL_SCORE - deadPieceByTeam.get(Team.BLACK)
+                - countOfSameLinePawn(Team.BLACK) * PAWN_SAME_HORIZONTAL_SCORE;
+        this.blackScore = new Score(blackScore);
+        double whiteScore = TOTAL_SCORE - deadPieceByTeam.get(Team.WHITE)
+                - countOfSameLinePawn(Team.WHITE) * PAWN_SAME_HORIZONTAL_SCORE;
+        this.whiteScore = new Score(whiteScore);
     }
 
     private long countOfSameLinePawn(Team team) {
@@ -119,6 +125,13 @@ public class Board {
             return count;
         }
         return 0;
+    }
+
+    public double score(Team team) {
+        if (team == Team.BLACK) {
+            return blackScore.getScore();
+        }
+        return whiteScore.getScore();
     }
 
     public Map<Position, Piece> getBoard() {

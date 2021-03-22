@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commands {
+    private static final String END = "end";
+
     private final List<Command> commands;
 
     public Commands(List<Command> commands) {

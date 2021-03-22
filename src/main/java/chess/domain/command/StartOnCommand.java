@@ -8,6 +8,7 @@ public class StartOnCommand implements Command {
 
     public String run(ChessGame chessGame, String input) {
         chessGame.settingBoard();
+        chessGame.start();
         return COMMAND_MESSAGE;
     }
 
