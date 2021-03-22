@@ -15,9 +15,9 @@ public class QueenTest {
     @DisplayName("Queen 객체 생성 확인")
     @Test
     void 퀸_객체_생성() {
-        Queen queen = new Queen(Position.of('d', '8'), Color.BLACK);
+        Queen queen = new Queen(Position.of("d8"), Color.BLACK);
 
-        assertThat(queen.getPosition()).isEqualTo(Position.of('d', '8'));
+        assertThat(queen.getPosition()).isEqualTo(Position.of("d8"));
         assertThat(queen.getName()).isEqualTo("Q");
     }
 
@@ -25,10 +25,10 @@ public class QueenTest {
     @Test
     void 퀸_이동_십자() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.BLACK));
+                new Queen(Position.of("d8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('d', '1'); // 옮기고자 하는 위치
+        Position source = Position.of("d8");
+        Position target = Position.of("d1");
         Piece queen = pieces.findByPosition(source);
 
         queen.move(target, pieces);
@@ -40,10 +40,10 @@ public class QueenTest {
     @Test
     void 퀸_이동_대각선() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.BLACK));
+                new Queen(Position.of("d8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('b', '6'); // 옮기고자 하는 위치
+        Position source = Position.of("d8");
+        Position target = Position.of("b6");
         Piece queen = pieces.findByPosition(source);
 
         queen.move(target, pieces);
@@ -55,10 +55,10 @@ public class QueenTest {
     @Test
     void 퀸_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.BLACK));
+                new Queen(Position.of("d8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('d', '8'); // 비숍 위치
-        Position target = Position.of('b', '1'); // 옮기고자 하는 위치
+        Position source = Position.of("d8");
+        Position target = Position.of("b1");
 
         Piece queen = pieces.findByPosition(source);
 

@@ -15,9 +15,9 @@ public class KingTest {
     @DisplayName("King 객체 생성 확인")
     @Test
     void 킹_객체_생성() {
-        King king = new King(Position.of('e', '8'), Color.BLACK);
+        King king = new King(Position.of("e8"), Color.BLACK);
 
-        assertThat(king.getPosition()).isEqualTo(Position.of('e', '8'));
+        assertThat(king.getPosition()).isEqualTo(Position.of("e8"));
         assertThat(king.getName()).isEqualTo("K");
     }
 
@@ -27,8 +27,8 @@ public class KingTest {
         List<Piece> current = Arrays.asList(
                 new King(Position.of("e8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of("e8"); // 비숍 위치
-        Position target = Position.of("e7"); // 옮기고자 하는 위치
+        Position source = Position.of("e8");
+        Position target = Position.of("e7");
         Piece king = pieces.findByPosition(source);
 
         king.move(target, pieces);
@@ -40,10 +40,10 @@ public class KingTest {
     @Test
     void 킹_이동_대각선() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of('e', '8'), Color.BLACK));
+                new King(Position.of("e8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('e', '8'); //
-        Position target = Position.of('f', '7'); // 옮기고자 하는 위치
+        Position source = Position.of("e8");
+        Position target = Position.of("f7");
         Piece king = pieces.findByPosition(source);
 
         king.move(target, pieces);
@@ -55,10 +55,10 @@ public class KingTest {
     @Test
     void 킹_이동_규칙에_어긋나는_경우_이동_규칙_예외() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of('e', '8'), Color.BLACK));
+                new King(Position.of("e8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('e', '8'); // 비숍 위치
-        Position target = Position.of('b', '1'); // 옮기고자 하는 위치
+        Position source = Position.of("e8");
+        Position target = Position.of("b1");
 
         Piece king = pieces.findByPosition(source);
 

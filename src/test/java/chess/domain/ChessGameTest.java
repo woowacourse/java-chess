@@ -13,7 +13,6 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ChessGameTest {
-
     @DisplayName("현재 기물 확인하기")
     @Test
     void 현재_기물_확인_테스트() {
@@ -26,8 +25,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Bishop(Position.of('c', '8'), Color.WHITE),
-                new Pawn(Position.of('f', '5'), Color.BLACK));
+                new Bishop(Position.of("c8"), Color.WHITE),
+                new Pawn(Position.of("f5"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move c8 f5");
@@ -40,8 +39,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다_대각선() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of('d', '8'), Color.WHITE),
-                new Pawn(Position.of('e', '7'), Color.BLACK));
+                new King(Position.of("d8"), Color.WHITE),
+                new Pawn(Position.of("e7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move d8 e7");
@@ -54,8 +53,8 @@ public class ChessGameTest {
     @Test
     void 상대편_말을_공격한다_십자() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of('d', '8'), Color.WHITE),
-                new Pawn(Position.of('d', '7'), Color.BLACK));
+                new King(Position.of("d8"), Color.WHITE),
+                new Pawn(Position.of("d7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move d8 d7");
@@ -68,8 +67,8 @@ public class ChessGameTest {
     @Test
     void 나이트_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Knight(Position.of('b', '8'), Color.WHITE),
-                new Pawn(Position.of('d', '7'), Color.BLACK));
+                new Knight(Position.of("b8"), Color.WHITE),
+                new Pawn(Position.of("d7"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move b8 d7");
@@ -82,8 +81,8 @@ public class ChessGameTest {
     @Test
     void 퀸_상대편_말을_공격한다_십자() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.WHITE),
-                new Pawn(Position.of('d', '1'), Color.BLACK));
+                new Queen(Position.of("d8"), Color.WHITE),
+                new Pawn(Position.of("d1"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move d8 d1");
@@ -96,8 +95,8 @@ public class ChessGameTest {
     @Test
     void 퀸_상대편_말을_공격한다_대각선() {
         List<Piece> current = Arrays.asList(
-                new Queen(Position.of('d', '8'), Color.WHITE),
-                new Pawn(Position.of('d', '1'), Color.BLACK));
+                new Queen(Position.of("d8"), Color.WHITE),
+                new Pawn(Position.of("d1"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move d8 d1");
@@ -110,8 +109,8 @@ public class ChessGameTest {
     @Test
     void 룩_상대편_말을_공격한다() {
         List<Piece> current = Arrays.asList(
-                new Rook(Position.of('a', '8'), Color.WHITE),
-                new Pawn(Position.of('a', '5'), Color.BLACK));
+                new Rook(Position.of("a8"), Color.WHITE),
+                new Pawn(Position.of("a5"), Color.BLACK));
         Pieces pieces = new Pieces(current);
         ChessGame chessGame = new ChessGame(pieces);
         Command command = new Command("move a8 a5");

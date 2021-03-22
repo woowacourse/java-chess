@@ -23,7 +23,7 @@ public class PiecesTest {
     @Test
     void 해당_위치에_있는_기물_찾기() {
         Pieces pieces = new Pieces(PieceFactory.initialPieces());
-        Piece sourcePiece = pieces.findByPosition(Position.of('e', '8'));
+        Piece sourcePiece = pieces.findByPosition(Position.of("e8"));
 
         assertThat(sourcePiece).isInstanceOf(King.class);
     }
@@ -32,7 +32,7 @@ public class PiecesTest {
     @Test
     void 해당_위치에_있는_기물_찾기_EMPTY() {
         Pieces pieces = new Pieces(PieceFactory.initialPieces());
-        Piece sourcePiece = pieces.findByPosition(Position.of('e', '4'));
+        Piece sourcePiece = pieces.findByPosition(Position.of("e4"));
 
         assertThat(sourcePiece).isInstanceOf(Empty.class);
     }
@@ -41,7 +41,7 @@ public class PiecesTest {
     @Test
     void 해당_위치_기물_제거_확인() {
         Pieces pieces = new Pieces(PieceFactory.initialPieces());
-        Position target = Position.of('g', '7');
+        Position target = Position.of("g7");
 
         pieces.removePieceByPosition(target);
 
@@ -66,12 +66,12 @@ public class PiecesTest {
     @Test
     void 세로줄_같은색_폰() {
         List<Piece> current = Arrays.asList(
-                new Pawn(Position.of('a', '8'), Color.BLACK),
-                new Pawn(Position.of('a', '7'), Color.BLACK),
-                new Pawn(Position.of('d', '8'), Color.BLACK),
-                new Pawn(Position.of('d', '7'), Color.BLACK),
-                new Pawn(Position.of('c', '1'), Color.WHITE),
-                new Pawn(Position.of('c', '2'), Color.WHITE));
+                new Pawn(Position.of("a8"), Color.BLACK),
+                new Pawn(Position.of("a7"), Color.BLACK),
+                new Pawn(Position.of("d8"), Color.BLACK),
+                new Pawn(Position.of("d7"), Color.BLACK),
+                new Pawn(Position.of("c1"), Color.WHITE),
+                new Pawn(Position.of("c2"), Color.WHITE));
         Pieces pieces = new Pieces(current);
 
         int pawnCountByX = pieces.pawnCountByX('a');

@@ -15,9 +15,9 @@ public class RookTest {
     @DisplayName("Rook 객체 생성 확인")
     @Test
     void 룩_객체_생성() {
-        Rook rook = new Rook(Position.of('a', '8'), Color.BLACK);
+        Rook rook = new Rook(Position.of("a8"), Color.BLACK);
 
-        assertThat(rook.getPosition()).isEqualTo(Position.of('a', '8'));
+        assertThat(rook.getPosition()).isEqualTo(Position.of("a8"));
         assertThat(rook.getName()).isEqualTo("R");
     }
 
@@ -25,10 +25,10 @@ public class RookTest {
     @Test
     void 룩_이동() {
         List<Piece> current = Arrays.asList(
-                new Rook(Position.of('a', '8'), Color.BLACK));
+                new Rook(Position.of("a8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('a', '8'); // 비숍 위치
-        Position target = Position.of('a', '1'); // 옮기고자 하는 위치
+        Position source = Position.of("a8");
+        Position target = Position.of("a1");
         Piece rook = pieces.findByPosition(source);
 
         rook.move(target, pieces);
@@ -40,10 +40,10 @@ public class RookTest {
     @Test
     void 룩_이동_규칙에_어긋나는_경우_예외() {
         List<Piece> current = Arrays.asList(
-                new Rook(Position.of('a', '8'), Color.BLACK));
+                new Rook(Position.of("a8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('a', '8'); // 비숍 위치
-        Position target = Position.of('b', '1'); // 옮기고자 하는 위치
+        Position source = Position.of("a8");
+        Position target = Position.of("b1");
 
         Piece rook = pieces.findByPosition(source);
 

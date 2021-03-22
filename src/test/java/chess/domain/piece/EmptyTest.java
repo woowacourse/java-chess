@@ -29,7 +29,7 @@ public class EmptyTest {
     @Test
     void 움직일_수_없다() {
         Empty empty = new Empty();
-        Position target = Position.of('e', '6');
+        Position target = Position.of("e6");
 
         assertThatThrownBy(() -> empty.move(target, initialPieces))
                 .isInstanceOf(IllegalArgumentException.class);
