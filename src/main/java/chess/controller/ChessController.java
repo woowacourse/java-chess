@@ -1,12 +1,9 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
-import chess.domain.command.*;
+import chess.domain.command.Commands;
 import chess.view.InputView;
 import chess.view.OutputView;
-
-import java.util.Arrays;
-import java.util.List;
 
 public class ChessController {
 
@@ -19,14 +16,18 @@ public class ChessController {
 
     public void playGame(ChessGame chessGame, Commands commands) {
         while (true) {
-            try {
-                String commandMessage = commands.execute(InputView.inputCommand(), chessGame);
-                OutputView.printMessage(commandMessage);
-                OutputView.printBoard(chessGame.getBoard());
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
-                playGame(chessGame, commands);
-            }
+            commandAndExecute(chessGame, commands);
+        }
+    }
+
+    private void commandAndExecute(ChessGame chessGame, Commands commands) {
+        try {
+            String commandMessage = commands.execute(InputView.inputCommand(), chessGame);
+            OutputView.printMessage(commandMessage);
+            OutputView.printBoard(chessGame.getBoard());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            playGame(chessGame, commands);
         }
     }
 }

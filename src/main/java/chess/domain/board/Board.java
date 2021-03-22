@@ -11,11 +11,11 @@ public class Board {
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
     private final Map<Position, Piece> board;
-    private final Map<Team, Double> deadPieceByTeam;
+    private final Map<Team, Double> lostScoreByTeam;
 
     public Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
-        this.deadPieceByTeam = initializeDeadPieceByTeamMap();
+        this.lostScoreByTeam = initializeDeadPieceByTeamMap();
     }
 
     private Map<Team, Double> initializeDeadPieceByTeamMap() {
@@ -35,18 +35,26 @@ public class Board {
         checkMovable(targetMovablePositions, destination);
         if (targetPiece.canMove(target, destination, this)) {
             Piece destinationPiece = findPieceFromPosition(destination);
-            if(destinationPiece instanceof King){
-                System.exit(0);
-            }
-            if (Objects.nonNull(destinationPiece)) {
-                deadPieceByTeam.put(destinationPiece.getTeam()
-                        , deadPieceByTeam.get(destinationPiece.getTeam()) + destinationPiece.getScore());
-            }
+            exitWhenPieceIsKing(destinationPiece);
+            loseScoreWhenDestinationIsPiece(destinationPiece);
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
             return;
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+    }
+
+    private void loseScoreWhenDestinationIsPiece(Piece destinationPiece) {
+        if (Objects.nonNull(destinationPiece)) {
+            lostScoreByTeam.put(destinationPiece.getTeam()
+                    , lostScoreByTeam.get(destinationPiece.getTeam()) + destinationPiece.getScore());
+        }
+    }
+
+    private void exitWhenPieceIsKing(Piece destinationPiece) {
+        if(destinationPiece instanceof King){
+            System.exit(0);
+        }
     }
 
     private void movePieceToPosition(Piece targetPiece, Position destination) {
@@ -68,26 +76,41 @@ public class Board {
     }
 
     public double calculateScore(Team team) {
-        double defaultScore = TOTAL_SCORE - deadPieceByTeam.get(team);
+        double defaultScore = TOTAL_SCORE - lostScoreByTeam.get(team);
         return defaultScore - countOfSameLinePawn(team) * PAWN_SAME_HORIZONTAL_SCORE;
     }
 
     private int countOfSameLinePawn(Team team) {
         int result = 0;
         for (Horizontal horizontal : Horizontal.values()) {
-            int cnt = 0;
-            for (Map.Entry<Position, Piece> entry : board.entrySet()) {
-                Position position = entry.getKey();
-                Piece piece = entry.getValue();
-                if (horizontal.isSameHorizontal(position) && piece instanceof Pawn && piece.isSameTeam(team)) {
-                    cnt++;
-                }
-            }
-            if (cnt >= 2) {
-                result += cnt;
-            }
+            int cnt = calculateSameLinePawnCount(team, horizontal);
+            result = plusCountWhenSameLinePawnIsMoreThanTwo(result, cnt);
         }
         return result;
+    }
+
+    private int plusCountWhenSameLinePawnIsMoreThanTwo(int result, int cnt) {
+        if (cnt >= 2) {
+            result += cnt;
+        }
+        return result;
+    }
+
+    private int calculateSameLinePawnCount(Team team, Horizontal horizontal) {
+        int cnt = 0;
+        for (Map.Entry<Position, Piece> entry : board.entrySet()) {
+            Position position = entry.getKey();
+            Piece piece = entry.getValue();
+            cnt = calculateEachHorizontalTotalPawnCount(team, horizontal, cnt, position, piece);
+        }
+        return cnt;
+    }
+
+    private int calculateEachHorizontalTotalPawnCount(Team team, Horizontal horizontal, int cnt, Position position, Piece piece) {
+        if (horizontal.isSameHorizontal(position) && piece instanceof Pawn && piece.isSameTeam(team)) {
+            cnt++;
+        }
+        return cnt;
     }
 
     public Map<Position, Piece> getBoard() {
