@@ -37,6 +37,10 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
+    public static void printCheck() {
+        System.out.println("체크!");
+    }
+
     public static void printResult(ChessResult chessResult) {
         printByFormat(SCORE_FORM, TeamColor.WHITE, chessResult.whiteTeamScore().value());
         printByFormat(SCORE_FORM, TeamColor.BLACK, chessResult.blackTeamScore().value());

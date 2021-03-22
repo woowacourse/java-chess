@@ -44,6 +44,10 @@ public abstract class Piece {
         return pieceMoving.row();
     }
 
+    public List<Position> movablePositions() {
+        return pieceMoving.movablePositions();
+    }
+
     public boolean sameColor(TeamColor teamColor) {
         return this.teamColor.isSameColor(teamColor);
     }
@@ -63,10 +67,6 @@ public abstract class Piece {
     public abstract boolean isPawn();
 
     public abstract boolean isKing();
-
-    public List<Position> movablePositions() {
-        return pieceMoving.movablePositions();
-    }
 
     public Score score() {
         return score;

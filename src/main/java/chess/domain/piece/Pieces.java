@@ -4,10 +4,7 @@ import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -87,6 +84,19 @@ public class Pieces {
         return piecesByTeamColor(teamColor)
                 .stream()
                 .noneMatch(Piece::isKing);
+    }
+
+    public Set<Position> attackPositions(TeamColor teamColor) {
+        return piecesByTeamColor(teamColor).stream()
+                .flatMap(piece -> piece.movablePositions().stream())
+                .collect(Collectors.toSet());
+    }
+
+    public Optional<Piece> kingByColor(TeamColor teamColor) {
+        return piecesByTeamColor(teamColor)
+                .stream()
+                .filter(Piece::isKing)
+                .findAny();
     }
 
     public Map<Position, String> nameGroupingByPosition() {

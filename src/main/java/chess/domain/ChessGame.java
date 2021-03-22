@@ -6,6 +6,7 @@ import chess.exception.PieceNotFoundException;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 import static chess.domain.TeamColor.BLACK;
 import static chess.domain.TeamColor.WHITE;
@@ -81,8 +82,12 @@ public class ChessGame {
         return pieces.totalScoreByTeamColor(teamColor);
     }
 
-    public TeamColor enemyColor() {
-        return currentColor.reverse();
+    public boolean checked() {
+        updateMovablePositions();
+        Set<Position> enemyAttackPositions = pieces.attackPositions(enemyColor());
+        Piece king = pieces.kingByColor(currentColor)
+                .orElseThrow(PieceNotFoundException::new);
+        return enemyAttackPositions.contains(king.currentPosition());
     }
 
     public Map<Position, String> nameGroupingByPosition() {
@@ -91,6 +96,10 @@ public class ChessGame {
 
     public Optional<Piece> piece(final Position position) {
         return pieces.pieceByPosition(position);
+    }
+
+    public TeamColor enemyColor() {
+        return currentColor.reverse();
     }
 
     public int boardSize() {

@@ -39,6 +39,9 @@ public class ChessAction {
             OutputView.printWinner(chessGame.enemyColor());
             return GameStatus.EXIT;
         }
+        if (chessGame.checked()) {
+            OutputView.printCheck();
+        }
         return GameStatus.RUN;
     }
 
