@@ -16,15 +16,29 @@ public class Queen extends Piece {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
+
+        return checkDiagonalOrStraightRule(current, destination, chessBoard);
+    }
+
+    private boolean checkDiagonalOrStraightRule(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (current.checkDiagonalRule(destination)) {
-            final List<Position> diagonalPath = current.generateDiagonalPath(destination);
-            return checkEmptyPath(diagonalPath, chessBoard);
+            return checkDiagonalEmptyPath(current, destination, chessBoard);
         }
+
         if (current.checkStraightRule(destination)) {
-            final List<Position> straightPath = current.generateStraightPath(destination);
-            return checkEmptyPath(straightPath, chessBoard);
+            return checkStraightEmptyPath(current, destination, chessBoard);
         }
         return false;
+    }
+
+    private boolean checkDiagonalEmptyPath(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+        final List<Position> diagonalPath = current.generateDiagonalPath(destination);
+        return checkEmptyPath(diagonalPath, chessBoard);
+    }
+
+    private boolean checkStraightEmptyPath(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
+        final List<Position> straightPath = current.generateStraightPath(destination);
+        return checkEmptyPath(straightPath, chessBoard);
     }
 
     @Override
@@ -49,8 +63,14 @@ public class Queen extends Piece {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (this == obj) return true;
+        if (obj == null) {
+            return false;
+        }
+
+        if (this == obj) {
+            return true;
+        }
+
         return getClass() == obj.getClass();
     }
 }
