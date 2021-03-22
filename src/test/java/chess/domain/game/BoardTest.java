@@ -1,5 +1,7 @@
-package chess.domain;
+package chess.domain.game;
 
+import chess.domain.game.Board;
+import chess.domain.game.BoardFactory;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;

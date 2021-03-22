@@ -1,10 +1,8 @@
 package chess.view;
 
-import chess.domain.Board;
-import chess.domain.Player;
+import chess.domain.game.Player;
 import chess.domain.piece.Color;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Pieces;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
