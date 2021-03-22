@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -24,6 +25,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("destinations")
+    @DisplayName("비숍의 움직임 로직 확인")
     void move(Position position) {
         Bishop bishop = new Bishop(Color.BLACK, Position.from("c5"));
         bishop.moveToEmpty(position, new Pieces());
@@ -32,6 +34,7 @@ class BishopTest {
 
     @ParameterizedTest
     @MethodSource("destinations")
+    @DisplayName("비숍이 움직이는 길에 다른 기물이 있을 때 익셉션을 날리는지 확인")
     void interruptedMove(Position position) {
         Bishop bishop = new Bishop(Color.BLACK, Position.from("c5"));
         List<Position> positions = Arrays.asList(Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));

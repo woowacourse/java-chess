@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import chess.domain.position.Position;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -27,6 +28,7 @@ class KingTest {
 
     @ParameterizedTest
     @MethodSource("destinations")
+    @DisplayName("킹의 움직임 로직확인")
     void move(Position position) {
         King king = new King(Color.BLACK, Position.from("c5"));
         king.moveToEmpty(position, new Pieces());
@@ -34,10 +36,10 @@ class KingTest {
     }
 
     @Test
+    @DisplayName("킹이 코너에 있을 때 움직임 로직확인")
     void cornerMove() {
         King king = new King(Color.BLACK, Position.from("a5"));
         assertThatCode(() -> king.moveToEmpty(Position.from("a4"), new Pieces()))
                 .doesNotThrowAnyException();
     }
-
 }

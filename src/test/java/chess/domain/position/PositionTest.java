@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -11,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class PositionTest {
-
     private static Stream<Arguments> positions() {
         return Stream.of(
                 Arguments.of(-3, -5, Position.of(Column.A, Row.ONE)),
@@ -22,6 +22,7 @@ public class PositionTest {
     }
 
     @Test
+    @DisplayName("position이 잘 생성되는지 확인")
     void createPosition() {
         assertThatCode(() -> Position.of(Column.A, Row.ONE))
                 .doesNotThrowAnyException();
@@ -29,12 +30,14 @@ public class PositionTest {
 
     @ParameterizedTest
     @MethodSource("positions")
+    @DisplayName("position이 주어진 위치로 잘 이동하는지 확인")
     void moveBy(int column, int row, Position expected) {
         Position position = Position.of(Column.D, Row.SIX);
         assertThat(position.moveBy(column, row)).isEqualTo(expected);
     }
 
     @Test
+    @DisplayName("체스판 position들이 잘 캐싱되는지 확인")
     void cache() {
         Position position1 = Position.from("a1");
         Position position2 = Position.of(Column.A, Row.ONE);
