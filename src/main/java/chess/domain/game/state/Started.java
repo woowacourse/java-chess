@@ -20,6 +20,16 @@ public abstract class Started implements State {
     }
 
     @Override
+    public boolean isNotEnd() {
+        return true;
+    }
+
+    @Override
+    public String finishReason() {
+        throw new IllegalStateException("현재 수행할 수 없는 명령입니다.");
+    }
+
+    @Override
     public boolean isSameColor(Color color) {
         throw new IllegalStateException("현재 수행할 수 없는 명령입니다.");
     }
@@ -36,6 +46,6 @@ public abstract class Started implements State {
 
     @Override
     public boolean isNotFinished() {
-        return true;
+        return this.board.isAliveBothKings();
     }
 }

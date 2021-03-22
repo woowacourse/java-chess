@@ -9,17 +9,17 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public void moveIfValidColor(Position source, Position target) {
-        throw new IllegalStateException();
+    public State start() {
+        return new Init(board());
     }
 
     @Override
-    public State end() {
+    public void moveIfValidColor(Position source, Position target) {
         throw new IllegalStateException("게임이 이미 종료되었습니다.");
     }
 
     @Override
-    public boolean isNotFinished() {
-        return false;
+    public State end() {
+        return new End(board());
     }
 }

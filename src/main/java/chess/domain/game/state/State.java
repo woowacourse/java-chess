@@ -18,7 +18,11 @@ public interface State {
 
     State end();
 
+    String finishReason();
+
     boolean isNotFinished();
+
+    boolean isNotEnd();
 
     List<Map<Position, Piece>> squares();
 }

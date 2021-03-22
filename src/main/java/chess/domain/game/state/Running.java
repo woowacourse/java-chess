@@ -7,18 +7,12 @@ public abstract class Running extends Started {
         super(board);
     }
 
+    protected boolean isFinished() {
+        return !board().isAliveBothKings();
+    }
+
     @Override
     public State start() {
         throw new IllegalStateException("게임이 이미 진행 중 입니다.");
-    }
-
-    @Override
-    public State end() {
-        return new End(board());
-    }
-
-    @Override
-    public boolean isNotFinished() {
-        return true;
     }
 }

@@ -59,6 +59,10 @@ public abstract class Piece {
         return true;
     }
 
+    public boolean isKing() {
+        return false;
+    }
+
     public abstract MoveStrategy moveStrategy();
 
     @Override

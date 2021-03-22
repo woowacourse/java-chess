@@ -26,4 +26,7 @@ public class OutputView {
         System.out.println(message);
         System.out.println();
     }
+
+    public static void printFinishWithReason(String message) {
+    }
 }

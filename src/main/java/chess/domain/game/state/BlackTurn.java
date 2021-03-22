@@ -6,7 +6,6 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.team.Color;
 
 public class BlackTurn extends Running {
-
     public BlackTurn(Board board) {
         super(board);
     }
@@ -19,6 +18,14 @@ public class BlackTurn extends Running {
     @Override
     public State passTurn() {
         return new WhiteTurn(board());
+    }
+
+    @Override
+    public State end() {
+        if (isFinished()) {
+            return new BlackWin(board());
+        }
+        return new Draw(board());
     }
 
     @Override

@@ -15,27 +15,41 @@ import java.util.List;
 public class ChessGameController {
     public void run() {
         ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
-        Commands commands = Commands.initCommands(chessGame);
         OutputView.printCommandNotice();
-        while (chessGame.isNotFinished()) {
-            playChess(chessGame, commands);
+        while (chessGame.isNotEnd()) {
+            chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
+            Commands commands = Commands.initCommands(chessGame);
+            runningChess(chessGame, commands);
+            afterFinishChess(chessGame, commands);
         }
-        // 게임 종료 후 3단계 승패코드
     }
 
-    private void playChess(ChessGame chessGame, Commands commands) {
-        try {
-            String input = InputView.command();
-            Command command = commands.matchedCommand(input);
-            command.execution(input);
+    private void runningChess(ChessGame chessGame, Commands commands) {
+        while (chessGame.isNotFinished()) {
+            commandExecution(commands);
             printBoardStatus(chessGame);
-        } catch (IllegalStateException | IllegalArgumentException e) {
-            OutputView.printErrorException(e.getMessage());
+        }
+    }
+
+    private void afterFinishChess(ChessGame chessGame, Commands commands) {
+        OutputView.printFinishWithReason(chessGame.finishReason());
+        while (chessGame.isFinished()) {
+            commandExecution(commands);
         }
     }
 
     private void printBoardStatus(ChessGame chessGame) {
         List<LineDto> boardDto = DtoAssembler.assemble(chessGame.board());
         OutputView.printBoard(boardDto);
+    }
+
+    private void commandExecution(Commands commands) {
+        try {
+            String input = InputView.command();
+            Command command = commands.matchedCommand(input);
+            command.execution(input);
+        } catch (IllegalStateException | IllegalArgumentException e) {
+            OutputView.printErrorException(e.getMessage());
+        }
     }
 }

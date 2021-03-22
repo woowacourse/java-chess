@@ -8,7 +8,7 @@ public class End extends Finished {
     }
 
     @Override
-    public State start() {
-        throw new IllegalStateException("게임이 이미 종료되었습니다.");
+    public boolean isNotEnd() {
+        return false;
     }
 }

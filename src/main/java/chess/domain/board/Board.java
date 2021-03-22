@@ -2,6 +2,7 @@ package chess.domain.board;
 
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.MoveStrategy;
+import chess.domain.piece.Empty;
 import chess.domain.piece.Piece;
 
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Board {
-
+    public static final int BOTH_KINGS_ALIVE = 2;
     private final List<Map<Position, Piece>> squares;
 
     public Board(final List<Map<Position, Piece>> squares) {
@@ -44,9 +45,7 @@ public class Board {
 
     private void swapPieces(Position source, Position target) {
         Piece sourcePiece = pieceOfPosition(source);
-        Piece targetPiece = pieceOfPosition(target);
-
-        replacePiece(source, targetPiece);
+        replacePiece(source, Empty.create());
         replacePiece(target, sourcePiece);
     }
 
@@ -60,5 +59,12 @@ public class Board {
         if (map.containsKey(position)) {
             map.replace(position, piece);
         }
+    }
+
+    public boolean isAliveBothKings() {
+        return squares.stream()
+                .flatMap(map -> map.values().stream())
+                .filter(Piece::isKing)
+                .count() == BOTH_KINGS_ALIVE;
     }
 }
