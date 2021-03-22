@@ -40,7 +40,8 @@ public class Position {
     }
 
     public static Position from(String positionKey) {
-        return Optional.ofNullable(CACHE.get(positionKey))
+        return Optional
+            .ofNullable(CACHE.get(positionKey))
             .orElseGet(() -> {
                 throw new InvalidMoveException(Position.OUT_OF_BOUND_MESSAGE);
             });
@@ -56,6 +57,16 @@ public class Position {
         char xRawPosition = xPosition.getValue();
         int yRawPosition = yPosition.getValue();
         return of(xRawPosition, yRawPosition);
+    }
+
+    public boolean isLineMove(Position target) {
+        return (computeHorizontalDistance(target) == 0 ||
+            computeVerticalDistance(target) == 0);
+    }
+
+    public boolean isDiagonalMove(Position target) {
+        return (Math.abs(computeHorizontalDistance(target)) ==
+            Math.abs(computeVerticalDistance(target)));
     }
 
     public int computeHorizontalDistance(Position anotherPosition) {
@@ -77,17 +88,6 @@ public class Position {
     public void moveUnit(int xVector, int yVector) {
         xPosition = xPosition.moveUnit(xVector);
         yPosition = yPosition.moveUnit(yVector);
-    }
-
-
-    public boolean isLineMove(Position target) {
-        return (computeHorizontalDistance(target) == 0 ||
-            computeVerticalDistance(target) == 0);
-    }
-
-    public boolean isDiagonalMove(Position target) {
-        return (Math.abs(computeHorizontalDistance(target)) ==
-            Math.abs(computeVerticalDistance(target)));
     }
 
     @Override

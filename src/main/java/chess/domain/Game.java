@@ -2,27 +2,27 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.InitializedBoard;
+import chess.domain.board.Point;
 import chess.domain.board.Position;
 import chess.domain.piece.PieceColor;
 
 public class Game {
 
     private Board board;
+    private Point point;
     private GameState gameState;
     private PieceColor turnColor;
 
     public Game() {
-        this(new Board(InitializedBoard.emptyBoard()), GameState.NOT_STARTED);
-    }
-
-    public Game(Board board, GameState gameState) {
-        this.board = board;
-        this.gameState = gameState;
+        this.board = new Board(InitializedBoard.emptyBoard());
+        this.point = new Point(board);
+        this.gameState = GameState.NOT_STARTED;
         this.turnColor = PieceColor.WHITE;
     }
 
     public void init() {
         this.board = new Board(InitializedBoard.board());
+        this.point = new Point(board);
         this.gameState = GameState.START;
     }
 
@@ -50,11 +50,11 @@ public class Game {
     }
 
     public double computeWhitePoint() {
-        return board.computePoint(PieceColor.WHITE);
+        return point.whitePoint();
     }
 
     public double computeBlackPoint() {
-        return board.computePoint(PieceColor.BLACK);
+        return point.blackPoint();
     }
 
     public Board getBoard() {

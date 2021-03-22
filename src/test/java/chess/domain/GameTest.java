@@ -17,8 +17,10 @@ class GameTest {
     void calculateGamePoint_int() {
         Game game = new Game();
         game.init();
+
         double whitePoint = game.computeWhitePoint();
         double blackPoint = game.computeBlackPoint();
+
         assertEquals(whitePoint, 38);
         assertEquals(blackPoint, 38);
     }
@@ -34,7 +36,9 @@ class GameTest {
         Position secondPawnPosition = Position.of('c', 4);
         board.putPieceAtPosition(firstPawnPosition, pawnPiece);
         board.putPieceAtPosition(secondPawnPosition, pawnPiece);
+
         double whitePoint = game.computeWhitePoint();
+
         assertEquals(whitePoint, 38.5);
     }
 
@@ -43,6 +47,7 @@ class GameTest {
     void judgeTurn_ThrownError() {
         Game game = new Game();
         game.init();
+
         assertThatThrownBy(() -> game.move("e7", "e6"))
             .isInstanceOf(RuntimeException.class)
             .hasMessageContaining("해당 턴이 아닙니다.");
@@ -60,7 +65,9 @@ class GameTest {
         game.move("e7", "e6");
         board.putPieceAtPosition(checkMatePosition, queenPiece);
         game.move("e7", "e8");
+
         PieceColor winnerColor = game.winnerColor();
+
         assertEquals(winnerColor, PieceColor.WHITE);
     }
 }
