@@ -31,12 +31,10 @@ public class PawnStrategy implements CanMoveStrategy {
         if (Objects.nonNull(movedPositionPiece)) {
             return false;
         }
-        if (destination.getVerticalWeight() - target.getVerticalWeight() == 2) {
-            movedPosition = movedPosition.moveTowardDirection(target.directionToDestination(destination));
-            movedPositionPiece = board.findPieceFromPosition(movedPosition);
-            return !Objects.nonNull(movedPositionPiece);
-        }
-        return true;
+        movedPosition = movedPosition.moveTowardDirection(target.directionToDestination(destination));
+        movedPositionPiece = board.findPieceFromPosition(movedPosition);
+
+        return Objects.isNull(movedPositionPiece);
     }
 
     private boolean isDiagonal(Direction direction) {
