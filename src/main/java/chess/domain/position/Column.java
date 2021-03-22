@@ -13,11 +13,11 @@ public enum Column {
         this.value = value;
     }
 
-    public static Column from(Character alpha) {
-        String upperAlpha = alpha.toString().toUpperCase(Locale.ROOT);
+    public static Column from(Character lineName) {
+        String upperName = lineName.toString().toUpperCase(Locale.ROOT);
 
         return Arrays.stream(Column.values())
-                .filter(column -> column.name().equals(upperAlpha))
+                .filter(column -> column.name().equals(upperName))
                 .findAny()
                 .orElseThrow(InvalidColumnException::new);
     }

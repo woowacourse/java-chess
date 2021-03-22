@@ -17,6 +17,9 @@ public class OutputView {
     private static final String WHITE_SCORE_IS = "White: ";
     private static final String CURRENT_TURN_IS = "Current Turn: ";
 
+    private OutputView() {
+    }
+
     public static void startGame() {
         System.out.println("체스 게임을 시작합니다.");
         System.out.println("게임 시작은 start, 종료는 end 명령을 입력하세요.");
@@ -29,7 +32,7 @@ public class OutputView {
         print(chessGame.currentTurn());
     }
 
-    public static void print(Board board) {
+    private static void print(Board board) {
         // TODO 뎁스 리팩터링
         for (Row row : Row.values()) {
             for (Column column : Column.values()) {

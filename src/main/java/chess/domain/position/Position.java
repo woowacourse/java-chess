@@ -4,6 +4,7 @@ import chess.exception.PositionException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class Position {
 
@@ -22,7 +23,7 @@ public class Position {
     // TODO 캐싱
     public static Position from(String position) {
         if (position.length() != POSITION_LENGTH) {
-            throw new PositionException("유효하지 않은 좌표입니다.");
+            throw new PositionException();
         }
 
         return new Position(
@@ -149,22 +150,15 @@ public class Position {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Position)) {
+        if (o == null || getClass() != o.getClass()) {
             return false;
         }
-
         Position position = (Position) o;
-
-        if (row != position.row) {
-            return false;
-        }
-        return column == position.column;
+        return column == position.column && row == position.row;
     }
 
     @Override
     public int hashCode() {
-        int result = row != null ? row.hashCode() : 0;
-        result = 31 * result + (column != null ? column.hashCode() : 0);
-        return result;
+        return Objects.hash(column, row);
     }
 }
