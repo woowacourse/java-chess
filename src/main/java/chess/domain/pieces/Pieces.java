@@ -25,7 +25,7 @@ public class Pieces {
         return pieces.stream()
                 .filter(piece -> piece.samePosition(position))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
+                .orElseThrow(() -> new IllegalArgumentException("움직이려는 말이 본인의 말이 아닙니다."));
     }
 
     public final void removePieceByPosition(final Position position) {
