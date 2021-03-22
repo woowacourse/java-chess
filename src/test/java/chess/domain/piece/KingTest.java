@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.TeamColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -46,9 +46,9 @@ public class KingTest {
     @DisplayName("킹 이 움직일 수 없는 경우")
     void moveKingFail() {
         Piece piece = chessBoard.getChessBoard().get(Position.valueOf("e1"));
-        assertThat(piece.isMoveAble(Position.valueOf("e2"), chessBoard));
-        assertThat(piece.isMoveAble(Position.valueOf("d2"), chessBoard));
-        assertThat(piece.isMoveAble(Position.valueOf("f2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("e2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("d2"), chessBoard));
+        assertFalse(piece.isMoveAble(Position.valueOf("f2"), chessBoard));
     }
 
     @Test

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.TeamColor;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

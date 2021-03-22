@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
+import chess.domain.pieceinformations.TeamColor;
 import chess.domain.position.Position;
 import chess.domain.piece.King;
 import chess.domain.piece.Knight;
@@ -26,23 +27,19 @@ public class ChessBoardTest {
     @Test
     @DisplayName("체스판 생성 테스트")
     void createChessBoard() {
-        assertThatCode(() -> new ChessBoard()).doesNotThrowAnyException();
+        assertThatCode(ChessBoard::new).doesNotThrowAnyException();
     }
 
     @Test
     @DisplayName("말 이동 실패 테스트")
     void failOutOfBoundary() {
-        assertThatThrownBy(() -> {
-            chessBoard.move("b2", "b10");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessBoard.move("b2", "b10")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("동일한 위치 금지 테스트")
     void failSamePosition() {
-        assertThatThrownBy(() -> {
-            chessBoard.move("b2", "b2");
-        }).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> chessBoard.move("b2", "b2")).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test

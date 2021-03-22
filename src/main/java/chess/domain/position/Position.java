@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.TeamColor;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -41,6 +41,14 @@ public class Position {
     }
 
     public static Position valueOf(String value) {
+        if (cache.containsKey(value)) {
+            return cache.get(value);
+        }
+        throw new IllegalArgumentException();
+    }
+
+    public static Position valueOf(AlphaColumn column, NumberRow row) {
+        final String value = column.alpha() + row.number();
         if (cache.containsKey(value)) {
             return cache.get(value);
         }

@@ -1,9 +1,10 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
+import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.TeamColor;
 import java.util.HashSet;
 import java.util.Set;
 

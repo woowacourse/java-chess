@@ -2,8 +2,8 @@ package chess.domain.piece;
 
 import chess.domain.ChessBoard;
 import chess.domain.position.Position;
-import chess.domain.State;
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.State;
+import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 
 public class Blank implements Piece {

@@ -1,5 +1,6 @@
 package chess.domain;
 
+import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import java.util.Map;
 

@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.pieceinformations;
 
 public enum PieceInformation {
     KING("k", 0),

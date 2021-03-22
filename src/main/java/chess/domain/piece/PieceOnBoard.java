@@ -1,8 +1,9 @@
 package chess.domain.piece;
 
 import chess.domain.ChessBoard;
-import chess.domain.State;
-import chess.domain.TeamColor;
+import chess.domain.pieceinformations.State;
+import chess.domain.pieceinformations.TeamColor;
+import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.player.Score;
 import chess.domain.position.Moves;
 import chess.domain.position.Position;
