@@ -1,6 +1,10 @@
-package controller.menu;
+package domain.menu;
 
 import domain.ChessGame;
+import domain.dto.BoardDto;
+import domain.dto.MenuDto;
+import domain.exception.CannotStartException;
+import domain.exception.GameNotStartException;
 import domain.exception.ImmovableSamePositionException;
 import domain.exception.InvalidMoveException;
 import domain.piece.Position;
@@ -11,17 +15,20 @@ import java.util.NoSuchElementException;
 public class Move implements Command {
 
     @Override
-    public void execute(String command, ChessGame game) {
+    public MenuDto execute(String command, ChessGame game) {
         if (!game.isRunning()) {
-            OutputView.gameNotStart();
-            return;
+            throw new GameNotStartException();
         }
 
+        startMoveMenu(command, game);
+        return new BoardDto(game.getBoard());
+    }
+
+    private void startMoveMenu(String command, ChessGame game) {
         try {
             String startPosition = command.split(" ")[1];
             String endPosition = command.split(" ")[2];
             game.move(Position.of(startPosition), Position.of(endPosition));
-            OutputView.showBoard(game.getBoard());
         } catch (NoSuchElementException | ArrayIndexOutOfBoundsException | StringIndexOutOfBoundsException e) {
             System.out.println("잘못된 위치 입력값입니다! (입력 : '" + command + "')");
         } catch (InvalidMoveException e) {
