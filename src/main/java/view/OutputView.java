@@ -51,4 +51,8 @@ public class OutputView {
     public static void cannotMovesamePosition(String command) {
         System.out.println("현재 위치와 동일한 위치로 이동할 수 없습니다.(입력 : " + command + ")");
     }
+
+    public static void invalidInputMenu() {
+        System.out.println("메뉴를 잘못 입력하였습니다.");
+    }
 }

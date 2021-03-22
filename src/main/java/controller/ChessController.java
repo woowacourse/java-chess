@@ -27,7 +27,7 @@ public class ChessController {
             Menu menu = Menu.findMenu(menuCommand);
             return menu;
         } catch (InvalidMenuException e) {
-            System.out.println("메뉴를 잘못 입력하였습니다.");
+            OutputView.invalidInputMenu();
             return selectMenu(chessGame);
         }
     }
