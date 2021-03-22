@@ -1,35 +1,30 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.board.Board;
-import chess.domain.position.MovePosition;
+import chess.domain.move.MovePosition;
 
-public class Blank extends AbstractPiece {
+public class Blank implements Piece {
     
-    public static Blank INSTANCE = new Blank(Color.BLANK);
-    
-    private static final DirectionGroup DIRECTION_GROUP = DirectionGroup.createBlankDirectionGroup();
+    public static final Blank INSTANCE = new Blank();
     
     private static final String SYMBOL = ".";
     private static final double SCORE = 0;
     
-    private Blank(Color color) {
-        super(color, DIRECTION_GROUP);
+    private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다";
+    
+    @Override
+    public Direction findDirection(MovePosition movePosition) {
+        throw new UnsupportedOperationException(ERROR_SQUARE_IS_BLANK);
     }
     
     @Override
-    public String getSymbol() {
-        return SYMBOL;
+    public boolean isSameColorAs(Color color) {
+        return false;
     }
     
     @Override
-    public double getScore() {
-        return SCORE;
-    }
-    
-    @Override
-    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
-        throw new IllegalArgumentException("해당 위치에는 기물이 존재하지 않습니다");
+    public boolean isBlank() {
+        return true;
     }
     
     @Override
@@ -40,5 +35,15 @@ public class Blank extends AbstractPiece {
     @Override
     public boolean isKing() {
         return false;
+    }
+    
+    @Override
+    public String getSymbol() {
+        return SYMBOL;
+    }
+    
+    @Override
+    public double getScore() {
+        return SCORE;
     }
 }
