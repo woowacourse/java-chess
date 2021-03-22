@@ -1,7 +1,6 @@
-package chess.domain;
+package chess.domain.manager;
 
 import chess.domain.board.Board;
-import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.ColoredPieces;
 import chess.domain.piece.attribute.Color;
@@ -11,29 +10,27 @@ import chess.domain.statistics.MatchResult;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
-public class ChessGameManager {
-    private Board board;
-    private List<ColoredPieces> coloredPieces;
+public class RunningGameManager implements ChessGameManager {
+    private final Board board;
+    private final List<ColoredPieces> coloredPieces;
     private Color currentColor;
-    private GameStatus gameStatus = GameStatus.NOT_STARTED;
 
-    public void start() {
-        board = DefaultBoardInitializer.getBoard();
-        this.coloredPieces = Color.getUserColors().stream()
-                .map(ColoredPieces::createByColor)
-                .collect(Collectors.toList());
-        currentColor = Color.WHITE;
-        gameStatus = GameStatus.RUNNING;
+    public RunningGameManager(Board board, List<ColoredPieces> coloredPieces, Color currentColor) {
+        this.board = board;
+        this.coloredPieces = coloredPieces;
+        this.currentColor = currentColor;
     }
 
-    public void end() {
-        gameStatus = GameStatus.END;
+    public ChessGameManager start() {
+        return ChessGameManagerFactory.createRunningGame();
+    }
+
+    public ChessGameManager end() {
+        return ChessGameManagerFactory.createEndGame(getStatistics());
     }
 
     public void move(Position from, Position to) {
-        throwExceptionWhenGameIsNotRunning();
         if (board.findByPosition(from).getPiece().getColor() != currentColor) {
             throw new IllegalArgumentException("현재 움직일 수 있는 진영의 기물이 아닙니다.");
         }
@@ -42,14 +39,7 @@ public class ChessGameManager {
             ColoredPieces opposite = findByColor(currentColor.opposite());
             opposite.remove(moveResult.getCapturedPiece());
         }
-        updateEndCondition();
         turnOver();
-    }
-
-    private void throwExceptionWhenGameIsNotRunning() {
-        if (gameStatus != GameStatus.RUNNING) {
-            throw new IllegalArgumentException("게임이 진행중이지 않아 실행할 수 없습니다.");
-        }
     }
 
     private void turnOver() {
@@ -63,15 +53,8 @@ public class ChessGameManager {
                 .orElseThrow(() -> new IllegalArgumentException("없는 진영의 기물들입니다."));
     }
 
-    public void updateEndCondition() {
-        boolean isEnd = isKingDeadEndCondition();
-
-        if (isEnd) {
-            gameStatus = GameStatus.END;
-        }
-    }
-
-    private boolean isKingDeadEndCondition() {
+    @Override
+    public boolean isKingDead() {
         return coloredPieces.stream()
                 .anyMatch(ColoredPieces::isKingDead);
     }
@@ -84,20 +67,25 @@ public class ChessGameManager {
                 .orElseThrow(() -> new IllegalArgumentException("왕이 다 죽어 승자가 없습니다."));
     }
 
-    public Board getBoard() {
-        return this.board;
-    }
-
-    public boolean isSameStatus(GameStatus gameStatus) {
-        return this.gameStatus == gameStatus;
-    }
-
     public ChessGameStatistics getStatistics() {
         Map<Color, Double> scoreMap = board.getScoreMap();
-        if (isKingDeadEndCondition()) {
+        if (isKingDead()) {
             return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResultByColor(kingAliveColor()));
         }
         return new ChessGameStatistics(scoreMap, MatchResult.generateMatchResult(scoreMap.get(Color.WHITE), scoreMap.get(Color.BLACK)));
     }
 
+    public Board getBoard() {
+        return this.board;
+    }
+
+    @Override
+    public boolean isNotEnd() {
+        return true;
+    }
+
+    @Override
+    public boolean isStart() {
+        return true;
+    }
 }

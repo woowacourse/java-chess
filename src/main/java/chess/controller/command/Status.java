@@ -1,6 +1,6 @@
 package chess.controller.command;
 
-import chess.domain.ChessGameManager;
+import chess.domain.manager.ChessGameManager;
 import chess.domain.statistics.ChessGameStatistics;
 import chess.view.OutputView;
 
@@ -16,13 +16,9 @@ public class Status implements Command{
     }
 
     @Override
-    public void execute(ChessGameManager chessGameManager) {
+    public ChessGameManager execute(ChessGameManager chessGameManager) {
         ChessGameStatistics chessGameStatistics = chessGameManager.getStatistics();
         OutputView.printResult(chessGameStatistics);
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        return chessGameManager;
     }
 }

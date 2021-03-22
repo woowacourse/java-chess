@@ -1,6 +1,7 @@
 package chess.controller.command;
 
-import chess.domain.ChessGameManager;
+import chess.domain.manager.ChessGameManager;
+import chess.domain.manager.ChessGameManagerFactory;
 import chess.domain.position.Position;
 import chess.view.OutputView;
 
@@ -23,13 +24,12 @@ public class Move implements Command{
     }
 
     @Override
-    public void execute(ChessGameManager chessGameManager) {
+    public ChessGameManager execute(ChessGameManager chessGameManager) {
         chessGameManager.move(from, to);
         OutputView.printBoard(chessGameManager.getBoard());
-    }
-
-    @Override
-    public boolean isEnd() {
-        return false;
+        if (chessGameManager.isKingDead()) {
+            return ChessGameManagerFactory.createEndGame(chessGameManager.getStatistics());
+        }
+        return chessGameManager;
     }
 }

@@ -1,8 +1,7 @@
 package chess.controller.command;
 
-import chess.domain.ChessGameManager;
+import chess.domain.manager.ChessGameManager;
 
 public interface Command {
-    void execute(ChessGameManager chessGameManager);
-    boolean isEnd();
+    ChessGameManager execute(ChessGameManager runningGameManager);
 }
