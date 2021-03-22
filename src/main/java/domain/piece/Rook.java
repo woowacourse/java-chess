@@ -1,78 +1,50 @@
 package domain.piece;
 
 import domain.Score;
-
-import java.util.Arrays;
-import java.util.List;
+import domain.board.Board;
+import domain.position.Direction;
+import domain.position.Position;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Rook extends Piece {
+
     private static final Score SCORE = new Score(5);
+    private static final String NAME = "r";
 
-    private Rook(String name, int x, int y, boolean isBlack) {
-        super(name, SCORE, Position.Of(x, y), isBlack);
-    }
-
-    public static Rook Of(String name, Position position, boolean color) {
-        return new Rook(name, position.getRow(), position.getColumn(), color);
-    }
-
-    public static List<Rook> initialRookPieces() {
-        return Arrays.asList(Rook.Of("R", Position.Of(0, 0), true),
-                Rook.Of("R", Position.Of(0, 7), true),
-                Rook.Of("r", Position.Of(7, 0), false),
-                Rook.Of("r", Position.Of(7, 7), false));
+    public Rook(boolean isBlack) {
+        super(isBlack);
     }
 
     @Override
-    public boolean canMove(Piece[][] board, Position endPosition) {
-        if (board[endPosition.getRow()][endPosition.getColumn()] != null && isOurTeam(board, endPosition)) return false;
-
-        if (checkPositionRange(endPosition)) {
+    public boolean canMove(Board board, Position source, Position target) {
+        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
+            || source.isNotLinearPosition(target)) {
             return false;
         }
-
-        int dx[] = {-1, 1, 0, 0}; // 상 하 좌 우
-        int dy[] = {0, 0, -1, 1};
-
-        int index = findDirection(endPosition);
-        int nextRow = position.getRow() + dx[index];
-        int nextColumn = position.getColumn() + dy[index];
-
-        while (!(nextRow == endPosition.getRow() && nextColumn == endPosition.getColumn())
-                && board[nextRow][nextColumn] == null) {
-            nextRow += dx[index];
-            nextColumn += dy[index];
-        }
-
-        return Position.Of(nextRow, nextColumn).equals(endPosition);
+        Direction direction = Direction.linearTargetDirection(source.diff(target));
+        do {
+            source = source.sum(direction);
+        } while (!source.equals(target)
+            && board.piece(source).isEmpty() && source.isChessBoardPosition());
+        return source.equals(target);
     }
 
-    @Override
-    public Rook movePosition(Position end) {
-        return new Rook(getName(), position.getRow(), position.getColumn(), isBlack());
+    public String getName() {
+        return NAME;
     }
 
-    private int findDirection(Position end) {
-        int rowDiff = end.getRow() - position.getRow();
-        int colDiff = end.getColumn() - position.getColumn();
-
-        if (rowDiff < 0) {
-            return 0;
-        }
-
-        if (rowDiff > 0) {
-            return 1;
-        }
-
-        if (colDiff < 0) {
-            return 2;
-        }
-
-        return 3;
+    public Score score() {
+        return SCORE;
     }
 
-    private boolean checkPositionRange(Position endPosition) {
-        return position.getRow() != endPosition.getRow()
-                && position.getColumn() != endPosition.getColumn();
+    public static Map<Position, Piece> createInitialRook() {
+        Map<Position, Piece> initialRook = new HashMap<>();
+        initialRook.put(new Position("a8"), new Rook(true));
+        initialRook.put(new Position("h8"), new Rook(true));
+        initialRook.put(new Position("a1"), new Rook(false));
+        initialRook.put(new Position("h1"), new Rook(false));
+        return initialRook;
     }
+
 }

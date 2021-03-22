@@ -1,51 +1,89 @@
 package domain.piece;
 
-import domain.Board;
-import domain.PieceFactory;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import domain.board.Board;
+import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class RookTest {
 
-    @DisplayName("룩이 이동하려는 위치가 상하좌우 범위라면, 성공을 반환한다.(빈칸인 경우)")
-    @Test
-    void check_row_column_range_true_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        Rook rook = Rook.Of("R", Position.Of(3, 3), true);
+    @DisplayName("룩은 상하좌우 방향으로 칸 수 제한 없이 이동할 수 있다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,h5", "d5,d1", "d5,a5", "d5,d8"}, delimiter = ',')
+    void testMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Rook blackRook = new Rook(true);
 
-        assertThat(rook.canMove(board.getBoard(), Position.Of(2, 3))).isTrue();
-        assertThat(rook.canMove(board.getBoard(), Position.Of(4, 3))).isTrue();
-        assertThat(rook.canMove(board.getBoard(), Position.Of(3, 2))).isTrue();
-        assertThat(rook.canMove(board.getBoard(), Position.Of(3, 4))).isTrue();
+        board.put(sourcePosition, blackRook);
+
+        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
 
-    @DisplayName("룩이 이동하려는 위치에 같은 편 말이 있는 경우 이동할 수 없다.")
-    @Test
-    void cant_move_rook_if_same_color_piece_exists() {
-        Board board = new Board(PieceFactory.createPieces());
-        Rook rook = Rook.Of("R", Position.Of(2, 3), true);
-        assertThat(rook.canMove(board.getBoard(), Position.Of(1, 3))).isFalse();
+    @DisplayName("룩은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,h1", "d5,h2", "d5,h3", "d5,h4"}, delimiter = ',')
+    void testNotMoveEmptyPlace(String source, String target) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Rook blackRook = new Rook(true);
+
+        board.put(sourcePosition, blackRook);
+
+        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("룩이 이동하려는 위치가 상하좌우 범위가 아니라면, 실패를 반환한다.")
+    @DisplayName("룩은 같은 편 기물이 있는 위치로 이동할 수 없다.")
     @Test
-    void check_row_column_range_false_test() {
-        Board board = new Board(PieceFactory.createPieces());
-        Rook rook = Rook.Of("R", Position.Of(3, 3), true);
+    void testMoveSameColorPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("h5");
+        Rook blackRook = new Rook(true);
+        King blackKing = new King(true);
 
-        assertThat(rook.canMove(board.getBoard(), Position.Of(4, 4))).isFalse();
-        assertThat(rook.canMove(board.getBoard(), Position.Of(2, 2))).isFalse();
+        board.put(sourcePosition, blackRook);
+        board.put(targetPosition, blackKing);
+
+        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("룩이 이동하려는 경로에 다른 말이 있으면, 실패를 반환한다.")
+    @DisplayName("룩은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
-    void cant_move_rook_if_piece_exist() {
-        Board board = new Board(PieceFactory.createPieces());
-        Rook rook = Rook.Of("R", Position.Of(3, 3), true);
-        Pawn pawn = Pawn.Of("P", Position.Of(3, 4), true);
-        board.put(pawn, Position.Of(3, 4));
-        assertThat(rook.canMove(board.getBoard(), Position.Of(3, 5))).isFalse();
+    void testMoveEnemyPiecePlace() {
+        Board board = new Board();
+        Position sourcePosition = new Position("d5");
+        Position targetPosition = new Position("h5");
+        Rook blackRook = new Rook(true);
+        King whiteKing = new King(false);
+
+        board.put(sourcePosition, blackRook);
+        board.put(targetPosition, whiteKing);
+
+        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isTrue();
     }
+
+    @DisplayName("룩은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
+    @ParameterizedTest
+    @CsvSource(value = {"d5,h5,e5", "d5,d1,d3", "d5,a5,b5", "d5,d8,d7"}, delimiter = ',')
+    void testObstacleMove(String source, String target, String obstacle) {
+        Board board = new Board();
+        Position sourcePosition = new Position(source);
+        Position targetPosition = new Position(target);
+        Position obstaclePosition = new Position(obstacle);
+        Rook blackRook = new Rook(true);
+        Rook whiteRook = new Rook(false);
+
+        board.put(sourcePosition, blackRook);
+        board.put(obstaclePosition, whiteRook);
+
+        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isFalse();
+    }
+
 }
