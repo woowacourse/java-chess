@@ -1,5 +1,7 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 
 import java.util.List;
@@ -9,6 +11,10 @@ public final class Queen extends Piece {
     private static final char NAME_WHEN_WHITE = 'q';
     private static final int STEP_RANGE = 8;
     private static final int SCORE = 9;
+
+    public Queen(final Color color, final Column column, final Row row) {
+        super(color, column.getName(), row.getName());
+    }
 
     public Queen(final Color color, final char x, final int y) {
         super(color, x, y);

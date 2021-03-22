@@ -22,14 +22,14 @@ public class LinesTest {
     @BeforeEach
     public void setup() {
         List<Line> linesGroup = Arrays.asList(
-                Line.empty(8),
-                Line.empty(7),
-                Line.empty(6),
-                Line.empty(5),
-                Line.general(4, Color.WHITE),
-                Line.empty(3),
-                Line.empty(2),
-                Line.empty(1)
+                Line.empty(Row.EIGHTH),
+                Line.empty(Row.SEVENTH),
+                Line.empty(Row.SIXTH),
+                Line.empty(Row.FIFTH),
+                Line.general(Row.FOURTH, Color.WHITE),
+                Line.empty(Row.THIRD),
+                Line.empty(Row.SECOND),
+                Line.empty(Row.FIRST)
         );
         lines = new Lines(linesGroup);
     }

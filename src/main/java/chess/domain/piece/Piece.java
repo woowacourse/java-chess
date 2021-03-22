@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
 import chess.domain.grid.Lines;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -13,6 +15,10 @@ public abstract class Piece {
 
     private final Color color;
     private Position position;
+
+    public Piece(final Color color, final Column column, final Row row) {
+        this(color, column.getName(), row.getName());
+    }
 
     public Piece(final Color color, final char x, final int y) {
         this(color, x, Character.forDigit(y, DECIMAL));
@@ -124,5 +130,12 @@ public abstract class Piece {
     @Override
     public int hashCode() {
         return Objects.hash(position, color);
+    }
+
+    @Override
+    public String toString() {
+        return "{ " + this.getClass() +
+                ", position=" + position +
+                '}';
     }
 }

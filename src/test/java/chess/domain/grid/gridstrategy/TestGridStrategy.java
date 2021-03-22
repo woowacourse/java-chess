@@ -1,19 +1,18 @@
-package chess.domain.grid.gridStrategy;
+package chess.domain.grid.gridstrategy;
 
 import chess.domain.grid.Line;
+import chess.domain.grid.Row;
+import chess.domain.grid.gridStrategy.GridStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class TestGridStrategy implements GridStrategy {
-    private static final int FIRST_ROW = 1;
-    private static final int EIGHTH_ROW = 8;
-
     @Override
     public List<Line> LinesInInitGrid() {
         List<Line> lineGroup = new ArrayList<>();
-        for (int i = FIRST_ROW; i <= EIGHTH_ROW; i++) {
-            lineGroup.add(Line.empty(i));
+        for (Row row : Row.values()) {
+            lineGroup.add(Line.empty(row));
         }
         return lineGroup;
     }

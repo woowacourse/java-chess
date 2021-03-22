@@ -1,12 +1,15 @@
 package chess.domain.position;
 
+import chess.domain.grid.Column;
+import chess.domain.grid.Row;
+
 import java.util.Objects;
 
 public final class Position {
-    private static final char MIN_X_RANGE = 'a';
-    private static final char MAX_X_RANGE = 'h';
-    private static final char MIN_Y_RANGE = '1';
-    private static final char MAX_Y_RANGE = '8';
+    private static final char MIN_X_RANGE = Column.FIRST.getName();
+    private static final char MAX_X_RANGE = Column.EIGHTH.getName();
+    private static final char MIN_Y_RANGE = Row.FIRST.getName();
+    private static final char MAX_Y_RANGE = Row.EIGHTH.getName();
 
     private final char x;
     private final char y;

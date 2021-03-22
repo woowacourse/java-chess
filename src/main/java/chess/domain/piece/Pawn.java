@@ -1,6 +1,8 @@
 package chess.domain.piece;
 
+import chess.domain.grid.Column;
 import chess.domain.grid.Lines;
+import chess.domain.grid.Row;
 import chess.domain.position.Direction;
 import chess.domain.position.Position;
 
@@ -17,6 +19,10 @@ public final class Pawn extends Piece {
     private static final int TWO_STEP = 2;
 
     private boolean moved = false;
+
+    public Pawn(final Color color, final Column column, final Row row) {
+        super(color, column.getName(), row.getName());
+    }
 
     public Pawn(final Color color, final char x, final int rowNumber) {
         super(color, x, rowNumber);

@@ -5,8 +5,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 
 public final class Score {
-    private static final int LINE_COUNT = 8;
-    private static final char MIN_X_POSITION = 'a';
+    private static final char MIN_X_POSITION = Column.FIRST.getName();
     private static final int SAME_COLUMN_BOUND = 2;
     private static final int DIVIDER_FOR_PAWN_SCORE = 2;
 
@@ -22,7 +21,7 @@ public final class Score {
 
     private double pawnScoreInSameColumn(final Color color) {
         double pawnScoreToDeduct = 0;
-        for (int i = 0; i < LINE_COUNT; i++) {
+        for (int i = 0; i < Row.values().length; i++) {
             pawnScoreToDeduct += pawnCountInSameColumn(color, i);
         }
         return pawnScoreToDeduct / DIVIDER_FOR_PAWN_SCORE;

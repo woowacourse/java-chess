@@ -1,13 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.grid.Grid;
-import chess.domain.grid.gridStrategy.TestGridStrategy;
+import chess.domain.grid.gridstrategy.TestGridStrategy;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.*;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 public class KnightTest {
     @Test

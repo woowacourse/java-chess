@@ -11,7 +11,7 @@ public class LineTest {
     @Test
     @DisplayName("Line에 Piece를 할당하는 지 테스트")
     public void assignPiece() {
-        Line line = Line.empty(1);
+        Line line = Line.empty(Row.FIRST);
         Pawn pawn = new Pawn(Color.BLACK, 'b', '1');
         line.assignPiece('b', pawn);
         assertThat(line.piece('b')).isEqualTo(pawn);
@@ -20,7 +20,7 @@ public class LineTest {
     @Test
     @DisplayName("Line에서 xPosition으로 해당하는 Piece를 제대로 찾는 지 테스트")
     public void piece() {
-        Line line = Line.general(1, Color.WHITE);
+        Line line = Line.general(Row.FIRST, Color.WHITE);
         assertThat(line.piece('a')).isEqualTo(line.pieces().get(0));
     }
 
