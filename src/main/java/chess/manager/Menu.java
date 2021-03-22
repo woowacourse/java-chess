@@ -22,7 +22,7 @@ public enum Menu {
         return Arrays.stream(values())
                 .filter(menu -> menu.isSameCommand(splitLine[0]) && menu.isSameParameterSize(splitLine.length))
                 .findFirst()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 명령입니다."));
     }
 
     private boolean isSameCommand(final String input) {

@@ -106,25 +106,25 @@ public class Board {
 
     private Score calculateScore(final Owner owner) {
         Score score = new Score(0);
-        boolean existKing = false;
+        boolean diedKing = true;
 
-        for (final Vertical v : Vertical.values()) {
-            for (final Horizontal h : Horizontal.values()) {
-                final Piece piece = of(v, h);
+        for (final Vertical vertical : Vertical.values()) {
+            for (final Horizontal horizontal : Horizontal.values()) {
+                final Piece piece = of(vertical, horizontal);
 
                 if (!piece.isOwner(owner)) {
                     continue;
                 }
 
                 if (piece.isKing()) {
-                    existKing = true;
+                    diedKing = false;
                 }
 
                 score = score.plus(piece.score());
             }
         }
 
-        if (existKing == false) {
+        if (diedKing) {
             return new Score(0);
         }
 
@@ -133,10 +133,10 @@ public class Board {
 
     private int getPawnCountInLine(final Owner owner) {
         int totalCount = 0;
-        for (final Vertical v : Vertical.values()) {
+        for (final Vertical vertical : Vertical.values()) {
             int verticalCount = 0;
-            for (final Horizontal h : Horizontal.values()) {
-                if (of(v, h).isSameOwnerPawn(owner)) {
+            for (final Horizontal horizontal : Horizontal.values()) {
+                if (of(vertical, horizontal).isSameOwnerPawn(owner)) {
                     verticalCount++;
                 }
             }

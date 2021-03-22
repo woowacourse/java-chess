@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 public class Score {
 
-    private static final double PAWN_PANALTY_SCORE = 0.5d;
+    private static final double PAWN_PENALTY_SCORE = 0.5d;
 
     private final double value;
 
@@ -19,6 +19,6 @@ public class Score {
     }
 
     public Score calculatePawnPenaltyScore(final int pawnCountInLine) {
-        return new Score(this.value - (PAWN_PANALTY_SCORE * pawnCountInLine));
+        return new Score(this.value - (PAWN_PENALTY_SCORE * pawnCountInLine));
     }
 }
