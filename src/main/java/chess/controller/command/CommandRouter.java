@@ -13,7 +13,7 @@ public enum CommandRouter {
     private static final int ORDER_INDEX = 0;
 
     private final String command;
-    Function<List<String>, Command> commandFactory;
+    private final Function<List<String>, Command> commandFactory;
 
     CommandRouter(String command, Function<List<String>, Command> commandFactory) {
         this.command = command;
