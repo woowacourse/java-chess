@@ -71,7 +71,7 @@ public enum Direction {
         return y;
     }
 
-    public boolean isDiagonal(){
+    public boolean isDiagonal() {
         return diagonalDirections().contains(this);
     }
 

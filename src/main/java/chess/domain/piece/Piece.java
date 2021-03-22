@@ -29,13 +29,15 @@ public abstract class Piece {
         this.symbol = symbol;
     }
 
-    public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece){
+    public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece) {
         return ableDirections.contains(direction) && distance.isBelow(ableDistance);
     }
 
-    public final String getSymbol(){
+    public final String getSymbol() {
         return symbol;
-    };
+    }
+
+    ;
 
     public final boolean isEnemy(final Piece other) {
         return this.owner.isEnemy(other.owner);

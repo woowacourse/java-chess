@@ -30,17 +30,17 @@ public class OutputView {
     public static void printPieceOrStar(final Board board, final List<Position> starPositions) {
         for (final Horizontal h : Horizontal.reversedValues()) {
             for (final Vertical v : Vertical.values()) {
-                printSymbol(board.getPieceOf(new Position(v,h)), starPositions.contains(new Position(v,h)));
+                printSymbol(board.getPieceOf(new Position(v, h)), starPositions.contains(new Position(v, h)));
             }
             System.out.println();
         }
     }
 
-    private static void printSymbol(final Piece piece, final boolean isStar){
+    private static void printSymbol(final Piece piece, final boolean isStar) {
         System.out.print(decideSymbol(piece, isStar));
     }
 
-    private static String decideSymbol(final Piece piece, final boolean isStar){
+    private static String decideSymbol(final Piece piece, final boolean isStar) {
         if (isStar) {
             return STAR_SHAPE;
         }
@@ -48,7 +48,7 @@ public class OutputView {
     }
 
     private final static String decideUpperOrLower(final String symbol, final boolean isBlackPiece) {
-        if (isBlackPiece){
+        if (isBlackPiece) {
             return symbol.toUpperCase();
         }
         return symbol.toLowerCase();
@@ -75,5 +75,11 @@ public class OutputView {
         if (status.whiteScore() == status.blackScore()) {
             System.out.println("무승부입니다.");
         }
+    }
+
+    public static void printMenu() {
+        System.out.println("> 체스 게임을 시작합니다.");
+        System.out.println("> 게임 시작은 start, 종료는 end 명령을 입력하세요.");
+        System.out.println("> 게임 이동 : move source target");
     }
 }

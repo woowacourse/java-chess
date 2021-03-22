@@ -14,6 +14,19 @@ public class BoardTest {
 
     private Board board;
 
+    private static Piece[] getPiecesOfFirstLine(Owner owner) {
+        return new Piece[]{
+                new Rook(owner),
+                new Knight(owner),
+                new Bishop(owner),
+                new Queen(owner),
+                new King(owner),
+                new Bishop(owner),
+                new Knight(owner),
+                new Rook(owner)
+        };
+    }
+
     @BeforeEach
     void setUp() {
         board = BoardInitializer.initiateBoard();
@@ -29,22 +42,9 @@ public class BoardTest {
         }
     }
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner){
-        return new Piece[]{
-                new Rook(owner),
-                new Knight(owner),
-                new Bishop(owner),
-                new Queen(owner),
-                new King(owner),
-                new Bishop(owner),
-                new Knight(owner),
-                new Rook(owner)
-        };
-    }
-
     @DisplayName("입력한 위치의 기물을 가져온다.")
     @Test
-    void of(){
+    void of() {
         final Piece piece = board.of(Vertical.B, Horizontal.TWO);
         assertThat(piece).isInstanceOf(Pawn.class);
         assertThat(piece).isEqualTo(Pawn.getInstanceOf(Owner.WHITE));

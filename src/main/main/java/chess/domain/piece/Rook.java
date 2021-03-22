@@ -6,7 +6,7 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class Rook extends Piece{
+public class Rook extends Piece {
     private static final List<Direction> DIRECTIONS = Arrays.asList(
             Direction.LEFT,
             Direction.DOWN,
@@ -22,12 +22,12 @@ public class Rook extends Piece{
         super(owner);
     }
 
-    public static Rook getInstanceOf(Owner owner){
-        if (owner.equals(Owner.BLACK)){
+    public static Rook getInstanceOf(Owner owner) {
+        if (owner.equals(Owner.BLACK)) {
             return BLACK_ROOK;
         }
 
-        if (owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             return WHITE_ROOK;
         }
 

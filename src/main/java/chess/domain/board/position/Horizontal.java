@@ -36,17 +36,17 @@ public enum Horizontal {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
+    public static Horizontal[] reversedValues() {
+        Horizontal[] values = values();
+        Arrays.sort(values, Collections.reverseOrder());
+        return values;
+    }
+
     public int getIndex() {
         return index;
     }
 
     public Horizontal add(final Direction direction, final Distance distance) {
         return of(index + direction.getY() * distance.getValue());
-    }
-
-    public static Horizontal[] reversedValues(){
-        Horizontal[] values = values();
-        Arrays.sort(values, Collections.reverseOrder());
-        return values;
     }
 }

@@ -25,14 +25,14 @@ public class BoardInitializer {
         return new Board(map);
     }
 
-    private static void putLineInMap(Map<Position, Piece> map, Horizontal horizontal, Piece[] pieces){
+    private static void putLineInMap(Map<Position, Piece> map, Horizontal horizontal, Piece[] pieces) {
         Vertical[] verticals = Vertical.values();
-        for(int i =0; i<BOARD_LENGTH; i++){
+        for (int i = 0; i < BOARD_LENGTH; i++) {
             map.put(new Position(verticals[i], horizontal), pieces[i]);
         }
     }
 
-    private static Piece[] getPiecesOfFirstLine(Owner owner){
+    private static Piece[] getPiecesOfFirstLine(Owner owner) {
         return new Piece[]{
                 Rook.getInstanceOf(owner),
                 Knight.getInstanceOf(owner),
@@ -45,13 +45,13 @@ public class BoardInitializer {
         };
     }
 
-    private static Piece[] getPiecesOfSecondLine(Owner owner){
+    private static Piece[] getPiecesOfSecondLine(Owner owner) {
         Piece[] pieces = new Pawn[BOARD_LENGTH];
         Arrays.fill(pieces, Pawn.getInstanceOf(owner));
         return pieces;
     }
 
-    private static Piece[] getEmptyLine(){
+    private static Piece[] getEmptyLine() {
         Piece[] pieces = new Empty[BOARD_LENGTH];
         Arrays.fill(pieces, Empty.getInstance());
         return pieces;

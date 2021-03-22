@@ -5,7 +5,7 @@ import chess.domain.board.position.Position;
 
 import java.util.List;
 
-public class Empty extends Piece{
+public class Empty extends Piece {
     private static final int ABLE_DISTANCE_TO_MOVE = 1;
 
     private static final Empty EMPTY = new Empty();

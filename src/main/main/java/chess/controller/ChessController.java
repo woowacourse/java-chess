@@ -13,7 +13,7 @@ public class ChessController {
     }
 
     public void run() {
-        if(Menu.isEnd(InputView.getNewGameCommand())){
+        if (Menu.isEnd(InputView.getNewGameCommand())) {
             return;
         }
 

@@ -13,11 +13,11 @@ public enum Distance {
 
     private int value;
 
-    Distance(final int value){
+    Distance(final int value) {
         this.value = value;
     }
 
-    public boolean isBelow(final Distance other){
+    public boolean isBelow(final Distance other) {
         return this.value <= other.value;
     }
 
@@ -25,16 +25,16 @@ public enum Distance {
         return value;
     }
 
-    public Distance before(){
+    public Distance before() {
         return Arrays.stream(values())
-                .filter(value -> value.value == this.value-1)
+                .filter(value -> value.value == this.value - 1)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public Distance next(){
+    public Distance next() {
         return Arrays.stream(values())
-                .filter(value -> value.value == this.value+1)
+                .filter(value -> value.value == this.value + 1)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
     }

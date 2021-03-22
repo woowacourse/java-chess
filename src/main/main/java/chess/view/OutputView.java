@@ -8,11 +8,11 @@ import chess.domain.piece.Piece;
 public class OutputView {
 
     public static void printInitialBoard(final Board board) {
-        int i =0;
-        for(Piece piece : board.getBoard().values()) {
+        int i = 0;
+        for (Piece piece : board.getBoard().values()) {
             System.out.print(piece.decideUpperOrLower(piece.getSymbol()));
-            if(i++ >6){
-                i =0;
+            if (i++ > 6) {
+                i = 0;
                 System.out.println();
             }
         }

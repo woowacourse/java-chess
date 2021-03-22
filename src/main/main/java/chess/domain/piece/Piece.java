@@ -1,4 +1,5 @@
 package chess.domain.piece;
+
 import chess.domain.piece.rule.Direction;
 import chess.domain.board.position.Position;
 
@@ -15,12 +16,12 @@ public abstract class Piece {
 
     public abstract Score score();
 
-    public final String decideUpperOrLower(String symbol){
-        if(owner.equals(Owner.BLACK)){
+    public final String decideUpperOrLower(String symbol) {
+        if (owner.equals(Owner.BLACK)) {
             return symbol.toUpperCase();
         }
 
-        if(owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             return symbol.toLowerCase();
         }
 
@@ -29,19 +30,19 @@ public abstract class Piece {
 
     public abstract String getSymbol();
 
-    public boolean isEnemy(Piece other){
-        if(owner.equals(Owner.BLACK)){
+    public boolean isEnemy(Piece other) {
+        if (owner.equals(Owner.BLACK)) {
             return other.owner == Owner.WHITE;
         }
 
-        if(owner.equals(Owner.WHITE)){
+        if (owner.equals(Owner.WHITE)) {
             return other.owner == Owner.BLACK;
         }
 
         throw new IllegalArgumentException();
     }
 
-    public boolean isSameTeam(Piece other){
+    public boolean isSameTeam(Piece other) {
         return owner.equals(other.owner);
     }
 
@@ -49,7 +50,7 @@ public abstract class Piece {
 
     public abstract int getMaxDistance();
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return this instanceof Empty;
     }
 }

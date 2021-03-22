@@ -14,30 +14,30 @@ public enum Vertical {
 
     private final int index;
 
-    Vertical(int index){
+    Vertical(int index) {
         this.index = index;
     }
 
-    static Vertical indexOf(String symbol){
+    static Vertical indexOf(String symbol) {
         return Vertical.valueOf(symbol.toUpperCase());
     }
 
-    static Vertical of(int index){
+    static Vertical of(int index) {
         return Arrays.stream(Vertical.values())
                 .filter(v -> v.index == index)
                 .findAny()
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public int getIndex(){
+    public int getIndex() {
         return index;
     }
 
-    public int getDistance(Vertical other){
+    public int getDistance(Vertical other) {
         return Math.abs(this.index - other.getIndex());
     }
 
-    public Vertical add(int v){
-        return of(index +v);
+    public Vertical add(int v) {
+        return of(index + v);
     }
 }

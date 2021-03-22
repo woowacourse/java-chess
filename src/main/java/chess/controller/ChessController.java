@@ -14,7 +14,7 @@ public class ChessController {
 
     private final ChessManager chessManager;
 
-    public ChessController(){
+    public ChessController() {
         chessManager = new ChessManager();
     }
 
@@ -24,12 +24,14 @@ public class ChessController {
         printResult();
     }
 
-    private void readStart(){
-        while(!Menu.of(InputView.getNewGameCommand()).isStart()){}
+    private void readStart() {
+        OutputView.printMenu();
+        while (!Menu.of(InputView.getUserCommand()).isStart()) {
+        }
         OutputView.printBoard(chessManager.getBoard());
     }
 
-    private void executeUserCommands(){
+    private void executeUserCommands() {
         String userInput;
         do {
             userInput = InputView.getUserCommand();
@@ -37,7 +39,7 @@ public class ChessController {
         } while (!chessManager.isEnd() && !Menu.of(userInput).isEnd());
     }
 
-    private void commandExecute(final String input){
+    private void commandExecute(final String input) {
         final Menu menu = Menu.of(input);
 
         if (menu.isMove()) {
@@ -53,17 +55,17 @@ public class ChessController {
         }
     }
 
-    private void movePiece(final MoveCommand command){
+    private void movePiece(final MoveCommand command) {
         chessManager.move(command);
         OutputView.printBoard(chessManager.getBoard());
     }
 
-    private void showAblePositionToMove(final ShowCommand command){
+    private void showAblePositionToMove(final ShowCommand command) {
         final List<Position> reachablePositions = chessManager.getReachablePositions(command);
-        OutputView.printReachableBoard(chessManager.getBoard(),reachablePositions);
+        OutputView.printReachableBoard(chessManager.getBoard(), reachablePositions);
     }
 
-    private void printResult(){
+    private void printResult() {
         OutputView.printGameResult(chessManager.calculateStatus());
     }
 }

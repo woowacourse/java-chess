@@ -6,7 +6,7 @@ import chess.domain.board.position.Position;
 import java.util.Arrays;
 import java.util.List;
 
-public class Knight extends Piece{
+public class Knight extends Piece {
 
     private static final List<Direction> DIRECTIONS = Arrays.asList(
             Direction.KNIGHT_DOWN_LEFT,
@@ -23,6 +23,10 @@ public class Knight extends Piece{
     private static final Knight BLACK_KNIGHT = new Knight(Owner.BLACK);
     private static final Knight WHITE_KNIGHT = new Knight(Owner.WHITE);
 
+    public Knight(Owner owner) {
+        super(owner);
+    }
+
     public static Knight getInstanceOf(Owner owner) {
         if (owner.equals(Owner.BLACK)) {
             return BLACK_KNIGHT;
@@ -33,10 +37,6 @@ public class Knight extends Piece{
         }
 
         throw new IllegalArgumentException("Invalid Knight");
-    }
-
-    public Knight(Owner owner) {
-        super(owner);
     }
 
     @Override

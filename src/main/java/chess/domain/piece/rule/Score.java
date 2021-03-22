@@ -3,7 +3,7 @@ package chess.domain.piece.rule;
 public class Score {
 
     public static final Score EMPTY = new Score(0.0d);
-    public static final Score PAWN  = new Score(1.0d);
+    public static final Score PAWN = new Score(1.0d);
     public static final Score KNIGHT = new Score(2.5d);
     public static final Score KING = new Score(0.0d);
     public static final Score BISHOP = new Score(3.0d);
