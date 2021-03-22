@@ -1,6 +1,7 @@
 package chess.domain.command;
 
 import chess.domain.game.ChessGame;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -10,14 +11,15 @@ public class Commands {
     private Commands(List<Command> commands) {
         this.commands = commands;
     }
+
     public static Commands initCommands(ChessGame chessGame) {
-        System.out.println("wow");
         return new Commands(Arrays.asList(
                 new Start(chessGame),
                 new Move(chessGame),
                 new End(chessGame)
         ));
     }
+
     public Command matchedCommand(String text) {
         try {
             return commands.stream()

@@ -9,7 +9,7 @@ public abstract class Finished extends Started {
     }
 
     @Override
-    public State move(Position source, Position target) {
+    public void move(Position source, Position target) {
         throw new IllegalStateException();
     }
 

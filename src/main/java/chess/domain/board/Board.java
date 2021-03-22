@@ -1,10 +1,12 @@
 package chess.domain.board;
 
 import chess.domain.board.position.Position;
+import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.piece.Piece;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Board {
 
@@ -12,6 +14,24 @@ public class Board {
 
     public Board(final List<Map<Position, Piece>> squares) {
         this.squares = squares;
+    }
+
+    public List<Map<Position, Piece>> squares() {
+        return squares;
+    }
+
+    public void moveIfValid(Position source, Position target) {
+        if (isNotMovablePosition(source, target)) {
+            throw new IllegalArgumentException("유효하지 않은 좌표 입력입니다.");
+        }
+        swapPieces(source, target);
+    }
+
+    private Boolean isNotMovablePosition(Position source, Position target) {
+        Piece piece = pieceOfPosition(source);
+        MoveStrategy moveStrategy = piece.moveStrategy();
+        Set<Position> movablePath = moveStrategy.moveStrategy(this, source);
+        return !movablePath.contains(target);
     }
 
     public Piece pieceOfPosition(Position position) {
@@ -22,7 +42,23 @@ public class Board {
                 .orElseThrow(IllegalArgumentException::new);
     }
 
-    public List<Map<Position, Piece>> getSquares() {
-        return squares;
+    private void swapPieces(Position source, Position target) {
+        Piece sourcePiece = pieceOfPosition(source);
+        Piece targetPiece = pieceOfPosition(target);
+
+        replacePiece(source, targetPiece);
+        replacePiece(target, sourcePiece);
+    }
+
+    private void replacePiece(Position position, Piece piece) {
+        for (Map<Position, Piece> map : squares) {
+            replaceIfValidKey(position, piece, map);
+        }
+    }
+
+    private void replaceIfValidKey(Position position, Piece piece, Map<Position, Piece> map) {
+        if (map.containsKey(position)) {
+            map.replace(position, piece);
+        }
     }
 }

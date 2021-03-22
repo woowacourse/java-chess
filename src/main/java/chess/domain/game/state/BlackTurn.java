@@ -10,7 +10,12 @@ public class BlackTurn extends Running {
     }
 
     @Override
-    public State move(Position source, Position target) {
+    public State passTurn() {
         return new WhiteTurn(board());
+    }
+
+    @Override
+    public void move(Position source, Position target) {
+//        return new WhiteTurn(board());
     }
 }

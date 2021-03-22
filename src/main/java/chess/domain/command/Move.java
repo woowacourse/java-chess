@@ -1,4 +1,5 @@
 package chess.domain.command;
+
 import chess.domain.board.position.Position;
 import chess.domain.game.ChessGame;
 

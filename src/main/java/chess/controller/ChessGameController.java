@@ -9,6 +9,7 @@ import chess.domain.game.ChessGame;
 import chess.utils.DtoAssembler;
 import chess.view.InputView;
 import chess.view.OutputView;
+
 import java.util.List;
 
 public class ChessGameController {

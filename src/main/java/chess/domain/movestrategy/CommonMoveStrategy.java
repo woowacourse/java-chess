@@ -11,14 +11,14 @@ import java.util.stream.Collectors;
 
 public class CommonMoveStrategy implements MoveStrategy {
     @Override
-    public Set<Position> movable(Board board, Position source) {
+    public Set<Position> moveStrategy(Board board, Position source) {
         Set<Position> movable = new HashSet<>();
         Piece piece = board.pieceOfPosition(source);
 
-        // 비숍, 킹, 퀸, 룩의 로직
         for (List<Position> positions : piece.vectors(source)) {
             movable.addAll(movablePosition(positions, board));
         }
+
         return movable;
     }
 

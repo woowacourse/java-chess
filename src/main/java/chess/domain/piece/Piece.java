@@ -28,14 +28,16 @@ public abstract class Piece {
         return color.equals(Color.WHITE);
     }
 
-    public abstract boolean isEmpty();
-
     public String getSymbol() {
         if (color.equals(Color.BLACK)) {
             return symbol.getBlack();
         }
         return symbol.getWhite();
     }
+
+    public abstract boolean isEmpty();
+
+    public abstract MoveStrategy moveStrategy();
 
     @Override
     public boolean equals(Object o) {
@@ -49,6 +51,4 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, symbol);
     }
-
-    public abstract MoveStrategy moveStrategy();
 }

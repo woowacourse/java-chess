@@ -14,7 +14,7 @@ public class Init extends Preparing {
     }
 
     @Override
-    public State move(Position source, Position target) {
+    public void move(Position source, Position target) {
         throw new IllegalStateException("게임 시작 전에는 게임 시작 명령만 입력 가능합니다.");
     }
 

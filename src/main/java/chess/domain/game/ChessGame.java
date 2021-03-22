@@ -1,9 +1,11 @@
 package chess.domain.game;
+
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
+
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +21,8 @@ public class ChessGame {
     }
 
     public void move(Position source, Position target) {
-        this.state = state.move(source, target);
+        this.state.move(source, target);
+        this.state = state.passTurn();
     }
 
     public void end() {
@@ -33,11 +36,4 @@ public class ChessGame {
     public List<Map<Position, Piece>> board() {
         return state.squares();
     }
-
-    //    // board로 이동 예정
-//    public Set<Position> movable(Position source) {
-//        Piece piece = board.pieceOfPosition(source);
-//        MoveStrategy moveStrategy = piece.moveStrategy();
-//        return moveStrategy.movable(board, source);
-//    }
 }

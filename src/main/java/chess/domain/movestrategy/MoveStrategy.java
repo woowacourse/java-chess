@@ -6,5 +6,5 @@ import chess.domain.board.position.Position;
 import java.util.Set;
 
 public interface MoveStrategy {
-    Set<Position> movable(Board board, Position source);
+    Set<Position> moveStrategy(Board board, Position source);
 }

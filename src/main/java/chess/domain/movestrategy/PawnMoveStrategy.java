@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 public class PawnMoveStrategy implements MoveStrategy {
     @Override
-    public Set<Position> movable(Board board, Position source) {
+    public Set<Position> moveStrategy(Board board, Position source) {
         Piece piece = board.pieceOfPosition(source);
         if (piece.isWhite()) { // 나중에 수정
             return pawnMovablePosition(piece.vectors(source), board);
