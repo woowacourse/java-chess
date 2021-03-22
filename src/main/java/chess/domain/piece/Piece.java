@@ -6,6 +6,7 @@ import chess.domain.piece.info.Score;
 
 public abstract class Piece {
     private static final String SAME_COLOR_ERROR = "[ERROR] taget에 같은 편 말이 있습니다.";
+
     protected Position position;
     protected final String name;
     protected final Color color;
@@ -52,9 +53,5 @@ public abstract class Piece {
 
     public boolean isSamePosition(Position position) {
         return this.position.equals(position);
-    }
-
-    public boolean isEmpty() {
-        return this instanceof Empty;
     }
 }

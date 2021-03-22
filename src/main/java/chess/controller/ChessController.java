@@ -40,14 +40,12 @@ public class ChessController {
     }
 
     private void playByCommand(ChessGame chessGame) {
-        while (chessGame.isRunning()) {
+        CommandType commandType;
+        do {
             String[] splitInput = InputView.inputCommand().split(" ");
-            CommandType commandType = CommandType.findRunningCommand(splitInput[0]);
-            if (commandType == CommandType.END) {
-                break;
-            }
+            commandType = CommandType.findRunningCommand(splitInput[0]);
             selectRunningCommand(commandType, splitInput);
-        }
+        }while (chessGame.isRunnable(commandType));
     }
 
     private void selectRunningCommand(CommandType commandType, String[] splitInput) {
@@ -56,13 +54,16 @@ public class ChessController {
             chessGame.play(Arrays.asList(splitInput[1], splitInput[2]));
             OutputView.printChessBoard(chessGame.getCurrentPieces());
         }
+        if (commandType == CommandType.END) {
+            return;
+        }
         if (commandType == CommandType.STATUS) {
             OutputView.printStatus(chessGame.getCurrentPieces());
         }
     }
 
     private void validateRemainingCommand(String[] splitInput) {
-        if (splitInput.length != 3) {
+        if (splitInput.length != 3 || (splitInput[1].length() != 2 && splitInput[2].length() != 2)) {
             throw new IllegalArgumentException(COMMAND_ERROR);
         }
     }

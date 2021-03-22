@@ -37,12 +37,16 @@ public class Pawn extends Piece {
         }
         Cross pawnCross = Cross.findCrossByTwoPosition(position, target);
         if (isMoveAble(target)) {
-            validateFirstTurn(target);
-            pawnCross.hasPieceInPath(position, target, currentPieces);
-            this.position = target;
+            movePawn(target, currentPieces, pawnCross);
             return;
         }
         throw new IllegalArgumentException(PAWN_ERROR);
+    }
+
+    private void movePawn(Position target, CurrentPieces currentPieces, Cross pawnCross) {
+        validateFirstTurn(target);
+        pawnCross.hasPieceInPath(position, target, currentPieces);
+        this.position = target;
     }
 
     private boolean isAttackAble(Position target) {

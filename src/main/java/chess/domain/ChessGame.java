@@ -41,7 +41,7 @@ public class ChessGame {
         }
     }
 
-    public boolean isRunning() {
-        return currentPieces.isAliveAllKings();
+    public boolean isRunnable(CommandType commandType) {
+        return !(commandType == CommandType.END) && currentPieces.isAliveAllKings();
     }
 }
