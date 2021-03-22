@@ -4,6 +4,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import chess.domain.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 import chess.domain.piece.PieceType;
