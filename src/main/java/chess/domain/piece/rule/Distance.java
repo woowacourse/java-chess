@@ -1,5 +1,7 @@
 package chess.domain.piece.rule;
 
+import java.util.Arrays;
+
 public enum Distance {
     ONE(1),
     TWO(2),
@@ -21,5 +23,19 @@ public enum Distance {
 
     public int getValue() {
         return value;
+    }
+
+    public Distance before(){
+        return Arrays.stream(values())
+                .filter(value -> value.value == this.value-1)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
+    }
+
+    public Distance next(){
+        return Arrays.stream(values())
+                .filter(value -> value.value == this.value+1)
+                .findFirst()
+                .orElseThrow(IllegalArgumentException::new);
     }
 }

@@ -9,10 +9,8 @@ import chess.domain.piece.*;
 import chess.domain.piece.rule.Score;
 import chess.manager.Status;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Board {
     private final Map<Position, Piece> board;
@@ -41,46 +39,56 @@ public class Board {
     }
 
     private void validateMove(final Position source, final Position target){
-        if (!ableToMove(source).contains(target)) {
-            throw new IllegalArgumentException();
+        if (!calculateReachablePositions(source).contains(target)) {
+            throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");
         }
     }
 
-    private List<Position> ableToMove(final Position source) {
-        // TODO :: 인덴트 줄이기
+    private List<Position> calculateReachablePositions(final Position source) {
+        return Arrays.stream(Direction.values())
+                .flatMap(direction -> addReachableDistance(source, direction).stream())
+                .collect(Collectors.toList());
+    }
+
+    private List<Position> addReachableDistance(final Position source, final Direction direction){
         final List<Position> ableToMove = new ArrayList<>();
-        final Piece sourcePiece = of(source);
-
-        for (final Direction direction : Direction.values()) {
-            for (final Distance distance : Distance.values()) {
-
-                if(isBlocked(source, direction, distance)){
-                    break;
-                }
-
-                final Position target = source.next(direction, distance);
-
-                if(!sourcePiece.isReachable(direction, distance, source, of(target))){
-                    break;
-                }
-
-                ableToMove.add(target);
-
-                if (sourcePiece.isEnemy(of(target)) ) {
-                    break;
-                }
+        for (final Distance distance : Distance.values()) {
+            if(isBlocked(source, direction, distance) || isUnreachable(source, direction, distance)){
+                break;
             }
+            ableToMove.add(source.next(direction, distance));
         }
-
         return ableToMove;
     }
 
     private boolean isBlocked(final Position source, final Direction direction, final Distance distance){
         try {
-            return of(source).isSameTeam(of(source.next(direction, distance)));
+            source.next(direction, distance);
+            return false;
         } catch (IllegalArgumentException e) {
             return true;
         }
+    }
+
+    private boolean isUnreachable(final Position source, final Direction direction, final Distance distance){
+        if(isSameTeam(source, direction, distance) || isPrePositionEnemy(source, direction, distance)){
+            return false;
+        }
+        final Position target = source.next(direction, distance);
+        return !of(source).isReachable(direction, distance, source, of(target));
+    }
+
+    private boolean isPrePositionEnemy(final Position source, final Direction direction, final Distance distance){
+        if(distance.equals(Distance.ONE)){
+            return false;
+        }
+        final Position prePosition = source.next(direction, distance.before());
+        return of(source).isEnemy(of(prePosition));
+    }
+
+    private boolean isSameTeam(final Position source, final Direction direction, final Distance distance){
+        final Position target = source.next(direction, distance);
+        return of(source).isSameTeam(of(target));
     }
 
     private void checkGameEnd(final Position target) {
@@ -94,50 +102,40 @@ public class Board {
         board.put(source, Empty.getInstance());
     }
 
-    public Status getStatus() {
+    public Status status() {
         return new Status(calculateScore(Owner.WHITE), calculateScore(Owner.BLACK));
     }
 
     private Score calculateScore(final Owner owner) {
         Score score = new Score(0);
-        boolean existKing = false;
+
+        if(!isKingLive(owner)){
+            return score;
+        }
 
         for (final Vertical v : Vertical.values()) {
             for (final Horizontal h : Horizontal.values()) {
-                final Piece piece = of(v, h);
-
-                if (!piece.isOwner(owner)) {
-                    continue;
+                if (of(v, h).isOwner(owner)) {
+                    score = score.plus(of(v, h).score());
                 }
-
-                if (piece.isKing()) {
-                    existKing = true;
-                }
-
-                score = score.plus(piece.score());
             }
         }
 
-        if (existKing == false) {
-            return new Score(0);
-        }
-
-        return score.calculatePawnPenaltyScore(getPawnCountInLine(owner));
+        return score.calculatePawnPenaltyScore(getPawnCountDuplicatedInLine(owner));
     }
 
-    private int getPawnCountInLine(final Owner owner) {
+    private boolean isKingLive(final Owner owner){
+        return Arrays.stream(Vertical.values())
+                .flatMap(v -> Arrays.stream(Horizontal.values())
+                .filter(h -> of(v, h).isOwner(owner) && of(v, h).isKing()))
+                .findFirst()
+                .isPresent();
+    }
+
+    private int getPawnCountDuplicatedInLine(final Owner owner) {
         int totalCount = 0;
         for (final Vertical v : Vertical.values()) {
-            int verticalCount = 0;
-            for (final Horizontal h : Horizontal.values()) {
-                if(!of(v, h).isOwner(owner)){
-                    continue;
-                }
-
-                if (of(v, h).isPawn()) {
-                    verticalCount++;
-                }
-            }
+            int verticalCount = getPawnCountInVerticalLine(v, owner);
             if (verticalCount > 1) {
                 totalCount += verticalCount;
             }
@@ -145,12 +143,18 @@ public class Board {
         return totalCount;
     }
 
+    private int getPawnCountInVerticalLine(final Vertical v, final Owner owner){
+        return (int)Arrays.stream(Horizontal.values())
+                .filter(h -> of(v, h).isOwner(owner) && of(v, h).isPawn())
+                .count();
+    }
+
     public boolean isEnd() {
         return isEnd;
     }
 
-    public List<Position> getAbleToMove(final Position source) {
-        return ableToMove(source);
+    public List<Position> getAblePositionsToMove(final Position source) {
+        return calculateReachablePositions(source);
     }
 
     public boolean isPositionOwner(final Position position, final Owner owner){

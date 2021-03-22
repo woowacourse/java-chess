@@ -31,50 +31,23 @@ public enum Direction {
     }
 
     public static List<Direction> diagonalDirections() {
-        return Arrays.asList(
-                UP_RIGHT,
-                UP_LEFT,
-                DOWN_RIGHT,
-                DOWN_LEFT
-        );
+        return Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT);
     }
 
     public static List<Direction> straightDirections() {
-        return Arrays.asList(
-                UP,
-                DOWN,
-                RIGHT,
-                LEFT
-        );
+        return Arrays.asList(UP, DOWN, RIGHT, LEFT);
     }
 
     public static List<Direction> allDirections() {
-        return Arrays.asList(
-                UP_RIGHT,
-                UP_LEFT,
-                DOWN_RIGHT,
-                DOWN_LEFT,
-                UP,
-                DOWN,
-                RIGHT,
-                LEFT
-        );
+        return Arrays.asList(UP_RIGHT, UP_LEFT, DOWN_RIGHT, DOWN_LEFT, UP, DOWN, RIGHT, LEFT);
     }
 
     public static List<Direction> whitePawnDirections() {
-        return Arrays.asList(
-                UP,
-                UP_RIGHT,
-                UP_LEFT
-        );
+        return Arrays.asList(UP, UP_RIGHT, UP_LEFT);
     }
 
     public static List<Direction> blackPawnDirections() {
-        return Arrays.asList(
-                DOWN,
-                DOWN_RIGHT,
-                DOWN_LEFT
-        );
+        return Arrays.asList(DOWN, DOWN_RIGHT, DOWN_LEFT);
     }
 
     public static List<Direction> knightDirections() {

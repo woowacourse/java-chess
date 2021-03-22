@@ -27,6 +27,7 @@ public abstract class Pawn extends Piece {
         }
     };
 
+    // XXX :: Symbol view로 빼기
     private Pawn(final Owner owner, final List<Direction> directions) {
         super(
                 owner,

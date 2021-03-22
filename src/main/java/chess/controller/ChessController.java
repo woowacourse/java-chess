@@ -59,7 +59,7 @@ public class ChessController {
     }
 
     private void showAblePositionToMove(final ShowCommand command){
-        List<Position> reachablePositions = chessManager.getReachablePositions(command);
+        final List<Position> reachablePositions = chessManager.getReachablePositions(command);
         OutputView.printReachableBoard(chessManager.getBoard(),reachablePositions);
     }
 

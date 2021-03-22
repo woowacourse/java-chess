@@ -34,11 +34,11 @@ public class ChessManager {
     }
 
     public List<Position> getReachablePositions(final ShowCommand command) {
-        return board.getAbleToMove(command.source());
+        return board.getAblePositionsToMove(command.source());
     }
 
     public Status calculateStatus() {
-        return board.getStatus();
+        return board.status();
     }
 
     public boolean isEnd() {
