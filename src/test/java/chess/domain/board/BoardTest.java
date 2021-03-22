@@ -42,7 +42,7 @@ class BoardTest {
 
         // then
         assertThatThrownBy(() -> initialBoard.move(source, target, Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(MoveFailureException.class);
     }
 
     @DisplayName("목표위치에 같은 팀의 말이 있으면 이동하지 못한다.")
@@ -54,7 +54,7 @@ class BoardTest {
 
         // then
         assertThatThrownBy(() -> initialBoard.move(rookLocation, pawnLocation, Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(MoveFailureException.class);
     }
 
     @DisplayName("이동 테스트 - 룩")
@@ -247,7 +247,7 @@ class BoardTest {
         // then
         assertThat(testBoard.find(possibleTarget)).isEqualTo(sourcePiece);
         assertThatThrownBy(() -> testBoard.move(possibleTarget, impossibleTarget, Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(MoveFailureException.class);
     }
 
     @DisplayName("폰이 직선 이동하는 경우 목표 위치에 적의 말이 있으면 이동하지 못한다.")
@@ -260,7 +260,7 @@ class BoardTest {
 
         // then
         assertThatThrownBy(() -> testBoard.move(source, target, Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
+            .isInstanceOf(MoveFailureException.class);
     }
 
     @DisplayName("공격 테스트 - 폰")
@@ -289,13 +289,7 @@ class BoardTest {
 
         // then
         assertThatThrownBy(() -> testBoard.move(source, target, Team.WHITE))
-            .isInstanceOf(IllegalArgumentException.class);
-    }
-
-    @DisplayName("룩, 비숍, 퀸, 폰은 경로에 체스 말이 있는 경우 이동하지 못한다.")
-    @Test
-    void move_obstacle() {
-
+            .isInstanceOf(MoveFailureException.class);
     }
 
     @DisplayName("점수 계산 테스트")

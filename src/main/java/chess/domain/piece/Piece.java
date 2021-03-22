@@ -68,6 +68,18 @@ public abstract class Piece implements Movable {
 
     public abstract PieceType getPieceType();
 
+    public int getX() {
+        return location.getX();
+    }
+
+    public int getY() {
+        return location.getY();
+    }
+
+    public Team getTeam() {
+        return team;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -83,13 +95,5 @@ public abstract class Piece implements Movable {
     @Override
     public int hashCode() {
         return Objects.hash(team, location);
-    }
-
-    public int getX() {
-        return location.getX();
-    }
-
-    public int getY() {
-        return location.getY();
     }
 }

@@ -9,6 +9,9 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private final static double BASIC_SCORE_CRITERION = 1;
+    private final static double PAWN_SAME_COL_SCORE = 0.5;
+
     private final List<Piece> pieces;
 
     private Board(final List<Piece> pieces) {
@@ -35,33 +38,33 @@ public class Board {
 
     private void validateTeam(Piece piece, Team team) {
         if (!piece.isSameTeam(team)) {
-            throw new IllegalArgumentException("상대의 말은 움직일 수 없습니다.");
+            throw new MoveFailureException("상대의 말은 움직일 수 없습니다.");
         }
     }
 
     private void validateIsNotSameTeam(Location target, Piece piece) {
         if (isExistent(target) && piece.isSameTeam(find(target))) {
-            throw new IllegalArgumentException("목표 위치에 같은 팀의 말이 있습니다.");
+            throw new MoveFailureException("목표 위치에 같은 팀의 말이 있습니다.");
         }
     }
 
     private void validateMoveCapable(Location target, Piece piece) {
         if (!piece.isMovable(target)) {
-            throw new IllegalArgumentException("해당 체스 말은 해당 위치로 이동할 능력이 없습니다.");
+            throw new MoveFailureException("해당 체스 말은 해당 위치로 이동할 능력이 없습니다.");
         }
     }
 
     private void validateNotExistentInPath(List<Location> pathToTarget) {
         for (Location location : pathToTarget) {
             if (isExistent(location)) {
-                throw new IllegalArgumentException("이동 경로에 말이 있습니다.");
+                throw new MoveFailureException("이동 경로에 말이 있습니다.");
             }
         }
     }
 
     private void validateSameLocation(Location source, Location target) {
         if (source.equals(target)) {
-            throw new IllegalArgumentException("현재 말의 위치와 목표 위치는 같을 수 없습니다.");
+            throw new MoveFailureException("현재 말의 위치와 목표 위치는 같을 수 없습니다.");
         }
     }
 
@@ -69,10 +72,10 @@ public class Board {
         if (sourcePiece.isPawn()) {
             int subX = source.subtractX(target);
             if (subX == 0 && isExistent(target)) {
-                throw new IllegalArgumentException("폰이 이동할 수 없는 상황 입니다.");
+                throw new MoveFailureException("폰이 이동할 수 없는 상황 입니다.");
             }
             if (subX != 0 && !isExistent(target)) {
-                throw new IllegalArgumentException("폰이 이동할 수 없는 상황 입니다.");
+                throw new MoveFailureException("폰이 이동할 수 없는 상황 입니다.");
             }
         }
     }
@@ -82,7 +85,7 @@ public class Board {
             .stream()
             .filter(piece -> piece.areYouHere(location))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("해당 위치에 체스 말이 존재하지 않습니다."));
+            .orElseThrow(() -> new MoveFailureException("해당 위치에 체스 말이 존재하지 않습니다."));
     }
 
     public boolean isExistent(Location location) {
@@ -99,10 +102,10 @@ public class Board {
     }
 
     public double score(Team team) {
-        return scoreExceptionPawn(team) + scorePawn(team);
+        return scoreExceptPawn(team) + scorePawn(team);
     }
 
-    private double scoreExceptionPawn(Team team) {
+    private double scoreExceptPawn(Team team) {
         return pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))
@@ -115,25 +118,26 @@ public class Board {
         final Map<Integer, Long> frequencyPerX = pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> piece.isPawn())
+            .filter(Piece::isPawn)
             .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()));
 
         return frequencyPerX
             .values()
             .stream()
-            .mapToDouble(count -> count <= 1 ? count : count * 0.5)
+            .mapToDouble(count -> count <= BASIC_SCORE_CRITERION ?
+                count :
+                count * PAWN_SAME_COL_SCORE)
             .sum();
-    }
-
-    public List<Piece> toList() {
-        return pieces;
     }
 
     public boolean isKingAlive(Team team) {
         return pieces
             .stream()
             .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> piece.isKing())
-            .findAny().isPresent();
+            .anyMatch(Piece::isKing);
+    }
+
+    public List<Piece> toList() {
+        return pieces;
     }
 }

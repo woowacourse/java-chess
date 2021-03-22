@@ -6,6 +6,7 @@ public class Location {
 
     private static final int MIN_LOCATION = 1;
     private static final int MAX_LOCATION = 8;
+    private static final int LOCATION_SIZE = 2;
 
     private final int x;
     private final int y;
@@ -21,8 +22,8 @@ public class Location {
     }
 
     public static Location of(final String location) {
-        if (location.length() != 2) {
-            throw new IllegalArgumentException();
+        if (location.length() != LOCATION_SIZE) {
+            throw new IllegalArgumentException("좌표가 잘못 입력되었습니다.");
         }
         int xPos = location.charAt(0) - 'a' + 1;
         int yPos = Character.digit(location.charAt(1), 10);
@@ -39,23 +40,6 @@ public class Location {
     private static boolean isRange(int x, int y) {
         return (MIN_LOCATION <= x && x <= MAX_LOCATION)
             && (MIN_LOCATION <= y && y <= MAX_LOCATION);
-    }
-
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final Location location = (Location) o;
-        return x == location.x && y == location.y;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(x, y);
     }
 
     public boolean isHorizontalOrVertical(final Location target) {
@@ -75,7 +59,7 @@ public class Location {
     }
 
     public boolean isAdjacent(final Location target) {
-        return Math.abs(this.x - target.x) <= 1 && Math.abs(this.y - target.y) <= 1;
+        return Math.abs(subtractX(target)) <= 1 && Math.abs(subtractY(target)) <= 1;
     }
 
     public int subtractX(final Location target) {
@@ -104,5 +88,22 @@ public class Location {
 
     public int getY() {
         return y;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final Location location = (Location) o;
+        return x == location.x && y == location.y;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
     }
 }

@@ -20,13 +20,13 @@ public class Pawn extends Piece {
 
     @Override
     public boolean isMovable(final Location target) {
-        List<Location> nextLocations = getNextLocations(target);
+        List<Location> nextLocations = getPossibleLocation(target);
 
         return nextLocations.stream()
             .anyMatch(location -> location.equals(target));
     }
 
-    private List<Location> getNextLocations(Location target) {
+    private List<Location> getPossibleLocation(Location target) {
         List<Location> locations = new ArrayList<>();
         int dy = 1;
         if (team.isBlack()) {
