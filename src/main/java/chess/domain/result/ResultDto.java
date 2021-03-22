@@ -3,12 +3,12 @@ package chess.domain.result;
 import chess.domain.state.TeamColor;
 import java.util.Map;
 
-public class Result { // DTO
+public class ResultDto {
 
     private final Map<TeamColor, Score> result;
     private final TeamColor winner;
 
-    public Result(Map<TeamColor, Score> result, TeamColor winner) {
+    public ResultDto(Map<TeamColor, Score> result, TeamColor winner) {
         this.result = result;
         this.winner = winner;
     }

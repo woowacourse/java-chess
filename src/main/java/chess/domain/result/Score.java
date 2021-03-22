@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class Score implements Comparable<Score> {
 
-    public static final Score ZERO = new Score(0);
+    public static final Score START_SCORE = new Score(0);
     private final double score;
 
     public Score(double value) {

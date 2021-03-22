@@ -27,7 +27,7 @@ public class PiecesTest {
         List<Piece> piecesValue = Collections.emptyList();
         Pieces pieces = new Pieces(piecesValue);
 
-        assertThat(pieces.calculateScore()).isEqualTo(Score.ZERO);
+        assertThat(pieces.calculateScore()).isEqualTo(Score.START_SCORE);
     }
 
 

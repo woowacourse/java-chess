@@ -21,7 +21,7 @@ public class Pieces {
     }
 
     public Score calculateScore() {
-        Score sum = Score.ZERO;
+        Score sum = Score.START_SCORE;
         Map<Character, Integer> pawnCount = new HashMap<>();
 
         for (Piece piece : pieces) {

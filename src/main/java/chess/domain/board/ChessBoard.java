@@ -9,7 +9,7 @@ import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Rook;
 import chess.domain.result.Pieces;
-import chess.domain.result.Result;
+import chess.domain.result.ResultDto;
 import chess.domain.result.Score;
 import chess.domain.state.TeamColor;
 import java.util.ArrayList;
@@ -218,18 +218,18 @@ public class ChessBoard {
         return piece(position);
     }
 
-    public Result result() {
+    public ResultDto result() {
         Map<TeamColor, Score> result = new HashMap<>();
         result.put(TeamColor.BLACK, blackPieces.calculateScore());
         result.put(TeamColor.WHITE, whitePieces.calculateScore());
 
         if (isBlankWin(result)) {
-            return new Result(result, TeamColor.BLACK);
+            return new ResultDto(result, TeamColor.BLACK);
         }
         if (isWhiteWin(result)) {
-            return new Result(result, TeamColor.WHITE);
+            return new ResultDto(result, TeamColor.WHITE);
         }
-        return new Result(result, TeamColor.NONE);
+        return new ResultDto(result, TeamColor.NONE);
     }
 
     private boolean isWhiteWin(Map<TeamColor, Score> result) {
