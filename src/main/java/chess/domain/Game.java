@@ -8,16 +8,19 @@ import chess.domain.player.Player;
 import chess.domain.player.Players;
 import chess.domain.position.Position;
 import chess.domain.result.Result;
+import chess.domain.state.End;
+import chess.domain.state.Ready;
+import chess.domain.state.State;
 import chess.view.OutputView;
 import java.util.Arrays;
-import java.util.List;
 
 public class Game {
 
     private final Board board;
     private final Players players;
-    private PieceColor currentColor;
-    private boolean isPlaying;
+
+    private PieceColor turn;
+    private State state;
 
     public Game() {
         board = BoardFactory.initializeBoard();
@@ -25,50 +28,49 @@ public class Game {
             Player.of(PieceColor.WHITE),
             Player.of(PieceColor.BLACK)
         ));
-        currentColor = PieceColor.WHITE;
-        isPlaying = true;
+        turn = PieceColor.WHITE;
+        state = new Ready();
     }
 
-    public void execute(String input) {
-        List<String> values = Arrays.asList(input.split(" "));
-        if (Command.isEnd(values.get(0))) {
-            isPlaying = false;
-            return;
+    public void move(Position from, Position to) {
+        Piece chosenPiece = board.findPieceBy(from);
+        if (!players.currentPlayer(turn).isOwnerOf(chosenPiece)) {
+            throw new IllegalArgumentException("움직일 수 없는 말을 선택했습니다.");
         }
-        if (Command.isStatus(values.get(0))) {
-            Result result = new Result(board);
-            OutputView.printScore(currentColor, result.calculateTotalScore(currentColor));
-            OutputView.printScore(getCurrentColor().reversed(),
-                result.calculateTotalScore(getCurrentColor().reversed()));
-            OutputView.printWinner(result.findWinner());
-            return;
-        }
-        Position source = Position.ofName(values.get(1));
-        Piece chosenPiece = board.findPieceBy(source);
-        if (!players.currentPlayer(currentColor).isOwnerOf(chosenPiece)) {
-            throw new IllegalArgumentException("말을 움직일 수 없습니다.");
-        }
-        Position target = Position.ofName(values.get(2));
-        board.move(chosenPiece, target);
-        currentColor = currentColor.reversed();
+        board.move(chosenPiece, to);
+        turn = turn.reversed();
+        validateKingAlive();
+    }
 
+    private void validateKingAlive() {
         if (board.kingDead()) {
-            isPlaying = false;
-            Result result = new Result(board);
+            changeState(new End());
+            Result result = new Result(board, turn);
             OutputView.printWinner(result.findWinner());
         }
     }
 
-    public boolean isPlaying() {
-        return isPlaying;
-//        return !board.kingDead();
+    public Result getResult(){
+        return new Result(board, turn);
     }
 
     public Board getBoard() {
         return board;
     }
 
-    public PieceColor getCurrentColor() {
-        return currentColor;
+    public PieceColor getTurn() {
+        return turn;
+    }
+
+    public void changeState(State state){
+        this.state = state;
+    }
+
+    public boolean isRunning(){
+        return state.isStarted();
+    }
+
+    public boolean isFinished() {
+        return state.gameOver();
     }
 }

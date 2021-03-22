@@ -10,9 +10,27 @@ import java.util.Map;
 public class Result {
 
     private final Board board;
+    private final Score whiteScore;
+    private final Score blackScore;
 
-    public Result(Board board) {
+    public Result(Board board, PieceColor color) {
         this.board = board;
+        whiteScore = calculateWhiteScore(color);
+        blackScore = calculateBlackScore(color);
+    }
+
+    private Score calculateWhiteScore(PieceColor color){
+        if(color.equals(PieceColor.WHITE)) {
+            return calculateTotalScore(color);
+        }
+        return calculateTotalScore(color.reversed());
+    }
+
+    private Score calculateBlackScore(PieceColor color){
+        if(color.equals(PieceColor.BLACK)) {
+            return calculateTotalScore(color);
+        }
+        return calculateTotalScore(color.reversed());
     }
 
     public Score calculateTotalScore(PieceColor color) {
@@ -28,7 +46,7 @@ public class Result {
         return pieces.keySet()
             .stream()
             .filter(piece -> !piece.isPawn())
-            .map(piece -> piece.score())
+            .map(Piece::score)
             .reduce(Score::add)
             .orElse(new Score(0))
             ;
@@ -53,7 +71,7 @@ public class Result {
 
     public String findWinner() {
         if (!board.kingDead()) {
-            throw new IllegalArgumentException("아직 승자가 정해지지 않았습니다.");
+            return "아직 승자가 정해지지 않았습니다.";
         }
         return board.getCoordinates()
             .keySet()
@@ -65,4 +83,11 @@ public class Result {
             ;
     }
 
+    public Score getWhiteScore() {
+        return whiteScore;
+    }
+
+    public Score getBlackScore() {
+        return blackScore;
+    }
 }
