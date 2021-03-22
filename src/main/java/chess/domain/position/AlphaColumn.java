@@ -53,10 +53,6 @@ public class AlphaColumn {
         return new ArrayList<>(cache.values());
     }
 
-    public static List<Integer> keys(){
-        return new ArrayList<>(cache.keySet());
-    }
-
     public String alpha(){
         return String.valueOf((char) asciNumber);
     }
