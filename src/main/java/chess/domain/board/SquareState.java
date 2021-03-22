@@ -74,24 +74,12 @@ public class SquareState {
         return this.team == team;
     }
 
-    public boolean isNotTeam(Team team) {
-        return this.team != team;
-    }
-
     public boolean isEnemy(SquareState sourceSquareState) {
         return team == sourceSquareState.team.opposingTeam();
     }
 
-    public boolean isEmpty() {
-        return team == Team.NONE;
-    }
-
     public boolean isPieceTypeOf(Piece piece) {
         return this.piece == piece;
-    }
-
-    public boolean isNotPieceTypeOf(Piece piece) {
-        return this.piece != piece;
     }
 
     @Override

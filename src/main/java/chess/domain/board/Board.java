@@ -44,7 +44,7 @@ public class Board {
         return !isSameTeamAt(point, team);
     }
 
-    public boolean isNotSameTeam(Point source, Point destination) {
+    public boolean isEnemy(Point source, Point destination) {
         SquareState sourceState = squares.get(source);
         SquareState destinationState = squares.get(destination);
 

@@ -82,6 +82,6 @@ public class PieceMovementRule {
 
     private boolean isNotOrValidPawnDiagonalMove(Point source, Point destination,
         MoveVector moveVector) {
-        return !moveVector.isDiagonalVector() || board.isNotSameTeam(source, destination);
+        return !moveVector.isDiagonalVector() || board.isEnemy(source, destination);
     }
 }
