@@ -2,11 +2,18 @@ package chess.domain.game.state;
 
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
+import chess.domain.piece.team.Color;
 
 public class BlackTurn extends Running {
+    private final Color color = Color.BLACK;
 
     public BlackTurn(Board board) {
         super(board);
+    }
+
+    @Override
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
     }
 
     @Override
@@ -16,6 +23,6 @@ public class BlackTurn extends Running {
 
     @Override
     public void move(Position source, Position target) {
-//        return new WhiteTurn(board());
+        board().moveIfValid(source, target);
     }
 }

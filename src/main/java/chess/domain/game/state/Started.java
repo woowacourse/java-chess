@@ -3,6 +3,7 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
+import chess.domain.piece.team.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,11 @@ public abstract class Started implements State {
 
     protected Board board() {
         return this.board;
+    }
+
+    @Override
+    public boolean isSameColor(Color color) {
+        throw new IllegalStateException("현재 수행할 수 없는 명령입니다.");
     }
 
     @Override
