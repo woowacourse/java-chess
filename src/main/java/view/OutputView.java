@@ -1,29 +1,17 @@
 package view;
 
-import domain.Board;
-import domain.piece.Position;
+import domain.dto.BoardDto;
+import domain.dto.StatusDto;
 
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 public class OutputView {
 
     private OutputView() {
     }
 
-    public static void showBoard(Board board) {
-        AtomicInteger count = new AtomicInteger(0);
-        IntStream.range(0, 8)
-                .boxed()
-                .flatMap(row -> IntStream.range(0, 8)
-                        .mapToObj(column -> Position.valueOf(row, column)))
-                .forEach(position -> {
-                    System.out.print(board.getPiece(position).getName());
-                    if (count.incrementAndGet() % 8 == 0) {
-                        System.out.println();
-                    }
-                });
+    public static void showBoard(BoardDto boardDto) {
+        boardDto.getMenuDto().forEach(System.out::print);
     }
 
     public static void showGuide() {
@@ -49,9 +37,8 @@ public class OutputView {
         System.out.println("게임이 아직 실행되지 않았습니다.");
     }
 
-    public static void showStatus(Map<String, Double> piecesScore) {
-        for (String teamColor : piecesScore.keySet()) {
-            System.out.println(teamColor + " : " + piecesScore.get(teamColor) + "점");
-        }
+    public static void showStatus(StatusDto statusDto) {
+        statusDto.getMenuDto().entrySet().stream()
+                .forEach(entry -> System.out.println(entry.getKey() + " : " + entry.getValue() + ""));
     }
 }
