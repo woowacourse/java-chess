@@ -58,7 +58,7 @@ public final class Pawn extends Piece {
     }
 
     private List<Direction> twoStepDirections() {
-        if (color() == Color.BLACK) {
+        if (isBlack()) {
             return Direction.blackPawnLinearDirection();
         }
         return Direction.whitePawnLinearDirection();
@@ -92,7 +92,7 @@ public final class Pawn extends Piece {
 
     @Override
     public final List<Direction> directions() {
-        if (color() == Color.BLACK) {
+        if (isBlack()) {
             return Direction.blackPawnDirection();
         }
         return Direction.whitePawnDirection();
@@ -110,7 +110,7 @@ public final class Pawn extends Piece {
 
     @Override
     public char name() {
-        if (color() == Color.BLACK) {
+        if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
         return NAME_WHEN_WHITE;

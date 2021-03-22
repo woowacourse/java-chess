@@ -36,7 +36,7 @@ public final class Knight extends Piece {
 
     @Override
     public final char name() {
-        if (color() == Color.BLACK) {
+        if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
         return NAME_WHEN_WHITE;

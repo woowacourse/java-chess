@@ -49,6 +49,10 @@ public abstract class Piece {
         return color;
     }
 
+    public boolean isBlack() {
+        return color == Color.BLACK;
+    }
+
     public final List<Position> route(final Direction direction, final int stepRange, Lines lines) {
         List<Position> positions = new ArrayList<>();
         Position sourcePosition = position();
