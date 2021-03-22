@@ -15,7 +15,8 @@ public final class OutputView {
     private static final String SCORE_FORM = "%s팀 : %.1f" + System.lineSeparator();
     private static final String WINNER_FORM = "승자는 %s팀 입니다.";
 
-    private OutputView() {}
+    private OutputView() {
+    }
 
     public static void printBoard(BoardDto boardDto) {
         StringBuilder stringBuilder = new StringBuilder();

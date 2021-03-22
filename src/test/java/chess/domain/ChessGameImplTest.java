@@ -10,7 +10,6 @@ import chess.domain.piece.Queen;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.InvalidTurnException;
 import chess.exception.PieceNotFoundException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import org.assertj.core.api.Assertions;
@@ -32,7 +31,8 @@ class ChessGameImplTest {
     @DisplayName("현재 턴의 해당하는 팀이 아닌 다른 팀의 말을 움직일 때")
     void movePiece_invalidTurnException() {
         Queen queen = new Queen(BLACK, Position.of(1, 1));
-        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.from(Collections.singletonList(queen)), WHITE);
+        ChessGameImpl chessGame = ChessGameImpl
+            .from(Pieces.from(Collections.singletonList(queen)), WHITE);
         Assertions.assertThatThrownBy(() ->
             chessGame.movePiece(queen.currentPosition(), Position.of(2, 2))
         ).isInstanceOf(InvalidTurnException.class);
@@ -42,7 +42,8 @@ class ChessGameImplTest {
     @DisplayName("움직일 수 없는 곳으로 이동할 때")
     void movePiece_impossibleMoveException() {
         Queen queen = new Queen(WHITE, Position.of(1, 1));
-        ChessGameImpl chessGame = ChessGameImpl.from(Pieces.from(Collections.singletonList(queen)), WHITE);
+        ChessGameImpl chessGame = ChessGameImpl
+            .from(Pieces.from(Collections.singletonList(queen)), WHITE);
         Assertions.assertThatThrownBy(() ->
             chessGame.movePiece(queen.currentPosition(), Position.of(3, 2))
         ).isInstanceOf(ImpossibleMoveException.class);
@@ -59,43 +60,6 @@ class ChessGameImplTest {
 
         Assertions.assertThat(pieces.pieceByPosition(knight.currentPosition())).contains(queen);
         Assertions.assertThat(pieces.pieceByPosition(Position.of(1, 1))).isEmpty();
-    }
-
-    @Test
-    @DisplayName("처음 시작할 때의 스코어")
-    void gameResult_initialScore() {
-        ChessGameImpl chessGame = ChessGameImpl.initialGame();
-        GameResult gameResult = chessGame.gameResult();
-
-        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(38));
-        Assertions.assertThat(gameResult.blackTeamScore()).isEqualTo(new Score(38));
-    }
-
-    @Test
-    @DisplayName("같은 행에 폰이 2개일 경우 점수 계산")
-    void gameResult_pawn_sameColumn() {
-        Pieces pieces = Pieces.from(Arrays.asList(
-            new Pawn(WHITE, Position.of(2, 3)),
-            new Pawn(WHITE, Position.of(2, 4))
-        ));
-        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
-        GameResult gameResult = chessGame.gameResult();
-
-        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(1.0));
-    }
-
-    @Test
-    @DisplayName("다른 행에 폰이 2개일 경우 점수 계산")
-    void gameResult_pawn_distinctColumn() {
-        Pieces pieces = Pieces.from(Arrays.asList(
-            new Pawn(WHITE, Position.of(3, 4)),
-            new Pawn(WHITE, Position.of(2, 4))
-        ));
-        ChessGameImpl chessGame = ChessGameImpl.from(pieces, WHITE);
-        GameResult gameResult = chessGame.gameResult();
-
-        Assertions.assertThat(gameResult.whiteTeamScore()).isEqualTo(new Score(2));
-        Assertions.assertThat(gameResult.winner()).isEqualTo(WHITE);
     }
 
     @Test

@@ -78,7 +78,8 @@ public final class ChessGameImpl implements ChessGame {
 
     @Override
     public boolean isChecked() {
-        Set<Position> enemiesAttackPositions = pieces.attackPositionsByColor(currentColor.reverse());
+        Set<Position> enemiesAttackPositions = pieces
+            .attackPositionsByColor(currentColor.reverse());
 
         return enemiesAttackPositions.contains(
             pieces.kingByColor(currentColor)

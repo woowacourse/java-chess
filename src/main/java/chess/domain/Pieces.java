@@ -17,6 +17,10 @@ public class Pieces {
 
     private final List<Piece> pieces;
 
+    private Pieces(List<Piece> pieces) {
+        this.pieces = new ArrayList<>(pieces);
+    }
+
     public static Pieces emptyPieces() {
         return new Pieces(new ArrayList<>());
     }
@@ -27,10 +31,6 @@ public class Pieces {
 
     public static Pieces from(Piece... pieces) {
         return new Pieces(Arrays.asList(pieces));
-    }
-
-    private Pieces(List<Piece> pieces) {
-        this.pieces = new ArrayList<>(pieces);
     }
 
     public void updateMovablePositions() {

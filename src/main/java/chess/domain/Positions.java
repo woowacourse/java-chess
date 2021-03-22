@@ -10,7 +10,7 @@ public final class Positions {
         this.targetPosition = targetPosition;
     }
 
-    public Position currentPosition(){
+    public Position currentPosition() {
         return currentPosition;
     }
 

@@ -4,7 +4,8 @@ import chess.domain.Position;
 
 public final class StringPositionConverter {
 
-    private StringPositionConverter() {}
+    private StringPositionConverter() {
+    }
 
     public static Position convert(String message) {
         char[] rowAndColumn = message.toCharArray();

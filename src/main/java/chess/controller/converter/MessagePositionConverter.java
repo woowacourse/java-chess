@@ -9,12 +9,15 @@ public final class MessagePositionConverter {
     private static final int CURRENT_POSITION_INDEX = 1;
     private static final int TARGET_POSITION_INDEX = 2;
 
-    private MessagePositionConverter() {}
+    private MessagePositionConverter() {
+    }
 
     public static Positions convert(String message) {
         String[] splitPositions = message.split(MESSAGE_SPLIT_REGEX);
-        Position currentPosition = StringPositionConverter.convert(splitPositions[CURRENT_POSITION_INDEX]);
-        Position targetPosition = StringPositionConverter.convert(splitPositions[TARGET_POSITION_INDEX]);
+        Position currentPosition = StringPositionConverter
+            .convert(splitPositions[CURRENT_POSITION_INDEX]);
+        Position targetPosition = StringPositionConverter
+            .convert(splitPositions[TARGET_POSITION_INDEX]);
         return new Positions(currentPosition, targetPosition);
     }
 }
