@@ -45,9 +45,6 @@ public class InputView {
 
     public static boolean isStatus() {
         String input = SCANNER.nextLine();
-        if (!STATUS.equals(input)) {
-            return false;
-        }
-        return true;
+        return STATUS.equals(input);
     }
 }
