@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.Point;
-import chess.domain.board.Row;
-
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,9 +12,6 @@ public enum Vector {
     NORTHWEST(-1, 1),
     SOUTHEAST(1, -1),
     SOUTHWEST(-1, -1),
-
-    FIRST_PAWN_UP(0, 2),
-    FIRST_PAWN_DOWN(0, -2),
 
     NNE(1, 2),
     NEE(2, 1),
@@ -36,12 +30,8 @@ public enum Vector {
         this.vertical = vertical;
     }
 
-    public static List<Vector> firstWhitePawnVectors() {
-        return Arrays.asList(NORTH, FIRST_PAWN_UP);
-    }
-
-    public static List<Vector> firstBlackPawnVectors() {
-        return Arrays.asList(NORTH, FIRST_PAWN_DOWN);
+    public static List<Vector> pawnVectors() {
+        return Arrays.asList(NORTH, NORTHEAST, NORTHWEST);
     }
 
     public static List<Vector> everyVectors() {
@@ -60,12 +50,6 @@ public enum Vector {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public static boolean hasNotVector(int horizon, int vertical) {
-        return Arrays.stream(Vector.values())
-            .noneMatch(vector -> (vector.horizon == horizon)
-                && (vector.vertical == vertical));
-    }
-
     public static Vector get(int horizon, int vertical) {
         return Arrays.stream(Vector.values())
             .filter(vector -> (vector.horizon == horizon)
@@ -74,17 +58,13 @@ public enum Vector {
             .orElseThrow(IllegalArgumentException::new);
     }
 
-    public boolean isWhitePawnsStraight(Point source) {
-        if (source.isRow(Row.TWO)) {
-            return firstWhitePawnVectors().contains(this);
-        }
+    public boolean isWhitePawnsStraight() {
+
         return this == NORTH;
     }
 
-    public boolean isBlackPawnsStraight(Point source) {
-        if (source.isRow(Row.SEVEN)) {
-            return firstBlackPawnVectors().contains(this);
-        }
+    public boolean isBlackPawnsStraight() {
+
         return this == SOUTH;
     }
 

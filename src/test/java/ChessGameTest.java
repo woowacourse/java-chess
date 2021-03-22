@@ -206,9 +206,11 @@ public class ChessGameTest {
         List<String> moveCommander1 = Arrays.asList("move", "d2", "d4");
         List<String> moveCommander2 = Arrays.asList("move", "d7", "d5");
         List<String> moveCommander3 = Arrays.asList("move", "c1", "h6");
+
         chessGame.move(moveCommander1);
         chessGame.move(moveCommander2);
         chessGame.move(moveCommander3);
+
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(Arrays.asList("move", "h7", "h5")))
                 .withMessage("불가능한 이동입니다.");

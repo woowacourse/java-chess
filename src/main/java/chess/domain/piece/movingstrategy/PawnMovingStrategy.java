@@ -9,7 +9,7 @@ public class PawnMovingStrategy implements MovingStrategy {
 
     private static final int LENGTH = 2;
 
-    private final List<Vector> pawnsVector = Vector.firstWhitePawnVectors();
+    private final List<Vector> pawnsVector = Vector.pawnVectors();
 
     @Override
     public Vector findMovableVector(Point source, Point destination) {
@@ -18,17 +18,16 @@ public class PawnMovingStrategy implements MovingStrategy {
 
         Vector possibleVector = findPawnsVectorByDifference(x, y);
 
-        if (Vector.FIRST_PAWN_UP == possibleVector && !source.isRow(Row.TWO)) {
+        if (y == 2 && !source.isRow(Row.TWO)) {
             return null;
         }
         return possibleVector;
     }
 
     private Vector findPawnsVectorByDifference(int x, int y) {
-        Vector moveVector = Vector.get(x, y);
 
         return pawnsVector.stream()
-            .filter(vector -> vector.equals(moveVector))
+            .filter(vector -> vector.isSameDirection(x, y))
             .findFirst()
             .orElse(null);
     }
