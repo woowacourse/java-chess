@@ -13,24 +13,10 @@ public class Result {
     private final Score whiteScore;
     private final Score blackScore;
 
-    public Result(Board board, PieceColor color) {
+    public Result(Board board) {
         this.board = board;
-        whiteScore = calculateWhiteScore(color);
-        blackScore = calculateBlackScore(color);
-    }
-
-    private Score calculateWhiteScore(PieceColor color) {
-        if (color.equals(PieceColor.WHITE)) {
-            return calculateTotalScore(color);
-        }
-        return calculateTotalScore(color.reversed());
-    }
-
-    private Score calculateBlackScore(PieceColor color) {
-        if (color.equals(PieceColor.BLACK)) {
-            return calculateTotalScore(color);
-        }
-        return calculateTotalScore(color.reversed());
+        whiteScore = calculateTotalScore(PieceColor.WHITE);
+        blackScore = calculateTotalScore(PieceColor.BLACK);
     }
 
     public Score calculateTotalScore(PieceColor color) {

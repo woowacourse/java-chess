@@ -21,7 +21,7 @@ class ResultTest {
     @Test
     void score() {
         Board board = BoardFactory.initializeBoard();
-        Result result = new Result(board, PieceColor.WHITE);
+        Result result = new Result(board);
         assertThat(result.getWhiteScore()).isEqualTo(Score.MAX);
         assertThat(result.getBlackScore()).isEqualTo(Score.MAX);
     }
@@ -33,8 +33,10 @@ class ResultTest {
         board.putPiece(new WhitePawn(), Position.of("a1"));
         board.putPiece(new WhitePawn(), Position.of("a2"));
         board.putPiece(new WhitePawn(), Position.of("a3"));
-        Result result = new Result(board, PieceColor.WHITE);
+        Result result = new Result(board);
         assertThat(result.getWhiteScore()).isEqualTo(new Score(1.5));
+        assertThat(result.getBlackScore()).isEqualTo(new Score(1.5));
+
     }
 
     @DisplayName("같은 행에 있거나 있지 않은 폰들의 점수를 계산한다.")
@@ -45,7 +47,7 @@ class ResultTest {
         board.putPiece(new BlackPawn(), Position.of("a2"));
         board.putPiece(new BlackPawn(), Position.of("b2"));
         board.putPiece(new BlackPawn(), Position.of("c3"));
-        Result result = new Result(board, PieceColor.BLACK);
+        Result result = new Result(board);
         Score totalScore = result.calculateTotalScore(PieceColor.BLACK);
         assertThat(totalScore).isEqualTo(new Score(3));
     }
@@ -55,7 +57,7 @@ class ResultTest {
     @CsvSource(value = {"e1:흑", "e8:백"}, delimiter = ':')
     void findWinner(String positionName, String colorName) {
         Board board = BoardFactory.initializeBoard();
-        Result result = new Result(board, PieceColor.WHITE);
+        Result result = new Result(board);
         assertThatIllegalArgumentException()
             .isThrownBy(result::findWinner)
             .withMessage("아직 승자가 정해지지 않았습니다.");

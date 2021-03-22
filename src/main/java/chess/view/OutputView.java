@@ -35,10 +35,15 @@ public class OutputView {
 
     public static void printScore(PieceColor color, Score score) {
         System.out.println(color.getColor() + "의 점수: " + score.is());
-
     }
 
     public static void printWinner(String winner) {
         System.out.println(winner);
+    }
+
+    public static void printStatus(Score whiteScore, Score blackScore) {
+        printScore(PieceColor.WHITE, whiteScore);
+        printScore(PieceColor.BLACK, blackScore);
+
     }
 }

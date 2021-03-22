@@ -40,6 +40,7 @@ public enum Command {
         }
         game.move(positionOf(input, 1), positionOf(input, 2));
         OutputView.printBoard(game.getBoard());
+        OutputView.printTurn(game.getTurn());
     }
 
     private static void end(String input, Game game) {
@@ -53,14 +54,14 @@ public enum Command {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
         }
         Result result = game.getResult();
-        OutputView.printWinner(result.findWinner());
+        OutputView.printStatus(result.getWhiteScore(), result.getBlackScore());
     }
 
     public static Command of(String value) {
         return Stream.of(values())
             .filter(command -> command.is(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("없는 명령어입니다."));
+            .orElseThrow(() -> new IllegalArgumentException("잘못된 명령어입니다."));
     }
 
     private static Position positionOf(String input, int pieceIndex) {

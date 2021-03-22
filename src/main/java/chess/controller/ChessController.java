@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Game;
+import chess.domain.result.Result;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -12,6 +13,8 @@ public class ChessController {
         while (!game.isFinished()) {
             executeCommand(InputView.receiveInput(), game);
         }
+        Result result = new Result(game.getBoard());
+        OutputView.printWinner(result.findWinner());
     }
 
     private void executeCommand(final String input, final Game game) {

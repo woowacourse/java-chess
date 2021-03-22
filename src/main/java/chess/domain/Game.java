@@ -11,7 +11,6 @@ import chess.domain.result.Result;
 import chess.domain.state.End;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
-import chess.view.OutputView;
 import java.util.Arrays;
 
 public class Game {
@@ -33,11 +32,11 @@ public class Game {
     }
 
     public void move(Position from, Position to) {
-        Piece chosenPiece = board.findPieceBy(from);
-        if (!players.currentPlayer(turn).isOwnerOf(chosenPiece)) {
+        Piece source = board.findPieceBy(from);
+        if (!players.currentPlayer(turn).isOwnerOf(source)) {
             throw new IllegalArgumentException("움직일 수 없는 말을 선택했습니다.");
         }
-        board.move(chosenPiece, to);
+        board.move(source, to);
         turn = turn.reversed();
         validateKingAlive();
     }
@@ -45,21 +44,7 @@ public class Game {
     private void validateKingAlive() {
         if (board.kingDead()) {
             changeState(new End());
-            Result result = new Result(board, turn);
-            OutputView.printWinner(result.findWinner());
         }
-    }
-
-    public Result getResult() {
-        return new Result(board, turn);
-    }
-
-    public Board getBoard() {
-        return board;
-    }
-
-    public PieceColor getTurn() {
-        return turn;
     }
 
     public void changeState(State state) {
@@ -72,5 +57,17 @@ public class Game {
 
     public boolean isFinished() {
         return state.gameOver();
+    }
+
+    public Board getBoard() {
+        return board;
+    }
+
+    public PieceColor getTurn() {
+        return turn;
+    }
+
+    public Result getResult() {
+        return new Result(board);
     }
 }
