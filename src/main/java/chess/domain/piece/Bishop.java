@@ -11,28 +11,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Bishop extends Piece {
-    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('c', '8'),
-            Position.of('f', '8'));
-    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('c', '1'),
-            Position.of('f', '1'));
-
     public Bishop(Position position, Color color) {
         super(position, Name.BISHOP, color, new Score(3));
     }
 
     public Bishop(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
-    }
-
-    public static List<Bishop> initialBishops() {
-        List<Bishop> blackBishops = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Bishop(position, Color.BLACK))
-                .collect(Collectors.toList());
-        List<Bishop> whiteBishops = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Bishop(position, Color.WHITE))
-                .collect(Collectors.toList());
-        blackBishops.addAll(whiteBishops);
-        return blackBishops;
     }
 
     @Override

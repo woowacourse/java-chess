@@ -11,22 +11,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Queen extends Piece {
-    private static final Position INITIAL_BLACK_POSITION = Position.of('d', '8');
-    private static final Position INITIAL_WHITE_POSITION = Position.of('d', '1');
-
     public Queen(Position position, Color color) {
         super(position, Name.QUEEN, color, new Score(9));
     }
 
     public Queen(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
-    }
-
-    public static List<Queen> initialQueens() {
-        List<Queen> queens = new ArrayList();
-        queens.add(new Queen(INITIAL_BLACK_POSITION, Color.BLACK));
-        queens.add(new Queen(INITIAL_WHITE_POSITION, Color.WHITE));
-        return queens;
     }
 
     @Override

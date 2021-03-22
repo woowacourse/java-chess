@@ -21,14 +21,6 @@ public class KnightTest {
         assertThat(knight.getName()).isEqualTo("N");
     }
 
-    @DisplayName("초기화된 Knight 객체들 생성 확인")
-    @Test
-    void 나이트_객체들_생성() {
-        List<Knight> nights = Knight.initialKnights();
-
-        assertThat(nights.size()).isEqualTo(4);
-    }
-
     @DisplayName("나이트의 이동을 확인한다.")
     @Test
     void 나이트_이동() {

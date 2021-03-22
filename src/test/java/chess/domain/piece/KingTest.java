@@ -21,14 +21,6 @@ public class KingTest {
         assertThat(king.getName()).isEqualTo("K");
     }
 
-    @DisplayName("초기화된 King 객체들 생성 확인")
-    @Test
-    void 킹_객체들_생성() {
-        List<King> kings = King.initialKings();
-
-        assertThat(kings.size()).isEqualTo(2);
-    }
-
     @DisplayName("킹의 십자 이동을 확인한다.")
     @Test
     void 킹_이동_십자() {

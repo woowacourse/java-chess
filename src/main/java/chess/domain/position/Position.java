@@ -32,10 +32,10 @@ public class Position {
         return of(xy.charAt(0), xy.charAt(1));
     }
 
-    public static Position of(char anotherX, char anotherY) {
+    public static Position of(char x, char y) {
         return POSITIONS.stream()
                 .filter(position ->
-                        position.x == anotherX && position.y == anotherY)
+                        position.x == x && position.y == y)
                 .findFirst()
                 .orElseThrow(() ->
                         new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다."));

@@ -5,19 +5,7 @@ import chess.domain.Name;
 import chess.domain.Score;
 import chess.domain.position.Position;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-
 public class Pawn extends Piece {
-    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('a', '7'),
-            Position.of('b', '7'), Position.of('c', '7'), Position.of('d', '7'),
-            Position.of('e', '7'), Position.of('f', '7'), Position.of('g', '7'),
-            Position.of('h', '7'));
-    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('a', '2'),
-            Position.of('b', '2'), Position.of('c', '2'), Position.of('d', '2'),
-            Position.of('e', '2'), Position.of('f', '2'), Position.of('g', '2'),
-            Position.of('h', '2'));
     public static final char BLACK_INITIAL_Y = '7';
     public static final char WHITE_INITIAL_Y = '2';
 
@@ -27,17 +15,6 @@ public class Pawn extends Piece {
 
     public Pawn(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
-    }
-
-    public static List<Pawn> initialPawns() {
-        List<Pawn> blackPawns = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Pawn(position, Color.BLACK))
-                .collect(Collectors.toList());
-        List<Pawn> whitePawns = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Pawn(position, Color.WHITE))
-                .collect(Collectors.toList());
-        blackPawns.addAll(whitePawns);
-        return blackPawns;
     }
 
     @Override

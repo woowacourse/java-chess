@@ -21,14 +21,6 @@ public class QueenTest {
         assertThat(queen.getName()).isEqualTo("Q");
     }
 
-    @DisplayName("초기화된 퀸 객체들 생성 확인")
-    @Test
-    void 퀸_객체들_생성() {
-        List<Queen> queens = Queen.initialQueens();
-
-        assertThat(queens.size()).isEqualTo(2);
-    }
-
     @DisplayName("퀸 이동 규칙에 어긋나는 경우 - 예외.")
     @Test
     void 퀸_이동_십자() {

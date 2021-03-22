@@ -10,29 +10,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Knight extends Piece {
-    private static final List<Position> INITIAL_BLACK_POSITIONS = Arrays.asList(Position.of('b', '8'),
-            Position.of('g', '8'));
-    private static final List<Position> INITIAL_WHITE_POSITIONS = Arrays.asList(Position.of('b', '1'),
-            Position.of('g', '1'));
-
     public Knight(Position position, Color color) {
         super(position, Name.KNIGHT, color, new Score(2.5));
     }
 
     public Knight(Position position, Name name, Color color, Score score) {
         super(position, name, color, score);
-    }
-
-
-    public static List<Knight> initialKnights() {
-        List<Knight> blackKnights = INITIAL_BLACK_POSITIONS.stream()
-                .map(position -> new Knight(position, Color.BLACK))
-                .collect(Collectors.toList());
-        List<Knight> whiteKnights = INITIAL_WHITE_POSITIONS.stream()
-                .map(position -> new Knight(position, Color.WHITE))
-                .collect(Collectors.toList());
-        blackKnights.addAll(whiteKnights);
-        return blackKnights;
     }
 
     @Override

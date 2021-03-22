@@ -29,14 +29,6 @@ public class PawnTest {
         assertThat(pawn.getName()).isEqualTo("P");
     }
 
-    @DisplayName("초기화된 Pawn 객체들 생성 확인")
-    @Test
-    void 폰_객체들_생성() {
-        List<Pawn> pawns = Pawn.initialPawns();
-
-        assertThat(pawns.size()).isEqualTo(16);
-    }
-
     @DisplayName("Pawn 규칙에 따라 처음 Pawn을 움직이는 경우 - 2칸 이동")
     @Test
     void pawn_처음으로_이동_2칸() {

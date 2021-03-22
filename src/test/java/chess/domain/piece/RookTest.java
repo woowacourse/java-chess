@@ -21,14 +21,6 @@ public class RookTest {
         assertThat(rook.getName()).isEqualTo("R");
     }
 
-    @DisplayName("초기화된 룩 객체들 생성 확인")
-    @Test
-    void 룩_객체들_생성() {
-        List<Rook> rooks = Rook.initialRooks();
-
-        assertThat(rooks.size()).isEqualTo(4);
-    }
-
     @DisplayName("룩의 이동을 확인한다.")
     @Test
     void 룩_이동() {

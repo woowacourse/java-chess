@@ -30,14 +30,6 @@ public class BishopTest {
         assertThat(bishop.getName()).isEqualTo("B");
     }
 
-    @DisplayName("초기화된 Bishop 객체들 생성 확인")
-    @Test
-    void 비숍_객체들_생성() {
-        List<Bishop> bishops = Bishop.initialBishops();
-
-        assertThat(bishops.size()).isEqualTo(4);
-    }
-
     @DisplayName("Bishop 규칙에 따른 이동")
     @Test
     void 비숍_이동_확인() {
