@@ -10,6 +10,7 @@ import java.util.Objects;
 
 public abstract class Piece {
     private static final int DECIMAL = 10;
+
     private final Color color;
     private Position position;
 
