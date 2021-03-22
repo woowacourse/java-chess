@@ -21,16 +21,20 @@ public class BoardInitializer {
     public static Board initiateBoard() {
         final Map<Position, Piece> map = new LinkedHashMap<>();
 
-        putLineInMap(map, Horizontal.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
-        putLineInMap(map, Horizontal.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
-        putLineInMap(map, Horizontal.SIX, getEmptyLine());
-        putLineInMap(map, Horizontal.FIVE, getEmptyLine());
-        putLineInMap(map, Horizontal.FOUR, getEmptyLine());
-        putLineInMap(map, Horizontal.THREE, getEmptyLine());
-        putLineInMap(map, Horizontal.TWO, getPiecesOfSecondLine(Owner.WHITE));
-        putLineInMap(map, Horizontal.ONE, getPiecesOfFirstLine(Owner.WHITE));
+        resetBoard(map);
 
         return new Board(map);
+    }
+
+    public static void resetBoard(Map<Position, Piece> board) {
+        putLineInMap(board, Horizontal.EIGHT, getPiecesOfFirstLine(Owner.BLACK));
+        putLineInMap(board, Horizontal.SEVEN, getPiecesOfSecondLine(Owner.BLACK));
+        putLineInMap(board, Horizontal.SIX, getEmptyLine());
+        putLineInMap(board, Horizontal.FIVE, getEmptyLine());
+        putLineInMap(board, Horizontal.FOUR, getEmptyLine());
+        putLineInMap(board, Horizontal.THREE, getEmptyLine());
+        putLineInMap(board, Horizontal.TWO, getPiecesOfSecondLine(Owner.WHITE));
+        putLineInMap(board, Horizontal.ONE, getPiecesOfFirstLine(Owner.WHITE));
     }
 
     private static void putLineInMap(final Map<Position, Piece> map, final Horizontal horizontal, final Piece[] pieces) {

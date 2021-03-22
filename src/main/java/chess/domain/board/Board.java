@@ -28,10 +28,6 @@ public class Board {
         return of(new Position(vertical, horizontal));
     }
 
-    public Map<Position, Piece> getBoard() {
-        return new HashMap<>(board);
-    }
-
     public void move(final Position source, final Position target) {
         validateMove(source, target);
         checkGameEnd(target);
@@ -85,6 +81,10 @@ public class Board {
         if (of(target).isKing()) {
             isEnd = true;
         }
+    }
+
+    public boolean isEnd() {
+        return isEnd;
     }
 
     private void movePiece(final Position source, final Position target) {
@@ -147,15 +147,19 @@ public class Board {
         return totalCount;
     }
 
-    public boolean isEnd() {
-        return isEnd;
-    }
-
     public List<Position> getAbleToMove(final Position source) {
         return ableToMove(source);
     }
 
     public boolean isPositionOwner(final Position position, final Owner owner) {
         return of(position).isOwner(owner);
+    }
+
+    public Map<Position, Piece> getBoard() {
+        return new HashMap<>(board);
+    }
+
+    public void resetBoard() {
+        BoardInitializer.resetBoard(board);
     }
 }
