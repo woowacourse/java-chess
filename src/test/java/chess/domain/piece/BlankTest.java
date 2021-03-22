@@ -32,6 +32,7 @@ public class BlankTest {
 		assertThat(blank.isSameColor(Color.NO_COLOR)).isTrue();
 	}
 
+	@DisplayName("blank를 이동하려고 하면 에러를 반환하는지")
 	@Test
 	void move() {
 		assertThatThrownBy(() -> blank.move(chessBoard, direction, targetPosition))
@@ -39,6 +40,7 @@ public class BlankTest {
 				.hasMessage(BLANK_MOVE_ERROR);
 	}
 
+	@DisplayName("blank에게 이동 가능 여부를 물어보려고 하면 에러를 반환하는지")
 	@Test
 	void isMovable() {
 		assertThatThrownBy(() -> blank.isMovable(chessBoard, direction, targetPosition))
@@ -46,6 +48,7 @@ public class BlankTest {
 				.hasMessage(BLANK_MOVE_ERROR);
 	}
 
+	@DisplayName("blank에게 갈 수 있는 방향을 물어보면 에러를 반환하는지")
 	@Test
 	void directions() {
 		assertThatThrownBy(() -> blank.directions())

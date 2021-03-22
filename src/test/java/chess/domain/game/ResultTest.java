@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.piece.Color;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
@@ -17,6 +18,7 @@ public class ResultTest {
 		resultStatistics = new HashMap<>();
 	}
 
+	@DisplayName("white가 승리했을 때 올바르게 승패를 판단하는지")
 	@Test
 	void resultWhite() {
 		resultStatistics.put(Color.BLACK, 10d);
@@ -28,6 +30,7 @@ public class ResultTest {
 		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Outcome.WIN);
 	}
 
+	@DisplayName("무승부 했을 때 올바르게 승패를 판단하는지")
 	@Test
 	void resultDraw() {
 		resultStatistics.put(Color.BLACK, 15d);
@@ -39,6 +42,7 @@ public class ResultTest {
 		assertThat(winOrLose.get(Color.WHITE)).isEqualTo(Outcome.DRAW);
 	}
 
+	@DisplayName("black이 승리했을 때 올바르게 승패를 판단하는지")
 	@Test
 	void resultBlack() {
 		resultStatistics.put(Color.BLACK, 15d);
