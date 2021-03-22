@@ -30,8 +30,8 @@ public class BoardTest {
     void createTest() {
         Piece[] pieces = getPiecesOfFirstLine(Owner.WHITE);
 
-        for (Horizontal horizontal : Horizontal.values()) {
-            assertThat(board.of(Vertical.A, horizontal).getSymbol()).isEqualTo(pieces[horizontal.getIndex()].getSymbol());
+        for (Vertical vertical : Vertical.values()) {
+            assertThat(board.of(vertical, Horizontal.ONE).getSymbol()).isEqualTo(pieces[vertical.getIndex() - 1].getSymbol());
         }
     }
 
