@@ -1,6 +1,7 @@
 package chess.view;
 
 import chess.domain.board.LineDto;
+import chess.domain.piece.team.Color;
 
 import java.util.List;
 
@@ -29,5 +30,14 @@ public class OutputView {
 
     public static void printFinishWithReason(String message) {
         System.out.println(message);
+    }
+
+    public static void printWinner(Color winColor) {
+        System.out.println(winColor.name() + "의 승리입니다.");
+    }
+
+    public static void printScoreStatus(double totalWhiteScore, double totalBlackScore) {
+        System.out.println(Color.BLACK + " : " + totalBlackScore);
+        System.out.println(Color.WHITE + " : " + totalWhiteScore);
     }
 }

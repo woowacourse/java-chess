@@ -19,4 +19,9 @@ public class End implements Command {
     public boolean isMatchedCommand(String text) {
         return END_COMMAND.equalsIgnoreCase(text);
     }
+
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
 }

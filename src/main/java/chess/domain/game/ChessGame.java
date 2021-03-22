@@ -5,6 +5,7 @@ import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
+import chess.domain.piece.team.Color;
 
 import java.util.List;
 import java.util.Map;
@@ -54,5 +55,9 @@ public class ChessGame {
 
     public boolean isNotEnd() {
         return state.isNotEnd();
+    }
+
+    public Color winner() {
+        return state.winner();
     }
 }

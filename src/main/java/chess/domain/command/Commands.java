@@ -16,7 +16,8 @@ public class Commands {
         return new Commands(Arrays.asList(
                 new Start(chessGame),
                 new Move(chessGame),
-                new End(chessGame)
+                new End(chessGame),
+                new Status(chessGame)
         ));
     }
 

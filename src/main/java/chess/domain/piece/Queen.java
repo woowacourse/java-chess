@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Queen extends Piece {
+    public static final double SCORE = 9;
+
     private Queen(Color color) {
         super(color, Symbol.QUEEN);
     }
@@ -40,5 +42,10 @@ public class Queen extends Piece {
     @Override
     public MoveStrategy moveStrategy() {
         return new CommonMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Objects;
 
 public abstract class Piece {
-
     private final Color color;
     private final Symbol symbol;
 
@@ -29,8 +28,8 @@ public abstract class Piece {
         return this.color.equals(Color.WHITE);
     }
 
-    public boolean isSameColorPiece(Piece piece) {
-        return this.color.equals(piece.color);
+    public boolean isSameColor(Color color) {
+        return this.color.equals(color);
     }
 
     public boolean isNotSameColorPiece(Piece piece) {
@@ -63,6 +62,10 @@ public abstract class Piece {
         return false;
     }
 
+    public boolean isPawn() {
+        return false;
+    }
+
     public abstract MoveStrategy moveStrategy();
 
     @Override
@@ -81,4 +84,6 @@ public abstract class Piece {
     public int hashCode() {
         return Objects.hash(color, symbol);
     }
+
+    public abstract double score();
 }

@@ -35,4 +35,9 @@ public class Empty extends Piece {
     public MoveStrategy moveStrategy() {
         throw new IllegalStateException();
     }
+
+    @Override
+    public double score() {
+        throw new IllegalStateException();
+    }
 }

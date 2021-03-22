@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Bishop extends Piece {
+    private static final double SCORE = 3;
+
     private Bishop(Color color) {
         super(color, Symbol.BISHOP);
     }
@@ -33,5 +35,10 @@ public class Bishop extends Piece {
     @Override
     public MoveStrategy moveStrategy() {
         return new CommonMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

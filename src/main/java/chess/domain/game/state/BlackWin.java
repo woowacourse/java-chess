@@ -12,4 +12,9 @@ public class BlackWin extends Finished {
     public String finishReason() {
         return Color.BLACK.name() + "의 승리로 종료되었습니다.";
     }
+
+    @Override
+    public Color winner() {
+        return Color.BLACK;
+    }
 }

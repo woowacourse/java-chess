@@ -33,6 +33,11 @@ public class Move implements Command {
                 MOVE_COMMAND.equalsIgnoreCase(splitCommand[COMMAND_INDEX]);
     }
 
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
+
     private boolean isSameCommandCount(int splitCommandCount) {
         return splitCommandCount == MOVE_COMMAND_COUNT;
     }

@@ -13,6 +13,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Pawn extends Piece {
+    public static final double SCORE = 1;
+
     private Pawn(Color color) {
         super(color, Symbol.PAWN);
     }
@@ -34,8 +36,18 @@ public class Pawn extends Piece {
     }
 
     @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public MoveStrategy moveStrategy() {
         return new PawnMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 
     private List<List<Position>> whiteMovable(Position position) {

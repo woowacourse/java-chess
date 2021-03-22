@@ -7,7 +7,7 @@ public abstract class Running extends Started {
         super(board);
     }
 
-    protected boolean isFinished() {
+    public boolean isFinished() {
         return !board().isAliveBothKings();
     }
 

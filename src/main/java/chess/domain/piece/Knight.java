@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
+    public static final double SCORE = 2.5;
+
     private Knight(Color color) {
         super(color, Symbol.KNIGHT);
     }
@@ -40,5 +42,10 @@ public class Knight extends Piece {
     @Override
     public MoveStrategy moveStrategy() {
         return new KnightMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

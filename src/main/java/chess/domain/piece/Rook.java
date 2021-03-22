@@ -11,6 +11,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Rook extends Piece {
+    public static final double SCORE = 5;
+
     private Rook(Color color) {
         super(color, Symbol.ROOK);
     }
@@ -36,5 +38,10 @@ public class Rook extends Piece {
     @Override
     public MoveStrategy moveStrategy() {
         return new CommonMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

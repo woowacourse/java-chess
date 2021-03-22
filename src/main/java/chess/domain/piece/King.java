@@ -12,6 +12,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
+    public static final double SCORE = 0;
+
     private King(Color color) {
         super(color, Symbol.KING);
     }
@@ -45,5 +47,10 @@ public class King extends Piece {
     @Override
     public MoveStrategy moveStrategy() {
         return new CommonMoveStrategy();
+    }
+
+    @Override
+    public double score() {
+        return SCORE;
     }
 }

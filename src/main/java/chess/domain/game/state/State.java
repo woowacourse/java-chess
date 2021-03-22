@@ -25,4 +25,6 @@ public interface State {
     boolean isNotEnd();
 
     List<Map<Position, Piece>> squares();
+
+    Color winner();
 }
