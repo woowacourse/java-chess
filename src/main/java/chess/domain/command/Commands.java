@@ -1,5 +1,6 @@
 package chess.domain.command;
 
+import chess.domain.ChessGame;
 import chess.exception.NoSuchCommandException;
 
 import java.util.ArrayList;
@@ -12,11 +13,11 @@ public class Commands {
         this.commands = new ArrayList<>(commands);
     }
 
-    public String execute(String input) {
+    public String execute(ChessGame chessGame, String input) {
         return commands.stream()
                 .filter(command -> command.isSameCommand(input.toLowerCase()))
                 .findAny()
                 .orElseThrow(NoSuchCommandException::new)
-                .run(input);
+                .run(chessGame, input);
     }
 }

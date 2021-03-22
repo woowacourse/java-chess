@@ -2,17 +2,12 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class StartOnCommand extends MainCommand {
+public class StartOnCommand implements Command {
     private static final String COMMAND_NAME = "start";
     private static final String COMMAND_MESSAGE = "체스판을 세팅했습니다.";
 
-    public StartOnCommand(ChessGame chessGame) {
-        super(chessGame);
-    }
-
-    @Override
-    public String run(String input) {
-        getChessGame().settingBoard();
+    public String run(ChessGame chessGame, String input) {
+        chessGame.settingBoard();
         return COMMAND_MESSAGE;
     }
 

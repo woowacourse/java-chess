@@ -11,10 +11,10 @@ public class Application {
         ChessGame chessGame = new ChessGame();
         Commands commands = new Commands(
                 Arrays.asList(
-                        new EndOnCommand(chessGame),
-                        new StartOnCommand(chessGame),
-                        new MoveOnCommand(chessGame),
-                        new StatusOnCommand(chessGame)
+                        new EndOnCommand(),
+                        new StartOnCommand(),
+                        new MoveOnCommand(),
+                        new StatusOnCommand()
                 )
         );
 

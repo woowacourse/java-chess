@@ -2,17 +2,11 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class EndOnCommand extends MainCommand {
+public class EndOnCommand implements Command {
     private static final String COMMAND_NAME = "end";
 
-    public EndOnCommand(ChessGame chessGame) {
-        super(chessGame);
-    }
-
-    @Override
-    public String run(String input) {
-        getChessGame().end();
-        return null;
+    public String run(ChessGame chessGame, String input) {
+        return chessGame.end();
     }
 
     @Override

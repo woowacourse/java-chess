@@ -2,7 +2,7 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 
-public class MoveOnCommand extends MainCommand {
+public class MoveOnCommand implements Command {
     private static final String DELIMITER = " ";
     private static final int MOVE_COMMAND_LENGTH = 3;
     private static final int MOVE_COMMAND_TARGET = 1;
@@ -10,17 +10,12 @@ public class MoveOnCommand extends MainCommand {
     private static final String COMMAND_NAME = "move";
     private static final String COMMAND_MESSAGE = "%s 에서 %s로 이동을 하였습니다";
 
-    public MoveOnCommand(ChessGame chessGame) {
-        super(chessGame);
-    }
-
-    @Override
-    public String run(String input) {
+    public String run(ChessGame chessGame, String input) {
         String[] splitInput = input.split(DELIMITER);
         if (splitInput.length != MOVE_COMMAND_LENGTH) {
             throw new IndexOutOfBoundsException();
         }
-        getChessGame().move(splitInput[MOVE_COMMAND_TARGET], splitInput[MOVE_COMMAND_DESTINATION]);
+        chessGame.move(splitInput[MOVE_COMMAND_TARGET], splitInput[MOVE_COMMAND_DESTINATION]);
         return String.format(COMMAND_MESSAGE, splitInput[MOVE_COMMAND_TARGET], splitInput[MOVE_COMMAND_DESTINATION]);
     }
 

@@ -4,6 +4,8 @@ import chess.domain.board.*;
 import chess.domain.piece.Team;
 
 public class ChessGame {
+    private static final String END = "end";
+
     private Board board;
 
     public void settingBoard() {
@@ -19,8 +21,8 @@ public class ChessGame {
         return board.calculateScore(team);
     }
 
-    public void end() {
-        System.exit(0);
+    public String end() {
+        return END;
     }
 
     private Position convertStringToPosition(String input) {
