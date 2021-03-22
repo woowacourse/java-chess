@@ -4,6 +4,7 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class King extends PieceOnBoard {
 
@@ -18,49 +19,13 @@ public class King extends PieceOnBoard {
     @Override
     public boolean isMoveAble(Position source, Position target, ChessBoard chessBoard) {
         Set<Position> candidates = new HashSet<>();
-        Position position = source.moveUp();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveDown();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveLeft();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveRight();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
+        candidates.addAll(moveDiagonal(source, target, chessBoard));
+        candidates.addAll(moveCross(source, target, chessBoard));
 
-        }
+        Set<Position> distanceOneCandidates = candidates.stream()
+            .filter(position -> position.isDistanceOne(source))
+            .collect(Collectors.toSet());
 
-        position = source.moveLeftUp();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveLeftDown();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveRightUp();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-        position = source.moveRightDown();
-        if (position != Position.ERROR && chessBoard.isBlank(position) ||
-            (position == target && isEnemyTeam(chessBoard.getPiece(position)))) {
-            candidates.add(position);
-        }
-
-        return candidates.contains(target);
+        return distanceOneCandidates.contains(target);
     }
 }
