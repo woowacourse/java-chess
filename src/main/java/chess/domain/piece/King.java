@@ -35,7 +35,8 @@ public class King extends Piece {
     }
 
     public void checkMoveRule(Position target) {
-        if (!(this.position.isSameDistanceByCount(target, 1))) {
+        if (!(this.position.xDistance(target) == 1 || this.position.yDistance(target) == 1)) {
+            System.out.println(Math.abs(position.xDistance(target)));
             throw new IllegalArgumentException("[ERROR] 킹 이동 규칙에 어긋납니다.");
         }
     }

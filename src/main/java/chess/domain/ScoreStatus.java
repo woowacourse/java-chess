@@ -27,8 +27,8 @@ public class ScoreStatus {
     private static double totalScoreByColorWithRule(Pieces pieces, Color color) {
         Pieces piecesByColor = pieces.piecesByColor(color);
         Score totalScore = piecesByColor.totalScore();
-        int sameXPawnCount = Xs.chars()
-                .map(index -> piecesByColor.pawnCountByX((char) index))
+        int sameXPawnCount = Xs.stream()
+                .mapToInt(piecesByColor::pawnCountByX)
                 .filter(count -> count >= PAWN_SUBTRACT_COUNT_PIVOT)
                 .sum();
         return totalScore.subtractedByMultipliedCount(sameXPawnCount);

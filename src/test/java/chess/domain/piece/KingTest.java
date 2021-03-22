@@ -25,10 +25,10 @@ public class KingTest {
     @Test
     void 킹_이동_십자() {
         List<Piece> current = Arrays.asList(
-                new King(Position.of('e', '8'), Color.BLACK));
+                new King(Position.of("e8"), Color.BLACK));
         Pieces pieces = new Pieces(current);
-        Position source = Position.of('e', '8'); // 비숍 위치
-        Position target = Position.of('e', '7'); // 옮기고자 하는 위치
+        Position source = Position.of("e8"); // 비숍 위치
+        Position target = Position.of("e7"); // 옮기고자 하는 위치
         Piece king = pieces.findByPosition(source);
 
         king.move(target, pieces);

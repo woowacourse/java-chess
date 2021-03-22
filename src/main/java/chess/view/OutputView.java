@@ -23,10 +23,12 @@ public class OutputView {
     }
 
     public static void printChessBoard(Pieces pieces) {
-        for (int i = 0; i < POSITIONS.size(); i++) {
-            checkChangeLinePoint(i);
-            Piece piece = pieces.findByPosition(POSITIONS.get(i));
+        int index = 0;
+        for (String xy : CACHE.keySet()) {
+            checkChangeLinePoint(index);
+            Piece piece = pieces.findByPosition(CACHE.get(xy));
             System.out.print(piece.getName());
+            index++;
         }
         System.out.println();
     }

@@ -1,22 +1,23 @@
 package chess.domain.position;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Position {
     public static final Position EMPTY = new Position('0', '0');
-    public static final List<Position> POSITIONS;
-    public static final Map<String, Position> CACHE = new LinkedHashMap<>();
     public static final int CHANGE_LINE_POINT = 8;
-    public static final String Xs = "abcdefgh";
-    private static final String Ys = "87654321";
+    public static final Map<String, Position> CACHE;
+    public static final List<Character> Xs = Arrays.asList('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
+    private static final List<Character> Ys = Arrays.asList('8', '7', '6', '5', '4', '3', '2', '1');
 
     static {
-        POSITIONS = new ArrayList<>();
-        for (int i = 0; i < CHANGE_LINE_POINT; i++) {
-            for (int j = 0; j < CHANGE_LINE_POINT; j++) {
-                POSITIONS.add(new Position(Xs.charAt(j), Ys.charAt(i)));
-            }
-        }
+        CACHE = Ys.stream().flatMap(y -> Xs.stream()
+                .map(x -> x + String.valueOf(y)))
+                .collect(Collectors.toMap(
+                        xy -> xy,
+                        Position::new,
+                        (xy1, xy2) -> xy1,
+                        LinkedHashMap::new));
     }
 
     private final char x;
@@ -32,15 +33,18 @@ public class Position {
     }
 
     public static Position of(String xy) {
-        return of(xy.charAt(0), xy.charAt(1));
+        validatePosition(xy);
+        return CACHE.get(xy);
+    }
+
+    private static void validatePosition(String xy) {
+        if (!(Xs.contains(xy.charAt(0)) && Ys.contains(xy.charAt(1)))) {
+            throw new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다.");
+        }
     }
 
     public static Position of(char x, char y) {
-        return POSITIONS.stream()
-                .filter(position -> position.x == x && position.y == y)
-                .findFirst()
-                .orElseThrow(() ->
-                        new IllegalArgumentException("[ERROR] 올바른 체스판 범위가 아닙니다."));
+        return of(x + String.valueOf(y));
     }
 
     public char getX() {
@@ -104,5 +108,4 @@ public class Position {
     public int hashCode() {
         return Objects.hash(x, y);
     }
-
 }
