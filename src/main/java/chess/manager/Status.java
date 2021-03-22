@@ -13,10 +13,10 @@ public class Status {
     }
 
     public double whiteScore() {
-        return whiteScore.score();
+        return whiteScore.value();
     }
 
     public double blackScore() {
-        return blackScore.score();
+        return blackScore.value();
     }
 }
