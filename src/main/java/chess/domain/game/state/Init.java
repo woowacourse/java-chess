@@ -22,4 +22,9 @@ public class Init extends Preparing {
     public State end() {
         return new End(board());
     }
+
+    @Override
+    public boolean isInit() {
+        return true;
+    }
 }

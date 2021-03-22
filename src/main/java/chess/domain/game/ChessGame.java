@@ -27,7 +27,7 @@ public class ChessGame {
     }
 
     private State stateByFinished() {
-        if (state.isNotFinished()) {
+        if (state.isRunning()) {
             return state.passTurn();
         }
         return state.end();
@@ -45,19 +45,19 @@ public class ChessGame {
         return state.finishReason();
     }
 
-    public boolean isFinished() {
-        return !state.isNotFinished();
-    }
-
-    public boolean isNotFinished() {
-        return state.isNotFinished();
-    }
-
     public boolean isNotEnd() {
         return state.isNotEnd();
     }
 
     public Color winner() {
         return state.winner();
+    }
+
+    public boolean isRunning() {
+        return state.isRunning();
+    }
+
+    public boolean isInit() {
+        return state.isInit();
     }
 }

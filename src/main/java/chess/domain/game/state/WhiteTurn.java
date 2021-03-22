@@ -11,18 +11,13 @@ public class WhiteTurn extends Running {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
-        return Color.WHITE.equals(color);
-    }
-
-    @Override
     public State passTurn() {
         return new BlackTurn(board());
     }
 
     @Override
     public State end() {
-        if (isFinished()) {
+        if (!isRunning()) {
             return new WhiteWin(board());
         }
         return new Draw(board());

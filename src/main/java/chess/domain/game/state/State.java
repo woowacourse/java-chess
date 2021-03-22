@@ -12,19 +12,19 @@ public interface State {
 
     void moveIfValidColor(Position source, Position target);
 
-    boolean isSameColor(Color color);
-
     State passTurn();
 
     State end();
 
     String finishReason();
 
-    boolean isNotFinished();
+    boolean isRunning();
 
     boolean isNotEnd();
 
     List<Map<Position, Piece>> squares();
 
     Color winner();
+
+    boolean isInit();
 }

@@ -22,9 +22,4 @@ public abstract class Finished extends Started {
     public State end() {
         return new End(board());
     }
-
-    @Override
-    public boolean isNotFinished() {
-        return false;
-    }
 }

@@ -16,26 +16,33 @@ import java.util.List;
 public class ChessGameController {
     public void run() {
         ChessGame chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
-        OutputView.printCommandNotice();
         while (chessGame.isNotEnd()) {
+            OutputView.printCommandNotice();
             chessGame = new ChessGame(new Board(InitBoardGenerator.initLines()));
             Commands commands = Commands.initCommands(chessGame);
+            InitChess(chessGame, commands);
             runningChess(chessGame, commands);
             afterFinishChess(chessGame, commands);
         }
     }
 
-    private void runningChess(ChessGame chessGame, Commands commands) {
-        while (chessGame.isNotFinished()) {
+    private void InitChess(ChessGame chessGame, Commands commands) {
+        while (chessGame.isInit()) {
             commandExecution(chessGame, commands);
+        }
+    }
+
+    private void runningChess(ChessGame chessGame, Commands commands) {
+        while (chessGame.isRunning()) {
             printBoardStatus(chessGame);
+            commandExecution(chessGame, commands);
         }
     }
 
     private void afterFinishChess(ChessGame chessGame, Commands commands) {
+        OutputView.printFinishWithReason(chessGame.finishReason());
         while (chessGame.isNotEnd()) {
             commandExecution(chessGame, commands);
-            OutputView.printFinishWithReason(chessGame.finishReason());
         }
     }
 
