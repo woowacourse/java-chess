@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.domain.Team;
+
 import java.util.Objects;
 
 public class Position {
@@ -27,7 +29,6 @@ public class Position {
         return col;
     }
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -43,5 +44,9 @@ public class Position {
 
     public boolean sameCol(final int col) {
         return this.col == col;
+    }
+
+    public boolean isInitPositionByTeam(final Team team) {
+        return team.isInitPawn(row);
     }
 }
