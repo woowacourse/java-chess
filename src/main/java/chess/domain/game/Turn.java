@@ -3,21 +3,21 @@ package chess.domain.game;
 import chess.domain.piece.Color;
 
 public class Turn {
-    private static final Player whitePlayer = new Player(Color.WHITE);
-    private static final Player blackPlayer = new Player(Color.BLACK);
-    private Player player = blackPlayer;
+    private Color color;
 
-    public void next() {
-        if (player.equals(blackPlayer)) {
-            player = whitePlayer;
-            return;
-        }
-        if (player.equals(whitePlayer)) {
-            player = blackPlayer;
-        }
+    public Turn() {
+        this.color = Color.BLACK;
     }
 
-    public Player player() {
-        return player;
+    public void next() {
+        if (Color.BLACK.equals(color)) {
+            color = Color.WHITE;
+            return;
+        }
+        color = Color.BLACK;
+    }
+
+    public Color color() {
+        return color;
     }
 }
