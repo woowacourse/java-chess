@@ -23,11 +23,9 @@ public abstract class Team {
     }
 
     protected final Map<Position, Piece> piecePosition;
-    protected final List<Piece> capturedPieces;
 
     public Team() {
         piecePosition = new HashMap<>();
-        capturedPieces = new ArrayList<>();
     }
 
     protected void initializePawn(final int pawnColumn, final int pawnDirection) {
@@ -58,10 +56,6 @@ public abstract class Team {
 
     public Piece killPiece(Position destination) {
         return piecePosition.remove(destination);
-    }
-
-    public void catchPiece(Piece piece) {
-        capturedPieces.add(piece);
     }
 
     public boolean havePiece(final Position position) {

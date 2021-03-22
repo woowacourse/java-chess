@@ -44,7 +44,6 @@ public class ChessGame {
 
     private void killEnemyPiece(Position destination, Team enemy) {
         Piece piece = enemy.killPiece(destination);
-        currentTurn.catchPiece(piece);
         checkMate(piece);
     }
 
