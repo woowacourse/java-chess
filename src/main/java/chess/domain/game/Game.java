@@ -1,5 +1,6 @@
-package chess.domain;
+package chess.domain.game;
 
+import chess.domain.Command;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.piece.Piece;
@@ -61,7 +62,6 @@ public class Game {
 
     public boolean isPlaying() {
         return isPlaying;
-//        return !board.kingDead();
     }
 
     public Board getBoard() {

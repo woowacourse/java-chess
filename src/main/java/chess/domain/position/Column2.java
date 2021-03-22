@@ -40,4 +40,8 @@ public enum Column2 {
 //    private boolean isLowerBoundary() {
 //
 //    }
+
+    public String value() {
+        return String.valueOf(value);
+    }
 }

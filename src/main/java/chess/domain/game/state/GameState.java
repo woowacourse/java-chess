@@ -1,0 +1,15 @@
+package chess.domain.game.state;
+
+import chess.domain.CommandAsString;
+import chess.domain.game.GameVisual;
+
+public interface GameState {
+
+    GameState execute(final CommandAsString command);
+
+    GameVisual gameVisual();
+
+    GameVisual statusVisual();
+
+    boolean isFinished();
+}

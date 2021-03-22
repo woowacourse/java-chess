@@ -32,4 +32,8 @@ public enum Row2 {
     private boolean isRightBoundary() {
         return EIGHT.equals(this);
     }
+
+    public String value() {
+        return String.valueOf(value);
+    }
 }
