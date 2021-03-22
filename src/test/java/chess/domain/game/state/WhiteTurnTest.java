@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class WhiteTurnTest {
-
     @Test
     @DisplayName("화이트 턴 상태에서 start 명령시 에러 반환")
     void blackTurnStartException() {
@@ -21,8 +20,7 @@ class WhiteTurnTest {
     @DisplayName("화이트 턴 상태에서 move 명령시 블랙 턴 반환")
     void blackTurnMoveReturnWhiteTurn() {
         WhiteTurn whiteTurn = new WhiteTurn(new Board(InitBoardGenerator.initLines()));
-//        assertThat(whiteTurn.move(Position.of("c2"), Position.of("c4")))
-//                .isInstanceOf(BlackTurn.class);
+        assertThat(whiteTurn.passTurn()).isInstanceOf(BlackTurn.class);
     }
 
     @Test
