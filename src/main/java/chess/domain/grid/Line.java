@@ -46,8 +46,6 @@ public final class Line {
     }
 
     public final Piece piece(final char xPosition) {
-        System.out.println("x : " + xPosition);
-        System.out.println(Column.column(xPosition));
         int index = Column.column(xPosition).index();
         return pieces.get(index);
     }
