@@ -62,6 +62,10 @@ public class Position implements Comparable<Position> {
             vertical.increaseVertical(direction.verticalDegree()));
     }
 
+    public boolean isSameColumn(final int column) {
+        return horizontal.isSameValue(column);
+    }
+
     public Horizontal horizontal() {
         return horizontal;
     }

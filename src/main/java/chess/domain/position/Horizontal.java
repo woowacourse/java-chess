@@ -50,6 +50,10 @@ public enum Horizontal {
         return value;
     }
 
+    public boolean isSameValue(final int value) {
+        return this.value == value;
+    }
+
     public int subtract(final Horizontal horizontal) {
         return value - horizontal.value;
     }
