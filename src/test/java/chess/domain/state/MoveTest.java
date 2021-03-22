@@ -99,4 +99,11 @@ class MoveTest {
         assertThat(move.needsParam())
             .isFalse();
     }
+
+    @DisplayName("이동상태 - 실패시 입력대기 상태로 돌아온다.")
+    @Test
+    void before() {
+        assertThat(move.before())
+            .isInstanceOf(Wait.class);
+    }
 }

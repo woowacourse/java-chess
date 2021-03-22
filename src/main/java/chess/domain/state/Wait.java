@@ -43,6 +43,11 @@ public class Wait implements State {
     }
 
     @Override
+    public State before() {
+        return this;
+    }
+
+    @Override
     public Object result() {
         throw new UnsupportedCommandException("입력 대기중에는 결과를 요청할 수 없습니다.");
     }

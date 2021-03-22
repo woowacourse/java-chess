@@ -60,4 +60,11 @@ class EndTest {
         assertThat(end.needsParam())
             .isFalse();
     }
+
+    @DisplayName("이동상태 - 이전상태로 돌아갈 일이 없다.")
+    @Test
+    void before() {
+        assertThatThrownBy(() -> end.before())
+            .isInstanceOf(UnsupportedCommandException.class);
+    }
 }

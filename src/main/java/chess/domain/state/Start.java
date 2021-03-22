@@ -18,7 +18,7 @@ public class Start implements State<List<Piece>> {
         board = BoardUtil.generateInitialBoard();
         team = Team.WHITE;
     }
-    
+
     private static void validate(String command) {
         CommandType commandType = CommandType.from(command);
         if (!commandType.equals(CommandType.START) && !commandType.equals(CommandType.END)) {
@@ -38,6 +38,11 @@ public class Start implements State<List<Piece>> {
             return new Wait(board, team);
         }
         return new End();
+    }
+
+    @Override
+    public State before() {
+        return this;
     }
 
     @Override

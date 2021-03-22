@@ -87,4 +87,11 @@ class StartTest {
         assertThat(start.needsParam())
             .isTrue();
     }
+
+    @DisplayName("시작상태 - 실패시 상태를 유지한다.")
+    @Test
+    void before() {
+        assertThat(start.before())
+            .isInstanceOf(Start.class);
+    }
 }

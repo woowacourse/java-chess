@@ -6,6 +6,8 @@ public interface State<T> {
 
     State next();
 
+    State before();
+
     T result();
 
     ResultType resultType();

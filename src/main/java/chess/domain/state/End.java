@@ -15,6 +15,11 @@ public class End implements State {
     }
 
     @Override
+    public State before() {
+        throw new UnsupportedCommandException("게임이 끝났습니다. 이전으로 돌아갈 수 없습니다.");
+    }
+
+    @Override
     public Object result() {
         throw new UnsupportedCommandException("게임이 끝났습니다. 결과를 요청할 수 업습니다.");
     }

@@ -92,4 +92,11 @@ class WaitTest {
         assertThat(wait.needsParam())
             .isTrue();
     }
+
+    @DisplayName("입력대기상태 - 실패시 상태를 유지한다.")
+    @Test
+    void before() {
+        assertThat(wait.before())
+            .isInstanceOf(Wait.class);
+    }
 }

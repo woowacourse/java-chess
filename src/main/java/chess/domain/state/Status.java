@@ -27,6 +27,11 @@ public class Status implements State<Map<Team, Double>> {
     }
 
     @Override
+    public State before() {
+        return new Wait(board, team);
+    }
+
+    @Override
     public Map<Team, Double> result() {
         Map<Team, Double> result = new HashMap<>();
         result.put(Team.WHITE, board.score(Team.WHITE));

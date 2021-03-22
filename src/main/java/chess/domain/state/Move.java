@@ -37,6 +37,11 @@ public class Move implements State<List<Piece>> {
     }
 
     @Override
+    public State before() {
+        return new Wait(board, team);
+    }
+
+    @Override
     public List<Piece> result() {
         String[] words = command.split(BLANK);
         Location source = Location.of(words[SOURCE_LOCATION_INDEX].trim());

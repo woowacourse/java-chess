@@ -37,7 +37,7 @@ class StatusTest {
         assertThat(state).isInstanceOf(Wait.class);
     }
 
-    @DisplayName("점수확인상태 - 결과는 두 팀의 점수를 가지고 있다..")
+    @DisplayName("점수확인상태 - 결과는 두 팀의 점수를 가지고 있다.")
     @Test
     void result() {
         final Map<Team, Double> result = ((Status) status).result();
@@ -65,5 +65,12 @@ class StatusTest {
     void needsParam() {
         assertThat(status.needsParam())
             .isFalse();
+    }
+
+    @DisplayName("이동상태 - 실패시 입력대기 상태로 돌아온다.")
+    @Test
+    void before() {
+        assertThat(status.before())
+            .isInstanceOf(Wait.class);
     }
 }
