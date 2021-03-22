@@ -24,4 +24,9 @@ public final class OutputView {
         System.out.println("WINNER : " + boardDTO.getWinner());
         System.out.println();
     }
+
+    public static void printErrorMessage(final String errorMessage) {
+        System.out.println(errorMessage);
+        System.out.println();
+    }
 }
