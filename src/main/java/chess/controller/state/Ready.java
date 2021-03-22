@@ -9,7 +9,7 @@ public final class Ready implements GameState {
     private static final String END_COMMAND = "end";
 
     @Override
-    public final GameState run(final Grid grid) {
+    public GameState run(final Grid grid) {
         try {
             return runReady(grid);
         } catch (IllegalArgumentException error) {
@@ -35,7 +35,7 @@ public final class Ready implements GameState {
     }
 
     @Override
-    public final boolean isFinished() {
+    public boolean isFinished() {
         return false;
     }
 }

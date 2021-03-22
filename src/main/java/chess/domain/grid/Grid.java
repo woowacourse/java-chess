@@ -20,19 +20,19 @@ public final class Grid {
         this.turn = Color.WHITE;
     }
 
-    public final Lines lines() {
+    public Lines lines() {
         return lines;
     }
 
-    public final Piece piece(final Position position) {
+    public Piece piece(final Position position) {
         return lines.piece(position);
     }
 
-    public final double score(final Color color) {
+    public double score(final Color color) {
         return score.score(color);
     }
 
-    public final void move(final Piece sourcePiece, final Piece targetPiece) {
+    public void move(final Piece sourcePiece, final Piece targetPiece) {
         sourcePiece.validateRoute(targetPiece, lines);
         changeTurn();
         update(sourcePiece, targetPiece);

@@ -45,17 +45,17 @@ public final class Line {
         return new Line(emptyLine);
     }
 
-    public final Piece piece(final char xPosition) {
+    public Piece piece(final char xPosition) {
         int index = Column.column(xPosition).index();
         return pieces.get(index);
     }
 
-    public final void assignPiece(final char xPosition, final Piece piece) {
+    public void assignPiece(final char xPosition, final Piece piece) {
         int index = Column.column(xPosition).index();
         pieces.set(index, piece);
     }
 
-    public final List<Piece> pieces() {
+    public List<Piece> pieces() {
         return pieces;
     }
 

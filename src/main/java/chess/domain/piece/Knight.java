@@ -25,17 +25,17 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public final List<Direction> directions() {
+    public List<Direction> directions() {
         return Direction.knightDirection();
     }
 
     @Override
-    public final int stepRange() {
+    public int stepRange() {
         return STEP_RANGE;
     }
 
     @Override
-    public final char name() {
+    public char name() {
         if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
@@ -43,7 +43,7 @@ public final class Knight extends Piece {
     }
 
     @Override
-    public final double score() {
+    public double score() {
         return SCORE;
     }
 }

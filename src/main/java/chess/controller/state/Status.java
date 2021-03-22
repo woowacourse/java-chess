@@ -6,7 +6,7 @@ import chess.view.OutputView;
 
 public final class Status extends Finished {
     @Override
-    public final GameState run(final Grid grid) {
+    public GameState run(final Grid grid) {
         try {
             return runStatus(grid);
         } catch (IllegalArgumentException error) {

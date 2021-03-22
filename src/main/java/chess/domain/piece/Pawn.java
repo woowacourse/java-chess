@@ -32,7 +32,7 @@ public final class Pawn extends Piece {
         super(color, x, y);
     }
 
-    public final boolean hasMoved() {
+    public boolean hasMoved() {
         return moved;
     }
 
@@ -91,7 +91,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public final List<Direction> directions() {
+    public List<Direction> directions() {
         if (isBlack()) {
             return Direction.blackPawnDirection();
         }
@@ -99,7 +99,7 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public final double score() {
+    public double score() {
         return SCORE;
     }
 

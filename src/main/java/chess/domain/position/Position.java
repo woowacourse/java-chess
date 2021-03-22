@@ -23,24 +23,24 @@ public final class Position {
         this.y = y;
     }
 
-    public final char x() {
+    public char x() {
         return x;
     }
 
-    public final char y() {
+    public char y() {
         return y;
     }
 
-    public final boolean isInValidRange() {
+    public boolean isInValidRange() {
         return x >= MIN_X_RANGE && x <= MAX_X_RANGE && y >= MIN_Y_RANGE && y <= MAX_Y_RANGE;
     }
 
-    public final Position next(final int xDegree, final int yDegree) {
+    public Position next(final int xDegree, final int yDegree) {
         return new Position((char) (x + xDegree), (char) (y + yDegree));
     }
 
     @Override
-    public final boolean equals(Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Position position = (Position) o;
@@ -48,7 +48,7 @@ public final class Position {
     }
 
     @Override
-    public final int hashCode() {
+    public int hashCode() {
         return Objects.hash(x, y);
     }
 

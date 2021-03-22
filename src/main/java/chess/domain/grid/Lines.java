@@ -15,11 +15,11 @@ public final class Lines {
         this.lines = new ArrayList<>(lines);
     }
 
-    public final List<Line> lines() {
+    public List<Line> lines() {
         return lines;
     }
 
-    public final void assign(final Position position, final Piece piece) {
+    public void assign(final Position position, final Piece piece) {
         char x = position.x();
         char y = position.y();
         Line line = line(Row.row(y));
@@ -27,14 +27,14 @@ public final class Lines {
         piece(position).moveTo(position);
     }
 
-    public final Piece piece(final Position position) {
+    public Piece piece(final Position position) {
         char x = position.x();
         char y = position.y();
         Line line = line(Row.row(y));
         return line.piece(x);
     }
 
-    public final boolean isEmpty(final Position position) {
+    public boolean isEmpty(final Position position) {
         return piece(position).isEmpty();
     }
 

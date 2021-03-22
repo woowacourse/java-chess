@@ -15,7 +15,7 @@ public final class Score {
         this.lines = lines;
     }
 
-    public final double score(final Color color) {
+    public double score(final Color color) {
         return totalScore(color) - pawnScoreInSameColumn(color);
     }
 

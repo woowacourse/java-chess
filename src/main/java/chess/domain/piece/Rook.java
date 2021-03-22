@@ -25,22 +25,22 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public final List<Direction> directions() {
+    public List<Direction> directions() {
         return Direction.linearDirection();
     }
 
     @Override
-    public final int stepRange() {
+    public int stepRange() {
         return STEP_RANGE;
     }
 
     @Override
-    public final double score() {
+    public double score() {
         return SCORE;
     }
 
     @Override
-    public final char name() {
+    public char name() {
         if (isBlack()) {
             return NAME_WHEN_BLACK;
         }
