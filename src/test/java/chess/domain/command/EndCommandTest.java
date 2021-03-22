@@ -29,17 +29,6 @@ class EndCommandTest {
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("올바른 입력인지 확인한다.")
-    @Test
-    void isUsable() {
-        endCommand.isUsable(null);
-        boolean actualTrue = endCommand.isUsable("end");
-        boolean actualFalse = endCommand.isUsable("end2");
-
-        assertThat(actualTrue).isTrue();
-        assertThat(actualFalse).isFalse();
-    }
-
     @DisplayName("Status 인지 확인한다.")
     @Test
     void isStatus() {

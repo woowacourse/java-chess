@@ -68,16 +68,6 @@ class StartCommandTest {
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("올바른 입력인지 확인한다.")
-    @Test
-    void isUsable() {
-        boolean actualTrue = startCommand.isUsable("start");
-        boolean actualFalse = startCommand.isUsable("start2");
-
-        assertThat(actualTrue).isTrue();
-        assertThat(actualFalse).isFalse();
-    }
-
     @DisplayName("Status 인지 확인한다.")
     @Test
     void isStatus() {

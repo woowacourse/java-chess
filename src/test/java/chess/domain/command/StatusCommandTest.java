@@ -18,13 +18,6 @@ class StatusCommandTest {
         statusCommand = new StatusCommand(new ChessGame(new Board(PieceFactory.createPieces())));
     }
 
-    @DisplayName("올바른 입력인지 확인한다.")
-    @Test
-    void isUsable() {
-        assertThat(statusCommand.isUsable("status")).isTrue();
-        assertThat(statusCommand.isUsable("status2")).isFalse();
-    }
-
     @DisplayName("Status 인지 확인한다.")
     @Test
     void isStatus() {

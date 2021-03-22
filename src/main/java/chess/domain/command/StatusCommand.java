@@ -30,13 +30,13 @@ public class StatusCommand extends CommandInit {
     }
 
     @Override
-    public boolean isUsable(final String input) {
-        return COMMAND.equals(input);
+    public boolean isStatus() {
+        return true;
     }
 
     @Override
-    public boolean isStatus() {
-        return true;
+    public String getCommand() {
+        return COMMAND;
     }
 
 }

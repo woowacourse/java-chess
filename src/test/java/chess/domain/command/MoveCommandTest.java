@@ -4,6 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
 import chess.domain.game.state.finished.End;
 import chess.domain.game.state.idle.Ready;
+import chess.exception.CommandFormatException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -44,17 +45,12 @@ class MoveCommandTest {
                 .isExactlyInstanceOf(UnsupportedOperationException.class);
     }
 
-    @DisplayName("올바른 입력인지 확인한다.")
-    @Test
-    void isUsable() {
-        assertThat(moveCommand.isUsable("move a1 a2")).isTrue();
-    }
-
-    @DisplayName("올바르지 않은 입력을 확인한다.")
+    @DisplayName("잘못된 입력을 확인한다.")
     @ParameterizedTest
-    @CsvSource({"move a1a2", "move a1 a23", "move a123 a2", "move2 a1 a2", "move a1 a1 a2"})
-    void isUsable_failCase(String input) {
-        assertThat(moveCommand.isUsable(input)).isFalse();
+    @CsvSource({"move a23 a3", "move a43 a3", "move2 a1 a3"})
+    void execute_checkWorngInput(String input) {
+        assertThatThrownBy(() -> moveCommand.execute(input))
+                .isExactlyInstanceOf(CommandFormatException.class);
     }
 
     @DisplayName("Status 인지 확인한다.")

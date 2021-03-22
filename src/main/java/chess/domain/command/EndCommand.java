@@ -15,8 +15,8 @@ public class EndCommand extends CommandInit {
     }
 
     @Override
-    public boolean isUsable(final String input) {
-        return COMMAND.equals(input);
+    public String getCommand() {
+        return COMMAND;
     }
 
 }
