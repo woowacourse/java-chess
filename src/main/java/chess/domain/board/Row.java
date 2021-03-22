@@ -5,14 +5,14 @@ import java.util.Collections;
 import java.util.List;
 
 public enum Row {
-    ONE("1", 0),
-    TWO("2", 1),
-    THREE("3", 2),
-    FOUR("4", 3),
-    FIVE("5", 4),
-    SIX("6", 5),
-    SEVEN("7", 6),
-    EIGHT("8", 7);
+    ONE("1"),
+    TWO("2"),
+    THREE("3"),
+    FOUR("4"),
+    FIVE("5"),
+    SIX("6"),
+    SEVEN("7"),
+    EIGHT("8");
 
     private static final int ROW_MAX = 7;
     private static final List<Row> REVERSE_ROWS = Arrays.asList(Row.values());
@@ -22,16 +22,14 @@ public enum Row {
     }
 
     private final String coordinate;
-    private final int index;
 
-    Row(String coordinate, int index) {
+    Row(String coordinate) {
         this.coordinate = coordinate;
-        this.index = index;
     }
 
     public static Row rowByIndex(int index) {
         return Arrays.stream(Row.values())
-            .filter(row -> row.index == index)
+            .filter(row -> row.index() == index)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
@@ -41,11 +39,11 @@ public enum Row {
     }
 
     public Row opposingRow() {
-        return rowByIndex(ROW_MAX - index);
+        return rowByIndex(ROW_MAX - index());
     }
 
     public int index() {
-        return index;
+        return ordinal();
     }
 
     public String coordinate() {

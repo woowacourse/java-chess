@@ -6,14 +6,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public enum Column {
-    A("a", 0),
-    B("b", 1),
-    C("c", 2),
-    D("d", 3),
-    E("e", 4),
-    F("f", 5),
-    G("g", 6),
-    H("h", 7);
+    A("a"),
+    B("b"),
+    C("c"),
+    D("d"),
+    E("e"),
+    F("f"),
+    G("g"),
+    H("h");
 
     private static final int MAX_COLUMN = 7;
     private static final List<Column> COLUMNS = Arrays.asList(Column.values());
@@ -23,16 +23,14 @@ public enum Column {
     }
 
     private final String coordinate;
-    private final int index;
 
-    Column(String coordinate, int index) {
+    Column(String coordinate) {
         this.coordinate = coordinate;
-        this.index = index;
     }
 
     public static Column columnByIndex(int index) {
         return Arrays.stream(Column.values())
-            .filter(column -> column.index == index)
+            .filter(column -> column.index() == index)
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
     }
@@ -42,7 +40,7 @@ public enum Column {
     }
 
     public Column opposingColumn() {
-        return columnByIndex(MAX_COLUMN - index);
+        return columnByIndex(MAX_COLUMN - index());
     }
 
     public String coordinate() {
@@ -50,6 +48,6 @@ public enum Column {
     }
 
     public int index() {
-        return index;
+        return ordinal();
     }
 }
