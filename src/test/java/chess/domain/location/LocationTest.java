@@ -2,6 +2,7 @@ package chess.domain.location;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -20,6 +21,25 @@ class LocationTest {
     @Test
     void create() {
         assertThat(location).isEqualTo(Location.of(1, 1));
+    }
+
+    @DisplayName("체스 좌표를 주면 정수를 담은 Location을 만들어준다.")
+    @Test
+    void create_input() {
+        // given
+        String validInput1 = "a1";
+        String validInput2 = "b7";
+
+        String inValidInput1 = "h9";
+        String inValidInput2 = "z1";
+
+        // then
+        assertAll(
+            () -> assertThat(Location.of(validInput1)).isEqualTo(Location.of(1, 1)),
+            () -> assertThat(Location.of(validInput2)).isEqualTo(Location.of(2, 7)),
+            () -> assertThatThrownBy(() -> Location.of(inValidInput1)).isInstanceOf(IllegalArgumentException.class),
+            () -> assertThatThrownBy(() -> Location.of(inValidInput2)).isInstanceOf(IllegalArgumentException.class)
+        );
     }
 
     @DisplayName("위치값은 보드의 범위를 벗어날 수 없다.")

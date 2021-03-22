@@ -20,6 +20,16 @@ public class Location {
         return new Location(x, y);
     }
 
+    public static Location of(String location) {
+        if (location.length() != 2) {
+            throw new IllegalArgumentException("[ERROR] 좌표는 x와 y값 두개로 이루어져야 합니다.");
+        }
+        int xPos = location.charAt(0) - 'a' + 1;
+        int yPos = Character.digit(location.charAt(1), 10);
+        validateRange(xPos, yPos);
+        return new Location(xPos, yPos);
+    }
+
     private static void validateRange(final int x, final int y) {
         if (!isRange(x, y)) {
             throw new IllegalArgumentException("범위에서 벗어났습니다.");
