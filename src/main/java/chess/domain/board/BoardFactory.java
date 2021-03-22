@@ -27,7 +27,7 @@ public class BoardFactory {
                         Arrays.stream(File.values())
                                 .map(file -> Position.of(file, rank))
                 )
-                .collect(toMap(Function.identity(), position -> new Square(new Blank())));
+                .collect(toMap(Function.identity(), position -> new Square(Blank.getInstance())));
 
         board.put(Position.of("a1"), new Square(new Rook(WHITE)));
         board.put(Position.of("b1"), new Square(new Knight(WHITE)));

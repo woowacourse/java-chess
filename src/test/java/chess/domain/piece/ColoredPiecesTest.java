@@ -29,7 +29,7 @@ class ColoredPiecesTest {
     @DisplayName("킹이 살아있는지 확인한다")
     @Test
     void isKingAliveTest() {
-        assertThat(coloredPieces.isKingDead()).isTrue();
+        assertThat(coloredPieces.isKingAlive()).isTrue();
     }
 
     @DisplayName("기물을 제거한다")

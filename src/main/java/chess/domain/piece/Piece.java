@@ -21,6 +21,6 @@ public abstract class Piece {
     }
 
     public boolean isNotBlank(){
-        return !this.equals(new Blank());
+        return !this.equals(Blank.getInstance());
     }
 }
