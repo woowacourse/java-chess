@@ -28,10 +28,6 @@ public class Position {
         return Collections.unmodifiableMap(POSITIONS);
     }
 
-    public static Position emptyPosition() {
-        return new Position(Rank.EMPTY, File.EMPTY);
-    }
-
     public static Position valueOf(final Rank rank, final File file) {
         return POSITIONS.get(rank.getRank() + file.getFile());
     }
@@ -40,7 +36,7 @@ public class Position {
         Rank findRank = Rank.findByRank(rank);
         File findFile = File.findByFile(file);
 
-        return POSITIONS.get(findRank.getRank() + findFile.getFile());
+        return valueOf(findRank, findFile);
     }
 
     public static Position valueOf(final int rank, final int file) {
@@ -50,7 +46,7 @@ public class Position {
         return POSITIONS.get(findRank.getRank() + findFile.getFile());
     }
 
-    public static Position find(String source) {
+    public static Position find(final String source) {
         String reversedSource = reverse(source);
         if (Objects.isNull(POSITIONS.get(reversedSource))) {
             throw new IllegalArgumentException("없는 위치입니다!");
@@ -58,7 +54,7 @@ public class Position {
         return POSITIONS.get(reversedSource);
     }
 
-    private static String reverse(String source) {
+    private static String reverse(final String source) {
         String reversedSource = "";
         reversedSource += source.charAt(1);
         reversedSource += source.charAt(0);

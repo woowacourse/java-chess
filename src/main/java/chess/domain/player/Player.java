@@ -19,11 +19,11 @@ public abstract class Player {
         return state.isFinish();
     }
 
-    public final void move(Source source, Target target, State targetState) {
+    public final void move(final Source source, final Target target, final State targetState) {
         this.state = this.state.move(source, target, targetState);
     }
 
-    public final void toRunningState(State anotherState) {
+    public final void toRunningState(final State anotherState) {
         this.state = this.state.toRunningState(anotherState);
     }
 }

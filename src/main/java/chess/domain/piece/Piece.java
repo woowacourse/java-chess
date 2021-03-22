@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
-import chess.domain.move.Movable;
 import chess.domain.position.Position;
+import chess.domain.position.Target;
 
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public abstract class Piece implements Movable {
+public abstract class Piece {
     private static final Pattern PATTERN = Pattern.compile("[A-Z]");
 
     private final String piece;
@@ -60,4 +60,6 @@ public abstract class Piece implements Movable {
     public int hashCode() {
         return Objects.hash(piece, color, position);
     }
+
+    public abstract void move(final Target target, final Pieces basePieces, final Pieces targetPieces);
 }

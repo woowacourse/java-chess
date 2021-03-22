@@ -1,7 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardFactory;
 import chess.domain.position.Source;
 import chess.domain.position.Target;
 import chess.domain.state.State;

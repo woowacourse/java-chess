@@ -11,7 +11,7 @@ public class InputView {
 
     private final Scanner scanner;
 
-    public InputView(Scanner scanner) {
+    public InputView(final Scanner scanner) {
         this.scanner = scanner;
     }
 
@@ -23,10 +23,6 @@ public class InputView {
         return scanner.nextLine();
     }
 
-    public String nextLine() {
-        return scanner.nextLine();
-    }
-
     public Queue<String> inputCommand() {
         String input = scanner.nextLine();
         Queue<String> inputs = Arrays.stream(input.split(DELIMITER))
@@ -35,7 +31,7 @@ public class InputView {
         return inputs;
     }
 
-    private void validateInputs(Queue<String> inputs) {
+    private void validateInputs(final Queue<String> inputs) {
         if (inputs.size() != 1 && inputs.size() != 3) {
             throw new IllegalArgumentException("유효하지 않은 입력입니다!");
         }
