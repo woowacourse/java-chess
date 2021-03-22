@@ -8,9 +8,10 @@ import java.util.List;
 
 public class DirectionGroup {
     
-    private static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
-    
     private static final int CANNOT_MOVE_LENGTH = 0;
+    private static final int MAX_MOVABLE_LENGTH_OF_PAWN = 2;
+    
+    private static final String ERROR_CAN_NOT_MOVE = "기물이 이동할 수 없는 위치입니다.";
     
     private final List<Direction> directionGroup;
     private final int movableLength;
@@ -32,10 +33,9 @@ public class DirectionGroup {
     }
     
     public Direction findDirectionOfPawn(MovePosition movePosition, Color color) {
-        final int maxMovableLength = 2;
         final Direction forwardDirection = color.getPawnForwardDirection();
         final boolean isAtDefaultPosition = movePosition.isAtDefaultPawnPosition(color);
-        final boolean canMoveTwoSteps = movePosition.canMove(forwardDirection, maxMovableLength);
+        final boolean canMoveTwoSteps = movePosition.canMove(forwardDirection, MAX_MOVABLE_LENGTH_OF_PAWN);
         
         if (isAtDefaultPosition && canMoveTwoSteps) {
             return forwardDirection;

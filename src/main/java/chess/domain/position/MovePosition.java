@@ -14,12 +14,14 @@ import static chess.ChessConstant.DEFAULT_INDEX_OF_WHITE_PAWN;
 public class MovePosition {
     
     private static final String BLANK = " ";
-    
     private static final int POSITIONS_SIZE = 3;
+    
     private static final int SOURCE_POSITION_INDEX = 0;
     private static final int TARGET_POSITION_INDEX = 1;
     
     private static final int MIN_MOVE_LENGTH = 1;
+    
+    private static final String ERROR_MISMATCH_POSITION_SIZE = "입력받은 위치가 2개가 아닙니다.";
     
     private final Position sourcePosition;
     private final Position targetPosition;
@@ -32,7 +34,7 @@ public class MovePosition {
     public static MovePosition from(String input) {
         final List<String> positions = trimAndExceptBlank(input);
         if (isSizeMismatch(positions)) {
-            throw new IllegalArgumentException("입력받은 위치가 2개가 아닙니다.");
+            throw new IllegalArgumentException(ERROR_MISMATCH_POSITION_SIZE);
         }
         
         final Position sourcePosition = Position.of(positions.get(SOURCE_POSITION_INDEX));

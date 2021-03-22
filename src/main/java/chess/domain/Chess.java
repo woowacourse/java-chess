@@ -7,6 +7,12 @@ import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;
 
 public class Chess {
+    
+    private static final String ERROR_GAME_IS_NOT_RUNNING = "게임 진행 중이 아닙니다.";
+    private static final String ERROR_SOURCE_PIECE_IS_BLANK = "움직이려 하는 위치에 기물이 없습니다.";
+    private static final String ERROR_SOURCE_PIECE_IS_NOT_MINE = "움직이려 하는 기물은 상대방의 기물입니다.";
+    private static final String ERROR_TARGET_PIECE_IS_MINE = "이동하려는 위치에 자신의 말이 있습니다.";
+    
     private final Board board;
     private Status status;
     private Color turn;
@@ -35,7 +41,7 @@ public class Chess {
     
     public void checkGameIsRunning() {
         if (!isRunning()) {
-            throw new IllegalStateException("게임 진행 중이 아닙니다.");
+            throw new IllegalStateException(ERROR_GAME_IS_NOT_RUNNING);
         }
     }
     
@@ -50,15 +56,15 @@ public class Chess {
         final Piece targetPiece = board.get(movePosition.getTargetPosition());
         
         if (sourcePiece.isBlank()) {
-            throw new IllegalArgumentException("움직이려 하는 위치에 기물이 없습니다.");
+            throw new IllegalArgumentException(ERROR_SOURCE_PIECE_IS_BLANK);
         }
         
         if (!sourcePiece.isSameColorAs(turn)) {
-            throw new IllegalArgumentException("움직이려 하는 기물은 상대방의 기물입니다.");
+            throw new IllegalArgumentException(ERROR_SOURCE_PIECE_IS_NOT_MINE);
         }
         
         if (targetPiece.isSameColorAs(turn)) {
-            throw new IllegalArgumentException("이동하려는 위치에 자신의 말이 있습니다.");
+            throw new IllegalArgumentException(ERROR_TARGET_PIECE_IS_MINE);
         }
     }
     

@@ -9,7 +9,8 @@ public class Position {
     
     private static final int POSITION_WORD_LENGTH = 2;
     
-    // TODO 캐싱 구현하기
+    private static final String ERROR_MISMATCH_WORD_LENGTH = "위치는 a1 과 같은 형식의 2글자이어야 합니다.";
+    
     private final Point x;
     private final Point y;
     
@@ -26,7 +27,7 @@ public class Position {
     
     public static Position of(String value) {
         if (value.length() != POSITION_WORD_LENGTH) {
-            throw new IllegalArgumentException("위치는 a1 과 같은 형식의 2글자이어야 합니다.");
+            throw new IllegalArgumentException(ERROR_MISMATCH_WORD_LENGTH);
         }
         
         int x = value.charAt(RANK_CHARACTER_INDEX) - 'a';

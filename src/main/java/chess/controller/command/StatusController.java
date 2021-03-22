@@ -10,7 +10,6 @@ public class StatusController implements CommandController {
         final double blackScore = chess.score(Color.BLACK);
         final double whiteScore = chess.score(Color.WHITE);
         OutputView.printStatus(blackScore, whiteScore);
-        
         return chess;
     }
 }

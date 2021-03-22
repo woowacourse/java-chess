@@ -10,6 +10,8 @@ public enum CommandControllerFactory {
     END("end", input -> new EndController()),
     EXIT("exit", input -> new ExitController());
     
+    private static final String ERROR_COMMAND_CANNOT_FIND = "메뉴에 없는 커맨드입니다.";
+    
     private final String command;
     private final Function<String, CommandController> controllerFunction;
     
@@ -32,6 +34,6 @@ public enum CommandControllerFactory {
                      .filter(commandFactory -> commandFactory.command.equals(input))
                      .map(commandFactory -> commandFactory.controllerFunction)
                      .findAny()
-                     .orElseThrow(() -> new IllegalArgumentException("메뉴에 없는 커맨드입니다."));
+                     .orElseThrow(() -> new IllegalArgumentException(ERROR_COMMAND_CANNOT_FIND));
     }
 }

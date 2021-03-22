@@ -7,6 +7,9 @@ import chess.domain.position.Position;
 import java.util.Map;
 
 public class SymbolBoard {
+    
+    private static final int BOARD_SIZE = 8;
+    
     private final String[][] board;
     
     public SymbolBoard(String[][] board) {
@@ -16,7 +19,7 @@ public class SymbolBoard {
     public static SymbolBoard from(Chess chess) {
         final Map<Position, Piece> pieceBoard = chess.getBoard()
                                                      .getBoard();
-        final String[][] board = new String[8][8];
+        final String[][] board = new String[BOARD_SIZE][BOARD_SIZE];
         for (Map.Entry<Position, Piece> entry : pieceBoard.entrySet()) {
             final int x = entry.getKey()
                                .getX()

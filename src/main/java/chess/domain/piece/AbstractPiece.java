@@ -9,6 +9,8 @@ import java.util.Objects;
 
 public abstract class AbstractPiece implements Piece {
     
+    private static final String ERROR_OBSTACLE_EXIST = "이동하는 경로 사이에 기물이 있습니다.";
+    
     protected final Color color;
     protected final DirectionGroup directionGroup;
     
@@ -18,13 +20,13 @@ public abstract class AbstractPiece implements Piece {
     }
     
     @Override
-    public boolean isBlank() {
-        return color.isBlank();
+    public boolean isSameColorAs(Color color) {
+        return this.color == color;
     }
     
     @Override
-    public boolean isSameColorAs(Color color) {
-        return this.color == color;
+    public boolean isBlank() {
+        return color.isBlank();
     }
     
     protected void checkObstacleExistsAtDirection(MovePosition movePosition, Direction direction, Board board) {
@@ -45,7 +47,7 @@ public abstract class AbstractPiece implements Piece {
     
     private void checkPieceIsBlank(Board board, Position sourcePosition) {
         if (!board.isBlank(sourcePosition)) {
-            throw new IllegalArgumentException("이동하는 경로 사이에 기물이 있습니다.");
+            throw new IllegalArgumentException(ERROR_OBSTACLE_EXIST);
         }
     }
     

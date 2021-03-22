@@ -18,6 +18,9 @@ import static java.util.stream.Collectors.groupingBy;
 
 public class Board {
     
+    private static final int DEFAULT_SUM_OF_PAWN_OPTION_SCORE = 0;
+    private static final double OPTION_SCORE_OF_PAWN = 0.5;
+    
     private final Map<Position, Piece> board;
     
     public Board() {
@@ -43,7 +46,7 @@ public class Board {
         final Piece targetPiece = board.get(targetPosition);
         
         sourcePiece.checkToMoveToTargetPosition(movePosition, this);
-        board.put(sourcePosition, new Blank());
+        board.put(sourcePosition, Blank.INSTANCE);
         board.put(targetPosition, sourcePiece);
         
         if (kingWillDie(targetPiece)) {
@@ -72,9 +75,17 @@ public class Board {
     private double sumOptionScoresOfPawns(Color color) {
         return countPawnAtColumn(color).values()
                                        .stream()
-                                       .filter(pawnCount -> pawnCount > 1L)
-                                       .mapToDouble(pawn -> pawn * 0.5)
-                                       .reduce(0, Double::sum);
+                                       .filter(this::isSeveralPawnExist)
+                                       .mapToDouble(this::changePawnScoreToHalf)
+                                       .reduce(DEFAULT_SUM_OF_PAWN_OPTION_SCORE, Double::sum);
+    }
+    
+    private boolean isSeveralPawnExist(Long pawnCont) {
+        return pawnCont > 1L;
+    }
+    
+    private double changePawnScoreToHalf(Long pawnCont) {
+        return (double) pawnCont * OPTION_SCORE_OF_PAWN;
     }
     
     private Map<Point, Long> countPawnAtColumn(Color color) {
