@@ -55,7 +55,7 @@ public class King extends Piece {
         return false;
     }
 
-    private void addMovablePositions(List<Position> movablePositions, Board board, int rowDir, int colDir) {
+    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
         int curRow = getPosition().getRow();
         int curCol = getPosition().getCol();
 
@@ -64,7 +64,7 @@ public class King extends Piece {
         }
     }
 
-    private boolean isMoveAbleDir(Board board, int nextRow, int nextCol) {
+    private boolean isMoveAbleDir(final Board board, final int nextRow, final int nextCol) {
         if (!board.validateRange(nextRow, nextCol)) {
             return false;
         }

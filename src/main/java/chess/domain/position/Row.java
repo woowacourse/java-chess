@@ -12,8 +12,8 @@ public enum Row {
     SEVEN("7", 1),
     EIGHT("8", 0);
 
-    final String row;
-    final int location;
+    private final String row;
+    private final int location;
 
     Row(final String row, final int location) {
         this.row = row;

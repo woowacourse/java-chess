@@ -48,7 +48,7 @@ public class OutputView {
         return arr;
     }
 
-    private static void printOneLine(String[] line) {
+    private static void printOneLine(final String[] line) {
         for (String val : line) {
             System.out.print(val);
         }

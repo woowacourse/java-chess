@@ -67,11 +67,11 @@ public abstract class Piece {
 
     public abstract boolean isPawn();
 
-    public Double score() {
+    public final Double score() {
         return score;
     }
 
-    public boolean sameCol(final int col) {
+    public final boolean sameCol(final int col) {
         return position.sameCol(col);
     }
 }

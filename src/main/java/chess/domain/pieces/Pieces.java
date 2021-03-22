@@ -16,35 +16,35 @@ public class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public boolean containByPosition(final Position position) {
+    public final boolean containByPosition(final Position position) {
         return pieces.stream()
                 .anyMatch(piece -> piece.samePosition(position));
     }
 
-    public Piece getPieceByPosition(final Position position) {
+    public final Piece getPieceByPosition(final Position position) {
         return pieces.stream()
                 .filter(piece -> piece.samePosition(position))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("해당 위치에 말이 없습니다."));
     }
 
-    public void removePieceByPosition(final Position position) {
+    public final void removePieceByPosition(final Position position) {
         pieces.stream()
                 .filter(piece -> piece.samePosition(position))
                 .findFirst()
                 .ifPresent(pieces::remove);
     }
 
-    public List<Piece> toList() {
+    public final List<Piece> toList() {
         return new ArrayList<>(pieces);
     }
 
-    public boolean kingAlive() {
+    public final boolean kingAlive() {
         return pieces.stream()
                 .anyMatch(Piece::isKing);
     }
 
-    public double calculateScore(final int rangeMinPivot, final int rangeMaxPivot) {
+    public final double calculateScore(final int rangeMinPivot, final int rangeMaxPivot) {
         double simpleSumScore = calculateSimpleSumScore();
         double decreasedScore = calculateDecreasedScore(rangeMinPivot, rangeMaxPivot);
         return simpleSumScore - decreasedScore;

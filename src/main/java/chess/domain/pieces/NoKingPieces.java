@@ -15,7 +15,7 @@ public abstract class NoKingPieces extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
+    public final boolean isPawn() {
         return false;
     }
 }

@@ -34,7 +34,7 @@ public class Rook extends NoKingPieces {
     }
 
     @Override
-    public List<Position> getMovablePositions(final Board board) {
+    public final List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
 
         int[] rowDir = {0, 0, -1, 1};
@@ -46,7 +46,7 @@ public class Rook extends NoKingPieces {
         return movablePositions;
     }
 
-    private void addMovablePositions(List<Position> movablePositions, Board board, int rowDir, int colDir) {
+    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
         int curRow = getPosition().getRow();
         int curCol = getPosition().getCol();
 
@@ -55,7 +55,7 @@ public class Rook extends NoKingPieces {
         }
     }
 
-    private boolean isMoveAbleDir(List<Position> movablePositions, Board board, int nextRow, int nextCol) {
+    private boolean isMoveAbleDir(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
         if (!board.validateRange(nextRow, nextCol)) {
             return false;
         }

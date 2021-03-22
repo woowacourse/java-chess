@@ -18,7 +18,7 @@ public class Board {
         this.board = new HashMap<>(board);
     }
 
-    public Map<Team, Pieces> toMap() {
+    public final Map<Team, Pieces> toMap() {
         return new HashMap<>(board);
     }
 
@@ -28,20 +28,20 @@ public class Board {
         startPointPiece.move(this, endPoint);
     }
 
-    public Pieces piecesByTeam(final Team team) {
+    public final Pieces piecesByTeam(final Team team) {
         return board.get(team);
     }
 
-    public boolean validateRange(final int row, final int col) {
+    public final boolean validateRange(final int row, final int col) {
         return !(row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
 
-    public boolean isEnemyKingDie(final Team team) {
+    public final boolean isEnemyKingDie(final Team team) {
         Pieces enemyPieces = board.get(Team.getAnotherTeam(team));
         return !enemyPieces.kingAlive();
     }
 
-    public double scoreByTeam(final Team team) {
+    public final double scoreByTeam(final Team team) {
         Pieces pieces = board.get(team);
         return pieces.calculateScore(RANGE_MIN_PIVOT, RANGE_MAX_PIVOT);
     }

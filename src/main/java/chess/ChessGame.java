@@ -10,12 +10,12 @@ public class ChessGame {
     private boolean isPlaying = true;
     private Team winner;
 
-    public void initSetting() {
+    public final void initSetting() {
         BoardFactory boardFactory = new BoardFactory();
         board = boardFactory.getBoard();
     }
 
-    public void end() {
+    public final void end() {
         isPlaying = false;
     }
 
@@ -23,11 +23,11 @@ public class ChessGame {
         return isPlaying;
     }
 
-    public Board getBoard() {
+    public final Board getBoard() {
         return board;
     }
 
-    public void move(final Position startPoint, final Position endPoint, final Team team) {
+    public final void move(final Position startPoint, final Position endPoint, final Team team) {
         board.move(startPoint, endPoint, team);
         if (board.isEnemyKingDie(team)) {
             winner = team;
@@ -35,11 +35,11 @@ public class ChessGame {
         }
     }
 
-    public double getScoreByTeam(final Team team) {
+    public final double getScoreByTeam(final Team team) {
         return board.scoreByTeam(team);
     }
 
-    public Team winner() {
+    public final Team winner() {
         return winner;
     }
 }

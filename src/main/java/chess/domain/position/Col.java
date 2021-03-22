@@ -15,8 +15,8 @@ public enum Col {
     G("g", 6),
     H("h", 7);
 
-    final String col;
-    final int location;
+    private final String col;
+    private final int location;
 
     Col(final String col, final int location) {
         this.col = col;
