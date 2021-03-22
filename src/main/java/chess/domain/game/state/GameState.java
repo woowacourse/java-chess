@@ -1,15 +1,15 @@
 package chess.domain.game.state;
 
 import chess.domain.CommandAsString;
-import chess.domain.result.Result;
+import chess.domain.game.GameVisual;
 
 public interface GameState {
 
     GameState execute(final CommandAsString command);
 
-    Result turnResult();
+    GameVisual gameVisual();
 
-    Result statusResult();
+    GameVisual statusVisual();
 
     boolean isFinished();
 }

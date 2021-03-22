@@ -1,5 +1,6 @@
 package chess.view;
 
+import chess.domain.game.GameVisual;
 import chess.domain.board.Board;
 import chess.domain.piece.PieceColor;
 import chess.domain.result.Score;
@@ -40,5 +41,9 @@ public class OutputView {
 
     public static void printWinner(String winner) {
         System.out.println(winner);
+    }
+
+    public static void print(GameVisual gameVisual) {
+
     }
 }

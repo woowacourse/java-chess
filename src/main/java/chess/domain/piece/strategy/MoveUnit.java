@@ -30,7 +30,7 @@ public enum MoveUnit {
     private final int columnDirection;
     private final int rowDirection;
 
-    MoveUnit(int columnDirection, int rowDirection) {
+    MoveUnit(final int columnDirection, final int rowDirection) {
         this.columnDirection = columnDirection;
         this.rowDirection = rowDirection;
     }

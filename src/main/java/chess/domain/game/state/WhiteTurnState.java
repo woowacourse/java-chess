@@ -1,16 +1,16 @@
 package chess.domain.game.state;
 
-import chess.domain.board.Board;
-import chess.domain.piece.Color;
+import chess.domain.board.Board2;
+import chess.domain.piece.PieceColor;
 
-public final class WhiteTurnState extends TurnState {
+public class WhiteTurnState extends PlayingState {
 
-    public WhiteTurnState(final Board board) {
-        super(board, Color.WHITE);
+    protected WhiteTurnState(Board2 board) {
+        super(board, PieceColor.WHITE);
     }
 
     @Override
-    protected GameState otherTurnState(final Board board) {
-        return new BlackTurnState(board);
+    protected GameState otherTurnState() {
+        return new BlackTurnState(board());
     }
 }
