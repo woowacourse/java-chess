@@ -57,7 +57,7 @@ public class ChessController {
             chessGame.play(Arrays.asList(splitInput[1], splitInput[2]));
             OutputView.printChessBoard(chessGame.getCurrentPieces());
         }
-        if(commandType == CommandType.STATUS) {
+        if (commandType == CommandType.STATUS) {
             OutputView.printStatus(chessGame.getCurrentPieces());
         }
     }

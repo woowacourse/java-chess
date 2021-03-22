@@ -16,7 +16,6 @@ public class King extends Move {
         super(position, name, color, score);
     }
 
-
     @Override
     public void move(Position target, CurrentPieces currentPieces) {
         validateKingMove(target);

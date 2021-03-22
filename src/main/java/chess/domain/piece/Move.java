@@ -27,5 +27,4 @@ public abstract class Move extends Piece {
         validateSameColor(targetPiece);
         currentPieces.removePieceIfNotEmpty(targetPiece);
     }
-
 }

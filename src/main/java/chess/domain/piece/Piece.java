@@ -2,9 +2,9 @@ package chess.domain.piece;
 
 public abstract class Piece {
     protected Position position;
-    protected String name;
-    protected Color color;
-    protected Score score;
+    protected final String name;
+    protected final Color color;
+    protected final Score score;
 
     public Piece(Position position, String name, Color color) {
         this(position, name, color, new Score(0));

@@ -28,7 +28,7 @@ public class Position {
 
     public static Position of(char x, char y) {
         validatePosition(x, y);
-        return POSITIONS.get(String.valueOf(x)+y);
+        return POSITIONS.get(String.valueOf(x) + y);
     }
 
     private static void validatePosition(char x, char y) {
