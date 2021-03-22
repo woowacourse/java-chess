@@ -12,4 +12,6 @@ public interface GameState {
     GameState end();
 
     GameState status();
+
+    boolean isFinished();
 }

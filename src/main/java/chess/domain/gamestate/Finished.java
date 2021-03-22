@@ -27,4 +27,9 @@ public class Finished implements GameState {
     public GameState status() {
         throw EXCEPTION;
     }
+
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
 }

@@ -64,4 +64,9 @@ public class Ready implements GameState {
     public GameState status() {
         throw EXCEPTION;
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

@@ -12,25 +12,23 @@ public class ChessController {
 
     public void play() {
         ChessGame chessGame = new ChessGame(new Board(), new Turn());
-
-        ready(chessGame);
-        start(chessGame);
-    }
-
-    private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
-        String input = InputView.InputString();
-        Command.commandByInput(input).execute(chessGame, Command.arguments(input));
+        start(chessGame);
     }
 
     private void start(ChessGame chessGame) {
         while (chessGame.isContinue()) {
+            inputCommandAndExecute(chessGame);
+            OutputView.printCurrentTurn(chessGame.currentTurn());
             OutputView.printChessBoard(chessGame.boardDto());
-            String input = InputView.InputString();
-            Command command = Command.commandByInput(input);
-            command.execute(chessGame, Command.arguments(input));
-            printScoreIfStatus(chessGame, command);
         }
+    }
+
+    private void inputCommandAndExecute(ChessGame chessGame) {
+        String input = InputView.InputString();
+        Command command = Command.commandByInput(input);
+        command.execute(chessGame, Command.arguments(input));
+        printScoreIfStatus(chessGame, command);
     }
 
     private void printScoreIfStatus(ChessGame chessGame, Command command) {

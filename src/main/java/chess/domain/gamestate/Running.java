@@ -47,4 +47,9 @@ public class Running implements GameState {
     public GameState status() {
         return this;
     }
+
+    @Override
+    public boolean isFinished() {
+        return false;
+    }
 }

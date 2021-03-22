@@ -3,7 +3,6 @@ package chess.domain;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
-import chess.domain.gamestate.Finished;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.Ready;
 import chess.dto.BoardDto;
@@ -38,11 +37,15 @@ public class ChessGame {
     }
 
     public boolean isContinue() {
-        return !(gameState instanceof Finished);
+        return !gameState.isFinished();
     }
 
     public double score(Team team) {
         return board.score(team);
+    }
+
+    public Team currentTurn() {
+        return turn.now();
     }
 
     public BoardDto boardDto() {
