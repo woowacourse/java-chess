@@ -6,7 +6,6 @@ import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.gamestate.State;
 import chess.exception.InvalidCommandException;
-import chess.view.OutputView;
 
 public class ChessGame {
     private State state;

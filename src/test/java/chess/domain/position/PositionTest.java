@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PositionTest {
-
     @Test
     @DisplayName("Position 같은 좌표 비교")
     void equalsSucceed() {
@@ -21,8 +20,7 @@ class PositionTest {
         assertThat(position1).isEqualTo(position2);
     }
 
-    @ParameterizedTest
-    @DisplayName("Position 다른 좌표 비교")
+    @ParameterizedTest(name = "Position 다른 좌표 비교")
     @MethodSource("equalsFailTestcase")
     void equalsFail(Position position1, Position position2) {
         assertThat(position1).isNotEqualTo(position2);
@@ -35,7 +33,7 @@ class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "세로 이동경로 반환")
     @MethodSource("getRouteVerticalTestcase")
     void getRouteVertical(Position from, Position to) {
         assertThat(Position.route(from, to))
@@ -50,7 +48,7 @@ class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "가로 이동경로 반환")
     @MethodSource("getRouteHorizontalTestcase")
     void getRouteHorizontal(Position from, Position to) {
         assertThat(Position.route(from, to))
@@ -64,7 +62,7 @@ class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "대각선(경사도 1) 이동경로 반환")
     @MethodSource("getRoutePositiveInclineTestcase")
     void getRoutePositiveIncline(Position from, Position to) {
         assertThat(Position.route(from, to))
@@ -78,7 +76,7 @@ class PositionTest {
         );
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "대각선(경사도 -1) 이동경로 반환")
     @MethodSource("getRouteNegativeInclineTestcase")
     void getRouteNegativeIncline(Position from, Position to) {
         assertThat(Position.route(from, to))
