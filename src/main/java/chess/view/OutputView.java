@@ -4,6 +4,7 @@ import chess.domain.piece.Piece;
 import chess.domain.position.File;
 import chess.domain.position.Position;
 import chess.domain.position.Rank;
+import chess.view.dto.PlayerResultDto;
 
 import java.util.Map;
 import java.util.Objects;
@@ -40,5 +41,9 @@ public class OutputView {
             return ".";
         }
         return chessBoard.get(position).getPiece();
+    }
+
+    public static void showResult(final PlayerResultDto resultDto) {
+        System.out.println(String.format("%s의 점수: %.1f", resultDto.getName(), resultDto.getScore()));
     }
 }

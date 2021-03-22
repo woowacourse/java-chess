@@ -20,4 +20,9 @@ public class End implements Command {
     public boolean isMove() {
         return false;
     }
+
+    @Override
+    public boolean isStatus() {
+        return false;
+    }
 }

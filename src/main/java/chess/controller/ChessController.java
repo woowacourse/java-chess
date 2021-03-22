@@ -7,6 +7,7 @@ import chess.domain.player.Round;
 import chess.domain.state.StateFactory;
 import chess.view.InputView;
 import chess.view.OutputView;
+import chess.view.dto.PlayerResultDto;
 
 import java.util.Scanner;
 
@@ -37,6 +38,10 @@ public class ChessController {
             OutputView.showChessBoard(round.getBoard());
             round.execute(INPUT.inputCommand());
             OutputView.showScore(round.currentPlayerName(), round.calculateScore());
+        }
+        if (round.isStatus()) {
+            OutputView.showResult(PlayerResultDto.toDto(round.getWhitePlayer()));
+            OutputView.showResult(PlayerResultDto.toDto(round.getBlackPlayer()));
         }
     }
 }

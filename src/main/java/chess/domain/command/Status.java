@@ -1,9 +1,9 @@
 package chess.domain.command;
 
-public class Move implements Command {
+public class Status implements Command {
     @Override
-    public Command execute(final String command) {
-        throw new UnsupportedOperationException("이미 움직이는 상태입니다.");
+    public Command execute(String command) {
+        throw new UnsupportedOperationException("점수 출력을 한 뒤에는 또 출력할 수 없습니다.");
     }
 
     @Override
@@ -13,16 +13,16 @@ public class Move implements Command {
 
     @Override
     public boolean isEnd() {
-        return false;
-    }
-
-    @Override
-    public boolean isMove() {
         return true;
     }
 
     @Override
-    public boolean isStatus() {
+    public boolean isMove() {
         return false;
+    }
+
+    @Override
+    public boolean isStatus() {
+        return true;
     }
 }

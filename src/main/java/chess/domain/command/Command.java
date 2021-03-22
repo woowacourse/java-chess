@@ -9,6 +9,8 @@ public interface Command {
 
     boolean isMove();
 
+    boolean isStatus();
+
     default Command ready() {
         return new Ready();
     }

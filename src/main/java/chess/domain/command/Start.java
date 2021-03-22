@@ -9,6 +9,9 @@ public class Start implements Command {
         if ("end".equals(command)) {
             return new End();
         }
+        if ("status".equals(command)) {
+            return new Status();
+        }
         throw new UnsupportedOperationException("지원하지 않는 명령어입니다.");
     }
 
@@ -24,6 +27,11 @@ public class Start implements Command {
 
     @Override
     public boolean isMove() {
+        return false;
+    }
+
+    @Override
+    public boolean isStatus() {
         return false;
     }
 }
