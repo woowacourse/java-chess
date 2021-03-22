@@ -1,5 +1,6 @@
 package domain.board;
 
+import domain.chessgame.ChessScore;
 import domain.chessgame.Score;
 import domain.piece.Bishop;
 import domain.piece.EmptyPiece;
@@ -12,6 +13,8 @@ import domain.piece.Rook;
 import domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
 
 public class Board {
 
@@ -55,26 +58,17 @@ public class Board {
         board.putAll(Pawn.createInitialPawn());
     }
 
-    public Score whitePiecesScore(){
-        Score score = new Score();
-        for(Position key : board.keySet()){
-            Piece piece = board.get(key);
-            if(piece.isNotEmpty() && piece.isBlack()){
-                score = score.sum(piece.getScore());
-            }
-        }
-        return score;
+    public Map<Position, Piece> pieces(boolean isBlack) {
+        Object o = board.entrySet();
+        return board.entrySet()
+            .stream()
+            .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == isBlack)
+            .collect(Collectors.toMap(Entry::getKey, Entry::getValue));
     }
 
-    public Score blackPiecesScore(){
-        Score score = new Score();
-        for(Position key : board.keySet()){
-            Piece piece = board.get(key);
-            if(piece.isNotEmpty() && !piece.isBlack()){
-                score = score.sum(piece.getScore());
-            }
-        }
-        return score;
+    public Score piecesScore(boolean isBlack) {
+        ChessScore chessScore = new ChessScore(this);
+        return chessScore.piecesScore(isBlack);
     }
 
 }

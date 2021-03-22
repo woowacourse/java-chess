@@ -1,4 +1,4 @@
-package domain;
+package domain.chessgame;
 
 import java.util.Objects;
 
@@ -20,6 +20,10 @@ public class Score {
 
     public Score half() {
         return new Score(value / 2);
+    }
+
+    public double value(){
+        return value;
     }
 
     @Override

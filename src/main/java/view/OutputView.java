@@ -19,8 +19,8 @@ public class OutputView {
     }
 
     public static void printScore(Board board){
-        System.out.println("검은색 : " + board.blackPiecesScore().value() + "점");
-        System.out.println("흰색 : " + board.whitePiecesScore().value() + "점");
+        System.out.println("검은색 : " + board.piecesScore(true).value() + "점");
+        System.out.println("흰색 : " + board.piecesScore(false).value() + "점");
     }
 
 }
