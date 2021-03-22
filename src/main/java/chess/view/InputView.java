@@ -1,5 +1,6 @@
 package chess.view;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class InputView {
@@ -9,8 +10,25 @@ public class InputView {
     private InputView() {
     }
 
-    // TODO : need null, empty checking
     public static String inputCommand() {
-        return SCANNER.nextLine().trim();
+        System.out.println("명령을 입력해주세요.");
+        return inputValidCommand();
+    }
+
+    private static String inputValidCommand() {
+        try {
+            String input = SCANNER.nextLine().trim().toLowerCase();
+            validateEmptyOrNull(input);
+            return input;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return inputValidCommand();
+        }
+    }
+
+    private static void validateEmptyOrNull(String value) {
+        if (Objects.isNull(value) || value.isEmpty()) {
+            throw new IllegalArgumentException("null이나 비어있는 문자열을 올 수 없습니다.");
+        }
     }
 }

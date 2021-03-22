@@ -50,35 +50,6 @@ public class BoardUtil {
         return Board.of(pieces);
     }
 
-    public static char[][] generateViewBoard(Board board) {
-        char[][] viewBoard = generateEmptyBoard();
-        List<Piece> pieces = board.toList();
-        for (Piece piece : pieces) {
-            int x = piece.getX();
-            int y = piece.getY();
-            viewBoard[7 - y + DEFAULT_POSITION][x - DEFAULT_POSITION] = generatePieceLetter(piece);
-        }
-        return viewBoard;
-    }
-
-    private static char generatePieceLetter(Piece piece) {
-        char value = piece.getPieceType().getValue();
-        if (piece.isSameTeam(Team.BLACK)) {
-            value = Character.toUpperCase(value);
-        }
-        return value;
-    }
-
-    private static char[][] generateEmptyBoard() {
-        char[][] viewBoard = new char[BOARD_SIZE][BOARD_SIZE];
-        for (int y = 0; y < BOARD_SIZE; y++) {
-            for (int x = 0; x < BOARD_SIZE; x++) {
-                viewBoard[y][x] = EMPTY;
-            }
-        }
-        return viewBoard;
-    }
-
     private static boolean isNotEmpty(char pieceLetter) {
         return pieceLetter != EMPTY;
     }
