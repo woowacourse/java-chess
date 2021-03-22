@@ -27,7 +27,7 @@ public enum Horizontal {
         return Arrays.stream(Horizontal.values())
                 .filter(h -> h.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 위치입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 가로열 위치입니다."));
     }
 
     private static void validateParseInt(String input) {

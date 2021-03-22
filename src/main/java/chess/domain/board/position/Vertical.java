@@ -19,18 +19,22 @@ public enum Vertical {
     }
 
     static Vertical parse(final String symbol) {
-        return Vertical.valueOf(symbol.toUpperCase());
+        try {
+            return Vertical.valueOf(symbol.toUpperCase());
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("체스판을 벗어난 세로열 위치입니다.");
+        }
     }
 
     static Vertical of(final int index) {
         return Arrays.stream(Vertical.values())
                 .filter(v -> v.index == index)
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 위치입니다."));
+                .orElseThrow(() -> new IllegalArgumentException("체스판을 벗어난 세로열 위치입니다."));
     }
 
     public int getIndex() {
-        return index;
+        return this.index;
     }
 
     public int getDistance(final Vertical other) {
@@ -38,6 +42,6 @@ public enum Vertical {
     }
 
     public Vertical add(final int v) {
-        return of(index + v);
+        return of(this.index + v);
     }
 }
