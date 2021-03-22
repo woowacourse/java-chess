@@ -73,4 +73,27 @@ class BoardUtilTest {
             () -> assertThat(board.find(Location.of(7, 7))).isEqualTo(Pawn.of(Location.of(7, 7), Team.BLACK))
         );
     }
+
+    @DisplayName("Board를 넣으면 2차원 배열의 뷰보드로 변환할 수 있다.")
+    @Test
+    void convertToViewBoard() {
+        // given
+        Board board = BoardUtil.generateInitialBoard();
+        char[][] defaultViewBoard = {
+            {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
+            {'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p'},
+            {'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r'}
+        };
+
+        // when
+        char[][] viewBoard = BoardUtil.generateViewBoard(board);
+
+        // then
+        assertThat(viewBoard).isEqualTo(defaultViewBoard);
+    }
 }
