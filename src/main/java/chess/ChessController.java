@@ -13,6 +13,7 @@ public final class ChessController {
 
     private static final String newline = System.lineSeparator();
     private static final int CHESS_SIZE = 8;
+    private static final String CHESS_COLUMN = "abcdefgh";
 
     public void run() {
         OutputView.printStart();
@@ -78,12 +79,20 @@ public final class ChessController {
             count++;
             chessNewLine(stringBuilder, count);
         }
+        stringBuilder.append(newline);
+        stringBuilder.append(CHESS_COLUMN);
         return stringBuilder.toString();
     }
 
     private void chessNewLine(final StringBuilder stringBuilder, final int count) {
         if (count != 0 && count % CHESS_SIZE == 0) {
+            stringBuilder.append("  ");
+            stringBuilder.append(chessRow(count));
             stringBuilder.append(newline);
         }
+    }
+
+    private int chessRow(int count) {
+        return (CHESS_SIZE + 1) - (count / CHESS_SIZE);
     }
 }
