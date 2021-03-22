@@ -51,10 +51,18 @@ public class Position {
     }
 
     public static Position find(String source) {
-        if (Objects.isNull(POSITIONS.get(source))) {
+        String reversedSource = reverse(source);
+        if (Objects.isNull(POSITIONS.get(reversedSource))) {
             throw new IllegalArgumentException("없는 위치입니다!");
         }
-        return POSITIONS.get(source);
+        return POSITIONS.get(reversedSource);
+    }
+
+    private static String reverse(String source) {
+        String reversedSource = "";
+        reversedSource += source.charAt(1);
+        reversedSource += source.charAt(0);
+        return reversedSource;
     }
 
     public Rank getRank() {

@@ -33,11 +33,13 @@ public class Round {
             Source source = Source.valueOf(sourcePosition, blackPlayer.getState());
             Target target = Target.valueOf(source, targetPosition, whitePlayer.getState());
             blackPlayer.move(source, target, whitePlayer.getState());
+            whitePlayer.toRunningState(blackPlayer.getState());
             return;
         }
         Source source = Source.valueOf(sourcePosition, whitePlayer.getState());
         Target target = Target.valueOf(source, targetPosition, blackPlayer.getState());
         whitePlayer.move(source, target, blackPlayer.getState());
+        blackPlayer.toRunningState(whitePlayer.getState());
     }
 
     private boolean isMove(final String command) {

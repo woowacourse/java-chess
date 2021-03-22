@@ -34,6 +34,16 @@ public class ChessController {
     private void startChessGame(final ChessBoard chessBoard) {
         Round round = new Round(StateFactory.initialization(PieceFactory.whitePieces()),
                 StateFactory.initialization(PieceFactory.blackPieces()));
+
+        while (true) try {
+            inputCommand(chessBoard, round);
+            break;
+        } catch (RuntimeException runtimeException) {
+            System.out.println("[EROOR]: " + runtimeException.getMessage());
+        }
+    }
+
+    private void inputCommand(ChessBoard chessBoard, Round round) {
         String command = "";
         while (!isEnd(command)) {
             OutputView.showChessBoard(chessBoard.getBoard());
