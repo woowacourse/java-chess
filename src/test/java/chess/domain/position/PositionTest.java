@@ -13,7 +13,7 @@ public class PositionTest {
     @Test
     @DisplayName("생성")
     void create() {
-        System.out.println(Position.values().toString());
+        assertThatCode(()-> Position.valueOf("a1")).doesNotThrowAnyException();
     }
 
     @Test
