@@ -19,11 +19,6 @@ public class End extends Idle {
     }
 
     @Override
-    public void end() {
-        throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
-    }
-
-    @Override
     public boolean isFinished() {
         return true;
     }

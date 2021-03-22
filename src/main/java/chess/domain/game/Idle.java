@@ -6,4 +6,9 @@ public abstract class Idle extends Started {
         super(chessGame);
     }
 
+    @Override
+    public void end() {
+        throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
+    }
+
 }

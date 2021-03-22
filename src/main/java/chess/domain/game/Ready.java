@@ -18,9 +18,4 @@ public class Ready extends Idle {
         chessGame.changeState(new BlackTurn(chessGame));
     }
 
-    @Override
-    public void end() {
-        throw new UnsupportedOperationException(MESSAGE_UNSUPPORTED);
-    }
-
 }
