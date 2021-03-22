@@ -24,6 +24,10 @@ public abstract class Piece {
         return score;
     }
 
+    public String getName() {
+        return name.getName();
+    }
+
     public boolean isSameColor(boolean value) {
         return color.equals(Color.of(value));
     }

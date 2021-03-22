@@ -20,7 +20,7 @@ public class Queen extends Piece {
     public static Map<Position, Queen> initialQueenPieces() {
         return new HashMap<Position, Queen>() {{
             put(Position.of("d8"), Queen.of("Q", true));
-            put(Position.of("d3"), Queen.of("q", false));
+            put(Position.of("d1"), Queen.of("q", false));
         }};
     }
 

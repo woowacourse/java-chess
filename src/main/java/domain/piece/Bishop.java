@@ -22,7 +22,7 @@ public class Bishop extends Piece {
             put(Position.of("c8"), Bishop.of("B", true));
             put(Position.of("f8"), Bishop.of("B", true));
             put(Position.of("c1"), Bishop.of("b", false));
-            put(Position.of("f5"), Bishop.of("b", false));
+            put(Position.of("f1"), Bishop.of("b", false));
         }};
     }
 

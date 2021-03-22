@@ -8,7 +8,7 @@ public class Name {
     private final char value;
     private static final Map<Character, Name> CACHE = new WeakHashMap<>();
 
-    public static final Name EMPTY = new Name(' ');
+    public static final Name EMPTY = new Name('.');
 
     private Name(char value) {
         this.value = value;
@@ -23,6 +23,10 @@ public class Name {
             throw new IllegalArgumentException("알맞는 기물의 이름을 입력하세요.(검정말 : 대문자, 흰말 : 소문자)");
         }
         return CACHE.computeIfAbsent(name.charAt(0), Name::new);
+    }
+
+    public String getName() {
+        return String.valueOf(value);
     }
 
     private static boolean validCase(boolean isUpperCase, char name) {
@@ -48,4 +52,5 @@ public class Name {
     public int hashCode() {
         return Objects.hash(value);
     }
+
 }

@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import static domain.Color.*;
 
 public class Board {
-    private static final int SIZE = 8;
+    public static final int SIZE = 8;
     private Map<Position, Piece> board;
 
     public Board(Map<Position, Piece> pieces) {
@@ -48,11 +48,11 @@ public class Board {
     }
 
     public Map<Position, Piece> getBlackTeam() {
-        return getTeam(BLACK.getValue());   // TODO : 상수 처리
+        return getTeam(BLACK.getValue());
     }
 
     public Map<Position, Piece> getWhiteTeam() {
-        return getTeam(WHITE.getValue());   // TODO : 상수 처리
+        return getTeam(WHITE.getValue());
     }
 
     public boolean isExistSamePawn(Map.Entry<Position, Piece> pawn) {

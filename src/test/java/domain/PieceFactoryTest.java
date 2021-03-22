@@ -18,7 +18,7 @@ class PieceFactoryTest {
                 put(Position.of("c8"), Bishop.of("B", true));
                 put(Position.of("f8"), Bishop.of("B", true));
                 put(Position.of("c1"), Bishop.of("b", false));
-                put(Position.of("f5"), Bishop.of("b", false));
+                put(Position.of("f1"), Bishop.of("b", false));
                 put(Position.of("e8"), King.of("K", true));
                 put(Position.of("e1"), King.of("k", false));
                 put(Position.of("b8"), Knight.of("N", true));
@@ -26,7 +26,7 @@ class PieceFactoryTest {
                 put(Position.of("b1"), Knight.of("n", false));
                 put(Position.of("g1"), Knight.of("n", false));
                 put(Position.of("d8"), Queen.of("Q", true));
-                put(Position.of("d3"), Queen.of("q", false));
+                put(Position.of("d1"), Queen.of("q", false));
                 put(Position.of("a7"), Pawn.of("P", true));
                 put(Position.of("b7"), Pawn.of("P", true));
                 put(Position.of("c7"), Pawn.of("P", true));
