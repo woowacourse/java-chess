@@ -1,18 +1,26 @@
 package chess.domain.command;
 
 import chess.domain.position.Position;
+import chess.exception.InvalidCommandException;
 
 public class Move implements Command {
-    private static final String BLANK = " ";
+    private static final String SPACE = " ";
 
-    private final Position from;
-    private final Position to;
+    private final Position source;
+    private final Position target;
 
     public Move(String command) {
-        String[] sourceTarget = command.split(BLANK);
+        String[] sourceTarget = command.split(SPACE);
+        validateLength(sourceTarget);
 
-        from = Position.from(sourceTarget[1]);
-        to = Position.from(sourceTarget[2]);
+        source = Position.from(sourceTarget[1]);
+        target = Position.from(sourceTarget[2]);
+    }
+
+    private void validateLength(String[] sourceTarget) {
+        if (sourceTarget.length != 3) {
+            throw new InvalidCommandException();
+        }
     }
 
     @Override
@@ -27,12 +35,12 @@ public class Move implements Command {
 
     @Override
     public Position source() {
-        return from;
+        return source;
     }
 
     @Override
     public Position target() {
-        return to;
+        return target;
     }
 
     @Override
