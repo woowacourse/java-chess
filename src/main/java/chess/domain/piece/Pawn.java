@@ -15,13 +15,20 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isMovable(Position current, Position destination, Map<Position, Piece> chessBoard) {
+    public boolean isMovable(final Position current, final Position destination, final Map<Position, Piece> chessBoard) {
         if (!checkPositionRule(current, destination)) {
             return false;
         }
+
         if (current.checkDiagonalRule(destination)) {
             return chessBoard.containsKey(destination);
         }
+
+        return checkStraightEmptyPath(current, destination, chessBoard);
+    }
+
+
+    private boolean checkStraightEmptyPath(Position current, Position destination, Map<Position, Piece> chessBoard) {
         final List<Position> straightPath = current.generateStraightPath(destination);
         return checkEmptyPath(straightPath, chessBoard) && !chessBoard.containsKey(destination);
     }
@@ -31,6 +38,7 @@ public class Pawn extends Piece {
         if (isMoved) {
             return checkPositionRuleAfterMove(current, destination);
         }
+
         return checkPositionRuleFirstMove(current, destination);
     }
 
@@ -56,6 +64,7 @@ public class Pawn extends Piece {
                 current.moveXandY(0, direction * 2).equals(destination)) {
             return true;
         }
+
         return current.checkDiagonalToDirection(destination, direction);
     }
 
