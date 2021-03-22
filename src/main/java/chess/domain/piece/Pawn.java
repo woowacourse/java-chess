@@ -67,4 +67,9 @@ public abstract class Pawn extends Piece {
 
         return direction.isStraight() && distance.equals(STRAIGHT_DISTANCE);
     }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
 }

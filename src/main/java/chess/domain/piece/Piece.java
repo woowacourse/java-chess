@@ -28,8 +28,8 @@ public abstract class Piece {
         this.symbol = symbol;
     }
 
-    public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece) {
-        return ableDirections.contains(direction) && distance.isBelow(ableDistance);
+    public final Score score() {
+        return this.score;
     }
 
     public final String getSymbol() {
@@ -44,24 +44,19 @@ public abstract class Piece {
         return this.owner.isSameTeam(other.owner);
     }
 
-    public boolean isOwner(final Owner owner) {
+    public final boolean isOwner(final Owner owner) {
         return this.owner.isSameTeam(owner);
     }
 
-     /*
-       XXX :: instance of 사용? 오버라이드?
-        상위 클래스에서 하위 클래스를 사용하는 것은 잘못되었다고 생각한다.
-     */
+    public boolean isReachable(final Direction direction, final Distance distance, final Position position, final Piece targetPiece) {
+        return ableDirections.contains(direction) && distance.isBelow(ableDistance);
+    }
 
     public boolean isKing() {
-        return this instanceof King;
+        return false;
     }
 
     public boolean isPawn() {
-        return this instanceof Pawn;
-    }
-
-    public final Score score() {
-        return this.score;
+        return false;
     }
 }

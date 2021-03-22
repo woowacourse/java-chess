@@ -28,4 +28,9 @@ public class King extends Piece {
 
         throw new IllegalArgumentException("Invalid King");
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
