@@ -9,7 +9,7 @@ public abstract class BoardSetting {
 
     private final List<PieceWithColorType> pieces = new ArrayList<>();
 
-    public BoardSetting(List<PieceWithColorType> piecesSetting) {
+    BoardSetting(List<PieceWithColorType> piecesSetting) {
         validate(piecesSetting);
         this.pieces.addAll(piecesSetting);
     }
