@@ -10,7 +10,7 @@ public enum CommandRouter {
     MOVE("move", Move::new),
     STATUS("status", Status::new);
 
-    private static final int COMMAND_INDEX = 0;
+    private static final int ORDER_INDEX = 0;
 
     private final String command;
     Function<List<String>, Command> commandFactory;
@@ -22,7 +22,7 @@ public enum CommandRouter {
 
     public static Command findByInputCommand(List<String> command) {
         return Arrays.stream(values())
-                .filter(commandRouter -> commandRouter.command.equalsIgnoreCase(command.get(COMMAND_INDEX)))
+                .filter(commandRouter -> commandRouter.command.equalsIgnoreCase(command.get(ORDER_INDEX)))
                 .map(commandRouter -> commandRouter.commandFactory.apply(command))
                 .findAny()
                 .orElseThrow(()-> new IllegalArgumentException("커맨드를 잘 못 입력하셨습니다"));
