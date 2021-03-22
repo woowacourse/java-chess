@@ -11,11 +11,11 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    private static final Score SCORE = new Score(0);
-    private static final String NAME = "k";
+    private static final Score SCORE = new Score(1);
+    private static final String NAME = "p";
 
     public Pawn(boolean isBlack) {
-        super(isBlack);
+        super(NAME, isBlack, SCORE);
     }
 
     public static Map<Position, Piece> createInitialPawn() {
@@ -37,14 +37,6 @@ public class Pawn extends Piece {
         initialPawn.put(new Position("g2"), new Pawn(false));
         initialPawn.put(new Position("h2"), new Pawn(false));
         return initialPawn;
-    }
-
-    public String getName() {
-        return NAME;
-    }
-
-    public Score score() {
-        return SCORE;
     }
 
     @Override

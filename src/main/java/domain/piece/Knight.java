@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.Score;
+import domain.chessgame.Score;
 import domain.board.Board;
 import domain.position.Direction;
 import domain.position.Position;
@@ -10,18 +10,10 @@ import java.util.Map;
 public class Knight extends Piece {
 
     private static final Score SCORE = new Score(2.5);
-    private static final String NAME = "k";
+    private static final String NAME = "n";
 
     public Knight(boolean isBlack) {
-        super(isBlack);
-    }
-
-    public String getName() {
-        return NAME;
-    }
-
-    public Score score() {
-        return SCORE;
+        super(NAME, isBlack, SCORE);
     }
 
     public static Map<Position, Piece> createInitialKnight() {
@@ -31,11 +23,6 @@ public class Knight extends Piece {
         initialKnight.put(new Position("b1"), new Knight(false));
         initialKnight.put(new Position("g1"), new Knight(false));
         return initialKnight;
-    }
-
-    @Override
-    public boolean isKing() {
-        return true;
     }
 
     @Override

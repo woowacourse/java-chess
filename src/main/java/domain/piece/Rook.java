@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.Score;
+import domain.chessgame.Score;
 import domain.board.Board;
 import domain.position.Direction;
 import domain.position.Position;
@@ -13,7 +13,7 @@ public class Rook extends Piece {
     private static final String NAME = "r";
 
     public Rook(boolean isBlack) {
-        super(isBlack);
+        super(NAME, isBlack, SCORE);
     }
 
     @Override
@@ -28,14 +28,6 @@ public class Rook extends Piece {
         } while (!source.equals(target)
             && board.piece(source).isEmpty() && source.isChessBoardPosition());
         return source.equals(target);
-    }
-
-    public String getName() {
-        return NAME;
-    }
-
-    public Score score() {
-        return SCORE;
     }
 
     public static Map<Position, Piece> createInitialRook() {

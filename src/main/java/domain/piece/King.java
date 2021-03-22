@@ -1,6 +1,6 @@
 package domain.piece;
 
-import domain.Score;
+import domain.chessgame.Score;
 import domain.board.Board;
 import domain.position.Direction;
 import domain.position.Position;
@@ -13,7 +13,7 @@ public class King extends Piece {
     private static final String NAME = "k";
 
     public King(boolean isBlack) {
-        super(isBlack);
+        super(NAME, isBlack, SCORE);
     }
 
     public static Map<Position, Piece> createInitialKing() {
@@ -38,12 +38,5 @@ public class King extends Piece {
             .anyMatch(direction -> source.sum(direction).equals(target));
     }
 
-    public String getName() {
-        return NAME;
-    }
-
-    public Score score() {
-        return SCORE;
-    }
 
 }
