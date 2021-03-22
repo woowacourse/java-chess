@@ -33,18 +33,4 @@ public class King extends PieceOnBoard {
         return candidates.contains(target);
     }
 
-    @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        candidates.add(moveOnce(Moves.UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN, target, chessBoard));
-        return candidates.contains(target);
-    }
-
 }

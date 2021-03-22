@@ -36,20 +36,4 @@ public class Queen extends PieceOnBoard {
         return candidates.contains(target);
     }
 
-    @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-
-        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.LEFT_UP,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_UP,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.UP,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.DOWN, target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.LEFT, target, chessBoard));
-
-        return candidates.contains(target);
-    }
-
 }

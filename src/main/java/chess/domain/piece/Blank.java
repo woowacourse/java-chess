@@ -20,11 +20,6 @@ public class Blank implements Piece {
     }
 
     @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        return false;
-    }
-
-    @Override
     public String getPieceName() {
         return ".";
     }

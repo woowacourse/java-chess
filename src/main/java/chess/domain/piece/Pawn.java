@@ -21,10 +21,4 @@ public class Pawn extends PieceOnBoard {
         return movablePawn(target, chessBoard);
     }
 
-    @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        return movablePawn(target, chessBoard);
-    }
-
-
 }

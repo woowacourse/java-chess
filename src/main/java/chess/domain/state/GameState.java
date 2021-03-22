@@ -20,4 +20,6 @@ public interface GameState {
 
     void put(Position position, Piece piece);
 
+    boolean isEnemy(Position position);
+
 }

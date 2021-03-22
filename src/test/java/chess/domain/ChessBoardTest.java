@@ -50,7 +50,8 @@ public class ChessBoardTest {
     @DisplayName("위치 이동 테스트")
     void change_position_test() {
         chessBoard.move("b1", "c3");
-        assertThat(chessBoard.getPiece(Position.valueOf("c3"))).isInstanceOf(Knight.class);
+        final Map<Position, Piece> chessBoard = this.chessBoard.getChessBoard();
+        assertThat(chessBoard.get(Position.valueOf("c3"))).isInstanceOf(Knight.class);
     }
 
     @Test

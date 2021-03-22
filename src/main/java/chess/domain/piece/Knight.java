@@ -35,20 +35,4 @@ public class Knight extends PieceOnBoard {
         return candidates.contains(target);
     }
 
-    @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-
-        candidates.add(moveOnce(Moves.LEFT_DOWN_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP_LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_DOWN_LEFT, target, chessBoard));
-        candidates.add(moveOnce(Moves.LEFT_UP_UP, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN_DOWN, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_DOWN_RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP_RIGHT, target, chessBoard));
-        candidates.add(moveOnce(Moves.RIGHT_UP_UP, target, chessBoard));
-
-        return candidates.contains(target);
-    }
-
 }

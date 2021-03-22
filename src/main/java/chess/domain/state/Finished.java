@@ -44,4 +44,9 @@ public class Finished implements GameState{
 
     }
 
+    @Override
+    public boolean isEnemy(Position position) {
+        return false;
+    }
+
 }

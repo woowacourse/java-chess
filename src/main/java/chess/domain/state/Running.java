@@ -90,4 +90,9 @@ public class Running implements GameState {
         chessBoard.put(position, piece);
     }
 
+    @Override
+    public boolean isEnemy(Position position) {
+        return false;
+    }
+
 }

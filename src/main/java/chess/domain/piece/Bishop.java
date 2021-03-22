@@ -29,15 +29,5 @@ public class Bishop extends PieceOnBoard {
         return candidates.contains(target);
     }
 
-    @Override
-    public boolean isMoveAble(Position target, ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        candidates.addAll(moveAsPossible(Moves.LEFT_DOWN,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.LEFT_UP,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_DOWN,target, chessBoard));
-        candidates.addAll(moveAsPossible(Moves.RIGHT_UP,target, chessBoard));
-        return candidates.contains(target);
-    }
-
 
 }

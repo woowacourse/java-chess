@@ -96,15 +96,8 @@ public class ChessBoard {
         }
     }
 
-    //todo: 삭제
-    public Piece getPiece(Position position) {
-        return gameState.getPiece(position);
-    }
-
     public Result result() {
-        Map<TeamColor, Score> result = new HashMap<>();
-        result.put(TeamColor.BLACK, blackPieces.calculateScore());
-        result.put(TeamColor.WHITE, whitePieces.calculateScore());
+        Map<TeamColor, Score> result = teamScores();
 
         if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
             return new Result(result, TeamColor.BLACK);
@@ -114,6 +107,13 @@ public class ChessBoard {
         }
 
         return new Result(result, TeamColor.NONE);
+    }
+
+    private Map<TeamColor, Score> teamScores() {
+        Map<TeamColor, Score> result = new HashMap<>();
+        result.put(TeamColor.BLACK, blackPieces.calculateScore());
+        result.put(TeamColor.WHITE, whitePieces.calculateScore());
+        return result;
     }
 
 

@@ -132,6 +132,7 @@ public abstract class PieceOnBoard implements Piece {
 
     private boolean isMeetEnemy(Position position, Position target,
         Map<Position, Piece> chessBoard) {
+
         return position == target && isEnemyTeam(chessBoard.get(position));
     }
 
@@ -142,71 +143,5 @@ public abstract class PieceOnBoard implements Piece {
     private boolean isEnemyTeam(Piece comparePiece) {
         return teamColor != comparePiece.getColor();
     }
-
-    //todo: 리팩토링중 컴파일 호환용
-    protected Set<Position> moveAsPossible(Moves direction, Position target,
-        ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        Position position = direction.move(currentPosition);
-        while (movable(position, target, chessBoard)) {
-            candidates.add(position);
-            position = direction.move(position);
-        }
-        return candidates;
-    }
-
-
-    protected Position moveOnce(Moves direction, Position target, ChessBoard chessBoard) {
-        Position position = direction.move(currentPosition);
-        if (movable(position, target, chessBoard)) {
-            return position;
-        }
-        return Position.ERROR;
-    }
-
-    protected boolean movablePawn(Position target, ChessBoard chessBoard) {
-        Set<Position> candidates = new HashSet<>();
-        candidates.addAll(checkFront(chessBoard, currentPosition.moveFront(teamColor)));
-        candidates.add(
-            checkFrontDiagonal(target, chessBoard,currentPosition.moveFront(teamColor).moveRight()));
-        candidates.add(
-            checkFrontDiagonal(target, chessBoard, currentPosition.moveFront(teamColor).moveLeft()));
-        return candidates.contains(target);
-    }
-
-    private Position checkFrontDiagonal(Position target, ChessBoard chessBoard, Position position) {
-        if (isMeetEnemy(position, target, chessBoard)) {
-            return position;
-        }
-        return Position.ERROR;
-    }
-
-    private Set<Position> checkFront(ChessBoard chessBoard, Position position) {
-        Set<Position> candidates = new HashSet<>();
-        if (validBlank(position, chessBoard)) {
-            candidates.add(position);
-            position = position.moveFront(teamColor);
-            if (validBlank(position, chessBoard) && currentPosition.pawnLine(teamColor)) {
-                candidates.add(position);
-            }
-        }
-        return candidates;
-    }
-
-
-    private boolean movable(Position position, Position target, ChessBoard chessBoard) {
-        return validBlank(position, chessBoard) || isMeetEnemy(position, target, chessBoard);
-    }
-
-    private boolean isMeetEnemy(Position position, Position target,
-        ChessBoard chessBoard) {
-        final Piece piece = chessBoard.getPiece(position);
-        return position == target && isEnemyTeam(piece);
-    }
-
-    private boolean validBlank(Position position, ChessBoard chessBoard) {
-        return position != Position.ERROR && chessBoard.getPiece(position) == Blank.INSTANCE;
-    }
-
 
 }

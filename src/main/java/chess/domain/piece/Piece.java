@@ -11,7 +11,7 @@ public interface Piece {
 
     boolean isMoveAble(Position target, Map<Position, Piece> chessBoard);
 
-    boolean isMoveAble(Position target, ChessBoard chessBoard);
+   // boolean isMoveAble(Position target, ChessBoard chessBoard);
 
     String getPieceName();
 
