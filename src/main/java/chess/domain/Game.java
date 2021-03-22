@@ -50,7 +50,7 @@ public class Game {
         }
     }
 
-    public Result getResult(){
+    public Result getResult() {
         return new Result(board, turn);
     }
 
@@ -62,11 +62,11 @@ public class Game {
         return turn;
     }
 
-    public void changeState(State state){
+    public void changeState(State state) {
         this.state = state;
     }
 
-    public boolean isRunning(){
+    public boolean isRunning() {
         return state.isStarted();
     }
 

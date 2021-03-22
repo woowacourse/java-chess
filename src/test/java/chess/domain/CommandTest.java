@@ -2,8 +2,6 @@ package chess.domain;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import chess.controller.Command;
 import org.junit.jupiter.api.DisplayName;

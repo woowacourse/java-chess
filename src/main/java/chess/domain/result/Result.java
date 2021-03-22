@@ -19,15 +19,15 @@ public class Result {
         blackScore = calculateBlackScore(color);
     }
 
-    private Score calculateWhiteScore(PieceColor color){
-        if(color.equals(PieceColor.WHITE)) {
+    private Score calculateWhiteScore(PieceColor color) {
+        if (color.equals(PieceColor.WHITE)) {
             return calculateTotalScore(color);
         }
         return calculateTotalScore(color.reversed());
     }
 
-    private Score calculateBlackScore(PieceColor color){
-        if(color.equals(PieceColor.BLACK)) {
+    private Score calculateBlackScore(PieceColor color) {
+        if (color.equals(PieceColor.BLACK)) {
             return calculateTotalScore(color);
         }
         return calculateTotalScore(color.reversed());

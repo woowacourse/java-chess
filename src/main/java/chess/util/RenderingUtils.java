@@ -16,8 +16,7 @@ public class RenderingUtils {
     public static String renderBoard(Board board) {
         final String visualBoard = Stream.of(Row.values())
             .map(index -> index.getNumber() + " " + renderRow(board, index) + index.getNumber())
-            .collect(Collectors.joining("\n"))
-            ;
+            .collect(Collectors.joining("\n"));
         final String columnInfo = "\n  a b c d e f g h\n";
         return columnInfo + visualBoard + columnInfo;
     }

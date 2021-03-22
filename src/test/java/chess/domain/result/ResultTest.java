@@ -57,8 +57,8 @@ class ResultTest {
         Board board = BoardFactory.initializeBoard();
         Result result = new Result(board, PieceColor.WHITE);
         assertThatIllegalArgumentException()
-                .isThrownBy(result::findWinner)
-                .withMessage("아직 승자가 정해지지 않았습니다.");
+            .isThrownBy(result::findWinner)
+            .withMessage("아직 승자가 정해지지 않았습니다.");
         Piece king = board.findPieceBy(Position.of(positionName));
         board.getCoordinates().remove(king);
         assertThat(result.findWinner()).isEqualTo(colorName + "이 이겼습니다.");

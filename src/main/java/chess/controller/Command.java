@@ -26,7 +26,7 @@ public enum Command {
     }
 
     private static void start(String input, Game game) {
-        if(game.isRunning()){
+        if (game.isRunning()) {
             throw new IllegalArgumentException("이미 게임을 진행중입니다.");
         }
         game.changeState(new Running());
@@ -35,7 +35,7 @@ public enum Command {
     }
 
     private static void move(String input, Game game) {
-        if(!game.isRunning()){
+        if (!game.isRunning()) {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
         }
         game.move(positionOf(input, 1), positionOf(input, 2));
@@ -49,7 +49,7 @@ public enum Command {
     }
 
     private static void showStatus(String input, Game game) {
-        if(!game.isRunning()){
+        if (!game.isRunning()) {
             throw new IllegalArgumentException("아직 게임을 시작하지 않았습니다.");
         }
         Result result = game.getResult();
@@ -66,7 +66,7 @@ public enum Command {
     private static Position positionOf(String input, int pieceIndex) {
         Pattern pattern = Pattern.compile(MOVE.message);
         Matcher matcher = pattern.matcher(input);
-        if(matcher.find()){
+        if (matcher.find()) {
             return Position.of(matcher.group(pieceIndex));
         }
         throw new IllegalArgumentException("유효하지 않은 체스말을 입력했습니다.");

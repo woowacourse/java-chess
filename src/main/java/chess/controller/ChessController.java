@@ -8,8 +8,8 @@ public class ChessController {
 
     public void run() {
         OutputView.printGuideMessage();
-        Game game =  new Game();
-        while(!game.isFinished()){
+        Game game = new Game();
+        while (!game.isFinished()) {
             executeCommand(InputView.receiveInput(), game);
         }
     }
