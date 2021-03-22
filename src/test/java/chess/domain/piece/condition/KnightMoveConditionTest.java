@@ -67,4 +67,5 @@ class KnightMoveConditionTest {
             assertThat(condition.isSatisfyBy(board, BlackKnight.createWithCoordinate(4, 4), new Position(nextRow, nextColumn))).isTrue();
         }
     }
+
 }

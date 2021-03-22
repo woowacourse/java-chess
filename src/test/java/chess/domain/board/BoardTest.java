@@ -109,4 +109,5 @@ class BoardTest {
         board = new Board(pieces);
         assertThat(board.isKingCaught()).isTrue();
     }
+
 }

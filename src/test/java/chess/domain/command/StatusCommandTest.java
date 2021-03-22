@@ -30,4 +30,5 @@ class StatusCommandTest {
     void isStatus() {
         assertThat(statusCommand.isStatus()).isTrue();
     }
+
 }

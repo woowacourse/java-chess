@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.function.Predicate;
 
 public class QueenMoveCondition extends MoveCondition {
+
     @Override
     public boolean isSatisfyBy(final Board board, final ChessPiece piece, final Position target) {
         return !piece.isSamePosition(target) &&

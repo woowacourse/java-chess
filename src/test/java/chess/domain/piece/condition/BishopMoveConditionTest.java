@@ -148,4 +148,5 @@ class BishopMoveConditionTest {
                         new Position(1, 1))
         );
     }
+
 }

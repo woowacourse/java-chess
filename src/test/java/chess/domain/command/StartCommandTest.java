@@ -78,4 +78,5 @@ class StartCommandTest {
     void isStatus() {
         assertThat(startCommand.isStatus()).isFalse();
     }
+
 }

@@ -57,4 +57,5 @@ public class OutputView {
     public static void printWinner(String color) {
         System.out.printf(WINNER_FORMAT, color);
     }
+
 }

@@ -6,4 +6,5 @@ public class ChessPieceMoveNotAllowException extends RuntimeException {
     public ChessPieceMoveNotAllowException() {
         super(MESSAGE);
     }
+
 }

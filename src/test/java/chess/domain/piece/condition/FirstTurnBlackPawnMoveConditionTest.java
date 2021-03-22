@@ -42,4 +42,5 @@ class FirstTurnBlackPawnMoveConditionTest {
 
         assertThat(actual).isFalse();
     }
+
 }

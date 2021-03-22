@@ -62,4 +62,5 @@ class MoveCommandTest {
     void isStatus() {
         assertThat(moveCommand.isStatus()).isFalse();
     }
+
 }

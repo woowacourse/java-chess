@@ -20,7 +20,6 @@ public class Board {
     private final Pieces<BlackPiece> blackPieces;
     private final Pieces<WhitePiece> whitePieces;
 
-
     public Board(List<ChessPiece> pieces) {
         Map<Boolean, List<ChessPiece>> partitionedPieces = pieces.stream()
                 .collect(partitioningBy(piece -> piece instanceof BlackPiece));

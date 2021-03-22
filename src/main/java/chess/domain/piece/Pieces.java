@@ -50,7 +50,6 @@ public class Pieces<T extends ChessPiece> {
                 .anyMatch(ChessPiece::isKing);
     }
 
-
     public double getScore() {
         double totalScore = getTotalScore();
         long countOfExpectedPawn = getCountOfExpectedPawn();

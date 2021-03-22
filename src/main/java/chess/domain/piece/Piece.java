@@ -63,4 +63,5 @@ public abstract class Piece implements ChessPiece {
     abstract protected boolean isSamePiece(Object o);
 
     abstract protected int toHashCode();
+
 }
