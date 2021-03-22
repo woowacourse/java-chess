@@ -3,14 +3,17 @@ package chess.domain.piece;
 import chess.domain.position.Row;
 
 public enum Color {
-    BLACK,
-    WHITE;
+    BLACK(-1),
+    WHITE(1);
+
+    private final int moveUnit;
+
+    Color(int moveUnit) {
+        this.moveUnit = moveUnit;
+    }
 
     public int moveUnit() {
-        if (this == BLACK) {
-            return -1;
-        }
-        return 1;
+        return this.moveUnit;
     }
 
     public Row initPawnRow() {
