@@ -29,16 +29,16 @@ public class OutputView {
         int lastVerticalValue = LAST_VERTICAL_VALUE;
         for (final Position position : chessBoard.keySet()) {
             lastVerticalValue = updateLastVerticalValue(lastVerticalValue, position);
-            System.out.print(chessBoard.get(position).getName());
+            System.out.print(chessBoard.get(position).name());
         }
         System.out.println();
     }
 
     private static int updateLastVerticalValue(final int before, final Position position) {
         int newValue = before;
-        if (position.getVertical().getValue() != before) {
+        if (position.vertical().value() != before) {
             System.out.println();
-            newValue = position.getVertical().getValue();
+            newValue = position.vertical().value();
         }
         return newValue;
     }
@@ -52,7 +52,7 @@ public class OutputView {
     }
 
     public static void printResult(final ChessResult result) {
-        final Team winner = result.getWinner();
+        final Team winner = result.winner();
         if (winner.undefined()) {
             System.out.println("무승부입니다.");
             printResultScores(winner.anyTeamExcludingThis(), result);
@@ -63,7 +63,7 @@ public class OutputView {
     }
 
     private static void printResultScores(final Team team, final ChessResult result) {
-        System.out.println(team.teamName() + "점수 : " + result.calculateScore(team));
-        System.out.println(team.oppositeTeamName() + "점수 : " + result.calculateScore(team.oppositeTeam()));
+        System.out.println(team.teamName() + "점수 : " + result.totalScore(team));
+        System.out.println(team.oppositeTeamName() + "점수 : " + result.totalScore(team.oppositeTeam()));
     }
 }

@@ -18,15 +18,15 @@ public abstract class Piece {
         name = initialName.toLowerCase(Locale.ROOT);
     }
 
-    final protected boolean isOpponent(final Piece piece) {
+    final protected boolean opposite(final Piece piece) {
         return this.team == piece.team.oppositeTeam();
     }
 
-    final public boolean isSameTeam(final Team team) {
+    final public boolean friendly(final Team team) {
         return this.team == team;
     }
 
-    final public String getName() {
+    final public String name() {
         return name;
     }
 
@@ -34,9 +34,9 @@ public abstract class Piece {
         return this.team;
     }
 
-    public abstract boolean canMove(final Position source, final Position target, final Piece piece);
+    public abstract boolean movable(final Position source, final Position target, final Piece piece);
 
-    public abstract double getScore();
+    public abstract double score();
 
     public abstract boolean multipleMovable();
 

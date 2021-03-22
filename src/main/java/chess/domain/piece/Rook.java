@@ -12,12 +12,12 @@ final public class Rook extends GeneralPiece {
     }
 
     @Override
-    protected List<Direction> createPossibleDirections() {
+    protected List<Direction> possibleDirections() {
         return Arrays.asList(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH);
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 

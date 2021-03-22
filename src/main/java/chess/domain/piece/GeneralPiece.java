@@ -9,12 +9,12 @@ public abstract class GeneralPiece extends Piece {
 
     public GeneralPiece(final Team team, final String initialName) {
         super(team, initialName);
-        this.possibleDirections = createPossibleDirections();
+        this.possibleDirections = possibleDirections();
     }
 
     @Override
-    final public boolean canMove(final Position source, final Position target, final Piece piece) {
-        return isPossibleDirection(source, target) && !isSameTeam(piece.team());
+    final public boolean movable(final Position source, final Position target, final Piece piece) {
+        return isPossibleDirection(source, target) && !friendly(piece.team());
     }
 
     private boolean isPossibleDirection(final Position source, final Position target) {
@@ -22,5 +22,5 @@ public abstract class GeneralPiece extends Piece {
                 .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));
     }
 
-    protected abstract List<Direction> createPossibleDirections();
+    protected abstract List<Direction> possibleDirections();
 }

@@ -12,12 +12,12 @@ final public class Bishop extends GeneralPiece {
     }
 
     @Override
-    protected List<Direction> createPossibleDirections() {
+    protected List<Direction> possibleDirections() {
         return Arrays.asList(Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST, Direction.SOUTHWEST);
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 

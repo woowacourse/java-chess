@@ -34,11 +34,11 @@ public enum Horizontal {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 

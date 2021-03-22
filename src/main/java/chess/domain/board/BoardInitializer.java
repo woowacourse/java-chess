@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 final public class BoardInitializer {
     private static final List<LocationInitializer> locationInitializers;
     private static final List<String> HORIZONTAL_RANGE = Arrays.stream(Horizontal.values())
-            .map(Horizontal::getSymbol)
+            .map(Horizontal::symbol)
             .collect(Collectors.toList());
     private static final List<String> VERTICAL_RANGE = Arrays.stream(Vertical.values())
-            .map(Vertical::getSymbol)
+            .map(Vertical::symbol)
             .collect(Collectors.toList());
 
     static {

@@ -17,8 +17,8 @@ class RookTest {
     @ValueSource(strings = {"d,4", "e,5", "f,4", "e,3"})
     void canMove(final String input) {
         final String[] inputs = input.split(",");
-        assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), new Queen(Team.BLACK))).isTrue();
-        assertThat(white.canMove(source, new Position(inputs[0], inputs[1]), Blank.getInstance())).isTrue();
-        assertThat(black.canMove(source, new Position(inputs[0], inputs[1]), new Queen(Team.WHITE))).isTrue();
+        assertThat(white.movable(source, new Position(inputs[0], inputs[1]), new Queen(Team.BLACK))).isTrue();
+        assertThat(white.movable(source, new Position(inputs[0], inputs[1]), Blank.getInstance())).isTrue();
+        assertThat(black.movable(source, new Position(inputs[0], inputs[1]), new Queen(Team.WHITE))).isTrue();
     }
 }

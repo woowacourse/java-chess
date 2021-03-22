@@ -12,13 +12,13 @@ final public class Queen extends GeneralPiece {
     }
 
     @Override
-    protected List<Direction> createPossibleDirections() {
+    protected List<Direction> possibleDirections() {
         return Arrays.asList(Direction.EAST, Direction.WEST, Direction.SOUTH, Direction.NORTH,
                 Direction.NORTHEAST, Direction.NORTHWEST, Direction.SOUTHEAST, Direction.SOUTHWEST);
     }
 
     @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 

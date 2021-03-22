@@ -20,28 +20,28 @@ final public class ChessResult {
         this.board = board;
     }
 
-    public double calculateScore(final Team team) {
+    public double totalScore(final Team team) {
         double total = 0;
         for (final Horizontal column : Horizontal.values()) {
-            total += getColumnTotalScore(team, column.getValue());
+            total += columnTotalScore(team, column.value());
         }
         return total;
     }
 
-    private double getColumnTotalScore(final Team team, final int column) {
+    private double columnTotalScore(final Team team, final int column) {
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         final List<Piece> pieces = chessBoard.keySet().stream()
-                .filter(position -> position.getHorizontal().getValue() == column)
+                .filter(position -> position.horizontal().value() == column)
                 .map(chessBoard::get)
-                .filter(piece -> piece.isSameTeam(team))
+                .filter(piece -> piece.friendly(team))
                 .collect(Collectors.toList());
 
         return pieces.stream()
-                .mapToDouble(Piece::getScore)
-                .reduce(0, Double::sum) - getPawnDiscountScore(pieces);
+                .mapToDouble(Piece::score)
+                .reduce(0, Double::sum) - pawnDiscountScore(pieces);
     }
 
-    private double getPawnDiscountScore(final List<Piece> pieces) {
+    private double pawnDiscountScore(final List<Piece> pieces) {
         long count = pieces.stream()
                 .filter(piece -> piece instanceof Pawn)
                 .count();
@@ -52,7 +52,7 @@ final public class ChessResult {
         return 0;
     }
 
-    public Team getWinner() {
+    public Team winner() {
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         if (board.isKingDead()) {
             return kingSlayerTeam(chessBoard);
@@ -70,10 +70,10 @@ final public class ChessResult {
     }
 
     private Team scoreWinner() {
-        if (calculateScore(Team.BLACK) > calculateScore(Team.WHITE)) {
+        if (totalScore(Team.BLACK) > totalScore(Team.WHITE)) {
             return Team.BLACK;
         }
-        if (calculateScore(Team.BLACK) < calculateScore(Team.WHITE)) {
+        if (totalScore(Team.BLACK) < totalScore(Team.WHITE)) {
             return Team.WHITE;
         }
         return Team.NOTHING;

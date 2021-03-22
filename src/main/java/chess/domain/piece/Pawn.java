@@ -19,23 +19,23 @@ final public class Pawn extends Piece {
     }
 
     @Override
-    public boolean canMove(final Position source, final Position target, final Piece piece) {
-        final Direction direction = POSSIBLE_DIRECTIONS.stream()
-                .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
-                .findAny()
-                .orElse(Direction.NOTHING);
-
-        return direction != Direction.NOTHING && checkPossible(direction, piece, source.getVertical());
-    }
-
-    @Override
-    public double getScore() {
+    public double score() {
         return SCORE;
     }
 
     @Override
     public boolean multipleMovable() {
         return false;
+    }
+
+    @Override
+    public boolean movable(final Position source, final Position target, final Piece piece) {
+        final Direction direction = POSSIBLE_DIRECTIONS.stream()
+                .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
+                .findAny()
+                .orElse(Direction.NOTHING);
+
+        return direction != Direction.NOTHING && noAllyOnTarget(direction, piece, source.vertical());
     }
 
     private List<Integer> subtractByTeam(final Position source, final Position target) {
@@ -45,15 +45,15 @@ final public class Pawn extends Piece {
         return target.subtract(source);
     }
 
-    private boolean checkPossible(final Direction direction, final Piece piece, final Vertical vertical) {
+    private boolean noAllyOnTarget(final Direction direction, final Piece piece, final Vertical vertical) {
         if (direction == Direction.NORTH) {
             return piece instanceof Blank;
         }
         if (direction == Direction.NORTHEAST || direction == Direction.NORTHWEST) {
-            return piece.isOpponent(this);
+            return piece.opposite(this);
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return INITIAL_VERTICALS.contains(vertical.getValue()) && piece instanceof Blank;
+            return INITIAL_VERTICALS.contains(vertical.value()) && piece instanceof Blank;
         }
         return false;
     }

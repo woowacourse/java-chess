@@ -13,37 +13,37 @@ class PawnTest {
     @Test
     @DisplayName("앞으로 한칸 이동 가능한 지 판단하는 기능")
     void canMoveOneBlock() {
-        assertThat(white.canMove(new Position("a", "2"), new Position("a", "3"), Blank.getInstance()))
+        assertThat(white.movable(new Position("a", "2"), new Position("a", "3"), Blank.getInstance()))
                 .isTrue();
-        assertThat(white.canMove(new Position("a", "2"), new Position("a", "3"), new King(Team.WHITE)))
+        assertThat(white.movable(new Position("a", "2"), new Position("a", "3"), new King(Team.WHITE)))
                 .isFalse();
 
-        assertThat(black.canMove(new Position("a", "7"), new Position("a", "6"), Blank.getInstance()))
+        assertThat(black.movable(new Position("a", "7"), new Position("a", "6"), Blank.getInstance()))
                 .isTrue();
-        assertThat(black.canMove(new Position("a", "7"), new Position("a", "6"), new King(Team.WHITE)))
+        assertThat(black.movable(new Position("a", "7"), new Position("a", "6"), new King(Team.WHITE)))
                 .isFalse();
     }
 
     @Test
     @DisplayName("대각선 방향으로 한 칸 이동 가능한 지 판단하는 기능")
     void canMoveBlack() {
-        assertThat(white.canMove(new Position("a", "2"), new Position("b", "3"), new Pawn(Team.BLACK)))
+        assertThat(white.movable(new Position("a", "2"), new Position("b", "3"), new Pawn(Team.BLACK)))
                 .isTrue();
-        assertThat(white.canMove(new Position("a", "2"), new Position("b", "3"), new Pawn(Team.WHITE)))
+        assertThat(white.movable(new Position("a", "2"), new Position("b", "3"), new Pawn(Team.WHITE)))
                 .isFalse();
 
-        assertThat(black.canMove(new Position("a", "7"), new Position("b", "6"), new Pawn(Team.WHITE)))
+        assertThat(black.movable(new Position("a", "7"), new Position("b", "6"), new Pawn(Team.WHITE)))
                 .isTrue();
-        assertThat(black.canMove(new Position("a", "7"), new Position("b", "6"), new Pawn(Team.BLACK)))
+        assertThat(black.movable(new Position("a", "7"), new Position("b", "6"), new Pawn(Team.BLACK)))
                 .isFalse();
     }
 
     @Test
     @DisplayName("처음 움직이는 경우 두칸 이동 가능 판단 기능")
     void checkInitialMove() {
-        assertThat(white.canMove(new Position("a", "2"), new Position("a", "4"), Blank.getInstance()))
+        assertThat(white.movable(new Position("a", "2"), new Position("a", "4"), Blank.getInstance()))
                 .isTrue();
-        assertThat(black.canMove(new Position("a", "7"), new Position("a", "5"), Blank.getInstance()))
+        assertThat(black.movable(new Position("a", "7"), new Position("a", "5"), Blank.getInstance()))
                 .isTrue();
     }
 }

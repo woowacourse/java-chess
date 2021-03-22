@@ -34,15 +34,15 @@ public enum Vertical {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치를 찾을 수 없습니다."));
     }
 
-    public String getSymbol() {
+    public String symbol() {
         return symbol;
     }
 
-    public int getValue() {
+    public int value() {
         return value;
     }
 
     public boolean isSameValue(final Vertical vertical) {
-        return value == vertical.getValue();
+        return value == vertical.value();
     }
 }

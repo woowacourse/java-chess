@@ -34,7 +34,7 @@ public final class Board {
         if (chessBoard.get(source) instanceof Blank) {
             return;
         }
-        if (!chessBoard.get(source).isSameTeam(team)) {
+        if (!chessBoard.get(source).friendly(team)) {
             throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
         }
     }
@@ -42,7 +42,7 @@ public final class Board {
     private boolean checkPath(final Position source, final Position target) {
         final List<Position> paths = pathPositions(source, target);
         if (paths.isEmpty()) {
-            return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+            return chessBoard.get(source).movable(source, target, chessBoard.get(target));
         }
         if (hasNoPiecesInPath(paths)) {
             return canPieceMoveToTarget(source, target, paths);
@@ -59,7 +59,7 @@ public final class Board {
 
     private List<Position> updatePosition(final Position source, final Position target) {
         final List<Position> paths = new ArrayList<>();
-        final Direction direction = source.decideDirection(target);
+        final Direction direction = source.directionToTarget(target);
         Position nextPosition = source.next(direction);
         while (!nextPosition.equals(target)) {
             paths.add(nextPosition);
@@ -75,9 +75,9 @@ public final class Board {
 
     private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
         if (chessBoard.get(source).multipleMovable()) {
-            return chessBoard.get(source).canMove(paths.get(paths.size() - 1), target, chessBoard.get(target));
+            return chessBoard.get(source).movable(paths.get(paths.size() - 1), target, chessBoard.get(target));
         }
-        return chessBoard.get(source).canMove(source, target, chessBoard.get(target));
+        return chessBoard.get(source).movable(source, target, chessBoard.get(target));
     }
 
     public boolean isKingDead() {

@@ -25,34 +25,33 @@ final public class Position implements Comparable<Position> {
     }
 
     public List<Integer> subtract(final Position source) {
-        return Arrays.asList(this.horizontal.getValue() - source.horizontal.getValue(),
-                this.vertical.getValue() - source.vertical.getValue());
+        return Arrays.asList(this.horizontal.value() - source.horizontal.value(),
+                this.vertical.value() - source.vertical.value());
     }
 
     public boolean hasMiddlePath(final Position target) {
-        return isLinear(target) || isDiagonal(target);
+        final List<Integer> result = target.subtract(this);
+        return linear(result) || diagonal(result);
     }
 
-    private boolean isLinear(final Position target) {
-        final List<Integer> result = target.subtract(this);
+    private boolean linear(final List<Integer> result) {
         return result.stream()
                 .filter(difference -> difference == 0)
                 .count() == 1;
     }
 
-    private boolean isDiagonal(final Position target) {
-        final List<Integer> result = target.subtract(this);
+    private boolean diagonal(final List<Integer> result) {
         return Math.abs(result.get(0)) == Math.abs(result.get(1)) && !result.contains(0);
     }
 
-    public Direction decideDirection(Position target) {
+    public Direction directionToTarget(Position target) {
         if (hasMiddlePath(target)) {
-            return Direction.getMatchingDirection(getDirectionMatcher(target));
+            return Direction.matchingDirection(directionFormat(target));
         }
         throw new IllegalArgumentException("유효하지 않은 방향입니다.");
     }
 
-    private List<Integer> getDirectionMatcher(Position target) {
+    private List<Integer> directionFormat(Position target) {
         final List<Integer> result = target.subtract(this);
         final int abs = result.stream()
                 .filter(difference -> difference != 0)
@@ -66,15 +65,15 @@ final public class Position implements Comparable<Position> {
     }
 
     public Position next(final Direction direction) {
-        return new Position(horizontal.getValue() + direction.getHorizontalDegree(),
-                vertical.getValue() + direction.getVerticalDegree());
+        return new Position(horizontal.value() + direction.horizontalDegree(),
+                vertical.value() + direction.verticalDegree());
     }
 
-    public Horizontal getHorizontal() {
+    public Horizontal horizontal() {
         return horizontal;
     }
 
-    public Vertical getVertical() {
+    public Vertical vertical() {
         return vertical;
     }
 
@@ -94,8 +93,8 @@ final public class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (vertical.isSameValue(position.vertical)) {
-            return horizontal.getValue() - position.horizontal.getValue();
+            return horizontal.value() - position.horizontal.value();
         }
-        return position.vertical.getValue() - vertical.getValue();
+        return position.vertical.value() - vertical.value();
     }
 }
