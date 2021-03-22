@@ -3,8 +3,8 @@ package chess.view;
 import java.util.Map;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Point;
 import chess.domain.Score;
+import chess.domain.board.Point;
 import chess.domain.piece.kind.Piece;
 
 public class OutputView {

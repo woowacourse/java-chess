@@ -51,6 +51,7 @@ public class Board {
 	private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
 		Point currentPoint = source;
 		Direction direction = sourcePiece.direction(targetPiece).orElse(null);
+
 		boolean isArriveAtTarget = currentPoint.equals(target);
 		while (!isArriveAtTarget) {
 			Piece currentPiece = selectPiece(currentPoint);
@@ -61,16 +62,16 @@ public class Board {
 		}
 	}
 
-	private void checkNextPointPossible(Point currentPoint, boolean isArriveAtTarget) {
-		if (!isArriveAtTarget) {
-			validateNextPoint(currentPoint);
-		}
-	}
-
 	private void moveTowardTarget(Point source, Point target, Piece sourcePiece, boolean isArriveAtTarget) {
 		if (isArriveAtTarget) {
 			sourcePiece.movePoint(target);
 			replacePiece(source, target);
+		}
+	}
+
+	private void checkNextPointPossible(Point currentPoint, boolean isArriveAtTarget) {
+		if (!isArriveAtTarget) {
+			validateNextPoint(currentPoint);
 		}
 	}
 

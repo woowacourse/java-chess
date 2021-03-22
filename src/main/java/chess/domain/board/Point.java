@@ -10,12 +10,13 @@ import chess.domain.piece.Direction;
 public class Point {
 	private static final int ASCII_CODE_GAP = 97;
 	private static final int RANK_GAP = 8;
-	private static final int LETTER_INDEX = 0;
 	private static final int RANK_INDEX = 1;
+	private static final int LETTER_INDEX = 0;
 	private static final char MINIMUM_LETTER = 'a';
 	private static final char MAXIMUM_LETTER = 'h';
 	private static final int MINIMUM_RANK = 1;
 	private static final int MAXIMUM_RANK = 8;
+
 	private static final List<Point> points;
 
 	static {
@@ -63,7 +64,11 @@ public class Point {
 	}
 
 	public int calculateDistance(Point point) {
-		return ((int)Math.pow(this.column.subtract(point.column), 2) + (int)Math.pow(this.row.subtract(point.row), 2));
+		return (makeDoubleNumber(this.column.subtract(point.column)) + makeDoubleNumber(this.row.subtract(point.row)));
+	}
+
+	private int makeDoubleNumber(int subtract) {
+		return (int)Math.pow(subtract, 2);
 	}
 
 	public Point createNextPoint(Direction direction) {
