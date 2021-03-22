@@ -58,16 +58,6 @@ public class BoardTest {
     }
 
     @Test
-    @DisplayName("킹이 잡혔는지 확인")
-    void gameIsOverWhenKingIsDead() {
-        assertThat(board.isKingDead()).isFalse();
-        board.putSymmetrically(Piece.KING, Point.of("c4"));
-        board.move(Point.of("c4"), Point.of("c5"));
-
-        assertThat(board.isKingDead()).isTrue();
-    }
-
-    @Test
     @DisplayName("세로 줄에 같은 팀의 폰이 있는 경우 0.5점으로 계산")
     void testScoreWhenSameTeamPawnInSameColumn() {
         Board board = new Board();

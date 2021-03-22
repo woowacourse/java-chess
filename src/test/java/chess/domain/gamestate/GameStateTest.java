@@ -7,6 +7,7 @@ import chess.domain.Turn;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Team;
+import chess.domain.piece.Piece;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -47,6 +48,16 @@ class GameStateTest {
         assertThat(gameState.status()).hasSameClassAs(new Running(board));
         assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)))
             .hasSameClassAs(new Running(board));
+    }
+
+    @Test
+    @DisplayName("Running 상태에서 KING 이 잡히면 게임 종료")
+    void gameIsOverWhenKingIsDead() {
+        board.putSymmetrically(Piece.KING, Point.of("c4"));
+        GameState gameState = new Running(board);
+
+        assertThat(gameState.move(Point.of("c4"), Point.of("c5"), new Turn(Team.WHITE)))
+            .hasSameClassAs(new Finished());
     }
 
     @Test

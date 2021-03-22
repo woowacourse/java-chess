@@ -17,14 +17,14 @@ public enum Command {
     private static final int OPERATION_INDEX = 0;
     private static final String DELIMITER = " ";
 
-    private final String operation;
+    private final String operator;
     private final int argumentCount;
-    private final BiConsumer<ChessGame, List<String>> operator;
+    private final BiConsumer<ChessGame, List<String>> operation;
 
-    Command(String operation, int argumentCount, BiConsumer<ChessGame, List<String>> operator) {
-        this.operation = operation;
-        this.argumentCount = argumentCount;
+    Command(String operator, int argumentCount, BiConsumer<ChessGame, List<String>> operation) {
         this.operator = operator;
+        this.argumentCount = argumentCount;
+        this.operation = operation;
     }
 
     public static Command commandByInput(String input) {
@@ -33,7 +33,7 @@ public enum Command {
         int inputArgumentsCount = splitInputs.size() - 1;
 
         return Arrays.stream(Command.values())
-            .filter(command -> command.operation.equalsIgnoreCase(firstInput)
+            .filter(command -> command.operator.equalsIgnoreCase(firstInput)
                 && command.argumentCount == inputArgumentsCount)
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("유효하지 않은 입력입니다."));
@@ -45,6 +45,6 @@ public enum Command {
     }
 
     public void execute(ChessGame chessGame, List<String> arguments) {
-        operator.accept(chessGame, arguments);
+        operation.accept(chessGame, arguments);
     }
 }

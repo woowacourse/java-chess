@@ -16,12 +16,10 @@ public class Board {
     private static final double HALF_PAWN_SCORE = 0.5;
 
     private final Map<Point, SquareState> squares = new HashMap<>();
-    private boolean isDeadKing;
 
     public Board() {
         Point.allPoints()
             .forEach(point -> squares.put(point, SquareState.of(Piece.EMPTY, Team.NONE)));
-        isDeadKing = false;
     }
 
     public void putSymmetrically(Piece piece, Point point) {
@@ -30,9 +28,6 @@ public class Board {
     }
 
     public void move(Point source, Point destination) {
-        if (squares.get(destination).isPieceTypeOf(Piece.KING)) {
-            isDeadKing = true;
-        }
         squares.put(destination, squares.get(source));
         squares.put(source, SquareState.of(Piece.EMPTY, Team.NONE));
     }
@@ -106,8 +101,8 @@ public class Board {
         return !moveVector.isDiagonalVector() || destination.isEnemy(source);
     }
 
-    public boolean isKingDead() {
-        return isDeadKing;
+    public boolean isSamePieceTypeAt(Point point, Piece piece) {
+        return squares.get(point).isPieceTypeOf(piece);
     }
 
     public double score(Team team) {
