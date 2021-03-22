@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -16,14 +16,13 @@ import java.util.stream.Stream;
 import static chess.domain.piece.Fixture.*;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
-import static org.junit.jupiter.api.Assertions.*;
 
 class KingMoveStrategyTest {
     private Board board;
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        board = DefaultBoardInitializer.getBoard();
     }
 
     private static Stream<Arguments> kingCanMoveTest() {

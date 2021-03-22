@@ -23,13 +23,21 @@ import static chess.domain.position.File.*;
 import static chess.domain.position.Rank.*;
 import static java.util.stream.Collectors.toList;
 
-public class BoardFactory {
-    public static Board createBoard() {
-        List<Square> board = initialize();
-        return new Board(board);
+public class DefaultBoardInitializer implements BoardInitializer {
+    private static DefaultBoardInitializer boardInitializer = new DefaultBoardInitializer();
+
+    private DefaultBoardInitializer(){
     }
 
-    private static List<Square> initialize() {
+    public static Board getBoard(){
+        return boardInitializer.createBoard();
+    }
+    @Override
+    public Board createBoard() {
+        return new Board(initialize());
+    }
+
+    private List<Square> initialize() {
         List<Square> board = createBlankSquare();
 
         board.addAll(createColoredExceptPawn(ONE, WHITE));
@@ -43,7 +51,7 @@ public class BoardFactory {
         return board;
     }
 
-    private static List<Square> createBlankSquare() {
+    private List<Square> createBlankSquare() {
         return Rank.getBlankRanks().stream()
                 .flatMap(rank ->
                         Arrays.stream(File.values())
@@ -53,7 +61,7 @@ public class BoardFactory {
                 .collect(Collectors.collectingAndThen(toList(), ArrayList::new));
     }
 
-    private static List<Square> createColoredExceptPawn(Rank rank, Color color) {
+    private List<Square> createColoredExceptPawn(Rank rank, Color color) {
         return Arrays.asList(
                 new Square(Position.of(A, rank), new Rook(color)),
                 new Square(Position.of(B, rank), new Knight(color)),
@@ -66,7 +74,7 @@ public class BoardFactory {
         );
     }
 
-    private static List<Square> createPawns(Rank rank, Color color) {
+    private List<Square> createPawns(Rank rank, Color color) {
         return Arrays.stream(File.values())
                 .map(file -> Position.of(file, rank))
                 .map(position -> new Square(position, new Pawn(color)))

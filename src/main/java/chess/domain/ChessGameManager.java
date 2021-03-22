@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.order.MoveResult;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.ColoredPieces;
@@ -21,7 +21,7 @@ public class ChessGameManager {
     private GameStatus gameStatus = GameStatus.NOT_STARTED;
 
     public void start() {
-        board = BoardFactory.createBoard();
+        board = DefaultBoardInitializer.getBoard();
         this.coloredPieces = Arrays.stream(Color.values())
                 .map(ColoredPieces::createByColor)
                 .collect(Collectors.toList());

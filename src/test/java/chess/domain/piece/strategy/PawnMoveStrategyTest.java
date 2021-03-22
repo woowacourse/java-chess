@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.order.MoveOrder;
 import chess.domain.piece.attribute.Color;
 import chess.domain.piece.Pawn;
@@ -19,7 +19,7 @@ class PawnMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        board = DefaultBoardInitializer.getBoard();
     }
 
     @DisplayName("행마에 대한 검증 - 직선")
@@ -41,6 +41,4 @@ class PawnMoveStrategyTest {
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
     }
-    //TODO 이동이 구현 된 후 대각선 이동 테스트 구현
-
 }

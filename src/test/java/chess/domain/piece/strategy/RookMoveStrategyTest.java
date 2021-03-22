@@ -1,7 +1,7 @@
 package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
-import chess.domain.board.BoardFactory;
+import chess.domain.board.DefaultBoardInitializer;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -22,7 +22,7 @@ class RookMoveStrategyTest {
 
     @BeforeEach
     void setUp() {
-        board = BoardFactory.createBoard();
+        board = DefaultBoardInitializer.getBoard();
     }
 
     private static Stream<Arguments> rookCanMoveTest() {
