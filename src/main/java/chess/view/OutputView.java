@@ -41,10 +41,11 @@ public class OutputView {
     }
 
     public static void printCurrentPlayer(Player player) {
-        System.out.println(NEWLINE + "현재 플레이어는 : " + player.color().name());
+        System.out.println(NEWLINE + "현재 플레이어는 : " + player.color()
+                                                           .name());
     }
 
-    public static void display(Map<Position,Piece> pieces) {
+    public static void display(Map<Position, Piece> pieces) {
         List<Row> rows = Arrays.asList(Row.values());
         Collections.reverse(rows);
         for (Row row : rows) {

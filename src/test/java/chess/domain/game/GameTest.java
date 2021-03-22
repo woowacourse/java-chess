@@ -1,8 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.game.Board;
-import chess.domain.game.BoardFactory;
-import chess.domain.game.Game;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,7 +7,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Map;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 
 class GameTest {

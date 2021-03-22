@@ -7,7 +7,8 @@ import chess.domain.position.Row;
 
 public class BoardFactory {
     private static final Pieces pieces = new Pieces();
-    static  {
+
+    static {
         setUpGeneral();
         setUpPawn();
     }

@@ -43,7 +43,7 @@ public class Position {
         return column.value() + row.value();
     }
 
-    public static List<Position> all () {
+    public static List<Position> all() {
         return new ArrayList<>(cache.values());
     }
 
