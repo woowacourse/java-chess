@@ -12,26 +12,22 @@ public class Application {
         OutputView.printInitMessage();
         final ChessBoard chessBoard = new ChessBoard();
         while (chessBoard.isPlaying()) {
-//                    return Commands.getInstance(sc.nextLine().trim());
             List<String> command = InputView.command();
             if (Commands.getInstance(command.get(0)) == Commands.START) {
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.MOVE) {
                 chessBoard.move(command.get(1), command.get(2));
-
                 OutputView.printBoard(chessBoard.getChessBoard());
             }
             if (Commands.getInstance(command.get(0)) == Commands.STATUS) {
                 OutputView.printScore(chessBoard.result());
             }
             if (Commands.getInstance(command.get(0)) == Commands.END) {
-                break;
+                return;
             }
-
         }
-
-
+        OutputView.printScore(chessBoard.result());
     }
 
 

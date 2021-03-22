@@ -2,17 +2,14 @@ package chess.domain;
 
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
-import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.BlackSet;
 import chess.domain.player.PieceSet;
-import chess.domain.player.Score;
 import chess.domain.player.WhiteSet;
 import chess.domain.position.AlphaColumn;
 import chess.domain.position.NumberRow;
 import chess.domain.position.Position;
 import chess.domain.state.GameState;
 import chess.domain.state.Running;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -97,25 +94,8 @@ public class ChessBoard {
     }
 
     public Result result() {
-        Map<TeamColor, Score> result = teamScores();
-
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
-            return new Result(result, TeamColor.BLACK);
-        }
-        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
-            return new Result(result, TeamColor.WHITE);
-        }
-
-        return new Result(result, TeamColor.NONE);
+        return gameState.result(blackPieces, whitePieces);
     }
-
-    private Map<TeamColor, Score> teamScores() {
-        Map<TeamColor, Score> result = new HashMap<>();
-        result.put(TeamColor.BLACK, blackPieces.calculateScore());
-        result.put(TeamColor.WHITE, whitePieces.calculateScore());
-        return result;
-    }
-
 
     public boolean isPlaying() {
         return gameState instanceof Running;

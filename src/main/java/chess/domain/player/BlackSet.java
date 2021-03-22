@@ -20,10 +20,10 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public class BlackSet implements PieceSet {
-
     private static final TeamColor BLACK = TeamColor.BLACK;
     public static final String INITIAL_PAWN_LINE = "7";
     public static final int INITIAL_CAPACITY = 16;
+    public static final double MINUS_HALF_POINT = -0.5;
 
     private final List<Piece> pieces;
 
@@ -81,7 +81,7 @@ public class BlackSet implements PieceSet {
     private Score subtractWhenOnSameLine(Map<Character, Integer> pawnCount) {
         return pawnCount.values().stream()
             .filter(number -> number > 1)
-            .map(number -> new Score(-0.5 * number))
+            .map(number -> new Score(MINUS_HALF_POINT * number))
             .reduce(Score.ZERO, Score::add);
     }
 
@@ -93,8 +93,8 @@ public class BlackSet implements PieceSet {
 
     private void recordPawns(Map<Character, Integer> pawnCount, Piece piece) {
         if (piece instanceof Pawn) {
-            pawnCount
-                .put(piece.getColumn(), pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
+            pawnCount.put(piece.getColumn(),
+                pawnCount.getOrDefault(piece.getColumn(), 0) + 1);
         }
     }
 

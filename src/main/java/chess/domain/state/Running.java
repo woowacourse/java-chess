@@ -5,6 +5,7 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.pieceinformations.TeamColor;
+import chess.domain.player.PieceSet;
 import chess.domain.player.Score;
 import chess.domain.position.Position;
 import java.util.Collections;
@@ -55,20 +56,27 @@ public class Running implements GameState {
     }
 
     @Override
-    public Result result() {
-        Map<TeamColor, Score> result = new HashMap<>();
-//        result.put(TeamColor.BLACK, blackPieces.calculateScore());
-//        result.put(TeamColor.WHITE, whitePieces.calculateScore());
-//
-//        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
-//            return new Result(result, TeamColor.BLACK);
-//        }
-//        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
-//            return new Result(result, TeamColor.WHITE);
-//        }
-//
+    public Result result(PieceSet black, PieceSet white) {
+        Map<TeamColor, Score> result = teamScores(black, white);
+
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) > 0) {
+            return new Result(result, TeamColor.BLACK);
+        }
+        if (result.get(TeamColor.BLACK).compareTo(result.get(TeamColor.WHITE)) < 0) {
+            return new Result(result, TeamColor.WHITE);
+        }
+
         return new Result(result, TeamColor.NONE);
     }
+
+
+    private Map<TeamColor, Score> teamScores(PieceSet black, PieceSet white) {
+        Map<TeamColor, Score> result = new HashMap<>();
+        result.put(TeamColor.BLACK, black.calculateScore());
+        result.put(TeamColor.WHITE, white.calculateScore());
+        return result;
+    }
+
 
     @Override
     public Map<Position, Piece> getChessBoard() {
@@ -80,19 +88,5 @@ public class Running implements GameState {
         return chessBoard.containsKey(position);
     }
 
-    @Override
-    public Piece getPiece(Position position) {
-        return chessBoard.get(position);
-    }
-
-    @Override
-    public void put(Position position, Piece piece) {
-        chessBoard.put(position, piece);
-    }
-
-    @Override
-    public boolean isEnemy(Position position) {
-        return false;
-    }
 
 }

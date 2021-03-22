@@ -4,8 +4,7 @@ import chess.domain.pieceinformations.TeamColor;
 import chess.domain.player.Score;
 import java.util.Map;
 
-public class Result { // DTO
-
+public class Result {
     private final Map<TeamColor, Score> result;
     private final TeamColor winner;
 

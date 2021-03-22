@@ -55,12 +55,12 @@ public class Position {
         throw new IllegalArgumentException();
     }
 
-    public static List<Position> values(){
+    public static List<Position> values() {
         return new ArrayList<>(cache.values());
     }
 
-    public Position moveFront(TeamColor teamColor){
-        if(teamColor == TeamColor.BLACK){
+    public Position moveFront(TeamColor teamColor) {
+        if (teamColor == TeamColor.BLACK) {
             return moveDown();
         }
         return moveUp();

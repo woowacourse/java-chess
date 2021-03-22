@@ -1,6 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.ChessBoard;
 import chess.domain.pieceinformations.PieceInformation;
 import chess.domain.pieceinformations.State;
 import chess.domain.pieceinformations.TeamColor;
@@ -12,7 +11,6 @@ import java.util.Map;
 import java.util.Set;
 
 public abstract class PieceOnBoard implements Piece {
-
     private final TeamColor teamColor;
     private final PieceInformation pieceType;
     private State state;
