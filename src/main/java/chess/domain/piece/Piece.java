@@ -58,6 +58,6 @@ public abstract class Piece {
     public abstract int getMaxDistance();
 
     public boolean isKing() {
-        return this instanceof King;
+        return false;
     }
 }

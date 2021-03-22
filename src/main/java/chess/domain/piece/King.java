@@ -40,4 +40,9 @@ public class King extends Piece {
     public int getMaxDistance() {
         return ABLE_DISTANCE_TO_MOVE;
     }
+
+    @Override
+    public boolean isKing() {
+        return true;
+    }
 }
