@@ -21,16 +21,12 @@ public class Position {
         this.row = row;
     }
 
-    private Position(String column, String row) {
-        this(Column.getColumn(column), Row.getRow(row));
-    }
-
-    public static Position ofName(String value) {
+    public static Position of(String value) {
         return POSITION_CACHE.get(value);
     }
 
-    public static Position ofColumnAndRow(Column column, Row row) {
-        return ofName(column.getName() + row.getNumber());
+    public static Position of(Column column, Row row) {
+        return of(column.getName() + row.getNumber());
     }
 
     private static void positionCache() {
@@ -89,8 +85,8 @@ public class Position {
         return column.isBoundary(direction) || row.isBoundary(direction);
     }
 
-    public String name() {
-        return this.column.getName() + this.row.getNumber();
+    public boolean isOn(Column column) {
+        return this.column.equals(column);
     }
 
     @Override
@@ -119,10 +115,6 @@ public class Position {
     public Position moveTo(Direction direction) {
         Column newColumn = column.move(direction);
         Row newRow = row.move(direction);
-        return Position.ofColumnAndRow(newColumn, newRow);
-    }
-
-    public boolean isOn(Column column) {
-        return this.column.equals(column);
+        return Position.of(newColumn, newRow);
     }
 }

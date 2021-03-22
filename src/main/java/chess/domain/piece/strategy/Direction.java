@@ -25,13 +25,9 @@ public enum Direction {
     LL_U(-2, 1),
     LL_D(-2, -1);
 
-    //    private final List<Integer> coordinates;
     private final int columnNumber;
     private final int rowNumber;
 
-    //    Direction(List<Integer> coordinates) {
-//        this.coordinates = coordinates;
-//    }
     Direction(int columnNumber, int rowNumber) {
         this.columnNumber = columnNumber;
         this.rowNumber = rowNumber;

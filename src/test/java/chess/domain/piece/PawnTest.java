@@ -16,7 +16,7 @@ class PawnTest {
     @DisplayName("흰색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 흰폰-e2 흰피스-없음 검은피스-없음")
     @Test
     void generatePath_White() {
-        Position current = Position.ofName("e2");
+        Position current = Position.of("e2");
         Piece pawn = new WhitePawn();
         Paths paths = new Paths();
         Board board = new Board();
@@ -29,13 +29,13 @@ class PawnTest {
     @DisplayName("흰색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 흰폰-e2 흰피스-없음 검은피스-d3,f3")
     @Test
     void generateAttackPath_White() {
-        Position current = Position.ofName("e2");
+        Position current = Position.of("e2");
         Piece pawn = new WhitePawn();
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
-        board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("d3"));
-        board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("f3"));
+        board.putPiece(new Bishop(PieceColor.BLACK), Position.of("d3"));
+        board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE2WithEnemyWhite());
@@ -44,13 +44,13 @@ class PawnTest {
     @DisplayName("흰색 폰이 시작점이 아닌 곳에 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰폰-e4 흰피스-d5 검은피스-f5")
     @Test
     void generateObstacleConsideredPath_White() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece pawn = new WhitePawn();
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
-        board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("d5"));
-        board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("f5"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d5"));
+        board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f5"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE4WithObstacleWhite());
@@ -59,7 +59,7 @@ class PawnTest {
     @DisplayName("검은색 폰이 시작점에서 이동가능한 전체 위치를 구한다. 상황 : 검은폰-e7 흰피스-없음 검은피스-없음")
     @Test
     void generatePath_Black() {
-        Position current = Position.ofName("e7");
+        Position current = Position.of("e7");
         Piece pawn = new BlackPawn();
         Paths paths = new Paths();
         Board board = new Board();
@@ -72,13 +72,13 @@ class PawnTest {
     @DisplayName("검은색 폰이 시작점에서 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 검은폰-e7 흰피스-d6,f6 검은피스-없음")
     @Test
     void generateAttackPath_Black() {
-        Position current = Position.ofName("e7");
+        Position current = Position.of("e7");
         Piece pawn = new BlackPawn();
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
-        board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("d6"));
-        board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("f6"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d6"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("f6"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE2WithEnemyBlack());
@@ -87,13 +87,13 @@ class PawnTest {
     @DisplayName("검은색 폰이 시작점이 아닌 곳에 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 검은폰-e4 흰피스-d3 검은피스-f3")
     @Test
     void generateObstacleConsideredPath_Black() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece pawn = new BlackPawn();
         Paths paths = new Paths();
         paths = paths.findAllPath(pawn, current);
         Board board = new Board();
-        board.putPiece(new Bishop(PieceColor.BLACK), Position.ofName("f3"));
-        board.putPiece(new Bishop(PieceColor.WHITE), Position.ofName("d3"));
+        board.putPiece(new Bishop(PieceColor.BLACK), Position.of("f3"));
+        board.putPiece(new Bishop(PieceColor.WHITE), Position.of("d3"));
         board.putPiece(pawn, current);
         assertThat(paths.removeObstacles(pawn, board).positions())
             .isEqualTo(pawnE4WithObstacleBlack());
@@ -101,47 +101,47 @@ class PawnTest {
 
     List<Position> pawnE2WithoutObstaclesWhite() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("e4")
+            Position.of("e3"),
+            Position.of("e4")
         );
     }
 
     List<Position> pawnE2WithEnemyWhite() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("e4")
+            Position.of("e3"),
+            Position.of("f3"),
+            Position.of("d3"),
+            Position.of("e4")
         );
     }
 
     List<Position> pawnE4WithObstacleWhite() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("f5")
+            Position.of("e5"),
+            Position.of("f5")
         );
     }
 
     List<Position> pawnE2WithoutObstaclesBlack() {
         return Arrays.asList(
-            Position.ofName("e6"),
-            Position.ofName("e5")
+            Position.of("e6"),
+            Position.of("e5")
         );
     }
 
     List<Position> pawnE2WithEnemyBlack() {
         return Arrays.asList(
-            Position.ofName("e6"),
-            Position.ofName("f6"),
-            Position.ofName("d6"),
-            Position.ofName("e5")
+            Position.of("e6"),
+            Position.of("f6"),
+            Position.of("d6"),
+            Position.of("e5")
         );
     }
 
     List<Position> pawnE4WithObstacleBlack() {
         return Arrays.asList(
-            Position.ofName("e3"),
-            Position.ofName("d3")
+            Position.of("e3"),
+            Position.of("d3")
         );
     }
 }

@@ -16,7 +16,7 @@ class RookTest {
     @DisplayName("룩이 이동가능한 전체 위치를 구한다. 상황 : 흰룩-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(rook, current);
@@ -26,7 +26,7 @@ class RookTest {
     @DisplayName("룩이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰룩-e4 흰피스-e2 검은피스-e7")
     @Test
     void generateObstacleConsideredPath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece rook = new Rook(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(rook, current);
@@ -37,36 +37,36 @@ class RookTest {
 
     List<Position> rookE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("e8"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("e2"),
-            Position.ofName("e1"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4")
+            Position.of("e5"),
+            Position.of("e6"),
+            Position.of("e7"),
+            Position.of("e8"),
+            Position.of("f4"),
+            Position.of("g4"),
+            Position.of("h4"),
+            Position.of("e3"),
+            Position.of("e2"),
+            Position.of("e1"),
+            Position.of("d4"),
+            Position.of("c4"),
+            Position.of("b4"),
+            Position.of("a4")
         );
     }
 
     List<Position> rookE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4")
+            Position.of("e5"),
+            Position.of("e6"),
+            Position.of("e7"),
+            Position.of("f4"),
+            Position.of("g4"),
+            Position.of("h4"),
+            Position.of("e3"),
+            Position.of("d4"),
+            Position.of("c4"),
+            Position.of("b4"),
+            Position.of("a4")
         );
     }
 }

@@ -16,7 +16,7 @@ class KnightTest {
     @DisplayName("나이트가 이동가능한 전체 위치를 구한다. 상황 : 흰나이트-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece knight = new Knight(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(knight, current);
@@ -26,7 +26,7 @@ class KnightTest {
     @DisplayName("나이트가 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰나이트-e4 흰피스-d2,f2 검은피스-d6,f6")
     @Test
     void generateObstacleConsideredPath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece knight = new Knight(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(knight, current);
@@ -35,35 +35,35 @@ class KnightTest {
         Piece secondBlackPiece = new Bishop(PieceColor.BLACK);
         Piece firstWhitePiece = new Bishop(PieceColor.WHITE);
         Piece secondWhitePiece = new Bishop(PieceColor.WHITE);
-        board.putPiece(firstBlackPiece, Position.ofName("d6"));
-        board.putPiece(secondBlackPiece, Position.ofName("f6"));
-        board.putPiece(firstWhitePiece, Position.ofName("d2"));
-        board.putPiece(secondWhitePiece, Position.ofName("f2"));
+        board.putPiece(firstBlackPiece, Position.of("d6"));
+        board.putPiece(secondBlackPiece, Position.of("f6"));
+        board.putPiece(firstWhitePiece, Position.of("d2"));
+        board.putPiece(secondWhitePiece, Position.of("f2"));
         assertThat(paths.removeObstacles(knight, board).positions()).isEqualTo(
             knightE4WithObstacles());
     }
 
     List<Position> knightE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("d6"),
-            Position.ofName("f6"),
-            Position.ofName("g5"),
-            Position.ofName("g3"),
-            Position.ofName("f2"),
-            Position.ofName("d2"),
-            Position.ofName("c5"),
-            Position.ofName("c3")
+            Position.of("d6"),
+            Position.of("f6"),
+            Position.of("g5"),
+            Position.of("g3"),
+            Position.of("f2"),
+            Position.of("d2"),
+            Position.of("c5"),
+            Position.of("c3")
         );
     }
 
     List<Position> knightE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("d6"),
-            Position.ofName("f6"),
-            Position.ofName("g5"),
-            Position.ofName("g3"),
-            Position.ofName("c5"),
-            Position.ofName("c3")
+            Position.of("d6"),
+            Position.of("f6"),
+            Position.of("g5"),
+            Position.of("g3"),
+            Position.of("c5"),
+            Position.of("c3")
         );
     }
 }

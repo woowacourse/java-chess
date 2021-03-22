@@ -24,7 +24,7 @@ public class RenderingUtils {
 
     private static String renderRow(Board board, Row row) {
         return Stream.of(Column.values())
-            .map(column -> Position.ofColumnAndRow(column, row))
+            .map(column -> Position.of(column, row))
             .map(position -> renderPosition(board.findPieceBy(position)))
             .collect(Collectors.joining())
             ;

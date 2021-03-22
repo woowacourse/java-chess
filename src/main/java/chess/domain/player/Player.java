@@ -17,7 +17,7 @@ public class Player {
     }
 
     public boolean isOwnerOf(Piece piece) {
-        return piece.isColor(color);
+        return piece.hasColor(color);
     }
 
     public boolean isColor(PieceColor color) {

@@ -31,10 +31,6 @@ public abstract class Piece {
         return this.pieceType.is(PieceType.KNIGHT);
     }
 
-    public boolean isColor(PieceColor color) {
-        return this.pieceColor.equals(color);
-    }
-
     public boolean isEnemy(Piece that) {
         return this.pieceColor.equals(that.pieceColor.reversed());
     }
@@ -60,10 +56,6 @@ public abstract class Piece {
 
     public String color() {
         return pieceColor.getColor();
-    }
-
-    public PieceColor getColor() {
-        return pieceColor;
     }
 
     public Score score() {

@@ -16,7 +16,7 @@ class KingTest {
     @DisplayName("킹이 이동가능한 전체 위치를 구한다. 상황 : 흰킹-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece king = new King(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(king, current);
@@ -27,7 +27,7 @@ class KingTest {
     @DisplayName("킹이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰킹-e4 흰피스-e3,f3 검은피스-e5,f5")
     @Test
     void generateObstacleConsideredPath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece king = new King(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(king, current);
@@ -36,35 +36,35 @@ class KingTest {
         Piece secondBlackPiece = new Knight(PieceColor.BLACK);
         Piece firstWhitePiece = new Knight(PieceColor.WHITE);
         Piece secondWhitePiece = new Knight(PieceColor.WHITE);
-        board.putPiece(firstBlackPiece, Position.ofName("e5"));
-        board.putPiece(secondBlackPiece, Position.ofName("f5"));
-        board.putPiece(firstWhitePiece, Position.ofName("e3"));
-        board.putPiece(secondWhitePiece, Position.ofName("f3"));
+        board.putPiece(firstBlackPiece, Position.of("e5"));
+        board.putPiece(secondBlackPiece, Position.of("f5"));
+        board.putPiece(firstWhitePiece, Position.of("e3"));
+        board.putPiece(secondWhitePiece, Position.of("f3"));
         assertThat(paths.removeObstacles(king, board).positions()).isEqualTo(
             kingE4WithObstacles());
     }
 
     List<Position> kingE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("f4"),
-            Position.ofName("e3"),
-            Position.ofName("d4"),
-            Position.ofName("f5"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("d5")
+            Position.of("e5"),
+            Position.of("f4"),
+            Position.of("e3"),
+            Position.of("d4"),
+            Position.of("f5"),
+            Position.of("f3"),
+            Position.of("d3"),
+            Position.of("d5")
         );
     }
 
     List<Position> kingE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("f4"),
-            Position.ofName("d4"),
-            Position.ofName("f5"),
-            Position.ofName("d3"),
-            Position.ofName("d5")
+            Position.of("e5"),
+            Position.of("f4"),
+            Position.of("d4"),
+            Position.of("f5"),
+            Position.of("d3"),
+            Position.of("d5")
         );
     }
 }

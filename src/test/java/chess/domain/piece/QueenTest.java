@@ -16,7 +16,7 @@ class QueenTest {
     @DisplayName("퀸이 이동가능한 전체 위치를 구한다. 상황 : 흰퀸-e4 흰피스-없음 검은피스-없음")
     @Test
     void generatePath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(queen, current);
@@ -27,7 +27,7 @@ class QueenTest {
     @DisplayName("퀸이 이동가능한 위치를 장애물을 고려하여 구한다. 상황 : 흰퀸-e4 흰피스-c2,e2,g2 검은피스-b7,e7,h7")
     @Test
     void generateObstacleConsideredPath() {
-        Position current = Position.ofName("e4");
+        Position current = Position.of("e4");
         Piece queen = new Queen(PieceColor.WHITE);
         Paths paths = new Paths();
         paths = paths.findAllPath(queen, current);
@@ -38,57 +38,57 @@ class QueenTest {
 
     List<Position> queenE4WithoutObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("e8"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("e2"),
-            Position.ofName("e1"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4"),
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("g2"),
-            Position.ofName("h1"),
-            Position.ofName("d3"),
-            Position.ofName("c2"),
-            Position.ofName("b1"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7"),
-            Position.ofName("a8")
+            Position.of("e5"),
+            Position.of("e6"),
+            Position.of("e7"),
+            Position.of("e8"),
+            Position.of("f4"),
+            Position.of("g4"),
+            Position.of("h4"),
+            Position.of("e3"),
+            Position.of("e2"),
+            Position.of("e1"),
+            Position.of("d4"),
+            Position.of("c4"),
+            Position.of("b4"),
+            Position.of("a4"),
+            Position.of("f5"),
+            Position.of("g6"),
+            Position.of("h7"),
+            Position.of("f3"),
+            Position.of("g2"),
+            Position.of("h1"),
+            Position.of("d3"),
+            Position.of("c2"),
+            Position.of("b1"),
+            Position.of("d5"),
+            Position.of("c6"),
+            Position.of("b7"),
+            Position.of("a8")
         );
     }
 
     List<Position> queenE4WithObstacles() {
         return Arrays.asList(
-            Position.ofName("e5"),
-            Position.ofName("e6"),
-            Position.ofName("e7"),
-            Position.ofName("f4"),
-            Position.ofName("g4"),
-            Position.ofName("h4"),
-            Position.ofName("e3"),
-            Position.ofName("d4"),
-            Position.ofName("c4"),
-            Position.ofName("b4"),
-            Position.ofName("a4"),
-            Position.ofName("f5"),
-            Position.ofName("g6"),
-            Position.ofName("h7"),
-            Position.ofName("f3"),
-            Position.ofName("d3"),
-            Position.ofName("d5"),
-            Position.ofName("c6"),
-            Position.ofName("b7")
+            Position.of("e5"),
+            Position.of("e6"),
+            Position.of("e7"),
+            Position.of("f4"),
+            Position.of("g4"),
+            Position.of("h4"),
+            Position.of("e3"),
+            Position.of("d4"),
+            Position.of("c4"),
+            Position.of("b4"),
+            Position.of("a4"),
+            Position.of("f5"),
+            Position.of("g6"),
+            Position.of("h7"),
+            Position.of("f3"),
+            Position.of("d3"),
+            Position.of("d5"),
+            Position.of("c6"),
+            Position.of("b7")
         );
     }
 }
