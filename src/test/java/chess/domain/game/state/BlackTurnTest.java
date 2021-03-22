@@ -9,7 +9,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 class BlackTurnTest {
-
     @Test
     @DisplayName("블랙 턴 상태에서 start 명령시 에러 반환")
     void blackTurnStartException() {
@@ -25,9 +24,9 @@ class BlackTurnTest {
     }
 
     @Test
-    @DisplayName("블랙 턴 상태에서 end 명령시 게임종료 상태 반환")
+    @DisplayName("블랙 턴 상태에서 end 명령시 Draw 상태 반환")
     void blackTurnEndReturnEndTurn() {
         BlackTurn blackTurn = new BlackTurn(new Board(InitBoardGenerator.initLines()));
-        assertThat(blackTurn.end()).isInstanceOf(End.class);
+        assertThat(blackTurn.end()).isInstanceOf(Draw.class);
     }
 }

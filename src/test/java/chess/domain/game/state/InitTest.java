@@ -11,7 +11,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 public class InitTest {
-
     private Init init;
 
     @BeforeEach
@@ -33,9 +32,8 @@ public class InitTest {
     }
 
     @Test
-    @DisplayName("초기 상태에서 end 명령시 에러 반환")
+    @DisplayName("초기 상태에서 end 명령시 게임 종료 상태 반환")
     void endEndReturnEndTurn() {
-        assertThatThrownBy(init::end).isInstanceOf(IllegalStateException.class);
+        assertThat(init.end()).isInstanceOf(End.class);
     }
-
 }
