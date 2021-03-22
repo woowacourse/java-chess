@@ -2,7 +2,6 @@ package chess.domain.piece;
 
 import chess.domain.position.Difference;
 import java.util.Arrays;
-import java.util.List;
 
 public enum Direction {
 
