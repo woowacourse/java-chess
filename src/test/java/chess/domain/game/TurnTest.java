@@ -9,15 +9,13 @@ class TurnTest {
     @Test
     void turnCheck() {
         Turn turn = new Turn();
-        Player player = turn.player();
-        assertThat(player.color()).isEqualTo(Color.BLACK);
+        assertThat(turn.color()).isEqualTo(Color.BLACK);
     }
 
     @Test
     void turnNextCheck() {
         Turn turn = new Turn();
         turn.next();
-        Player player = turn.player();
-        assertThat(player.color()).isEqualTo(Color.WHITE);
+        assertThat(turn.color()).isEqualTo(Color.WHITE);
     }
 }

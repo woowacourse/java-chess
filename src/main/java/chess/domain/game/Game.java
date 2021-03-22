@@ -17,8 +17,7 @@ public class Game {
     }
 
     public void move(Position from, Position to) {
-        Player player = turn.player();
-        board.move(player.color(), from, to);
+        board.move(turn.color(), from, to);
         turn.next();
     }
 
@@ -26,8 +25,8 @@ public class Game {
         return board.isNotEnd();
     }
 
-    public Player currentPlayer() {
-        return turn.player();
+    public Color currentPlayer() {
+        return turn.color();
     }
 
     public Map<Color, Double> score() {

@@ -16,7 +16,7 @@ public class ChessController {
         Board board = BoardFactory.create();
         Game game = new Game(board);
         OutputView.printWayToMove();
-        OutputView.display(board.allPieces());
+        OutputView.display(game.allBoard());
 
         play(game);
         printScoreIfWanted(game);
