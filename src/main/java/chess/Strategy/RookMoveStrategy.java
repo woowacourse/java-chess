@@ -1,11 +1,8 @@
 package chess.Strategy;
 
-import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;
-import chess.domain.piece.Direction;
-import chess.domain.piece.Piece;
 
 import java.util.ArrayList;
 import java.util.Collections;

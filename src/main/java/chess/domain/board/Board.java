@@ -6,11 +6,11 @@ import chess.domain.piece.*;
 import java.util.*;
 
 public class Board {
-    private static final double TOTAL_SCORE = 38;
-    private static final double PAWN_SAME_HORIZONTAL_SCORE = 0.5;
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
     public static final int PAWN_COUNT_THRESHOLD = 2;
+    private static final double TOTAL_SCORE = 38;
+    private static final double PAWN_SAME_HORIZONTAL_SCORE = 0.5;
     private final Map<Position, Piece> board;
     private final Map<Team, Double> lostScoreByTeam;
 

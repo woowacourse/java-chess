@@ -3,7 +3,6 @@ package chess.domain.command;
 import chess.domain.ChessGame;
 import chess.exception.NoSuchCommandException;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 

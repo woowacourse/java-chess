@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.piece.Piece;
-
 import java.util.Arrays;
 
 public enum Horizontal {

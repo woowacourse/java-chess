@@ -1,12 +1,10 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
-import org.junit.jupiter.api.BeforeEach;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Team;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
