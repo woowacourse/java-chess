@@ -8,20 +8,20 @@ public class Rook extends Division {
     private static final String ROOK_DISPLAYNAME = "r";
     private static final int ROOK_SCORE = 5;
 
-    public Rook(Color color, Position position) {
+    public Rook(final Color color, final Position position) {
         super(color, ROOK_DISPLAYNAME, position);
     }
 
     @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
+    public void moveToEmpty(final Position to, final Pieces pieces) {
         if (position.isOrthogonal(to)) {
             validateNoneBetween(to, pieces);
             position = to;
         }
     }
 
-    private void validateNoneBetween(Position to, Pieces pieces) {
-        List<Position> positions = position.getBetween(to);
+    private void validateNoneBetween(final Position to, final Pieces pieces) {
+        final List<Position> positions = position.getBetween(to);
         if (positions.stream()
                      .filter(pieces::hasPieceOf)
                      .anyMatch(pieces::hasPieceOf)) {
@@ -30,7 +30,7 @@ public class Rook extends Division {
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {
+    public void moveForKill(final Position to, final Pieces pieces) {
         this.moveToEmpty(to, pieces);
     }
 

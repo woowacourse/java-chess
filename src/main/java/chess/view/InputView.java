@@ -12,7 +12,7 @@ public class InputView {
 
     public static boolean willNotPlayGame() {
         OutputView.printWillPlayGameMessage();
-        String userInput = scanner.nextLine();
+        final String userInput = scanner.nextLine();
         if ("start".equals(userInput)) {
             return false;
         }
@@ -23,8 +23,8 @@ public class InputView {
     }
 
     public static List<String> requestPositions() {
-        String userInput = scanner.nextLine();
-        List<String> inputs = Arrays.asList(userInput.split(" "));
+        final String userInput = scanner.nextLine();
+        final List<String> inputs = Arrays.asList(userInput.split(" "));
         if (inputs.size() == 3 && "move".equals(inputs.get(0))) {
             return inputs.subList(1,3);
         }
@@ -32,7 +32,7 @@ public class InputView {
     }
 
     public static boolean willWatchScore() {
-        String userInput = scanner.nextLine();
+        final String userInput = scanner.nextLine();
         if ("status".equals(userInput)) {
             return true;
         }

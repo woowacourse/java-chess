@@ -8,12 +8,12 @@ public class Queen extends Division {
     private static final String QUEEN_DISPLAYNAME = "q";
     private static final int QUEEN_SCORE = 9;
 
-    public Queen(Color color, Position position) {
+    public Queen(final Color color, final Position position) {
         super(color, QUEEN_DISPLAYNAME, position);
     }
 
     @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
+    public void moveToEmpty(final Position to, final Pieces pieces) {
         if (position.isOrthogonal(to)) {
             validateNoneBetween(to, pieces);
             position = to;
@@ -25,8 +25,8 @@ public class Queen extends Division {
         }
     }
 
-    private void validateNoneBetween(Position to, Pieces pieces) {
-        List<Position> positions = position.getBetween(to);
+    private void validateNoneBetween(final Position to, final Pieces pieces) {
+        final List<Position> positions = position.getBetween(to);
         if (positions.stream()
                      .anyMatch(pieces::hasPieceOf)) {
             throw new IllegalArgumentException();
@@ -34,7 +34,7 @@ public class Queen extends Division {
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {
+    public void moveForKill(final Position to, final Pieces pieces) {
         this.moveToEmpty(to, pieces);
     }
 

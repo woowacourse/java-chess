@@ -12,7 +12,7 @@ public class Position {
     private static final Map<String, Position> cache = new HashMap<>();
 
     static {
-        for (Column x : Column.values()) {
+        for (final Column x : Column.values()) {
             cacheByColumn(x);
         }
     }
@@ -22,19 +22,19 @@ public class Position {
         this.row = row;
     }
 
-    public static Position of(Column column, Row row) {
+    public static Position of(final Column column, final Row row) {
         return from(toKey(column, row));
     }
 
-    public static Position from(String key) {
+    public static Position from(final String key) {
         if (cache.containsKey(key)) {
             return cache.get(key);
         }
         throw new IllegalArgumentException();
     }
 
-    private static void cacheByColumn(Column x) {
-        for (Row y : Row.values()) {
+    private static void cacheByColumn(final Column x) {
+        for (final Row y : Row.values()) {
             cache.put(toKey(x, y), new Position(x, y));
         }
     }
@@ -43,28 +43,28 @@ public class Position {
         return column.value() + row.value();
     }
 
-    public Position moveBy(int columnValue, int rowValue) {
+    public Position moveBy(final int columnValue, final int rowValue) {
         return Position.of(column.moveBy(columnValue), row.moveBy(rowValue));
     }
 
-    public boolean isOrthogonal(Position to) {
+    public boolean isOrthogonal(final Position to) {
         return hasRow(to.row) || hasColumn(to.column);
     }
 
-    public boolean isDiagonal(Position to) {
+    public boolean isDiagonal(final Position to) {
         return Math.abs(row.diff(to.row)) == Math.abs(column.diff(to.column));
     }
 
-    public boolean hasRow(Row row) {
+    public boolean hasRow(final Row row) {
         return this.row.equals(row);
     }
 
-    private boolean hasColumn(Column column) {
+    private boolean hasColumn(final Column column) {
         return this.column.equals(column);
     }
 
-    public List<Position> getBetween(Position to) {
-        List<Position> betweenPosition = new ArrayList<>();
+    public List<Position> getBetween(final Position to) {
+        final List<Position> betweenPosition = new ArrayList<>();
         if (hasColumn(to.column)) {
             betweenPosition.addAll(betweenPositionsHasSameColumn(to));
         }
@@ -77,24 +77,24 @@ public class Position {
         return betweenPosition;
     }
 
-    private List<Position> betweenPositionsHasSameColumn(Position to) {
+    private List<Position> betweenPositionsHasSameColumn(final Position to) {
         return row.getBetween(to.row)
                   .stream()
                   .map(row -> Position.of(column, row))
                   .collect(Collectors.toList());
     }
 
-    private List<Position> betweenPositionsHasSameRow(Position to) {
+    private List<Position> betweenPositionsHasSameRow(final Position to) {
         return column.getBetween(to.column)
                      .stream()
                      .map(column -> Position.of(column, row))
                      .collect(Collectors.toList());
     }
 
-    private List<Position> betweenPositionsByDiagonal(Position to) {
-        List<Position> betweenPosition = new ArrayList<>();
-        int rowDirection = row.unitDirection(to.row);
-        int columnDirection = column.unitDirection(to.column);
+    private List<Position> betweenPositionsByDiagonal(final Position to) {
+        final List<Position> betweenPosition = new ArrayList<>();
+        final int rowDirection = row.unitDirection(to.row);
+        final int columnDirection = column.unitDirection(to.column);
         Position temp = Position.of(column, row);
         while (!temp.equals(to)) {
             temp = temp.moveBy(columnDirection, rowDirection);
@@ -103,11 +103,11 @@ public class Position {
         return betweenPosition;
     }
 
-    public int diffRow(Position to) {
+    public int diffRow(final Position to) {
         return row.diff(to.row);
     }
 
-    public int diffColumn(Position to) {
+    public int diffColumn(final Position to) {
         return column.diff(to.column);
     }
 

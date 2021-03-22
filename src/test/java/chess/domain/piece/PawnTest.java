@@ -14,16 +14,16 @@ public class PawnTest {
     @Test
     @DisplayName("폰이 잘 생성되는지 확인")
     void createPawn() {
-        Piece pawn = new Pawn(Color.BLACK, Position.from("a3"));
+        final Piece pawn = new Pawn(Color.BLACK, Position.from("a3"));
         assertThat(pawn).isInstanceOf(Pawn.class);
     }
 
     @Test
     @DisplayName("하얀 말일 때 기본 이동")
     void whiteMove() {
-        Position from = Position.from("a3");
-        Position to = Position.from("a4");
-        Piece pawn = new Pawn(Color.WHITE, from);
+        final Position from = Position.from("a3");
+        final Position to = Position.from("a4");
+        final Piece pawn = new Pawn(Color.WHITE, from);
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -31,9 +31,9 @@ public class PawnTest {
     @Test
     @DisplayName("검정 말일 때 기본 이동")
     void blackMove() {
-        Position from = Position.from("a3");
-        Position to = Position.from("a2");
-        Piece pawn = new Pawn(Color.BLACK, from);
+        final Position from = Position.from("a3");
+        final Position to = Position.from("a2");
+        final Piece pawn = new Pawn(Color.BLACK, from);
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -41,9 +41,9 @@ public class PawnTest {
     @Test
     @DisplayName("하얀 말 처음 위치에서 이동")
     void whiteInitialMove() {
-        Position from = Position.from("a2");
-        Position to = Position.from("a4");
-        Piece pawn = new Pawn(Color.WHITE, from);
+        final Position from = Position.from("a2");
+        final Position to = Position.from("a4");
+        final Piece pawn = new Pawn(Color.WHITE, from);
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -51,9 +51,9 @@ public class PawnTest {
     @Test
     @DisplayName("검정 말 처음 위치에서 이동")
     void blackInitialMove() {
-        Position from = Position.from("a7");
-        Position to = Position.from("a5");
-        Piece pawn = new Pawn(Color.BLACK, from);
+        final Position from = Position.from("a7");
+        final Position to = Position.from("a5");
+        final Piece pawn = new Pawn(Color.BLACK, from);
         pawn.moveToEmpty(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -61,18 +61,18 @@ public class PawnTest {
     @Test
     @DisplayName("하얀 말 처음 위치에서 이동 방해")
     void whiteInterruptedInitialMove() {
-        Position from = Position.from("a2");
-        Position to = Position.from("a4");
-        Piece pawn = new Pawn(Color.WHITE, from);
+        final Position from = Position.from("a2");
+        final Position to = Position.from("a4");
+        final Piece pawn = new Pawn(Color.WHITE, from);
         assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a3"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
     @Test
     @DisplayName("검정 말 처음 위치에서 이동 방해")
     void blackInterruptedInitialMove() {
-        Position from = Position.from("a7");
-        Position to = Position.from("a5");
-        Piece pawn = new Pawn(Color.BLACK, from);
+        final Position from = Position.from("a7");
+        final Position to = Position.from("a5");
+        final Piece pawn = new Pawn(Color.BLACK, from);
         assertThatThrownBy(() -> pawn.moveToEmpty(to, new Pieces(new Pawn(Color.WHITE, Position.from("a6"))))).isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -80,9 +80,9 @@ public class PawnTest {
     @ValueSource(strings = {"b1", "d1"})
     @DisplayName("검정 말 잡기")
     void blackKill(String destination) {
-        Position from = Position.from("c2");
-        Position to = Position.from(destination);
-        Piece pawn = new Pawn(Color.BLACK, from);
+        final Position from = Position.from("c2");
+        final Position to = Position.from(destination);
+        final Piece pawn = new Pawn(Color.BLACK, from);
         pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -91,9 +91,9 @@ public class PawnTest {
     @ValueSource(strings = {"g6"})
     @DisplayName("하얀 말 잡기")
     void whiteKill(String destination) {
-        Position from = Position.from("h5");
-        Position to = Position.from(destination);
-        Piece pawn = new Pawn(Color.WHITE, from);
+        final Position from = Position.from("h5");
+        final Position to = Position.from(destination);
+        final Piece pawn = new Pawn(Color.WHITE, from);
         pawn.moveForKill(to, new Pieces());
         assertTrue(pawn.hasPosition(to));
     }
@@ -101,9 +101,9 @@ public class PawnTest {
     @Test
     @DisplayName("하얀 말 잡기 방해")
     void interruptedWhiteKill() {
-        Position from = Position.from("h5");
-        Position to = Position.from("h6");
-        Piece pawn = new Pawn(Color.WHITE, from);
+        final Position from = Position.from("h5");
+        final Position to = Position.from("h6");
+        final Piece pawn = new Pawn(Color.WHITE, from);
 
         assertThatThrownBy(() -> pawn.moveForKill(to, new Pieces())).isInstanceOf(IllegalArgumentException.class);
     }

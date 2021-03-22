@@ -19,8 +19,8 @@ public class Game {
         pieces.init();
     }
 
-    public void move(Position from, Position to) {
-        Player player = turn.player();
+    public void move(final Position from, final Position to) {
+        final Player player = turn.player();
         player.move(from, to, pieces);
         turn.next();
     }
@@ -37,7 +37,7 @@ public class Game {
     }
 
     public Map<Color, Double> score() {
-        Map<Color, Double> scores = new HashMap<>();
+        final Map<Color, Double> scores = new HashMap<>();
         scores.put(Color.BLACK, pieces.score(Color.BLACK));
         scores.put(Color.WHITE, pieces.score(Color.WHITE));
         return scores;

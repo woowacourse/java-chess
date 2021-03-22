@@ -29,8 +29,8 @@ class KnightTest {
     @ParameterizedTest
     @MethodSource("destinations")
     @DisplayName("나이트의 움직임 로직확인")
-    void move(Position position) {
-        Knight knight = new Knight(Color.BLACK, Position.from("c5"));
+    void move(final Position position) {
+        final Knight knight = new Knight(Color.BLACK, Position.from("c5"));
         knight.moveToEmpty(position, new Pieces());
         assertTrue(knight.hasPosition(position));
     }
@@ -38,7 +38,7 @@ class KnightTest {
     @Test
     @DisplayName("나이트가 코너에 있을 때 움직임 로직확인")
     void cornerMove() {
-        Knight knight = new Knight(Color.BLACK, Position.from("a5"));
+        final Knight knight = new Knight(Color.BLACK, Position.from("a5"));
         assertThatCode(() -> knight.moveToEmpty(Position.from("c4"), new Pieces()))
                 .doesNotThrowAnyException();
     }

@@ -6,17 +6,17 @@ import chess.domain.position.Position;
 public abstract class Basis implements Piece {
     private final String displayName;
 
-    public Basis(String displayName) {
+    public Basis(final String displayName) {
         this.displayName = displayName;
     }
 
-    public abstract void moveToEmpty(Position to, Pieces pieces);
+    public abstract void moveToEmpty(final Position to, final Pieces pieces);
 
-    public abstract void moveForKill(Position to, Pieces pieces);
+    public abstract void moveForKill(final Position to, final Pieces pieces);
 
     public abstract Position getPosition();
 
-    public abstract boolean isSameColor(Color color);
+    public abstract boolean isSameColor(final Color color);
 
     public abstract boolean isEmpty();
 

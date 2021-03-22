@@ -22,7 +22,7 @@ public enum Column {
         this.value = value;
     }
 
-    public Column moveBy(int value) {
+    public Column moveBy(final int value) {
         if ((this.ordinal() + value) < 0 || this.ordinal() + value >= columns.length) {
             throw new IllegalArgumentException(OVER_RANGE_ERROR);
         }
@@ -33,20 +33,20 @@ public enum Column {
         return value;
     }
 
-    public List<Column> getBetween(Column to) {
-        int start = Math.min(this.ordinal(), to.ordinal());
-        int end = Math.max(this.ordinal(), to.ordinal());
-        List<Column> betweenColumns = new ArrayList<>();
+    public List<Column> getBetween(final Column to) {
+        final int start = Math.min(this.ordinal(), to.ordinal());
+        final int end = Math.max(this.ordinal(), to.ordinal());
+        final List<Column> betweenColumns = new ArrayList<>();
         IntStream.range(start + 1, end)
                  .forEach(x -> betweenColumns.add(columns[x]));
         return betweenColumns;
     }
 
-    public int diff(Column column) {
+    public int diff(final Column column) {
         return column.ordinal() - ordinal();
     }
 
-    public int unitDirection(Column to) {
+    public int unitDirection(final Column to) {
         return diff(to) / Math.abs(diff(to));
     }
 }

@@ -8,7 +8,7 @@ public abstract class Division extends Basis {
     protected final Color color;
     protected Position position;
 
-    public Division(Color color, String displayName, Position position) {
+    public Division(final Color color, final String displayName, final Position position) {
         super(displayName);
         this.color = color;
         this.position = position;
@@ -18,9 +18,9 @@ public abstract class Division extends Basis {
         return color.initPawnRow();
     }
 
-    public abstract void moveToEmpty(Position to, Pieces pieces);
+    public abstract void moveToEmpty(final Position to, final Pieces pieces);
 
-    public abstract void moveForKill(Position to, Pieces pieces);
+    public abstract void moveForKill(final Position to, final Pieces pieces);
 
     @Override
     public Position getPosition() {
@@ -37,12 +37,12 @@ public abstract class Division extends Basis {
     }
 
     @Override
-    public boolean hasPosition(Position position) {
+    public boolean hasPosition(final Position position) {
         return this.position.equals(position);
     }
 
     @Override
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         return this.color.equals(color);
     }
 
@@ -53,9 +53,7 @@ public abstract class Division extends Basis {
 
     public abstract boolean isKing();
 
-
     public abstract double score();
-
 
     public abstract boolean isPawn();
 

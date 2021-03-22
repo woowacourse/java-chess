@@ -25,14 +25,14 @@ class RowTest {
     @MethodSource("rows")
     @DisplayName("row가 주어진 위치로 잘 이동하는지 확인")
     void moveBy(int value, Row expected) {
-        Row row = Row.SIX;
+        final Row row = Row.SIX;
         assertThat(row.moveBy(value)).isEqualTo(expected);
     }
 
     @Test
     @DisplayName("체스판을 벗어나는 움직임에서 익셉션을 날리는지 확인")
     void moveByException() {
-        Row row = Row.SIX;
+        final Row row = Row.SIX;
         assertThatThrownBy(() -> row.moveBy(3)).isInstanceOf(IllegalArgumentException.class);
         assertThatThrownBy(() -> row.moveBy(-6)).isInstanceOf(IllegalArgumentException.class);
     }
@@ -40,7 +40,7 @@ class RowTest {
     @Test
     @DisplayName("주어진 두 row 사이의 row를 잘 반환하는지 확인")
     void getBetween() {
-        Row row = Row.SIX;
+        final Row row = Row.SIX;
         assertThat(row.getBetween(Row.THREE)).contains(Row.FOUR, Row.FIVE);
     }
 }

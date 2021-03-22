@@ -18,7 +18,7 @@ public class Pieces {
     public static final double SAME_COLUMN_SCORE = 0.5;
     private final List<Piece> pieces = new ArrayList<>();
 
-    public Pieces(Piece... pieces) {
+    public Pieces(final Piece... pieces) {
         this.pieces.addAll(Arrays.asList(pieces));
     }
 
@@ -35,7 +35,7 @@ public class Pieces {
         setUpGeneralByColor(Color.WHITE, Row.ONE);
     }
 
-    private void setUpGeneralByColor(Color color, Row row) {
+    private void setUpGeneralByColor(final Color color, final Row row) {
         pieces.add(new Rook(color, Position.of(Column.A, row)));
         pieces.add(new Knight(color, Position.of(Column.B, row)));
         pieces.add(new Bishop(color, Position.of(Column.C, row)));
@@ -51,20 +51,20 @@ public class Pieces {
         setUpRow(Row.TWO, Color.WHITE);
     }
 
-    private void setUpRow(Row row, Color color) {
-        for (Column column : Column.values()) {
+    private void setUpRow(final Row row, final Color color) {
+        for (final Column column : Column.values()) {
             pieces.add(new Pawn(color, Position.of(column, row)));
         }
     }
 
-    public Piece getPieceOf(Position position) {
+    public Piece getPieceOf(final Position position) {
         return pieces.stream()
                      .filter(piece -> piece.hasPosition(position))
                      .findFirst()
                      .orElse(new Empty());
     }
 
-    public boolean hasPieceOf(Position position) {
+    public boolean hasPieceOf(final Position position) {
         return pieces.stream()
                      .anyMatch(piece -> piece.hasPosition(position));
     }
@@ -73,15 +73,15 @@ public class Pieces {
         return pieces;
     }
 
-    public void delete(Piece piece) {
+    public void delete(final Piece piece) {
         pieces.remove(piece);
     }
 
-    public double score(Color color) {
+    public double score(final Color color) {
         return calculateGeneralScore(color) + calculatePawnScore(color);
     }
 
-    private double calculateGeneralScore(Color color) {
+    private double calculateGeneralScore(final Color color) {
         return pieces.stream()
                      .filter(piece -> piece.isSameColor(color))
                      .filter(piece -> !piece.isPawn())
@@ -89,26 +89,26 @@ public class Pieces {
                      .sum();
     }
 
-    private double calculatePawnScore(Color color) {
+    private double calculatePawnScore(final Color color) {
         return pawnCountingByColumn(color).values()
                                           .stream()
                                           .mapToDouble(this::lowerPawnScore)
                                           .sum();
     }
 
-    private Map<Column, Long> pawnCountingByColumn(Color color) {
+    private Map<Column, Long> pawnCountingByColumn(final Color color) {
         return pawnsWith(color).stream()
                                .collect(groupingBy(Piece::getColumn, counting()));
     }
 
-    private List<Piece> pawnsWith(Color color) {
+    private List<Piece> pawnsWith(final Color color) {
         return pieces.stream()
                      .filter(piece -> piece.isSameColor(color))
                      .filter(Piece::isPawn)
                      .collect(Collectors.toList());
     }
 
-    private double lowerPawnScore(long count) {
+    private double lowerPawnScore(final long count) {
         if (count >= SAME_COLUMN_CRITERIA) {
             return count * SAME_COLUMN_SCORE;
         }

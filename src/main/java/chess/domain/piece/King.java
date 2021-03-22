@@ -6,14 +6,14 @@ public class King extends Division {
     private static final String KING_DISPLAYNAME = "k";
     private static final int KING_SCORE = 0;
 
-    public King(Color color, Position position) {
+    public King(final Color color, final Position position) {
         super(color, KING_DISPLAYNAME, position);
     }
 
     @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
-        int diffRow = Math.abs(position.diffRow(to));
-        int diffColumn = Math.abs(position.diffColumn(to));
+    public void moveToEmpty(final Position to, final Pieces pieces) {
+        final int diffRow = Math.abs(position.diffRow(to));
+        final int diffColumn = Math.abs(position.diffColumn(to));
 
         if ((diffRow | diffColumn) == 1) {
             position = to;
@@ -23,7 +23,7 @@ public class King extends Division {
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {
+    public void moveForKill(final Position to, final Pieces pieces) {
         this.moveToEmpty(to, pieces);
     }
 

@@ -15,8 +15,8 @@ class PlayerTest {
     @Test
     @DisplayName("화이트 플레이어가 이동을 원하는 기물로 자신의 말을 골랐을 때 잘 이동하는지 확인")
     void validatePieceToMove() {
-        Player whitePlayer = new Player(Color.WHITE);
-        Position position = Position.from("a2");
+        final Player whitePlayer = new Player(Color.WHITE);
+        final Position position = Position.from("a2");
         assertThatCode(() -> whitePlayer.pickStartPiece(position, new Pieces(new Pawn(Color.WHITE, position))))
                 .doesNotThrowAnyException();
     }
@@ -24,8 +24,8 @@ class PlayerTest {
     @Test
     @DisplayName("화이트 플레이어가 이동을 원하는 기물로 검정 말을 골랐을 때 익셉션을 날리는지 확인")
     void validatePieceToMoveError() {
-        Player whitePlayer = new Player(Color.WHITE);
-        Position position = Position.from("a7");
+        final Player whitePlayer = new Player(Color.WHITE);
+        final Position position = Position.from("a7");
         assertThatThrownBy(() -> whitePlayer.pickStartPiece(Position.from("a7"), new Pieces(new Pawn(Color.BLACK, position))))
                 .isInstanceOf(IllegalArgumentException.class);
     }

@@ -30,7 +30,7 @@ class GameTest {
     @Test
     @DisplayName("점수계산을 잘 하는지 확인인")
     void score() {
-        Map<Color, Double> scoreTable = game.score();
+        final Map<Color, Double> scoreTable = game.score();
         assertThat(scoreTable.get(Color.BLACK)).isEqualTo(38);
         assertThat(scoreTable.get(Color.WHITE)).isEqualTo(38);
     }

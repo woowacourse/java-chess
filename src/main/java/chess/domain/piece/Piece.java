@@ -4,17 +4,17 @@ import chess.domain.position.Column;
 import chess.domain.position.Position;
 
 public interface Piece {
-    void moveToEmpty(Position to, Pieces pieces);
+    void moveToEmpty(final Position to, final Pieces pieces);
 
-    void moveForKill(Position to, Pieces pieces);
+    void moveForKill(final Position to, final Pieces pieces);
 
     String display();
 
-    boolean hasPosition(Position position);
+    boolean hasPosition(final Position position);
 
     Position getPosition();
 
-    boolean isSameColor(Color color);
+    boolean isSameColor(final Color color);
 
     boolean isEmpty();
 

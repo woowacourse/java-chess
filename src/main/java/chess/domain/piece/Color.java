@@ -8,7 +8,7 @@ public enum Color {
 
     private final int moveUnit;
 
-    Color(int moveUnit) {
+    Color(final int moveUnit) {
         this.moveUnit = moveUnit;
     }
 

@@ -27,7 +27,7 @@ class RookTest {
     @MethodSource("destinations")
     @DisplayName("룩의 움직임 로직확인")
     void move(Position position) {
-        Rook rook = new Rook(Color.BLACK, Position.from("c5"));
+        final Rook rook = new Rook(Color.BLACK, Position.from("c5"));
         rook.moveToEmpty(position, new Pieces());
         assertTrue(rook.hasPosition(position));
     }
@@ -36,15 +36,15 @@ class RookTest {
     @MethodSource("destinations")
     @DisplayName("룩이 움직이는 길에 다른 기물이 있을 때 익셉션을 날리는지 확인")
     void interruptedMove(Position position) {
-        Rook rook = new Rook(Color.BLACK, Position.from("c5"));
-        List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"));
+        final Rook rook = new Rook(Color.BLACK, Position.from("c5"));
+        final List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"));
 
         assertThatThrownBy(() -> rook.moveToEmpty(position, blackPieces(positions)))
                 .isInstanceOf(IllegalArgumentException.class);
     }
 
     private Pieces blackPieces(List<Position> positions) {
-        Piece[] pieces = new Piece[positions.size()];
+        final Piece[] pieces = new Piece[positions.size()];
         for (int i = 0; i < positions.size(); i++) {
             pieces[i] = new Pawn(Color.BLACK, positions.get(i));
         }

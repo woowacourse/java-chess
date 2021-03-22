@@ -11,15 +11,15 @@ public class Empty extends Basis {
     }
 
     @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
+    public void moveToEmpty(final Position to, final Pieces pieces) {
         throw new UnsupportedOperationException();
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {}
+    public void moveForKill(final Position to, final Pieces pieces) {}
 
     @Override
-    public boolean hasPosition(Position position) {
+    public boolean hasPosition(final Position position) {
         throw new UnsupportedOperationException();
     }
 
@@ -29,7 +29,7 @@ public class Empty extends Basis {
     }
 
     @Override
-    public boolean isSameColor(Color color) {
+    public boolean isSameColor(final Color color) {
         throw new UnsupportedOperationException();
     }
 

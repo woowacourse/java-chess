@@ -15,7 +15,7 @@ public class ChessController {
         if (willNotPlayGame()) {
             return;
         }
-        Game game = new Game();
+        final Game game = new Game();
         OutputView.printWayToMove();
         OutputView.display(game.getPieces());
 
@@ -32,13 +32,13 @@ public class ChessController {
         }
     }
 
-    private void play(Game game) {
+    private void play(final Game game) {
         while (game.isNotEnd()) {
             playOneTurn(game);
         }
     }
 
-    private void playOneTurn(Game game) {
+    private void playOneTurn(final Game game) {
         try {
             tryOneTurn(game);
         } catch (IllegalArgumentException e) {
@@ -47,16 +47,16 @@ public class ChessController {
         }
     }
 
-    private void tryOneTurn(Game game) {
+    private void tryOneTurn(final Game game) {
         OutputView.printCurrentPlayer(game.currentPlayer());
-        List<String> positions = InputView.requestPositions();
-        String from = positions.get(FROM_POSITION_INDEX);
-        String to = positions.get(TO_POSITION_INDEX);
+        final List<String> positions = InputView.requestPositions();
+        final String from = positions.get(FROM_POSITION_INDEX);
+        final String to = positions.get(TO_POSITION_INDEX);
         game.move(Position.from(from), Position.from(to));
         OutputView.display(game.getPieces());
     }
 
-    private void printScoreIfWanted(Game game) {
+    private void printScoreIfWanted(final Game game) {
         if (willWatchScore()) {
             OutputView.printScore(game.score());
         }

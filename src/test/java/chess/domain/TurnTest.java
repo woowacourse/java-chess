@@ -19,7 +19,7 @@ class TurnTest {
     @Test
     @DisplayName("검정말이 선인지 확인")
     void turnCheck() {
-        Player player = turn.player();
+        final Player player = turn.player();
         assertThat(player.getColor()).isEqualTo(Color.BLACK);
     }
 
@@ -27,7 +27,7 @@ class TurnTest {
     @DisplayName("다음 턴으로 잘 바꾸는지 확인")
     void turnNextCheck() {
         turn.next();
-        Player player = turn.player();
+        final Player player = turn.player();
         assertThat(player.getColor()).isEqualTo(Color.WHITE);
     }
 }

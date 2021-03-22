@@ -31,7 +31,7 @@ class QueenTest {
     @MethodSource("destinations")
     @DisplayName("퀸의 움직임 로직확인")
     void move(Position position) {
-        Queen queen = new Queen(Color.BLACK, Position.from("c5"));
+        final Queen queen = new Queen(Color.BLACK, Position.from("c5"));
         queen.moveToEmpty(position, new Pieces());
         assertTrue(queen.hasPosition(position));
     }
@@ -40,8 +40,8 @@ class QueenTest {
     @MethodSource("destinations")
     @DisplayName("퀸이 움직이는 길에 다른 기물이 있을 때 익셉션을 날리는지 확인")
     void interruptedMove(Position position) {
-        Queen queen = new Queen(Color.BLACK, Position.from("c5"));
-        List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"),
+        final Queen queen = new Queen(Color.BLACK, Position.from("c5"));
+        final List<Position> positions = Arrays.asList(Position.from("b5"), Position.from("e5"), Position.from("c2"), Position.from("c6"),
                 Position.from("b6"), Position.from("b4"), Position.from("d4"), Position.from("d6"));
 
         assertThatThrownBy(() -> queen.moveToEmpty(position, blackPieces(positions)))
@@ -49,7 +49,7 @@ class QueenTest {
     }
 
     private Pieces blackPieces(List<Position> positions) {
-        Piece[] pieces = new Piece[positions.size()];
+        final Piece[] pieces = new Piece[positions.size()];
         for (int i = 0; i < positions.size(); i++) {
             pieces[i] = new Pawn(Color.BLACK, positions.get(i));
         }

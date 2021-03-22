@@ -10,12 +10,12 @@ public class Pawn extends Division {
     private static final int SINGLE_MOVEMENT = 1;
     private static final int DOUBLE_MOVEMENTS = 2;
 
-    public Pawn(Color color, Position position) {
+    public Pawn(final Color color, final Position position) {
         super(color, PAWN_DISPLAYNAME, position);
     }
 
     @Override
-    public void moveToEmpty(Position to, Pieces pieces) {
+    public void moveToEmpty(final Position to, final Pieces pieces) {
         if (canMoveDouble(to)) {
             validateNoneBetween(to, pieces);
             position = to;
@@ -28,31 +28,31 @@ public class Pawn extends Division {
         throw new IllegalArgumentException();
     }
 
-    private boolean canMoveDouble(Position to) {
+    private boolean canMoveDouble(final Position to) {
         return (getPawnMovementSize(to) == DOUBLE_MOVEMENTS) && position.hasRow(initPawnRow());
     }
 
-    private int getPawnMovementSize(Position to) {
+    private int getPawnMovementSize(final Position to) {
         if (position.diffColumn(to) != 0) {
             throw new IllegalArgumentException();
         }
         return position.diffRow(to) / color.moveUnit();
     }
 
-    private void validateNoneBetween(Position to, Pieces pieces) {
-        List<Position> positions = position.getBetween(to);
+    private void validateNoneBetween(final Position to, final Pieces pieces) {
+        final List<Position> positions = position.getBetween(to);
         if (positions.stream()
                      .anyMatch(pieces::hasPieceOf)) {
             throw new IllegalArgumentException();
         }
     }
 
-    private boolean canMoveSingle(Position to) {
+    private boolean canMoveSingle(final Position to) {
         return getPawnMovementSize(to) == SINGLE_MOVEMENT;
     }
 
     @Override
-    public void moveForKill(Position to, Pieces pieces) {
+    public void moveForKill(final Position to, final Pieces pieces) {
         if (canKill(to)) {
             position = to;
             return;
@@ -75,7 +75,7 @@ public class Pawn extends Division {
         return true;
     }
 
-    private boolean canKill(Position to) {
+    private boolean canKill(final Position to) {
         return Math.abs(position.diffColumn(to)) == 1 && position.diffRow(to) == color.moveUnit();
     }
 }

@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 public class Player {
     private final Color color;
 
-    public Player(Color color) {
+    public Player(final Color color) {
         this.color = color;
     }
 
@@ -16,17 +16,17 @@ public class Player {
         return color;
     }
 
-    public Piece pickStartPiece(Position position, Pieces pieces) {
-        Piece piece = pieces.getPieceOf(position);
+    public Piece pickStartPiece(final Position position, final Pieces pieces) {
+        final Piece piece = pieces.getPieceOf(position);
         if (piece.isSameColor(color)) {
             return piece;
         }
         throw new IllegalArgumentException();
     }
 
-    public void move(Position from, Position to, Pieces pieces) {
-        Piece start = pickStartPiece(from, pieces);
-        Piece piece = pieces.getPieceOf(to);
+    public void move(final Position from, final Position to, final Pieces pieces) {
+        final Piece start = pickStartPiece(from, pieces);
+        final Piece piece = pieces.getPieceOf(to);
         if (piece.isEmpty()) {
             start.moveToEmpty(to, pieces);
             return;
