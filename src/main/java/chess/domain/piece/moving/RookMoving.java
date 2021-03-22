@@ -1,7 +1,7 @@
 package chess.domain.piece.moving;
 
 import chess.domain.Position;
-import chess.domain.piece.direction.Directions;
+import chess.domain.piece.direction.PieceDirections;
 import chess.domain.piece.direction.RookDirections;
 import chess.exception.ImpossibleMoveException;
 
@@ -10,13 +10,13 @@ import java.util.List;
 
 public class RookMoving implements PieceMoving {
 
-    private final Directions directions;
+    private final PieceDirections pieceDirections;
     private Position currentPosition;
     private List<Position> movablePositions;
     private boolean moved;
 
     public RookMoving(RookDirections rookDirections, Position currentPosition) {
-        this.directions = rookDirections;
+        this.pieceDirections = rookDirections;
         this.currentPosition = currentPosition;
         this.movablePositions = new ArrayList<>();
         this.moved = false;
@@ -24,7 +24,7 @@ public class RookMoving implements PieceMoving {
 
     @Override
     public void updateMovablePositions(List<Position> existPiecePositions, List<Position> enemiesPositions) {
-        movablePositions = directions.movablePositions(currentPosition, existPiecePositions, enemiesPositions);
+        movablePositions = pieceDirections.movablePositions(currentPosition, existPiecePositions, enemiesPositions);
     }
 
     @Override

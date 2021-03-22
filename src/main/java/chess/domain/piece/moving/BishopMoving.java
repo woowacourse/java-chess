@@ -2,7 +2,7 @@ package chess.domain.piece.moving;
 
 import chess.domain.Position;
 import chess.domain.piece.direction.BishopDirections;
-import chess.domain.piece.direction.Directions;
+import chess.domain.piece.direction.PieceDirections;
 import chess.exception.ImpossibleMoveException;
 
 import java.util.ArrayList;
@@ -10,13 +10,13 @@ import java.util.List;
 
 public class BishopMoving implements PieceMoving {
 
-    private final Directions directions;
+    private final PieceDirections pieceDirections;
     private Position currentPosition;
     private List<Position> movablePositions;
     private boolean moved;
 
     public BishopMoving(BishopDirections bishopDirections, Position currentPosition) {
-        this.directions = bishopDirections;
+        this.pieceDirections = bishopDirections;
         this.currentPosition = currentPosition;
         this.movablePositions = new ArrayList<>();
         this.moved = false;
@@ -24,7 +24,7 @@ public class BishopMoving implements PieceMoving {
 
     @Override
     public void updateMovablePositions(List<Position> existPiecePositions, List<Position> enemiesPositions) {
-        movablePositions = directions.movablePositions(currentPosition, existPiecePositions, enemiesPositions);
+        movablePositions = pieceDirections.movablePositions(currentPosition, existPiecePositions, enemiesPositions);
     }
 
     @Override

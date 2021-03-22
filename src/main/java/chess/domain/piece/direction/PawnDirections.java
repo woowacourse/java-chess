@@ -6,7 +6,7 @@ import chess.domain.TeamColor;
 import java.util.List;
 import java.util.Optional;
 
-public class PawnDirections extends Directions {
+public class PawnDirections extends PieceDirections {
 
     public PawnDirections(TeamColor teamColor) {
         super(false, Direction.forwardDirection(teamColor), Direction.forwardDiagonal(teamColor));

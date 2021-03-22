@@ -5,13 +5,13 @@ import chess.domain.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class Directions {
+public abstract class PieceDirections {
 
     private final boolean movableMoreThanOnePosition;
     private final List<Direction> moveDirections;
     private final List<Direction> killDirections;
 
-    public Directions(boolean movableMoreThanOnePosition, List<Direction> moveDirections, List<Direction> killDirections) {
+    public PieceDirections(boolean movableMoreThanOnePosition, List<Direction> moveDirections, List<Direction> killDirections) {
         this.movableMoreThanOnePosition = movableMoreThanOnePosition;
         this.moveDirections = moveDirections;
         this.killDirections = killDirections;
