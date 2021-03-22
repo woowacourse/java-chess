@@ -13,9 +13,9 @@ public enum Command {
     STATUS("status", ChessController::status);
 
     private final String command;
-    BiConsumer<ChessGame, String> function;
+    BiConsumer<ChessGame, Commands> function;
 
-    Command(String command, BiConsumer<ChessGame, String> function) {
+    Command(String command, BiConsumer<ChessGame, Commands> function) {
         this.command = command;
         this.function = function;
     }
@@ -27,7 +27,7 @@ public enum Command {
                 .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 명령어 입니다."));
     }
 
-    public void apply(ChessGame chessGame, String command) {
+    public void apply(ChessGame chessGame, Commands command) {
         function.accept(chessGame, command);
     }
 }

@@ -55,11 +55,11 @@ public class Position {
         return y - this.getY();
     }
 
-    public int calculateFilePoint2(Position target) {
+    public int calculateFilePoint(Position target) {
         return target.getX() - this.getX();
     }
 
-    public int calculateRankPoint2(Position target) {
+    public int calculateRankPoint(Position target) {
         return target.getY() - this.getY();
     }
 

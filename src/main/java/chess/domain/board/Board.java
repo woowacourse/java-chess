@@ -41,8 +41,8 @@ public class Board {
         return PointCalculator.calculatePawn(chessBoard, team);
     }
 
-    public void movePiece(Positions positions) {
-        chessBoard.put(positions.target(), chessBoard.get(positions.source()));
-        chessBoard.remove(positions.source());
+    public void movePiece(Path path) {
+        chessBoard.put(path.target(), chessBoard.get(path.source()));
+        chessBoard.remove(path.source());
     }
 }

@@ -27,74 +27,74 @@ public class ChessGame {
         state = state.init();
     }
 
-    public void move(String command) {
+    public void move(Commands command) {
         try {
-            Positions positions = new Positions(command);
+            Path path = new Path(command.path());
             // TODO: 보드로부터 피스를 받아 이동시키는 것이 아니라 보드 내부에서 이동시키도록 변경하기.
-            Piece piece = board.pieceAt(positions.source());
+            Piece piece = board.pieceAt(path.source());
             piece.confirmTurn(turn);
-            board.confirmSameTeamPiece(positions.target(), turn);
-            moveBody(positions, piece);
+            board.confirmSameTeamPiece(path.target(), turn);
+            moveBody(path, piece);
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
     }
 
-    private void moveBody(Positions positions, Piece piece) {
-        final Direction direction = positions.computeDirection();
+    private void moveBody(Path path, Piece piece) {
+        final Direction direction = path.computeDirection();
         final Strategy strategy = piece.strategy();
         strategy.moveTowards(direction);
-        actionEachPiece(positions, piece, direction, strategy);
+        actionEachPiece(path, piece, direction, strategy);
     }
 
     // TODO : chessgame은 보드에게, 보드는 각 피스에게 일을 시키도록 수정하기
-    private void actionEachPiece(Positions positions, Piece piece, Direction direction, Strategy strategy) {
-        final int distance = positions.computeDistance();
+    private void actionEachPiece(Path path, Piece piece, Direction direction, Strategy strategy) {
+        final int distance = path.computeDistance();
         if (piece.isPawn()) {
-            actionPawn(piece, positions, direction, strategy, distance);
+            actionPawn(piece, path, direction, strategy, distance);
             return;
         }
-        action(positions, direction, strategy, distance);
+        action(path, direction, strategy, distance);
     }
 
-    private void actionPawn(Piece piece, Positions positions, Direction direction, Strategy strategy, int distance) {
-        if (positions.isDiagonal()) {
-            MoveValidator.validateDiagonalMove(board, piece, positions.target(), distance);
-            movePiece(positions);
+    private void actionPawn(Piece piece, Path path, Direction direction, Strategy strategy, int distance) {
+        if (path.isDiagonal()) {
+            MoveValidator.validateDiagonalMove(board, piece, path.target(), distance);
+            movePiece(path);
             return;
         }
         MoveValidator.validateStraightMove(distance);
-        MoveValidator.isPieceExist(board, positions.target());
-        moveStraight(positions, distance, direction, strategy);
+        MoveValidator.isPieceExist(board, path.target());
+        moveStraight(path, distance, direction, strategy);
     }
 
-    private void moveStraight(Positions positions, int distance, Direction direction, Strategy strategy) {
+    private void moveStraight(Path path, int distance, Direction direction, Strategy strategy) {
         if (distance == Pawn.MOVE_DEFAULT_RANGE) {
-            movePiece(positions);
+            movePiece(path);
             return;
         }
 
         if (distance == Pawn.MOVE_FIRST_RANGE) {
-            MoveValidator.validatePawnLocation(positions.source());
-            action(positions, direction, strategy, distance);
+            MoveValidator.validatePawnLocation(path.source());
+            action(path, direction, strategy, distance);
         }
     }
 
-    private void movePiece(Positions positions) {
-        if (board.containsPosition(positions.target())) {
-            confirmKingCaptured(positions.target());
+    private void movePiece(Path path) {
+        if (board.containsPosition(path.target())) {
+            confirmKingCaptured(path.target());
         }
-        board.movePiece(positions);
+        board.movePiece(path);
         turnOver();
     }
 
-    private void action(Positions positions, Direction direction, Strategy strategy, int distance) {
+    private void action(Path path, Direction direction, Strategy strategy, int distance) {
         int step = 1;
         while (strategy.canMove()) {
-            Position position = positions.move(direction, step++);
-            if (positions.targetEquals(position)) {
+            Position position = path.move(direction, step++);
+            if (path.targetEquals(position)) {
                 board.confirmSameTeamPiece(position, turn);
-                movePiece(positions);
+                movePiece(path);
                 return;
             }
             MoveValidator.isPieceExist(board, position);

@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.Positions;
+import chess.domain.board.Path;
 import chess.domain.board.Team;
 import chess.domain.piece.Pawn;
 import chess.domain.utils.BoardInitializer;
@@ -40,7 +40,7 @@ class MoveValidatorTest {
     @DisplayName("대각선으로 폰이 이동할 수 있는 경우")
     @Test
     void validateDiagonalMove() {
-        board.movePiece(new Positions(Arrays.asList(Position.of("a7"), Position.of("a3"))));
+        board.movePiece(new Path(Arrays.asList(Position.of("a7"), Position.of("a3"))));
         assertThatCode(() -> MoveValidator
                 .validateDiagonalMove(board, new Pawn(Team.WHITE), Position.of("a3"), 1))
                 .doesNotThrowAnyException();

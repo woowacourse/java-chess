@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.ChessGame;
+import chess.domain.board.Commands;
 import chess.domain.board.Command;
 import chess.domain.dto.BoardDto;
 import chess.domain.utils.BoardInitializer;
@@ -12,22 +13,32 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
 
-    public void run() {
+//    public void run() {
+//        ChessGame chessGame = new ChessGame();
+//        OutputView.printCommandInfo();
+//        while (chessGame.isRunning()) {
+//            String inputCmd = InputView.inputCommand();
+//            Command command = Command.of(splitCommand(inputCmd));
+//            command.apply(chessGame, inputCmd);
+//        }
+//    }
+
+    public void run2() {
         ChessGame chessGame = new ChessGame();
         OutputView.printCommandInfo();
         while (chessGame.isRunning()) {
-            String inputCmd = InputView.inputCommand();
-            Command command = Command.of(splitCommand(inputCmd));
+            final Commands inputCmd = InputView.inputCommand2();
+            Command command = Command.of(inputCmd.mainCommand());
             command.apply(chessGame, inputCmd);
         }
     }
 
-    public static void start(ChessGame chessGame, String command) {
+    public static void start(ChessGame chessGame, Commands command) {
         chessGame.initBoard(BoardInitializer.init());
         OutputView.printBoard(new BoardDto(chessGame.board(), chessGame.turn()));
     }
 
-    public static void move(ChessGame chessGame, String command) {
+    public static void move(ChessGame chessGame, Commands command) {
         if (chessGame.isReady() || chessGame.isEnd()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
@@ -36,16 +47,41 @@ public class ChessController {
         confirmKingDead(chessGame);
     }
 
-    public static void end(ChessGame chessGame, String command) {
+    public static void end(ChessGame chessGame, Commands command) {
         chessGame.endGame();
     }
 
-    public static void status(ChessGame chessGame, String command) {
+    public static void status(ChessGame chessGame, Commands command) {
         if (chessGame.isReady()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
         OutputView.printStatus(chessGame.calculatePoint());
     }
+
+//    public static void start(ChessGame chessGame, String command) {
+//        chessGame.initBoard(BoardInitializer.init());
+//        OutputView.printBoard(new BoardDto(chessGame.board(), chessGame.turn()));
+//    }
+//
+//    public static void move(ChessGame chessGame, String command) {
+//        if (chessGame.isReady() || chessGame.isEnd()) {
+//            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+//        }
+//        chessGame.move(command);
+//        OutputView.printBoard(new BoardDto(chessGame.board(), chessGame.turn()));
+//        confirmKingDead(chessGame);
+//    }
+//
+//    public static void end(ChessGame chessGame, String command) {
+//        chessGame.endGame();
+//    }
+//
+//    public static void status(ChessGame chessGame, String command) {
+//        if (chessGame.isReady()) {
+//            throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
+//        }
+//        OutputView.printStatus(chessGame.calculatePoint());
+//    }
 
     private static void confirmKingDead(ChessGame chessGame) {
         if (chessGame.isEnd()) {

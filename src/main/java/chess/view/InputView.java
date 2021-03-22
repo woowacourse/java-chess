@@ -1,5 +1,7 @@
 package chess.view;
 
+import chess.domain.board.Commands;
+
 import java.util.Scanner;
 
 public class InputView {
@@ -7,5 +9,9 @@ public class InputView {
 
     public static String inputCommand() {
         return SCANNER.nextLine();
+    }
+
+    public static Commands inputCommand2() {
+        return new Commands(SCANNER.nextLine());
     }
 }
