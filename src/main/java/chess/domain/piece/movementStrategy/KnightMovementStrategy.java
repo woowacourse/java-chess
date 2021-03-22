@@ -1,33 +1,15 @@
 package chess.domain.piece.movementStrategy;
 
-import chess.domain.board.Point;
 import chess.domain.piece.MoveVector;
 import java.util.List;
 
-public class KnightMovementStrategy implements MovementStrategy {
+public class KnightMovementStrategy extends AbstractMovementStrategy {
 
     private static final int LENGTH = 1;
 
-    private static final List<MoveVector> KNIGHTS_MOVE_VECTORS = MoveVector.knightVectors();
-
     @Override
-    public MoveVector movableVector(Point source, Point destination) {
-        int x = destination.columnDifference(source);
-        int y = destination.rowDifference(source);
-
-        return KNIGHTS_MOVE_VECTORS.stream()
-            .filter(vector -> vector.isSameDirection(x, y))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("이동할 수 있는 방향이 아닙니다."));
-    }
-
-    @Override
-    public boolean hasMovableVector(Point source, Point destination) {
-        int x = destination.columnDifference(source);
-        int y = destination.rowDifference(source);
-
-        return KNIGHTS_MOVE_VECTORS.stream()
-            .anyMatch(moveVector -> moveVector.isSameDirection(x, y));
+    protected List<MoveVector> possibleMoveVectors() {
+        return MoveVector.knightVectors();
     }
 
     @Override
