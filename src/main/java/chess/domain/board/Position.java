@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.TeamColor;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Position {
 
@@ -164,5 +165,23 @@ public class Position {
         return "Position{" +
             "boardPosition='" + alpha + ", " + number + '\'' +
             '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Position)) {
+            return false;
+        }
+        Position position = (Position) o;
+        return alpha == position.alpha &&
+            number == position.number;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(alpha, number);
     }
 }

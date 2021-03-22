@@ -3,6 +3,8 @@ package chess.domain.piece;
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.result.Score;
+import java.util.HashSet;
+import java.util.Set;
 
 public abstract class PieceOnBoard implements Piece {
 
@@ -44,6 +46,125 @@ public abstract class PieceOnBoard implements Piece {
 
     protected boolean validBlank(Position position, ChessBoard chessBoard) {
         return position != Position.ERROR && chessBoard.isBlank(position);
+    }
+
+
+    protected Set<Position> moveDiagonal(Position source, Position target, ChessBoard chessBoard) {
+
+        Set<Position> candidates = new HashSet<>();
+
+        candidates.addAll(possibleLeftDown(source, target, chessBoard));
+        candidates.addAll(possibleLeftUP(source, target, chessBoard));
+        candidates.addAll(possibleRightDown(source, target, chessBoard));
+        candidates.addAll(possibleRightUp(source, target, chessBoard));
+        return candidates;
+    }
+
+    private Set<Position> possibleRightUp(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveRightUp();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveRightUp();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleRightDown(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveRightDown();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveRightDown();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleLeftUP(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveLeftUp();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveLeftUp();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleLeftDown(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveLeftDown();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveLeftDown();
+        }
+        return candidates;
+    }
+
+    protected Set<Position> moveCross(Position source, Position target, ChessBoard chessBoard) {
+
+        Set<Position> candidates = new HashSet<>();
+
+        candidates.addAll(possibleUp(source, target, chessBoard));
+        candidates.addAll(possibleDown(source, target, chessBoard));
+        candidates.addAll(possibleLeft(source, target, chessBoard));
+        candidates.addAll(possibleRight(source, target, chessBoard));
+        return candidates;
+    }
+
+    private Set<Position> possibleUp(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveUp();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveUp();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleDown(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveDown();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveDown();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleLeft(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveLeft();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveLeft();
+        }
+        return candidates;
+    }
+
+    private Set<Position> possibleRight(Position source, Position target,
+        ChessBoard chessBoard) {
+        Set<Position> candidates = new HashSet<>();
+
+        Position position = source.moveRight();
+        while (movable(position, target, chessBoard)) {
+            candidates.add(position);
+            position = position.moveRight();
+        }
+        return candidates;
     }
 
     @Override
