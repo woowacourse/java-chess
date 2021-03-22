@@ -1,5 +1,8 @@
 package chess.domain.game;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
+
 import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
@@ -13,10 +16,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
-
 class ChessGameTest {
+
     private ChessGame runningChessGame;
 
     @BeforeEach

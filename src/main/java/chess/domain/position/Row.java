@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.exception.InvalidRowException;
-
 import java.util.Arrays;
 
 public enum Row {

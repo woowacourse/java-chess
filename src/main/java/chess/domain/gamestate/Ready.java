@@ -7,6 +7,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
 public class Ready extends GameState {
+
     public Ready(Board board) {
         super(board, Side.NONE);
     }

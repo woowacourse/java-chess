@@ -3,11 +3,11 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMethodCallException;
-
 import java.util.Collections;
 import java.util.List;
 
 public class King extends Piece {
+
     private static final String INITIAL = "K";
     private static final int SCORE = 0;
 

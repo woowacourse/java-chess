@@ -9,11 +9,11 @@ import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.InvalidCommandException;
 import chess.exception.InvalidMovementException;
-
 import java.util.List;
 import java.util.Map;
 
 public class Board {
+
     private static final int KING_COUNT = 2;
 
     private final Map<Position, Piece> board;

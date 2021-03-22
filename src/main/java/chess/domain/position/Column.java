@@ -1,7 +1,6 @@
 package chess.domain.position;
 
 import chess.exception.InvalidColumnException;
-
 import java.util.Arrays;
 import java.util.Locale;
 

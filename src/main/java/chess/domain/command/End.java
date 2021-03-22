@@ -4,6 +4,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
 public class End implements Command {
+
     @Override
     public boolean isStart() {
         return false;

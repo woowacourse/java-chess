@@ -3,10 +3,10 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMethodCallException;
-
 import java.util.List;
 
 public class Rook extends Piece {
+
     private static final String INITIAL = "R";
     private static final int SCORE = 5;
 

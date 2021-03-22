@@ -1,12 +1,12 @@
 package chess.domain.position;
 
 import chess.exception.PositionException;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Position {
+
     private static final int POSITION_LENGTH = 2;
     private static final int POSITIVE_INCLINE = 1;
     private static final int NEGATIVE_INCLINE = -1;
@@ -62,7 +62,8 @@ public class Position {
         return Collections.emptyList();
     }
 
-    private static List<Position> negativeDiagonalRoute(int differenceOfColumn, Position newPosition) {
+    private static List<Position> negativeDiagonalRoute(int differenceOfColumn,
+            Position newPosition) {
         List<Position> result = new ArrayList<>();
         int abs = Math.abs(differenceOfColumn);
         int next = differenceOfColumn / abs;
@@ -74,7 +75,8 @@ public class Position {
         return result;
     }
 
-    private static List<Position> positiveDiagonalRoute(int differenceOfColumn, Position newPosition) {
+    private static List<Position> positiveDiagonalRoute(int differenceOfColumn,
+            Position newPosition) {
         List<Position> result = new ArrayList<>();
         int abs = Math.abs(differenceOfColumn);
         int next = differenceOfColumn / abs;

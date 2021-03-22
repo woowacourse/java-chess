@@ -1,11 +1,17 @@
 package chess.domain.board;
 
 import chess.domain.Side;
-import chess.domain.piece.*;
+import chess.domain.piece.Bishop;
+import chess.domain.piece.Blank;
+import chess.domain.piece.King;
+import chess.domain.piece.Knight;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Rook;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;

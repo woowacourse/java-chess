@@ -4,6 +4,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
 public interface Command {
+
     String MOVE_COMMAND = "move";
     String END_COMMAND = "end";
     String STATUS_COMMAND = "status";

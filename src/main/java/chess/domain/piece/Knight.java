@@ -3,11 +3,11 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMethodCallException;
-
 import java.util.Collections;
 import java.util.List;
 
 public class Knight extends Piece {
+
     private static final String INITIAL = "N";
     private static final double SCORE = 2.5;
     private static final int MOVE_RULE_FIRST = 1;
@@ -19,10 +19,12 @@ public class Knight extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
-        if (Math.abs(rowDifference) == MOVE_RULE_SECOND && Math.abs(columnDifference) == MOVE_RULE_FIRST) {
+        if (Math.abs(rowDifference) == MOVE_RULE_SECOND
+                && Math.abs(columnDifference) == MOVE_RULE_FIRST) {
             return true;
         }
-        return Math.abs(rowDifference) == MOVE_RULE_FIRST && Math.abs(columnDifference) == MOVE_RULE_SECOND;
+        return Math.abs(rowDifference) == MOVE_RULE_FIRST
+                && Math.abs(columnDifference) == MOVE_RULE_SECOND;
     }
 
     @Override

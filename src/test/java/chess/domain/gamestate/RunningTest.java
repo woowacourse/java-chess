@@ -1,5 +1,7 @@
 package chess.domain.gamestate;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.board.BoardTestInitializer;
@@ -8,9 +10,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class RunningTest {
+
     private State running;
 
     @BeforeEach
@@ -27,12 +28,14 @@ class RunningTest {
     @Test
     @DisplayName("기물을 움직여 왕을 잡을 경우 GameSet 상태로 변화")
     void moveGameSet() {
-        assertThat(running.move(Position.from("d5"), Position.from("f6"))).isInstanceOf(GameSet.class);
+        assertThat(running.move(Position.from("d5"), Position.from("f6")))
+                .isInstanceOf(GameSet.class);
     }
 
     @Test
     @DisplayName("기물을 움직여 Running 상태로 변화")
     void moveRunning() {
-        assertThat(running.move(Position.from("h2"), Position.from("h3"))).isInstanceOf(Running.class);
+        assertThat(running.move(Position.from("h2"), Position.from("h3")))
+                .isInstanceOf(Running.class);
     }
 }

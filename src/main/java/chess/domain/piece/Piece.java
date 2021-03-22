@@ -3,12 +3,12 @@ package chess.domain.piece;
 import chess.domain.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovementException;
-
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
 
 public abstract class Piece {
+
     private final Side side;
     private final String initial;
     private boolean initPosition = true;

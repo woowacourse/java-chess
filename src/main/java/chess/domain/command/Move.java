@@ -4,6 +4,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
 public class Move implements Command {
+
     private static final String SPACE = " ";
 
     private final Position source;

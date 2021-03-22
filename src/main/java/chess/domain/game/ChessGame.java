@@ -8,6 +8,7 @@ import chess.domain.gamestate.State;
 import chess.exception.InvalidCommandException;
 
 public class ChessGame {
+
     private State state;
 
     public ChessGame(State state) {

@@ -2,10 +2,10 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
-
 import java.util.List;
 
 public class Pawn extends Piece {
+
     private static final String INITIAL = "P";
     private static final int BLACK_DIRECTION = 1;
     private static final int WHITE_DIRECTION = -1;
@@ -66,7 +66,8 @@ public class Pawn extends Piece {
         return rowDifference == direction * DOUBLE_FORWARD;
     }
 
-    private boolean oneSquareForwardOrDiagonal(int rowDifference, int columnDifference, int direction) {
+    private boolean oneSquareForwardOrDiagonal(int rowDifference, int columnDifference,
+            int direction) {
         return rowDifference == direction && Math.abs(columnDifference) < DOUBLE_FORWARD;
     }
 
@@ -77,7 +78,8 @@ public class Pawn extends Piece {
 
     @Override
     public boolean diagonal(Position from, Position to) {
-        return Math.abs(Position.differenceOfRow(from, to)) == Math.abs(Position.differenceOfColumn(from, to));
+        return Math.abs(Position.differenceOfRow(from, to)) == Math
+                .abs(Position.differenceOfColumn(from, to));
     }
 
     @Override

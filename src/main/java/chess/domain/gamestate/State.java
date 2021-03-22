@@ -6,6 +6,7 @@ import chess.domain.board.Board;
 import chess.domain.position.Position;
 
 public interface State {
+
     State start();
 
     State move(Position from, Position to);
