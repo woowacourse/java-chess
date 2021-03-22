@@ -10,7 +10,8 @@ import java.util.Map;
 
 public class Board {
 
-    private static final String STAY_ERROR_MESSAGE = "지금 위치와 이동하려는 위치가 같습니다.";
+    public static final String STAY_ERROR_MESSAGE = "지금 위치와 이동하려는 위치가 같습니다.";
+    public static final String INVALID_TURN_MESSAGE = "해당 턴이 아닙니다.";
     private static final Piece VOID_PIECE = new Piece(PieceKind.VOID, PieceColor.VOID);
 
     private final Map<Position, Piece> board;
@@ -127,7 +128,7 @@ public class Board {
 
     public void checkTurn(Piece piece, PieceColor turnColor) {
         if (!piece.isSameColor(turnColor)) {
-            throw new RuntimeException("해당 턴이 아닙니다.");
+            throw new RuntimeException(INVALID_TURN_MESSAGE);
         }
     }
 

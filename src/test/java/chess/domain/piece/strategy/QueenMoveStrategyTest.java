@@ -34,7 +34,7 @@ class QueenMoveStrategyTest {
         Position target = Position.of('c', 3);
         assertThatThrownBy(() -> board.move(position, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining("지금 위치와 이동하려는 위치가 같습니다.");
+            .hasMessageContaining(Board.STAY_ERROR_MESSAGE);
     }
 
     @DisplayName("Queen 움직임 테스트 - 유효한 대각선 위치로 이동")

@@ -9,6 +9,8 @@ import java.util.List;
 
 public class ChessController {
 
+    public static final String NOT_START_MESSAGE = "게임이 시작되지 않았습니다.";
+
     public void run() {
         OutputView.printInitMessage();
         Game game = new Game();
@@ -43,7 +45,7 @@ public class ChessController {
 
     private static void isStart(Game game) {
         if (!game.isStart()) {
-            throw new IllegalArgumentException("게임이 시작되지 않았습니다.");
+            throw new IllegalArgumentException(NOT_START_MESSAGE);
         }
     }
 

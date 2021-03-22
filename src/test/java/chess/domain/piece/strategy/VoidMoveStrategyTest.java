@@ -22,6 +22,6 @@ class VoidMoveStrategyTest {
 
         assertThatThrownBy(() -> board.move(source, target, PieceColor.WHITE))
             .isInstanceOf(InvalidMoveException.class)
-            .hasMessageContaining("빈 칸입니다.");
+            .hasMessageContaining(VoidMoveStrategy.VOID_MESSAGE);
     }
 }

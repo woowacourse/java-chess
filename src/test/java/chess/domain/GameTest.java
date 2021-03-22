@@ -50,7 +50,7 @@ class GameTest {
 
         assertThatThrownBy(() -> game.move("e7", "e6"))
             .isInstanceOf(RuntimeException.class)
-            .hasMessageContaining("해당 턴이 아닙니다.");
+            .hasMessageContaining(Board.INVALID_TURN_MESSAGE);
     }
 
     @DisplayName("게임 승패 알아보는 테스트")

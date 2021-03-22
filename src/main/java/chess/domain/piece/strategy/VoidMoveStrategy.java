@@ -5,7 +5,7 @@ import chess.domain.exceptions.InvalidMoveException;
 
 public class VoidMoveStrategy implements MoveStrategy {
 
-    private static final String VOID_MESSAGE = "빈 칸입니다.";
+    public static final String VOID_MESSAGE = "빈 칸입니다.";
 
     @Override
     public void move(Position source, Position target) {
