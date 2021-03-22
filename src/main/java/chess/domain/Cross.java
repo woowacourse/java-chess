@@ -1,6 +1,7 @@
 package chess.domain;
 
 import chess.domain.piece.CurrentPieces;
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Position;
 
 import java.util.Arrays;
@@ -33,13 +34,16 @@ public enum Cross {
                 .filter(value -> source.isCross(target))
                 .filter(value -> value.findCross.test(source, target))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 십자 방향이 아닙니다."));
+                .orElseThrow(() -> new IllegalArgumentException("[ERROR] 올바른 방향이 아닙니다."));
     }
 
     public void hasPieceInPath(Position source, Position target, CurrentPieces currentPieces) {
         int sourceX = source.getX();
         int sourceY = source.getY();
         int count = Math.max(Math.abs(source.subtractX(target)), Math.abs(source.subtractY(target)));
+        if (currentPieces.findByPosition(source) instanceof Pawn) {
+            count++;
+        }
         for (int i = 1; i < count; i++) {
             validatePieceInPath(currentPieces, sourceX, sourceY, i);
         }
