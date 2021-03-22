@@ -22,8 +22,17 @@
   - [x] currentPosition에서 targetPosition으로 말을 이동시키는 기능 구현
   - [x] king이 죽었는지 체크 구현
   - [x] 팀 별로 totalScore를 계산해서 반환 구현
+  - [x] check 구현
+  - [ ] checkmate 구현
 
 #### ChessAction
 
  - [x] 사용자 요구에 따라 start, move, end, status를 실행하도록 구현
  
+#### Todo
+체크메이트
+ 1. 현재 King이 체크상태
+ 2. King이 움직일 수 있는 모든 곳이 적의 공격범위에 포함
+ 3. 아군의 말이 적의 공격로의 중간을 막아줄 수 없을 때
+ 4. 아군의 말이 check 중인 말을 잡을 수 없을 때
+ 5. check 중인 말이 두개 이상이라 하나를 잡아도 여전히 check일 때
