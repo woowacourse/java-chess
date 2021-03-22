@@ -1,11 +1,18 @@
 package chess.view;
 
+import chess.domain.ChessResult;
 import chess.domain.Position;
-import chess.domain.Score;
 import chess.domain.TeamColor;
 
 
 public class OutputView {
+
+    private static final String SCORE_FORM = "%s팀 : %.1f" + System.lineSeparator();
+    private static final String WINNER_FORM = "%s팀 승리!";
+
+    public static void printByFormat(String format, Object... message) {
+        System.out.printf(format, message);
+    }
 
     public static void printBoard(BoardDto boardDto) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -30,13 +37,13 @@ public class OutputView {
                 "> 게임 이동 : move source위치 target위치 - 예. move b2 b3");
     }
 
-    public static void printScore(Score whiteTeamScore, Score blackTeamScore) {
-        System.out.println("흰색 팀 : " + whiteTeamScore.value());
-        System.out.println("검은색 팀 : " + blackTeamScore.value());
-
+    public static void printResult(ChessResult chessResult) {
+        printByFormat(SCORE_FORM, TeamColor.WHITE, chessResult.whiteTeamScore().value());
+        printByFormat(SCORE_FORM, TeamColor.BLACK, chessResult.blackTeamScore().value());
+        printWinner(chessResult.winner());
     }
 
     public static void printWinner(TeamColor teamColor) {
-        System.out.println(teamColor + " 승리!!");
+        printByFormat(WINNER_FORM, teamColor);
     }
 }

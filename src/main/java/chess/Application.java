@@ -7,7 +7,7 @@ import chess.exception.ChessException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class AppRunner {
+public class Application {
     public static void main(String[] args) {
         ChessAction chessAction = new ChessAction();
         OutputView.printStartGame();

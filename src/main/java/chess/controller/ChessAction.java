@@ -1,6 +1,8 @@
 package chess.controller;
 
-import chess.domain.*;
+import chess.domain.ChessGame;
+import chess.domain.ChessResult;
+import chess.domain.Position;
 import chess.exception.ImpossibleMoveException;
 import chess.exception.PieceNotFoundException;
 import chess.util.MessagePositionConverter;
@@ -11,13 +13,13 @@ public class ChessAction {
 
     private ChessGame chessGame;
 
-    public GameStatus start(String message) {
+    public GameStatus start() {
         chessGame = new ChessGame();
         OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
         return GameStatus.RUN;
     }
 
-    public GameStatus end(String message) {
+    public GameStatus end() {
         return GameStatus.EXIT;
     }
 
@@ -26,7 +28,13 @@ public class ChessAction {
         Position currentPosition = messagePositionConverter.currentPosition();
         Position targetPosition = messagePositionConverter.targetPosition();
         chessGame.move(currentPosition, targetPosition);
+
         OutputView.printBoard(new BoardDto(chessGame.nameGroupingByPosition(), chessGame.boardSize()));
+
+        return chessState();
+    }
+
+    private GameStatus chessState() {
         if (chessGame.isKingDead()) {
             OutputView.printWinner(chessGame.enemyColor());
             return GameStatus.EXIT;
@@ -34,12 +42,9 @@ public class ChessAction {
         return GameStatus.RUN;
     }
 
-    public GameStatus status(String message) {
-        Score whiteTeamScore = chessGame.totalScoreByTeamColor(TeamColor.WHITE);
-        Score blackTeamScore = chessGame.totalScoreByTeamColor(TeamColor.BLACK);
-        OutputView.printScore(whiteTeamScore, blackTeamScore);
-        ChessResult chessResult = new ChessResult(whiteTeamScore, blackTeamScore);
-        OutputView.printWinner(chessResult.winner());
+    public GameStatus status() {
+        ChessResult chessResult = chessGame.result();
+        OutputView.printResult(chessResult);
         return GameStatus.EXIT;
     }
 }

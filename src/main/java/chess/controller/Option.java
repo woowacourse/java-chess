@@ -4,10 +4,10 @@ import java.util.Arrays;
 import java.util.function.BiFunction;
 
 public enum Option {
-    START("start", ChessAction::start),
-    END("end", ChessAction::end),
+    START("start", (chessAction, message) -> chessAction.start()),
+    END("end", (chessAction, message) -> chessAction.end()),
     MOVE("move", ChessAction::move),
-    STATUS("status", ChessAction::status);
+    STATUS("status", (chessAction, message) -> chessAction.status());
 
     private String message;
     private BiFunction<ChessAction, String, GameStatus> function;
