@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Chess;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
@@ -14,8 +13,8 @@ import static org.assertj.core.api.Assertions.*;
 
 class RookTest {
     
-    private final Rook rook = new Rook(Color.WHITE);
-    private final Position sourcePosition = Position.of("a1");
+    private final Rook rook = Rook.WHITE_INSTANCE;
+    private final Position sourcePosition = Position.from("a1");
     private Board board;
     
     @BeforeEach
@@ -29,8 +28,8 @@ class RookTest {
     void moveLinearOneStep() {
         
         // given
-        final Position targetPosition = Position.of("a2");
-        final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final Position targetPosition = Position.from("a2");
+        final Board newBoard = BoardUtils.put(board, targetPosition, Blank.INSTANCE);
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -45,8 +44,8 @@ class RookTest {
     void moveLinearMultiStep() {
         
         // given
-        final Board newBoard = BoardUtils.put(board, Position.of("a2"), new Blank());
-        final Position targetPosition = Position.of("a4");
+        final Board newBoard = BoardUtils.put(board, Position.from("a2"), Blank.INSTANCE);
+        final Position targetPosition = Position.from("a4");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -61,7 +60,7 @@ class RookTest {
     void move_TryToMoveWhereCannotMove_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("b2");
+        final Position targetPosition = Position.from("b2");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -78,7 +77,7 @@ class RookTest {
     void move_ObstacleIsInPath_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("a3");
+        final Position targetPosition = Position.from("a3");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when

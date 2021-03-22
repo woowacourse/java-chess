@@ -7,6 +7,10 @@ import chess.domain.position.MovePosition;
 public class Pawn extends AbstractPiece {
     
     private static final int MOVABLE_LENGTH = 1;
+    public static final Pawn BLACK_INSTANCE
+            = new Pawn(Color.BLACK, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
+    public static final Pawn WHITE_INSTANCE
+            = new Pawn(Color.WHITE, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
     
     private static final String SYMBOL = "p";
     public static final double SCORE = 1;
@@ -14,23 +18,16 @@ public class Pawn extends AbstractPiece {
     private static final String ERROR_PIECE_EXIST_AT_FORWARD_TARGET = "폰이 전진하는 위치에 기물이 있으면 안됩니다.";
     private static final String ERROR_PIECE_DOES_NOT_EXISTS_AT_DIAGONAL_TARGET = "폰은 대각선으로 이동하기 위해서는 상대방의 기물이 있어야 합니다.";
     
-    public Pawn(Color color, DirectionGroup directionGroup) {
+    private Pawn(Color color, DirectionGroup directionGroup) {
         super(color, directionGroup);
     }
     
-    public static Pawn createWhitePawn() {
-        final DirectionGroup directionGroup = new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH);
-        return new Pawn(Color.WHITE, directionGroup);
-    }
-    
-    public static Pawn createBlackPawn() {
-        final DirectionGroup directionGroup = new DirectionGroup(Direction.blackPawnDirection(), MOVABLE_LENGTH);
-        return new Pawn(Color.WHITE, directionGroup);
-    }
-    
     public static Pawn from(Color color) {
-        final DirectionGroup directionGroup = new DirectionGroup(color.getPawnDirections(), MOVABLE_LENGTH);
-        return new Pawn(color, directionGroup);
+        if (color.isBlack()) {
+            return BLACK_INSTANCE;
+        }
+        
+        return WHITE_INSTANCE;
     }
     
     @Override

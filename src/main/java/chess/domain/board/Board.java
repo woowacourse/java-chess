@@ -3,7 +3,6 @@ package chess.domain.board;
 import chess.domain.Color;
 import chess.domain.Status;
 import chess.domain.piece.Blank;
-import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;
@@ -57,7 +56,7 @@ public class Board {
     }
     
     private boolean kingWillDie(Piece targetPiece) {
-        return targetPiece instanceof King;
+        return targetPiece.isKing();
     }
     
     public double score(Color color) {
@@ -92,7 +91,8 @@ public class Board {
         return board.entrySet()
                     .stream()
                     .filter(entry -> isPawnOfColor(color, entry.getValue()))
-                    .collect(groupingBy(entry -> entry.getKey().getX(), counting()));
+                    .collect(groupingBy(entry -> entry.getKey()
+                                                      .getX(), counting()));
     }
     
     private boolean isPawnOfColor(Color Color, Piece piece) {
@@ -101,6 +101,6 @@ public class Board {
     
     public boolean isBlank(Position position) {
         final Piece piece = board.get(position);
-        return piece.isSameColorAs(Color.BLANK);
+        return piece.isBlank();
     }
 }

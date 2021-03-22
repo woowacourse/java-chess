@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class PositionTest {
     
     private final int movableLength = 1;
-    private final Position position = Position.of("a1");
+    private final Position position = Position.from("a1");
     private final Direction direction = Direction.NORTH;
     
     @Test
@@ -17,7 +17,7 @@ class PositionTest {
     void canMoveTest() {
         
         // given
-        Position targetPosition = Position.of("a2");
+        Position targetPosition = Position.from("a2");
         MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
@@ -32,7 +32,7 @@ class PositionTest {
     void canMove_NotEnoughLengthToMove_CannotMove() {
         
         // given
-        Position targetPosition = Position.of("a3");
+        Position targetPosition = Position.from("a3");
         MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
@@ -47,7 +47,7 @@ class PositionTest {
     void canMove_IncorrectDirections_CannotMove() {
         
         // given
-        Position targetPosition = Position.of("a3");
+        Position targetPosition = Position.from("a3");
         MovePosition movePosition = new MovePosition(position, targetPosition);
         
         // when
@@ -60,7 +60,7 @@ class PositionTest {
     @Test
     @DisplayName("문자열로 위치생성 테스트")
     void createTest() {
-        assertThat(Position.of("b2")).isEqualTo(Position.of(1, 1));
-        assertThat(Position.of("b3")).isEqualTo(Position.of(1, 2));
+        assertThat(Position.from("b2")).isEqualTo(Position.of(1, 1));
+        assertThat(Position.from("b3")).isEqualTo(Position.of(1, 2));
     }
 }

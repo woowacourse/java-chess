@@ -6,6 +6,9 @@ import chess.domain.position.MovePosition;
 
 public class Knight extends AbstractPiece {
     
+    public static final Knight BLACK_INSTANCE = new Knight(Color.BLACK);
+    public static final Knight WHITE_INSTANCE = new Knight(Color.WHITE);
+    
     private static final int MOVABLE_LENGTH = 1;
     private static final DirectionGroup DIRECTION_GROUP = new DirectionGroup(Direction.knightDirection(),
             MOVABLE_LENGTH);
@@ -13,8 +16,16 @@ public class Knight extends AbstractPiece {
     private static final String SYMBOL = "n";
     public static final double SCORE = 2.5;
     
-    public Knight(Color color) {
+    private Knight(Color color) {
         super(color, DIRECTION_GROUP);
+    }
+    
+    public static Knight from(Color color) {
+        if (color.isBlack()) {
+            return BLACK_INSTANCE;
+        }
+        
+        return WHITE_INSTANCE;
     }
     
     @Override

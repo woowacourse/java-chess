@@ -6,6 +6,9 @@ import chess.domain.position.MovePosition;
 
 public class Queen extends AbstractPiece {
     
+    public static final Queen BLACK_INSTANCE = new Queen(Color.BLACK);
+    public static final Queen WHITE_INSTANCE = new Queen(Color.WHITE);
+    
     private static final int MOVABLE_LENGTH = 7;
     private static final DirectionGroup DIRECTION_GROUP
             = new DirectionGroup(Direction.everyDirection(), MOVABLE_LENGTH);
@@ -13,8 +16,16 @@ public class Queen extends AbstractPiece {
     private static final String SYMBOL = "q";
     private static final double SCORE = 9;
     
-    public Queen(Color color) {
+    private Queen(Color color) {
         super(color, DIRECTION_GROUP);
+    }
+    
+    public static Queen from(Color color) {
+        if (color.isBlack()) {
+            return BLACK_INSTANCE;
+        }
+        
+        return WHITE_INSTANCE;
     }
     
     @Override

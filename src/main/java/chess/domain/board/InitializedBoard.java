@@ -31,14 +31,14 @@ public class InitializedBoard {
     }
     
     private static void createNonPawns(Map<Position, Piece> board, int yPoint, Color color) {
-        board.put(Position.of(0, yPoint), new Rook(color));
-        board.put(Position.of(1, yPoint), new Knight(color));
-        board.put(Position.of(2, yPoint), new Bishop(color));
-        board.put(Position.of(3, yPoint), new Queen(color));
-        board.put(Position.of(4, yPoint), new King(color));
-        board.put(Position.of(5, yPoint), new Bishop(color));
-        board.put(Position.of(6, yPoint), new Knight(color));
-        board.put(Position.of(7, yPoint), new Rook(color));
+        board.put(Position.of(0, yPoint), Rook.from(color));
+        board.put(Position.of(1, yPoint), Knight.from(color));
+        board.put(Position.of(2, yPoint), Bishop.from(color));
+        board.put(Position.of(3, yPoint), Queen.from(color));
+        board.put(Position.of(4, yPoint), King.from(color));
+        board.put(Position.of(5, yPoint), Bishop.from(color));
+        board.put(Position.of(6, yPoint), Knight.from(color));
+        board.put(Position.of(7, yPoint), Rook.from(color));
     }
     
     private static void createPawns(Map<Position, Piece> board, int yPoint, Color color) {
@@ -47,7 +47,7 @@ public class InitializedBoard {
     
     private static void createBlanks(Map<Position, Piece> board) {
         for (int yPoint = BLANK_START_INDEX; yPoint <= BLANK_END_INDEX; yPoint++) {
-            createPiecesAtRow(board, yPoint, new Blank(Color.BLANK));
+            createPiecesAtRow(board, yPoint, Blank.INSTANCE);
         }
     }
     

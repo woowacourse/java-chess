@@ -1,6 +1,5 @@
 package chess.domain.board;
 
-import chess.domain.Color;
 import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.position.Position;
@@ -21,7 +20,7 @@ public class EmptyBoard {
     
     private static void createBlanks(Map<Position, Piece> board) {
         for (int yPoint = MIN_INDEX; yPoint <= MAX_INDEX; yPoint++) {
-            createPiecesAtRow(board, yPoint, new Blank(Color.BLANK));
+            createPiecesAtRow(board, yPoint, Blank.INSTANCE);
         }
     }
     

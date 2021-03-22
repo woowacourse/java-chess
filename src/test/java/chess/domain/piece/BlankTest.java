@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Chess;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
@@ -19,9 +18,9 @@ class BlankTest {
     void move_TryToMoveBlank_ExceptionThrown() {
         
         // given
-        Blank blank = new Blank(Color.WHITE);
-        Position sourcePosition = Position.of("a3");
-        Position targetPosition = Position.of("a4");
+        Blank blank = Blank.INSTANCE;
+        Position sourcePosition = Position.from("a3");
+        Position targetPosition = Position.from("a4");
         Board board = Chess.createWithInitializedBoard()
                            .getBoard();
         
@@ -40,7 +39,7 @@ class BlankTest {
     void scoreTest() {
         
         // when
-        final double score = new Blank(Color.BLACK).getScore();
+        final double score = Blank.INSTANCE.getScore();
         
         // then
         assertThat(score).isEqualTo(0);

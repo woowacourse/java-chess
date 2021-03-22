@@ -37,8 +37,8 @@ public class MovePosition {
             throw new IllegalArgumentException(ERROR_MISMATCH_POSITION_SIZE);
         }
         
-        final Position sourcePosition = Position.of(positions.get(SOURCE_POSITION_INDEX));
-        final Position targetPosition = Position.of(positions.get(TARGET_POSITION_INDEX));
+        final Position sourcePosition = Position.from(positions.get(SOURCE_POSITION_INDEX));
+        final Position targetPosition = Position.from(positions.get(TARGET_POSITION_INDEX));
         return new MovePosition(sourcePosition, targetPosition);
     }
     

@@ -6,6 +6,9 @@ import chess.domain.position.MovePosition;
 
 public class King extends AbstractPiece {
     
+    public static final King BLACK_INSTANCE = new King(Color.BLACK);
+    public static final King WHITE_INSTANCE = new King(Color.WHITE);
+    
     private static final int MOVABLE_LENGTH = 1;
     private static final DirectionGroup DIRECTION_GROUP = new DirectionGroup(Direction.everyDirection(),
             MOVABLE_LENGTH);
@@ -13,8 +16,16 @@ public class King extends AbstractPiece {
     private static final String SYMBOL = "k";
     public static final double SCORE = 0;
     
-    public King(Color color) {
+    private King(Color color) {
         super(color, DIRECTION_GROUP);
+    }
+    
+    public static King from(Color color) {
+        if (color.isBlack()) {
+            return BLACK_INSTANCE;
+        }
+        
+        return WHITE_INSTANCE;
     }
     
     @Override

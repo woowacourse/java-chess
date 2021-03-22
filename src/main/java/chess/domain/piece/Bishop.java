@@ -6,6 +6,9 @@ import chess.domain.position.MovePosition;
 
 public class Bishop extends AbstractPiece {
     
+    public static final Bishop BLACK_INSTANCE = new Bishop(Color.BLACK);
+    public static final Bishop WHITE_INSTANCE = new Bishop(Color.WHITE);
+    
     private static final int MOVABLE_LENGTH = 7;
     private static final DirectionGroup DIRECTION_GROUP
             = new DirectionGroup(Direction.diagonalDirection(), MOVABLE_LENGTH);
@@ -13,8 +16,16 @@ public class Bishop extends AbstractPiece {
     private static final String SYMBOL = "b";
     private static final double SCORE = 3;
     
-    public Bishop(Color color) {
+    private Bishop(Color color) {
         super(color, DIRECTION_GROUP);
+    }
+    
+    public static Bishop from(Color color) {
+        if (color.isBlack()) {
+            return BLACK_INSTANCE;
+        }
+        
+        return WHITE_INSTANCE;
     }
     
     @Override

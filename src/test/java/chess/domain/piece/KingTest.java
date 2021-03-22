@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Chess;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
@@ -13,8 +12,8 @@ import static org.assertj.core.api.Assertions.*;
 
 class KingTest {
     
-    private final King king = new King(Color.WHITE);
-    private final Position sourcePosition = Position.of("e1");
+    private final King king = King.WHITE_INSTANCE;
+    private final Position sourcePosition = Position.from("e1");
     private final Board board = Chess.createWithInitializedBoard()
                                      .getBoard();
     
@@ -23,8 +22,8 @@ class KingTest {
     void moveDiagonalOneStep() {
         
         // given
-        final Position targetPosition = Position.of("d2");
-        final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final Position targetPosition = Position.from("d2");
+        final Board newBoard = BoardUtils.put(board, targetPosition, Blank.INSTANCE);
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -39,8 +38,8 @@ class KingTest {
     void moveDiagonalMultiStep() {
         
         // given
-        final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
-        final Position targetPosition = Position.of("c3");
+        final Board newBoard = BoardUtils.put(board, Position.from("d2"), Blank.INSTANCE);
+        final Position targetPosition = Position.from("c3");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -56,8 +55,8 @@ class KingTest {
     void moveLinearOneStep() {
         
         // given
-        final Position targetPosition = Position.of("e2");
-        Board newBoard = BoardUtils.put(this.board, targetPosition, new Blank());
+        final Position targetPosition = Position.from("e2");
+        Board newBoard = BoardUtils.put(this.board, targetPosition, Blank.INSTANCE);
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -72,8 +71,8 @@ class KingTest {
     void moveLinearMultiStep() {
         
         // given
-        final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
-        final Position targetPosition = Position.of("d4");
+        final Board newBoard = BoardUtils.put(board, Position.from("d2"), Blank.INSTANCE);
+        final Position targetPosition = Position.from("d4");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -89,7 +88,7 @@ class KingTest {
     void move_TryToMoveWhereCannotMove_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("e3");
+        final Position targetPosition = Position.from("e3");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when

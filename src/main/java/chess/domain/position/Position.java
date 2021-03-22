@@ -8,6 +8,8 @@ public class Position {
     private static final int FILE_CHARACTER_INDEX = 1;
     
     private static final int POSITION_WORD_LENGTH = 2;
+    private static final char START_FILE_CHARACTER = 'a';
+    private static final char START_RANK_CHARACTER = '1';
     
     private static final String ERROR_MISMATCH_WORD_LENGTH = "위치는 a1 과 같은 형식의 2글자이어야 합니다.";
     
@@ -19,20 +21,28 @@ public class Position {
         this.y = y;
     }
     
+    public static Position from(String value) {
+        if (value.length() != POSITION_WORD_LENGTH) {
+            throw new IllegalArgumentException(ERROR_MISMATCH_WORD_LENGTH);
+        }
+        
+        int x = value.charAt(RANK_CHARACTER_INDEX) - START_FILE_CHARACTER;
+        int y = value.charAt(FILE_CHARACTER_INDEX) - START_RANK_CHARACTER;
+        return Position.of(x, y);
+    }
+    
     public static Position of(int x, int y) {
         final Point pointX = Point.from(x);
         final Point pointY = Point.from(y);
         return new Position(pointX, pointY);
     }
     
-    public static Position of(String value) {
-        if (value.length() != POSITION_WORD_LENGTH) {
-            throw new IllegalArgumentException(ERROR_MISMATCH_WORD_LENGTH);
-        }
-        
-        int x = value.charAt(RANK_CHARACTER_INDEX) - 'a';
-        int y = value.charAt(FILE_CHARACTER_INDEX) - '1';
-        return Position.of(x, y);
+    public Point getX() {
+        return x;
+    }
+    
+    public Point getY() {
+        return y;
     }
     
     public Position add(int xDistance, int yDistance) {
@@ -41,6 +51,10 @@ public class Position {
     
     public boolean isInRange() {
         return x.isInRange() && y.isInRange();
+    }
+    
+    public boolean existsAtRankOf(int point) {
+        return y.equalsTo(point);
     }
     
     @Override
@@ -58,17 +72,5 @@ public class Position {
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
-    }
-    
-    public Point getX() {
-        return x;
-    }
-    
-    public Point getY() {
-        return y;
-    }
-    
-    public boolean existsAtRankOf(int point) {
-        return y.equalsTo(point);
     }
 }

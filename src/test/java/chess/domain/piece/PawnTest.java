@@ -11,17 +11,16 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class PawnTest {
-    private final Pawn pawn = Pawn.createWhitePawn();
-    private final Position sourcePosition = Position.of("a2");
-    private final Board board = Chess.createWithInitializedBoard()
-                                     .getBoard();
+    private final Pawn pawn = Pawn.WHITE_INSTANCE;
+    private final Position sourcePosition = Position.from("a2");
+    private final Board board = Chess.createWithInitializedBoard().getBoard();
     
     @Test
     @DisplayName("1칸 전진 테스트")
     void moveLinearOneStep() {
         
         // given
-        Position targetPosition = Position.of("a3");
+        Position targetPosition = Position.from("a3");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -36,7 +35,7 @@ class PawnTest {
     void moveLinearTwoStep() {
         
         // given
-        Position targetPosition = Position.of("a4");
+        Position targetPosition = Position.from("a4");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -51,7 +50,7 @@ class PawnTest {
     void moveLinearMultiStep_OverTwoStep_ExceptionThrown() {
         
         // given
-        Position targetPosition = Position.of("a5");
+        Position targetPosition = Position.from("a5");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -66,8 +65,8 @@ class PawnTest {
     void moveDiagonalOneStep() {
         
         // given
-        Position targetPosition = Position.of("b3");
-        Board newBoard = BoardUtils.put(board, targetPosition, Pawn.createBlackPawn());
+        Position targetPosition = Position.from("b3");
+        Board newBoard = BoardUtils.put(board, targetPosition, Pawn.WHITE_INSTANCE);
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -82,8 +81,8 @@ class PawnTest {
     void move_PieceAlreadyExistsAtTarget_ExceptionThrown() {
         
         // given
-        Position targetPosition = Position.of("a3");
-        Board newBoard = BoardUtils.put(board, targetPosition, Pawn.createBlackPawn());
+        Position targetPosition = Position.from("a3");
+        Board newBoard = BoardUtils.put(board, targetPosition, Pawn.WHITE_INSTANCE);
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -98,10 +97,10 @@ class PawnTest {
     void moveTwoStep_IfPawnIsNotFirstMovement_ExceptionThrown() {
         
         // given
-        Position newSourcePosition = Position.of("c3");
-        Board newBoard = BoardUtils.put(board, newSourcePosition, Pawn.createWhitePawn());
+        Position newSourcePosition = Position.from("c3");
+        Board newBoard = BoardUtils.put(board, newSourcePosition, Pawn.WHITE_INSTANCE);
         
-        Position targetPosition = Position.of("c5");
+        Position targetPosition = Position.from("c5");
         MovePosition movePosition = new MovePosition(newSourcePosition, targetPosition);
         
         // when
@@ -116,7 +115,7 @@ class PawnTest {
     void moveDiagonal_IfTargetIsBlank_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("b3");
+        final Position targetPosition = Position.from("b3");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -131,10 +130,10 @@ class PawnTest {
     void move_ObstacleIsInPath_ExceptionThrown() {
         
         // given
-        Position blackPawnPosition = Position.of("c3");
-        Board newBoard = BoardUtils.put(board, blackPawnPosition, Pawn.createBlackPawn());
+        Position blackPawnPosition = Position.from("c3");
+        Board newBoard = BoardUtils.put(board, blackPawnPosition, Pawn.WHITE_INSTANCE);
         
-        Position targetPosition = Position.of("c4");
+        Position targetPosition = Position.from("c4");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when

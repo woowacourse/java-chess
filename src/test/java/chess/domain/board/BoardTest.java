@@ -31,28 +31,28 @@ public class BoardTest {
         
         // then
         final Map<Position, Piece> chessBord = this.board.getBoard();
-        assertThat(chessBord.get(Position.of("a1"))).isInstanceOf(Rook.class);
-        assertThat(chessBord.get(Position.of("b1"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.of("c1"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.of("d1"))).isInstanceOf(Queen.class);
-        assertThat(chessBord.get(Position.of("e1"))).isInstanceOf(King.class);
-        assertThat(chessBord.get(Position.of("f1"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.of("g1"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.of("h1"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.from("a1"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.from("b1"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.from("c1"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.from("d1"))).isInstanceOf(Queen.class);
+        assertThat(chessBord.get(Position.from("e1"))).isInstanceOf(King.class);
+        assertThat(chessBord.get(Position.from("f1"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.from("g1"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.from("h1"))).isInstanceOf(Rook.class);
         
         for (int i = 0; i < 8; i++) {
             Position position = Position.of(i, 1);
             assertThat(chessBord.get(position)).isInstanceOf(Pawn.class);
         }
         
-        assertThat(chessBord.get(Position.of("a8"))).isInstanceOf(Rook.class);
-        assertThat(chessBord.get(Position.of("b8"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.of("c8"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.of("d8"))).isInstanceOf(Queen.class);
-        assertThat(chessBord.get(Position.of("e8"))).isInstanceOf(King.class);
-        assertThat(chessBord.get(Position.of("f8"))).isInstanceOf(Bishop.class);
-        assertThat(chessBord.get(Position.of("g8"))).isInstanceOf(Knight.class);
-        assertThat(chessBord.get(Position.of("h8"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.from("a8"))).isInstanceOf(Rook.class);
+        assertThat(chessBord.get(Position.from("b8"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.from("c8"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.from("d8"))).isInstanceOf(Queen.class);
+        assertThat(chessBord.get(Position.from("e8"))).isInstanceOf(King.class);
+        assertThat(chessBord.get(Position.from("f8"))).isInstanceOf(Bishop.class);
+        assertThat(chessBord.get(Position.from("g8"))).isInstanceOf(Knight.class);
+        assertThat(chessBord.get(Position.from("h8"))).isInstanceOf(Rook.class);
         
         for (int i = 0; i < 8; i++) {
             Position position = Position.of(i, 6);
@@ -65,8 +65,8 @@ public class BoardTest {
     void movePiece() {
         
         // given
-        Position sourcePosition = Position.of("b2");
-        Position targetPosition = Position.of("b3");
+        Position sourcePosition = Position.from("b2");
+        Position targetPosition = Position.from("b3");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -92,11 +92,11 @@ public class BoardTest {
     }
     
     private void killKingOfBlack() {
-        Position whitePawnPosition = Position.of("d7");
-        Board newBoard = BoardUtils.put(board, whitePawnPosition, Pawn.createWhitePawn());
+        Position whitePawnPosition = Position.from("d7");
+        Board newBoard = BoardUtils.put(board, whitePawnPosition, Pawn.WHITE_INSTANCE);
         chess = new Chess(newBoard);
         
-        Position blackKingPosition = Position.of("e8");
+        Position blackKingPosition = Position.from("e8");
         MovePosition movePosition = new MovePosition(whitePawnPosition, blackKingPosition);
         chess.movePiece(movePosition);
     }
@@ -108,8 +108,8 @@ public class BoardTest {
         // given
         final Chess emptyChess = Chess.createWithEmptyBoard();
         Board newBoard = emptyChess.getBoard();
-        newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
-        newBoard = BoardUtils.put(newBoard, Position.of("b1"), Pawn.createWhitePawn());
+        newBoard = BoardUtils.put(newBoard, Position.from("a1"), Pawn.WHITE_INSTANCE);
+        newBoard = BoardUtils.put(newBoard, Position.from("b1"), Pawn.WHITE_INSTANCE);
         final Chess chessAddedPawns = new Chess(newBoard);
         
         // when
@@ -125,8 +125,8 @@ public class BoardTest {
         // given
         final Chess emptyChess = Chess.createWithEmptyBoard();
         Board newBoard = emptyChess.getBoard();
-        newBoard = BoardUtils.put(newBoard, Position.of("a1"), Pawn.createWhitePawn());
-        newBoard = BoardUtils.put(newBoard, Position.of("a2"), Pawn.createWhitePawn());
+        newBoard = BoardUtils.put(newBoard, Position.from("a1"), Pawn.WHITE_INSTANCE);
+        newBoard = BoardUtils.put(newBoard, Position.from("a2"), Pawn.WHITE_INSTANCE);
         final Chess chessAddedPawns = new Chess(newBoard);
         
         // when

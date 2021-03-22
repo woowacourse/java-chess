@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Chess;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
@@ -13,8 +12,8 @@ import static org.assertj.core.api.Assertions.*;
 
 public class QueenTest {
     
-    private final Queen queen = new Queen(Color.WHITE);
-    private final Position sourcePosition = Position.of("d1");
+    private final Queen queen = Queen.WHITE_INSTANCE;
+    private final Position sourcePosition = Position.from("d1");
     private final Board board = Chess.createWithInitializedBoard()
                                      .getBoard();
     
@@ -23,8 +22,8 @@ public class QueenTest {
     void moveDiagonalOneStep() {
         
         // given
-        final Position targetPosition = Position.of("c2");
-        final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final Position targetPosition = Position.from("c2");
+        final Board newBoard = BoardUtils.put(board, targetPosition, Blank.INSTANCE);
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -39,8 +38,8 @@ public class QueenTest {
     void moveDiagonalMultiStep() {
         
         // given
-        final Board newBoard = BoardUtils.put(board, Position.of("c2"), new Blank());
-        final Position targetPosition = Position.of("a4");
+        final Board newBoard = BoardUtils.put(board, Position.from("c2"), Blank.INSTANCE);
+        final Position targetPosition = Position.from("a4");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -56,8 +55,8 @@ public class QueenTest {
     void moveLinearOneStep() {
         
         // given
-        final Position targetPosition = Position.of("d2");
-        final Board newBoard = BoardUtils.put(board, targetPosition, new Blank());
+        final Position targetPosition = Position.from("d2");
+        final Board newBoard = BoardUtils.put(board, targetPosition, Blank.INSTANCE);
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -72,8 +71,8 @@ public class QueenTest {
     void moveLinearMultiStep() {
         
         // given
-        final Board newBoard = BoardUtils.put(board, Position.of("d2"), new Blank());
-        final Position targetPosition = Position.of("d4");
+        final Board newBoard = BoardUtils.put(board, Position.from("d2"), Blank.INSTANCE);
+        final Position targetPosition = Position.from("d4");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -88,7 +87,7 @@ public class QueenTest {
     void move_TryToMoveWhereCannotMove_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("b2");
+        final Position targetPosition = Position.from("b2");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -104,7 +103,7 @@ public class QueenTest {
     void move_ObstacleIsInPath_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("d3");
+        final Position targetPosition = Position.from("d3");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when

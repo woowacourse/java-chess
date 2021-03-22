@@ -1,7 +1,6 @@
 package chess.domain.piece;
 
 import chess.domain.Chess;
-import chess.domain.Color;
 import chess.domain.board.Board;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
@@ -12,17 +11,16 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class KnightTest {
-    private final Knight knight = new Knight(Color.WHITE);
-    private final Position sourcePosition = Position.of("b1");
-    private final Board board = Chess.createWithInitializedBoard()
-                                     .getBoard();
+    private final Knight knight = Knight.WHITE_INSTANCE;
+    private final Position sourcePosition = Position.from("b1");
+    private final Board board = Chess.createWithInitializedBoard().getBoard();
     
     @Test
     @DisplayName("이동 검사")
     void moveTest() {
         
         // given
-        final Position targetPosition = Position.of("a3");
+        final Position targetPosition = Position.from("a3");
         MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when
@@ -37,7 +35,7 @@ class KnightTest {
     void move_TryToMoveWhereCannotMove_ExceptionThrown() {
         
         // given
-        final Position targetPosition = Position.of("a2");
+        final Position targetPosition = Position.from("a2");
         final MovePosition movePosition = new MovePosition(sourcePosition, targetPosition);
         
         // when

@@ -2,8 +2,6 @@ package chess.domain;
 
 import chess.domain.piece.Direction;
 
-import java.util.List;
-
 public enum Color {
     BLACK("BLACK") {
         @Override
@@ -51,13 +49,5 @@ public enum Color {
             return Direction.SOUTH;
         }
         return Direction.NORTH;
-    }
-    
-    public List<Direction> getPawnDirections() {
-        if (this == BLACK) {
-            return Direction.blackPawnDirection();
-        }
-        
-        return Direction.whitePawnDirection();
     }
 }
