@@ -6,15 +6,19 @@ import chess.domain.piece.kind.Piece;
 import java.util.Map;
 
 import static chess.domain.Board.BOARD_SIZE;
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
 
 public class Score {
     private static final double OVERLAPPED_PAWN_SCORE = 0.5;
     private static final int PAWN_COUNT_THRESHOLD_TO_HALF_SCORE = 2;
 
-    private final double score;
+    private final double whiteScore;
+    private final double blackScore;
 
-    public Score(Map<Point, Piece> board, Color color) {
-        this.score = calculateScore(board, color);
+    public Score(Map<Point, Piece> board) {
+        this.whiteScore = calculateScore(board, WHITE);
+        this.blackScore = calculateScore(board, BLACK);
     }
 
     private double calculateScore(Map<Point, Piece> board, Color color) {
@@ -48,7 +52,21 @@ public class Score {
         return 0;
     }
 
-    public double getScore() {
-        return this.score;
+    public double getWhiteScore() {
+        return this.whiteScore;
+    }
+
+    public double getBlackScore() {
+        return this.blackScore;
+    }
+
+    public String getWinner() {
+        if (this.whiteScore > blackScore) {
+            return WHITE+ " 승";
+        }
+        if (this.whiteScore < blackScore) {
+            return BLACK + " 승";
+        }
+        return "무승부";
     }
 }

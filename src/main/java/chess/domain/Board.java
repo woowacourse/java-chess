@@ -93,8 +93,8 @@ public class Board {
                 .count() == KINGS_COUNT_TO_PLAY;
     }
 
-    public Score makeScore(Color currentColor) {
-        return new Score(this.board, currentColor);
+    public Score makeScore() {
+        return new Score(this.board);
     }
 
     private void validateSourcePieceNotEmpty(Piece piece) {

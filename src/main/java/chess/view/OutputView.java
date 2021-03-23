@@ -7,6 +7,9 @@ import chess.domain.piece.kind.Piece;
 
 import java.util.Map;
 
+import static chess.domain.piece.Color.BLACK;
+import static chess.domain.piece.Color.WHITE;
+
 public class OutputView {
     public static final String START = "start";
     public static final String END = "end";
@@ -43,7 +46,9 @@ public class OutputView {
     }
 
     public static void printScore(Score score) {
-        System.out.println(score.getScore());
+        System.out.println(WHITE + " 점수: " + score.getWhiteScore());
+        System.out.println(BLACK + " 점수: " + score.getBlackScore());
+        System.out.println("게임 결과: " + score.getWinner());
     }
 
     public static void noticeGameFinished() {

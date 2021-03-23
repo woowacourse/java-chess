@@ -41,7 +41,7 @@ public class ChessController {
 
     private void playTurn(ChessGame chessGame) {
         while (chessGame.isProgressing()) {
-            List<String> userInput = InputView.inputMoveOrStatus();
+            List<String> userInput = InputView.inputEachTurn();
             makeScoreOrMove(chessGame, userInput);
         }
     }

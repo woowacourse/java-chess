@@ -33,7 +33,7 @@ public class ChessGame {
     }
 
     public Score calculateScore() {
-        return board.makeScore(currentColor);
+        return board.makeScore();
     }
 
     public Map<Point, Piece> getBoard() {

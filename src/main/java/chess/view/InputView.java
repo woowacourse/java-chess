@@ -11,6 +11,7 @@ import static chess.controller.ChessController.STATUS;
 public class InputView {
     public static final String INVALID_INPUT_ERROR_MESSAGE = "올바르지 않은 입력입니다.";
     private static final Scanner scanner = new Scanner(System.in);
+    public static final String END = "end";
 
     private InputView() {
     }
@@ -26,16 +27,24 @@ public class InputView {
         throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
     }
 
-    public static List<String> inputMoveOrStatus() {
+    public static List<String> inputEachTurn() {
         String input = scanner.nextLine();
-        if (input.equals(STATUS)) {
+        if (STATUS.equals(input)) {
             return Collections.singletonList(STATUS);
         }
 
+        if (END.equals(input)) {
+            System.exit(0);
+        }
+
         List<String> inputMoving = Arrays.asList(input.split(" "));
-        if (!inputMoving.get(0).equals(MOVE)) {
+        if (isUnsupportedOperation(inputMoving)) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
         return inputMoving;
+    }
+
+    private static boolean isUnsupportedOperation(List<String> inputMoving) {
+        return !MOVE.equals(inputMoving.get(0));
     }
 }
