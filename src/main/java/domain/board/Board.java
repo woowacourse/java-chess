@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int CHESS_BOARD_SIZE = 8;
+    private static final int PAWN_ALLY_COUNT_CONDITION = 2;
     private final Map<Position, Piece> board;
 
     public Board() {
@@ -25,14 +27,14 @@ public class Board {
 
     private Map<Position, Piece> emptyBoard() {
         Map<Position, Piece> emptyBoard = new HashMap<>();
-        for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
             putInitialPiece(emptyBoard, row);
         }
         return emptyBoard;
     }
 
     private void putInitialPiece(Map<Position, Piece> emptyBoard, int row) {
-        for (int column = 0; column < 8; column++) {
+        for (int column = 0; column < CHESS_BOARD_SIZE; column++) {
             emptyBoard.put(new Position(row, column), new EmptyPiece());
         }
     }
@@ -88,7 +90,7 @@ public class Board {
 
     private Score minusPawnScore(Score score, boolean isBlack) {
         int minusCount = 0;
-        for (int row = 0; row < 8; row++) {
+        for (int row = 0; row < CHESS_BOARD_SIZE; row++) {
             minusCount += rowAllyPawnCount(row, isBlack);
         }
         return score.minusPawnScore(minusCount);
@@ -101,7 +103,7 @@ public class Board {
                 && column == entry.getKey().getColumnDegree())
             .count();
 
-        if (count >= 2) {
+        if (count >= PAWN_ALLY_COUNT_CONDITION) {
             return count;
         }
         return 0;
