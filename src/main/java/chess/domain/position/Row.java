@@ -5,26 +5,24 @@ import chess.domain.position.exception.InvalidRowException;
 import java.util.Arrays;
 
 public enum Row {
-    EIGHTH("8", 8), SEVENTH("7", 7), SIXTH("6", 6), FIFTH("5", 5),
-    FOURTH("4", 4), THIRD("3", 3), SECOND("2", 2), FIRST("1", 1);
+    EIGHTH(8), SEVENTH(7), SIXTH(6), FIFTH(5),
+    FOURTH(4), THIRD(3), SECOND(2), FIRST(1);
 
-    private final String lineName;
     private final int value;
 
-    Row(String lineName, int value) {
-        this.lineName = lineName;
+    Row(int value) {
         this.value = value;
     }
 
-    public static Row from(Character lineName) {
+    public static Row from(int value) {
         return Arrays.stream(Row.values())
-                .filter(row -> row.lineName.equals(lineName.toString()))
+                .filter(row -> row.value == value)
                 .findAny()
                 .orElseThrow(InvalidRowException::new);
     }
 
-    public String getLineName() {
-        return lineName;
+    public String getValue() {
+        return Integer.toString(value);
     }
 
     public static int differance(Row row1, Row row2) {

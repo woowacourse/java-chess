@@ -26,7 +26,7 @@ public class Position {
 
         return new Position(
                 Column.from(position.charAt(0)),
-                Row.from(position.charAt(1)));
+                Row.from(Character.getNumericValue(position.charAt(1))));
     }
 
     public static int differenceOfRow(Position from, Position to) {

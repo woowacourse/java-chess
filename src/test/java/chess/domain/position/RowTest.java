@@ -11,13 +11,13 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class RowTest {
     @Test
     void fromSuccess() {
-        Row from = Row.from('1');
+        Row from = Row.from(1);
         assertThat(from).isEqualTo(Row.FIRST);
     }
 
     @ParameterizedTest
-    @ValueSource(chars = {'ㄱ', 'z', 'i', '0', '9'})
-    void fromFail(Character input) {
+    @ValueSource(ints = {0, 9, 123})
+    void fromFail(int input) {
         assertThatThrownBy(() -> Row.from(input))
                 .isInstanceOf(InvalidRowException.class);
     }

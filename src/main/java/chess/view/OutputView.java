@@ -30,7 +30,7 @@ public class OutputView {
                 Position position = new Position(column, row);
                 System.out.print(board.getInitial(position));
             }
-            System.out.println("  " + row.getLineName());
+            System.out.println("  " + row.getValue());
         }
         System.out.println();
         Arrays.stream(Column.values())
