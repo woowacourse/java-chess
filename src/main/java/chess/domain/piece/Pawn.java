@@ -78,8 +78,10 @@ public class Pawn extends Piece {
 
     @Override
     public boolean diagonal(Position from, Position to) {
-        return Math.abs(Position.differenceOfRow(from, to)) == Math
-                .abs(Position.differenceOfColumn(from, to));
+        int rowDifference = Math.abs(Position.differenceOfRow(from, to));
+        int columnDifference = Math.abs(Position.differenceOfColumn(from, to));
+
+        return rowDifference == 1 && columnDifference == 1;
     }
 
     @Override
@@ -87,7 +89,7 @@ public class Pawn extends Piece {
         if (Position.differenceOfColumn(from, to) != 0) {
             return false;
         }
-        return Position.differenceOfRow(from, to) < 2;
+        return Math.abs(Position.differenceOfRow(from, to)) < 3;
     }
 
     public static double scoreByCount(int count) {

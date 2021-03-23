@@ -20,7 +20,6 @@ public class Position {
         this.row = row;
     }
 
-    // TODO 캐싱
     public static Position from(String position) {
         if (position.length() != POSITION_LENGTH) {
             throw new PositionException();

@@ -10,7 +10,6 @@ public class Start implements Command {
         return true;
     }
 
-    // TODO End, Move, Status: isMove(), source(), target() 메서드 중복!!!
     @Override
     public boolean isMove() {
         return false;
