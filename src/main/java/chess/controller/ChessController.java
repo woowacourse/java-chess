@@ -12,9 +12,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public final class ChessController {
-    private static final String MOVE_COMMAND = "move";
-    private static final String STATUS_COMMAND = "status";
-    private static final String END_COMMAND = "end";
+    private static final String MOVE_PIECE = "move";
+    private static final String SHOW_SCORE = "status";
+    private static final String END_GAME = "end";
 
     public void run() {
         OutputView.printChessStartMessage();
@@ -67,14 +67,14 @@ public final class ChessController {
     }
 
     private void controlUserCommand(final ChessGame chessGame, final List<String> turnOption) {
-        if (MOVE_COMMAND.equals(turnOption.get(0))) {
+        if (MOVE_PIECE.equals(turnOption.get(0))) {
             chessGame.move(Position.of(turnOption.get(1)), Position.of(turnOption.get(2)));
         }
-        if (STATUS_COMMAND.equals(turnOption.get(0))) {
+        if (SHOW_SCORE.equals(turnOption.get(0))) {
             printChessScore(chessGame);
             progressSingleTurn(chessGame);
         }
-        if (END_COMMAND.equals(turnOption.get(0))) {
+        if (END_GAME.equals(turnOption.get(0))) {
             chessGame.finish();
         }
     }
