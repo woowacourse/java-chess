@@ -44,6 +44,9 @@ public class Position {
     public Direction calculateDirection(Position target) {
         int x = calculateFilePoint(target.getX());
         int y = calculateRankPoint(target.getY());
+        if(x == 0 && y == 0) {
+            throw new IllegalArgumentException("[ERROR] source 좌표와 target 좌표가 동일합니다.");
+        }
         int divide = Math.abs(gcd(x, y));
         return Direction.of(x / divide, y / divide);
     }
