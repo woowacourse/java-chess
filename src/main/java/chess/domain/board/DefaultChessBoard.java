@@ -37,14 +37,14 @@ public class DefaultChessBoard implements Board {
 
     public MoveResult move(Position from, Position to) {
         Square fromSquare = this.findByPosition(from);
-        return fromSquare.move(createMoveOrder(from, to));
+        return fromSquare.move(createMoveOrder(this, from, to));
     }
 
-    public MoveOrder createMoveOrder(Position from, Position to) {
-        return new MoveOrder(Direction.of(from, to), getRoute(from, to), board.get(from), board.get(to));
+    public MoveOrder createMoveOrder(Board board, Position from, Position to) {
+        return new MoveOrder(this, from, to);
     }
 
-    private List<Square> getRoute(Position from, Position to) {
+    public List<Square> getRoute(Position from, Position to) {
         Direction direction = Direction.of(from, to);
         List<Position> route = new ArrayList<>();
         Position currentPosition = from.getNextPosition(direction);

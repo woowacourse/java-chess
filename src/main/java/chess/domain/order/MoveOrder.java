@@ -1,36 +1,44 @@
 package chess.domain.order;
 
+import chess.domain.board.Board;
 import chess.domain.board.Square;
 import chess.domain.position.Direction;
+import chess.domain.position.Position;
 
 import java.util.List;
 
 public class MoveOrder {
-    private final Direction direction;
-    private final List<Square> route;
-    private final Square from;
-    private final Square to;
+    private final Board board;
+    private final Position from;
+    private final Position to;
 
-    public MoveOrder(Direction direction, List<Square> route, Square from, Square to) {
-        this.direction = direction;
-        this.route = route;
+    public MoveOrder(Board board, Position from, Position to) {
+        this.board = board;
         this.from = from;
         this.to = to;
     }
 
     public Direction getDirection() {
-        return direction;
+        return Direction.of(this.from, this.to);
     }
 
     public List<Square> getRoute() {
-        return route;
+        return this.board.getRoute(from, to);
     }
 
-    public Square getFrom() {
-        return from;
+    public Position getFromPosition() {
+        return this.from;
     }
 
-    public Square getTo() {
-        return to;
+    public Position getToPosition() {
+        return this.from;
+    }
+
+    public Square getFromSquare() {
+        return board.findByPosition(from);
+    }
+
+    public Square getToSquare() {
+        return board.findByPosition(to);
     }
 }

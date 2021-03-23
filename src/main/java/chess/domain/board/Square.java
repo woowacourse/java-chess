@@ -36,8 +36,8 @@ public class Square {
         }
 
         if (piece.canMove(moveOrder)) {
-            Piece removedPiece = moveOrder.getTo().piece;
-            moveOrder.getTo().piece = this.piece;
+            Piece removedPiece = moveOrder.getToSquare().piece;
+            moveOrder.getToSquare().piece = this.piece;
             this.piece = new Blank();
             return new MoveResult(removedPiece);
         }

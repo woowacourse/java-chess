@@ -5,6 +5,7 @@ import chess.domain.order.MoveResult;
 import chess.domain.piece.Color;
 import chess.domain.position.Position;
 
+import java.util.List;
 import java.util.Map;
 
 public interface Board {
@@ -14,7 +15,9 @@ public interface Board {
 
     MoveResult move(Position from, Position to);
 
-    MoveOrder createMoveOrder(Position from, Position to);
+    MoveOrder createMoveOrder(Board board, Position from, Position to);
     
     Map<Color, Double> getScoreMap();
+
+    List<Square> getRoute(Position from, Position to);
 }

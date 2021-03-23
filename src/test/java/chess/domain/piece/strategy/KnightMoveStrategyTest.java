@@ -37,14 +37,14 @@ class KnightMoveStrategyTest {
     @ParameterizedTest
     @MethodSource
     void knightCanMoveTest(Position from, Position to, boolean expected) {
-        assertThat(whiteKnight.canMove(board.createMoveOrder(from, to))).isEqualTo(expected);
+        assertThat(whiteKnight.canMove(board.createMoveOrder(board, from, to))).isEqualTo(expected);
     }
 
     @DisplayName("잘못된 방향으로 이동하려고 한다면 예외")
     @ParameterizedTest
     @CsvSource({"a1, a3", "a1, b8"})
     void throwExceptionWhenWrongDirection(String from, String to) {
-        assertThatThrownBy(() -> whiteKnight.canMove(board.createMoveOrder(Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteKnight.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
@@ -53,6 +53,6 @@ class KnightMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"c3, b1", "c3, d1"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteKnight.canMove(board.createMoveOrder(Position.of(from), Position.of(to))));
+        assertThatThrownBy(() -> whiteKnight.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))));
     }
 }

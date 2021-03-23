@@ -27,7 +27,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a3, WHITE", "b7, b6, BLACK"})
     void canMove_StraightDirection(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = board.createMoveOrder(Position.of(from), Position.of(to));
+        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
         assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
     }
 
@@ -36,11 +36,22 @@ class PawnMoveStrategyTest {
     @CsvSource({"c2, c5, WHITE", "g7, g4, BLACK"})
     void throwExceptionWhenMoveOverThreeSquares(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = board.createMoveOrder(Position.of(from), Position.of(to));
+        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
         assertThatThrownBy(() -> pawn.canMove(moveOrder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
     }
-    //TODO 이동이 구현 된 후 대각선 이동 테스트 구현
 
+    // TODO 대각선 이동 테스트 구현
+
+    @DisplayName("폰은 첫 행마에 2칸을 움직일 수 있다.")
+    @ParameterizedTest
+    @CsvSource({"a2, a4, WHITE", "b7, b5, BLACK"})
+    void canMove_2RankOnFirstMove(String from, String to, Color color) {
+        Pawn pawn = new Pawn(color);
+        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
+        assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
+    }
+
+    // TODO 2번째 행마 시 2칸을 전진시 예외 발생 테스트
 }

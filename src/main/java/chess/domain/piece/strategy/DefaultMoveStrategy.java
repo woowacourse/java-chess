@@ -21,7 +21,7 @@ public abstract class DefaultMoveStrategy implements MoveStrategy {
 
         validateBlockedRoute(moveOrder.getRoute());
 
-        if (moveOrder.getTo().hasPiece()) {
+        if (moveOrder.getToSquare().hasPiece()) {
             validateSameColorPiece(moveOrder);
         }
         return true;
@@ -41,7 +41,7 @@ public abstract class DefaultMoveStrategy implements MoveStrategy {
     }
 
     private void validateSameColorPiece(MoveOrder moveOrder) {
-        if (moveOrder.getFrom().getPiece().isSameColor(moveOrder.getTo().getPiece())) {
+        if (moveOrder.getFromSquare().getPiece().isSameColor(moveOrder.getToSquare().getPiece())) {
             throw new IllegalArgumentException("동일한 진영의 말이 있어서 행마할 수 없습니다.");
         }
     }

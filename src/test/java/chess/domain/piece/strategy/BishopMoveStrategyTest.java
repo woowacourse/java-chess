@@ -37,14 +37,14 @@ public class BishopMoveStrategyTest {
     @ParameterizedTest
     @MethodSource
     void bishopCanMoveTest(Position from, Position to, boolean expected) {
-        assertThat(whiteBishop.canMove(board.createMoveOrder(from, to))).isEqualTo(expected);
+        assertThat(whiteBishop.canMove(board.createMoveOrder(board, from, to))).isEqualTo(expected);
     }
 
     @DisplayName("잘못된 방향으로 이동하려고 한다면 예외")
     @ParameterizedTest
     @CsvSource({"a1, a2", "a1, g1"})
     void throwExceptionWhenWrongDirection(String from, String to) {
-        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
@@ -52,7 +52,7 @@ public class BishopMoveStrategyTest {
     @DisplayName("기물이 가는 길에 다른 기물이 있으면 예외")
     @Test
     void whenBlockedThrowTest() {
-        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(Position.of("c1"), Position.of("e3"))))
+        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(board, Position.of("c1"), Position.of("e3"))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("중간에 말이 있어 행마할 수 없습니다.");
     }
@@ -61,7 +61,7 @@ public class BishopMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"c1, d2", "c1, b2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteBishop.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("동일한 진영의 말이 있어서 행마할 수 없습니다.");
     }

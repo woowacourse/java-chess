@@ -15,7 +15,7 @@ class SquareTest {
     void throwExceptionWhenEmptySquare() {
         Square c3 = mockBoard.findByPosition(Position.of("c3"));
 
-        assertThatThrownBy(() -> c3.move(mockBoard.createMoveOrder(Position.of("c3"), Position.of("c4"))))
+        assertThatThrownBy(() -> c3.move(mockBoard.createMoveOrder(mockBoard, Position.of("c3"), Position.of("c4"))))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치엔 말이 없습니다.");
     }
