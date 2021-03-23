@@ -95,7 +95,7 @@ public class Board {
     }
     
     private boolean isPawnOfColor(Color Color, Piece piece) {
-        return piece.isSameColorAs(Color) && piece instanceof Pawn;
+        return piece.isSameColorAs(Color) && piece.isPawn();
     }
     
     public boolean isBlank(Position position) {
