@@ -24,13 +24,11 @@ public class ChessGame {
 
     public void moveAndCatchPiece(final Color color, final Position source, final Position target) {
         board.movePiece(color, source, target);
-        board.catchPiece(color);
 
         if (isCaughtKing()) {
             changeState(new End(this));
             return;
         }
-
         changeState(state.nextTurn());
     }
 
