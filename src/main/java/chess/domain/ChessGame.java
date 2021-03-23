@@ -54,7 +54,7 @@ public class ChessGame {
         }
     }
 
-    public void finish() {
+    private void finish() {
         isEnd = true;
     }
 
