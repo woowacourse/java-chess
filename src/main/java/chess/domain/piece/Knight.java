@@ -55,12 +55,6 @@ public class Knight extends Piece {
         return false;
     }
 
-    private void checkTarget(Target target, List<Position> positions) {
-        if (!positions.contains(target.getPosition())) {
-            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
-        }
-    }
-
     private List<Position> makeRoutes(final Pieces pieces) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(makeUpLeftRoutes(pieces));
@@ -182,7 +176,6 @@ public class Knight extends Piece {
         return Collections.emptyList();
     }
 
-
     private List<Position> makeRightUpRoutes(final Pieces pieces) {
         Position position = getPosition();
         int rank = position.getRank().getValue() + 1;
@@ -217,6 +210,12 @@ public class Knight extends Piece {
             return Collections.singletonList(nextPosition);
         }
         return Collections.emptyList();
+    }
+
+    private void checkTarget(Target target, List<Position> positions) {
+        if (!positions.contains(target.getPosition())) {
+            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
+        }
     }
 
     @Override

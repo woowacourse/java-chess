@@ -23,6 +23,15 @@ public class Queen extends Piece {
         return new Queen(piece, position, Color.WHITE);
     }
 
+    private static void validate(final String piece) {
+        if (!SYMBOL.contains(piece)) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+        if (piece.length() > 1) {
+            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
+        }
+    }
+
     @Override
     public void move(final Target target, final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = makeRoutes(basePieces, targetPieces);
@@ -45,12 +54,6 @@ public class Queen extends Piece {
         return false;
     }
 
-    private void checkTarget(final Target target, final List<Position> positions) {
-        if (!positions.contains(target.getPosition())) {
-            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
-        }
-    }
-
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(makeUpRoutes(basePieces, targetPieces));
@@ -64,35 +67,13 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int index = file; index < 8; index++) {
-            Position nextPosition = Position.valueOf(rank, index + 1);
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int index = file; index > 1; index--) {
-            Position nextPosition = Position.valueOf(rank, index - 1);
+        for (int index = rank; index < 8; index++) {
+            Position nextPosition = Position.valueOf(index + 1, file);
             Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
             Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
             if (targetPiece.isPresent()) {
@@ -130,13 +111,13 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int index = rank; index < 8; index++) {
-            Position nextPosition = Position.valueOf(index + 1, file);
+        for (int index = file; index < 8; index++) {
+            Position nextPosition = Position.valueOf(rank, index + 1);
             Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
             Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
             if (targetPiece.isPresent()) {
@@ -152,13 +133,60 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
-            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
+        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
+            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
+            if (file < 1) {
+                break;
+            }
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                positions.add(nextPosition);
+                break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int index = file; index > 1; index--) {
+            Position nextPosition = Position.valueOf(rank, index - 1);
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                positions.add(nextPosition);
+                break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
+            Position nextPosition = Position.valueOf(rankIndex + 1, file++ + 1);
             if (file > 7) {
                 break;
             }
@@ -202,13 +230,13 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
-            Position nextPosition = Position.valueOf(rankIndex + 1, file++ + 1);
+        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
+            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
             if (file > 7) {
                 break;
             }
@@ -227,29 +255,10 @@ public class Queen extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
-            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
-            if (file < 1) {
-                break;
-            }
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
+    private void checkTarget(final Target target, final List<Position> positions) {
+        if (!positions.contains(target.getPosition())) {
+            throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
-        return positions;
     }
 
     @Override
@@ -260,14 +269,5 @@ public class Queen extends Piece {
     @Override
     public int hashCode() {
         return super.hashCode();
-    }
-
-    private static void validate(final String piece) {
-        if (!SYMBOL.contains(piece)) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
-        if (piece.length() > 1) {
-            throw new IllegalArgumentException(String.format("옳지 않은 기물입니다! 입력 값: %s", piece));
-        }
     }
 }

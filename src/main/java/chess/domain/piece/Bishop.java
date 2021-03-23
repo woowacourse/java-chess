@@ -70,38 +70,13 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
-            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
-            if (file > 7) {
-                break;
-            }
-            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
-            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
-            if (targetPiece.isPresent()) {
-                positions.add(nextPosition);
-                break;
-            }
-            if (!basePiece.isPresent()) {
-                positions.add(nextPosition);
-                continue;
-            }
-            break;
-        }
-        return positions;
-    }
-
-    private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
-        List<Position> positions = new ArrayList<>();
-        Position position = getPosition();
-        int rank = position.getRank().getValue();
-        int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
-            Position nextPosition = Position.valueOf(rankIndex - 1, file-- - 1);
+        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
+            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
             if (file < 1) {
                 break;
             }
@@ -145,14 +120,39 @@ public class Bishop extends Piece {
         return positions;
     }
 
-    private List<Position> makeUpLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
+    private List<Position> makeDownLeftRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         Position position = getPosition();
         int rank = position.getRank().getValue();
         int file = position.getFile().getValue();
-        for (int rankIndex = rank; rankIndex < 8; rankIndex++) {
-            Position nextPosition = Position.valueOf(rankIndex + 1, file-- - 1);
+        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
+            Position nextPosition = Position.valueOf(rankIndex - 1, file-- - 1);
             if (file < 1) {
+                break;
+            }
+            Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
+            Optional<Piece> targetPiece = targetPieces.findPiece(nextPosition);
+            if (targetPiece.isPresent()) {
+                positions.add(nextPosition);
+                break;
+            }
+            if (!basePiece.isPresent()) {
+                positions.add(nextPosition);
+                continue;
+            }
+            break;
+        }
+        return positions;
+    }
+
+    private List<Position> makeDownRightRoutes(final Pieces basePieces, final Pieces targetPieces) {
+        List<Position> positions = new ArrayList<>();
+        Position position = getPosition();
+        int rank = position.getRank().getValue();
+        int file = position.getFile().getValue();
+        for (int rankIndex = rank; rankIndex > 0; rankIndex--) {
+            Position nextPosition = Position.valueOf(rankIndex - 1, file++ + 1);
+            if (file > 7) {
                 break;
             }
             Optional<Piece> basePiece = basePieces.findPiece(nextPosition);
