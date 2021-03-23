@@ -10,10 +10,18 @@ public final class Team {
     private final PieceCaptured pieceCaptured;
     private final Score score;
 
-    public Team(final PiecePosition piecePosition) {
+    private Team(final PiecePosition piecePosition, final PieceCaptured pieceCaptured, final Score score) {
         this.piecePosition = piecePosition;
-        this.pieceCaptured = new PieceCaptured();
-        this.score = new Score();
+        this.pieceCaptured = pieceCaptured;
+        this.score = score;
+    }
+
+    public static Team blackTeam() {
+        return new Team(PiecePosition.initBlackPosition(), new PieceCaptured(), new Score());
+    }
+
+    public static Team whiteTeam() {
+        return new Team(PiecePosition.initWhitePosition(), new PieceCaptured(), new Score());
     }
 
     public Piece choosePiece(final Position position) {

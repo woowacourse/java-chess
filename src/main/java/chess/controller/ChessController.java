@@ -3,6 +3,7 @@ package chess.controller;
 import chess.domain.ChessGame;
 import chess.domain.Position;
 import chess.domain.piece.Piece;
+import chess.domain.team.Team;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PiecePrintFormat;
@@ -20,7 +21,7 @@ public final class ChessController {
         OutputView.printChessStartMessage();
         final boolean start = InputView.inputChessStartOrEnd();
         if (start) {
-            final ChessGame chessGame = new ChessGame();
+            final ChessGame chessGame = new ChessGame(Team.blackTeam(), Team.whiteTeam());
             playChessGame(chessGame);
             printChessScore(chessGame);
         }

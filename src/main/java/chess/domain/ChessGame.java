@@ -1,7 +1,6 @@
 package chess.domain;
 
 import chess.domain.piece.Piece;
-import chess.domain.team.PiecePosition;
 import chess.domain.team.Team;
 
 import java.util.HashMap;
@@ -14,8 +13,12 @@ public final class ChessGame {
     private boolean isPlaying;
 
     public ChessGame() {
-        this.blackTeam = new Team(PiecePosition.initBlackPosition());
-        this.whiteTeam = new Team(PiecePosition.initWhitePosition());
+        this(Team.blackTeam(), Team.whiteTeam());
+    }
+
+    public ChessGame(final Team blackTeam, final Team whiteTeam) {
+        this.blackTeam = blackTeam;
+        this.whiteTeam = whiteTeam;
         this.currentTurnTeam = this.whiteTeam;
         this.isPlaying = true;
     }
@@ -41,10 +44,7 @@ public final class ChessGame {
         if (checkCastlingMove(chosenPiece, current, destination)) {
             return true;
         }
-        if (checkPromotionMove(chosenPiece, current, destination)) {
-            return true;
-        }
-        return false;
+        return checkPromotionMove(chosenPiece, current, destination);
     }
 
     private boolean checkCastlingMove(final Piece chosenPiece, final Position current, final Position destination) {

@@ -13,7 +13,7 @@ public class TeamTest {
     @Test
     @DisplayName("블랙팀을 생성하면, 검은색 기물이 정상 배치된다.")
     void init_black_team() {
-        final Team blackTeam = new Team(PiecePosition.initBlackPosition());
+        final Team blackTeam = Team.blackTeam();
         final Map<Position, Piece> blackTeamPiecePosition = blackTeam.currentPiecePosition();
 
         assertThat(blackTeamPiecePosition.get(Position.of("a7"))).isInstanceOf(Pawn.class);
@@ -38,7 +38,7 @@ public class TeamTest {
     @Test
     @DisplayName("화이트팀을 생성하면, 하얀색 기물이 정상 배치된다.")
     void init_white_team() {
-        final Team whiteTeam = new Team(PiecePosition.initWhitePosition());
+        final Team whiteTeam = Team.whiteTeam();
         final Map<Position, Piece> whiteTeamPiecePosition = whiteTeam.currentPiecePosition();
 
         assertThat(whiteTeamPiecePosition.get(Position.of("a2"))).isInstanceOf(Pawn.class);
