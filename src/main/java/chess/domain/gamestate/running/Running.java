@@ -11,6 +11,9 @@ public abstract class Running extends AbstractState {
 
     @Override
     public boolean isFinished() {
+        if (board.isAnyKingDead()) {
+            return true;
+        }
         return false;
     }
 }

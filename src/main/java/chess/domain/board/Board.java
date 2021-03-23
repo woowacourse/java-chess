@@ -88,4 +88,11 @@ public class Board {
     public List<Piece> toList() {
         return new ArrayList<>(pieces);
     }
+
+    public boolean isAnyKingDead() {
+        return pieces
+            .stream()
+            .filter(Piece::isKing)
+            .count() != 2;
+    }
 }

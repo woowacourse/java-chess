@@ -1,8 +1,6 @@
 package chess.domain.gamestate;
 
 import chess.domain.board.Board;
-import chess.domain.team.Team;
-import chess.utils.BoardUtil;
 
 public abstract class AbstractState implements State {
 
@@ -10,5 +8,10 @@ public abstract class AbstractState implements State {
 
     public AbstractState(Board board) {
         this.board = board;
+    }
+
+    @Override
+    public boolean isKingDead() {
+        return board.isAnyKingDead();
     }
 }
