@@ -25,10 +25,6 @@ public class Score {
         return new Score(value - (count * 0.5));
     }
 
-    public Score half() {
-        return new Score(value / 2);
-    }
-
     public double value() {
         return value;
     }

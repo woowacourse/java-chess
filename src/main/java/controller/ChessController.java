@@ -14,6 +14,7 @@ public class ChessController {
     private static final String STATUS_COMMAND = "status";
 
     public void run() {
+        OutputView.printGameInformation();
         try {
             if (!InputView.command().equals(START_COMMAND)) {
                 throw new IllegalArgumentException();
