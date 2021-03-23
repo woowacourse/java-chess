@@ -38,7 +38,7 @@
 ## 리팩토링 중점 사안
 - [x] 상수들이 의미하는 바를 명확하게 표기할 것
 - [ ] 체스에서의 턴 변경은 controller에서 호출 vs chessGame에서 move하고 나서 호출?
-- [ ] ChessGame에서 PiecePosition을 생성할 때, 내부에서 생성하도록 캡슐화 해보는 것은 어떤가?
+- [x] ChessGame에서 PiecePosition을 생성할 때, 내부에서 생성하도록 캡슐화 해보는 것은 어떤가?
     - [ ] 체스 게임에서 필요한 blackTeam과 whiteTeam의 팀 생성은 어디서 하는 게 좋을까?
 - [ ] 특정 기물을 위한 메서드가 불필요한 기물들에게 까지 노출되는 것을 피하는 방법?
 

@@ -7,12 +7,28 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class PiecePosition {
+    private static final int BLACK_PAWN_COLUMN = 6;
+    private static final int BLACK_PAWN_DIRECTION = -1;
+    private static final int BLACK_PIECE_COLUMN = 7;
+
+    private static final int WHITE_PAWN_COLUMN = 1;
+    private static final int WHITE_PAWN_DIRECTION = 1;
+    private static final int WHITE_PIECE_COLUMN = 0;
+
     private final Map<Position, Piece> piecePosition;
 
-    public PiecePosition(final int pawnColumn, final int pawnDirection, final int pieceColumn) {
+    private PiecePosition(final int pawnColumn, final int pawnDirection, final int pieceColumn) {
         piecePosition = new HashMap<>();
         initializePawn(pawnColumn, pawnDirection);
         initializePiece(pieceColumn);
+    }
+
+    public static PiecePosition initBlackPosition() {
+        return new PiecePosition(BLACK_PAWN_COLUMN, BLACK_PAWN_DIRECTION, BLACK_PIECE_COLUMN);
+    }
+
+    public static PiecePosition initWhitePosition() {
+        return new PiecePosition(WHITE_PAWN_COLUMN, WHITE_PAWN_DIRECTION, WHITE_PIECE_COLUMN);
     }
 
     private void initializePawn(final int pawnColumn, final int pawnDirection) {

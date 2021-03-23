@@ -16,7 +16,7 @@ public class PiecePositionTest {
 
     @BeforeEach
     void setUp() {
-        whitePiecePosition = new PiecePosition(1, 1, 0);
+        whitePiecePosition = PiecePosition.initWhitePosition();
     }
 
     @Test

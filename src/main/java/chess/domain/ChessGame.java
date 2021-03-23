@@ -8,32 +8,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class ChessGame {
-    private static final int BLACK_PAWN_COLUMN = 6;
-    private static final int BLACK_PAWN_DIRECTION = -1;
-    private static final int BLACK_PIECE_COLUMN = 7;
-
-    private static final int WHITE_PAWN_COLUMN = 1;
-    private static final int WHITE_PAWN_DIRECTION = 1;
-    private static final int WHITE_PIECE_COLUMN = 0;
-
     private final Team blackTeam;
     private final Team whiteTeam;
     private Team currentTurnTeam;
     private boolean isPlaying;
 
     public ChessGame() {
-        this.blackTeam = initBlackTeam();
-        this.whiteTeam = initWhiteTeam();
+        this.blackTeam = new Team(PiecePosition.initBlackPosition());
+        this.whiteTeam = new Team(PiecePosition.initWhitePosition());
         this.currentTurnTeam = this.whiteTeam;
         this.isPlaying = true;
-    }
-
-    private Team initBlackTeam() {
-        return new Team(new PiecePosition(BLACK_PAWN_COLUMN, BLACK_PAWN_DIRECTION, BLACK_PIECE_COLUMN));
-    }
-
-    private Team initWhiteTeam() {
-        return new Team(new PiecePosition(WHITE_PAWN_COLUMN, WHITE_PAWN_DIRECTION, WHITE_PIECE_COLUMN));
     }
 
     public void move(final Position current, final Position destination) {
