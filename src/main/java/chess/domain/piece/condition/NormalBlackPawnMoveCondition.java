@@ -19,8 +19,8 @@ public class NormalBlackPawnMoveCondition extends MoveCondition {
     }
 
     private boolean isNotExistPieceOnPath(Board board, Position target) {
-        return board.getPieces().stream()
-                .noneMatch(piece -> piece.isSamePosition(target));
+        return board.isNoneMatchByFilteredPieces(piece -> true,
+                piece -> piece.isSamePosition(target));
     }
 
 }

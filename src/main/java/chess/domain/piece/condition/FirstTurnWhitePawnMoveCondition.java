@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-import java.util.List;
+import java.util.function.Predicate;
 
 public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
 
@@ -21,16 +21,13 @@ public class FirstTurnWhitePawnMoveCondition extends MoveCondition {
     }
 
     private boolean isNotPieceExistOnPath(Board board, Piece piece, Position target) {
-        List<Piece> pieces = board.getPieces();
+        return board.isNoneMatchByFilteredPieces(pieceOnBoard -> !pieceOnBoard.equals(piece),
+                isExistInMoveArea(piece, target));
+    }
 
-        return pieces.stream()
-                .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(
-                        pieceOnBoard ->
-                                pieceOnBoard.getColumn() == piece.getColumn() &&
-                                        target.getRow() <= pieceOnBoard.getRow() &&
-                                        pieceOnBoard.getRow() <= piece.getRow()
-                );
+    private Predicate<Piece> isExistInMoveArea(final Piece piece, final Position target) {
+        return pieceOnBoard -> pieceOnBoard.getColumn() == piece.getColumn() &&
+                target.getRow() <= pieceOnBoard.getRow() && pieceOnBoard.getRow() <= piece.getRow();
     }
 
 }

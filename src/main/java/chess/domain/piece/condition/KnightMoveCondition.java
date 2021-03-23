@@ -28,11 +28,9 @@ public class KnightMoveCondition extends MoveCondition {
     }
 
     public boolean isNotExistSameColorPieceOnPath(Board board, Piece piece, Position target) {
-        return board.getPieces().stream()
-                .noneMatch(pieceOnBoard ->
-                        pieceOnBoard.isSamePosition(target) &&
-                                piece.isSameColor(pieceOnBoard.getColor())
-                );
+        return board.isNoneMatchByFilteredPieces(pieceOnBoard -> true,
+                pieceOnBoard -> pieceOnBoard.isSamePosition(target) &&
+                        piece.isSameColor(pieceOnBoard.getColor()));
     }
 
 }

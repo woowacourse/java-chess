@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
@@ -22,11 +21,8 @@ public class FirstTurnBlackPawnMoveCondition extends MoveCondition {
     }
 
     private boolean isNotExistPieceOnPath(Board board, Piece piece, Position target) {
-        List<Piece> pieces = board.getPieces();
-
-        return pieces.stream()
-                .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(isExistInMoveArea(piece, target));
+        return board.isNoneMatchByFilteredPieces(pieceOnBoard -> !pieceOnBoard.equals(piece),
+                isExistInMoveArea(piece, target));
     }
 
     private Predicate<Piece> isExistInMoveArea(final Piece piece, final Position target) {

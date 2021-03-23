@@ -123,4 +123,8 @@ public class Piece {
         return result;
     }
 
+    public double calculateGradient(final Position target) {
+        return position.calculateGradient(target);
+    }
+
 }

@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class QueenMoveCondition extends MoveCondition {
@@ -36,28 +35,19 @@ public class QueenMoveCondition extends MoveCondition {
         int maxRow = Math.max(piece.getRow(), target.getRow());
         int minRow = Math.min(piece.getRow(), target.getRow());
 
-        return board.getPieces().stream()
-                .filter(pieceOnBoard -> !pieceOnBoard.equals(piece))
-                .noneMatch(pieceOnBoard ->
-                        isExistObstacleOnCrossPath(maxCol, minCol, maxRow, minRow, pieceOnBoard)
-                );
+        return board.isNoneMatchByFilteredPieces(pieceOnBoard -> !pieceOnBoard.equals(pieceOnBoard),
+                isExistObstacleOnCrossPath(maxCol, minCol, maxRow, minRow));
     }
 
-    private boolean isExistObstacleOnCrossPath(final int maxCol,
-                                               final int minCol,
-                                               final int maxRow,
-                                               final int minRow,
-                                               final Piece pieceOnBoard) {
-        return (minRow <= pieceOnBoard.getRow()) && (pieceOnBoard.getRow() <= maxRow) &&
-                (minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol);
+    private Predicate<Piece> isExistObstacleOnCrossPath(final int maxCol, final int minCol, final int maxRow, final int minRow) {
+        return pieceOnBoard ->
+                (minRow <= pieceOnBoard.getRow()) && (pieceOnBoard.getRow() <= maxRow) &&
+                        (minCol <= pieceOnBoard.getColumn() && pieceOnBoard.getColumn() <= maxCol);
     }
 
     private boolean isNotExistObstacleOnXPath(Board board, Piece piece, Position target) {
-        List<Piece> pieces = board.getPieces();
-
-        return pieces.stream()
-                .filter(isExistInMoveArea(piece, target))
-                .noneMatch(hasSameGradientWithSourceAndTarget(piece, target));
+        return board.isNoneMatchByFilteredPieces(isExistInMoveArea(piece, target),
+                hasSameGradientWithSourceAndTarget(piece, target));
     }
 
     private Predicate<Piece> isExistInMoveArea(Piece piece, Position target) {
@@ -72,8 +62,8 @@ public class QueenMoveCondition extends MoveCondition {
 
     private Predicate<Piece> hasSameGradientWithSourceAndTarget(final Piece piece, final Position target) {
         return selectedPiece ->
-                piece.getPosition().calculateGradient(target) ==
-                        piece.getPosition().calculateGradient(selectedPiece.getPosition());
+                piece.calculateGradient(target) ==
+                        piece.calculateGradient(selectedPiece.getPosition());
     }
 
 }

@@ -96,4 +96,17 @@ public class Pieces {
                 .sum();
     }
 
+    public boolean isNoneMatchByFilteredPieces(Predicate<Piece> filteredCondition, Predicate<Piece> noneMatchedCondition) {
+        return pieces.stream()
+                .filter(filteredCondition)
+                .noneMatch(noneMatchedCondition);
+    }
+
+    public boolean isEnemyExist(Position target, Color color) {
+        return pieces.stream()
+                .anyMatch(
+                        piece -> piece.isSamePosition(target) && piece.isSameColor(color)
+                );
+    }
+
 }

@@ -21,11 +21,7 @@ public class CatchingPieceWhitePawnMoveCondition extends MoveCondition {
     }
 
     private boolean isEnemyExist(final Board board, final Position target) {
-        return board.getPieces().stream()
-                .anyMatch(
-                        piece -> piece.isSamePosition(target) &&
-                                piece.isSameColor(Color.BLACK)
-                );
+        return board.isEnemyExist(target, Color.BLACK);
     }
 
 }

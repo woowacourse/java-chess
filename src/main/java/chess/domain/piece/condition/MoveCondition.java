@@ -9,8 +9,16 @@ public abstract class MoveCondition {
     public abstract boolean isSatisfyBy(Board board, Piece source, Position target);
 
     protected boolean isNotChessPieceOutOfBoard(Board board, Position target) {
-        return 0 <= target.getRow() && target.getRow() < board.getRow() &&
-                0 <= target.getColumn() && target.getColumn() < board.getColumn();
+        if (target.getRow() < 0) {
+            return false;
+        }
+        if (target.getRow() >= board.getRow()) {
+            return false;
+        }
+        if (target.getColumn() < 0) {
+            return false;
+        }
+        return target.getColumn() < board.getColumn();
     }
 
 }

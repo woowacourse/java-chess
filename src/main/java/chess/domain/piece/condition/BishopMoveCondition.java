@@ -4,7 +4,6 @@ import chess.domain.board.Board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Position;
 
-import java.util.List;
 import java.util.function.Predicate;
 
 public class BishopMoveCondition extends MoveCondition {
@@ -23,17 +22,14 @@ public class BishopMoveCondition extends MoveCondition {
     }
 
     private boolean isNotExistObstacleOnPath(Board board, Piece piece, Position target) {
-        List<Piece> pieces = board.getPieces();
-
-        return pieces.stream()
-                .filter(isExistInMoveArea(piece, target))
-                .noneMatch(hasSameGradientWithSourceAndTarget(piece, target));
+        return board.isNoneMatchByFilteredPieces(isExistInMoveArea(piece, target),
+                hasSameGradientWithSourceAndTarget(piece, target));
     }
 
     private Predicate<Piece> hasSameGradientWithSourceAndTarget(final Piece piece, final Position target) {
         return selectedPiece ->
-                piece.getPosition().calculateGradient(target) ==
-                        piece.getPosition().calculateGradient(selectedPiece.getPosition());
+                piece.calculateGradient(target) ==
+                        piece.calculateGradient(selectedPiece.getPosition());
     }
 
     private Predicate<Piece> isExistInMoveArea(final Piece piece, final Position target) {

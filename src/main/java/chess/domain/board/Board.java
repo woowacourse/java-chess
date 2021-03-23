@@ -6,6 +6,7 @@ import chess.domain.piece.Pieces;
 import chess.domain.piece.Position;
 
 import java.util.List;
+import java.util.function.Predicate;
 
 public class Board {
     public static final int ROW = 8;
@@ -23,11 +24,7 @@ public class Board {
 
     public void movePiece(Color color, Position source, Position target) {
         Piece sourcePiece = pieces.findControllablePieceByPosition(color, source);
-        catchPiece(color);
         sourcePiece.move(target, this);
-    }
-
-    private void catchPiece(final Color color) {
         pieces.catchPiece(color);
     }
 
@@ -53,6 +50,14 @@ public class Board {
 
     public boolean isCaughtKing() {
         return pieces.isCaughtKing();
+    }
+
+    public boolean isNoneMatchByFilteredPieces(final Predicate<Piece> filteredCondition, final Predicate<Piece> noneMatchedCondition) {
+        return pieces.isNoneMatchByFilteredPieces(filteredCondition, noneMatchedCondition);
+    }
+
+    public boolean isEnemyExist(final Position target, final Color color) {
+        return pieces.isEnemyExist(target, color);
     }
 
 }
