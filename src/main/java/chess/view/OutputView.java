@@ -2,9 +2,8 @@ package chess.view;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
-import chess.domain.game.Outcome;
 import chess.domain.game.Result;
-import chess.domain.piece.Color;
+import chess.domain.piece.feature.Color;
 import chess.domain.piece.Piece;
 
 import java.util.Map;

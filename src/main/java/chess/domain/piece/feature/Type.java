@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.feature;
 
 public enum Type {
 	PAWN("P", 1),

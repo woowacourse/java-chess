@@ -3,7 +3,7 @@ package chess.controller;
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
-import chess.domain.piece.Color;
+import chess.domain.piece.feature.Color;
 import chess.view.InputView;
 import chess.view.Option;
 import chess.view.OutputView;

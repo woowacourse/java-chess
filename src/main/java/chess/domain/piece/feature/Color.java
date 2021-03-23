@@ -1,4 +1,4 @@
-package chess.domain.piece;
+package chess.domain.piece.feature;
 
 public enum Color {
 	BLACK, WHITE, NO_COLOR;

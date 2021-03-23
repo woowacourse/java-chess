@@ -1,7 +1,9 @@
-package chess.domain.piece;
+package chess.domain.piece.flexibledistance;
 
 import chess.domain.board.Direction;
 import chess.domain.board.Position;
+import chess.domain.piece.feature.Color;
+import chess.domain.piece.feature.Type;
 
 import java.util.List;
 

@@ -1,6 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.board.Position;
+import chess.domain.piece.feature.Color;
+import chess.domain.piece.fixeddistance.King;
+import chess.domain.piece.fixeddistance.Knight;
+import chess.domain.piece.flexibledistance.Bishop;
+import chess.domain.piece.flexibledistance.Queen;
+import chess.domain.piece.flexibledistance.Rook;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
