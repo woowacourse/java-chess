@@ -1,19 +1,22 @@
 package chess.domain.state;
 
 public class Exit implements State {
+
+    public static final String ERROR_MESSAGE_IS_ALREADY_EXIT = "[ERROR] 이미 종료된 상태입니다.";
+
     @Override
     public State exit() {
-        throw new IllegalArgumentException("[ERROR] 이미 종료된 상태입니다.");
+        throw new IllegalArgumentException(ERROR_MESSAGE_IS_ALREADY_EXIT);
     }
 
     @Override
     public State init() {
-        throw new IllegalArgumentException("[ERROR] 이미 종료된 상태입니다.");
+        throw new IllegalArgumentException(ERROR_MESSAGE_IS_ALREADY_EXIT);
     }
 
     @Override
     public State next() {
-        throw new IllegalArgumentException("[ERROR] 이미 종료된 상태입니다.");
+        throw new IllegalArgumentException(ERROR_MESSAGE_IS_ALREADY_EXIT);
     }
 
     @Override
