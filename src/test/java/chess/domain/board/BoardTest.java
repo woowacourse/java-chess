@@ -35,11 +35,7 @@ public class BoardTest {
     @DisplayName("올바른 보드 생성된다.")
     @Test
     void createTest() {
-        Piece[] pieces = getPiecesOfFirstLine(Owner.WHITE);
-
-        for (Horizontal horizontal : Horizontal.values()) {
-            assertThat(board.of(Vertical.A, horizontal).getSymbol()).isEqualTo(pieces[horizontal.getIndex()].getSymbol());
-        }
+        assertThat(board.of(Vertical.A, Horizontal.ONE)).isInstanceOf(Rook.class);
     }
 
     @DisplayName("입력한 위치의 기물을 가져온다.")
