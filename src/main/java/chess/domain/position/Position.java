@@ -84,14 +84,6 @@ public class Position {
             (Math.pow(this.getX() - source.getX(), 2) + Math.pow(this.getY() - source.getY(), 2)));
     }
 
-    private int calculateRankGap(Position position) {
-        return this.getY() - position.getY();
-    }
-
-    private int calculateFileGap(Position position) {
-        return this.getX() - position.getX();
-    }
-
     public boolean isLocatedAtStartLine() {
         return this.getY() == Pawn.WHITE_PAWN_START_LINE
             || this.getY() == Pawn.BLACK_PAWN_START_LINE;
