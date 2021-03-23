@@ -24,11 +24,11 @@ public class InputView {
         }
     }
 
-    public static List<String> inputMovePosition() {
-        final String inputMoveCommand = scanner.nextLine();
-        final List<String> splitMoveCommand = Arrays.asList(inputMoveCommand.split(" "));
-        if (MOVE_COMMAND.equals(splitMoveCommand.get(0)) || STATUS_COMMAND.equals(splitMoveCommand.get(0))) {
-            return splitMoveCommand;
+    public static List<String> inputUserCommand() {
+        final String inputCommand = scanner.nextLine();
+        final List<String> splitCommand = Arrays.asList(inputCommand.split(" "));
+        if (MOVE_COMMAND.equals(splitCommand.get(0)) || STATUS_COMMAND.equals(splitCommand.get(0))) {
+            return splitCommand;
         }
         throw new IllegalArgumentException("허용되지 않은 명령입니다.");
     }

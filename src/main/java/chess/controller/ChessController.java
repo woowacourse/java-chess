@@ -36,7 +36,7 @@ public class ChessController {
 
     private void singleTurn(ChessGame chessGame) {
         try {
-            List<String> movePositions = InputView.inputMovePosition();
+            List<String> movePositions = InputView.inputUserCommand();
             controlUserCommand(chessGame, movePositions);
         } catch (Exception e) {
             System.out.println(e.getMessage());
