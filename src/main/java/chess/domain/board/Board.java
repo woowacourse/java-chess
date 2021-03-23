@@ -60,7 +60,7 @@ public class Board {
 
     public Path generatePath(Piece piece) {
         Paths paths = new Paths();
-        paths = paths.findAllPath(piece, coordinates.get(piece));
+        paths = paths.findAllPath(piece, findPositionBy(piece));
         return paths.removeObstacles(piece, this);
     }
 

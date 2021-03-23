@@ -21,7 +21,7 @@ public enum Command {
     private static final int TARGET_POSITION = 2;
     private static final String ALREADY_RUNNING_ERROR_MESSAGE = "이미 게임을 진행중입니다.";
     private static final String GAME_NOT_STARTED_ERROR_MESSAGE = "아직 게임을 시작하지 않았습니다.";
-    private static final String INVALID_COMMNAD_ERROR_MESSAGE = "잘못된 명령어입니다.";
+    private static final String INVALID_COMMAND_ERROR_MESSAGE = "잘못된 명령어입니다.";
     private static final String INVALID_PIECE_ERROR_MESSAGE = "유효하지 않은 체스말을 입력했습니다.";
 
     private final String message;
@@ -64,7 +64,7 @@ public enum Command {
         return Stream.of(values())
             .filter(command -> command.is(value))
             .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMNAD_ERROR_MESSAGE));
+            .orElseThrow(() -> new IllegalArgumentException(INVALID_COMMAND_ERROR_MESSAGE));
     }
 
     private static Position positionOf(String input, int pieceIndex) {
