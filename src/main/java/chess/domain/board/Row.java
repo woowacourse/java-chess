@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import com.sun.org.apache.bcel.internal.generic.ATHROW;
+
 import java.util.Arrays;
 
 public enum Row {
@@ -11,6 +13,8 @@ public enum Row {
 	SIX(2, '6'),
 	SEVEN(1, '7'),
 	EIGHT(0, '8');
+
+	private static final String ROW_INDEX_ERROR = "범위를 벗어난 row 입니다.";
 
 	private final int index;
 	private final char row;
@@ -24,14 +28,14 @@ public enum Row {
 		return Arrays.stream(values())
 				.filter(value -> value.row == input)
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new IllegalArgumentException(ROW_INDEX_ERROR));
 	}
 
 	public static Row findRowByIndex(int input) {
 		return Arrays.stream(values())
 				.filter(value -> value.index == input)
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new IllegalArgumentException(ROW_INDEX_ERROR));
 	}
 
 	public static boolean isInBound(int index) {

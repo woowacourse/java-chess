@@ -3,46 +3,62 @@ package chess.controller;
 import chess.domain.board.ChessBoard;
 import chess.domain.game.ChessGame;
 import chess.domain.game.Result;
+import chess.domain.gamestate.Ready;
 import chess.domain.piece.feature.Color;
 import chess.view.InputView;
-import chess.view.Option;
 import chess.view.OutputView;
 
 import java.util.List;
 
-import static chess.view.InputView.COMMAND_INDEX;
-
 public class Controller {
 	public void run() {
 		ChessBoard chessBoard = new ChessBoard();
-		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE);
+		ChessGame chessGame = new ChessGame(chessBoard, Color.WHITE, new Ready());
 		OutputView.printMainScreen();
-		if (InputView.isStart()) {
-			startGame(chessGame);
-			gameResult(chessGame);
-			run();
-		}
+
+		startGame(chessGame);
+		playGame(chessGame);
+		gameResult(chessGame);
 	}
 
 	private void startGame(ChessGame chessGame) {
-		chessGame.start();
-		OutputView.printChessBoard(chessGame.getChessBoard());
-		playGame(chessGame);
+		try {
+			List<String> input = InputView.takeInput();
+			chessGame.start(input);
+			if (chessGame.isOngoing()) {
+				OutputView.printChessBoard(chessGame.getChessBoard());
+			}
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			startGame(chessGame);
+		}
 	}
 
 	private void playGame(ChessGame chessGame) {
 		while (chessGame.isOngoing()) {
-			List<String> input = InputView.takeMoveOrStatusInput();
-			if (Option.STATUS.getOption().equals(input.get(COMMAND_INDEX))) {
-				break;
+			play(chessGame);
+		}
+	}
+
+	private void play(ChessGame chessGame) {
+		try {
+			List<String> input = InputView.takeInput();
+			chessGame.play(input);
+			if (chessGame.isOngoing()) {
+				OutputView.printChessBoard(chessGame.getChessBoard());
 			}
-			chessGame.movePiece(input);
-			OutputView.printChessBoard(chessGame.getChessBoard());
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			play(chessGame);
 		}
 	}
 
 	private void gameResult(ChessGame chessGame) {
-		Result result = chessGame.result();
-		OutputView.printResult(result);
+		try {
+			Result result = chessGame.calculateResult();
+			OutputView.printResult(result);
+			run();
+		} catch (UnsupportedOperationException ignored) {
+		}
 	}
 }

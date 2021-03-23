@@ -2,6 +2,7 @@ package chess.domain.game;
 
 import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
+import chess.domain.gamestate.Ready;
 import chess.domain.piece.Blank;
 import chess.domain.piece.feature.Color;
 import org.assertj.core.api.AssertionsForClassTypes;
@@ -21,8 +22,8 @@ public class ChessGameTest {
 
 	@BeforeEach
 	void setUp() {
-		chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
-		chessGame.start();
+		chessGame = new ChessGame(new ChessBoard(), Color.WHITE, new Ready());
+		chessGame.initBoard();
 	}
 
 	@Test
@@ -45,8 +46,8 @@ public class ChessGameTest {
 	@Test
 	@DisplayName("턴이 아닐 때 오류 발생")
 	void validateTurn() {
-		ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE);
-		chessGame.start();
+		ChessGame chessGame = new ChessGame(new ChessBoard(), Color.WHITE, new Ready());
+		chessGame.initBoard();
 		assertThatThrownBy(() -> chessGame.movePiece(Arrays.asList("move", "b7", "b6")))
 				.isInstanceOf(IllegalArgumentException.class)
 				.hasMessage(String.format(TURN_MESSAGE, Color.WHITE));

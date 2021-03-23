@@ -12,6 +12,8 @@ public enum Column {
 	G(6, 'g'),
 	H(7, 'h');
 
+	private static final String COLUMN_INDEX_ERROR = "범위를 벗어난 column 입니다.";
+
 	private final int index;
 	private final char column;
 
@@ -24,14 +26,14 @@ public enum Column {
 		return Arrays.stream(values())
 				.filter(value -> value.column == input)
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new IllegalArgumentException(COLUMN_INDEX_ERROR));
 	}
 
 	public static Column findColumnByIndex(int input) {
 		return Arrays.stream(values())
 				.filter(value -> value.index == input)
 				.findFirst()
-				.orElseThrow(IllegalArgumentException::new);
+				.orElseThrow(() -> new IllegalArgumentException(COLUMN_INDEX_ERROR));
 	}
 
 	public static boolean isInBound(int index) {

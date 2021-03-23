@@ -3,10 +3,9 @@ package chess.domain.board;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Optional;
 
 public class Position {
-	public static final String OUT_OF_BOUND_MESSAGE = "체스판 범위를 벗어난 위치입니다.";
+	public static final String OUT_OF_BOUND_MESSAGE = "존재하지 않는 위치입니다.";
 
 	private static final Map<String, Position> cache = new HashMap<>();
 
@@ -30,24 +29,35 @@ public class Position {
 
 	public static Position of(Row row, Column column) {
 		String key = generateKey(row, column);
-		return Optional.ofNullable(cache.get(key))
-				.orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
+		return cache.computeIfAbsent(key, v -> {
+			throw new IllegalArgumentException(OUT_OF_BOUND_MESSAGE);
+		});
 	}
 
 	public static Position of(int row, int column) {
 		String key = generateKey(Row.findRowByIndex(row), Column.findColumnByIndex(column));
-		return Optional.ofNullable(cache.get(key))
-				.orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
+		return cache.computeIfAbsent(key, v -> {
+			throw new IllegalArgumentException(OUT_OF_BOUND_MESSAGE);
+		});
 	}
 
 	public static Position of(String input) {
+		validatePositionSize(input);
+		System.out.println(input);
 		String key = generateKey(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
-		return Optional.ofNullable(cache.get(key))
-				.orElseThrow(() -> new IllegalArgumentException(OUT_OF_BOUND_MESSAGE));
+		return cache.computeIfAbsent(key, v -> {
+			throw new IllegalArgumentException(OUT_OF_BOUND_MESSAGE);
+		});
 	}
 
 	private static String generateKey(Row row, Column column) {
 		return row.name() + column.name();
+	}
+
+	private static void validatePositionSize(String input) {
+		if (input.length() != 2) {
+			throw new IllegalArgumentException(OUT_OF_BOUND_MESSAGE);
+		}
 	}
 
 	public Column getColumn() {
