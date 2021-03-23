@@ -33,7 +33,7 @@ public class ChessController {
             String input = InputView.inputCommandFromUser();
             Command command = commands.getIfPresent(input);
             command.handle(input);
-            printByCommand(command);
+            printByCommand(command); // todo: 이녀석을 뭐라고 네이밍할까...??
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
             turn();
