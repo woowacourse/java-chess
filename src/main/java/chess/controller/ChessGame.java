@@ -10,7 +10,7 @@ import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessGame {
-    public void start() {
+    public static void start() {
         OutputView.startGame();
         State state = new Ready(Board.getGamingBoard());
         Command command = command();
@@ -19,7 +19,7 @@ public class ChessGame {
         }
     }
 
-    private void startGame(State initialState) {
+    private static void startGame(State initialState) {
         State state = initialState.start();
         printBoard(state);
 
@@ -28,7 +28,7 @@ public class ChessGame {
         }
     }
 
-    private void printBoard(State state) {
+    private static void printBoard(State state) {
         OutputView.print(state.board(), state.side());
 
         if (state.isGameSet()) {
@@ -36,7 +36,7 @@ public class ChessGame {
         }
     }
 
-    private State turn(State state) {
+    private static State turn(State state) {
         try {
             state = execute(command(), state);
             printBoard(state);
@@ -47,7 +47,7 @@ public class ChessGame {
         return state;
     }
 
-    private State execute(Command command, State state) {
+    private static State execute(Command command, State state) {
 
         if (command.isMove()) {
             state = state.move(command.source(), command.target());
@@ -65,7 +65,7 @@ public class ChessGame {
         return state;
     }
 
-    private Command command() {
+    private static Command command() {
         try {
             return Command.from(InputView.command());
         } catch (InvalidCommandException e) {
