@@ -12,6 +12,7 @@ import java.util.List;
 public class ChessGame {
     private static final int SOURCE_INDEX = 1;
     private static final int DESTINATION_INDEX = 2;
+    public static final int MOVE_ARGUMENTS_COUNT = 3;
 
     private final Turn turn;
     private Board board;
@@ -48,34 +49,17 @@ public class ChessGame {
     }
 
     private void move(Point source, Point destination, Team currentTeam) {
-        validatePoint(source, destination);
-        validateTurn(source, currentTeam);
-        board.move(source, destination);
-    }
-
-    private void validatePoint(Point source, Point destination) {
-        if (board.isEmpty(source)) {
-            throw new IllegalArgumentException("움직일 수 있는 기물이 존재하지 않습니다.");
-        }
-        if (!board.canMove(source, destination)) {
-            throw new IllegalArgumentException("해당 위치로는 움직일 수 없습니다.");
-        }
-    }
-
-    private void validateTurn(Point source, Team currentTeam) {
-        if (!board.isTeam(source, currentTeam)) {
-            throw new IllegalArgumentException("현재 플레이어의 기물이 아닙니다.");
-        }
+        board.move(source, destination, currentTeam);
     }
 
     private void validateMoveArgument(List<String> arguments) {
-        if (arguments.size() != 3) {
+        if (arguments.size() != MOVE_ARGUMENTS_COUNT) {
             throw new IllegalArgumentException("정확한 위치를 입력해주세요.");
         }
     }
 
     public boolean isRunning() {
-        return board.isContinued();
+        return state.isRunning();
     }
 
     public double score(Team team) {

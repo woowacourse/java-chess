@@ -10,14 +10,14 @@ public class Point {
 
     private static final Map<String, Point> POINT_POOL = new HashMap<>();
 
+    private final Column x;
+    private final Row y;
+
     static {
         for (Row row : Row.values()) {
             iterateXCoordinate(row);
         }
     }
-
-    private final Column x;
-    private final Row y;
 
     public Point(Column x, Row y) {
         this.x = x;

@@ -67,6 +67,6 @@ public class Ready implements GameState {
 
     @Override
     public boolean isRunning() {
-        return board.isContinued();
+        return board.isRunning();
     }
 }

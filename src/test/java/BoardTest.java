@@ -77,19 +77,19 @@ public class BoardTest {
     @Test
     @DisplayName("킹이 잡히지 않았을 경우 게임 진행")
     void gameIsPlayingWhenKingNotDead() {
-        assertThat(board.isContinued()).isTrue();
+        assertThat(board.isRunning()).isTrue();
     }
 
     @Test
     @DisplayName("킹이 잡히면 게임종료 테스트")
     void gameIsOverWhenKingIsDead() {
-        board.move(Point.of("e7"), Point.of("e5"));
-        board.move(Point.of("e8"), Point.of("e7"));
-        board.move(Point.of("e7"), Point.of("e6"));
-        board.move(Point.of("e6"), Point.of("f5"));
+        board.move(Point.of("e7"), Point.of("e5"), Team.BLACK);
+        board.move(Point.of("e8"), Point.of("e7"), Team.BLACK);
+        board.move(Point.of("e7"), Point.of("e6"), Team.BLACK);
+        board.move(Point.of("e6"), Point.of("f5"), Team.BLACK);
 
-        board.move(Point.of("d2"), Point.of("d4"));
-        board.move(Point.of("d1"), Point.of("d3"));
+        board.move(Point.of("d2"), Point.of("d4"), Team.WHITE);
+        board.move(Point.of("d1"), Point.of("d3"), Team.WHITE);
         chessGame.move(Arrays.asList("move", "d3", "f5"));
 
         assertThat(chessGame.isRunning()).isFalse();

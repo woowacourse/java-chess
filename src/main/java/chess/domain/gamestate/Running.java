@@ -37,6 +37,6 @@ public class Running implements GameState {
 
     @Override
     public boolean isRunning() {
-        return board.isContinued();
+        return board.isRunning();
     }
 }

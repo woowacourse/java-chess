@@ -61,8 +61,8 @@ public class ChessGameTest {
     @Test
     @DisplayName("킹을 유효한 위치로 이동 테스트")
     void kingWithValidMove() {
-        board.move(Point.of("e2"), Point.of("e3")); // 폰 이동
-        board.move(Point.of("e1"), Point.of("e2"));
+        board.move(Point.of("e2"), Point.of("e3"), Team.WHITE); // 폰 이동
+        board.move(Point.of("e1"), Point.of("e2"), Team.WHITE);
 
         assertThat(board.getSquareState(Point.of("e2")))
                 .isEqualTo(Square.of(Piece.KING, Team.WHITE));
@@ -71,7 +71,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("퀸을 유효한 위치로 이동 테스트")
     void queenWithValidMove() {
-        board.move(Point.of("d2"), Point.of("d3"));
+        board.move(Point.of("d2"), Point.of("d3"), Team.WHITE);
         List<String> moveCommander = Arrays.asList("move", "d1", "d2");
         chessGame.move(moveCommander);
 
@@ -100,7 +100,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("비숍을 유효한 위치로 이동 테스트")
     void bishopWithValidMove() {
-        board.move(Point.of("d2"), Point.of("d3"));
+        board.move(Point.of("d2"), Point.of("d3"), Team.WHITE);
         List<String> moveCommander = Arrays.asList("move", "c1", "h6");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("h6")))
@@ -119,7 +119,9 @@ public class ChessGameTest {
     @Test
     @DisplayName("룩을 유효한 위치로 이동 테스트")
     void rookWithValidMove() {
-        board.move(Point.of("a2"), Point.of("a6"));
+        board.move(Point.of("a2"), Point.of("a4"), Team.WHITE);
+        board.move(Point.of("a4"), Point.of("a5"), Team.WHITE);
+        board.move(Point.of("a5"), Point.of("a6"), Team.WHITE);
         List<String> moveCommander = Arrays.asList("move", "a1", "a5");
         chessGame.move(moveCommander);
         assertThat(board.getSquareState(Point.of("a5")))
@@ -129,7 +131,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("룩 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void rookMoveToInvalidPoint() {
-        board.move(Point.of("b2"), Point.of("b3"));
+        board.move(Point.of("b2"), Point.of("b3"), Team.WHITE);
         List<String> moveCommander = Arrays.asList("move", "a1", "f6");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
@@ -192,7 +194,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("폰 이동 테스트(첫 이동 외에 2칸 이동을 시도한 경우 예외처리)")
     void pawnMoveToInvalidPointWhenSecondMove() {
-        board.move(Point.of("b2"), Point.of("b3"));
+        board.move(Point.of("b2"), Point.of("b3"), Team.WHITE);
 
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(Arrays.asList("move", "b3", "b5")))

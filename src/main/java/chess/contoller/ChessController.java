@@ -22,13 +22,13 @@ public class ChessController {
     private void ready(ChessGame chessGame) {
         OutputView.printStartInfo();
         List<String> input = InputView.InputString();
-        validateStarCommant(chessGame, input);
+        validateStartCommand(chessGame, input);
     }
 
-    private void validateStarCommant(ChessGame chessGame, List<String> input) {
+    private void validateStartCommand(ChessGame chessGame, List<String> input) {
         try {
             Command command = Command.getByInput(input.get(0));
-            validateStartCommand(command);
+            validateStart(command);
             command.execute(chessGame, input);
         } catch (IllegalArgumentException e) {
             OutputView.printMessage(e.getMessage());
@@ -36,7 +36,7 @@ public class ChessController {
         }
     }
 
-    private void validateStartCommand(Command command) {
+    private void validateStart(Command command) {
         List<Command> possibleCommand = Arrays.asList(Command.START, Command.END);
         if (!possibleCommand.contains(command)) {
             throw new IllegalArgumentException("start, end 이외의 명령은 입력할 수 없습니다.");

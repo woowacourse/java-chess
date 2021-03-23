@@ -9,15 +9,13 @@ import java.util.*;
 
 public class Board {
 
-    private static final double HALF_PAWN_SCORE = 0.5;
     private static final int ONE_MOVE_COUNT = 1;
+    public static final int RUNNING_NUMBER = 2;
 
     private final Map<Point, Square> squares = new HashMap<>();
-    private boolean aliveKing;
 
     public Board() {
         initializeBoard();
-        aliveKing = true;
     }
 
     private void initializeBoard() {
@@ -125,12 +123,26 @@ public class Board {
         return moveCount <= sourceSquare.getMoveLength();
     }
 
-    public void move(Point source, Point destination) {
-        if (squares.get(destination).isKing()) {
-            aliveKing = !aliveKing;
-        }
+    public void move(Point source, Point destination, Team team) {
+        validatePoint(source, destination);
+        validateTurn(source, team);
         squares.put(destination, squares.get(source));
         squares.put(source, Square.of(Piece.EMPTY, Team.NONE));
+    }
+
+    private void validatePoint(Point source, Point destination) {
+        if (isEmpty(source)) {
+            throw new IllegalArgumentException("움직일 수 있는 기물이 존재하지 않습니다.");
+        }
+        if (!canMove(source, destination)) {
+            throw new IllegalArgumentException("해당 위치로는 움직일 수 없습니다.");
+        }
+    }
+
+    private void validateTurn(Point source, Team currentTeam) {
+        if (!isTeam(source, currentTeam)) {
+            throw new IllegalArgumentException("현재 플레이어의 기물이 아닙니다.");
+        }
     }
 
     public boolean isTeam(Point source, Team currentTeam) {
@@ -138,34 +150,15 @@ public class Board {
         return square.isTeam(currentTeam);
     }
 
-    public boolean isContinued() {
-        return aliveKing;
+    public boolean isRunning() {
+        long kingCount = squares.values().stream()
+                .filter(Square::isKing)
+                .count();
+        return kingCount == RUNNING_NUMBER;
     }
 
     public double score(Team team) {
-        return sumScore(team) - (HALF_PAWN_SCORE * pawnCountInSameColumn(team));
-    }
-
-    private long pawnCountInSameColumn(Team team) {
-        return Arrays.stream(Column.values())
-                .mapToLong(column -> pawnCountInColumn(team, column))
-                .filter(count -> count >= 2)
-                .sum();
-    }
-
-    private long pawnCountInColumn(Team team, Column column) {
-        return squares.keySet().stream()
-                .filter(point -> point.isColumn(column))
-                .map(squares::get)
-                .filter(square -> square.isTeam(team) && square.isPawn())
-                .count();
-    }
-
-    private double sumScore(Team team) {
-        return squares.values().stream()
-                .filter(square -> square.isTeam(team))
-                .mapToDouble(Square::score)
-                .sum();
+        return new BoardScore(squares).score(team);
     }
 
     public Square getSquareState(Point point) {
