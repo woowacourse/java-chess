@@ -34,15 +34,18 @@ public class ChessGame {
         Position source = movePath.getSource();
         Position target = movePath.getTarget();
         Piece piece = pieceAtSourcePosition(source);
-        Strategy strategy = piece.strategy();
-        Direction currentDirection = source.calculateDirection(target);
 
-        board.validateTargetPieceIsSameTeam(target, turn);
-        MoveValidator.validateStrategyContainsDirection(currentDirection, strategy);
-        MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, source),
-            calculateTargetMove(movePath, currentDirection));
-        validateTargetPath(movePath, piece, currentDirection);
+        validateChessMovement(movePath, piece, source.calculateDirection(target));
         movePiece(source, target);
+    }
+
+    private void validateChessMovement(MovePath movePath, Piece piece, Direction currentDirection) {
+        Strategy strategy = piece.strategy();
+        board.validateTargetPieceIsSameTeam(movePath.getTarget(), turn);
+        MoveValidator.validateStrategyContainsDirection(currentDirection, strategy);
+        MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, movePath.getSource()), calculateTargetMove(
+            movePath, currentDirection));
+        validateTargetPath(movePath, piece, currentDirection);
     }
 
     private Piece pieceAtSourcePosition(Position source) {
