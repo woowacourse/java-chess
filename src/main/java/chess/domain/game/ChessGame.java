@@ -59,17 +59,9 @@ public class ChessGame {
 	}
 
 	public Result result() {
-		Map<Color, Double> resultStatistics = createResultStatistics();
-		return new Result(resultStatistics);
-	}
-
-	private Map<Color, Double> createResultStatistics() {
 		double blackScore = chessBoard.getScore(Color.WHITE);
 		double whiteScore = chessBoard.getScore(Color.BLACK);
 
-		Map<Color, Double> resultStatistics = new HashMap<>();
-		resultStatistics.put(Color.BLACK, blackScore);
-		resultStatistics.put(Color.WHITE, whiteScore);
-		return resultStatistics;
+		return new Result(blackScore, whiteScore);
 	}
 }

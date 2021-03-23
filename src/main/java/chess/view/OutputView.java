@@ -37,12 +37,10 @@ public class OutputView {
 	}
 
 	public static void printResult(Result result) {
-		Map<Color, Double> score = result.getResult();
-		Map<Color, Outcome> winOrLose = result.getWinOrLose();
 		System.out.printf(RESULT_FORMAT,
-				Color.BLACK.name(), score.get(Color.BLACK), winOrLose.get(Color.BLACK).getOutcome());
+				Color.BLACK.name(), result.getBlackScore(), result.getBlackOutcome());
 		System.out.printf(RESULT_FORMAT,
-				Color.WHITE.name(), score.get(Color.WHITE), winOrLose.get(Color.WHITE).getOutcome());
+				Color.WHITE.name(), result.getWhiteScore(), result.getWhiteOutcome());
 		System.out.println();
 	}
 }
