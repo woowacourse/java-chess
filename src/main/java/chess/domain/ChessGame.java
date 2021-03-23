@@ -11,6 +11,8 @@ import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.domain.util.StringParser;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ChessGame {
 
@@ -106,14 +108,14 @@ public class ChessGame {
         turn = Team.turnOver(turn);
     }
 
-    public EnumMap<Team, Double> calculatePoint() {
-        EnumMap<Team, Double> result = new EnumMap<>(Team.class);
+    public Map<Team, Double> calculatePoint() {
+        Map<Team, Double> result = new HashMap<>();
         calculateEachTeamPoint(result, Team.BLACK);
         calculateEachTeamPoint(result, Team.WHITE);
         return result;
     }
 
-    private void calculateEachTeamPoint(EnumMap<Team, Double> result, Team team) {
+    private void calculateEachTeamPoint(Map<Team, Double> result, Team team) {
         double totalPoint = board.calculateTotalPoint(team);
         totalPoint -= board.updatePawnPoint(team);
         result.put(team, totalPoint);
