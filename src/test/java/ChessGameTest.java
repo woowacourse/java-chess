@@ -35,7 +35,7 @@ public class ChessGameTest {
         List<String> moveCommander = Arrays.asList("move", "c3", "c4");
         assertThatIllegalArgumentException()
                 .isThrownBy(() -> chessGame.move(moveCommander))
-                .withMessage("움직일 수 있는 기물이 존재하지 않습니다.");
+                .withMessage("해당 위치에 기물이 존재하지 않습니다.");
     }
 
     @Test
