@@ -2,11 +2,8 @@ package chess.domain.board;
 
 
 import chess.domain.piece.Piece;
-import chess.dto.BoardDto;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Board {
@@ -42,6 +39,7 @@ public class Board {
         long kingCount = squares.values().stream()
                 .filter(Square::isKing)
                 .count();
+
         return kingCount == RUNNING_NUMBER;
     }
 
@@ -53,21 +51,7 @@ public class Board {
         return squares.get(point);
     }
 
-    public BoardDto boardDto() {
-        List<List<String>> board = new ArrayList<>();
-        for (Row row : Row.reverseRows()) {
-            board.add(rowLine(row));
-        }
-
-        return new BoardDto(board);
-    }
-
-    private List<String> rowLine(Row row) {
-        List<String> rowLine = new ArrayList<>();
-        for (Column column : Column.columns()) {
-            Square square = squares.get(Point.of(column.xCoordinate() + row.yCoordinate()));
-            rowLine.add(square.pieceName());
-        }
-        return rowLine;
+    public Map<Point, Square> board() {
+        return squares;
     }
 }

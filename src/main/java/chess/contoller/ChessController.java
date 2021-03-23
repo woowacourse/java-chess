@@ -1,14 +1,16 @@
 package chess.contoller;
 
 import chess.domain.ChessGame;
-import chess.domain.board.Board;
-import chess.domain.board.Team;
+import chess.domain.board.*;
 import chess.domain.command.Command;
+import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
 
@@ -45,7 +47,7 @@ public class ChessController {
 
     private void start(ChessGame chessGame) {
         while (chessGame.isRunning()) {
-            OutputView.printChessBoard(chessGame.generateBoardDto());
+            OutputView.printChessBoard(boardDto(chessGame));
             List<String> input = InputView.InputString();
             validateCommand(chessGame, input);
         }
@@ -68,5 +70,24 @@ public class ChessController {
             OutputView.printTeamScore(chessGame.score(Team.WHITE), Team.WHITE);
             OutputView.printTeamScore(chessGame.score(Team.BLACK), Team.BLACK);
         }
+    }
+
+    public BoardDto boardDto(ChessGame chessGame) {
+        List<List<String>> board = new ArrayList<>();
+        for (Row row : Row.reverseRows()) {
+            board.add(rowLine(row, chessGame));
+        }
+
+        return new BoardDto(board);
+    }
+
+    private List<String> rowLine(Row row, ChessGame chessGame) {
+        List<String> rowLine = new ArrayList<>();
+        Map<Point, Square> board = chessGame.board();
+        for (Column column : Column.columns()) {
+            Square square = board.get(Point.of(column.xCoordinate() + row.yCoordinate()));
+            rowLine.add(square.pieceName());
+        }
+        return rowLine;
     }
 }

@@ -2,12 +2,13 @@ package chess.domain;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.board.Square;
 import chess.domain.board.Team;
 import chess.domain.gamestate.GameState;
 import chess.domain.gamestate.Ready;
-import chess.dto.BoardDto;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessGame {
     private static final int SOURCE_INDEX = 1;
@@ -66,11 +67,11 @@ public class ChessGame {
         return board.score(team);
     }
 
-    public BoardDto generateBoardDto() {
-        return board.boardDto();
-    }
-
     public GameState state() {
         return state;
+    }
+
+    public Map<Point, Square> board() {
+        return board.board();
     }
 }
