@@ -9,7 +9,7 @@ import chess.domain.position.Position;
 import java.util.*;
 import java.util.stream.Collectors;
 
-final public class PawnInitializer implements LocationInitializer {
+public final class PawnInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Arrays.stream(Horizontal.values())
             .map(Horizontal::symbol)
             .collect(Collectors.toList());

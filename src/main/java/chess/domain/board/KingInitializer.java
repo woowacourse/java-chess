@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-final public class KingInitializer implements LocationInitializer {
+public final class KingInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Collections.singletonList("e");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");
     private static final List<String> VERTICALS_BLACK = Collections.singletonList("8");

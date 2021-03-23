@@ -13,7 +13,7 @@ public abstract class GeneralPiece extends Piece {
     }
 
     @Override
-    final public boolean movable(final Position source, final Position target, final Piece piece) {
+    public final boolean movable(final Position source, final Position target, final Piece piece) {
         return isPossibleDirection(source, target) && !friendly(piece.team());
     }
 

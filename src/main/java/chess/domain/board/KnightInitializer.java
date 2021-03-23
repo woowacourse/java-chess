@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 import java.util.*;
 
-final public class KnightInitializer implements LocationInitializer {
+public final class KnightInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Arrays.asList("b", "g");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");
     private static final List<String> VERTICALS_BLACK = Collections.singletonList("8");

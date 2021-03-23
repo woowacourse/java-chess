@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 import java.util.*;
 
-final public class BishopInitializer implements LocationInitializer {
+public final class BishopInitializer implements LocationInitializer {
     private static final List<String> HORIZONTALS = Arrays.asList("c", "f");
     private static final List<String> VERTICALS_WHITE = Collections.singletonList("1");
     private static final List<String> VERTICALS_BLACK = Collections.singletonList("8");

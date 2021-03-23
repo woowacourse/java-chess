@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-final public class BoardInitializer {
+public final class BoardInitializer {
     private static final List<LocationInitializer> locationInitializers;
     private static final List<String> HORIZONTAL_RANGE = Arrays.stream(Horizontal.values())
             .map(Horizontal::symbol)

@@ -1,6 +1,5 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.BoardInitializer;
 import chess.domain.piece.*;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;

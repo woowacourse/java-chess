@@ -18,19 +18,19 @@ public abstract class Piece {
         name = initialName.toLowerCase(Locale.ROOT);
     }
 
-    final protected boolean opposite(final Piece piece) {
+    protected final boolean opposite(final Piece piece) {
         return this.team == piece.team.oppositeTeam();
     }
 
-    final public boolean friendly(final Team team) {
+    public final boolean friendly(final Team team) {
         return this.team == team;
     }
 
-    final public String name() {
+    public final String name() {
         return name;
     }
 
-    final public Team team() {
+    public final Team team() {
         return this.team;
     }
 

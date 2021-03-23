@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
 
-final public class ChessResult {
+public final class ChessResult {
     private final Board board;
 
     public ChessResult(final Board board) {

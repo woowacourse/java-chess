@@ -9,9 +9,9 @@ import java.util.Map;
 
 public class OutputView {
 
+    public static final int LAST_VERTICAL_VALUE = 8;
     private static final String MESSAGE_PREFIX = "> ";
     private static final String ERROR_PREFIX = "[ERROR] ";
-    public static final int LAST_VERTICAL_VALUE = 8;
 
     public static void printStartGameMessage() {
         System.out.println(MESSAGE_PREFIX + "체스 게임을 시작합니다.");

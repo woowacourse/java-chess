@@ -6,13 +6,13 @@ import chess.domain.position.Vertical;
 import java.util.Arrays;
 import java.util.List;
 
-final public class Pawn extends Piece {
+public final class Pawn extends Piece {
+    public static final double EXTRA_SCORE = 0.5;
     private static final List<Integer> INITIAL_VERTICALS = Arrays.asList(2, 7);
     private static final List<Direction> POSSIBLE_DIRECTIONS = Arrays.asList(Direction.NORTH, Direction.NORTHEAST, Direction.NORTHWEST,
             Direction.INITIAL_PAWN_NORTH);
     private static final String INITIAL_NAME = "P";
     private static final double SCORE = 1;
-    public static final double EXTRA_SCORE = 0.5;
 
     public Pawn(final Team team) {
         super(team, INITIAL_NAME);

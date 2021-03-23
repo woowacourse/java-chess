@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-final public class Position implements Comparable<Position> {
+public final class Position implements Comparable<Position> {
     private final Horizontal horizontal;
     private final Vertical vertical;
 
