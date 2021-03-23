@@ -15,9 +15,9 @@ import java.util.List;
 
 public class BoardUtil {
 
-    private final static int BOARD_SIZE = 8;
-    private final static int DEFAULT_POSITION = 1;
-    private final static char EMPTY = '.';
+    private static final int BOARD_SIZE = 8;
+    private static final int DEFAULT_POSITION = 1;
+    private static final char EMPTY = '.';
 
     private static final char[][] INITIAL_BOARD = {
         {'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R'},
