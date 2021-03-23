@@ -66,7 +66,7 @@ public class Pawn extends Piece {
         return true;
     }
 
-    private void checkTarget(Target target, List<Position> positions) {
+    private void checkTarget(final Target target, final List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
         }
@@ -80,7 +80,7 @@ public class Pawn extends Piece {
         return whitePositions(basePieces, targetPieces, positions);
     }
 
-    private List<Position> blackPositions(Pieces basePieces, Pieces targetPieces, List<Position> positions) {
+    private List<Position> blackPositions(final Pieces basePieces, final Pieces targetPieces, final List<Position> positions) {
         if (isFirst) {
             positions.addAll(makeFirstDownRoutes(basePieces, targetPieces));
             positions.addAll(makeDownRightRoutes(basePieces, targetPieces));
@@ -168,7 +168,7 @@ public class Pawn extends Piece {
         return positions;
     }
 
-    private List<Position> whitePositions(Pieces basePieces, Pieces targetPieces, List<Position> positions) {
+    private List<Position> whitePositions(final Pieces basePieces, final Pieces targetPieces, final List<Position> positions) {
         if (isFirst) {
             positions.addAll(makeFirstUpRoutes(basePieces, targetPieces));
             positions.addAll(makeUpRightRoutes(basePieces, targetPieces));

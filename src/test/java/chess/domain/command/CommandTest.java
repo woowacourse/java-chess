@@ -30,7 +30,7 @@ class CommandTest {
         assertThat(move.isEnd()).isEqualTo(false);
         assertThat(move.isMove()).isEqualTo(true);
         assertThat(move.isStatus()).isEqualTo(false);
-        assertThat(command.isReady()).isEqualTo(false);
+        assertThat(move.isReady()).isEqualTo(false);
     }
 
     @DisplayName("start가 들어오고, status 커맨드가 들어오면 move상태로 변경한다.")
@@ -125,6 +125,16 @@ class CommandTest {
         Command end = command.execute("end");
 
         assertThatThrownBy(() -> end.execute("end"))
+                .isInstanceOf(UnsupportedOperationException.class);
+    }
+
+    @DisplayName("status 상태에서 커맨드를 실행하려하면 예외가 발생한다.")
+    @Test
+    void statusException() {
+        Command command = CommandFactory.initialCommand("start");
+        Command status = command.execute("status");
+
+        assertThatThrownBy(() -> status.execute("end"))
                 .isInstanceOf(UnsupportedOperationException.class);
     }
 }
