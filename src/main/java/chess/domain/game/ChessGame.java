@@ -4,6 +4,8 @@ import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.BoardResponseDTO;
 import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.Board;
+import chess.domain.board.setting.BoardCustomSetting;
+import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.piece.Piece;
 import chess.domain.piece.type.PieceWithColorType;
@@ -19,9 +21,17 @@ public class ChessGame {
     private final Board board;
 
     public ChessGame(BoardSetting boardSetting) {
+        validate(boardSetting);
         players = new Players();
         board = new Board();
         setPieces(boardSetting);
+    }
+
+    private void validate(BoardSetting boardSetting) {
+        if (!(boardSetting instanceof BoardDefaultSetting
+            || boardSetting instanceof BoardCustomSetting)) {
+            throw new IllegalArgumentException("유효하지 않은 보드 세팅 객체 타입 입니다.");
+        }
     }
 
     private void setPieces(BoardSetting boardSetting) {
