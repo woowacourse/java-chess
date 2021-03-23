@@ -30,6 +30,11 @@ public class Status extends Running {
     }
 
     @Override
+    public void processMove(String input, Team currentTeam) {
+        throw new IllegalArgumentException("[ERROR] 현재 move 상태가 아닙니다.");
+    }
+
+    @Override
     public ResponseDto getProcessResult() {
         return new ResponseDto.Builder(BoardUtil.generateViewBoard(board))
             .blackScore(board.score(Team.BLACK))

@@ -1,23 +1,34 @@
 package chess.controller;
 
-import chess.domain.board.Board;
-import chess.domain.gamestate.CommandType;
-import chess.domain.gamestate.State;
-import chess.domain.gamestate.running.Ready;
-import chess.domain.location.Location;
-import chess.domain.team.Team;
-import chess.utils.BoardUtil;
+import chess.domain.game.ChessGame;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 public class ChessController {
 
-    public void play() {
+    public void run() {
         OutputView.printGameStartMessage();
-        Team currentTurn = Team.WHITE;
 
-        Board board = BoardUtil.generateInitialBoard();
-        State state = new Ready(board);
+        ChessGame game = new ChessGame();
+        while (!game.isFinished()) {
+            play(game);
+            processResult(game);
+        }
+    }
 
+    private void play(ChessGame game) {
+        try {
+            String input = InputView.inputCommand();
+            game.play(input);
+        } catch (RuntimeException e) {
+            OutputView.printExceptionMessage(e.getMessage());
+            play(game);
+        }
+    }
+
+    private void processResult(ChessGame game) {
+        if (!game.isFinished()) {
+            OutputView.printResult(game.getProcessResult());
+        }
     }
 }

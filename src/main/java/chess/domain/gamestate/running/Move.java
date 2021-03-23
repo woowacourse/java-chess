@@ -35,6 +35,14 @@ public class Move extends Running {
     }
 
     @Override
+    public void processMove(String input, Team currentTeam) {
+        String[] splittedInput = input.split(" ");
+        Location source = Location.of(splittedInput[1]);
+        Location target = Location.of(splittedInput[2]);
+        board.move(source, target, currentTeam);
+    }
+
+    @Override
     public ResponseDto getProcessResult() {
         return new ResponseDto.Builder(generateViewBoard(board))
             .blackScore(-1)
