@@ -27,6 +27,9 @@ public class ChessGame {
             currentTeam = currentTeam.reverse();
         }
 
+        if (state.isFinished()) {
+            state = state.changeCommand(CommandType.END);
+        }
         state = nextState;
     }
 

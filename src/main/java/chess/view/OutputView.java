@@ -29,6 +29,14 @@ public class OutputView {
             System.out.println();
             return;
         }
+        printScoreMessage(responseDto);
+    }
+
+    private static boolean isBoardResponse(ResponseDto responseDto) {
+        return responseDto.getType() == ResponseType.BOARD;
+    }
+
+    private static void printScoreMessage(ResponseDto responseDto) {
         ScoreDto scoreDto = (ScoreDto) responseDto.getValue();
         double whiteScore = scoreDto.getWhiteScore();
         double blackScore = scoreDto.getBlackScore();
@@ -36,9 +44,6 @@ public class OutputView {
         System.out.println("화이트: " + whiteScore);
         System.out.println("블랙: " + blackScore);
         System.out.println("승자: " + winner.getValue());
-    }
-
-    private static boolean isBoardResponse(ResponseDto responseDto) {
-        return responseDto.getType() == ResponseType.BOARD;
+        System.out.println();
     }
 }

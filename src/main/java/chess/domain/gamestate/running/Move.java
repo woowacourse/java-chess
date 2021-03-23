@@ -18,9 +18,6 @@ public class Move extends Running {
     @Override
     public State changeCommand(CommandType command) {
         validateCommand(command);
-        if (board.isAnyKingDead()) {
-            return new End(board);
-        }
         if (command == CommandType.STATUS) {
             return new Status(board);
         }
@@ -42,7 +39,6 @@ public class Move extends Running {
         Location source = Location.of(splittedInput[1]);
         Location target = Location.of(splittedInput[2]);
         board.move(source, target, currentTeam);
-
     }
 
     @Override
