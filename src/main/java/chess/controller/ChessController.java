@@ -23,7 +23,6 @@ public class ChessController {
         if (command != Command.START) {
             return;
         }
-        chessBoard.initializeDefaultPieces();
         OutputView.printChessBoard(chessBoard);
         startChessGame();
         if (chessBoard.isKingCheckmate()) {

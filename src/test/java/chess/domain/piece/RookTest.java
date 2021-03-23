@@ -1,9 +1,6 @@
 package chess.domain.piece;
 
-import chess.domain.board.Cell;
-import chess.domain.board.ChessBoard;
-import chess.domain.board.ChessBoardGenerator;
-import chess.domain.board.Coordinate;
+import chess.domain.board.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -12,7 +9,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.EnumSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -26,7 +25,9 @@ class RookTest {
 
     @BeforeEach
     void setup() {
-        cells = ChessBoardGenerator.generateEmptyBoard();
+        cells = Arrays.stream(File.values())
+                .flatMap(file -> Arrays.stream(Rank.values()).map(rank -> new Coordinate(file, rank)))
+                .collect(Collectors.toMap(coordinate -> coordinate, value -> new Cell()));
         chessBoard = new ChessBoard(cells);
         cells.get(current).put(rook);
     }

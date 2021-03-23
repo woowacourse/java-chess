@@ -1,6 +1,9 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Direction;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 
 import java.util.*;
@@ -20,36 +23,6 @@ public class ChessBoard {
         if (cells.size() != CHESS_BOARD_SIZE) {
             throw new IllegalArgumentException("유효하지 않은 크기의 체스보드입니다.");
         }
-    }
-
-    public void initializeDefaultPieces() {
-        putPawns(TeamType.BLACK, Rank.SEVEN);
-        putPiecesExceptPawn(TeamType.BLACK, Rank.EIGHT);
-        putPawns(TeamType.WHITE, Rank.TWO);
-        putPiecesExceptPawn(TeamType.WHITE, Rank.ONE);
-    }
-
-    private void putPawns(TeamType teamType, Rank pawnDefaultRank) {
-        for (File file : File.values()) {
-            Coordinate coordinate = new Coordinate(file, pawnDefaultRank);
-            Cell emptyCell = cells.get(coordinate);
-            emptyCell.put(new Pawn(teamType));
-        }
-    }
-
-    private void putPiecesExceptPawn(TeamType teamType, Rank piecesDefaultRank) {
-        List<Piece> pieces = generatePiecesExceptPawn(teamType);
-        File[] files = File.values();
-        for (int i = 0; i < files.length; i++) {
-            Coordinate coordinate = new Coordinate(files[i], piecesDefaultRank);
-            Cell emptyCell = cells.get(coordinate);
-            emptyCell.put(pieces.get(i));
-        }
-    }
-
-    private List<Piece> generatePiecesExceptPawn(TeamType teamType) {
-        return Arrays.asList(new Rook(teamType), new Knight(teamType), new Bishop(teamType), new Queen(teamType),
-                new King(teamType), new Bishop(teamType), new Knight(teamType), new Rook(teamType));
     }
 
     public void move(Coordinate current, Coordinate destination, TeamType teamType) {
@@ -107,13 +80,6 @@ public class ChessBoard {
         return pawn.getScore();
     }
 
-    public boolean isKingCheckmate() {
-        return cells.values()
-                .stream()
-                .filter(Cell::hasKing)
-                .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
-    }
-
     public TeamType findWinnerTeam() {
         if (!isKingCheckmate()) {
             throw new IllegalStateException("승리한 팀을 찾을 수 없습니다.");
@@ -126,16 +92,11 @@ public class ChessBoard {
                 .orElseThrow(() -> new IllegalStateException("승리한 팀을 찾을 수 없습니다."));
     }
 
-    public boolean isEmptyOrHasEnemyOn(Coordinate coordinate, TeamType teamType) {
-        return cells.get(coordinate).isEmptyOrHasEnemy(teamType);
-    }
-
-    public boolean isEmptyOn(Coordinate coordinate) {
-        return cells.get(coordinate).isEmpty();
-    }
-
-    public boolean hasEnemyOn(Coordinate coordinate, TeamType teamType) {
-        return cells.get(coordinate).hasEnemy(teamType);
+    public boolean isKingCheckmate() {
+        return cells.values()
+                .stream()
+                .filter(Cell::hasKing)
+                .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
     }
 
     public boolean hasPieceOnRouteBeforeDestination(Coordinate current, Coordinate destination) {
@@ -149,6 +110,18 @@ public class ChessBoard {
         return possibleCoordinates.stream()
                 .map(cells::get)
                 .anyMatch(cell -> !cell.isEmpty());
+    }
+
+    public boolean isEmptyOrHasEnemyOn(Coordinate coordinate, TeamType teamType) {
+        return cells.get(coordinate).isEmptyOrHasEnemy(teamType);
+    }
+
+    public boolean isEmptyOn(Coordinate coordinate) {
+        return cells.get(coordinate).isEmpty();
+    }
+
+    public boolean hasEnemyOn(Coordinate coordinate, TeamType teamType) {
+        return cells.get(coordinate).hasEnemy(teamType);
     }
 
     public Map<Coordinate, Cell> getCells() {
