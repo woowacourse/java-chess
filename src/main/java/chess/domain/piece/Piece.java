@@ -16,7 +16,7 @@ public abstract class Piece {
     private final double score;
     private final List<Direction> directions;
 
-    public Piece(PieceType pieceType, TeamColor teamColor, double score,
+    protected Piece(PieceType pieceType, TeamColor teamColor, double score,
         List<Direction> directions) {
         this.pieceType = pieceType;
         this.teamColor = teamColor;
