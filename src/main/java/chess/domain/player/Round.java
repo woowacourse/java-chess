@@ -75,9 +75,6 @@ public class Round {
             Position targetPosition = Position.find(commands.poll());
             moveByTurn(sourcePosition, targetPosition);
         }
-        if (this.command.isStatus()) {
-
-        }
     }
 
     public double calculateScore() {

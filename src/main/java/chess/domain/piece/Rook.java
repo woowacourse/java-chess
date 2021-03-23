@@ -50,6 +50,16 @@ public class Rook extends Piece {
         }
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(makeUpRoutes(basePieces, targetPieces));

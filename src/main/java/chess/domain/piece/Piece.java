@@ -70,4 +70,8 @@ public abstract class Piece {
     public abstract void move(final Target target, final Pieces basePieces, final Pieces targetPieces);
 
     public abstract double score(final List<Piece> pieces);
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 }

@@ -48,6 +48,16 @@ public class King extends Piece {
         return SCORE;
     }
 
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
     private List<Position> makeRoutes(final Pieces basePieces, final Pieces targetPieces) {
         List<Position> positions = new ArrayList<>();
         positions.addAll(makeUpRoutes(basePieces, targetPieces));
