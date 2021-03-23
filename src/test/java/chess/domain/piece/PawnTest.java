@@ -13,6 +13,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.MethodSource;
 
 class PawnTest {
@@ -20,97 +21,100 @@ class PawnTest {
     private static Piece pawnBlack;
     private static Piece pawnWhite;
 
+    private final Position c7 = Position.from("c7");
+    private final Position c2 = Position.from("c2");
+
     @BeforeEach
     void setUp() {
         pawnBlack = new Pawn(Side.BLACK);
         pawnWhite = new Pawn(Side.WHITE);
     }
 
-    @ParameterizedTest(name = "백 진영 Pawn 이동 성공")
-    @MethodSource("routeWhitePawnSuccessTestcase")
-    void routeWhitePawnSuccess(Position to) {
-        assertThat(pawnWhite.route(Position.from("b2"), to)).isEmpty();
-    }
-
-    private static Stream<Arguments> routeWhitePawnSuccessTestcase() {
-        return Stream.of(
-                Arguments.of(Position.from("a3")),
-                Arguments.of(Position.from("b3")),
-                Arguments.of(Position.from("c3"))
-        );
-    }
-
-    @ParameterizedTest(name = "흑 진영 Pawn 이동 성공")
+    @ParameterizedTest(name = "Black Pawn 이동 성공")
     @MethodSource("routeBlackPawnSuccessTestcase")
     void routeBlackPawnSuccess(Position to) {
-        assertThat(pawnBlack.route(Position.from("b7"), to)).isEmpty();
+        assertThat(pawnBlack.route(c7, to)).isEmpty();
     }
 
     private static Stream<Arguments> routeBlackPawnSuccessTestcase() {
         return Stream.of(
-                Arguments.of(Position.from("a6")),
                 Arguments.of(Position.from("b6")),
-                Arguments.of(Position.from("c6"))
+                Arguments.of(Position.from("c6")),
+                Arguments.of(Position.from("d6"))
         );
     }
 
-    @ParameterizedTest(name = "백 진영 Pawn 이동 실패")
-    @MethodSource("routeWhitePawnFailTestcase")
-    void routeWhitePawnFail(Position to) {
-        assertThatThrownBy(() -> pawnWhite.route(Position.from("b2"), to))
-                .isInstanceOf(InvalidMovementException.class);
+    @ParameterizedTest(name = "White Pawn 이동 성공")
+    @MethodSource("routeWhitePawnSuccessTestcase")
+    void routeWhitePawnSuccess(Position to) {
+        assertThat(pawnWhite.route(c2, to)).isEmpty();
     }
 
-    private static Stream<Arguments> routeWhitePawnFailTestcase() {
+    private static Stream<Arguments> routeWhitePawnSuccessTestcase() {
         return Stream.of(
-                Arguments.of(Position.from("b1")),
-                Arguments.of(Position.from("a1")),
-                Arguments.of(Position.from("a2")),
-                Arguments.of(Position.from("b5")),
-                Arguments.of(Position.from("b2"))
+                Arguments.of(Position.from("b3")),
+                Arguments.of(Position.from("c3")),
+                Arguments.of(Position.from("d3"))
         );
     }
 
-    @ParameterizedTest(name = "흑 진영 Pawn 이동 실패")
+    @ParameterizedTest(name = "Black Pawn 이동 실패")
     @MethodSource("routeBlackPawnFailTestcase")
     void routeBlackPawnFail(Position to) {
-        assertThatThrownBy(() -> pawnBlack.route(Position.from("b7"), to))
+        assertThatThrownBy(() -> pawnBlack.route(c7, to))
                 .isInstanceOf(InvalidMovementException.class);
     }
 
     private static Stream<Arguments> routeBlackPawnFailTestcase() {
         return Stream.of(
-                Arguments.of(Position.from("b8")),
                 Arguments.of(Position.from("c8")),
-                Arguments.of(Position.from("c7")),
-                Arguments.of(Position.from("b4")),
-                Arguments.of(Position.from("b7"))
+                Arguments.of(Position.from("d8")),
+                Arguments.of(Position.from("d7")),
+                Arguments.of(Position.from("c4")),
+                Arguments.of(Position.from("c7"))
+        );
+    }
+
+    @ParameterizedTest(name = "White Pawn 이동 실패")
+    @MethodSource("routeWhitePawnFailTestcase")
+    void routeWhitePawnFail(Position to) {
+        assertThatThrownBy(() -> pawnWhite.route(c2, to))
+                .isInstanceOf(InvalidMovementException.class);
+    }
+
+    private static Stream<Arguments> routeWhitePawnFailTestcase() {
+        return Stream.of(
+                Arguments.of(Position.from("c1")),
+                Arguments.of(Position.from("b1")),
+                Arguments.of(Position.from("b2")),
+                Arguments.of(Position.from("c5")),
+                Arguments.of(Position.from("c2"))
         );
     }
 
     @Test
     @DisplayName("한번도 움직이지 않은 Pawn 두칸 이동, 경로 반환")
     void moveDoubleSuccess() {
-        List<Position> blackPawnRoute = pawnBlack.route(Position.from("b7"), Position.from("b5"));
-        assertThat(blackPawnRoute).containsExactly(Position.from("b6"));
+        List<Position> blackPawnRoute = pawnBlack.route(c7, Position.from("c5"));
+        assertThat(blackPawnRoute).containsExactly(Position.from("c6"));
 
-        List<Position> whitePawnRoute = pawnWhite.route(Position.from("b2"), Position.from("b4"));
-        assertThat(whitePawnRoute).containsExactly(Position.from("b3"));
+        List<Position> whitePawnRoute = pawnWhite.route(c2, Position.from("c4"));
+        assertThat(whitePawnRoute).containsExactly(Position.from("c3"));
     }
 
     @Test
     @DisplayName("한번 이상 이동한 Pawn 두칸 이동 실패")
     void moveDoubleFail() {
         pawnBlack.moved();
-        assertThatThrownBy(() -> pawnBlack.route(Position.from("b6"), Position.from("b4")))
+        assertThatThrownBy(() -> pawnBlack.route(Position.from("c6"), Position.from("c4")))
                 .isInstanceOf(InvalidMovementException.class);
 
         pawnWhite.moved();
-        assertThatThrownBy(() -> pawnWhite.route(Position.from("b3"), Position.from("b5")))
+        assertThatThrownBy(() -> pawnWhite.route(Position.from("c3"), Position.from("c5")))
                 .isInstanceOf(InvalidMovementException.class);
     }
 
-    @ParameterizedTest(name = "흑 진영 Pawn 두칸 이동룰에 맞지 않은 이동 실패")
+    @ParameterizedTest(name = "Black Pawn 두칸 이동룰에 맞지 않은 이동 실패")
     @MethodSource("moveBlackPawnFailTestcase")
     void moveBlackPawnFail(String from, String to) {
         assertThatThrownBy(() -> pawnBlack.route(Position.from(from), Position.from(to)))
@@ -119,13 +123,13 @@ class PawnTest {
 
     private static Stream<Arguments> moveBlackPawnFailTestcase() {
         return Stream.of(
-                Arguments.of("b7", "a5"),
-                Arguments.of("b7", "c5"),
-                Arguments.of("b7", "b4")
+                Arguments.of("c7", "b5"),
+                Arguments.of("c7", "d5"),
+                Arguments.of("c7", "c4")
         );
     }
 
-    @ParameterizedTest(name = "백 진영 Pawn 두칸 이동룰에 맞지 않은 이동 실패")
+    @ParameterizedTest(name = "White Pawn 두칸 이동룰에 맞지 않은 이동 실패")
     @MethodSource("moveWhitePawnFailTestcase")
     void moveWhitePawnFail(String from, String to) {
         assertThatThrownBy(() -> pawnWhite.route(Position.from(from), Position.from(to)))
@@ -134,21 +138,57 @@ class PawnTest {
 
     private static Stream<Arguments> moveWhitePawnFailTestcase() {
         return Stream.of(
-                Arguments.of("b2", "a4"),
-                Arguments.of("b2", "c4"),
-                Arguments.of("b2", "b5")
+                Arguments.of("c2", "b4"),
+                Arguments.of("c2", "d4"),
+                Arguments.of("c2", "c5")
         );
     }
 
-    @Test
-    @DisplayName("폰 대각선으로 움직이는지 확인")
-    void diagonal() {
-        assertThat(pawnBlack.diagonal(Position.from("b7"), Position.from("c6"))).isTrue();
+    @ParameterizedTest(name = "Black Pawn 대각선 이동 검사")
+    @CsvSource(value = {"b2", "d2"})
+    void diagonalBlackPawn(String to) {
+        assertThat(pawnBlack.diagonal(Position.from("c1"), Position.from(to))).isTrue();
     }
 
-    @Test
-    @DisplayName("폰 전진인지 확인")
-    void forward() {
-        assertThat(pawnBlack.forward(Position.from("b7"), Position.from("b6"))).isTrue();
+    @ParameterizedTest(name = "White Pawn 대각선 이동 검사")
+    @CsvSource(value = {"b6", "b6"})
+    void diagonalWhitePawn(String to) {
+        assertThat(pawnWhite.diagonal(c7, Position.from(to))).isTrue();
+    }
+
+    @ParameterizedTest(name = "Black Pawn 대각선 이동 실패")
+    @CsvSource(value = {"a2", "a3", "a4", "b2", "b4", "c3", "c4"})
+    void diagonalBlackPawnFail(String to) {
+        assertThat(pawnBlack.diagonal(c2, Position.from(to))).isFalse();
+    }
+
+    @ParameterizedTest(name = "White Pawn 대각선 이동 실패")
+    @CsvSource(value = {"a7", "a6", "a5", "b7", "b5", "c6", "c5"})
+    void diagonalWhitePawnFail(String to) {
+        assertThat(pawnWhite.diagonal(c7, Position.from(to))).isFalse();
+    }
+
+    @ParameterizedTest(name = "Black Pawn 전진 이동 검사")
+    @CsvSource(value = {"c3", "c4"})
+    void forwardBlackPawn(String to) {
+        assertThat(pawnBlack.forward(c2, Position.from(to))).isTrue();
+    }
+
+    @ParameterizedTest(name = "White Pawn 전진 이동 검사")
+    @CsvSource(value = {"c6", "c5"})
+    void forwardWhitePawn(String to) {
+        assertThat(pawnWhite.forward(c7, Position.from(to))).isTrue();
+    }
+
+    @ParameterizedTest(name = "Black Pawn 전진 이동 실패")
+    @CsvSource(value = {"b2", "b3", "b4", "d2", "d3", "d4", "c5"})
+    void forwardBlackPawnFail(String to) {
+        assertThat(pawnBlack.forward(c2, Position.from(to))).isFalse();
+    }
+
+    @ParameterizedTest(name = "White Pawn 전진 이동 실패")
+    @CsvSource(value = {"b7", "b6", "b5", "d7", "d6", "d5", "c4"})
+    void forwardWhitePawnFail(String to) {
+        assertThat(pawnWhite.forward(c7, Position.from(to))).isFalse();
     }
 }
