@@ -27,6 +27,7 @@ public final class ChessGame {
         if (checkValidMove(current, destination)) {
             currentTurnTeam.movePiece(current, destination);
             captureEnemy(destination);
+            changeTurn();
             return;
         }
         throw new IllegalArgumentException("움직일 수 없는 경로입니다.");
@@ -91,12 +92,12 @@ public final class ChessGame {
         }
     }
 
-    public void finish() {
-        isPlaying = false;
+    private void changeTurn() {
+        currentTurnTeam = getEnemy();
     }
 
-    public void changeTurn() {
-        currentTurnTeam = getEnemy();
+    public void finish() {
+        isPlaying = false;
     }
 
     public boolean isPlaying() {

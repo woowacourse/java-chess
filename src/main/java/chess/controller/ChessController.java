@@ -31,7 +31,6 @@ public final class ChessController {
         while (chessGame.isPlaying()) {
             printChessBoard(chessGame);
             progressSingleTurn(chessGame);
-            chessGame.changeTurn();
         }
     }
 
