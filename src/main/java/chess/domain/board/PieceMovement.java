@@ -23,7 +23,7 @@ public class PieceMovement {
     }
 
     private void validatePoint(Point source, Point destination) {
-        if (isEmptySource()) {
+        if (sourceSquare.isEmpty()) {
             throw new IllegalArgumentException("해당 위치에 기물이 존재하지 않습니다.");
         }
         if (!isValidMove(source, destination)) {
@@ -38,8 +38,6 @@ public class PieceMovement {
     }
 
     private boolean isValidMove(Point source, Point destination) {
-        setSquareAndVector(source, destination);
-
         if (sourceSquare.isPawn()) {
             return canMovePawn(source, destination);
         }
@@ -127,9 +125,5 @@ public class PieceMovement {
         sourceSquare = squares.get(source);
         destinationSquare = squares.get(destination);
         vector = sourceSquare.findMovableVector(source, destination);
-    }
-
-    public boolean isEmptySource() {
-        return sourceSquare.isEmpty();
     }
 }
