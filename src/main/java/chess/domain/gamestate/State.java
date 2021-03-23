@@ -9,9 +9,7 @@ public interface State {
 
     boolean isMove();
 
-    void processCommand(Team currentTurn);
-
-    State changeCommand(CommandType command, String commandInput);
+    State changeCommand(CommandType command);
 
     ResponseDto getProcessResult();
 }

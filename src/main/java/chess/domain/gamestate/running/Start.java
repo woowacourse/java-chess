@@ -9,17 +9,17 @@ import chess.utils.BoardUtil;
 
 public class Start extends Running {
 
-    public Start(Board board, String commandInput) {
-        super(board, commandInput);
+    public Start(Board board) {
+        super(board);
     }
 
     @Override
-    public State changeCommand(CommandType command, String commandInput) {
+    public State changeCommand(CommandType command) {
         validateCommand(command);
         if (command == CommandType.MOVE) {
-            return new Move(board, commandInput);
+            return new Move(board);
         }
-        return new End(board, commandInput);
+        return new End(board);
     }
 
     private void validateCommand(CommandType command) {

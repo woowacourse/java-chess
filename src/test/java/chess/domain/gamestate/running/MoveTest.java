@@ -20,7 +20,7 @@ class MoveTest {
     @BeforeEach
     void setUp() {
         board = BoardUtil.generateInitialBoard();
-        state = new Move(board, "move a2 a3");
+        state = new Move(board);
     }
 
     @DisplayName("상태 변경 - move 상태에서 move로 변경가능하다.")
@@ -30,7 +30,7 @@ class MoveTest {
         CommandType move = CommandType.MOVE;
 
         // when
-        state = state.changeCommand(move, "move a2 a3");
+        state = state.changeCommand(move);
 
         // then
         assertThat(state).isInstanceOf(Move.class);
@@ -43,7 +43,7 @@ class MoveTest {
         CommandType status = CommandType.STATUS;
 
         // when
-        state = state.changeCommand(status, "status");
+        state = state.changeCommand(status);
 
         // then
         assertThat(state).isInstanceOf(Status.class);
@@ -56,7 +56,7 @@ class MoveTest {
         CommandType end = CommandType.END;
 
         // when
-        state = state.changeCommand(end, "end");
+        state = state.changeCommand(end);
 
         // then
         assertThat(state).isInstanceOf(End.class);
@@ -69,7 +69,7 @@ class MoveTest {
         CommandType start = CommandType.START;
 
         // then
-        assertThatThrownBy(() -> state.changeCommand(start, "start"))
+        assertThatThrownBy(() -> state.changeCommand(start))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

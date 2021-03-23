@@ -8,8 +8,8 @@ import chess.domain.gamestate.State;
 
 public class End extends AbstractState {
 
-    public End(Board board, String commandInput) {
-        super(board, commandInput);
+    public End(Board board) {
+        super(board);
     }
 
     @Override
@@ -18,7 +18,7 @@ public class End extends AbstractState {
     }
 
     @Override
-    public State changeCommand(CommandType command, String commandInput) {
+    public State changeCommand(CommandType command) {
         throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
     }
 
@@ -26,8 +26,6 @@ public class End extends AbstractState {
     public ResponseDto getProcessResult() {
         throw new IllegalArgumentException("[ERROR] 게임이 이미 종료되었습니다.");
     }
-
-
 
     @Override
     public boolean isMove() {

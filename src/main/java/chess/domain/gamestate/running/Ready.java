@@ -8,17 +8,17 @@ import chess.domain.gamestate.finished.End;
 
 public class Ready extends Running {
 
-    public Ready(Board board, String commandInput) {
-        super(board, commandInput);
+    public Ready(Board board) {
+        super(board);
     }
 
     @Override
-    public State changeCommand(CommandType command, String commandInput) {
+    public State changeCommand(CommandType command) {
         validateCommand(command);
         if (command == CommandType.START) {
-            return new Start(board, commandInput);
+            return new Start(board);
         }
-        return new End(board, commandInput);
+        return new End(board);
     }
 
     private void validateCommand(CommandType command) {

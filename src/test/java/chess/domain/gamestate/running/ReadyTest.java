@@ -20,7 +20,7 @@ class ReadyTest {
     @BeforeEach
     void setUp() {
         board = BoardUtil.generateInitialBoard();
-        state = new Ready(board, "ready");
+        state = new Ready(board);
     }
 
     @DisplayName("상태 변경 - ready 상태에서 start로 변경가능하다.")
@@ -30,7 +30,7 @@ class ReadyTest {
         CommandType start = CommandType.START;
 
         // when
-        state = state.changeCommand(start, "start");
+        state = state.changeCommand(start);
 
         // then
         assertThat(state).isInstanceOf(Start.class);
@@ -43,7 +43,7 @@ class ReadyTest {
         CommandType end = CommandType.END;
 
         // when
-        state = state.changeCommand(end, "end");
+        state = state.changeCommand(end);
 
         // then
         assertThat(state).isInstanceOf(End.class);
@@ -56,7 +56,7 @@ class ReadyTest {
         CommandType move = CommandType.MOVE;
 
         // then
-        assertThatThrownBy(() -> state.changeCommand(move, "move a2 a3"))
+        assertThatThrownBy(() -> state.changeCommand(move))
             .isInstanceOf(IllegalArgumentException.class);
     }
 
@@ -67,7 +67,7 @@ class ReadyTest {
         CommandType status = CommandType.STATUS;
 
         // then
-        assertThatThrownBy(() -> state.changeCommand(status, "status"))
+        assertThatThrownBy(() -> state.changeCommand(status))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

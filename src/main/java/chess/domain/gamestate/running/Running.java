@@ -5,8 +5,8 @@ import chess.domain.gamestate.AbstractState;
 
 public abstract class Running extends AbstractState {
 
-    public Running(Board board, String commandInput) {
-        super(board, commandInput);
+    public Running(Board board) {
+        super(board);
     }
 
     @Override

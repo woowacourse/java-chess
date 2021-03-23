@@ -17,34 +17,7 @@ public class ChessController {
         Team currentTurn = Team.WHITE;
 
         Board board = BoardUtil.generateInitialBoard();
-        State state = new Ready(board, "ready");
-        while (!state.isFinished()) {
-            state = changeStateByCommandInput(state);
-            state.processCommand(currentTurn);
-            if (state.isMove()) {
-                currentTurn = currentTurn.reverse();
-            }
-            OutputView.printResult(state.getProcessResult());
-        }
-    }
+        State state = new Ready(board);
 
-    private State changeStateByCommandInput(State state) {
-        try {
-            String inputCommand = InputView.inputCommand();
-            CommandType command = inputCommand(inputCommand);
-            return state.changeCommand(command, inputCommand);
-        } catch (RuntimeException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return changeStateByCommandInput(state);
-        }
-    }
-
-    private CommandType inputCommand(String inputCommand) {
-        try {
-            return CommandType.from(inputCommand);
-        } catch (RuntimeException e) {
-            OutputView.printExceptionMessage(e.getMessage());
-            return inputCommand(inputCommand);
-        }
     }
 }

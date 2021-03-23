@@ -19,7 +19,7 @@ class EndTest {
     @BeforeEach
     void setUp() {
         board = BoardUtil.generateInitialBoard();
-        state = new End(board, "end");
+        state = new End(board);
     }
 
     @DisplayName("상태 변경 - end 상태에선 어떤 명령어도 안된다.")
@@ -29,7 +29,7 @@ class EndTest {
         CommandType start = CommandType.START;
 
         // then
-        assertThatThrownBy(() -> state.changeCommand(start, "start"))
+        assertThatThrownBy(() -> state.changeCommand(start))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

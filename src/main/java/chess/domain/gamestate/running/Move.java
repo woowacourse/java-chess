@@ -12,20 +12,20 @@ import chess.domain.team.Team;
 
 public class Move extends Running {
 
-    public Move(Board board, String commandInput) {
-        super(board, commandInput);
+    public Move(Board board) {
+        super(board);
     }
 
     @Override
-    public State changeCommand(CommandType command, String commandInput) {
+    public State changeCommand(CommandType command) {
         validateCommand(command);
         if (command == CommandType.STATUS) {
-            return new Status(board, commandInput);
+            return new Status(board);
         }
         if (command == CommandType.MOVE) {
             return this;
         }
-        return new End(board, commandInput);
+        return new End(board);
     }
 
     public void validateCommand(CommandType command) {
@@ -40,14 +40,6 @@ public class Move extends Running {
             .blackScore(-1)
             .whiteScore(-1)
             .build();
-    }
-
-    @Override
-    public void processCommand(Team currentTurn) {
-        String[] splited = commandInput.split(" ");
-        Location source = Location.of(splited[1]);
-        Location target = Location.of(splited[2]);
-        board.move(source, target, currentTurn);
     }
 
     @Override
