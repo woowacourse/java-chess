@@ -38,7 +38,6 @@ public class ChessGame {
         }
 
         currentTurn.move(current, destination);
-        chosenPiece.isMoved();
         changeTurn();
     }
 
