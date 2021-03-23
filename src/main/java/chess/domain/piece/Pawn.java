@@ -27,7 +27,6 @@ public class Pawn extends Piece {
         }
         if (isSideEqualTo(Side.WHITE)) {
             return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
-
         }
 
         return false;
