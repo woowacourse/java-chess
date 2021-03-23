@@ -55,11 +55,11 @@ public class Board {
     }
 
     private void validateNotExistentInPath(List<Location> pathToTarget) {
-        for (Location location : pathToTarget) {
+        pathToTarget.forEach(location -> {
             if (isExistent(location)) {
                 throw new MoveFailureException("이동 경로에 말이 있습니다.");
             }
-        }
+        });
     }
 
     private void validateSameLocation(Location source, Location target) {

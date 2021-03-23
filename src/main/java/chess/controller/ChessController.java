@@ -25,11 +25,8 @@ public class ChessController {
         State state = new Start();
         while (state.isRunning()) {
             actWithCommand(state);
-            if (actWithResponse(state)) {
-                state = state.next();
-            } else {
-                state = state.before();
-            }
+            boolean isSuccessful = actWithResponse(state);
+            state = progress(state, isSuccessful);
         }
         printGameEndMessage();
     }
@@ -81,5 +78,12 @@ public class ChessController {
     private void responseScore(State state) {
         Map<Team, Double> result = Status.class.cast(state).result();
         OutputView.printScore(result.get(Team.BLACK), result.get(Team.WHITE));
+    }
+
+    private State progress(State state, boolean isSuccess) {
+        if (isSuccess) {
+            return state.next();
+        }
+        return state.before();
     }
 }
