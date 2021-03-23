@@ -11,7 +11,6 @@ import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.domain.util.StringParser;
 import java.util.EnumMap;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ChessGame {
@@ -45,8 +44,9 @@ public class ChessGame {
         Strategy strategy = piece.strategy();
         board.validateTargetPieceIsSameTeam(movePath.getTarget(), turn);
         MoveValidator.validateStrategyContainsDirection(currentDirection, strategy);
-        MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, movePath.getSource()), calculateTargetMove(
-            movePath, currentDirection));
+        MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, movePath.getSource()),
+            calculateTargetMove(
+                movePath, currentDirection));
         validateTargetPath(movePath, piece, currentDirection);
     }
 
@@ -70,7 +70,7 @@ public class ChessGame {
             Position currentPosition = source.move(currentDirection, i);
             board.validateHasPieceInPath(currentPosition);
         }
-        if(piece.isPawn()) {
+        if (piece.isPawn()) {
             MoveValidator.validatePawnCondition(board, target, currentDirection);
         }
     }
@@ -109,7 +109,7 @@ public class ChessGame {
     }
 
     public Map<Team, Double> calculatePoint() {
-        Map<Team, Double> result = new HashMap<>();
+        Map<Team, Double> result = new EnumMap<>(Team.class);
         calculateEachTeamPoint(result, Team.BLACK);
         calculateEachTeamPoint(result, Team.WHITE);
         return result;
@@ -142,7 +142,7 @@ public class ChessGame {
     }
 
     public Team getWinTeam() {
-        if(!state.isEnd()) {
+        if (!state.isEnd()) {
             throw new IllegalArgumentException("[ERROR] 아직 왕이 잡히지 않았습니다.");
         }
         return winner;
