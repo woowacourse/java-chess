@@ -7,7 +7,7 @@ import chess.domain.piece.Direction;
 import static chess.domain.piece.Color.BLACK;
 import static chess.domain.piece.Color.WHITE;
 
-public class Pawn extends Piece {
+public final class Pawn extends Piece {
     public static final int INITIAL_BLACK_PAWN_ROW = 1;
     public static final int INITIAL_WHITE_PAWN_ROW = 6;
     private static final int DEFAULT_PAWN_SCORE = 1;

@@ -4,7 +4,7 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class Queen extends Piece {
+public final class Queen extends Piece {
     private static final int QUEEN_SCORE = 9;
     private static final String QUEEN_NAME = "q";
 

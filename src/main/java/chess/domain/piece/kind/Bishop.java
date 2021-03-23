@@ -4,7 +4,7 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class Bishop extends Piece {
+public final class Bishop extends Piece {
     private static final String BISHOP_NAME = "b";
     private static final int BISHOP_SCORE = 3;
 

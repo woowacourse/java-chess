@@ -4,7 +4,7 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class Empty extends Piece {
+public final class Empty extends Piece {
     private static final int EMPTY_SCORE = 0;
     private static final String EMPTY_PIECE_NAME = ".";
 

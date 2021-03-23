@@ -4,7 +4,7 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class Knight extends Piece {
+public final class Knight extends Piece {
     private static final double KNIGHT_SCORE = 2.5;
     private static final int POSSIBLE_DISTANCE_OF_KNIGHT = 5;
     private static final String KNIGHT_NAME = "n";

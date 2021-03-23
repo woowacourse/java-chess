@@ -4,7 +4,7 @@ import chess.domain.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class King extends Piece {
+public final class King extends Piece {
     private static final int KING_SCORE = 0;
     private static final String KING_NAME = "k";
 
