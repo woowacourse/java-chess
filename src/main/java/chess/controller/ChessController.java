@@ -9,7 +9,7 @@ import chess.exception.InvalidCommandException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessGame {
+public class ChessController {
     public static void start() {
         OutputView.startGame();
         State state = new Ready(Board.getGamingBoard());
