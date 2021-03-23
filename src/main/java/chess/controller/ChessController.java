@@ -18,11 +18,10 @@ public class ChessController {
     public void run() {
         OutputView.getNewGameCommand();
         firstCommand();
-        String userInput;
+        Menu menu;
         do {
-            userInput = InputView.getUserCommand();
-            commandExecute(userInput);
-        } while (!chessManager.isEnd() && !Menu.of(userInput).isEnd());
+            menu = getMenu();
+        } while (!chessManager.isEnd() && !menu.isEnd());
 
         OutputView.printGameResult(chessManager.calculateStatus());
     }
@@ -41,9 +40,7 @@ public class ChessController {
         try {
             String userInput = InputView.getUserCommand();
             Menu menu = Menu.of(userInput);
-            if (!menu.isStart() && !menu.isEnd()) {
-                throw new IllegalArgumentException("첫 입력은 start(게임시작) 또는 end(게임종료)만 가능합니다.");
-            }
+            menu.isFirstCommand();
             return menu;
         } catch (IllegalArgumentException e) {
             OutputView.printError(e);
@@ -51,10 +48,22 @@ public class ChessController {
         }
     }
 
-    private void commandExecute(final String input) {
-        final Menu menu = Menu.of(input);
+    private Menu getMenu() {
+        try {
+            return executeMenu(InputView.getUserCommand());
+        } catch (IllegalArgumentException e) {
+            OutputView.printError(e);
+            return getMenu();
+        }
+    }
 
-        // XXX :: ENUM 고민
+    private void movePiece(final MoveCommand command) {
+        chessManager.move(command);
+        OutputView.printBoard(chessManager.getBoard());
+    }
+
+    private Menu executeMenu(final String input) {
+        final Menu menu = Menu.of(input);
 
         if (menu.isStart()) {
             chessManager.resetBoard();
@@ -72,11 +81,8 @@ public class ChessController {
         if (menu.isStatus()) {
             OutputView.printStatus(chessManager.calculateStatus());
         }
-    }
 
-    private void movePiece(final MoveCommand command) {
-        chessManager.move(command);
-        OutputView.printBoard(chessManager.getBoard());
+        return menu;
     }
 
     private void showAblePositionToMove(final ShowCommand command) {

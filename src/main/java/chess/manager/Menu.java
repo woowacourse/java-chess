@@ -33,6 +33,13 @@ public enum Menu {
         return this.parameterCount == size;
     }
 
+    public void isFirstCommand() {
+        if (this.isStart() || this.isEnd()) {
+            return;
+        }
+        throw new IllegalArgumentException("첫 입력은 start(게임시작) 또는 end(게임종료)만 가능합니다.");
+    }
+
     public boolean isEnd() {
         return this.equals(END);
     }

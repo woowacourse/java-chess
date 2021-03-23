@@ -36,7 +36,7 @@ public class Board {
 
     private void validateMove(final Position source, final Position target) {
         if (!ableToMove(source).contains(target)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("유효하지 않은 이동입니다.");
         }
     }
 
