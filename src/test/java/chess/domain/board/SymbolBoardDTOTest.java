@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SymbolBoardTest {
+class SymbolBoardDTOTest {
     
     private static Stream<Arguments> generateNonPawnSource() {
         return Stream.of(Arguments.of(0, "r"), Arguments.of(1, "n"), Arguments.of(2, "b"), Arguments.of(3, "q"),
@@ -28,8 +28,8 @@ class SymbolBoardTest {
         final int whiteRow = 0;
         
         // when
-        final String[][] board = SymbolBoard.from(chess)
-                                            .getBoard();
+        final String[][] board = SymbolBoardDTO.from(chess)
+                                               .getBoard();
         
         // then
         assertThat(board[file][blackRow]).isEqualTo(symbol.toUpperCase());
@@ -46,8 +46,8 @@ class SymbolBoardTest {
         final int whiteRow = 1;
         
         // when
-        final String[][] board = SymbolBoard.from(chess)
-                                            .getBoard();
+        final String[][] board = SymbolBoardDTO.from(chess)
+                                               .getBoard();
         
         // then
         for (int i = 0; i < 8; i++) {
@@ -67,8 +67,8 @@ class SymbolBoardTest {
         Chess chess = Chess.createWithEmptyBoard();
         
         // when
-        final String[][] board = SymbolBoard.from(chess)
-                                            .getBoard();
+        final String[][] board = SymbolBoardDTO.from(chess)
+                                               .getBoard();
         
         // then
         for (int i = 0; i < 8; i++) {

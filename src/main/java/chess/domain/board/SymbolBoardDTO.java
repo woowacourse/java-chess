@@ -6,17 +6,17 @@ import chess.domain.position.Position;
 
 import java.util.Map;
 
-public class SymbolBoard {
+public class SymbolBoardDTO {
     
     private static final int BOARD_SIZE = 8;
     
     private final String[][] board;
     
-    public SymbolBoard(String[][] board) {
+    public SymbolBoardDTO(String[][] board) {
         this.board = board;
     }
     
-    public static SymbolBoard from(Chess chess) {
+    public static SymbolBoardDTO from(Chess chess) {
         final Map<Position, Piece> pieceBoard = chess.getBoard()
                                                      .getBoard();
         final String[][] board = new String[BOARD_SIZE][BOARD_SIZE];
@@ -26,7 +26,7 @@ public class SymbolBoard {
             board[x][y] = entry.getValue().getSymbol();
         }
         
-        return new SymbolBoard(board);
+        return new SymbolBoardDTO(board);
     }
     
     public String[][] getBoard() {

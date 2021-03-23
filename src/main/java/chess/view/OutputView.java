@@ -2,7 +2,7 @@ package chess.view;
 
 import chess.domain.Chess;
 import chess.domain.Color;
-import chess.domain.board.SymbolBoard;
+import chess.domain.board.SymbolBoardDTO;
 
 import static chess.ChessConstant.MAX_INDEX_OF_BOARD;
 import static chess.ChessConstant.MIN_INDEX_OF_BOARD;
@@ -42,7 +42,7 @@ public class OutputView {
     }
     
     public static void printBoard(Chess chess) {
-        final String[][] board = SymbolBoard.from(chess).getBoard();
+        final String[][] board = SymbolBoardDTO.from(chess).getBoard();
         for (int j = MAX_INDEX_OF_BOARD; j >= MIN_INDEX_OF_BOARD; j--) {
             printRankAt(board, j);
         }
