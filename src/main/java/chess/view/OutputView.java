@@ -75,7 +75,7 @@ public class OutputView {
         System.out.printf("검은색은 %.2f점. 흰색은 %.2f점입니다.%n", blackScore, whiteScore);
     }
 
-    public static void printGameEdMessage() {
+    public static void printGameEndMessage() {
         System.out.println("게임이 끝났습니다.");
     }
 

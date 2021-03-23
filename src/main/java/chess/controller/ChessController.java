@@ -3,7 +3,7 @@ package chess.controller;
 import static chess.view.InputView.inputCommand;
 import static chess.view.OutputView.printBoard;
 import static chess.view.OutputView.printException;
-import static chess.view.OutputView.printGameEdMessage;
+import static chess.view.OutputView.printGameEndMessage;
 import static chess.view.OutputView.printGameStartMessage;
 
 import chess.domain.piece.Piece;
@@ -31,7 +31,7 @@ public class ChessController {
                 state = state.before();
             }
         }
-        printGameEdMessage();
+        printGameEndMessage();
     }
 
     private void actWithCommand(State state) {
