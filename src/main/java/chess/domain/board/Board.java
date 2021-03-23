@@ -13,7 +13,7 @@ public class Board {
 
     private final Pieces pieces;
 
-    public Board(final Pieces pieces) {
+    private Board(final Pieces pieces) {
         this.pieces = pieces;
     }
 
