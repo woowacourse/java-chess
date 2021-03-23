@@ -18,7 +18,7 @@ import static java.util.stream.Collectors.toMap;
 public class BoardFactory {
     public static Board createBoard() {
         Map<Position, Square> board = initialize();
-        return new Board(board);
+        return new DefaultChessBoard(board);
     }
 
     private static Map<Position, Square> initialize() {
