@@ -22,7 +22,7 @@ public class ChessController {
 
     public void play() {
         printGameStartMessage();
-        State state = new Start();
+        State<?> state = new Start();
         while (state.isRunning()) {
             actWithCommand(state);
             boolean isSuccessful = actWithResponse(state);
@@ -31,7 +31,7 @@ public class ChessController {
         printGameEndMessage();
     }
 
-    private void actWithCommand(State state) {
+    private void actWithCommand(State<?> state) {
         try {
             runNeedsCommand(state);
         } catch (RuntimeException e) {
@@ -40,14 +40,14 @@ public class ChessController {
         }
     }
 
-    private void runNeedsCommand(State state) {
+    private void runNeedsCommand(State<?> state) {
         if (!state.needsParam()) {
             return;
         }
         state.receive(inputCommand());
     }
 
-    private boolean actWithResponse(State state) {
+    private boolean actWithResponse(State<?> state) {
         try {
             response(state);
             return true;
@@ -57,7 +57,7 @@ public class ChessController {
         }
     }
 
-    private void response(State state) {
+    private void response(State<?> state) {
         if (ResultType.BOARD.equals(state.resultType())) {
             responseBoard(state);
         }
@@ -66,7 +66,7 @@ public class ChessController {
         }
     }
 
-    private void responseBoard(State state) {
+    private void responseBoard(State<?> state) {
         List<?> result = (List<?>) state.result();
         List<Piece> pieces = result.stream()
             .map(Piece.class::cast)
@@ -75,12 +75,13 @@ public class ChessController {
         printBoard(PiecesDto.from(pieces));
     }
 
-    private void responseScore(State state) {
-        Map<Team, Double> result = Status.class.cast(state).result();
+    private void responseScore(State<?> state) {
+        Status status = (Status) state;
+        Map<Team, Double> result = status.result();
         OutputView.printScore(result.get(Team.BLACK), result.get(Team.WHITE));
     }
 
-    private State progress(State state, boolean isSuccess) {
+    private State<?> progress(State<?> state, boolean isSuccess) {
         if (isSuccess) {
             return state.next();
         }
