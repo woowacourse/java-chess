@@ -46,10 +46,10 @@ public class Board {
     }
 
     public double calculateTotalPoint(Team team) {
-        return PointCalculator.calculate(chessBoard, team);
+        return PointCalculator.calculateSumAllPiecesPoint(chessBoard, team);
     }
 
     public double updatePawnPoint(Team team) {
-        return PointCalculator.calculatePawn(chessBoard, team);
+        return PointCalculator.calculateSumPawnAtSameFilePoint(chessBoard, team);
     }
 }

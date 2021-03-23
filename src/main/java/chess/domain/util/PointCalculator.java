@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class PointCalculator {
-    public static double calculate(Map<Position, Piece> chessBoard, Team team) {
+    public static double calculateSumAllPiecesPoint(Map<Position, Piece> chessBoard, Team team) {
         return chessBoard.values().stream()
             .filter(piece -> piece.getTeam() == team)
             .mapToDouble(Piece::getPoint)
@@ -18,8 +18,8 @@ public class PointCalculator {
     }
 
 
-    public static double calculatePawn(Map<Position, Piece> chessBoard, Team team) {
-        Map<Integer, Long> collect = groupFileAndPawnCount(chessBoard, team);
+    public static double calculateSumPawnAtSameFilePoint(Map<Position, Piece> chessBoard, Team team) {
+        Map<Integer, Long> collect = groupFileOnlyPawnCount(chessBoard, team);
         return sumPawnCountAtSameFile(collect) * 0.5;
     }
 
@@ -30,7 +30,7 @@ public class PointCalculator {
             .sum();
     }
 
-    private static Map<Integer, Long> groupFileAndPawnCount(Map<Position, Piece> chessBoard,
+    private static Map<Integer, Long> groupFileOnlyPawnCount(Map<Position, Piece> chessBoard,
         Team team) {
         return chessBoard.entrySet().stream()
             .filter(entry -> entry.getValue().getTeam() == team)
