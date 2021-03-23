@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class Knight extends Piece {
     private static final int UNICODE_DECIMAL = 9816;
+    public static final double SCORE_KNIGHT = 2.5;
 
     public Knight() {
     }

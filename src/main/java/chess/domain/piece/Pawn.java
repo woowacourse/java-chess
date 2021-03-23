@@ -7,6 +7,9 @@ import java.util.Map;
 
 public class Pawn extends Piece {
     private static final int UNICODE_DECIMAL = 9817;
+    public static final double SCORE_PAWN = 1.0;
+    public static final int DIRECTION_WHITE = 1;
+    public static final int DIRECTION_BLACK = -1;
 
     private final int direction;
 

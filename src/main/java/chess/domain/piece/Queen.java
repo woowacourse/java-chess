@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Queen extends Piece {
     private static final int UNICODE_DECIMAL = 9813;
+    public static final double SCORE_QUEEN = 9.0;
 
     public Queen() {
     }

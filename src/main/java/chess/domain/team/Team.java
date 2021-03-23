@@ -9,17 +9,24 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static chess.domain.piece.Bishop.SCORE_BISHOP;
+import static chess.domain.piece.King.SCORE_KING;
+import static chess.domain.piece.Knight.SCORE_KNIGHT;
+import static chess.domain.piece.Pawn.*;
+import static chess.domain.piece.Queen.SCORE_QUEEN;
+import static chess.domain.piece.Rook.SCORE_ROOK;
+
 public abstract class Team {
     private static final Map<Piece, Double> scoreByPiece = new HashMap<>();
 
     static {
-        scoreByPiece.put(new King(), 0.0);
-        scoreByPiece.put(new Queen(), 9.0);
-        scoreByPiece.put(new Knight(), 2.5);
-        scoreByPiece.put(new Bishop(), 3.0);
-        scoreByPiece.put(new Rook(), 5.0);
-        scoreByPiece.put(new Pawn(1), 1.0);
-        scoreByPiece.put(new Pawn(-1), 1.0);
+        scoreByPiece.put(new King(), SCORE_KING);
+        scoreByPiece.put(new Queen(), SCORE_QUEEN);
+        scoreByPiece.put(new Knight(), SCORE_KNIGHT);
+        scoreByPiece.put(new Bishop(), SCORE_BISHOP);
+        scoreByPiece.put(new Rook(), SCORE_ROOK);
+        scoreByPiece.put(new Pawn(DIRECTION_WHITE), SCORE_PAWN);
+        scoreByPiece.put(new Pawn(DIRECTION_BLACK), SCORE_PAWN);
     }
 
     protected final Map<Position, Piece> piecePosition;

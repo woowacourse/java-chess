@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class Rook extends Piece {
     private static final int UNICODE_DECIMAL = 9814;
+    public static final double SCORE_ROOK = 5.0;
 
     public Rook() {
     }
