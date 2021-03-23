@@ -11,7 +11,7 @@ import java.util.List;
 
 public class ChessManager {
     private final Board board;
-    private Owner turn = Owner.BLACK;
+    private Owner turn = Owner.WHITE;
 
     public ChessManager() {
         this.board = BoardInitializer.initiateBoard();
@@ -29,7 +29,7 @@ public class ChessManager {
 
     private void validateTurn(final Position source) {
         if (!board.isPositionOwner(source, turn)) {
-            throw new IllegalArgumentException("현재 턴의 기물이 아닙니다.");
+            throw new IllegalArgumentException("현재는 " + turn.name() + "플레이어의 턴입니다.");
         }
     }
 
