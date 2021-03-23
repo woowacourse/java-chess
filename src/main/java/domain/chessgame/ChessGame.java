@@ -5,8 +5,8 @@ import domain.position.Position;
 
 public class ChessGame {
 
-    private boolean isNotEnd;
     private final Board board;
+    private boolean isNotEnd;
 
     public ChessGame() {
         this.isNotEnd = true;

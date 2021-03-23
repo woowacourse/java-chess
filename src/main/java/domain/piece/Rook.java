@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.chessgame.Score;
 import domain.board.Board;
+import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
 import java.util.HashMap;
@@ -16,6 +16,15 @@ public class Rook extends Piece {
         super(NAME, isBlack, SCORE);
     }
 
+    public static Map<Position, Piece> createInitialRook() {
+        Map<Position, Piece> initialRook = new HashMap<>();
+        initialRook.put(new Position("a8"), new Rook(true));
+        initialRook.put(new Position("h8"), new Rook(true));
+        initialRook.put(new Position("a1"), new Rook(false));
+        initialRook.put(new Position("h1"), new Rook(false));
+        return initialRook;
+    }
+
     @Override
     public boolean canMove(Board board, Position source, Position target) {
         if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
@@ -28,15 +37,6 @@ public class Rook extends Piece {
         } while (!source.equals(target)
             && board.piece(source).isEmpty() && source.isChessBoardPosition());
         return source.equals(target);
-    }
-
-    public static Map<Position, Piece> createInitialRook() {
-        Map<Position, Piece> initialRook = new HashMap<>();
-        initialRook.put(new Position("a8"), new Rook(true));
-        initialRook.put(new Position("h8"), new Rook(true));
-        initialRook.put(new Position("a1"), new Rook(false));
-        initialRook.put(new Position("h1"), new Rook(false));
-        return initialRook;
     }
 
 }

@@ -30,14 +30,6 @@ public enum Direction {
         this.columnDegree = columnDegree;
     }
 
-    public int getRowDegree() {
-        return rowDegree;
-    }
-
-    public int getColumnDegree() {
-        return columnDegree;
-    }
-
     public static Direction linearTargetDirection(Position diff) {
         if (diff.getRowDegree() < 0) {
             return NORTH;
@@ -86,6 +78,14 @@ public enum Direction {
 
     public static List<Direction> blackPawnDirection() {
         return Arrays.asList(SOUTH, SOUTHEAST, SOUTHWEST);
+    }
+
+    public int getRowDegree() {
+        return rowDegree;
+    }
+
+    public int getColumnDegree() {
+        return columnDegree;
     }
 
 }

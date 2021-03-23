@@ -48,14 +48,14 @@ public abstract class Piece {
         return false;
     }
 
-    public String getName(){
-        if(isBlack) {
+    public String getName() {
+        if (isBlack) {
             return name.toUpperCase();
         }
         return name;
     }
 
-    public Score getScore(){
+    public Score getScore() {
         return score;
     }
 

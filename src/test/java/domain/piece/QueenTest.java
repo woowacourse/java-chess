@@ -1,5 +1,7 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.board.Board;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -7,13 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class QueenTest {
 
     @DisplayName("퀸은 상하좌우와 모든 대각선 방향으로 칸 수 제한 없이 이동할 수 있다.")
     @ParameterizedTest
-    @CsvSource(value = {"d5,a8", "d5,f7", "d5,b3", "d5,h1", "d5,h5", "d5,d1", "d5,a5", "d5,d8"}, delimiter = ',')
+    @CsvSource(value = {"d5,a8", "d5,f7", "d5,b3", "d5,h1", "d5,h5", "d5,d1", "d5,a5",
+        "d5,d8"}, delimiter = ',')
     void testMoveEmptyPlace(String source, String target) {
         Board board = new Board();
         Position sourcePosition = new Position(source);
@@ -27,7 +28,7 @@ class QueenTest {
 
     @DisplayName("퀸은 이동 가능 범위가 아닌 위치로 이동 할 수 없다.")
     @ParameterizedTest
-    @CsvSource(value = {"d5,e7", "d5,b8", "d5,c1","d5,f2"}, delimiter = ',')
+    @CsvSource(value = {"d5,e7", "d5,b8", "d5,c1", "d5,f2"}, delimiter = ',')
     void testNotMoveEmptyPlace(String source, String target) {
         Board board = new Board();
         Position sourcePosition = new Position(source);
@@ -71,7 +72,8 @@ class QueenTest {
 
     @DisplayName("퀸은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
     @ParameterizedTest
-    @CsvSource(value = {"d5,a8,b7","d5,g8,e6","d5,a2,b3","d5,h1,g2", "d5,h5,e5", "d5,d1,d3", "d5,a5,b5", "d5,d8,d7"}, delimiter = ',')
+    @CsvSource(value = {"d5,a8,b7", "d5,g8,e6", "d5,a2,b3", "d5,h1,g2", "d5,h5,e5", "d5,d1,d3",
+        "d5,a5,b5", "d5,d8,d7"}, delimiter = ',')
     void testObstacleMove(String source, String target, String obstacle) {
         Board board = new Board();
         Position sourcePosition = new Position(source);

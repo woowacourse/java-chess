@@ -71,7 +71,7 @@ class BishopTest {
 
     @DisplayName("비숍은 이동 경로상에 다른 기물이 있으면 이동할 수 없다.")
     @ParameterizedTest
-    @CsvSource(value = {"d5,a8,b7","d5,g8,e6","d5,a2,b3","d5,h1,g2"}, delimiter = ',')
+    @CsvSource(value = {"d5,a8,b7", "d5,g8,e6", "d5,a2,b3", "d5,h1,g2"}, delimiter = ',')
     void testObstacleMove(String source, String target, String obstacle) {
         Board board = new Board();
         Position sourcePosition = new Position(source);

@@ -1,5 +1,7 @@
 package domain.piece;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import domain.board.Board;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -7,13 +9,12 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 class KnightTest {
 
     @DisplayName("나이트는 두 칸 전진한 상태에서 좌우로 한 칸 움직일 수 있다.")
     @ParameterizedTest
-    @CsvSource(value = {"d5,e7", "d5,f6", "d5,f4", "d5,e3", "d5,c3","d5,b4", "d5,b6", "d5,c7"}, delimiter = ',')
+    @CsvSource(value = {"d5,e7", "d5,f6", "d5,f4", "d5,e3", "d5,c3", "d5,b4", "d5,b6",
+        "d5,c7"}, delimiter = ',')
     void testMoveEmptyPlace(String source, String target) {
         Board board = new Board();
         Position sourcePosition = new Position(source);

@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.chessgame.Score;
 import domain.board.Board;
+import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
 import java.util.HashMap;
@@ -16,6 +16,15 @@ public class Bishop extends Piece {
         super(NAME, isBlack, SCORE);
     }
 
+    public static Map<Position, Piece> createInitialBishop() {
+        Map<Position, Piece> initialBishop = new HashMap<>();
+        initialBishop.put(new Position("c8"), new Bishop(true));
+        initialBishop.put(new Position("f8"), new Bishop(true));
+        initialBishop.put(new Position("c1"), new Bishop(false));
+        initialBishop.put(new Position("f1"), new Bishop(false));
+        return initialBishop;
+    }
+
     @Override
     public boolean canMove(Board board, Position source, Position target) {
         if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
@@ -28,14 +37,5 @@ public class Bishop extends Piece {
         } while (!source.equals(target)
             && board.piece(source).isEmpty() && source.isChessBoardPosition());
         return source.equals(target);
-    }
-
-    public static Map<Position, Piece> createInitialBishop() {
-        Map<Position, Piece> initialBishop = new HashMap<>();
-        initialBishop.put(new Position("c8"), new Bishop(true));
-        initialBishop.put(new Position("f8"), new Bishop(true));
-        initialBishop.put(new Position("c1"), new Bishop(false));
-        initialBishop.put(new Position("f1"), new Bishop(false));
-        return initialBishop;
     }
 }

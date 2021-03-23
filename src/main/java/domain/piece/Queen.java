@@ -1,7 +1,7 @@
 package domain.piece;
 
-import domain.chessgame.Score;
 import domain.board.Board;
+import domain.chessgame.Score;
 import domain.position.Direction;
 import domain.position.Position;
 import java.util.HashMap;
@@ -16,6 +16,13 @@ public class Queen extends Piece {
         super(NAME, isBlack, SCORE);
     }
 
+    public static Map<Position, Piece> createInitialQueen() {
+        Map<Position, Piece> initialQueen = new HashMap<>();
+        initialQueen.put(new Position("d8"), new Queen(true));
+        initialQueen.put(new Position("d1"), new Queen(false));
+        return initialQueen;
+    }
+
     @Override
     public boolean canMove(Board board, Position source, Position target) {
         if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
@@ -28,13 +35,6 @@ public class Queen extends Piece {
         } while (!source.equals(target)
             && board.piece(source).isEmpty() && source.isChessBoardPosition());
         return source.equals(target);
-    }
-
-    public static Map<Position, Piece> createInitialQueen() {
-        Map<Position, Piece> initialQueen = new HashMap<>();
-        initialQueen.put(new Position("d8"), new Queen(true));
-        initialQueen.put(new Position("d1"), new Queen(false));
-        return initialQueen;
     }
 
     private Direction targetDirection(Position source, Position target) {
