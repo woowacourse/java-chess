@@ -18,6 +18,7 @@ import static chess.domain.piece.Rook.SCORE_ROOK;
 
 public abstract class Team {
     private static final Map<Piece, Double> scoreByPiece = new HashMap<>();
+    private Team enemy;
 
     static {
         scoreByPiece.put(new King(), SCORE_KING);
@@ -75,6 +76,15 @@ public abstract class Team {
 
     public Map<Position, Piece> getPiecePosition() {
         return new HashMap<>(piecePosition);
+    }
+
+
+    final public void setEnemy(Team enemy) {
+        this.enemy = enemy;
+    }
+
+    public Team getEnemy() {
+        return enemy;
     }
 
     public double calculateTotalScore() {

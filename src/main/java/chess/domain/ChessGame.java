@@ -20,6 +20,10 @@ public class ChessGame {
     public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
+
+        blackTeam.setEnemy(whiteTeam);
+        whiteTeam.setEnemy(blackTeam);
+
         this.currentTurn = this.whiteTeam;
         this.isEnd = false;
     }
@@ -28,7 +32,7 @@ public class ChessGame {
         final Piece chosenPiece = currentTurn.choosePiece(current);
         validateMovable(current, destination, chosenPiece);
 
-        Team enemy = getEnemy();
+        Team enemy = currentTurn.getEnemy();
         if (enemy.havePiece(destination)) {
             killEnemyPiece(destination, enemy);
         }
@@ -62,15 +66,8 @@ public class ChessGame {
         return isEnd;
     }
 
-    private Team getEnemy() {
-        if (currentTurn == blackTeam) {
-            return whiteTeam;
-        }
-        return blackTeam;
-    }
-
     public void changeTurn() {
-        currentTurn = getEnemy();
+        currentTurn = currentTurn.getEnemy();
     }
 
     public Map<Position, Piece> generateChessBoard() {

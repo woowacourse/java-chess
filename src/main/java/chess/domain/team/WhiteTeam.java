@@ -1,8 +1,5 @@
 package chess.domain.team;
 
-import chess.domain.Position;
-import chess.domain.piece.Piece;
-
 public class WhiteTeam extends Team {
     private static final int WHITE_PAWN_COLUMN = 1;
     private static final int WHITE_PIECE_COLUMN = 0;
