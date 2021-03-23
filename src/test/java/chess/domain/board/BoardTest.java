@@ -9,6 +9,7 @@ import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.team.Team;
+import chess.domain.team.Winner;
 import chess.utils.BoardUtil;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -104,5 +105,91 @@ class BoardTest {
         // then
         assertThat(board.score(Team.BLACK)).isEqualTo(20);
         assertThat(board.score(Team.WHITE)).isEqualTo(19.5);
+    }
+
+    @DisplayName("승자 판별 - 블랙 킹이 죽은 경우")
+    @Test
+    void judgeWinner_blackKing() {
+        // given
+        char[][] testBoard = {
+            {'.', '.', 'R', '.', '.', '.', '.', '.'},
+            {'P', '.', 'P', 'B', '.', '.', '.', '.'},
+            {'.', 'P', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', 'p', '.', 'p'},
+            {'.', '.', '.', '.', '.', 'p', 'p', '.'},
+            {'.', '.', '.', '.', 'r', 'k', '.', '.'}
+        };
+        Board board = BoardUtil.convertToBoard(testBoard);
+
+        // when
+        Winner winner = board.judgeWinner();
+
+        // then
+        assertThat(winner).isSameAs(Winner.WHITE);
+    }
+
+    @DisplayName("승자 판별 - 화이트 킹이 죽은 경우")
+    @Test
+    void judgeWinner_whiteKing() {
+        // given
+        char[][] testBoard = {
+            {'.', 'K', 'R', '.', '.', '.', '.', '.'},
+            {'P', '.', 'P', 'B', '.', '.', '.', '.'},
+            {'.', 'P', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', 'p', '.', 'p'},
+            {'.', '.', '.', '.', '.', 'p', 'p', '.'},
+            {'.', '.', '.', '.', 'r', '.', '.', '.'}
+        };
+        Board board = BoardUtil.convertToBoard(testBoard);
+
+        // when
+        Winner winner = board.judgeWinner();
+
+        // then
+        assertThat(winner).isSameAs(Winner.BLACK);
+    }
+    
+    @DisplayName("승자 판별 - 점수를 이용한 판별 (블랙 승, 화이트 패)")
+    @Test
+    void judgeWinner_score() {
+        // given
+        char[][] testBoard = {
+            {'.', 'K', 'R', '.', '.', '.', '.', '.'},
+            {'P', '.', 'P', 'B', '.', '.', '.', '.'},
+            {'.', 'P', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', 'p', '.', 'p'},
+            {'.', '.', '.', '.', '.', 'p', 'p', '.'},
+            {'.', '.', '.', '.', 'r', 'k', '.', '.'}
+        };
+        Board board = BoardUtil.convertToBoard(testBoard);
+
+        // then
+        assertThat(board.judgeWinner()).isSameAs(Winner.BLACK);
+    }
+    
+    @DisplayName("승자 판별 - 두 팀의 점수가 같으면 무승부")
+    @Test
+    void judgeWinner_draw() {
+        // given
+        char[][] testBoard = {
+            {'.', 'K', '.', '.', '.', '.', '.', '.'},
+            {'R', '.', 'N', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', 'Q', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', 'n', 'q', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', '.', '.', '.', '.'},
+            {'.', '.', '.', '.', 'r', 'k', '.', '.'}
+        };
+        Board board = BoardUtil.convertToBoard(testBoard);
+
+        // then
+        assertThat(board.judgeWinner()).isSameAs(Winner.DRAW);
     }
 }

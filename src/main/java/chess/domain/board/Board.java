@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.location.Location;
 import chess.domain.piece.Piece;
 import chess.domain.team.Team;
+import chess.domain.team.Winner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -83,6 +84,42 @@ public class Board {
             .stream()
             .mapToDouble(count -> count <= 1 ? count : count * 0.5)
             .sum();
+    }
+
+    public Winner judgeWinner() {
+        if (isBlackKingDead()) {
+            return Winner.WHITE;
+        }
+        if (isWhiteKingDead()) {
+            return Winner.BLACK;
+        }
+        return judgeWinnerByScore();
+    }
+
+    private Winner judgeWinnerByScore() {
+        double blackScore = score(Team.BLACK);
+        double whiteScore = score(Team.WHITE);
+        if (blackScore > whiteScore) {
+            return Winner.BLACK;
+        }
+        if (whiteScore > blackScore) {
+            return Winner.WHITE;
+        }
+        return Winner.DRAW;
+    }
+
+    private boolean isBlackKingDead() {
+        return !pieces
+            .stream()
+            .filter(Piece::isKing)
+            .anyMatch(piece -> piece.isSameTeam(Team.BLACK));
+    }
+
+    private boolean isWhiteKingDead() {
+        return !pieces
+            .stream()
+            .filter(Piece::isKing)
+            .anyMatch(piece -> piece.isSameTeam(Team.WHITE));
     }
 
     public List<Piece> toList() {
