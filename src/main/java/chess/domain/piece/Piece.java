@@ -25,7 +25,5 @@ public interface Piece {
 
     double getPoint();
 
-    /////
-
     List<Position> generate(Path path, boolean target);
 }

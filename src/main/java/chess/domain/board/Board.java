@@ -60,7 +60,6 @@ public class Board {
         if (!confirm(positions)) {
             throw new IllegalArgumentException("[ERROR] 경로에 말이 존재합니다.");
         }
-        movePiece(path);
     }
 
     public boolean target(Path path, Team turn) {
@@ -68,5 +67,9 @@ public class Board {
             return false;
         }
         return !chessBoard.get(path.target()).isSameTeam(turn);
+    }
+
+    public boolean isKingAt(Position target) {
+        return pieceAt(target).isKing();
     }
 }
