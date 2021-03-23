@@ -24,7 +24,7 @@ public class OutputView {
         double whiteScore = responseDto.getWhiteScore();
         double blackScore = responseDto.getBlackScore();
         if (whiteScore != -1 && blackScore != -1) {
-            System.out.printf("검은색: %.1f점. 흰색: %.1f점\n", whiteScore, blackScore);
+            System.out.printf("검은색: %.1f점. 흰색: %.1f점\n", blackScore, whiteScore);
         }
         System.out.println();
     }
