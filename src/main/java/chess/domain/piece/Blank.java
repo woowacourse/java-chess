@@ -1,7 +1,8 @@
 package chess.domain.piece;
 
 import chess.domain.Color;
-import chess.domain.move.MovePosition;
+import chess.domain.board.Board;
+import chess.domain.position.MovePosition;
 
 public class Blank implements Piece {
     
@@ -10,10 +11,10 @@ public class Blank implements Piece {
     private static final String SYMBOL = ".";
     private static final double SCORE = 0;
     
-    private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다";
+    private static final String ERROR_SQUARE_IS_BLANK = "선택한 위치는 빈 칸입니다.";
     
     @Override
-    public Direction findDirection(MovePosition movePosition) {
+    public void checkToMoveToTargetPosition(MovePosition movePosition, Board board) {
         throw new UnsupportedOperationException(ERROR_SQUARE_IS_BLANK);
     }
     

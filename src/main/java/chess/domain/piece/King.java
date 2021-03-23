@@ -14,7 +14,7 @@ public class King extends AbstractPiece {
             MOVABLE_LENGTH);
     
     private static final String SYMBOL = "k";
-    public static final double SCORE = 0;
+    private static final double SCORE = 0;
     
     private King(Color color) {
         super(color, DIRECTION_GROUP);

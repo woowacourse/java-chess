@@ -61,12 +61,8 @@ public enum Direction {
         if (isOppositeDirection(distance, degree)) {
             return false;
         }
-        
-        if (degree != 0 && !canDivideWithoutRemainder(distance, degree, movableLength)) {
-            return false;
-        }
-        
-        return true;
+    
+        return degree == 0 || canDivideWithoutRemainder(distance, degree, movableLength);
     }
     
     private boolean doesNotMove(int distance, int degree) {

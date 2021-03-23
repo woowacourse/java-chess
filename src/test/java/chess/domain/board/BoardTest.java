@@ -2,7 +2,10 @@ package chess.domain.board;
 
 import chess.domain.Chess;
 import chess.domain.Color;
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.BoardUtils;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;

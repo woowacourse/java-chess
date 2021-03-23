@@ -14,7 +14,7 @@ public class Knight extends AbstractPiece {
             MOVABLE_LENGTH);
     
     private static final String SYMBOL = "n";
-    public static final double SCORE = 2.5;
+    private static final double SCORE = 2.5;
     
     private Knight(Color color) {
         super(color, DIRECTION_GROUP);

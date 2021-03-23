@@ -26,7 +26,7 @@ public abstract class AbstractPiece implements Piece {
     
     @Override
     public boolean isBlank() {
-        return color.isBlank();
+        return false;
     }
     
     protected void checkObstacleExistsAtDirection(MovePosition movePosition, Direction direction, Board board) {

@@ -6,7 +6,6 @@ import chess.domain.piece.Blank;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.position.MovePosition;
-import chess.domain.position.Point;
 import chess.domain.position.Position;
 
 import java.util.HashMap;
