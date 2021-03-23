@@ -17,8 +17,8 @@ public class Bishop implements Piece {
     }
 
     @Override
-    public Strategy strategy() {
-        return new Strategy(Direction.diagonalDirection(), MOVE_RANGE);
+    public DirectionStrategy strategy() {
+        return new DirectionStrategy(Direction.diagonalDirection(), MOVE_RANGE);
     }
 
     @Override

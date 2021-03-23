@@ -2,7 +2,7 @@ package chess.domain.piece;
 
 public interface Piece {
 
-    Strategy strategy();
+    DirectionStrategy strategy();
 
     String getName();
 

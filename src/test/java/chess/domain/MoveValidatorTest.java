@@ -6,7 +6,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import chess.domain.piece.Direction;
 import chess.domain.piece.Knight;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Strategy;
+import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
 import chess.domain.util.BoardInitializer;
@@ -39,8 +39,9 @@ class MoveValidatorTest {
 
     @Test
     void validateDirection() {
-        Strategy strategy = new Knight(Team.BLACK).strategy();
-        assertThatThrownBy(() -> MoveValidator.validateStrategyContainsDirection(Direction.SOUTHEAST, strategy))
+        DirectionStrategy directionStrategy = new Knight(Team.BLACK).strategy();
+        assertThatThrownBy(() -> MoveValidator.validateStrategyContainsDirection(Direction.SOUTHEAST,
+            directionStrategy))
             .isInstanceOf(IllegalArgumentException.class)
             .hasMessageContaining("이 말은 해당 방향으로");
     }

@@ -11,8 +11,8 @@ public class Knight implements Piece {
     }
 
     @Override
-    public Strategy strategy() {
-        return new Strategy(Direction.knightDirection(), MOVE_RANGE);
+    public DirectionStrategy strategy() {
+        return new DirectionStrategy(Direction.knightDirection(), MOVE_RANGE);
     }
 
     @Override

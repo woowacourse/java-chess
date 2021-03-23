@@ -2,11 +2,11 @@ package chess.domain.piece;
 
 import java.util.List;
 
-public class Strategy {
+public class DirectionStrategy {
     private final List<Direction> directions;
     private final int moveRange;
 
-    public Strategy(List<Direction> directions, int moveRange) {
+    public DirectionStrategy(List<Direction> directions, int moveRange) {
         this.directions = directions;
         this.moveRange = moveRange;
     }

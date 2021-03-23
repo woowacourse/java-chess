@@ -12,8 +12,8 @@ public class Rook implements Piece {
     }
 
     @Override
-    public Strategy strategy() {
-        return new Strategy(Direction.linearDirection(), MOVE_RANGE);
+    public DirectionStrategy strategy() {
+        return new DirectionStrategy(Direction.linearDirection(), MOVE_RANGE);
     }
 
     @Override

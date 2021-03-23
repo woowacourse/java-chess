@@ -12,8 +12,8 @@ public class King implements Piece {
     }
 
     @Override
-    public Strategy strategy() {
-        return new Strategy(Direction.everyDirection(), MOVE_RANGE);
+    public DirectionStrategy strategy() {
+        return new DirectionStrategy(Direction.everyDirection(), MOVE_RANGE);
     }
 
     @Override

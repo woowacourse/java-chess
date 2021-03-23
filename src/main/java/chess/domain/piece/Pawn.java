@@ -13,11 +13,11 @@ public class Pawn implements Piece {
     }
 
     @Override
-    public Strategy strategy() {
+    public DirectionStrategy strategy() {
         if (team == Team.BLACK) {
-            return new Strategy(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
+            return new DirectionStrategy(Direction.blackPawnDirection(), MOVE_FIRST_RANGE);
         }
-        return new Strategy(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
+        return new DirectionStrategy(Direction.whitePawnDirection(), MOVE_FIRST_RANGE);
     }
 
     @Override

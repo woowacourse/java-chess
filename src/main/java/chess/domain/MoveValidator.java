@@ -2,14 +2,14 @@ package chess.domain;
 
 import chess.domain.piece.Direction;
 import chess.domain.piece.Piece;
-import chess.domain.piece.Strategy;
+import chess.domain.piece.DirectionStrategy;
 import chess.domain.position.Position;
 
 public class MoveValidator {
 
     public static void validateStrategyContainsDirection(Direction currentDirection,
-        Strategy strategy) {
-        if (!strategy.containsDirection(currentDirection)) {
+        DirectionStrategy directionStrategy) {
+        if (!directionStrategy.containsDirection(currentDirection)) {
             throw new IllegalArgumentException("[ERROR] 이 말은 해당 방향으로 이동할 수 없습니다.");
         }
     }
