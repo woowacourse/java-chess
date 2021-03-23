@@ -1,6 +1,7 @@
 package chess.controller;
 
 import chess.domain.Board;
+import chess.domain.ChessGame;
 import chess.domain.command.Command;
 import chess.domain.gamestate.Ready;
 import chess.domain.gamestate.State;
@@ -12,57 +13,54 @@ import chess.view.OutputView;
 public class ChessController {
     public static void start() {
         OutputView.startGame();
-        State state = new Ready(Board.getGamingBoard());
+        ChessGame chessGame = new ChessGame(Board.getGamingBoard());
         Command command = command();
         if (command.isStart()) {
-            startGame(state);
+            startGame(chessGame);
         }
     }
 
-    private static void startGame(State initialState) {
-        State state = initialState.start();
-        printBoard(state);
+    private static void startGame(ChessGame chessGame) {
+        chessGame.start();
+        printBoard(chessGame);
 
-        while (!state.isFinished()) {
-            state = turn(state);
+        while (!chessGame.isFinished()) {
+            turn(chessGame);
         }
     }
 
-    private static void printBoard(State state) {
-        OutputView.print(state.board(), state.side());
+    private static void printBoard(ChessGame chessGame) {
+        OutputView.print(chessGame.board(), chessGame.side());
 
-        if (state.isGameSet()) {
-            OutputView.printWinner(state.winner());
+        if (chessGame.isGameSet()) {
+            OutputView.printWinner(chessGame.state().winner());
         }
     }
 
-    private static State turn(State state) {
+    private static void turn(ChessGame chessGame) {
         try {
-            state = execute(command(), state);
-            printBoard(state);
+            execute(command(), chessGame);
+            printBoard(chessGame);
         } catch (ChessException e) {
             OutputView.printError(e);
-            return turn(state);
+            turn(chessGame);
         }
-        return state;
     }
 
-    private static State execute(Command command, State state) {
+    private static void execute(Command command, ChessGame chessGame) {
 
         if (command.isMove()) {
-            state = state.move(command.source(), command.target());
+            chessGame.move(command.source(), command.target());
         }
 
         if (command.isStatus()) {
-            state = state.status();
-            OutputView.print(state.score());
-            return state;
+            chessGame.status();
+            OutputView.print(chessGame.score());
         }
 
         if (command.isEnd()) {
-            state = state.finished();
+            chessGame.end();
         }
-        return state;
     }
 
     private static Command command() {
