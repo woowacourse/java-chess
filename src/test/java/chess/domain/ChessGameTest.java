@@ -24,7 +24,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("체스 게임이 정상 생성되는지 확인한다")
     void init() {
-        assertThatCode(() -> new ChessGame())
+        assertThatCode(() -> new ChessGame(Team.blackTeam(), Team.whiteTeam()))
                 .doesNotThrowAnyException();
     }
 

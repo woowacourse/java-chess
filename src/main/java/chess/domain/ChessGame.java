@@ -12,10 +12,6 @@ public final class ChessGame {
     private Team currentTurnTeam;
     private boolean isPlaying;
 
-    public ChessGame() {
-        this(Team.blackTeam(), Team.whiteTeam());
-    }
-
     public ChessGame(final Team blackTeam, final Team whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
