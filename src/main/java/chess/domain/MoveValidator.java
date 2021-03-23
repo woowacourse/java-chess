@@ -20,19 +20,18 @@ public class MoveValidator {
         }
     }
 
-    public static void validatePawnCondition(Board board, Position target, Piece piece,
-        Direction direction) {
+    public static void validatePawnCondition(Board board, Position target, Direction direction) {
         if (!board.hasPieceAt(target)) {
-            MoveValidator.validateTargetIsBlank(piece, direction);
+            MoveValidator.validateTargetIsBlank(direction);
             return;
         }
-        if (piece.isPawn() && Direction.isLinearDirection(direction)) {
+        if (Direction.isLinearDirection(direction)) {
             throw new IllegalArgumentException("[ERROR] 폰은 대각선 방향으로만 상대 말을 먹을 수 있습니다.");
         }
     }
 
-    public static void validateTargetIsBlank(Piece piece, Direction direction) {
-        if (piece.isPawn() && Direction.isDiagonalDirection(direction)) {
+    public static void validateTargetIsBlank(Direction direction) {
+        if (Direction.isDiagonalDirection(direction)) {
             throw new IllegalArgumentException("[ERROR] 폰은 상대방 말이 없는 대각선 방향으로는 이동할 수 없습니다.");
         }
     }

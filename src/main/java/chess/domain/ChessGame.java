@@ -68,7 +68,9 @@ public class ChessGame {
             Position currentPosition = source.move(currentDirection, i);
             board.validateHasPieceInPath(currentPosition);
         }
-        MoveValidator.validatePawnCondition(board, target, piece, currentDirection);
+        if(piece.isPawn()) {
+            MoveValidator.validatePawnCondition(board, target, currentDirection);
+        }
     }
 
     private int calculateMoveRange(Piece piece, Strategy strategy, Position position) {
