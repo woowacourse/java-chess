@@ -137,6 +137,9 @@ public class ChessGame {
     }
 
     public Team getWinTeam() {
+        if(!state.isEnd()) {
+            throw new IllegalArgumentException("[ERROR] 아직 왕이 잡히지 않았습니다.");
+        }
         return winner;
     }
 
