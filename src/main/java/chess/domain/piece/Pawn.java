@@ -24,14 +24,10 @@ public class Pawn extends Piece {
             return false;
         }
 
-        int direction = 0;
         if (isSideEqualTo(Side.BLACK)) {
-            direction = BLACK_DIRECTION;
+            return movableOneOrTwoSquare(rowDifference, columnDifference, BLACK_DIRECTION);
         }
-        if (isSideEqualTo(Side.WHITE)) {
-            direction = WHITE_DIRECTION;
-        }
-        return movableOneOrTwoSquare(rowDifference, columnDifference, direction);
+        return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
     }
 
     @Override
