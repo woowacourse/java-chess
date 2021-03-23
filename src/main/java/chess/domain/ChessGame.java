@@ -9,6 +9,7 @@ import chess.domain.position.MovePath;
 import chess.domain.position.Position;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
+import chess.domain.util.BoardInitializer;
 import chess.domain.util.StringParser;
 import java.util.EnumMap;
 import java.util.Map;
@@ -79,10 +80,10 @@ public class ChessGame {
         if (!piece.isPawn()) {
             return strategy.getMoveRange();
         }
-        if (position.getY() == Pawn.WHITE_PAWN_START_LINE && piece.getTeam() == Team.WHITE) {
+        if (position.getY() == BoardInitializer.WHITE_PAWN_START_LINE && piece.getTeam() == Team.WHITE) {
             return Pawn.MOVE_FIRST_RANGE;
         }
-        if (position.getY() == Pawn.BLACK_PAWN_START_LINE && piece.getTeam() == Team.BLACK) {
+        if (position.getY() == BoardInitializer.BLACK_PAWN_START_LINE && piece.getTeam() == Team.BLACK) {
             return Pawn.MOVE_FIRST_RANGE;
         }
         return Pawn.MOVE_DEFAULT_RANGE;

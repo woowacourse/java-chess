@@ -18,9 +18,10 @@ import java.util.List;
 import java.util.Map;
 
 public class BoardInitializer {
-    public static final int BLACK_OTHER_PIECE_START_LINE = 8;
     public static final int WHITE_OTHER_PIECE_START_LINE = 1;
-
+    public static final int WHITE_PAWN_START_LINE = 2;
+    public static final int BLACK_PAWN_START_LINE = 7;
+    public static final int BLACK_OTHER_PIECE_START_LINE = 8;
     public static final List<Piece> INITIAL_PIECES = new ArrayList<>();
 
     static {
@@ -68,9 +69,9 @@ public class BoardInitializer {
 
     private static void initPawn(Map<Position, Piece> board) {
         for (File file : File.values()) {
-            board.put(Position.of(file.getFile() + Pawn.BLACK_PAWN_START_LINE),
+            board.put(Position.of(file.getFile() + BoardInitializer.BLACK_PAWN_START_LINE),
                 new Pawn(Team.BLACK));
-            board.put(Position.of(file.getFile() + Pawn.WHITE_PAWN_START_LINE),
+            board.put(Position.of(file.getFile() + BoardInitializer.WHITE_PAWN_START_LINE),
                 new Pawn(Team.WHITE));
         }
     }

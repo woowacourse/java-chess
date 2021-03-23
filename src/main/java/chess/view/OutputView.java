@@ -50,7 +50,7 @@ public class OutputView {
         return file.getFile() + rank.getRank();
     }
 
-    public static void printStatus(EnumMap<Team, Double> result) {
+    public static void printStatus(Map<Team, Double> result) {
         for (Map.Entry<Team, Double> entry : result.entrySet()) {
             System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().getName(), entry.getValue());
         }

@@ -2,6 +2,7 @@ package chess.domain.position;
 
 import chess.domain.piece.Direction;
 import chess.domain.piece.Pawn;
+import chess.domain.util.BoardInitializer;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -85,8 +86,8 @@ public class Position {
     }
 
     public boolean isLocatedAtStartLine() {
-        return this.getY() == Pawn.WHITE_PAWN_START_LINE
-            || this.getY() == Pawn.BLACK_PAWN_START_LINE;
+        return this.getY() == BoardInitializer.WHITE_PAWN_START_LINE
+            || this.getY() == BoardInitializer.BLACK_PAWN_START_LINE;
     }
 
     @Override

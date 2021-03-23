@@ -3,8 +3,6 @@ package chess.domain.piece;
 public class Pawn implements Piece {
 
     public static final double POINT = 1;
-    public static final int BLACK_PAWN_START_LINE = 7;
-    public static final int WHITE_PAWN_START_LINE = 2;
     public static final int MOVE_FIRST_RANGE = 2;
     public static final int MOVE_DEFAULT_RANGE = 1;
 
