@@ -33,25 +33,28 @@ public class ChessController {
             String input = InputView.inputCommandFromUser();
             Command command = commands.getIfPresent(input);
             command.handle(input);
-            printByCommand(command); // todo: 이녀석을 뭐라고 네이밍할까...??
+            executeByCommand(command);
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
             turn();
         }
     }
 
-    private void printByCommand(final Command command) {
+    private void executeByCommand(final Command command) {
         if (game.isFinished()) {
             return;
         }
 
         if (command.isStatus()) {
-            StatusCommand statusCommand = (StatusCommand) command;
-            OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
+            printScore((StatusCommand) command);
             return;
         }
 
         OutputView.drawBoard(new BoardDto(board));
+    }
+
+    private void printScore(final StatusCommand statusCommand) {
+        OutputView.printScore(statusCommand.getWhiteScore(), statusCommand.getBlackScore());
     }
 
 }
