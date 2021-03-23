@@ -18,7 +18,7 @@ public class ChessGameTest {
     @Test
     void isPlaying() {
         ChessGame chessGame = new ChessGame();
-        assertTrue(chessGame.isNotEnd());
+        assertTrue(chessGame.isProgressing());
     }
 
     //TODO: 턴 바뀌는지 확인

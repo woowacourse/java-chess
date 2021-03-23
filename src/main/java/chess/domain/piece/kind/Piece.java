@@ -39,11 +39,17 @@ public abstract class Piece {
 
     public abstract double score();
 
-    public abstract boolean isEmptyPiece();
+    public boolean isEmptyPiece() {
+        return false;
+    }
 
-    public abstract boolean isKing();
+    public boolean isKing() {
+        return false;
+    }
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return false;
+    }
 
     public String getName() {
         return name.getName();

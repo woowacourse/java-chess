@@ -28,7 +28,7 @@ public class ChessGame {
         return WHITE;
     }
 
-    public boolean isNotEnd() {
+    public boolean isProgressing() {
         return board.hasBothKings();
     }
 

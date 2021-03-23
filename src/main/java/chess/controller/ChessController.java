@@ -23,7 +23,7 @@ public class ChessController {
     }
 
     private void playGame(ChessGame chessGame) {
-        while (chessGame.isNotEnd()) {
+        while (chessGame.isProgressing()) {
             List<String> userInput = InputView.inputMoveOrStatus();
             makeScoreOrMove(chessGame, userInput);
         }

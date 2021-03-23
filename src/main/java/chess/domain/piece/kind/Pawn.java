@@ -18,6 +18,7 @@ public class Pawn extends Piece {
         super(PAWN_NAME, color, point);
     }
 
+    @Override
     public void validateMovable(Direction direction, Piece targetPiece) {
         if (isNotMovableDirection(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
@@ -62,16 +63,6 @@ public class Pawn extends Piece {
     @Override
     public double score() {
         return DEFAULT_PAWN_SCORE;
-    }
-
-    @Override
-    public boolean isEmptyPiece() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
     }
 
     @Override
