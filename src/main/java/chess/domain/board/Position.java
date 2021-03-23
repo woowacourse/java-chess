@@ -43,7 +43,6 @@ public class Position {
 
 	public static Position of(String input) {
 		validatePositionSize(input);
-		System.out.println(input);
 		String key = generateKey(Row.findRow(input.charAt(1)), Column.findColumn(input.charAt(0)));
 		return cache.computeIfAbsent(key, v -> {
 			throw new IllegalArgumentException(OUT_OF_BOUND_MESSAGE);
