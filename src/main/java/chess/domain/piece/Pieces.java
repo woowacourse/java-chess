@@ -47,7 +47,7 @@ public class Pieces {
 
     public boolean isKing(final Position position) {
         if (findPiece(position).isPresent()) {
-            return findPiece(position).get() instanceof King;
+            return findPiece(position).get().isKing();
         }
         return false;
     }

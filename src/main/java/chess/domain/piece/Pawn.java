@@ -47,13 +47,23 @@ public class Pawn extends Piece {
     public double score(final List<Piece> pieces) {
         File currentFile = this.getPosition().getFile();
         boolean isSameFile = pieces.stream()
+                .filter(Piece::isPawn)
                 .filter(piece -> !this.equals(piece))
-                .filter(piece -> piece instanceof Pawn)
                 .anyMatch(piece -> currentFile.isSameFile(piece.getFile()));
         if (isSameFile) {
             return SCORE / 2;
         }
         return SCORE;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 
     private void checkTarget(Target target, List<Position> positions) {

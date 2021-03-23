@@ -45,6 +45,16 @@ public class Bishop extends Piece {
         return SCORE;
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
     private void checkTarget(final Target target, final List<Position> positions) {
         if (!positions.contains(target.getPosition())) {
             throw new IllegalArgumentException(String.format("이동할 수 없는 위치입니다. 입력 값: %s", target.getPosition()));
