@@ -25,8 +25,8 @@ public final class Position implements Comparable<Position> {
     }
 
     public List<Integer> subtract(final Position source) {
-        return Arrays.asList(this.horizontal.value() - source.horizontal.value(),
-                this.vertical.value() - source.vertical.value());
+        return Arrays.asList(this.horizontal.subtractedValue(source.horizontal),
+                this.vertical.subtractedValue(source.vertical));
     }
 
     public boolean hasMiddlePath(final Position target) {
@@ -65,8 +65,8 @@ public final class Position implements Comparable<Position> {
     }
 
     public Position next(final Direction direction) {
-        return new Position(horizontal.value() + direction.horizontalDegree(),
-                vertical.value() + direction.verticalDegree());
+        return new Position(horizontal.addedValue(direction.horizontalDegree()),
+                vertical.addedValue(direction.verticalDegree()));
     }
 
     public Horizontal horizontal() {
@@ -93,8 +93,8 @@ public final class Position implements Comparable<Position> {
     @Override
     public int compareTo(Position position) {
         if (vertical.isSameValue(position.vertical)) {
-            return horizontal.value() - position.horizontal.value();
+            return horizontal.subtractedValue(position.horizontal);
         }
-        return position.vertical.value() - vertical.value();
+        return position.vertical.subtractedValue(vertical);
     }
 }

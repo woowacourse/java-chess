@@ -34,15 +34,23 @@ public enum Vertical {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 세로 위치를 찾을 수 없습니다."));
     }
 
+    public boolean isSameValue(final Vertical vertical) {
+        return value == vertical.value;
+    }
+
+    public int subtractedValue(Vertical vertical) {
+        return this.value - vertical.value;
+    }
+
+    public int addedValue(int value) {
+        return this.value + value;
+    }
+
     public String symbol() {
         return symbol;
     }
 
     public int value() {
         return value;
-    }
-
-    public boolean isSameValue(final Vertical vertical) {
-        return value == vertical.value();
     }
 }

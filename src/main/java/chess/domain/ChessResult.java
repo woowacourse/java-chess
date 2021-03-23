@@ -23,15 +23,15 @@ public final class ChessResult {
     public double totalScore(final Team team) {
         double total = 0;
         for (final Horizontal column : Horizontal.values()) {
-            total += columnTotalScore(team, column.value());
+            total += columnTotalScore(team, column);
         }
         return total;
     }
 
-    private double columnTotalScore(final Team team, final int column) {
+    private double columnTotalScore(final Team team, final Horizontal column) {
         final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         final List<Piece> pieces = chessBoard.keySet().stream()
-                .filter(position -> position.horizontal().value() == column)
+                .filter(position -> position.horizontal().isSameValue(column))
                 .map(chessBoard::get)
                 .filter(piece -> piece.friendly(team))
                 .collect(Collectors.toList());

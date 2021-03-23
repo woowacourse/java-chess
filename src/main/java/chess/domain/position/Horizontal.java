@@ -34,12 +34,19 @@ public enum Horizontal {
                 .orElseThrow(() -> new IllegalArgumentException("해당하는 가로 위치를 찾을 수 없습니다."));
     }
 
+    public boolean isSameValue(final Horizontal horizontal) {
+        return value == horizontal.value;
+    }
+
+    public int subtractedValue(Horizontal horizontal) {
+        return this.value - horizontal.value;
+    }
+
+    public int addedValue(int value) {
+        return this.value + value;
+    }
+
     public String symbol() {
         return symbol;
     }
-
-    public int value() {
-        return value;
-    }
-
 }
