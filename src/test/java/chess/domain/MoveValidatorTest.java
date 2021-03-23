@@ -42,7 +42,7 @@ class MoveValidatorTest {
         Strategy strategy = new Knight(Team.BLACK).strategy();
         assertThatThrownBy(() -> MoveValidator.validateStrategyContainsDirection(Direction.SOUTHEAST, strategy))
             .isInstanceOf(IllegalArgumentException.class)
-            .hasMessageContaining("해당 좌표로 이동할 수 없습니다.");
+            .hasMessageContaining("이 말은 해당 방향으로");
     }
 
     @Test
