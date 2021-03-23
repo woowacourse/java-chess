@@ -4,8 +4,8 @@ import chess.domain.board.ChessBoard;
 import chess.domain.board.Position;
 import chess.domain.gamestate.Running;
 import chess.domain.gamestate.State;
-import chess.domain.piece.feature.Color;
 import chess.domain.piece.Piece;
+import chess.domain.piece.feature.Color;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class ChessGame {
 	}
 
 	public void start(List<String> input) {
-		state.start(input,this);
+		state.start(input, this);
 	}
 
 	public void play(List<String> input) {

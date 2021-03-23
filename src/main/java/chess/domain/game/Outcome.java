@@ -16,15 +16,15 @@ public enum Outcome {
 		this.expression = expression;
 	}
 
-	public String getOutcome() {
-		return outcome;
-	}
-
 	public static String outcome(double score, double scoreToCompare) {
 		return Arrays.stream(values())
 				.filter(outcome -> outcome.expression.test(score, scoreToCompare))
 				.findFirst()
 				.map(Outcome::getOutcome)
 				.orElseThrow(IllegalArgumentException::new);
+	}
+
+	public String getOutcome() {
+		return outcome;
 	}
 }

@@ -1,6 +1,8 @@
 package chess.domain.board;
 
-import chess.domain.piece.*;
+import chess.domain.piece.Blank;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
 import chess.domain.piece.feature.Color;
 import chess.domain.piece.fixeddistance.King;
 import chess.domain.piece.fixeddistance.Knight;

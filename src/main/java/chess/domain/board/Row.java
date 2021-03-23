@@ -1,7 +1,5 @@
 package chess.domain.board;
 
-import com.sun.org.apache.bcel.internal.generic.ATHROW;
-
 import java.util.Arrays;
 
 public enum Row {
