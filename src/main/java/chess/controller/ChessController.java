@@ -32,10 +32,10 @@ public class ChessController {
     private void makeScoreOrMove(ChessGame chessGame, List<String> userInput) {
         String operation = userInput.get(0);
 
-        if (operation.equals(STATUS)) {
+        if (STATUS.equals(operation)) {
             OutputView.printScore(chessGame.calculateScore());
         }
-        if (operation.equals(MOVE)) {
+        if (MOVE.equals(operation)) {
             Point source = Point.of(userInput.get(1));
             Point target = Point.of(userInput.get(2));
             chessGame.playTurn(source, target);
