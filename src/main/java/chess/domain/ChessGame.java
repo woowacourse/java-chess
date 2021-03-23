@@ -44,7 +44,7 @@ public class ChessGame {
         Point source = Point.of(arguments.get(SOURCE_INDEX));
         Point destination = Point.of(arguments.get(DESTINATION_INDEX));
         move(source, destination, turn.now());
-        turn.next();
+        turn.nextTurn();
 
         board = state.board();
     }

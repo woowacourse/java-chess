@@ -17,7 +17,7 @@ public class Turn {
         return Team.BLACK;
     }
 
-    public void next() {
+    public void nextTurn() {
         isWhiteTurn = !isWhiteTurn;
     }
 }
