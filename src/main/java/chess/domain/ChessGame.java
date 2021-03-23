@@ -41,9 +41,8 @@ public class ChessGame {
         MoveValidator.validateStrategyContainsDirection(currentDirection, strategy);
         MoveValidator.validateMoveRange(calculateMoveRange(piece, strategy, source),
             calculateTargetMove(movePath, currentDirection));
-        if (validateTargetPath(movePath, piece, currentDirection)) {
-            movePiece(source, target);
-        }
+        validateTargetPath(movePath, piece, currentDirection);
+        movePiece(source, target);
     }
 
     private Piece pieceAtSourcePosition(Position source) {
@@ -58,7 +57,7 @@ public class ChessGame {
         return target.calculateDistance(source) / currentDirection.getUnit();
     }
 
-    private boolean validateTargetPath(MovePath movePath, Piece piece, Direction currentDirection) {
+    private void validateTargetPath(MovePath movePath, Piece piece, Direction currentDirection) {
         Position source = movePath.getSource();
         Position target = movePath.getTarget();
         int targetMove = calculateTargetMove(movePath, currentDirection);
@@ -67,7 +66,6 @@ public class ChessGame {
             board.validateHasPieceInPath(currentPosition);
         }
         MoveValidator.validatePawnCondition(board, target, piece, currentDirection);
-        return true;
     }
 
     private int calculateMoveRange(Piece piece, Strategy strategy, Position position) {
