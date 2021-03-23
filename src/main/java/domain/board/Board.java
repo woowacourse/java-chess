@@ -82,11 +82,11 @@ public class Board {
         for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
             score = score.sum(entry.getValue().getScore());
         }
-        score = minusScore(score, isBlack);
+        score = minusPawnScore(score, isBlack);
         return score;
     }
 
-    private Score minusScore(Score score, boolean isBlack) {
+    private Score minusPawnScore(Score score, boolean isBlack) {
         int minusCount = 0;
         for (int row = 0; row < 8; row++) {
             minusCount += rowAllyPawnCount(row, isBlack);
