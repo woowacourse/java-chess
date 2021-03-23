@@ -1,6 +1,5 @@
 package domain.board;
 
-import domain.chessgame.ChessScore;
 import domain.chessgame.Score;
 import domain.piece.Bishop;
 import domain.piece.EmptyPiece;
@@ -38,6 +37,15 @@ public class Board {
         }
     }
 
+    public void initChessPieces() {
+        board.putAll(King.createInitialKing());
+        board.putAll(Queen.createInitialQueen());
+        board.putAll(Bishop.createInitialBishop());
+        board.putAll(Knight.createInitialKnight());
+        board.putAll(Rook.createInitialRook());
+        board.putAll(Pawn.createInitialPawn());
+    }
+
     public Map<Position, Piece> getBoard() {
         return board;
     }
@@ -58,17 +66,7 @@ public class Board {
         board.put(position, piece);
     }
 
-    public void initChessPieces() {
-        board.putAll(King.createInitialKing());
-        board.putAll(Queen.createInitialQueen());
-        board.putAll(Bishop.createInitialBishop());
-        board.putAll(Knight.createInitialKnight());
-        board.putAll(Rook.createInitialRook());
-        board.putAll(Pawn.createInitialPawn());
-    }
-
     public Map<Position, Piece> pieces(boolean isBlack) {
-        Object o = board.entrySet();
         return board.entrySet()
             .stream()
             .filter(entry -> entry.getValue().isNotEmpty() && entry.getValue().isBlack() == isBlack)
@@ -76,8 +74,34 @@ public class Board {
     }
 
     public Score piecesScore(boolean isBlack) {
-        ChessScore chessScore = new ChessScore(this);
-        return chessScore.piecesScore(isBlack);
+        Score score = new Score();
+        Map<Position, Piece> pieces = pieces(isBlack);
+
+        for (Map.Entry<Position, Piece> entry : pieces.entrySet()) {
+            score = score.sum(entry.getValue().getScore());
+        }
+        score = minusScore(score, isBlack);
+        return score;
+    }
+
+    private Score minusScore(Score score, boolean isBlack) {
+        int minusCount = 0;
+        for (int row = 0; row < 8; row++) {
+            minusCount += rowAllyPawnCount(row, isBlack);
+        }
+        return score.minusPawnScore(minusCount);
+    }
+
+    private int rowAllyPawnCount(int column, boolean isBlack) {
+        int count = (int) pieces(isBlack).entrySet()
+            .stream()
+            .filter(entry -> entry.getValue().isPawn() && column == entry.getKey().getColumnDegree())
+            .count();
+
+        if (count >= 2) {
+            return count;
+        }
+        return 0;
     }
 
 }

@@ -18,18 +18,29 @@ public class Score {
         return new Score(this.value + score.value);
     }
 
+    public Score minusPawnScore(int count) {
+        if (count == 0) {
+            return this;
+        }
+        return new Score(value - (count * 0.5));
+    }
+
     public Score half() {
         return new Score(value / 2);
     }
 
-    public double value(){
+    public double value() {
         return value;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Score score = (Score) o;
         return Double.compare(score.value, value) == 0;
     }

@@ -40,7 +40,7 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isKing() {
+    public boolean isPawn(){
         return true;
     }
 

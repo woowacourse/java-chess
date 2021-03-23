@@ -2,6 +2,7 @@ package domain.board;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+import domain.chessgame.Score;
 import domain.piece.Bishop;
 import domain.piece.King;
 import domain.piece.Knight;
@@ -130,4 +131,29 @@ class BoardTest {
         assertThat(board.piece(new Position("h2")).isBlack()).isFalse();
     }
 
+    @DisplayName("점수 계산 테스트")
+    @Test
+    void calculateChessScoreTest() {
+        Board board = new Board();
+
+        board.put(new Position("b8"), new King(true));
+        board.put(new Position("c8"), new Rook(true));
+        board.put(new Position("a7"), new Pawn(true));
+        board.put(new Position("c7"), new Pawn(true));
+        board.put(new Position("d7"), new Bishop(true));
+        board.put(new Position("b6"), new Pawn(true));
+        board.put(new Position("e6"), new Queen(true));
+
+        board.put(new Position("f4"), new Knight(false));
+        board.put(new Position("g4"), new Queen(false));
+        board.put(new Position("f3"), new Pawn(false));
+        board.put(new Position("h3"), new Pawn(false));
+        board.put(new Position("f2"), new Pawn(false));
+        board.put(new Position("g2"), new Pawn(false));
+        board.put(new Position("e1"), new Rook(false));
+        board.put(new Position("f1"), new King(false));
+
+        assertThat(board.piecesScore(true)).isEqualTo(new Score(20));
+        assertThat(board.piecesScore(false)).isEqualTo(new Score(19.5));
+    }
 }
