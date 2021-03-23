@@ -20,13 +20,18 @@ public class Pawn extends Piece {
 
     @Override
     protected boolean movable(int rowDifference, int columnDifference) {
+        if (isSideEqualTo(Side.NONE)) {
+            return false;
+        }
+
+        int direction = 0;
         if (isSideEqualTo(Side.BLACK)) {
-            return movableOneOrTwoSquare(rowDifference, columnDifference, BLACK_DIRECTION);
+            direction = BLACK_DIRECTION;
         }
         if (isSideEqualTo(Side.WHITE)) {
-            return movableOneOrTwoSquare(rowDifference, columnDifference, WHITE_DIRECTION);
+            direction = WHITE_DIRECTION;
         }
-        return false;
+        return movableOneOrTwoSquare(rowDifference, columnDifference, direction);
     }
 
     @Override
