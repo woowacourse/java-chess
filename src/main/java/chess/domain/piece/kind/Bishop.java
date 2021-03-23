@@ -1,14 +1,14 @@
 package chess.domain.piece.kind;
 
-import chess.domain.board.Point;
-import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
+import static chess.domain.piece.Direction.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static chess.domain.piece.Direction.*;
+import chess.domain.board.Point;
+import chess.domain.piece.Color;
+import chess.domain.piece.Direction;
 
 public class Bishop extends Piece {
 	private static final String BISHOP_NAME = "b";

@@ -53,4 +53,14 @@ public class Score {
 	public double getScore() {
 		return this.score;
 	}
+
+	public Color biggerScoreColor(Score whiteScore) {
+		if (whiteScore.score > this.score) {
+			return Color.WHITE;
+		}
+		if (whiteScore.score < this.score) {
+			return Color.BLACK;
+		}
+		return Color.NOTHING;
+	}
 }

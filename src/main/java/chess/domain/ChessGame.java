@@ -33,8 +33,8 @@ public class ChessGame {
 		return board.hasBothKings();
 	}
 
-	public Score calculateScore() {
-		return board.makeScore(currentColor);
+	public Score calculateScore(Color color) {
+		return board.makeScore(color);
 	}
 
 	public Map<Point, Piece> getBoard() {

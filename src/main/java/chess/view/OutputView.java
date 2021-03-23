@@ -5,6 +5,7 @@ import java.util.Map;
 import chess.domain.ChessGame;
 import chess.domain.Score;
 import chess.domain.board.Point;
+import chess.domain.piece.Color;
 import chess.domain.piece.kind.Piece;
 
 public class OutputView {
@@ -42,8 +43,8 @@ public class OutputView {
 		return pieces.get(point).getName();
 	}
 
-	public static void printScore(Score score) {
-		System.out.println(score.getScore());
+	public static void printScore(Color color, Score score) {
+		System.out.println(color.name() + score.getScore());
 	}
 
 	public static void noticeGameFinished() {
@@ -52,5 +53,13 @@ public class OutputView {
 
 	public static void printError(String message) {
 		System.out.println(message + " 다시 입력해주세요.");
+	}
+
+	public static void printWinner(Color biggerColor) {
+		if (biggerColor.equals(Color.NOTHING)) {
+			System.out.println("무승부입니다.");
+			return;
+		}
+		System.out.println(biggerColor.getName() + "이 승리했습니다.");
 	}
 }

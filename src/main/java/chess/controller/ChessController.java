@@ -3,9 +3,11 @@ package chess.controller;
 import java.util.List;
 
 import chess.domain.ChessGame;
+import chess.domain.Score;
 import chess.domain.board.Point;
-import chess.view.OutputView;
+import chess.domain.piece.Color;
 import chess.view.InputView;
+import chess.view.OutputView;
 
 public class ChessController {
 	public static final String STATUS = "status";
@@ -15,12 +17,12 @@ public class ChessController {
 
 	public void run() {
 		OutputView.printStartGuideMessage();
-		while (isPlaying()) {
+		while (isCorrectStart()) {
 			playChessGame();
 		}
 	}
 
-	private boolean isPlaying() {
+	private boolean isCorrectStart() {
 		try {
 			return InputView.inputStart();
 		} catch (IllegalArgumentException e) {
@@ -32,19 +34,24 @@ public class ChessController {
 	private void playChessGame() {
 		ChessGame chessGame = new ChessGame();
 		OutputView.printBoard(chessGame);
-		playGame(chessGame);
+		while (chessGame.isNotEnd() && isPlayingInput(chessGame)) ;
 		OutputView.noticeGameFinished();
 	}
 
-	private void playGame(ChessGame chessGame) {
-		boolean flag = true;
-		while(flag) {
-			try {
-				flag = isContinue(chessGame, makeInput());
-			} catch (IllegalArgumentException e) {
-				OutputView.printError(e.getMessage());
-				flag = isContinue(chessGame, makeInput());
-			}
+	private boolean isPlayingInput(ChessGame chessGame) {
+		try {
+			return isCorrectInput(chessGame, makeInput());
+		} catch (IllegalArgumentException e) {
+			OutputView.printError(e.getMessage());
+			return isCorrectInput(chessGame, makeInput());
+		}
+	}
+
+	private boolean isCorrectInput(ChessGame chessGame, List<String> input) {
+		try {
+			return makeScoreOrMove(chessGame, input);
+		} catch (IllegalArgumentException e) {
+			throw new IllegalArgumentException(e.getMessage());
 		}
 	}
 
@@ -57,31 +64,31 @@ public class ChessController {
 		}
 	}
 
-	private boolean isContinue(ChessGame chessGame, List<String> input) {
-		try {
-			return makeScoreOrMove(chessGame, input);
-		} catch (IllegalArgumentException e) {
-			throw new IllegalArgumentException(e.getMessage());
-		}
-	}
-
 	private boolean makeScoreOrMove(ChessGame chessGame, List<String> userInput) {
-		if(userInput.get(0).equals(END)) {
+		if (userInput.get(0).equals(END)) {
 			return false;
 		}
 		if (userInput.get(0).equals(STATUS)) {
-			OutputView.printScore(chessGame.calculateScore());
+			Score blackScore = chessGame.calculateScore(Color.BLACK);
+			OutputView.printScore(Color.BLACK, blackScore);
+			Score whiteScore = chessGame.calculateScore(Color.WHITE);
+			OutputView.printScore(Color.WHITE, whiteScore);
+			OutputView.printWinner(blackScore.biggerScoreColor(whiteScore));
 		}
 		if (userInput.get(0).equals(MOVE)) {
-			Point source = createPoint(userInput.get(1));
-			Point target = createPoint(userInput.get(2));
-			playTurn(chessGame, source, target);
+			move(chessGame, userInput);
 			OutputView.printBoard(chessGame);
 		}
 		if (userInput.get(0).equals(START)) {
 			playChessGame();
 		}
 		return true;
+	}
+
+	private void move(ChessGame chessGame, List<String> userInput) {
+		Point source = createPoint(userInput.get(1));
+		Point target = createPoint(userInput.get(2));
+		playTurn(chessGame, source, target);
 	}
 
 	private Point createPoint(String userInput) {
@@ -95,7 +102,7 @@ public class ChessController {
 	private void playTurn(ChessGame chessGame, Point source, Point target) {
 		try {
 			chessGame.playTurn(source, target);
-		}catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			throw new IllegalArgumentException(e.getMessage());
 		}
 	}

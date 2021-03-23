@@ -6,9 +6,9 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import chess.domain.Score;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
-import chess.domain.Score;
 import chess.domain.piece.Color;
 
 public class ScoreTest {

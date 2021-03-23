@@ -8,14 +8,14 @@ import java.util.Collections;
 import java.util.List;
 
 import chess.domain.board.Point;
-import chess.domain.piece.kind.Knight;
-import chess.domain.piece.kind.Rook;
 import chess.domain.piece.kind.Bishop;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.King;
+import chess.domain.piece.kind.Knight;
 import chess.domain.piece.kind.Pawn;
 import chess.domain.piece.kind.Piece;
 import chess.domain.piece.kind.Queen;
+import chess.domain.piece.kind.Rook;
 
 public enum PieceType {
 	ROOK(Constants.INITIAL_COLUMN_OF_ROOK) {
