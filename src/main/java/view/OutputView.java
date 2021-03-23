@@ -30,6 +30,7 @@ public class OutputView {
             Piece piece = chessBoard.get(new Position(row, column));
             System.out.print(piece.getName());
         }
+        System.out.println();
     }
 
     public static void printScore(Board board) {
