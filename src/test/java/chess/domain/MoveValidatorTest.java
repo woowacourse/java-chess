@@ -37,25 +37,16 @@ class MoveValidatorTest {
                 .doesNotThrowAnyException();
     }
 
-    @DisplayName("대각선으로 폰이 이동할 수 있는 경우")
-    @Test
-    void validateDiagonalMove() {
-        board.movePiece(new Path(Arrays.asList(Position.of("a7"), Position.of("a3"))));
-        assertThatCode(() -> MoveValidator
-                .validateDiagonalMove(board, new Pawn(Team.WHITE), Position.of("a3"), 1))
-                .doesNotThrowAnyException();
-    }
-
     @Test
     void validateStraightMove() {
         assertThatThrownBy(() -> MoveValidator.validateStraightMove(3))
                 .isInstanceOf(IllegalArgumentException.class)
-                .hasMessageContaining("폰은 두 칸 이상");
+                .hasMessageContaining("폰은 두 칸 초과");
     }
 
     @Test
     void validateMoveRange() {
-        assertThatThrownBy(() -> MoveValidator.validateMoveRange(3, 1))
+        assertThatThrownBy(() -> MoveValidator.validateDistance(3, 1))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessageContaining("이동할 수 있는 거리");
     }

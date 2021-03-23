@@ -3,7 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.*;
 import chess.domain.utils.MoveValidator;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -37,12 +36,12 @@ public abstract class AbstractPiece implements Piece {
     }
 
     @Override
-    public List<Position> generate(Path path) {
+    public List<Position> generate(Path path, boolean target) {
         final Direction direction = path.computeDirection();
         final Strategy strategy = strategy();
         strategy.moveTowards(direction); // 전략 상 갈 수 있는 방향인지 확인함.
         final int distance = path.computeDistance();
-        MoveValidator.validateMoveRange(distance, strategy.moveRange()); // 이동할 수 있는 범위 내의 값인지 확인함.
+        MoveValidator.validateDistance(distance, strategy.moveRange()); // 이동할 수 있는 범위 내의 값인지 확인함.
         return generatePaths(path, direction, distance);
     }
 

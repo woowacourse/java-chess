@@ -51,15 +51,17 @@ public class Pawn extends AbstractPiece {
     }
 
     @Override
-    public List<Position> generate(Path path) {
+    public List<Position> generate(Path path, boolean target) {
         final Direction direction = path.computeDirection();
         final Strategy strategy = strategy();
         strategy.moveTowards(direction); // 전략 상 갈 수 있는 방향인지 확인함.
         final int distance = path.computeDistance();
 
-        if (path.isDiagonal()) { // 대각 방향인 경우
-            MoveValidator.validateMoveRange(distance, Pawn.DIAGONAL_MOVE_RANGE);
-            return super.generatePaths(path, direction, 0);
+        if (path.isDiagonal()) { // 대각 방향이면서 목적지에 상대팀의 말이 존재하는 경우
+            // 이동가능한지 확인 -> 불가능하면 터뜨린다.
+            MoveValidator.validateDiagonalMove(distance, Pawn.DIAGONAL_MOVE_RANGE, target);
+            // 이동 가능하면 그냥 빈 배열을 전달한다.
+            return new ArrayList<>();
         }
 
         // 2칸 초과인지 확인.

@@ -1,12 +1,13 @@
 package chess.domain.piece;
 
 import chess.domain.board.*;
+import chess.domain.utils.MoveValidator;
 
 import java.util.List;
 
 public class Knight extends AbstractPiece {
     public static final double POINT = 2.5;
-    private static final int MOVE_RANGE = 1;
+    private static final int MOVE_RANGE = 2;
 
     public Knight(Team team) {
         super(team);
@@ -38,10 +39,5 @@ public class Knight extends AbstractPiece {
     @Override
     public double getPoint() {
         return POINT;
-    }
-
-    @Override
-    public List<Position> generate(Path path) {
-        return super.generate(path);
     }
 }

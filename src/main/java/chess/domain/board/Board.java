@@ -56,10 +56,17 @@ public class Board {
         final Piece piece = pieceAt(path.source());
         piece.confirmTurn(turn); // 제 차례가 아닌 경우 먼저 터뜨림.
         confirmSameTeamPiece(path.target(), turn); // 목적지에 같은 팀의 말이 있는 경우 터뜨림.
-        final List<Position> positions = piece.generate(path);
+        final List<Position> positions = piece.generate(path, target(path, turn));
         if (!confirm(positions)) {
             throw new IllegalArgumentException("[ERROR] 경로에 말이 존재합니다.");
         }
         movePiece(path);
+    }
+
+    public boolean target(Path path, Team turn) {
+        if (!chessBoard.containsKey(path.target())) {
+            return false;
+        }
+        return !chessBoard.get(path.target()).isSameTeam(turn);
     }
 }

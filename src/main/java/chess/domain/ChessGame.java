@@ -69,7 +69,7 @@ public class ChessGame {
 
     private void actionPawn(Piece piece, Path path, Direction direction, Strategy strategy, int distance) {
         if (path.isDiagonal()) {
-            MoveValidator.validateDiagonalMove(board, piece, path.target(), distance);
+//            MoveValidator.validateDiagonalMove(board, piece, path.target(), distance);
             movePiece(path);
             return;
         }
@@ -109,7 +109,7 @@ public class ChessGame {
             }
             MoveValidator.isPieceExist(board, position);
         }
-        MoveValidator.validateMoveRange(distance, strategy.moveRange());
+        MoveValidator.validateDistance(distance, strategy.moveRange());
     }
 
     private void confirmKingCaptured(Position target) {

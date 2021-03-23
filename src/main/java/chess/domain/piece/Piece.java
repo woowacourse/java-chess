@@ -27,5 +27,5 @@ public interface Piece {
 
     /////
 
-    List<Position> generate(Path path);
+    List<Position> generate(Path path, boolean target);
 }

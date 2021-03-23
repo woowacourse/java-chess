@@ -145,8 +145,7 @@ class ChessGameTest {
         // when
         chessGame.move(new Commands("move a2 a4"));
         chessGame.move(new Commands("move b7 b5"));
-        chessGame.move(new Commands("move a4 a5"));
-        chessGame.move(new Commands("move b5 a5"));
+        chessGame.move(new Commands("move a4 b5"));
 
         // then
         assertThat("").contains(outContent.toString());
@@ -178,7 +177,7 @@ class ChessGameTest {
         assertThat(outContent.toString()).contains("[ERROR] 해당 방향은 존재하지 않습니다.");
     }
 
-    @DisplayName("나이트 이동 테스트 - 이동할 수 있는 거리를 벗어났습니다.")
+    @DisplayName("나이트 이동 테스트 - 이동 가능")
     @Test
     void move_knight3() {
         // given
@@ -189,6 +188,19 @@ class ChessGameTest {
 
         //then
         assertThat("").contains(outContent.toString());
+    }
+
+    @DisplayName("나이트 이동 테스트 - 이동 가능한 거리를 벗어났습니다.")
+    @Test
+    void move_knight4() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move(new Commands("move b1 d5"));
+
+        //then
+        assertThat(outContent.toString()).contains("[ERROR] 이동할 수 있는 거리를 벗어났습니다.");
     }
 
     @DisplayName("룩 이동 테스트 - 앞에 같은 팀의 말이 있는 경우 이동 불가")
