@@ -1,6 +1,7 @@
 package chess.domain.utils;
 
 import chess.domain.board.Board;
+import chess.domain.board.Path;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
@@ -28,7 +29,7 @@ public class MoveValidator {
 
     public static void validateStraightMove(int distance) {
         if (distance > Pawn.MOVE_FIRST_RANGE) {
-            throw new IllegalArgumentException("[ERROR] 폰은 두 칸 이상 움직일 수 없습니다.");
+            throw new IllegalArgumentException("[ERROR] 폰은 두 칸 초과 움직일 수 없습니다.");
         }
     }
 

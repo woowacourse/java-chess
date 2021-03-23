@@ -1,8 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Strategy;
-import chess.domain.board.Team;
+import chess.domain.board.*;
+
+import java.util.List;
 
 public class Knight extends AbstractPiece {
     public static final double POINT = 2.5;
@@ -38,5 +38,10 @@ public class Knight extends AbstractPiece {
     @Override
     public double getPoint() {
         return POINT;
+    }
+
+    @Override
+    public List<Position> generate(Path path) {
+        return super.generate(path);
     }
 }

@@ -1,7 +1,11 @@
 package chess.domain.piece;
 
+import chess.domain.board.Path;
+import chess.domain.board.Position;
 import chess.domain.board.Strategy;
 import chess.domain.board.Team;
+
+import java.util.List;
 
 public interface Piece {
 
@@ -20,4 +24,8 @@ public interface Piece {
     boolean isKing();
 
     double getPoint();
+
+    /////
+
+    List<Position> generate(Path path);
 }

@@ -27,14 +27,24 @@ public class ChessGame {
         state = state.init();
     }
 
+//    public void move(Commands command) {
+//        try {
+//            Path path = new Path(command.path());
+//            // TODO: 보드로부터 피스를 받아 이동시키는 것이 아니라 보드 내부에서 이동시키도록 변경하기.
+//            Piece piece = board.pieceAt(path.source());
+//            piece.confirmTurn(turn);
+//            board.confirmSameTeamPiece(path.target(), turn);
+//            moveBody(path, piece);
+//        } catch (IllegalArgumentException e) {
+//            OutputView.printErrorMessage(e.getMessage());
+//        }
+//    }
+
+
     public void move(Commands command) {
         try {
-            Path path = new Path(command.path());
-            // TODO: 보드로부터 피스를 받아 이동시키는 것이 아니라 보드 내부에서 이동시키도록 변경하기.
-            Piece piece = board.pieceAt(path.source());
-            piece.confirmTurn(turn);
-            board.confirmSameTeamPiece(path.target(), turn);
-            moveBody(path, piece);
+            board.move(new Path(command.path()), turn);
+            turnOver(); // 차례 넘기기
         } catch (IllegalArgumentException e) {
             OutputView.printErrorMessage(e.getMessage());
         }
@@ -99,7 +109,7 @@ public class ChessGame {
             }
             MoveValidator.isPieceExist(board, position);
         }
-        MoveValidator.validateMoveRange(distance, strategy.getMoveRange());
+        MoveValidator.validateMoveRange(distance, strategy.moveRange());
     }
 
     private void confirmKingCaptured(Position target) {

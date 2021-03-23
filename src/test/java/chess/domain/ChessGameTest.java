@@ -72,8 +72,11 @@ class ChessGameTest {
         // given
         chessGame.initBoard(BoardInitializer.init());
 
-        // when - then
-        assertThatCode(() -> chessGame.move(new Commands("move a2 a4"))).doesNotThrowAnyException();
+        // when
+        chessGame.move(new Commands("move a2 a4"));
+
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("Pawn 이동 테스트 - 초기 2칸 이동 시 상대팀의 말이 있는 경우 예외")
@@ -90,7 +93,7 @@ class ChessGameTest {
 
         // then
         chessGame.move(new Commands("move b2 b4"));
-        assertThat(outContent.toString()).contains("[ERROR] 말이 존재합니다.");
+        assertThat(outContent.toString()).contains("[ERROR] 경로에 말이 존재합니다.");
     }
 
     @DisplayName("Pawn 이동 테스트 - 한칸 이동")
@@ -100,7 +103,10 @@ class ChessGameTest {
         chessGame.initBoard(BoardInitializer.init());
 
         // when - then
-        assertThatCode(() -> chessGame.move(new Commands("move a2 a3"))).doesNotThrowAnyException();
+        chessGame.move(new Commands("move a2 a3"));
+
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("Pawn 이동 테스트 - 한칸 이동 시 상대팀의 말이 있는 경우 예외")
@@ -116,7 +122,7 @@ class ChessGameTest {
 
         // then
         chessGame.move(new Commands("move a5 a4"));
-        assertThat(outContent.toString()).contains("[ERROR] 말이 존재합니다.");
+        assertThat(outContent.toString()).contains("[ERROR] 경로에 말이 존재합니다.");
     }
 
     @DisplayName("Pawn 이동 테스트 - 대각선 이동 시 상대팀의 말이 없는 경우 예외")
@@ -140,9 +146,10 @@ class ChessGameTest {
         chessGame.move(new Commands("move a2 a4"));
         chessGame.move(new Commands("move b7 b5"));
         chessGame.move(new Commands("move a4 a5"));
+        chessGame.move(new Commands("move b5 a5"));
 
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move b5 a5"))).doesNotThrowAnyException();
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("나이트 이동 테스트 - 앞에 말이 있는 경우에도 이동 가능")
@@ -151,8 +158,11 @@ class ChessGameTest {
         // given
         chessGame.initBoard(BoardInitializer.init());
 
-        // when - then
-        assertThatCode(() -> chessGame.move(new Commands("move b1 c3"))).doesNotThrowAnyException();
+        // when
+        chessGame.move(new Commands("move b1 c3"));
+
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("나이트 이동 테스트 - 이동 불가능한 곳인 경우 예외")
@@ -166,6 +176,19 @@ class ChessGameTest {
 
         //then
         assertThat(outContent.toString()).contains("[ERROR] 해당 방향은 존재하지 않습니다.");
+    }
+
+    @DisplayName("나이트 이동 테스트 - 이동할 수 있는 거리를 벗어났습니다.")
+    @Test
+    void move_knight3() {
+        // given
+        chessGame.initBoard(BoardInitializer.init());
+
+        // when
+        chessGame.move(new Commands("move b1 c3"));
+
+        //then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("룩 이동 테스트 - 앞에 같은 팀의 말이 있는 경우 이동 불가")
@@ -190,9 +213,10 @@ class ChessGameTest {
         // when
         chessGame.move(new Commands("move a2 a4"));
         chessGame.move(new Commands("move b7 b5"));
+        chessGame.move(new Commands("move a1 a3"));
 
-        //then
-        assertThatCode(() -> chessGame.move(new Commands("move a1 a3"))).doesNotThrowAnyException();
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("룩 이동 테스트 - 앞에 말이 없는 경우 무한정 이동 가능")
@@ -204,13 +228,14 @@ class ChessGameTest {
         // when
         chessGame.move(new Commands("move a2 a4"));
         chessGame.move(new Commands("move b7 b5"));
-        chessGame.move(new Commands("move a4 a5"));
+        chessGame.move(new Commands("move a4 b5"));
         chessGame.move(new Commands("move c7 c6"));
-        chessGame.move(new Commands("move a5 b5"));
-        chessGame.move(new Commands("move c6 c5"));
+        chessGame.move(new Commands("move b5 c6"));
+        chessGame.move(new Commands("move d7 d6"));
+        chessGame.move(new Commands("move a1 a6"));
 
-        //then
-        assertThatCode(() -> chessGame.move(new Commands("move a1 a6"))).doesNotThrowAnyException();
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("룩 이동 테스트 - 앞에 같은 팀의 말이 없는 경우 무한정 이동 가능")
@@ -222,13 +247,12 @@ class ChessGameTest {
         // when
         chessGame.move(new Commands("move a2 a4"));
         chessGame.move(new Commands("move b7 b5"));
-        chessGame.move(new Commands("move a4 a5"));
-        chessGame.move(new Commands("move c7 c6"));
-        chessGame.move(new Commands("move a5 b5"));
-        chessGame.move(new Commands("move c6 c5"));
+        chessGame.move(new Commands("move a4 b5"));
+        chessGame.move(new Commands("move c7 c5"));
+        chessGame.move(new Commands("move a1 a7"));
 
-        //then
-        assertThatCode(() -> chessGame.move(new Commands("move a1 a7"))).doesNotThrowAnyException();
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("비숍 이동 테스트 - 앞에 같은 팀의 말이 있는 경우 이동 불가")
@@ -249,16 +273,17 @@ class ChessGameTest {
     void move_bishop2() {
         // given
         chessGame.initBoard(BoardInitializer.init());
+        chessGame.move(new Commands("move b2 b3"));
+        chessGame.move(new Commands("move b7 b6"));
 
         // when
-        chessGame.move(new Commands("move b2 b3"));
-        chessGame.move(new Commands("move b7 b5"));
+        chessGame.move(new Commands("move c1 a3")); // 좌상향
+        chessGame.move(new Commands("move c8 a6")); // 좌하향
+        chessGame.move(new Commands("move a3 d6")); // 우상향
+        chessGame.move(new Commands("move a6 d3")); // 우하향
 
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move c1 a3"))).doesNotThrowAnyException(); // 좌상향
-        assertThatCode(() -> chessGame.move(new Commands("move c8 c6"))).doesNotThrowAnyException(); // 좌하향
-        assertThatCode(() -> chessGame.move(new Commands("move a3 d6"))).doesNotThrowAnyException(); // 우상향
-        assertThatCode(() -> chessGame.move(new Commands("move c6 d3"))).doesNotThrowAnyException(); // 우하향
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("비숍 이동 테스트 - 가로 막는 말이 다른 팀의 말인 경우 이동 가능")
@@ -266,15 +291,16 @@ class ChessGameTest {
     void move_bishop3() {
         // given
         chessGame.initBoard(BoardInitializer.init());
+        chessGame.move(new Commands("move b2 b3"));
+        chessGame.move(new Commands("move b7 b6"));
+        chessGame.move(new Commands("move c1 a3"));
+        chessGame.move(new Commands("move c8 a6"));
 
         // when
-        chessGame.move(new Commands("move b2 b3"));
-        chessGame.move(new Commands("move b7 b5"));
-        chessGame.move(new Commands("move c1 a3"));
-        chessGame.move(new Commands("move c8 c6"));
+        chessGame.move(new Commands("move a3 e7"));
 
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move a3 e7"))).doesNotThrowAnyException();
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("퀸 이동 테스트 - 같은 팀의 말이 앞에 존재하는 경우 이동 불가")
@@ -295,21 +321,21 @@ class ChessGameTest {
     void move_queen2() {
         // given
         chessGame.initBoard(BoardInitializer.init());
-
-        // when
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move d7 d5"));
 
-        // then
-        assertThatCode(() -> chessGame.move(new Commands("move d1 d3"))).doesNotThrowAnyException(); // 위로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move d8 d6"))).doesNotThrowAnyException(); // 아래로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move d3 c3"))).doesNotThrowAnyException(); // 왼쪽으로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move d6 e6"))).doesNotThrowAnyException(); // 오른쪽으로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move c3 d4"))).doesNotThrowAnyException(); // 우상향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move e6 f5"))).doesNotThrowAnyException(); // 우하향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move d4 e5"))).doesNotThrowAnyException(); // 좌상향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move f5 e4"))).doesNotThrowAnyException(); // 좌하향 대각선
+        // when
+        chessGame.move(new Commands("move d1 d3")); // 위로 직진
+        chessGame.move(new Commands("move d8 d6")); // 아래로 직진
+        chessGame.move(new Commands("move d3 c3")); // 왼쪽으로 직진
+        chessGame.move(new Commands("move d6 e6")); // 오른쪽으로 직진
+        chessGame.move(new Commands("move c3 b4")); // 좌상향 대각선
+        chessGame.move(new Commands("move e6 f5")); // 우하향 대각선
+        chessGame.move(new Commands("move b4 c5")); // 좌상향 대각선
+        chessGame.move(new Commands("move f5 e4")); // 좌하향 대각선
 
+        // then
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("퀸 이동 테스트 - 앞에 말이 없는 경우 8방향 거리 무한정 이동 가능")
@@ -317,17 +343,18 @@ class ChessGameTest {
     void move_queen3() {
         // given
         chessGame.initBoard(BoardInitializer.init());
-
-        // when
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move e7 e5"));
-        chessGame.move(new Commands("move d4 d5"));
+        chessGame.move(new Commands("move h2 h3"));
         chessGame.move(new Commands("move a7 a6"));
-        chessGame.move(new Commands("move d5 e5"));
+        chessGame.move(new Commands("move d4 e5"));
         chessGame.move(new Commands("move a6 a5"));
 
+        // when
+        chessGame.move(new Commands("move d1 d6")); // 위로 무한정 직진
+
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move d1 d6"))).doesNotThrowAnyException(); // 위로 무한정 직진
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("퀸 이동 테스트 - 다른 팀의 말이 존재하는 경우 이동 가능")
@@ -335,17 +362,18 @@ class ChessGameTest {
     void move_queen4() {
         // given
         chessGame.initBoard(BoardInitializer.init());
-
-        // when
         chessGame.move(new Commands("move d2 d4"));
         chessGame.move(new Commands("move e7 e5"));
-        chessGame.move(new Commands("move d4 d5"));
+        chessGame.move(new Commands("move h2 h3"));
         chessGame.move(new Commands("move a7 a6"));
-        chessGame.move(new Commands("move d5 e5"));
+        chessGame.move(new Commands("move d4 e5"));
         chessGame.move(new Commands("move a6 a5"));
 
+        // when
+        chessGame.move(new Commands("move d1 d7"));
+
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move d1 d7"))).doesNotThrowAnyException();
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("킹 이동 테스트 - 같은 팀의 말이 앞에 존재하는 경우 이동 불가")
@@ -366,22 +394,23 @@ class ChessGameTest {
     void move_king2() {
         // given
         chessGame.initBoard(BoardInitializer.init());
-
-        // when
         chessGame.move(new Commands("move e2 e4"));
         chessGame.move(new Commands("move e7 e5"));
         chessGame.move(new Commands("move e1 e2"));
         chessGame.move(new Commands("move e8 e7"));
 
+        // when
+        chessGame.move(new Commands("move e2 e3")); // 위로 직진
+        chessGame.move(new Commands("move e7 e6")); // 아래로 직진
+        chessGame.move(new Commands("move e3 d3")); // 왼쪽으로 직진
+        chessGame.move(new Commands("move e6 f6")); // 오른쪽으로 직진
+        chessGame.move(new Commands("move d3 c4")); // 좌상향 대각선
+        chessGame.move(new Commands("move f6 g5")); // 우하향 대각선
+        chessGame.move(new Commands("move c4 d5")); // 우상향 대각선
+        chessGame.move(new Commands("move g5 f4")); // 하향 대각선
+
         // then
-        assertThatCode(() -> chessGame.move(new Commands("move e2 e3"))).doesNotThrowAnyException(); // 위로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move e7 e6"))).doesNotThrowAnyException(); // 아래로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move e3 d3"))).doesNotThrowAnyException(); // 왼쪽으로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move e6 f6"))).doesNotThrowAnyException(); // 오른쪽으로 직진
-        assertThatCode(() -> chessGame.move(new Commands("move d3 e4"))).doesNotThrowAnyException(); // 우상향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move f6 g5"))).doesNotThrowAnyException(); // 우하향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move e4 d5"))).doesNotThrowAnyException(); // 좌상향 대각선
-        assertThatCode(() -> chessGame.move(new Commands("move g5 f4"))).doesNotThrowAnyException(); // 좌하향 대각선
+        assertThat("").contains(outContent.toString());
     }
 
     @DisplayName("킹 이동 테스트 - 앞에 말이 없는 경우 8방향으로 한 칸만 이동 가능, 두칸 이상 시 예외")

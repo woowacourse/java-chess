@@ -11,7 +11,7 @@ public class Strategy {
         this.moveRange = moveRange;
     }
 
-    public int getMoveRange() {
+    public int moveRange() {
         return moveRange;
     }
 
