@@ -8,7 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class InputView {
-	public static final String INVALID_INPUT_ERROR_MESSAGE = "올바르지 않은 입력입니다.";
+	private static final String SPACE = " ";
+
 	private static final Scanner scanner = new Scanner(System.in);
 
 	private InputView() {
@@ -22,7 +23,7 @@ public class InputView {
 		if (startInput.equals(OutputView.END)) {
 			return false;
 		}
-		throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
+		throw new IllegalArgumentException("올바르지 않은 입력입니다.");
 	}
 
 	public static List<String> inputMoveOrStatus() {
@@ -31,11 +32,14 @@ public class InputView {
 			return Collections.singletonList(STATUS);
 		}
 
-		List<String> inputMoving = Arrays.asList(input.split(" "));
-		if (!inputMoving.get(0).equals(MOVE)) {
-			throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
+		List<String> inputMoving = Arrays.asList(input.split(SPACE));
+		if (inputMoving.get(0).equals(MOVE)) {
+			return inputMoving;
 		}
 
-		return inputMoving;
+		if (inputMoving.get(0).equals(START) || inputMoving.get(0).equals(END)) {
+			return inputMoving;
+		}
+		throw new IllegalArgumentException("옳지 않은 입력입니다.");
 	}
 }
