@@ -2,7 +2,7 @@ package chess.domain.board;
 
 import static chess.domain.piece.type.PieceType.KING;
 
-import chess.controller.dto.response.BoardResponseDTO;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.domain.piece.Piece;
 import chess.domain.player.type.TeamColor;
 import chess.domain.position.MoveRoute;
@@ -100,13 +100,13 @@ public class Board {
             .count() < NUMBER_OF_ALL_KINGS;
     }
 
-    public BoardResponseDTO status() {
+    public BoardStatusResponseDTO status() {
         List<String> cellsStatus = new ArrayList<>();
         List<Rank> reversedRanks = Rank.reversedRanks();
         for (Rank rank : reversedRanks) {
             addCellsStatusOnRank(cellsStatus, rank);
         }
-        return new BoardResponseDTO(cellsStatus);
+        return new BoardStatusResponseDTO(cellsStatus);
     }
 
     private void addCellsStatusOnRank(List<String> cellsStatus, Rank rank) {
@@ -114,6 +114,17 @@ public class Board {
             Cell cell = cells.get(Position.of(file, rank));
             cellsStatus.add(cell.status());
         }
+    }
+
+    public TeamColor winnerTeamColor() {
+        if (!isKingDead()) {
+            throw new IllegalStateException("모든 King들이 살아있습니다.");
+        }
+        return cells.values().stream()
+            .filter(cell -> !cell.isEmpty() && cell.pieceType() == KING)
+            .findAny()
+            .orElseThrow(() -> new IllegalStateException("살아있는 King이 한 개도 없습니다."))
+            .teamColor();
     }
 }
 

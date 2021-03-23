@@ -17,7 +17,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.dto.request.CommandRequestDTO;
-import chess.controller.dto.request.MoveRequestDTO;
 import chess.controller.dto.response.ScoresResponseDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardDefaultSetting;
@@ -62,6 +61,48 @@ class ChessGameTest {
     void boardSettingInjectionTypeError() {
         assertThatThrownBy(() -> new ChessGame(null))
             .isInstanceOf(IllegalArgumentException.class);
+    }
+
+    @DisplayName("체스 게임을 먼저 시작했으면, 기물을 이동시킬 수 있다.")
+    @Test
+    void canMovePieceAfterStart() {
+        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
+        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+        chessGame.start();
+
+        assertThatCode(() -> chessGame.move(commandRequestDTO))
+            .doesNotThrowAnyException();
+    }
+
+    @DisplayName("체스 게임을 먼저 시작했으면, 체스 게임으로부터 보드 상태 정보를 받을 수 있다.")
+    @Test
+    void canGetBoardStatusAfterStart() {
+        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
+        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+        chessGame.start();
+
+        assertThatCode(() -> chessGame.move(commandRequestDTO))
+            .doesNotThrowAnyException();
+    }
+
+    @DisplayName("체스 게임을 먼저 시작하지 않았으면, 기물을 이동시킬 수 없다.")
+    @Test
+    void cannotMovePieceBeforeStart() {
+        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
+        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
+            .isInstanceOf(IllegalStateException.class);
+    }
+
+    @DisplayName("체스 게임을 먼저 시작하지 않았으면, 체스 게임으로부터 보드 상태 정보를 받을 수 없다.")
+    @Test
+    void cannotGetBoardStatusBeforeStart() {
+        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
+        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
+
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
+            .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("King이 잡혔는지 확인")
@@ -128,6 +169,77 @@ class ChessGameTest {
         }
     }
 
+    @DisplayName("승리자 한글 이름 반환")
+    @Nested
+    class winnerKoreanName {
+        @DisplayName("한 개의 King이 죽었다면, 승리한 팀의 색깔을 반환한다.")
+        @Test
+        void getWinnerTeamColorKoreanNameAfterOneKingDead() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, null, null, null)
+            );
+
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+            chessGame.start();
+
+            String expectedWinnerTeamColorKoreanName = "흑";
+            assertThat(chessGame.winnerTeamColorKoreanName())
+                .isEqualTo(expectedWinnerTeamColorKoreanName);
+        }
+
+        @DisplayName("모든 King이 살아있다면, 예외를 발생시킨다.")
+        @Test
+        void cannotGetWinnerTeamColorKoreanNameWhenAllKingsAlive() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, B_KG, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, W_KG, null, null)
+            );
+
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+            chessGame.start();
+
+            assertThatThrownBy(chessGame::winnerTeamColorKoreanName)
+                .isInstanceOf(IllegalStateException.class);
+        }
+
+        @DisplayName("모든 King이 죽었다면, 예외를 발생시킨다.")
+        @Test
+        void cannotGetWinnerTeamColorKoreanNameWhenAllKingsDead() {
+            BoardSetting customBoardSetting = new BoardCustomSetting(
+                Arrays.asList(
+                    null, null, B_RK, null, null, null, null, null,
+                    B_PN, null, B_PN, B_BP, null, null, null, null,
+                    null, B_PN, null, null, B_QN, null, null, null,
+                    null, null, null, null, null, null, null, null,
+                    null, null, null, null, null, W_NT, W_QN, null,
+                    null, null, null, null, null, W_PN, null, W_PN,
+                    null, null, null, null, null, W_PN, W_PN, null,
+                    null, null, null, null, W_RK, null, null, null)
+            );
+
+            ChessGame chessGame = new ChessGame(customBoardSetting);
+            chessGame.start();
+
+            assertThatThrownBy(chessGame::winnerTeamColorKoreanName)
+                .isInstanceOf(IllegalStateException.class);
+        }
+    }
+
     @DisplayName("점수 계산")
     @Nested
     class ScoreCalculate {
@@ -147,6 +259,8 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
+            chessGame.start();
+
             ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
 
             assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(20);
@@ -169,11 +283,12 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
+            chessGame.start();
+
             CommandRequestDTO commandRequestDTO
                 = new CommandRequestDTO("move", "a4", "b5");
-            MoveRequestDTO moveRequestDTO = new MoveRequestDTO("white", commandRequestDTO);
 
-            chessGame.move(moveRequestDTO);
+            chessGame.move(commandRequestDTO);
             ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
 
             assertThat(scoresResponseDTO.getBlackTeamScore()).isEqualTo(37);
@@ -188,7 +303,6 @@ class ChessGameTest {
         @DisplayName("Rook, Bishop, Queen, King")
         @Nested
         class RookBishopQueenKing {
-            private static final String colorOfPieceToMove = "black";
 
             @DisplayName("Rook 이동")
             @Nested
@@ -210,10 +324,12 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
+
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -232,12 +348,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("아래 방향으로 이동")
@@ -256,12 +373,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 방향으로 이동")
@@ -280,12 +398,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 방향으로 이동")
@@ -304,12 +423,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -328,12 +448,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -352,12 +473,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -376,12 +498,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
             }
 
@@ -405,10 +528,12 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
+
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -427,12 +552,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -451,12 +577,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
@@ -475,12 +602,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
@@ -499,12 +627,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -523,12 +652,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -547,12 +677,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -571,12 +702,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
             }
 
@@ -600,11 +732,12 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("위 방향으로 이동")
@@ -623,12 +756,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("아래 방향으로 이동")
@@ -647,12 +781,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d1";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 방향으로 이동")
@@ -671,12 +806,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 방향으로 이동")
@@ -695,12 +831,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 이동")
@@ -719,12 +856,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 이동")
@@ -743,12 +881,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a2";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 이동")
@@ -767,12 +906,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "g8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 이동")
@@ -791,12 +931,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "h1";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("이동경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -815,12 +956,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -839,12 +981,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -863,12 +1006,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "a8";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
             }
 
@@ -892,11 +1036,12 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("위 방향으로 한 칸 이동")
@@ -915,12 +1060,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d6";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("아래 방향으로 한 칸 이동")
@@ -939,12 +1085,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "d4";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 방향으로 한 칸 이동")
@@ -963,12 +1110,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 방향으로 한 칸 이동")
@@ -987,12 +1135,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c5";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 위 대각선 방향으로 한 칸 이동")
@@ -1011,12 +1160,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("왼쪽 아래 대각선 방향으로 한 칸 이동")
@@ -1035,12 +1185,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c4";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 위 대각선 방향으로 한 칸 이동")
@@ -1059,12 +1210,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e6";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("오른쪽 아래 대각선 방향으로 한 칸 이동")
@@ -1083,12 +1235,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "e4";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -1107,12 +1260,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -1131,12 +1285,13 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
                     String destinationInput = "c6";
 
-                    assertCanMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCanMove(chessGame, startPositionInput, destinationInput);
                 }
             }
         }
@@ -1144,7 +1299,6 @@ class ChessGameTest {
         @DisplayName("Knight 이동")
         @Nested
         class Knight {
-            private static final String colorOfPieceToMove = "black";
 
             @DisplayName("유효하지 않은 경로로 이동할 수 없다.")
             @ParameterizedTest
@@ -1163,11 +1317,12 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
 
-                assertCannotMove(chessGame, startPositionInput, destinationInput,
-                    colorOfPieceToMove);
+                assertCannotMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("왼쪽 왼쪽 위 방향으로 한 번 이동")
@@ -1186,11 +1341,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "b6";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("왼쪽 왼쪽 아래 방향으로 한 번 이동")
@@ -1209,11 +1366,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c3";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("왼쪽 위 위 방향으로 한 번 이동")
@@ -1232,11 +1391,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("왼쪽 아래 아래 방향으로 한 번 이동")
@@ -1255,11 +1416,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c3";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("오른쪽 오른쪽 위 방향으로 한 번 이동")
@@ -1278,11 +1441,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "f6";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("오른쪽 오른쪽 아래 방향으로 한 번 이동")
@@ -1301,11 +1466,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "f4";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("오른쪽 위 위 방향으로 한 번 이동")
@@ -1324,11 +1491,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "e7";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("오른쪽 아래 아래 방향으로 한 번 이동")
@@ -1347,11 +1516,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "e3";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("도착위치에 아군 기물이 존재하면, 이동할 수 없다.")
@@ -1370,12 +1541,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
 
-                assertCannotMove(chessGame, startPositionInput, destinationInput,
-                    colorOfPieceToMove);
+                assertCannotMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("이동 경로 중간에 적 기물이 존재해도, 이동할 수 있다.")
@@ -1394,11 +1566,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
 
             @DisplayName("도착위치에 적 기물이 존재하면, 이동할 수 있다.")
@@ -1417,11 +1591,13 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
+                chessGame.start();
+                chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
                 String destinationInput = "c7";
 
-                assertCanMove(chessGame, startPositionInput, destinationInput, colorOfPieceToMove);
+                assertCanMove(chessGame, startPositionInput, destinationInput);
             }
         }
 
@@ -1431,7 +1607,6 @@ class ChessGameTest {
             @DisplayName("흑 팀인 경우")
             @Nested
             class BlackTeam {
-                private static final String colorOfPieceToMove = "black";
 
                 @DisplayName("유효하지 않은 경로로 이동할 수 없다.")
                 @ParameterizedTest
@@ -1450,11 +1625,12 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
+                    chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("한 칸 전진")
@@ -1476,12 +1652,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1500,12 +1677,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("위 방향으로 이동할 수 없다.")
@@ -1524,12 +1702,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
@@ -1548,12 +1727,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d3";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
 
@@ -1576,12 +1756,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1600,12 +1781,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -1624,12 +1806,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "d5";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("위 방향으로 이동할 수 없다.")
@@ -1648,12 +1831,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d7";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
 
@@ -1676,12 +1860,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "c6";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
@@ -1700,12 +1885,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "e6";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
@@ -1724,12 +1910,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "c6";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
@@ -1748,12 +1935,13 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
+                        chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
                         String destinationInput = "e6";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
             }
@@ -1761,7 +1949,6 @@ class ChessGameTest {
             @DisplayName("백 팀인 경우")
             @Nested
             class WhiteTeam {
-                private static final String colorOfPieceToMove = "white";
 
                 @DisplayName("유효하지 않은 경로로 이동할 수 없다.")
                 @ParameterizedTest
@@ -1780,11 +1967,11 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
+                    chessGame.start();
 
                     String startPositionInput = "d5";
 
-                    assertCannotMove(chessGame, startPositionInput, destinationInput,
-                        colorOfPieceToMove);
+                    assertCannotMove(chessGame, startPositionInput, destinationInput);
                 }
 
                 @DisplayName("한 칸 전진")
@@ -1806,12 +1993,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1830,12 +2017,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("아래 방향으로 이동할 수 없다.")
@@ -1854,12 +2041,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("처음 위치가 아닌 곳에서 앞으로 두 칸 전진할 수 없다.")
@@ -1878,12 +2065,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d7";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
 
@@ -1906,12 +2093,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 기물이 존재하면, 이동할 수 없다.")
@@ -1930,12 +2117,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("이동 경로 중간에 기물이 존재하면, 이동할 수 없다.")
@@ -1954,12 +2141,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("아래 방향으로 이동할 수 없다.")
@@ -1978,12 +2165,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d3";
                         String destinationInput = "d1";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
 
@@ -2006,12 +2193,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "c3";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("적이 오른쪽 대각선에 있을 때, 이동 가능")
@@ -2030,12 +2217,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "e3";
 
-                        assertCanMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCanMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 왼쪽 대각선 이동 불가능")
@@ -2054,12 +2241,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "c3";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
 
                     @DisplayName("도착위치에 적이 존재하지 않을 때, 오른쪽 대각선 이동 불가능")
@@ -2078,12 +2265,12 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
+                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "e3";
 
-                        assertCannotMove(chessGame, startPositionInput, destinationInput,
-                            colorOfPieceToMove);
+                        assertCannotMove(chessGame, startPositionInput, destinationInput);
                     }
                 }
             }
@@ -2091,7 +2278,7 @@ class ChessGameTest {
     }
 
     private void assertCanMove(ChessGame chessGame, String startPositionInput,
-        String destinationInput, String colorOfMovingPiece) {
+        String destinationInput) {
 
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
         String pieceToMove
@@ -2099,9 +2286,8 @@ class ChessGameTest {
 
         CommandRequestDTO commandRequestDTO
             = new CommandRequestDTO(MOVE, startPositionInput, destinationInput);
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(colorOfMovingPiece, commandRequestDTO);
 
-        chessGame.move(moveRequestDTO);
+        chessGame.move(commandRequestDTO);
         List<String> cellsStatusAfterMove = chessGame.boardStatus().getCellsStatus();
 
         assertPiecePosition(startPositionInput, EMPTY_CELL_STATUS, cellsStatusAfterMove);
@@ -2119,7 +2305,7 @@ class ChessGameTest {
     }
 
     private void assertCannotMove(ChessGame chessGame, String startPositionInput,
-        String destinationInput, String colorOfMovingPiece) {
+        String destinationInput) {
 
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
 
@@ -2130,9 +2316,8 @@ class ChessGameTest {
 
         CommandRequestDTO commandRequestDTO
             = new CommandRequestDTO(MOVE, startPositionInput, destinationInput);
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(colorOfMovingPiece, commandRequestDTO);
 
-        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
         List<String> cellsStatusAfterMove = chessGame.boardStatus().getCellsStatus();

@@ -3,10 +3,10 @@ package chess.controller.dto.response;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardResponseDTO {
+public class BoardStatusResponseDTO {
     private final List<String> cellsStatus;
 
-    public BoardResponseDTO(List<String> cellsStatus) {
+    public BoardStatusResponseDTO(List<String> cellsStatus) {
         this.cellsStatus = new ArrayList<>(cellsStatus);
     }
 

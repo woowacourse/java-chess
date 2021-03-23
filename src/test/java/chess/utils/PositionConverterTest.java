@@ -11,7 +11,7 @@ import static chess.domain.piece.type.PieceWithColorType.W_QN;
 import static chess.domain.piece.type.PieceWithColorType.W_RK;
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.controller.dto.response.BoardResponseDTO;
+import chess.controller.dto.response.BoardStatusResponseDTO;
 import chess.domain.board.setting.BoardCustomSetting;
 import chess.domain.board.setting.BoardSetting;
 import chess.domain.game.ChessGame;
@@ -37,8 +37,10 @@ public class PositionConverterTest {
         );
 
         ChessGame chessGame = new ChessGame(customBoardSetting);
-        BoardResponseDTO boardResponseDTO = chessGame.boardStatus();
-        List<String> cellsStatus = boardResponseDTO.getCellsStatus();
+        chessGame.start();
+
+        BoardStatusResponseDTO boardStatusResponseDTO = chessGame.boardStatus();
+        List<String> cellsStatus = boardStatusResponseDTO.getCellsStatus();
 
         int cellIndexOfBlackPawn = PositionConverter.convertToCellsStatusIndex("a7");
         int cellIndexOfBlackKing = PositionConverter.convertToCellsStatusIndex("b8");

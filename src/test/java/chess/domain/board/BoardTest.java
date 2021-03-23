@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.dto.request.CommandRequestDTO;
-import chess.controller.dto.request.MoveRequestDTO;
 import chess.domain.board.setting.BoardDefaultSetting;
 import chess.domain.game.ChessGame;
 import chess.utils.PositionConverter;
@@ -22,16 +21,16 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         chessGame = new ChessGame(new BoardDefaultSetting());
+        chessGame.start();
     }
 
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 빈 칸인 경우")
     @Test
     void cannotMovePieceAtStartPositionEmpty() {
         CommandRequestDTO commandRequestDTO
-            = new CommandRequestDTO("move", "a3", "a4");
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
+            = new CommandRequestDTO(MOVE, "a3", "a4");
 
-        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
@@ -48,9 +47,8 @@ class BoardTest {
     void cannotMovePieceAtStartPositionEnemyPiece() {
         CommandRequestDTO commandRequestDTO
             = new CommandRequestDTO(MOVE, "a7", "a6");
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
@@ -67,9 +65,8 @@ class BoardTest {
     void movePiece() {
         CommandRequestDTO commandRequestDTO
             = new CommandRequestDTO(MOVE, "a2", "a4");
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        chessGame.move(moveRequestDTO);
+        chessGame.move(commandRequestDTO);
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
 
         assertThat(cellsStatus.get(PositionConverter.convertToCellsStatusIndex("a2")))
@@ -84,9 +81,8 @@ class BoardTest {
     void cannotMovePieceToDestination() {
         CommandRequestDTO commandRequestDTO
             = new CommandRequestDTO(MOVE, "a2", "a5");
-        MoveRequestDTO moveRequestDTO = new MoveRequestDTO(WHITE, commandRequestDTO);
 
-        assertThatThrownBy(() -> chessGame.move(moveRequestDTO))
+        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
             .isInstanceOf(IllegalArgumentException.class);
 
         List<String> cellsStatus = chessGame.boardStatus().getCellsStatus();
