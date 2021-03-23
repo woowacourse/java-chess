@@ -15,12 +15,13 @@ public class ChessGame {
     private final BlackTeam blackTeam;
     private final WhiteTeam whiteTeam;
     private Team currentTurn;
-    private boolean isEnd = false;
+    private boolean isEnd;
 
     public ChessGame(final BlackTeam blackTeam, final WhiteTeam whiteTeam) {
         this.blackTeam = blackTeam;
         this.whiteTeam = whiteTeam;
         this.currentTurn = this.whiteTeam;
+        this.isEnd = false;
     }
 
     public void move(final Position current, final Position destination) {
