@@ -8,8 +8,8 @@ import chess.domain.piece.Score;
 import java.util.List;
 
 public class Player {
-    private final List<Position> positions;
     private final Owner owner;
+    private final List<Position> positions;
 
     public Player(final List<Position> positions, final Owner owner) {
         this.positions = positions;

@@ -24,21 +24,19 @@ public class ChessManager {
 
     public void move(final MoveCommand command) {
         players.validateTurn(command.source());
-        board.move(command.source(), command.target());
-
-        players.updatePositions(command.source(), command.target());
+        players.move(command.source(), command.target());
         players.changeTurn();
     }
 
-    public List<Position> getReachablePositions(final ShowCommand command) {
-        return board.getAblePositionsToMove(command.source());
+    public boolean isEnd() {
+        return players.isKingDead();
     }
 
     public Status calculateStatus() {
-        return players.getStatus(board);
+        return players.getStatus();
     }
 
-    public boolean isEnd() {
-        return players.isKingDead(board);
+    public List<Position> getReachablePositions(ShowCommand command) {
+        return players.getReachablePositions(command.source());
     }
 }

@@ -1,7 +1,9 @@
 package chess.domain.player;
 
 import chess.domain.board.Board;
+import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
+import chess.domain.command.ShowCommand;
 import chess.domain.piece.Owner;
 import chess.manager.Status;
 
@@ -13,6 +15,7 @@ public class Players {
     private static final int INDEX_OF_WHITE = 1;
 
     private final List<Player> players;
+    private final Board board;
     private Turn turn;
 
     public Players() {
@@ -21,7 +24,13 @@ public class Players {
                 PlayerInitializer.initPlayer(Owner.WHITE)
         );
 
+        this.board = BoardInitializer.initiateBoard();
         this.turn = Turn.BLACK;
+    }
+
+    public void move(final Position source, final Position target){
+        board.move(source, target);
+        updatePositions(source, target);
     }
 
     public void updatePositions(final Position source, final Position target) {
@@ -36,13 +45,13 @@ public class Players {
         this.turn = this.turn.change();
     }
 
-    public Status getStatus(final Board board) {
+    public Status getStatus() {
         final Player white = players.get(INDEX_OF_WHITE);
         final Player black = players.get(INDEX_OF_BLACK);
         return new Status(white.calculateScore(board), black.calculateScore(board));
     }
 
-    public boolean isKingDead(final Board board) {
+    public boolean isKingDead() {
         return players.stream()
                 .filter(player -> player.isKingDead(board))
                 .findFirst()
@@ -55,5 +64,9 @@ public class Players {
         if (!turnPlayer.contains(source)) {
             throw new IllegalArgumentException("현재 순서의 사용자가 아닙니다.");
         }
+    }
+
+    public List<Position> getReachablePositions(final Position source) {
+        return board.getAblePositionsToMove(source);
     }
 }
