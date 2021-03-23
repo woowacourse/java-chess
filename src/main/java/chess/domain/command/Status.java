@@ -22,6 +22,11 @@ public class Status implements Command {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean isStatus() {
         return true;
     }

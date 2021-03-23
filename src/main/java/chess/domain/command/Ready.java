@@ -31,6 +31,11 @@ public class Ready implements Command {
     }
 
     @Override
+    public boolean isReady() {
+        return true;
+    }
+
+    @Override
     public boolean isStatus() {
         return false;
     }

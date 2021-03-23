@@ -9,17 +9,17 @@ import chess.domain.position.Target;
 import java.util.Optional;
 
 public interface State {
-    boolean isFinish();
-
     State move(final Source source, final Target target, final State anotherState);
+
+    State toRunningState(final State anotherState);
 
     Optional<Piece> findPiece(final Position position);
 
     Pieces pieces();
 
-    State toRunningState(final State anotherState);
-
-    void removePiece(final Position position);
+    boolean isFinish();
 
     boolean isKing(final Position position);
+
+    void removePiece(final Position position);
 }

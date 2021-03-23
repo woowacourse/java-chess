@@ -31,6 +31,11 @@ public class Start implements Command {
     }
 
     @Override
+    public boolean isReady() {
+        return false;
+    }
+
+    @Override
     public boolean isStatus() {
         return false;
     }
