@@ -35,7 +35,7 @@ public enum Row {
 	}
 
 	public static boolean isInBound(int index) {
-		return index >= EIGHT.index && index < ONE.index;
+		return Arrays.stream(values()).anyMatch(value -> value.index == index);
 	}
 
 	public int getIndex() {

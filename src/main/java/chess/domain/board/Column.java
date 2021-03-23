@@ -35,12 +35,7 @@ public enum Column {
 	}
 
 	public static boolean isInBound(int index) {
-		try {
-			findColumnByIndex(index);
-			return true;
-		} catch (IllegalArgumentException e) {
-			return false;
-		}
+		return Arrays.stream(values()).anyMatch(value -> value.index == index);
 	}
 
 	public int getIndex() {
