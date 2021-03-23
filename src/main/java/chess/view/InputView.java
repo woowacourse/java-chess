@@ -36,7 +36,6 @@ public class InputView {
         if (!inputMoving.get(0).equals(MOVE)) {
             throw new IllegalArgumentException(INVALID_INPUT_ERROR_MESSAGE);
         }
-
         return inputMoving;
     }
 }

@@ -12,17 +12,34 @@ public class ChessController {
     public static final String MOVE = "move";
 
     public void run() {
-        OutputView.printStartGuideMessage();
-
-        while (InputView.inputStart()) {
+        while (playerWantStart()) {
             ChessGame chessGame = new ChessGame();
-            OutputView.printBoard(chessGame);
             playGame(chessGame);
             OutputView.noticeGameFinished();
         }
     }
 
+    private boolean playerWantStart() {
+        try {
+            OutputView.printStartGuideMessage();
+            return InputView.inputStart();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return playerWantStart();
+        }
+    }
+
     private void playGame(ChessGame chessGame) {
+        try {
+            OutputView.printBoard(chessGame);
+            playTurn(chessGame);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            playGame(chessGame);
+        }
+    }
+
+    private void playTurn(ChessGame chessGame) {
         while (chessGame.isProgressing()) {
             List<String> userInput = InputView.inputMoveOrStatus();
             makeScoreOrMove(chessGame, userInput);

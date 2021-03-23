@@ -47,6 +47,6 @@ public class OutputView {
     }
 
     public static void noticeGameFinished() {
-        System.out.println("게임이 끝났습니다. 새로운 게임을 시작하시려면 start, 종료를 원하시면 end를 입력하세요.");
+        System.out.println("게임이 끝났습니다.");
     }
 }
