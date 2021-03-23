@@ -35,27 +35,15 @@ public class ChessGameTest {
     void game_end_with_checkmate_test() {
         final ChessGame chessGame = new ChessGame(new BlackTeam(), new WhiteTeam());
         chessGame.move(Position.of("e2"), Position.of("e4"));
-        chessGame.changeTurn();
-
         chessGame.move(Position.of("f7"), Position.of("f5"));
-        chessGame.changeTurn();
-
         chessGame.move(Position.of("e4"), Position.of("f5"));
-        chessGame.changeTurn();
-
         chessGame.move(Position.of("g7"), Position.of("g5"));
-        chessGame.changeTurn();
 
         assertThat(chessGame.isEnd()).isFalse();
 
         chessGame.move(Position.of("d1"), Position.of("h5"));
-        chessGame.changeTurn();
-
         chessGame.move(Position.of("h7"), Position.of("h6"));
-        chessGame.changeTurn();
-
         chessGame.move(Position.of("h5"), Position.of("e8"));
-        chessGame.changeTurn();
 
         assertThat(chessGame.isEnd()).isTrue();
     }

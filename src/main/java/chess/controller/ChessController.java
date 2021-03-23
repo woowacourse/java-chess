@@ -47,7 +47,6 @@ public class ChessController {
     private void controlUserCommand(ChessGame chessGame, List<String> movePositions) {
         if (MOVE_COMMAND.equals(movePositions.get(0))) {
             chessGame.move(Position.of(movePositions.get(1)), Position.of(movePositions.get(2)));
-            chessGame.changeTurn();
         }
 
         if (STATUS_COMMAND.equals(movePositions.get(0))) {

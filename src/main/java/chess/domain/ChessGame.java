@@ -39,6 +39,7 @@ public class ChessGame {
 
         currentTurn.move(current, destination);
         chosenPiece.isMoved();
+        changeTurn();
     }
 
     private void validateMovable(final Position current, final Position destination, final Piece chosenPiece) {
@@ -66,7 +67,7 @@ public class ChessGame {
         return isEnd;
     }
 
-    public void changeTurn() {
+    private void changeTurn() {
         currentTurn = currentTurn.getEnemy();
     }
 
