@@ -31,6 +31,10 @@ public enum Direction {
     }
 
     public static Direction of(int x, int y) {
+        return getDirectionOrElseThrow(x, y);
+    }
+
+    private static Direction getDirectionOrElseThrow(int x, int y) {
         return Arrays.stream(Direction.values())
             .filter(direction -> direction.getXDegree() == x && direction.getYDegree() == y)
             .findFirst()
