@@ -8,8 +8,7 @@ import org.assertj.core.api.ThrowableAssert;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
+import static org.assertj.core.api.Assertions.*;
 
 class BlankTest {
     
@@ -30,8 +29,8 @@ class BlankTest {
         ThrowableAssert.ThrowingCallable callable = () -> blank.checkToMoveToTargetPosition(movePosition, board);
         
         // then
-        assertThatIllegalArgumentException().isThrownBy(callable)
-                                            .withMessage("해당 위치에는 기물이 존재하지 않습니다");
+        assertThatThrownBy(callable).isInstanceOf(UnsupportedOperationException.class)
+                                    .hasMessage("선택한 위치는 빈 칸입니다.");
     }
     
     @Test
