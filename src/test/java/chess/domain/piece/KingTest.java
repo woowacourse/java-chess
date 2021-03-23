@@ -60,7 +60,7 @@ public class KingTest {
         chessBoard.put(rookCurrent, whiteRook);
 
         final Position kingAfterCastling = Position.of("g1");
-        assertThat(whiteKing.isCastlingMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
+        assertThat(whiteKing.isMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
     }
 
     @Test
@@ -77,6 +77,6 @@ public class KingTest {
         chessBoard.put(rookCurrent, whiteRook);
 
         final Position kingAfterCastling = Position.of("c1");
-        assertThat(whiteKing.isCastlingMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
+        assertThat(whiteKing.isMovable(kingCurrent, kingAfterCastling, chessBoard)).isTrue();
     }
 }

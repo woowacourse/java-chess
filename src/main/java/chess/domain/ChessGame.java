@@ -21,6 +21,7 @@ public final class ChessGame {
 
     public void move(final Position current, final Position destination) {
         if (checkValidMove(current, destination)) {
+            makeSpecialMove(current, destination);
             currentTurnTeam.movePiece(current, destination);
             captureEnemy(destination);
             changeTurn();
@@ -31,33 +32,43 @@ public final class ChessGame {
 
     private boolean checkValidMove(final Position current, final Position destination) {
         final Piece chosenPiece = currentTurnTeam.choosePiece(current);
-        if (checkSpecialMove(chosenPiece, current, destination)) {
-            return true;
-        }
         return chosenPiece.isMovable(current, destination, generateChessBoard());
     }
 
-    private boolean checkSpecialMove(final Piece chosenPiece, final Position current, final Position destination) {
-        if (checkCastlingMove(chosenPiece, current, destination)) {
-            return true;
+    private void makeSpecialMove(final Position current, final Position destination) {
+        final Piece chosenPiece = currentTurnTeam.choosePiece(current);
+        if (chosenPiece.isKing() && chosenPiece.isFirstMove()) {
+            makeKingSideCastling(current, destination);
+            makeQueenSideCastling(current, destination);
         }
-        return checkPromotionMove(chosenPiece, current, destination);
+        if (chosenPiece.isPawn() && destination.isEndRank()) {
+            promote(current);
+        }
     }
 
-    private boolean checkCastlingMove(final Piece chosenPiece, final Position current, final Position destination) {
-        if (chosenPiece.isKing() && chosenPiece.isCastlingMovable(current, destination, generateChessBoard())) {
-            currentTurnTeam.moveCastlingRook(destination);
-            return true;
+    private void makeKingSideCastling(final Position kingCurrent, final Position kingDestination) {
+        if (kingCurrent.moveXandY(2, 0).equals(kingDestination)) {
+            final Position kingSideRook = kingDestination.moveXandY(1, 0);
+            makeCastling(kingSideRook, kingDestination);
         }
-        return false;
     }
 
-    private boolean checkPromotionMove(final Piece chosenPiece, final Position current, final Position destination) {
-        if (chosenPiece.isPawn() && chosenPiece.isPromotionMovable(current, destination, generateChessBoard())) {
-            currentTurnTeam.promotePiece(current);
-            return true;
+    private void makeQueenSideCastling(final Position kingCurrent, final Position kingDestination) {
+        if (kingCurrent.moveXandY(-2, 0).equals(kingDestination)) {
+            final Position queenSideRook = kingDestination.moveXandY(-2, 0);
+            makeCastling(queenSideRook, kingDestination);
         }
-        return false;
+    }
+
+    private void makeCastling(final Position castlingRook, final Position kingDestination) {
+        final Piece piece = currentTurnTeam.choosePiece(castlingRook);
+        if (piece.isRook() && piece.isFirstMove()) {
+            currentTurnTeam.moveCastlingRook(kingDestination);
+        }
+    }
+
+    private void promote(final Position current) {
+        currentTurnTeam.promotePiece(current);
     }
 
     public Map<Position, Piece> generateChessBoard() {

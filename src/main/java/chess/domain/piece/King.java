@@ -14,20 +14,8 @@ public final class King extends Piece {
     @Override
     public boolean isMovable(final Position current, final Position destination,
                              final Map<Position, Piece> chessBoard) {
-        return checkPositionRule(current, destination);
-    }
-
-    @Override
-    public boolean isCastlingMovable(final Position current, final Position destination,
-                                     final Map<Position, Piece> chessBoard) {
-        return checkKingSideCastlingRule(current, destination, chessBoard)
+        return checkPositionRule(current, destination) || checkKingSideCastlingRule(current, destination, chessBoard)
                 || checkQueenSideCastlingRule(current, destination, chessBoard);
-    }
-
-    @Override
-    public boolean isPromotionMovable(final Position current, final Position destination,
-                                      final Map<Position, Piece> chessBoard) {
-        return false;
     }
 
     @Override
