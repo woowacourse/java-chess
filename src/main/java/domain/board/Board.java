@@ -54,12 +54,14 @@ public class Board {
         return board.get(position);
     }
 
-    public void move(Position source, Position target) {
+    public boolean move(Position source, Position target) {
         Piece piece = board.getOrDefault(source, new EmptyPiece());
         if (piece.isNotEmpty() && piece.canMove(this, source, target)) {
             put(source, new EmptyPiece());
             put(target, piece);
+            return true;
         }
+        return false;
     }
 
     public void put(Position position, Piece piece) {
@@ -95,7 +97,8 @@ public class Board {
     private int rowAllyPawnCount(int column, boolean isBlack) {
         int count = (int) pieces(isBlack).entrySet()
             .stream()
-            .filter(entry -> entry.getValue().isPawn() && column == entry.getKey().getColumnDegree())
+            .filter(entry -> entry.getValue().isPawn()
+                && column == entry.getKey().getColumnDegree())
             .count();
 
         if (count >= 2) {

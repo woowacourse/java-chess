@@ -15,14 +15,10 @@ public class ChessController {
 
     public void run() {
         OutputView.printGameInformation();
-        try {
-            if (!InputView.command().equals(START_COMMAND)) {
-                throw new IllegalArgumentException();
-            }
-            startChessGame();
-        } catch (Exception e) {
-            run();
+        if (!InputView.command().equals(START_COMMAND)) {
+            throw new IllegalArgumentException();
         }
+        startChessGame();
     }
 
     private void startChessGame() {
@@ -30,16 +26,25 @@ public class ChessController {
         while (chessGame.isNotEnd()) {
             OutputView.printBoard(chessGame.getBoard());
             List<String> command = InputView.moveCommand();
-            if (command.get(0).equals(END_COMMAND)) {
+            if (!runCommand(chessGame, command)) {
                 return;
             }
-            if (command.get(0).equals(STATUS_COMMAND)) {
-                OutputView.printScore(chessGame.getBoard());
-            }
-            if (command.get(0).equals(MOVE_COMMAND)) {
-                chessGame.move(new Position(command.get(1)), new Position(command.get(2)));
-            }
         }
+        OutputView.printBoard(chessGame.getBoard());
     }
 
+    private boolean runCommand(ChessGame chessGame, List<String> command) {
+        if (command.get(0).equals(END_COMMAND)) {
+            return false;
+        }
+        if (command.get(0).equals(STATUS_COMMAND)) {
+            OutputView.printScore(chessGame.getBoard());
+            return true;
+        }
+        if (command.get(0).equals(MOVE_COMMAND)) {
+            chessGame.move(new Position(command.get(1)), new Position(command.get(2)));
+            return true;
+        }
+        return false;
+    }
 }

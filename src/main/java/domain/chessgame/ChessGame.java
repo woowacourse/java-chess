@@ -5,7 +5,7 @@ import domain.position.Position;
 
 public class ChessGame {
 
-    private final boolean isNotEnd;
+    private boolean isNotEnd;
     private final Board board;
 
     public ChessGame() {
@@ -15,7 +15,11 @@ public class ChessGame {
     }
 
     public void move(Position start, Position end) {
-        board.move(start, end);
+        boolean isKing = board.piece(end).isKing();
+        boolean isMoved = board.move(start, end);
+        if (isMoved && isKing) {
+            isNotEnd = false;
+        }
     }
 
     public boolean isNotEnd() {
