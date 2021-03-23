@@ -18,7 +18,7 @@ public enum Row {
 
     public static Row from(Character lineName) {
         return Arrays.stream(Row.values())
-                .filter(Row -> Row.lineName.equals(lineName.toString()))
+                .filter(row -> row.lineName.equals(lineName.toString()))
                 .findAny()
                 .orElseThrow(InvalidRowException::new);
     }
