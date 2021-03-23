@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class BoardSettingTest {
+class BoardDefaultSettingTest {
     private List<String> cellsStatus;
     private List<String> blackPiecesExceptPawns;
     private List<String> whitePiecesExceptPawns;
@@ -23,9 +23,9 @@ class BoardSettingTest {
         whitePiecesExceptPawns = Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r");
     }
 
-    @DisplayName("보드 기물 초기 세팅")
+    @DisplayName("보드 기본 세팅")
     @Test
-    void initialBoardPiecesSetting() {
+    void BoardDefaultSetting() {
         for (int i = 0; i < 8; i++) {
             String fileValue = File.values()[i].value();
 
