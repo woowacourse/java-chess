@@ -29,6 +29,21 @@ public final class Pawn extends Piece {
     }
 
     @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
+    }
+
+    @Override
     public boolean movable(final Position source, final Position target, final Piece piece) {
         final Direction direction = POSSIBLE_DIRECTIONS.stream()
                 .filter(possibleDirection -> possibleDirection.isSameDirection(subtractByTeam(source, target)))
@@ -47,13 +62,13 @@ public final class Pawn extends Piece {
 
     private boolean noAllyOnTarget(final Direction direction, final Piece piece, final Vertical vertical) {
         if (direction == Direction.NORTH) {
-            return piece instanceof Blank;
+            return piece.isBlank();
         }
         if (direction == Direction.NORTHEAST || direction == Direction.NORTHWEST) {
-            return piece.opposite(this);
+            return piece.opposite(this.team());
         }
         if (direction == Direction.INITIAL_PAWN_NORTH) {
-            return INITIAL_VERTICALS.contains(vertical.value()) && piece instanceof Blank;
+            return INITIAL_VERTICALS.contains(vertical.value()) && piece.isBlank();
         }
         return false;
     }

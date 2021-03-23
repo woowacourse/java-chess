@@ -26,4 +26,9 @@ public final class Knight extends GeneralPiece {
     public boolean multipleMovable() {
         return false;
     }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

@@ -17,6 +17,16 @@ public abstract class GeneralPiece extends Piece {
         return isPossibleDirection(source, target) && !friendly(piece.team());
     }
 
+    @Override
+    public boolean isBlank() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
     private boolean isPossibleDirection(final Position source, final Position target) {
         return possibleDirections.stream()
                 .anyMatch(possibleDirection -> possibleDirection.isSameDirection(target.subtract(source)));

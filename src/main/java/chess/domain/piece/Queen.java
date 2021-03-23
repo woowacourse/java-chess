@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Queen extends GeneralPiece {
+public final class Queen extends MultipleMovablePiece {
     private static final String INITIAL_NAME = "Q";
     private static final double SCORE = 9;
 
@@ -20,10 +20,5 @@ public final class Queen extends GeneralPiece {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public boolean multipleMovable() {
-        return true;
     }
 }

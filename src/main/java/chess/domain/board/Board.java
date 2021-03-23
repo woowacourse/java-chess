@@ -31,10 +31,9 @@ public final class Board {
     }
 
     private void validateRightTurn(final Position source, final Team team) {
-        if (chessBoard.get(source) instanceof Blank) {
-            return;
-        }
-        if (!chessBoard.get(source).friendly(team)) {
+        final Piece sourcePiece = chessBoard.get(source);
+
+        if (sourcePiece.opposite(team)) {
             throw new IllegalArgumentException("본인의 턴에 맞는 말을 움직이세요.");
         }
     }
@@ -72,7 +71,7 @@ public final class Board {
 
     private boolean hasNoPiecesInPath(final List<Position> paths) {
         return paths.stream()
-                .allMatch(path -> chessBoard.get(path) instanceof Blank);
+                .allMatch(path -> chessBoard.get(path).isBlank());
     }
 
     private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
@@ -86,7 +85,7 @@ public final class Board {
 
     public boolean isKingDead() {
         return chessBoard.values().stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .count() != 2;
     }
 }

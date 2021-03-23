@@ -18,8 +18,8 @@ public abstract class Piece {
         name = initialName.toLowerCase(Locale.ROOT);
     }
 
-    protected final boolean opposite(final Piece piece) {
-        return this.team == piece.team.oppositeTeam();
+    public final boolean opposite(final Team team) {
+        return this.team == team.oppositeTeam();
     }
 
     public final boolean friendly(final Team team) {
@@ -39,6 +39,12 @@ public abstract class Piece {
     public abstract double score();
 
     public abstract boolean multipleMovable();
+
+    public abstract boolean isBlank();
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 
     @Override
     public boolean equals(Object o) {

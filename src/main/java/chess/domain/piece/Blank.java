@@ -28,4 +28,19 @@ public final class Blank extends Piece {
     public boolean multipleMovable() {
         return false;
     }
+
+    @Override
+    public boolean isBlank() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
 }

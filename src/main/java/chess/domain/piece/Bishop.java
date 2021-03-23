@@ -3,7 +3,7 @@ package chess.domain.piece;
 import java.util.Arrays;
 import java.util.List;
 
-public final class Bishop extends GeneralPiece {
+public final class Bishop extends MultipleMovablePiece {
     private static final String INITIAL_NAME = "B";
     private static final double SCORE = 3;
 
@@ -19,10 +19,5 @@ public final class Bishop extends GeneralPiece {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public boolean multipleMovable() {
-        return true;
     }
 }

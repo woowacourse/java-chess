@@ -43,7 +43,7 @@ public final class ChessResult {
 
     private double pawnDiscountScore(final List<Piece> pieces) {
         long count = pieces.stream()
-                .filter(piece -> piece instanceof Pawn)
+                .filter(Piece::isPawn)
                 .count();
 
         if (count >= 2) {
@@ -63,7 +63,7 @@ public final class ChessResult {
 
     private Team kingSlayerTeam(Map<Position, Piece> chessBoard) {
         return chessBoard.values().stream()
-                .filter(piece -> piece instanceof King)
+                .filter(Piece::isKing)
                 .map(Piece::team)
                 .findFirst()
                 .orElseThrow(IllegalArgumentException::new);
