@@ -108,14 +108,14 @@ public class Board {
         return Winner.DRAW;
     }
 
-    private boolean isBlackKingDead() {
+    public boolean isBlackKingDead() {
         return !pieces
             .stream()
             .filter(Piece::isKing)
             .anyMatch(piece -> piece.isSameTeam(Team.BLACK));
     }
 
-    private boolean isWhiteKingDead() {
+    public boolean isWhiteKingDead() {
         return !pieces
             .stream()
             .filter(Piece::isKing)

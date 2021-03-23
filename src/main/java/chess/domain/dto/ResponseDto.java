@@ -1,65 +1,28 @@
 package chess.domain.dto;
 
-import chess.domain.team.Team;
-import chess.domain.team.Winner;
+public class ResponseDto<T> {
 
-public class ResponseDto {
+    private final T value;
+    private final ResponseType type;
 
-    private final char[][] board;
-    private final double blackScore;
-    private final double whiteScore;
-    private final Winner winner;
-
-    public static class Builder {
-        private char[][] board;
-        private double blackScore;
-        private double whiteScore;
-        private Winner winner;
-
-        public Builder(char[][] board) {
-            this.board = board;
-        }
-
-        public Builder blackScore(double blackScore) {
-            this.blackScore = blackScore;
-            return this;
-        }
-
-        public Builder whiteScore(double whiteScore) {
-            this.whiteScore = whiteScore;
-            return this;
-        }
-
-        public Builder winner(Winner winner) {
-            this.winner = winner;
-            return this;
-        }
-
-        public ResponseDto build() {
-            return new ResponseDto(this);
-        }
+    private ResponseDto(T value, ResponseType type) {
+        this.value = value;
+        this.type = type;
     }
 
-    private ResponseDto(Builder builder) {
-        this.board = builder.board;
-        this.blackScore = builder.blackScore;
-        this.whiteScore = builder.whiteScore;
-        this.winner = builder.winner;
+    public static <T extends BoardDto> ResponseDto<T> withBoard(T value) {
+        return new ResponseDto<>(value, ResponseType.BOARD);
     }
 
-    public char[][] getBoard() {
-        return board;
+    public static <T extends ScoreDto> ResponseDto<T> withScore(T value) {
+        return new ResponseDto<>(value, ResponseType.SCORE);
     }
 
-    public double getBlackScore() {
-        return blackScore;
+    public T getValue() {
+        return value;
     }
 
-    public double getWhiteScore() {
-        return whiteScore;
-    }
-
-    public Winner getWinner() {
-        return winner;
+    public ResponseType getType() {
+        return type;
     }
 }

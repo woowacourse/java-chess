@@ -1,8 +1,7 @@
 package chess.domain.gamestate.running;
 
-import static chess.utils.BoardUtil.generateViewBoard;
-
 import chess.domain.board.Board;
+import chess.domain.dto.BoardDto;
 import chess.domain.dto.ResponseDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
@@ -19,6 +18,9 @@ public class Move extends Running {
     @Override
     public State changeCommand(CommandType command) {
         validateCommand(command);
+        if (board.isAnyKingDead()) {
+            return new End(board);
+        }
         if (command == CommandType.STATUS) {
             return new Status(board);
         }
@@ -40,15 +42,12 @@ public class Move extends Running {
         Location source = Location.of(splittedInput[1]);
         Location target = Location.of(splittedInput[2]);
         board.move(source, target, currentTeam);
+
     }
 
     @Override
     public ResponseDto getProcessResult() {
-        return new ResponseDto.Builder(generateViewBoard(board))
-            .blackScore(-1)
-            .whiteScore(-1)
-            .winner(board.judgeWinner())
-            .build();
+        return ResponseDto.withBoard(BoardDto.from(board));
     }
 
     @Override

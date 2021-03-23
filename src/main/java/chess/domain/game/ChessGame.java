@@ -35,6 +35,7 @@ public class ChessGame {
     }
 
     public ResponseDto getProcessResult() {
+
         return state.getProcessResult();
     }
 }

@@ -12,7 +12,7 @@ public class ChessController {
         ChessGame game = new ChessGame();
         while (!game.isFinished()) {
             play(game);
-            processResult(game);
+            OutputView.printResult(game.getProcessResult());
         }
     }
 
@@ -23,12 +23,6 @@ public class ChessController {
         } catch (RuntimeException e) {
             OutputView.printExceptionMessage(e.getMessage());
             play(game);
-        }
-    }
-
-    private void processResult(ChessGame game) {
-        if (!game.isFinished()) {
-            OutputView.printResult(game.getProcessResult());
         }
     }
 }

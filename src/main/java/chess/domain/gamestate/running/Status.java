@@ -2,11 +2,11 @@ package chess.domain.gamestate.running;
 
 import chess.domain.board.Board;
 import chess.domain.dto.ResponseDto;
+import chess.domain.dto.ScoreDto;
 import chess.domain.gamestate.CommandType;
 import chess.domain.gamestate.State;
 import chess.domain.gamestate.finished.End;
 import chess.domain.team.Team;
-import chess.utils.BoardUtil;
 
 public class Status extends Running {
 
@@ -36,11 +36,7 @@ public class Status extends Running {
 
     @Override
     public ResponseDto getProcessResult() {
-        return new ResponseDto.Builder(BoardUtil.generateViewBoard(board))
-            .blackScore(board.score(Team.BLACK))
-            .whiteScore(board.score(Team.WHITE))
-            .winner(board.judgeWinner())
-            .build();
+        return ResponseDto.withScore(ScoreDto.of(board));
     }
 
     @Override

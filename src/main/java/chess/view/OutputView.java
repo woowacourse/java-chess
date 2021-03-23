@@ -1,6 +1,10 @@
 package chess.view;
 
+import chess.domain.dto.BoardDto;
 import chess.domain.dto.ResponseDto;
+import chess.domain.dto.ResponseType;
+import chess.domain.dto.ScoreDto;
+import chess.domain.team.Winner;
 import java.util.Arrays;
 
 public class OutputView {
@@ -18,15 +22,23 @@ public class OutputView {
     }
 
     public static void printResult(ResponseDto responseDto) {
-        char[][] board = responseDto.getBoard();
-        Arrays.stream(board)
-            .forEach(System.out::println);
-        double whiteScore = responseDto.getWhiteScore();
-        double blackScore = responseDto.getBlackScore();
-        String winner = responseDto.getWinner().getValue();
-        if (whiteScore != -1 && blackScore != -1) {
-            System.out.printf("검은색: %.1f점. 흰색: %.1f점. 승자: %s\n", blackScore, whiteScore, winner);
+        if (isBoardResponse(responseDto)) {
+            BoardDto boardDto = (BoardDto) responseDto.getValue();
+            Arrays.stream(boardDto.getValue())
+                .forEach(System.out::println);
+            System.out.println();
+            return;
         }
-        System.out.println();
+        ScoreDto scoreDto = (ScoreDto) responseDto.getValue();
+        double whiteScore = scoreDto.getWhiteScore();
+        double blackScore = scoreDto.getBlackScore();
+        Winner winner = scoreDto.getWinner();
+        System.out.println("화이트: " + whiteScore);
+        System.out.println("블랙: " + blackScore);
+        System.out.println("승자: " + winner.getValue());
+    }
+
+    private static boolean isBoardResponse(ResponseDto responseDto) {
+        return responseDto.getType() == ResponseType.BOARD;
     }
 }
