@@ -41,8 +41,10 @@ public final class Board {
 
     private boolean checkPath(final Position source, final Position target) {
         final List<Position> paths = pathPositions(source, target);
+        final Piece sourcePiece = chessBoard.get(source);
+
         if (paths.isEmpty()) {
-            return chessBoard.get(source).movable(source, target, chessBoard.get(target));
+            return sourcePiece.movable(source, target, chessBoard.get(target));
         }
         if (hasNoPiecesInPath(paths)) {
             return canPieceMoveToTarget(source, target, paths);
@@ -74,10 +76,12 @@ public final class Board {
     }
 
     private boolean canPieceMoveToTarget(final Position source, final Position target, final List<Position> paths) {
-        if (chessBoard.get(source).multipleMovable()) {
-            return chessBoard.get(source).movable(paths.get(paths.size() - 1), target, chessBoard.get(target));
+        final Piece sourcePiece = chessBoard.get(source);
+
+        if (sourcePiece.multipleMovable()) {
+            return sourcePiece.movable(paths.get(paths.size() - 1), target, chessBoard.get(target));
         }
-        return chessBoard.get(source).movable(source, target, chessBoard.get(target));
+        return sourcePiece.movable(source, target, chessBoard.get(target));
     }
 
     public boolean isKingDead() {
