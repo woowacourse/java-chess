@@ -13,6 +13,7 @@ import static chess.domain.piece.type.PieceWithColorType.W_PN;
 import static chess.domain.piece.type.PieceWithColorType.W_QN;
 import static chess.domain.piece.type.PieceWithColorType.W_RK;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.controller.dto.request.CommandRequestDTO;
@@ -24,7 +25,6 @@ import chess.domain.board.setting.BoardSetting;
 import chess.utils.PositionConverter;
 import java.util.Arrays;
 import java.util.List;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -35,13 +35,34 @@ class ChessGameTest {
     private static final String MOVE = "move";
     private static final String EMPTY_CELL_STATUS = ".";
 
-    private ChessGame chessGame;
-
-    @BeforeEach
-    void setUp() {
-        chessGame = new ChessGame(new BoardDefaultSetting());
+    @DisplayName("보드 기본 세팅 객체 주입 테스트")
+    @Test
+    void boardDefaultSettingInjection() {
+        assertThatCode(() -> new ChessGame(new BoardDefaultSetting()))
+            .doesNotThrowAnyException();
     }
 
+    @DisplayName("보드 Custom 세팅 객체 주입 테스트")
+    @Test
+    void boardCustomSettingInjection() {
+        assertThatCode(() -> new ChessGame(new BoardCustomSetting(Arrays.asList(
+            null, B_KG, B_RK, null, null, null, null, null,
+            B_PN, null, B_PN, B_BP, null, null, null, null,
+            null, B_PN, null, null, B_QN, null, null, null,
+            null, null, null, null, null, null, null, null,
+            null, null, null, null, null, W_NT, W_QN, null,
+            null, null, null, null, null, W_PN, null, W_PN,
+            null, null, null, null, null, W_PN, W_PN, null,
+            null, null, null, null, W_RK, null, null, null
+        )))).doesNotThrowAnyException();
+    }
+
+    @DisplayName("보드 세팅 객체 주입시, 타입 에러 테스트")
+    @Test
+    void boardSettingInjectionTypeError() {
+        assertThatThrownBy(() -> new ChessGame(null))
+            .isInstanceOf(IllegalArgumentException.class);
+    }
 
     @DisplayName("King이 잡혔는지 확인")
     @Nested
