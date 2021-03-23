@@ -1,13 +1,11 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.BishopStrategy;
-import chess.domain.piece.strategy.Direction;
 import java.util.List;
 
 public class Bishop extends Piece {
 
     public Bishop(PieceColor pieceColor) {
-        super(PieceType.BISHOP, pieceColor, new BishopStrategy());
+        super(PieceType.BISHOP, pieceColor);
     }
 
     @Override

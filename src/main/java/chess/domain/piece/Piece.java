@@ -1,8 +1,5 @@
 package chess.domain.piece;
 
-import chess.domain.piece.strategy.Direction;
-import chess.domain.piece.strategy.MoveStrategy;
-import chess.domain.position.Position;
 import chess.domain.result.Score;
 import java.util.List;
 
@@ -10,12 +7,10 @@ public abstract class Piece {
 
     protected PieceType pieceType;
     protected PieceColor pieceColor;
-    protected MoveStrategy moveStrategy;
 
-    protected Piece(PieceType pieceType, PieceColor pieceColor, MoveStrategy moveStrategy) {
+    protected Piece(PieceType pieceType, PieceColor pieceColor) {
         this.pieceType = pieceType;
         this.pieceColor = pieceColor;
-        this.moveStrategy = moveStrategy;
     }
 
     public abstract List<Direction> directions();
@@ -38,10 +33,6 @@ public abstract class Piece {
 
     public boolean isEnemy(Piece that) {
         return this.pieceColor.equals(that.pieceColor.reversed());
-    }
-
-    public boolean canMove(Position from, Position to){
-        return moveStrategy.canMove(from, to);
     }
 
     public boolean isEmpty() {

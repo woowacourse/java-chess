@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.piece.strategy.Direction;
+import chess.domain.piece.Direction;
 import java.util.Arrays;
 
 public enum Row {

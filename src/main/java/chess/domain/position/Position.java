@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.domain.piece.strategy.Direction;
+import chess.domain.piece.Direction;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -47,6 +47,10 @@ public class Position {
         }
     }
 
+    public static List<Position> positions() {
+        return new ArrayList<>(POSITION_CACHE.values());
+    }
+
     public boolean isWhitePawnStartLine() {
         return row.equals(Row.TWO);
     }
@@ -55,20 +59,8 @@ public class Position {
         return row.equals(Row.SEVEN);
     }
 
-    public boolean isStraight(Position that) {
-        return columnGap(that) == 0 || rowGap(that) == 0;
-    }
-
     public boolean isDiagonal(Position that) {
         return Math.abs(rowGap(that)) == Math.abs(columnGap(that));
-    }
-
-    public boolean isKnightPath(Position that) {
-        return diagonalDistance(that) == 5;
-    }
-
-    public double diagonalDistance(Position that){
-        return Math.pow(rowGap(that),2) + Math.pow(columnGap(that),2);
     }
 
     public int columnGap(Position that) {
@@ -105,12 +97,8 @@ public class Position {
         return row() > that.row();
     }
 
-    public boolean isLowerTo(Position that){
+    public boolean isLowerTo(Position that) {
         return row() < that.row();
-    }
-
-    public static List<Position> positions(){
-        return new ArrayList<>(POSITION_CACHE.values());
     }
 
     @Override

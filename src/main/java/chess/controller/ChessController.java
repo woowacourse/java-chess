@@ -12,8 +12,6 @@ public class ChessController {
         Game game = new Game();
         while (!game.isFinished()) {
             executeCommand(InputView.receiveInput(), game);
-            OutputView.printBoard(game.getBoard());
-            OutputView.printTurn(game.getTurn());
         }
         Result result = new Result(game.getBoard());
         OutputView.printWinner(result.findWinner());

@@ -3,7 +3,7 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThatIllegalArgumentException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import chess.domain.piece.strategy.Direction;
+import chess.domain.piece.Direction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

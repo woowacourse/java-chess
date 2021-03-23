@@ -49,15 +49,6 @@ public class Board {
         }
     }
 
-    public Path generatePath2(Piece piece) {
-        return new Path(Position.positions()
-            .stream()
-            .filter(position ->
-                piece.canMove(findPositionBy(piece), position))
-            .collect(Collectors.toList())
-        );
-    }
-
     public Path generatePath(Piece piece) {
         Paths paths = new Paths();
         paths = paths.findAllPath(piece, findPositionBy(piece));

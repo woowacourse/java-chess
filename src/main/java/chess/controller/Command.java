@@ -36,6 +36,8 @@ public enum Command {
         if (game.isRunning()) {
             throw new IllegalArgumentException(ALREADY_RUNNING_ERROR_MESSAGE);
         }
+        OutputView.printBoard(game.getBoard());
+        OutputView.printTurn(game.getTurn());
         game.changeState(new Running());
     }
 
@@ -44,6 +46,8 @@ public enum Command {
             throw new IllegalArgumentException(GAME_NOT_STARTED_ERROR_MESSAGE);
         }
         game.move(positionOf(input, SOURCE_POSITION), positionOf(input, TARGET_POSITION));
+        OutputView.printBoard(game.getBoard());
+        OutputView.printTurn(game.getTurn());
     }
 
     private static void end(String input, Game game) {
