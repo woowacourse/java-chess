@@ -57,11 +57,11 @@ public class Pawn extends Piece {
         if (oneSquareForward(rowDifference, columnDifference, direction)) {
             return true;
         }
-        return twoSquareForward(rowDifference, direction);
+        return twoSquareForward(rowDifference, columnDifference, direction);
     }
 
-    private boolean twoSquareForward(int rowDifference, int direction) {
-        return rowDifference == direction * DOUBLE_FORWARD && isInitPosition();
+    private boolean twoSquareForward(int rowDifference, int columnDifference, int direction) {
+        return rowDifference == direction * DOUBLE_FORWARD && isInitPosition() && columnDifference == PAWN_ROUTE_COUNT_ONE_FORWARD;
     }
 
     private boolean oneSquareForward(int rowDifference, int columnDifference, int direction) {
