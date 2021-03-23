@@ -18,4 +18,9 @@ public class Ready extends Idle {
         chessGame.changeState(new BlackTurn(chessGame));
     }
 
+    @Override
+    public State nextTurn() {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
 }

@@ -81,13 +81,13 @@ class PiecesTest {
                 Piece.createKing(Color.BLACK, 0, 0)
         ));
 
-        assertThat(pieces.isKingsExist()).isTrue();
+        assertThat(pieces.isCaughtKing()).isFalse();
 
         pieces = new Pieces(Collections.singletonList(
                 Piece.createKing(Color.WHITE, 0, 0)
         ));
 
-        assertThat(pieces.isKingsExist()).isFalse();
+        assertThat(pieces.isCaughtKing()).isTrue();
     }
 
 }

@@ -19,7 +19,7 @@ public class MoveCommand extends CommandInit {
         String[] inputs = input.split(" ");
 
         if (!isRightInputs(inputs)) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException("올바르지 않은 move 커맨드입니다.");
         }
 
         Position source = getPositionFromInput(inputs[1]);

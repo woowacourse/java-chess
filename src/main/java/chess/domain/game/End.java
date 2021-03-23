@@ -23,4 +23,9 @@ public class End extends Idle {
         return true;
     }
 
+    @Override
+    public State nextTurn() {
+        throw new UnsupportedOperationException("지원하지 않는 기능입니다.");
+    }
+
 }

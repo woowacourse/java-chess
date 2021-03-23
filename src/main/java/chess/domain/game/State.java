@@ -10,4 +10,6 @@ public interface State {
     void end();
 
     boolean isFinished();
+
+    State nextTurn();
 }

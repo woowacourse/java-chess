@@ -1,6 +1,7 @@
 package chess.domain.game;
 
 import chess.domain.board.Board;
+import chess.domain.piece.Color;
 import chess.domain.piece.Position;
 
 public class ChessGame {
@@ -21,6 +22,18 @@ public class ChessGame {
         state.move(source, target);
     }
 
+    public void moveAndCatchPiece(final Color color, final Position source, final Position target) {
+        board.movePiece(color, source, target);
+        board.catchPiece(color);
+
+        if (isCaughtKing()) {
+            changeState(new End(this));
+            return;
+        }
+
+        changeState(state.nextTurn());
+    }
+
     public void end() {
         state.end();
     }
@@ -33,8 +46,8 @@ public class ChessGame {
         return state.isFinished();
     }
 
-    public boolean isKingsExist() {
-        return board.isKingsExist();
+    public boolean isCaughtKing() {
+        return board.isCaughtKing();
     }
 
     public Board getBoard() {
@@ -48,4 +61,5 @@ public class ChessGame {
     public double getBlackScore() {
         return board.getBlackScore();
     }
+
 }
