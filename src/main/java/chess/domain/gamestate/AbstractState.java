@@ -9,9 +9,4 @@ public abstract class AbstractState implements State {
     public AbstractState(Board board) {
         this.board = board;
     }
-
-    @Override
-    public boolean isKingDead() {
-        return board.isAnyKingDead();
-    }
 }

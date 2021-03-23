@@ -7,8 +7,6 @@ public interface State {
 
     boolean isFinished();
 
-    boolean isKingDead();
-
     boolean isMove();
 
     State changeCommand(CommandType command);
