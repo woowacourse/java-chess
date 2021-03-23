@@ -47,6 +47,7 @@ public class Move extends Running {
         return new ResponseDto.Builder(generateViewBoard(board))
             .blackScore(-1)
             .whiteScore(-1)
+            .winner(board.judgeWinner())
             .build();
     }
 

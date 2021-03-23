@@ -39,6 +39,7 @@ public class Start extends Running {
         return new ResponseDto.Builder(BoardUtil.generateViewBoard(board))
             .whiteScore(-1)
             .blackScore(-1)
+            .winner(board.judgeWinner())
             .build();
     }
 

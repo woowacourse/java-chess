@@ -39,6 +39,7 @@ public class Status extends Running {
         return new ResponseDto.Builder(BoardUtil.generateViewBoard(board))
             .blackScore(board.score(Team.BLACK))
             .whiteScore(board.score(Team.WHITE))
+            .winner(board.judgeWinner())
             .build();
     }
 

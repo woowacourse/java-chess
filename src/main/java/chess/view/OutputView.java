@@ -23,8 +23,9 @@ public class OutputView {
             .forEach(System.out::println);
         double whiteScore = responseDto.getWhiteScore();
         double blackScore = responseDto.getBlackScore();
+        String winner = responseDto.getWinner().getValue();
         if (whiteScore != -1 && blackScore != -1) {
-            System.out.printf("검은색: %.1f점. 흰색: %.1f점\n", blackScore, whiteScore);
+            System.out.printf("검은색: %.1f점. 흰색: %.1f점. 승자: %s\n", blackScore, whiteScore, winner);
         }
         System.out.println();
     }
