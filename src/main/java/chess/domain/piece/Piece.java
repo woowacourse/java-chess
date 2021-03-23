@@ -99,6 +99,10 @@ public class Piece {
         return new Position(position.getRow(), position.getColumn());
     }
 
+    public boolean isPawn() {
+        return shape == Shape.PAWN;
+    }
+
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -109,10 +113,6 @@ public class Piece {
         if (color != piece.color) return false;
         if (shape != piece.shape) return false;
         return Objects.equals(position, piece.position);
-    }
-
-    public boolean isPawn() {
-        return shape == Shape.PAWN;
     }
 
     @Override

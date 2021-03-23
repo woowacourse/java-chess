@@ -9,9 +9,9 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 public class Pieces {
-
     private static final int COUNT_OF_KING = 2;
     private static final double PAWN_EXCEPTED_CONDITION_RATIO = 0.5;
+
     private final List<Piece> pieces;
 
     public Pieces(final List<Piece> pieces) {
@@ -33,7 +33,7 @@ public class Pieces {
 
     private Set<Map.Entry<Position, Long>> findDuplicatePosition() {
         return pieces.stream()
-                .collect(groupingBy(piece -> new Position(piece.getRow(), piece.getColumn()), counting()))
+                .collect(groupingBy(Piece::getPosition, counting()))
                 .entrySet();
     }
 
