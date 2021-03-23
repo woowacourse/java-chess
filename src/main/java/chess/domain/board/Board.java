@@ -23,7 +23,7 @@ public class Board {
 
     private final Map<Position, Square> board;
 
-    protected Board(Map<Position, Square> board) {
+    Board(Map<Position, Square> board) {
         this.board = board;
     }
 
