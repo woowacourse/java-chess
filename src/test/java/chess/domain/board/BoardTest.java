@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 import chess.domain.location.Location;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.team.Team;
 import chess.domain.team.Winner;

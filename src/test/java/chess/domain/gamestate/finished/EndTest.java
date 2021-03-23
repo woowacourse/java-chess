@@ -1,6 +1,5 @@
 package chess.domain.gamestate.finished;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 import chess.domain.board.Board;
