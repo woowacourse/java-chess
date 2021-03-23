@@ -56,7 +56,7 @@ public class BoardTest {
         final Position source = new Position(Vertical.B, Horizontal.TWO);
         final Position target = new Position(Vertical.B, Horizontal.THREE);
 
-        board.move(source, target);
+        board.movePiece(source, target);
 
         assertThat(board.of(source)).isInstanceOf(Empty.class);
         assertThat(board.of(target)).isInstanceOf(Pawn.class);

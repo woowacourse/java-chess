@@ -30,7 +30,7 @@ public class Board {
         return of(new Position(vertical, horizontal));
     }
 
-    public void move(final Position source, final Position target) {
+    public void movePiece(final Position source, final Position target) {
         if (!reachablePositions(source).contains(target)) {
             throw new IllegalArgumentException("해당 기물이 갈 수 있는 위치가 아닙니다.");
         }

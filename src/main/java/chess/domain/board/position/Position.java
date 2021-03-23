@@ -5,8 +5,6 @@ import chess.domain.piece.movement.Distance;
 
 import java.util.Objects;
 
-// XXX :: Position 캐싱하기
-
 public class Position {
     private final Vertical vertical;
     private final Horizontal horizontal;

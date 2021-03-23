@@ -3,9 +3,8 @@ package chess.domain.player;
 import chess.domain.board.Board;
 import chess.domain.board.BoardInitializer;
 import chess.domain.board.position.Position;
-import chess.domain.command.ShowCommand;
 import chess.domain.piece.Owner;
-import chess.manager.Status;
+import chess.domain.piece.Score;
 
 import java.util.Arrays;
 import java.util.List;
@@ -28,9 +27,17 @@ public class Players {
         this.turn = Turn.BLACK;
     }
 
-    public void move(final Position source, final Position target){
-        board.move(source, target);
+    public void move(final Position source, final Position target) {
+        checkIsKingDead(target);
+        board.movePiece(source, target);
         updatePositions(source, target);
+    }
+
+    private void checkIsKingDead(final Position target) {
+        if (board.getPieceOf(target).isKing()) {
+            final Player otherPlayer = players.get(turn.otherIndex());
+            otherPlayer.makeKingDead();
+        }
     }
 
     public void updatePositions(final Position source, final Position target) {
@@ -45,19 +52,6 @@ public class Players {
         this.turn = this.turn.change();
     }
 
-    public Status getStatus() {
-        final Player white = players.get(INDEX_OF_WHITE);
-        final Player black = players.get(INDEX_OF_BLACK);
-        return new Status(white.calculateScore(board), black.calculateScore(board));
-    }
-
-    public boolean isKingDead() {
-        return players.stream()
-                .filter(player -> player.isKingDead(board))
-                .findFirst()
-                .isPresent();
-    }
-
     public void validateTurn(final Position source) {
         final Player turnPlayer = players.get(turn.index());
 
@@ -68,5 +62,26 @@ public class Players {
 
     public List<Position> getReachablePositions(final Position source) {
         return board.getAblePositionsToMove(source);
+    }
+
+    public Score blackPlayerScore() {
+        final Player black = players.get(INDEX_OF_BLACK);
+        return black.calculateScore(board);
+    }
+
+    public Score whitePlayerScore() {
+        final Player white = players.get(INDEX_OF_WHITE);
+        return white.calculateScore(board);
+    }
+
+    public boolean isEnd() {
+        return players.stream()
+                .filter(player -> player.isEnd())
+                .findFirst()
+                .isPresent();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 }

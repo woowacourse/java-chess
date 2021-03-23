@@ -17,6 +17,8 @@ public enum PieceSymbol {
         this.symbol = symbol;
     }
 
+    // XXX :: Symbol을 어떻게 정의해주는게 좋을까
+
     public static String symbol(final Piece piece) {
         if (piece instanceof Empty) {
             return EMPTY.symbol;
