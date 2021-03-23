@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public class Queen extends Piece implements FlexibleDistanceMovable {
+public class Queen extends FlexibleDistancePiece {
 	public Queen(Color color, Position position) {
 		super(color, position);
 		this.type = Type.QUEEN;

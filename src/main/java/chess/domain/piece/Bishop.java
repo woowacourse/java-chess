@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public class Bishop extends Piece implements FlexibleDistanceMovable {
+public class Bishop extends FlexibleDistancePiece {
 	public Bishop(Color color, Position position) {
 		super(color, position);
 		this.type = Type.BISHOP;

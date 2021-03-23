@@ -5,7 +5,7 @@ import chess.domain.board.Position;
 
 import java.util.List;
 
-public class Knight extends Piece implements FixedDistanceMovable {
+public class Knight extends FixedDistancePiece {
 	public Knight(Color color, Position position) {
 		super(color, position);
 		this.type = Type.KNIGHT;
