@@ -9,9 +9,12 @@ public class Knight extends AbstractPiece {
     public static final Knight BLACK_INSTANCE = new Knight(Color.BLACK);
     public static final Knight WHITE_INSTANCE = new Knight(Color.WHITE);
     
-    private static final int MOVABLE_LENGTH = 1;
-    private static final DirectionGroup DIRECTION_GROUP = new DirectionGroup(Direction.knightDirection(),
-            MOVABLE_LENGTH);
+    private static final DirectionGroup DIRECTION_GROUP;
+    
+    static {
+        final int MOVABLE_LENGTH = 1;
+        DIRECTION_GROUP = new DirectionGroup(Direction.knightDirection(), MOVABLE_LENGTH);
+    }
     
     private static final String SYMBOL = "n";
     private static final double SCORE = 2.5;

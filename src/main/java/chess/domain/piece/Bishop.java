@@ -9,9 +9,12 @@ public class Bishop extends AbstractPiece {
     public static final Bishop BLACK_INSTANCE = new Bishop(Color.BLACK);
     public static final Bishop WHITE_INSTANCE = new Bishop(Color.WHITE);
     
-    private static final int MOVABLE_LENGTH = 7;
-    private static final DirectionGroup DIRECTION_GROUP
-            = new DirectionGroup(Direction.diagonalDirection(), MOVABLE_LENGTH);
+    private static final DirectionGroup DIRECTION_GROUP;
+    
+    static {
+        final int MOVABLE_LENGTH = 7;
+        DIRECTION_GROUP = new DirectionGroup(Direction.diagonalDirection(), MOVABLE_LENGTH);
+    }
     
     private static final String SYMBOL = "b";
     private static final double SCORE = 3;

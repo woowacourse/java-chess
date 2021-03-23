@@ -6,11 +6,14 @@ import chess.domain.position.MovePosition;
 
 public class Pawn extends AbstractPiece {
     
-    private static final int MOVABLE_LENGTH = 2;
-    public static final Pawn BLACK_INSTANCE
-            = new Pawn(Color.BLACK, new DirectionGroup(Direction.blackPawnDirection(), MOVABLE_LENGTH));
-    public static final Pawn WHITE_INSTANCE
-            = new Pawn(Color.WHITE, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
+    public static final Pawn BLACK_INSTANCE;
+    public static final Pawn WHITE_INSTANCE;
+    
+    static {
+        final int MOVABLE_LENGTH = 2;
+        BLACK_INSTANCE = new Pawn(Color.BLACK, new DirectionGroup(Direction.blackPawnDirection(), MOVABLE_LENGTH));
+        WHITE_INSTANCE = new Pawn(Color.WHITE, new DirectionGroup(Direction.whitePawnDirection(), MOVABLE_LENGTH));
+    }
     
     private static final String SYMBOL = "p";
     private static final double SCORE = 1;
