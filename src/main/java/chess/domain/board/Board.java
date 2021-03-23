@@ -30,8 +30,9 @@ public class Board {
         return board.get(position);
     }
 
-    public void movePiece(Position target, Position destination) {
+    public Team movePiece(Position target, Position destination, Team turnOwner) {
         Piece targetPiece = findPieceFromPosition(target);
+        checkTeamToPlayTurn(targetPiece, turnOwner);
         List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
         checkMovable(targetMovablePositions, destination);
         if (targetPiece.canMove(target, destination, this)) {
@@ -40,9 +41,16 @@ public class Board {
             loseScoreWhenDestinationIsPiece(destinationPiece);
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
-            return;
+            return targetPiece.getTeam();
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+    }
+
+    private void checkTeamToPlayTurn(Piece targetPiece, Team turnOwner) {
+        if (targetPiece.isSameTeam(turnOwner)) {
+            return;
+        }
+        throw new IllegalArgumentException("해당 팀의 순서가 아닙니다.");
     }
 
     private void loseScoreWhenDestinationIsPiece(Piece destinationPiece) {

@@ -28,7 +28,7 @@ class BoardTest {
     @DisplayName("기물 이동 수행")
     void movePieceTest() {
         board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
-                Position.of(Horizontal.A, Vertical.FOUR));
+                Position.of(Horizontal.A, Vertical.FOUR), Team.WHITE);
         assertThat(board.getBoard().get(Position.of(Horizontal.A, Vertical.TWO))).isNull();
         assertThat(board.getBoard().get(Position.of(Horizontal.A, Vertical.FOUR))).isInstanceOf(Pawn.class);
     }
@@ -38,7 +38,7 @@ class BoardTest {
     void movePieceExceptionTest() {
         assertThatThrownBy(() -> {
             board.movePiece(Position.of(Horizontal.A, Vertical.TWO),
-                    Position.of(Horizontal.A, Vertical.FIVE));
+                    Position.of(Horizontal.A, Vertical.FIVE), Team.WHITE);
         }).isInstanceOf(UnsupportedOperationException.class);
     }
 
@@ -51,12 +51,21 @@ class BoardTest {
     @Test
     @DisplayName("기물을 잃었을 때와 한 줄에 2개의 폰인 경우 점수 확인")
     void calculateScoreWhenPieceIsDead() {
-        board.movePiece(Position.of(Horizontal.B, Vertical.TWO), Position.of(Horizontal.B, Vertical.FOUR));
-        board.movePiece(Position.of(Horizontal.B, Vertical.FOUR), Position.of(Horizontal.B, Vertical.FIVE));
-        board.movePiece(Position.of(Horizontal.B, Vertical.FIVE), Position.of(Horizontal.B, Vertical.SIX));
-        board.movePiece(Position.of(Horizontal.B, Vertical.SIX), Position.of(Horizontal.C, Vertical.SEVEN));
+        board.movePiece(Position.of(Horizontal.B, Vertical.TWO), Position.of(Horizontal.B, Vertical.FOUR), Team.WHITE);
+        board.movePiece(Position.of(Horizontal.B, Vertical.FOUR), Position.of(Horizontal.B, Vertical.FIVE), Team.WHITE);
+        board.movePiece(Position.of(Horizontal.B, Vertical.FIVE), Position.of(Horizontal.B, Vertical.SIX), Team.WHITE);
+        board.movePiece(Position.of(Horizontal.B, Vertical.SIX), Position.of(Horizontal.C, Vertical.SEVEN), Team.WHITE);
 
         assertThat(board.calculateScore(Team.WHITE)).isEqualTo(37);
         assertThat(board.calculateScore(Team.BLACK)).isEqualTo(37);
+    }
+
+    @Test
+    @DisplayName("본인 팀의 순서가 아닐 때에 말을 옮기는 경우 확인")
+    void notTurnOwnerPlay() {
+        assertThatThrownBy(() -> {
+            board.movePiece(Position.of(Horizontal.B, Vertical.TWO),
+                    Position.of(Horizontal.B, Vertical.FOUR), Team.BLACK);
+        }).isInstanceOf(IllegalArgumentException.class);
     }
 }

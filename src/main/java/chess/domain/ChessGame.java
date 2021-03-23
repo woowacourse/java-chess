@@ -5,14 +5,16 @@ import chess.domain.piece.Team;
 
 public class ChessGame {
     private Board board;
+    private Team turnOwner;
 
     public void settingBoard() {
         board = BoardFactory.create();
+        turnOwner = Team.WHITE;
     }
 
     public void move(String target, String destination) {
-        board.movePiece(convertStringToPosition(target),
-                convertStringToPosition(destination));
+        turnOwner = board.movePiece(convertStringToPosition(target),
+                convertStringToPosition(destination), turnOwner);
     }
 
     public double status(Team team) {
