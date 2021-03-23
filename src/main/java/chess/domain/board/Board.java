@@ -22,7 +22,7 @@ public class Board {
     }
 
     public void movePiece(Color color, Position source, Position target) {
-        Piece sourcePiece = pieces.findPieceByPosition(color, source);
+        Piece sourcePiece = pieces.findControllablePieceByPosition(color, source);
 
         sourcePiece.move(target, this);
     }

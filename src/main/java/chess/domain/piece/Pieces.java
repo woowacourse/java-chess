@@ -18,22 +18,12 @@ public class Pieces {
         this.pieces = new ArrayList<>(pieces);
     }
 
-    public Piece findPieceByPosition(final Color color, final Position source) {
-        validateControllablePiece(color, source);
+    public Piece findControllablePieceByPosition(final Color color, final Position source) {
         return pieces.stream()
                 .filter(piece -> piece.isSamePosition(source))
+                .filter(piece -> piece.isSameColor(color))
                 .findAny()
                 .orElseThrow(NoSuchPermittedChessPieceException::new);
-    }
-
-    private void validateControllablePiece(final Color color, final Position source) {
-        Optional<Piece> sourcePiece = pieces.stream()
-                .filter(piece -> piece.isSamePosition(source))
-                .findAny();
-
-        if (!(sourcePiece.isPresent() && sourcePiece.get().getColor() == color)) {
-            throw new NoSuchPermittedChessPieceException();
-        }
     }
 
     public void catchPiece(final Color color) {
