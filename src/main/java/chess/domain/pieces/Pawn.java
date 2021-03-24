@@ -34,7 +34,7 @@ public final class Pawn extends Piece {
         addAttackablePositions(movablePositions, board);
         addMovablePositions(movablePositions, board, 1);
 
-        if (getPosition().isInitPositionByTeam(getTeam())) {
+        if (getPosition().isInitPawnPositionByTeam(getTeam())) {
             addMovablePositions(movablePositions, board, 2);
         }
         return movablePositions;

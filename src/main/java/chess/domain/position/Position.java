@@ -26,8 +26,11 @@ public final class Position {
         return this.col == col;
     }
 
-    public final boolean isInitPositionByTeam(final Team team) {
-        return team.isInitPawn(row);
+    public final boolean isInitPawnPositionByTeam(final Team team) {
+        if (Team.WHITE.equals(team)) {
+            return row == Row.getLocation("2");
+        }
+        return row == Row.getLocation("7");
     }
 
     public final int getRow() {
