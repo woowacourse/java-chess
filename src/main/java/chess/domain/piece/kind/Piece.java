@@ -22,15 +22,15 @@ public abstract class Piece {
 
     public abstract double score();
 
-    public boolean isSameTeam(Color color) {
+    public final boolean isSameTeam(Color color) {
         return color.isSameAs(this.color);
     }
 
-    public boolean isIncorrectTurn(Color color) {
+    public final boolean isIncorrectTurn(Color color) {
         return !color.isSameAs(this.color);
     }
 
-    public void validateRoute(Point source, Point target, Piece targetPiece) {
+    public final void validateRoute(Point source, Point target, Piece targetPiece) {
         checkCorrectDistance(source, target, targetPiece);
         checkCorrectDirection(Direction.findDirection(source, target));
     }
@@ -55,7 +55,7 @@ public abstract class Piece {
         return false;
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getName();
     }
 

@@ -9,7 +9,7 @@ import chess.domain.piece.Color;
 import chess.view.InputView;
 import chess.view.OutputView;
 
-public class ChessController {
+public final class ChessController {
     public static final String STATUS = "status";
     public static final String MOVE = "move";
     public static final String END = "end";

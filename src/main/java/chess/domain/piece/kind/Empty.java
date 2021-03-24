@@ -2,7 +2,7 @@ package chess.domain.piece.kind;
 
 import chess.domain.piece.Color;
 
-public class Empty extends Piece {
+public final class Empty extends Piece {
     private static final int EMPTY_SCORE = 0;
     private static final String EMPTY_PIECE_NAME = ".";
 

@@ -12,7 +12,7 @@ import chess.domain.piece.Color;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Piece;
 
-public class ChessGame {
+public final class ChessGame {
     private final Board board;
     private Color currentColor = WHITE;
 

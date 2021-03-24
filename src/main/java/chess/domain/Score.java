@@ -9,7 +9,7 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.kind.Piece;
 
-public class Score {
+public final class Score {
     private static final double OVERLAPPED_PAWN_SCORE = 0.5;
     private static final int PAWN_COUNT_THRESHOLD_TO_HALF_SCORE = 2;
 

@@ -8,7 +8,7 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.kind.Piece;
 
-public class OutputView {
+public final class OutputView {
     public static final String START = "start";
     public static final String END = "end";
     private static final String START_GUIDE_MESSAGE = "체스 게임을 시작합니다.";

@@ -9,7 +9,7 @@ import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
-public class Rook extends Piece {
+public final class Rook extends Piece {
     private static final int ROOK_SCORE = 5;
     private static final String ROOK_NAME = "r";
 

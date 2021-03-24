@@ -9,7 +9,7 @@ import chess.domain.piece.Direction;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Piece;
 
-public class Board {
+public final class Board {
     public static final int BOARD_SIZE = 8;
     private static final int KINGS_COUNT_TO_PLAY = 2;
 

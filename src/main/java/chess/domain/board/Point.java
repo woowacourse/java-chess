@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 import chess.domain.piece.Direction;
 
-public class Point {
+public final class Point {
     private static final int ASCII_CODE_GAP = 97;
     private static final int RANK_GAP = 8;
     private static final int RANK_INDEX = 1;
