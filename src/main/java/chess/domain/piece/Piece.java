@@ -3,56 +3,26 @@ package chess.domain.piece;
 import chess.domain.game.Side;
 import chess.domain.position.Position;
 import java.util.List;
-import java.util.Locale;
 
-public abstract class Piece {
+public interface Piece {
 
-    private final Side side;
-    private final String initial;
-    private boolean initPosition = true;
+    List<Position> route(Position from, Position to);
 
-    public Piece(Side side, String initial) {
-        this.side = side;
-        this.initial = initial;
-    }
+    boolean isBlank();
 
-    public abstract List<Position> route(Position from, Position to);
+    boolean isPawn();
 
-    protected abstract boolean movable(int rowDifference, int columnDifference);
+    boolean isKing();
 
-    protected abstract List<Position> getRoute(Position from, Position to);
+    double score();
 
-    public abstract boolean isBlank();
+    void moved();
 
-    public abstract boolean isPawn();
+    boolean isSideEqualTo(Side side);
 
-    public abstract boolean isKing();
+    boolean diagonal(Position from, Position to);
 
-    public abstract double score();
+    boolean forward(Position from, Position to);
 
-    public void moved() {
-        initPosition = false;
-    }
-
-    protected boolean isInitPosition() {
-        return initPosition;
-    }
-
-    public boolean isSideEqualTo(Side side) {
-        return this.side == side;
-    }
-
-    public abstract boolean diagonal(Position from, Position to);
-
-    public abstract boolean forward(Position from, Position to);
-
-    public final String getInitial() {
-        if (side == Side.WHITE) {
-            return initial.toLowerCase(Locale.ROOT);
-        }
-        if (side == Side.BLACK) {
-            return initial.toUpperCase(Locale.ROOT);
-        }
-        return initial;
-    }
+    String getInitial();
 }

@@ -6,14 +6,10 @@ import chess.exception.InvalidMethodCallException;
 import chess.exception.PieceDoesNotExistException;
 import java.util.List;
 
-public final class Blank extends Piece {
+public final class Blank implements Piece {
 
     private static final String INITIAL = ".";
     private static final Blank CACHED_BLANK = new Blank();
-
-    public Blank() {
-        super(Side.NONE, INITIAL);
-    }
 
     public static Blank getBlank() {
         return CACHED_BLANK;
@@ -21,16 +17,6 @@ public final class Blank extends Piece {
 
     @Override
     public List<Position> route(Position from, Position to) {
-        throw new PieceDoesNotExistException();
-    }
-
-    @Override
-    protected boolean movable(int rowDifference, int columnDifference) {
-        throw new PieceDoesNotExistException();
-    }
-
-    @Override
-    protected List<Position> getRoute(Position from, Position to) {
         throw new PieceDoesNotExistException();
     }
 
@@ -55,6 +41,16 @@ public final class Blank extends Piece {
     }
 
     @Override
+    public void moved() {
+        throw new PieceDoesNotExistException();
+    }
+
+    @Override
+    public boolean isSideEqualTo(Side side) {
+        return side == Side.NONE;
+    }
+
+    @Override
     public boolean diagonal(Position from, Position to) {
         throw new InvalidMethodCallException();
     }
@@ -62,5 +58,10 @@ public final class Blank extends Piece {
     @Override
     public boolean forward(Position from, Position to) {
         throw new InvalidMethodCallException();
+    }
+
+    @Override
+    public String getInitial() {
+        return INITIAL;
     }
 }
