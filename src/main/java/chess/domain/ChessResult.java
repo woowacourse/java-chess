@@ -8,18 +8,14 @@ import chess.domain.piece.Team;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public final class ChessResult {
-    private final Board board;
     private final Map<Position, Piece> chessBoard;
 
-    public ChessResult(final Board board) {
-        this.board = board;
-        this.chessBoard = board.unwrap();
+    public ChessResult(final Map<Position, Piece> chessBoard) {
+        this.chessBoard = new TreeMap<>(chessBoard);
     }
 
     public double totalScore(final Team team) {
@@ -31,7 +27,6 @@ public final class ChessResult {
     }
 
     private double columnTotalScore(final Team team, final Horizontal column) {
-        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
         final List<Piece> pieces = chessBoard.keySet().stream()
                 .filter(position -> position.horizontal().isSameValue(column))
                 .map(chessBoard::get)
@@ -55,8 +50,7 @@ public final class ChessResult {
     }
 
     public Team winner() {
-        final Map<Position, Piece> chessBoard = new TreeMap<>(board.unwrap());
-        if (board.isKingDead()) {
+        if (new Board(chessBoard).isKingDead()) {
             return kingSlayerTeam(chessBoard);
         }
 
@@ -79,5 +73,22 @@ public final class ChessResult {
             return Team.WHITE;
         }
         return Team.NOTHING;
+    }
+
+    public Map<String, Double> scoreResult() {
+        Map<String, Double> result = new LinkedHashMap<>();
+        if (winner().undefined()) {
+            Team team = winner().anyTeamExcludingThis();
+            result.put(team.teamName(), totalScore(team));
+            result.put(team.oppositeTeamName(), totalScore(team.oppositeTeam()));
+            return result;
+        }
+        result.put(winner().teamName(), totalScore(winner()));
+        result.put(winner().oppositeTeamName(), totalScore(winner().oppositeTeam()));
+        return result;
+    }
+
+    public boolean isTie() {
+        return winner().undefined();
     }
 }

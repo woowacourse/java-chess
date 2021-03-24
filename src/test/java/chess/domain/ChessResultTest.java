@@ -7,6 +7,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -19,7 +21,7 @@ class ChessResultTest {
     @BeforeEach
     void setUp() {
         chessBoard = new TreeMap<>(new Board().unwrap());
-        result = new ChessResult(new Board(chessBoard));
+        result = new ChessResult(chessBoard);
     }
 
     @Test
@@ -29,7 +31,7 @@ class ChessResultTest {
         assertThat(result.totalScore(team)).isEqualTo(38);
 
         chessBoard.put(new Position("a", "3"), new Pawn(Team.WHITE));
-        result = new ChessResult(new Board(chessBoard));
+        result = new ChessResult(chessBoard);
         assertThat(result.totalScore(team)).isEqualTo(38);
     }
 
@@ -39,11 +41,11 @@ class ChessResultTest {
         assertThat(result.winner()).isEqualTo(Team.NOTHING);
 
         chessBoard.put(new Position("a", "3"), new Rook(Team.WHITE));
-        result = new ChessResult(new Board(chessBoard));
+        result = new ChessResult(chessBoard);
         assertThat(result.winner()).isEqualTo(Team.WHITE);
 
         chessBoard.put(new Position("a", "4"), new Queen(Team.BLACK));
-        result = new ChessResult(new Board(chessBoard));
+        result = new ChessResult(chessBoard);
         assertThat(result.winner()).isEqualTo(Team.BLACK);
     }
 
@@ -51,7 +53,26 @@ class ChessResultTest {
     @DisplayName("왕 잡은 팀 확인 기능")
     void checkKingSlayer() {
         chessBoard.put(new Position("e", "8"), Blank.getInstance());
-        result = new ChessResult(new Board(chessBoard));
+        result = new ChessResult(chessBoard);
         assertThat(result.winner()).isEqualTo(Team.WHITE);
+    }
+
+    @Test
+    @DisplayName("무승부 확인 기능")
+    void isTie() {
+        assertThat(result.isTie()).isTrue();
+    }
+
+    @Test
+    @DisplayName("결과 점수 반환 기능")
+    void getResult() {
+        chessBoard.put(new Position("e", "8"), Blank.getInstance());
+        chessBoard.put(new Position("a", "1"), Blank.getInstance());
+        result = new ChessResult(chessBoard);
+
+        Map<String, Double> compareResult = new LinkedHashMap<>();
+        compareResult.put("white", 33.0);
+        compareResult.put("black", 38.0);
+        assertThat(result.scoreResult()).isEqualTo(compareResult);
     }
 }

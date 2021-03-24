@@ -1,16 +1,14 @@
 package chess.controller;
 
 import chess.domain.ChessResult;
-import chess.domain.Turn;
-import chess.domain.board.Board;
 import chess.domain.chessgame.ChessGame;
-import chess.domain.piece.Team;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
-import chess.exception.GameOverException;
 import chess.view.InputView;
 import chess.view.OutputView;
 
 import java.util.List;
+import java.util.Map;
 
 public class ChessController {
     public void runChess() {
@@ -23,7 +21,7 @@ public class ChessController {
         while (!game.isGameOver()) {
             proceed(game);
         }
-//        showResult(game.board());
+        showResult(game.board());
     }
 
     private void proceed(final ChessGame game) {
@@ -56,10 +54,11 @@ public class ChessController {
         return new Position(commands[0], commands[1]);
     }
 
-    private void showResult(final Board board) {
+    private void showResult(final Map<Position, Piece> board) {
         OutputView.printGameResultNotice();
         if (InputView.isStatusInput()) {
-            OutputView.printResult(new ChessResult(board));
+            ChessResult result = new ChessResult(board);
+            OutputView.printResult(result.scoreResult(), result.winner(), result.isTie());
         }
     }
 }

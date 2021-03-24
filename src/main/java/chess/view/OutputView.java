@@ -52,19 +52,19 @@ public class OutputView {
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
-    public static void printResult(final ChessResult result) {
-        final Team winner = result.winner();
-        if (winner.undefined()) {
+    public static void printResult(final Map<String, Double> result, Team winner, boolean isTie) {
+        if (isTie) {
             System.out.println("무승부입니다.");
-            printResultScores(winner.anyTeamExcludingThis(), result);
+            printResultScores(result);
             return;
         }
-        System.out.println(winner.teamName() + "이 승리하였습니다.");
-        printResultScores(winner, result);
+        System.out.println(winner.teamName() + "팀이 승리하였습니다.");
+        printResultScores(result);
     }
 
-    private static void printResultScores(final Team team, final ChessResult result) {
-        System.out.println(team.teamName() + "점수 : " + result.totalScore(team));
-        System.out.println(team.oppositeTeamName() + "점수 : " + result.totalScore(team.oppositeTeam()));
+    private static void printResultScores(Map<String, Double> result) {
+        for (String name : result.keySet()) {
+            System.out.println(name + "점수 : " + result.get(name));
+        }
     }
 }
