@@ -22,15 +22,19 @@ public class ChessGame {
     public void play(String input) {
         CommandType command = CommandType.from(input);
         State nextState = state.changeCommand(command);
-        if (command == CommandType.MOVE) {
-            nextState.processMove(input, currentTeam);
-            currentTeam = currentTeam.reverse();
-        }
+        commandMoveState(command, nextState, input);
 
         if (state.isFinished()) {
             state = state.changeCommand(CommandType.END);
         }
         state = nextState;
+    }
+
+    private void commandMoveState(CommandType command, State nextState, String input) {
+        if (command == CommandType.MOVE) {
+            nextState.processMove(input, currentTeam);
+            currentTeam = currentTeam.reverse();
+        }
     }
 
     public boolean isFinished() {

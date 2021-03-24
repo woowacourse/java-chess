@@ -67,20 +67,15 @@ public class Board {
     private double scoreExceptionPawn(Team team) {
         return pieces
             .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> !piece.isPawn())
+            .filter(piece -> piece.isSameTeam(team) && !piece.isPawn())
             .mapToDouble(piece -> piece.pieceScore().score())
             .sum();
     }
 
     private double scorePawn(Team team) {
-        Map<Integer, Long> frequencyPerX = pieces
-            .stream()
-            .filter(piece -> piece.isSameTeam(team))
-            .filter(piece -> piece.isPawn())
-            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()));
-
-        return frequencyPerX
+        return pieces.stream()
+            .filter(piece -> piece.isSameTeam(team) && piece.isPawn())
+            .collect(Collectors.groupingBy(Piece::getX, Collectors.counting()))
             .values()
             .stream()
             .mapToDouble(count -> count <= 1 ? count : count * 0.5)
