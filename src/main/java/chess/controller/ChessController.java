@@ -1,8 +1,8 @@
 package chess.controller;
 
 import chess.domain.board.ChessBoard;
-import chess.domain.board.Coordinate;
 import chess.domain.command.Command;
+import chess.domain.command.CommandRequest;
 import chess.domain.command.CommandTokens;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
@@ -32,35 +32,34 @@ public class ChessController {
 
     private Command inputFirstCommand() {
         InputView.printGameStartMessage();
-        CommandTokens commandTokens = new CommandTokens(InputView.inputPlayerCommand());
+        CommandTokens commandTokens = CommandTokens.from(InputView.inputPlayerCommand());
         return Command.findCommand(commandTokens.findMainCommandToken());
     }
 
     private void startChessGame() {
         Command command = Command.START;
-        while (command != Command.END && !chessBoard.isKingCheckmate()) {
-            CommandTokens commandTokens = new CommandTokens(InputView.inputPlayerCommand());
+        while (isPlayable(command)) {
+            CommandTokens commandTokens = CommandTokens.from(InputView.inputPlayerCommand());
             command = Command.findCommand(commandTokens.findMainCommandToken());
-            executeCommand(command, commandTokens);
+            CommandRequest commandRequest = new CommandRequest(teamType, commandTokens);
+            executeCommand(command, commandRequest);
             OutputView.printChessBoard(chessBoard);
         }
     }
 
-    private void executeCommand(Command command, CommandTokens commandTokens) {
+    private boolean isPlayable(Command command) {
+        return command != Command.END && !chessBoard.isKingCheckmate();
+    }
+
+    private void executeCommand(Command command, CommandRequest commandRequest) {
         if (command == Command.MOVE) {
-            executeMoveCommand(commandTokens);
+            command.execute(chessBoard, commandRequest);
+            teamType = teamType.findOppositeTeam();
             return;
         }
         if (command == Command.STATUS) {
-            Result result = chessBoard.calculateScores();
+            Result result = command.execute(chessBoard, commandRequest);
             OutputView.printScoreStatus(result);
         }
-    }
-
-    private void executeMoveCommand(CommandTokens commandTokens) {
-        Coordinate current = Coordinate.from(commandTokens.findCurrentCoordinateToken());
-        Coordinate destination = Coordinate.from(commandTokens.findDestinationCoordinateToken());
-        chessBoard.move(current, destination, teamType);
-        teamType = teamType.findOppositeTeam();
     }
 }
