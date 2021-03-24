@@ -98,9 +98,9 @@ public class ChessGame {
         return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
     }
 
-    public String winnerTeamColorKoreanName() {
+    public String winnerTeamColorName() {
         TeamColor teamColor = board.winnerTeamColor();
-        return teamColor.KoreanName();
+        return teamColor.getName();
     }
 
     public void changeCurrentTurnTeamColorToOpposite() {

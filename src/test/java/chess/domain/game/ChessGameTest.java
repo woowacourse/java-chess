@@ -191,7 +191,7 @@ class ChessGameTest {
             chessGame.start();
 
             String expectedWinnerTeamColorKoreanName = "흑";
-            assertThat(chessGame.winnerTeamColorKoreanName())
+            assertThat(chessGame.winnerTeamColorName())
                 .isEqualTo(expectedWinnerTeamColorKoreanName);
         }
 
@@ -213,7 +213,7 @@ class ChessGameTest {
             ChessGame chessGame = new ChessGame(customBoardSetting);
             chessGame.start();
 
-            assertThatThrownBy(chessGame::winnerTeamColorKoreanName)
+            assertThatThrownBy(chessGame::winnerTeamColorName)
                 .isInstanceOf(IllegalStateException.class);
         }
 
@@ -235,7 +235,7 @@ class ChessGameTest {
             ChessGame chessGame = new ChessGame(customBoardSetting);
             chessGame.start();
 
-            assertThatThrownBy(chessGame::winnerTeamColorKoreanName)
+            assertThatThrownBy(chessGame::winnerTeamColorName)
                 .isInstanceOf(IllegalStateException.class);
         }
     }

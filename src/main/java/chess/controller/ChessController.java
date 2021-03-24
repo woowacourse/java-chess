@@ -86,7 +86,7 @@ public class ChessController {
             = chessGameResponseDTO.getMoveResultResponseDTO();
         OutputView.printBoard(moveResultResponseDTO.getBoardStatusResponseDTO());
         if (moveResultResponseDTO.isKingDead()) {
-            OutputView.printWinnerTeamColor(moveResultResponseDTO.getWinnerTeamColor());
+            OutputView.printWinnerTeamColor(moveResultResponseDTO.getWinnerTeamColorName());
             return chessGameResponseDTO;
         }
         return chessGameResponseDTO;

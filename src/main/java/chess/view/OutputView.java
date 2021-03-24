@@ -39,7 +39,7 @@ public class OutputView {
         System.out.println();
     }
 
-    public static void printWinnerTeamColor(String winnerTeamColorKoreanName) {
-        System.out.println(winnerTeamColorKoreanName + " 팀이 이겼습니다.");
+    public static void printWinnerTeamColor(String winnerTeamColorName) {
+        System.out.println(winnerTeamColorName + " 팀이 이겼습니다.");
     }
 }

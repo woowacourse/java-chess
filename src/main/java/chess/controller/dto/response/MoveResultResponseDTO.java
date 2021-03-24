@@ -3,14 +3,14 @@ package chess.controller.dto.response;
 public class MoveResultResponseDTO {
     private final BoardStatusResponseDTO boardStatusResponseDTO;
     private final boolean isKingDead;
-    private final String winnerTeamColor;
+    private final String winnerTeamColorName;
 
     public MoveResultResponseDTO(BoardStatusResponseDTO boardStatusResponseDTO,
-        boolean isKingDead, String winnerTeamColor) {
+        boolean isKingDead, String winnerTeamColorName) {
 
         this.boardStatusResponseDTO = boardStatusResponseDTO;
         this.isKingDead = isKingDead;
-        this.winnerTeamColor = winnerTeamColor;
+        this.winnerTeamColorName = winnerTeamColorName;
     }
 
     public BoardStatusResponseDTO getBoardStatusResponseDTO() {
@@ -21,7 +21,7 @@ public class MoveResultResponseDTO {
         return isKingDead;
     }
 
-    public String getWinnerTeamColor() {
-        return winnerTeamColor;
+    public String getWinnerTeamColorName() {
+        return winnerTeamColorName;
     }
 }

@@ -24,12 +24,12 @@ public class ChessService {
         BoardStatusResponseDTO boardStatusResponseDTO
             = movePieceAndGetBoardStatusResponseDTO(commandRequestDTO);
         boolean isKingDead = chessGame.isKingDead();
-        String winnerTeamColorKoreanName = null;
+        String winnerTeamColorName = null;
         if (isKingDead) {
-            winnerTeamColorKoreanName = chessGame.winnerTeamColorKoreanName();
+            winnerTeamColorName = chessGame.winnerTeamColorName();
         }
         MoveResultResponseDTO moveResultResponseDTO = new MoveResultResponseDTO(
-            boardStatusResponseDTO, isKingDead, winnerTeamColorKoreanName);
+            boardStatusResponseDTO, isKingDead, winnerTeamColorName);
         return new ChessGameResponseDTO(moveResultResponseDTO);
     }
 

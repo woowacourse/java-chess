@@ -7,11 +7,11 @@ public enum TeamColor {
     BLACK("black", "흑");
 
     private final String value;
-    private final String koreanName;
+    private final String name;
 
-    TeamColor(String value, String koreanName) {
+    TeamColor(String value, String name) {
         this.value = value;
-        this.koreanName = koreanName;
+        this.name = name;
     }
 
     public static TeamColor of(String teamColorInput) {
@@ -28,7 +28,7 @@ public enum TeamColor {
         return WHITE;
     }
 
-    public String KoreanName() {
-        return koreanName;
+    public String getName() {
+        return name;
     }
 }
