@@ -5,6 +5,7 @@ import chess.domain.Position;
 import chess.domain.piece.Piece;
 import chess.domain.team.BlackTeam;
 import chess.domain.team.WhiteTeam;
+import chess.dto.PositionDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 import chess.view.PieceNameConverter;
@@ -55,27 +56,29 @@ public class ChessController {
     }
 
     private void printChessBoard(final ChessGame chessGame) {
-        final Map<Position, String> chessBoard = convertToBlackPrintName(chessGame);
+        final Map<PositionDto, String> chessBoard = convertToBlackPrintName(chessGame);
         chessBoard.putAll(convertToWhitePrintName(chessGame));
         OutputView.printChessBoard(chessBoard);
     }
 
-    private Map<Position, String> convertToBlackPrintName(final ChessGame chessGame) {
+    private Map<PositionDto, String> convertToBlackPrintName(final ChessGame chessGame) {
         final Map<Position, Piece> blackPosition = chessGame.getBlackTeam().getPiecePosition();
-        final Map<Position, String> blackPrintFormat = new HashMap<>();
+        final Map<PositionDto, String> blackPrintFormat = new HashMap<>();
         for (Position position : blackPosition.keySet()) {
             final Piece piece = blackPosition.get(position);
-            blackPrintFormat.put(position, PieceNameConverter.convert(piece).toUpperCase());
+            PositionDto positionDto = new PositionDto(position.getX(), position.getY());
+            blackPrintFormat.put(positionDto, PieceNameConverter.convert(piece).toUpperCase());
         }
         return blackPrintFormat;
     }
 
-    private Map<Position, String> convertToWhitePrintName(final ChessGame chessGame) {
+    private Map<PositionDto, String> convertToWhitePrintName(final ChessGame chessGame) {
         final Map<Position, Piece> whitePosition = chessGame.getWhiteTeam().getPiecePosition();
-        final Map<Position, String> whitePrintFormat = new HashMap<>();
+        final Map<PositionDto, String> whitePrintFormat = new HashMap<>();
         for (Position position : whitePosition.keySet()) {
             final Piece piece = whitePosition.get(position);
-            whitePrintFormat.put(position, PieceNameConverter.convert(piece).toLowerCase());
+            PositionDto positionDto = new PositionDto(position.getX(), position.getY());
+            whitePrintFormat.put(positionDto, PieceNameConverter.convert(piece).toLowerCase());
         }
         return whitePrintFormat;
     }
