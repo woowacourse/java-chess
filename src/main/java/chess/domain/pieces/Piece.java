@@ -3,6 +3,7 @@ package chess.domain.pieces;
 import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
+import chess.exception.InvalidMovePositionException;
 
 import java.util.List;
 import java.util.Locale;
@@ -57,7 +58,7 @@ public abstract class Piece {
 
     private void validateEndPoint(final Position endPoint, final List<Position> movablePositions) {
         if (!movablePositions.contains(endPoint)) {
-            throw new IllegalArgumentException("갈수 없는 위치입니다.");
+            throw new InvalidMovePositionException();
         }
     }
 

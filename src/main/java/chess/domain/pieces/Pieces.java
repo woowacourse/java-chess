@@ -1,6 +1,7 @@
 package chess.domain.pieces;
 
 import chess.domain.position.Position;
+import chess.exception.WrongMoveCommandException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +26,7 @@ public final class Pieces {
         return pieces.stream()
                 .filter(piece -> piece.samePosition(position))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("움직이려는 말이 본인의 말이 아닙니다."));
+                .orElseThrow(WrongMoveCommandException::new);
     }
 
     public final void removePieceByPosition(final Position position) {

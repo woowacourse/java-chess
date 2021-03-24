@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.pieces.Piece;
 import chess.domain.pieces.Pieces;
 import chess.domain.position.Position;
+import chess.exception.AnotherTeamTurnException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +25,16 @@ public final class Board {
 
     public final void move(final Position startPoint, final Position endPoint, final Team team) {
         Pieces pieces = board.get(team);
+        checkAnotherTeamTurn(startPoint, team);
         Piece startPointPiece = pieces.getPieceByPosition(startPoint);
         startPointPiece.move(this, endPoint);
+    }
+
+    private void checkAnotherTeamTurn(Position startPoint, Team team) {
+        Pieces anotherTeamPieces = board.get(Team.getAnotherTeam(team));
+        if (anotherTeamPieces.containByPosition(startPoint)) {
+            throw new AnotherTeamTurnException(team);
+        }
     }
 
     public final Pieces piecesByTeam(final Team team) {

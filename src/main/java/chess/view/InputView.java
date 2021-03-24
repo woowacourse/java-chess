@@ -1,5 +1,8 @@
 package chess.view;
 
+import chess.exception.InvalidCoordinateException;
+import chess.exception.WrongCommandException;
+
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -16,7 +19,7 @@ public final class InputView {
             validateCommand(command);
             return command;
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printError(e.getMessage());
             return getCommand();
         }
     }
@@ -29,13 +32,13 @@ public final class InputView {
 
     private static void validateCommand(final String command) {
         if (!Command.isValidateCommand(command)) {
-            throw new IllegalArgumentException("잘못된 커멘드 입력입니다.");
+            throw new WrongCommandException();
         }
     }
 
     private static void validatePoint(final String point) {
         if (point.length() != POINT_LENGTH) {
-            throw new IllegalArgumentException("잘못된 좌표 입니다.");
+            throw new InvalidCoordinateException();
         }
     }
 }

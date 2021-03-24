@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.exception.WrongInitPositionException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +21,7 @@ public final class King extends Piece {
 
     public static King of(final Team team, final int col) {
         if (col != INIT_COL) {
-            throw new IllegalArgumentException("잘못된 초기 위치입니다.");
+            throw new WrongInitPositionException();
         }
         return new King(team, getInitPosition(team, col));
     }

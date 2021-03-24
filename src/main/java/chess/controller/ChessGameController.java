@@ -41,7 +41,7 @@ public final class ChessGameController {
             interactiveCommand(command);
             printCurrentBoard(command);
         } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
+            OutputView.printError(e.getMessage());
         }
     }
 

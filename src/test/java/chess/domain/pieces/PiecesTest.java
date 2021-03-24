@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.position.Position;
+import chess.exception.WrongMoveCommandException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,7 +51,7 @@ class PiecesTest {
     void getPieceByPositionException() {
         assertThatThrownBy(
                 () -> pieces.getPieceByPosition(new Position(7, 7))
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(WrongMoveCommandException.class);
     }
 
     @Test

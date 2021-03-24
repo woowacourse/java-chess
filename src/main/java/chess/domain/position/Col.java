@@ -1,5 +1,7 @@
 package chess.domain.position;
 
+import chess.exception.InvalidCoordinateException;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -27,7 +29,7 @@ public enum Col {
         return Arrays.stream(Col.values())
                 .filter(value -> value.col.equals(col))
                 .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("갈 수 없는 좌표입니다."))
+                .orElseThrow(InvalidCoordinateException::new)
                 .location;
     }
 

@@ -75,4 +75,8 @@ public final class OutputView {
         printEachTeamScore(blackTeamScore, whiteTeamScore);
         System.out.println("승자는 " + winner.name() + "팀 입니다.");
     }
+
+    public static void printError(final String message) {
+        System.err.println(message);
+    }
 }

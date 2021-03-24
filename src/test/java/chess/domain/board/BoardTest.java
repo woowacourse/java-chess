@@ -5,6 +5,7 @@ import chess.domain.pieces.Pieces;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
+import chess.exception.AnotherTeamTurnException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -32,7 +33,7 @@ class BoardTest {
 
         assertThatThrownBy(
                 () -> board.move(startPoint, endPoint, Team.BLACK)
-        ).isInstanceOf(IllegalArgumentException.class);
+        ).isInstanceOf(AnotherTeamTurnException.class);
         board.move(startPoint, endPoint, Team.WHITE);
     }
 

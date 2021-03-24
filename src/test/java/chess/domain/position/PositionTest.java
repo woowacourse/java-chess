@@ -1,5 +1,6 @@
 package chess.domain.position;
 
+import chess.exception.NegativePositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,7 +25,7 @@ class PositionTest {
     void invalidRangeX(final int row) {
         int col = 2;
 
-        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(NegativePositionException.class);
     }
 
     @ParameterizedTest
@@ -33,6 +34,6 @@ class PositionTest {
     void invalidRangeY(final int col) {
         int row = 2;
 
-        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> new Position(row, col)).isInstanceOf(NegativePositionException.class);
     }
 }

@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
+import chess.exception.WrongInitPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -56,7 +57,7 @@ class KnightTest {
     @DisplayName("Knight 초기 col 위치가 b혹은 g가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"a", "c", "d", "e", "f", "h"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Knight.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Knight.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test

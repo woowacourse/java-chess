@@ -1,6 +1,7 @@
 package chess.domain.position;
 
 import chess.domain.Team;
+import chess.exception.NegativePositionException;
 
 import java.util.Objects;
 
@@ -17,7 +18,7 @@ public final class Position {
 
     private void validateRange(final int row, final int col) {
         if (row < RANGE_MIN_PIVOT || col < RANGE_MIN_PIVOT) {
-            throw new IllegalArgumentException("좌표에는 음수가 들어갈 수 없습니다.");
+            throw new NegativePositionException();
         }
     }
 

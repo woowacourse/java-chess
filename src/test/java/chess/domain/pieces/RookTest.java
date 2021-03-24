@@ -4,6 +4,7 @@ import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
+import chess.exception.WrongInitPositionException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -51,7 +52,7 @@ class RookTest {
     @DisplayName("Rook 초기 col 위치가 a혹은 h가 아니면, 예외가 발생한다.")
     @ValueSource(strings = {"b", "c", "d", "e", "f", "g"})
     void wrongInitColCheck(String col) {
-        assertThatThrownBy(() -> Rook.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(IllegalArgumentException.class);
+        assertThatThrownBy(() -> Rook.of(Team.BLACK, Col.getLocation(col))).isInstanceOf(WrongInitPositionException.class);
     }
 
     @Test
