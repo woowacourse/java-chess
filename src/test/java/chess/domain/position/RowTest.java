@@ -3,7 +3,7 @@ package chess.domain.position;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.exception.InvalidRowException;
+import chess.exception.PositionException;
 import java.util.stream.Stream;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -25,7 +25,7 @@ class RowTest {
     @ValueSource(chars = {'ㄱ', 'z', 'i', '0', '9'})
     void fromFail(Character input) {
         assertThatThrownBy(() -> Row.from(input))
-                .isInstanceOf(InvalidRowException.class);
+                .isInstanceOf(PositionException.class);
     }
 
     @ParameterizedTest(name = "해당 값만큼 떨어진 Row 반환")
@@ -48,7 +48,7 @@ class RowTest {
     @MethodSource("nextRowFailTestcase")
     void nextRowFail(Row sourceRow, int moveValue) {
         assertThatThrownBy(() -> sourceRow.nextRow(moveValue))
-                .isInstanceOf(InvalidRowException.class);
+                .isInstanceOf(PositionException.class);
     }
 
     private static Stream<Arguments> nextRowFailTestcase() {

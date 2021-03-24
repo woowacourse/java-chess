@@ -1,6 +1,6 @@
 package chess.domain.position;
 
-import chess.exception.InvalidRowException;
+import chess.exception.PositionException;
 import java.util.Arrays;
 
 public enum Row {
@@ -19,7 +19,7 @@ public enum Row {
         return Arrays.stream(Row.values())
                 .filter(row -> row.lineName.equals(lineName.toString()))
                 .findAny()
-                .orElseThrow(InvalidRowException::new);
+                .orElseThrow(() -> new PositionException("유효하지 않은 행입니다."));
     }
 
     public String getLineName() {
@@ -35,6 +35,6 @@ public enum Row {
         return Arrays.stream(Row.values())
                 .filter(row -> row.value == targetValue)
                 .findAny()
-                .orElseThrow(InvalidRowException::new);
+                .orElseThrow(() -> new PositionException("유효하지 않은 행입니다."));
     }
 }
