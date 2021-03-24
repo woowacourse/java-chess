@@ -11,8 +11,6 @@ import java.util.Map;
 public interface Board {
     Square findByPosition(Position position);
 
-    Map<Position, Square> board();
-
     MoveResult move(MoveOrder moveOrder);
     
     Map<Color, Double> getScoreMap();
