@@ -1,7 +1,10 @@
 package chess.domain.board;
 
 
-import chess.domain.piece.*;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Team;
 
 import java.util.*;
 
@@ -32,18 +35,31 @@ public class Board {
 
     public Team movePiece(Position target, Position destination, Team turnOwner) {
         Piece targetPiece = findPieceFromPosition(target);
+        checkTargetPieceNull(targetPiece);
         checkTeamToPlayTurn(targetPiece, turnOwner);
-        List<Position> targetMovablePositions = targetPiece.searchMovablePositions(target);
-        checkMovable(targetMovablePositions, destination);
+        checkMovable(targetPiece.searchMovablePositions(target), destination);
+
+        return movePieceIfPossible(targetPiece, target, destination);
+    }
+
+    private Team movePieceIfPossible(Piece targetPiece, Position target, Position destination) {
         if (targetPiece.canMove(target, destination, this)) {
             Piece destinationPiece = findPieceFromPosition(destination);
             exitWhenPieceIsKing(destinationPiece);
             loseScoreWhenDestinationIsPiece(destinationPiece);
+
             movePieceToPosition(targetPiece, destination);
             clearPosition(target);
+
             return targetPiece.getTeam();
         }
         throw new IllegalArgumentException("기물을 움직일 수 없습니다.");
+    }
+
+    private void checkTargetPieceNull(Piece piece) {
+        if (Objects.isNull(piece)) {
+            throw new IllegalArgumentException("입력한 시작 좌표에 기물이 존재하지 않습니다.");
+        }
     }
 
     private void checkTeamToPlayTurn(Piece targetPiece, Team turnOwner) {

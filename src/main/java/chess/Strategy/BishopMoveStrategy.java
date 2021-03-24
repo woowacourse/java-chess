@@ -1,6 +1,5 @@
 package chess.Strategy;
 
-import chess.domain.board.Board;
 import chess.domain.board.Horizontal;
 import chess.domain.board.Position;
 import chess.domain.board.Vertical;

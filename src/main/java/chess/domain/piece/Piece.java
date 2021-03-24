@@ -52,7 +52,7 @@ public abstract class Piece {
     }
 
     public boolean canPromotion(Position position) {
-        return score == 0 && position.isDeadLine();
+        return score == 1 && position.isDeadLine();
     }
 
     public String getName() {

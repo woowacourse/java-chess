@@ -2,6 +2,7 @@ package chess.domain.command;
 
 import chess.domain.ChessGame;
 import chess.domain.piece.Team;
+import chess.exception.NoSuchCommandException;
 import chess.view.OutputView;
 
 import java.util.Arrays;
@@ -29,7 +30,7 @@ public enum Command {
         return Arrays.stream(Command.values())
                 .filter(value -> input.matches(value.command))
                 .findAny()
-                .orElseThrow(() -> new IllegalArgumentException("해당 명령어를 찾지 못했습니다."));
+                .orElseThrow(NoSuchCommandException::new);
     }
 
     private static void status(ChessGame chessGame, String input) {
