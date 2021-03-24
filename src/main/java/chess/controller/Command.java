@@ -1,21 +1,17 @@
 package chess.controller;
 
-import chess.domain.ChessGame;
 import java.util.Arrays;
-import java.util.function.BiConsumer;
 
 public enum Command {
-    START("start", ChessController::start),
-    END("end", ChessController::end),
-    MOVE("move", ChessController::move),
-    STATUS("status", ChessController::status);
+    START("start"),
+    END("end"),
+    MOVE("move"),
+    STATUS("status");
 
     private final String command;
-    BiConsumer<ChessGame, String> function;
 
-    Command(String command, BiConsumer<ChessGame, String> function) {
+    Command(String command) {
         this.command = command;
-        this.function = function;
     }
 
     public static Command of(String input) {
@@ -23,9 +19,5 @@ public enum Command {
             .filter(value -> input.equals(value.command))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("[ERROR] 잘못된 명령어 입니다."));
-    }
-
-    public void apply(ChessGame chessGame, String command) {
-        function.accept(chessGame, command);
     }
 }

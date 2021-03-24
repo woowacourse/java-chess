@@ -31,11 +31,11 @@ public class ChessController {
         }
     }
 
-    public static void end(ChessGame chessGame, String command) {
+    public static void end(ChessGame chessGame) {
         chessGame.endGame();
     }
 
-    public static void status(ChessGame chessGame, String command) {
+    public static void status(ChessGame chessGame) {
         if (chessGame.isReady()) {
             throw new IllegalArgumentException("[ERROR] 게임이 초기화되지 않았습니다.");
         }
@@ -49,10 +49,25 @@ public class ChessController {
             try {
                 String inputCmd = InputView.inputCommand();
                 Command command = Command.of(splitCommand(inputCmd));
-                command.apply(chessGame, inputCmd);
+                applyCommand(chessGame, command, inputCmd);
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
             }
+        }
+    }
+
+    private void applyCommand(ChessGame chessGame, Command command, String inputCmd) {
+        if(command == Command.START) {
+            start(chessGame);
+        }
+        if(command == Command.MOVE) {
+            move(chessGame, inputCmd);
+        }
+        if(command == Command.STATUS) {
+            status(chessGame);
+        }
+        if(command == Command.END) {
+            end(chessGame);
         }
     }
 
