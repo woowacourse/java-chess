@@ -24,55 +24,59 @@ public abstract class Piece {
         this.pieceMoving = pieceMoving;
     }
 
-    public void updateMovablePositions(List<Position> existPiecePositions, List<Position> enemiesPositions) {
+    public final void updateMovablePositions(List<Position> existPiecePositions, List<Position> enemiesPositions) {
         pieceMoving.updateMovablePositions(existPiecePositions, enemiesPositions);
     }
 
-    public void move(Position targetPosition) throws ImpossibleMoveException {
+    public final void move(Position targetPosition) throws ImpossibleMoveException {
         pieceMoving.move(targetPosition);
     }
 
-    public Position currentPosition() {
+    public final Position currentPosition() {
         return pieceMoving.currentPosition();
     }
 
-    public boolean isSamePosition(Position position) {
+    public final boolean isSamePosition(Position position) {
         return pieceMoving.isSamePosition(position);
     }
 
-    public int row() {
+    public final int row() {
         return pieceMoving.row();
     }
 
-    public List<Position> movablePositions() {
+    public final List<Position> movablePositions() {
         return pieceMoving.movablePositions();
     }
 
-    public boolean sameColor(TeamColor teamColor) {
+    public final boolean sameColor(TeamColor teamColor) {
         return this.teamColor.isSameColor(teamColor);
     }
 
-    public boolean notSameColor(TeamColor teamColor) {
+    public final boolean notSameColor(TeamColor teamColor) {
         return this.teamColor.isNotSameColor(teamColor);
     }
 
-    public TeamColor enemyColor() {
+    public final TeamColor enemyColor() {
         return teamColor.reverse();
     }
 
-    public TeamColor teamColor() {
+    public final TeamColor teamColor() {
         return teamColor;
     }
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return false;
+    }
 
-    public abstract boolean isKing();
+    public boolean isKing() {
+        return false;
+    }
 
-    public Score score() {
+    public final Score score() {
         return score;
     }
 
-    public String name() {
+    public final String name() {
         if (teamColor == WHITE) {
             return name;
         }

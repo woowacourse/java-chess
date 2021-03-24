@@ -11,14 +11,4 @@ public class Rook extends Piece {
     public Rook(TeamColor teamColor, Position position) {
         super("r", teamColor, Score.from(5), new RookMoving(new RookDirections(), position));
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

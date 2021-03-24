@@ -11,14 +11,4 @@ public class Queen extends Piece {
     public Queen(TeamColor teamColor, Position position) {
         super("q", teamColor, Score.from(9), new QueenMoving(new QueenDirections(), position));
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

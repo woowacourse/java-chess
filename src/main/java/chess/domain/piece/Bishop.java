@@ -11,14 +11,4 @@ public class Bishop extends Piece {
     public Bishop(TeamColor teamColor, Position position) {
         super("b", teamColor, Score.from(3), new BishopMoving(new BishopDirections(), position));
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }

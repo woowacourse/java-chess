@@ -11,12 +11,6 @@ public class King extends Piece {
     public King(TeamColor teamColor, Position position) {
         super("k", teamColor, Score.from(0), new KingMoving(new KingDirections(), position));
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
     @Override
     public boolean isKing() {
         return true;

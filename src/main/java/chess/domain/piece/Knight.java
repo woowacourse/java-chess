@@ -11,14 +11,4 @@ public class Knight extends Piece {
     public Knight(TeamColor teamColor, Position position) {
         super("n", teamColor, Score.from(2.5), new KnightMoving(new KnightDirections(), position));
     }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
 }
