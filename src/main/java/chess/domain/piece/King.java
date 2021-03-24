@@ -10,4 +10,13 @@ public class King extends Piece {
         super(KING_NAME, team, SCORE, new KingMoveStrategy());
     }
 
+    @Override
+    public boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }

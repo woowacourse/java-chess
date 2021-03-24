@@ -7,6 +7,17 @@ public class Pawn extends Piece {
     private static final double SCORE = 1;
 
     public Pawn(Team team) {
+
         super(PAWN_NAME, team, SCORE, new PawnMoveStrategy(team));
+    }
+
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return true;
     }
 }

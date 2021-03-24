@@ -10,4 +10,13 @@ public class Rook extends Piece {
         super(ROOK_NAME, team, SCORE, new RookMoveStrategy());
     }
 
+    @Override
+    public boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public boolean isPawn() {
+        return false;
+    }
 }
