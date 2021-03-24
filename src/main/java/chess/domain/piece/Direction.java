@@ -2,9 +2,8 @@ package chess.domain.piece;
 
 import java.util.Arrays;
 
-import chess.domain.board.Column;
 import chess.domain.board.Point;
-import chess.domain.board.Row;
+import chess.domain.board.PositionValue;
 
 public enum Direction {
     NORTH(-1, 0),
@@ -16,12 +15,12 @@ public enum Direction {
     WEST(0, -1),
     NORTH_WEST(-1, -1);
 
-    private final Row rowDirection;
-    private final Column columnDirection;
+    private final PositionValue rowDirection;
+    private final PositionValue columnDirection;
 
     Direction(int rowDirection, int columnDirection) {
-        this.rowDirection = new Row(rowDirection);
-        this.columnDirection = new Column(columnDirection);
+        this.rowDirection = new PositionValue(rowDirection);
+        this.columnDirection = new PositionValue(columnDirection);
     }
 
     public static Direction findDirection(Point source, Point target) {
@@ -47,11 +46,11 @@ public enum Direction {
         return Integer.compare(difference, 0);
     }
 
-    public int addCurrentRow(Row row) {
+    public int addCurrentRow(PositionValue row) {
         return rowDirection.add(row);
     }
 
-    public int addCurrentColumn(Column column) {
+    public int addCurrentColumn(PositionValue column) {
         return columnDirection.add(column);
     }
 }

@@ -4,8 +4,8 @@ import static chess.domain.board.Board.*;
 
 import java.util.Map;
 
-import chess.domain.board.Column;
 import chess.domain.board.Point;
+import chess.domain.board.PositionValue;
 import chess.domain.piece.Color;
 import chess.domain.piece.kind.Piece;
 
@@ -31,9 +31,9 @@ public final class Score {
     private double calculatePawnScore(Map<Point, Piece> board, Color color) {
         int pawnCountInColumn = 0;
         for (int i = 0; i < BOARD_SIZE; i++) {
-            Column column = new Column(i);
+            PositionValue columnValue = new PositionValue(i);
             long columnPawnCount = board.keySet().stream()
-                .filter(point -> point.isSameColumn(column))
+                .filter(point -> point.isSameColumn(columnValue))
                 .map(board::get)
                 .filter(piece -> piece.isSameTeam(color))
                 .filter(Piece::isPawn)

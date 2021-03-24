@@ -7,7 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import chess.domain.board.Point;
-import chess.domain.board.Row;
+import chess.domain.board.PositionValue;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
@@ -52,11 +52,11 @@ public final class Pawn extends Piece {
     }
 
     private boolean isInitialWhitePawn(Point point) {
-        return this.color.equals(WHITE) && point.isSameRow(new Row(INITIAL_WHITE_PAWN_ROW));
+        return this.color.equals(WHITE) && point.isSameRow(new PositionValue(INITIAL_WHITE_PAWN_ROW));
     }
 
     private boolean isInitialBlackPawn(Point point) {
-        return this.color.equals(BLACK) && point.isSameRow(new Row(INITIAL_BLACK_PAWN_ROW));
+        return this.color.equals(BLACK) && point.isSameRow(new PositionValue(INITIAL_BLACK_PAWN_ROW));
     }
 
     @Override

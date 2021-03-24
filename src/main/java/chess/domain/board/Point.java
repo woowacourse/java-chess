@@ -33,12 +33,12 @@ public final class Point {
             .collect(Collectors.toList());
     }
 
-    private final Row row;
-    private final Column column;
+    private final PositionValue row;
+    private final PositionValue column;
 
     private Point(char letter, int rank) {
-        row = new Row(convertRankToIndex(rank));
-        column = new Column(convertLetterToIndex(letter));
+        row = new PositionValue(convertRankToIndex(rank));
+        column = new PositionValue(convertLetterToIndex(letter));
     }
 
     public static Point valueOf(int row, int column) {
@@ -84,11 +84,11 @@ public final class Point {
         return valueOf(direction.addCurrentRow(this.row), direction.addCurrentColumn(this.column));
     }
 
-    public boolean isSameRow(Row row) {
+    public boolean isSameRow(PositionValue row) {
         return this.row.equals(row);
     }
 
-    public boolean isSameColumn(Column column) {
+    public boolean isSameColumn(PositionValue column) {
         return this.column.equals(column);
     }
 
