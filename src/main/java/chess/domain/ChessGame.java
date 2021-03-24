@@ -45,8 +45,8 @@ public final class ChessGame {
         return WHITE;
     }
 
-    public boolean isNotEnd() {
-        return board.hasBothKings();
+    public boolean isEnd() {
+        return !board.hasBothKings();
     }
 
     public Score calculateScore(Color color) {

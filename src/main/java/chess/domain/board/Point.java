@@ -50,7 +50,7 @@ public final class Point {
 
     private static Point of(char letter, int rank) {
         return points.stream()
-            .filter(p -> p.column.isSameAs(convertLetterToIndex(letter)) && p.row.isSameAs(convertRankToIndex(rank)))
+            .filter(point -> point.column.isSameAs(convertLetterToIndex(letter)) && point.row.isSameAs(convertRankToIndex(rank)))
             .findFirst()
             .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
     }
@@ -64,11 +64,11 @@ public final class Point {
     }
 
     public int calculateDistance(Point point) {
-        return (makeDoubleNumber(this.column.subtract(point.column)) + makeDoubleNumber(this.row.subtract(point.row)));
+        return makeDoubleNumber(this.column.subtract(point.column)) + makeDoubleNumber(this.row.subtract(point.row));
     }
 
     private int makeDoubleNumber(int subtract) {
-        return (int)Math.pow(subtract, 2);
+        return (int) Math.pow(subtract, 2);
     }
 
     public Direction makeDirection(Point point) {

@@ -34,25 +34,20 @@ public final class ChessController {
     private void playChessGame() {
         ChessGame chessGame = new ChessGame();
         OutputView.printBoard(chessGame);
-        while (chessGame.isNotEnd() && isPlayingInput(chessGame))
-            ;
+        while (true) {
+            if(chessGame.isEnd() || isFinished(chessGame)) {
+                break;
+            }
+        }
         OutputView.noticeGameFinished();
     }
 
-    private boolean isPlayingInput(ChessGame chessGame) {
+    private boolean isFinished(ChessGame chessGame) {
         try {
             return isCorrectInput(chessGame, makeInput());
         } catch (IllegalArgumentException e) {
             OutputView.printError(e.getMessage());
             return isCorrectInput(chessGame, makeInput());
-        }
-    }
-
-    private boolean isCorrectInput(ChessGame chessGame, List<String> input) {
-        try {
-            return makeScoreOrMove(chessGame, input);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException(e.getMessage());
         }
     }
 
@@ -65,25 +60,38 @@ public final class ChessController {
         }
     }
 
-    private boolean makeScoreOrMove(ChessGame chessGame, List<String> userInput) {
-        if (userInput.get(0).equals(END)) {
-            return false;
+    private boolean isCorrectInput(ChessGame chessGame, List<String> input) {
+        try {
+            return isEndInput(chessGame, input);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage());
         }
-        if (userInput.get(0).equals(STATUS)) {
-            Score blackScore = chessGame.calculateScore(Color.BLACK);
-            OutputView.printScore(Color.BLACK, blackScore);
-            Score whiteScore = chessGame.calculateScore(Color.WHITE);
-            OutputView.printScore(Color.WHITE, whiteScore);
-            OutputView.printWinner(blackScore.biggerScoreColor(whiteScore));
+    }
+
+    private boolean isEndInput(ChessGame chessGame, List<String> userInput) {
+        String action = userInput.get(0);
+        if (END.equals(action)) {
+            return true;
         }
-        if (userInput.get(0).equals(MOVE)) {
+        if (STATUS.equals(action)) {
+            showScore(chessGame);
+        }
+        if (MOVE.equals(action)) {
             move(chessGame, userInput);
             OutputView.printBoard(chessGame);
         }
-        if (userInput.get(0).equals(START)) {
+        if (START.equals(action)) {
             playChessGame();
         }
-        return true;
+        return false;
+    }
+
+    private void showScore(ChessGame chessGame) {
+        Score blackScore = chessGame.calculateScore(Color.BLACK);
+        OutputView.printScore(Color.BLACK, blackScore);
+        Score whiteScore = chessGame.calculateScore(Color.WHITE);
+        OutputView.printScore(Color.WHITE, whiteScore);
+        OutputView.printWinner(blackScore.biggerScoreColor(whiteScore));
     }
 
     private void move(ChessGame chessGame, List<String> userInput) {

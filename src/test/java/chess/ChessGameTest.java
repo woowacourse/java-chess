@@ -14,10 +14,10 @@ public class ChessGameTest {
         assertDoesNotThrow(ChessGame::new);
     }
 
-    @DisplayName("게임 진행 시 isNotEnd 참 확인")
+    @DisplayName("게임 진행 시 isEnd 거짓 확인")
     @Test
     void isPlaying() {
         ChessGame chessGame = new ChessGame();
-        assertTrue(chessGame.isNotEnd());
+        assertFalse(chessGame.isEnd());
     }
 }
