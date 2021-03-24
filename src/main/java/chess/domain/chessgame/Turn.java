@@ -6,8 +6,8 @@ public class Turn {
 
     private Team currentTeam;
 
-    public Turn(Team firstTeam) {
-        this.currentTeam = firstTeam;
+    public Turn(Team currentTeam) {
+        this.currentTeam = currentTeam;
     }
 
     public Team now() {
