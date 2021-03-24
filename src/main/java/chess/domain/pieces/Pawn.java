@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.move.PawnMove;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 
@@ -14,7 +15,7 @@ public final class Pawn extends Piece {
     private static final double SCORE = 1.0;
 
     public Pawn(final Team team, final Position position) {
-        super(position, "P", team, SCORE);
+        super(position, "P", team, SCORE, new PawnMove());
     }
 
     public static Pawn of(final Team team, final int col) {
@@ -62,44 +63,22 @@ public final class Pawn extends Piece {
     private void addAttackablePositions(final List<Position> movablePositions, final Board board) {
         Team myTeam = getTeam();
         if (myTeam.equals(Team.WHITE)) {
-            addWhiteTeamAttackPosition(movablePositions, board);
+            movablePositions.addAll(addWhiteTeamAttackPosition(board));
             return;
         }
-        addBlackTeamAttackPosition(movablePositions, board);
+        movablePositions.addAll(addBlackTeamAttackPosition(board));
     }
 
-    private void addBlackTeamAttackPosition(final List<Position> movablePositions, final Board board) {
+    private List<Position> addBlackTeamAttackPosition(final Board board) {
         int[] rowDir = {1, 1};
         int[] colDir = {-1, 1};
-        checkAttackPosition(movablePositions, board, rowDir, colDir);
+        return movable().allMovablePosition(this, board, rowDir, colDir);
     }
 
-    private void addWhiteTeamAttackPosition(final List<Position> movablePositions, final Board board) {
+    private List<Position> addWhiteTeamAttackPosition(final Board board) {
         int[] rowDir = {-1, -1};
         int[] colDir = {-1, 1};
-        checkAttackPosition(movablePositions, board, rowDir, colDir);
-    }
-
-    private void checkAttackPosition(final List<Position> movablePositions, final Board board, final int[] rowDir, final int[] colDir) {
-        Position curPosition = getPosition();
-        for (int dir = 0; dir < rowDir.length; ++dir) {
-            int nextRow = curPosition.getRow() + rowDir[dir];
-            int nextCol = curPosition.getCol() + colDir[dir];
-            addAttackablePosition(movablePositions, board, nextRow, nextCol);
-        }
-    }
-
-    private void addAttackablePosition(final List<Position> movablePositions, Board board, final int nextRow, final int nextCol) {
-        Position attackPosition = new Position(nextRow, nextCol);
-        if (!board.validateRange(attackPosition)) {
-            return;
-        }
-
-        Pieces otherTeamPieces = board.piecesByTeam(Team.enemyTeam(getTeam()));
-
-        if (otherTeamPieces.containByPosition(attackPosition)) {
-            movablePositions.add(attackPosition);
-        }
+        return movable().allMovablePosition(this, board, rowDir, colDir);
     }
 
     @Override

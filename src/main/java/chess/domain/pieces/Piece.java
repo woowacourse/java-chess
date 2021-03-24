@@ -2,6 +2,7 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.move.Movable;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovePositionException;
 
@@ -13,12 +14,14 @@ public abstract class Piece {
     private final Team team;
     private final String initial;
     private final Double score;
+    private final Movable movable;
 
-    public Piece(final Position position, final String initial, final Team team, final Double score) {
+    public Piece(final Position position, final String initial, final Team team, final Double score, final Movable movable) {
         this.position = position;
         this.score = score;
         this.initial = checkTeam(team, initial);
         this.team = team;
+        this.movable = movable;
     }
 
     private String checkTeam(final Team team, final String initial) {
@@ -58,7 +61,7 @@ public abstract class Piece {
         return position;
     }
 
-    protected final Team getTeam() {
+    public final Team getTeam() {
         return team;
     }
 
@@ -68,6 +71,10 @@ public abstract class Piece {
 
     public final Double score() {
         return score;
+    }
+
+    public final Movable movable() {
+        return movable;
     }
 
     public abstract List<Position> getMovablePositions(final Board board);

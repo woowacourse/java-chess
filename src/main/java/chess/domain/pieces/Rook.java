@@ -2,11 +2,11 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.move.MultiMove;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Rook extends NoKingPieces {
@@ -17,7 +17,7 @@ public final class Rook extends NoKingPieces {
     private static final int RIGHT_SIDE_INIT_COL = 7;
 
     public Rook(final Team team, final Position position) {
-        super(position, "R", team, SCORE);
+        super(position, "R", team, SCORE, new MultiMove());
     }
 
     public static Rook of(final Team team, final int col) {
@@ -36,36 +36,8 @@ public final class Rook extends NoKingPieces {
 
     @Override
     public final List<Position> getMovablePositions(final Board board) {
-        List<Position> movablePositions = new ArrayList<>();
-
         int[] rowDir = {0, 0, -1, 1};
         int[] colDir = {-1, 1, 0, 0};
-
-        for (int i = 0; i < rowDir.length; i++) {
-            addMovablePositions(board, movablePositions, rowDir[i], colDir[i]);
-        }
-        return movablePositions;
-    }
-
-    private void addMovablePositions(Board board, List<Position> movablePositions, int rowDir, int colDir) {
-        int distance = 1;
-        while (canMove(board, movablePositions, getPosition().next(rowDir * distance, colDir * distance))) {
-            distance++;
-        }
-    }
-
-    private boolean canMove(Board board, List<Position> movablePositions, Position nextPosition) {
-        if (!board.validateRange(nextPosition)) {
-            return false;
-        }
-        if (board.piecesByTeam(getTeam()).containByPosition(nextPosition)) {
-            return false;
-        }
-        if (board.piecesByTeam(Team.enemyTeam(getTeam())).containByPosition(nextPosition)) {
-            movablePositions.add(nextPosition);
-            return false;
-        }
-        movablePositions.add(nextPosition);
-        return true;
+        return movable().allMovablePosition(this, board, rowDir, colDir);
     }
 }

@@ -2,11 +2,11 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.move.SingleMove;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class Knight extends NoKingPieces {
@@ -17,7 +17,7 @@ public final class Knight extends NoKingPieces {
     private static final int RIGHT_SIDE_INIT_COL = 6;
 
     public Knight(final Team team, final Position position) {
-        super(position, "N", team, SCORE);
+        super(position, "N", team, SCORE, new SingleMove());
     }
 
     public static Knight of(final Team team, final int col) {
@@ -36,25 +36,8 @@ public final class Knight extends NoKingPieces {
 
     @Override
     public final List<Position> getMovablePositions(final Board board) {
-        List<Position> movablePositions = new ArrayList<>();
-
         int[] rowDir = {-1, 1, 2, 2, 1, -1, -2, -2};
         int[] colDir = {2, 2, 1, -1, -2, -2, -1, 1};
-
-        for (int i = 0; i < rowDir.length; i++) {
-            addMovablePositions(board, movablePositions, rowDir[i], colDir[i]);
-        }
-        return movablePositions;
-    }
-
-    private void addMovablePositions(Board board, List<Position> movablePositions, int rowDir, int colDir) {
-        Position nextPosition = getPosition().next(rowDir, colDir);
-        if (!board.validateRange(nextPosition)) {
-            return;
-        }
-        if (board.piecesByTeam(getTeam()).containByPosition(nextPosition)) {
-            return;
-        }
-        movablePositions.add(nextPosition);
+        return movable().allMovablePosition(this, board, rowDir, colDir);
     }
 }

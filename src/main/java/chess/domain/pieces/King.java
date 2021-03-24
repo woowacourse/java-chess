@@ -2,11 +2,11 @@ package chess.domain.pieces;
 
 import chess.domain.Team;
 import chess.domain.board.Board;
+import chess.domain.move.SingleMove;
 import chess.domain.position.Position;
 import chess.domain.position.Row;
 import chess.exception.WrongInitPositionException;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public final class King extends Piece {
@@ -16,7 +16,7 @@ public final class King extends Piece {
     private static final int INIT_COL = 4;
 
     public King(final Team team, final Position position) {
-        super(position, "K", team, SCORE);
+        super(position, "K", team, SCORE, new SingleMove());
     }
 
     public static King of(final Team team, final int col) {
@@ -35,26 +35,9 @@ public final class King extends Piece {
 
     @Override
     public final List<Position> getMovablePositions(final Board board) {
-        List<Position> movablePositions = new ArrayList<>();
-
         int[] rowDir = {0, 0, -1, 1, -1, 1, -1, 1};
         int[] colDir = {-1, 1, 0, 0, -1, 1, 1, -1};
-
-        for (int i = 0; i < rowDir.length; i++) {
-            addMovablePositions(board, movablePositions, rowDir[i], colDir[i]);
-        }
-        return movablePositions;
-    }
-
-    private void addMovablePositions(Board board, List<Position> movablePositions, int rowDir, int colDir) {
-        Position nextPosition = getPosition().next(rowDir, colDir);
-        if (!board.validateRange(nextPosition)) {
-            return;
-        }
-        if (board.piecesByTeam(getTeam()).containByPosition(nextPosition)) {
-            return;
-        }
-        movablePositions.add(nextPosition);
+        return movable().allMovablePosition(this, board, rowDir, colDir);
     }
 
     @Override
