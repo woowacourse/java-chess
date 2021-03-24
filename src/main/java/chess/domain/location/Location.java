@@ -6,6 +6,9 @@ public class Location {
 
     private static final int MIN_LOCATION = 1;
     private static final int MAX_LOCATION = 8;
+    private static final int NUM_OF_COORDINATES = 2;
+    private static final int X_POS_INDEX = 0;
+    private static final int Y_POS_INDEX = 1;
 
     private final int x;
     private final int y;
@@ -21,11 +24,11 @@ public class Location {
     }
 
     public static Location of(String location) {
-        if (location.length() != 2) {
+        if (location.length() != NUM_OF_COORDINATES) {
             throw new IllegalArgumentException("[ERROR] 좌표는 x와 y값 두개로 이루어져야 합니다.");
         }
-        int xPos = location.charAt(0) - 'a' + 1;
-        int yPos = Character.digit(location.charAt(1), 10);
+        int xPos = location.charAt(X_POS_INDEX) - 'a' + 1;
+        int yPos = Character.digit(location.charAt(Y_POS_INDEX), 10);
         validateRange(xPos, yPos);
         return new Location(xPos, yPos);
     }

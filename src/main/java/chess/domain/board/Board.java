@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class Board {
 
+    private static final int NUM_OF_KING = 2;
     private final List<Piece> pieces;
 
     private Board(final List<Piece> pieces) {
@@ -123,6 +124,6 @@ public class Board {
         return pieces
             .stream()
             .filter(Piece::isKing)
-            .count() != 2;
+            .count() != NUM_OF_KING;
     }
 }

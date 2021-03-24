@@ -11,6 +11,9 @@ import chess.domain.team.Team;
 
 public class Move extends Running {
 
+    private static final int SOURCE_INDEX = 1;
+    private static final int TARGET_INDEX = 2;
+
     public Move(Board board) {
         super(board);
     }
@@ -36,8 +39,8 @@ public class Move extends Running {
     @Override
     public void processMove(String input, Team currentTeam) {
         String[] splittedInput = input.split(" ");
-        Location source = Location.of(splittedInput[1]);
-        Location target = Location.of(splittedInput[2]);
+        Location source = Location.of(splittedInput[SOURCE_INDEX]);
+        Location target = Location.of(splittedInput[TARGET_INDEX]);
         board.move(source, target, currentTeam);
     }
 
