@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Pieces {
+public final class Pieces {
     public static final double DEFAULT_SCORE = 0.0;
     public static final double DECREASE_UNIT = 0.5;
     public static final int DECREASE_PIVOT = 2;

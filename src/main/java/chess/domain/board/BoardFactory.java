@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class BoardFactory {
+public final class BoardFactory {
     private final Map<Team, Pieces> board = new HashMap<>();
 
     public Board getBoard() {

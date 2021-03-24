@@ -4,7 +4,7 @@ import chess.domain.Team;
 
 import java.util.Objects;
 
-public class Position {
+public final class Position {
     public static final int RANGE_MIN_PIVOT = 0;
     private final int row;
     private final int col;
@@ -21,11 +21,11 @@ public class Position {
         }
     }
 
-    public int getRow() {
+    public final int getRow() {
         return row;
     }
 
-    public int getCol() {
+    public final int getCol() {
         return col;
     }
 
@@ -42,11 +42,11 @@ public class Position {
         return Objects.hash(row, col);
     }
 
-    public boolean sameCol(final int col) {
+    public final boolean sameCol(final int col) {
         return this.col == col;
     }
 
-    public boolean isInitPositionByTeam(final Team team) {
+    public final boolean isInitPositionByTeam(final Team team) {
         return team.isInitPawn(row);
     }
 }

@@ -8,7 +8,7 @@ import chess.domain.position.Row;
 import java.util.ArrayList;
 import java.util.List;
 
-public class King extends Piece {
+public final class King extends Piece {
     private static final String BLACK_TEAM_ROW = "8";
     private static final String WHITE_TEAM_ROW = "1";
     private static final double SCORE = 0.0;
@@ -33,7 +33,7 @@ public class King extends Piece {
     }
 
     @Override
-    public List<Position> getMovablePositions(final Board board) {
+    public final List<Position> getMovablePositions(final Board board) {
         List<Position> movablePositions = new ArrayList<>();
 
         int[] rowDir = {0, 0, -1, 1, -1, 1, -1, 1};

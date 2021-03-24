@@ -11,7 +11,7 @@ import chess.view.OutputView;
 
 import java.util.Objects;
 
-public class ChessGameController {
+public final class ChessGameController {
     private final ChessGame chessGame;
     private Team currentTurn;
 
@@ -20,7 +20,7 @@ public class ChessGameController {
         this.currentTurn = Team.WHITE;
     }
 
-    public void start() {
+    public final void start() {
         OutputView.printStartMessage();
         run();
     }

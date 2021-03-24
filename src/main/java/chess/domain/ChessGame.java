@@ -4,7 +4,7 @@ import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
 
-public class ChessGame {
+public final class ChessGame {
     private Board board;
     private boolean isPlaying = true;
     private Team winner;
@@ -18,7 +18,7 @@ public class ChessGame {
         isPlaying = false;
     }
 
-    public boolean isPlaying() {
+    public final boolean isPlaying() {
         return isPlaying;
     }
 

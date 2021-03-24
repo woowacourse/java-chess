@@ -8,7 +8,7 @@ import chess.domain.position.Position;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Board {
+public final class Board {
     public static final int RANGE_MIN_PIVOT = 0;
     public static final int RANGE_MAX_PIVOT = 7;
 
@@ -22,7 +22,7 @@ public class Board {
         return new HashMap<>(board);
     }
 
-    public void move(final Position startPoint, final Position endPoint, final Team team) {
+    public final void move(final Position startPoint, final Position endPoint, final Team team) {
         Pieces pieces = board.get(team);
         Piece startPointPiece = pieces.getPieceByPosition(startPoint);
         startPointPiece.move(this, endPoint);

@@ -7,7 +7,7 @@ import chess.domain.position.Position;
 
 import java.util.Arrays;
 
-public class OutputView {
+public final class OutputView {
     public static final int BOARD_MAX_SIZE = 8;
 
     private OutputView() {
