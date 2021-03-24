@@ -27,7 +27,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         Position movedPosition = target.moveTowardDirection(direction);
         Piece movedPositionPiece = board.findPieceFromPosition(movedPosition);
 
-        if (isTopBottom(direction)) {
+        if (direction.isTopBottom()) {
             if (Objects.nonNull(movedPositionPiece)) {
                 return false;
             }
@@ -40,19 +40,10 @@ public class PawnMoveStrategy implements MoveStrategy {
             }
         }
 
-        if (isDiagonal(direction)) {
+        if (direction.isDiagonal()) {
             return !Objects.isNull(movedPositionPiece) && !movedPositionPiece.isSameTeam(targetPiece);
         }
         return true;
-    }
-
-    private boolean isDiagonal(Direction direction) {
-        return direction == Direction.RIGHT_TOP || direction == Direction.LEFT_TOP
-                || direction == Direction.LEFT_BOTTOM || direction == Direction.RIGHT_BOTTOM;
-    }
-
-    private boolean isTopBottom(Direction direction) {
-        return direction == Direction.TOP || direction == Direction.BOTTOM;
     }
 
     @Override

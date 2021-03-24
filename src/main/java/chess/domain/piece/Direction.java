@@ -40,6 +40,15 @@ public enum Direction {
         return 0;
     }
 
+    public boolean isTopBottom() {
+        return this.equals(Direction.TOP) || this.equals(Direction.BOTTOM);
+    }
+
+    public boolean isDiagonal() {
+        return this.equals(Direction.RIGHT_TOP) || this.equals(Direction.RIGHT_BOTTOM)
+                || this.equals(Direction.LEFT_TOP) || this.equals(Direction.LEFT_BOTTOM);
+    }
+
     public int getX() {
         return x;
     }
