@@ -3,9 +3,13 @@ package chess.domain.piece;
 import chess.domain.Position;
 import chess.domain.Score;
 import chess.domain.TeamColor;
+import chess.exception.ImpossibleMoveException;
 import chess.exception.PieceNotFoundException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
@@ -23,16 +27,38 @@ public class Pieces {
         pieces.add(piece);
     }
 
-    public void remove(Piece piece) {
-        pieces.remove(piece);
+    public void move(Position currentPosition, Position targetPosition, TeamColor currentColor) {
+        Piece currentPiece = pieceByPosition(currentPosition);
+        if (currentPiece.notSameColor(currentColor)) {
+            throw new ImpossibleMoveException(currentColor + "팀 차례 입니다.");
+        }
+        if (isPieceExist(targetPosition)) {
+            Piece targetPiece = pieceByPosition(targetPosition);
+            pieces.remove(targetPiece);
+        }
+        currentPiece.move(targetPosition);
+        currentPiece.updateMovablePositions(
+                existPiecePositions(),
+                positionsByTeamColor(currentPiece.enemyColor())
+        );
     }
 
-    public void updateMovablePositions() {
-        pieces.forEach(piece -> piece.updateMovablePositions(
-                existPiecePositions(),
-                positionsByTeamColor(piece.enemyColor())
-                )
-        );
+    public void updatePiecesMovablePositions() {
+        for (Piece piece : pieces) {
+            piece.updateMovablePositions(
+                    existPiecePositions(),
+                    positionsByTeamColor(piece.enemyColor())
+            );
+        }
+    }
+
+    private boolean isPieceExist(Position targetPosition) {
+        try {
+            pieceByPosition(targetPosition);
+        } catch (PieceNotFoundException e) {
+            return false;
+        }
+        return true;
     }
 
     private List<Position> existPiecePositions() {
@@ -56,7 +82,7 @@ public class Pieces {
     public Score totalScoreByTeamColor(final TeamColor teamColor) {
         return piecesByTeamColor(teamColor).stream()
                 .map(Piece::score)
-                .reduce(Score.from(0), Score::addedScore)
+                .reduce(Score.from(0), Score::add)
                 .minus(sameColumnPawnScore(teamColor));
     }
 
@@ -72,7 +98,7 @@ public class Pieces {
                 .filter(Piece::isPawn)
                 .limit(sameColumnPawnCount)
                 .map(piece -> Pawn.halfScore())
-                .reduce(Score.from(0), Score::addedScore);
+                .reduce(Score.from(0), Score::add);
     }
 
     private int sameTeamCountByPiece(final TeamColor teamColor, final Predicate<Piece> piecePredicate) {
@@ -93,6 +119,13 @@ public class Pieces {
                 .collect(Collectors.toSet());
     }
 
+    public Piece pieceByPosition(final Position position) {
+        return pieces.stream()
+                .filter(piece -> piece.isSamePosition(position))
+                .findAny()
+                .orElseThrow(PieceNotFoundException::new);
+    }
+
     public Piece kingByColor(TeamColor teamColor) {
         return piecesByTeamColor(teamColor)
                 .stream()
@@ -103,15 +136,6 @@ public class Pieces {
 
     public Map<Position, String> nameGroupingByPosition() {
         return pieces.stream()
-                .collect(toMap(
-                        Piece::currentPosition,
-                        Piece::name
-                ));
-    }
-
-    public Optional<Piece> pieceByPosition(final Position position) {
-        return pieces.stream()
-                .filter(piece -> piece.isSamePosition(position))
-                .findAny();
+                .collect(toMap(Piece::currentPosition, Piece::name));
     }
 }
