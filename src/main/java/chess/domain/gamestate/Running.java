@@ -30,16 +30,16 @@ public class Running implements GameState {
         if (!pieceMovementRule.canMove(source, destination, turn.now())) {
             throw new IllegalArgumentException("불가능한 이동입니다.");
         }
-
-        return gameStateAfterMove(source, destination, turn);
-    }
-
-    private GameState gameStateAfterMove(Point source, Point destination, Turn turn) {
-
         boolean isKingDead = board.isSamePieceTypeAt(destination, Piece.KING);
         Team destinationTeam = board.teamAt(destination);
+
         board.move(source, destination);
         turn.next();
+
+        return gameStateAfterMovement(isKingDead, destinationTeam);
+    }
+
+    private GameState gameStateAfterMovement(boolean isKingDead, Team destinationTeam) {
         if (isKingDead) {
             return new Finished(destinationTeam.opposingTeam());
         }
