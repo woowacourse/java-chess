@@ -12,6 +12,8 @@ import domain.piece.Rook;
 import domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 class BoardTest {
 
@@ -91,45 +93,15 @@ class BoardTest {
     }
 
     @DisplayName("체스판 초기화시 16개의 Pawn이 올바른 자리에 위치한다.")
-    @Test
-    void initPawn() {
+    @ParameterizedTest
+    @CsvSource(value = {"a7,true", "b7,true", "c7,true", "d7,true", "e7,true", "f7,true", "g7,true", "h7,true",
+        "a2,false", "b2,false", "c2,false", "d2,false", "e2,false", "f2,false", "g2,false", "h2,false"}, delimiter = ',')
+    void initPawn(String pawnInitialPosition, boolean isBlack) {
         Board board = new Board();
         board.initChessPieces();
 
-        assertThat(board.piece(new Position("a7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("a7")).isBlack()).isTrue();
-
-        assertThat(board.piece(new Position("b7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("b7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("c7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("c7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("d7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("d7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("e7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("e7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("f7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("f7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("g7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("g7")).isBlack()).isTrue();
-        assertThat(board.piece(new Position("h7"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("h7")).isBlack()).isTrue();
-
-        assertThat(board.piece(new Position("a2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("a2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("b2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("b2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("c2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("c2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("d2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("d2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("e2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("e2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("f2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("f2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("g2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("g2")).isBlack()).isFalse();
-        assertThat(board.piece(new Position("h2"))).isInstanceOf(Pawn.class);
-        assertThat(board.piece(new Position("h2")).isBlack()).isFalse();
+        assertThat(board.piece(new Position(pawnInitialPosition))).isInstanceOf(Pawn.class);
+        assertThat(board.piece(new Position(pawnInitialPosition)).isBlack()).isEqualTo(isBlack);
     }
 
     @DisplayName("점수 계산 테스트")
