@@ -5,7 +5,6 @@ import chess.exception.ImpossibleMoveException;
 import chess.exception.PieceNotFoundException;
 
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 
 import static chess.domain.TeamColor.BLACK;
@@ -27,7 +26,7 @@ public class ChessGame {
     public ChessGame(Pieces pieces, TeamColor currentColor) {
         this.pieces = pieces;
         this.currentColor = currentColor;
-        updateMovablePositions();
+        updatePiecesMovablePositions();
     }
 
     private void init() {
@@ -36,7 +35,7 @@ public class ChessGame {
 
         initPawns(BLACK, 6);
         initPieces(BLACK, 7);
-        updateMovablePositions();
+        updatePiecesMovablePositions();
     }
 
     private void initPieces(final TeamColor teamColor, final int y) {
@@ -56,21 +55,12 @@ public class ChessGame {
         }
     }
 
-    public void updateMovablePositions() {
-        pieces.updateMovablePositions();
+    public void updatePiecesMovablePositions() {
+        pieces.updatePiecesMovablePositions();
     }
 
     public void move(final Position currentPosition, final Position targetPosition) throws PieceNotFoundException, ImpossibleMoveException {
-        Piece currentPiece = piece(currentPosition).orElseThrow(PieceNotFoundException::new);
-        if (currentPiece.notSameColor(currentColor)) {
-            throw new ImpossibleMoveException(currentColor + "팀 차례 입니다.");
-        }
-
-        Optional<Piece> targetPiece = piece(targetPosition);
-
-        currentPiece.move(targetPosition);
-        targetPiece.ifPresent(pieces::remove);
-        updateMovablePositions();
+        pieces.move(currentPosition, targetPosition, currentColor);
         currentColor = currentColor.reverse();
     }
 
@@ -83,7 +73,7 @@ public class ChessGame {
     }
 
     public boolean checked() {
-        updateMovablePositions();
+        updatePiecesMovablePositions();
         Set<Position> enemyAttackPositions = pieces.attackPositions(enemyColor());
         Piece king = pieces.kingByColor(currentColor);
         return enemyAttackPositions.contains(king.currentPosition());
@@ -93,7 +83,7 @@ public class ChessGame {
         return pieces.nameGroupingByPosition();
     }
 
-    public Optional<Piece> piece(final Position position) {
+    public Piece piece(final Position position) {
         return pieces.pieceByPosition(position);
     }
 

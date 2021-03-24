@@ -22,7 +22,7 @@ public class PiecesTest {
         Piece bishop = new Knight(TeamColor.WHITE, Position.of(7, 0));
         pieces.add(pawn);
         pieces.add(bishop);
-        pieces.updateMovablePositions();
+        pieces.updatePiecesMovablePositions();
         Set<Position> actualPositions = new HashSet<>(Arrays.asList(
                 Position.of(0, 1),
                 Position.of(5, 1),
@@ -45,7 +45,7 @@ public class PiecesTest {
         Piece king = new King(TeamColor.WHITE, Position.of(7, 0));
         pieces.add(pawn);
         pieces.add(king);
-        pieces.updateMovablePositions();
+        pieces.updatePiecesMovablePositions();
 
         //when
         Piece expectedKing = pieces.kingByColor(TeamColor.WHITE);

@@ -19,14 +19,14 @@ public abstract class PieceDirections {
 
     public List<Position> movablePositions(Position currentPosition, List<Position> existPiecePositions, List<Position> enemyPositions) {
         List<Position> movablePositions = new ArrayList<>();
-        addNonePieceExistPositions(currentPosition, existPiecePositions, movablePositions);
+        addPositionsNotExistPiece(currentPosition, existPiecePositions, movablePositions);
         addKillPositions(currentPosition, enemyPositions, movablePositions);
         return movablePositions;
     }
 
-    public void addNonePieceExistPositions(Position currentPosition, List<Position> existPiecePositions, List<Position> movablePositions) {
+    public void addPositionsNotExistPiece(Position currentPosition, List<Position> existPiecePositions, List<Position> movablePositions) {
         for (Direction moveDirection : moveDirections) {
-            addNonePieceExistPosition(moveDirection, currentPosition, existPiecePositions, movablePositions);
+            addPositionNotExistPiece(moveDirection, currentPosition, existPiecePositions, movablePositions);
         }
     }
 
@@ -36,14 +36,17 @@ public abstract class PieceDirections {
         }
     }
 
-    protected void addNonePieceExistPosition(Direction moveDirection, Position currentPosition,
-                                             List<Position> existPiecePositions, List<Position> movablePositions) {
+    private void addPositionNotExistPiece(Direction moveDirection, Position currentPosition,
+                                          List<Position> existPiecePositions, List<Position> movablePositions) {
         do {
-            if (currentPosition.invalidGo(moveDirection)) return;
+            if (currentPosition.invalidGo(moveDirection)) {
+                return;
+            }
             currentPosition = currentPosition.go(moveDirection);
 
-            if (existPiecePositions.contains(currentPosition)) return;
-
+            if (existPiecePositions.contains(currentPosition)) {
+                return;
+            }
             movablePositions.add(currentPosition);
         } while (movableMoreThanOnePosition);
     }
@@ -51,7 +54,9 @@ public abstract class PieceDirections {
     private void addKillPosition(Direction killDirection, Position currentPosition,
                                  List<Position> enemyPositions, List<Position> movablePositions) {
         do {
-            if (currentPosition.invalidGo(killDirection)) return;
+            if (currentPosition.invalidGo(killDirection)) {
+                return;
+            }
             currentPosition = currentPosition.go(killDirection);
 
             if (enemyPositions.contains(currentPosition)) {

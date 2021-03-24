@@ -11,17 +11,18 @@ import static java.util.stream.Collectors.toMap;
 
 public class Position {
 
+    private static final int ROW_SIZE = 8;
     private static final int MAX_POSITION = 7;
     private static final int MIN_POSITION = 0;
 
-    private static final Map<String, Position> positions;
+    private static final Map<Integer, Position> positions;
 
     static {
         positions = IntStream.rangeClosed(0, MAX_POSITION)
                 .boxed()
                 .flatMap(x -> IntStream.rangeClosed(0, MAX_POSITION)
                         .mapToObj(y -> new Position(x, y)))
-                .collect(toMap(position -> "" + position.x + position.y, Function.identity()));
+                .collect(toMap(position -> position.x * ROW_SIZE + position.y, Function.identity()));
     }
 
     private final int x;
@@ -37,7 +38,7 @@ public class Position {
             throw new IllegalArgumentException("체스판을 넘어서는 범위입니다.");
         }
 
-        String key = "" + x + y;
+        int key = (x * ROW_SIZE) + y;
         return positions.get(key);
     }
 

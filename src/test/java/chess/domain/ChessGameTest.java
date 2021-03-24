@@ -19,11 +19,11 @@ public class ChessGameTest {
         ChessGame chessGame = new ChessGame();
 
         //when
-        Piece rook = chessGame.piece(Position.of(0, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece knight = chessGame.piece(Position.of(1, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece bishop = chessGame.piece(Position.of(2, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece queen = chessGame.piece(Position.of(3, 0)).orElseThrow(PieceNotFoundException::new);
-        Piece king = chessGame.piece(Position.of(4, 0)).orElseThrow(PieceNotFoundException::new);
+        Piece rook = chessGame.piece(Position.of(0, 0));
+        Piece knight = chessGame.piece(Position.of(1, 0));
+        Piece bishop = chessGame.piece(Position.of(2, 0));
+        Piece queen = chessGame.piece(Position.of(3, 0));
+        Piece king = chessGame.piece(Position.of(4, 0));
 
         //then
         assertThat(rook).isInstanceOf(Rook.class);
@@ -44,10 +44,9 @@ public class ChessGameTest {
 
         //when
         chessGame.move(Position.of(3, 0), Position.of(5, 2));
-        Piece expectedPiece = chessGame.piece(Position.of(5, 2)).get();
+        Piece expectedPiece = chessGame.piece(Position.of(5, 2));
 
         //than
-        assertThat(chessGame.piece(Position.of(3, 0))).isEmpty();
         assertThat(expectedPiece).isEqualTo(queen);
     }
 
