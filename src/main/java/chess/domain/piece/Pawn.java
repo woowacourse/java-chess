@@ -71,9 +71,10 @@ public final class Pawn extends Piece {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (obj == null) return false;
-        if (this == obj) return true;
-        return getClass() == obj.getClass();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pawn pawn = (Pawn) o;
+        return direction == pawn.direction;
     }
 }
