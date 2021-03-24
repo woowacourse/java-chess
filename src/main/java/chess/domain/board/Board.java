@@ -12,7 +12,7 @@ import chess.exception.InvalidMovementException;
 import java.util.List;
 import java.util.Map;
 
-public class Board {
+public final class Board {
 
     private static final int KING_COUNT = 2;
 

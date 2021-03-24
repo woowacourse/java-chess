@@ -7,7 +7,7 @@ import chess.domain.command.Command;
 import chess.domain.gamestate.State;
 import chess.exception.InvalidCommandException;
 
-public class ChessGame {
+public final class ChessGame {
 
     private State state;
 

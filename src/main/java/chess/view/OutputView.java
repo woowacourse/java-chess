@@ -10,7 +10,7 @@ import chess.domain.position.Row;
 import java.util.Arrays;
 import java.util.Locale;
 
-public class OutputView {
+public final class OutputView {
 
     private static final String LINE = "-------------------";
     private static final String BLACK_SCORE_IS = "Black: ";

@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
-public class End implements Command {
+public final class End implements Command {
 
     @Override
     public boolean isStart() {

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
-public class Position {
+public final class Position {
 
     private static final int POSITION_LENGTH = 2;
     private static final int POSITIVE_INCLINE = 1;

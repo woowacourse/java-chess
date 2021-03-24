@@ -2,7 +2,7 @@ package chess.domain;
 
 import chess.domain.board.Board;
 
-public class Score {
+public final class Score {
 
     private final double blackScore;
     private final double whiteScore;

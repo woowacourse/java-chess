@@ -16,7 +16,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-public class BoardInitializer {
+public final class BoardInitializer {
 
     private static final Map<Column, Function<Side, Piece>> BASE_MAP = new HashMap<>();
 

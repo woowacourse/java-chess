@@ -3,7 +3,7 @@ package chess.domain.command;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
-public class Move implements Command {
+public final class Move implements Command {
 
     private static final String SPACE = " ";
 

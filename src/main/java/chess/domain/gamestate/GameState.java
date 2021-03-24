@@ -14,16 +14,16 @@ public abstract class GameState implements State {
     }
 
     @Override
-    public Board board() {
+    public final Board board() {
         return board;
     }
 
     @Override
-    public Side currentTurn() {
+    public final Side currentTurn() {
         return side;
     }
 
-    public Side changeTurn() {
+    public final Side changeTurn() {
         return side.changeTurn();
     }
 }
