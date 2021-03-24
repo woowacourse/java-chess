@@ -1,6 +1,7 @@
 package chess.domain.piece;
 
 import static chess.domain.piece.Color.*;
+import static chess.domain.piece.PieceType.Constants.*;
 import static chess.domain.piece.kind.Pawn.*;
 
 import java.util.Arrays;
@@ -18,7 +19,7 @@ import chess.domain.piece.kind.Queen;
 import chess.domain.piece.kind.Rook;
 
 public enum PieceType {
-    ROOK(Constants.INITIAL_COLUMN_OF_ROOK) {
+    ROOK(INITIAL_COLUMN_OF_ROOK) {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -30,7 +31,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    KNIGHT(Constants.INITIAL_COLUMN_OF_KNIGHT) {
+    KNIGHT(INITIAL_COLUMN_OF_KNIGHT) {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -42,7 +43,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    BISHOP(Constants.INITIAL_COLUMN_OF_BISHOP) {
+    BISHOP(INITIAL_COLUMN_OF_BISHOP) {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -54,7 +55,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    QUEEN(Constants.INITIAL_COLUMN_OF_QUEEN) {
+    QUEEN(INITIAL_COLUMN_OF_QUEEN) {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -66,7 +67,7 @@ public enum PieceType {
             return createDefaultPieces(row, column);
         }
     },
-    KING(Constants.INITIAL_COLUMN_OF_KING) {
+    KING(INITIAL_COLUMN_OF_KING) {
         @Override
         public Piece create(int row, int column) {
             if (row == Constants.INITIAL_BLACK_ROW_WITHOUT_PAWN) {
@@ -108,7 +109,7 @@ public enum PieceType {
 
     public abstract Piece create(int row, int column);
 
-    private static class Constants {
+    static final class Constants {
         public static final List<Integer> INITIAL_COLUMN_OF_ROOK = Arrays.asList(0, 7);
         public static final List<Integer> INITIAL_COLUMN_OF_KNIGHT = Arrays.asList(1, 6);
         public static final List<Integer> INITIAL_COLUMN_OF_BISHOP = Arrays.asList(2, 5);
