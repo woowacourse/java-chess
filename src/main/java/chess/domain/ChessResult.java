@@ -1,14 +1,16 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.piece.King;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Horizontal;
 import chess.domain.position.Position;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public final class ChessResult {

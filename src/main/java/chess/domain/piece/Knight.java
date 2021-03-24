@@ -13,8 +13,8 @@ public final class Knight extends GeneralPiece {
 
     @Override
     protected List<Direction> possibleDirections() {
-        return Arrays.asList(Direction.NNE, Direction.NNW, Direction.SSE, Direction.SSW,
-                Direction.WWN, Direction.WWS, Direction.EEN, Direction.EES);
+        return Arrays.asList(Direction.NORTH_NORTHEAST, Direction.NORTH_NORTHWEST, Direction.SOUTH_SOUTHEAST, Direction.SOUTH_SOUTHWEST,
+                Direction.WEST_NORTHWEST, Direction.WEST_SOUTHWEST, Direction.EAST_NORTHEAST, Direction.EAST_SOUTHEAST);
     }
 
     @Override

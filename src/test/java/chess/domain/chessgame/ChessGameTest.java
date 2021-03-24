@@ -1,7 +1,6 @@
 package chess.domain.chessgame;
 
 import chess.domain.board.Board;
-import chess.domain.piece.Blank;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Queen;
 import chess.domain.piece.Team;
@@ -13,7 +12,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class ChessGameTest {
 

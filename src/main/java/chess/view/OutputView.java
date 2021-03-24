@@ -1,6 +1,5 @@
 package chess.view;
 
-import chess.domain.ChessResult;
 import chess.domain.piece.Piece;
 import chess.domain.piece.Team;
 import chess.domain.position.Position;
@@ -18,10 +17,6 @@ public class OutputView {
         System.out.println(MESSAGE_PREFIX + "게임 시작 : start");
         System.out.println(MESSAGE_PREFIX + "게임 종료 : end");
         System.out.println(MESSAGE_PREFIX + "게임 이동 : move source 위치 target 위치 - 예. move b2 b3");
-    }
-
-    public static void printMessage(final String message) {
-        System.out.println(message);
     }
 
     public static void printCurrentBoard(final Map<Position, Piece> chessBoard) {
