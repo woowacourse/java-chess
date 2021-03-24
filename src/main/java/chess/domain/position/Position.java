@@ -1,25 +1,19 @@
 package chess.domain.position;
 
 import chess.domain.Team;
-import chess.exception.NegativePositionException;
 
 import java.util.Objects;
 
+import static chess.domain.board.Board.RANGE_MAX_PIVOT;
+import static chess.domain.board.Board.RANGE_MIN_PIVOT;
+
 public final class Position {
-    public static final int RANGE_MIN_PIVOT = 0;
     private final int row;
     private final int col;
 
     public Position(final int row, final int col) {
-        validateRange(row, col);
         this.row = row;
         this.col = col;
-    }
-
-    private void validateRange(final int row, final int col) {
-        if (row < RANGE_MIN_PIVOT || col < RANGE_MIN_PIVOT) {
-            throw new NegativePositionException();
-        }
     }
 
     public final boolean sameCol(final int col) {
@@ -31,6 +25,14 @@ public final class Position {
             return row == Row.getLocation("2");
         }
         return row == Row.getLocation("7");
+    }
+
+    public Position next(int rowDir, int colDir) {
+        return new Position(this.row + rowDir, this.col + colDir);
+    }
+
+    public boolean outOfRange() {
+        return (row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
 
     public final int getRow() {

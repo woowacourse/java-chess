@@ -42,7 +42,7 @@ public final class Pawn extends Piece {
 
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
         Position curPosition = getPosition();
-        if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getCol())) {
+        if (!board.validateRange(new Position(curPosition.getRow() + getStraightRow(degree), curPosition.getCol()))) {
             return;
         }
         Position movedPosition = new Position(curPosition.getRow() + getStraightRow(degree), curPosition.getCol());
@@ -90,11 +90,11 @@ public final class Pawn extends Piece {
     }
 
     private void addAttackablePosition(final List<Position> movablePositions, Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
+        Position attackPosition = new Position(nextRow, nextCol);
+        if (!board.validateRange(attackPosition)) {
             return;
         }
 
-        Position attackPosition = new Position(nextRow, nextCol);
         Pieces otherTeamPieces = board.piecesByTeam(Team.enemyTeam(getTeam()));
 
         if (otherTeamPieces.containByPosition(attackPosition)) {

@@ -41,33 +41,31 @@ public final class Rook extends NoKingPieces {
         int[] rowDir = {0, 0, -1, 1};
         int[] colDir = {-1, 1, 0, 0};
 
-        for (int dir = 0; dir < colDir.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDir[dir], colDir[dir]);
+        for (int i = 0; i < rowDir.length; i++) {
+            addMovablePositions(board, movablePositions, rowDir[i], colDir[i]);
         }
         return movablePositions;
     }
 
-    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
-        int curRow = getPosition().getRow();
-        int curCol = getPosition().getCol();
-
-        while (isMoveAbleDir(movablePositions, board, curRow + rowDir, curCol + colDir)) {
-            movablePositions.add(new Position(curRow += rowDir, curCol += colDir));
+    private void addMovablePositions(Board board, List<Position> movablePositions, int rowDir, int colDir) {
+        int distance = 1;
+        while (canMove(board, movablePositions, getPosition().next(rowDir * distance, colDir * distance))) {
+            distance++;
         }
     }
 
-    private boolean isMoveAbleDir(final List<Position> movablePositions, final Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
+    private boolean canMove(Board board, List<Position> movablePositions, Position nextPosition) {
+        if (!board.validateRange(nextPosition)) {
             return false;
         }
-        if (board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol))) {
+        if (board.piecesByTeam(getTeam()).containByPosition(nextPosition)) {
             return false;
         }
-        if (board.piecesByTeam(Team.enemyTeam(getTeam())).containByPosition(new Position(nextRow, nextCol))) {
-            movablePositions.add(new Position(nextRow, nextCol));
+        if (board.piecesByTeam(Team.enemyTeam(getTeam())).containByPosition(nextPosition)) {
+            movablePositions.add(nextPosition);
             return false;
         }
+        movablePositions.add(nextPosition);
         return true;
     }
-
 }

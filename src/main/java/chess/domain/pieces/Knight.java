@@ -41,25 +41,20 @@ public final class Knight extends NoKingPieces {
         int[] rowDir = {-1, 1, 2, 2, 1, -1, -2, -2};
         int[] colDir = {2, 2, 1, -1, -2, -2, -1, 1};
 
-        for (int dir = 0; dir < colDir.length; ++dir) {
-            addMovablePositions(movablePositions, board, rowDir[dir], colDir[dir]);
+        for (int i = 0; i < rowDir.length; i++) {
+            addMovablePositions(board, movablePositions, rowDir[i], colDir[i]);
         }
         return movablePositions;
     }
 
-    private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
-        int curRow = getPosition().getRow();
-        int curCol = getPosition().getCol();
-
-        if (isMoveAbleDir(board, curRow + rowDir, curCol + colDir)) {
-            movablePositions.add(new Position(curRow + rowDir, curCol + colDir));
+    private void addMovablePositions(Board board, List<Position> movablePositions, int rowDir, int colDir) {
+        Position nextPosition = getPosition().next(rowDir, colDir);
+        if (!board.validateRange(nextPosition)) {
+            return;
         }
-    }
-
-    private boolean isMoveAbleDir(final Board board, final int nextRow, final int nextCol) {
-        if (!board.validateRange(nextRow, nextCol)) {
-            return false;
+        if (board.piecesByTeam(getTeam()).containByPosition(nextPosition)) {
+            return;
         }
-        return !board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol));
+        movablePositions.add(nextPosition);
     }
 }

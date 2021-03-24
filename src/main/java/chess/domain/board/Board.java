@@ -34,8 +34,8 @@ public final class Board {
         }
     }
 
-    public final boolean validateRange(final int row, final int col) {
-        return !(row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
+    public boolean validateRange(Position position) {
+        return !position.outOfRange();
     }
 
     public final boolean isEnemyKingDead(final Team team) {
