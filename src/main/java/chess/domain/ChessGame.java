@@ -20,11 +20,11 @@ public final class ChessGame {
 
     public final void move(final String startPoint, final String endPoint) {
         board.move(position(startPoint), position(endPoint), currentTurn);
-        if (board.isEnemyKingDie(currentTurn)) {
+        if (board.isEnemyKingDead(currentTurn)) {
             winner = currentTurn;
             end();
         }
-        currentTurn = Team.getAnotherTeam(currentTurn);
+        currentTurn = Team.enemyTeam(currentTurn);
     }
 
     private Position position(final String point) {

@@ -95,7 +95,7 @@ public final class Pawn extends Piece {
         }
 
         Position attackPosition = new Position(nextRow, nextCol);
-        Pieces otherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(getTeam()));
+        Pieces otherTeamPieces = board.piecesByTeam(Team.enemyTeam(getTeam()));
 
         if (otherTeamPieces.containByPosition(attackPosition)) {
             movablePositions.add(attackPosition);

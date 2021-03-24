@@ -27,7 +27,7 @@ public final class Board {
     }
 
     private void checkAnotherTeamTurn(Position startPoint, Team team) {
-        Pieces anotherTeamPieces = board.get(Team.getAnotherTeam(team));
+        Pieces anotherTeamPieces = board.get(Team.enemyTeam(team));
         if (anotherTeamPieces.containByPosition(startPoint)) {
             throw new AnotherTeamTurnException(team);
         }
@@ -37,8 +37,8 @@ public final class Board {
         return !(row < RANGE_MIN_PIVOT || row > RANGE_MAX_PIVOT || col < RANGE_MIN_PIVOT || col > RANGE_MAX_PIVOT);
     }
 
-    public final boolean isEnemyKingDie(final Team team) {
-        Pieces enemyPieces = board.get(Team.getAnotherTeam(team));
+    public final boolean isEnemyKingDead(final Team team) {
+        Pieces enemyPieces = board.get(Team.enemyTeam(team));
         return !enemyPieces.kingAlive();
     }
 

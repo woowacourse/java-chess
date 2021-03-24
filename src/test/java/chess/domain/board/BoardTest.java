@@ -52,12 +52,12 @@ class BoardTest {
     @DisplayName("적팀의 왕이 죽으면, true를 리턴한다.")
     void enemyKingDieCheck() {
         Team team = Team.BLACK;
-        Pieces pieces = board.toMap().get(Team.getAnotherTeam(team));
+        Pieces pieces = board.toMap().get(Team.enemyTeam(team));
         Position WhiteTeamKingPosition = new Position(Row.getLocation("1"), Col.getLocation("e"));
 
-        assertThat(board.isEnemyKingDie(team)).isFalse();
+        assertThat(board.isEnemyKingDead(team)).isFalse();
         pieces.removePieceByPosition(WhiteTeamKingPosition);
-        assertThat(board.isEnemyKingDie(team)).isTrue();
+        assertThat(board.isEnemyKingDead(team)).isTrue();
     }
 
     @Test

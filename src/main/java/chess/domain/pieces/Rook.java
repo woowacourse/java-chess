@@ -63,7 +63,7 @@ public final class Rook extends NoKingPieces {
         if (board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol))) {
             return false;
         }
-        if (board.piecesByTeam(Team.getAnotherTeam(getTeam())).containByPosition(new Position(nextRow, nextCol))) {
+        if (board.piecesByTeam(Team.enemyTeam(getTeam())).containByPosition(new Position(nextRow, nextCol))) {
             movablePositions.add(new Position(nextRow, nextCol));
             return false;
         }

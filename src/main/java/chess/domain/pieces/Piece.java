@@ -36,7 +36,7 @@ public abstract class Piece {
     }
 
     private void erasePiece(final Board board, final Position endPoint) {
-        Pieces anotherTeamPieces = board.piecesByTeam(Team.getAnotherTeam(team));
+        Pieces anotherTeamPieces = board.piecesByTeam(Team.enemyTeam(team));
         anotherTeamPieces.removePieceByPosition(endPoint);
     }
 

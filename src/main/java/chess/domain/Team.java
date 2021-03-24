@@ -12,7 +12,7 @@ public enum Team {
         this.pawnInitRow = pawnInitRow;
     }
 
-    public static Team getAnotherTeam(final Team userTeam) {
+    public static Team enemyTeam(final Team userTeam) {
         if (Team.BLACK.equals(userTeam)) {
             return WHITE;
         }
