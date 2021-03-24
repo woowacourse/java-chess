@@ -12,8 +12,8 @@ class NameTest {
     @DisplayName("이름 생성 확인")
     @Test
     void create() {
-        Assertions.assertEquals(new Name("a", BLACK).getName(), "A");
-        Assertions.assertEquals(new Name("A", WHITE).getName(), "a");
-        Assertions.assertEquals(new Name("a", NOTHING).getName(), "a");
+        Assertions.assertEquals("A", new Name("a", BLACK).getName());
+        Assertions.assertEquals("a", new Name("A", WHITE).getName());
+        Assertions.assertEquals("a", new Name("a", NOTHING).getName());
     }
 }

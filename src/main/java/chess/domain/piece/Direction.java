@@ -37,9 +37,10 @@ public enum Direction {
         }
 
         return Arrays.stream(Direction.values())
-            .filter(direction -> direction.rowDirection.isSameAs(normalizeDifference(initialRowDifference))
-                && direction.columnDirection.isSameAs(normalizeDifference(initialColumnDifference)))
-            .findAny().orElseThrow(RuntimeException::new);
+            .filter(direction -> direction.rowDirection.isSameAs(normalizeDifference(initialRowDifference)))
+            .filter(direction -> direction.columnDirection.isSameAs(normalizeDifference(initialColumnDifference)))
+            .findAny()
+            .orElseThrow(RuntimeException::new);
     }
 
     private static int normalizeDifference(int difference) {
