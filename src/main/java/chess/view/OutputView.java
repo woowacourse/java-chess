@@ -16,6 +16,7 @@ public class OutputView {
     private static final String STATUS_COMMAND = "현재 점수 : status";
     private static final String GAME_RESULT_TIE = "무승부입니다.";
     private static final String GAME_RESULT_WINNER_FORMAT = "승자는 %s 입니다.\n";
+    private static final String ILLEGAL_COMMAND_MESSAGE = "%s 다시 입력해주세요.\n";
 
 
     public static void printStartInfo() {
@@ -49,5 +50,10 @@ public class OutputView {
             return;
         }
         System.out.printf(GAME_RESULT_WINNER_FORMAT, winner.teamName());
+    }
+
+    public static void printIllegalCommand(IllegalArgumentException ipe) {
+        System.out.printf(INFO_MESSAGE_FORMAT,
+            String.format(ILLEGAL_COMMAND_MESSAGE, ipe.getMessage()));
     }
 }

@@ -21,9 +21,17 @@ public class ChessController {
 
     private void proceed(ChessGame chessGame, Board board) {
         while (chessGame.isOngoing()) {
+            proceedATurn(chessGame, board);
+        }
+    }
+
+    private void proceedATurn(ChessGame chessGame, Board board) {
+        try {
             inputCommandAndExecute(chessGame);
             OutputView.printCurrentTurn(chessGame.currentTurn());
             OutputView.printChessBoard(new BoardDto(board));
+        } catch (IllegalArgumentException e) {
+            OutputView.printIllegalCommand(e);
         }
     }
 
