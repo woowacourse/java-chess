@@ -1,12 +1,15 @@
 package chess.domain;
 
+import static chess.domain.board.Board.*;
 import static chess.domain.piece.Color.*;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
+import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Piece;
 
 public class ChessGame {
@@ -14,7 +17,20 @@ public class ChessGame {
     private Color currentColor = WHITE;
 
     public ChessGame() {
-        this.board = new Board();
+        this.board = initialize(new HashMap<>());
+    }
+
+    private Board initialize(Map<Point, Piece> boardMap) {
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            initializeColumn(boardMap, i);
+        }
+        return new Board(boardMap);
+    }
+
+    private void initializeColumn(Map<Point, Piece> boardMap, int i) {
+        for (int j = 0; j < BOARD_SIZE; j++) {
+            boardMap.put(Point.valueOf(i, j), PieceType.findPiece(i, j));
+        }
     }
 
     public void playTurn(Point source, Point target) {

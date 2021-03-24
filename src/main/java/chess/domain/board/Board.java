@@ -15,23 +15,12 @@ public class Board {
     public static final int BOARD_SIZE = 8;
     private static final int KINGS_COUNT_TO_PLAY = 2;
 
-    private final Map<Point, Piece> board = new HashMap<>();
+    private final Map<Point, Piece> board;
 
-    public Board() {
-        initialize();
+    public Board(Map<Point, Piece> board) {
+        this.board = board;
     }
 
-    private void initialize() {
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            initializeColumn(i);
-        }
-    }
-
-    private void initializeColumn(int i) {
-        for (int j = 0; j < BOARD_SIZE; j++) {
-            board.put(Point.valueOf(i, j), PieceType.findPiece(i, j));
-        }
-    }
 
     public void movePiece(Point source, Point target, Color currentColor) {
         Piece sourcePiece = selectPiece(source);

@@ -4,7 +4,6 @@ import static chess.domain.piece.Direction.*;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Color;

@@ -1,7 +1,5 @@
 package chess.domain.piece.kind;
 
-import java.util.Optional;
-
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
