@@ -56,10 +56,10 @@ public final class ChessGameController {
     }
 
     private void interactiveCommand(final Command command, final ChessGame chessGame) {
-        if (command.equals(Command.MOVE)) {
+        if (Command.MOVE.equals(command)) {
             move(chessGame);
         }
-        if (command.equals(Command.STATUS)) {
+        if (Command.STATUS.equals(command)) {
             OutputView.printEachTeamScore(chessGame.getScoreByTeam(Team.BLACK), chessGame.getScoreByTeam(Team.WHITE));
         }
     }
@@ -72,11 +72,7 @@ public final class ChessGameController {
 
     private void printCurrentBoard(final Command command, final ChessGame chessGame) {
         if (command.isPrint()) {
-            printBoard(chessGame);
+            OutputView.printBoard(chessGame.getBoard());
         }
-    }
-
-    private void printBoard(final ChessGame chessGame) {
-        OutputView.printBoard(chessGame.getBoard());
     }
 }
