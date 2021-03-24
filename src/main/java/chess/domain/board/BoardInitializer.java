@@ -31,6 +31,9 @@ public class BoardInitializer {
         BASE_MAP.put(Column.H, Rook::new);
     }
 
+    private BoardInitializer() {
+    }
+
     public static Map<Position, Piece> init() {
         Map<Position, Piece> result = new HashMap<>();
 

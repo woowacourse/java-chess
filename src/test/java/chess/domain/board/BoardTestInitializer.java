@@ -15,6 +15,9 @@ import java.util.Map;
 
 public class BoardTestInitializer {
 
+    private BoardTestInitializer() {
+    }
+
     public static Map<Position, Piece> init() {
         Map<Position, Piece> result = new HashMap<>();
 
