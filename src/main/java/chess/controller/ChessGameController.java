@@ -2,6 +2,7 @@ package chess.controller;
 
 import chess.domain.ChessGame;
 import chess.domain.Team;
+import chess.exception.StartCommandException;
 import chess.view.Command;
 import chess.view.InputView;
 import chess.view.OutputView;
@@ -11,12 +12,31 @@ import java.util.Objects;
 public final class ChessGameController {
 
     public final void start() {
+        ChessGame chessGame = new ChessGame();
         OutputView.printStartMessage();
-        run();
+        gameStart(chessGame);
+        play(chessGame);
     }
 
-    private void run() {
-        ChessGame chessGame = new ChessGame();
+    private void gameStart(final ChessGame chessGame) {
+        try {
+            Command command = Command.valueOf(InputView.getCommand());
+            startCommand(command, chessGame);
+            printCurrentBoard(command, chessGame);
+        } catch (StartCommandException e) {
+            OutputView.printError(e.getMessage());
+            gameStart(chessGame);
+        }
+    }
+
+    private void startCommand(final Command command, final ChessGame chessGame) {
+        if (!Command.START.equals(command) && !Command.END.equals(command)) {
+            throw new StartCommandException();
+        }
+        command.execute(chessGame);
+    }
+
+    private void play(final ChessGame chessGame) {
         while (chessGame.isPlaying()) {
             turnExecute(chessGame);
         }
@@ -31,7 +51,7 @@ public final class ChessGameController {
             command.execute(chessGame);
             interactiveCommand(command, chessGame);
             printCurrentBoard(command, chessGame);
-        } catch (IllegalArgumentException e) {
+        } catch (RuntimeException e) {
             OutputView.printError(e.getMessage());
         }
     }
