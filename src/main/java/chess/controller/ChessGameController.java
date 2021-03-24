@@ -11,8 +11,7 @@ import java.util.Objects;
 
 public final class ChessGameController {
 
-    public final void start() {
-        ChessGame chessGame = new ChessGame();
+    public final void start(final ChessGame chessGame) {
         OutputView.printStartMessage();
         gameStart(chessGame);
         play(chessGame);
