@@ -25,15 +25,15 @@ public abstract class Piece {
 
     public abstract Point moveOneStep(Point target, Direction direction);
 
-    public boolean isSameTeam(Color color) {
+    public final boolean isSameTeam(Color color) {
         return color.isSameAs(this.color);
     }
 
-    public boolean isIncorrectTurn(Color color) {
+    public final boolean isIncorrectTurn(Color color) {
         return !color.isSameAs(this.color);
     }
 
-    public void movePoint(Point target) {
+    public final void movePoint(Point target) {
         this.point = target;
     }
 
@@ -51,7 +51,7 @@ public abstract class Piece {
         return false;
     }
 
-    public String getName() {
+    public final String getName() {
         return name.getName();
     }
 
