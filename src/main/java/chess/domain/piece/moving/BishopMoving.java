@@ -60,8 +60,5 @@ public class BishopMoving implements PieceMoving {
     @Override
     public int row() {
         return currentPosition.row();
-
     }
-
-
 }
