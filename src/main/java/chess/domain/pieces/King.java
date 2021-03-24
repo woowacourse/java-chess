@@ -46,16 +46,6 @@ public final class King extends Piece {
         return movablePositions;
     }
 
-    @Override
-    public final boolean isKing() {
-        return true;
-    }
-
-    @Override
-    public final boolean isPawn() {
-        return false;
-    }
-
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int rowDir, final int colDir) {
         int curRow = getPosition().getRow();
         int curCol = getPosition().getCol();
@@ -70,5 +60,15 @@ public final class King extends Piece {
             return false;
         }
         return !board.piecesByTeam(getTeam()).containByPosition(new Position(nextRow, nextCol));
+    }
+
+    @Override
+    public final boolean isKing() {
+        return true;
+    }
+
+    @Override
+    public final boolean isPawn() {
+        return false;
     }
 }

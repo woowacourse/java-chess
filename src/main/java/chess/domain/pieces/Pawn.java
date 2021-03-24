@@ -40,16 +40,6 @@ public final class Pawn extends Piece {
         return movablePositions;
     }
 
-    @Override
-    public final boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public final boolean isPawn() {
-        return true;
-    }
-
     private void addMovablePositions(final List<Position> movablePositions, final Board board, final int degree) {
         Position curPosition = getPosition();
         if (!board.validateRange(curPosition.getRow() + getStraightRow(degree), curPosition.getCol())) {
@@ -110,5 +100,15 @@ public final class Pawn extends Piece {
         if (otherTeamPieces.containByPosition(attackPosition)) {
             movablePositions.add(attackPosition);
         }
+    }
+
+    @Override
+    public final boolean isKing() {
+        return false;
+    }
+
+    @Override
+    public final boolean isPawn() {
+        return true;
     }
 }

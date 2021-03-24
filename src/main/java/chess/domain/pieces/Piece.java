@@ -21,27 +21,11 @@ public abstract class Piece {
         this.team = team;
     }
 
-    protected final Team getTeam() {
-        return team;
-    }
-
     private String checkTeam(final Team team, final String initial) {
         if (team.equals(Team.WHITE)) {
             return initial.toLowerCase(Locale.ROOT);
         }
         return initial.toUpperCase(Locale.ROOT);
-    }
-
-    public final String getInitial() {
-        return initial;
-    }
-
-    public final Position getPosition() {
-        return position;
-    }
-
-    public final boolean samePosition(final Position startPoint) {
-        return this.position.equals(startPoint);
     }
 
     public final void move(final Board board, final Position endPoint) {
@@ -62,17 +46,33 @@ public abstract class Piece {
         }
     }
 
-    public abstract List<Position> getMovablePositions(final Board board);
-
-    public abstract boolean isKing();
-
-    public abstract boolean isPawn();
-
-    public final Double score() {
-        return score;
+    public final boolean samePosition(final Position startPoint) {
+        return this.position.equals(startPoint);
     }
 
     public final boolean sameCol(final int col) {
         return position.sameCol(col);
     }
+
+    public final Position getPosition() {
+        return position;
+    }
+
+    protected final Team getTeam() {
+        return team;
+    }
+
+    public final String getInitial() {
+        return initial;
+    }
+
+    public final Double score() {
+        return score;
+    }
+
+    public abstract List<Position> getMovablePositions(final Board board);
+
+    public abstract boolean isKing();
+
+    public abstract boolean isPawn();
 }

@@ -36,10 +36,6 @@ public final class Pieces {
                 .ifPresent(pieces::remove);
     }
 
-    public final List<Piece> toList() {
-        return new ArrayList<>(pieces);
-    }
-
     public final boolean kingAlive() {
         return pieces.stream()
                 .anyMatch(Piece::isKing);
@@ -74,5 +70,9 @@ public final class Pieces {
             return DECREASE_UNIT * count;
         }
         return DEFAULT_SCORE;
+    }
+
+    public final List<Piece> toList() {
+        return new ArrayList<>(pieces);
     }
 }

@@ -18,18 +18,6 @@ public final class ChessGame {
         this.currentTurn = Team.WHITE;
     }
 
-    public final void end() {
-        isPlaying = false;
-    }
-
-    public final boolean isPlaying() {
-        return isPlaying;
-    }
-
-    public final Board getBoard() {
-        return board;
-    }
-
     public final void move(final String startPoint, final String endPoint) {
         board.move(position(startPoint), position(endPoint), currentTurn);
         if (board.isEnemyKingDie(currentTurn)) {
@@ -39,15 +27,27 @@ public final class ChessGame {
         currentTurn = Team.getAnotherTeam(currentTurn);
     }
 
-    public final double getScoreByTeam(final Team team) {
-        return board.scoreByTeam(team);
-    }
-
     private Position position(final String point) {
         return new Position(
                 Row.getLocation(String.valueOf(point.charAt(1))),
                 Col.getLocation(String.valueOf(point.charAt(0)))
         );
+    }
+
+    public final void end() {
+        isPlaying = false;
+    }
+
+    public final boolean isPlaying() {
+        return isPlaying;
+    }
+
+    public final double getScoreByTeam(final Team team) {
+        return board.scoreByTeam(team);
+    }
+
+    public final Board getBoard() {
+        return board;
     }
 
     public final Team winner() {

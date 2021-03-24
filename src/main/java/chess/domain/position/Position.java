@@ -22,6 +22,14 @@ public final class Position {
         }
     }
 
+    public final boolean sameCol(final int col) {
+        return this.col == col;
+    }
+
+    public final boolean isInitPositionByTeam(final Team team) {
+        return team.isInitPawn(row);
+    }
+
     public final int getRow() {
         return row;
     }
@@ -41,13 +49,5 @@ public final class Position {
     @Override
     public int hashCode() {
         return Objects.hash(row, col);
-    }
-
-    public final boolean sameCol(final int col) {
-        return this.col == col;
-    }
-
-    public final boolean isInitPositionByTeam(final Team team) {
-        return team.isInitPawn(row);
     }
 }
