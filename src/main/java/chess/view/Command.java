@@ -1,6 +1,6 @@
 package chess.view;
 
-import chess.ChessGame;
+import chess.domain.ChessGame;
 
 import java.util.Arrays;
 

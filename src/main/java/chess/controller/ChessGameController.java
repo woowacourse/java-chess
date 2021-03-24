@@ -1,6 +1,6 @@
 package chess.controller;
 
-import chess.ChessGame;
+import chess.domain.ChessGame;
 import chess.domain.Team;
 import chess.domain.position.Col;
 import chess.domain.position.Position;
@@ -44,7 +44,7 @@ public class ChessGameController {
             System.out.println(e.getMessage());
         }
     }
-    
+
     private void interactiveCommand(final Command command) {
         if (command.equals(Command.MOVE)) {
             move();

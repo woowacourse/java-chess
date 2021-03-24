@@ -1,6 +1,5 @@
-package chess;
+package chess.domain;
 
-import chess.domain.Team;
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
 import chess.domain.position.Position;
