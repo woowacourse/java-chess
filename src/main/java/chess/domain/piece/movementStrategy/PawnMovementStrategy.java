@@ -5,7 +5,7 @@ import java.util.List;
 
 public class PawnMovementStrategy extends AbstractMovementStrategy {
 
-    private static final int LENGTH = 1;
+    private static final int MOVEMENT_RANGE = 1;
 
     @Override
     protected List<MoveVector> possibleMoveVectors() {
@@ -14,6 +14,6 @@ public class PawnMovementStrategy extends AbstractMovementStrategy {
 
     @Override
     public int movementRange() {
-        return LENGTH;
+        return MOVEMENT_RANGE;
     }
 }

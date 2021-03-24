@@ -5,7 +5,7 @@ import java.util.List;
 
 public class BishopMovementStrategy extends AbstractMovementStrategy {
 
-    private static final int LENGTH = 7;
+    private static final int MOVEMENT_RANGE = 7;
 
     @Override
     protected List<MoveVector> possibleMoveVectors() {
@@ -14,6 +14,6 @@ public class BishopMovementStrategy extends AbstractMovementStrategy {
 
     @Override
     public int movementRange() {
-        return LENGTH;
+        return MOVEMENT_RANGE;
     }
 }
