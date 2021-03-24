@@ -35,6 +35,10 @@ public abstract class Piece {
         return directions.contains(direction);
     }
 
+    public boolean isPieceOf(Class<? extends Piece> pieceType) {
+        return this.getClass() == pieceType;
+    }
+
     public boolean isKing() {
         return this instanceof King;
     }

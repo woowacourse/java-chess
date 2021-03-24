@@ -1,12 +1,14 @@
 package chess.domain.board;
 
-import chess.domain.piece.Direction;
-import chess.domain.piece.Pawn;
+import chess.domain.piece.King;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
 import chess.domain.result.Result;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ChessBoard {
     private static final int CHESS_BOARD_SIZE = 64;
@@ -38,46 +40,16 @@ public class ChessBoard {
     }
 
     public Result calculateScores() {
-        double blackTeamScore = calculatePieceScores(TeamType.BLACK);
-        double whiteTeamScore = calculatePieceScores(TeamType.WHITE);
-        return Result.generateResult(blackTeamScore, whiteTeamScore);
+        Map<Coordinate, Piece> blackTeamPieces = filterPiecesByTeam(TeamType.BLACK);
+        Map<Coordinate, Piece> whiteTeamPieces = filterPiecesByTeam(TeamType.WHITE);
+        return Result.generateResult(blackTeamPieces, whiteTeamPieces);
     }
 
-    private double calculatePieceScores(TeamType teamType) {
-        double scoreTotalExceptPawn = calculateScoreTotalExceptPawn(teamType);
-        double pawnScoreTotal = 0;
-        for (File file : File.values()) {
-            int pawnCounts = calculatePawnCounts(teamType, file);
-            pawnScoreTotal += accumulatePawnScore(teamType, pawnCounts);
-        }
-        return scoreTotalExceptPawn + pawnScoreTotal;
-    }
-
-    private double calculateScoreTotalExceptPawn(TeamType teamType) {
-        return cells.values()
+    private Map<Coordinate, Piece> filterPiecesByTeam(TeamType teamType) {
+        return cells.entrySet()
                 .stream()
-                .filter(cell -> cell.isTeamOf(teamType) && !cell.hasPawn())
-                .mapToDouble(Cell::getPieceScore)
-                .sum();
-    }
-
-    private int calculatePawnCounts(TeamType teamType, File file) {
-        return (int) Arrays.stream(Rank.values())
-                .map(rank -> new Coordinate(file, rank))
-                .map(cells::get)
-                .filter(cell -> cell.isTeamOf(teamType) && cell.hasPawn())
-                .count();
-    }
-
-    private double accumulatePawnScore(TeamType teamType, int pawnCounts) {
-        if (pawnCounts == 0) {
-            return 0;
-        }
-        Piece pawn = new Pawn(teamType);
-        if (pawnCounts > 1) {
-            return (pawn.getScore() / 2) * pawnCounts;
-        }
-        return pawn.getScore();
+                .filter(entry -> entry.getValue().isTeamOf(teamType))
+                .collect(Collectors.toMap(Map.Entry::getKey, entry -> entry.getValue().getPiece()));
     }
 
     public TeamType findWinnerTeam() {
@@ -86,7 +58,7 @@ public class ChessBoard {
         }
         return cells.values()
                 .stream()
-                .filter(Cell::hasKing)
+                .filter(cell -> cell.hasPieceOf(King.class))
                 .map(Cell::getTeamType)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("승리한 팀을 찾을 수 없습니다."));
@@ -95,19 +67,13 @@ public class ChessBoard {
     public boolean isKingCheckmate() {
         return cells.values()
                 .stream()
-                .filter(Cell::hasKing)
+                .filter(cell -> cell.hasPieceOf(King.class))
                 .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
     }
 
     public boolean hasPieceOnRouteBeforeDestination(Coordinate current, Coordinate destination) {
-        List<Coordinate> possibleCoordinates = new ArrayList<>();
-        Direction direction = current.evaluateDirection(destination);
-        Coordinate nextCoordinate = current.move(direction);
-        while (!nextCoordinate.equals(destination)) {
-            possibleCoordinates.add(nextCoordinate);
-            nextCoordinate = nextCoordinate.move(direction);
-        }
-        return possibleCoordinates.stream()
+        return current.calculateContinuousCoordinatesTo(destination)
+                .stream()
                 .map(cells::get)
                 .anyMatch(cell -> !cell.isEmpty());
     }

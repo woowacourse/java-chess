@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
 import org.junit.jupiter.api.DisplayName;
@@ -86,6 +87,6 @@ class ChessBoardGeneratorTest {
         return Arrays.stream(File.values())
                 .map(file -> new Coordinate(file, rank))
                 .map(cells::get)
-                .allMatch(cell -> cell.isTeamOf(teamType) && cell.hasPawn());
+                .allMatch(cell -> cell.isTeamOf(teamType) && cell.hasPieceOf(Pawn.class));
     }
 }

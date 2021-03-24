@@ -46,16 +46,8 @@ public class Cell {
         return !isEmpty() && getPiece().isTeamOf(teamType);
     }
 
-    public boolean hasKing() {
-        return !isEmpty() && getPiece().isKing();
-    }
-
-    public boolean hasPawn() {
-        return !isEmpty() && getPiece().isPawn();
-    }
-
-    public double getPieceScore() {
-        return getPiece().getScore();
+    public boolean hasPieceOf(Class<? extends Piece> pieceType) {
+        return !isEmpty() && getPiece().isPieceOf(pieceType);
     }
 
     public TeamType getTeamType() {
