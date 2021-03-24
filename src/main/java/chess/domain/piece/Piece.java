@@ -55,10 +55,12 @@ public abstract class Piece {
     }
 
     protected final void validateNotExistObjectInPath(List<Location> path, Board board) {
-        for (Location location : path) {
-            if (board.isPieceExistIn(location)) {
-                throw new IllegalArgumentException("[ERROR] 이동 경로에 말이 존재하므로 이동할 수 없습니다.");
-            }
+        boolean isPieceExistInPath = path
+            .stream()
+            .anyMatch(oneStep -> board.isPieceExistIn(oneStep));
+        
+        if (isPieceExistInPath) {
+            throw new IllegalArgumentException("[ERROR] 이동 경로에 말이 존재하므로 이동할 수 없습니다.");
         }
     }
 

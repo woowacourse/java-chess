@@ -22,7 +22,7 @@ public class Pawn extends Piece {
 
     @Override
     public void validateMovingAbilityToTarget(Location target) {
-        List<Location> movableNextLocations = getNextLocations(target);
+        List<Location> movableNextLocations = getNextLocations();
 
         boolean isMovable = movableNextLocations.stream()
             .anyMatch(location -> location.equals(target));
@@ -31,7 +31,7 @@ public class Pawn extends Piece {
         }
     }
 
-    private List<Location> getNextLocations(Location target) {
+    private List<Location> getNextLocations() {
         List<Location> locations = new ArrayList<>();
         int dy = 1;
         if (team.isBlack()) {
