@@ -1,27 +1,26 @@
 package chess.domain.board;
 
 
-import chess.domain.piece.*;
+import chess.domain.piece.Pawn;
+import chess.domain.piece.Piece;
+import chess.domain.piece.Queen;
+import chess.domain.piece.Team;
 
 import java.util.*;
 
 public class Board {
-    private static final double TOTAL_SCORE = 38;
-    private static final double PAWN_SAME_HORIZONTAL_SCORE = 0.5;
-    private static final double PAWN_SAME_HORIZONTAL_MIN_COUNT = 2;
     public static final int MIN_BORDER = 1;
     public static final int MAX_BORDER = 8;
+    private static final double PAWN_SAME_HORIZONTAL_MIN_COUNT = 2;
 
     private final Map<Position, Piece> board;
     private final Map<Team, Double> deadPieceByTeam;
-    private Team lastTurn;
-    private Score blackScore;
-    private Score whiteScore;
+    private final BoardStatus boardStatus;
 
     public Board(Map<Position, Piece> board) {
         this.board = new LinkedHashMap<>(board);
         this.deadPieceByTeam = initializeDeadPieceByTeamMap();
-        lastTurn = Team.BLACK;
+        this.boardStatus = new BoardStatus();
     }
 
     private Map<Team, Double> initializeDeadPieceByTeamMap() {
@@ -55,10 +54,10 @@ public class Board {
     }
 
     private void checkTurn(Piece targetPiece) {
-        if (targetPiece.isSameTeam(lastTurn)) {
+        if (targetPiece.isSameTeam(boardStatus.getLastTurn())) {
             throw new IllegalArgumentException("해당 팀의 차례가 아닙니다.");
         }
-        lastTurn = targetPiece.getTeam();
+        boardStatus.changeTurn();
     }
 
     private boolean isKing(Piece piece) {
@@ -93,17 +92,10 @@ public class Board {
         throw new UnsupportedOperationException("이동 불가능한 좌표입니다.");
     }
 
-    public void calculateScore() {
-        double blackScore = TOTAL_SCORE - deadPieceByTeam.get(Team.BLACK)
-                - countOfSameLinePawn(Team.BLACK) * PAWN_SAME_HORIZONTAL_SCORE;
-        this.blackScore = new Score(blackScore);
-        double whiteScore = TOTAL_SCORE - deadPieceByTeam.get(Team.WHITE)
-                - countOfSameLinePawn(Team.WHITE) * PAWN_SAME_HORIZONTAL_SCORE;
-        this.whiteScore = new Score(whiteScore);
-    }
-
-    private long countOfSameLinePawn(Team team) {
-        return findSameHorizontalTotalPawnCount(team);
+    public void applyStatus() {
+        boardStatus.calculateScore(deadPieceByTeam,
+                findSameHorizontalTotalPawnCount(Team.BLACK),
+                findSameHorizontalTotalPawnCount(Team.WHITE));
     }
 
     private long findSameHorizontalTotalPawnCount(Team team) {
@@ -128,10 +120,7 @@ public class Board {
     }
 
     public double score(Team team) {
-        if (team == Team.BLACK) {
-            return blackScore.getScore();
-        }
-        return whiteScore.getScore();
+        return boardStatus.score(team);
     }
 
     public Map<Position, Piece> getBoard() {

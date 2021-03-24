@@ -15,7 +15,7 @@ public class ChessGame {
     }
 
     public void start() {
-        board.calculateScore();
+        board.applyStatus();
         isStart = true;
     }
 
@@ -23,7 +23,7 @@ public class ChessGame {
         if (board.movePiece(convertStringToPosition(target), convertStringToPosition(destination))) {
             return true;
         }
-        board.calculateScore();
+        board.applyStatus();
         return false;
     }
 

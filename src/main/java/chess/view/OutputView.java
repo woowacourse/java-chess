@@ -47,10 +47,6 @@ public class OutputView {
         return printLineWhenLineIsFull(cnt, builder);
     }
 
-    public static void printMessage(String commandMessage) {
-        System.out.println(commandMessage);
-    }
-
     public static void printStatus(double blackScore, double whiteScore) {
         if (blackScore > whiteScore) {
             System.out.printf(COMMAND_MESSAGE + "%n", blackScore, whiteScore, BLACK_WIN);
@@ -58,6 +54,8 @@ public class OutputView {
         if (blackScore < whiteScore) {
             System.out.printf(COMMAND_MESSAGE + "%n", blackScore, whiteScore, WHITE_WIN);
         }
-        System.out.printf(COMMAND_MESSAGE + "%n", blackScore, whiteScore, DRAW);
+        if (blackScore == whiteScore) {
+            System.out.printf(COMMAND_MESSAGE + "%n", blackScore, whiteScore, DRAW);
+        }
     }
 }
