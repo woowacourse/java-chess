@@ -5,8 +5,8 @@ import java.util.List;
 
 public class CommandTokens {
     private static final int MAIN_COMMAND_INDEX = 0;
-    private static final int CURRENT_COORDINATION_INDEX = 1;
-    private static final int DESTINATION_COORDINATE_INDEX = 2;
+    private static final int CURRENT_COORDINATION_INDEX = 0;
+    private static final int DESTINATION_COORDINATE_INDEX = 1;
     private static final int SINGLE_COMMAND_TOKEN_SIZE = 1;
     private static final int MULTI_COMMAND_TOKEN_SIZE = 3;
 
