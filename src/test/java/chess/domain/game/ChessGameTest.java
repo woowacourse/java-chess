@@ -3,7 +3,6 @@ package chess.domain.game;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.command.Start;

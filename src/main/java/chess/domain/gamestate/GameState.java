@@ -1,7 +1,7 @@
 package chess.domain.gamestate;
 
-import chess.domain.Side;
 import chess.domain.board.Board;
+import chess.domain.game.Side;
 
 public abstract class GameState implements State {
 

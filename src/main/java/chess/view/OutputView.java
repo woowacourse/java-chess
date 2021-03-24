@@ -1,9 +1,9 @@
 package chess.view;
 
-import chess.domain.Score;
-import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.game.ChessGame;
+import chess.domain.game.Score;
+import chess.domain.game.Side;
 import chess.domain.position.Column;
 import chess.domain.position.Position;
 import chess.domain.position.Row;

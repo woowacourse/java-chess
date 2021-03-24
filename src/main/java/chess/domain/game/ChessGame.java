@@ -1,7 +1,5 @@
 package chess.domain.game;
 
-import chess.domain.Score;
-import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.command.Command;
 import chess.domain.gamestate.State;

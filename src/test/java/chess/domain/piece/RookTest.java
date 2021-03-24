@@ -3,7 +3,7 @@ package chess.domain.piece;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
-import chess.domain.Side;
+import chess.domain.game.Side;
 import chess.domain.position.Position;
 import chess.exception.InvalidMovementException;
 import java.util.Arrays;

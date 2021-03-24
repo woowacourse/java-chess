@@ -2,9 +2,9 @@ package chess.domain.gamestate;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import chess.domain.Side;
 import chess.domain.board.Board;
 import chess.domain.board.BoardTestInitializer;
+import chess.domain.game.Side;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
