@@ -7,14 +7,11 @@ import java.util.Map;
 
 public class BoardFactory {
 
-    private BoardFactory() {
-    }
-
-    public static Board create() {
+    public Board create() {
         return new Board(createBoard());
     }
 
-    private static Map<Position, Piece> createBoard() {
+    private Map<Position, Piece> createBoard() {
         Map<Position, Piece> board = initialize();
 
         board.put(Position.of(Horizontal.A, Vertical.EIGHT), new Rook(Team.BLACK));
@@ -39,7 +36,7 @@ public class BoardFactory {
         return board;
     }
 
-    private static Map<Position, Piece> initialize() {
+    private Map<Position, Piece> initialize() {
         Map<Position, Piece> board = new LinkedHashMap<>();
 
         for (Position position : Position.getPositions()) {
@@ -49,7 +46,7 @@ public class BoardFactory {
         return board;
     }
 
-    private static void setPawn(Map<Position, Piece> board) {
+    private void setPawn(Map<Position, Piece> board) {
         for (Horizontal horizontal : Horizontal.values()) {
             board.put(Position.of(horizontal, Vertical.SEVEN), new Pawn(Team.BLACK));
             board.put(Position.of(horizontal, Vertical.TWO), new Pawn(Team.WHITE));

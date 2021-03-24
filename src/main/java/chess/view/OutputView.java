@@ -8,6 +8,10 @@ import java.util.Objects;
 public class OutputView {
     private static final String EMPTY_FIELD = ".";
     private static final int LINE_COUNT = 8;
+    private static final String STATUS_MESSAGE = "BLACK 팀의 점수 : %f, WHITE 팀의 점수 : %f" + System.lineSeparator();
+    private static final String BLACK_WIN = "BLACK 팀이 유리한 상황입니다.";
+    private static final String WHITE_WIN = "WHITE 팀이 유리한 상황입니다.";
+    private static final String DRAW = "동등한 상황입니다.";
 
     public static void printManual() {
         System.out.println("> 체스 게임을 시작합니다.");
@@ -47,5 +51,20 @@ public class OutputView {
     public static void printMessage(String commandMessage) {
         System.out.println(commandMessage);
         System.out.println();
+    }
+
+    public static void printStatus(double blackStatus, double whiteStatus) {
+        System.out.printf(STATUS_MESSAGE, blackStatus, whiteStatus);
+        System.out.println(calculateCurrentWinningTeam(blackStatus, whiteStatus));
+    }
+
+    private static String calculateCurrentWinningTeam(double blackStatus, double whiteStatus) {
+        if (blackStatus > whiteStatus) {
+            return BLACK_WIN;
+        }
+        if (blackStatus < whiteStatus) {
+            return WHITE_WIN;
+        }
+        return DRAW;
     }
 }

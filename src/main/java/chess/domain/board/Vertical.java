@@ -24,14 +24,14 @@ public enum Vertical {
         return Arrays.stream(Vertical.values())
                 .filter(vertical -> vertical.value.equals(value))
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("1~8 범위 밖의 값입니다."));
     }
 
     public static Vertical findFromWeight(int weight) {
         return Arrays.stream(Vertical.values())
                 .filter(vertical -> vertical.weight == weight)
                 .findAny()
-                .orElseThrow(IllegalArgumentException::new);
+                .orElseThrow(() -> new IllegalArgumentException("1~8 범위 밖의 값입니다."));
     }
 
     public int getWeight() {

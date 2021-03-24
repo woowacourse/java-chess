@@ -20,7 +20,7 @@ public class Board {
     }
 
     private Map<Team, Double> initializeDeadPieceByTeamMap() {
-        Map<Team, Double> result = new HashMap<>();
+        Map<Team, Double> result = new EnumMap<>(Team.class);
         result.put(Team.BLACK, 0d);
         result.put(Team.WHITE, 0d);
         return result;
