@@ -1,9 +1,9 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
+import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Pawn;
 import chess.domain.piece.Piece;
-import chess.domain.piece.DirectionStrategy;
 import chess.domain.piece.Team;
 import chess.domain.position.MovePath;
 import chess.domain.position.Position;
@@ -45,9 +45,10 @@ public class ChessGame {
         DirectionStrategy directionStrategy = piece.strategy();
         board.validateTargetPieceIsSameTeam(movePath.getTarget(), turn);
         MoveValidator.validateStrategyContainsDirection(currentDirection, directionStrategy);
-        MoveValidator.validateMoveRange(calculateMoveRange(piece, directionStrategy, movePath.getSource()),
-            calculateTargetMove(
-                movePath, currentDirection));
+        MoveValidator
+            .validateMoveRange(calculateMoveRange(piece, directionStrategy, movePath.getSource()),
+                calculateTargetMove(
+                    movePath, currentDirection));
         validateTargetPath(movePath, piece, currentDirection);
     }
 
@@ -76,14 +77,17 @@ public class ChessGame {
         }
     }
 
-    private int calculateMoveRange(Piece piece, DirectionStrategy directionStrategy, Position position) {
+    private int calculateMoveRange(Piece piece, DirectionStrategy directionStrategy,
+        Position position) {
         if (!piece.isPawn()) {
             return directionStrategy.getMoveRange();
         }
-        if (position.getY() == BoardInitializer.WHITE_PAWN_START_LINE && piece.getTeam() == Team.WHITE) {
+        if (position.getY() == BoardInitializer.WHITE_PAWN_START_LINE
+            && piece.getTeam() == Team.WHITE) {
             return Pawn.MOVE_FIRST_RANGE;
         }
-        if (position.getY() == BoardInitializer.BLACK_PAWN_START_LINE && piece.getTeam() == Team.BLACK) {
+        if (position.getY() == BoardInitializer.BLACK_PAWN_START_LINE
+            && piece.getTeam() == Team.BLACK) {
             return Pawn.MOVE_FIRST_RANGE;
         }
         return Pawn.MOVE_DEFAULT_RANGE;

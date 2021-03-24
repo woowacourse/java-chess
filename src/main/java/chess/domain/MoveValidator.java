@@ -1,8 +1,8 @@
 package chess.domain;
 
 import chess.domain.piece.Direction;
-import chess.domain.piece.Piece;
 import chess.domain.piece.DirectionStrategy;
+import chess.domain.piece.Piece;
 import chess.domain.position.Position;
 
 public class MoveValidator {

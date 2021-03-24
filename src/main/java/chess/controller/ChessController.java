@@ -10,7 +10,7 @@ public class ChessController {
     public static final int COMMAND_INDEX = 0;
     public static final String SPACE = " ";
 
-    public static void start(ChessGame chessGame, String command) {
+    public static void start(ChessGame chessGame) {
         chessGame.initBoard(BoardInitializer.init());
         OutputView.printBoard(chessGame.getPrintBoardDto());
     }

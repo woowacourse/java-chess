@@ -18,7 +18,8 @@ public class PointCalculator {
     }
 
 
-    public static double calculateSumPawnAtSameFilePoint(Map<Position, Piece> chessBoard, Team team) {
+    public static double calculateSumPawnAtSameFilePoint(Map<Position, Piece> chessBoard,
+        Team team) {
         Map<Integer, Long> collect = groupFileOnlyPawnCount(chessBoard, team);
         return sumPawnCountAtSameFile(collect) * 0.5;
     }
