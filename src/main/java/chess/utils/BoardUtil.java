@@ -65,20 +65,23 @@ public class BoardUtil {
     private static Piece generatePiece(char pieceLetter, int x, int y) {
         Location convertedLocation = convertLocation(x, y);
         Team team = findOutTeam(pieceLetter);
-        switch (Character.toLowerCase(pieceLetter)) {
-            case 'r':
-                return Rook.of(convertedLocation, team);
-            case 'n':
-                return Knight.of(convertedLocation, team);
-            case 'b':
-                return Bishop.of(convertedLocation, team);
-            case 'q':
-                return Queen.of(convertedLocation, team);
-            case 'k':
-                return King.of(convertedLocation, team);
-            default:
-                return Pawn.of(convertedLocation, team);
+        char lowerPieceLetter = Character.toLowerCase(pieceLetter);
+        if (lowerPieceLetter == 'r') {
+            return Rook.of(convertedLocation, team);
         }
+        if (lowerPieceLetter == 'n') {
+            return Knight.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'b') {
+            return Bishop.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'q') {
+            return Queen.of(convertedLocation, team);
+        }
+        if (lowerPieceLetter == 'k') {
+            return King.of(convertedLocation, team);
+        }
+        return Pawn.of(convertedLocation, team);
     }
 
     private static Location convertLocation(int x, int y) {
