@@ -24,6 +24,7 @@ public final class Board {
         checkAnotherTeamTurn(startPoint, team);
         Piece startPointPiece = pieces.getPieceByPosition(startPoint);
         startPointPiece.move(this, endPoint);
+        startPointPiece.erasePiece(this, endPoint);
     }
 
     private void checkAnotherTeamTurn(Position startPoint, Team team) {
