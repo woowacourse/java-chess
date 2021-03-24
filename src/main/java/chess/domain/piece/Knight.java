@@ -31,32 +31,7 @@ public class Knight extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public double score() {
         return KNIGHT_SCORE;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        throw new InvalidMethodCallException();
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        throw new InvalidMethodCallException();
     }
 }

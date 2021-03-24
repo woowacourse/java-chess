@@ -2,6 +2,7 @@ package chess.domain.piece;
 
 import chess.domain.Side;
 import chess.domain.position.Position;
+import chess.exception.InvalidMethodCallException;
 import chess.exception.InvalidMovementException;
 
 import java.util.List;
@@ -37,11 +38,17 @@ public abstract class Piece {
 
     protected abstract List<Position> getRoute(Position from, Position to);
 
-    public abstract boolean isBlank();
+    public boolean isBlank() {
+        return false;
+    };
 
-    public abstract boolean isPawn();
+    public boolean isPawn() {
+        return false;
+    };
 
-    public abstract boolean isKing();
+    public boolean isKing() {
+        return false;
+    };
 
     public abstract double score();
 
@@ -67,7 +74,11 @@ public abstract class Piece {
         return initial;
     }
 
-    public abstract boolean diagonal(Position from, Position to);
+    public boolean diagonal(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
 
-    public abstract boolean forward(Position from, Position to);
+    public boolean forward(Position from, Position to) {
+        throw new InvalidMethodCallException();
+    }
 }

@@ -38,18 +38,8 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
     public boolean isPawn() {
         return true;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
     }
 
     private boolean movableOneOrTwoSquare(int rowDifference, int columnDifference, int direction) {

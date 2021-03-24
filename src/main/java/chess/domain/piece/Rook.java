@@ -29,32 +29,7 @@ public class Rook extends Piece {
     }
 
     @Override
-    public boolean isBlank() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public double score() {
         return ROOK_SCORE;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        throw new InvalidMethodCallException();
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        throw new InvalidMethodCallException();
     }
 }

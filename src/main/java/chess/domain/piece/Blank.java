@@ -35,27 +35,7 @@ public class Blank extends Piece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public double score() {
         throw new PieceDoesNotExistException();
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        throw new InvalidMethodCallException();
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        throw new InvalidMethodCallException();
     }
 }
