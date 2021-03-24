@@ -1,7 +1,7 @@
 package chess.domain;
 
 import chess.domain.board.Board;
-import chess.domain.board.Commands;
+import chess.domain.command.Commands;
 import chess.domain.board.Position;
 import chess.domain.board.Team;
 import chess.domain.piece.Pawn;
@@ -16,7 +16,6 @@ import java.io.PrintStream;
 import java.util.EnumMap;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
 
 class ChessGameTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();

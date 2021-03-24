@@ -2,6 +2,7 @@ package chess.view;
 
 import chess.domain.board.*;
 import chess.domain.dto.BoardDto;
+import chess.domain.dto.PointDto;
 import chess.domain.piece.Piece;
 
 import java.util.EnumMap;
@@ -48,8 +49,8 @@ public class OutputView {
         return file.getFile() + rank.getRank();
     }
 
-    public static void printStatus(EnumMap<Team, Double> result) {
-        for (Map.Entry<Team, Double> entry : result.entrySet()) {
+    public static void printStatus(PointDto pointDto) {
+        for (Map.Entry<Team, Double> entry : pointDto.result()) {
             System.out.printf("%s팀의 점수는 %.2f점 입니다.\n", entry.getKey().team(), entry.getValue());
         }
         System.out.println();

@@ -1,4 +1,8 @@
-package chess.domain.board;
+package chess.domain.command;
+
+import chess.domain.board.File;
+import chess.domain.board.Position;
+import chess.domain.board.Rank;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,6 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Commands {
+
     private final String command;
     private final List<Position> path;
 
