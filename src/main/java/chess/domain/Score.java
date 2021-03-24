@@ -19,7 +19,7 @@ public class Score {
         return new Score(value);
     }
 
-    public Score addedScore(Score score) {
+    public Score add(Score score) {
         return from(this.value + score.value);
     }
 
