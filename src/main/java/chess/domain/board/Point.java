@@ -1,5 +1,7 @@
 package chess.domain.board;
 
+import static chess.domain.board.Board.*;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -16,6 +18,8 @@ public final class Point {
     private static final char MAXIMUM_LETTER = 'h';
     private static final int MINIMUM_RANK = 1;
     private static final int MAXIMUM_RANK = 8;
+    private static final int MINIMUM_INDEX = 0;
+    private static final int MAXIMUM_INDEX = 7;
 
     private static final List<Point> points;
 
@@ -38,10 +42,7 @@ public final class Point {
     }
 
     public static Point valueOf(int row, int column) {
-        return points.stream()
-            .filter(p -> p.column.equals(new Column(column)) && p.row.equals(new Row(row)))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+        return points.get(makeIndex(row, column));
     }
 
     public static Point of(String point) {
@@ -49,10 +50,14 @@ public final class Point {
     }
 
     private static Point of(char letter, int rank) {
-        return points.stream()
-            .filter(point -> point.column.isSameAs(convertLetterToIndex(letter)) && point.row.isSameAs(convertRankToIndex(rank)))
-            .findFirst()
-            .orElseThrow(() -> new IllegalArgumentException("올바르지 않은 좌표입니다."));
+        return points.get(makeIndex(convertRankToIndex(rank), convertLetterToIndex(letter)));
+    }
+
+    private static int makeIndex(int row, int column) {
+        if(row < MINIMUM_INDEX || row  > MAXIMUM_INDEX || column < MINIMUM_INDEX || column > MAXIMUM_INDEX) {
+            throw new IllegalArgumentException("옳지 않은 좌표입니다.");
+        }
+        return BOARD_SIZE * column + (MAXIMUM_INDEX - row);
     }
 
     private static int convertLetterToIndex(char letter) {
