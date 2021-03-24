@@ -9,7 +9,7 @@ import chess.domain.piece.Piece;
 
 public class PieceMovementRule {
 
-    public static final int FIRST_NEXT_MOVE_COUNT = 2;
+    private static final int FIRST_NEXT_MOVE_COUNT = 2;
     private static final int FIRST_MOVING_PAWN_RANGE = 2;
 
     private final Board board;
@@ -19,15 +19,12 @@ public class PieceMovementRule {
     }
 
     public boolean canMove(Point source, Point destination, Team currentTeam) {
-
         return isValidSourceAndDestination(source, destination, currentTeam)
             && board.hasMovableVector(source, destination)
-            && canMoveWithMoveVector(source, destination,
-            board.movableVector(source, destination));
+            && canMoveWithMoveVector(source, destination, board.movableVector(source, destination));
     }
 
-    private boolean isValidSourceAndDestination(
-        Point source, Point destination, Team currentTeam) {
+    private boolean isValidSourceAndDestination(Point source, Point destination, Team currentTeam) {
         return board.isSameTeamAt(source, currentTeam)
             && board.isNotSameTeamAt(destination, currentTeam);
 

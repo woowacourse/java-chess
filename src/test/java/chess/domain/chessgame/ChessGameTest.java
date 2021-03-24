@@ -33,6 +33,7 @@ public class ChessGameTest {
     @DisplayName("팀 화이트 초기설정 테스트")
     void initializeBoard() {
         BoardDto actualBoard = board.boardDto();
+
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R"));
         expectedBoard.add(Arrays.asList("P", "P", "P", "P", "P", "P", "P", "P"));
@@ -43,7 +44,7 @@ public class ChessGameTest {
         expectedBoard.add(Arrays.asList("p", "p", "p", "p", "p", "p", "p", "p"));
         expectedBoard.add(Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r"));
 
-        assertThat(expectedBoard).isEqualTo(actualBoard.board());
+        assertThat(actualBoard.board()).isEqualTo(expectedBoard);
     }
 
     @Test
@@ -58,6 +59,7 @@ public class ChessGameTest {
     @DisplayName("킹 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void kingsMoveToInvalidPoint() {
         board.move(Point.of("e2"), Point.of("f3"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("e1"), Point.of("e3")))
             .withMessage("불가능한 이동입니다.");
@@ -73,9 +75,11 @@ public class ChessGameTest {
                 return Team.WHITE;
             }
         });
+
         chessGame.start();
         board.move(Point.of("e2"), Point.of("f3"));
         board.move(Point.of("e1"), Point.of("e3"));
+
         assertThatCode(() -> {
             chessGame.move(Point.of("e3"), Point.of("f4"));
             chessGame.move(Point.of("f4"), Point.of("f5"));
@@ -98,6 +102,7 @@ public class ChessGameTest {
                 return Team.WHITE;
             }
         });
+
         chessGame.start();
         board.move(Point.of("d1"), Point.of("d3"));
 
@@ -138,6 +143,7 @@ public class ChessGameTest {
             }
         });
         chessGame.start();
+
         board.move(Point.of("d2"), Point.of("d3"));
         board.move(Point.of("b2"), Point.of("b3"));
 
@@ -167,6 +173,7 @@ public class ChessGameTest {
                 return Team.WHITE;
             }
         });
+
         chessGame.start();
         board.move(Point.of("a2"), Point.of("a6"));
 
@@ -182,6 +189,7 @@ public class ChessGameTest {
     @DisplayName("룩 이동 테스트(해당 위치로 갈 수 없는 경우 예외처리)")
     void rookMoveToInvalidPoint() {
         board.move(Point.of("b2"), Point.of("b3"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("a1"), Point.of("f6"))
         ).withMessage("불가능한 이동입니다.");
@@ -197,7 +205,9 @@ public class ChessGameTest {
                 return Team.WHITE;
             }
         });
+
         chessGame.start();
+
         assertThatCode(() -> {
             chessGame.move(Point.of("b1"), Point.of("c3"));
             chessGame.move(Point.of("c3"), Point.of("e4"));
@@ -232,6 +242,7 @@ public class ChessGameTest {
     void pawnMovesBack() {
         board.move(Point.of("b2"), Point.of("b3"));
         board.move(Point.of("b7"), Point.of("b6"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("b3"), Point.of("b2"))
         ).withMessage("불가능한 이동입니다.");
@@ -253,6 +264,7 @@ public class ChessGameTest {
     @DisplayName("폰을 유효한 위치로 이동 테스트(2칸 이동시 앞에 길이 막혀있으면 예외처리)")
     void pawnWithInvalidMoveWhenFirstMove() {
         board.move(Point.of("b2"), Point.of("c3"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("c2"), Point.of("c4"))
         ).withMessage("불가능한 이동입니다.");
@@ -263,6 +275,7 @@ public class ChessGameTest {
     void pawnMoveToInvalidPointWhenSecondMove() {
         board.move(Point.of("b2"), Point.of("b3"));
         board.move(Point.of("c7"), Point.of("c6"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("b3"), Point.of("b5"))
         ).withMessage("불가능한 이동입니다.");
@@ -286,6 +299,7 @@ public class ChessGameTest {
     void pawnWithInvalidMoveWhenFindEnemy() {
         board.move(Point.of("e7"), Point.of("e4"));
         board.move(Point.of("d2"), Point.of("d5"));
+
         assertThatIllegalArgumentException().isThrownBy(() ->
             chessGame.move(Point.of("d5"), Point.of("e4"))
         ).withMessage("불가능한 이동입니다.");

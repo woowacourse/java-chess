@@ -25,6 +25,7 @@ public class BoardTest {
     @DisplayName("빈 보드 생성")
     void createBoard() {
         BoardDto actualBoard = board.boardDto();
+
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
@@ -35,12 +36,15 @@ public class BoardTest {
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
 
-        assertThat(expectedBoard).isEqualTo(actualBoard.board());
+        assertThat(actualBoard.board()).isEqualTo(expectedBoard);
     }
 
     @Test
     @DisplayName("흑과 백이 대칭적으로 말을 놓는 기능")
     void putSymmetrically() {
+        board.putSymmetrically(Piece.ROOK, Point.of("c3"));
+        BoardDto actualBoard = board.boardDto();
+
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
@@ -50,9 +54,7 @@ public class BoardTest {
         expectedBoard.add(Arrays.asList(".", ".", "r", ".", ".", ".", ".", "."));
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
-        board.putSymmetrically(Piece.ROOK, Point.of("c3"));
-        BoardDto actualBoard = board.boardDto();
 
-        assertThat(expectedBoard).isEqualTo(actualBoard.board());
+        assertThat(actualBoard.board()).isEqualTo(expectedBoard);
     }
 }
