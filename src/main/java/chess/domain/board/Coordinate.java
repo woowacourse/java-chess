@@ -3,6 +3,7 @@ package chess.domain.board;
 import chess.domain.piece.Direction;
 import chess.domain.piece.TeamType;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +44,17 @@ public class Coordinate {
 
     public Coordinate move(Direction direction) {
         return new Coordinate(file.move(direction), rank.move(direction));
+    }
+
+    public List<Coordinate> calculateContinuousCoordinatesTo(Coordinate targetCoordinate) {
+        List<Coordinate> possibleCoordinates = new ArrayList<>();
+        Direction direction = this.evaluateDirection(targetCoordinate);
+        Coordinate nextCoordinate = this.move(direction);
+        while (!nextCoordinate.equals(targetCoordinate)) {
+            possibleCoordinates.add(nextCoordinate);
+            nextCoordinate = nextCoordinate.move(direction);
+        }
+        return possibleCoordinates;
     }
 
     public boolean isTwoRankForwardFrom(Coordinate targetCoordinate) {
