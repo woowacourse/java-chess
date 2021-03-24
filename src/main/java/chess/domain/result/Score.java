@@ -21,6 +21,7 @@ public class Score {
     }
 
     public static Score from(Map<Coordinate, Piece> pieces) {
+        validatePieces(pieces);
         double scoreTotalExceptPawn = calculateScoreTotalExceptPawn(pieces);
         double pawnScoreTotal = 0;
         for (File file : File.values()) {
@@ -28,6 +29,17 @@ public class Score {
             pawnScoreTotal += accumulatePawnScore(pawnCounts);
         }
         return new Score(scoreTotalExceptPawn + pawnScoreTotal);
+    }
+
+    private static void validatePieces(Map<Coordinate, Piece> pieces) {
+        boolean isAllSameTeam = pieces.values()
+                .stream()
+                .map(Piece::getTeamType)
+                .distinct()
+                .count() == 1;
+        if (!isAllSameTeam) {
+            throw new IllegalArgumentException("다른 팀의 기물이 포함되어 있어서 점수를 집계할 수 없습니다.");
+        }
     }
 
     private static double calculateScoreTotalExceptPawn(Map<Coordinate, Piece> pieces) {
