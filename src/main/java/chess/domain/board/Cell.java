@@ -3,32 +3,31 @@ package chess.domain.board;
 import chess.domain.piece.Piece;
 import chess.domain.piece.TeamType;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class Cell {
-    private static final int CURRENT_PIECE_INDEX = 0;
 
-    private final List<Piece> pieceOnCell = new ArrayList<>();
+    private Piece piece;
 
     public void put(Piece piece) {
-        if (!pieceOnCell.isEmpty()) {
-            pieceOnCell.clear();
-        }
-        pieceOnCell.add(piece);
+        this.piece = piece;
     }
 
     public void movePieceTo(Cell targetCell) {
         Piece pieceOnCurrentCell = getPiece();
         targetCell.put(pieceOnCurrentCell);
-        pieceOnCell.clear();
+        this.piece = null;
     }
 
     public Piece getPiece() {
-        if (pieceOnCell.isEmpty()) {
+        if (isEmpty()) {
             throw new IllegalStateException("현재 위치에 기물이 없습니다.");
         }
-        return pieceOnCell.get(CURRENT_PIECE_INDEX);
+        return piece;
+    }
+
+    public boolean isEmpty() {
+        return Objects.isNull(piece);
     }
 
     public boolean hasMovablePiece(ChessBoard chessBoard, Coordinate current, Coordinate destination) {
@@ -36,27 +35,23 @@ public class Cell {
     }
 
     public boolean isEmptyOrHasEnemy(TeamType teamType) {
-        return pieceOnCell.isEmpty() || !isTeamOf(teamType);
+        return isEmpty() || !isTeamOf(teamType);
     }
 
     public boolean hasEnemy(TeamType teamType) {
-        return !pieceOnCell.isEmpty() && !isTeamOf(teamType);
+        return !isEmpty() && !isTeamOf(teamType);
     }
 
     public boolean isTeamOf(TeamType teamType) {
-        return !pieceOnCell.isEmpty() && getPiece().isTeamOf(teamType);
+        return !isEmpty() && getPiece().isTeamOf(teamType);
     }
 
     public boolean hasKing() {
-        return !pieceOnCell.isEmpty() && getPiece().isKing();
+        return !isEmpty() && getPiece().isKing();
     }
 
     public boolean hasPawn() {
-        return !pieceOnCell.isEmpty() && getPiece().isPawn();
-    }
-
-    public boolean isEmpty() {
-        return pieceOnCell.isEmpty();
+        return !isEmpty() && getPiece().isPawn();
     }
 
     public double getPieceScore() {
