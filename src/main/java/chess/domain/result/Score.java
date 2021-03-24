@@ -24,9 +24,10 @@ public class Score {
         validatePieces(pieces);
         double scoreTotalExceptPawn = calculateScoreTotalExceptPawn(pieces);
         double pawnScoreTotal = 0;
+        Piece pawn = new Pawn(TeamType.WHITE);
         for (File file : File.values()) {
             int pawnCounts = calculatePawnCountsByFile(pieces, file);
-            pawnScoreTotal += accumulatePawnScore(pawnCounts);
+            pawnScoreTotal += accumulatePawnScore(pawnCounts, pawn);
         }
         return new Score(scoreTotalExceptPawn + pawnScoreTotal);
     }
@@ -58,16 +59,14 @@ public class Score {
                 .count();
     }
 
-    private static double accumulatePawnScore(int pawnCounts) {
+    private static double accumulatePawnScore(int pawnCounts, Piece pawn) {
         if (pawnCounts == 0) {
             return 0;
         }
-        Piece pawn = new Pawn(TeamType.WHITE);
         if (pawnCounts > 1) {
             return (pawn.getScore() / 2) * pawnCounts;
         }
         return pawn.getScore();
-
     }
 
     private void validateScore(double score) {
