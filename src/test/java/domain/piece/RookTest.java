@@ -39,21 +39,6 @@ class RookTest {
         assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("룩은 같은 편 기물이 있는 위치로 이동할 수 없다.")
-    @Test
-    void testMoveSameColorPiecePlace() {
-        Board board = new Board();
-        Position sourcePosition = new Position("d5");
-        Position targetPosition = new Position("h5");
-        Rook blackRook = new Rook(true);
-        King blackKing = new King(true);
-
-        board.put(sourcePosition, blackRook);
-        board.put(targetPosition, blackKing);
-
-        assertThat(blackRook.canMove(board, sourcePosition, targetPosition)).isFalse();
-    }
-
     @DisplayName("룩은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
     void testMoveEnemyPiecePlace() {

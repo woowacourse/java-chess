@@ -9,24 +9,23 @@ import java.util.Map;
 
 public class Queen extends Piece {
 
-    private static final Score SCORE = new Score(9);
     private static final String NAME = "q";
+    private static final Score SCORE = new Score(9);
 
     public Queen(boolean isBlack) {
         super(NAME, isBlack, SCORE);
     }
 
-    public static Map<Position, Piece> createInitialQueen() {
-        Map<Position, Piece> initialQueen = new HashMap<>();
-        initialQueen.put(new Position("d8"), new Queen(true));
-        initialQueen.put(new Position("d1"), new Queen(false));
-        return initialQueen;
+    public static Map<Position, Piece> createInitialQueens() {
+        Map<Position, Piece> initialQueens = new HashMap<>();
+        initialQueens.put(new Position("d8"), new Queen(true));
+        initialQueens.put(new Position("d1"), new Queen(false));
+        return initialQueens;
     }
 
     @Override
     public boolean canMove(Board board, Position source, Position target) {
-        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
-            || (source.isNotLinearPosition(target) && source.isNotDiagonalPosition(target))) {
+        if (source.isNotLinearPosition(target) && source.isNotDiagonalPosition(target)) {
             return false;
         }
         Direction direction = targetDirection(source, target);
@@ -43,4 +42,5 @@ public class Queen extends Piece {
         }
         return Direction.diagonalTargetDirection(source.diff(target));
     }
+
 }

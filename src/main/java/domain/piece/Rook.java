@@ -16,19 +16,18 @@ public class Rook extends Piece {
         super(NAME, isBlack, SCORE);
     }
 
-    public static Map<Position, Piece> createInitialRook() {
-        Map<Position, Piece> initialRook = new HashMap<>();
-        initialRook.put(new Position("a8"), new Rook(true));
-        initialRook.put(new Position("h8"), new Rook(true));
-        initialRook.put(new Position("a1"), new Rook(false));
-        initialRook.put(new Position("h1"), new Rook(false));
-        return initialRook;
+    public static Map<Position, Piece> createInitialRooks() {
+        Map<Position, Piece> initialRooks = new HashMap<>();
+        initialRooks.put(new Position("a8"), new Rook(true));
+        initialRooks.put(new Position("h8"), new Rook(true));
+        initialRooks.put(new Position("a1"), new Rook(false));
+        initialRooks.put(new Position("h1"), new Rook(false));
+        return initialRooks;
     }
 
     @Override
     public boolean canMove(Board board, Position source, Position target) {
-        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))
-            || source.isNotLinearPosition(target)) {
+        if (source.isNotLinearPosition(target)) {
             return false;
         }
         Direction direction = Direction.linearTargetDirection(source.diff(target));

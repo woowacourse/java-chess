@@ -40,22 +40,7 @@ class KnightTest {
         assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("나이트는 같은 편 기물이 있는 위치로 이동할 수 없다.")
-    @Test
-    void testMoveSameColorPiecePlace() {
-        Board board = new Board();
-        Position sourcePosition = new Position("d5");
-        Position targetPosition = new Position("e7");
-        Knight blackKnight = new Knight(true);
-        Rook blackRook = new Rook(true);
-
-        board.put(sourcePosition, blackKnight);
-        board.put(targetPosition, blackRook);
-
-        assertThat(blackKnight.canMove(board, sourcePosition, targetPosition)).isFalse();
-    }
-
-    @DisplayName("킹은 다른 편 기물이 있는 위치로 이동할 수 있다.")
+    @DisplayName("나이트은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
     void testMoveEnemyPiecePlace() {
         Board board = new Board();

@@ -9,27 +9,24 @@ import java.util.Map;
 
 public class Knight extends Piece {
 
-    private static final Score SCORE = new Score(2.5);
     private static final String NAME = "n";
+    private static final Score SCORE = new Score(2.5);
 
     public Knight(boolean isBlack) {
         super(NAME, isBlack, SCORE);
     }
 
-    public static Map<Position, Piece> createInitialKnight() {
-        Map<Position, Piece> initialKnight = new HashMap<>();
-        initialKnight.put(new Position("b8"), new Knight(true));
-        initialKnight.put(new Position("g8"), new Knight(true));
-        initialKnight.put(new Position("b1"), new Knight(false));
-        initialKnight.put(new Position("g1"), new Knight(false));
-        return initialKnight;
+    public static Map<Position, Piece> createInitialKnights() {
+        Map<Position, Piece> initialKnights = new HashMap<>();
+        initialKnights.put(new Position("b8"), new Knight(true));
+        initialKnights.put(new Position("g8"), new Knight(true));
+        initialKnights.put(new Position("b1"), new Knight(false));
+        initialKnights.put(new Position("g1"), new Knight(false));
+        return initialKnights;
     }
 
     @Override
     public boolean canMove(Board board, Position source, Position target) {
-        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))) {
-            return false;
-        }
         return Direction.knightDirection()
             .stream()
             .anyMatch(direction -> source.sum(direction).equals(target));

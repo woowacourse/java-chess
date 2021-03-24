@@ -40,12 +40,12 @@ public class Board {
     }
 
     public void initChessPieces() {
-        board.putAll(King.createInitialKing());
-        board.putAll(Queen.createInitialQueen());
-        board.putAll(Bishop.createInitialBishop());
-        board.putAll(Knight.createInitialKnight());
-        board.putAll(Rook.createInitialRook());
-        board.putAll(Pawn.createInitialPawn());
+        board.putAll(King.createInitialKings());
+        board.putAll(Queen.createInitialQueens());
+        board.putAll(Bishop.createInitialBishops());
+        board.putAll(Knight.createInitialKnights());
+        board.putAll(Rook.createInitialRooks());
+        board.putAll(Pawn.createInitialPawns());
     }
 
     public Map<Position, Piece> getBoard() {
@@ -53,17 +53,25 @@ public class Board {
     }
 
     public Piece piece(Position position) {
-        return board.get(position);
+        return board.getOrDefault(position, new EmptyPiece());
     }
 
     public boolean move(Position source, Position target) {
-        Piece piece = board.getOrDefault(source, new EmptyPiece());
-        if (piece.isNotEmpty() && piece.canMove(this, source, target)) {
+        Piece SourcePiece = piece(source);
+        if (canMove(source, target) && SourcePiece.canMove(this, source, target)) {
             put(source, new EmptyPiece());
-            put(target, piece);
+            put(target, SourcePiece);
             return true;
         }
         return false;
+    }
+
+    public boolean canMove(Position source, Position target) {
+        Piece sourcePiece = piece(source);
+        Piece targetPiece = piece(target);
+        return sourcePiece.isNotEmpty()
+            && target.isChessBoardPosition()
+            && !sourcePiece.isSameColor(targetPiece);
     }
 
     public void put(Position position, Piece piece) {

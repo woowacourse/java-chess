@@ -98,6 +98,7 @@ class BoardTest {
 
         assertThat(board.piece(new Position("a7"))).isInstanceOf(Pawn.class);
         assertThat(board.piece(new Position("a7")).isBlack()).isTrue();
+
         assertThat(board.piece(new Position("b7"))).isInstanceOf(Pawn.class);
         assertThat(board.piece(new Position("b7")).isBlack()).isTrue();
         assertThat(board.piece(new Position("c7"))).isInstanceOf(Pawn.class);
@@ -155,5 +156,49 @@ class BoardTest {
 
         assertThat(board.piecesScore(true)).isEqualTo(new Score(20));
         assertThat(board.piecesScore(false)).isEqualTo(new Score(19.5));
+    }
+
+    @DisplayName("기물은 같은 팀이 있는 곳으로 이동할 수 없다.")
+    @Test
+    void moveSameColorPiecePositionTest() {
+        Board board = new Board();
+        King blackKing = new King(true);
+        Rook blackRook = new Rook(true);
+        Position source = new Position(3,3);
+        Position target = new Position(4,3);
+
+        board.put(source, blackKing);
+        board.put(target, blackRook);
+        board.move(source, target);
+
+        assertThat(board.piece(target)).isSameAs(blackRook);
+    }
+
+    @DisplayName("기물은 체스판 범위가 넘어서는 곳으로 이동할 수 없다.")
+    @Test
+    void moveOverChessBoardTest() {
+        Board board = new Board();
+        King blackKing = new King(true);
+        Position source = new Position(3,3);
+        Position target = new Position(10,10);
+
+        board.put(source, blackKing);
+        board.move(source, target);
+
+        assertThat(board.piece(source)).isSameAs(blackKing);
+    }
+
+    @DisplayName("source 위치에 기물이 없으면 이동할 수 없다.")
+    @Test
+    void emptySourceTest() {
+        Board board = new Board();
+        King blackKing = new King(true);
+        Position source = new Position(1,1);
+        Position target = new Position(4,3);
+
+        board.put(target, blackKing);
+        board.move(source, target);
+
+        assertThat(board.piece(target)).isSameAs(blackKing);
     }
 }

@@ -11,32 +11,24 @@ import java.util.Map;
 
 public class Pawn extends Piece {
 
-    private static final Score SCORE = new Score(1);
     private static final String NAME = "p";
+    private static final Score SCORE = new Score(1);
 
     public Pawn(boolean isBlack) {
         super(NAME, isBlack, SCORE);
     }
 
-    public static Map<Position, Piece> createInitialPawn() {
-        Map<Position, Piece> initialPawn = new HashMap<>();
-        initialPawn.put(new Position("a7"), new Pawn(true));
-        initialPawn.put(new Position("b7"), new Pawn(true));
-        initialPawn.put(new Position("c7"), new Pawn(true));
-        initialPawn.put(new Position("d7"), new Pawn(true));
-        initialPawn.put(new Position("e7"), new Pawn(true));
-        initialPawn.put(new Position("f7"), new Pawn(true));
-        initialPawn.put(new Position("g7"), new Pawn(true));
-        initialPawn.put(new Position("h7"), new Pawn(true));
-        initialPawn.put(new Position("a2"), new Pawn(false));
-        initialPawn.put(new Position("b2"), new Pawn(false));
-        initialPawn.put(new Position("c2"), new Pawn(false));
-        initialPawn.put(new Position("d2"), new Pawn(false));
-        initialPawn.put(new Position("e2"), new Pawn(false));
-        initialPawn.put(new Position("f2"), new Pawn(false));
-        initialPawn.put(new Position("g2"), new Pawn(false));
-        initialPawn.put(new Position("h2"), new Pawn(false));
-        return initialPawn;
+    public static Map<Position, Piece> createInitialPawns() {
+        Map<Position, Piece> initialPawns = new HashMap<>();
+        putPawns(initialPawns, 1, true);
+        putPawns(initialPawns, 6, false);
+        return initialPawns;
+    }
+
+    private static void putPawns(Map<Position, Piece> pawns, int row, boolean isBlack) {
+        for (int column = 0; column < 8; column++) {
+            pawns.put(new Position(row, column), new Pawn(isBlack));
+        }
     }
 
     @Override
@@ -46,9 +38,6 @@ public class Pawn extends Piece {
 
     @Override
     public boolean canMove(Board board, Position source, Position target) {
-        if (!target.isChessBoardPosition() || isSameColor(board.piece(target))) {
-            return false;
-        }
         List<Direction> directions = new ArrayList<>(findDirections());
         Direction forwardDirection = directions.remove(0);
         if (isForwardMovable(board, forwardDirection, source, target)
@@ -78,7 +67,7 @@ public class Pawn extends Piece {
 
     private boolean isFirstMovable(Board board, Direction direction, Position source,
         Position target) {
-        if (!createInitialPawn().containsKey(source) || board.piece(target).isNotEmpty()) {
+        if (!createInitialPawns().containsKey(source) || board.piece(target).isNotEmpty()) {
             return false;
         }
         Position firstStep = source.sum(direction);

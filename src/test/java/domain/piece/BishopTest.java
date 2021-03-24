@@ -39,21 +39,6 @@ class BishopTest {
         assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isFalse();
     }
 
-    @DisplayName("비숍은 같은 편 기물이 있는 위치로 이동할 수 없다.")
-    @Test
-    void testMoveSameColorPiecePlace() {
-        Board board = new Board();
-        Position sourcePosition = new Position("d5");
-        Position targetPosition = new Position("a8");
-        Bishop blackBishop = new Bishop(true);
-        Rook blackRook = new Rook(true);
-
-        board.put(sourcePosition, blackBishop);
-        board.put(targetPosition, blackRook);
-
-        assertThat(blackBishop.canMove(board, sourcePosition, targetPosition)).isFalse();
-    }
-
     @DisplayName("비숍은 다른 편 기물이 있는 위치로 이동할 수 있다.")
     @Test
     void testMoveEnemyPiecePlace() {

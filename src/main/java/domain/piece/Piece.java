@@ -10,15 +10,15 @@ public abstract class Piece {
     private final boolean isBlack;
     private final Score score;
 
-    protected Piece(String name, boolean color, Score score) {
-        this.isBlack = color;
+    protected Piece(String name, boolean isBlack, Score score) {
         this.name = name;
+        this.isBlack = isBlack;
         this.score = score;
     }
 
     public Piece(String name) {
-        this.isBlack = false;
         this.name = name;
+        this.isBlack = false;
         this.score = null;
     }
 
@@ -26,26 +26,6 @@ public abstract class Piece {
 
     public boolean isSameColor(Piece piece) {
         return piece.isNotEmpty() && this.isBlack == piece.isBlack;
-    }
-
-    public boolean isBlack() {
-        return isBlack;
-    }
-
-    public boolean isKing() {
-        return false;
-    }
-
-    public boolean isPawn() {
-        return false;
-    }
-
-    public boolean isNotEmpty() {
-        return true;
-    }
-
-    public boolean isEmpty() {
-        return false;
     }
 
     public String getName() {
@@ -57,6 +37,26 @@ public abstract class Piece {
 
     public Score getScore() {
         return score;
+    }
+
+    public boolean isBlack() {
+        return isBlack;
+    }
+
+    public boolean isNotEmpty() {
+        return true;
+    }
+
+    public boolean isEmpty() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
+        return false;
     }
 
 }
