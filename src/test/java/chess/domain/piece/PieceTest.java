@@ -17,6 +17,12 @@ class PieceTest {
                 Arguments.of(TeamType.WHITE, TeamType.WHITE, true));
     }
 
+    private static Stream<Arguments> getPieceTypes() {
+        return Stream.of(Arguments.of(new King(TeamType.WHITE), King.class),
+                Arguments.of(new Pawn(TeamType.BLACK), Pawn.class),
+                Arguments.of(new Knight(TeamType.WHITE), Knight.class));
+    }
+
     @DisplayName("기물이 킹인지 확인한다.")
     @Test
     void isKing() {
@@ -46,5 +52,14 @@ class PieceTest {
         boolean isSameTeam = piece.isTeamOf(comparingTeam);
 
         assertThat(isSameTeam).isEqualTo(expected);
+    }
+
+    @DisplayName("기물이 주어진 타입의 기물인지 확인한다.")
+    @ParameterizedTest
+    @MethodSource("getPieceTypes")
+    void isPieceOf(Piece piece, Class<? extends Piece> pieceType) {
+        boolean isSamePieceType = piece.isPieceOf(pieceType);
+
+        assertThat(isSamePieceType).isTrue();
     }
 }
