@@ -57,17 +57,11 @@ public class ChessController {
         }
     }
 
-    private void movePiece(final MoveCommand command) {
-        chessManager.move(command);
-        OutputView.printBoard(chessManager.getBoard());
-    }
-
     private Menu executeMenu(final String input) {
         final Menu menu = Menu.of(input);
 
         if (menu.isStart()) {
-            chessManager.resetBoard();
-            OutputView.printBoard(chessManager.getBoard());
+            restartGame();
         }
 
         if (menu.isMove()) {
@@ -83,6 +77,16 @@ public class ChessController {
         }
 
         return menu;
+    }
+
+    private void restartGame() {
+        chessManager.resetBoard();
+        OutputView.printBoard(chessManager.getBoard());
+    }
+
+    private void movePiece(final MoveCommand command) {
+        chessManager.move(command);
+        OutputView.printBoard(chessManager.getBoard());
     }
 
     private void showAblePositionToMove(final ShowCommand command) {
