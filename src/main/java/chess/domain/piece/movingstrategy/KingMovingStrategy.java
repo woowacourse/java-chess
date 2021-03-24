@@ -6,7 +6,7 @@ import java.util.List;
 
 public class KingMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 1;
+    private static final int MOVABLE_LENGTH = 0;
 
     private final List<Vector> kingsVector = Vector.everyVectors();
 
@@ -23,6 +23,6 @@ public class KingMovingStrategy implements MovingStrategy {
 
     @Override
     public int getMoveLength() {
-        return LENGTH;
+        return MOVABLE_LENGTH;
     }
 }

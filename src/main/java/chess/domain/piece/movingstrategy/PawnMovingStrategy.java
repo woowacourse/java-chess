@@ -7,7 +7,7 @@ import java.util.List;
 
 public class PawnMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 2;
+    private static final int MOVABLE_LENGTH = 1;
 
     private final List<Vector> pawnsVector = Vector.pawnVectors();
 
@@ -34,6 +34,6 @@ public class PawnMovingStrategy implements MovingStrategy {
 
     @Override
     public int getMoveLength() {
-        return LENGTH;
+        return MOVABLE_LENGTH;
     }
 }

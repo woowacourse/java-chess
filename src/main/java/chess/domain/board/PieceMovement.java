@@ -18,8 +18,8 @@ public class PieceMovement {
 
     public void validateMovement(Point source, Point destination, Team team) {
         setSquareAndVector(source, destination);
-        validatePoint(source, destination);
         validateTurn(team);
+        validatePoint(source, destination);
     }
 
     private void validatePoint(Point source, Point destination) {

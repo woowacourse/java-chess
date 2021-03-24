@@ -6,7 +6,7 @@ import java.util.List;
 
 public class KnightMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 1;
+    private static final int MOVABLE_LENGTH = 0;
 
     private final List<Vector> kingsVector = Vector.knightVectors();
 
@@ -23,6 +23,6 @@ public class KnightMovingStrategy implements MovingStrategy {
 
     @Override
     public int getMoveLength() {
-        return LENGTH;
+        return MOVABLE_LENGTH;
     }
 }

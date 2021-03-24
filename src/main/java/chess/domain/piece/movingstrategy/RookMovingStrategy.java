@@ -6,7 +6,7 @@ import java.util.List;
 
 public class RookMovingStrategy implements MovingStrategy {
 
-    static final int LENGTH = 7;
+    static final int MOVABLE_LENGTH = 7;
 
     private final List<Vector> rooksVector = Vector.axisVectors();
 
@@ -23,6 +23,6 @@ public class RookMovingStrategy implements MovingStrategy {
 
     @Override
     public int getMoveLength() {
-        return LENGTH;
+        return MOVABLE_LENGTH;
     }
 }

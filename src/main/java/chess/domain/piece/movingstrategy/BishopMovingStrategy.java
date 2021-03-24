@@ -6,7 +6,7 @@ import java.util.List;
 
 public class BishopMovingStrategy implements MovingStrategy {
 
-    private static final int LENGTH = 7;
+    private static final int MOVABLE_LENGTH = 7;
 
     private final List<Vector> bishopVector = Vector.diagonalVectors();
 
@@ -23,6 +23,6 @@ public class BishopMovingStrategy implements MovingStrategy {
 
     @Override
     public int getMoveLength() {
-        return LENGTH;
+        return MOVABLE_LENGTH;
     }
 }
