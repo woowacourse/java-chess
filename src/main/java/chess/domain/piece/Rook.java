@@ -3,8 +3,6 @@ package chess.domain.piece;
 import chess.domain.board.position.Position;
 import chess.domain.movestrategy.CommonMoveStrategy;
 import chess.domain.movestrategy.MoveStrategy;
-import chess.domain.piece.team.Color;
-import chess.domain.piece.team.Symbol;
 
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -1,7 +1,7 @@
 package chess.view;
 
 import chess.domain.board.LineDto;
-import chess.domain.piece.team.Color;
+import chess.domain.piece.Color;
 
 import java.util.List;
 

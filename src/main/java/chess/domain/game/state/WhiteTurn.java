@@ -3,7 +3,7 @@ package chess.domain.game.state;
 import chess.domain.board.Board;
 import chess.domain.board.position.Position;
 import chess.domain.piece.Piece;
-import chess.domain.piece.team.Color;
+import chess.domain.piece.Color;
 
 public class WhiteTurn extends Running {
     public WhiteTurn(Board board) {

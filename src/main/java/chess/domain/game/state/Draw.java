@@ -1,7 +1,7 @@
 package chess.domain.game.state;
 
 import chess.domain.board.Board;
-import chess.domain.piece.team.Color;
+import chess.domain.piece.Color;
 
 public class Draw extends Finished {
     public Draw(Board board) {

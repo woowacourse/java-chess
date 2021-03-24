@@ -5,7 +5,7 @@ import chess.domain.board.position.Position;
 import chess.domain.game.state.Init;
 import chess.domain.game.state.State;
 import chess.domain.piece.Piece;
-import chess.domain.piece.team.Color;
+import chess.domain.piece.Color;
 
 import java.util.List;
 import java.util.Map;

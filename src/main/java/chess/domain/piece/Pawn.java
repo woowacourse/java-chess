@@ -4,8 +4,6 @@ import chess.domain.board.position.Position;
 import chess.domain.board.position.Ypoint;
 import chess.domain.movestrategy.MoveStrategy;
 import chess.domain.movestrategy.PawnMoveStrategy;
-import chess.domain.piece.team.Color;
-import chess.domain.piece.team.Symbol;
 
 import java.util.ArrayList;
 import java.util.Arrays;

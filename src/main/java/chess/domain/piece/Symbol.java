@@ -1,4 +1,4 @@
-package chess.domain.piece.team;
+package chess.domain.piece;
 
 public enum Symbol {
     KING("k", "K"),
