@@ -34,7 +34,7 @@ public class ChessGame {
         gameState = gameState.status();
     }
 
-    public boolean isContinue() {
+    public boolean isOngoing() {
         return !gameState.isFinished();
     }
 

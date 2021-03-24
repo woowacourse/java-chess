@@ -19,7 +19,7 @@ public class ChessController {
     }
 
     private void proceed(ChessGame chessGame, Board board) {
-        while (chessGame.isContinue()) {
+        while (chessGame.isOngoing()) {
             inputCommandAndExecute(chessGame);
             OutputView.printCurrentTurn(chessGame.currentTurn());
             OutputView.printChessBoard(board.boardDto());
