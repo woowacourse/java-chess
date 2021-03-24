@@ -2,30 +2,23 @@ package chess.domain.piece.kind;
 
 import chess.domain.board.Point;
 import chess.domain.piece.Color;
-import chess.domain.piece.Direction;
 
 public class Knight extends Piece {
     private static final double KNIGHT_SCORE = 2.5;
     private static final int POSSIBLE_DISTANCE_OF_KNIGHT = 5;
     private static final String KNIGHT_NAME = "n";
 
-    public Knight(Color color, Point point) {
-        super(KNIGHT_NAME, color, point);
+    public Knight(Color color) {
+        super(KNIGHT_NAME, color);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        int distance = this.point.calculateDistance(target.point);
-
-        if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
-            throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
+    public void checkCorrectDistance(Point sourcePoint, Point targetPoint, Piece target) {
+        int distance = sourcePoint.calculateDistance(targetPoint);
+        if (distance == POSSIBLE_DISTANCE_OF_KNIGHT) {
+            return;
         }
-        return null;
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return target;
+        throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }
 
     @Override
@@ -46,5 +39,9 @@ public class Knight extends Piece {
     @Override
     public boolean isPawn() {
         return false;
+    }
+
+    public boolean isKnight() {
+        return true;
     }
 }

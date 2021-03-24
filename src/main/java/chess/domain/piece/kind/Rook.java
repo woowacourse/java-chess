@@ -15,22 +15,19 @@ public class Rook extends Piece {
 
     private static final List<Direction> rookDirection = Arrays.asList(NORTH, SOUTH, EAST, WEST);
 
-    public Rook(Color color, Point point) {
-        super(ROOK_NAME, color, point);
+    public Rook(Color color) {
+        super(ROOK_NAME, color);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
+    public void checkCorrectDistance(Point sourcePoint, Point targetPoint, Piece target) {
+    }
+
+    @Override
+    public void checkCorrectDirection(Direction direction) {
         if (!rookDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return direction;
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return this.point.createNextPoint(direction);
     }
 
     @Override

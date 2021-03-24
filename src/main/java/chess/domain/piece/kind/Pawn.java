@@ -21,33 +21,28 @@ public class Pawn extends Piece {
     private static final List<Direction> whitePawnDirection = Arrays.asList(NORTH, NORTH_EAST, NORTH_WEST);
     private static final List<Direction> blackPawnDirection = Arrays.asList(SOUTH, SOUTH_EAST, SOUTH_WEST);
 
-    public Pawn(Color color, Point point) {
-        super(PAWN_NAME, color, point);
+    public Pawn(Color color) {
+        super(PAWN_NAME, color);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
-        checkCorrectDirection(direction);
-        return findCorrectDirection(target, direction);
-    }
-
-    private Direction findCorrectDirection(Piece target, Direction direction) {
-        int distance = this.point.calculateDistance(target.point);
+    public void checkCorrectDistance(Point sourcePoint, Point targetPoint, Piece target) {
+        int distance = sourcePoint.calculateDistance(targetPoint);
         if (distance == MOVE_STRAIGHT_ONE_SQUARE && target.isEmptyPiece()) {
-            return direction;
+            return;
         }
         if (distance == MOVE_DIAGONAL_ONE_SQUARE && !target.isEmptyPiece()) {
-            return direction;
+            return;
         }
         if (distance == INITIAL_POSSIBLE_DISTANCE_OF_PAWN && target.isEmptyPiece()
-            && (isInitialBlackPawn() || isInitialWhitePawn())) {
-            return direction;
+            && (isInitialBlackPawn(sourcePoint) || isInitialWhitePawn(sourcePoint))) {
+            return;
         }
         throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }
 
-    private void checkCorrectDirection(Direction direction) {
+    @Override
+    public void checkCorrectDirection(Direction direction) {
         if (this.color.equals(WHITE) && !whitePawnDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
@@ -56,17 +51,12 @@ public class Pawn extends Piece {
         }
     }
 
-    private boolean isInitialWhitePawn() {
-        return this.color.equals(WHITE) && this.point.isSameRow(new Row(INITIAL_WHITE_PAWN_ROW));
+    private boolean isInitialWhitePawn(Point point) {
+        return this.color.equals(WHITE) && point.isSameRow(new Row(INITIAL_WHITE_PAWN_ROW));
     }
 
-    private boolean isInitialBlackPawn() {
-        return this.color.equals(BLACK) && this.point.isSameRow(new Row(INITIAL_BLACK_PAWN_ROW));
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return target;
+    private boolean isInitialBlackPawn(Point point) {
+        return this.color.equals(BLACK) && point.isSameRow(new Row(INITIAL_BLACK_PAWN_ROW));
     }
 
     @Override

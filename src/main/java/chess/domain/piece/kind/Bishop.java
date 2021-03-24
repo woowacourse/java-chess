@@ -5,7 +5,6 @@ import static chess.domain.piece.Direction.*;
 import java.util.Arrays;
 import java.util.List;
 
-import chess.domain.board.Point;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
 
@@ -16,22 +15,15 @@ public class Bishop extends Piece {
     private static final List<Direction> bishopDirection = Arrays.asList(SOUTH_EAST, SOUTH_WEST, NORTH_EAST,
         NORTH_WEST);
 
-    public Bishop(Color color, Point point) {
-        super(BISHOP_NAME, color, point);
+    public Bishop(Color color) {
+        super(BISHOP_NAME, color);
     }
 
     @Override
-    public Direction direction(Piece target) {
-        Direction direction = Direction.findDirection(this.point, target.point);
+    public void checkCorrectDirection(Direction direction) {
         if (!bishopDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");
         }
-        return direction;
-    }
-
-    @Override
-    public Point moveOneStep(Point target, Direction direction) {
-        return this.point.createNextPoint(direction);
     }
 
     @Override

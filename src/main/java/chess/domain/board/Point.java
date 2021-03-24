@@ -71,6 +71,10 @@ public class Point {
         return (int)Math.pow(subtract, 2);
     }
 
+    public Direction makeDirection(Point point) {
+        return Direction.findDirection(this, point);
+    }
+
     public Point createNextPoint(Direction direction) {
         return valueOf(direction.addCurrentRow(this.row), direction.addCurrentColumn(this.column));
     }

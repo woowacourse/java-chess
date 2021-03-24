@@ -1,9 +1,14 @@
 package chess.piece;
 
+import static chess.domain.board.Board.*;
 import static chess.domain.piece.Color.*;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -11,63 +16,68 @@ import chess.domain.board.Point;
 import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Knight;
+import chess.domain.piece.kind.Piece;
 
 public class KnightTest {
-    @DisplayName("Knight 생성")
+    private Map<Point, Piece> board;
+
+    @BeforeEach
+    void setUp() {
+        board = new HashMap<>();
+        for (int i = 0; i < BOARD_SIZE; i++) {
+            for (int j = 0; j < BOARD_SIZE; j++) {
+                board.put(Point.valueOf(i, j), PieceType.findPiece(i, j));
+            }
+        }
+    }
+
+    @DisplayName("knight 생성")
     @Test
     public void create() {
-        Knight knight7 = new Knight(BLACK, Point.valueOf(0, 1));
-        assertThat(PieceType.findPiece(0, 1)).isEqualTo(knight7);
-        Knight knight2 = new Knight(BLACK, Point.valueOf(0, 6));
-        assertThat(PieceType.findPiece(0, 6)).isEqualTo(knight2);
-        Knight knight3 = new Knight(WHITE, Point.valueOf(7, 1));
-        assertThat(PieceType.findPiece(7, 1)).isEqualTo(knight3);
-        Knight knight4 = new Knight(WHITE, Point.valueOf(7, 6));
-        assertThat(PieceType.findPiece(7, 6)).isEqualTo(knight4);
+        Knight knight1 = new Knight(BLACK);
+        assertEquals(knight1, board.get(Point.valueOf(0, 1)));
+        Knight knight2 = new Knight(BLACK);
+        assertEquals(knight2, board.get(Point.valueOf(0, 6)));
+        Knight knight3 = new Knight(WHITE);
+        assertEquals(knight3, board.get(Point.valueOf(7, 1)));
+        Knight knight4 = new Knight(WHITE);
+        assertEquals(knight4, board.get(Point.valueOf(7, 6)));
     }
 
     @DisplayName("Knight의 가능한 거리 확인")
     @Test
     void checkKnightPossibleMove() {
-        Knight knight = new Knight(BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(NOTHING, Point.valueOf(2, 5));
-        Empty empty2 = new Empty(NOTHING, Point.valueOf(2, 3));
-        Empty empty3 = new Empty(NOTHING, Point.valueOf(3, 6));
-        Empty empty4 = new Empty(NOTHING, Point.valueOf(3, 2));
-        Empty empty5 = new Empty(NOTHING, Point.valueOf(6, 5));
-        Empty empty6 = new Empty(NOTHING, Point.valueOf(6, 3));
-        Empty empty7 = new Empty(NOTHING, Point.valueOf(5, 6));
-        Empty empty8 = new Empty(NOTHING, Point.valueOf(5, 2));
-
-        assertNull(knight.direction(empty));
-        assertNull(knight.direction(empty2));
-        assertNull(knight.direction(empty3));
-        assertNull(knight.direction(empty4));
-        assertNull(knight.direction(empty5));
-        assertNull(knight.direction(empty6));
-        assertNull(knight.direction(empty7));
-        assertNull(knight.direction(empty8));
+        Knight knight = new Knight(BLACK);
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(2, 5), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(2, 3), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(3, 6), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(3, 2), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(6, 5), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(6, 3), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(5, 6), new Empty(WHITE)));
+        assertDoesNotThrow(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(5, 2), new Empty(WHITE)));
     }
 
     @DisplayName("Knight의 불가능한 거리 확인")
     @Test
     void checkKnightImpossibleMove() {
-        Knight knight = new Knight(BLACK, Point.valueOf(4, 4));
-        Empty empty = new Empty(NOTHING, Point.valueOf(2, 2));
-        Empty empty2 = new Empty(NOTHING, Point.valueOf(2, 6));
-        Empty empty3 = new Empty(NOTHING, Point.valueOf(4, 6));
-        Empty empty4 = new Empty(NOTHING, Point.valueOf(2, 4));
-
-        assertThatThrownBy(() -> knight.direction(empty))
+        Knight knight = new Knight(BLACK);
+        assertThatThrownBy(
+            () -> knight.checkCorrectDistance(Point.valueOf(4, 4), Point.valueOf(9, 4), new Empty(WHITE)))
             .isInstanceOf(IllegalArgumentException.class);
-
-        assertThatThrownBy(() -> knight.direction(empty2))
+        assertThatThrownBy(
+            () -> knight.checkCorrectDistance(Point.valueOf(0, 0), Point.valueOf(0, 2), new Empty(WHITE)))
             .isInstanceOf(IllegalArgumentException.class);
-
-        assertThatThrownBy(() -> knight.direction(empty3))
-            .isInstanceOf(IllegalArgumentException.class);
-
-        assertThatThrownBy(() -> knight.direction(empty4))
+        assertThatThrownBy(
+            () -> knight.checkCorrectDistance(Point.valueOf(0, 0), Point.valueOf(0, 0), new Empty(WHITE)))
             .isInstanceOf(IllegalArgumentException.class);
     }
 }

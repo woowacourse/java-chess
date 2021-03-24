@@ -14,17 +14,11 @@ public abstract class Piece {
 
     protected final Name name;
     protected final Color color;
-    protected Point point;
 
-    public Piece(String name, Color color, Point point) {
+    public Piece(String name, Color color) {
         this.name = new Name(name, color);
         this.color = color;
-        this.point = point;
     }
-
-    public abstract Direction direction(Piece target);
-
-    public abstract Point moveOneStep(Point target, Direction direction);
 
     public boolean isSameTeam(Color color) {
         return color.isSameAs(this.color);
@@ -34,10 +28,6 @@ public abstract class Piece {
         return !color.isSameAs(this.color);
     }
 
-    public void movePoint(Point target) {
-        this.point = target;
-    }
-
     public abstract double score();
 
     public abstract boolean isEmptyPiece();
@@ -45,6 +35,19 @@ public abstract class Piece {
     public abstract boolean isKing();
 
     public abstract boolean isPawn();
+
+    public void checkCorrectDistance(Point source, Point target, Piece targetPiece) {}
+
+    public void checkCorrectDirection(Direction direction) {}
+
+    public void validateRoute(Point source, Point target, Piece targetPiece) {
+        checkCorrectDistance(source, target, targetPiece);
+        checkCorrectDirection(Direction.findDirection(source, target));
+    }
+
+    public boolean isKnight() {
+        return false;
+    }
 
     public String getName() {
         return name.getName();
@@ -57,13 +60,11 @@ public abstract class Piece {
         if (o == null || getClass() != o.getClass())
             return false;
         Piece piece = (Piece)o;
-        return Objects.equals(name, piece.name) &&
-            color == piece.color &&
-            Objects.equals(point, piece.point);
+        return Objects.equals(name, piece.name) && color == piece.color;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, color, point);
+        return Objects.hash(name, color);
     }
 }

@@ -1,13 +1,11 @@
 package chess.domain.board;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.Map;
 
 import chess.domain.Score;
 import chess.domain.piece.Color;
 import chess.domain.piece.Direction;
-import chess.domain.piece.PieceType;
 import chess.domain.piece.kind.Empty;
 import chess.domain.piece.kind.Piece;
 
@@ -21,7 +19,6 @@ public class Board {
         this.board = board;
     }
 
-
     public void movePiece(Point source, Point target, Color currentColor) {
         Piece sourcePiece = selectPiece(source);
         validateSourcePieceNotEmpty(sourcePiece);
@@ -30,30 +27,33 @@ public class Board {
         Piece targetPiece = selectPiece(target);
         validateTargetPieceColor(currentColor, targetPiece);
 
-        moveStepByStep(source, target, sourcePiece, targetPiece);
+        if (sourcePiece.isKnight()) {
+            replacePiece(source, target);
+            return;
+        }
+        sourcePiece.validateRoute(source, target, targetPiece);
+        moveStepByStep(source, target);
     }
 
     private Piece selectPiece(Point point) {
         return board.get(point);
     }
 
-    private void moveStepByStep(Point source, Point target, Piece sourcePiece, Piece targetPiece) {
+    private void moveStepByStep(Point source, Point target) {
         Point currentPoint = source;
-        Direction direction = sourcePiece.direction(targetPiece);
+        Direction direction = source.makeDirection(target);
 
         boolean isArriveAtTarget = currentPoint.equals(target);
         while (!isArriveAtTarget) {
-            Piece currentPiece = selectPiece(currentPoint);
-            currentPoint = currentPiece.moveOneStep(target, direction);
+            currentPoint = currentPoint.createNextPoint(direction);
             isArriveAtTarget = currentPoint.equals(target);
-            moveTowardTarget(source, target, sourcePiece, isArriveAtTarget);
+            moveTowardTarget(source, target, isArriveAtTarget);
             checkNextPointPossible(currentPoint, isArriveAtTarget);
         }
     }
 
-    private void moveTowardTarget(Point source, Point target, Piece sourcePiece, boolean isArriveAtTarget) {
+    private void moveTowardTarget(Point source, Point target, boolean isArriveAtTarget) {
         if (isArriveAtTarget) {
-            sourcePiece.movePoint(target);
             replacePiece(source, target);
         }
     }
@@ -68,7 +68,7 @@ public class Board {
         Piece sourcePiece = board.get(source);
 
         board.replace(target, sourcePiece);
-        board.replace(source, new Empty(Color.NOTHING, source));
+        board.replace(source, new Empty(Color.NOTHING));
     }
 
     public boolean hasBothKings() {

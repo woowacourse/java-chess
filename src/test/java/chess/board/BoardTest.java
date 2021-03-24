@@ -14,7 +14,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import chess.domain.ChessGame;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.piece.PieceType;
