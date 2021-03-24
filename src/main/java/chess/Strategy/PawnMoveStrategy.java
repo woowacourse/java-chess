@@ -41,7 +41,7 @@ public class PawnMoveStrategy implements MoveStrategy {
         }
 
         if (direction.isDiagonal()) {
-            return !Objects.isNull(movedPositionPiece) && !movedPositionPiece.isSameTeam(targetPiece);
+            return Objects.nonNull(movedPositionPiece) && movedPositionPiece.isDifferentTeam(targetPiece);
         }
         return true;
     }

@@ -61,13 +61,13 @@ public class Board {
     }
 
     private void exitWhenPieceIsKing(Piece destinationPiece) {
-        if (destinationPiece instanceof King) {
+        if (Objects.nonNull(destinationPiece) && destinationPiece.isKing()) {
             System.exit(0);
         }
     }
 
     private void movePieceToPosition(Piece targetPiece, Position destination) {
-        if (targetPiece instanceof Pawn && destination.isDeadLine()) {
+        if (targetPiece.canPromotion(destination)) {
             targetPiece = new Queen(targetPiece.getTeam());
         }
         board.put(destination, targetPiece);

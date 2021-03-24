@@ -5,6 +5,7 @@ import chess.domain.board.Board;
 import chess.domain.board.Position;
 
 import java.util.List;
+import java.util.Objects;
 
 public abstract class Piece {
     private final String name;
@@ -35,11 +36,23 @@ public abstract class Piece {
     }
 
     public boolean isSameTeam(Piece piece) {
-        return team.equals(piece.getTeam());
+        return Objects.equals(team, piece.getTeam());
     }
 
     public boolean isSameTeam(Team team) {
-        return this.team.equals(team);
+        return Objects.equals(this.team, team);
+    }
+
+    public boolean isDifferentTeam(Piece piece) {
+        return !Objects.equals(team, piece.getTeam());
+    }
+
+    public boolean isKing() {
+        return score == 0;
+    }
+
+    public boolean canPromotion(Position position) {
+        return score == 0 && position.isDeadLine();
     }
 
     public String getName() {
