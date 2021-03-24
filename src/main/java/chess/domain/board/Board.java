@@ -87,10 +87,10 @@ public class Board {
     }
 
     public Winner judgeWinner() {
-        if (isBlackKingDead()) {
+        if (isKingDead(Team.BLACK)) {
             return Winner.WHITE;
         }
-        if (isWhiteKingDead()) {
+        if (isKingDead(Team.WHITE)) {
             return Winner.BLACK;
         }
         return judgeWinnerByScore();
@@ -108,18 +108,11 @@ public class Board {
         return Winner.DRAW;
     }
 
-    public boolean isBlackKingDead() {
+    public boolean isKingDead(Team team) {
         return !pieces
             .stream()
             .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameTeam(Team.BLACK));
-    }
-
-    public boolean isWhiteKingDead() {
-        return !pieces
-            .stream()
-            .filter(Piece::isKing)
-            .anyMatch(piece -> piece.isSameTeam(Team.WHITE));
+            .anyMatch(piece -> piece.isSameTeam(team));
     }
 
     public List<Piece> toList() {

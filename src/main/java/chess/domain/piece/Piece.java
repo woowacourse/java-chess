@@ -58,7 +58,7 @@ public abstract class Piece {
         boolean isPieceExistInPath = path
             .stream()
             .anyMatch(oneStep -> board.isPieceExistIn(oneStep));
-        
+
         if (isPieceExistInPath) {
             throw new IllegalArgumentException("[ERROR] 이동 경로에 말이 존재하므로 이동할 수 없습니다.");
         }
