@@ -46,7 +46,7 @@ public class Coordinate {
         return new Coordinate(file.move(direction), rank.move(direction));
     }
 
-    public List<Coordinate> calculateContinuousCoordinatesTo(Coordinate targetCoordinate) {
+    public List<Coordinate> findRouteCoordinatesTo(Coordinate targetCoordinate) {
         List<Coordinate> possibleCoordinates = new ArrayList<>();
         Direction direction = this.evaluateDirection(targetCoordinate);
         Coordinate nextCoordinate = this.move(direction);

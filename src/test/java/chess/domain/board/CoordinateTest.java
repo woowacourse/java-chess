@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -92,5 +93,16 @@ class CoordinateTest {
         boolean isDefaultPawnRank = coordinate.isDefaultPawnRank(teamType);
 
         assertThat(isDefaultPawnRank).isEqualTo(expected);
+    }
+
+    @DisplayName("한 좌표에서 다른 좌표 직전까지의 경로 좌표의 리스트를 반환한다.")
+    @Test
+    void calculateRouteCoordinatesTo() {
+        Coordinate current = Coordinate.from("c2");
+        Coordinate destination = Coordinate.from("g6");
+
+        List<Coordinate> possibleCoordinates = current.findRouteCoordinatesTo(destination);
+
+        assertThat(possibleCoordinates).containsExactly(Coordinate.from("d3"), Coordinate.from("e4"), Coordinate.from("f5"));
     }
 }

@@ -72,7 +72,7 @@ public class ChessBoard {
     }
 
     public boolean hasPieceOnRouteBeforeDestination(Coordinate current, Coordinate destination) {
-        return current.calculateContinuousCoordinatesTo(destination)
+        return current.findRouteCoordinatesTo(destination)
                 .stream()
                 .map(cells::get)
                 .anyMatch(cell -> !cell.isEmpty());
