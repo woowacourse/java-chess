@@ -14,6 +14,8 @@ public final class Pawn extends GamePiece {
     private static final double MULTIPLE_PAWN_SCORE = 0.5;
     private static final int MULTIPLE_SCORE_LIMIT = 1;
 
+    private boolean initPosition = true;
+
     public Pawn(Side side) {
         super(side, INITIAL);
     }
@@ -52,8 +54,13 @@ public final class Pawn extends GamePiece {
         return twoSquareForward(rowDifference, columnDifference, direction);
     }
 
+    private boolean oneSquareForwardOrDiagonal(int rowDifference, int columnDifference,
+            int direction) {
+        return rowDifference == direction && Math.abs(columnDifference) < DOUBLE_FORWARD;
+    }
+
     private boolean twoSquareForward(int rowDifference, int columnDifference, int direction) {
-        if (!isInitPosition()) {
+        if (!initPosition) {
             return false;
         }
         if (columnDifference != 0) {
@@ -62,14 +69,14 @@ public final class Pawn extends GamePiece {
         return rowDifference == direction * DOUBLE_FORWARD;
     }
 
-    private boolean oneSquareForwardOrDiagonal(int rowDifference, int columnDifference,
-            int direction) {
-        return rowDifference == direction && Math.abs(columnDifference) < DOUBLE_FORWARD;
-    }
-
     @Override
     public double score() {
         return SINGLE_PAWN_SCORE;
+    }
+
+    @Override
+    public void moved() {
+        initPosition = false;
     }
 
     @Override

@@ -1,11 +1,11 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
+import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
-import chess.exception.InvalidMethodCallException;
 import java.util.List;
 
-public final class Bishop extends GamePiece {
+public final class Bishop extends GamePieceExceptPawn {
 
     private static final String INITIAL = "B";
     private static final int SCORE = 3;
@@ -29,11 +29,6 @@ public final class Bishop extends GamePiece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
     public boolean isKing() {
         return false;
     }
@@ -41,15 +36,5 @@ public final class Bishop extends GamePiece {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        throw new InvalidMethodCallException();
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        throw new InvalidMethodCallException();
     }
 }

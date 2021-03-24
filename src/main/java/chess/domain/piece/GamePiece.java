@@ -11,7 +11,6 @@ public abstract class GamePiece implements Piece {
 
     private final Side side;
     private final String initial;
-    private boolean initPosition = true;
 
     public GamePiece(Side side, String initial) {
         this.side = side;
@@ -38,15 +37,6 @@ public abstract class GamePiece implements Piece {
 
     protected abstract List<Position> getRoute(Position from, Position to);
 
-    // TODO moved, isInitPosition 폰만 사용. initPosition자체를 폰에게?
-    //  두 메서드를 폰제외하고 모두 구현 vs 게임피스에서 구현하고 폰에서 오버라이드
-    //  둘 다 최악
-    //  폰 제외한 게임피스를 추상 클래스로 추상화: moved, isInitPosition, diagonal, forward 4개 메서드 중복제거 가능
-    @Override
-    public final void moved() {
-        initPosition = false;
-    }
-
     @Override
     public final boolean isSideEqualTo(Side side) {
         return this.side == side;
@@ -66,9 +56,5 @@ public abstract class GamePiece implements Piece {
             return initial.toUpperCase(Locale.ROOT);
         }
         return initial;
-    }
-
-    protected final boolean isInitPosition() {
-        return initPosition;
     }
 }

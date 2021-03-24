@@ -1,12 +1,12 @@
 package chess.domain.piece;
 
 import chess.domain.game.Side;
+import chess.domain.gamestate.GamePieceExceptPawn;
 import chess.domain.position.Position;
-import chess.exception.InvalidMethodCallException;
 import java.util.Collections;
 import java.util.List;
 
-public final class King extends GamePiece {
+public final class King extends GamePieceExceptPawn {
 
     private static final String INITIAL = "K";
     private static final int SCORE = 0;
@@ -26,11 +26,6 @@ public final class King extends GamePiece {
     }
 
     @Override
-    public boolean isPawn() {
-        return false;
-    }
-
-    @Override
     public boolean isKing() {
         return true;
     }
@@ -38,15 +33,5 @@ public final class King extends GamePiece {
     @Override
     public double score() {
         return SCORE;
-    }
-
-    @Override
-    public boolean diagonal(Position from, Position to) {
-        throw new InvalidMethodCallException();
-    }
-
-    @Override
-    public boolean forward(Position from, Position to) {
-        throw new InvalidMethodCallException();
     }
 }
