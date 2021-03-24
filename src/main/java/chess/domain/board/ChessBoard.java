@@ -9,6 +9,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ChessBoard {
     private static final int CHESS_BOARD_SIZE = 64;
@@ -56,18 +57,20 @@ public class ChessBoard {
         if (!isKingCheckmate()) {
             throw new IllegalStateException("승리한 팀을 찾을 수 없습니다.");
         }
-        return cells.values()
-                .stream()
-                .filter(cell -> cell.hasPieceOf(King.class))
+        return filterKingsOnChessBoard()
                 .map(Cell::getTeamType)
                 .findAny()
                 .orElseThrow(() -> new IllegalStateException("승리한 팀을 찾을 수 없습니다."));
     }
 
-    public boolean isKingCheckmate() {
+    private Stream<Cell> filterKingsOnChessBoard() {
         return cells.values()
                 .stream()
-                .filter(cell -> cell.hasPieceOf(King.class))
+                .filter(cell -> cell.hasPieceOf(King.class));
+    }
+
+    public boolean isKingCheckmate() {
+        return filterKingsOnChessBoard()
                 .count() == KING_COUNTS_FOR_CHECKMATE_CONDITION;
     }
 
