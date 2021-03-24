@@ -21,12 +21,12 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class RookTest {
-    Board board;
-    Position whiteTeamPawnPosition = new Position(0, 2);
-    Position crossBlackTeamPawnPosition = new Position(0, 0);
-    Position straightBlackTeamPawnPosition = new Position(1, 0);
-    Position crossBlankPosition = new Position(2, 0);
-    Position straightBlankPosition = new Position(2, 1);
+    private Board board;
+    private final Position whiteTeamPawnPosition = new Position(0, 2);
+    private final Position crossBlackTeamPawnPosition = new Position(0, 0);
+    private final Position straightBlackTeamPawnPosition = new Position(1, 0);
+    private final Position crossBlankPosition = new Position(2, 0);
+    private final Position straightBlankPosition = new Position(2, 1);
 
     @ParameterizedTest
     @DisplayName("Rook이 Black 팀으로 생성되면, row의 실제 좌표 위치는 0이다.")

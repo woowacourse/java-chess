@@ -8,8 +8,10 @@ import java.util.function.Consumer;
 public enum Command {
     START("START", true, ChessGame::initSetting),
     END("END", false, ChessGame::end),
-    MOVE("MOVE", true, chessGame -> {}),
-    STATUS("STATUS", false, chessGame -> {});
+    MOVE("MOVE", true, chessGame -> {
+    }),
+    STATUS("STATUS", false, chessGame -> {
+    });
 
     private final String command;
     private final boolean isPrint;
