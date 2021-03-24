@@ -35,13 +35,9 @@ public class DefaultChessBoard implements Board {
         return Collections.unmodifiableMap(board);
     }
 
-    public MoveResult move(Position from, Position to) {
-        Square fromSquare = this.findByPosition(from);
-        return fromSquare.move(createMoveOrder(this, from, to));
-    }
-
-    public MoveOrder createMoveOrder(Board board, Position from, Position to) {
-        return new MoveOrder(this, from, to);
+    public MoveResult move(MoveOrder moveOrder) {
+        Square fromSqaure = this.findByPosition(moveOrder.getFromPosition());
+        return fromSqaure.move(moveOrder);
     }
 
     public List<Square> getRoute(Position from, Position to) {

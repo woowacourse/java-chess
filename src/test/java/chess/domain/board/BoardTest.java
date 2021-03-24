@@ -1,5 +1,6 @@
 package chess.domain.board;
 
+import chess.domain.order.MoveOrder;
 import chess.domain.piece.RealPiece;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.DisplayName;
@@ -21,7 +22,7 @@ public class BoardTest {
     @DisplayName("이동할 때 해당 위치에 말이 없으면 예외")
     @Test
     void throwExceptionWhenSquareHasNotPiece() {
-        assertThatThrownBy(() -> mockBoard.move(Position.of("a3"), Position.of("b3")))
+        assertThatThrownBy(() -> mockBoard.move(new MoveOrder(mockBoard, Position.of("a3"), Position.of("b3"))))
                 .isInstanceOf(NoSuchElementException.class)
                 .hasMessage("해당 위치엔 말이 없습니다.");
     }
@@ -30,7 +31,7 @@ public class BoardTest {
     @Test
     void movePiece() {
         RealPiece realPiece = mockBoard.findByPosition(Position.of("b2")).getPiece();
-        mockBoard.move(Position.of("b2"), Position.of("b3"));
+        mockBoard.move(new MoveOrder(mockBoard, Position.of("b2"), Position.of("b3")));
 
         assertThat(mockBoard.findByPosition(Position.of("b3")).getPiece()).isEqualTo(realPiece);
     }

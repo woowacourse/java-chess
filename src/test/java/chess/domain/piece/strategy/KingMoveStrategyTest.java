@@ -2,6 +2,7 @@ package chess.domain.piece.strategy;
 
 import chess.domain.board.Board;
 import chess.domain.board.BoardFactory;
+import chess.domain.order.MoveOrder;
 import chess.domain.position.Position;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -37,14 +38,14 @@ class KingMoveStrategyTest {
     @ParameterizedTest
     @MethodSource
     void kingCanMoveTest(Position from, Position to, boolean expected) {
-        assertThat(whiteKing.canMove(board.createMoveOrder(board, from, to))).isEqualTo(expected);
+        assertThat(whiteKing.canMove(new MoveOrder(board, from, to))).isEqualTo(expected);
     }
 
     @DisplayName("잘못된 방향으로 이동하려고 한다면 예외")
     @ParameterizedTest
     @CsvSource({"c3,e4", "h2, g5"})
     void throwExceptionWhenWrongDirection(String from, String to) {
-        assertThatThrownBy(() -> whiteKing.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteKing.canMove(new MoveOrder(board, Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("움직일 수 없는 방향입니다.");
     }
@@ -52,7 +53,7 @@ class KingMoveStrategyTest {
     @DisplayName("킹 기물이 2칸 이상 움직이면 예외")
     @Test
     void whenBlockedThrowTest() {
-        assertThatThrownBy(() -> whiteKing.canMove(board.createMoveOrder(board, Position.of("d3"), Position.of("d5"))))
+        assertThatThrownBy(() -> whiteKing.canMove(new MoveOrder(board, Position.of("d3"), Position.of("d5"))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("킹이 움직일 수 있는 범위를 벗어났습니다.");
     }
@@ -61,7 +62,7 @@ class KingMoveStrategyTest {
     @ParameterizedTest
     @CsvSource({"d1, e1", "d1, d2"})
     void throwExceptionWhenMoveToSameTeam(String from, String to) {
-        assertThatThrownBy(() -> whiteKing.canMove(board.createMoveOrder(board, Position.of(from), Position.of(to))))
+        assertThatThrownBy(() -> whiteKing.canMove(new MoveOrder(board, Position.of(from), Position.of(to))))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("동일한 진영의 말이 있어서 행마할 수 없습니다.");
     }

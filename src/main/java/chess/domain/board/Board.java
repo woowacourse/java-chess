@@ -13,9 +13,7 @@ public interface Board {
 
     Map<Position, Square> board();
 
-    MoveResult move(Position from, Position to);
-
-    MoveOrder createMoveOrder(Board board, Position from, Position to);
+    MoveResult move(MoveOrder moveOrder);
     
     Map<Color, Double> getScoreMap();
 

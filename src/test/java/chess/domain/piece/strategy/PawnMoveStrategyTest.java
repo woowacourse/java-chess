@@ -27,7 +27,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a3, WHITE", "b7, b6, BLACK"})
     void canMove_StraightDirection(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
+        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
         assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
     }
 
@@ -36,7 +36,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"c2, c5, WHITE", "g7, g4, BLACK"})
     void throwExceptionWhenMoveOverThreeSquares(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
+        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
         assertThatThrownBy(() -> pawn.canMove(moveOrder))
                 .isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("폰이 움직일 수 있는 범위를 벗어났습니다.");
@@ -49,7 +49,7 @@ class PawnMoveStrategyTest {
     @CsvSource({"a2, a4, WHITE", "b7, b5, BLACK"})
     void canMove_2RankOnFirstMove(String from, String to, Color color) {
         Pawn pawn = new Pawn(color);
-        MoveOrder moveOrder = board.createMoveOrder(board, Position.of(from), Position.of(to));
+        MoveOrder moveOrder = new MoveOrder(board, Position.of(from), Position.of(to));
         assertThat(pawn.canMove(moveOrder)).isEqualTo(true);
     }
 
