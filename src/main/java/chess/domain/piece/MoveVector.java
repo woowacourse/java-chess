@@ -22,11 +22,11 @@ public enum MoveVector {
     NWW(-2, 1),
     NNW(-1, 2);
 
-    private final int horizon;
+    private final int horizontal;
     private final int vertical;
 
-    MoveVector(int horizon, int vertical) {
-        this.horizon = horizon;
+    MoveVector(int horizontal, int vertical) {
+        this.horizontal = horizontal;
         this.vertical = vertical;
     }
 
@@ -50,9 +50,9 @@ public enum MoveVector {
         return Arrays.asList(NNE, NEE, SEE, SSE, SSW, SWW, NWW, NNW);
     }
 
-    public static MoveVector moveVectorByValues(int horizon, int vertical) {
+    public static MoveVector moveVectorByValues(int horizontal, int vertical) {
         return Arrays.stream(MoveVector.values())
-            .filter(vector -> (vector.horizon == horizon)
+            .filter(vector -> (vector.horizontal == horizontal)
                 && (vector.vertical == vertical))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new);
@@ -66,23 +66,23 @@ public enum MoveVector {
         return this == NORTH || this == SOUTH;
     }
 
-    public boolean isSameDirection(int horizon, int vertical) {
-        if (isOppositeDirection(horizon, vertical)) {
+    public boolean isSameDirection(int horizontal, int vertical) {
+        if (isOppositeDirection(horizontal, vertical)) {
             return false;
         }
-        return this.horizon * vertical == this.vertical * horizon;
+        return this.horizontal * vertical == this.vertical * horizontal;
     }
 
-    private boolean isOppositeDirection(int horizon, int vertical) {
-        return (this.horizon * horizon < 0) || (this.vertical * vertical < 0);
+    private boolean isOppositeDirection(int horizontal, int vertical) {
+        return (this.horizontal * horizontal < 0) || (this.vertical * vertical < 0);
     }
 
     public MoveVector oppositeVector() {
-        return moveVectorByValues((-1) * horizon, (-1) * vertical);
+        return moveVectorByValues((-1) * horizontal, (-1) * vertical);
     }
 
-    public int horizon() {
-        return horizon;
+    public int horizontal() {
+        return horizontal;
     }
 
     public int vertical() {

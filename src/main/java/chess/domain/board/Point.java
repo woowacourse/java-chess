@@ -76,7 +76,7 @@ public class Point {
     }
 
     private int movedXIndex(MoveVector moveVector) {
-        return column.index() + moveVector.horizon();
+        return column.index() + moveVector.horizontal();
     }
 
     public boolean isRow(Row row) {
