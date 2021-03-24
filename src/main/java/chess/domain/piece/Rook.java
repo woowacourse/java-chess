@@ -5,7 +5,7 @@ import chess.domain.position.Position;
 import chess.exception.InvalidMethodCallException;
 import java.util.List;
 
-public class Rook extends Piece {
+public final class Rook extends GamePiece {
 
     private static final String INITIAL = "R";
     private static final int SCORE = 5;
@@ -26,11 +26,6 @@ public class Rook extends Piece {
     @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Position.route(from, to);
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override

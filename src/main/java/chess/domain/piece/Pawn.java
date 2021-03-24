@@ -4,7 +4,7 @@ import chess.domain.Side;
 import chess.domain.position.Position;
 import java.util.List;
 
-public class Pawn extends Piece {
+public final class Pawn extends GamePiece {
 
     private static final String INITIAL = "P";
     private static final int BLACK_DIRECTION = 1;
@@ -33,11 +33,6 @@ public class Pawn extends Piece {
     @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Position.route(from, to);
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override

@@ -6,7 +6,7 @@ import chess.exception.InvalidMethodCallException;
 import java.util.Collections;
 import java.util.List;
 
-public class Knight extends Piece {
+public final class Knight extends GamePiece {
 
     private static final String INITIAL = "N";
     private static final double SCORE = 2.5;
@@ -30,11 +30,6 @@ public class Knight extends Piece {
     @Override
     protected List<Position> getRoute(Position from, Position to) {
         return Collections.emptyList();
-    }
-
-    @Override
-    public boolean isBlank() {
-        return false;
     }
 
     @Override
