@@ -3,6 +3,7 @@ package chess.domain.gamestate;
 import chess.domain.board.Board;
 import chess.domain.board.Point;
 import chess.domain.board.Row;
+import chess.domain.board.Team;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
 import java.util.Arrays;
@@ -68,5 +69,10 @@ public class Ready implements GameState {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Team winner() {
+        throw EXCEPTION;
     }
 }

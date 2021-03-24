@@ -28,6 +28,7 @@ class GameStateTest {
 
         assertThatIllegalArgumentException().isThrownBy(gameState::end);
         assertThatIllegalArgumentException().isThrownBy(gameState::status);
+        assertThatIllegalArgumentException().isThrownBy(gameState::winner);
         assertThatIllegalArgumentException()
             .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)));
         assertThat(gameState.start()).hasSameClassAs(new Running(board));
@@ -40,7 +41,8 @@ class GameStateTest {
         GameState gameState = new Running(board);
 
         assertThatIllegalArgumentException().isThrownBy(gameState::start);
-        assertThat(gameState.end()).hasSameClassAs(new Finished());
+        assertThatIllegalArgumentException().isThrownBy(gameState::winner);
+        assertThat(gameState.end()).hasSameClassAs(new Finished(Team.NONE));
         assertThat(gameState.status()).hasSameClassAs(new Running(board));
         assertThat(gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)))
             .hasSameClassAs(new Running(board));
@@ -53,18 +55,19 @@ class GameStateTest {
         GameState gameState = new Running(board);
 
         assertThat(gameState.move(Point.of("c4"), Point.of("c5"), new Turn(Team.WHITE)))
-            .hasSameClassAs(new Finished());
+            .hasSameClassAs(new Finished(Team.WHITE));
     }
 
     @Test
     @DisplayName("Finished 상태의 명령어 입력시 상태 변화")
     void finished() {
-        GameState gameState = new Finished();
+        GameState gameState = new Finished(Team.WHITE);
 
         assertThatIllegalArgumentException().isThrownBy(gameState::start);
         assertThatIllegalArgumentException().isThrownBy(gameState::end);
         assertThatIllegalArgumentException().isThrownBy(gameState::status);
         assertThatIllegalArgumentException()
             .isThrownBy(() -> gameState.move(Point.of("a1"), Point.of("b1"), new Turn(Team.WHITE)));
+        assertThat(gameState.winner()).isEqualTo(Team.WHITE);
     }
 }

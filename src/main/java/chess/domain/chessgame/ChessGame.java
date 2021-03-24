@@ -45,4 +45,8 @@ public class ChessGame {
     public Team currentTurn() {
         return turn.now();
     }
+
+    public Team winner() {
+        return gameState.winner();
+    }
 }

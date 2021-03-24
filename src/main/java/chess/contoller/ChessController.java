@@ -14,10 +14,11 @@ public class ChessController {
         Board board = new Board();
         ChessGame chessGame = new ChessGame(board, new Turn(Team.WHITE));
         OutputView.printStartInfo();
-        start(chessGame, board);
+        proceed(chessGame, board);
+        printGameResult(chessGame);
     }
 
-    private void start(ChessGame chessGame, Board board) {
+    private void proceed(ChessGame chessGame, Board board) {
         while (chessGame.isContinue()) {
             inputCommandAndExecute(chessGame);
             OutputView.printCurrentTurn(chessGame.currentTurn());
@@ -37,5 +38,9 @@ public class ChessController {
             OutputView.printTeamScore(chessGame.score(Team.WHITE), Team.WHITE);
             OutputView.printTeamScore(chessGame.score(Team.BLACK), Team.BLACK);
         }
+    }
+
+    private void printGameResult(ChessGame chessGame) {
+        OutputView.printWinner(chessGame.winner());
     }
 }

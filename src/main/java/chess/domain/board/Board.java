@@ -51,6 +51,10 @@ public class Board {
         return sourceState.isEnemy(destinationState);
     }
 
+    public Team teamAt(Point point) {
+        return squares.get(point).team();
+    }
+
     public boolean hasMovableVector(Point source, Point destination) {
         SquareState sourceState = squares.get(source);
 

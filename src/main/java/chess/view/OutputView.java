@@ -14,6 +14,8 @@ public class OutputView {
     private static final String END_COMMAND = "게임 종료 : end";
     private static final String MOVE_COMMAND = "게임 이동 : move source위치 target위치 - 예. move b2 b3";
     private static final String STATUS_COMMAND = "현재 점수 : status";
+    private static final String GAME_RESULT_TIE = "무승부입니다.";
+    private static final String GAME_RESULT_WINNER_FORMAT = "승자는 %s 입니다.\n";
 
 
     public static void printStartInfo() {
@@ -39,5 +41,13 @@ public class OutputView {
     public static void printCurrentTurn(Team currentTurn) {
         System.out.printf(INFO_MESSAGE_FORMAT,
             String.format(CURRENT_TURN_FORMAT, currentTurn.teamName()));
+    }
+
+    public static void printWinner(Team winner) {
+        if (winner == Team.NONE) {
+            System.out.println(GAME_RESULT_TIE);
+            return;
+        }
+        System.out.printf(GAME_RESULT_WINNER_FORMAT, winner.teamName());
     }
 }

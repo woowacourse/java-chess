@@ -2,6 +2,7 @@ package chess.domain.gamestate;
 
 import chess.domain.board.Board;
 import chess.domain.board.Point;
+import chess.domain.board.Team;
 import chess.domain.chessgame.PieceMovementRule;
 import chess.domain.chessgame.Turn;
 import chess.domain.piece.Piece;
@@ -36,17 +37,18 @@ public class Running implements GameState {
     private GameState gameStateAfterMove(Point source, Point destination, Turn turn) {
 
         boolean isKingDead = board.isSamePieceTypeAt(destination, Piece.KING);
+        Team destinationTeam = board.teamAt(destination);
         board.move(source, destination);
         turn.next();
         if (isKingDead) {
-            return new Finished();
+            return new Finished(destinationTeam.opposingTeam());
         }
         return this;
     }
 
     @Override
     public GameState end() {
-        return new Finished();
+        return new Finished(Team.NONE);
     }
 
     @Override
@@ -57,5 +59,10 @@ public class Running implements GameState {
     @Override
     public boolean isFinished() {
         return false;
+    }
+
+    @Override
+    public Team winner() {
+        throw EXCEPTION;
     }
 }
