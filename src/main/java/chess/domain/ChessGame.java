@@ -1,7 +1,11 @@
 package chess.domain;
 
-import chess.domain.board.*;
+import chess.domain.board.Board;
+import chess.domain.board.Path;
+import chess.domain.board.Team;
 import chess.domain.command.Commands;
+import chess.domain.dto.BoardDto;
+import chess.domain.dto.PointDto;
 import chess.domain.state.Ready;
 import chess.domain.state.State;
 import chess.view.OutputView;
@@ -23,6 +27,14 @@ public class ChessGame {
     public void initBoard(Board board) {
         this.board = board;
         state = state.init();
+    }
+
+    public BoardDto boardDto() {
+        return new BoardDto(board, turn);
+    }
+
+    public PointDto pointDto() {
+        return new PointDto(calculatePoint());
     }
 
     public void move(Commands command) {
@@ -50,7 +62,7 @@ public class ChessGame {
         }
     }
 
-    public EnumMap<Team, Double> calculatePoint() {
+    private EnumMap<Team, Double> calculatePoint() {
         EnumMap<Team, Double> result = new EnumMap<>(Team.class);
         calculateEachTeamPoint(result, Team.BLACK);
         calculateEachTeamPoint(result, Team.WHITE);
@@ -81,14 +93,6 @@ public class ChessGame {
 
     public Team winner() {
         return winner;
-    }
-
-    public Board board() {
-        return board;
-    }
-
-    public Team turn() {
-        return turn;
     }
 
     private void turnOver() {

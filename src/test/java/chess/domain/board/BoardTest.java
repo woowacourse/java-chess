@@ -1,9 +1,5 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.Board;
-import chess.domain.board.Position;
-import chess.domain.board.Path;
-import chess.domain.board.Team;
 import chess.domain.piece.Rook;
 import chess.domain.utils.BoardInitializer;
 import org.junit.jupiter.api.BeforeEach;

@@ -5,7 +5,6 @@ import chess.domain.dto.BoardDto;
 import chess.domain.dto.PointDto;
 import chess.domain.piece.Piece;
 
-import java.util.EnumMap;
 import java.util.Map;
 
 public class OutputView {

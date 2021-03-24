@@ -1,7 +1,5 @@
-package chess.domain;
+package chess.domain.board;
 
-import chess.domain.board.Direction;
-import chess.domain.board.Position;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;

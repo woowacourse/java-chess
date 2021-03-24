@@ -1,17 +1,9 @@
-package chess.domain;
+package chess.domain.utils;
 
 import chess.domain.board.Board;
 import chess.domain.board.Position;
-import chess.domain.board.Path;
-import chess.domain.board.Team;
-import chess.domain.piece.Pawn;
-import chess.domain.utils.BoardInitializer;
-import chess.domain.utils.MoveValidator;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

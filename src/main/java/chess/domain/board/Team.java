@@ -24,8 +24,4 @@ public enum Team {
     public boolean isBlack(Team team) {
         return team == BLACK;
     }
-
-    public boolean same(Team team) {
-        return (this == team);
-    }
 }

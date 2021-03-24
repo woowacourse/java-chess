@@ -20,9 +20,4 @@ public class Strategy {
             throw new IllegalArgumentException("[ERROR] 해당 좌표로 이동할 수 없습니다.");
         }
     }
-
-    public boolean canMove() {
-        moveRange -= 1;
-        return moveRange >= 0;
-    }
 }

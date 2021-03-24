@@ -1,10 +1,8 @@
 package chess.domain.utils;
 
 import chess.domain.board.Board;
-import chess.domain.board.Path;
 import chess.domain.board.Position;
 import chess.domain.piece.Pawn;
-import chess.domain.piece.Piece;
 
 public class MoveValidator {
     public static void isPieceExist(Board board, Position position) {

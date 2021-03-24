@@ -1,10 +1,8 @@
 package chess.domain;
 
-import chess.domain.board.Board;
-import chess.domain.command.Commands;
-import chess.domain.board.Position;
 import chess.domain.board.Team;
-import chess.domain.piece.Pawn;
+import chess.domain.command.Commands;
+import chess.domain.dto.PointDto;
 import chess.domain.utils.BoardInitializer;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,17 +42,9 @@ class ChessGameTest {
         assertThat(chessGame.isReady()).isTrue();
     }
 
-    @Test
-    void move1() {
-        chessGame.initBoard(BoardInitializer.init());
-        chessGame.move(new Commands("move a2 a3"));
-        Board board = chessGame.board();
-        assertThat(board.pieceAt(Position.of("a3"))).isInstanceOf(Pawn.class);
-    }
-
     @DisplayName("이동 테스트 - 소스와 타겟이 같을 때 이동 불가")
     @Test
-    void move2() {
+    void move1() {
         // given
         chessGame.initBoard(BoardInitializer.init());
 
@@ -445,7 +435,9 @@ class ChessGameTest {
         result.put(Team.BLACK, 38.0);
         result.put(Team.WHITE, 38.0);
 
+        PointDto resultDto = new PointDto(result);
+
         chessGame.initBoard(BoardInitializer.init());
-        assertThat(chessGame.calculatePoint()).isEqualTo(result);
+        assertThat(chessGame.pointDto()).isEqualTo(resultDto);
     }
 }

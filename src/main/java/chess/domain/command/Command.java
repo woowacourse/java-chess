@@ -35,10 +35,6 @@ public enum Command {
         return START.equals(this);
     }
 
-    public boolean isEnd() {
-        return END.equals(this);
-    }
-
     public boolean isStatus() {
         return STATUS.equals(this);
     }

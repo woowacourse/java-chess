@@ -1,9 +1,8 @@
 package chess.domain.piece;
 
-import chess.domain.board.*;
-import chess.domain.utils.MoveValidator;
-
-import java.util.List;
+import chess.domain.board.Direction;
+import chess.domain.board.Strategy;
+import chess.domain.board.Team;
 
 public class Knight extends AbstractPiece {
     public static final double POINT = 2.5;

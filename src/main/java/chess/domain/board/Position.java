@@ -17,6 +17,7 @@ public class Position {
 
     private final File file;
     private final Rank rank;
+
     private Position(File file, Rank rank) {
         this.file = file;
         this.rank = rank;
