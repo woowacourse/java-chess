@@ -20,10 +20,6 @@ public final class Rook extends Piece {
     }
 
     @Override
-    public void checkCorrectDistance(Point sourcePoint, Point targetPoint, Piece target) {
-    }
-
-    @Override
     public void checkCorrectDirection(Direction direction) {
         if (!rookDirection.contains(direction)) {
             throw new IllegalArgumentException("이동할 수 없는 방향입니다.");

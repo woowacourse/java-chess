@@ -15,10 +15,9 @@ public final class Knight extends Piece {
     @Override
     public void checkCorrectDistance(Point sourcePoint, Point targetPoint, Piece target) {
         int distance = sourcePoint.calculateDistance(targetPoint);
-        if (distance == POSSIBLE_DISTANCE_OF_KNIGHT) {
-            return;
+        if (distance != POSSIBLE_DISTANCE_OF_KNIGHT) {
+            throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
         }
-        throw new IllegalArgumentException(IMPOSSIBLE_ROUTE_ERROR_MESSAGE);
     }
 
     @Override
