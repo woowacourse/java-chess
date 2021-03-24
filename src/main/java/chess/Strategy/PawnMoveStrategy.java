@@ -23,27 +23,34 @@ public class PawnMoveStrategy implements MoveStrategy {
     public boolean canMove(Position target, Position destination, Board board) {
         Direction direction = target.directionToDestination(destination);
         Piece targetPiece = board.findPieceFromPosition(target);
-
         Position movedPosition = target.moveTowardDirection(direction);
         Piece movedPositionPiece = board.findPieceFromPosition(movedPosition);
-
-        if (direction.isTopBottom()) {
-            if (Objects.nonNull(movedPositionPiece)) {
-                return false;
-            }
-            if (destination.getVerticalWeight() - target.getVerticalWeight() == 2) {
-                movedPosition = movedPosition.moveTowardDirection(direction);
-                movedPositionPiece = board.findPieceFromPosition(movedPosition);
-                if (Objects.nonNull(movedPositionPiece)) {
-                    return false;
-                }
-            }
-        }
 
         if (direction.isDiagonal()) {
             return Objects.nonNull(movedPositionPiece) && movedPositionPiece.isDifferentTeam(targetPiece);
         }
-        return true;
+
+        if (direction.isTopBottom()) {
+            return checkWhenTopBottom(board, target, destination);
+        }
+
+        return false;
+    }
+
+    private boolean checkWhenTopBottom(Board board, Position target, Position destination) {
+        Direction direction = target.directionToDestination(destination);
+        Position movedPosition = target.moveTowardDirection(direction);
+        Piece movedPositionPiece = board.findPieceFromPosition(movedPosition);
+
+        if (Objects.nonNull(movedPositionPiece)) {
+            return false;
+        }
+        if (destination.getVerticalWeight() - target.getVerticalWeight() == 2) {
+            movedPosition = movedPosition.moveTowardDirection(direction);
+            movedPositionPiece = board.findPieceFromPosition(movedPosition);
+        }
+
+        return Objects.isNull(movedPositionPiece);
     }
 
     @Override

@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoardTest {
-    Board board = BoardFactory.create();
+    Board board = new BoardFactory().create();
 
     @DisplayName("보드가 초기화 되었을 때 체스말이 없는 곳은 null 값을 가진다.")
     @Test
