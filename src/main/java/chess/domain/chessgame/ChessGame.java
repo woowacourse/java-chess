@@ -21,8 +21,8 @@ public final class ChessGame {
         this(new Board());
     }
 
-    public boolean isGameOver() {
-        return gameState.isGameOver();
+    public boolean isRunning() {
+        return gameState.isRunning();
     }
 
     public void move(final Position source, final Position target) {

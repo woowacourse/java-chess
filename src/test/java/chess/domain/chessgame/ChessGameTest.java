@@ -20,7 +20,7 @@ class ChessGameTest {
     void isGameOver() {
         ChessGame game = new ChessGame();
         game.endGame();
-        assertThat(game.isGameOver()).isTrue();
+        assertThat(game.isRunning()).isFalse();
     }
 
     @Test
@@ -30,6 +30,6 @@ class ChessGameTest {
         chessBoard.put(new Position("e", "7"), new Queen(Team.WHITE));
         ChessGame game = new ChessGame(new Board(chessBoard));
         game.move(new Position("e", "7"), new Position("e", "8"));
-        assertThat(game.isGameOver()).isTrue();
+        assertThat(game.isRunning()).isFalse();
     }
 }

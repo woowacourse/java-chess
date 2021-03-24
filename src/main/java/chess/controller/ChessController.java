@@ -18,7 +18,7 @@ public class ChessController {
             game.endGame();
         }
 
-        while (!game.isGameOver()) {
+        while (game.isRunning()) {
             proceed(game);
         }
         showResult(game.board());

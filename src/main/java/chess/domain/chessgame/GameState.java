@@ -7,8 +7,8 @@ public final class GameState {
         this.isRunning = true;
     }
 
-    public boolean isGameOver() {
-        return !isRunning;
+    public boolean isRunning() {
+        return isRunning;
     }
 
     public void endGame() {
