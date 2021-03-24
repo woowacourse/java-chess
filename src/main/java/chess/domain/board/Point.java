@@ -1,19 +1,22 @@
 package chess.domain.board;
 
 import chess.domain.piece.MoveVector;
+import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Point {
 
-    private static final Map<String, Point> POINT_POOL = new HashMap<>();
+    private static final Map<String, Point> POINT_POOL;
 
     static {
-        for (Row row : Row.values()) {
-            generatePointPoolRow(row);
-        }
+        POINT_POOL = Arrays.stream(Row.values())
+            .flatMap(Point::pointPoolByRow)
+            .collect(Collectors.toMap(SimpleEntry::getKey, SimpleEntry::getValue));
     }
 
     private final Column column;
@@ -24,10 +27,10 @@ public class Point {
         this.row = row;
     }
 
-    private static void generatePointPoolRow(Row row) {
-        for (Column column : Column.values()) {
-            POINT_POOL.put(column.coordinate() + row.coordinate(), new Point(column, row));
-        }
+    private static Stream<SimpleEntry<String, Point>> pointPoolByRow(Row row) {
+        return Arrays.stream(Column.values())
+            .map(column -> new SimpleEntry<>(column.coordinate() + row.coordinate(),
+                new Point(column, row)));
     }
 
     public static Point of(String point) {

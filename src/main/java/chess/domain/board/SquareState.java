@@ -2,18 +2,18 @@ package chess.domain.board;
 
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class SquareState {
 
-    private static final List<SquareState> SQUARE_STATE_POOL = new ArrayList<>();
+    private static final Map<Piece, Map<Team, SquareState>> SQUARE_STATE_POOL;
 
     static {
-        for (Piece piece : Piece.values()) {
-            generateSquareStatePoolByPiece(piece);
-        }
+        SQUARE_STATE_POOL = Arrays.stream(Piece.values())
+            .collect(Collectors.toMap(piece -> piece, SquareState::squareStateMapByPiece));
     }
 
     private final Piece piece;
@@ -24,17 +24,13 @@ public class SquareState {
         this.team = team;
     }
 
-    private static void generateSquareStatePoolByPiece(Piece piece) {
-        for (Team team : Team.values()) {
-            SQUARE_STATE_POOL.add(new SquareState(piece, team));
-        }
+    private static Map<Team, SquareState> squareStateMapByPiece(Piece piece) {
+        return Arrays.stream(Team.values())
+            .collect(Collectors.toMap(team -> team, team -> new SquareState(piece, team)));
     }
 
     public static SquareState of(Piece piece, Team team) {
-        return SQUARE_STATE_POOL.stream()
-            .filter(squareState -> squareState.piece == piece && squareState.team == team)
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new);
+        return SQUARE_STATE_POOL.get(piece).get(team);
     }
 
     public MoveVector movableVector(Point source, Point destination) {
