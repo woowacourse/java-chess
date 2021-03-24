@@ -30,10 +30,6 @@ public final class ChessGame {
         throw new InvalidCommandException();
     }
 
-    public State state() {
-        return state;
-    }
-
     public Board board() {
         return state.board();
     }
