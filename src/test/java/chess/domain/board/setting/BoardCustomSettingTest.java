@@ -38,7 +38,6 @@ class BoardCustomSettingTest {
         );
 
         ChessGame chessGame = new ChessGame(customBoardSetting);
-        chessGame.start();
 
         BoardStatusResponseDTO boardStatusResponseDTO = chessGame.boardStatus();
         List<String> cellsStatus = boardStatusResponseDTO.getCellsStatus();

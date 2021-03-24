@@ -21,7 +21,6 @@ import java.util.List;
 public class ChessGame {
     private final Players players;
     private final Board board;
-    private boolean isStarted = false;
     private TeamColor currentTurnTeamColor = WHITE;
 
     public ChessGame(BoardSetting boardSetting) {
@@ -56,22 +55,11 @@ public class ChessGame {
         board.setPiece(position, piece);
     }
 
-    public void start() {
-        isStarted = true;
-    }
-
     public void move(CommandRequestDTO commandRequestDTO) {
-        validateIsGameStarted();
         MoveRoute moveRoute = new MoveRoute(commandRequestDTO);
         board.validateRoute(moveRoute, currentTurnTeamColor);
         updatePiecesOfPlayers(moveRoute);
         board.move(moveRoute);
-    }
-
-    private void validateIsGameStarted() {
-        if (!isStarted) {
-            throw new IllegalStateException("게임을 먼저 시작해 주세요.");
-        }
     }
 
     private void updatePiecesOfPlayers(MoveRoute moveRoute) {
@@ -89,12 +77,10 @@ public class ChessGame {
     }
 
     public BoardStatusResponseDTO boardStatus() {
-        validateIsGameStarted();
         return board.status();
     }
 
     public ScoresResponseDTO getScores() {
-        validateIsGameStarted();
         return new ScoresResponseDTO(players.blackPlayerScore(), players.whitePlayerScore());
     }
 

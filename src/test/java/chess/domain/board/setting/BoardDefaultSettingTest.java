@@ -19,7 +19,6 @@ class BoardDefaultSettingTest {
     @BeforeEach
     void setUp() {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        chessGame.start();
         cellsStatus = chessGame.boardStatus().getCellsStatus();
         blackPiecesExceptPawns = Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R");
         whitePiecesExceptPawns = Arrays.asList("r", "n", "b", "q", "k", "b", "n", "r");

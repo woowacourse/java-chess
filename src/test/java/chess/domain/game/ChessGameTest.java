@@ -68,7 +68,6 @@ class ChessGameTest {
     void canMovePieceAfterStart() {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
         CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
-        chessGame.start();
 
         assertThatCode(() -> chessGame.move(commandRequestDTO))
             .doesNotThrowAnyException();
@@ -79,30 +78,9 @@ class ChessGameTest {
     void canGetBoardStatusAfterStart() {
         ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
         CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
-        chessGame.start();
 
         assertThatCode(() -> chessGame.move(commandRequestDTO))
             .doesNotThrowAnyException();
-    }
-
-    @DisplayName("체스 게임을 먼저 시작하지 않았으면, 기물을 이동시킬 수 없다.")
-    @Test
-    void cannotMovePieceBeforeStart() {
-        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
-
-        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
-            .isInstanceOf(IllegalStateException.class);
-    }
-
-    @DisplayName("체스 게임을 먼저 시작하지 않았으면, 체스 게임으로부터 보드 상태 정보를 받을 수 없다.")
-    @Test
-    void cannotGetBoardStatusBeforeStart() {
-        ChessGame chessGame = new ChessGame(new BoardDefaultSetting());
-        CommandRequestDTO commandRequestDTO = new CommandRequestDTO(MOVE, "a2", "a4");
-
-        assertThatThrownBy(() -> chessGame.move(commandRequestDTO))
-            .isInstanceOf(IllegalStateException.class);
     }
 
     @DisplayName("King이 잡혔는지 확인")
@@ -188,7 +166,6 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            chessGame.start();
 
             String expectedWinnerTeamColorKoreanName = "흑";
             assertThat(chessGame.winnerTeamColorName())
@@ -211,7 +188,6 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            chessGame.start();
 
             assertThatThrownBy(chessGame::winnerTeamColorName)
                 .isInstanceOf(IllegalStateException.class);
@@ -233,7 +209,6 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            chessGame.start();
 
             assertThatThrownBy(chessGame::winnerTeamColorName)
                 .isInstanceOf(IllegalStateException.class);
@@ -259,7 +234,6 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            chessGame.start();
 
             ScoresResponseDTO scoresResponseDTO = chessGame.getScores();
 
@@ -283,7 +257,6 @@ class ChessGameTest {
             );
 
             ChessGame chessGame = new ChessGame(customBoardSetting);
-            chessGame.start();
 
             CommandRequestDTO commandRequestDTO
                 = new CommandRequestDTO("move", "a4", "b5");
@@ -324,7 +297,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -348,7 +321,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -373,7 +346,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -398,7 +371,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -423,7 +396,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -448,7 +421,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -473,7 +446,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -498,7 +471,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -528,7 +501,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -552,7 +525,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -577,7 +550,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -602,7 +575,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -627,7 +600,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -652,7 +625,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -677,7 +650,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -702,7 +675,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -732,7 +705,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -756,7 +729,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -781,7 +754,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -806,7 +779,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -831,7 +804,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -856,7 +829,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -881,7 +854,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -906,7 +879,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -931,7 +904,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -956,7 +929,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -981,7 +954,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1006,7 +979,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1036,7 +1009,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1060,7 +1033,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1085,7 +1058,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1110,7 +1083,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1135,7 +1108,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1160,7 +1133,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1185,7 +1158,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1210,7 +1183,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1235,7 +1208,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1260,7 +1233,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1285,7 +1258,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1317,7 +1290,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1341,7 +1314,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1366,7 +1339,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1391,7 +1364,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1416,7 +1389,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1441,7 +1414,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1466,7 +1439,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1491,7 +1464,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1516,7 +1489,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1541,7 +1514,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1566,7 +1539,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1591,7 +1564,7 @@ class ChessGameTest {
                 );
 
                 ChessGame chessGame = new ChessGame(customBoardSetting);
-                chessGame.start();
+
                 chessGame.changeCurrentTurnTeamColorToOpposite();
 
                 String startPositionInput = "d5";
@@ -1625,7 +1598,7 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
+
                     chessGame.changeCurrentTurnTeamColorToOpposite();
 
                     String startPositionInput = "d5";
@@ -1652,7 +1625,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
@@ -1677,7 +1650,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
@@ -1702,7 +1675,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
@@ -1727,7 +1700,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
@@ -1756,7 +1729,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1781,7 +1754,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1806,7 +1779,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1831,7 +1804,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d5";
@@ -1860,7 +1833,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1885,7 +1858,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1910,7 +1883,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1935,7 +1908,7 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
+
                         chessGame.changeCurrentTurnTeamColorToOpposite();
 
                         String startPositionInput = "d7";
@@ -1967,7 +1940,6 @@ class ChessGameTest {
                     );
 
                     ChessGame chessGame = new ChessGame(customBoardSetting);
-                    chessGame.start();
 
                     String startPositionInput = "d5";
 
@@ -1993,7 +1965,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
@@ -2017,7 +1988,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d6";
@@ -2041,7 +2011,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d4";
@@ -2065,7 +2034,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d5";
                         String destinationInput = "d7";
@@ -2093,7 +2061,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
@@ -2117,7 +2084,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
@@ -2141,7 +2107,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "d4";
@@ -2165,7 +2130,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d3";
                         String destinationInput = "d1";
@@ -2193,7 +2157,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "c3";
@@ -2217,7 +2180,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "e3";
@@ -2241,7 +2203,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "c3";
@@ -2265,7 +2226,6 @@ class ChessGameTest {
                         );
 
                         ChessGame chessGame = new ChessGame(customBoardSetting);
-                        chessGame.start();
 
                         String startPositionInput = "d2";
                         String destinationInput = "e3";

@@ -13,7 +13,6 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
-    private static final String WHITE = "white";
     private static final String MOVE = "move";
 
     private ChessGame chessGame;
@@ -21,7 +20,6 @@ class BoardTest {
     @BeforeEach
     void setUp() {
         chessGame = new ChessGame(new BoardDefaultSetting());
-        chessGame.start();
     }
 
     @DisplayName("백 팀 - 출발 위치에 자신의 기물이 없는 경우, 이동 불가 - 빈 칸인 경우")
