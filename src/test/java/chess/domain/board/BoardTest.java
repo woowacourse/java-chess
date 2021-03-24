@@ -24,7 +24,7 @@ public class BoardTest {
     @Test
     @DisplayName("빈 보드 생성")
     void createBoard() {
-        BoardDto actualBoard = board.boardDto();
+        BoardDto actualBoard = new BoardDto(board);
 
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));
@@ -43,7 +43,7 @@ public class BoardTest {
     @DisplayName("흑과 백이 대칭적으로 말을 놓는 기능")
     void putSymmetrically() {
         board.putSymmetrically(Piece.ROOK, Point.of("c3"));
-        BoardDto actualBoard = board.boardDto();
+        BoardDto actualBoard = new BoardDto(board);
 
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList(".", ".", ".", ".", ".", ".", ".", "."));

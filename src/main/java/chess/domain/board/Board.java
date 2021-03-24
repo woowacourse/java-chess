@@ -2,8 +2,6 @@ package chess.domain.board;
 
 import chess.domain.piece.MoveVector;
 import chess.domain.piece.Piece;
-import chess.dto.BoardDto;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,21 +83,7 @@ public class Board {
             .collect(Collectors.toList());
     }
 
-    public BoardDto boardDto() {
-        List<List<String>> result = new ArrayList<>();
-        for (Row row : Row.reversedRows()) {
-            result.add(rowDto(row));
-        }
-
-        return new BoardDto(result);
-    }
-
-    private List<String> rowDto(Row row) {
-        List<String> rowResult = new ArrayList<>();
-        for (Column column : Column.columns()) {
-            SquareState squareState = squares.get(Point.of(column.coordinate() + row.coordinate()));
-            rowResult.add(squareState.pieceName());
-        }
-        return rowResult;
+    public Map<Point, SquareState> squares() {
+        return new HashMap<>(squares);
     }
 }

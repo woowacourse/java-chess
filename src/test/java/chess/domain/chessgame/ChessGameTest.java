@@ -32,7 +32,7 @@ public class ChessGameTest {
     @Test
     @DisplayName("팀 화이트 초기설정 테스트")
     void initializeBoard() {
-        BoardDto actualBoard = board.boardDto();
+        BoardDto actualBoard = new BoardDto(board);
 
         List<List<String>> expectedBoard = new ArrayList<>();
         expectedBoard.add(Arrays.asList("R", "N", "B", "Q", "K", "B", "N", "R"));

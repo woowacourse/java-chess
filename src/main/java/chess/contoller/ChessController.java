@@ -5,6 +5,7 @@ import chess.domain.board.Team;
 import chess.domain.chessgame.ChessGame;
 import chess.domain.chessgame.Turn;
 import chess.domain.command.Command;
+import chess.dto.BoardDto;
 import chess.view.InputView;
 import chess.view.OutputView;
 
@@ -22,7 +23,7 @@ public class ChessController {
         while (chessGame.isOngoing()) {
             inputCommandAndExecute(chessGame);
             OutputView.printCurrentTurn(chessGame.currentTurn());
-            OutputView.printChessBoard(board.boardDto());
+            OutputView.printChessBoard(new BoardDto(board));
         }
     }
 
