@@ -5,6 +5,9 @@ import chess.domain.piece.Team;
 
 public class ChessGame {
     private static final String END = "end";
+    private static final int OPTION_TARGET_INDEX = 0;
+    private static final int OPTION_DESTINATION_INDEX = 1;
+    private static final int OPTION_FINISH = 2;
 
     private Board board;
     private boolean isStart;
@@ -36,8 +39,8 @@ public class ChessGame {
     }
 
     private Position convertStringToPosition(String input) {
-        return Position.of(Horizontal.find(input.substring(0, 1)),
-                Vertical.find(input.substring(1, 2)));
+        return Position.of(Horizontal.find(input.substring(OPTION_TARGET_INDEX, OPTION_DESTINATION_INDEX)),
+                Vertical.find(input.substring(OPTION_DESTINATION_INDEX, OPTION_FINISH)));
     }
 
     public boolean isBeforeStart() {
