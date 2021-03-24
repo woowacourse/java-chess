@@ -37,4 +37,11 @@ public abstract class LinearMoveStrategy implements MoveStrategy {
         Piece destinationPiece = board.findPieceFromPosition(movedPosition);
         return destinationPiece == null || !destinationPiece.isSameTeam(targetPiece);
     }
+
+    public boolean isInBorder(int horizontalWeight, int verticalWeight, Direction direction) {
+        return horizontalWeight + direction.getX() >= Board.MIN_BORDER
+                && horizontalWeight + direction.getX() <= Board.MAX_BORDER
+                && verticalWeight + direction.getY() >= Board.MIN_BORDER
+                && verticalWeight + direction.getY() <= Board.MAX_BORDER;
+    }
 }

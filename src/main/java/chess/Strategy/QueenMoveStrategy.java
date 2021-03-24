@@ -53,8 +53,7 @@ public class QueenMoveStrategy extends LinearMoveStrategy {
         List<Position> result = new ArrayList<>();
         int horizontalWeight = target.getHorizontalWeight();
         int verticalWeight = target.getVerticalWeight();
-        while (horizontalWeight + direction.getX() >= Board.MIN_BORDER && horizontalWeight + direction.getX() <= Board.MAX_BORDER
-                && verticalWeight + direction.getY() >= Board.MIN_BORDER && verticalWeight + direction.getY() <= Board.MAX_BORDER) {
+        while (isInBorder(horizontalWeight, verticalWeight, direction)) {
             horizontalWeight += direction.getX();
             verticalWeight += direction.getY();
             result.add(

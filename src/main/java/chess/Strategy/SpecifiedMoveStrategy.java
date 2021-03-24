@@ -17,4 +17,9 @@ public abstract class SpecifiedMoveStrategy implements MoveStrategy {
         }
         return !targetPiece.isSameTeam(destinationPiece);
     }
+
+    public boolean isInBorder(int horizontalWeight, int verticalWeight) {
+        return horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
+                && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER;
+    }
 }

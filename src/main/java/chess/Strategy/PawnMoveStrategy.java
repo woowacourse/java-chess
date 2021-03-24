@@ -66,12 +66,16 @@ public class PawnMoveStrategy implements MoveStrategy {
 
     private List<Position> calculatePawnMovablePosition(int horizontalWeight, int verticalWeight) {
         List<Position> result = new ArrayList<>();
-        if (horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
-                && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER) {
+        if (isInBorder(horizontalWeight, verticalWeight)) {
             result.add(Position.of(Horizontal.findFromWeight(horizontalWeight),
                     Vertical.findFromWeight(verticalWeight)));
         }
         return result;
+    }
+
+    private boolean isInBorder(int horizontalWeight, int verticalWeight) {
+        return horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
+                && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER;
     }
 
     private Direction findDirection() {

@@ -36,9 +36,4 @@ public class KingMoveStrategy extends SpecifiedMoveStrategy {
         }
         return result;
     }
-
-    private boolean isInBorder(int horizontalWeight, int verticalWeight) {
-        return horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
-                && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER;
-    }
 }

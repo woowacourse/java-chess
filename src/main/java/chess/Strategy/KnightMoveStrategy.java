@@ -37,8 +37,7 @@ public class KnightMoveStrategy extends SpecifiedMoveStrategy {
 
     private List<Position> findKnightDestination(int horizontalWeight, int verticalWeight) {
         List<Position> result = new ArrayList<>();
-        if (horizontalWeight >= Board.MIN_BORDER && horizontalWeight <= Board.MAX_BORDER
-                && verticalWeight >= Board.MIN_BORDER && verticalWeight <= Board.MAX_BORDER) {
+        if (isInBorder(horizontalWeight, verticalWeight)) {
             result.add(
                     Position.of(Horizontal.findFromWeight(horizontalWeight), Vertical.findFromWeight(verticalWeight))
             );
