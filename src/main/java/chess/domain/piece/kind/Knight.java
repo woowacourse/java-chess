@@ -26,21 +26,6 @@ public class Knight extends Piece {
         return KNIGHT_SCORE;
     }
 
-    @Override
-    public boolean isEmptyPiece() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
-    public boolean isPawn() {
-        return false;
-    }
-
     public boolean isKnight() {
         return true;
     }

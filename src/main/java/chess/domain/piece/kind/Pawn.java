@@ -65,16 +65,6 @@ public class Pawn extends Piece {
     }
 
     @Override
-    public boolean isEmptyPiece() {
-        return false;
-    }
-
-    @Override
-    public boolean isKing() {
-        return false;
-    }
-
-    @Override
     public boolean isPawn() {
         return true;
     }

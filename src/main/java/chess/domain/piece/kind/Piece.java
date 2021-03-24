@@ -20,6 +20,8 @@ public abstract class Piece {
         this.color = color;
     }
 
+    public abstract double score();
+
     public boolean isSameTeam(Color color) {
         return color.isSameAs(this.color);
     }
@@ -28,24 +30,28 @@ public abstract class Piece {
         return !color.isSameAs(this.color);
     }
 
-    public abstract double score();
-
-    public abstract boolean isEmptyPiece();
-
-    public abstract boolean isKing();
-
-    public abstract boolean isPawn();
-
-    public void checkCorrectDistance(Point source, Point target, Piece targetPiece) {}
-
-    public void checkCorrectDirection(Direction direction) {}
-
     public void validateRoute(Point source, Point target, Piece targetPiece) {
         checkCorrectDistance(source, target, targetPiece);
         checkCorrectDirection(Direction.findDirection(source, target));
     }
 
+    public void checkCorrectDistance(Point source, Point target, Piece targetPiece) {}
+
+    public void checkCorrectDirection(Direction direction) {}
+
     public boolean isKnight() {
+        return false;
+    }
+
+    public boolean isEmptyPiece() {
+        return false;
+    }
+
+    public boolean isKing() {
+        return false;
+    }
+
+    public boolean isPawn() {
         return false;
     }
 
