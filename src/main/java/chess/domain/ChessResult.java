@@ -15,9 +15,11 @@ import java.util.stream.Collectors;
 
 public final class ChessResult {
     private final Board board;
+    private final Map<Position, Piece> chessBoard;
 
     public ChessResult(final Board board) {
         this.board = board;
+        this.chessBoard = board.unwrap();
     }
 
     public double totalScore(final Team team) {

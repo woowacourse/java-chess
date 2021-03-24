@@ -48,6 +48,7 @@ public class OutputView {
     }
 
     public static void printGameResultNotice() {
+        System.out.println("게임이 종료되었습니다.");
         System.out.println("결과를 보려면 \"status\"를 입력해 주세요.");
     }
 
