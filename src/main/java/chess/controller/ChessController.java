@@ -5,19 +5,11 @@ import chess.domain.command.CommandInput;
 import chess.domain.command.Commands;
 import chess.domain.piece.Team;
 import chess.exception.GameIsNotStartException;
-import chess.view.InputView;
 import chess.view.OutputView;
 
-import java.util.Arrays;
-import java.util.List;
-
 public class ChessController {
-    private static final String DELIMITER = " ";
     private static final String STATUS = "status";
     private static final String END = "end";
-    private static final int ONLY_COMMAND = 1;
-    private static final int OPTION_TARGET = 1;
-    private static final int OPTION_DESTINATION = 2;
 
     public void run(ChessGame chessGame, Commands commands) {
         boolean isPlaying = true;
@@ -31,7 +23,7 @@ public class ChessController {
     public boolean playGame(ChessGame chessGame, Commands commands) {
         boolean play = true;
         try {
-            CommandInput commandInput = createCommandInput();
+            CommandInput commandInput = CommandInput.create();
             String command = commands.execute(chessGame, commandInput);
             play = isPlay(command);
             checkGameStart(chessGame, play);
@@ -41,17 +33,6 @@ public class ChessController {
             System.out.println(e.getMessage());
         }
         return play;
-    }
-
-    private CommandInput createCommandInput() {
-        String input = InputView.inputCommand();
-        List<String> inputs = Arrays.asList(input.split(DELIMITER));
-        String command = inputs.get(0);
-
-        if (inputs.size() == ONLY_COMMAND) {
-            return new CommandInput(command);
-        }
-        return new CommandInput(command, Arrays.asList(inputs.get(OPTION_TARGET), inputs.get(OPTION_DESTINATION)));
     }
 
     private void checkGameStart(ChessGame chessGame, boolean isPlay) {
