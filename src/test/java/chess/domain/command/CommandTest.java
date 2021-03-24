@@ -10,10 +10,10 @@ class CommandTest {
 
     @Test
     void fromSuccess() {
-        assertThat(Command.from("move a1 a2")).isInstanceOf(Move.class);
-        assertThat(Command.from("end")).isInstanceOf(End.class);
-        assertThat(Command.from("status")).isInstanceOf(Status.class);
-        assertThat(Command.from("start")).isInstanceOf(Start.class);
+        assertThat(Command.from("move a1 a2")).isEqualTo(Command.MOVE);
+        assertThat(Command.from("end")).isEqualTo(Command.END);
+        assertThat(Command.from("status")).isEqualTo(Command.STATUS);
+        assertThat(Command.from("start")).isEqualTo(Command.START);
     }
 
     @Test

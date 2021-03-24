@@ -3,8 +3,7 @@ package chess.controller;
 import chess.domain.Board;
 import chess.domain.ChessGame;
 import chess.domain.command.Command;
-import chess.domain.gamestate.Ready;
-import chess.domain.gamestate.State;
+import chess.domain.position.Position;
 import chess.exception.ChessException;
 import chess.exception.InvalidCommandException;
 import chess.view.InputView;
@@ -14,8 +13,7 @@ public class ChessController {
     public static void start() {
         OutputView.startGame();
         ChessGame chessGame = new ChessGame(Board.getGamingBoard());
-        Command command = command();
-        if (command.isStart()) {
+        if (Command.from(InputView.command()) == Command.START) {
             startGame(chessGame);
         }
     }
@@ -39,7 +37,7 @@ public class ChessController {
 
     private static void turn(ChessGame chessGame) {
         try {
-            execute(command(), chessGame);
+            execute(InputView.command(), chessGame);
             printBoard(chessGame);
         } catch (ChessException e) {
             OutputView.printError(e);
@@ -47,28 +45,21 @@ public class ChessController {
         }
     }
 
-    private static void execute(Command command, ChessGame chessGame) {
+    private static void execute(String input, ChessGame chessGame) {
 
-        if (command.isMove()) {
-            chessGame.move(command.source(), command.target());
+        Command command = Command.from(input);
+        if (Command.MOVE == command) {
+            Position[] positions = Command.positions(input);
+            chessGame.move(positions[0], positions[1]);
         }
 
-        if (command.isStatus()) {
+        if (Command.STATUS == command) {
             chessGame.status();
             OutputView.print(chessGame.score());
         }
 
-        if (command.isEnd()) {
+        if (Command.END == command) {
             chessGame.end();
-        }
-    }
-
-    private static Command command() {
-        try {
-            return Command.from(InputView.command());
-        } catch (InvalidCommandException e) {
-            OutputView.printError(e);
-            return command();
         }
     }
 }

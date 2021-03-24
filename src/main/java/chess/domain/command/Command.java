@@ -3,38 +3,37 @@ package chess.domain.command;
 import chess.domain.position.Position;
 import chess.exception.InvalidCommandException;
 
-public interface Command {
-    String MOVE_COMMAND = "move";
-    String END_COMMAND = "end";
-    String STATUS_COMMAND = "status";
-    String START_COMMAND = "start";
+import java.util.Arrays;
 
-    static Command from(String command) {
-        if (command.startsWith(MOVE_COMMAND)) {
-            return new Move(command);
-        }
-        if (command.equals(END_COMMAND)) {
-            return new End();
-        }
-        if (command.equals(STATUS_COMMAND)) {
-            return new Status();
-        }
-        if (command.equals(START_COMMAND)) {
-            return new Start();
-        }
+public enum Command {
+    START("start"),
+    MOVE("move"),
+    STATUS("status"),
+    END("end");
 
-        throw new InvalidCommandException();
+    private final String description;
+
+    Command(String description) {
+        this.description = description;
     }
 
-    boolean isStart();
+    public static Command from(String input) {
+        String[] splittedInput = input.split(" ");
 
-    boolean isMove();
+        return Arrays.stream(values())
+                .filter(command -> command.description.equals(splittedInput[0]))
+                .findFirst()
+                .orElseThrow(InvalidCommandException::new);
+    }
 
-    Position source();
+    public static Position[] positions(String command) {
+        String[] splittedCommand = command.split(" ");
 
-    Position target();
+        Position[] positions = new Position[2];
 
-    boolean isEnd();
+        positions[0] = Position.from(splittedCommand[1]);
+        positions[1] = Position.from(splittedCommand[2]);
 
-    boolean isStatus();
+        return positions;
+    }
 }
